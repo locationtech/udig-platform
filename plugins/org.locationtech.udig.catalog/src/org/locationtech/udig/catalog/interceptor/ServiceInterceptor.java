@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.interceptor;
+package org.locationtech.udig.catalog.interceptor;
 
-import net.refractions.udig.catalog.IService;
+import org.locationtech.udig.catalog.IService;
 
 /**
  * An interceptor that is ran on a service.
@@ -21,7 +21,7 @@ public interface ServiceInterceptor {
     /**
      * Extension Point ID of Service interceptors
      */
-    String EXTENSION_ID = "net.refractions.udig.catalog.serviceInterceptor"; //$NON-NLS-1$
+    String EXTENSION_ID = "org.locationtech.udig.catalog.serviceInterceptor"; //$NON-NLS-1$
     
     /**
      * Attribute name of layer created interceptors; called when service is created

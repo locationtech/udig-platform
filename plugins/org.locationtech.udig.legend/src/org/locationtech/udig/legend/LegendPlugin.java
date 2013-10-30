@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.legend;
+package org.locationtech.udig.legend;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -23,7 +23,7 @@ public class LegendPlugin extends AbstractUIPlugin {
 
 	//The shared instance.
 	private static LegendPlugin plugin;
-    public static final String ID = "net.refractions.udig.legend"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.legend"; //$NON-NLS-1$
 
 	/**
 	 * The constructor.

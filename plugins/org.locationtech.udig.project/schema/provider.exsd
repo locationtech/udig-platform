@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project">
+<schema targetNamespace="org.locationtech.udig.project">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.project" id="provider" name="Provider"/>
+         <meta.schema plugin="org.locationtech.udig.project" id="provider" name="Provider"/>
       </appInfo>
       <documentation>
          Extensions of this point are used to provide object instances. Providers must declare the type of object they provide, and an optional key which identifies the object type.

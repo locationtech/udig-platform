@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog;
+package org.locationtech.udig.catalog;
 
 import static java.text.MessageFormat.format;
 
@@ -21,10 +21,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.refractions.udig.catalog.internal.postgis.PostgisPlugin;
-import net.refractions.udig.catalog.internal.postgis.ui.PostgisServiceDialect;
-import net.refractions.udig.catalog.postgis.internal.Messages;
-import net.refractions.udig.core.Pair;
+import org.locationtech.udig.catalog.internal.postgis.PostgisPlugin;
+import org.locationtech.udig.catalog.internal.postgis.ui.PostgisServiceDialect;
+import org.locationtech.udig.catalog.postgis.internal.Messages;
+import org.locationtech.udig.core.Pair;
 
 import org.eclipse.core.runtime.Platform;
 import org.geotools.data.DataStoreFactorySpi;

@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.kml.wizard;
+package org.locationtech.udig.catalog.kml.wizard;
 
 import java.io.File;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -26,15 +26,15 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import eu.udig.catalog.kml.core.KmlUtils;
-import eu.udig.catalog.kml.internal.Messages;
+import org.locationtech.udig.catalog.kml.core.KmlUtils;
+import org.locationtech.udig.catalog.kml.internal.Messages;
 
 /**
  * @author Andrea Antonello (www.hydrologis.com)
  * @author Frank Gasdorf
  */
 public class KmlExportWizardPage extends WizardPage {
-    public static final String ID = "eu.udig.catalog.kml.wizard.KmlExportWizardPage"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.catalog.kml.wizard.KmlExportWizardPage"; //$NON-NLS-1$
 
     private IGeoResource geoResource;
 

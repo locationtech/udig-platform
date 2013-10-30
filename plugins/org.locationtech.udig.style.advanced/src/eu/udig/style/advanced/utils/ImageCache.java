@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.utils;
+package org.locationtech.udig.style.advanced.utils;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -17,7 +17,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-import eu.udig.style.advanced.StylePlugin;
+import org.locationtech.udig.style.advanced.StylePlugin;
 
 /**
  * A singleton cache for images.

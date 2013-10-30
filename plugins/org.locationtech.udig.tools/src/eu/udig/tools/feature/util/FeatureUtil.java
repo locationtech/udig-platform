@@ -9,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.feature.util;
+package org.locationtech.udig.tools.feature.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,8 +40,8 @@ import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 
-import eu.udig.tools.internal.i18n.Messages;
-import eu.udig.tools.geometry.internal.util.GeometryUtil;
+import org.locationtech.udig.tools.internal.i18n.Messages;
+import org.locationtech.udig.tools.geometry.internal.util.GeometryUtil;
 
 /**
  * Convenient method to handle Features and its components

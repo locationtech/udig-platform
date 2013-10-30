@@ -4,12 +4,12 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.internal.render.provider;
+package org.locationtech.udig.project.internal.render.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.refractions.udig.project.internal.render.util.RenderAdapterFactory;
+import org.locationtech.udig.project.internal.render.util.RenderAdapterFactory;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -76,7 +76,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
 
     /**
      * This keeps track of the one adapter used for all
-     * {@link net.refractions.udig.project.internal.render.RenderManager} instances. <!--
+     * {@link org.locationtech.udig.project.internal.render.RenderManager} instances. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @generated
@@ -84,7 +84,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
     protected RenderManagerItemProvider renderManagerItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.project.internal.render.RenderManager}.
+     * This creates an adapter for a {@link org.locationtech.udig.project.internal.render.RenderManager}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -100,7 +100,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
 
     /**
      * This keeps track of the one adapter used for all
-     * {@link net.refractions.udig.project.internal.render.ViewportModel} instances. <!--
+     * {@link org.locationtech.udig.project.internal.render.ViewportModel} instances. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @generated
@@ -108,7 +108,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
     protected ViewportModelItemProvider viewportModelItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.project.internal.render.ViewportModel}.
+     * This creates an adapter for a {@link org.locationtech.udig.project.internal.render.ViewportModel}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -124,7 +124,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
 
     /**
      * This keeps track of the one adapter used for all
-     * {@link net.refractions.udig.project.internal.render.RenderExecutor} instances. <!--
+     * {@link org.locationtech.udig.project.internal.render.RenderExecutor} instances. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @generated
@@ -132,7 +132,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
     protected RenderExecutorItemProvider renderExecutorItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.project.internal.render.RenderExecutor}.
+     * This creates an adapter for a {@link org.locationtech.udig.project.internal.render.RenderExecutor}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

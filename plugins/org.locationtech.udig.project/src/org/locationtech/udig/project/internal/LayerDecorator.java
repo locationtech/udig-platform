@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -17,15 +17,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolveChangeEvent;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILayerListener;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.Interaction;
-import net.refractions.udig.project.LayerEvent;
-import net.refractions.udig.ui.palette.ColourScheme;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolveChangeEvent;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILayerListener;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.project.LayerEvent;
+import org.locationtech.udig.ui.palette.ColourScheme;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.notify.Notification;
@@ -94,7 +94,7 @@ public class LayerDecorator implements Layer, InternalEObject {
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#addListener(net.refractions.udig.project.LayerListener)
+     * @see org.locationtech.udig.project.Layer#addListener(org.locationtech.udig.project.LayerListener)
      */
     public synchronized void addListener( final ILayerListener listener ) {
         if (listeners == null) {
@@ -105,7 +105,7 @@ public class LayerDecorator implements Layer, InternalEObject {
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#removeListener(net.refractions.udig.project.LayerListener)
+     * @see org.locationtech.udig.project.Layer#removeListener(org.locationtech.udig.project.LayerListener)
      */
     public synchronized void removeListener( final ILayerListener listener ) {
         listeners.remove(listener);
@@ -129,238 +129,238 @@ public class LayerDecorator implements Layer, InternalEObject {
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#properties()
+     * @see org.locationtech.udig.project.Layer#properties()
      */
     public IBlackboard getProperties() {
         return layer.getProperties();
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#getContextModel()
+     * @see org.locationtech.udig.project.Layer#getContextModel()
      */
     public ContextModel getContextModel() {
         return layer.getContextModel();
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#setContextModel(net.refractions.udig.project.ContextModel)
+     * @see org.locationtech.udig.project.Layer#setContextModel(org.locationtech.udig.project.ContextModel)
      */
     public void setContextModel( ContextModel value ) {
         layer.setContextModel(value);
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#getFilter()
+     * @see org.locationtech.udig.project.Layer#getFilter()
      */
     public Filter getFilter() {
         return layer.getFilter();
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#setFilter(org.opengis.filter.Filter)
+     * @see org.locationtech.udig.project.Layer#setFilter(org.opengis.filter.Filter)
      */
     public void setFilter( Filter value ) {
         layer.setFilter(value);
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#getStyleBlackboard()
+     * @see org.locationtech.udig.project.Layer#getStyleBlackboard()
      */
     public StyleBlackboard getStyleBlackboard() {
         return layer.getStyleBlackboard();
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#setStyleBlackboard(net.refractions.udig.project.StyleBlackboard)
+     * @see org.locationtech.udig.project.Layer#setStyleBlackboard(org.locationtech.udig.project.StyleBlackboard)
      */
     public void setStyleBlackboard( StyleBlackboard value ) {
         layer.setStyleBlackboard(value);
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#getZorder()
+     * @see org.locationtech.udig.project.Layer#getZorder()
      */
     public int getZorder() {
         return layer.getZorder();
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#setZorder(int)
+     * @see org.locationtech.udig.project.Layer#setZorder(int)
      */
     public void setZorder( int value ) {
         layer.setZorder(value);
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#getStatus()
+     * @see org.locationtech.udig.project.Layer#getStatus()
      */
     public int getStatus() {
         return layer.getStatus();
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#setStatus(int)
+     * @see org.locationtech.udig.project.Layer#setStatus(int)
      */
     public void setStatus( int value ) {
         layer.setStatus(value);
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#isApplicable(java.lang.String)
+     * @see org.locationtech.udig.project.Layer#isApplicable(java.lang.String)
      */
     public boolean getInteraction( Interaction interaction ) {
         return layer.getInteraction(interaction);
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#setApplicable(java.lang.String, boolean)
+     * @see org.locationtech.udig.project.Layer#setApplicable(java.lang.String, boolean)
      */
     public void setInteraction( Interaction interaction, boolean isApplicable ) {
         layer.setInteraction(interaction, isApplicable);
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#isSelectable()
+     * @see org.locationtech.udig.project.Layer#isSelectable()
      */
     public boolean isSelectable() {
         return layer.isSelectable();
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#setSelectable(boolean)
+     * @see org.locationtech.udig.project.Layer#setSelectable(boolean)
      */
     public void setSelectable( boolean value ) {
         layer.setSelectable(value);
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#getName()
+     * @see org.locationtech.udig.project.Layer#getName()
      */
     public String getName() {
         return layer.getName();
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#setName(java.lang.String)
+     * @see org.locationtech.udig.project.Layer#setName(java.lang.String)
      */
     public void setName( String value ) {
         layer.setName(value);
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#getCatalogRef()
+     * @see org.locationtech.udig.project.Layer#getCatalogRef()
      */
     public CatalogRef getCatalogRef() {
         return layer.getCatalogRef();
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#setCatalogRef(net.refractions.udig.project.LayerRef)
+     * @see org.locationtech.udig.project.Layer#setCatalogRef(org.locationtech.udig.project.LayerRef)
      */
     public void setCatalogRef( CatalogRef value ) {
         layer.setCatalogRef(value);
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#getID()
+     * @see org.locationtech.udig.project.Layer#getID()
      */
     public URL getID() {
         return layer.getID();
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#setID(java.net.URL)
+     * @see org.locationtech.udig.project.Layer#setID(java.net.URL)
      */
     public void setID( URL value ) {
         layer.setID(value);
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#isVisible()
+     * @see org.locationtech.udig.project.Layer#isVisible()
      */
     public boolean isVisible() {
         return layer.isVisible();
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#setVisible(boolean)
+     * @see org.locationtech.udig.project.Layer#setVisible(boolean)
      */
     public void setVisible( boolean value ) {
         layer.setVisible(value);
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#getGeoResources()
+     * @see org.locationtech.udig.project.Layer#getGeoResources()
      */
     public List<IGeoResource> getGeoResources() {
         return layer.getGeoResources();
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#getGlyph()
+     * @see org.locationtech.udig.project.Layer#getGlyph()
      */
     public ImageDescriptor getIcon() {
         return layer.getIcon();
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#setGlyph(org.eclipse.jface.resource.ImageDescriptor)
+     * @see org.locationtech.udig.project.Layer#setGlyph(org.eclipse.jface.resource.ImageDescriptor)
      */
     public void setIcon( ImageDescriptor value ) {
         layer.setIcon(value);
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#getQuery(boolean)
+     * @see org.locationtech.udig.project.Layer#getQuery(boolean)
      */
     public Query getQuery( boolean selection ) {
         return layer.getQuery(selection);
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#getSchema()
+     * @see org.locationtech.udig.project.Layer#getSchema()
      */
     public SimpleFeatureType getSchema() {
         return layer.getSchema();
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#getCRS(org.eclipse.core.runtime.IProgressMonitor)
+     * @see org.locationtech.udig.project.Layer#getCRS(org.eclipse.core.runtime.IProgressMonitor)
      */
     public CoordinateReferenceSystem getCRS( IProgressMonitor monitor ) {
         return layer.getCRS();
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#getCRS()
+     * @see org.locationtech.udig.project.Layer#getCRS()
      */
     public CoordinateReferenceSystem getCRS() {
         return layer.getCRS();
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#setCRS(org.opengis.referencing.crs.CoordinateReferenceSystem)
+     * @see org.locationtech.udig.project.Layer#setCRS(org.opengis.referencing.crs.CoordinateReferenceSystem)
      */
     public void setCRS( CoordinateReferenceSystem value ) {
         layer.setCRS(value);
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#refresh(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.Layer#refresh(com.vividsolutions.jts.geom.Envelope)
      */
     public void refresh( Envelope bounds ) {
         layer.refresh(bounds);
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#getMathTransform()
+     * @see org.locationtech.udig.project.Layer#getMathTransform()
      */
     public MathTransform layerToMapTransform() throws IOException {
         return layer.layerToMapTransform();
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#getBounds(org.eclipse.core.runtime.IProgressMonitor,
+     * @see org.locationtech.udig.project.Layer#getBounds(org.eclipse.core.runtime.IProgressMonitor,
      *      org.opengis.referencing.crs.CoordinateReferenceSystem)
      */
     public ReferencedEnvelope getBounds( IProgressMonitor monitor, CoordinateReferenceSystem crs ) {
@@ -368,7 +368,7 @@ public class LayerDecorator implements Layer, InternalEObject {
     }
 
     /*
-     * @see net.refractions.udig.project.Layer#createBBoxFilter(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.Layer#createBBoxFilter(com.vividsolutions.jts.geom.Envelope)
      */
     public Filter createBBoxFilter( Envelope boundingBox, IProgressMonitor monitor ) {
         return layer.createBBoxFilter(boundingBox, monitor);
@@ -509,7 +509,7 @@ public class LayerDecorator implements Layer, InternalEObject {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.Layer#getMap()
+     * @see org.locationtech.udig.project.internal.Layer#getMap()
      */
     public Map getMapInternal() {
         return layer.getMapInternal();
@@ -657,14 +657,14 @@ public class LayerDecorator implements Layer, InternalEObject {
     }
 
     /**
-     * @see net.refractions.udig.project.ILayer#getGeoResource()
+     * @see org.locationtech.udig.project.ILayer#getGeoResource()
      */
     public IGeoResource getGeoResource() {
         return layer.getGeoResource();
     }
 
     /**
-     * @see net.refractions.udig.project.internal.Layer#setGeoResource(net.refractions.udig.catalog.IGeoResource)
+     * @see org.locationtech.udig.project.internal.Layer#setGeoResource(org.locationtech.udig.catalog.IGeoResource)
      * @deprecated
      */
     public void setGeoResource( IGeoResource value ) {
@@ -672,7 +672,7 @@ public class LayerDecorator implements Layer, InternalEObject {
     }
 
     /**
-     * @see net.refractions.udig.project.ILayer#getGeoResource(java.lang.Class)
+     * @see org.locationtech.udig.project.ILayer#getGeoResource(java.lang.Class)
      */
     public <E> E getResource( Class<E> resourceType, IProgressMonitor monitor ) throws IOException {
         return layer.getResource(resourceType, monitor);
@@ -688,7 +688,7 @@ public class LayerDecorator implements Layer, InternalEObject {
     }
 
     /**
-     * @see net.refractions.udig.project.ILayer#getGeoResource(java.lang.Class)
+     * @see org.locationtech.udig.project.ILayer#getGeoResource(java.lang.Class)
      * @deprecated
      */
     public <T> IGeoResource getGeoResource( Class<T> clazz ) {
@@ -696,7 +696,7 @@ public class LayerDecorator implements Layer, InternalEObject {
     }
 
     /**
-     * @see net.refractions.udig.project.ILayer#getMap()
+     * @see org.locationtech.udig.project.ILayer#getMap()
      */
     public IMap getMap() {
         return layer.getMap();
@@ -710,7 +710,7 @@ public class LayerDecorator implements Layer, InternalEObject {
     }
 
     /**
-     * @see net.refractions.udig.core.IBlockingAdaptable#getAdapter(java.lang.Class,
+     * @see org.locationtech.udig.core.IBlockingAdaptable#getAdapter(java.lang.Class,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
     public <T> T getAdapter( Class<T> adapter, IProgressMonitor monitor ) throws IOException {
@@ -718,56 +718,56 @@ public class LayerDecorator implements Layer, InternalEObject {
     }
 
     /**
-     * @see net.refractions.udig.core.IBlockingAdaptable#canAdaptTo(java.lang.Class)
+     * @see org.locationtech.udig.core.IBlockingAdaptable#canAdaptTo(java.lang.Class)
      */
     public <T> boolean canAdaptTo( Class<T> adapter ) {
         return layer.canAdaptTo(adapter);
     }
 
     /**
-     * @see net.refractions.udig.project.internal.Layer#getColourScheme()
+     * @see org.locationtech.udig.project.internal.Layer#getColourScheme()
      */
     public ColourScheme getColourScheme() {
         return layer.getColourScheme();
     }
 
     /**
-     * @see net.refractions.udig.project.internal.Layer#setColourScheme(net.refractions.udig.ui.palette.ColourScheme)
+     * @see org.locationtech.udig.project.internal.Layer#setColourScheme(org.locationtech.udig.ui.palette.ColourScheme)
      */
     public void setColourScheme( ColourScheme value ) {
         layer.setColourScheme(value);
     }
 
     /**
-     * @see net.refractions.udig.project.internal.Layer#getDefaultColor()
+     * @see org.locationtech.udig.project.internal.Layer#getDefaultColor()
      */
     public Color getDefaultColor() {
         return layer.getDefaultColor();
     }
 
     /**
-     * @see net.refractions.udig.project.internal.Layer#setDefaultColor(java.awt.Color)
+     * @see org.locationtech.udig.project.internal.Layer#setDefaultColor(java.awt.Color)
      */
     public void setDefaultColor( Color value ) {
         layer.setDefaultColor(value);
     }
 
     /**
-     * @see net.refractions.udig.project.ILayer#mapToLayerTransform()
+     * @see org.locationtech.udig.project.ILayer#mapToLayerTransform()
      */
     public MathTransform mapToLayerTransform() throws IOException {
         return layer.mapToLayerTransform();
     }
 
     /**
-     * @see net.refractions.udig.project.internal.Layer#setStatusMessage(java.lang.String)
+     * @see org.locationtech.udig.project.internal.Layer#setStatusMessage(java.lang.String)
      */
     public void setStatusMessage( String message ) {
         layer.setStatusMessage(message);
     }
 
     /**
-     * @see net.refractions.udig.project.ILayer#getStatusMessage()
+     * @see org.locationtech.udig.project.ILayer#getStatusMessage()
      */
     public String getStatusMessage() {
         return layer.getStatusMessage();

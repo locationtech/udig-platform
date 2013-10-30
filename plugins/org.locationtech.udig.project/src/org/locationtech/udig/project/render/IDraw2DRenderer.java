@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.render;
+package org.locationtech.udig.project.render;
 
 import java.awt.Graphics2D;
 

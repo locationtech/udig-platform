@@ -8,41 +8,41 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.util;
+package org.locationtech.udig.project.internal.util;
 
-import net.refractions.udig.catalog.IResolveChangeListener;
-import net.refractions.udig.core.IBlockingAdaptable;
-import net.refractions.udig.project.IAbstractContext;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.IFolder;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILayerLegendItem;
-import net.refractions.udig.project.ILegendItem;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.IStyleBlackboard;
-import net.refractions.udig.project.Interaction;
-import net.refractions.udig.project.internal.AbstractContext;
-import net.refractions.udig.project.internal.Blackboard;
-import net.refractions.udig.project.internal.BlackboardEntry;
-import net.refractions.udig.project.internal.ContextModel;
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.internal.Folder;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerFactory;
-import net.refractions.udig.project.internal.LayerLegendItem;
-import net.refractions.udig.project.internal.LegendItem;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectElement;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectRegistry;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.internal.StyleEntry;
-import net.refractions.udig.project.render.IRenderManager;
-import net.refractions.udig.project.render.IViewportModel;
+import org.locationtech.udig.catalog.IResolveChangeListener;
+import org.locationtech.udig.core.IBlockingAdaptable;
+import org.locationtech.udig.project.IAbstractContext;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IEditManager;
+import org.locationtech.udig.project.IFolder;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILayerLegendItem;
+import org.locationtech.udig.project.ILegendItem;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.IStyleBlackboard;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.project.internal.AbstractContext;
+import org.locationtech.udig.project.internal.Blackboard;
+import org.locationtech.udig.project.internal.BlackboardEntry;
+import org.locationtech.udig.project.internal.ContextModel;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.Folder;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerFactory;
+import org.locationtech.udig.project.internal.LayerLegendItem;
+import org.locationtech.udig.project.internal.LegendItem;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectRegistry;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.StyleEntry;
+import org.locationtech.udig.project.render.IRenderManager;
+import org.locationtech.udig.project.render.IViewportModel;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.notify.Adapter;
@@ -51,7 +51,7 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * TODO Purpose of net.refractions.udig.project.internal.util
+ * TODO Purpose of org.locationtech.udig.project.internal.util
  * <p>
  * </p>
  * 
@@ -262,13 +262,13 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
 
     /**
      * Creates a new adapter for an object of class '
-     * {@link net.refractions.udig.project.ContextModel <em>Context Model</em>}'. <!--
+     * {@link org.locationtech.udig.project.ContextModel <em>Context Model</em>}'. <!--
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * 
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.ContextModel
+     * @see org.locationtech.udig.project.internal.ContextModel
      * @generated
      */
     public Adapter createContextModelAdapter() {
@@ -276,12 +276,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.Layer <em>Layer</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.internal.Layer <em>Layer</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.Layer
+     * @see org.locationtech.udig.project.internal.Layer
      * @generated
      */
     public Adapter createLayerAdapter() {
@@ -289,12 +289,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.Map <em>Map</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.internal.Map <em>Map</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.Map
+     * @see org.locationtech.udig.project.internal.Map
      * @generated
      */
     public Adapter createMapAdapter() {
@@ -302,12 +302,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.Project <em>Project</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.internal.Project <em>Project</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.Project
+     * @see org.locationtech.udig.project.internal.Project
      * @generated
      */
     public Adapter createProjectAdapter() {
@@ -315,12 +315,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.ProjectElement <em>Element</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.internal.ProjectElement <em>Element</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.ProjectElement
+     * @see org.locationtech.udig.project.internal.ProjectElement
      * @generated
      */
     public Adapter createProjectElementAdapter() {
@@ -328,12 +328,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.ProjectRegistry <em>Registry</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.internal.ProjectRegistry <em>Registry</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.ProjectRegistry
+     * @see org.locationtech.udig.project.internal.ProjectRegistry
      * @generated
      */
     public Adapter createProjectRegistryAdapter() {
@@ -355,12 +355,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.LayerFactory <em>Layer Factory</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.internal.LayerFactory <em>Layer Factory</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.LayerFactory
+     * @see org.locationtech.udig.project.internal.LayerFactory
      * @generated
      */
     public Adapter createLayerFactoryAdapter() {
@@ -381,12 +381,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.core.IBlockingAdaptable <em>IBlocking Adaptable</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.core.IBlockingAdaptable <em>IBlocking Adaptable</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.core.IBlockingAdaptable
+     * @see org.locationtech.udig.core.IBlockingAdaptable
      * @generated
      */
     public Adapter createIBlockingAdaptableAdapter() {
@@ -394,12 +394,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.Blackboard <em>Blackboard</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.internal.Blackboard <em>Blackboard</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.Blackboard
+     * @see org.locationtech.udig.project.internal.Blackboard
      * @generated
      */
     public Adapter createBlackboardAdapter() {
@@ -407,12 +407,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.BlackboardEntry <em>Blackboard Entry</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.internal.BlackboardEntry <em>Blackboard Entry</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.BlackboardEntry
+     * @see org.locationtech.udig.project.internal.BlackboardEntry
      * @generated
      */
     public Adapter createBlackboardEntryAdapter() {
@@ -420,12 +420,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.catalog.IResolveChangeListener <em>IResolve Change Listener</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.catalog.IResolveChangeListener <em>IResolve Change Listener</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.catalog.IResolveChangeListener
+     * @see org.locationtech.udig.catalog.IResolveChangeListener
      * @generated
      */
     public Adapter createIResolveChangeListenerAdapter() {
@@ -433,13 +433,13 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.IStyleBlackboard <em>IStyle Blackboard</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.IStyleBlackboard <em>IStyle Blackboard</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.IStyleBlackboard
+     * @see org.locationtech.udig.project.IStyleBlackboard
      * @generated
      */
     public Adapter createIStyleBlackboardAdapter() {
@@ -461,13 +461,13 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.IFolder <em>IFolder</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.IFolder <em>IFolder</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.IFolder
+     * @see org.locationtech.udig.project.IFolder
      * @generated
      */
     public Adapter createIFolderAdapter() {
@@ -475,13 +475,13 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.Folder <em>Folder</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.internal.Folder <em>Folder</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.Folder
+     * @see org.locationtech.udig.project.internal.Folder
      * @generated
      */
     public Adapter createFolderAdapter() {
@@ -489,13 +489,13 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.ILayerLegendItem <em>ILayer Legend Item</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.ILayerLegendItem <em>ILayer Legend Item</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.ILayerLegendItem
+     * @see org.locationtech.udig.project.ILayerLegendItem
      * @generated
      */
     public Adapter createILayerLegendItemAdapter() {
@@ -503,13 +503,13 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.LegendItem <em>Legend Item</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.internal.LegendItem <em>Legend Item</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.LegendItem
+     * @see org.locationtech.udig.project.internal.LegendItem
      * @generated
      */
     public Adapter createLegendItemAdapter() {
@@ -517,13 +517,13 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.ILegendItem <em>ILegend Item</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.ILegendItem <em>ILegend Item</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.ILegendItem
+     * @see org.locationtech.udig.project.ILegendItem
      * @generated
      */
     public Adapter createILegendItemAdapter() {
@@ -531,13 +531,13 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.LayerLegendItem <em>Layer Legend Item</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.internal.LayerLegendItem <em>Layer Legend Item</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.LayerLegendItem
+     * @see org.locationtech.udig.project.internal.LayerLegendItem
      * @generated
      */
     public Adapter createLayerLegendItemAdapter() {
@@ -546,13 +546,13 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
 
     /**
      * Creates a new adapter for an object of class '
-     * {@link net.refractions.udig.project.IProjectElement <em>IProject Element</em>}'. <!--
+     * {@link org.locationtech.udig.project.IProjectElement <em>IProject Element</em>}'. <!--
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * 
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.ProjectElement
+     * @see org.locationtech.udig.project.internal.ProjectElement
      * @generated
      */
     public Adapter createIProjectElementAdapter() {
@@ -560,12 +560,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.render.IRenderManager <em>IRender Manager</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.render.IRenderManager <em>IRender Manager</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.render.IRenderManager
+     * @see org.locationtech.udig.project.render.IRenderManager
      * @generated
      */
     public Adapter createIRenderManagerAdapter() {
@@ -573,12 +573,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.render.IViewportModel <em>IViewport Model</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.render.IViewportModel <em>IViewport Model</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.render.IViewportModel
+     * @see org.locationtech.udig.project.render.IViewportModel
      * @generated
      */
     public Adapter createIViewportModelAdapter() {
@@ -587,13 +587,13 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
 
     /**
      * Creates a new adapter for an object of class '
-     * {@link net.refractions.udig.project.StyleBlackboard <em>Style Blackboard</em>}'. <!--
+     * {@link org.locationtech.udig.project.StyleBlackboard <em>Style Blackboard</em>}'. <!--
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * 
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.StyleBlackboard
+     * @see org.locationtech.udig.project.internal.StyleBlackboard
      * @generated
      */
     public Adapter createStyleBlackboardAdapter() {
@@ -601,12 +601,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.StyleEntry <em>Style Entry</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.internal.StyleEntry <em>Style Entry</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.StyleEntry
+     * @see org.locationtech.udig.project.internal.StyleEntry
      * @generated
      */
     public Adapter createStyleEntryAdapter() {
@@ -628,12 +628,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.IMap <em>IMap</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.IMap <em>IMap</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.IMap
+     * @see org.locationtech.udig.project.IMap
      * @generated
      */
     public Adapter createIMapAdapter() {
@@ -641,12 +641,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.EditManager <em>Edit Manager</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.internal.EditManager <em>Edit Manager</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.EditManager
+     * @see org.locationtech.udig.project.internal.EditManager
      * @generated
      */
     public Adapter createEditManagerAdapter() {
@@ -654,12 +654,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.ILayer <em>ILayer</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.ILayer <em>ILayer</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.ILayer
+     * @see org.locationtech.udig.project.ILayer
      * @generated
      */
     public Adapter createILayerAdapter() {
@@ -667,12 +667,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.IEditManager <em>IEdit Manager</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.IEditManager <em>IEdit Manager</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.IEditManager
+     * @see org.locationtech.udig.project.IEditManager
      * @generated
      */
     public Adapter createIEditManagerAdapter() {
@@ -680,12 +680,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.IProject <em>IProject</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.IProject <em>IProject</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.IProject
+     * @see org.locationtech.udig.project.IProject
      * @generated
      */
     public Adapter createIProjectAdapter() {
@@ -693,12 +693,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.IAbstractContext <em>IAbstract Context</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.IAbstractContext <em>IAbstract Context</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.IAbstractContext
+     * @see org.locationtech.udig.project.IAbstractContext
      * @generated
      */
     public Adapter createIAbstractContextAdapter() {
@@ -706,12 +706,12 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.IBlackboard <em>IBlackboard</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.IBlackboard <em>IBlackboard</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.IBlackboard
+     * @see org.locationtech.udig.project.IBlackboard
      * @generated
      */
     public Adapter createIBlackboardAdapter() {

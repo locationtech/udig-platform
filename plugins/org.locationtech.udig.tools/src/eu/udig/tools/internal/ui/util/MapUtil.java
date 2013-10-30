@@ -9,19 +9,19 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.internal.ui.util;
+package org.locationtech.udig.tools.internal.ui.util;
 
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.render.IViewportModel;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.render.IViewportModel;
 
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import eu.udig.tools.internal.mediator.AppGISAdapter;
+import org.locationtech.udig.tools.internal.mediator.AppGISAdapter;
 
 /**
  * Map Util

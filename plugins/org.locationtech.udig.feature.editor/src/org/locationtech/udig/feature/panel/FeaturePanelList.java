@@ -13,7 +13,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package net.refractions.udig.feature.panel;
+package org.locationtech.udig.feature.panel;
 
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;

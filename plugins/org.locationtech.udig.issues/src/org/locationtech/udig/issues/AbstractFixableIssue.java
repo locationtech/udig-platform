@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues;
+package org.locationtech.udig.issues;
 
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.core.IFixer;
-import net.refractions.udig.core.enums.Resolution;
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.issues.internal.IssuesActivator;
+import org.locationtech.udig.core.IFixer;
+import org.locationtech.udig.core.enums.Resolution;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.issues.internal.IssuesActivator;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.ui.IEditorPart;
@@ -41,7 +41,7 @@ public abstract class AbstractFixableIssue extends AbstractIssue {
     public static final String ATT_REQKEY = "requiredKey"; //$NON-NLS-1$
 
     public static final String KEY_FIXERMEMENTO = "fixerMemento"; //$NON-NLS-1$
-    public static final String XPID_ISSUEFIXER = "net.refractions.udig.issues.issueFixer"; //$NON-NLS-1$
+    public static final String XPID_ISSUEFIXER = "org.locationtech.udig.issues.issueFixer"; //$NON-NLS-1$
     
     IMemento fixerMemento = null;
     

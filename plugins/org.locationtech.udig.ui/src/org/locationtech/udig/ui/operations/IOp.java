@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.ui.operations;
+package org.locationtech.udig.ui.operations;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;
@@ -21,7 +21,7 @@ import org.eclipse.swt.widgets.Display;
  */
 public interface IOp {
     /** <code>EXTENSION_POINT</code> field */
-    public static final String EXTENSION_POINT="net.refractions.udig.ui.operation";  //$NON-NLS-1$
+    public static final String EXTENSION_POINT="org.locationtech.udig.ui.operation";  //$NON-NLS-1$
   
     /**
      * Each operation is called by the frame work in a seperate thread.  Interaction with the display must

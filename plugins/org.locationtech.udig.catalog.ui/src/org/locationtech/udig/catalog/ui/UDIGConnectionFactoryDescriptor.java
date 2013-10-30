@@ -8,11 +8,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.ui;
+package org.locationtech.udig.catalog.ui;
 
 import java.util.List;
 
-import net.refractions.udig.catalog.ui.ConnectionFactoryManager.Descriptor;
+import org.locationtech.udig.catalog.ui.ConnectionFactoryManager.Descriptor;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -20,7 +20,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
- * Descriptor for net.refractions.udig.catalog.ui.connectionFactory extensions.
+ * Descriptor for org.locationtech.udig.catalog.ui.connectionFactory extensions.
  * <p>
  * The initial data source selection state/page allows the user to choose a wizard
  * to go forward with. Each available wizard is represented as one of these

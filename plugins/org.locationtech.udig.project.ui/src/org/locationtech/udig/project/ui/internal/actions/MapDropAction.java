@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.actions;
+package org.locationtech.udig.project.ui.internal.actions;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -17,24 +17,24 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.internal.ui.actions.CatalogImportDropAction;
-import net.refractions.udig.catalog.ui.workflow.ResourceSelectionState;
-import net.refractions.udig.catalog.ui.workflow.State;
-import net.refractions.udig.catalog.ui.workflow.Workflow;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.impl.LayerResource;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.internal.Trace;
-import net.refractions.udig.project.ui.internal.wizard.MapImport;
-import net.refractions.udig.project.ui.internal.wizard.MapImportWizard;
-import net.refractions.udig.ui.ViewerDropLocation;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.internal.ui.actions.CatalogImportDropAction;
+import org.locationtech.udig.catalog.ui.workflow.ResourceSelectionState;
+import org.locationtech.udig.catalog.ui.workflow.State;
+import org.locationtech.udig.catalog.ui.workflow.Workflow;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.impl.LayerResource;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.internal.Trace;
+import org.locationtech.udig.project.ui.internal.wizard.MapImport;
+import org.locationtech.udig.project.ui.internal.wizard.MapImportWizard;
+import org.locationtech.udig.ui.ViewerDropLocation;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;

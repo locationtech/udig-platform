@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.issues" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.issues" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.issues" id="issueFixer" name="issueFixer"/>
+         <meta.schema plugin="org.locationtech.udig.issues" id="issueFixer" name="issueFixer"/>
       </appInfo>
       <documentation>
          Declares a fixer for fixing subclasses of AbstractFixableIssue.
@@ -70,7 +70,7 @@
                   The IFixer implementation being contributed by this extension.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.core.IFixer"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.core.IFixer"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -80,7 +80,7 @@
                   AbstractFixableIssue subclass that the fixer operates on (this will filter the classes for which IFixer.canFix is called which object is an instance of targetClass).
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.issues.AbstractFixableIssue"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.issues.AbstractFixableIssue"/>
                </appInfo>
             </annotation>
          </attribute>

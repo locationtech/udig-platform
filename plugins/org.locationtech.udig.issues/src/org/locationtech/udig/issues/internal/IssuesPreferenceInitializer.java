@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.internal;
+package org.locationtech.udig.issues.internal;
 
-import static net.refractions.udig.issues.internal.PreferenceConstants.KEY_ACTIVE_LIST;
-import static net.refractions.udig.issues.internal.PreferenceConstants.KEY_VIEW_CONTENT_PROVIDER;
-import static net.refractions.udig.issues.internal.PreferenceConstants.KEY_VIEW_EXPANSION_PROVIDER;
-import static net.refractions.udig.issues.internal.PreferenceConstants.KEY_VIEW_SORTER;
-import static net.refractions.udig.issues.internal.PreferenceConstants.VALUE_MEMORY_LIST;
+import static org.locationtech.udig.issues.internal.PreferenceConstants.KEY_ACTIVE_LIST;
+import static org.locationtech.udig.issues.internal.PreferenceConstants.KEY_VIEW_CONTENT_PROVIDER;
+import static org.locationtech.udig.issues.internal.PreferenceConstants.KEY_VIEW_EXPANSION_PROVIDER;
+import static org.locationtech.udig.issues.internal.PreferenceConstants.KEY_VIEW_SORTER;
+import static org.locationtech.udig.issues.internal.PreferenceConstants.VALUE_MEMORY_LIST;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;

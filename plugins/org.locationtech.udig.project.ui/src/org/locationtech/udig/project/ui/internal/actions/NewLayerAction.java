@@ -7,24 +7,24 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.actions;
+package org.locationtech.udig.project.ui.internal.actions;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Iterator;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.core.AdapterUtil;
-import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.ui.FeatureTypeEditor;
-import net.refractions.udig.ui.FeatureTypeEditorDialog;
-import net.refractions.udig.ui.ProgressManager;
-import net.refractions.udig.ui.FeatureTypeEditorDialog.ValidateFeatureType;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.AdapterUtil;
+import org.locationtech.udig.project.IEditManager;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.ui.FeatureTypeEditor;
+import org.locationtech.udig.ui.FeatureTypeEditorDialog;
+import org.locationtech.udig.ui.ProgressManager;
+import org.locationtech.udig.ui.FeatureTypeEditorDialog.ValidateFeatureType;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;

@@ -7,25 +7,25 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.command.factory;
+package org.locationtech.udig.project.command.factory;
 
 import java.util.Collection;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.Interaction;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.commands.AddLayerCommand;
-import net.refractions.udig.project.internal.commands.AddLayersCommand;
-import net.refractions.udig.project.internal.commands.ChangeCRSCommand;
-import net.refractions.udig.project.internal.commands.CreateMapCommand;
-import net.refractions.udig.project.internal.commands.DeleteLayerCommand;
-import net.refractions.udig.project.internal.commands.SetApplicabilityCommand;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.commands.AddLayerCommand;
+import org.locationtech.udig.project.internal.commands.AddLayersCommand;
+import org.locationtech.udig.project.internal.commands.ChangeCRSCommand;
+import org.locationtech.udig.project.internal.commands.CreateMapCommand;
+import org.locationtech.udig.project.internal.commands.DeleteLayerCommand;
+import org.locationtech.udig.project.internal.commands.SetApplicabilityCommand;
 
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
@@ -37,7 +37,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
  * @since 0.3
  */
 @SuppressWarnings("deprecation")
-public class BasicCommandFactory extends net.refractions.udig.project.command.BasicCommandFactory {
+public class BasicCommandFactory extends org.locationtech.udig.project.command.BasicCommandFactory {
     /**
      * Creates a new EditCommandFactory object
      * 

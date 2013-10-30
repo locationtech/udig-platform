@@ -1,9 +1,9 @@
 /**
  * 
  */
-package net.refractions.udig.internal.ui;
+package org.locationtech.udig.internal.ui;
 
-import net.refractions.udig.ui.TransferFactory;
+import org.locationtech.udig.ui.TransferFactory;
 
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.HTMLTransfer;
@@ -30,7 +30,7 @@ import org.eclipse.swt.dnd.URLTransfer;
 public class UDigTransferFactory implements TransferFactory {
 
     /**
-     * @see net.refractions.udig.ui.TransferFactory#getTransfers()
+     * @see org.locationtech.udig.ui.TransferFactory#getTransfers()
      */
     public Transfer[] getTransfers() {
         return new Transfer[]{

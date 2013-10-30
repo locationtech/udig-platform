@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.printing.ui" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.printing.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.printing.ui" id="boxFactories" name="%printing.ui.boxFactories.name"/>
+         <meta.schema plugin="org.locationtech.udig.printing.ui" id="boxFactories" name="%printing.ui.boxFactories.name"/>
       </appInfo>
       <documentation>
          TBD
@@ -57,7 +57,7 @@
             <meta.element labelAttribute="name" icon="smallImage"/>
          </appInfo>
          <documentation>
-            boxprinter provides the declaration for BoxPrinter classes. They must implement net.refractions.udig.printing.model.BoxPrinter. The class attribute must contain this class name. The visible element should be set to false if the user should not be able to create their own instances of this box. It will not appear in the slide-out palette in the UI.
+            boxprinter provides the declaration for BoxPrinter classes. They must implement org.locationtech.udig.printing.model.BoxPrinter. The class attribute must contain this class name. The visible element should be set to false if the user should not be able to create their own instances of this box. It will not appear in the slide-out palette in the UI.
          </documentation>
       </annotation>
       <complexType>
@@ -67,7 +67,7 @@
                   The class that will be instantiated.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.printing.model.AbstractBoxPrinter"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.printing.model.AbstractBoxPrinter"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -125,10 +125,10 @@
 &lt;br&gt;&lt;br&gt;
 &lt;i&gt;IMPORTANT:&lt;/i&gt; The id defined in the extension&apos;s id field must be specified AND the id of the plugin it is defined int.
 &lt;br&gt;
-&lt;i&gt;Example:&lt;/i&gt;  if the ID is mapEditorAction and the plugin is net.refractions.udig.printing then the id entered must be:&lt;br&gt;
-net.refractions.udig.printing.mapEditorAction
+&lt;i&gt;Example:&lt;/i&gt;  if the ID is mapEditorAction and the plugin is org.locationtech.udig.printing then the id entered must be:&lt;br&gt;
+org.locationtech.udig.printing.mapEditorAction
 &lt;br&gt;&lt;br&gt;
-See the net.refractions.udig.editAction extension point. It is the id of the editAction sub-element in that extension.
+See the org.locationtech.udig.editAction extension point. It is the id of the editAction sub-element in that extension.
                </documentation>
             </annotation>
          </attribute>
@@ -154,7 +154,7 @@ See the net.refractions.udig.editAction extension point. It is the id of the edi
                   the type of boxprinter that the actions can operate on.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.printing.model.BoxPrinter"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.printing.model.BoxPrinter"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -177,7 +177,7 @@ See the net.refractions.udig.editAction extension point. It is the id of the edi
                   The action that will perform the changes indicated by the policy.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.printing.ui.IBoxEditAction"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.printing.ui.IBoxEditAction"/>
                </appInfo>
             </annotation>
          </attribute>

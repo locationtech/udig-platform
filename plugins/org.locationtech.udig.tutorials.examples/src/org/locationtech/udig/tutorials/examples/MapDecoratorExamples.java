@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.examples;
+package org.locationtech.udig.tutorials.examples;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -24,14 +24,14 @@ import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IRepository;
-import net.refractions.udig.mapgraphic.MapGraphicContext;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IRepository;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 /**
  * The following code examples show how to do a few things with map graphics.

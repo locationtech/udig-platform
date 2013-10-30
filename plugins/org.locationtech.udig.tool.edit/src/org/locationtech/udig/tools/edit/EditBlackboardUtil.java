@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit;
+package org.locationtech.udig.tools.edit;
 
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
@@ -25,28 +25,28 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILayerListener;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.Interaction;
-import net.refractions.udig.project.LayerEvent;
-import net.refractions.udig.project.command.UndoableComposite;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.impl.EditManagerImpl;
-import net.refractions.udig.project.internal.render.RenderPackage;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplayListener;
-import net.refractions.udig.project.render.displayAdapter.MapDisplayEvent;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.project.ui.tool.Tool;
-import net.refractions.udig.tool.edit.internal.Messages;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
-import net.refractions.udig.tools.edit.support.EditGeom;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILayerListener;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.project.LayerEvent;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.impl.EditManagerImpl;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
+import org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ui.tool.Tool;
+import org.locationtech.udig.tool.edit.internal.Messages;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.EditGeom;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.Command;
@@ -463,13 +463,13 @@ public class EditBlackboardUtil {
     }
 
     /**
-     * Command handler for the command "net.refractions.udig.tool.edit.clearAction"
+     * Command handler for the command "org.locationtech.udig.tool.edit.clearAction"
      *  to clear EditBlackboard.
      */
     static IHandler clearEditBlackboardHandler;
     
     /**
-     * Listener for "net.refractions.udig.tool.edit.clearAction" command.
+     * Listener for "org.locationtech.udig.tool.edit.clearAction" command.
      */
     static ICommandListener clearEditBlackboardCommandListener;
 
@@ -510,7 +510,7 @@ public class EditBlackboardUtil {
         ICommandService service = (ICommandService) PlatformUI.getWorkbench().getAdapter(
                 ICommandService.class);
 
-        Command command = service.getCommand("net.refractions.udig.tool.edit.clearAction"); //$NON-NLS-1$
+        Command command = service.getCommand("org.locationtech.udig.tool.edit.clearAction"); //$NON-NLS-1$
         command.setHandler(clearEditBlackboardHandler);
         
         if(clearEditBlackboardCommandListener == null){
@@ -539,7 +539,7 @@ public class EditBlackboardUtil {
     static synchronized void disableClearBlackboardCommand() {
         ICommandService service = (ICommandService) PlatformUI.getWorkbench().getAdapter(
                 ICommandService.class);
-        Command command = service.getCommand("net.refractions.udig.tool.edit.clearAction"); //$NON-NLS-1$
+        Command command = service.getCommand("org.locationtech.udig.tool.edit.clearAction"); //$NON-NLS-1$
 
         if(clearEditBlackboardCommandListener != null){
             command.removeCommandListener(clearEditBlackboardCommandListener);

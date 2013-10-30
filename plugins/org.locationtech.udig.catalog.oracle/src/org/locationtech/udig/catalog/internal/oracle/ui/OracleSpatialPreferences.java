@@ -9,14 +9,14 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal.oracle.ui;
+package org.locationtech.udig.catalog.internal.oracle.ui;
 
 
 import java.net.URL;
 
-import net.refractions.udig.catalog.internal.oracle.OracleServiceExtension;
-import net.refractions.udig.catalog.oracle.internal.Messages;
-import net.refractions.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
+import org.locationtech.udig.catalog.internal.oracle.OracleServiceExtension;
+import org.locationtech.udig.catalog.oracle.internal.Messages;
+import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -70,7 +70,7 @@ public class OracleSpatialPreferences extends AbstractProprietaryJarPreferencePa
 
     @Override
     protected URL getLibsURL() {
-        return Platform.getBundle("net.refractions.udig.libs.oracle").getEntry("/libs"); //$NON-NLS-1$ //$NON-NLS-2$
+        return Platform.getBundle("org.locationtech.udig.libs.oracle").getEntry("/libs"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
 }

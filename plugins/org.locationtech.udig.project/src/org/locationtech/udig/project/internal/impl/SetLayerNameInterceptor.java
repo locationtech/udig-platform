@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 import java.io.IOException;
 
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.project.interceptor.LayerInterceptor;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.project.interceptor.LayerInterceptor;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.ui.ProgressManager;
 
 /**
  * Sets the name of a newly created layer.

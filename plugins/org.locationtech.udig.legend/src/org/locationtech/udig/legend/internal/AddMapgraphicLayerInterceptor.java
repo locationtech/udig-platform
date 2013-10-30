@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.legend.internal;
+package org.locationtech.udig.legend.internal;
 
-import net.refractions.udig.legend.LegendPlugin;
-import net.refractions.udig.legend.ui.LegendGraphic;
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.project.interceptor.LayerInterceptor;
-import net.refractions.udig.project.internal.ContextModel;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.impl.MapImpl;
+import org.locationtech.udig.legend.LegendPlugin;
+import org.locationtech.udig.legend.ui.LegendGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.project.interceptor.LayerInterceptor;
+import org.locationtech.udig.project.internal.ContextModel;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.impl.MapImpl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;

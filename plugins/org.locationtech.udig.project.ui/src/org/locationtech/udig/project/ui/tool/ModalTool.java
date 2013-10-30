@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.tool;
+package org.locationtech.udig.project.ui.tool;
 
 /**
  * A ModalTool is a tool which "takes control" of how the Map Editor operates.of operation.
@@ -27,7 +27,7 @@ package net.refractions.udig.project.ui.tool;
  * </ul>
  * <p>
  * 
- * @see net.refractions.udig.project.ui.tool.AbstractModalTool
+ * @see org.locationtech.udig.project.ui.tool.AbstractModalTool
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
@@ -149,7 +149,7 @@ public interface ModalTool extends Tool {
      * the actual updating of the mouse cursor is performed automatically.
      * 
      * 
-     * @param id the cursor ID from <code>net.refractions.udig.project.ui.tool.toolCursor</code>
+     * @param id the cursor ID from <code>org.locationtech.udig.project.ui.tool.toolCursor</code>
      * extension or the constant from <code>ModalTool</code> interface.
      * 
      */

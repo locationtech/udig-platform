@@ -8,10 +8,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 import static org.junit.Assert.assertEquals;
-import net.refractions.udig.internal.ui.TransferStrategy;
+import org.locationtech.udig.internal.ui.TransferStrategy;
 
 import org.eclipse.swt.dnd.TransferData;
 import org.junit.Before;
@@ -28,7 +28,7 @@ public class AbstractStrategizedTransferTest {
 	}
 	
 	/*
-	 * Test method for 'net.refractions.udig.ui.AbstractStrategizedTransfer.javaToNative(Object, TransferData)'
+	 * Test method for 'org.locationtech.udig.ui.AbstractStrategizedTransfer.javaToNative(Object, TransferData)'
 	 */
 	@Test
 	public void testJavaToNativeObjectTransferData() {
@@ -46,7 +46,7 @@ public class AbstractStrategizedTransferTest {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.ui.AbstractStrategizedTransfer.nativeToJava(TransferData)'
+	 * Test method for 'org.locationtech.udig.ui.AbstractStrategizedTransfer.nativeToJava(TransferData)'
 	 */
 	@Ignore
     @Test
@@ -66,7 +66,7 @@ public class AbstractStrategizedTransferTest {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.ui.AbstractStrategizedTransfer.addStrategy(TransferStrategy)'
+	 * Test method for 'org.locationtech.udig.ui.AbstractStrategizedTransfer.addStrategy(TransferStrategy)'
 	 */
 	@Ignore
     @Test

@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui;
+package org.locationtech.udig.project.ui;
 
 import java.util.ArrayList;
 
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.project.ui.internal.FeatureEditorLoader;
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.ui.internal.FeatureEditorLoader;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.swt.SWT;

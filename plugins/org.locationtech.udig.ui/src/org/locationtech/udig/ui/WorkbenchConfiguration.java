@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 
@@ -18,12 +18,12 @@ import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
  * 
  * The implementation of this interface that is called by the framework 
  * is specified by the extension in the preferences under the key 
- * 'net.refractions.udig.ui/workbenchConfiguration'. You can place this in your 
+ * 'org.locationtech.udig.ui/workbenchConfiguration'. You can place this in your 
  * product's plugin_customization.ini.
  * 
  * Example:
  * <pre>
- * net.refractions.udig.ui/workbenchConfiguration=net.refractions.udig.internal.ui.uDigWorkbenchConfiguration
+ * org.locationtech.udig.ui/workbenchConfiguration=org.locationtech.udig.internal.ui.uDigWorkbenchConfiguration
  * </pre>
  * 
  * Example class implementation:
@@ -44,7 +44,7 @@ import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
  */
 public interface WorkbenchConfiguration {
     
-    public final String XPID = "net.refractions.udig.ui.workbenchConfigurations"; //$NON-NLS-1$
+    public final String XPID = "org.locationtech.udig.ui.workbenchConfigurations"; //$NON-NLS-1$
     /**
      * Points to id field of extension point attribute
      */

@@ -8,17 +8,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.render.gridcoverage.tool.info;
+package org.locationtech.udig.render.gridcoverage.tool.info;
 
 import java.awt.Rectangle;
 
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.tool.AbstractModalTool;
-import net.refractions.udig.project.ui.tool.ModalTool;
-import net.refractions.udig.render.gridcoverage.tool.info.internal.MosaicInfoView;
-import net.refractions.udig.render.internal.gridcoverage.basic.RendererPlugin;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.commands.SelectionBoxCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.tool.AbstractModalTool;
+import org.locationtech.udig.project.ui.tool.ModalTool;
+import org.locationtech.udig.render.gridcoverage.tool.info.internal.MosaicInfoView;
+import org.locationtech.udig.render.internal.gridcoverage.basic.RendererPlugin;
 
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Display;
@@ -33,8 +33,8 @@ public class MoasicInfoTool extends AbstractModalTool implements ModalTool {
     /**
      * ID of current tool
      */
-    public static final String ID = "net.refractions.udig.render.gridcoverage.tool.info.mosaicInfoTool"; //$NON-NLS-1$
-    public static final String CATEGORY_ID = "net.refractions.udig.tool.category.info"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.render.gridcoverage.tool.info.mosaicInfoTool"; //$NON-NLS-1$
+    public static final String CATEGORY_ID = "org.locationtech.udig.tool.category.info"; //$NON-NLS-1$
 
     public MoasicInfoTool() {
         super(MOUSE | MOTION);
@@ -73,7 +73,7 @@ public class MoasicInfoTool extends AbstractModalTool implements ModalTool {
      * See class description for intended workflow.
      * </p>
      * 
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseReleased(MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseReleased(MapMouseEvent)
      */
     public void mouseReleased( MapMouseEvent e ) {
         try {
@@ -119,7 +119,7 @@ public class MoasicInfoTool extends AbstractModalTool implements ModalTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.Tool#dispose()
+     * @see org.locationtech.udig.project.ui.tool.Tool#dispose()
      */
     public void dispose() {
         super.dispose();

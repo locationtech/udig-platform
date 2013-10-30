@@ -1,14 +1,14 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.render;
+package org.locationtech.udig.project.internal.render;
 
-import net.refractions.udig.project.internal.render.impl.TiledCompositeRendererImpl;
+import org.locationtech.udig.project.internal.render.impl.TiledCompositeRendererImpl;
 
 import org.eclipse.emf.ecore.EFactory;
 
 /**
- * TODO Purpose of net.refractions.udig.project.internal.render
+ * TODO Purpose of org.locationtech.udig.project.internal.render
  * <p>
  * </p>
  * 
@@ -22,7 +22,7 @@ public interface RenderFactory extends EFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    RenderFactory eINSTANCE = net.refractions.udig.project.internal.render.impl.RenderFactoryImpl
+    RenderFactory eINSTANCE = org.locationtech.udig.project.internal.render.impl.RenderFactoryImpl
             .init();
 
     /**

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.test;
+package org.locationtech.udig.issues.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -19,24 +19,24 @@ import static org.junit.Assert.assertTrue;
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.core.enums.Priority;
-import net.refractions.udig.issues.AbstractIssue;
-import net.refractions.udig.issues.FeatureIssue;
-import net.refractions.udig.issues.IIssue;
-import net.refractions.udig.issues.IIssuesList;
-import net.refractions.udig.issues.IIssuesManager;
-import net.refractions.udig.issues.IssuesList;
-import net.refractions.udig.issues.internal.IssuesManager;
-import net.refractions.udig.issues.listeners.IIssueListener;
-import net.refractions.udig.issues.listeners.IIssuesListListener;
-import net.refractions.udig.issues.listeners.IIssuesManagerListener;
-import net.refractions.udig.issues.listeners.IssuesListEvent;
-import net.refractions.udig.issues.listeners.IssuesListEventType;
-import net.refractions.udig.issues.listeners.IssuesManagerEvent;
-import net.refractions.udig.issues.listeners.IssuesManagerEventType;
-import net.refractions.udig.ui.WaitCondition;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.core.enums.Priority;
+import org.locationtech.udig.issues.AbstractIssue;
+import org.locationtech.udig.issues.FeatureIssue;
+import org.locationtech.udig.issues.IIssue;
+import org.locationtech.udig.issues.IIssuesList;
+import org.locationtech.udig.issues.IIssuesManager;
+import org.locationtech.udig.issues.IssuesList;
+import org.locationtech.udig.issues.internal.IssuesManager;
+import org.locationtech.udig.issues.listeners.IIssueListener;
+import org.locationtech.udig.issues.listeners.IIssuesListListener;
+import org.locationtech.udig.issues.listeners.IIssuesManagerListener;
+import org.locationtech.udig.issues.listeners.IssuesListEvent;
+import org.locationtech.udig.issues.listeners.IssuesListEventType;
+import org.locationtech.udig.issues.listeners.IssuesManagerEvent;
+import org.locationtech.udig.issues.listeners.IssuesManagerEventType;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ui.IEditorPart;
@@ -63,7 +63,7 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.IssuesManager.removeIssues(String)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.IssuesManager.removeIssues(String)'
      */
     @Test
     public void testRemoveIssues() {

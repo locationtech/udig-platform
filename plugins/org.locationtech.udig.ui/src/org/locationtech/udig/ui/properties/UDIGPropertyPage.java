@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.properties;
+package org.locationtech.udig.ui.properties;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.ui.dialogs.PropertyPage;
@@ -36,10 +36,10 @@ public abstract class UDIGPropertyPage extends PropertyPage {
      *          &lt;enabledWhen&gt;
      *             &lt;or&gt;
      *                &lt;instanceof
-     *                      value="net.refractions.udig.project.internal.Layer"&gt;
+     *                      value="org.locationtech.udig.project.internal.Layer"&gt;
      *                &lt;/instanceof&gt;
      *                &lt;adapt
-     *                      type="net.refractions.udig.project.internal.Layer"&gt;
+     *                      type="org.locationtech.udig.project.internal.Layer"&gt;
      *                &lt;/adapt&gt;
      *             &lt;/or&gt;
      *          &lt;/enabledWhen&gt;

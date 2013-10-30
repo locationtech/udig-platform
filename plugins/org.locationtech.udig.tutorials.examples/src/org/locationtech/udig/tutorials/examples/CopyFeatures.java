@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.examples;
+package org.locationtech.udig.tutorials.examples;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.commands.edit.CopyFeaturesCommand;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.commands.edit.CopyFeaturesCommand;
 
 import org.opengis.filter.Filter;
 

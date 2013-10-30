@@ -8,17 +8,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.commands.draw;
+package org.locationtech.udig.project.ui.internal.commands.draw;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
-import net.refractions.udig.project.ui.commands.IDrawCommand;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
+import org.locationtech.udig.project.ui.commands.IDrawCommand;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 

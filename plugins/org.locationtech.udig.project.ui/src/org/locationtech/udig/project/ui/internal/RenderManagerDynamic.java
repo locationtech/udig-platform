@@ -1,9 +1,9 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
-import static net.refractions.udig.project.ui.internal.Trace.RENDER;
+import static org.locationtech.udig.project.ui.internal.Trace.RENDER;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -16,30 +16,30 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.ContextModelListenerAdapter;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.render.CompositeRenderContext;
-import net.refractions.udig.project.internal.render.ExecutorVisitor;
-import net.refractions.udig.project.internal.render.MultiLayerRenderer;
-import net.refractions.udig.project.internal.render.RenderContext;
-import net.refractions.udig.project.internal.render.RenderExecutor;
-import net.refractions.udig.project.internal.render.RenderFactory;
-import net.refractions.udig.project.internal.render.RenderPackage;
-import net.refractions.udig.project.internal.render.SelectionLayer;
-import net.refractions.udig.project.internal.render.impl.CompositeRenderContextImpl;
-import net.refractions.udig.project.internal.render.impl.CompositeRendererImpl;
-import net.refractions.udig.project.internal.render.impl.RenderExecutorComposite;
-import net.refractions.udig.project.internal.render.impl.RenderExecutorMultiLayer;
-import net.refractions.udig.project.internal.render.impl.RenderManagerImpl;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.project.render.RenderException;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.ContextModelListenerAdapter;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.CompositeRenderContext;
+import org.locationtech.udig.project.internal.render.ExecutorVisitor;
+import org.locationtech.udig.project.internal.render.MultiLayerRenderer;
+import org.locationtech.udig.project.internal.render.RenderContext;
+import org.locationtech.udig.project.internal.render.RenderExecutor;
+import org.locationtech.udig.project.internal.render.RenderFactory;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.internal.render.SelectionLayer;
+import org.locationtech.udig.project.internal.render.impl.CompositeRenderContextImpl;
+import org.locationtech.udig.project.internal.render.impl.CompositeRendererImpl;
+import org.locationtech.udig.project.internal.render.impl.RenderExecutorComposite;
+import org.locationtech.udig.project.internal.render.impl.RenderExecutorMultiLayer;
+import org.locationtech.udig.project.internal.render.impl.RenderManagerImpl;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -107,7 +107,7 @@ public class RenderManagerDynamic extends RenderManagerImpl {
 	}
 
 	/**
-	 * @see net.refractions.udig.project.render.impl.RenderManagerImpl#refresh(net.refractions.udig.project.Layer)
+	 * @see org.locationtech.udig.project.render.impl.RenderManagerImpl#refresh(org.locationtech.udig.project.Layer)
 	 */
 	public void refresh(final ILayer layer, Envelope bounds) {
 		checkState();
@@ -167,7 +167,7 @@ public class RenderManagerDynamic extends RenderManagerImpl {
     }
 
 	/**
-	 * @see net.refractions.udig.project.render.impl.RenderManagerImpl#refreshSelection(com.vividsolutions.jts.geom.Envelope)
+	 * @see org.locationtech.udig.project.render.impl.RenderManagerImpl#refreshSelection(com.vividsolutions.jts.geom.Envelope)
 	 */
 	public void refreshSelection(final ILayer layer, final Envelope bounds) {
 		checkState();
@@ -225,7 +225,7 @@ public class RenderManagerDynamic extends RenderManagerImpl {
 	}
 
 	/**
-	 * @see net.refractions.udig.project.render.IRenderManager#clearSelection(ILayer)
+	 * @see org.locationtech.udig.project.render.IRenderManager#clearSelection(ILayer)
 	 */
 	public void clearSelection(ILayer layer) {
 		checkState();
@@ -342,7 +342,7 @@ public class RenderManagerDynamic extends RenderManagerImpl {
 	/**
 	 * TODO summary sentence for setViewport ...
 	 * 
-	 * @see net.refractions.udig.project.render.RenderManager#setDisplay(net.refractions.udig.project.render.displayAdapter.IMapDisplay)
+	 * @see org.locationtech.udig.project.render.RenderManager#setDisplay(org.locationtech.udig.project.render.displayAdapter.IMapDisplay)
 	 * @param value
 	 */
 	public void setDisplay(IMapDisplay value) {
@@ -355,7 +355,7 @@ public class RenderManagerDynamic extends RenderManagerImpl {
 			.getRenderExecutorListener(this);
 
 	/**
-	 * @see net.refractions.udig.project.render.impl.RenderManagerImpl#setRenderExecutor(net.refractions.udig.project.render.RenderExecutor)
+	 * @see org.locationtech.udig.project.render.impl.RenderManagerImpl#setRenderExecutor(org.locationtech.udig.project.render.RenderExecutor)
 	 */
 	@SuppressWarnings("unchecked")
 	public void setRenderExecutor(RenderExecutor newRenderExecutor) {
@@ -374,7 +374,7 @@ public class RenderManagerDynamic extends RenderManagerImpl {
 	Adapter selectionListener = RenderManagerAdapters.createLayerListener(this);
 
 	/**
-	 * @see net.refractions.udig.project.render.impl.RenderManagerImpl#basicSetMap(net.refractions.udig.project.Map,
+	 * @see org.locationtech.udig.project.render.impl.RenderManagerImpl#basicSetMap(org.locationtech.udig.project.Map,
 	 *      org.eclipse.emf.common.notify.NotificationChain)
 	 */
 	@SuppressWarnings("unchecked")

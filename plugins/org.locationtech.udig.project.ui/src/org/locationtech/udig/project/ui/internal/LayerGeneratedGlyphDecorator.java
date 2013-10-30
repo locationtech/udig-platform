@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
-import static net.refractions.udig.project.internal.provider.LayerItemProvider.GENERATED_ICON;
-import static net.refractions.udig.project.internal.provider.LayerItemProvider.GENERATED_NAME;
+import static org.locationtech.udig.project.internal.provider.LayerItemProvider.GENERATED_ICON;
+import static org.locationtech.udig.project.internal.provider.LayerItemProvider.GENERATED_NAME;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -18,16 +18,16 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.ITransientResolve;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.ui.ImageCache;
-import net.refractions.udig.ui.graphics.Glyph;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.ITransientResolve;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.ui.ImageCache;
+import org.locationtech.udig.ui.graphics.Glyph;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -414,7 +414,7 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
 
         Style sld = (Style) blackboard.lookup(Style.class); // or
         // blackboard.get(
-        // "net.refractions.udig.style.sld"
+        // "org.locationtech.udig.style.sld"
         // );
         if (sld != null) {
             Rule rule = getRule(sld);

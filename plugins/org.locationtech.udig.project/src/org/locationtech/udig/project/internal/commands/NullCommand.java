@@ -1,12 +1,12 @@
 /**
  * 
  */
-package net.refractions.udig.project.internal.commands;
+package org.locationtech.udig.project.internal.commands;
 
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.UndoableCommand;
-import net.refractions.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.UndoableCommand;
+import org.locationtech.udig.project.command.UndoableMapCommand;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -19,14 +19,14 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class NullCommand extends AbstractCommand implements MapCommand, UndoableMapCommand, UndoableCommand {
 	
 	/* (non-Javadoc)
-	 * @see net.refractions.udig.project.command.Command#run(org.eclipse.core.runtime.IProgressMonitor)
+	 * @see org.locationtech.udig.project.command.Command#run(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	public void run(IProgressMonitor monitor) throws Exception {
 		// do nothing
 	}
 
 	/* (non-Javadoc)
-	 * @see net.refractions.udig.project.command.Command#getName()
+	 * @see org.locationtech.udig.project.command.Command#getName()
 	 */
 	public String getName() {
 		return null;

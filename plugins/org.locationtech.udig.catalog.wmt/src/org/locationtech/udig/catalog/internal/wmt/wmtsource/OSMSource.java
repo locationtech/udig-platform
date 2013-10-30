@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.wmtsource;
+package org.locationtech.udig.catalog.internal.wmt.wmtsource;
 
-import net.refractions.udig.catalog.internal.wmt.tile.OSMTile;
-import net.refractions.udig.catalog.internal.wmt.tile.WMTTile.WMTTileFactory;
+import org.locationtech.udig.catalog.internal.wmt.tile.OSMTile;
+import org.locationtech.udig.catalog.internal.wmt.tile.WMTTile.WMTTileFactory;
 
 public abstract class OSMSource extends WMTSource {
     public static String NAME = "OpenStreetMap"; //$NON-NLS-1$

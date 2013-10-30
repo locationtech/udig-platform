@@ -8,14 +8,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld.editor.internal;
+package org.locationtech.udig.style.sld.editor.internal;
 
 import java.awt.Color;
 import java.util.List;
 
-import net.refractions.udig.style.sld.SLDPlugin;
-import net.refractions.udig.ui.graphics.Glyph;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.ui.graphics.Glyph;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;

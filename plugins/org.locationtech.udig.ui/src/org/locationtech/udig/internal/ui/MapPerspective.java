@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.internal.ui;
+package org.locationtech.udig.internal.ui;
 
 
 import org.eclipse.ui.IFolderLayout;
@@ -23,7 +23,7 @@ import org.eclipse.ui.IPerspectiveFactory;
 public class MapPerspective implements IPerspectiveFactory {
 
 	/** <code>ID_PERSPECTIVE</code> field */
-	public static final String ID_PERSPECTIVE = "net.refractions.udig.ui.mapPerspective"; //$NON-NLS-1$
+	public static final String ID_PERSPECTIVE = "org.locationtech.udig.ui.mapPerspective"; //$NON-NLS-1$
     
     /**
      * Creates the initial layout for a page.
@@ -41,18 +41,18 @@ public class MapPerspective implements IPerspectiveFactory {
         // Get the editor area.
         String editorArea = layout.getEditorArea();
         
-        layout.addView( "net.refractions.udig.project.ui.projectExplorer", IPageLayout.LEFT, 0.25f, editorArea ); //$NON-NLS-1$
-        //layout.addView( "net.refractions.udig.project.ui.layerManager", IPageLayout.BOTTOM, 0.25f, //$NON-NLS-1$
-        //        "net.refractions.udig.project.ui.projectExplorer" ); //$NON-NLS-1$
+        layout.addView( "org.locationtech.udig.project.ui.projectExplorer", IPageLayout.LEFT, 0.25f, editorArea ); //$NON-NLS-1$
+        //layout.addView( "org.locationtech.udig.project.ui.layerManager", IPageLayout.BOTTOM, 0.25f, //$NON-NLS-1$
+        //        "org.locationtech.udig.project.ui.projectExplorer" ); //$NON-NLS-1$
         
-        IFolderLayout folder = layout.createFolder("net.refractions.udig.mapPerspective.selection", IPageLayout.BOTTOM, 0.25f, //$NON-NLS-1$
-                "net.refractions.udig.project.ui.projectExplorer");
-        folder.addView("net.refractions.udig.project.ui.layerManager");
-        folder.addView("net.refractions.udig.ui.aoiView");
+        IFolderLayout folder = layout.createFolder("org.locationtech.udig.mapPerspective.selection", IPageLayout.BOTTOM, 0.25f, //$NON-NLS-1$
+                "org.locationtech.udig.project.ui.projectExplorer");
+        folder.addView("org.locationtech.udig.project.ui.layerManager");
+        folder.addView("org.locationtech.udig.ui.aoiView");
         
-        layout.addView("net.refractions.udig.catalog.ui.CatalogView", IPageLayout.BOTTOM, 0.65f, editorArea);         //$NON-NLS-1$
-        layout.addActionSet("net.refractions.udig.helpMenuItems");
-        layout.addActionSet("net.refractions.udig.ui.default");
+        layout.addView("org.locationtech.udig.catalog.ui.CatalogView", IPageLayout.BOTTOM, 0.65f, editorArea);         //$NON-NLS-1$
+        layout.addActionSet("org.locationtech.udig.helpMenuItems");
+        layout.addActionSet("org.locationtech.udig.ui.default");
         layout.addPerspectiveShortcut(StylePerspective.ID_PERSPECTIVE);
     }
     

@@ -9,11 +9,11 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  * 
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
-import net.refractions.udig.project.Interaction;
+import org.locationtech.udig.project.Interaction;
 
-import net.refractions.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -33,8 +33,8 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link net.refractions.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl#getTypedKey <em>Key</em>}</li>
- *   <li>{@link net.refractions.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl#getTypedValue <em>Value</em>}</li>
+ *   <li>{@link org.locationtech.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl#getTypedKey <em>Key</em>}</li>
+ *   <li>{@link org.locationtech.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl#getTypedValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *

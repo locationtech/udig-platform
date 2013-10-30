@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues;
+package org.locationtech.udig.issues;
 
 import java.io.IOException;
 
-import net.refractions.udig.issues.internal.IssuesManager;
-import net.refractions.udig.issues.listeners.IIssuesListListener;
-import net.refractions.udig.issues.listeners.IIssuesManagerListener;
+import org.locationtech.udig.issues.internal.IssuesManager;
+import org.locationtech.udig.issues.listeners.IIssuesListListener;
+import org.locationtech.udig.issues.listeners.IIssuesManagerListener;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 

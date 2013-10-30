@@ -8,11 +8,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.rasterings;
+package org.locationtech.udig.catalog.rasterings;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -79,7 +79,7 @@ public class AbstractRasterGeoResourceInfo extends IGeoResourceInfo {
                         .log(
                                 new org.eclipse.core.runtime.Status(
                                         IStatus.WARNING,
-                                        "net.refractions.udig.catalog", 0, "Error while getting the bounds of a layer", e)); //$NON-NLS-1$ //$NON-NLS-2$
+                                        "org.locationtech.udig.catalog", 0, "Error while getting the bounds of a layer", e)); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
         return this.bounds;

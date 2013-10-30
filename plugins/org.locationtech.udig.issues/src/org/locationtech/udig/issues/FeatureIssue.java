@@ -7,27 +7,27 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues;
+package org.locationtech.udig.issues;
 
 import java.io.IOException;
 import java.util.List;
 
-import net.refractions.udig.core.enums.Priority;
-import net.refractions.udig.core.internal.FeatureUtils;
-import net.refractions.udig.issues.internal.Messages;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.command.NavCommand;
-import net.refractions.udig.project.command.UndoableComposite;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
-import net.refractions.udig.project.ui.internal.FeatureEditorLoader;
-import net.refractions.udig.project.ui.internal.MapEditor;
-import net.refractions.udig.project.ui.internal.MapEditorInput;
-import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
-import net.refractions.udig.project.ui.internal.tool.ToolContext;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.core.enums.Priority;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.issues.internal.Messages;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.command.NavCommand;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.project.ui.internal.FeatureEditorLoader;
+import org.locationtech.udig.project.ui.internal.MapEditor;
+import org.locationtech.udig.project.ui.internal.MapEditorInput;
+import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
+import org.locationtech.udig.project.ui.internal.tool.ToolContext;
+import org.locationtech.udig.ui.ProgressManager;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -57,7 +57,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
  * @since 1.0.0
  */
 public class FeatureIssue extends AbstractIssue {
-	public static final String EXT_ID="net.refractions.udig.issues.featureIssue"; //$NON-NLS-1$
+	public static final String EXT_ID="org.locationtech.udig.issues.featureIssue"; //$NON-NLS-1$
     private static final String MAP_KEY = "map"; //$NON-NLS-1$
     private static final String LAYER_KEY = "layer"; //$NON-NLS-1$
     private static final String PROJECT_KEY = "project"; //$NON-NLS-1$
@@ -166,7 +166,7 @@ public class FeatureIssue extends AbstractIssue {
         bounds.expandToInclude(bounds.getMinX()-deltax, bounds.getMinY()-deltay);
         bounds.expandToInclude(bounds.getMaxX()+deltax, bounds.getMaxY()+deltay);
         UndoableComposite composite = new UndoableComposite();
-        IAction tool = ApplicationGIS.getToolManager().getToolAction("net.refractions.udig.tools.selectionTool", "net.refractions.udig.tool.edit.edit"); //$NON-NLS-1$ //$NON-NLS-2$
+        IAction tool = ApplicationGIS.getToolManager().getToolAction("org.locationtech.udig.tools.selectionTool", "org.locationtech.udig.tool.edit.edit"); //$NON-NLS-1$ //$NON-NLS-2$
         // could be null if tool.edit plug-in is not in distribution.
         if( tool !=null ){
         	tool.run();

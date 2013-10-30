@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.tests.internal.commands;
+package org.locationtech.udig.project.tests.internal.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -17,16 +17,16 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceFactory;
-import net.refractions.udig.catalog.tests.DummyService;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.commands.CreateMapCommand;
-import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceFactory;
+import org.locationtech.udig.catalog.tests.DummyService;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.commands.CreateMapCommand;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
 
 import org.junit.Before;
 import org.junit.Test;

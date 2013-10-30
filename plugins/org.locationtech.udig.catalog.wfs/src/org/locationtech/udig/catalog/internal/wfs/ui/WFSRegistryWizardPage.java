@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wfs.ui;
+package org.locationtech.udig.catalog.internal.wfs.ui;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -21,15 +21,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.wfs.WFSServiceImpl;
-import net.refractions.udig.catalog.internal.wfs.WfsPlugin;
-import net.refractions.udig.catalog.ui.UDIGConnectionPage;
-import net.refractions.udig.catalog.ui.wizard.DataStoreWizardPage;
-import net.refractions.udig.catalog.ui.workflow.EndConnectionState;
-import net.refractions.udig.catalog.wfs.internal.Messages;
-import net.refractions.udig.core.RecentHistory;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.wfs.WFSServiceImpl;
+import org.locationtech.udig.catalog.internal.wfs.WfsPlugin;
+import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
+import org.locationtech.udig.catalog.ui.wizard.DataStoreWizardPage;
+import org.locationtech.udig.catalog.ui.workflow.EndConnectionState;
+import org.locationtech.udig.catalog.wfs.internal.Messages;
+import org.locationtech.udig.core.RecentHistory;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -118,7 +118,7 @@ UDIGConnectionPage{
     }
     
 	public String getId() {
-		return "net.refractions.udig.catalog.ui.wfs"; //$NON-NLS-1$
+		return "org.locationtech.udig.catalog.ui.wfs"; //$NON-NLS-1$
 	}
 
     /** Can be called during createControl */
@@ -549,7 +549,7 @@ UDIGConnectionPage{
         return error?null:dsParams;
     }
     /*
-     * @see net.refractions.udig.catalog.ui.UDIGImportPage#getResources(org.eclipse.core.runtime.IProgressMonitor)
+     * @see org.locationtech.udig.catalog.ui.UDIGImportPage#getResources(org.eclipse.core.runtime.IProgressMonitor)
      */
     public List<IService> getResources( IProgressMonitor monitor ) throws Exception {
         if( !isPageComplete() )
@@ -563,7 +563,7 @@ UDIGConnectionPage{
     /**
      * TODO summary sentence for getDataStoreFactorySpi ...
      * 
-     * @see net.refractions.udig.catalog.internal.ui.datastore.DataStoreWizard#getDataStoreFactorySpi()
+     * @see org.locationtech.udig.catalog.internal.ui.datastore.DataStoreWizard#getDataStoreFactorySpi()
      * @return
      */
     protected DataStoreFactorySpi getDataStoreFactorySpi() {

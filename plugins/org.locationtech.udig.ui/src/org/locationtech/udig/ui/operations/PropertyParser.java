@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.operations;
+package org.locationtech.udig.ui.operations;
 
-import net.refractions.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.internal.ui.UiPlugin;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
@@ -35,7 +35,7 @@ public class PropertyParser implements FilterParser {
             return OpFilter.TRUE;
         }
         
-        IConfigurationElement[] configuration = Platform.getExtensionRegistry().getConfigurationElementsFor("net.refractions.udig.ui.objectProperty"); //$NON-NLS-1$
+        IConfigurationElement[] configuration = Platform.getExtensionRegistry().getConfigurationElementsFor("org.locationtech.udig.ui.objectProperty"); //$NON-NLS-1$
         IConfigurationElement propertyElement=null;
         String targetClass = null; 
         for( IConfigurationElement configurationElement : configuration ) {

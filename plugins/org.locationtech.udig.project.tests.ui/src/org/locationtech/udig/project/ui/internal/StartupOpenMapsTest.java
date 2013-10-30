@@ -8,18 +8,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 
 import java.net.URL;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.catalog.tests.ui.CatalogTestsUIPlugin;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.ui.WaitCondition;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.catalog.tests.ui.CatalogTestsUIPlugin;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.swt.widgets.Display;
@@ -29,7 +29,7 @@ import org.junit.Test;
 public class StartupOpenMapsTest extends AbstractProjectUITestCase {
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.StartupOpenMaps.earlyStartup()'
+     * Test method for 'org.locationtech.udig.project.ui.internal.StartupOpenMaps.earlyStartup()'
      */
     @Ignore
     @Test

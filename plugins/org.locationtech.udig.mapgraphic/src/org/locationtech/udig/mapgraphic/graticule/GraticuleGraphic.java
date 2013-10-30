@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.graticule;
+package org.locationtech.udig.mapgraphic.graticule;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -21,13 +21,13 @@ import java.util.List;
 import javax.measure.unit.SI;
 import javax.measure.unit.Unit;
 
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.mapgraphic.MapGraphicContext;
-import net.refractions.udig.mapgraphic.MapGraphicPlugin;
-import net.refractions.udig.mapgraphic.internal.Messages;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.mapgraphic.MapGraphicPlugin;
+import org.locationtech.udig.mapgraphic.internal.Messages;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.widgets.Display;

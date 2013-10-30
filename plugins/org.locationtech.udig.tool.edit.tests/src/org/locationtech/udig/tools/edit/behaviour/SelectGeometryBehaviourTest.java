@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.behaviour;
+package org.locationtech.udig.tools.edit.behaviour;
 
 
 import static org.junit.Assert.assertEquals;
@@ -21,23 +21,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.project.BlackboardEvent;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.IBlackboardListener;
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
-import net.refractions.udig.project.ui.internal.tool.ToolContext;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.EventType;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
-import net.refractions.udig.tools.edit.support.EditBlackboardAdapter;
-import net.refractions.udig.tools.edit.support.EditBlackboardEvent;
-import net.refractions.udig.tools.edit.support.EditGeom;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
-import net.refractions.udig.tools.edit.support.TestHandler;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.project.BlackboardEvent;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IBlackboardListener;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.project.ui.internal.tool.ToolContext;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.EventType;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.EditBlackboardAdapter;
+import org.locationtech.udig.tools.edit.support.EditBlackboardEvent;
+import org.locationtech.udig.tools.edit.support.EditGeom;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.tools.edit.support.TestHandler;
 
 import org.geotools.data.FeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
@@ -70,7 +70,7 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
     final int alt = MapMouseEvent.ALT_DOWN_MASK;
     final int button1 = MapMouseEvent.BUTTON1;
     final int button2 = MapMouseEvent.BUTTON2;
-    private net.refractions.udig.project.internal.Map map;
+    private org.locationtech.udig.project.internal.Map map;
     private FeatureCollection<SimpleFeatureType, SimpleFeature>  features;
 
     java.awt.Point SCREEN=new java.awt.Point(500,500);
@@ -102,7 +102,7 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
     }
     
     /*
-     * Test method for 'net.refractions.udig.tools.edit.mode.MoveVertexMode.isValid(EditToolHandler, MapMouseEvent, EventType)'
+     * Test method for 'org.locationtech.udig.tools.edit.mode.MoveVertexMode.isValid(EditToolHandler, MapMouseEvent, EventType)'
      */
     @Test
     public void testIsValid() throws Exception {
@@ -140,7 +140,7 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.mode.MoveVertexMode.run(EditToolHandler, MapMouseEvent, EventType)'
+     * Test method for 'org.locationtech.udig.tools.edit.mode.MoveVertexMode.run(EditToolHandler, MapMouseEvent, EventType)'
      */
     @Ignore
     @Test
@@ -156,14 +156,14 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
         handler.getEditBlackboard().getListeners().add(l);
         
         handler.handleEvent(new MapMouseEvent(null, 10, 0, none, none, button1), EventType.RELEASED);
-        assertEquals( net.refractions.udig.tools.edit.support.Point.valueOf(10,0), handler.getCurrentGeom().getShell().getPoint(0));
+        assertEquals( org.locationtech.udig.tools.edit.support.Point.valueOf(10,0), handler.getCurrentGeom().getShell().getPoint(0));
         assertTrue( l.set  );
         assertNull(l.old);
         assertEquals( handler.getCurrentGeom(), l.current);
 
         EditGeom geom=l.added.get(l.added.size()-1);
         handler.handleEvent(new MapMouseEvent(null, 20, 0, none, none, button1), EventType.RELEASED);
-        assertEquals( net.refractions.udig.tools.edit.support.Point.valueOf(20,0), handler.getCurrentGeom().getShell().getPoint(0));
+        assertEquals( org.locationtech.udig.tools.edit.support.Point.valueOf(20,0), handler.getCurrentGeom().getShell().getPoint(0));
         assertTrue( l.set  );
         assertEquals(geom,l.old);
         assertEquals( handler.getCurrentGeom(), l.current);
@@ -230,17 +230,17 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
         
         handler.handleEvent(new MapMouseEvent(null, 20, 15, none, none, button1), EventType.RELEASED);
         
-        assertTrue(handler.getCurrentShape().hasVertex(net.refractions.udig.tools.edit.support.Point.valueOf(20,10)));
-        assertTrue(handler.getCurrentShape().hasVertex(net.refractions.udig.tools.edit.support.Point.valueOf(20,20)));
-        assertFalse(handler.getCurrentShape().hasVertex(net.refractions.udig.tools.edit.support.Point.valueOf(10,10)));
-        assertFalse(handler.getCurrentShape().hasVertex(net.refractions.udig.tools.edit.support.Point.valueOf(10,20)));
+        assertTrue(handler.getCurrentShape().hasVertex(org.locationtech.udig.tools.edit.support.Point.valueOf(20,10)));
+        assertTrue(handler.getCurrentShape().hasVertex(org.locationtech.udig.tools.edit.support.Point.valueOf(20,20)));
+        assertFalse(handler.getCurrentShape().hasVertex(org.locationtech.udig.tools.edit.support.Point.valueOf(10,10)));
+        assertFalse(handler.getCurrentShape().hasVertex(org.locationtech.udig.tools.edit.support.Point.valueOf(10,20)));
 
         handler.handleEvent(new MapMouseEvent(null, 10, 15, none, none, button1), EventType.RELEASED);
         
-        assertTrue(handler.getCurrentShape().hasVertex(net.refractions.udig.tools.edit.support.Point.valueOf(10,10)));
-        assertTrue(handler.getCurrentShape().hasVertex(net.refractions.udig.tools.edit.support.Point.valueOf(10,20)));
-        assertFalse(handler.getCurrentShape().hasVertex(net.refractions.udig.tools.edit.support.Point.valueOf(20,10)));
-        assertFalse(handler.getCurrentShape().hasVertex(net.refractions.udig.tools.edit.support.Point.valueOf(20,20)));
+        assertTrue(handler.getCurrentShape().hasVertex(org.locationtech.udig.tools.edit.support.Point.valueOf(10,10)));
+        assertTrue(handler.getCurrentShape().hasVertex(org.locationtech.udig.tools.edit.support.Point.valueOf(10,20)));
+        assertFalse(handler.getCurrentShape().hasVertex(org.locationtech.udig.tools.edit.support.Point.valueOf(20,10)));
+        assertFalse(handler.getCurrentShape().hasVertex(org.locationtech.udig.tools.edit.support.Point.valueOf(20,20)));
     
     }
 

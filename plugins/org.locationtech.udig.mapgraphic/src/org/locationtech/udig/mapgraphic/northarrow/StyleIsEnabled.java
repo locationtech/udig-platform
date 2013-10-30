@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.northarrow;
+package org.locationtech.udig.mapgraphic.northarrow;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.ui.operations.AbstractPropertyValue;
-import net.refractions.udig.ui.operations.PropertyValue;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.ui.operations.AbstractPropertyValue;
+import org.locationtech.udig.ui.operations.PropertyValue;
 
 /**
  * Used to enable either tool or operations based on the presence of a value on

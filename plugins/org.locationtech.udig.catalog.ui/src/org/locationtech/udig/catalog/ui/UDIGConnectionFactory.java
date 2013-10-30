@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.ui;
+package org.locationtech.udig.catalog.ui;
 
 import java.io.Serializable;
 import java.net.URL;
@@ -29,7 +29,7 @@ import org.eclipse.core.runtime.CoreException;
  * </p>
  * <p>
  * Implementations of this class are provided via the
- * net.refractions.udig.catalog.ui.connectionFactory extension point.
+ * org.locationtech.udig.catalog.ui.connectionFactory extension point.
  * </p>
  * 
  * @author Justin Deoliveira,Refractions Research Inc.,jdeolive@refractions.net
@@ -37,7 +37,7 @@ import org.eclipse.core.runtime.CoreException;
 public abstract class UDIGConnectionFactory {
 
     /** extension point id **/
-    public static final String XPID = "net.refractions.udig.catalog.ui.connectionFactory"; //$NON-NLS-1$
+    public static final String XPID = "org.locationtech.udig.catalog.ui.connectionFactory"; //$NON-NLS-1$
 
     protected UDIGConnectionFactoryDescriptor descriptor;
 

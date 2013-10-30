@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.libs.internal;
+package org.locationtech.udig.libs.internal;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -57,7 +57,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
- * The Activator for net.refractions.udig.libs provides global settings to help all the open source
+ * The Activator for org.locationtech.udig.libs provides global settings to help all the open source
  * projects get along.
  * <p>
  * Currently this activator supplied:
@@ -77,9 +77,9 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class Activator implements BundleActivator {
 
-    public static String ID = "net.refractions.udig.libs"; //$NON-NLS-1$
-    public static String JDBC_DATA_TRACE_FINE = "net.refractions.udig.libs/debug/data/jdbc/fine";
-    public static String JDBC_TRACE_FINE = "net.refractions.udig.libs/debug/jdbc/fine";
+    public static String ID = "org.locationtech.udig.libs"; //$NON-NLS-1$
+    public static String JDBC_DATA_TRACE_FINE = "org.locationtech.udig.libs/debug/data/jdbc/fine";
+    public static String JDBC_TRACE_FINE = "org.locationtech.udig.libs/debug/jdbc/fine";
 
     private static final String DATABASES_FOLDER_NAME = "databases";
     private static final String EPSG_DATABASEFOLDER_PREFIX = "epsg_v";
@@ -355,7 +355,7 @@ public class Activator implements BundleActivator {
                 } catch (Throwable t) {
                     if (Platform.inDebugMode()) {
                         System.out
-                                .println("Could not find net.refractions.udig.libs/epsg.properties"); //$NON-NLS-1$
+                                .println("Could not find org.locationtech.udig.libs/epsg.properties"); //$NON-NLS-1$
                         t.printStackTrace();
                     }
                 }

@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog;
+package org.locationtech.udig.catalog;
 
 import java.io.IOException;
 
 /**
- * Creates Temporary Resources.  Used by the temporaryResource extension point and the {@link net.refractions.udig.catalog.ICatalog#getTemporaryDescriptorClasses()}
- * and {@link net.refractions.udig.catalog.ICatalog#createTemporaryResource(Object)}.
+ * Creates Temporary Resources.  Used by the temporaryResource extension point and the {@link org.locationtech.udig.catalog.ICatalog#getTemporaryDescriptorClasses()}
+ * and {@link org.locationtech.udig.catalog.ICatalog#createTemporaryResource(Object)}.
  * <p>
- * An example is in net.refractions.udig.catalog.memory plugin.  It takes a FeatureType as the
+ * An example is in org.locationtech.udig.catalog.memory plugin.  It takes a FeatureType as the
  * param and creates a resource that resolves to a FeatureStore that stores features of the
  * FeatureType.
  * </p>

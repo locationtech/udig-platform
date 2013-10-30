@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.common;
+package org.locationtech.udig.style.advanced.common;
 
 import java.util.List;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
-import eu.udig.style.advanced.common.styleattributeclasses.FeatureTypeStyleWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.FeatureTypeStyleWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 
 /**
  * A tree view content provider for {@link FeatureTypeStyleWrapper}s with {@link RuleWrapper} childs.

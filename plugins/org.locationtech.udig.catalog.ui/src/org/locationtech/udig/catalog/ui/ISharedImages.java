@@ -9,10 +9,10 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.ui;
+package org.locationtech.udig.catalog.ui;
 
-import static net.refractions.udig.core.internal.Icons.OBJECT;
-import static net.refractions.udig.core.internal.Icons.OVERLAY;
+import static org.locationtech.udig.core.internal.Icons.OBJECT;
+import static org.locationtech.udig.core.internal.Icons.OVERLAY;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;

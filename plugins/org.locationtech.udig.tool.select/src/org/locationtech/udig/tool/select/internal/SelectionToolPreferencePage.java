@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.select.internal;
+package org.locationtech.udig.tool.select.internal;
 
-import net.refractions.udig.tool.select.SelectPlugin;
+import org.locationtech.udig.tool.select.SelectPlugin;
 
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;

@@ -8,13 +8,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.printing.ui.pdf;
+package org.locationtech.udig.printing.ui.pdf;
 
 import java.util.Map;
 
-import net.refractions.udig.printing.ui.Template;
-import net.refractions.udig.printing.ui.TemplateFactory;
-import net.refractions.udig.printing.ui.internal.Messages;
+import org.locationtech.udig.printing.ui.Template;
+import org.locationtech.udig.printing.ui.TemplateFactory;
+import org.locationtech.udig.printing.ui.internal.Messages;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -72,8 +72,8 @@ public class PrintWizardPage1 extends WizardPage implements Listener {
      */
     public PrintWizardPage1(Map<String, TemplateFactory> templateFactories) {
         super("ExportPDFFromTemplatePage");  //$NON-NLS-1$
-        setTitle(net.refractions.udig.printing.ui.internal.Messages.PrintWizardPage1_PAGE_TITLE);
-        setDescription(net.refractions.udig.printing.ui.internal.Messages.PrintWizardPage1_PAGE_DESC);
+        setTitle(org.locationtech.udig.printing.ui.internal.Messages.PrintWizardPage1_PAGE_TITLE);
+        setDescription(org.locationtech.udig.printing.ui.internal.Messages.PrintWizardPage1_PAGE_DESC);
         
         this.templateFactories = templateFactories;
     }
@@ -175,7 +175,7 @@ public class PrintWizardPage1 extends WizardPage implements Listener {
         optionsGroup.setLayout(layout);
         optionsGroup.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL
                 | GridData.GRAB_HORIZONTAL));
-        optionsGroup.setText(net.refractions.udig.printing.ui.internal.Messages.PrintWizardPage1_OPTIONS);
+        optionsGroup.setText(org.locationtech.udig.printing.ui.internal.Messages.PrintWizardPage1_OPTIONS);
         optionsGroup.setFont(parent.getFont());
 
         createOptionsGroupControls(optionsGroup);
@@ -244,7 +244,7 @@ public class PrintWizardPage1 extends WizardPage implements Listener {
         
         // export raster... checkbox
         exportRasterCheckbox = new Button(right, SWT.CHECK | SWT.LEFT);
-        exportRasterCheckbox.setText(net.refractions.udig.printing.ui.internal.Messages.PrintWizardPage1_EXPORT_RASTERS);        
+        exportRasterCheckbox.setText(org.locationtech.udig.printing.ui.internal.Messages.PrintWizardPage1_EXPORT_RASTERS);        
         exportRasterCheckbox.setSelection(true);
         
         // Output DPI ... label and combo        
@@ -252,7 +252,7 @@ public class PrintWizardPage1 extends WizardPage implements Listener {
         dpiAndPageComposite.setLayoutData(new GridData(SWT.LEFT, GridData.VERTICAL_ALIGN_BEGINNING, true, false));
         dpiAndPageComposite.setLayout(new GridLayout(2, false));
         Label dpiLabel = new Label(dpiAndPageComposite, SWT.LEFT);
-        dpiLabel.setText(net.refractions.udig.printing.ui.internal.Messages.PrintWizardPage1_DPI);
+        dpiLabel.setText(org.locationtech.udig.printing.ui.internal.Messages.PrintWizardPage1_DPI);
         dpiCombo = new Combo(dpiAndPageComposite, SWT.READ_ONLY);
         dpiCombo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false));
         dpiCombo.setItems(new String[] { "72", //$NON-NLS-1$
@@ -266,7 +266,7 @@ public class PrintWizardPage1 extends WizardPage implements Listener {
         
         // Page Size        
         Label pageLabel = new Label(dpiAndPageComposite, SWT.LEFT);
-        pageLabel.setText(net.refractions.udig.printing.ui.internal.Messages.PrintWizardPage1_PAGE_SIZE);
+        pageLabel.setText(org.locationtech.udig.printing.ui.internal.Messages.PrintWizardPage1_PAGE_SIZE);
         pageCombo = new Combo(dpiAndPageComposite, SWT.READ_ONLY);
         pageCombo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false));
         pageCombo.add("A4"); //$NON-NLS-1$

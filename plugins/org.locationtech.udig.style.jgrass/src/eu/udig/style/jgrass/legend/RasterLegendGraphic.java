@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.jgrass.legend;
+package org.locationtech.udig.style.jgrass.legend;
 
 import static java.lang.Math.round;
 
@@ -16,13 +16,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.mapgraphic.MapGraphicContext;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
@@ -31,8 +31,8 @@ import org.eclipse.ui.PlatformUI;
 import org.geotools.gce.grassraster.JGrassMapEnvironment;
 import org.geotools.gce.grassraster.core.color.JGrassColorTable;
 
-import eu.udig.catalog.jgrass.activeregion.dialogs.JGRasterChooserDialog;
-import eu.udig.catalog.jgrass.core.JGrassMapGeoResource;
+import org.locationtech.udig.catalog.jgrass.activeregion.dialogs.JGRasterChooserDialog;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
 
 
 /**

@@ -1,14 +1,14 @@
 /**
  * 
  */
-package net.refractions.udig.catalog.memory;
+package org.locationtech.udig.catalog.memory;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
-import net.refractions.udig.catalog.ui.UDIGConnectionPage;
+import org.locationtech.udig.catalog.ui.AbstractUDIGImportPage;
+import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;

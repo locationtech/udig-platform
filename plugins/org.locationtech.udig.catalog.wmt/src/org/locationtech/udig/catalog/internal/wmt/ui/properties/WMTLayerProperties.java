@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.ui.properties;
+package org.locationtech.udig.catalog.internal.wmt.ui.properties;
 
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.XMLMemento;
 
-import net.refractions.udig.catalog.internal.wmt.WMTService;
-import net.refractions.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.catalog.internal.wmt.WMTService;
+import org.locationtech.udig.project.internal.StyleBlackboard;
 
 public class WMTLayerProperties {
     private StyleBlackboard blackboard = null;

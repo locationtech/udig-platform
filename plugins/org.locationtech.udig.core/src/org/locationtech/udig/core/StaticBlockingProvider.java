@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.core;
+package org.locationtech.udig.core;
 
 import java.io.IOException;
 

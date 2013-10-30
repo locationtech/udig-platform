@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld.editor.raster;
+package org.locationtech.udig.style.sld.editor.raster;
 
 import java.text.DecimalFormat;
 
-import net.refractions.udig.style.sld.editor.raster.ValueFormatter.DataType;
-import net.refractions.udig.style.sld.internal.Messages;
+import org.locationtech.udig.style.sld.editor.raster.ValueFormatter.DataType;
+import org.locationtech.udig.style.sld.internal.Messages;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;

@@ -7,18 +7,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.ww;
+package org.locationtech.udig.catalog.internal.wmt.ww;
 
 import java.io.IOException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.internal.wmt.WMTPlugin;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSource;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.WWSource;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.ww.QuadTileSet;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.internal.wmt.WMTPlugin;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.WMTSource;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.WWSource;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.ww.QuadTileSet;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -27,8 +27,8 @@ import org.eclipse.core.runtime.NullProgressMonitor;
  * Based on WMSGeoResourceImpl this class represents a WWSource (QuadTileSet) 
  * in the catalog.
  * 
- * @see net.refractions.udig.catalog.internal.wmt.wmtsource.ww.QuadTileSet
- * @see net.refractions.udig.catalog.internal.wmt.wmtsource.WWSource
+ * @see org.locationtech.udig.catalog.internal.wmt.wmtsource.ww.QuadTileSet
+ * @see org.locationtech.udig.catalog.internal.wmt.wmtsource.WWSource
  * 
  * @author to.srwn
  * @since 1.1.0
@@ -80,7 +80,7 @@ public class WWGeoResource extends IGeoResource {
     }
     
     /*
-     * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
+     * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     public <T> boolean canResolve( Class<T> adaptee ) {
         return adaptee != null
@@ -89,7 +89,7 @@ public class WWGeoResource extends IGeoResource {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IGeoResource#resolve(java.lang.Class,
+     * @see org.locationtech.udig.catalog.IGeoResource#resolve(java.lang.Class,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
@@ -108,7 +108,7 @@ public class WWGeoResource extends IGeoResource {
 
 
     /*
-     * @see net.refractions.udig.catalog.IGeoResourceInfo#createInfo(java.lang.Class,
+     * @see org.locationtech.udig.catalog.IGeoResourceInfo#createInfo(java.lang.Class,
      *      org.eclipse.core.runtime.IProgressMonitor
      */
     protected IGeoResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
@@ -124,7 +124,7 @@ public class WWGeoResource extends IGeoResource {
 
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getStatus()
+     * @see org.locationtech.udig.catalog.IResolve#getStatus()
      */
     public Status getStatus() {
         if (msg != null) {
@@ -137,14 +137,14 @@ public class WWGeoResource extends IGeoResource {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getMessage()
+     * @see org.locationtech.udig.catalog.IResolve#getMessage()
      */
     public Throwable getMessage() {
         return msg;
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getIdentifier()
+     * @see org.locationtech.udig.catalog.IResolve#getIdentifier()
      */
     public URL getIdentifier() {
         return identifier;

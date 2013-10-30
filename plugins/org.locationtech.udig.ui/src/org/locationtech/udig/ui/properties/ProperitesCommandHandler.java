@@ -8,9 +8,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.properties;
+package org.locationtech.udig.ui.properties;
 
-import net.refractions.udig.core.SelectionProviderForwarder;
+import org.locationtech.udig.core.SelectionProviderForwarder;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;

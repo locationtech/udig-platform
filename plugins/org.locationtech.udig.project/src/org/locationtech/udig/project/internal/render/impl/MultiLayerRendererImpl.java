@@ -1,12 +1,12 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.render.impl;
+package org.locationtech.udig.project.internal.render.impl;
 
-import net.refractions.udig.project.internal.render.MultiLayerRenderer;
-import net.refractions.udig.project.internal.render.RenderPackage;
-import net.refractions.udig.project.render.RenderException;
-import net.refractions.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.internal.render.MultiLayerRenderer;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.project.render.IRenderContext;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;

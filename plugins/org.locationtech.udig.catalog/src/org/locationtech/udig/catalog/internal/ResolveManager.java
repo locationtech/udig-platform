@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal;
+package org.locationtech.udig.catalog.internal;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,12 +16,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveAdapterFactory;
-import net.refractions.udig.catalog.IResolveManager;
-import net.refractions.udig.catalog.ResolveAdapterFactory;
-import net.refractions.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveAdapterFactory;
+import org.locationtech.udig.catalog.IResolveManager;
+import org.locationtech.udig.catalog.ResolveAdapterFactory;
+import org.locationtech.udig.core.internal.ExtensionPointList;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -40,7 +40,7 @@ import org.eclipse.core.runtime.SubMonitor;
  */
 public class ResolveManager implements IResolveManager {
 
-    private static final String LIST_ID = "net.refractions.udig.catalog.resolvers"; //$NON-NLS-1$
+    private static final String LIST_ID = "org.locationtech.udig.catalog.resolvers"; //$NON-NLS-1$
 
     /**
      * Resolver configuration elements mapped to resulting factory, used to lazily
@@ -179,11 +179,11 @@ public class ResolveManager implements IResolveManager {
     	IConfigurationElement[] resolveList  = element.getChildren("resolve"); //$NON-NLS-1$
         for( IConfigurationElement child : resolveList ) {
             String resolveType=child.getAttribute("type"); //$NON-NLS-1$
-            if( !resolveType.startsWith("net.refractions") && !resolveType.startsWith("eu.udig") ){
+            if( !resolveType.startsWith("net.refractions") && !resolveType.startsWith("org.locationtech.udig") ){
                 // We first try a class loader trick to grab the target class
                 // without forcing the load of the plugin where the element
                 // comes from (this works in may cases where the type is something
-                // common from net.refractions.udig.libs)
+                // common from org.locationtech.udig.libs)
                 try{
                     ClassLoader classLoader = target.getClassLoader();
                     if( classLoader==null ){

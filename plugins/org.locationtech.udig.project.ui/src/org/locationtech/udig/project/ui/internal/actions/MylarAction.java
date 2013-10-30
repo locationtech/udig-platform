@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.actions;
+package org.locationtech.udig.project.ui.internal.actions;
 
-import net.refractions.udig.project.EditManagerEvent;
-import net.refractions.udig.project.IEditManagerListener;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.EditManagerEvent;
+import org.locationtech.udig.project.IEditManagerListener;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;

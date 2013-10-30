@@ -1,7 +1,7 @@
 /*
  * Created on 28-Mar-2005
  */
-package net.refractions.udig.catalog.tests;
+package org.locationtech.udig.catalog.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -12,7 +12,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
-import net.refractions.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolve;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.junit.Test;

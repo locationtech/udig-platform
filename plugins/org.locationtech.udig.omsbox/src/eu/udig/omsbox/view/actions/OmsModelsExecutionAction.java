@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.omsbox.view.actions;
+package org.locationtech.udig.omsbox.view.actions;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 
-import eu.udig.omsbox.view.OmsBoxView;
+import org.locationtech.udig.omsbox.view.OmsBoxView;
 
 /**
  * @author Andrea Antonello (www.hydrologis.com)

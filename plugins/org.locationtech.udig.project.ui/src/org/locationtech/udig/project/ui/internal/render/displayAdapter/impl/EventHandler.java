@@ -1,16 +1,16 @@
 /**
  * 
  */
-package net.refractions.udig.project.ui.internal.render.displayAdapter.impl;
+package org.locationtech.udig.project.ui.internal.render.displayAdapter.impl;
 
 import java.awt.Dimension;
 
-import net.refractions.udig.project.render.displayAdapter.MapDisplayEvent;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.internal.Trace;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelEvent;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.internal.Trace;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
@@ -90,7 +90,7 @@ public class EventHandler implements Listener {
         synchronized (this) {
             scheduledTime=System.currentTimeMillis()+400;
         }
-        net.refractions.udig.ui.PlatformGIS.asyncInDisplayThread(new Runnable() {
+        org.locationtech.udig.ui.PlatformGIS.asyncInDisplayThread(new Runnable() {
 			public void run() {
 				e.display.timerExec(500, new Runnable(){
 					public void run() {

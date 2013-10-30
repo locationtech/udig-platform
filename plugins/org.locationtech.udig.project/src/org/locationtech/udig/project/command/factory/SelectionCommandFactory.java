@@ -7,19 +7,19 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.command.factory;
+package org.locationtech.udig.project.command.factory;
 
 import java.util.List;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.CompositeCommand;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.UndoableComposite;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.commands.selection.BBoxSelectionCommand;
-import net.refractions.udig.project.internal.commands.selection.FIDSelectCommand;
-import net.refractions.udig.project.internal.commands.selection.NoSelectCommand;
-import net.refractions.udig.project.internal.commands.selection.SelectCommand;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.CompositeCommand;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.internal.commands.selection.BBoxSelectionCommand;
+import org.locationtech.udig.project.internal.commands.selection.FIDSelectCommand;
+import org.locationtech.udig.project.internal.commands.selection.NoSelectCommand;
+import org.locationtech.udig.project.internal.commands.selection.SelectCommand;
 
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
@@ -35,7 +35,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * @since 0.3
  */
 @SuppressWarnings("deprecation")
-public class SelectionCommandFactory extends net.refractions.udig.project.command.SelectionCommandFactory {
+public class SelectionCommandFactory extends org.locationtech.udig.project.command.SelectionCommandFactory {
 	/**
 	 * Creates a new SelectionCommandFactory object
 	 * 

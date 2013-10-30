@@ -9,9 +9,9 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.issues.internal;
+package org.locationtech.udig.issues.internal;
 
-import net.refractions.udig.core.internal.Icons;
+import org.locationtech.udig.core.internal.Icons;
 
 /**
  * Image constants for use with Images class.

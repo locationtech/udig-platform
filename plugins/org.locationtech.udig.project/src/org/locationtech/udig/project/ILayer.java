@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project;
+package org.locationtech.udig.project;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResource;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -364,7 +364,7 @@ public interface ILayer extends ILegendItem, Comparable<ILayer> {
      * getMap().getViewportModel() will return the ViewportModel.
      * </p>
      * 
-     * @see net.refractions.udig.project.render.IViewportModel
+     * @see org.locationtech.udig.project.render.IViewportModel
      */
     MathTransform layerToMapTransform() throws IOException;
 
@@ -375,7 +375,7 @@ public interface ILayer extends ILegendItem, Comparable<ILayer> {
      * getMap().getViewportModel() will return the ViewportModel.
      * </p>
      * 
-     * @see net.refractions.udig.project.render.IViewportModel
+     * @see org.locationtech.udig.project.render.IViewportModel
      */
     MathTransform mapToLayerTransform() throws IOException;
 
@@ -436,7 +436,7 @@ public interface ILayer extends ILegendItem, Comparable<ILayer> {
      * getMap().getViewportModel() will return the ViewportModel.
      * </p>
      * 
-     * @see net.refractions.udig.project.render.IViewportModel
+     * @see org.locationtech.udig.project.render.IViewportModel
      * @param boundingBox in the same crs as the viewport model.
      * @return a Geometry filter in the correct CRS or null if an exception occurs.
      */

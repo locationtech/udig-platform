@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.internal.datastore;
+package org.locationtech.udig.issues.internal.datastore;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
 
-import net.refractions.udig.catalog.PostgisServiceExtension2;
-import net.refractions.udig.issues.IListStrategy;
+import org.locationtech.udig.catalog.PostgisServiceExtension2;
+import org.locationtech.udig.issues.IListStrategy;
 
 import org.geotools.data.DataStore;
 import org.geotools.data.postgis.PostgisNGDataStoreFactory;
@@ -27,7 +27,7 @@ import org.geotools.data.postgis.PostgisNGDataStoreFactory;
  */
 public class PostgisDatastoreStrategy extends AbstractDatastoreStrategy implements IListStrategy {
     
-    private static final String ID = "net.refractions.udig.issues.issuesList"; //$NON-NLS-1$
+    private static final String ID = "org.locationtech.udig.issues.issuesList"; //$NON-NLS-1$
     private DataStore datastore;
    
 

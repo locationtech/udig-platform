@@ -8,16 +8,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.graph.internal;
+package org.locationtech.udig.graph.internal;
 
 import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.mapgraphic.MapGraphicContext;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.geotools.graph.structure.Edge;
 import org.geotools.graph.structure.Node;
@@ -25,7 +25,7 @@ import org.geotools.graph.structure.Node;
 import com.vividsolutions.jts.geom.Point;
 
 public class PathMapGraphic implements MapGraphic {
-    public static final String ID = "mapgraphic:/localhost/mapgraphic#net.refractions.udig.tutorials.tracking.graphics.path";
+    public static final String ID = "mapgraphic:/localhost/mapgraphic#org.locationtech.udig.tutorials.tracking.graphics.path";
     
     public PathMapGraphic() {
     }

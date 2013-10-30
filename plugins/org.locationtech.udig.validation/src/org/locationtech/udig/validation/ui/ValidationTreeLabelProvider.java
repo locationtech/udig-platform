@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.validation.ui;
+package org.locationtech.udig.validation.ui;
 
-import net.refractions.udig.validation.DTOUtils;
+import org.locationtech.udig.validation.DTOUtils;
 
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;

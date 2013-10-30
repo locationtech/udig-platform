@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.browser.ui;
+package org.locationtech.udig.browser.ui;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.refractions.udig.browser.BrowserPlugin;
-import net.refractions.udig.browser.ExternalCatalogueImportPage;
+import org.locationtech.udig.browser.BrowserPlugin;
+import org.locationtech.udig.browser.ExternalCatalogueImportPage;
 
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -67,7 +67,7 @@ public class URLImportPage extends WizardPage
     }
 
     public String getID() {
-        return "net.refractions.udig.browser.URL"; //$NON-NLS-1$
+        return "org.locationtech.udig.browser.URL"; //$NON-NLS-1$
     }
 
     public URL getURL() {

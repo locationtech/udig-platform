@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.ui.preferences;
+package org.locationtech.udig.catalog.ui.preferences;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,8 +20,8 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.internal.Messages;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;

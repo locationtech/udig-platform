@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.tcat.citd.sim.udig.bookmarks.internal;
+package org.locationtech.udig.bookmarks.internal;
 
 import org.eclipse.ui.services.AbstractServiceFactory;
 import org.eclipse.ui.services.IServiceLocator;
-import org.tcat.citd.sim.udig.bookmarks.IBookmarkService;
+import org.locationtech.udig.bookmarks.IBookmarkService;
 
 /**
  * Responsible for creating our internal BookmarkServiceImpl.

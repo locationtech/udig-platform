@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.jgrass.core;
+package org.locationtech.udig.catalog.jgrass.core;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,23 +21,23 @@ import java.util.Map;
 
 import javax.swing.Icon;
 
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveChangeEvent;
-import net.refractions.udig.catalog.IResolve.Status;
-import net.refractions.udig.catalog.IResolveChangeEvent.Type;
-import net.refractions.udig.catalog.IResolveDelta;
-import net.refractions.udig.catalog.IResolveDelta.Kind;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceInfo;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.catalog.internal.CatalogImpl;
-import net.refractions.udig.catalog.internal.ResolveChangeEvent;
-import net.refractions.udig.catalog.internal.ResolveDelta;
-import net.refractions.udig.ui.ProgressManager;
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveChangeEvent;
+import org.locationtech.udig.catalog.IResolve.Status;
+import org.locationtech.udig.catalog.IResolveChangeEvent.Type;
+import org.locationtech.udig.catalog.IResolveDelta;
+import org.locationtech.udig.catalog.IResolveDelta.Kind;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.internal.CatalogImpl;
+import org.locationtech.udig.catalog.internal.ResolveChangeEvent;
+import org.locationtech.udig.catalog.internal.ResolveDelta;
+import org.locationtech.udig.ui.ProgressManager;
+import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -46,8 +46,8 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.gce.grassraster.JGrassConstants;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import eu.udig.catalog.jgrass.JGrassPlugin;
-import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
+import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
+import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
 
 /**
  * <p>

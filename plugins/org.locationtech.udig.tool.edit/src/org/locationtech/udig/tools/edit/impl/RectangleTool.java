@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.impl;
+package org.locationtech.udig.tools.edit.impl;
 
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
@@ -15,23 +15,23 @@ import java.awt.geom.GeneralPath;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.tools.edit.AbstractEditTool;
-import net.refractions.udig.tools.edit.Activator;
-import net.refractions.udig.tools.edit.Behaviour;
-import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.EnablementBehaviour;
-import net.refractions.udig.tools.edit.activator.ClearCurrentSelectionActivator;
-import net.refractions.udig.tools.edit.activator.EditStateListenerActivator;
-import net.refractions.udig.tools.edit.activator.ResetHandlerActivator;
-import net.refractions.udig.tools.edit.activator.SetRenderingFilter;
-import net.refractions.udig.tools.edit.behaviour.CreateShapeBehaviour;
-import net.refractions.udig.tools.edit.behaviour.DefaultCancelBehaviour;
-import net.refractions.udig.tools.edit.behaviour.CreateShapeBehaviour.ShapeFactory;
-import net.refractions.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
-import net.refractions.udig.tools.edit.enablement.ValidToolDetectionActivator;
-import net.refractions.udig.tools.edit.enablement.WithinLegalLayerBoundsBehaviour;
-import net.refractions.udig.tools.edit.support.ShapeType;
+import org.locationtech.udig.tools.edit.AbstractEditTool;
+import org.locationtech.udig.tools.edit.Activator;
+import org.locationtech.udig.tools.edit.Behaviour;
+import org.locationtech.udig.tools.edit.EditToolConfigurationHelper;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.EnablementBehaviour;
+import org.locationtech.udig.tools.edit.activator.ClearCurrentSelectionActivator;
+import org.locationtech.udig.tools.edit.activator.EditStateListenerActivator;
+import org.locationtech.udig.tools.edit.activator.ResetHandlerActivator;
+import org.locationtech.udig.tools.edit.activator.SetRenderingFilter;
+import org.locationtech.udig.tools.edit.behaviour.CreateShapeBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.DefaultCancelBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.CreateShapeBehaviour.ShapeFactory;
+import org.locationtech.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
+import org.locationtech.udig.tools.edit.enablement.ValidToolDetectionActivator;
+import org.locationtech.udig.tools.edit.enablement.WithinLegalLayerBoundsBehaviour;
+import org.locationtech.udig.tools.edit.support.ShapeType;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;

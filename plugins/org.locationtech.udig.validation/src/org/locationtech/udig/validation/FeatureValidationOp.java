@@ -1,13 +1,13 @@
 /**
  * 
  */
-package net.refractions.udig.validation;
+package org.locationtech.udig.validation;
 
 import java.util.Iterator;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.operations.IOp;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;
@@ -37,7 +37,7 @@ abstract class FeatureValidationOp implements IOp {
     
 	/** 
      * 
-	 * @see net.refractions.udig.ui.operations.IOp#op(org.eclipse.swt.widgets.Display, java.lang.Object, org.eclipse.core.runtime.IProgressMonitor)
+	 * @see org.locationtech.udig.ui.operations.IOp#op(org.eclipse.swt.widgets.Display, java.lang.Object, org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	public void op(final Display display, Object target, IProgressMonitor monitor) throws Exception {
 	    final ILayer layer = (ILayer) target;

@@ -7,18 +7,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.impl;
+package org.locationtech.udig.tools.edit.impl;
 
 import java.awt.Point;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.ui.internal.commands.draw.DrawShapeCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.tool.AbstractModalTool;
-import net.refractions.udig.project.ui.tool.ModalTool;
-import net.refractions.udig.tool.edit.internal.Messages;
-import net.refractions.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.ui.internal.commands.draw.DrawShapeCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.tool.AbstractModalTool;
+import org.locationtech.udig.project.ui.tool.ModalTool;
+import org.locationtech.udig.tool.edit.internal.Messages;
+import org.locationtech.udig.tools.edit.EditPlugin;
 
 import org.eclipse.jface.action.IStatusLineManager;
 import org.geotools.feature.FeatureCollection;

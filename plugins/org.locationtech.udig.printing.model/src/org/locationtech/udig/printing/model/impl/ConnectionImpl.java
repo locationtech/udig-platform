@@ -4,11 +4,11 @@
  *
  * $Id$
  */
-package net.refractions.udig.printing.model.impl;
+package org.locationtech.udig.printing.model.impl;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.Connection;
-import net.refractions.udig.printing.model.ModelPackage;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.Connection;
+import org.locationtech.udig.printing.model.ModelPackage;
 
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
@@ -25,9 +25,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link net.refractions.udig.printing.model.impl.ConnectionImpl#isConnected <em>Connected</em>}</li>
- *   <li>{@link net.refractions.udig.printing.model.impl.ConnectionImpl#getSource <em>Source</em>}</li>
- *   <li>{@link net.refractions.udig.printing.model.impl.ConnectionImpl#getTarget <em>Target</em>}</li>
+ *   <li>{@link org.locationtech.udig.printing.model.impl.ConnectionImpl#isConnected <em>Connected</em>}</li>
+ *   <li>{@link org.locationtech.udig.printing.model.impl.ConnectionImpl#getSource <em>Source</em>}</li>
+ *   <li>{@link org.locationtech.udig.printing.model.impl.ConnectionImpl#getTarget <em>Target</em>}</li>
  * </ul>
  * </p>
  *

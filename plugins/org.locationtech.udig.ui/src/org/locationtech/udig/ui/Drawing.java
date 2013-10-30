@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,11 +21,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.refractions.udig.ui.graphics.AWTGraphics;
-import net.refractions.udig.ui.graphics.NonAdvancedSWTGraphics;
-import net.refractions.udig.ui.graphics.SLDs;
-import net.refractions.udig.ui.graphics.SWTGraphics;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.ui.graphics.AWTGraphics;
+import org.locationtech.udig.ui.graphics.NonAdvancedSWTGraphics;
+import org.locationtech.udig.ui.graphics.SLDs;
+import org.locationtech.udig.ui.graphics.SWTGraphics;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.graphics.GC;

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.tests.internal.geotiff;
+package org.locationtech.udig.catalog.tests.internal.geotiff;
 
 import java.io.IOException;
 import java.net.URL;

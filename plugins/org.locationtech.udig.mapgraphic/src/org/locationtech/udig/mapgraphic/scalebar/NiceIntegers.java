@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.scalebar;
+package org.locationtech.udig.mapgraphic.scalebar;
 
-import net.refractions.udig.core.IProviderWithParam;
+import org.locationtech.udig.core.IProviderWithParam;
 
 /**
  * Provides numbers like:  1, 2, 5, 10, 20, 50, 100, ... 

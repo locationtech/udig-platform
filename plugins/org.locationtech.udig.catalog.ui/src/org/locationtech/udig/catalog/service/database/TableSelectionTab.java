@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.service.database;
+package org.locationtech.udig.catalog.service.database;
 
 import java.io.Serializable;
 import java.net.URL;
@@ -20,8 +20,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import net.refractions.udig.core.Either;
-import net.refractions.udig.ui.graphics.Glyph;
+import org.locationtech.udig.core.Either;
+import org.locationtech.udig.ui.graphics.Glyph;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;

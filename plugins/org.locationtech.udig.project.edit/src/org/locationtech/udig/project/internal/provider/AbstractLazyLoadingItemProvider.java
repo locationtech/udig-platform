@@ -8,13 +8,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.provider;
+package org.locationtech.udig.project.internal.provider;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.project.edit.internal.Messages;
+import org.locationtech.udig.project.edit.internal.Messages;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;

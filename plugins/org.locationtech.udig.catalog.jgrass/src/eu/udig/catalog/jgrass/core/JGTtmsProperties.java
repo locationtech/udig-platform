@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.jgrass.core;
+package org.locationtech.udig.catalog.jgrass.core;
 
 import com.vividsolutions.jts.geom.Coordinate;
 

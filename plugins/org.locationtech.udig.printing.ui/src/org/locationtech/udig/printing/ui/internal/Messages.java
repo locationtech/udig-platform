@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.ui.internal;
+package org.locationtech.udig.printing.ui.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "net.refractions.udig.printing.ui.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.printing.ui.internal.messages"; //$NON-NLS-1$
 	public static String ExportPDFWizard_Title;
 
     public static String ExportPDFWizardPage1_0;

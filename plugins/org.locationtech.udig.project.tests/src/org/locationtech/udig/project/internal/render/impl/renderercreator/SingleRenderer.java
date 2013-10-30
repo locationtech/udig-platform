@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.render.impl.renderercreator;
+package org.locationtech.udig.project.internal.render.impl.renderercreator;
 
 import java.awt.Graphics2D;
 
-import net.refractions.udig.project.internal.render.impl.RendererImpl;
-import net.refractions.udig.project.render.RenderException;
+import org.locationtech.udig.project.internal.render.impl.RendererImpl;
+import org.locationtech.udig.project.render.RenderException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 

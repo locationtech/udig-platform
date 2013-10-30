@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.catalog" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.catalog" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.catalog" id="ServiceExtension" name="Services"/>
+         <meta.schema plugin="org.locationtech.udig.catalog" id="ServiceExtension" name="Services"/>
       </appInfo>
       <documentation>
          Allows uDig to recognize new kinds of services.
@@ -67,7 +67,7 @@ This extension point is proccessed by the ServiceFactory and is used to create s
 ServiceExtension2 allows for better error reporting in the event a connection could not be made.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.catalog.ServiceExtension"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.catalog.ServiceExtension"/>
                </appInfo>
             </annotation>
          </attribute>

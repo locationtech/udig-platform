@@ -8,14 +8,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.tests.internal.wfs;
+package org.locationtech.udig.catalog.tests.internal.wfs;
 
 import java.net.URL;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.wfs.WFSServiceExtension;
-import net.refractions.udig.catalog.tests.AbstractGeoResourceTest;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.wfs.WFSServiceExtension;
+import org.locationtech.udig.catalog.tests.AbstractGeoResourceTest;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.junit.Before;
@@ -39,7 +39,7 @@ public class WFSGeoResourceTest extends AbstractGeoResourceTest {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.catalog.tests.AbstractGeoResourceTest#getResolve()
+     * @see org.locationtech.udig.catalog.tests.AbstractGeoResourceTest#getResolve()
      */
     protected IGeoResource getResolve() {
         return resource;
@@ -48,7 +48,7 @@ public class WFSGeoResourceTest extends AbstractGeoResourceTest {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.catalog.tests.AbstractResolveTest#hasParent()
+     * @see org.locationtech.udig.catalog.tests.AbstractResolveTest#hasParent()
      */
     protected boolean hasParent() {
         return true;

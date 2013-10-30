@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package net.refractions.udig.tool.info.internal;
+package org.locationtech.udig.tool.info.internal;
 
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.tool.info.CoveragePointInfo;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.tool.info.CoveragePointInfo;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.coverage.grid.GridCoordinates2D;

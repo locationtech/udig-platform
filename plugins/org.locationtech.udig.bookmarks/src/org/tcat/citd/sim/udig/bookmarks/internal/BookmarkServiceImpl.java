@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.tcat.citd.sim.udig.bookmarks.internal;
+package org.locationtech.udig.bookmarks.internal;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,20 +15,20 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Project;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Project;
 
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.osgi.service.prefs.BackingStoreException;
-import org.tcat.citd.sim.udig.bookmarks.Bookmark;
-import org.tcat.citd.sim.udig.bookmarks.BookmarkListener;
-import org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin;
-import org.tcat.citd.sim.udig.bookmarks.IBookmark;
-import org.tcat.citd.sim.udig.bookmarks.IBookmarkService;
+import org.locationtech.udig.bookmarks.Bookmark;
+import org.locationtech.udig.bookmarks.BookmarkListener;
+import org.locationtech.udig.bookmarks.BookmarksPlugin;
+import org.locationtech.udig.bookmarks.IBookmark;
+import org.locationtech.udig.bookmarks.IBookmarkService;
 
 /**
  * This class provides a bookmark repository and associated management functions.

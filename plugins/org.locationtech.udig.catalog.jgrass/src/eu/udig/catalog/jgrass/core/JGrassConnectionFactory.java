@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
- package eu.udig.catalog.jgrass.core;
+ package org.locationtech.udig.catalog.jgrass.core;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,8 +17,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.ui.UDIGConnectionFactory;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.ui.UDIGConnectionFactory;
 
 /**
  * TODO Purpose of

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.rcp;
+package org.locationtech.udig.tutorials.rcp;
 
 /**
  * Interface defining the application's command IDs.
@@ -19,7 +19,7 @@ package net.refractions.udig.tutorials.rcp;
  */
 public interface ICommandIds {
 
-    public static final String CMD_OPEN = "net.refractions.udig.tutorials.rcp.open";
-    public static final String CMD_OPEN_MESSAGE = "net.refractions.udig.tutorials.rcp.openMessage";
+    public static final String CMD_OPEN = "org.locationtech.udig.tutorials.rcp.open";
+    public static final String CMD_OPEN_MESSAGE = "org.locationtech.udig.tutorials.rcp.openMessage";
     
 }

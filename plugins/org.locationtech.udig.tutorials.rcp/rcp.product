@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="RCP Product" id="net.refractions.udig.tutorials.rcp.product" application="net.refractions.udig.tutorials.rcp.application" useFeatures="true" includeLaunchers="true">
+<product name="RCP Product" id="org.locationtech.udig.tutorials.rcp.product" application="org.locationtech.udig.tutorials.rcp.application" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="product_lg.gif"/>
@@ -33,7 +33,7 @@
    <plugins>
       <plugin id="com.ibm.icu"/>
       <plugin id="com.ibm.icu.nl1" fragment=""/>
-      <plugin id="net.refractions.udig.tutorials.rcp"/>
+      <plugin id="org.locationtech.udig.tutorials.rcp"/>
       <plugin id="org.eclipse.core.commands"/>
       <plugin id="org.eclipse.core.commands.nl1" fragment=""/>
       <plugin id="org.eclipse.core.contenttype"/>
@@ -72,8 +72,8 @@
 
    <features>
       <feature id="org.eclipse.rcp"/>
-      <feature id="net.refractions.udig.rcp_feature"/>
-      <feature id="net.refractions.udig.tutorials.rcp_feature"/>
+      <feature id="org.locationtech.udig.rcp_feature"/>
+      <feature id="org.locationtech.udig.tutorials.rcp_feature"/>
    </features>
 
 

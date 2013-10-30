@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.ui.graphics;
+package org.locationtech.udig.ui.graphics;
 
 import java.awt.Color;
 import java.io.File;
@@ -23,7 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.internal.ui.UiPlugin;
 
 import org.eclipse.swt.graphics.FontData;
 import org.geotools.factory.CommonFactoryFinder;

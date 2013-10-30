@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.shp.tests;
+package org.locationtech.udig.catalog.shp.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -23,13 +23,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
-import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
-import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
-import net.refractions.udig.document.source.ShpAttachmentSource;
-import net.refractions.udig.document.source.ShpDocPropertyParser;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.document.IDocument;
+import org.locationtech.udig.catalog.document.IDocumentSource.DocumentInfo;
+import org.locationtech.udig.catalog.internal.shp.ShpGeoResourceImpl;
+import org.locationtech.udig.catalog.internal.shp.ShpServiceImpl;
+import org.locationtech.udig.document.source.ShpAttachmentSource;
+import org.locationtech.udig.document.source.ShpDocPropertyParser;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;

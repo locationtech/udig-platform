@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.render.displayAdapter;
+package org.locationtech.udig.project.ui.render.displayAdapter;
 
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 
 /**
  * Event Mouse wheel events. API use?example?

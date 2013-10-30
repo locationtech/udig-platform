@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -29,7 +29,7 @@ import org.eclipse.swt.dnd.DropTargetEvent;
  */
 public abstract class IDropAction {
 	
-	public static final String XPID = "net.refractions.udig.ui.dropAction"; //$NON-NLS-1$
+	public static final String XPID = "org.locationtech.udig.ui.dropAction"; //$NON-NLS-1$
 	
 	/** the extension info **/
 	IConfigurationElement element;

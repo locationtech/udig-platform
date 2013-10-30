@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.graticule;
+package org.locationtech.udig.mapgraphic.graticule;
 
 import java.awt.Color;
 
-import net.refractions.udig.mapgraphic.MapGraphicContext;
-import net.refractions.udig.mapgraphic.style.FontStyle;
-import net.refractions.udig.mapgraphic.style.FontStyleContent;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IStyleBlackboard;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.mapgraphic.style.FontStyle;
+import org.locationtech.udig.mapgraphic.style.FontStyleContent;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IStyleBlackboard;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 /**
  * Style for the {@link GridMapGraphic}.
@@ -34,7 +34,7 @@ public class GraticuleStyle {
      * @see {@link ILayer#getStyleBlackboard()}
      * @see {@link IStyleBlackboard#get(String)}
      */
-    public static final String ID = "net.refractions.udig.tool.edit.mapgraphic.graticule.style"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.tool.edit.mapgraphic.graticule.style"; //$NON-NLS-1$
 
     /**
      * Default {@link GraticuleStyle style}

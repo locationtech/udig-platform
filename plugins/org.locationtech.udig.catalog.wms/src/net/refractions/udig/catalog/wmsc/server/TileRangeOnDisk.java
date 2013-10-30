@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.wmsc.server;
+package org.locationtech.udig.catalog.wmsc.server;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.internal.PreferenceConstants;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.internal.PreferenceConstants;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;

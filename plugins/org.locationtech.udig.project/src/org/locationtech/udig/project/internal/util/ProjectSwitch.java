@@ -1,43 +1,43 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.util;
+package org.locationtech.udig.project.internal.util;
 
 import java.util.List;
 
-import net.refractions.udig.catalog.IResolveChangeListener;
-import net.refractions.udig.core.IBlockingAdaptable;
-import net.refractions.udig.project.IAbstractContext;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.IFolder;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILayerLegendItem;
-import net.refractions.udig.project.ILegendItem;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.IStyleBlackboard;
-import net.refractions.udig.project.Interaction;
-import net.refractions.udig.project.internal.AbstractContext;
-import net.refractions.udig.project.internal.Blackboard;
-import net.refractions.udig.project.internal.BlackboardEntry;
-import net.refractions.udig.project.internal.ContextModel;
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.internal.Folder;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerFactory;
-import net.refractions.udig.project.internal.LayerLegendItem;
-import net.refractions.udig.project.internal.LegendItem;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectElement;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectRegistry;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.internal.StyleEntry;
-import net.refractions.udig.project.render.IRenderManager;
-import net.refractions.udig.project.render.IViewportModel;
+import org.locationtech.udig.catalog.IResolveChangeListener;
+import org.locationtech.udig.core.IBlockingAdaptable;
+import org.locationtech.udig.project.IAbstractContext;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IEditManager;
+import org.locationtech.udig.project.IFolder;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILayerLegendItem;
+import org.locationtech.udig.project.ILegendItem;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.IStyleBlackboard;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.project.internal.AbstractContext;
+import org.locationtech.udig.project.internal.Blackboard;
+import org.locationtech.udig.project.internal.BlackboardEntry;
+import org.locationtech.udig.project.internal.ContextModel;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.Folder;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerFactory;
+import org.locationtech.udig.project.internal.LayerLegendItem;
+import org.locationtech.udig.project.internal.LegendItem;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectRegistry;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.StyleEntry;
+import org.locationtech.udig.project.render.IRenderManager;
+import org.locationtech.udig.project.render.IViewportModel;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.ecore.EClass;
@@ -51,7 +51,7 @@ import org.eclipse.emf.ecore.util.Switch;
  * each class of the model, starting with the actual class of the object and proceeding up the
  * inheritance hierarchy until a non-null result is returned, which is the result of the switch.
  * <!-- end-user-doc -->
- * @see net.refractions.udig.project.internal.ProjectPackage
+ * @see org.locationtech.udig.project.internal.ProjectPackage
  * @generated
  */
 public class ProjectSwitch<T> extends Switch<T> {

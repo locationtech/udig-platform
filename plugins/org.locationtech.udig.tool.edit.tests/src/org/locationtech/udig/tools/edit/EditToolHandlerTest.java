@@ -8,15 +8,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit;
+package org.locationtech.udig.tools.edit;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.commands.NullCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.tools.edit.support.TestHandler;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.internal.commands.NullCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.tools.edit.support.TestHandler;
 
 import org.junit.Test;
 
@@ -43,7 +43,7 @@ public class EditToolHandlerTest {
     };
     
     /*
-     * Test method for 'net.refractions.udig.tools.edit.latest.EditToolHandler.setActive(boolean)'
+     * Test method for 'org.locationtech.udig.tools.edit.latest.EditToolHandler.setActive(boolean)'
      */
     @Test
     public void testSetActive() throws Exception {
@@ -78,7 +78,7 @@ public class EditToolHandlerTest {
 
     /*
      * Test method for
-     * 'net.refractions.udig.tools.edit.latest.EditToolHandler.handleEvent(MapMouseEvent,
+     * 'org.locationtech.udig.tools.edit.latest.EditToolHandler.handleEvent(MapMouseEvent,
      * EventType)'
      */
     @Test

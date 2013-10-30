@@ -8,14 +8,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.internal;
+package org.locationtech.udig.mapgraphic.internal;
 
 import java.io.Serializable;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.ServiceExtension;
+import org.locationtech.udig.catalog.ServiceExtension;
 
 public class MapGraphicServiceExtension implements ServiceExtension {
     /**
@@ -26,7 +26,7 @@ public class MapGraphicServiceExtension implements ServiceExtension {
     /**
      * TODO summary sentence for createService ...
      * 
-     * @see net.refractions.udig.catalog.ServiceExtension#createService(java.net.URL, java.util.Map)
+     * @see org.locationtech.udig.catalog.ServiceExtension#createService(java.net.URL, java.util.Map)
      * @param id
      * @param params
      * @return
@@ -41,7 +41,7 @@ public class MapGraphicServiceExtension implements ServiceExtension {
     /**
      * TODO summary sentence for createParams ...
      * 
-     * @see net.refractions.udig.catalog.ServiceExtension#createParams(java.net.URL)
+     * @see org.locationtech.udig.catalog.ServiceExtension#createParams(java.net.URL)
      * @param url
      * @return
      */

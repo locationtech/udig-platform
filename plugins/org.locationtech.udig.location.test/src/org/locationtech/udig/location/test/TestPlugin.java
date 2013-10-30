@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.location.test;
+package org.locationtech.udig.location.test;
 
 import org.eclipse.core.runtime.Plugin;
 import org.junit.Ignore;

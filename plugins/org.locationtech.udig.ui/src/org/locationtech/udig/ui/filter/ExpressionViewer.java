@@ -8,13 +8,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.filter;
+package org.locationtech.udig.ui.filter;
 
 import java.util.HashMap;
 import java.util.List;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.ui.filter.ViewerFactory.Appropriate;
+import org.locationtech.udig.ui.filter.ViewerFactory.Appropriate;
 
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.IMenuListener;
@@ -180,7 +180,7 @@ public class ExpressionViewer extends IExpressionViewer {
     protected void showViewer(String newViewerId) {
         if( newViewerId == null ){
             // show place holder label or default to CQL
-            newViewerId = "net.refractions.udig.ui.cqlExpressionViewer";
+            newViewerId = "org.locationtech.udig.ui.cqlExpressionViewer";
         }
         this.viewerId = newViewerId;
         

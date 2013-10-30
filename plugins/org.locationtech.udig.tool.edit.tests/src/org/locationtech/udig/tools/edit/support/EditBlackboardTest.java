@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.support;
+package org.locationtech.udig.tools.edit.support;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -29,10 +29,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.project.internal.render.impl.ScaleUtils;
-import net.refractions.udig.tool.edit.tests.TestsPlugin;
-import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
-import net.refractions.udig.tools.edit.support.EditBlackboardEvent.EventType;
+import org.locationtech.udig.project.internal.render.impl.ScaleUtils;
+import org.locationtech.udig.tool.edit.tests.TestsPlugin;
+import org.locationtech.udig.tools.edit.preferences.PreferenceUtil;
+import org.locationtech.udig.tools.edit.support.EditBlackboardEvent.EventType;
 
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.feature.FeatureCollections;
@@ -282,7 +282,7 @@ public class EditBlackboardTest {
     }
     
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PixelCoordMap.addCoord(int, int, Coordinate)'
+     * Test method for 'org.locationtech.udig.tools.edit.support.PixelCoordMap.addCoord(int, int, Coordinate)'
      */
     @Test
     public void testAddCoord() {
@@ -485,7 +485,7 @@ public class EditBlackboardTest {
 
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PixelCoordMap.moveCoords(int, int, int, int)'
+     * Test method for 'org.locationtech.udig.tools.edit.support.PixelCoordMap.moveCoords(int, int, int, int)'
      */
     @Test
     public void testMoveCoords() throws Exception, Exception {
@@ -571,7 +571,7 @@ public class EditBlackboardTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PixelCoordMap.deleteCoords(int, int)'
+     * Test method for 'org.locationtech.udig.tools.edit.support.PixelCoordMap.deleteCoords(int, int)'
      */
     @Test
     public void testDeleteCoords() {
@@ -999,7 +999,7 @@ public class EditBlackboardTest {
     }
     
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.EditUtils.overVertex(Point, PixelCoordMap, int)'
+     * Test method for 'org.locationtech.udig.tools.edit.support.EditUtils.overVertex(Point, PixelCoordMap, int)'
      */
     @Test
     public void testOverVertex() {

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.render.internal.feature.basic;
+package org.locationtech.udig.render.internal.feature.basic;
 
 /**
  * @author jgarnett
@@ -16,5 +16,5 @@ package net.refractions.udig.render.internal.feature.basic;
  */
 public interface Trace {
 
-    public static final String FINEST = "net.refractions.udig.render.feature.basic/finest"; //$NON-NLS-1$
+    public static final String FINEST = "org.locationtech.udig.render.feature.basic/finest"; //$NON-NLS-1$
 }

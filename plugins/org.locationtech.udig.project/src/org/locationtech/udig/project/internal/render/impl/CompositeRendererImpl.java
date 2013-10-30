@@ -1,7 +1,7 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.render.impl;
+package org.locationtech.udig.project.internal.render.impl;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -21,23 +21,23 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ProjectBlackboardConstants;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.render.CompositeRenderContext;
-import net.refractions.udig.project.internal.render.MultiLayerRenderer;
-import net.refractions.udig.project.internal.render.RenderContext;
-import net.refractions.udig.project.internal.render.RenderExecutor;
-import net.refractions.udig.project.internal.render.RenderFactory;
-import net.refractions.udig.project.internal.render.RenderListenerAdapter;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.internal.render.RendererCreator;
-import net.refractions.udig.project.internal.render.SelectionLayer;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.project.render.ILabelPainter;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.RenderException;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.CompositeRenderContext;
+import org.locationtech.udig.project.internal.render.MultiLayerRenderer;
+import org.locationtech.udig.project.internal.render.RenderContext;
+import org.locationtech.udig.project.internal.render.RenderExecutor;
+import org.locationtech.udig.project.internal.render.RenderFactory;
+import org.locationtech.udig.project.internal.render.RenderListenerAdapter;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.internal.render.RendererCreator;
+import org.locationtech.udig.project.internal.render.SelectionLayer;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.render.ILabelPainter;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.RenderException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.notify.Notification;
@@ -137,7 +137,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
      * 
      * Returns a list that is a copy of all the children render.
      * 
-     * @see net.refractions.udig.project.internal.render.MultiLayerRenderer#children()
+     * @see org.locationtech.udig.project.internal.render.MultiLayerRenderer#children()
      */
     public List<Renderer> children() {
         List<Renderer> children = new ArrayList<Renderer>();
@@ -156,7 +156,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
         executor.eAdapters().add(new RenderListenerAdapter(){
 
             /**
-             * @see net.refractions.udig.project.internal.render.RenderListenerAdapter#renderDisposed(org.eclipse.emf.common.notify.Notification)
+             * @see org.locationtech.udig.project.internal.render.RenderListenerAdapter#renderDisposed(org.eclipse.emf.common.notify.Notification)
              */
             protected void renderDisposed( Notification msg ) {
                 EObject obj = (EObject) getTarget();
@@ -164,7 +164,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
             }
 
             /**
-             * @see net.refractions.udig.project.internal.render.RenderListenerAdapter#renderDone()
+             * @see org.locationtech.udig.project.internal.render.RenderListenerAdapter#renderDone()
              */
             protected void renderDone() {
                setState(DONE);
@@ -181,7 +181,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
             }
 
             /**
-             * @see net.refractions.udig.project.internal.render.RenderListenerAdapter#renderUpdate()
+             * @see org.locationtech.udig.project.internal.render.RenderListenerAdapter#renderUpdate()
              */
             protected void renderUpdate() {
                 synchronized (CompositeRendererImpl.this) {
@@ -198,7 +198,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.impl.RendererImpl#dispose()
+     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#dispose()
      */
     public synchronized void dispose() {
         for (RenderExecutor renderer : getRenderExecutors()) {
@@ -222,14 +222,14 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
     }
     
     /**
-     * @see net.refractions.udig.project.internal.render.impl.RendererImpl#getContext()
+     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#getContext()
      */
     public CompositeRenderContext getContext() {
         return (CompositeRenderContext) super.getContext();
     }
 
 	/**
-     * @see net.refractions.udig.project.render.IMultiLayerRenderer#getIChildren()
+     * @see org.locationtech.udig.project.render.IMultiLayerRenderer#getIChildren()
      */
     @SuppressWarnings("unchecked")
 	public List getIChildren() {
@@ -237,7 +237,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
     }
 
     /**
-     * @see net.refractions.udig.project.render.IMultiLayerRenderer#getIContext()
+     * @see org.locationtech.udig.project.render.IMultiLayerRenderer#getIContext()
      */
     public IRenderContext getIContext() {
         return getContext();
@@ -424,8 +424,8 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.Renderer#getInfo(java.awt.Point,
-     *      net.refractions.udig.project.Layer) public InfoList getInfo(Point screenLocation) throws
+     * @see org.locationtech.udig.project.internal.render.Renderer#getInfo(java.awt.Point,
+     *      org.locationtech.udig.project.Layer) public InfoList getInfo(Point screenLocation) throws
      *      IOException { InfoList infos = new InfoList(screenLocation); Iterator iter =
      *      getRenderExecutors().iterator(); while (iter.hasNext()) { Renderer renderer =
      *      ((RenderExecutor) iter.next()); List results = renderer.getInfo(screenLocation); if
@@ -434,7 +434,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
 
     /**
      * @throws RenderException
-     * @see net.refractions.udig.project.internal.render.Renderer#render(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.internal.render.Renderer#render(com.vividsolutions.jts.geom.Envelope)
      */
     public void render( IProgressMonitor monitor ) throws RenderException {
         if (getRenderExecutors().size() == 0)
@@ -446,7 +446,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.impl.RendererImpl#setContext(net.refractions.udig.project.render.RenderContext)
+     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#setContext(org.locationtech.udig.project.render.RenderContext)
      */
     @SuppressWarnings("unchecked")
     public void setContext( IRenderContext newContext ) {

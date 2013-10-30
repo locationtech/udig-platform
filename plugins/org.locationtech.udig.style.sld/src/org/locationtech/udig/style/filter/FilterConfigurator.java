@@ -9,15 +9,15 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.style.filter;
+package org.locationtech.udig.style.filter;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.project.ProjectBlackboardConstants;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.style.IStyleConfigurator;
-import net.refractions.udig.ui.filter.FilterInput;
-import net.refractions.udig.ui.filter.FilterViewer;
-import net.refractions.udig.ui.filter.IFilterViewer;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.IStyleConfigurator;
+import org.locationtech.udig.ui.filter.FilterInput;
+import org.locationtech.udig.ui.filter.FilterViewer;
+import org.locationtech.udig.ui.filter.IFilterViewer;
 
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.viewers.ISelectionChangedListener;

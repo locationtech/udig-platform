@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.utils;
+package org.locationtech.udig.style.advanced.utils;
 
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 /**
  * Enumeration of possible vendor options.

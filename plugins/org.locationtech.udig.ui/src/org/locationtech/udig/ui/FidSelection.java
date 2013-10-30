@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import net.refractions.udig.core.IProvider;
+import org.locationtech.udig.core.IProvider;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.opengis.feature.simple.SimpleFeature;

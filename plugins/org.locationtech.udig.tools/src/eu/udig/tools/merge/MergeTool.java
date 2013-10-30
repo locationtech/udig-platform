@@ -9,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.merge;
+package org.locationtech.udig.tools.merge;
 
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -17,18 +17,18 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.internal.commands.selection.BBoxSelectionCommand;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.project.ui.AnimationUpdater;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.tool.ModalTool;
-import net.refractions.udig.project.ui.tool.SimpleTool;
-import net.refractions.udig.tools.edit.animation.MessageBubble;
-import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.internal.commands.selection.BBoxSelectionCommand;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.ui.AnimationUpdater;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.commands.SelectionBoxCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.tool.ModalTool;
+import org.locationtech.udig.project.ui.tool.SimpleTool;
+import org.locationtech.udig.tools.edit.animation.MessageBubble;
+import org.locationtech.udig.tools.edit.preferences.PreferenceUtil;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewPart;
@@ -40,9 +40,9 @@ import org.opengis.filter.Filter;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 
-import eu.udig.tools.internal.i18n.Messages;
-import eu.udig.tools.internal.ui.util.StatusBar;
-import eu.udig.tools.merge.internal.view.MergeView;
+import org.locationtech.udig.tools.internal.i18n.Messages;
+import org.locationtech.udig.tools.internal.ui.util.StatusBar;
+import org.locationtech.udig.tools.merge.internal.view.MergeView;
 
 /**
  * Merge the features in bounding box
@@ -60,7 +60,7 @@ public class MergeTool extends SimpleTool implements ModalTool {
     /**
      * Comment for <code>ID</code>
      */
-    public static final String ID = "eu.udig.tools.merge.MergeTool"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.tools.merge.MergeTool"; //$NON-NLS-1$
 
     private static final Logger LOGGER = Logger.getLogger(MergeTool.class.getName());
 

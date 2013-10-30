@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Layer;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;

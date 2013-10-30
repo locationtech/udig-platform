@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,9 +16,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.ui.internal.Messages;
-import net.refractions.udig.ui.preferences.PreferenceConstants;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.internal.Messages;
+import org.locationtech.udig.ui.preferences.PreferenceConstants;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -438,7 +438,7 @@ public class FeatureTypeEditor {
 
 
             };
-            createAttributeAction.setId("net.refractions.udig.ui.FeatureTypeEditor.createAttributeAction"); //$NON-NLS-1$
+            createAttributeAction.setId("org.locationtech.udig.ui.FeatureTypeEditor.createAttributeAction"); //$NON-NLS-1$
             createAttributeAction.setText(Messages.addAttributeAction_label); 
             createAttributeAction.setToolTipText(Messages.addAttributeAction_label); 
             createAttributeAction.setImageDescriptor(UiPlugin.getDefault().getImageDescriptor("elcl16/new_attribute.gif")); //$NON-NLS-1$
@@ -473,7 +473,7 @@ public class FeatureTypeEditor {
             deleteAttributeAction.setToolTipText(Messages.deleteAttributeAction_tooltip);
             deleteAttributeAction.setImageDescriptor(UiPlugin.getDefault().getImageDescriptor("elcl16/delete.gif")); //$NON-NLS-1$
             deleteAttributeAction.setDescription(Messages.deleteAttributeAction_description);
-            deleteAttributeAction.setId("net.refractions.udig.ui.FeatureTypeEditor.deleteAttributeAction"); //$NON-NLS-1$
+            deleteAttributeAction.setId("org.locationtech.udig.ui.FeatureTypeEditor.deleteAttributeAction"); //$NON-NLS-1$
         }
         return deleteAttributeAction;
     }

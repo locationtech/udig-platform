@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.graphics;
+package org.locationtech.udig.ui.graphics;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -113,7 +113,7 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportGraphics#draw(java.awt.Shape)
+     * @see org.locationtech.udig.project.render.ViewportGraphics#draw(java.awt.Shape)
      */
     public void draw( Shape s ) {
         PathIterator p = s.getPathIterator(transform, 1);
@@ -130,7 +130,7 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportGraphics#draw(java.awt.Shape)
+     * @see org.locationtech.udig.project.render.ViewportGraphics#draw(java.awt.Shape)
      */
     public void fill( Shape s ) {
         gc.setBackground(fore);
@@ -152,7 +152,7 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportGraphics#fillRect(int,
+     * @see org.locationtech.udig.project.render.ViewportGraphics#fillRect(int,
      *      int, int, int)
      */
     public void fillRect( int x, int y, int width, int height ) {
@@ -164,7 +164,7 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportGraphics#setColor(java.awt.Color)
+     * @see org.locationtech.udig.project.render.ViewportGraphics#setColor(java.awt.Color)
      */
     public void setColor( java.awt.Color c ) {
         Color color = new Color(display, c.getRed(), c.getGreen(), c.getBlue());
@@ -177,7 +177,7 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
     /**
      * This is hard because - background doesn't mean what we think it means.
      * 
-     * @see net.refractions.udig.project.render.ViewportGraphics#setBackground(java.awt.Color)
+     * @see org.locationtech.udig.project.render.ViewportGraphics#setBackground(java.awt.Color)
      */
     public void setBackground( java.awt.Color c ) {
         Color color = new Color(display, c.getRed(), c.getGreen(), c.getBlue());
@@ -188,7 +188,7 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportGraphics#setStroke(int,
+     * @see org.locationtech.udig.project.render.ViewportGraphics#setStroke(int,
      *      int)
      */
     public void setStroke( int style, int width ) {
@@ -225,21 +225,21 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportGraphics#setClip(java.awt.Rectangle)
+     * @see org.locationtech.udig.project.render.ViewportGraphics#setClip(java.awt.Rectangle)
      */
     public void setClip( java.awt.Rectangle r ) {
         gc.setClipping(r.x, r.y, r.width, r.height);
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportGraphics#translate(java.awt.Point)
+     * @see org.locationtech.udig.project.render.ViewportGraphics#translate(java.awt.Point)
      */
     public void translate( Point offset ) {
         transform.translate(offset.x, offset.y);
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportGraphics#clearRect(int,
+     * @see org.locationtech.udig.project.render.ViewportGraphics#clearRect(int,
      *      int, int, int)
      */
     public void clearRect( int x, int y, int width, int height ) {
@@ -250,7 +250,7 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportGraphics#drawImage(javax.media.jai.PlanarImage,
+     * @see org.locationtech.udig.project.render.ViewportGraphics#drawImage(javax.media.jai.PlanarImage,
      *      int, int)
      */
     public void drawImage( RenderedImage rimage, int x, int y ) {
@@ -379,7 +379,7 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.ui.graphics.ViewportGraphics#drawImage(java.awt.Image,
+     * @see org.locationtech.udig.ui.graphics.ViewportGraphics#drawImage(java.awt.Image,
      *      int, int)
      * 
      * Current version can only draw Image if the image is an RenderedImage
@@ -390,7 +390,7 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.ui.graphics.ViewportGraphics#drawImage(java.awt.Image,
+     * @see org.locationtech.udig.ui.graphics.ViewportGraphics#drawImage(java.awt.Image,
      *      int, int, int, int, int, int, int, int)
      */
     public void drawImage( java.awt.Image image, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2 ) {

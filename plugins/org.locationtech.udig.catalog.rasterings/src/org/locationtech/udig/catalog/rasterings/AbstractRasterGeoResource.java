@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.rasterings;
+package org.locationtech.udig.catalog.rasterings;
 
 import java.awt.Rectangle;
 import java.io.File;
@@ -21,14 +21,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.catalog.rasterings.internal.Messages;
-import net.refractions.udig.ui.ProgressManager;
-import net.refractions.udig.ui.UDIGDisplaySafeLock;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.rasterings.internal.Messages;
+import org.locationtech.udig.ui.ProgressManager;
+import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;

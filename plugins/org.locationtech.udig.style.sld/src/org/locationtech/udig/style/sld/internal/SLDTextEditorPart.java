@@ -9,14 +9,14 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.style.sld.internal;
+package org.locationtech.udig.style.sld.internal;
 
 import java.awt.Color;
 import java.util.List;
 
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.style.sld.SLDEditorPart;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.sld.SLDEditorPart;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -87,7 +87,7 @@ public class SLDTextEditorPart extends SLDEditorPart {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.style.sld.SLDEditorPart#getContentType()
+     * @see org.locationtech.udig.style.sld.SLDEditorPart#getContentType()
      */
     public Class getContentType() {
         return TextSymbolizer.class;
@@ -184,7 +184,7 @@ public class SLDTextEditorPart extends SLDEditorPart {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.style.sld.SLDEditorPart#createPartControl(org.eclipse.swt.widgets.Composite)
+     * @see org.locationtech.udig.style.sld.SLDEditorPart#createPartControl(org.eclipse.swt.widgets.Composite)
      */
     protected Control createPartControl( Composite parent ) {
         RowLayout layout = new RowLayout();        
@@ -208,7 +208,7 @@ public class SLDTextEditorPart extends SLDEditorPart {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.style.sld.SLDEditorPart#init()
+     * @see org.locationtech.udig.style.sld.SLDEditorPart#init()
      */
     public void init() {
         // do nothing
@@ -285,7 +285,7 @@ public class SLDTextEditorPart extends SLDEditorPart {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.style.sld.SLDEditorPart#reset()
+     * @see org.locationtech.udig.style.sld.SLDEditorPart#reset()
      */
     public void reset() {
         setStylingElements((TextSymbolizer) getContent());
@@ -294,7 +294,7 @@ public class SLDTextEditorPart extends SLDEditorPart {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.style.IStyleConfigurator#apply()
+     * @see org.locationtech.udig.style.IStyleConfigurator#apply()
      */
     private void apply( int mask ) {
         TextSymbolizer textSymbolizer = (TextSymbolizer) getContent();

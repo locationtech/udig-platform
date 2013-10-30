@@ -8,17 +8,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.examples;
+package org.locationtech.udig.tutorials.examples;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.interceptor.ServiceInterceptor;
-import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.interceptor.ServiceInterceptor;
+import org.locationtech.udig.catalog.internal.shp.ShpServiceImpl;
 
 public class ShpPropertiesInterceptor implements ServiceInterceptor {
 

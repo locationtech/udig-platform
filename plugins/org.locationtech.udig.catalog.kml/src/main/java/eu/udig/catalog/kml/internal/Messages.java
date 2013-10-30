@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.kml.internal;
+package org.locationtech.udig.catalog.kml.internal;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  * @author Frank Gasdorf
  */
 public class Messages {
-    private static final String BUNDLE_NAME = "eu.udig.catalog.kml.internal.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "org.locationtech.udig.catalog.kml.internal.messages"; //$NON-NLS-1$
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 

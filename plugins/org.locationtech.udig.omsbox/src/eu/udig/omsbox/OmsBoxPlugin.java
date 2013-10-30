@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.omsbox;
+package org.locationtech.udig.omsbox;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -20,13 +20,13 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.mapgraphic.internal.MapGraphicService;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;
@@ -39,9 +39,9 @@ import org.geotools.data.DataUtilities;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
-import eu.udig.omsbox.processingregion.ProcessingRegionMapGraphic;
-import eu.udig.omsbox.utils.ImageCache;
-import eu.udig.omsbox.utils.OmsBoxConstants;
+import org.locationtech.udig.omsbox.processingregion.ProcessingRegionMapGraphic;
+import org.locationtech.udig.omsbox.utils.ImageCache;
+import org.locationtech.udig.omsbox.utils.OmsBoxConstants;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -49,7 +49,7 @@ import eu.udig.omsbox.utils.OmsBoxConstants;
 public class OmsBoxPlugin extends AbstractUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "eu.udig.omsbox"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "org.locationtech.udig.omsbox"; //$NON-NLS-1$
 
     // The shared instance
     private static OmsBoxPlugin plugin;
@@ -245,7 +245,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
                 addPath(pluginPath + File.separator + "bin", sb);
             }
             // add udig libs
-            Bundle udigLibsBundle = Platform.getBundle("net.refractions.udig.libs");
+            Bundle udigLibsBundle = Platform.getBundle("org.locationtech.udig.libs");
             String udigLibsFolderPath = getPath(udigLibsBundle, "lib");
             if (udigLibsFolderPath != null) {
                 sb.append(File.pathSeparator);

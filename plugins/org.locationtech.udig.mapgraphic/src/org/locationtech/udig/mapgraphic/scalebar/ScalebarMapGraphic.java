@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.scalebar;
+package org.locationtech.udig.mapgraphic.scalebar;
 
-import static net.refractions.udig.mapgraphic.scalebar.Unit.CENTIMETER;
-import static net.refractions.udig.mapgraphic.scalebar.Unit.KILOMETER;
-import static net.refractions.udig.mapgraphic.scalebar.Unit.METER;
+import static org.locationtech.udig.mapgraphic.scalebar.Unit.CENTIMETER;
+import static org.locationtech.udig.mapgraphic.scalebar.Unit.KILOMETER;
+import static org.locationtech.udig.mapgraphic.scalebar.Unit.METER;
 
 import java.awt.Color;
 import java.awt.Rectangle;
@@ -21,20 +21,20 @@ import java.awt.geom.RoundRectangle2D;
 import java.text.MessageFormat;
 import java.util.Locale;
 
-import net.refractions.udig.catalog.util.CRSUtil;
-import net.refractions.udig.core.IProviderWithParam;
-import net.refractions.udig.core.Pair;
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.mapgraphic.MapGraphicContext;
-import net.refractions.udig.mapgraphic.internal.Messages;
-import net.refractions.udig.mapgraphic.scalebar.BarStyle.BarType;
-import net.refractions.udig.mapgraphic.style.FontStyle;
-import net.refractions.udig.mapgraphic.style.FontStyleContent;
-import net.refractions.udig.mapgraphic.style.LocationStyleContent;
-import net.refractions.udig.project.IStyleBlackboard;
-import net.refractions.udig.project.ProjectBlackboardConstants;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.catalog.util.CRSUtil;
+import org.locationtech.udig.core.IProviderWithParam;
+import org.locationtech.udig.core.Pair;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.mapgraphic.internal.Messages;
+import org.locationtech.udig.mapgraphic.scalebar.BarStyle.BarType;
+import org.locationtech.udig.mapgraphic.style.FontStyle;
+import org.locationtech.udig.mapgraphic.style.FontStyleContent;
+import org.locationtech.udig.mapgraphic.style.LocationStyleContent;
+import org.locationtech.udig.project.IStyleBlackboard;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 /**
  * Provides a decorator object that represents a typical Scalebar
@@ -91,8 +91,8 @@ public class ScalebarMapGraphic implements MapGraphic {
         return result;
     }
     /*
-     * @see net.refractions.udig.project.render.decorator.Decorator#draw(java.awt.Graphics2D,
-     *      net.refractions.udig.project.render.RenderContext)
+     * @see org.locationtech.udig.project.render.decorator.Decorator#draw(java.awt.Graphics2D,
+     *      org.locationtech.udig.project.render.RenderContext)
      */
     public void draw( MapGraphicContext context ) {
         // draw1(context);

@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project">
+<schema targetNamespace="org.locationtech.udig.project">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.project" id="persister" name="Persister"/>
+         <meta.schema plugin="org.locationtech.udig.project" id="persister" name="Persister"/>
       </appInfo>
       <documentation>
          Extensions of this point persist objects of a specified type. Persistence is achievied by using a memento to capture internal object state.
@@ -47,10 +47,10 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  Package qualified refeference to a class that implements net.refractions.udig.project.IPersister
+                  Package qualified refeference to a class that implements org.locationtech.udig.project.IPersister
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.IPersister"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.IPersister"/>
                </appInfo>
             </annotation>
          </attribute>

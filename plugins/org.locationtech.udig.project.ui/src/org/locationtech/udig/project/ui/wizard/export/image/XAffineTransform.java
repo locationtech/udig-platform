@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.project.ui.wizard.export.image;
+package org.locationtech.udig.project.ui.wizard.export.image;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;

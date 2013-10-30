@@ -9,14 +9,14 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.ui.filter;
+package org.locationtech.udig.ui.filter;
 
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.ui.internal.Messages;
+import org.locationtech.udig.ui.internal.Messages;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;

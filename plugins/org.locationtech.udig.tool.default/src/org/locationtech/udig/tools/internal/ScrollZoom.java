@@ -9,11 +9,11 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.tools.internal;
+package org.locationtech.udig.tools.internal;
 
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelEvent;
-import net.refractions.udig.project.ui.tool.AbstractTool;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelEvent;
+import org.locationtech.udig.project.ui.tool.AbstractTool;
 
 
 /**
@@ -41,7 +41,7 @@ public class ScrollZoom extends AbstractTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseWheelMoved(net.refractions.udig.project.render.displayAdapter.MapMouseWheelEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseWheelMoved(org.locationtech.udig.project.render.displayAdapter.MapMouseWheelEvent)
      */
     public void mouseWheelMoved(MapMouseWheelEvent e) {
         if( e.modifiersDown() )
@@ -51,7 +51,7 @@ public class ScrollZoom extends AbstractTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mousePressed(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mousePressed(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void mousePressed(MapMouseEvent e) {
         if (e.modifiers == MapMouseEvent.ALT_DOWN_MASK && e.buttons==MapMouseEvent.BUTTON1) {
@@ -60,7 +60,7 @@ public class ScrollZoom extends AbstractTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseDragged(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseDragged(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void mouseDragged(MapMouseEvent e) {
         if (e.modifiers == MapMouseEvent.ALT_DOWN_MASK && e.buttons==MapMouseEvent.BUTTON1) {
@@ -75,7 +75,7 @@ public class ScrollZoom extends AbstractTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseReleased(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseReleased(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void mouseReleased(MapMouseEvent e) {
         distance = 0;

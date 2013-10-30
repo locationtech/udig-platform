@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.internal;
+package org.locationtech.udig.tools.internal;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -28,7 +28,7 @@ public class ToolsPlugin extends AbstractUIPlugin {
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
 	
-    static public final String ID = "net.refractions.udig.tools";  //$NON-NLS-1$
+    static public final String ID = "org.locationtech.udig.tools";  //$NON-NLS-1$
 	/**
 	 * The constructor.
 	 */
@@ -103,7 +103,7 @@ public class ToolsPlugin extends AbstractUIPlugin {
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:<pre><code>
-     * private static final String RENDERING = "net.refractions.udig.project/render/trace";
+     * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
      * }

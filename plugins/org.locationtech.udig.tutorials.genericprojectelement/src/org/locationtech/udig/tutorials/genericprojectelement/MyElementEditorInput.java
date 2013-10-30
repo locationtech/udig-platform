@@ -8,10 +8,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.genericprojectelement;
+package org.locationtech.udig.tutorials.genericprojectelement;
 
-import net.refractions.udig.project.element.ProjectElementAdapter;
-import net.refractions.udig.project.ui.UDIGEditorInput;
+import org.locationtech.udig.project.element.ProjectElementAdapter;
+import org.locationtech.udig.project.ui.UDIGEditorInput;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 

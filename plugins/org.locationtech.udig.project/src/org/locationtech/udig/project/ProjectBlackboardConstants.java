@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project;
+package org.locationtech.udig.project;
 
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.internal.impl.UDIGFeatureStore;
-import net.refractions.udig.project.internal.interceptor.ShowViewInterceptor;
-import net.refractions.udig.project.internal.render.RendererCreator;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.impl.UDIGFeatureStore;
+import org.locationtech.udig.project.internal.interceptor.ShowViewInterceptor;
+import org.locationtech.udig.project.internal.render.RendererCreator;
 
 import org.geotools.data.DataStore;
 import org.geotools.data.Query;
@@ -106,7 +106,7 @@ public interface ProjectBlackboardConstants {
      * If the query is found on the map
      * @see #MAP__DATA_QUERY
      */
-    String LAYER__DATA_QUERY = "net.refractions.udig.project.view"; //$NON-NLS-1$
+    String LAYER__DATA_QUERY = "org.locationtech.udig.project.view"; //$NON-NLS-1$
     
     /**
      * Key for a FilterStyle used to provided user supplied filtering of content during rendering.
@@ -114,39 +114,39 @@ public interface ProjectBlackboardConstants {
      * The FilterStyle object includes both a user supplied filter; and various flags and settings allowing
      * the user to interact with facilities such as the Area of Interest.
      */
-    String LAYER__STYLE_FILTER = "net.refractions.udig.style.filter"; //$NON-NLS-1$
+    String LAYER__STYLE_FILTER = "org.locationtech.udig.style.filter"; //$NON-NLS-1$
 
     /**
      * Key to indicate a layer may be edited.
      * 
      * @see UDIGFeatureStore
      */
-    String LAYER__EDIT_APPLICABILITY = "net.refractions.udig.edit"; //$NON-NLS-1$
+    String LAYER__EDIT_APPLICABILITY = "org.locationtech.udig.edit"; //$NON-NLS-1$
     
     
     /**
-     * @see net.refractions.udig.project.preferences.PreferenceConstants.P_MINIMUM_ZOOM_SCALE
+     * @see org.locationtech.udig.project.preferences.PreferenceConstants.P_MINIMUM_ZOOM_SCALE
      */
-    String LAYER__MINIMUM_ZOOM_SCALE = "net.refractions.udig.project.MINIMUM_ZOOM_SCALE"; //$NON-NLS-1$
+    String LAYER__MINIMUM_ZOOM_SCALE = "org.locationtech.udig.project.MINIMUM_ZOOM_SCALE"; //$NON-NLS-1$
 
     /**
      * NOT USED at the current codebase.
      */
-    String LAYER__MAXIMUM_ZOOM_SCALE = "net.refractions.udig.project.MAXIMUM_ZOOM_SCALE"; //$NON-NLS-1$
+    String LAYER__MAXIMUM_ZOOM_SCALE = "org.locationtech.udig.project.MAXIMUM_ZOOM_SCALE"; //$NON-NLS-1$
 
     /**
      * FALSE boolean value contained in layer's blackboard advises the platform
      * to block removing of features functionality in the target layer.
      */
-    String LAYER__FEATURES_REMOVE_APPLICABILITY = "net.refractions.udig.edit.layer.FEATURES_REMOVE_APPLICABILITY"; //$NON-NLS-1$
+    String LAYER__FEATURES_REMOVE_APPLICABILITY = "org.locationtech.udig.edit.layer.FEATURES_REMOVE_APPLICABILITY"; //$NON-NLS-1$
 
     /**
      * NOT USED at the current codebase
      */
-    String LAYER__FEATURES_ADD_APPLICABILITY = "net.refractions.udig.edit.layer.FEATURES_ADD_APPLICABILITY"; //$NON-NLS-1$
+    String LAYER__FEATURES_ADD_APPLICABILITY = "org.locationtech.udig.edit.layer.FEATURES_ADD_APPLICABILITY"; //$NON-NLS-1$
 
     /**
      * NOT USED at the current codebase
      */
-    String LAYER__FEATURES_MODIFY_APPLICABILITY = "net.refractions.udig.edit.layer.FEATURES_MODIFY_APPLICABILITY"; //$NON-NLS-1$
+    String LAYER__FEATURES_MODIFY_APPLICABILITY = "org.locationtech.udig.edit.layer.FEATURES_MODIFY_APPLICABILITY"; //$NON-NLS-1$
 }

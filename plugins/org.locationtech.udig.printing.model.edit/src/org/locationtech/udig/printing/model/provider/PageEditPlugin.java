@@ -4,9 +4,9 @@
  *
  * $Id$
  */
-package net.refractions.udig.printing.model.provider;
+package org.locationtech.udig.printing.model.provider;
 
-import net.refractions.udig.project.internal.provider.ProjectEditPlugin;
+import org.locationtech.udig.project.internal.provider.ProjectEditPlugin;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;

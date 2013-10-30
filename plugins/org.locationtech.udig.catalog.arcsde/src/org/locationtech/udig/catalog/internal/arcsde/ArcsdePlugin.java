@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.arcsde;
+package org.locationtech.udig.catalog.internal.arcsde;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -27,7 +27,7 @@ public class ArcsdePlugin extends AbstractUIPlugin {
     /**
      * Comment for <code>ID</code>
      */
-    public static final String ID = "net.refractions.udig.catalog.arcsde"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.catalog.arcsde"; //$NON-NLS-1$
 
     // The shared instance.
     private static ArcsdePlugin plugin;
@@ -92,7 +92,7 @@ public class ArcsdePlugin extends AbstractUIPlugin {
         try {
             if (resourceBundle == null)
                 resourceBundle = ResourceBundle
-                        .getBundle("net.refractions.udig.catalog.internal.arcsde.ArcsdePluginResources"); //$NON-NLS-1$
+                        .getBundle("org.locationtech.udig.catalog.internal.arcsde.ArcsdePluginResources"); //$NON-NLS-1$
         } catch (MissingResourceException x) {
             resourceBundle = null;
         }
@@ -117,7 +117,7 @@ public class ArcsdePlugin extends AbstractUIPlugin {
      * It is much prefered to do this:
      * 
      * <pre><code>
-     * private static final String RENDERING = &quot;net.refractions.udig.project/render/trace&quot;;
+     * private static final String RENDERING = &quot;org.locationtech.udig.project/render/trace&quot;;
      * if (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
      *     System.out.println(&quot;your message here&quot;);
      * }

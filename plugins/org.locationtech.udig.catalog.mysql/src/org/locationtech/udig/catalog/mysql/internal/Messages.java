@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.mysql.internal;
+package org.locationtech.udig.catalog.mysql.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "net.refractions.udig.catalog.mysql.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.catalog.mysql.internal.messages"; //$NON-NLS-1$
 
 	public static String MySQLServiceExtension_badURL;
 

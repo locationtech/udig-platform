@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.cache;
+package org.locationtech.udig.style.cache;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -26,9 +26,9 @@ import org.geotools.styling.Style;
 import org.opengis.coverage.grid.GridCoverage;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.style.IStyleConfigurator;
-import net.refractions.udig.style.sld.SLDContent;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.IStyleConfigurator;
+import org.locationtech.udig.style.sld.SLDContent;
 
 public class CacheConfigurator extends IStyleConfigurator {
 

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.catalog.csv;
+package org.locationtech.udig.tutorials.catalog.csv;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,8 +19,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.URLUtils;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 

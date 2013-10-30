@@ -9,15 +9,15 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.command;
+package org.locationtech.udig.project.command;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.commands.DefaultErrorHandler;
-import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.commands.DefaultErrorHandler;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;

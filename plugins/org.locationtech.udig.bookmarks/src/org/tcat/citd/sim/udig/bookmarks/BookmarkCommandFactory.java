@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.tcat.citd.sim.udig.bookmarks;
+package org.locationtech.udig.bookmarks;
 
-import net.refractions.udig.project.command.NavCommand;
+import org.locationtech.udig.project.command.NavCommand;
 
-import org.tcat.citd.sim.udig.bookmarks.internal.command.GotoBookmarkCommand;
+import org.locationtech.udig.bookmarks.internal.command.GotoBookmarkCommand;
 
 /**
  * Factory for creating bookmark-related commands

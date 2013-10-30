@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="net.refractions.udig_tutorials.custom-feature"
+      id="org.locationtech.udig_tutorials.custom-feature"
       label="Feature for Custom Aplication"
       version="1.3.0.qualifier"
       provider-name="A Humble uDig Student">
@@ -25,14 +25,14 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
   </license>
 
    <plugin
-         id="net.refractions.udig.tutorials.customapp"
+         id="org.locationtech.udig.tutorials.customapp"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="net.refractions.udig.tutorials.distanceTool"
+         id="org.locationtech.udig.tutorials.distanceTool"
          download-size="0"
          install-size="0"
          version="0.0.0"/>

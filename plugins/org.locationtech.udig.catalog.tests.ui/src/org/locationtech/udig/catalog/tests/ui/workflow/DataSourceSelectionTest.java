@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.tests.ui.workflow;
+package org.locationtech.udig.catalog.tests.ui.workflow;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
@@ -18,15 +18,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.ui.DataSourceSelectionPage;
-import net.refractions.udig.catalog.ui.UDIGConnectionFactoryDescriptor;
-import net.refractions.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
-import net.refractions.udig.catalog.ui.workflow.DataSourceSelectionState;
-import net.refractions.udig.catalog.ui.workflow.State;
-import net.refractions.udig.catalog.ui.workflow.Workflow;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardDialog;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
+import org.locationtech.udig.catalog.ui.DataSourceSelectionPage;
+import org.locationtech.udig.catalog.ui.UDIGConnectionFactoryDescriptor;
+import org.locationtech.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
+import org.locationtech.udig.catalog.ui.workflow.DataSourceSelectionState;
+import org.locationtech.udig.catalog.ui.workflow.State;
+import org.locationtech.udig.catalog.ui.workflow.Workflow;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardDialog;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -96,7 +96,7 @@ public class DataSourceSelectionTest {
 				UDIGConnectionFactoryDescriptor d = 
 					(UDIGConnectionFactoryDescriptor) sselection.getFirstElement(); 
 					
-				fail = !d.getId().equals("net.refractions.udig.catalog.ui.WMS"); //$NON-NLS-1$
+				fail = !d.getId().equals("org.locationtech.udig.catalog.ui.WMS"); //$NON-NLS-1$
 				if (!fail) {
 					Button button = DialogDriver.findButton(dialog,IDialogConstants.NEXT_ID);
 					fail = !button.isEnabled();

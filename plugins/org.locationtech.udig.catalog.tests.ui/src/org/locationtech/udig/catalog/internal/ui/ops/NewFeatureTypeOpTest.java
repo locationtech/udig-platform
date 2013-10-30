@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.ui.ops;
+package org.locationtech.udig.catalog.internal.ui.ops;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -21,15 +21,15 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceFactory;
-import net.refractions.udig.catalog.internal.wfs.WFSServiceExtension;
-import net.refractions.udig.catalog.tests.ui.CatalogTestsUIPlugin;
-import net.refractions.udig.ui.WaitCondition;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceFactory;
+import org.locationtech.udig.catalog.internal.wfs.WFSServiceExtension;
+import org.locationtech.udig.catalog.tests.ui.CatalogTestsUIPlugin;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -68,7 +68,7 @@ public class NewFeatureTypeOpTest {
         
         delete(file);
         // test if shapefile is not local
-        URL url=new URL("https://github.com/uDig/udig-platform/blob/master/plugins/net.refractions.udig.catalog.tests.ui/data/streams.shp?raw=true"); //$NON-NLS-1$
+        URL url=new URL("https://github.com/uDig/udig-platform/blob/master/plugins/org.locationtech.udig.catalog.tests.ui/data/streams.shp?raw=true"); //$NON-NLS-1$
         
         services = CatalogPlugin.getDefault().getServiceFactory().createService(url);
         

@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld.editor;
+package org.locationtech.udig.style.sld.editor;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.style.sld.SLDPlugin;
-import net.refractions.udig.style.sld.internal.Messages;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.style.sld.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.styling.SLDTransformer;

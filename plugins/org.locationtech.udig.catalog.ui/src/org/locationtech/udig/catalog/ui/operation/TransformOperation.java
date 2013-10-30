@@ -8,19 +8,19 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.ui.operation;
+package org.locationtech.udig.catalog.ui.operation;
 
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.catalog.util.GeoToolsAdapters;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.operations.IOp;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.catalog.util.GeoToolsAdapters;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;

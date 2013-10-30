@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.catalog.teradata;
+package org.locationtech.udig.catalog.teradata;
 
 import static org.geotools.data.teradata.TeradataDataStoreFactory.PORT;
 import static org.geotools.jdbc.JDBCDataStoreFactory.DATABASE;
@@ -26,10 +26,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
 
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.service.database.TableDescriptor;
-import net.refractions.udig.ui.UDIGDisplaySafeLock;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.service.database.TableDescriptor;
+import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.render;
+package org.locationtech.udig.project.render;
 
 import java.awt.Rectangle;
 
@@ -16,7 +16,7 @@ import org.geotools.renderer.lite.LabelCache;
 
 /**
  * The Labeller draws the labels from each renderer on the top layer of the map.  New implementations can be 
- * registered using the net.refractions.udig.project.ui.label.painter extension point.
+ * registered using the org.locationtech.udig.project.ui.label.painter extension point.
  * <p>
  * The basic implementation maintains a cache of Labels so that various heuristics can be ran on them.  For example making 
  * sure that labels don't overlap.  At the end of each rendering the cached labels are deleted.  Except for those added 

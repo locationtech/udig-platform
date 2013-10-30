@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.ui.wizard;
+package org.locationtech.udig.catalog.ui.wizard;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -17,15 +17,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.internal.ui.ImageConstants;
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.catalog.ui.search.ResourceSearchComposite;
-import net.refractions.udig.catalog.ui.workflow.ResourceSearchState;
-import net.refractions.udig.catalog.ui.workflow.State;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPage;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.internal.ui.ImageConstants;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.catalog.ui.search.ResourceSearchComposite;
+import org.locationtech.udig.catalog.ui.workflow.ResourceSearchState;
+import org.locationtech.udig.catalog.ui.workflow.State;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPage;
 
 import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.PageChangedEvent;

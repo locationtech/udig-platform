@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.libs.internal;
+package org.locationtech.udig.libs.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-    private static final String BUNDLE_NAME = "net.refractions.udig.libs.internal.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "org.locationtech.udig.libs.internal.messages"; //$NON-NLS-1$
     public static String Activator_1;
     public static String Activator_EPSG_DATABASE;
     public static String CHECK;

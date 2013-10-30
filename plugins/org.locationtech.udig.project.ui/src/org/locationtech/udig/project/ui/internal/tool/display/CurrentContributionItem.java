@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.tool.display;
+package org.locationtech.udig.project.ui.internal.tool.display;
 
 import org.eclipse.jface.action.ContributionItem;
 

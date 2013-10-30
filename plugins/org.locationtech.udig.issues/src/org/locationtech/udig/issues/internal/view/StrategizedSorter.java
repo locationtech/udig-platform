@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.internal.view;
+package org.locationtech.udig.issues.internal.view;
 
-import net.refractions.udig.issues.Column;
-import net.refractions.udig.issues.IIssuesViewSorter;
+import org.locationtech.udig.issues.Column;
+import org.locationtech.udig.issues.IIssuesViewSorter;
 
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;

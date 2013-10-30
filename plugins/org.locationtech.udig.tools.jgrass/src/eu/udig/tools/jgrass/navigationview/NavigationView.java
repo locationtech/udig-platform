@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.tools.jgrass.navigationview;
+package org.locationtech.udig.tools.jgrass.navigationview;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,18 +25,18 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IMapCompositionListener;
-import net.refractions.udig.project.IMapListener;
-import net.refractions.udig.project.MapCompositionEvent;
-import net.refractions.udig.project.MapEvent;
-import net.refractions.udig.project.command.factory.NavigationCommandFactory;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.ui.ExceptionDetailsDialog;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IMapCompositionListener;
+import org.locationtech.udig.project.IMapListener;
+import org.locationtech.udig.project.MapCompositionEvent;
+import org.locationtech.udig.project.MapEvent;
+import org.locationtech.udig.project.command.factory.NavigationCommandFactory;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.FileLocator;
@@ -96,8 +96,8 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
 
-import eu.udig.catalog.jgrass.JGrassPlugin;
-import eu.udig.tools.jgrass.JGrassToolsPlugin;
+import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
+import org.locationtech.udig.tools.jgrass.JGrassToolsPlugin;
 
 /**
  * A navigation view.

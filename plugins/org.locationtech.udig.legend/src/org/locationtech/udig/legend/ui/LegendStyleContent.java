@@ -9,21 +9,21 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.legend.ui;
+package org.locationtech.udig.legend.ui;
 
 import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.StyleContent;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.StyleContent;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
 
 public class LegendStyleContent extends StyleContent {
 
-    public static final String ID = "net.refractions.udig.legend.legendStyle"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.legend.legendStyle"; //$NON-NLS-1$
     
     public LegendStyleContent() {
         super(ID);

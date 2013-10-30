@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.shp.tests;
+package org.locationtech.udig.catalog.shp.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
-import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
-import net.refractions.udig.document.source.ShpDocPropertyParser;
+import org.locationtech.udig.catalog.document.IDocumentSource.DocumentInfo;
+import org.locationtech.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import org.locationtech.udig.document.source.ShpDocPropertyParser;
 
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;

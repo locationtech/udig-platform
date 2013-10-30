@@ -8,16 +8,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig;
+package org.locationtech.udig;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import net.refractions.udig.internal.ui.UDIGDropHandler;
-import net.refractions.udig.internal.ui.UDIGDropHandler.CompositeDropActionJob;
-import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
-import net.refractions.udig.project.ui.internal.MapEditorPart;
-import net.refractions.udig.ui.WaitCondition;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
+import org.locationtech.udig.internal.ui.UDIGDropHandler.CompositeDropActionJob;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ui.IEditorPart;

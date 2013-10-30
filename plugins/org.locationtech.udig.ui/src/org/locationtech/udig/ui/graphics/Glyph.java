@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.ui.graphics;
+package org.locationtech.udig.ui.graphics;
 
 import java.awt.Color;
 
-import net.refractions.udig.ui.Drawing;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.Drawing;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;

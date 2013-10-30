@@ -1,7 +1,7 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.render;
+package org.locationtech.udig.project.internal.render;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 /**
- * TODO Purpose of net.refractions.udig.project.internal.render
+ * TODO Purpose of org.locationtech.udig.project.internal.render
  * <p>
  * </p>
  * 
@@ -40,21 +40,21 @@ public interface RenderPackage extends EPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    String eNS_PREFIX = "net.refractions.udig.project.internal.render"; //$NON-NLS-1$
+    String eNS_PREFIX = "org.locationtech.udig.project.internal.render"; //$NON-NLS-1$
 
     /**
      * The singleton instance of the package.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    RenderPackage eINSTANCE = net.refractions.udig.project.internal.render.impl.RenderPackageImpl
+    RenderPackage eINSTANCE = org.locationtech.udig.project.internal.render.impl.RenderPackageImpl
             .init();
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.render.IRenderManager <em>IRender Manager</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.render.IRenderManager <em>IRender Manager</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.render.IRenderManager
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIRenderManager()
+     * @see org.locationtech.udig.project.render.IRenderManager
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIRenderManager()
      * @generated
      */
     int IRENDER_MANAGER = 0;
@@ -69,10 +69,10 @@ public interface RenderPackage extends EPackage {
     int IRENDER_MANAGER_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.render.IViewportModel <em>IViewport Model</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.render.IViewportModel <em>IViewport Model</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.render.IViewportModel
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIViewportModel()
+     * @see org.locationtech.udig.project.render.IViewportModel
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIViewportModel()
      * @generated
      */
     int IVIEWPORT_MODEL = 1;
@@ -87,10 +87,10 @@ public interface RenderPackage extends EPackage {
     int IVIEWPORT_MODEL_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.render.IMultiLayerRenderer <em>IMulti Layer Renderer</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.render.IMultiLayerRenderer <em>IMulti Layer Renderer</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.render.IMultiLayerRenderer
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIMultiLayerRenderer()
+     * @see org.locationtech.udig.project.render.IMultiLayerRenderer
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIMultiLayerRenderer()
      * @generated
      */
     int IMULTI_LAYER_RENDERER = 2;
@@ -105,10 +105,10 @@ public interface RenderPackage extends EPackage {
     int IMULTI_LAYER_RENDERER_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.render.IRenderer <em>IRenderer</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.render.IRenderer <em>IRenderer</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.render.IRenderer
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIRenderer()
+     * @see org.locationtech.udig.project.render.IRenderer
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIRenderer()
      * @generated
      */
     int IRENDERER = 3;
@@ -123,10 +123,10 @@ public interface RenderPackage extends EPackage {
     int IRENDERER_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.ILayer <em>ILayer</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.ILayer <em>ILayer</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.ILayer
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getILayer()
+     * @see org.locationtech.udig.project.ILayer
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getILayer()
      * @generated
      */
     int ILAYER = 4;
@@ -141,10 +141,10 @@ public interface RenderPackage extends EPackage {
     int ILAYER_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.render.impl.RendererImpl <em>Renderer</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.render.impl.RendererImpl <em>Renderer</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.render.impl.RendererImpl
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getRenderer()
+     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRenderer()
      * @generated
      */
     int RENDERER = 10;
@@ -186,10 +186,10 @@ public interface RenderPackage extends EPackage {
     int RENDERER_FEATURE_COUNT = IRENDERER_FEATURE_COUNT + 3;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.render.impl.MultiLayerRendererImpl <em>Multi Layer Renderer</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.render.impl.MultiLayerRendererImpl <em>Multi Layer Renderer</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.render.impl.MultiLayerRendererImpl
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getMultiLayerRenderer()
+     * @see org.locationtech.udig.project.internal.render.impl.MultiLayerRendererImpl
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getMultiLayerRenderer()
      * @generated
      */
     int MULTI_LAYER_RENDERER = 5;
@@ -231,10 +231,10 @@ public interface RenderPackage extends EPackage {
     int MULTI_LAYER_RENDERER_FEATURE_COUNT = RENDERER_FEATURE_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.render.impl.RenderExecutorImpl <em>Executor</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl <em>Executor</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.render.impl.RenderExecutorImpl
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getRenderExecutor()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRenderExecutor()
      * @generated
      */
     int RENDER_EXECUTOR = 6;
@@ -285,10 +285,10 @@ public interface RenderPackage extends EPackage {
     int RENDER_EXECUTOR_FEATURE_COUNT = RENDERER_FEATURE_COUNT + 1;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.render.impl.RenderManagerImpl <em>Manager</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.render.impl.RenderManagerImpl <em>Manager</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.render.impl.RenderManagerImpl
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getRenderManager()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderManagerImpl
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRenderManager()
      * @generated
      */
     int RENDER_MANAGER = 7;
@@ -339,10 +339,10 @@ public interface RenderPackage extends EPackage {
     int RENDER_MANAGER_FEATURE_COUNT = IRENDER_MANAGER_FEATURE_COUNT + 4;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.render.displayAdapter.IMapDisplayListener <em>IMap Display Listener</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener <em>IMap Display Listener</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.render.displayAdapter.IMapDisplayListener
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIMapDisplayListener()
+     * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIMapDisplayListener()
      * @generated
      */
     int IMAP_DISPLAY_LISTENER = 11;
@@ -357,10 +357,10 @@ public interface RenderPackage extends EPackage {
     int IMAP_DISPLAY_LISTENER_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.render.impl.ViewportModelImpl <em>Viewport Model</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.render.impl.ViewportModelImpl <em>Viewport Model</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.render.impl.ViewportModelImpl
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getViewportModel()
+     * @see org.locationtech.udig.project.internal.render.impl.ViewportModelImpl
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getViewportModel()
      * @generated
      */
     int VIEWPORT_MODEL = 8;
@@ -505,7 +505,7 @@ public interface RenderPackage extends EPackage {
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see Comparable
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getComparable()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getComparable()
      * @generated
      */
     int COMPARABLE = 9;
@@ -520,11 +520,11 @@ public interface RenderPackage extends EPackage {
     int COMPARABLE_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.render.IRenderContext <em>IRender Context</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.render.IRenderContext <em>IRender Context</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.render.IRenderContext
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIRenderContext()
+     * @see org.locationtech.udig.project.render.IRenderContext
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIRenderContext()
      * @generated
      */
     int IRENDER_CONTEXT = 12;
@@ -543,7 +543,7 @@ public interface RenderPackage extends EPackage {
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see org.opengis.referencing.crs.CoordinateReferenceSystem
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getCoordinateReferenceSystem()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getCoordinateReferenceSystem()
      * @generated
      */
     int COORDINATE_REFERENCE_SYSTEM = 13;
@@ -553,7 +553,7 @@ public interface RenderPackage extends EPackage {
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @see com.vividsolutions.jts.geom.Envelope
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getEnvelope()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getEnvelope()
      * @generated
      */
     int ENVELOPE = 14;
@@ -562,8 +562,8 @@ public interface RenderPackage extends EPackage {
      * The meta object id for the '<em>IGeo Resource</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.refractions.udig.catalog.IGeoResource
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIGeoResource()
+     * @see org.locationtech.udig.catalog.IGeoResource
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIGeoResource()
      * @generated
      */
     int IGEO_RESOURCE = 15;
@@ -573,7 +573,7 @@ public interface RenderPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see java.awt.image.BufferedImage
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getBufferedImage()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getBufferedImage()
      * @generated
      */
     int BUFFERED_IMAGE = 16;
@@ -583,7 +583,7 @@ public interface RenderPackage extends EPackage {
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @see java.awt.Rectangle
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getRectangle()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRectangle()
      * @generated
      */
     int RECTANGLE = 17;
@@ -593,7 +593,7 @@ public interface RenderPackage extends EPackage {
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @see org.geotools.data.Query
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getQuery()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getQuery()
      * @generated
      */
     int QUERY = 18;
@@ -603,7 +603,7 @@ public interface RenderPackage extends EPackage {
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @see java.awt.Graphics2D
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getGraphics2D()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getGraphics2D()
      * @generated
      */
     int GRAPHICS2_D = 19;
@@ -613,7 +613,7 @@ public interface RenderPackage extends EPackage {
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @see java.util.List
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getList()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getList()
      * @generated
      */
     int LIST = 20;
@@ -623,7 +623,7 @@ public interface RenderPackage extends EPackage {
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @see com.vividsolutions.jts.geom.Coordinate
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getCoordinate()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getCoordinate()
      * @generated
      */
     int COORDINATE = 21;
@@ -633,7 +633,7 @@ public interface RenderPackage extends EPackage {
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @see java.awt.Point
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getPoint()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getPoint()
      * @generated
      */
     int POINT = 22;
@@ -643,7 +643,7 @@ public interface RenderPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see java.awt.geom.AffineTransform
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getAffineTransform()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getAffineTransform()
      * @generated
      */
     int AFFINE_TRANSFORM = 23;
@@ -652,8 +652,8 @@ public interface RenderPackage extends EPackage {
      * The meta object id for the '<em>Map Display</em>' data type.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * @see net.refractions.udig.project.render.displayAdapter.IMapDisplay
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getMapDisplay()
+     * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplay
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getMapDisplay()
      * @generated
      */
     int MAP_DISPLAY = 24;
@@ -663,7 +663,7 @@ public interface RenderPackage extends EPackage {
      * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
      * @see org.eclipse.core.runtime.IProgressMonitor
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIProgressMonitor()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIProgressMonitor()
      * @generated
      */
     int IPROGRESS_MONITOR = 25;
@@ -672,8 +672,8 @@ public interface RenderPackage extends EPackage {
      * The meta object id for the '<em>Exception</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.render.RenderException
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getRenderException()
+     * @see org.locationtech.udig.project.render.RenderException
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRenderException()
      * @generated
      */
     int RENDER_EXCEPTION = 26;
@@ -683,7 +683,7 @@ public interface RenderPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see java.util.SortedSet
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getSortedSet()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getSortedSet()
      * @generated
      */
     int SORTED_SET = 27;
@@ -693,7 +693,7 @@ public interface RenderPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see org.geotools.geometry.jts.ReferencedEnvelope
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getReferencedEnvelope()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getReferencedEnvelope()
      * @generated
      */
     int REFERENCED_ENVELOPE = 28;
@@ -703,7 +703,7 @@ public interface RenderPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see org.joda.time.DateTime
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getDateTime()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getDateTime()
      * @generated
      */
     int DATE_TIME = 29;
@@ -713,7 +713,7 @@ public interface RenderPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see java.lang.IllegalArgumentException
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIllegalArgumentException()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIllegalArgumentException()
      * @generated
      */
     int ILLEGAL_ARGUMENT_EXCEPTION = 30;
@@ -722,8 +722,8 @@ public interface RenderPackage extends EPackage {
      * The meta object id for the '<em>Info List</em>' data type. <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * 
-     * @see net.refractions.udig.project.render.InfoList
-     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getInfoList()
+     * @see org.locationtech.udig.project.render.InfoList
+     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getInfoList()
      * @generated int INFO_LIST = 30;
      */
 
@@ -732,8 +732,8 @@ public interface RenderPackage extends EPackage {
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the meta object for class '<em>Comparable</em>'.
-     * @see net.refractions.udig.project.render.IRenderManager
-     * @model instanceClass="net.refractions.udig.project.render.IRenderManager"
+     * @see org.locationtech.udig.project.render.IRenderManager
+     * @model instanceClass="org.locationtech.udig.project.render.IRenderManager"
      * @generated
      */
     EClass getIRenderManager();
@@ -743,8 +743,8 @@ public interface RenderPackage extends EPackage {
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the meta object for class '<em>Comparable</em>'.
-     * @see net.refractions.udig.project.render.IViewportModel
-     * @model instanceClass="net.refractions.udig.project.render.IViewportModel"
+     * @see org.locationtech.udig.project.render.IViewportModel
+     * @model instanceClass="org.locationtech.udig.project.render.IViewportModel"
      * @generated
      */
     EClass getIViewportModel();
@@ -754,8 +754,8 @@ public interface RenderPackage extends EPackage {
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the meta object for class '<em>Comparable</em>'.
-     * @see net.refractions.udig.project.render.IMultiLayerRenderer
-     * @model instanceClass="net.refractions.udig.project.render.IMultiLayerRenderer"
+     * @see org.locationtech.udig.project.render.IMultiLayerRenderer
+     * @model instanceClass="org.locationtech.udig.project.render.IMultiLayerRenderer"
      * @generated
      */
     EClass getIMultiLayerRenderer();
@@ -765,8 +765,8 @@ public interface RenderPackage extends EPackage {
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the meta object for class '<em>Comparable</em>'.
-     * @see net.refractions.udig.project.render.IRenderer
-     * @model instanceClass="net.refractions.udig.project.render.IRenderer"
+     * @see org.locationtech.udig.project.render.IRenderer
+     * @model instanceClass="org.locationtech.udig.project.render.IRenderer"
      * @generated
      */
     EClass getIRenderer();
@@ -776,297 +776,297 @@ public interface RenderPackage extends EPackage {
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the meta object for class '<em>Comparable</em>'.
-     * @see net.refractions.udig.project.ILayer
-     * @model instanceClass="net.refractions.udig.project.ILayer"
+     * @see org.locationtech.udig.project.ILayer
+     * @model instanceClass="org.locationtech.udig.project.ILayer"
      * @generated
      */
     EClass getILayer();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.render.MultiLayerRenderer <em>Multi Layer Renderer</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.render.MultiLayerRenderer <em>Multi Layer Renderer</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Multi Layer Renderer</em>'.
-     * @see net.refractions.udig.project.internal.render.MultiLayerRenderer
+     * @see org.locationtech.udig.project.internal.render.MultiLayerRenderer
      * @generated
      */
     EClass getMultiLayerRenderer();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.render.RenderExecutor <em>Executor</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.render.RenderExecutor <em>Executor</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Executor</em>'.
-     * @see net.refractions.udig.project.internal.render.RenderExecutor
+     * @see org.locationtech.udig.project.internal.render.RenderExecutor
      * @generated
      */
     EClass getRenderExecutor();
 
     /**
-     * Returns the meta object for the reference '{@link net.refractions.udig.project.internal.render.RenderExecutor#getRenderer <em>Renderer</em>}'.
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.render.RenderExecutor#getRenderer <em>Renderer</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Renderer</em>'.
-     * @see net.refractions.udig.project.internal.render.RenderExecutor#getRenderer()
+     * @see org.locationtech.udig.project.internal.render.RenderExecutor#getRenderer()
      * @see #getRenderExecutor()
      * @generated
      */
     EReference getRenderExecutor_Renderer();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.render.RenderManager <em>Manager</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.render.RenderManager <em>Manager</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Manager</em>'.
-     * @see net.refractions.udig.project.internal.render.RenderManager
+     * @see org.locationtech.udig.project.internal.render.RenderManager
      * @generated
      */
     EClass getRenderManager();
 
     /**
-     * Returns the meta object for the reference '{@link net.refractions.udig.project.internal.render.RenderManager#getRenderExecutor <em>Render Executor</em>}'.
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.render.RenderManager#getRenderExecutor <em>Render Executor</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Render Executor</em>'.
-     * @see net.refractions.udig.project.internal.render.RenderManager#getRenderExecutor()
+     * @see org.locationtech.udig.project.internal.render.RenderManager#getRenderExecutor()
      * @see #getRenderManager()
      * @generated
      */
     EReference getRenderManager_RenderExecutor();
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.render.RenderManager#getMapDisplay <em>Map Display</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.RenderManager#getMapDisplay <em>Map Display</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Map Display</em>'.
-     * @see net.refractions.udig.project.internal.render.RenderManager#getMapDisplay()
+     * @see org.locationtech.udig.project.internal.render.RenderManager#getMapDisplay()
      * @see #getRenderManager()
      * @generated
      */
     EAttribute getRenderManager_MapDisplay();
 
     /**
-     * Returns the meta object for the reference '{@link net.refractions.udig.project.internal.render.RenderManager#getMapInternal <em>Map Internal</em>}'.
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.render.RenderManager#getMapInternal <em>Map Internal</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Map Internal</em>'.
-     * @see net.refractions.udig.project.internal.render.RenderManager#getMapInternal()
+     * @see org.locationtech.udig.project.internal.render.RenderManager#getMapInternal()
      * @see #getRenderManager()
      * @generated
      */
     EReference getRenderManager_MapInternal();
 
     /**
-     * Returns the meta object for the reference '{@link net.refractions.udig.project.internal.render.RenderManager#getViewportModelInternal <em>Viewport Model Internal</em>}'.
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.render.RenderManager#getViewportModelInternal <em>Viewport Model Internal</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Viewport Model Internal</em>'.
-     * @see net.refractions.udig.project.internal.render.RenderManager#getViewportModelInternal()
+     * @see org.locationtech.udig.project.internal.render.RenderManager#getViewportModelInternal()
      * @see #getRenderManager()
      * @generated
      */
     EReference getRenderManager_ViewportModelInternal();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.render.Renderer <em>Renderer</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.render.Renderer <em>Renderer</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Renderer</em>'.
-     * @see net.refractions.udig.project.internal.render.Renderer
+     * @see org.locationtech.udig.project.internal.render.Renderer
      * @generated
      */
     EClass getRenderer();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.render.Renderer#getState <em>State</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.Renderer#getState <em>State</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>State</em>'.
-     * @see net.refractions.udig.project.internal.render.Renderer#getState()
+     * @see org.locationtech.udig.project.internal.render.Renderer#getState()
      * @see #getRenderer()
      * @generated
      */
     EAttribute getRenderer_State();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.render.Renderer#getName <em>Name</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.Renderer#getName <em>Name</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Name</em>'.
-     * @see net.refractions.udig.project.internal.render.Renderer#getName()
+     * @see org.locationtech.udig.project.internal.render.Renderer#getName()
      * @see #getRenderer()
      * @generated
      */
     EAttribute getRenderer_Name();
 
     /**
-     * Returns the meta object for the reference '{@link net.refractions.udig.project.internal.render.Renderer#getContext <em>Context</em>}'.
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.render.Renderer#getContext <em>Context</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Context</em>'.
-     * @see net.refractions.udig.project.internal.render.Renderer#getContext()
+     * @see org.locationtech.udig.project.internal.render.Renderer#getContext()
      * @see #getRenderer()
      * @generated
      */
     EReference getRenderer_Context();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.render.displayAdapter.IMapDisplayListener <em>IMap Display Listener</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener <em>IMap Display Listener</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>IMap Display Listener</em>'.
-     * @see net.refractions.udig.project.render.displayAdapter.IMapDisplayListener
-     * @model instanceClass="net.refractions.udig.project.render.displayAdapter.IMapDisplayListener"
+     * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener
+     * @model instanceClass="org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener"
      * @generated
      */
     EClass getIMapDisplayListener();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.render.IRenderContext <em>IRender Context</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.render.IRenderContext <em>IRender Context</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>IRender Context</em>'.
-     * @see net.refractions.udig.project.render.IRenderContext
-     * @model instanceClass="net.refractions.udig.project.render.IRenderContext"
+     * @see org.locationtech.udig.project.render.IRenderContext
+     * @model instanceClass="org.locationtech.udig.project.render.IRenderContext"
      * @generated
      */
     EClass getIRenderContext();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.render.ViewportModel <em>Viewport Model</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.render.ViewportModel <em>Viewport Model</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Viewport Model</em>'.
-     * @see net.refractions.udig.project.internal.render.ViewportModel
+     * @see org.locationtech.udig.project.internal.render.ViewportModel
      * @generated
      */
     EClass getViewportModel();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.render.ViewportModel#getCRS <em>CRS</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCRS <em>CRS</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>CRS</em>'.
-     * @see net.refractions.udig.project.internal.render.ViewportModel#getCRS()
+     * @see org.locationtech.udig.project.internal.render.ViewportModel#getCRS()
      * @see #getViewportModel()
      * @generated
      */
     EAttribute getViewportModel_CRS();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.render.ViewportModel#getBounds <em>Bounds</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.ViewportModel#getBounds <em>Bounds</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Bounds</em>'.
-     * @see net.refractions.udig.project.internal.render.ViewportModel#getBounds()
+     * @see org.locationtech.udig.project.internal.render.ViewportModel#getBounds()
      * @see #getViewportModel()
      * @generated
      */
     EAttribute getViewportModel_Bounds();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.render.ViewportModel#getCenter <em>Center</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCenter <em>Center</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Center</em>'.
-     * @see net.refractions.udig.project.internal.render.ViewportModel#getCenter()
+     * @see org.locationtech.udig.project.internal.render.ViewportModel#getCenter()
      * @see #getViewportModel()
      * @generated
      */
     EAttribute getViewportModel_Center();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.render.ViewportModel#getHeight <em>Height</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.ViewportModel#getHeight <em>Height</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Height</em>'.
-     * @see net.refractions.udig.project.internal.render.ViewportModel#getHeight()
+     * @see org.locationtech.udig.project.internal.render.ViewportModel#getHeight()
      * @see #getViewportModel()
      * @generated
      */
     EAttribute getViewportModel_Height();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.render.ViewportModel#getWidth <em>Width</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.ViewportModel#getWidth <em>Width</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Width</em>'.
-     * @see net.refractions.udig.project.internal.render.ViewportModel#getWidth()
+     * @see org.locationtech.udig.project.internal.render.ViewportModel#getWidth()
      * @see #getViewportModel()
      * @generated
      */
     EAttribute getViewportModel_Width();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.render.ViewportModel#getAspectRatio <em>Aspect Ratio</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.ViewportModel#getAspectRatio <em>Aspect Ratio</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Aspect Ratio</em>'.
-     * @see net.refractions.udig.project.internal.render.ViewportModel#getAspectRatio()
+     * @see org.locationtech.udig.project.internal.render.ViewportModel#getAspectRatio()
      * @see #getViewportModel()
      * @generated
      */
     EAttribute getViewportModel_AspectRatio();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.render.ViewportModel#getPixelSize <em>Pixel Size</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.ViewportModel#getPixelSize <em>Pixel Size</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Pixel Size</em>'.
-     * @see net.refractions.udig.project.internal.render.ViewportModel#getPixelSize()
+     * @see org.locationtech.udig.project.internal.render.ViewportModel#getPixelSize()
      * @see #getViewportModel()
      * @generated
      */
     EAttribute getViewportModel_PixelSize();
 
     /**
-     * Returns the meta object for the container reference '{@link net.refractions.udig.project.internal.render.ViewportModel#getMapInternal <em>Map Internal</em>}'.
+     * Returns the meta object for the container reference '{@link org.locationtech.udig.project.internal.render.ViewportModel#getMapInternal <em>Map Internal</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Map Internal</em>'.
-     * @see net.refractions.udig.project.internal.render.ViewportModel#getMapInternal()
+     * @see org.locationtech.udig.project.internal.render.ViewportModel#getMapInternal()
      * @see #getViewportModel()
      * @generated
      */
     EReference getViewportModel_MapInternal();
 
     /**
-     * Returns the meta object for the reference '{@link net.refractions.udig.project.internal.render.ViewportModel#getRenderManagerInternal <em>Render Manager Internal</em>}'.
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.render.ViewportModel#getRenderManagerInternal <em>Render Manager Internal</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Render Manager Internal</em>'.
-     * @see net.refractions.udig.project.internal.render.ViewportModel#getRenderManagerInternal()
+     * @see org.locationtech.udig.project.internal.render.ViewportModel#getRenderManagerInternal()
      * @see #getViewportModel()
      * @generated
      */
     EReference getViewportModel_RenderManagerInternal();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.render.ViewportModel#getPreferredScaleDenominators <em>Preferred Scale Denominators</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.ViewportModel#getPreferredScaleDenominators <em>Preferred Scale Denominators</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Preferred Scale Denominators</em>'.
-     * @see net.refractions.udig.project.internal.render.ViewportModel#getPreferredScaleDenominators()
+     * @see org.locationtech.udig.project.internal.render.ViewportModel#getPreferredScaleDenominators()
      * @see #getViewportModel()
      * @generated
      */
     EAttribute getViewportModel_PreferredScaleDenominators();
 
     /**
-     * Returns the meta object for the attribute list '{@link net.refractions.udig.project.internal.render.ViewportModel#getAvailableTimesteps <em>Available Timesteps</em>}'.
+     * Returns the meta object for the attribute list '{@link org.locationtech.udig.project.internal.render.ViewportModel#getAvailableTimesteps <em>Available Timesteps</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute list '<em>Available Timesteps</em>'.
-     * @see net.refractions.udig.project.internal.render.ViewportModel#getAvailableTimesteps()
+     * @see org.locationtech.udig.project.internal.render.ViewportModel#getAvailableTimesteps()
      * @see #getViewportModel()
      * @generated
      */
     EAttribute getViewportModel_AvailableTimesteps();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.render.ViewportModel#getCurrentTimestep <em>Current Timestep</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCurrentTimestep <em>Current Timestep</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Current Timestep</em>'.
-     * @see net.refractions.udig.project.internal.render.ViewportModel#getCurrentTimestep()
+     * @see org.locationtech.udig.project.internal.render.ViewportModel#getCurrentTimestep()
      * @see #getViewportModel()
      * @generated
      */
     EAttribute getViewportModel_CurrentTimestep();
 
     /**
-     * Returns the meta object for the attribute list '{@link net.refractions.udig.project.internal.render.ViewportModel#getAvailableElevation <em>Available Elevation</em>}'.
+     * Returns the meta object for the attribute list '{@link org.locationtech.udig.project.internal.render.ViewportModel#getAvailableElevation <em>Available Elevation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute list '<em>Available Elevation</em>'.
-     * @see net.refractions.udig.project.internal.render.ViewportModel#getAvailableElevation()
+     * @see org.locationtech.udig.project.internal.render.ViewportModel#getAvailableElevation()
      * @see #getViewportModel()
      * @generated
      */
     EAttribute getViewportModel_AvailableElevation();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.render.ViewportModel#getCurrentElevation <em>Current Elevation</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCurrentElevation <em>Current Elevation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Current Elevation</em>'.
-     * @see net.refractions.udig.project.internal.render.ViewportModel#getCurrentElevation()
+     * @see org.locationtech.udig.project.internal.render.ViewportModel#getCurrentElevation()
      * @see #getViewportModel()
      * @generated
      */
@@ -1104,11 +1104,11 @@ public interface RenderPackage extends EPackage {
     EDataType getEnvelope();
 
     /**
-     * Returns the meta object for data type '{@link net.refractions.udig.catalog.IGeoResource <em>IGeo Resource</em>}'.
+     * Returns the meta object for data type '{@link org.locationtech.udig.catalog.IGeoResource <em>IGeo Resource</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>IGeo Resource</em>'.
-     * @see net.refractions.udig.catalog.IGeoResource
-     * @model instanceClass="net.refractions.udig.catalog.IGeoResource"
+     * @see org.locationtech.udig.catalog.IGeoResource
+     * @model instanceClass="org.locationtech.udig.catalog.IGeoResource"
      * @generated
      */
     EDataType getIGeoResource();
@@ -1197,11 +1197,11 @@ public interface RenderPackage extends EPackage {
     EDataType getAffineTransform();
 
     /**
-     * Returns the meta object for data type '{@link net.refractions.udig.project.render.displayAdapter.IMapDisplay <em>Map Display</em>}'.
+     * Returns the meta object for data type '{@link org.locationtech.udig.project.render.displayAdapter.IMapDisplay <em>Map Display</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Map Display</em>'.
-     * @see net.refractions.udig.project.render.displayAdapter.IMapDisplay
-     * @model instanceClass="net.refractions.udig.project.render.displayAdapter.IMapDisplay"
+     * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplay
+     * @model instanceClass="org.locationtech.udig.project.render.displayAdapter.IMapDisplay"
      * @generated
      */
     EDataType getMapDisplay();
@@ -1217,12 +1217,12 @@ public interface RenderPackage extends EPackage {
     EDataType getIProgressMonitor();
 
     /**
-     * Returns the meta object for data type '{@link net.refractions.udig.project.render.RenderException <em>Exception</em>}'.
+     * Returns the meta object for data type '{@link org.locationtech.udig.project.render.RenderException <em>Exception</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for data type '<em>Exception</em>'.
-     * @see net.refractions.udig.project.render.RenderException
-     * @model instanceClass="net.refractions.udig.project.render.RenderException"
+     * @see org.locationtech.udig.project.render.RenderException
+     * @model instanceClass="org.locationtech.udig.project.render.RenderException"
      * @generated
      */
     EDataType getRenderException();
@@ -1294,71 +1294,71 @@ public interface RenderPackage extends EPackage {
      */
     interface Literals {
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.render.IRenderManager <em>IRender Manager</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.render.IRenderManager <em>IRender Manager</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.render.IRenderManager
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIRenderManager()
+         * @see org.locationtech.udig.project.render.IRenderManager
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIRenderManager()
          * @generated
          */
         EClass IRENDER_MANAGER = eINSTANCE.getIRenderManager();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.render.IViewportModel <em>IViewport Model</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.render.IViewportModel <em>IViewport Model</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.render.IViewportModel
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIViewportModel()
+         * @see org.locationtech.udig.project.render.IViewportModel
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIViewportModel()
          * @generated
          */
         EClass IVIEWPORT_MODEL = eINSTANCE.getIViewportModel();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.render.IMultiLayerRenderer <em>IMulti Layer Renderer</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.render.IMultiLayerRenderer <em>IMulti Layer Renderer</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.render.IMultiLayerRenderer
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIMultiLayerRenderer()
+         * @see org.locationtech.udig.project.render.IMultiLayerRenderer
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIMultiLayerRenderer()
          * @generated
          */
         EClass IMULTI_LAYER_RENDERER = eINSTANCE.getIMultiLayerRenderer();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.render.IRenderer <em>IRenderer</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.render.IRenderer <em>IRenderer</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.render.IRenderer
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIRenderer()
+         * @see org.locationtech.udig.project.render.IRenderer
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIRenderer()
          * @generated
          */
         EClass IRENDERER = eINSTANCE.getIRenderer();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.ILayer <em>ILayer</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.ILayer <em>ILayer</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.ILayer
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getILayer()
+         * @see org.locationtech.udig.project.ILayer
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getILayer()
          * @generated
          */
         EClass ILAYER = eINSTANCE.getILayer();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.render.impl.MultiLayerRendererImpl <em>Multi Layer Renderer</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.render.impl.MultiLayerRendererImpl <em>Multi Layer Renderer</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.render.impl.MultiLayerRendererImpl
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getMultiLayerRenderer()
+         * @see org.locationtech.udig.project.internal.render.impl.MultiLayerRendererImpl
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getMultiLayerRenderer()
          * @generated
          */
         EClass MULTI_LAYER_RENDERER = eINSTANCE.getMultiLayerRenderer();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.render.impl.RenderExecutorImpl <em>Executor</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl <em>Executor</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.render.impl.RenderExecutorImpl
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getRenderExecutor()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRenderExecutor()
          * @generated
          */
         EClass RENDER_EXECUTOR = eINSTANCE.getRenderExecutor();
@@ -1372,11 +1372,11 @@ public interface RenderPackage extends EPackage {
         EReference RENDER_EXECUTOR__RENDERER = eINSTANCE.getRenderExecutor_Renderer();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.render.impl.RenderManagerImpl <em>Manager</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.render.impl.RenderManagerImpl <em>Manager</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.render.impl.RenderManagerImpl
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getRenderManager()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderManagerImpl
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRenderManager()
          * @generated
          */
         EClass RENDER_MANAGER = eINSTANCE.getRenderManager();
@@ -1415,11 +1415,11 @@ public interface RenderPackage extends EPackage {
                 .getRenderManager_ViewportModelInternal();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.render.impl.ViewportModelImpl <em>Viewport Model</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.render.impl.ViewportModelImpl <em>Viewport Model</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.render.impl.ViewportModelImpl
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getViewportModel()
+         * @see org.locationtech.udig.project.internal.render.impl.ViewportModelImpl
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getViewportModel()
          * @generated
          */
         EClass VIEWPORT_MODEL = eINSTANCE.getViewportModel();
@@ -1546,17 +1546,17 @@ public interface RenderPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see Comparable
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getComparable()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getComparable()
          * @generated
          */
         EClass COMPARABLE = eINSTANCE.getComparable();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.render.impl.RendererImpl <em>Renderer</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.render.impl.RendererImpl <em>Renderer</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.render.impl.RendererImpl
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getRenderer()
+         * @see org.locationtech.udig.project.internal.render.impl.RendererImpl
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRenderer()
          * @generated
          */
         EClass RENDERER = eINSTANCE.getRenderer();
@@ -1586,21 +1586,21 @@ public interface RenderPackage extends EPackage {
         EReference RENDERER__CONTEXT = eINSTANCE.getRenderer_Context();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.render.displayAdapter.IMapDisplayListener <em>IMap Display Listener</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener <em>IMap Display Listener</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.render.displayAdapter.IMapDisplayListener
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIMapDisplayListener()
+         * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIMapDisplayListener()
          * @generated
          */
         EClass IMAP_DISPLAY_LISTENER = eINSTANCE.getIMapDisplayListener();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.render.IRenderContext <em>IRender Context</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.render.IRenderContext <em>IRender Context</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.render.IRenderContext
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIRenderContext()
+         * @see org.locationtech.udig.project.render.IRenderContext
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIRenderContext()
          * @generated
          */
         EClass IRENDER_CONTEXT = eINSTANCE.getIRenderContext();
@@ -1610,7 +1610,7 @@ public interface RenderPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see org.opengis.referencing.crs.CoordinateReferenceSystem
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getCoordinateReferenceSystem()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getCoordinateReferenceSystem()
          * @generated
          */
         EDataType COORDINATE_REFERENCE_SYSTEM = eINSTANCE.getCoordinateReferenceSystem();
@@ -1620,7 +1620,7 @@ public interface RenderPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see com.vividsolutions.jts.geom.Envelope
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getEnvelope()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getEnvelope()
          * @generated
          */
         EDataType ENVELOPE = eINSTANCE.getEnvelope();
@@ -1629,8 +1629,8 @@ public interface RenderPackage extends EPackage {
          * The meta object literal for the '<em>IGeo Resource</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.catalog.IGeoResource
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIGeoResource()
+         * @see org.locationtech.udig.catalog.IGeoResource
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIGeoResource()
          * @generated
          */
         EDataType IGEO_RESOURCE = eINSTANCE.getIGeoResource();
@@ -1640,7 +1640,7 @@ public interface RenderPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see java.awt.image.BufferedImage
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getBufferedImage()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getBufferedImage()
          * @generated
          */
         EDataType BUFFERED_IMAGE = eINSTANCE.getBufferedImage();
@@ -1650,7 +1650,7 @@ public interface RenderPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see java.awt.Rectangle
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getRectangle()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRectangle()
          * @generated
          */
         EDataType RECTANGLE = eINSTANCE.getRectangle();
@@ -1660,7 +1660,7 @@ public interface RenderPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see org.geotools.data.Query
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getQuery()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getQuery()
          * @generated
          */
         EDataType QUERY = eINSTANCE.getQuery();
@@ -1670,7 +1670,7 @@ public interface RenderPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see java.awt.Graphics2D
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getGraphics2D()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getGraphics2D()
          * @generated
          */
         EDataType GRAPHICS2_D = eINSTANCE.getGraphics2D();
@@ -1680,7 +1680,7 @@ public interface RenderPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see java.util.List
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getList()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getList()
          * @generated
          */
         EDataType LIST = eINSTANCE.getList();
@@ -1690,7 +1690,7 @@ public interface RenderPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see com.vividsolutions.jts.geom.Coordinate
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getCoordinate()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getCoordinate()
          * @generated
          */
         EDataType COORDINATE = eINSTANCE.getCoordinate();
@@ -1700,7 +1700,7 @@ public interface RenderPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see java.awt.Point
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getPoint()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getPoint()
          * @generated
          */
         EDataType POINT = eINSTANCE.getPoint();
@@ -1710,7 +1710,7 @@ public interface RenderPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see java.awt.geom.AffineTransform
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getAffineTransform()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getAffineTransform()
          * @generated
          */
         EDataType AFFINE_TRANSFORM = eINSTANCE.getAffineTransform();
@@ -1719,8 +1719,8 @@ public interface RenderPackage extends EPackage {
          * The meta object literal for the '<em>Map Display</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.render.displayAdapter.IMapDisplay
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getMapDisplay()
+         * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplay
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getMapDisplay()
          * @generated
          */
         EDataType MAP_DISPLAY = eINSTANCE.getMapDisplay();
@@ -1730,7 +1730,7 @@ public interface RenderPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see org.eclipse.core.runtime.IProgressMonitor
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIProgressMonitor()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIProgressMonitor()
          * @generated
          */
         EDataType IPROGRESS_MONITOR = eINSTANCE.getIProgressMonitor();
@@ -1739,8 +1739,8 @@ public interface RenderPackage extends EPackage {
          * The meta object literal for the '<em>Exception</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.render.RenderException
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getRenderException()
+         * @see org.locationtech.udig.project.render.RenderException
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRenderException()
          * @generated
          */
         EDataType RENDER_EXCEPTION = eINSTANCE.getRenderException();
@@ -1750,7 +1750,7 @@ public interface RenderPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see java.util.SortedSet
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getSortedSet()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getSortedSet()
          * @generated
          */
         EDataType SORTED_SET = eINSTANCE.getSortedSet();
@@ -1760,7 +1760,7 @@ public interface RenderPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see org.geotools.geometry.jts.ReferencedEnvelope
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getReferencedEnvelope()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getReferencedEnvelope()
          * @generated
          */
         EDataType REFERENCED_ENVELOPE = eINSTANCE.getReferencedEnvelope();
@@ -1770,7 +1770,7 @@ public interface RenderPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see org.joda.time.DateTime
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getDateTime()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getDateTime()
          * @generated
          */
         EDataType DATE_TIME = eINSTANCE.getDateTime();
@@ -1780,7 +1780,7 @@ public interface RenderPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see java.lang.IllegalArgumentException
-         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIllegalArgumentException()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIllegalArgumentException()
          * @generated
          */
         EDataType ILLEGAL_ARGUMENT_EXCEPTION = eINSTANCE.getIllegalArgumentException();

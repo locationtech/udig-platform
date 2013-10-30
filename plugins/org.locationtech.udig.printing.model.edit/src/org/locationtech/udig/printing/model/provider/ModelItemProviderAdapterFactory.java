@@ -4,12 +4,12 @@
  *
  * $Id$
  */
-package net.refractions.udig.printing.model.provider;
+package org.locationtech.udig.printing.model.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.refractions.udig.printing.model.util.ModelAdapterFactory;
+import org.locationtech.udig.printing.model.util.ModelAdapterFactory;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -74,7 +74,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
     }
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.printing.model.Box}.
+     * This creates an adapter for a {@link org.locationtech.udig.printing.model.Box}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -85,7 +85,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
     }
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.printing.model.Connection}.
+     * This creates an adapter for a {@link org.locationtech.udig.printing.model.Connection}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -96,7 +96,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
     }
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.printing.model.Element}.
+     * This creates an adapter for a {@link org.locationtech.udig.printing.model.Element}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -107,7 +107,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
     }
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.printing.model.Page}.
+     * This creates an adapter for a {@link org.locationtech.udig.printing.model.Page}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

@@ -8,17 +8,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.tests.ui;
+package org.locationtech.udig.project.tests.ui;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
 
 import org.geotools.util.Range;
 

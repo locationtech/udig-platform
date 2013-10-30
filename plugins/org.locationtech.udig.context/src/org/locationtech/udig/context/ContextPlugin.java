@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.context;
+package org.locationtech.udig.context;
 
 
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -60,6 +60,6 @@ public class ContextPlugin extends AbstractUIPlugin {
 	 * @return the image descriptor
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
-		return AbstractUIPlugin.imageDescriptorFromPlugin("net.refractions.udig.context", path); //$NON-NLS-1$
+		return AbstractUIPlugin.imageDescriptorFromPlugin("org.locationtech.udig.context", path); //$NON-NLS-1$
 	}
 }

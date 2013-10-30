@@ -7,17 +7,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.ui;
+package org.locationtech.udig.catalog.ui;
 
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.ServiceExtension2;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.ServiceExtension2;
 
 /**
  * Adds some generic checks to attempt to process URLs and Map context objects.  Essentially queries

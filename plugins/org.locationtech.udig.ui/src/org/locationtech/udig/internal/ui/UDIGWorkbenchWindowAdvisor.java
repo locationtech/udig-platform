@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.internal.ui;
+package org.locationtech.udig.internal.ui;
 
-import net.refractions.udig.core.internal.CorePlugin;
-import net.refractions.udig.ui.UDIGDragDropUtilities;
-import net.refractions.udig.ui.WorkbenchConfiguration;
-import net.refractions.udig.ui.preferences.PreferenceConstants;
+import org.locationtech.udig.core.internal.CorePlugin;
+import org.locationtech.udig.ui.UDIGDragDropUtilities;
+import org.locationtech.udig.ui.WorkbenchConfiguration;
+import org.locationtech.udig.ui.preferences.PreferenceConstants;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -108,7 +108,7 @@ public class UDIGWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         super.postWindowOpen();
         try {
             Preferences userPreferences = UiPlugin.getUserPreferences();
-            if (!userPreferences.nodeExists("net.refractions.udig.ui.firstRun")) { //$NON-NLS-1$
+            if (!userPreferences.nodeExists("org.locationtech.udig.ui.firstRun")) { //$NON-NLS-1$
                 firstRun();
             } else {
                 showTip();
@@ -137,7 +137,7 @@ public class UDIGWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         // getWindowConfigurer().getWindow().getShell().setMaximized(true);
         Preferences userPreferences = UiPlugin.getUserPreferences();
         userPreferences
-                .node("net.refractions.udig.ui.firstRun").putBoolean("net.refractions.udig.ui.isFirstRun", false); //$NON-NLS-1$ //$NON-NLS-2$
+                .node("org.locationtech.udig.ui.firstRun").putBoolean("org.locationtech.udig.ui.isFirstRun", false); //$NON-NLS-1$ //$NON-NLS-2$
 
 //        if (Platform.getOS().equals(Platform.OS_LINUX)) {
 //            MessageDialog.openWarning(getWindowConfigurer().getWindow()

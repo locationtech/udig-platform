@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.tools.jgrass.csv;
+package org.locationtech.udig.tools.jgrass.csv;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,11 +20,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.ui.ExceptionDetailsDialog;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -51,9 +51,9 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 
-import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
-import eu.udig.tools.jgrass.JGrassToolsPlugin;
-import eu.udig.tools.jgrass.i18n.Messages;
+import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
+import org.locationtech.udig.tools.jgrass.JGrassToolsPlugin;
+import org.locationtech.udig.tools.jgrass.i18n.Messages;
 
 /**
  * Csv to feature layer import wizard.

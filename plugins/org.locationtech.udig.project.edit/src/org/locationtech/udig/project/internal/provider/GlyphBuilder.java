@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.internal.provider;
+package org.locationtech.udig.project.internal.provider;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;
@@ -19,9 +19,9 @@ import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
 import java.util.List;
 
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.ui.Drawing;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.ui.Drawing;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.GC;

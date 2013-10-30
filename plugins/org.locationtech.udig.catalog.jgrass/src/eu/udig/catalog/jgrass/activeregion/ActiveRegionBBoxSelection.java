@@ -7,43 +7,43 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.jgrass.activeregion;
+package org.locationtech.udig.catalog.jgrass.activeregion;
 
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.internal.commands.selection.BBoxSelectionCommand;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.tool.ModalTool;
-import net.refractions.udig.project.ui.tool.SimpleTool;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.internal.commands.selection.BBoxSelectionCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.commands.SelectionBoxCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.tool.ModalTool;
+import org.locationtech.udig.project.ui.tool.SimpleTool;
 
 import org.geotools.gce.grassraster.JGrassRegion;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 
-import eu.udig.catalog.jgrass.JGrassPlugin;
+import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
 
 public class ActiveRegionBBoxSelection extends SimpleTool implements ModalTool {
 
     /**
      * Comment for <code>ID</code>
      */
-    public static final String ID = "eu.udig.catalog.jgrass.activeregion.ui.activeregionbbox"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.catalog.jgrass.activeregion.ui.activeregionbbox"; //$NON-NLS-1$
 
     private Point start;
 
     private boolean selecting;
 
-    private net.refractions.udig.project.ui.commands.SelectionBoxCommand shapeCommand;
+    private org.locationtech.udig.project.ui.commands.SelectionBoxCommand shapeCommand;
 
     /**
      * Creates a new instance of BBoxSelection
@@ -55,7 +55,7 @@ public class ActiveRegionBBoxSelection extends SimpleTool implements ModalTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.SimpleTool#onMouseDragged(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.SimpleTool#onMouseDragged(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
     protected void onMouseDragged( MapMouseEvent e ) {
         Point end = e.getPoint();
@@ -65,7 +65,7 @@ public class ActiveRegionBBoxSelection extends SimpleTool implements ModalTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mousePressed(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mousePressed(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void onMousePressed( MapMouseEvent e ) {
         shapeCommand = new SelectionBoxCommand();
@@ -81,7 +81,7 @@ public class ActiveRegionBBoxSelection extends SimpleTool implements ModalTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseReleased(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseReleased(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void onMouseReleased( MapMouseEvent e ) {
         if (selecting) {

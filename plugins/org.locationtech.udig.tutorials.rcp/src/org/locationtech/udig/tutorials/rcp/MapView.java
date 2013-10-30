@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.rcp;
+package org.locationtech.udig.tutorials.rcp;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,24 +15,24 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceFactory;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxCommand;
-import net.refractions.udig.project.internal.commands.AddLayersCommand;
-import net.refractions.udig.project.ui.internal.MapPart;
-import net.refractions.udig.project.ui.internal.wizard.MapImport;
-import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
-import net.refractions.udig.project.ui.tool.ModalTool;
-import net.refractions.udig.project.ui.viewers.MapViewer;
-import net.refractions.udig.tools.internal.FixedScalePan;
-import net.refractions.udig.tools.internal.Zoom;
-import net.refractions.udig.tutorials.tracking.glasspane.SeagullGlassPaneOp;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceFactory;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import org.locationtech.udig.project.internal.commands.AddLayersCommand;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.wizard.MapImport;
+import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
+import org.locationtech.udig.project.ui.tool.ModalTool;
+import org.locationtech.udig.project.ui.viewers.MapViewer;
+import org.locationtech.udig.tools.internal.FixedScalePan;
+import org.locationtech.udig.tools.internal.Zoom;
+import org.locationtech.udig.tutorials.tracking.glasspane.SeagullGlassPaneOp;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -58,7 +58,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
  * @version 1.3.0
  */
 public class MapView extends ViewPart implements MapPart {
-    public static String ID = "net.refractions.udig.tutorials.rcp.mapView";
+    public static String ID = "org.locationtech.udig.tutorials.rcp.mapView";
     // private GISWidget widget;
     private MapViewer mapviewer;
     // private RenderManager renderManager;

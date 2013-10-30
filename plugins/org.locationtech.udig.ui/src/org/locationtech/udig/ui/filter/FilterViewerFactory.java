@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.filter;
+package org.locationtech.udig.ui.filter;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.viewers.Viewer;
@@ -204,9 +204,9 @@ public abstract class FilterViewerFactory {
     // Factory and Extension Point Support
     //
     /** General purpose {@link IFilterViewer} suitable for use as a default */
-    public static final String CQL_FILTER_VIEWER = "net.refractions.udig.ui.filter.cqlFilterViewer";
+    public static final String CQL_FILTER_VIEWER = "org.locationtech.udig.ui.filter.cqlFilterViewer";
 
     /** Extension point ID each "expressionViewer" will be processed into our {@link #factoryList()} */
-    public static final String FILTER_VIEWER_EXTENSION = "net.refractions.udig.ui.filterViewer";
+    public static final String FILTER_VIEWER_EXTENSION = "org.locationtech.udig.ui.filterViewer";
 
 }

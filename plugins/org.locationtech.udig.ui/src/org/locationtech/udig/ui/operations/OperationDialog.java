@@ -1,16 +1,16 @@
 /**
  * 
  */
-package net.refractions.udig.ui.operations;
+package org.locationtech.udig.ui.operations;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.internal.ui.operations.OperationCategory;
-import net.refractions.udig.internal.ui.operations.OperationMenuFactory;
-import net.refractions.udig.ui.internal.Messages;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.internal.ui.operations.OperationCategory;
+import org.locationtech.udig.internal.ui.operations.OperationMenuFactory;
+import org.locationtech.udig.ui.internal.Messages;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;

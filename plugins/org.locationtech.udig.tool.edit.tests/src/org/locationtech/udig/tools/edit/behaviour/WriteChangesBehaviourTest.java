@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.behaviour;
+package org.locationtech.udig.tools.edit.behaviour;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -19,18 +19,18 @@ import static org.junit.Assert.fail;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.refractions.udig.core.internal.FeatureUtils;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.tests.support.TestLayer;
-import net.refractions.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
-import net.refractions.udig.tools.edit.support.EditGeom;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
-import net.refractions.udig.tools.edit.support.ShapeType;
-import net.refractions.udig.tools.edit.support.TestHandler;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.tests.support.TestLayer;
+import org.locationtech.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.EditGeom;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.tools.edit.support.ShapeType;
+import org.locationtech.udig.tools.edit.support.TestHandler;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.DataUtilities;
@@ -78,7 +78,7 @@ public class WriteChangesBehaviourTest {
     }
     
     /*
-     * Test method for 'net.refractions.udig.tools.edit.behaviour.SetEditFeatureBehaviour.isValid(EditToolHandler)'
+     * Test method for 'org.locationtech.udig.tools.edit.behaviour.SetEditFeatureBehaviour.isValid(EditToolHandler)'
      */
     @Test
     public void testIsValid() throws Exception {
@@ -96,7 +96,7 @@ public class WriteChangesBehaviourTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.behaviour.SetEditFeatureBehaviour.run(EditToolHandler)'
+     * Test method for 'org.locationtech.udig.tools.edit.behaviour.SetEditFeatureBehaviour.run(EditToolHandler)'
      */
     @Ignore
     @Test
@@ -162,7 +162,7 @@ public class WriteChangesBehaviourTest {
     }
     
     /*
-     * Test method for 'net.refractions.udig.tools.edit.behaviour.SetEditFeatureBehaviour.run(EditToolHandler)'
+     * Test method for 'org.locationtech.udig.tools.edit.behaviour.SetEditFeatureBehaviour.run(EditToolHandler)'
      */
     @Ignore
     @Test
@@ -335,7 +335,7 @@ public class WriteChangesBehaviourTest {
 
 
     private Coordinate toCoord( EditBlackboard bb, int i, int j ) {
-        return bb.toCoord(net.refractions.udig.tools.edit.support.Point.valueOf(i,j));
+        return bb.toCoord(org.locationtech.udig.tools.edit.support.Point.valueOf(i,j));
     }
 
     @Ignore

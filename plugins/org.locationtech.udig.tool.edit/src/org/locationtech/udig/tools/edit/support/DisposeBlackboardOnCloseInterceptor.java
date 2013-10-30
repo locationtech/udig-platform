@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.support;
+package org.locationtech.udig.tools.edit.support;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.interceptor.MapInterceptor;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.tools.edit.EditBlackboardUtil;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.interceptor.MapInterceptor;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.tools.edit.EditBlackboardUtil;
 
 /**
  * When a map is closed this cleans out all the references to the blackboard so it can be garbage collected.  

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog;
+package org.locationtech.udig.catalog;
 
 import java.io.IOException;
 import java.net.URI;
@@ -15,7 +15,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.internal.postgis.PostgisPlugin;
+import org.locationtech.udig.catalog.internal.postgis.PostgisPlugin;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;

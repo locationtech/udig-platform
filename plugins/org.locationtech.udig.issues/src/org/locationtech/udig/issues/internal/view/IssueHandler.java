@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.internal.view;
+package org.locationtech.udig.issues.internal.view;
 
-import net.refractions.udig.issues.IIssue;
-import net.refractions.udig.issues.IssueConstants;
-import net.refractions.udig.issues.internal.Messages;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.issues.IIssue;
+import org.locationtech.udig.issues.IssueConstants;
+import org.locationtech.udig.issues.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPerspectiveDescriptor;

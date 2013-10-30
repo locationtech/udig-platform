@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog;
+package org.locationtech.udig.catalog;
 
 import java.io.IOException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * An IResolverFactoryManager processes the net.refractions.udig.resolvers extension point and allows client 
+ * An IResolverFactoryManager processes the org.locationtech.udig.resolvers extension point and allows client 
  * code to resolve {@link IResolve} objects to other objects. 
  * 
  * <p>

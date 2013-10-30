@@ -10,7 +10,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal.arcsde.ui;
+package org.locationtech.udig.catalog.internal.arcsde.ui;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -18,11 +18,11 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import net.refractions.udig.catalog.arcsde.internal.Messages;
-import net.refractions.udig.catalog.internal.arcsde.ArcsdePlugin;
-import net.refractions.udig.catalog.ui.preferences.AbstractProprietaryDatastoreWizardPage;
-import net.refractions.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
-import net.refractions.udig.catalog.ui.wizard.DataBaseConnInfo;
+import org.locationtech.udig.catalog.arcsde.internal.Messages;
+import org.locationtech.udig.catalog.internal.arcsde.ArcsdePlugin;
+import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryDatastoreWizardPage;
+import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
+import org.locationtech.udig.catalog.ui.wizard.DataBaseConnInfo;
 
 import org.eclipse.swt.widgets.Composite;
 import org.geotools.arcsde.ArcSDEDataStoreFactory;
@@ -99,7 +99,7 @@ public class ArcSDEWizardPage extends AbstractProprietaryDatastoreWizardPage {
     }
 
     public String getId() {
-        return "net.refractions.udig.catalog.ui.arcsde"; //$NON-NLS-1$
+        return "org.locationtech.udig.catalog.ui.arcsde"; //$NON-NLS-1$
     }
 
     public Map<String, Serializable> getParams() {
@@ -143,7 +143,7 @@ public class ArcSDEWizardPage extends AbstractProprietaryDatastoreWizardPage {
     }
 
     /*
-     * @seenet.refractions.udig.catalog.ui.UDIGImportPage#getResources(org.eclipse.core.runtime.
+     * @seeorg.locationtech.udig.catalog.ui.UDIGImportPage#getResources(org.eclipse.core.runtime.
      * IProgressMonitor)
      */
     // public List<IService> getResources(IProgressMonitor monitor) throws Exception {

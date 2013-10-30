@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.document.source;
+package org.locationtech.udig.document.source;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,11 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.document.IDocument.ContentType;
-import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
-import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
-import net.refractions.udig.document.ui.DocUtils;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.document.IDocument.ContentType;
+import org.locationtech.udig.catalog.document.IDocumentSource.DocumentInfo;
+import org.locationtech.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import org.locationtech.udig.document.ui.DocUtils;
 
 import org.opengis.feature.simple.SimpleFeature;
 

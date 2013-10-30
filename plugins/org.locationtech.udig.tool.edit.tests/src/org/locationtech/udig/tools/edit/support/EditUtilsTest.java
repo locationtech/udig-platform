@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.support;
+package org.locationtech.udig.tools.edit.support;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -25,7 +25,7 @@ import org.junit.Test;
 public class EditUtilsTest {
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.EditUtils.intersectingLines(Point, Point, Point, Point)'
+     * Test method for 'org.locationtech.udig.tools.edit.support.EditUtils.intersectingLines(Point, Point, Point, Point)'
      */
     @Test
     public void testIntersectingLines() {

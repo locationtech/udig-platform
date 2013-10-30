@@ -8,14 +8,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
-import net.refractions.udig.project.IMapListener;
-import net.refractions.udig.project.MapEvent;
-import net.refractions.udig.project.MapEvent.MapEventType;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.IMapListener;
+import org.locationtech.udig.project.MapEvent;
+import org.locationtech.udig.project.MapEvent.MapEventType;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;

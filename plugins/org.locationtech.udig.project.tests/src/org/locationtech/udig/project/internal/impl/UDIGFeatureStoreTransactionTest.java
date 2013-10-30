@@ -8,19 +8,19 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Dimension;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureStore;

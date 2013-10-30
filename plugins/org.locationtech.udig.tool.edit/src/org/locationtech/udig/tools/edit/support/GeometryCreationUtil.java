@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.support;
+package org.locationtech.udig.tools.edit.support;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.core.internal.GeometryBuilder;
-import net.refractions.udig.tool.edit.internal.Messages;
-import net.refractions.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.core.internal.GeometryBuilder;
+import org.locationtech.udig.tool.edit.internal.Messages;
+import org.locationtech.udig.tools.edit.EditPlugin;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;

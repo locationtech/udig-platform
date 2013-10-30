@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.style.jgrass.legend;
+package org.locationtech.udig.style.jgrass.legend;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,22 +22,22 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.mapgraphic.MapGraphicContext;
-import net.refractions.udig.mapgraphic.internal.MapGraphicResource;
-import net.refractions.udig.mapgraphic.style.FontStyle;
-import net.refractions.udig.mapgraphic.style.FontStyleContent;
-import net.refractions.udig.mapgraphic.style.LocationStyleContent;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.graphics.SLDs;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.mapgraphic.internal.MapGraphicResource;
+import org.locationtech.udig.mapgraphic.style.FontStyle;
+import org.locationtech.udig.mapgraphic.style.FontStyleContent;
+import org.locationtech.udig.mapgraphic.style.LocationStyleContent;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.graphics.SLDs;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
@@ -646,7 +646,7 @@ public class VectorLegendGraphic implements MapGraphic {
 
         Style sld = (Style) blackboard.lookup(Style.class); // or
         // blackboard.get(
-        // "net.refractions.udig.style.sld"
+        // "org.locationtech.udig.style.sld"
         // );
         if (sld != null) {
             Rule rule = getRule(sld);

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld.editor;
+package org.locationtech.udig.style.sld.editor;
 
 import javax.xml.transform.TransformerException;
 
@@ -22,7 +22,7 @@ public class StyleEditor {
     /**
      * Extension point processed for sld editor
      */
-    public static final String ID = "net.refractions.udig.style.sld.editor"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.style.sld.editor"; //$NON-NLS-1$
     /**
      * Amount to indent nested SLD documents
      */

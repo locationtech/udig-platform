@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.tutorials.preferredzoomlevels;
+package org.locationtech.udig.tutorials.preferredzoomlevels;
 
 import java.io.IOException;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxCommand;
-import net.refractions.udig.project.ui.tool.AbstractActionTool;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import org.locationtech.udig.project.ui.tool.AbstractActionTool;
+import org.locationtech.udig.ui.ProgressManager;
 
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.geometry.jts.ReferencedEnvelope;

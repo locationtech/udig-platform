@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.catalog">
+<schema targetNamespace="org.locationtech.udig.catalog">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.catalog" id="temporaryResource" name="temporaryResource"/>
+         <meta.schema plugin="org.locationtech.udig.catalog" id="temporaryResource" name="temporaryResource"/>
       </appInfo>
       <documentation>
          Defines a temporary GeoResource.  An example is a MemoryDataStore.  This extension point is processed by ICatalog for the getTemporaryResource() and getTemporaryDescriptorClasses() methods
@@ -63,7 +63,7 @@
                   A Factory that takes an instance of the descriptor class and creates a Temporary IGeoResource.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.catalog.TemporaryResourceFactory"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.catalog.TemporaryResourceFactory"/>
                </appInfo>
             </annotation>
          </attribute>

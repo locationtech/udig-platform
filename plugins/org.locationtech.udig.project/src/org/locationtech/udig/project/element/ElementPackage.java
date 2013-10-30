@@ -10,9 +10,9 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.element;
+package org.locationtech.udig.project.element;
 
-import net.refractions.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.EPackage;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see net.refractions.udig.project.element.ElementFactory
+ * @see org.locationtech.udig.project.element.ElementFactory
  * @model kind="package"
  * @generated
  */
@@ -57,7 +57,7 @@ public interface ElementPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    String eNS_PREFIX = "net.refractions.udig.project.element"; //$NON-NLS-1$
+    String eNS_PREFIX = "org.locationtech.udig.project.element"; //$NON-NLS-1$
 
     /**
      * The singleton instance of the package.
@@ -65,14 +65,14 @@ public interface ElementPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    ElementPackage eINSTANCE = net.refractions.udig.project.element.impl.ElementPackageImpl.init();
+    ElementPackage eINSTANCE = org.locationtech.udig.project.element.impl.ElementPackageImpl.init();
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.element.impl.ProjectElementAdapterImpl <em>Project Element Adapter</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.element.impl.ProjectElementAdapterImpl <em>Project Element Adapter</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.element.impl.ProjectElementAdapterImpl
-     * @see net.refractions.udig.project.element.impl.ElementPackageImpl#getProjectElementAdapter()
+     * @see org.locationtech.udig.project.element.impl.ProjectElementAdapterImpl
+     * @see org.locationtech.udig.project.element.impl.ElementPackageImpl#getProjectElementAdapter()
      * @generated
      */
     int PROJECT_ELEMENT_ADAPTER = 0;
@@ -117,40 +117,40 @@ public interface ElementPackage extends EPackage {
      * The meta object id for the '<em>IGeneric Project Element</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.element.IGenericProjectElement
-     * @see net.refractions.udig.project.element.impl.ElementPackageImpl#getIGenericProjectElement()
+     * @see org.locationtech.udig.project.element.IGenericProjectElement
+     * @see org.locationtech.udig.project.element.impl.ElementPackageImpl#getIGenericProjectElement()
      * @generated
      */
     int IGENERIC_PROJECT_ELEMENT = 1;
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.element.ProjectElementAdapter <em>Project Element Adapter</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.element.ProjectElementAdapter <em>Project Element Adapter</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>Project Element Adapter</em>'.
-     * @see net.refractions.udig.project.element.ProjectElementAdapter
+     * @see org.locationtech.udig.project.element.ProjectElementAdapter
      * @generated
      */
     EClass getProjectElementAdapter();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.element.ProjectElementAdapter#getBackingObject <em>Backing Object</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.element.ProjectElementAdapter#getBackingObject <em>Backing Object</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Backing Object</em>'.
-     * @see net.refractions.udig.project.element.ProjectElementAdapter#getBackingObject()
+     * @see org.locationtech.udig.project.element.ProjectElementAdapter#getBackingObject()
      * @see #getProjectElementAdapter()
      * @generated
      */
     EAttribute getProjectElementAdapter_BackingObject();
 
     /**
-     * Returns the meta object for data type '{@link net.refractions.udig.project.element.IGenericProjectElement <em>IGeneric Project Element</em>}'.
+     * Returns the meta object for data type '{@link org.locationtech.udig.project.element.IGenericProjectElement <em>IGeneric Project Element</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for data type '<em>IGeneric Project Element</em>'.
-     * @see net.refractions.udig.project.element.IGenericProjectElement
-     * @model instanceClass="net.refractions.udig.project.element.IGenericProjectElement"
+     * @see org.locationtech.udig.project.element.IGenericProjectElement
+     * @model instanceClass="org.locationtech.udig.project.element.IGenericProjectElement"
      * @generated
      */
     EDataType getIGenericProjectElement();
@@ -178,11 +178,11 @@ public interface ElementPackage extends EPackage {
      */
     interface Literals {
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.element.impl.ProjectElementAdapterImpl <em>Project Element Adapter</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.element.impl.ProjectElementAdapterImpl <em>Project Element Adapter</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.element.impl.ProjectElementAdapterImpl
-         * @see net.refractions.udig.project.element.impl.ElementPackageImpl#getProjectElementAdapter()
+         * @see org.locationtech.udig.project.element.impl.ProjectElementAdapterImpl
+         * @see org.locationtech.udig.project.element.impl.ElementPackageImpl#getProjectElementAdapter()
          * @generated
          */
         EClass PROJECT_ELEMENT_ADAPTER = eINSTANCE.getProjectElementAdapter();
@@ -200,8 +200,8 @@ public interface ElementPackage extends EPackage {
          * The meta object literal for the '<em>IGeneric Project Element</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.element.IGenericProjectElement
-         * @see net.refractions.udig.project.element.impl.ElementPackageImpl#getIGenericProjectElement()
+         * @see org.locationtech.udig.project.element.IGenericProjectElement
+         * @see org.locationtech.udig.project.element.impl.ElementPackageImpl#getIGenericProjectElement()
          * @generated
          */
         EDataType IGENERIC_PROJECT_ELEMENT = eINSTANCE.getIGenericProjectElement();

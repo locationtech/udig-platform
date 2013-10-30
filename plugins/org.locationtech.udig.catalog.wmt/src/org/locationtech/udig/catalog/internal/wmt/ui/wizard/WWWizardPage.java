@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.ui.wizard;
+package org.locationtech.udig.catalog.internal.wmt.ui.wizard;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,15 +23,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.wmt.WMTPlugin;
-import net.refractions.udig.catalog.internal.wmt.ww.WWService;
-import net.refractions.udig.catalog.internal.wmt.ww.WWServiceExtension;
-import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
-import net.refractions.udig.catalog.ui.UDIGConnectionPage;
-import net.refractions.udig.catalog.ui.workflow.EndConnectionState;
-import net.refractions.udig.catalog.wmt.internal.Messages;
-import net.refractions.udig.core.RecentHistory;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.wmt.WMTPlugin;
+import org.locationtech.udig.catalog.internal.wmt.ww.WWService;
+import org.locationtech.udig.catalog.internal.wmt.ww.WWServiceExtension;
+import org.locationtech.udig.catalog.ui.AbstractUDIGImportPage;
+import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
+import org.locationtech.udig.catalog.ui.workflow.EndConnectionState;
+import org.locationtech.udig.catalog.wmt.internal.Messages;
+import org.locationtech.udig.core.RecentHistory;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -112,7 +112,7 @@ public class WWWizardPage extends AbstractUDIGImportPage implements ModifyListen
     }
 
     public String getId() {
-        return "net.refractions.udig.catalog.ui.WW"; //$NON-NLS-1$
+        return "org.locationtech.udig.catalog.ui.WW"; //$NON-NLS-1$
     }
     
     public void createControl(Composite parent) {

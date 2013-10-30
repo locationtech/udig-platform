@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.core.internal;
+package org.locationtech.udig.core.internal;
 
 /**
  * Image Directory constants used for making Images, ISharedImages and so on.

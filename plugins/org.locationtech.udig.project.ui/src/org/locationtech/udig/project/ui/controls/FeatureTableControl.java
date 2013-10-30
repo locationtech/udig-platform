@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.controls;
+package org.locationtech.udig.project.ui.controls;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;

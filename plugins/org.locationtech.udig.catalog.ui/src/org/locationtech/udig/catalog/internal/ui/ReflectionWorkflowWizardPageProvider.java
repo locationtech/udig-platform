@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.ui;
+package org.locationtech.udig.catalog.internal.ui;
 
 import java.lang.reflect.Constructor;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import net.refractions.udig.catalog.ui.workflow.State;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPage;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
+import org.locationtech.udig.catalog.ui.workflow.State;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPage;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
 
 /**
  * Returns a unique {@link WorkflowWizardPage} for each state.  Uses the class passed to the constructor

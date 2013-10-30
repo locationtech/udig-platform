@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui;
+package org.locationtech.udig.project.ui;
 
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;

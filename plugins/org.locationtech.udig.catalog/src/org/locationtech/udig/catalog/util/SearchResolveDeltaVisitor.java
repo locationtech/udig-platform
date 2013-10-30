@@ -9,17 +9,17 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.util;
+package org.locationtech.udig.catalog.util;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveChangeEvent;
-import net.refractions.udig.catalog.IResolveDelta;
-import net.refractions.udig.catalog.IResolveDeltaVisitor;
-import net.refractions.udig.catalog.IResolveDelta.Kind;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveChangeEvent;
+import org.locationtech.udig.catalog.IResolveDelta;
+import org.locationtech.udig.catalog.IResolveDeltaVisitor;
+import org.locationtech.udig.catalog.IResolveDelta.Kind;
 
 /**
  * Easy of use visitor for search IResolveDeltas.

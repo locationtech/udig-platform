@@ -1,14 +1,14 @@
 /**
  * 
  */
-package net.refractions.udig.tools.edit;
+package org.locationtech.udig.tools.edit;
 
 import java.util.Map;
 
-import net.refractions.udig.project.EditManagerEvent;
-import net.refractions.udig.project.IEditManagerListener;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
-import net.refractions.udig.tools.edit.support.EditGeom;
+import org.locationtech.udig.project.EditManagerEvent;
+import org.locationtech.udig.project.IEditManagerListener;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.EditGeom;
 
 import org.opengis.feature.simple.SimpleFeature;
 
@@ -24,7 +24,7 @@ public class EditManagerListenerActivator implements Activator, IEditManagerList
 	private EditToolHandler handler;
 
 	/* (non-Javadoc)
-	 * @see net.refractions.udig.tools.edit.Activator#activate(net.refractions.udig.tools.edit.EditToolHandler)
+	 * @see org.locationtech.udig.tools.edit.Activator#activate(org.locationtech.udig.tools.edit.EditToolHandler)
 	 */
 	public void activate(EditToolHandler handler) {
 		this.handler = handler;
@@ -32,7 +32,7 @@ public class EditManagerListenerActivator implements Activator, IEditManagerList
 	}
 
 	/* (non-Javadoc)
-	 * @see net.refractions.udig.tools.edit.Activator#deactivate(net.refractions.udig.tools.edit.EditToolHandler)
+	 * @see org.locationtech.udig.tools.edit.Activator#deactivate(org.locationtech.udig.tools.edit.EditToolHandler)
 	 */
 	public void deactivate(EditToolHandler handler) {
 		handler.getContext().getEditManager().removeListener(this);
@@ -40,14 +40,14 @@ public class EditManagerListenerActivator implements Activator, IEditManagerList
 	}
 
 	/* (non-Javadoc)
-	 * @see net.refractions.udig.tools.edit.Activator#handleActivateError(net.refractions.udig.tools.edit.EditToolHandler, java.lang.Throwable)
+	 * @see org.locationtech.udig.tools.edit.Activator#handleActivateError(org.locationtech.udig.tools.edit.EditToolHandler, java.lang.Throwable)
 	 */
 	public void handleActivateError(EditToolHandler handler, Throwable error) {
 		EditPlugin.log("Activate Error", error); //$NON-NLS-1$
 	}
 
 	/* (non-Javadoc)
-	 * @see net.refractions.udig.tools.edit.Activator#handleDeactivateError(net.refractions.udig.tools.edit.EditToolHandler, java.lang.Throwable)
+	 * @see org.locationtech.udig.tools.edit.Activator#handleDeactivateError(org.locationtech.udig.tools.edit.EditToolHandler, java.lang.Throwable)
 	 */
 	public void handleDeactivateError(EditToolHandler handler, Throwable error) {
 		EditPlugin.log("Deactivate Error", error); //$NON-NLS-1$

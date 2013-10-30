@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.catalog.csv;
+package org.locationtech.udig.tutorials.catalog.csv;
 
 import java.io.File;
 import java.io.Serializable;
@@ -16,14 +16,14 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ServiceExtension;
-import net.refractions.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ServiceExtension;
+import org.locationtech.udig.catalog.URLUtils;
 
 public class CSVServiceExtension implements ServiceExtension {
     /* CSV service key, url to the CSV file */
     public static final String KEY 
-        = "net.refractions.udig.tutorials.catalog.csv.url";
+        = "org.locationtech.udig.tutorials.catalog.csv.url";
     
 public Map<String, Serializable> createParams( URL url ) {
     try {

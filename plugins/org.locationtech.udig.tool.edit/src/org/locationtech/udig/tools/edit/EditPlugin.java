@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit;
+package org.locationtech.udig.tools.edit;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
@@ -22,12 +22,12 @@ import org.osgi.framework.BundleContext;
  */
 public class EditPlugin extends AbstractUIPlugin {
 
-	public static final String ID = "net.refractions.udig.tools.edit"; //$NON-NLS-1$
-    public static final String SELECTION = "net.refractions.udig.tools.edit/selection"; //$NON-NLS-1$
-    public static final String ACTIVATOR = "net.refractions.udig.tools.edit/activator"; //$NON-NLS-1$
-    public static final String HANDLER_LOCK = "net.refractions.udig.tools.edit/handler/lock"; //$NON-NLS-1$
-    public static final String BEHAVIOUR = "net.refractions.udig.tools.edit/behaviour"; //$NON-NLS-1$
-    public static final String RUN_ASSERTIONS = "net.refractions.udig.tools.edit/debug/assertions"; //$NON-NLS-1$
+	public static final String ID = "org.locationtech.udig.tools.edit"; //$NON-NLS-1$
+    public static final String SELECTION = "org.locationtech.udig.tools.edit/selection"; //$NON-NLS-1$
+    public static final String ACTIVATOR = "org.locationtech.udig.tools.edit/activator"; //$NON-NLS-1$
+    public static final String HANDLER_LOCK = "org.locationtech.udig.tools.edit/handler/lock"; //$NON-NLS-1$
+    public static final String BEHAVIOUR = "org.locationtech.udig.tools.edit/behaviour"; //$NON-NLS-1$
+    public static final String RUN_ASSERTIONS = "org.locationtech.udig.tools.edit/debug/assertions"; //$NON-NLS-1$
 	//The shared instance.
 	private static EditPlugin plugin;
 	
@@ -95,7 +95,7 @@ public class EditPlugin extends AbstractUIPlugin {
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:<pre><code>
-     * private static final String RENDERING = "net.refractions.udig.project/render/trace";
+     * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
      * 

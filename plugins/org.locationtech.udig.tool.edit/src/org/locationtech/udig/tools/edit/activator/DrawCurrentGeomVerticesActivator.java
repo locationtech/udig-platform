@@ -7,25 +7,25 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.activator;
+package org.locationtech.udig.tools.edit.activator;
 
-import net.refractions.udig.project.BlackboardEvent;
-import net.refractions.udig.project.EditManagerEvent;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.IBlackboardListener;
-import net.refractions.udig.project.IEditManagerListener;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.tools.edit.Activator;
-import net.refractions.udig.tools.edit.EditPlugin;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.commands.DrawPointCommand;
-import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
-import net.refractions.udig.tools.edit.support.EditBlackboardAdapter;
-import net.refractions.udig.tools.edit.support.EditBlackboardEvent;
-import net.refractions.udig.tools.edit.support.EditBlackboardListener;
-import net.refractions.udig.tools.edit.support.EditBlackboardEvent.EventType;
+import org.locationtech.udig.project.BlackboardEvent;
+import org.locationtech.udig.project.EditManagerEvent;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IBlackboardListener;
+import org.locationtech.udig.project.IEditManagerListener;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.tools.edit.Activator;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.commands.DrawPointCommand;
+import org.locationtech.udig.tools.edit.preferences.PreferenceUtil;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.EditBlackboardAdapter;
+import org.locationtech.udig.tools.edit.support.EditBlackboardEvent;
+import org.locationtech.udig.tools.edit.support.EditBlackboardListener;
+import org.locationtech.udig.tools.edit.support.EditBlackboardEvent.EventType;
 
 /**
  * 

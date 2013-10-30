@@ -7,17 +7,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.tcat.citd.sim.udig.bookmarks.internal;
+package org.locationtech.udig.bookmarks.internal;
 
 import java.util.Collection;
 import java.util.HashMap;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.MapEditor;
-import net.refractions.udig.project.ui.internal.MapPart;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.MapEditor;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -28,10 +28,10 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
-import org.tcat.citd.sim.udig.bookmarks.Bookmark;
-import org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin;
-import org.tcat.citd.sim.udig.bookmarks.IBookmarkService;
-import org.tcat.citd.sim.udig.bookmarks.internal.ui.BookmarksView;
+import org.locationtech.udig.bookmarks.Bookmark;
+import org.locationtech.udig.bookmarks.BookmarksPlugin;
+import org.locationtech.udig.bookmarks.IBookmarkService;
+import org.locationtech.udig.bookmarks.internal.ui.BookmarksView;
 
 /**
  * The content provider class is responsible for providing objects to the view. It can wrap existing

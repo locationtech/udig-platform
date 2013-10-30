@@ -7,28 +7,28 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.select.commands;
+package org.locationtech.udig.tool.select.commands;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.aoi.AOIProxy;
-import net.refractions.udig.aoi.IAOIService;
-import net.refractions.udig.aoi.IAOIStrategy;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.Interaction;
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.Messages;
-import net.refractions.udig.project.internal.render.impl.ViewportModelImpl;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.tool.select.SelectPlugin;
-import net.refractions.udig.tool.select.internal.AOILayerStrategy;
-import net.refractions.udig.tool.select.internal.SelectionToolPreferencePage;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.aoi.AOIProxy;
+import org.locationtech.udig.aoi.IAOIService;
+import org.locationtech.udig.aoi.IAOIStrategy;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.render.impl.ViewportModelImpl;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.tool.select.SelectPlugin;
+import org.locationtech.udig.tool.select.internal.AOILayerStrategy;
+import org.locationtech.udig.tool.select.internal.SelectionToolPreferencePage;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
@@ -51,7 +51,7 @@ import com.vividsolutions.jts.geom.Polygon;
 /**
  * Queries the current AOI layer (Area of Interest) for selection and updates the AOILayerStrategy
  * 
- * @see net.refractions.udig.tools.internal.AOILayerStrategy
+ * @see org.locationtech.udig.tools.internal.AOILayerStrategy
  * @author leviputna
  * @since 1.2.3
  */
@@ -60,7 +60,7 @@ public class SetAOILayerCommand extends AbstractCommand implements UndoableMapCo
     private Envelope bbox = null;
     private ReferencedEnvelope bounds;
     private MapMouseEvent mouseEvent;
-    private static String AOI_LAYER_ID = "net.refractions.udig.tool.select.internal.aoiLayer";
+    private static String AOI_LAYER_ID = "org.locationtech.udig.tool.select.internal.aoiLayer";
 
     /**
      * Creates a new instance of SetConndaryCommand
@@ -73,14 +73,14 @@ public class SetAOILayerCommand extends AbstractCommand implements UndoableMapCo
     }
 
     /**
-     * @see net.refractions.udig.project.command.UndoableCommand#rollback()
+     * @see org.locationtech.udig.project.command.UndoableCommand#rollback()
      */
     public void rollback( IProgressMonitor monitor ) throws Exception {
 
     }
 
     /**
-     * @see net.refractions.udig.project.command.MapCommand#run()
+     * @see org.locationtech.udig.project.command.MapCommand#run()
      */
     public void run( IProgressMonitor monitor ) throws Exception {
 
@@ -225,7 +225,7 @@ public class SetAOILayerCommand extends AbstractCommand implements UndoableMapCo
     }
 
     /**
-     * @see net.refractions.udig.project.command.MapCommand#getName()
+     * @see org.locationtech.udig.project.command.MapCommand#getName()
      */
     public String getName() {
         return Messages.BBoxSelectionCommand_boxSelection;

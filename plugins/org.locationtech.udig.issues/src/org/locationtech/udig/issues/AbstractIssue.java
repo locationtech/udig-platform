@@ -7,19 +7,19 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues;
+package org.locationtech.udig.issues;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.core.enums.Priority;
-import net.refractions.udig.core.enums.Resolution;
-import net.refractions.udig.issues.listeners.IIssueListener;
-import net.refractions.udig.issues.listeners.IssueChangeType;
-import net.refractions.udig.issues.listeners.IssueEvent;
-import net.refractions.udig.issues.listeners.IssuePropertyChangeEvent;
+import org.locationtech.udig.core.enums.Priority;
+import org.locationtech.udig.core.enums.Resolution;
+import org.locationtech.udig.issues.listeners.IIssueListener;
+import org.locationtech.udig.issues.listeners.IssueChangeType;
+import org.locationtech.udig.issues.listeners.IssueEvent;
+import org.locationtech.udig.issues.listeners.IssuePropertyChangeEvent;
 
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IMemento;

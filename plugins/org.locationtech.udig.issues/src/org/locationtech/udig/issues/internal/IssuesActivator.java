@@ -8,11 +8,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.internal;
+package org.locationtech.udig.issues.internal;
 
-import net.refractions.udig.core.AbstractUdigUIPlugin;
-import net.refractions.udig.issues.IIssuesManager;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.core.AbstractUdigUIPlugin;
+import org.locationtech.udig.issues.IIssuesManager;
+import org.locationtech.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
@@ -31,7 +31,7 @@ import org.osgi.framework.BundleContext;
 public class IssuesActivator extends AbstractUdigUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "net.refractions.udig.issues"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "org.locationtech.udig.issues"; //$NON-NLS-1$
 
     static final String ICONS_PATH = "icons/"; //$NON-NLS-1$
 
@@ -94,7 +94,7 @@ public class IssuesActivator extends AbstractUdigUIPlugin {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.core.AbstractUdigUIPlugin#getIconPath()
+     * @see org.locationtech.udig.core.AbstractUdigUIPlugin#getIconPath()
      */
     public IPath getIconPath() {
         return new Path(ICONS_PATH);

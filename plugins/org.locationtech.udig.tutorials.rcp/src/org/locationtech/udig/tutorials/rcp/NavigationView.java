@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.rcp;
+package org.locationtech.udig.tutorials.rcp;
 
 import java.util.ArrayList;
 
@@ -25,7 +25,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 public class NavigationView extends ViewPart {
-	public static final String ID = "net.refractions.udig.tutorials.rcp.navigationView";
+	public static final String ID = "org.locationtech.udig.tutorials.rcp.navigationView";
 	private TreeViewer viewer;
 	 
 	class TreeObject {

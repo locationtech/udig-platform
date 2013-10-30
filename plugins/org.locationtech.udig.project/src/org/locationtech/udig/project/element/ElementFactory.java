@@ -10,9 +10,9 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.element;
+package org.locationtech.udig.project.element;
 
-import net.refractions.udig.project.IProject;
+import org.locationtech.udig.project.IProject;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see net.refractions.udig.project.element.ElementPackage
+ * @see org.locationtech.udig.project.element.ElementPackage
  * @generated
  */
 public interface ElementFactory extends EFactory {
@@ -31,7 +31,7 @@ public interface ElementFactory extends EFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    ElementFactory eINSTANCE = net.refractions.udig.project.element.impl.ElementFactoryImpl.init();
+    ElementFactory eINSTANCE = org.locationtech.udig.project.element.impl.ElementFactoryImpl.init();
 
     /**
      * Returns a new object of class '<em>Project Element Adapter</em>'.

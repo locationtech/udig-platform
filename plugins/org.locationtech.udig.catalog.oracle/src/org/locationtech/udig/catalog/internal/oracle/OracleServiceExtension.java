@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal.oracle;
+package org.locationtech.udig.catalog.internal.oracle;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -18,10 +18,10 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.AbstractDataStoreServiceExtension;
-import net.refractions.udig.catalog.ServiceExtension2;
-import net.refractions.udig.catalog.oracle.internal.Messages;
-import net.refractions.udig.core.internal.CorePlugin;
+import org.locationtech.udig.catalog.AbstractDataStoreServiceExtension;
+import org.locationtech.udig.catalog.ServiceExtension2;
+import org.locationtech.udig.catalog.oracle.internal.Messages;
+import org.locationtech.udig.core.internal.CorePlugin;
 
 import org.eclipse.core.runtime.Platform;
 import org.geotools.data.DataStoreFactorySpi;
@@ -46,7 +46,7 @@ public class OracleServiceExtension extends AbstractDataStoreServiceExtension
      * database actually being on, parameters being correct, etc...
      * </p>
      * 
-     * @see net.refractions.udig.catalog.ServiceExtension#createService(java.net.URI, java.util.Map)
+     * @see org.locationtech.udig.catalog.ServiceExtension#createService(java.net.URI, java.util.Map)
      * @param id
      * @param params
      * @return OracleServiceImpl or null if the params do not provide enough information to connnect
@@ -111,7 +111,7 @@ public class OracleServiceExtension extends AbstractDataStoreServiceExtension
     /**
      * This is a guess ...
      * 
-     * @see net.refractions.udig.catalog.ServiceExtension#createParams(java.net.URL)
+     * @see org.locationtech.udig.catalog.ServiceExtension#createParams(java.net.URL)
      * @param url
      * @return
      */

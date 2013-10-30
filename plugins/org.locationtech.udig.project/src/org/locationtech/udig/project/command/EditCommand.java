@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.command;
+package org.locationtech.udig.project.command;
 
 /**
  * The super interface for all commands that can be used to edit maps and pages.

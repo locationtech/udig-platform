@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.rasterings.AbstractRasterGeoResource;
-import net.refractions.udig.catalog.rasterings.AbstractRasterService;
-import net.refractions.udig.catalog.rasterings.AbstractRasterServiceInfo;
+import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResource;
+import org.locationtech.udig.catalog.rasterings.AbstractRasterService;
+import org.locationtech.udig.catalog.rasterings.AbstractRasterServiceInfo;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;

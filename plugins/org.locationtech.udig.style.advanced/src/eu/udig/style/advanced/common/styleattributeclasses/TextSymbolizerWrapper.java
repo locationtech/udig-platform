@@ -7,19 +7,19 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.common.styleattributeclasses;
+package org.locationtech.udig.style.advanced.common.styleattributeclasses;
 
-import static eu.udig.style.advanced.utils.Utilities.DEFAULT_COLOR;
-import static eu.udig.style.advanced.utils.Utilities.ff;
-import static eu.udig.style.advanced.utils.Utilities.sb;
+import static org.locationtech.udig.style.advanced.utils.Utilities.DEFAULT_COLOR;
+import static org.locationtech.udig.style.advanced.utils.Utilities.ff;
+import static org.locationtech.udig.style.advanced.utils.Utilities.sb;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.refractions.udig.style.sld.SLD;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.style.sld.SLD;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.swt.graphics.FontData;
 import org.geotools.styling.AnchorPoint;
@@ -34,7 +34,7 @@ import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.expression.Expression;
 
-import eu.udig.style.advanced.utils.VendorOptions;
+import org.locationtech.udig.style.advanced.utils.VendorOptions;
 
 /**
  * A wrapper for a {@link TextSymbolizer} to ease interaction with gui.

@@ -1,9 +1,9 @@
 /**
  * 
  */
-package net.refractions.udig.ui.tests.support;
+package org.locationtech.udig.ui.tests.support;
 
-import net.refractions.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.WaitCondition;
 
 import org.eclipse.swt.widgets.Display;
 import org.geotools.feature.SchemaException;

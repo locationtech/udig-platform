@@ -10,7 +10,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal.oracle.ui;
+package org.locationtech.udig.catalog.internal.oracle.ui;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -26,14 +26,14 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.oracle.OraclePlugin;
-import net.refractions.udig.catalog.internal.oracle.OracleServiceExtension;
-import net.refractions.udig.catalog.oracle.internal.Messages;
-import net.refractions.udig.catalog.ui.preferences.AbstractProprietaryDatastoreWizardPage;
-import net.refractions.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
-import net.refractions.udig.catalog.ui.wizard.DataBaseConnInfo;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.oracle.OraclePlugin;
+import org.locationtech.udig.catalog.internal.oracle.OracleServiceExtension;
+import org.locationtech.udig.catalog.oracle.internal.Messages;
+import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryDatastoreWizardPage;
+import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
+import org.locationtech.udig.catalog.ui.wizard.DataBaseConnInfo;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -109,7 +109,7 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
     }
 
     public String getId() {
-        return "net.refractions.udig.catalog.ui.oracle"; //$NON-NLS-1$
+        return "org.locationtech.udig.catalog.ui.oracle"; //$NON-NLS-1$
     }
 
     @Override
@@ -225,7 +225,7 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
     /**
      * Grab a DataSource using the current connection parameters.
      * 
-     * @see net.refractions.udig.catalog.internal.ui.datastore.DataBaseRegistryWizardPage#getConnection()
+     * @see org.locationtech.udig.catalog.internal.ui.datastore.DataBaseRegistryWizardPage#getConnection()
      * @return DataSource, or null if could not connect
      */
     protected DataSource getDataSource() {
@@ -318,7 +318,7 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
     /**
      * TODO summary sentence for hasSchema ...
      * 
-     * @see net.refractions.udig.catalog.internal.ui.datastore.DataBaseRegistryWizardPage#dbmsUsesSchema()
+     * @see org.locationtech.udig.catalog.internal.ui.datastore.DataBaseRegistryWizardPage#dbmsUsesSchema()
      * @return
      */
     protected boolean dbmsUsesSchema() {

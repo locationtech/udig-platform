@@ -10,16 +10,16 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.element.impl;
+package org.locationtech.udig.project.element.impl;
 
-import net.refractions.udig.project.element.ElementFactory;
-import net.refractions.udig.project.element.ElementPackage;
-import net.refractions.udig.project.element.IGenericProjectElement;
-import net.refractions.udig.project.element.ProjectElementAdapter;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.impl.ProjectPackageImpl;
-import net.refractions.udig.project.internal.render.RenderPackage;
-import net.refractions.udig.project.internal.render.impl.RenderPackageImpl;
+import org.locationtech.udig.project.element.ElementFactory;
+import org.locationtech.udig.project.element.ElementPackage;
+import org.locationtech.udig.project.element.IGenericProjectElement;
+import org.locationtech.udig.project.element.ProjectElementAdapter;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.impl.ProjectPackageImpl;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.internal.render.impl.RenderPackageImpl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -60,7 +60,7 @@ public class ElementPackageImpl extends EPackageImpl implements ElementPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see org.eclipse.emf.ecore.EPackage.Registry
-     * @see net.refractions.udig.project.element.ElementPackage#eNS_URI
+     * @see org.locationtech.udig.project.element.ElementPackage#eNS_URI
      * @see #init()
      * @generated
      */

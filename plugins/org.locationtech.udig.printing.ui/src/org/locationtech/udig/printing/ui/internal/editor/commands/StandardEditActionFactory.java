@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.printing.ui.internal.editor.commands;
+package org.locationtech.udig.printing.ui.internal.editor.commands;
 
-import net.refractions.udig.printing.ui.EditActionFactory;
-import net.refractions.udig.printing.ui.actions.EditMapAction;
-import net.refractions.udig.printing.ui.internal.editor.policies.LabelDirectEditPolicy;
-import net.refractions.udig.printing.ui.internal.editor.policies.MapEditPolicy;
+import org.locationtech.udig.printing.ui.EditActionFactory;
+import org.locationtech.udig.printing.ui.actions.EditMapAction;
+import org.locationtech.udig.printing.ui.internal.editor.policies.LabelDirectEditPolicy;
+import org.locationtech.udig.printing.ui.internal.editor.policies.MapEditPolicy;
 
 import org.eclipse.gef.ui.actions.DirectEditAction;
 import org.eclipse.jface.action.Action;

@@ -8,17 +8,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.scalebar;
+package org.locationtech.udig.mapgraphic.scalebar;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.text.NumberFormat;
 
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.mapgraphic.MapGraphicContext;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.IStyleBlackboard;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IStyleBlackboard;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 public class ScaleDenomMapGraphic implements MapGraphic {
 

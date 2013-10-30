@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.style.color;
+package org.locationtech.udig.tutorials.style.color;
 
 import java.awt.Color;
 
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.style.IStyleConfigurator;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.IStyleConfigurator;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;

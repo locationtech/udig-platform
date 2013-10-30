@@ -9,13 +9,13 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.internal.wmt.basic;
+package org.locationtech.udig.render.internal.wmt.basic;
 
-import net.refractions.udig.catalog.internal.wmt.WMTGeoResource;
-import net.refractions.udig.catalog.internal.wmt.ww.WWGeoResource;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.catalog.internal.wmt.WMTGeoResource;
+import org.locationtech.udig.catalog.internal.wmt.ww.WWGeoResource;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
 
 
 public class BasicWMTMetricsFactory implements IRenderMetricsFactory {
@@ -27,14 +27,14 @@ public class BasicWMTMetricsFactory implements IRenderMetricsFactory {
     }
 
     /**
-     * @see net.refractions.udig.project.render.RenderMetricsFactory#createMetrics(net.refractions.udig.project.render.RenderContext)
+     * @see org.locationtech.udig.project.render.RenderMetricsFactory#createMetrics(org.locationtech.udig.project.render.RenderContext)
      */
     public AbstractRenderMetrics createMetrics( IRenderContext context ) {
         return new BasicWMTMetrics(context, this);
     }
     
     /**
-     * @see net.refractions.udig.project.render.RenderMetrics#getRendererType()
+     * @see org.locationtech.udig.project.render.RenderMetrics#getRendererType()
      */
     public Class<BasicWMTRenderer> getRendererType() {
         return BasicWMTRenderer.class;

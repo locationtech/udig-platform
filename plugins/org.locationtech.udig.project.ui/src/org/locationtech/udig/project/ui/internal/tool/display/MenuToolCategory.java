@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.tool.display;
+package org.locationtech.udig.project.ui.internal.tool.display;
 
 import java.util.Collection;
 
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.tool.IToolManager;
-import net.refractions.udig.ui.Constants;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.ui.Constants;
 
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -191,7 +191,7 @@ public class MenuToolCategory extends ToolCategory {
             return false;
         }
         /**
-         * @see net.refractions.udig.project.ui.internal.tool.display.CurrentContributionItem#isDisposed()
+         * @see org.locationtech.udig.project.ui.internal.tool.display.CurrentContributionItem#isDisposed()
          */
         public boolean isDisposed() {
             return menuItem == null || menuItem.isDisposed();
@@ -199,7 +199,7 @@ public class MenuToolCategory extends ToolCategory {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.internal.tool.display.ToolCategory#getHandlerSubmission(java.lang.String)
+     * @see org.locationtech.udig.project.ui.internal.tool.display.ToolCategory#getHandlerSubmission(java.lang.String)
      */
     protected IHandler getHandler() {
         return null;

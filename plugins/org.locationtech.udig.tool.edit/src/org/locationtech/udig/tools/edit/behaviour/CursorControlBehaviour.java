@@ -7,21 +7,21 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.behaviour;
+package org.locationtech.udig.tools.edit.behaviour;
 
-import net.refractions.udig.core.IProvider;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.tools.edit.EditPlugin;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.EventBehaviour;
-import net.refractions.udig.tools.edit.EventType;
-import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
-import net.refractions.udig.tools.edit.support.ClosestEdge;
-import net.refractions.udig.tools.edit.support.EditGeom;
-import net.refractions.udig.tools.edit.support.Point;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.core.IProvider;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.EventBehaviour;
+import org.locationtech.udig.tools.edit.EventType;
+import org.locationtech.udig.tools.edit.preferences.PreferenceUtil;
+import org.locationtech.udig.tools.edit.support.ClosestEdge;
+import org.locationtech.udig.tools.edit.support.EditGeom;
+import org.locationtech.udig.tools.edit.support.Point;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Display;

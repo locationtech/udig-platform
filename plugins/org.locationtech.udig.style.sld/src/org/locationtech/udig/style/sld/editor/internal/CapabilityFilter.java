@@ -13,7 +13,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package net.refractions.udig.style.sld.editor.internal;
+package org.locationtech.udig.style.sld.editor.internal;
 
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;

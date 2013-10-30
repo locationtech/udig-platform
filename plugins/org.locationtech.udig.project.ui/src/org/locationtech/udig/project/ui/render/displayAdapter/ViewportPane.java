@@ -9,16 +9,16 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.render.displayAdapter;
+package org.locationtech.udig.project.ui.render.displayAdapter;
 
 import java.awt.image.BufferedImage;
 
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplayListener;
-import net.refractions.udig.project.ui.commands.IDrawCommand;
-import net.refractions.udig.project.ui.internal.MapPart;
-import net.refractions.udig.project.ui.render.glass.GlassPane;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
+import org.locationtech.udig.project.ui.commands.IDrawCommand;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.render.glass.GlassPane;
 
 import org.eclipse.swt.widgets.Control;
 

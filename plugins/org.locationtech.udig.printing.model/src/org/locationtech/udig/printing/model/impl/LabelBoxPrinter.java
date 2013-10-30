@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.printing.model.impl;
+package org.locationtech.udig.printing.model.impl;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -16,11 +16,11 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.printing.model.AbstractBoxPrinter;
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.ui.UDIGEditorInput;
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
+import org.locationtech.udig.printing.model.AbstractBoxPrinter;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.ui.UDIGEditorInput;
+import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
@@ -337,7 +337,7 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
     }
 
     public String getExtensionPointID() {
-        return "net.refractions.udig.printing.ui.standardBoxes"; //$NON-NLS-1$
+        return "org.locationtech.udig.printing.ui.standardBoxes"; //$NON-NLS-1$
     }
 
     @SuppressWarnings("unchecked")

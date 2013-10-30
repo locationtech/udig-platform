@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.commands;
+package org.locationtech.udig.project.ui.commands;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -17,20 +17,20 @@ import java.awt.Shape;
 import java.io.IOException;
 import java.util.List;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-import net.refractions.udig.project.ui.IAnimation;
-import net.refractions.udig.project.ui.internal.commands.draw.CompositeDrawCommand;
-import net.refractions.udig.project.ui.internal.commands.draw.DrawEditFeatureCommand;
-import net.refractions.udig.project.ui.internal.commands.draw.DrawFeatureCommand;
-import net.refractions.udig.project.ui.internal.commands.draw.DrawShapeCommand;
-import net.refractions.udig.project.ui.internal.commands.draw.StartAnimationCommand;
-import net.refractions.udig.project.ui.internal.commands.draw.StopAnimationCommand;
-import net.refractions.udig.project.ui.internal.commands.draw.TranslateCommand;
-import net.refractions.udig.project.ui.internal.commands.draw.ZoomDrawCommand;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.ui.IAnimation;
+import org.locationtech.udig.project.ui.internal.commands.draw.CompositeDrawCommand;
+import org.locationtech.udig.project.ui.internal.commands.draw.DrawEditFeatureCommand;
+import org.locationtech.udig.project.ui.internal.commands.draw.DrawFeatureCommand;
+import org.locationtech.udig.project.ui.internal.commands.draw.DrawShapeCommand;
+import org.locationtech.udig.project.ui.internal.commands.draw.StartAnimationCommand;
+import org.locationtech.udig.project.ui.internal.commands.draw.StopAnimationCommand;
+import org.locationtech.udig.project.ui.internal.commands.draw.TranslateCommand;
+import org.locationtech.udig.project.ui.internal.commands.draw.ZoomDrawCommand;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;

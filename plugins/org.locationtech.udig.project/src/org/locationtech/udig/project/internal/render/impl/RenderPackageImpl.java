@@ -1,7 +1,7 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.render.impl;
+package org.locationtech.udig.project.internal.render.impl;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -11,27 +11,27 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 import java.util.SortedSet;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.element.ElementPackage;
-import net.refractions.udig.project.element.impl.ElementPackageImpl;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.impl.ProjectPackageImpl;
-import net.refractions.udig.project.internal.render.MultiLayerRenderer;
-import net.refractions.udig.project.internal.render.RenderExecutor;
-import net.refractions.udig.project.internal.render.RenderFactory;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.RenderPackage;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.render.IMultiLayerRenderer;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderManager;
-import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.project.render.RenderException;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplayListener;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.element.ElementPackage;
+import org.locationtech.udig.project.element.impl.ElementPackageImpl;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.impl.ProjectPackageImpl;
+import org.locationtech.udig.project.internal.render.MultiLayerRenderer;
+import org.locationtech.udig.project.internal.render.RenderExecutor;
+import org.locationtech.udig.project.internal.render.RenderFactory;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.render.IMultiLayerRenderer;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderManager;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EAttribute;
@@ -259,7 +259,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * if one already exists.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.emf.ecore.EPackage.Registry
-     * @see net.refractions.udig.project.internal.render.RenderPackage#eNS_URI
+     * @see org.locationtech.udig.project.internal.render.RenderPackage#eNS_URI
      * @see #init()
      * @generated
      */

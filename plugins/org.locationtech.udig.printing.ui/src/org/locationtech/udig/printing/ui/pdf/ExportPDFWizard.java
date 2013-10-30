@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.printing.ui.pdf;
+package org.locationtech.udig.printing.ui.pdf;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -27,25 +27,25 @@ import java.util.Locale;
 
 import javax.imageio.ImageIO;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.core.internal.Icons;
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.ModelFactory;
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.printing.ui.Template;
-import net.refractions.udig.printing.ui.TemplateFactory;
-import net.refractions.udig.printing.ui.internal.Messages;
-import net.refractions.udig.printing.ui.internal.PrintingEngine;
-import net.refractions.udig.printing.ui.internal.PrintingPlugin;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxCommand;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.BoundsStrategy;
-import net.refractions.udig.project.ui.SelectionStyle;
-import net.refractions.udig.project.ui.ApplicationGIS.DrawMapParameter;
-import net.refractions.udig.project.ui.internal.MapEditorInput;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.internal.Icons;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.ModelFactory;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.printing.ui.Template;
+import org.locationtech.udig.printing.ui.TemplateFactory;
+import org.locationtech.udig.printing.ui.internal.Messages;
+import org.locationtech.udig.printing.ui.internal.PrintingEngine;
+import org.locationtech.udig.printing.ui.internal.PrintingPlugin;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.BoundsStrategy;
+import org.locationtech.udig.project.ui.SelectionStyle;
+import org.locationtech.udig.project.ui.ApplicationGIS.DrawMapParameter;
+import org.locationtech.udig.project.ui.internal.MapEditorInput;
 
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.jface.resource.ImageDescriptor;

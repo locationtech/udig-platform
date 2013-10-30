@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.commands;
+package org.locationtech.udig.tools.edit.commands;
 
 import java.awt.Color;
 
-import net.refractions.udig.core.IProvider;
-import net.refractions.udig.core.StaticProvider;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.support.EditGeom;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.core.IProvider;
+import org.locationtech.udig.core.StaticProvider;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.support.EditGeom;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 /**
  * This class manages the colors and line patterns the uses for drawing. There are different colors

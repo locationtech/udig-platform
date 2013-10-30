@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.project.ui.wizard.export.image;
+package org.locationtech.udig.project.ui.wizard.export.image;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,8 +12,8 @@ import java.util.List;
 import javax.imageio.spi.IIORegistry;
 import javax.imageio.spi.ImageWriterSpi;
 
-import net.refractions.udig.project.ui.SelectionStyle;
-import net.refractions.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.SelectionStyle;
+import org.locationtech.udig.project.ui.internal.Messages;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;

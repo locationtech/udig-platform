@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.internal.ui;
+package org.locationtech.udig.internal.ui;
 
 
 import org.eclipse.ui.IPageLayout;
@@ -22,7 +22,7 @@ import org.eclipse.ui.IPerspectiveFactory;
 public class AlternateMapPerspective implements IPerspectiveFactory {
 
 	/** <code>ID_PERSPECTIVE</code> field */
-	public static final String ID_PERSPECTIVE = "net.refractions.udig.ui.alternateMapPerspective"; //$NON-NLS-1$
+	public static final String ID_PERSPECTIVE = "org.locationtech.udig.ui.alternateMapPerspective"; //$NON-NLS-1$
     
     /**
      * Creates the initial layout for a page.
@@ -40,9 +40,9 @@ public class AlternateMapPerspective implements IPerspectiveFactory {
         // Get the editor area.
         String editorArea = layout.getEditorArea();
         
-        layout.addView( "net.refractions.udig.project.ui.projectExplorer", IPageLayout.RIGHT, 0.65f, editorArea ); //$NON-NLS-1$
-        layout.addView( "net.refractions.udig.project.ui.layerManager", IPageLayout.BOTTOM, 0.25f, //$NON-NLS-1$
-                "net.refractions.udig.project.ui.projectExplorer" ); //$NON-NLS-1$
+        layout.addView( "org.locationtech.udig.project.ui.projectExplorer", IPageLayout.RIGHT, 0.65f, editorArea ); //$NON-NLS-1$
+        layout.addView( "org.locationtech.udig.project.ui.layerManager", IPageLayout.BOTTOM, 0.25f, //$NON-NLS-1$
+                "org.locationtech.udig.project.ui.projectExplorer" ); //$NON-NLS-1$
         
         layout.createPlaceholderFolder("bottom", IPageLayout.BOTTOM, 0.65f, editorArea);         //$NON-NLS-1$
         layout.addPerspectiveShortcut(MapPerspective.ID_PERSPECTIVE);

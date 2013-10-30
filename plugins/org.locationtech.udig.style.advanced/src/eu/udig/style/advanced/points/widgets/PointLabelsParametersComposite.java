@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.points.widgets;
+package org.locationtech.udig.style.advanced.points.widgets;
 
-import static eu.udig.style.advanced.utils.Utilities.ff;
+import static org.locationtech.udig.style.advanced.utils.Utilities.ff;
 
 import java.awt.Color;
 
-import net.refractions.udig.style.sld.SLD;
+import org.locationtech.udig.style.sld.SLD;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
@@ -31,16 +31,16 @@ import org.eclipse.swt.widgets.Text;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.expression.Expression;
 
-import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
-import eu.udig.style.advanced.common.ParameterComposite;
-import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
-import eu.udig.style.advanced.internal.Messages;
-import eu.udig.style.advanced.utils.Alignments;
-import eu.udig.style.advanced.utils.FontEditor;
-import eu.udig.style.advanced.utils.StolenColorEditor;
-import eu.udig.style.advanced.utils.Utilities;
-import eu.udig.style.advanced.utils.VendorOptions;
+import org.locationtech.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
+import org.locationtech.udig.style.advanced.common.ParameterComposite;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
+import org.locationtech.udig.style.advanced.internal.Messages;
+import org.locationtech.udig.style.advanced.utils.Alignments;
+import org.locationtech.udig.style.advanced.utils.FontEditor;
+import org.locationtech.udig.style.advanced.utils.StolenColorEditor;
+import org.locationtech.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.style.advanced.utils.VendorOptions;
 
 /**
  * A composite that holds widgets for labels parameter setting.

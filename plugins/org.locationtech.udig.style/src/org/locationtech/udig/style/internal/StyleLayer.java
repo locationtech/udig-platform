@@ -9,18 +9,18 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.style.internal;
+package org.locationtech.udig.style.internal;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.command.UndoableCommand;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerDecorator;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.internal.StyleEntry;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.UndoableCommand;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerDecorator;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.StyleEntry;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -48,7 +48,7 @@ public class StyleLayer extends LayerDecorator {
     }
 
     /*
-     * @see net.refractions.udig.project.LayerDecorator#getStyleBlackboard()
+     * @see org.locationtech.udig.project.LayerDecorator#getStyleBlackboard()
      */
     public synchronized StyleBlackboard getStyleBlackboard() {
         if (blackboard == null) {
@@ -117,7 +117,7 @@ class ApplyStyleCommand extends AbstractCommand implements UndoableCommand {
 
     /*
      * overwrite with the original blackboard
-     * @see net.refractions.udig.project.command.UndoableCommand#rollback()
+     * @see org.locationtech.udig.project.command.UndoableCommand#rollback()
      */
     public void rollback( IProgressMonitor monitor ) throws Exception {
         layer.setStyleBlackboard(oldStyleBlackboard);
@@ -139,7 +139,7 @@ class ApplyStyleCommand extends AbstractCommand implements UndoableCommand {
     }
 
     /**
-     * @see net.refractions.udig.project.command.MapCommand#getName()
+     * @see org.locationtech.udig.project.command.MapCommand#getName()
      */
     public String getName() {
         return layer.getName();

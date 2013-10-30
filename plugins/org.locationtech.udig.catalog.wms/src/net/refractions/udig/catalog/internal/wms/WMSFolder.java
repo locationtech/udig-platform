@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wms;
+package org.locationtech.udig.catalog.internal.wms;
 
 import java.io.IOException;
 import java.net.URL;
@@ -16,14 +16,14 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveFolder;
-import net.refractions.udig.catalog.IResolveManager;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.catalog.ui.ISharedImages;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveFolder;
+import org.locationtech.udig.catalog.IResolveManager;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.ISharedImages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;

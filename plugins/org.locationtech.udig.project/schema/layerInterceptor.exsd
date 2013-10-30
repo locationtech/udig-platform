@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.project" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.project" id="layerInterceptor" name="layerInterceptor"/>
+         <meta.schema plugin="org.locationtech.udig.project" id="layerInterceptor" name="layerInterceptor"/>
       </appInfo>
       <documentation>
          Layer Interceptors allow customized actions to be executed at certain points in a Layer&apos;s life cycle.  The points available are: Layer creation, Layer being added to a Map and layer being removed from a map.
@@ -82,7 +82,7 @@
                   The LayerInterceptor class.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.interceptor.LayerInterceptor"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.interceptor.LayerInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -122,7 +122,7 @@
                   The LayerInterceptor class.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.interceptor.LayerInterceptor"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.interceptor.LayerInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -162,7 +162,7 @@
                   The LayerInterceptor class.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.interceptor.LayerInterceptor"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.interceptor.LayerInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -186,8 +186,8 @@
          An example use is:
 &lt;pre&gt;
 &lt;layerCreated
-  class=&quot;net.refractions.udig.project.internal.impl.SetStyleInterceptor&quot;
-  id=&quot;net.refractions.udig.project.setStyleInterceptor&quot;
+  class=&quot;org.locationtech.udig.project.internal.impl.SetStyleInterceptor&quot;
+  id=&quot;org.locationtech.udig.project.setStyleInterceptor&quot;
   name=&quot;Set Layer Style&quot;/&gt;
 &lt;/pre&gt;
 

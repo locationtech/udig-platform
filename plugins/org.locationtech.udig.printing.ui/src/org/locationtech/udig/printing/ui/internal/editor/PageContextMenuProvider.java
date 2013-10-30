@@ -9,9 +9,9 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.ui.internal.editor;
+package org.locationtech.udig.printing.ui.internal.editor;
 
-import net.refractions.udig.printing.ui.internal.PrintingPlugin;
+import org.locationtech.udig.printing.ui.internal.PrintingPlugin;
 
 import org.eclipse.gef.ContextMenuProvider;
 import org.eclipse.gef.EditPartViewer;

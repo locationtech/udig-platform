@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -15,8 +15,8 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import net.refractions.udig.internal.ui.Trace;
-import net.refractions.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.internal.ui.Trace;
+import org.locationtech.udig.internal.ui.UiPlugin;
 
 import org.eclipse.swt.widgets.Display;
 

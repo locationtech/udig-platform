@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.jgrass.operations;
+package org.locationtech.udig.catalog.jgrass.operations;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import net.refractions.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.IStatus;
@@ -32,9 +32,9 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.IWorkbenchWindowPulldownDelegate;
 import org.eclipse.ui.PlatformUI;
 
-import eu.udig.catalog.jgrass.JGrassPlugin;
-import eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
-import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
+import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
+import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
 
 /**
  * Action to remove a mapset from disk.

@@ -4,12 +4,12 @@
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-package net.refractions.udig.internal.ui.operations;
+package org.locationtech.udig.internal.ui.operations;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.ui.operations.OpAction;
+import org.locationtech.udig.ui.operations.OpAction;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.action.IAction;

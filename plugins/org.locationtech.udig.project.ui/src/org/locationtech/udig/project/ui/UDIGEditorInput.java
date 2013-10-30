@@ -9,11 +9,11 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui;
+package org.locationtech.udig.project.ui;
 
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.element.IGenericProjectElement;
-import net.refractions.udig.project.element.ProjectElementAdapter;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.element.IGenericProjectElement;
+import org.locationtech.udig.project.element.ProjectElementAdapter;
 
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;

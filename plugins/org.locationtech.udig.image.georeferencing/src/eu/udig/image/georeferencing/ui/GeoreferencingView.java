@@ -10,15 +10,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.image.georeferencing.ui;
+package org.locationtech.udig.image.georeferencing.ui;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
-import net.refractions.udig.project.ui.IUDIGView;
-import net.refractions.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ui.IUDIGView;
+import org.locationtech.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -39,14 +39,14 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.opengis.feature.simple.SimpleFeature;
 
-import eu.udig.image.georeferencing.internal.i18n.Messages;
-import eu.udig.image.georeferencing.internal.preferences.Preferences;
-import eu.udig.image.georeferencing.internal.process.MarkModelFactory;
-import eu.udig.image.georeferencing.internal.ui.GeoReferencingCommand;
-import eu.udig.image.georeferencing.internal.ui.GeoreferencingCommandEventChange;
-import eu.udig.image.georeferencing.internal.ui.MainComposite;
-import eu.udig.image.georeferencing.internal.ui.message.InfoMessage;
-import eu.udig.image.georeferencing.internal.ui.message.InfoMessage.Type;
+import org.locationtech.udig.image.georeferencing.internal.i18n.Messages;
+import org.locationtech.udig.image.georeferencing.internal.preferences.Preferences;
+import org.locationtech.udig.image.georeferencing.internal.process.MarkModelFactory;
+import org.locationtech.udig.image.georeferencing.internal.ui.GeoReferencingCommand;
+import org.locationtech.udig.image.georeferencing.internal.ui.GeoreferencingCommandEventChange;
+import org.locationtech.udig.image.georeferencing.internal.ui.MainComposite;
+import org.locationtech.udig.image.georeferencing.internal.ui.message.InfoMessage;
+import org.locationtech.udig.image.georeferencing.internal.ui.message.InfoMessage.Type;
 
 /**
  * View for Georeferencing.
@@ -57,7 +57,7 @@ import eu.udig.image.georeferencing.internal.ui.message.InfoMessage.Type;
  */
 public class GeoreferencingView extends ViewPart implements IUDIGView, Observer {
 
-	public static final String		id					= "eu.udig.image.georeferencing.ui.GeoreferencingView";	//$NON-NLS-1$
+	public static final String		id					= "org.locationtech.udig.image.georeferencing.ui.GeoreferencingView";	//$NON-NLS-1$
 	private static final String 	GCP_FILE_EXT 		= "*.gcp"; //$NON-NLS-1$
 	private static final String 	LOAD_IMAGE_BUTTON 	= "images/load.png"; //$NON-NLS-1$
 	private static final String 	RUN_IMAGE_BUTTON 	= "images/run.gif"; //$NON-NLS-1$

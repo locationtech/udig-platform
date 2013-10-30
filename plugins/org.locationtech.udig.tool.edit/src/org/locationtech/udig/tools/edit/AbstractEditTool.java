@@ -7,21 +7,21 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit;
+package org.locationtech.udig.tools.edit;
 
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.tool.display.CursorProxy;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelEvent;
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.project.ui.tool.IToolManager;
-import net.refractions.udig.project.ui.tool.SimpleTool;
-import net.refractions.udig.tools.edit.activator.EnableAcceptEditCommandHandlerActivator;
-import net.refractions.udig.tools.edit.support.EditUtils;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.tool.display.CursorProxy;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelEvent;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.project.ui.tool.SimpleTool;
+import org.locationtech.udig.tools.edit.activator.EnableAcceptEditCommandHandlerActivator;
+import org.locationtech.udig.tools.edit.support.EditUtils;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.swt.SWT;
@@ -68,7 +68,7 @@ public abstract class AbstractEditTool extends SimpleTool {
             editCursor=Display.getDefault().getSystemCursor(SWT.CURSOR_ARROW);
         }
 
-        //Must be configured in "net.refractions.udig.tool.default" plugin
+        //Must be configured in "org.locationtech.udig.tool.default" plugin
         Cursor selectionCursor = toolManager.findToolCursor("boxSelectionCursor"); //$NON-NLS-1$
         handler=new EditToolHandler(selectionCursor, editCursor);
         initRequiredActivators();

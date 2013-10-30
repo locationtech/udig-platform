@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.ui" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.ui" id="filterViewer" name="FilterViewer"/>
+         <meta.schema plugin="org.locationtech.udig.ui" id="filterViewer" name="FilterViewer"/>
       </appInfo>
       <documentation>
          Extension Point for creating a custom Filter or Expression viewer
@@ -84,7 +84,7 @@ Example: CQL or Include
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.ui.filter.FilterViewerFactory:"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.ui.filter.FilterViewerFactory:"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -128,7 +128,7 @@ Example: CQL or Crayons
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.ui.filter.ExpressionViewerFactory:"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.ui.filter.ExpressionViewerFactory:"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -161,18 +161,18 @@ Example: CQL or Crayons
       <documentation>
          To contribute additional viewers into your application use the extension point as shown below:
 &lt;pre&gt;
-&lt;extension id=&quot;net.refractions.udig.tutorial.viewers&quot;
-           point=&quot;net.refractions.udig.ui.filterViewer&quot;
+&lt;extension id=&quot;org.locationtech.udig.tutorial.viewers&quot;
+           point=&quot;org.locationtech.udig.ui.filterViewer&quot;
            name=&quot;Custom Filter Viewers&quot;&gt;
     &lt;filterViewer
         id=&quot;roadCondition&quot;
         name=&quot;Road Condition&quot;
-        class=&quot;net.refractions.udig.tutorial.viewer.RoadConditionFilterViewerFactory&quot;
+        class=&quot;org.locationtech.udig.tutorial.viewer.RoadConditionFilterViewerFactory&quot;
         description=&quot;Filter sample road dataset using a graphical display of road condition&quot;/&gt;
     &lt;expressionViewer
         id=&quot;crayons&quot;
         name=&quot;Crayons&quot;
-        class=&quot;net.refractions.udig.tutorial.viewer.CrayonExpressionViewerFactory&quot;
+        class=&quot;org.locationtech.udig.tutorial.viewer.CrayonExpressionViewerFactory&quot;
         description=&quot;Define color using all the crayons in the box&quot;/&gt;
 &lt;/extension&gt;
 &lt;/pre&gt;

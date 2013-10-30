@@ -7,18 +7,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.render.displayAdapter.impl;
+package org.locationtech.udig.project.ui.internal.render.displayAdapter.impl;
 
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.project.render.displayAdapter.IMapDisplayListener;
-import net.refractions.udig.project.render.displayAdapter.MapDisplayEvent;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelEvent;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
+import org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseListener;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
 
 import org.eclipse.swt.widgets.Display;
 

@@ -10,7 +10,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.image.georeferencing.ui;
+package org.locationtech.udig.image.georeferencing.ui;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -29,8 +29,8 @@ import java.util.StringTokenizer;
 
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import eu.udig.image.georeferencing.internal.process.MarkModel;
-import eu.udig.image.georeferencing.internal.process.MarkModelFactory;
+import org.locationtech.udig.image.georeferencing.internal.process.MarkModel;
+import org.locationtech.udig.image.georeferencing.internal.process.MarkModelFactory;
 
 /**
  * @author Mauricio Pazos (www.axios.es)

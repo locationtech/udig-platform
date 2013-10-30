@@ -9,35 +9,35 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.ui.wizard;
+package org.locationtech.udig.catalog.ui.wizard;
 
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.internal.ui.ConnectionPageDecorator;
-import net.refractions.udig.catalog.internal.ui.ReflectionWorkflowWizardPageProvider;
-import net.refractions.udig.catalog.ui.ConnectionErrorPage;
-import net.refractions.udig.catalog.ui.DataSourceSelectionPage;
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
-import net.refractions.udig.catalog.ui.workflow.ConnectionErrorState;
-import net.refractions.udig.catalog.ui.workflow.ConnectionFailurePage;
-import net.refractions.udig.catalog.ui.workflow.ConnectionFailureState;
-import net.refractions.udig.catalog.ui.workflow.DataSourceSelectionState;
-import net.refractions.udig.catalog.ui.workflow.EndConnectionState;
-import net.refractions.udig.catalog.ui.workflow.IntermediateState;
-import net.refractions.udig.catalog.ui.workflow.State;
-import net.refractions.udig.catalog.ui.workflow.Workflow;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardAdapter;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardDialog;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPage;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.internal.ui.ConnectionPageDecorator;
+import org.locationtech.udig.catalog.internal.ui.ReflectionWorkflowWizardPageProvider;
+import org.locationtech.udig.catalog.ui.ConnectionErrorPage;
+import org.locationtech.udig.catalog.ui.DataSourceSelectionPage;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
+import org.locationtech.udig.catalog.ui.workflow.ConnectionErrorState;
+import org.locationtech.udig.catalog.ui.workflow.ConnectionFailurePage;
+import org.locationtech.udig.catalog.ui.workflow.ConnectionFailureState;
+import org.locationtech.udig.catalog.ui.workflow.DataSourceSelectionState;
+import org.locationtech.udig.catalog.ui.workflow.EndConnectionState;
+import org.locationtech.udig.catalog.ui.workflow.IntermediateState;
+import org.locationtech.udig.catalog.ui.workflow.State;
+import org.locationtech.udig.catalog.ui.workflow.Workflow;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardAdapter;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardDialog;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPage;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;

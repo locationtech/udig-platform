@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.postgis;
+package org.locationtech.udig.catalog.internal.postgis;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -27,7 +27,7 @@ public class PostgisPlugin extends AbstractUIPlugin {
 	private static PostgisPlugin plugin;
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
-	public static final String ID = "net.refractions.udig.catalog.internal.postgis"; //$NON-NLS-1$
+	public static final String ID = "org.locationtech.udig.catalog.internal.postgis"; //$NON-NLS-1$
     
 	/**
 	 * The constructor.
@@ -83,7 +83,7 @@ public class PostgisPlugin extends AbstractUIPlugin {
 	public ResourceBundle getResourceBundle() {
 		try {
 			if (resourceBundle == null)
-				resourceBundle = ResourceBundle.getBundle("net.refractions.udig.catalog.internal.postgis.PostgisPluginResources"); //$NON-NLS-1$
+				resourceBundle = ResourceBundle.getBundle("org.locationtech.udig.catalog.internal.postgis.PostgisPluginResources"); //$NON-NLS-1$
 		} catch (MissingResourceException x) {
 			resourceBundle = null;
 		}
@@ -109,7 +109,7 @@ public class PostgisPlugin extends AbstractUIPlugin {
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:<pre><code>
-     * private static final String RENDERING = "net.refractions.udig.project/render/trace";
+     * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
      * }

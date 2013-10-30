@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig;
+package org.locationtech.udig;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -22,10 +22,10 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.UDIGDisplaySafeLock;
-import net.refractions.udig.ui.WaitCondition;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.UDIGDisplaySafeLock;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.swt.widgets.Display;
 import org.junit.Before;

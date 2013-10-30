@@ -8,9 +8,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.preferences;
+package org.locationtech.udig.ui.preferences;
 
-import net.refractions.udig.ui.FeatureTypeEditor;
+import org.locationtech.udig.ui.FeatureTypeEditor;
 
 /**
  * Constant definitions for plug-in preferences
@@ -24,7 +24,7 @@ public class PreferenceConstants {
     
     /**
      * Fully qualified extension id pointing to an extension instance of point 
-     * "net.refractions.udig.ui.workbenchConfigurations". The value specified by
+     * "org.locationtech.udig.ui.workbenchConfigurations". The value specified by
      * the extension id will be called upon to configure the workbench when it 
      * starts up.
      */
@@ -32,7 +32,7 @@ public class PreferenceConstants {
     
     /**
      * Fully qualified extension id pointing to an instance of extension point
-     * "net.refractions.udig.ui.menuBuilders". The MenuBuilder specified by the
+     * "org.locationtech.udig.ui.menuBuilders". The MenuBuilder specified by the
      * extension will be called by uDig to configure the menubar and coolbar.
      */
     public static final String P_MENU_BUILDER = "menuBuilder"; //$NON-NLS-1$

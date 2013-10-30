@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.internal.ui;
+package org.locationtech.udig.internal.ui;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,10 +20,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.refractions.udig.core.internal.ExtensionPointProcessor;
-import net.refractions.udig.core.internal.ExtensionPointUtil;
-import net.refractions.udig.ui.IDropAction;
-import net.refractions.udig.ui.TransferFactory;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.ui.IDropAction;
+import org.locationtech.udig.ui.TransferFactory;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
@@ -39,7 +39,7 @@ import org.eclipse.swt.dnd.Transfer;
  *  <p>
  *  The following extension points are processed:
  *  <ul>
- *  <li>net.refractions.udig.ui.dropTransfers</li>
+ *  <li>org.locationtech.udig.ui.dropTransfers</li>
  *  </ul>
  * @author jones
  * @since 1.0.0

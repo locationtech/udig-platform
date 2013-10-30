@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.render.internal.wms.basic;
+package org.locationtech.udig.render.internal.wms.basic;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,19 +17,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ProjectBlackboardConstants;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.ICompositeRenderContext;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderMetricsFactory;
-import net.refractions.udig.render.wms.basic.WMSPlugin;
-import net.refractions.udig.style.sld.SLDContent;
-import net.refractions.udig.style.wms.WMSStyleContent;
-import net.refractions.udig.ui.ProgressManager;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.ICompositeRenderContext;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.render.wms.basic.WMSPlugin;
+import org.locationtech.udig.style.sld.SLDContent;
+import org.locationtech.udig.style.wms.WMSStyleContent;
+import org.locationtech.udig.ui.ProgressManager;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.ows.Layer;
@@ -77,7 +77,7 @@ public class BasicWMSMetrics2 extends AbstractRenderMetrics {
     }
 
     /**
-     * @see net.refractions.udig.project.render.IRenderMetrics#getRenderMetricsFactory()
+     * @see org.locationtech.udig.project.render.IRenderMetrics#getRenderMetricsFactory()
      */
     public IRenderMetricsFactory getRenderMetricsFactory() {
         return factory;

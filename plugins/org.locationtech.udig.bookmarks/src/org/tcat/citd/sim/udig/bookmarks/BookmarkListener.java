@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.tcat.citd.sim.udig.bookmarks;
+package org.locationtech.udig.bookmarks;
 
 import java.util.Collection;
 

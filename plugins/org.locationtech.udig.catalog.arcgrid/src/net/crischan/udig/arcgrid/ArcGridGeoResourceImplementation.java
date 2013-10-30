@@ -13,9 +13,9 @@ package net.crischan.udig.arcgrid;
 import java.io.IOException;
 
 import net.crischan.udig.arcgrid.internal.Messages;
-import net.refractions.udig.catalog.rasterings.AbstractRasterGeoResource;
-import net.refractions.udig.catalog.rasterings.AbstractRasterGeoResourceInfo;
-import net.refractions.udig.catalog.rasterings.AbstractRasterService;
+import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResource;
+import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResourceInfo;
+import org.locationtech.udig.catalog.rasterings.AbstractRasterService;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;

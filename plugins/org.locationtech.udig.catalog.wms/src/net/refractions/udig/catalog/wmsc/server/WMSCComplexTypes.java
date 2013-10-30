@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.wmsc.server;
+package org.locationtech.udig.catalog.wmsc.server;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -16,10 +16,10 @@ import java.util.Map;
 
 import javax.naming.OperationNotSupportedException;
 
-import net.refractions.udig.catalog.internal.wms.WmsPlugin;
-import net.refractions.udig.catalog.wmsc.server.WMSCSchema.WMSCAttribute;
-import net.refractions.udig.catalog.wmsc.server.WMSCSchema.WMSCComplexType;
-import net.refractions.udig.catalog.wmsc.server.WMSCSchema.WMSCElement;
+import org.locationtech.udig.catalog.internal.wms.WmsPlugin;
+import org.locationtech.udig.catalog.wmsc.server.WMSCSchema.WMSCAttribute;
+import org.locationtech.udig.catalog.wmsc.server.WMSCSchema.WMSCComplexType;
+import org.locationtech.udig.catalog.wmsc.server.WMSCSchema.WMSCElement;
 
 import org.geotools.data.ows.CRSEnvelope;
 import org.geotools.data.ows.Service;

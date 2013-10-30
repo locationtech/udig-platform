@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.arcsde;
+package org.locationtech.udig.catalog.internal.arcsde;
 
 import java.io.IOException;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResource;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.arcsde.jndi.SharedSessionPool;

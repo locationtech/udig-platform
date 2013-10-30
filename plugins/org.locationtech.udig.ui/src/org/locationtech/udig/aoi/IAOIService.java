@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.aoi;
+package org.locationtech.udig.aoi;
 
  
 import java.util.List;
@@ -27,7 +27,7 @@ import com.vividsolutions.jts.geom.Geometry;
  * 
  * Example of changing the strategy uesd for determining the AOI extent:
  * <pre>
- * AOIProxy proxy = service.findProxy("net.refractions.udig.ui.aoiAll");
+ * AOIProxy proxy = service.findProxy("org.locationtech.udig.ui.aoiAll");
  * service.setProxy( proxy );</pre>
  * 
  * @author Paul Pfeiffer

@@ -8,21 +8,21 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.shp.op;
+package org.locationtech.udig.catalog.shp.op;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.shp.ShpPlugin;
-import net.refractions.udig.catalog.internal.shp.ShpServiceExtension;
-import net.refractions.udig.core.AdapterUtil;
-import net.refractions.udig.ui.CRSChooserDialog;
-import net.refractions.udig.ui.operations.IOp;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.shp.ShpPlugin;
+import org.locationtech.udig.catalog.internal.shp.ShpServiceExtension;
+import org.locationtech.udig.core.AdapterUtil;
+import org.locationtech.udig.ui.CRSChooserDialog;
+import org.locationtech.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -43,7 +43,7 @@ public class SetProjection implements IOp {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see net.refractions.udig.ui.operations.IOp#op(org.eclipse.swt.widgets.Display,
+	 * @see org.locationtech.udig.ui.operations.IOp#op(org.eclipse.swt.widgets.Display,
 	 *      java.lang.Object, org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	public void op(final Display display, final Object target,

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.jconsole.actions;
+package org.locationtech.udig.jconsole.actions;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,9 +21,9 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
 
-import eu.udig.jconsole.JConsolePlugin;
-import eu.udig.jconsole.JavaEditor;
-import eu.udig.jconsole.JavaFileEditorInput;
+import org.locationtech.udig.jconsole.JConsolePlugin;
+import org.locationtech.udig.jconsole.JavaEditor;
+import org.locationtech.udig.jconsole.JavaFileEditorInput;
 
 /**
  * Action to open an editor

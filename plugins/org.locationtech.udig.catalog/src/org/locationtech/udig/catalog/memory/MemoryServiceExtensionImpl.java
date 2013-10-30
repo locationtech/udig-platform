@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.memory;
+package org.locationtech.udig.catalog.memory;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -18,10 +18,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ServiceExtension;
-import net.refractions.udig.catalog.memory.internal.MemoryServiceImpl;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ServiceExtension;
+import org.locationtech.udig.catalog.memory.internal.MemoryServiceImpl;
 
 import org.geotools.data.DataUtilities;
 import org.geotools.data.memory.MemoryDataStore;

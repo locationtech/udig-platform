@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.internal.ui;
+package org.locationtech.udig.internal.ui;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -34,15 +34,15 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import net.refractions.udig.core.AbstractUdigUIPlugin;
-import net.refractions.udig.core.internal.ExtensionPointProcessor;
-import net.refractions.udig.core.internal.ExtensionPointUtil;
-import net.refractions.udig.internal.ui.operations.OperationMenuFactory;
-import net.refractions.udig.ui.MenuBuilder;
-import net.refractions.udig.ui.UDIGMenuBuilder;
-import net.refractions.udig.ui.internal.Messages;
-import net.refractions.udig.ui.preferences.PreferenceConstants;
-import net.refractions.udig.ui.preferences.RuntimeFieldEditor;
+import org.locationtech.udig.core.AbstractUdigUIPlugin;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.internal.ui.operations.OperationMenuFactory;
+import org.locationtech.udig.ui.MenuBuilder;
+import org.locationtech.udig.ui.UDIGMenuBuilder;
+import org.locationtech.udig.ui.internal.Messages;
+import org.locationtech.udig.ui.preferences.PreferenceConstants;
+import org.locationtech.udig.ui.preferences.RuntimeFieldEditor;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
@@ -75,7 +75,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     /** Icons path (value "icons/") */
     public final static String ICONS_PATH = "icons/";//$NON-NLS-1$
 
-    public final static String ID = "net.refractions.udig.ui"; //$NON-NLS-1$
+    public final static String ID = "org.locationtech.udig.ui"; //$NON-NLS-1$
 
     public static final String DROP_ACTIONS_ID = ID + ".dropActions"; //$NON-NLS-1$
 
@@ -85,7 +85,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
 
     private static final String UDIG_VERSION_KEY = "1"; //$NON-NLS-1$
 
-    private static final String UDIG_PRODUCT_ID = "net.refractions.udig.product"; //$NON-NLS-1$
+    private static final String UDIG_PRODUCT_ID = "org.locationtech.udig.product"; //$NON-NLS-1$
 
     private URL iconsUrl;
 
@@ -297,7 +297,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much preferred to do this:<pre><code>
-     * private static final String RENDERING = "net.refractions.udig.project/render/trace";
+     * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
      * 
@@ -580,7 +580,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      * plugin_customization.ini files, and these values are loaded into the 
      * preference store. The parameter <tt>prefConstant</tt> is used to look
      * up this value, and should be the key (prefixed by the plug-in name,
-     * net.refractions.udig.ui) used in the ini file. 
+     * org.locationtech.udig.ui) used in the ini file. 
      * 
      * The returned object will either be an instances of 
      * <tt>interfaceClass</tt> or <tt>null</tt>.
@@ -595,31 +595,31 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      * Example:
      * plugin_customization.ini
      * <pre>
-     * net.refractions.udig.ui/workbenchConfiguration=net.refractions.udig.internal.ui.UDIGWorkbenchConfiguration
+     * org.locationtech.udig.ui/workbenchConfiguration=org.locationtech.udig.internal.ui.UDIGWorkbenchConfiguration
      * </pre>
      * 
-     * <b><tt>store</tt></b>: net.refractions.udig.internal.ui.UiPlugin.getPreferenceStore() 
+     * <b><tt>store</tt></b>: org.locationtech.udig.internal.ui.UiPlugin.getPreferenceStore() 
      * (this corresponds to the first part of the key)
      * 
-     * <b><tt>pluginID</tt></b>: "net.refractions.udig.ui"
+     * <b><tt>pluginID</tt></b>: "org.locationtech.udig.ui"
      * 
      * <b><tt>prefConstant</tt></b>: "workbenchConfiguration"
      * 
      * 
      * <pre>
      *     <extension
-     *       point="net.refractions.udig.ui.workbenchConfigurations">
+     *       point="org.locationtech.udig.ui.workbenchConfigurations">
      *         <workbenchConfiguration
-     *           class="net.refractions.udig.internal.ui.UDIGWorkbenchConfiguration"
-     *           id="net.refractions.udig.internal.ui.UDIGWorkbenchConfiguration"/>
+     *           class="org.locationtech.udig.internal.ui.UDIGWorkbenchConfiguration"
+     *           id="org.locationtech.udig.internal.ui.UDIGWorkbenchConfiguration"/>
      *     </extension>
      * </pre>
      * 
-     * <b><tt>xpid</tt></b>: "net.refractions.udig.ui.workbenchConfigurations"
+     * <b><tt>xpid</tt></b>: "org.locationtech.udig.ui.workbenchConfigurations"
      * <b><tt>idField</tt></b>: "id"
      * <b><tt>classField</tt></b>: "class"
      * 
-     * This will return an instance of <tt>net.refractions.udig.ui.WorkbenchConfiguration</tt>,
+     * This will return an instance of <tt>org.locationtech.udig.ui.WorkbenchConfiguration</tt>,
      * or null if it cannot find one (in which case, check the logs!).
      * 
      * Make sure to be a good developer and use constants. Also make sure to 

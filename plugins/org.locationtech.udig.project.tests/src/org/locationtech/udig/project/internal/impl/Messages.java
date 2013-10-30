@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "net.refractions.udig.project.internal.impl.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.project.internal.impl.messages"; //$NON-NLS-1$
 	public static String PersistenceTest_12;
 	public static String PersistenceTest_11;
 	public static String PersistenceTest_10;

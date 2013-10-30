@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.ui;
+package org.locationtech.udig.catalog.internal.ui;
 
 import java.lang.reflect.InvocationTargetException;
 
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardAdapter;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardAdapter;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.ProgressManager;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.operation.IRunnableWithProgress;

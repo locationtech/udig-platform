@@ -7,33 +7,33 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.info.internal;
+package org.locationtech.udig.tool.info.internal;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.core.internal.FeatureUtils;
-import net.refractions.udig.project.AdaptableFeature;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILayerListener;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IMapCompositionListener;
-import net.refractions.udig.project.Interaction;
-import net.refractions.udig.project.LayerEvent;
-import net.refractions.udig.project.LayerEvent.EventType;
-import net.refractions.udig.project.MapCompositionEvent;
-import net.refractions.udig.project.internal.impl.LayerImpl;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.properties.FeaturePropertySource;
-import net.refractions.udig.tool.info.CoveragePointInfo;
-import net.refractions.udig.tool.info.InfoPlugin;
-import net.refractions.udig.tool.info.InfoTool;
-import net.refractions.udig.tool.info.LayerPointInfo;
-import net.refractions.udig.tool.info.internal.display.BrowserInfoDisplay;
-import net.refractions.udig.tool.info.internal.display.TextInfoDisplay;
-import net.refractions.udig.ui.SearchPart;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.project.AdaptableFeature;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILayerListener;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IMapCompositionListener;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.project.LayerEvent;
+import org.locationtech.udig.project.LayerEvent.EventType;
+import org.locationtech.udig.project.MapCompositionEvent;
+import org.locationtech.udig.project.internal.impl.LayerImpl;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.properties.FeaturePropertySource;
+import org.locationtech.udig.tool.info.CoveragePointInfo;
+import org.locationtech.udig.tool.info.InfoPlugin;
+import org.locationtech.udig.tool.info.InfoTool;
+import org.locationtech.udig.tool.info.LayerPointInfo;
+import org.locationtech.udig.tool.info.internal.display.BrowserInfoDisplay;
+import org.locationtech.udig.tool.info.internal.display.TextInfoDisplay;
+import org.locationtech.udig.ui.SearchPart;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -89,7 +89,7 @@ import org.opengis.filter.expression.Expression;
  */
 public class InfoView2 extends SearchPart {
     /** <code>VIEW_ID</code> field */
-    public static final String VIEW_ID = "net.refractions.udig.tool.info.infoView"; //$NON-NLS-1$
+    public static final String VIEW_ID = "org.locationtech.udig.tool.info.infoView"; //$NON-NLS-1$
     private Text information;
     private TextInfoDisplay textDisplay;
     private BrowserInfoDisplay browserDisplay;
@@ -162,7 +162,7 @@ public class InfoView2 extends SearchPart {
         }
         
         /**
-         * @see net.refractions.udig.project.internal.provider.LayerItemProvider
+         * @see org.locationtech.udig.project.internal.provider.LayerItemProvider
          */
         public Color getBackground(Object element) {
             if (element instanceof AdaptableFeature) {
@@ -176,7 +176,7 @@ public class InfoView2 extends SearchPart {
         }
 
         /**
-         * @see net.refractions.udig.project.internal.provider.LayerItemProvider
+         * @see org.locationtech.udig.project.internal.provider.LayerItemProvider
          */
         public Color getForeground(Object element) {
             if (element instanceof AdaptableFeature) {

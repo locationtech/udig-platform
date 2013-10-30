@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.grid;
+package org.locationtech.udig.mapgraphic.grid;
 
 import java.awt.Color;
 
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 /**
  * Style for the {@link GridMapGraphic}.
@@ -25,7 +25,7 @@ public class GridStyle {
         SCREEN, WORLD
     }
 
-    public static final String ID = "net.refractions.udig.tool.edit.mapgraphic.grid.style"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.tool.edit.mapgraphic.grid.style"; //$NON-NLS-1$
     public static final GridStyle DEFAULT_STYLE = new GridStyle(Type.SCREEN, 25, 25, new Color(0,
             0, 255, 100), ViewportGraphics.LINE_DOT, 1);
 

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.render;
+package org.locationtech.udig.project.internal.render;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -16,11 +16,11 @@ import java.awt.image.BufferedImage;
 
 import javax.media.jai.TileCache;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.AbstractContext;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.render.IRenderContext;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.AbstractContext;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.render.IRenderContext;
 
 import org.geotools.data.Query;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -97,7 +97,7 @@ public interface RenderContext extends AbstractContext, Comparable<RenderContext
     Layer getLayerInternal();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.render.RenderContext#getLayerInternal <em>Layer Internal</em>}'
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.RenderContext#getLayerInternal <em>Layer Internal</em>}'
      * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @param value the new value of the '<em>Layer Internal</em>' reference.
@@ -116,7 +116,7 @@ public interface RenderContext extends AbstractContext, Comparable<RenderContext
     IGeoResource getGeoResourceInternal();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.render.RenderContext#getGeoResourceInternal <em>Geo Resource Internal</em>}'
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.RenderContext#getGeoResourceInternal <em>Geo Resource Internal</em>}'
      * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @param value the new value of the '<em>Geo Resource Internal</em>' attribute.

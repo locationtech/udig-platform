@@ -9,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.geometry.trim;
+package org.locationtech.udig.tools.geometry.trim;
 
 import java.text.MessageFormat;
 
@@ -21,7 +21,7 @@ import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiLineString;
 import com.vividsolutions.jts.geom.Point;
 
-import eu.udig.tools.internal.i18n.Messages;
+import org.locationtech.udig.tools.internal.i18n.Messages;
 
 /**
  * Performs the trimming of a LineString or MultiLineString using a provided

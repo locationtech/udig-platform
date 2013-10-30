@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.wmsc.server;
+package org.locationtech.udig.catalog.wmsc.server;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -21,7 +21,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Set;
 
-import net.refractions.udig.catalog.tests.wmsc.Activator;
+import org.locationtech.udig.catalog.tests.wmsc.Activator;
 
 import org.geotools.data.ResourceInfo;
 import org.geotools.data.ServiceInfo;

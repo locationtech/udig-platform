@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -22,17 +22,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IResourceCachingInterceptor;
-import net.refractions.udig.project.IResourceInterceptor;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IResourceCachingInterceptor;
+import org.locationtech.udig.project.IResourceInterceptor;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -81,7 +81,7 @@ public class LayerResource extends IGeoResource {
     }
 
     /**
-     * @see net.refractions.udig.catalog.IGeoResource#hashCode()
+     * @see org.locationtech.udig.catalog.IGeoResource#hashCode()
      */
     public int hashCode() {
         return geoResource.hashCode();
@@ -119,14 +119,14 @@ public class LayerResource extends IGeoResource {
         return this.geoResource.getID();
     }
     /**
-     * @see net.refractions.udig.catalog.IResolve#getMessage()
+     * @see org.locationtech.udig.catalog.IResolve#getMessage()
      */
     public Throwable getMessage() {
         return geoResource.getMessage();
     }
 
     /**
-     * @see net.refractions.udig.catalog.IResolve#getStatus()
+     * @see org.locationtech.udig.catalog.IResolve#getStatus()
      */
     public Status getStatus() {
         return geoResource.getStatus();
@@ -137,14 +137,14 @@ public class LayerResource extends IGeoResource {
     }
     
     /**
-     * @see net.refractions.udig.catalog.IGeoResource#getPersistentProperties()
+     * @see org.locationtech.udig.catalog.IGeoResource#getPersistentProperties()
      */
     public Map<String, Serializable> getPersistentProperties() {
         return geoResource.getPersistentProperties();
     }
 
     /**
-     * @see net.refractions.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
+     * @see org.locationtech.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
      */
     public List<IResolve> members( IProgressMonitor monitor ) {
         // JG: I am not sure if this is correct; the children may need to be wrapped up as LayerResource themselves
@@ -152,7 +152,7 @@ public class LayerResource extends IGeoResource {
     }
 
     /**
-     * @see net.refractions.udig.catalog.IGeoResource#resolve(java.lang.Class,
+     * @see org.locationtech.udig.catalog.IGeoResource#resolve(java.lang.Class,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
     public synchronized <T> T resolve( Class<T> adaptee, IProgressMonitor monitor )
@@ -354,7 +354,7 @@ public class LayerResource extends IGeoResource {
                     final Map<IConfigurationElement, SafeResourceInterceptor<?>> post = new HashMap<IConfigurationElement, SafeResourceInterceptor<?>>();
 
                     List<IConfigurationElement> list = ExtensionPointList
-                            .getExtensionPointList("net.refractions.udig.project.resourceInterceptor"); //$NON-NLS-1$
+                            .getExtensionPointList("org.locationtech.udig.project.resourceInterceptor"); //$NON-NLS-1$
                     for( IConfigurationElement element : list ) {
                         try {
                             if (element.getName().equals("cachingStrategy")) { //$NON-NLS-1$

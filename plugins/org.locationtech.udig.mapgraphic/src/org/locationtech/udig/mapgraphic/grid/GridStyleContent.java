@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.grid;
+package org.locationtech.udig.mapgraphic.grid;
 
 import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.mapgraphic.grid.GridStyle.Type;
-import net.refractions.udig.project.StyleContent;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.mapgraphic.grid.GridStyle.Type;
+import org.locationtech.udig.project.StyleContent;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;

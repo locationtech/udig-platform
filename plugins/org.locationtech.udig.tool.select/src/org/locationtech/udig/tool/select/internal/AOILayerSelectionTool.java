@@ -7,25 +7,25 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.select.internal;
+package org.locationtech.udig.tool.select.internal;
 
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.List;
 
-import net.refractions.udig.aoi.AOIListener;
-import net.refractions.udig.aoi.IAOIService;
-import net.refractions.udig.aoi.IAOIStrategy;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.tool.AbstractModalTool;
-import net.refractions.udig.project.ui.tool.ModalTool;
-import net.refractions.udig.project.ui.tool.options.ToolOptionContributionItem;
-import net.refractions.udig.tool.select.SelectPlugin;
-import net.refractions.udig.tool.select.commands.SetAOILayerCommand;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.aoi.AOIListener;
+import org.locationtech.udig.aoi.IAOIService;
+import org.locationtech.udig.aoi.IAOIStrategy;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ui.commands.SelectionBoxCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.tool.AbstractModalTool;
+import org.locationtech.udig.project.ui.tool.ModalTool;
+import org.locationtech.udig.project.ui.tool.options.ToolOptionContributionItem;
+import org.locationtech.udig.tool.select.SelectPlugin;
+import org.locationtech.udig.tool.select.commands.SetAOILayerCommand;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -72,7 +72,7 @@ public class AOILayerSelectionTool extends AbstractModalTool implements ModalToo
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mousePressed(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mousePressed(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void mousePressed( MapMouseEvent e ) {
         shapeCommand = new SelectionBoxCommand();
@@ -106,7 +106,7 @@ public class AOILayerSelectionTool extends AbstractModalTool implements ModalToo
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseReleased(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseReleased(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void mouseReleased( MapMouseEvent e ) {
         if (selecting) {
@@ -129,7 +129,7 @@ public class AOILayerSelectionTool extends AbstractModalTool implements ModalToo
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.SimpleTool#onMouseDragged(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.SimpleTool#onMouseDragged(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void mouseDragged( MapMouseEvent e ) {
         if (selecting) {
@@ -184,7 +184,7 @@ public class AOILayerSelectionTool extends AbstractModalTool implements ModalToo
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.Tool#dispose()
+     * @see org.locationtech.udig.project.ui.tool.Tool#dispose()
      */
     public void dispose() {
         super.dispose();
@@ -194,7 +194,7 @@ public class AOILayerSelectionTool extends AbstractModalTool implements ModalToo
 
         private ComboViewer comboViewer;
 
-        private static String AOI_LAYER_ID = "net.refractions.udig.tool.select.internal.aoiLayer";
+        private static String AOI_LAYER_ID = "org.locationtech.udig.tool.select.internal.aoiLayer";
 
         /**
          * Listens to the user and changes the global IAOIService to the indicated strategy.

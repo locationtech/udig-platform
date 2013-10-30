@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.ui.property;
+package org.locationtech.udig.catalog.ui.property;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IService;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IService;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;

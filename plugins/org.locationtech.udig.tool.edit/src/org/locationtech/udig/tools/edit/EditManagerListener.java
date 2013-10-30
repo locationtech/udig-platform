@@ -7,22 +7,22 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit;
+package org.locationtech.udig.tools.edit;
 
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 
-import net.refractions.udig.project.EditManagerEvent;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.IEditManagerListener;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.tool.Tool;
-import net.refractions.udig.tools.edit.support.EditUtils;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.project.EditManagerEvent;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IEditManager;
+import org.locationtech.udig.project.IEditManagerListener;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.tool.Tool;
+import org.locationtech.udig.tools.edit.support.EditUtils;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
 
 import org.opengis.filter.Filter;
 

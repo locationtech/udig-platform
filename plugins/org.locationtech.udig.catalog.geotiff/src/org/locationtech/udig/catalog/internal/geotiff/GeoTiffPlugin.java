@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.geotiff;
+package org.locationtech.udig.catalog.internal.geotiff;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -84,7 +84,7 @@ public class GeoTiffPlugin extends AbstractUIPlugin {
 		try {
 			if (this.resourceBundle == null)
 				this.resourceBundle = ResourceBundle.getBundle(
-                        "net.refractions.udig.catalog.internal.geotiff.GeoTiffPluginResources"); //$NON-NLS-1$
+                        "org.locationtech.udig.catalog.internal.geotiff.GeoTiffPluginResources"); //$NON-NLS-1$
 		} catch (MissingResourceException x) {
 			this.resourceBundle = null;
 		}

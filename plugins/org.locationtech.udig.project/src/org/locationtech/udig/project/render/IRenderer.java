@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.render;
+package org.locationtech.udig.project.render;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -69,7 +69,7 @@ import com.vividsolutions.jts.geom.Envelope;
 public interface IRenderer {
 
     /** The name of the Extension Point for Renderers */
-    public static final String RENDER_EXT = "net.refractions.udig.project.renderer"; //$NON-NLS-1$
+    public static final String RENDER_EXT = "org.locationtech.udig.project.renderer"; //$NON-NLS-1$
 
     
     

@@ -2,7 +2,7 @@
 /**
  * 
  */
-package net.refractions.udig.project.ui;
+package org.locationtech.udig.project.ui;
 
 import java.util.List;
 

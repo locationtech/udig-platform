@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.arcsde.ui;
+package org.locationtech.udig.catalog.internal.arcsde.ui;
 
 import java.net.URL;
 
-import net.refractions.udig.catalog.arcsde.internal.Messages;
-import net.refractions.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
+import org.locationtech.udig.catalog.arcsde.internal.Messages;
+import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -81,7 +81,7 @@ public class ArcSDEPreferences extends AbstractProprietaryJarPreferencePage
 
     @Override
     protected URL getLibsURL() {
-        return Platform.getBundle("net.refractions.udig.catalog.arcsde").getEntry("/lib"); //$NON-NLS-1$ //$NON-NLS-2$;
+        return Platform.getBundle("org.locationtech.udig.catalog.arcsde").getEntry("/lib"); //$NON-NLS-1$ //$NON-NLS-2$;
     }
 
 }

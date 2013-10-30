@@ -7,23 +7,23 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.property;
+package org.locationtech.udig.project.internal.property;
 
 import java.net.URL;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.objectproperty.ObjectPropertyCatalogListener;
-import net.refractions.udig.project.BlackboardEvent;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.IBlackboardListener;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ProjectBlackboardConstants;
-import net.refractions.udig.ui.operations.AbstractPropertyValue;
-import net.refractions.udig.ui.operations.PropertyValue;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.objectproperty.ObjectPropertyCatalogListener;
+import org.locationtech.udig.project.BlackboardEvent;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IBlackboardListener;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.ui.operations.AbstractPropertyValue;
+import org.locationtech.udig.ui.operations.PropertyValue;
 
 import org.geotools.data.FeatureSource;
 

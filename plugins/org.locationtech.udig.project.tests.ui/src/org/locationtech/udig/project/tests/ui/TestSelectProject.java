@@ -8,11 +8,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.tests.ui;
+package org.locationtech.udig.project.tests.ui;
 
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.ProjectExplorer;
-import net.refractions.udig.ui.operations.IOp;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.ProjectExplorer;
+import org.locationtech.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;

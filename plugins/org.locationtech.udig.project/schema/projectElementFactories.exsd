@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project">
+<schema targetNamespace="org.locationtech.udig.project">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.project" id="projectElements" name="Project Elements"/>
+         <meta.schema plugin="org.locationtech.udig.project" id="projectElements" name="Project Elements"/>
       </appInfo>
       <documentation>
          [Enter description of this extension point.]
@@ -47,7 +47,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.IProjectElementFactory"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.IProjectElementFactory"/>
                </appInfo>
             </annotation>
          </attribute>

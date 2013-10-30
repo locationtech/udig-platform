@@ -8,17 +8,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit;
+package org.locationtech.udig.tools.edit;
 
 import static org.junit.Assert.assertEquals;
 
 import java.awt.Dimension;
 
-import net.refractions.udig.project.tests.support.TestMapDisplay;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.tools.edit.support.Point;
-import net.refractions.udig.tools.edit.support.TestHandler;
-import net.refractions.udig.tools.edit.support.TestMouseTracker;
+import org.locationtech.udig.project.tests.support.TestMapDisplay;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.tools.edit.support.Point;
+import org.locationtech.udig.tools.edit.support.TestHandler;
+import org.locationtech.udig.tools.edit.support.TestMouseTracker;
 
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ public class MouseTrackerTest {
     final static TestMapDisplay DISPLAY = new TestMapDisplay(new Dimension(500,500));
     
     /*
-     * Test method for 'net.refractions.udig.tools.edit.latest.MouseTracker.updateState(MapMouseEvent, EventType)'
+     * Test method for 'org.locationtech.udig.tools.edit.latest.MouseTracker.updateState(MapMouseEvent, EventType)'
      */
     @Test
     public void testUpdateState() throws Exception {

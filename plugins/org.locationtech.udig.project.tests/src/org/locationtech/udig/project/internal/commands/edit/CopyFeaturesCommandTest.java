@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.commands.edit;
+package org.locationtech.udig.project.internal.commands.edit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -18,14 +18,14 @@ import static org.junit.Assert.assertTrue;
 import java.awt.Dimension;
 import java.io.IOException;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.tests.CatalogTests;
-import net.refractions.udig.core.internal.FeatureUtils;
-import net.refractions.udig.core.internal.GeometryBuilder;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.tests.support.MapTests;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.tests.CatalogTests;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.core.internal.GeometryBuilder;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.tests.support.MapTests;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.DataUtilities;
@@ -98,7 +98,7 @@ public class CopyFeaturesCommandTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.DropFilterAction.perform(Object, Object, IProgressMonitor)'
+     * Test method for 'org.locationtech.udig.project.ui.DropFilterAction.perform(Object, Object, IProgressMonitor)'
      */
     @Ignore
     @Test
@@ -517,7 +517,7 @@ public class CopyFeaturesCommandTest {
     }
     
     /*
-     * Test method for 'net.refractions.udig.project.internal.commands.edit.CopyFeaturesCommand.rollback(IProgressMonitor)'
+     * Test method for 'org.locationtech.udig.project.internal.commands.edit.CopyFeaturesCommand.rollback(IProgressMonitor)'
      */
     @Ignore
     @Test

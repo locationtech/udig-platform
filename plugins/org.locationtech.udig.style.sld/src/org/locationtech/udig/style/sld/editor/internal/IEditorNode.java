@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld.editor.internal;
+package org.locationtech.udig.style.sld.editor.internal;
 
-import net.refractions.udig.style.sld.IEditorPage;
-import net.refractions.udig.style.sld.IEditorPageContainer;
+import org.locationtech.udig.style.sld.IEditorPage;
+import org.locationtech.udig.style.sld.IEditorPageContainer;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;

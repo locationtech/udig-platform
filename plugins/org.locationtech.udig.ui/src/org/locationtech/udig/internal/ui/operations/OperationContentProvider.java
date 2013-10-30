@@ -8,14 +8,14 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package net.refractions.udig.internal.ui.operations;
+package org.locationtech.udig.internal.ui.operations;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.ui.operations.OpAction;
+import org.locationtech.udig.ui.operations.OpAction;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;

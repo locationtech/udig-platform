@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.internal.ui.operations;
+package org.locationtech.udig.internal.ui.operations;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,10 +19,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.ui.internal.Messages;
-import net.refractions.udig.ui.operations.OpAction;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.internal.Messages;
+import org.locationtech.udig.ui.operations.OpAction;
 
 import org.eclipse.core.expressions.Expression;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -60,7 +60,7 @@ public class OperationMenuFactory {
      * Create instance
      */
     public OperationMenuFactory() {
-        extensionPoints = ExtensionPointList.getExtensionPointList("net.refractions.udig.ui.operation"); //$NON-NLS-1$
+        extensionPoints = ExtensionPointList.getExtensionPointList("org.locationtech.udig.ui.operation"); //$NON-NLS-1$
         createActionList(extensionPoints);
     }
 

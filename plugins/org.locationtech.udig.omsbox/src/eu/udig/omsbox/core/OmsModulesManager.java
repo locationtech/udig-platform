@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.omsbox.core;
+package org.locationtech.udig.omsbox.core;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -37,11 +37,11 @@ import oms3.annotations.Status;
 import oms3.annotations.UI;
 import oms3.annotations.Unit;
 import oms3.util.Components;
-import eu.udig.omsbox.OmsBoxPlugin;
-import eu.udig.omsbox.utils.AnnotationUtilities;
-import eu.udig.omsbox.utils.OmsBoxConstants;
-import eu.udig.omsbox.utils.OmsBoxUtils;
-import eu.udig.omsbox.utils.ResourceFinder;
+import org.locationtech.udig.omsbox.OmsBoxPlugin;
+import org.locationtech.udig.omsbox.utils.AnnotationUtilities;
+import org.locationtech.udig.omsbox.utils.OmsBoxConstants;
+import org.locationtech.udig.omsbox.utils.OmsBoxUtils;
+import org.locationtech.udig.omsbox.utils.ResourceFinder;
 
 /**
  * Singleton in which the modules discovery and load/unload occurrs.

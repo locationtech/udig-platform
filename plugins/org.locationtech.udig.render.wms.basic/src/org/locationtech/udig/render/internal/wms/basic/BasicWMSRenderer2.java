@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.internal.wms.basic;
+package org.locationtech.udig.render.internal.wms.basic;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -40,22 +40,22 @@ import javax.imageio.ImageIO;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.naming.OperationNotSupportedException;
 
-import net.refractions.udig.catalog.util.CRSUtil;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ProjectBlackboardConstants;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.internal.render.impl.RendererImpl;
-import net.refractions.udig.project.render.ICompositeRenderContext;
-import net.refractions.udig.project.render.IMultiLayerRenderer;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.RenderException;
-import net.refractions.udig.render.wms.basic.WMSPlugin;
-import net.refractions.udig.render.wms.basic.internal.Messages;
-import net.refractions.udig.render.wms.basic.preferences.PreferenceConstants;
-import net.refractions.udig.style.wms.WMSStyleContent;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.util.CRSUtil;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.internal.render.impl.RendererImpl;
+import org.locationtech.udig.project.render.ICompositeRenderContext;
+import org.locationtech.udig.project.render.IMultiLayerRenderer;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.render.wms.basic.WMSPlugin;
+import org.locationtech.udig.render.wms.basic.internal.Messages;
+import org.locationtech.udig.render.wms.basic.preferences.PreferenceConstants;
+import org.locationtech.udig.style.wms.WMSStyleContent;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;

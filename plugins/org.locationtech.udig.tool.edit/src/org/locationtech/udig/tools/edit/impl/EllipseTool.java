@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.impl;
+package org.locationtech.udig.tools.edit.impl;
 
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
 
-import net.refractions.udig.tools.edit.behaviour.CreateShapeBehaviour;
-import net.refractions.udig.tools.edit.behaviour.CreateShapeBehaviour.ShapeFactory;
+import org.locationtech.udig.tools.edit.behaviour.CreateShapeBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.CreateShapeBehaviour.ShapeFactory;
 
 /**
  * Draws and adds ellipses to a layer.

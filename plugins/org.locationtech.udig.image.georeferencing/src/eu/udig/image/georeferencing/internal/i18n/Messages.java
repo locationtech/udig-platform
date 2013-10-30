@@ -10,7 +10,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.image.georeferencing.internal.i18n;
+package org.locationtech.udig.image.georeferencing.internal.i18n;
 
 import org.eclipse.osgi.util.NLS;
 /**
@@ -22,7 +22,7 @@ import org.eclipse.osgi.util.NLS;
  *
  */
 public class Messages extends NLS {
-	private static final String	BUNDLE_NAME	= "eu.udig.image.georeferencing.internal.i18n.messages"; //$NON-NLS-1$
+	private static final String	BUNDLE_NAME	= "org.locationtech.udig.image.georeferencing.internal.i18n.messages"; //$NON-NLS-1$
 	public static String 		GeoreferencingView_openMarksFile; 
 	public static String		CoordinateTableComposite_cant_add_gcp;
 	public static String		CoordinateTableComposite_itemAddTooltip;

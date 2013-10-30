@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.tools.jgrass.profile;
+package org.locationtech.udig.tools.jgrass.profile;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -18,17 +18,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.EditManagerEvent;
-import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.IEditManagerListener;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.tool.SimpleTool;
-import net.refractions.udig.ui.ExceptionDetailsDialog;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.EditManagerEvent;
+import org.locationtech.udig.project.IEditManager;
+import org.locationtech.udig.project.IEditManagerListener;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.tool.SimpleTool;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -49,10 +49,10 @@ import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
-import eu.udig.tools.jgrass.JGrassToolsPlugin;
-import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities;
-import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.ProfilePoint;
-import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.RegionMap;
+import org.locationtech.udig.tools.jgrass.JGrassToolsPlugin;
+import org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities;
+import org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools.ProfilePoint;
+import org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools.RegionMap;
 
 /**
  * <p>

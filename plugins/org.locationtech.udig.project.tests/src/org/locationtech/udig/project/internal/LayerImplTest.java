@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -22,19 +22,19 @@ import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.ITransientResolve;
-import net.refractions.udig.catalog.tests.CatalogTests;
-import net.refractions.udig.project.IResourceInterceptor;
-import net.refractions.udig.project.internal.impl.LayerImpl;
-import net.refractions.udig.project.internal.impl.LayerResource;
-import net.refractions.udig.project.internal.interceptor.ResourceCacheInterceptor;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.project.tests.TestInterceptorCaching;
-import net.refractions.udig.project.tests.TestInterceptorPost;
-import net.refractions.udig.project.tests.TestInterceptorPre;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.ITransientResolve;
+import org.locationtech.udig.catalog.tests.CatalogTests;
+import org.locationtech.udig.project.IResourceInterceptor;
+import org.locationtech.udig.project.internal.impl.LayerImpl;
+import org.locationtech.udig.project.internal.impl.LayerResource;
+import org.locationtech.udig.project.internal.interceptor.ResourceCacheInterceptor;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.tests.TestInterceptorCaching;
+import org.locationtech.udig.project.tests.TestInterceptorPost;
+import org.locationtech.udig.project.tests.TestInterceptorPre;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureSource;
@@ -75,7 +75,7 @@ public class LayerImplTest {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#getGeoResources()}.
+     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#getGeoResources()}.
      */
     @Test
     public void testGetGeoResources() {
@@ -104,7 +104,7 @@ public class LayerImplTest {
         assertFalse(TestInterceptorCaching.obtained);
         assertTrue(TestInterceptorPost.runs>0);
         
-        ProjectPlugin.getPlugin().getPreferenceStore().setValue(PreferenceConstants.P_LAYER_RESOURCE_CACHING_STRATEGY, "net.refractions.udig.project.tests.net.refractions.udig.project.tests.interceptor2"); //$NON-NLS-1$
+        ProjectPlugin.getPlugin().getPreferenceStore().setValue(PreferenceConstants.P_LAYER_RESOURCE_CACHING_STRATEGY, "org.locationtech.udig.project.tests.org.locationtech.udig.project.tests.interceptor2"); //$NON-NLS-1$
         try{
             TestInterceptorPre.runs=0;
             TestInterceptorPost.runs=0;
@@ -171,7 +171,7 @@ public class LayerImplTest {
     }
     
     /**
-     * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#getResource(java.lang.Class, org.eclipse.core.runtime.IProgressMonitor)}.
+     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#getResource(java.lang.Class, org.eclipse.core.runtime.IProgressMonitor)}.
      */
     @Test
     public void testGetResource() throws IOException {
@@ -179,7 +179,7 @@ public class LayerImplTest {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#findGeoResource(java.lang.Class)}.
+     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#findGeoResource(java.lang.Class)}.
      * @throws Exception 
      */
     @SuppressWarnings("unchecked")
@@ -200,7 +200,7 @@ public class LayerImplTest {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#isType(java.lang.Class)}.
+     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#isType(java.lang.Class)}.
      */
     @Test
     public void testHasResource() {
@@ -210,7 +210,7 @@ public class LayerImplTest {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#getCRS()}.
+     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#getCRS()}.
      */
     @Test
     public void testGetCRS() {
@@ -218,7 +218,7 @@ public class LayerImplTest {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#getDefaultColor()}.
+     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#getDefaultColor()}.
      */
     @Test
     public void testGetDefaultColor() {
@@ -226,7 +226,7 @@ public class LayerImplTest {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#getMinScaleDenominator()}.
+     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#getMinScaleDenominator()}.
      */
     @Test
     public void testGetMinScaleDenominator() {
@@ -234,7 +234,7 @@ public class LayerImplTest {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#getMaxScaleDenominator()}.
+     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#getMaxScaleDenominator()}.
      */
     @Test
     public void testGetMaxScaleDenominator() {
@@ -242,7 +242,7 @@ public class LayerImplTest {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#refresh(com.vividsolutions.jts.geom.Envelope)}.
+     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#refresh(com.vividsolutions.jts.geom.Envelope)}.
      */
     @Test
     public void testRefresh() {
@@ -250,7 +250,7 @@ public class LayerImplTest {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#layerToMapTransform()}.
+     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#layerToMapTransform()}.
      */
     @Test
     public void testLayerToMapTransform() {
@@ -258,7 +258,7 @@ public class LayerImplTest {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#mapToLayerTransform()}.
+     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#mapToLayerTransform()}.
      */
     @Test
     public void testMapToLayerTransform() {
@@ -266,7 +266,7 @@ public class LayerImplTest {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#createBBoxFilter(com.vividsolutions.jts.geom.Envelope, org.eclipse.core.runtime.IProgressMonitor)}.
+     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#createBBoxFilter(com.vividsolutions.jts.geom.Envelope, org.eclipse.core.runtime.IProgressMonitor)}.
      */
     @Test
     public void testCreateBBoxFilter() {
@@ -274,7 +274,7 @@ public class LayerImplTest {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#changed(net.refractions.udig.catalog.IResolveChangeEvent)}.
+     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#changed(org.locationtech.udig.catalog.IResolveChangeEvent)}.
      */
     @Test
     public void testChanged() {

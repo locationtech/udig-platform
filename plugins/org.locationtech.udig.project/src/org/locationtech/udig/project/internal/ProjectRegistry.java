@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * TODO Purpose of net.refractions.udig.project.internal
+ * TODO Purpose of org.locationtech.udig.project.internal
  * <p>
  * </p>
  * 
@@ -44,7 +44,7 @@ public interface ProjectRegistry extends EObject {
     public Project getCurrentProject();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.ProjectRegistry#getCurrentProject <em>Current Project</em>}' reference.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.ProjectRegistry#getCurrentProject <em>Current Project</em>}' reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Current Project</em>' reference.
      * @see #getCurrentProject()

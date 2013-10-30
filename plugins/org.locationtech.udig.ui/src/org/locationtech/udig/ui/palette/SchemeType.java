@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.ui.palette;
+package org.locationtech.udig.ui.palette;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -71,7 +71,7 @@ public enum SchemeType {
     private static InternationalString string(String key) {
         if( bundle == null ){
             try {            
-                bundle = ResourceBundle.getBundle( "net.refractions.udig.ui.palette.schemeType"); //$NON-NLS-1$
+                bundle = ResourceBundle.getBundle( "org.locationtech.udig.ui.palette.schemeType"); //$NON-NLS-1$
             }
             catch( Throwable t ){
                 t.printStackTrace();

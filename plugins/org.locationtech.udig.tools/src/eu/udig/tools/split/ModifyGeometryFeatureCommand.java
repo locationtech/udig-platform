@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.split;
+package org.locationtech.udig.tools.split;
 
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.commands.edit.AbstractEditCommand;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.commands.edit.AbstractEditCommand;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -31,7 +31,7 @@ import org.opengis.filter.identity.FeatureId;
 
 import com.vividsolutions.jts.geom.Geometry;
 
-import eu.udig.tools.geometry.internal.util.GeometryUtil;
+import org.locationtech.udig.tools.geometry.internal.util.GeometryUtil;
 /**
  * Modify the geomety of feature
  * 

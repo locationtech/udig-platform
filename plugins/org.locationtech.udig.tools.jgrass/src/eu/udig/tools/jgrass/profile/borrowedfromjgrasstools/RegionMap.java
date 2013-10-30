@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.tools.jgrass.profile.borrowedfromjgrasstools;
+package org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools;
 
-import static eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities.COLS;
-import static eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities.EAST;
-import static eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities.NORTH;
-import static eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities.ROWS;
-import static eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities.SOUTH;
-import static eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities.WEST;
-import static eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities.XRES;
-import static eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities.YRES;
+import static org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities.COLS;
+import static org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities.EAST;
+import static org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities.NORTH;
+import static org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities.ROWS;
+import static org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities.SOUTH;
+import static org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities.WEST;
+import static org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities.XRES;
+import static org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities.YRES;
 
 import java.util.HashMap;
 

@@ -20,15 +20,15 @@
  *     Teddy Walker <teddy.walker@googlemail.com>
  *      - Bug 188056 [Preferences] PreferencePages have to less indent in PreferenceDialog
  *******************************************************************************/
-package net.refractions.udig.style.sld.editor.internal;
+package org.locationtech.udig.style.sld.editor.internal;
 
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.style.sld.IEditorPage;
-import net.refractions.udig.style.sld.IEditorPageContainer;
-import net.refractions.udig.style.sld.SLDPlugin;
-import net.refractions.udig.style.sld.editor.EditorPageManager;
+import org.locationtech.udig.style.sld.IEditorPage;
+import org.locationtech.udig.style.sld.IEditorPageContainer;
+import org.locationtech.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.style.sld.editor.EditorPageManager;
 
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.IStatus;

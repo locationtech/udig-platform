@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Tool View" uid="eu.udig.tutorials.tool-view.Product" id="eu.udig.tutorials.tool-view.product" application="eu.udig.tutorials.tool-view.application" version="1.0" useFeatures="false" includeLaunchers="true">
+<product name="Tool View" uid="org.locationtech.udig.tutorials.tool-view.Product" id="org.locationtech.udig.tutorials.tool-view.product" application="org.locationtech.udig.tutorials.tool-view.application" version="1.0" useFeatures="false" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
@@ -15,7 +15,7 @@
    <windowImages/>
 
    <splash
-      location="eu.udig.tutorials.tool-view"
+      location="org.locationtech.udig.tutorials.tool-view"
       startupProgressRect="5,275,445,15" />
    <launcher>
       <solaris/>
@@ -31,36 +31,36 @@
       <plugin id="com.ibm.icu"/>
       <plugin id="com.lowagie.itext"/>
       <plugin id="com.mapquest"/>
-      <plugin id="eu.udig.mapquest.apiwrapper"/>
-      <plugin id="eu.udig.tutorials.tool-view"/>
+      <plugin id="org.locationtech.udig.mapquest.apiwrapper"/>
+      <plugin id="org.locationtech.udig.tutorials.tool-view"/>
       <plugin id="javax.servlet"/>
       <plugin id="javax.servlet.jsp"/>
-      <plugin id="net.refractions.udig.catalog"/>
-      <plugin id="net.refractions.udig.catalog.geotiff"/>
-      <plugin id="net.refractions.udig.catalog.rasterings"/>
-      <plugin id="net.refractions.udig.catalog.shp"/>
-      <plugin id="net.refractions.udig.catalog.ui"/>
-      <plugin id="net.refractions.udig.catalog.wms"/>
-      <plugin id="net.refractions.udig.catalog.wmt"/>
-      <plugin id="net.refractions.udig.core"/>
-      <plugin id="net.refractions.udig.jai" fragment="true"/>
-      <plugin id="net.refractions.udig.jai.macosx" fragment="true"/>
-      <plugin id="net.refractions.udig.libs"/>
-      <plugin id="net.refractions.udig.mapgraphic"/>
-      <plugin id="net.refractions.udig.project"/>
-      <plugin id="net.refractions.udig.project.edit"/>
-      <plugin id="net.refractions.udig.project.ui"/>
-      <plugin id="net.refractions.udig.render.feature.basic"/>
-      <plugin id="net.refractions.udig.render.feature.shapefile"/>
-      <plugin id="net.refractions.udig.render.gridcoverage.basic"/>
-      <plugin id="net.refractions.udig.render.wms.basic"/>
-      <plugin id="net.refractions.udig.render.wmt.basic"/>
-      <plugin id="net.refractions.udig.style"/>
-      <plugin id="net.refractions.udig.style.sld"/>
-      <plugin id="net.refractions.udig.style.wms"/>
-      <plugin id="net.refractions.udig.tool.default"/>
-      <plugin id="net.refractions.udig.tool.select"/>
-      <plugin id="net.refractions.udig.ui"/>
+      <plugin id="org.locationtech.udig.catalog"/>
+      <plugin id="org.locationtech.udig.catalog.geotiff"/>
+      <plugin id="org.locationtech.udig.catalog.rasterings"/>
+      <plugin id="org.locationtech.udig.catalog.shp"/>
+      <plugin id="org.locationtech.udig.catalog.ui"/>
+      <plugin id="org.locationtech.udig.catalog.wms"/>
+      <plugin id="org.locationtech.udig.catalog.wmt"/>
+      <plugin id="org.locationtech.udig.core"/>
+      <plugin id="org.locationtech.udig.jai" fragment="true"/>
+      <plugin id="org.locationtech.udig.jai.macosx" fragment="true"/>
+      <plugin id="org.locationtech.udig.libs"/>
+      <plugin id="org.locationtech.udig.mapgraphic"/>
+      <plugin id="org.locationtech.udig.project"/>
+      <plugin id="org.locationtech.udig.project.edit"/>
+      <plugin id="org.locationtech.udig.project.ui"/>
+      <plugin id="org.locationtech.udig.render.feature.basic"/>
+      <plugin id="org.locationtech.udig.render.feature.shapefile"/>
+      <plugin id="org.locationtech.udig.render.gridcoverage.basic"/>
+      <plugin id="org.locationtech.udig.render.wms.basic"/>
+      <plugin id="org.locationtech.udig.render.wmt.basic"/>
+      <plugin id="org.locationtech.udig.style"/>
+      <plugin id="org.locationtech.udig.style.sld"/>
+      <plugin id="org.locationtech.udig.style.wms"/>
+      <plugin id="org.locationtech.udig.tool.default"/>
+      <plugin id="org.locationtech.udig.tool.select"/>
+      <plugin id="org.locationtech.udig.ui"/>
       <plugin id="org.apache.ant"/>
       <plugin id="org.apache.batik.bridge"/>
       <plugin id="org.apache.batik.css"/>

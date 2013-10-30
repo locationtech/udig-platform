@@ -9,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.parallel.view;
+package org.locationtech.udig.tools.parallel.view;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +22,13 @@ import java.util.Map.Entry;
 
 import javax.measure.unit.Unit;
 
-import net.refractions.udig.project.EditManagerEvent;
-import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.IEditManagerListener;
-import net.refractions.udig.project.command.UndoableComposite;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.project.EditManagerEvent;
+import org.locationtech.udig.project.IEditManager;
+import org.locationtech.udig.project.IEditManagerListener;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.tools.edit.EditToolHandler;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jface.resource.JFaceResources;
@@ -41,14 +41,14 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
 //import es.axios.geotools.util.UnitList;
-import eu.udig.tools.feature.util.UnitList;
+import org.locationtech.udig.tools.feature.util.UnitList;
 //import es.axios.udig.ui.commons.message.InfoMessage;
-import eu.udig.tools.parallel.internal.InfoMessage;
-import eu.udig.tools.parallel.internal.PrecisionToolsContext;
-import eu.udig.tools.parallel.internal.InfoMessage.Type;
+import org.locationtech.udig.tools.parallel.internal.InfoMessage;
+import org.locationtech.udig.tools.parallel.internal.PrecisionToolsContext;
+import org.locationtech.udig.tools.parallel.internal.InfoMessage.Type;
 //import es.axios.udig.ui.commons.message.InfoMessage.Type;
 //import es.axios.udig.ui.editingtools.internal.i18n.Messages;
-import eu.udig.tools.internal.i18n.Messages;
+import org.locationtech.udig.tools.internal.i18n.Messages;
 //import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsMode;
 
 /**

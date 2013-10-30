@@ -7,17 +7,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.editorpages;
+package org.locationtech.udig.style.advanced.editorpages;
 
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.style.internal.StyleLayer;
-import net.refractions.udig.style.sld.SLDContent;
-import net.refractions.udig.style.sld.editor.StyleEditorDialog;
-import net.refractions.udig.style.sld.editor.StyleEditorPage;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.sld.SLDContent;
+import org.locationtech.udig.style.sld.editor.StyleEditorDialog;
+import org.locationtech.udig.style.sld.editor.StyleEditorPage;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -33,9 +33,9 @@ import org.geotools.styling.Style;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 
-import eu.udig.style.advanced.internal.Messages;
-import eu.udig.style.advanced.lines.LinePropertiesEditor;
-import eu.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.style.advanced.internal.Messages;
+import org.locationtech.udig.style.advanced.lines.LinePropertiesEditor;
+import org.locationtech.udig.style.advanced.utils.Utilities;
 
 /**
  * Style editor for simple lines.
@@ -43,7 +43,7 @@ import eu.udig.style.advanced.utils.Utilities;
  * @author Andrea Antonello (www.hydrologis.com)
  */
 public class SimpleLineEditorPage extends StyleEditorPage {
-    public static final String ID = "eu.udig.style.advanced.editorpages.SimpleLineEditorPage"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.style.advanced.editorpages.SimpleLineEditorPage"; //$NON-NLS-1$
 
     private Style style = null;
     private LinePropertiesEditor linesEditor;

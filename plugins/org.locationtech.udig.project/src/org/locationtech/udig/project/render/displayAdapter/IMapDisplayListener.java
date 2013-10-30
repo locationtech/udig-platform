@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.render.displayAdapter;
+package org.locationtech.udig.project.render.displayAdapter;
 
 /**
  * An interface for objects to listen to the MapEditor

@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.style.internal;
+package org.locationtech.udig.style.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "net.refractions.udig.style.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.style.internal.messages"; //$NON-NLS-1$
 	public static String StyleView_cancel_tooltip;
 	public static String StyleView_apply_tooltip;
 	public static String StyleView_chooser_message;

@@ -8,30 +8,30 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.rcp;
+package org.locationtech.udig.tutorials.rcp;
 
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.List;
 
-import net.refractions.udig.catalog.wmsc.server.WMSTileSet;
-import net.refractions.udig.project.internal.ContextModelListenerAdapter;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.render.IViewportModelListener;
-import net.refractions.udig.project.render.ViewportModelEvent;
-import net.refractions.udig.project.render.ViewportModelEvent.EventType;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplayListener;
-import net.refractions.udig.project.render.displayAdapter.MapDisplayEvent;
-import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
-import net.refractions.udig.project.ui.commands.IDrawCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.tool.AbstractModalTool;
-import net.refractions.udig.project.ui.viewers.MapViewer;
+import org.locationtech.udig.catalog.wmsc.server.WMSTileSet;
+import org.locationtech.udig.project.internal.ContextModelListenerAdapter;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.render.IViewportModelListener;
+import org.locationtech.udig.project.render.ViewportModelEvent;
+import org.locationtech.udig.project.render.ViewportModelEvent.EventType;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
+import org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent;
+import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
+import org.locationtech.udig.project.ui.commands.IDrawCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.tool.AbstractModalTool;
+import org.locationtech.udig.project.ui.viewers.MapViewer;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -377,7 +377,7 @@ public class OverviewMapViewer {
         private org.eclipse.swt.graphics.Point startp = null;
         
         /**
-         * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseDragged(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+         * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseDragged(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
          */
         public void mouseDragged( MapMouseEvent e ) {
             if (dragging){
@@ -416,7 +416,7 @@ public class OverviewMapViewer {
         }
 
         /**
-         * @see net.refractions.udig.project.ui.tool.AbstractTool#mousePressed(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+         * @see org.locationtech.udig.project.ui.tool.AbstractTool#mousePressed(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
          */
         public void mousePressed( MapMouseEvent e ) {
             Coordinate start = getContext().pixelToWorld(e.x, e.y);
@@ -428,7 +428,7 @@ public class OverviewMapViewer {
        
         }
         /**
-         * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseReleased(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+         * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseReleased(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
          */
         public void mouseReleased( MapMouseEvent e ) {
             if (dragging) {

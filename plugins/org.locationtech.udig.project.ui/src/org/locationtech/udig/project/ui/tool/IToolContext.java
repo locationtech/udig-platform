@@ -9,17 +9,17 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.tool;
+package org.locationtech.udig.project.ui.tool;
 
-import net.refractions.udig.project.IAbstractContext;
-import net.refractions.udig.project.command.Command;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.factory.BasicCommandFactory;
-import net.refractions.udig.project.command.factory.EditCommandFactory;
-import net.refractions.udig.project.command.factory.NavigationCommandFactory;
-import net.refractions.udig.project.command.factory.SelectionCommandFactory;
-import net.refractions.udig.project.ui.commands.DrawCommandFactory;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.IAbstractContext;
+import org.locationtech.udig.project.command.Command;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.factory.BasicCommandFactory;
+import org.locationtech.udig.project.command.factory.EditCommandFactory;
+import org.locationtech.udig.project.command.factory.NavigationCommandFactory;
+import org.locationtech.udig.project.command.factory.SelectionCommandFactory;
+import org.locationtech.udig.project.ui.commands.DrawCommandFactory;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.ui.IActionBars2;

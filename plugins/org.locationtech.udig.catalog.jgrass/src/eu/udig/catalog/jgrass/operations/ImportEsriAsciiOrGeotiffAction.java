@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.jgrass.operations;
+package org.locationtech.udig.catalog.jgrass.operations;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import net.refractions.udig.ui.ExceptionDetailsDialog;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -50,9 +50,9 @@ import org.opengis.coverage.grid.GridCoverageWriter;
 import org.opengis.parameter.GeneralParameterValue;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import eu.udig.catalog.jgrass.JGrassPlugin;
-import eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
-import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
+import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
+import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
 
 /**
  * Action to import an esrii ascii grid into the mapset.

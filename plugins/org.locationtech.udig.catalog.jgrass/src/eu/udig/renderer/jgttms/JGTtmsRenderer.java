@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.renderer.jgttms;
+package org.locationtech.udig.renderer.jgttms;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -18,11 +18,11 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.render.impl.RendererImpl;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.RenderException;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.render.impl.RendererImpl;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.RenderException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.coverage.grid.GridCoverage2D;
@@ -39,8 +39,8 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
-import eu.udig.catalog.jgrass.core.JGTtmsGeoResource;
-import eu.udig.catalog.jgrass.core.JGTtmsProperties;
+import org.locationtech.udig.catalog.jgrass.core.JGTtmsGeoResource;
+import org.locationtech.udig.catalog.jgrass.core.JGTtmsProperties;
 
 /**
  * The renderer for JGTtms maps

@@ -8,9 +8,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
-import net.refractions.udig.project.IProvider;
+import org.locationtech.udig.project.IProvider;
 
 public class AProvider extends IProvider<A> {
 

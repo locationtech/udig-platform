@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.tests.ui.workflow;
+package org.locationtech.udig.catalog.tests.ui.workflow;
 
 
 import org.eclipse.jface.action.Action;
@@ -61,7 +61,7 @@ import org.eclipse.ui.part.ViewPart;
 public class DummyView extends ViewPart {
 	
 	public static final String VIEW_ID 
-		= "net.refractions.udig.catalog.tests.ui.workflow.DummyView"; //$NON-NLS-1$
+		= "org.locationtech.udig.catalog.tests.ui.workflow.DummyView"; //$NON-NLS-1$
 	
 	private ListViewer viewer;
 	private Action action1;

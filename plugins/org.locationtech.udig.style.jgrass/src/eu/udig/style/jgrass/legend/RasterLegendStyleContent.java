@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.jgrass.legend;
+package org.locationtech.udig.style.jgrass.legend;
 
 import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.StyleContent;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.StyleContent;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;

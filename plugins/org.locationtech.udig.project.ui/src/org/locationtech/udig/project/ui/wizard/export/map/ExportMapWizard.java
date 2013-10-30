@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.wizard.export.map;
+package org.locationtech.udig.project.ui.wizard.export.map;
 
 import java.util.Collection;
 
-import net.refractions.udig.core.internal.Icons;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.wizard.export.MapSelectorPage;
-import net.refractions.udig.project.ui.wizard.export.image.MapSelectorPageWithScaleColumn;
+import org.locationtech.udig.core.internal.Icons;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.wizard.export.MapSelectorPage;
+import org.locationtech.udig.project.ui.wizard.export.image.MapSelectorPageWithScaleColumn;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IStructuredSelection;

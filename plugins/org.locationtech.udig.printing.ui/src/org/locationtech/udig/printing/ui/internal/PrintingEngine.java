@@ -9,9 +9,9 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.ui.internal;
+package org.locationtech.udig.printing.ui.internal;
 
-import static net.refractions.udig.printing.ui.internal.PrintingPlugin.TRACE_PRINTING;
+import static org.locationtech.udig.printing.ui.internal.PrintingPlugin.TRACE_PRINTING;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -23,8 +23,8 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.util.Iterator;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.Page;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.Page;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 

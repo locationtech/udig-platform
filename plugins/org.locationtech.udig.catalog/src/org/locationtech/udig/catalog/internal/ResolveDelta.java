@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal;
+package org.locationtech.udig.catalog.internal;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,10 +17,10 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveDelta;
-import net.refractions.udig.catalog.IResolveDeltaVisitor;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveDelta;
+import org.locationtech.udig.catalog.IResolveDeltaVisitor;
 
 /**
  * Catalog delta.
@@ -131,7 +131,7 @@ public class ResolveDelta implements IResolveDelta {
     }
 
     /*
-     * @see net.refractions.udig.catalog.ICatalogDelta#accept(net.refractions.udig.catalog.IServiceVisitor)
+     * @see org.locationtech.udig.catalog.ICatalogDelta#accept(org.locationtech.udig.catalog.IServiceVisitor)
      */
     public void accept( IResolveDeltaVisitor visitor ) throws IOException {
         if (visitor.visit(this)) {
@@ -144,14 +144,14 @@ public class ResolveDelta implements IResolveDelta {
     }
 
     /*
-     * @see net.refractions.udig.catalog.ICatalogDelta#getAffected()
+     * @see org.locationtech.udig.catalog.ICatalogDelta#getAffected()
      */
     public List<IResolveDelta> getChildren() {
         return children;
     }
 
     /*
-     * @see net.refractions.udig.catalog.ICatalogDelta#getAffected(int, int)
+     * @see org.locationtech.udig.catalog.ICatalogDelta#getAffected(int, int)
      */
     public List<IResolveDelta> getChildren( EnumSet<Kind> kindMask ) {
         List<IResolveDelta> list = new ArrayList<IResolveDelta>();
@@ -164,7 +164,7 @@ public class ResolveDelta implements IResolveDelta {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IDelta#getKind()
+     * @see org.locationtech.udig.catalog.IDelta#getKind()
      */
     public Kind getKind() {
         return kind;

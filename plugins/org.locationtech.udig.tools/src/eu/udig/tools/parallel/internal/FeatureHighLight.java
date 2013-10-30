@@ -9,16 +9,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.parallel.internal;
+package org.locationtech.udig.tools.parallel.internal;
 
 import java.awt.Rectangle;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import net.refractions.udig.project.ui.IAnimation;
-import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
-import net.refractions.udig.project.ui.commands.IDrawCommand;
+import org.locationtech.udig.project.ui.IAnimation;
+import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
+import org.locationtech.udig.project.ui.commands.IDrawCommand;
 
 /**
  * <p>

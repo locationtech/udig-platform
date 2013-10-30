@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.imageio;
+package org.locationtech.udig.catalog.imageio;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -17,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.rasterings.AbstractRasterGeoResource;
-import net.refractions.udig.catalog.rasterings.AbstractRasterService;
-import net.refractions.udig.catalog.rasterings.AbstractRasterServiceInfo;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResource;
+import org.locationtech.udig.catalog.rasterings.AbstractRasterService;
+import org.locationtech.udig.catalog.rasterings.AbstractRasterServiceInfo;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;

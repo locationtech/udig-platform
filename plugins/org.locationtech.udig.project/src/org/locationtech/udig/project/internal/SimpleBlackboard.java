@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.project.BlackboardEvent;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.IBlackboardListener;
+import org.locationtech.udig.project.BlackboardEvent;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IBlackboardListener;
 
 /**
  * A simple wrapper on a Map, used for tempoary collaboration.
@@ -46,14 +46,14 @@ public class SimpleBlackboard implements IBlackboard {
     }
 
     /**
-     * @see net.refractions.udig.project.IBlackboard#get(java.lang.String)
+     * @see org.locationtech.udig.project.IBlackboard#get(java.lang.String)
      */
     public Object get( String key ) {
         return map.get(key);
     }
 
     /**
-     * @see net.refractions.udig.project.IBlackboard#put(java.lang.String, java.lang.Object)
+     * @see org.locationtech.udig.project.IBlackboard#put(java.lang.String, java.lang.Object)
      */
     public void put( String key, Object value ) {
         Object oldValue = map.put(key, value);
@@ -79,7 +79,7 @@ public class SimpleBlackboard implements IBlackboard {
         return oldValue;
     }
     /**
-     * @see net.refractions.udig.project.IBlackboard#getFloat(java.lang.String)
+     * @see org.locationtech.udig.project.IBlackboard#getFloat(java.lang.String)
      */
     public Float getFloat( String key ) {
         if (map.containsKey(key)) {
@@ -92,7 +92,7 @@ public class SimpleBlackboard implements IBlackboard {
     }
 
     /**
-     * @see net.refractions.udig.project.IBlackboard#getInteger(java.lang.String)
+     * @see org.locationtech.udig.project.IBlackboard#getInteger(java.lang.String)
      */
     public Integer getInteger( String key ) {
         if (map.containsKey(key)) {
@@ -105,7 +105,7 @@ public class SimpleBlackboard implements IBlackboard {
     }
 
     /**
-     * @see net.refractions.udig.project.IBlackboard#getString(java.lang.String)
+     * @see org.locationtech.udig.project.IBlackboard#getString(java.lang.String)
      */
     public String getString( String key ) {
         if (map.containsKey(key)) {
@@ -118,28 +118,28 @@ public class SimpleBlackboard implements IBlackboard {
     }
 
     /**
-     * @see net.refractions.udig.project.IBlackboard#putFloat(java.lang.String, float)
+     * @see org.locationtech.udig.project.IBlackboard#putFloat(java.lang.String, float)
      */
     public void putFloat( String key, float value ) {
         put(key, value);
     }
 
     /**
-     * @see net.refractions.udig.project.IBlackboard#putInteger(java.lang.String, int)
+     * @see org.locationtech.udig.project.IBlackboard#putInteger(java.lang.String, int)
      */
     public void putInteger( String key, int value ) {
         put(key, value);
     }
 
     /**
-     * @see net.refractions.udig.project.IBlackboard#putString(java.lang.String, java.lang.String)
+     * @see org.locationtech.udig.project.IBlackboard#putString(java.lang.String, java.lang.String)
      */
     public void putString( String key, String value ) {
         put(key, value);
     }
 
     /**
-     * @see net.refractions.udig.project.IBlackboard#clear()
+     * @see org.locationtech.udig.project.IBlackboard#clear()
      */
     public void clear() {
         map.clear();
@@ -158,7 +158,7 @@ public class SimpleBlackboard implements IBlackboard {
     }
 
     /*
-     * @see net.refractions.udig.project.Blackboard#contains(java.lang.String)
+     * @see org.locationtech.udig.project.Blackboard#contains(java.lang.String)
      */
     public boolean contains( String key ) {
         return map.containsKey(key);

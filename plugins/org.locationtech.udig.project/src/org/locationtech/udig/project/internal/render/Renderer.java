@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.render;
+package org.locationtech.udig.project.internal.render;
 
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderer;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderer;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -43,7 +43,7 @@ public interface Renderer extends EObject, IRenderer {
     public int getState();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.render.Renderer#getState <em>State</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.Renderer#getState <em>State</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>State</em>' attribute.
      * @see #getState()
@@ -57,14 +57,14 @@ public interface Renderer extends EObject, IRenderer {
      * end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
-     * @see net.refractions.udig.project.internal.render.RenderPackage#getRenderer_Name()
+     * @see org.locationtech.udig.project.internal.render.RenderPackage#getRenderer_Name()
      * @model id="true"
      * @generated
      */
     String getName();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.render.Renderer#getName <em>Name</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.Renderer#getName <em>Name</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Name</em>' attribute.
      * @see #getName()
@@ -81,13 +81,13 @@ public interface Renderer extends EObject, IRenderer {
      * <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Toolkit</em>' attribute.
-     * @see net.refractions.udig.project.internal.render.RenderPackage#getRenderer_Context()
+     * @see org.locationtech.udig.project.internal.render.RenderPackage#getRenderer_Context()
      * @model transient="true" resolveProxies="false"
      */
     IRenderContext getContext();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.render.Renderer#getContext <em>Context</em>}' reference.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.Renderer#getContext <em>Context</em>}' reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Context</em>' reference.
      * @see #getContext()

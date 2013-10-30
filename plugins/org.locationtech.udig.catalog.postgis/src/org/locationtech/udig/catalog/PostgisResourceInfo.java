@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog;
+package org.locationtech.udig.catalog;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import net.refractions.udig.catalog.IResolve.Status;
-import net.refractions.udig.catalog.internal.postgis.PostgisPlugin;
-import net.refractions.udig.catalog.postgis.internal.Messages;
-import net.refractions.udig.ui.graphics.Glyph;
+import org.locationtech.udig.catalog.IResolve.Status;
+import org.locationtech.udig.catalog.internal.postgis.PostgisPlugin;
+import org.locationtech.udig.catalog.postgis.internal.Messages;
+import org.locationtech.udig.ui.graphics.Glyph;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -104,7 +104,7 @@ class PostgisResourceInfo extends IGeoResourceInfo {
                             .getLog()
                             .log(new org.eclipse.core.runtime.Status(
                                     IStatus.WARNING,
-                                    "net.refractions.udig.catalog", 0, Messages.PostGISGeoResource_error_layer_bounds, e)); //$NON-NLS-1$
+                                    "org.locationtech.udig.catalog", 0, Messages.PostGISGeoResource_error_layer_bounds, e)); //$NON-NLS-1$
                     bounds = new ReferencedEnvelope(new Envelope(), null);
                 }
             }

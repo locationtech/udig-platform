@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.test;
+package org.locationtech.udig.issues.test;
 
-import net.refractions.udig.core.IFixer;
-import net.refractions.udig.core.enums.Resolution;
-import net.refractions.udig.issues.AbstractFixableIssue;
-import net.refractions.udig.issues.IIssue;
+import org.locationtech.udig.core.IFixer;
+import org.locationtech.udig.core.enums.Resolution;
+import org.locationtech.udig.issues.AbstractFixableIssue;
+import org.locationtech.udig.issues.IIssue;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IMemento;

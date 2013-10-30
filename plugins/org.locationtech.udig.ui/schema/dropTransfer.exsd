@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.ui">
+<schema targetNamespace="org.locationtech.udig.ui">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.ui" id="dropTransfer" name="dropTransfer"/>
+         <meta.schema plugin="org.locationtech.udig.ui" id="dropTransfer" name="dropTransfer"/>
       </appInfo>
       <documentation>
          Available transfers are advertised by dropTransfer extensions.  A transferFactory returns a set of the transfers
@@ -50,7 +50,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.ui.TransferFactory"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.ui.TransferFactory"/>
                </appInfo>
             </annotation>
          </attribute>

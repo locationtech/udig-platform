@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.tile;
+package org.locationtech.udig.catalog.internal.wmt.tile;
 
 import java.awt.Dimension;
 import java.net.URL;
@@ -16,13 +16,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-import net.refractions.udig.catalog.internal.wmt.Trace;
-import net.refractions.udig.catalog.internal.wmt.WMTPlugin;
-import net.refractions.udig.catalog.internal.wmt.tile.NASATile.NASATileName.NASAZoomLevel;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.NASASource;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSource;
-import net.refractions.udig.core.internal.CorePlugin;
-import net.refractions.udig.project.internal.render.impl.ScaleUtils;
+import org.locationtech.udig.catalog.internal.wmt.Trace;
+import org.locationtech.udig.catalog.internal.wmt.WMTPlugin;
+import org.locationtech.udig.catalog.internal.wmt.tile.NASATile.NASATileName.NASAZoomLevel;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.NASASource;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.WMTSource;
+import org.locationtech.udig.core.internal.CorePlugin;
+import org.locationtech.udig.project.internal.render.impl.ScaleUtils;
 
 import org.eclipse.swt.widgets.Display;
 import org.geotools.geometry.jts.ReferencedEnvelope;

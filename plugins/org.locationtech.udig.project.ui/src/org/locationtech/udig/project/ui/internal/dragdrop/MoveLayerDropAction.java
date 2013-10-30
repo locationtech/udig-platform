@@ -7,23 +7,23 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.dragdrop;
+package org.locationtech.udig.project.ui.internal.dragdrop;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.commands.AddLayersCommand;
-import net.refractions.udig.project.internal.commands.DeleteLayersCommand;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.LayersView;
-import net.refractions.udig.project.ui.internal.MapEditor;
-import net.refractions.udig.project.ui.internal.MapEditorPart;
-import net.refractions.udig.ui.IDropAction;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.commands.AddLayersCommand;
+import org.locationtech.udig.project.internal.commands.DeleteLayersCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.LayersView;
+import org.locationtech.udig.project.ui.internal.MapEditor;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.ui.IDropAction;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 

@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.ui">
+<schema targetNamespace="org.locationtech.udig.ui">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.ui" id="dataWizards" name="DataWizards"/>
+         <meta.schema plugin="org.locationtech.udig.ui" id="dataWizards" name="DataWizards"/>
       </appInfo>
       <documentation>
          [Enter description of this extension point.]
@@ -74,7 +74,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.ui.UDIGImportPage"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.ui.UDIGImportPage"/>
                </appInfo>
             </annotation>
          </attribute>

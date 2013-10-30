@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.catalog;
+package org.locationtech.udig.catalog;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.refractions.udig.catalog.IResolve.Status;
-import net.refractions.udig.core.internal.CorePlugin;
+import org.locationtech.udig.catalog.IResolve.Status;
+import org.locationtech.udig.core.internal.CorePlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.preference.IPreferenceStore;

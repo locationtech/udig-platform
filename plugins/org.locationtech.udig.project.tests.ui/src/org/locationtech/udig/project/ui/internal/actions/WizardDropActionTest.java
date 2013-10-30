@@ -8,16 +8,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.actions;
+package org.locationtech.udig.project.ui.internal.actions;
 
 import static org.junit.Assert.assertTrue;
 
 import java.net.URL;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.catalog.tests.ui.CatalogTestsUIPlugin;
-import net.refractions.udig.project.ui.internal.LayersView;
-import net.refractions.udig.ui.ViewerDropLocation;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.catalog.tests.ui.CatalogTestsUIPlugin;
+import org.locationtech.udig.project.ui.internal.LayersView;
+import org.locationtech.udig.ui.ViewerDropLocation;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.ui.PlatformUI;
@@ -26,7 +26,7 @@ import org.junit.Test;
 public class WizardDropActionTest extends AbstractProjectUITestCase{
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.actions.WizardDropAction.accept(Object, Object)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.actions.WizardDropAction.accept(Object, Object)'
      */
     @Test
     public void testHttpAccept() {
@@ -38,7 +38,7 @@ public class WizardDropActionTest extends AbstractProjectUITestCase{
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.actions.WizardDropAction.accept(Object, Object)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.actions.WizardDropAction.accept(Object, Object)'
      */
     @Test
     public void testFileStringAccept() throws Exception {

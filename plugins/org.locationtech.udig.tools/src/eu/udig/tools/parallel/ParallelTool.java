@@ -9,31 +9,31 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.parallel;
+package org.locationtech.udig.tools.parallel;
 
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.tools.edit.AbstractEditTool;
-import net.refractions.udig.tools.edit.Activator;
-import net.refractions.udig.tools.edit.Behaviour;
-import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
-import net.refractions.udig.tools.edit.EnablementBehaviour;
-import net.refractions.udig.tools.edit.activator.DrawCurrentGeomVerticesActivator;
-import net.refractions.udig.tools.edit.activator.DrawGeomsActivator;
-import net.refractions.udig.tools.edit.activator.EditStateListenerActivator;
-import net.refractions.udig.tools.edit.activator.GridActivator;
-import net.refractions.udig.tools.edit.activator.ResetAllStateActivator;
-import net.refractions.udig.tools.edit.activator.SetRenderingFilter;
-import net.refractions.udig.tools.edit.activator.SetSnapBehaviourCommandHandlerActivator;
-import net.refractions.udig.tools.edit.behaviour.AcceptOnDoubleClickBehaviour;
-import net.refractions.udig.tools.edit.behaviour.DefaultCancelBehaviour;
-import net.refractions.udig.tools.edit.behaviour.DrawCreateVertexSnapAreaBehaviour;
-import net.refractions.udig.tools.edit.behaviour.SetSnapSizeBehaviour;
-import net.refractions.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
-import net.refractions.udig.tools.edit.enablement.ValidToolDetectionActivator;
-import net.refractions.udig.tools.edit.enablement.WithinLegalLayerBoundsBehaviour;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.tools.edit.AbstractEditTool;
+import org.locationtech.udig.tools.edit.Activator;
+import org.locationtech.udig.tools.edit.Behaviour;
+import org.locationtech.udig.tools.edit.EditToolConfigurationHelper;
+import org.locationtech.udig.tools.edit.EnablementBehaviour;
+import org.locationtech.udig.tools.edit.activator.DrawCurrentGeomVerticesActivator;
+import org.locationtech.udig.tools.edit.activator.DrawGeomsActivator;
+import org.locationtech.udig.tools.edit.activator.EditStateListenerActivator;
+import org.locationtech.udig.tools.edit.activator.GridActivator;
+import org.locationtech.udig.tools.edit.activator.ResetAllStateActivator;
+import org.locationtech.udig.tools.edit.activator.SetRenderingFilter;
+import org.locationtech.udig.tools.edit.activator.SetSnapBehaviourCommandHandlerActivator;
+import org.locationtech.udig.tools.edit.behaviour.AcceptOnDoubleClickBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.DefaultCancelBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.DrawCreateVertexSnapAreaBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.SetSnapSizeBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
+import org.locationtech.udig.tools.edit.enablement.ValidToolDetectionActivator;
+import org.locationtech.udig.tools.edit.enablement.WithinLegalLayerBoundsBehaviour;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewPart;
@@ -48,12 +48,12 @@ import com.vividsolutions.jts.geom.Polygon;
 
 //TODO remove older imports
 //import es.axios.udig.ui.editingtools.precisionparallels.internal.ParallelContext;
-import eu.udig.tools.parallel.internal.ParallelContext;
-import eu.udig.tools.parallel.internal.ParallelPreview;
-import eu.udig.tools.parallel.internal.behaviour.PrecisionToolAcceptBehaviour;
-import eu.udig.tools.parallel.internal.behaviour.SetInitialPointEventBehaviour;
-import eu.udig.tools.parallel.internal.behaviour.SetReferenceFeatureBehaviour;
-import eu.udig.tools.parallel.view.ParallelParametersView;
+import org.locationtech.udig.tools.parallel.internal.ParallelContext;
+import org.locationtech.udig.tools.parallel.internal.ParallelPreview;
+import org.locationtech.udig.tools.parallel.internal.behaviour.PrecisionToolAcceptBehaviour;
+import org.locationtech.udig.tools.parallel.internal.behaviour.SetInitialPointEventBehaviour;
+import org.locationtech.udig.tools.parallel.internal.behaviour.SetReferenceFeatureBehaviour;
+import org.locationtech.udig.tools.parallel.view.ParallelParametersView;
 //import es.axios.udig.ui.editingtools.precisionparallels.internal.ParallelPreview;
 //import es.axios.udig.ui.editingtools.precisionparallels.internal.behaviour.SetInitialPointEventBehaviour;
 //import es.axios.udig.ui.editingtools.precisionparallels.internal.behaviour.SetReferenceFeatureBehaviour;

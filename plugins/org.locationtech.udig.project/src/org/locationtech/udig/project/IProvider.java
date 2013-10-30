@@ -8,13 +8,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project;
+package org.locationtech.udig.project;
 
 import org.eclipse.core.runtime.IExtension;
 
 /**
  * Provides an object of type T. Used to populate the IBlackboard with default values.  
- * <p>This is used by the <em>net.refractions.udig.project.provider</em> extension point</p>
+ * <p>This is used by the <em>org.locationtech.udig.project.provider</em> extension point</p>
  * 
  * @author Jesse
  * @since 1.0.0
@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.IExtension;
 public abstract class IProvider<T> {
 
     /** Extension point id. * */
-    public static final String XPID = "net.refractions.udig.project.provider"; //$NON-NLS-1$
+    public static final String XPID = "org.locationtech.udig.project.provider"; //$NON-NLS-1$
 
     /** the extension configuration element * */
     IExtension extension;

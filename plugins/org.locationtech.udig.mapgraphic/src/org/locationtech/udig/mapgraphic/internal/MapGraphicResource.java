@@ -8,19 +8,19 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.internal;
+package org.locationtech.udig.mapgraphic.internal;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.core.internal.CorePlugin;
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.mapgraphic.MapGraphicFactory;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.core.internal.CorePlugin;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphicFactory;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -63,7 +63,7 @@ public class MapGraphicResource extends IGeoResource {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IGeoResource#resolve(java.lang.Class,
+     * @see org.locationtech.udig.catalog.IGeoResource#resolve(java.lang.Class,
      * org.eclipse.core.runtime.IProgressMonitor)
      */
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
@@ -106,7 +106,7 @@ public class MapGraphicResource extends IGeoResource {
         return new MapGraphicResourceInfo(element);
     }
     /*
-     * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
+     * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     public <T> boolean canResolve( Class<T> adaptee ) {
 
@@ -121,21 +121,21 @@ public class MapGraphicResource extends IGeoResource {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getStatus()
+     * @see org.locationtech.udig.catalog.IResolve#getStatus()
      */
     public Status getStatus() {
         return parent.getStatus();
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getMessage()
+     * @see org.locationtech.udig.catalog.IResolve#getMessage()
      */
     public Throwable getMessage() {
         return parent.getMessage();
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getIdentifier()
+     * @see org.locationtech.udig.catalog.IResolve#getIdentifier()
      */
     public URL getIdentifier() {
         try {
@@ -158,7 +158,7 @@ public class MapGraphicResource extends IGeoResource {
         }
 
         /*
-         * @see net.refractions.udig.catalog.IGeoResourceInfo#getName()
+         * @see org.locationtech.udig.catalog.IGeoResourceInfo#getName()
          */
         @Override
         public String getName() {

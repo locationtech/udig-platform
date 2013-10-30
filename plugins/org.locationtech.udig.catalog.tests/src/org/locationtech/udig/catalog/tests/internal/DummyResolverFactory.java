@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.tests.internal;
+package org.locationtech.udig.catalog.tests.internal;
 
 import java.io.IOException;
 
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveAdapterFactory;
-import net.refractions.udig.catalog.tests.DummyGeoResource;
-import net.refractions.udig.catalog.tests.DummyService;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveAdapterFactory;
+import org.locationtech.udig.catalog.tests.DummyGeoResource;
+import org.locationtech.udig.catalog.tests.DummyService;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 

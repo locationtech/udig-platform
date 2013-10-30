@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.ui.properties;
+package org.locationtech.udig.catalog.internal.wmt.ui.properties;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.Layer;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.WMTSource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
 
 import org.eclipse.core.expressions.PropertyTester;
 

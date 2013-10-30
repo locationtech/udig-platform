@@ -2,14 +2,14 @@
  * Created on Dec 21, 2004 TODO To change the template for this generated file go to Window -
  * Preferences - Java - Code Style - Code Templates
  */
-package net.refractions.udig.project.internal.render;
+package org.locationtech.udig.project.internal.render;
 
 import java.util.Collection;
 import java.util.List;
 
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.render.impl.CompositeContextListener;
-import net.refractions.udig.project.render.ICompositeRenderContext;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.render.impl.CompositeContextListener;
+import org.locationtech.udig.project.render.ICompositeRenderContext;
 
 /**
  * A toolkit that is provided to composite renderers.

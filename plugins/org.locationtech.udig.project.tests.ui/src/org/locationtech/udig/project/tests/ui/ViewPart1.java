@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.tests.ui;
+package org.locationtech.udig.project.tests.ui;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IMemento;
@@ -22,7 +22,7 @@ import org.eclipse.ui.part.ViewPart;
  * @since 1.0.0
  */
 public class ViewPart1 extends ViewPart {
-    public final static String ID="net.refractions.udig.project.tests.ui.view1"; //$NON-NLS-1$
+    public final static String ID="org.locationtech.udig.project.tests.ui.view1"; //$NON-NLS-1$
     public IMemento memento;
     /**
      * 

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.support;
+package org.locationtech.udig.tools.edit.support;
 
 import java.awt.Rectangle;
 import java.awt.Shape;
@@ -16,13 +16,13 @@ import java.awt.geom.PathIterator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
+import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Path;
 
 /**
- * An abstract class for drawing {@link net.refractions.udig.tools.edit.support.EditGeom} objects
+ * An abstract class for drawing {@link org.locationtech.udig.tools.edit.support.EditGeom} objects
  * 
  * @author jones
  * @since 1.1.0

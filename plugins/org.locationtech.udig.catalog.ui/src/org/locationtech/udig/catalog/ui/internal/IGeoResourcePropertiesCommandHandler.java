@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.ui.internal;
+package org.locationtech.udig.catalog.ui.internal;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.ui.properties.ProperitesCommandHandler;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.ui.properties.ProperitesCommandHandler;
 
 /**
  * A command hander to display an IGeoResource properties page.

@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.command;
+package org.locationtech.udig.project.command;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Map;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Map;
 
 /**
- * TODO Purpose of net.refractions.udig.project.command
+ * TODO Purpose of org.locationtech.udig.project.command
  * <p>
  * </p>
  * 
@@ -25,7 +25,7 @@ public abstract class AbstractCommand implements MapCommand {
     private Map map;
 
     /**
-     * @see net.refractions.udig.project.command.MapCommand#setMap(IMap)
+     * @see org.locationtech.udig.project.command.MapCommand#setMap(IMap)
      * @uml.property name="map"
      */
     public void setMap( IMap map2 ) {
@@ -33,7 +33,7 @@ public abstract class AbstractCommand implements MapCommand {
     }
 
     /**
-     * @see net.refractions.udig.project.command.MapCommand#getMap()
+     * @see org.locationtech.udig.project.command.MapCommand#getMap()
      * @uml.property name="map"
      */
     public Map getMap() {

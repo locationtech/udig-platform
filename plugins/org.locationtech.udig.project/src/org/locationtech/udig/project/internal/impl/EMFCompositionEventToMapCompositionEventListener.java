@@ -8,16 +8,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMapCompositionListener;
-import net.refractions.udig.project.MapCompositionEvent;
-import net.refractions.udig.project.MapCompositionEvent.EventType;
-import net.refractions.udig.project.internal.ContextModel;
-import net.refractions.udig.project.internal.ContextModelListenerAdapter;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMapCompositionListener;
+import org.locationtech.udig.project.MapCompositionEvent;
+import org.locationtech.udig.project.MapCompositionEvent.EventType;
+import org.locationtech.udig.project.internal.ContextModel;
+import org.locationtech.udig.project.internal.ContextModelListenerAdapter;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -40,7 +40,7 @@ import org.eclipse.emf.common.notify.Notification;
 		}
 
 		/**
-         * @see net.refractions.udig.project.internal.ContextModelListenerAdapter#notifyChanged(org.eclipse.emf.common.notify.Notification)
+         * @see org.locationtech.udig.project.internal.ContextModelListenerAdapter#notifyChanged(org.eclipse.emf.common.notify.Notification)
          */
         @SuppressWarnings("deprecation")
         public void notifyChanged( Notification msg ) {

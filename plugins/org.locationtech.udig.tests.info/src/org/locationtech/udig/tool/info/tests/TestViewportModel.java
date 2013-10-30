@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.tool.info.tests;
+package org.locationtech.udig.tool.info.tests;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -11,12 +11,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.SortedSet;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.render.IViewportModelListener;
-import net.refractions.udig.project.render.displayAdapter.MapDisplayEvent;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.render.IViewportModelListener;
+import org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;

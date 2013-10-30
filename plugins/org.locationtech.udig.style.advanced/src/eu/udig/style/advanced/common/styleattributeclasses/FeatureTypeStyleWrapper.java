@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.common.styleattributeclasses;
+package org.locationtech.udig.style.advanced.common.styleattributeclasses;
 
-import static eu.udig.style.advanced.utils.Utilities.createDefaultLineRule;
-import static eu.udig.style.advanced.utils.Utilities.createDefaultPointRule;
-import static eu.udig.style.advanced.utils.Utilities.createDefaultPolygonRule;
+import static org.locationtech.udig.style.advanced.utils.Utilities.createDefaultLineRule;
+import static org.locationtech.udig.style.advanced.utils.Utilities.createDefaultPointRule;
+import static org.locationtech.udig.style.advanced.utils.Utilities.createDefaultPolygonRule;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +20,7 @@ import java.util.List;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Rule;
 
-import eu.udig.style.advanced.internal.Messages;
+import org.locationtech.udig.style.advanced.internal.Messages;
 
 /**
  * A wrapper for the {@link FeatureTypeStyle} object to ease gui use.

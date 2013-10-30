@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.tutorials.preferredzoomlevels;
+package org.locationtech.udig.tutorials.preferredzoomlevels;
 
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
@@ -16,7 +16,7 @@ import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
 	@SuppressWarnings("nls")
-    private static final String PERSPECTIVE_ID = "eu.udig.tutorials.preferredzoomlevels.perspective";
+    private static final String PERSPECTIVE_ID = "org.locationtech.udig.tutorials.preferredzoomlevels.perspective";
 
 	public WorkbenchWindowAdvisor createWorkbenchWindowAdvisor(
 			IWorkbenchWindowConfigurer configurer) {

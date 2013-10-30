@@ -4,24 +4,24 @@
  *
  * $Id$
  */
-package net.refractions.udig.printing.model.impl;
+package org.locationtech.udig.printing.model.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.BoxPrinter;
-import net.refractions.udig.printing.model.ModelPackage;
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectElement;
-import net.refractions.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.BoxPrinter;
+import org.locationtech.udig.printing.model.ModelPackage;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.internal.ProjectPackage;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.draw2d.geometry.Dimension;
@@ -43,9 +43,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link net.refractions.udig.printing.model.impl.PageImpl#getName <em>Name</em>}</li>
- *   <li>{@link net.refractions.udig.printing.model.impl.PageImpl#getProjectInternal <em>Project Internal</em>}</li>
- *   <li>{@link net.refractions.udig.printing.model.impl.PageImpl#getBoxes <em>Boxes</em>}</li>
+ *   <li>{@link org.locationtech.udig.printing.model.impl.PageImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.locationtech.udig.printing.model.impl.PageImpl#getProjectInternal <em>Project Internal</em>}</li>
+ *   <li>{@link org.locationtech.udig.printing.model.impl.PageImpl#getBoxes <em>Boxes</em>}</li>
  * </ul>
  * </p>
  *
@@ -416,7 +416,7 @@ public class PageImpl extends ElementImpl implements Page {
     }
 
     /**
-     * @see net.refractions.udig.project.IProjectElement#getProject()
+     * @see org.locationtech.udig.project.IProjectElement#getProject()
      */
     public IProject getProject() {
         return getProjectInternal();

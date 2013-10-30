@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wfs;
+package org.locationtech.udig.catalog.internal.wfs;
 
 import java.io.IOException;
 import java.net.URI;
@@ -17,8 +17,8 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.ui.graphics.Glyph;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.ui.graphics.Glyph;
 
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
@@ -97,7 +97,7 @@ class WFSGeoResourceInfo extends IGeoResourceInfo {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IGeoResourceInfo#getCRS()
+     * @see org.locationtech.udig.catalog.IGeoResourceInfo#getCRS()
      */
     public CoordinateReferenceSystem getCRS() {
         if (crs != null)

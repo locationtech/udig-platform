@@ -7,20 +7,20 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.enablement;
+package org.locationtech.udig.tools.edit.enablement;
 
-import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.Interaction;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.tool.edit.internal.Messages;
-import net.refractions.udig.tools.edit.EditPlugin;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.EnablementBehaviour;
-import net.refractions.udig.tools.edit.EventType;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.project.IEditManager;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.tool.edit.internal.Messages;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.EnablementBehaviour;
+import org.locationtech.udig.tools.edit.EventType;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;

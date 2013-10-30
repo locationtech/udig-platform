@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.render.impl.renderercreator;
+package org.locationtech.udig.project.internal.render.impl.renderercreator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -21,24 +21,24 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.SortedSet;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.tests.DummyService;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.internal.impl.LayerImpl;
-import net.refractions.udig.project.internal.render.CompositeRenderContext;
-import net.refractions.udig.project.internal.render.RenderContext;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.internal.render.RendererCreator;
-import net.refractions.udig.project.internal.render.SelectionLayer;
-import net.refractions.udig.project.internal.render.impl.PlaceHolder;
-import net.refractions.udig.project.internal.render.impl.RendererCreatorImpl;
-import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.project.tests.support.TestFeatureStore;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.tests.DummyService;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.impl.LayerImpl;
+import org.locationtech.udig.project.internal.render.CompositeRenderContext;
+import org.locationtech.udig.project.internal.render.RenderContext;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.internal.render.RendererCreator;
+import org.locationtech.udig.project.internal.render.SelectionLayer;
+import org.locationtech.udig.project.internal.render.impl.PlaceHolder;
+import org.locationtech.udig.project.internal.render.impl.RendererCreatorImpl;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.tests.support.TestFeatureStore;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
@@ -56,7 +56,7 @@ import org.junit.Test;
 public class RendererCreatorImplTest extends AbstractProjectTestCase {
 
     /**
-     * Test method for {@link net.refractions.udig.project.internal.render.impl.RendererCreatorImpl#getAvailableRenderersInfo(net.refractions.udig.project.internal.Layer)}.
+     * Test method for {@link org.locationtech.udig.project.internal.render.impl.RendererCreatorImpl#getAvailableRenderersInfo(org.locationtech.udig.project.internal.Layer)}.
      */
     @Test
     public void testGetAvailableRenderersInfo() {
@@ -91,7 +91,7 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
     }
     
     /**
-     * Test method for {@link net.refractions.udig.project.internal.render.impl.RendererCreatorImpl#getRenderer(net.refractions.udig.project.internal.render.RenderContext)}.
+     * Test method for {@link org.locationtech.udig.project.internal.render.impl.RendererCreatorImpl#getRenderer(org.locationtech.udig.project.internal.render.RenderContext)}.
      * @throws Exception 
      */
     @Ignore
@@ -124,7 +124,7 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.project.internal.render.impl.RendererCreatorImpl#getRenderContext(net.refractions.udig.project.internal.Layer)}.
+     * Test method for {@link org.locationtech.udig.project.internal.render.impl.RendererCreatorImpl#getRenderContext(org.locationtech.udig.project.internal.Layer)}.
      */
     @Test
     public void testGetRenderContext() {
@@ -132,7 +132,7 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.project.internal.render.impl.RendererCreatorImpl#changed(org.eclipse.emf.common.notify.Notification)}.
+     * Test method for {@link org.locationtech.udig.project.internal.render.impl.RendererCreatorImpl#changed(org.eclipse.emf.common.notify.Notification)}.
      * @throws Exception 
      */
     @Test
@@ -177,7 +177,7 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.project.internal.render.impl.RendererCreatorImpl#findSelectionLayer(net.refractions.udig.project.ILayer)}.
+     * Test method for {@link org.locationtech.udig.project.internal.render.impl.RendererCreatorImpl#findSelectionLayer(org.locationtech.udig.project.ILayer)}.
      * @throws Exception 
      */
     @Test
@@ -202,7 +202,7 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.project.internal.render.impl.RendererCreatorImpl#getConfiguration()}.
+     * Test method for {@link org.locationtech.udig.project.internal.render.impl.RendererCreatorImpl#getConfiguration()}.
      */
     @Ignore
     @Test
@@ -425,16 +425,16 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         
         sameRenderer(creator, SingleRenderer.class, 2);
         
-        layer.getBlackboard().put(RendererCreator.PREFERRED_RENDERER_ID, "net.refractions.udig.project.tests.single2"); //$NON-NLS-1$
+        layer.getBlackboard().put(RendererCreator.PREFERRED_RENDERER_ID, "org.locationtech.udig.project.tests.single2"); //$NON-NLS-1$
         
         firstLayerR2SecondR1(creator);        
         
         // now both layers have it so both should use renderer2
-        layer2.getBlackboard().put(RendererCreator.PREFERRED_RENDERER_ID, "net.refractions.udig.project.tests.single2"); //$NON-NLS-1$
+        layer2.getBlackboard().put(RendererCreator.PREFERRED_RENDERER_ID, "org.locationtech.udig.project.tests.single2"); //$NON-NLS-1$
         
         sameRenderer(creator , SingleRenderer2.class, 2);
         
-        map.getBlackboard().put(RendererCreator.PREFERRED_RENDERER_ID, "net.refractions.udig.project.tests.single2"); //$NON-NLS-1$
+        map.getBlackboard().put(RendererCreator.PREFERRED_RENDERER_ID, "org.locationtech.udig.project.tests.single2"); //$NON-NLS-1$
         
         sameRenderer(creator, SingleRenderer2.class, 2);
         
@@ -442,7 +442,7 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         
         sameRenderer(creator, SingleRenderer2.class, 2);
         
-        layer2.getBlackboard().put(RendererCreator.PREFERRED_RENDERER_ID, "net.refractions.udig.project.tests.single"); //$NON-NLS-1$
+        layer2.getBlackboard().put(RendererCreator.PREFERRED_RENDERER_ID, "org.locationtech.udig.project.tests.single"); //$NON-NLS-1$
         
         // map has renderer2 but layer2 has renderer1 so it should be renderer1 on layer2.  
         // layer1 still has renderer2 on it.
@@ -474,16 +474,16 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         
         sameRenderer(creator, SingleRenderer.class, 2);
         
-        layer.getBlackboard().put(RendererCreator.LAST_RESORT_RENDERER_ID, "net.refractions.udig.project.tests.single"); //$NON-NLS-1$
+        layer.getBlackboard().put(RendererCreator.LAST_RESORT_RENDERER_ID, "org.locationtech.udig.project.tests.single"); //$NON-NLS-1$
         
         firstLayerR2SecondR1(creator);        
         
         // now both layers have it so both should use renderer2
-        layer2.getBlackboard().put(RendererCreator.LAST_RESORT_RENDERER_ID, "net.refractions.udig.project.tests.single"); //$NON-NLS-1$
+        layer2.getBlackboard().put(RendererCreator.LAST_RESORT_RENDERER_ID, "org.locationtech.udig.project.tests.single"); //$NON-NLS-1$
         
         sameRenderer(creator , SingleRenderer2.class, 2);
         
-        map.getBlackboard().put(RendererCreator.LAST_RESORT_RENDERER_ID, "net.refractions.udig.project.tests.single"); //$NON-NLS-1$
+        map.getBlackboard().put(RendererCreator.LAST_RESORT_RENDERER_ID, "org.locationtech.udig.project.tests.single"); //$NON-NLS-1$
         
         sameRenderer(creator, SingleRenderer2.class, 2);
         
@@ -491,7 +491,7 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         
         sameRenderer(creator, SingleRenderer2.class, 2);
         
-        layer2.getBlackboard().put(RendererCreator.LAST_RESORT_RENDERER_ID, "net.refractions.udig.project.tests.single2"); //$NON-NLS-1$
+        layer2.getBlackboard().put(RendererCreator.LAST_RESORT_RENDERER_ID, "org.locationtech.udig.project.tests.single2"); //$NON-NLS-1$
         
         // map has renderer2 but layer2 has renderer1 so it should be renderer1 on layer2.  
         // layer1 still has renderer2 on it.

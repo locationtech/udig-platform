@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project;
+package org.locationtech.udig.project;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -19,9 +19,9 @@ import java.awt.geom.AffineTransform;
 import java.io.IOException;
 import java.util.List;
 
-import net.refractions.udig.project.render.IRenderManager;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.render.IRenderManager;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 
 import org.geotools.feature.FeatureCollection;
 import org.geotools.geometry.jts.ReferencedEnvelope;

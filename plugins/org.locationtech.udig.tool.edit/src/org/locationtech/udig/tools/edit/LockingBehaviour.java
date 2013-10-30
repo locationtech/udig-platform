@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit;
+package org.locationtech.udig.tools.edit;
 
-import net.refractions.udig.tools.edit.support.EditGeom;
+import org.locationtech.udig.tools.edit.support.EditGeom;
 
 /**
  * An extension interface allowing an EventBehaviour to Lock the tool handler.
@@ -30,7 +30,7 @@ import net.refractions.udig.tools.edit.support.EditGeom;
  * geometry) and the BoxSelection behaviour starts drawing the selection box.  The mouse drags
  * over a Geometry and the MoveGeometry behaviour starts as well.  
  * </p><p>
- * One solution is to put both behaviours in a {@link net.refractions.udig.tools.edit.MutualExclusiveEventBehavior} so that if the BoxSelection
+ * One solution is to put both behaviours in a {@link org.locationtech.udig.tools.edit.MutualExclusiveEventBehavior} so that if the BoxSelection
  * behaviour is running then the MoveGeometryBehaviour won't.  However if the MoveGeometryBehaviour
  * starts then the BoxSelection behaviour may as well.
  * </p>

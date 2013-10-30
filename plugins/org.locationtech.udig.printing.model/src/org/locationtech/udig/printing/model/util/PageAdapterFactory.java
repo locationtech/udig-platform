@@ -4,14 +4,14 @@
  *
  * $Id$
  */
-package net.refractions.udig.printing.model.util;
+package org.locationtech.udig.printing.model.util;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.Connection;
-import net.refractions.udig.printing.model.Element;
-import net.refractions.udig.printing.model.ModelPackage;
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.project.IProjectElement;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.Connection;
+import org.locationtech.udig.printing.model.Element;
+import org.locationtech.udig.printing.model.ModelPackage;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.project.IProjectElement;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -24,7 +24,7 @@ import org.eclipse.ui.IEditorInput;
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see net.refractions.udig.printing.model.ModelPackage
+ * @see org.locationtech.udig.printing.model.ModelPackage
  * @generated
  */
 public class PageAdapterFactory extends AdapterFactoryImpl {
@@ -111,13 +111,13 @@ public class PageAdapterFactory extends AdapterFactoryImpl {
 
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.printing.model.Box <em>Box</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.printing.model.Box <em>Box</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.printing.model.Box
+     * @see org.locationtech.udig.printing.model.Box
      * @generated
      */
     public Adapter createBoxAdapter() {
@@ -125,13 +125,13 @@ public class PageAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.printing.model.Element <em>Element</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.printing.model.Element <em>Element</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.printing.model.Element
+     * @see org.locationtech.udig.printing.model.Element
      * @generated
      */
     public Adapter createElementAdapter() {
@@ -139,13 +139,13 @@ public class PageAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.printing.model.LabelBox <em>Label Box</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.printing.model.LabelBox <em>Label Box</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.printing.model.LabelBox
+     * @see org.locationtech.udig.printing.model.LabelBox
      * @generated
      */
     public Adapter createLabelBoxAdapter() {
@@ -153,13 +153,13 @@ public class PageAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.printing.model.Page <em>Page</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.printing.model.Page <em>Page</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.printing.model.Page
+     * @see org.locationtech.udig.printing.model.Page
      * @generated
      */
     public Adapter createPageAdapter() {
@@ -167,13 +167,13 @@ public class PageAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.printing.model.MapBox <em>Map Box</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.printing.model.MapBox <em>Map Box</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.printing.model.MapBox
+     * @see org.locationtech.udig.printing.model.MapBox
      * @generated
      */
     public Adapter createMapBoxAdapter() {
@@ -195,13 +195,13 @@ public class PageAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.printing.model.Connection <em>Connection</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.printing.model.Connection <em>Connection</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.printing.model.Connection
+     * @see org.locationtech.udig.printing.model.Connection
      * @generated
      */
     public Adapter createConnectionAdapter() {
@@ -209,13 +209,13 @@ public class PageAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.printing.model.DecoratorBox <em>Decorator Box</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.printing.model.DecoratorBox <em>Decorator Box</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.printing.model.DecoratorBox
+     * @see org.locationtech.udig.printing.model.DecoratorBox
      * @generated
      */
     public Adapter createDecoratorBoxAdapter() {
@@ -223,13 +223,13 @@ public class PageAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.IProjectElement <em>IProject Element</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.IProjectElement <em>IProject Element</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.IProjectElement
+     * @see org.locationtech.udig.project.IProjectElement
      * @generated
      */
     public Adapter createIProjectElementAdapter() {

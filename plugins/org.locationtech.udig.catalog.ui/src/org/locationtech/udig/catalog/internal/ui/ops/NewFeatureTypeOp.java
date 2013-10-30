@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.ui.ops;
+package org.locationtech.udig.catalog.internal.ui.ops;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,15 +20,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.ui.actions.ResetService;
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.ui.FeatureTypeEditorDialog;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.FeatureTypeEditorDialog.ValidateFeatureType;
-import net.refractions.udig.ui.operations.IOp;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.ui.actions.ResetService;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.ui.FeatureTypeEditorDialog;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.FeatureTypeEditorDialog.ValidateFeatureType;
+import org.locationtech.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;

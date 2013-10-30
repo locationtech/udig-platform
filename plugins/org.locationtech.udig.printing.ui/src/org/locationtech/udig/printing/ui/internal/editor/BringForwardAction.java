@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package net.refractions.udig.printing.ui.internal.editor;
+package org.locationtech.udig.printing.ui.internal.editor;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.impl.PageImpl;
-import net.refractions.udig.printing.ui.IBoxEditAction;
-import net.refractions.udig.printing.ui.internal.editor.parts.BoxPart;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.impl.PageImpl;
+import org.locationtech.udig.printing.ui.IBoxEditAction;
+import org.locationtech.udig.printing.ui.internal.editor.parts.BoxPart;
 
 /**
  * Moves a box of the printing editor up one level.

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.style.sld.editor;
+package org.locationtech.udig.style.sld.editor;
 
 import java.util.ArrayList;
 

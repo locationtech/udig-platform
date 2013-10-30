@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.ui;
+package org.locationtech.udig.catalog.ui;
 
 import java.io.File;
 import java.io.Serializable;
@@ -22,18 +22,18 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.catalog.service.FormatProvider;
-import net.refractions.udig.core.internal.ExtensionPointProcessor;
-import net.refractions.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.service.FormatProvider;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 
 public class FileConnectionFactory extends UDIGConnectionFactory {
 
-    private static final String FILE_FORMAT_EXTENSION = "net.refractions.udig.catalog.ui.fileFormat"; //$NON-NLS-1$
+    private static final String FILE_FORMAT_EXTENSION = "org.locationtech.udig.catalog.ui.fileFormat"; //$NON-NLS-1$
     private ArrayList<String> extensionList;
     private ArrayList<FileType> typeList;
     

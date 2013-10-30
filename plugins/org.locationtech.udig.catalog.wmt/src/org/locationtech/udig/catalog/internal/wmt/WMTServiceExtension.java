@@ -7,22 +7,22 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt;
+package org.locationtech.udig.catalog.internal.wmt;
 
 import java.io.Serializable;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.ServiceExtension;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSource;
+import org.locationtech.udig.catalog.ServiceExtension;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.WMTSource;
 
 public class WMTServiceExtension implements ServiceExtension {
     
-	public static final String KEY = "net.refractions.udig.catalog.internal.wmt.url"; //$NON-NLS-1$
+	public static final String KEY = "org.locationtech.udig.catalog.internal.wmt.url"; //$NON-NLS-1$
 	
     /*
-     * @see net.refractions.udig.catalog.ServiceExtension#createService(java.net.URL, java.util.Map)
+     * @see org.locationtech.udig.catalog.ServiceExtension#createService(java.net.URL, java.util.Map)
      */
     public WMTService createService(URL id, Map<String,Serializable> params) {
         if (params == null)
@@ -68,7 +68,7 @@ public class WMTServiceExtension implements ServiceExtension {
     }
 
     /*
-     * @see net.refractions.udig.catalog.ServiceExtension#createParams(java.net.URL)
+     * @see org.locationtech.udig.catalog.ServiceExtension#createParams(java.net.URL)
      */
     public Map<String,Serializable> createParams(URL url) {
         //todo: check if the class exists?

@@ -9,13 +9,13 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.tool.info.internal.display;
+package org.locationtech.udig.tool.info.internal.display;
 
 import java.io.IOException;
 
-import net.refractions.udig.tool.info.InfoDisplay;
-import net.refractions.udig.tool.info.InfoPlugin;
-import net.refractions.udig.tool.info.LayerPointInfo;
+import org.locationtech.udig.tool.info.InfoDisplay;
+import org.locationtech.udig.tool.info.InfoPlugin;
+import org.locationtech.udig.tool.info.LayerPointInfo;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ToolBarManager;
@@ -100,7 +100,7 @@ public class BrowserInfoDisplay extends InfoDisplay {
     /**
      * Focus the browser onto LayerPointInfo.getRequestURL.
      * 
-     * @see net.refractions.udig.tool.info.InfoDisplay#setInfo(net.refractions.udig.project.render.LayerPointInfo)
+     * @see org.locationtech.udig.tool.info.InfoDisplay#setInfo(org.locationtech.udig.project.render.LayerPointInfo)
      * @param info
      */
     public void setInfo( LayerPointInfo info ) {

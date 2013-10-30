@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.scalebar;
+package org.locationtech.udig.mapgraphic.scalebar;
 
 /**
  * A super simple representation of the units we use in the scalebar

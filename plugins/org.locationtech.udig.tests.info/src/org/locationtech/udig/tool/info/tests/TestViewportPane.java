@@ -1,20 +1,20 @@
 /**
  * 
  */
-package net.refractions.udig.tool.info.tests;
+package org.locationtech.udig.tool.info.tests;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplayListener;
-import net.refractions.udig.project.ui.commands.IDrawCommand;
-import net.refractions.udig.project.ui.internal.MapEditor;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.render.glass.GlassPane;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
+import org.locationtech.udig.project.ui.commands.IDrawCommand;
+import org.locationtech.udig.project.ui.internal.MapEditor;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseListener;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.render.glass.GlassPane;
 
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Control;

@@ -9,11 +9,11 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.tool.display;
+package org.locationtech.udig.project.ui.internal.tool.display;
 
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.tool.IToolHandler;
-import net.refractions.udig.project.ui.tool.Tool;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.tool.IToolHandler;
+import org.locationtech.udig.project.ui.tool.Tool;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -38,14 +38,14 @@ public class HandlerProxy extends AbstractHandler {
     public static class EmptyHandler extends AbstractHandler implements IToolHandler {
 
         /**
-         * @see net.refractions.udig.project.tool.IToolHandler#setTool(net.refractions.udig.project.tool.Tool)
+         * @see org.locationtech.udig.project.tool.IToolHandler#setTool(org.locationtech.udig.project.tool.Tool)
          */
         public void setTool( Tool tool ) {
             // do nothing
         }
 
         /**
-         * @see net.refractions.udig.project.tool.IToolHandler#setCurrentCommandId(java.lang.String)
+         * @see org.locationtech.udig.project.tool.IToolHandler#setCurrentCommandId(java.lang.String)
          */
         public void setCurrentCommandId( String currentCommandId ) {
             // do nothing.

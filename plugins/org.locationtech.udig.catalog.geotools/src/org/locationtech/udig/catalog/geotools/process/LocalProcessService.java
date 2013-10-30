@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.geotools.process;
+package org.locationtech.udig.catalog.geotools.process;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -17,12 +17,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceInfo;
-import net.refractions.udig.catalog.IResolve.Status;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.IResolve.Status;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.process.ProcessFactory;
@@ -68,7 +68,7 @@ public class LocalProcessService extends IService {
     }
 
     @Override
-    public net.refractions.udig.catalog.ID getID() {
+    public org.locationtech.udig.catalog.ID getID() {
         return SERVICE_ID;
     }
     

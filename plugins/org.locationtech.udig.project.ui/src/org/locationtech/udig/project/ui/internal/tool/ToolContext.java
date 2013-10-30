@@ -9,15 +9,15 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.tool;
+package org.locationtech.udig.project.ui.internal.tool;
 
-import net.refractions.udig.project.command.factory.EditCommandFactory;
-import net.refractions.udig.project.command.factory.NavigationCommandFactory;
-import net.refractions.udig.project.command.factory.SelectionCommandFactory;
-import net.refractions.udig.project.internal.AbstractContext;
-import net.refractions.udig.project.ui.commands.DrawCommandFactory;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.command.factory.EditCommandFactory;
+import org.locationtech.udig.project.command.factory.NavigationCommandFactory;
+import org.locationtech.udig.project.command.factory.SelectionCommandFactory;
+import org.locationtech.udig.project.internal.AbstractContext;
+import org.locationtech.udig.project.ui.commands.DrawCommandFactory;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.swt.widgets.Display;

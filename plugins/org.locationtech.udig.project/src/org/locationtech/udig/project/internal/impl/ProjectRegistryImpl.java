@@ -1,7 +1,7 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,16 +11,16 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.internal.Messages;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectElement;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.ProjectRegistry;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.ProjectRegistry;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
@@ -43,7 +43,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
- * TODO Purpose of net.refractions.udig.project.internal.impl
+ * TODO Purpose of org.locationtech.udig.project.internal.impl
  * <p>
  * </p>
  * 
@@ -111,7 +111,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     }
 
     /**
-     * @see net.refractions.udig.project.internal.ProjectRegistry#getDefaultProject()
+     * @see org.locationtech.udig.project.internal.ProjectRegistry#getDefaultProject()
      */
     public Project getDefaultProject() {
         String projectName = Messages.ProjectRegistry_defaultName;
@@ -122,7 +122,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     }
 
     /**
-     * @see net.refractions.udig.project.internal.ProjectRegistry#getCurrentProject()
+     * @see org.locationtech.udig.project.internal.ProjectRegistry#getCurrentProject()
      * @uml.property name="currentProject"
      */
     public Project getCurrentProject() {
@@ -417,35 +417,35 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     }
 
     /**
-     * @see net.refractions.udig.IProjectRegistry#getDefaultIProject()
+     * @see org.locationtech.udig.IProjectRegistry#getDefaultIProject()
      */
     public IProject getDefaultIProject() {
         return getDefaultProject();
     }
 
     /**
-     * @see net.refractions.udig.IProjectRegistry#getCurrentIProject()
+     * @see org.locationtech.udig.IProjectRegistry#getCurrentIProject()
      */
     public IProject getCurrentIProject() {
         return getCurrentProject();
     }
 
     /**
-     * @see net.refractions.udig.IProjectRegistry#setICurrentProject(net.refractions.udig.IProject)
+     * @see org.locationtech.udig.IProjectRegistry#setICurrentProject(org.locationtech.udig.IProject)
      */
     public void setICurrentProject( IProject value ) {
         setCurrentProject((Project) value);
     }
 
     /**
-     * @see net.refractions.udig.IProjectRegistry#getIProject(java.lang.String)
+     * @see org.locationtech.udig.IProjectRegistry#getIProject(java.lang.String)
      */
     public IProject getIProject( String projectPath ) {
         return getProject(projectPath);
     }
 
     /**
-     * @see net.refractions.udig.IProjectRegistry#getIProjects()
+     * @see org.locationtech.udig.IProjectRegistry#getIProjects()
      */
     @SuppressWarnings("unchecked")
     public List getIProjects() {
@@ -544,7 +544,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     }
 
     /**
-     * @see net.refractions.udig.project.internal.ProjectFactory#getProjectRegistry()
+     * @see org.locationtech.udig.project.internal.ProjectFactory#getProjectRegistry()
      * @uml.property   name="projectRegistry"
      */
     public static ProjectRegistry getProjectRegistry() {

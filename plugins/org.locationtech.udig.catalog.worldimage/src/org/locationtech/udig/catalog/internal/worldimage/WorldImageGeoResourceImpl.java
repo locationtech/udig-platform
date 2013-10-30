@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal.worldimage;
+package org.locationtech.udig.catalog.internal.worldimage;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,11 +22,11 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.HashMap;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.catalog.rasterings.AbstractRasterGeoResource;
-import net.refractions.udig.catalog.rasterings.GridCoverageLoader;
-import net.refractions.udig.catalog.worldimage.internal.Messages;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResource;
+import org.locationtech.udig.catalog.rasterings.GridCoverageLoader;
+import org.locationtech.udig.catalog.worldimage.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -98,7 +98,7 @@ public class WorldImageGeoResourceImpl extends AbstractRasterGeoResource {
         } catch (IOException e) {
             CatalogPlugin.getDefault().getLog().log(
                     new org.eclipse.core.runtime.Status(IStatus.WARNING,
-                            "net.refractions.udig.catalog", 0, //$NON-NLS-1$
+                            "org.locationtech.udig.catalog", 0, //$NON-NLS-1$
                             Messages.WorldImageGeoResourceImpl_PrjUnavailable, e));
         }
         if (rbc == null) {
@@ -173,13 +173,13 @@ public class WorldImageGeoResourceImpl extends AbstractRasterGeoResource {
         } catch (MalformedURLException e) {
             CatalogPlugin.getDefault().getLog().log(
                     new org.eclipse.core.runtime.Status(IStatus.WARNING,
-                            "net.refractions.udig.catalog", 0, //$NON-NLS-1$
+                            "org.locationtech.udig.catalog", 0, //$NON-NLS-1$
                             "", e)); //$NON-NLS-1$
             return super.getReadParameters();
         } catch (IOException e) {
             CatalogPlugin.getDefault().getLog().log(
                     new org.eclipse.core.runtime.Status(IStatus.WARNING,
-                            "net.refractions.udig.catalog", 0, //$NON-NLS-1$
+                            "org.locationtech.udig.catalog", 0, //$NON-NLS-1$
                             "", e)); //$NON-NLS-1$
             return super.getReadParameters();
         }
@@ -192,12 +192,12 @@ public class WorldImageGeoResourceImpl extends AbstractRasterGeoResource {
         } catch (FileNotFoundException e) {
             CatalogPlugin.getDefault().getLog().log(
                     new org.eclipse.core.runtime.Status(IStatus.WARNING,
-                            "net.refractions.udig.catalog", 0, //$NON-NLS-1$
+                            "org.locationtech.udig.catalog", 0, //$NON-NLS-1$
                             "", e)); //$NON-NLS-1$
         } catch (FactoryException e) {
             CatalogPlugin.getDefault().getLog().log(
                     new org.eclipse.core.runtime.Status(IStatus.WARNING,
-                            "net.refractions.udig.catalog", 0, //$NON-NLS-1$
+                            "org.locationtech.udig.catalog", 0, //$NON-NLS-1$
                             "", e)); //$NON-NLS-1$
         }
         CoordinateReferenceSystem crsSys = null;

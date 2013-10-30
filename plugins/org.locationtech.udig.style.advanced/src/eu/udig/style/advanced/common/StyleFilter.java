@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.common;
+package org.locationtech.udig.style.advanced.common;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 
-import eu.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
 
 /**
  * Viewer filter on style names.

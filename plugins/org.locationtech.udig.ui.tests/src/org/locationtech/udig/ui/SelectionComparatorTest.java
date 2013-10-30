@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.refractions.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.core.internal.FeatureUtils;
 
 import org.eclipse.swt.SWT;
 import org.geotools.data.DataUtilities;

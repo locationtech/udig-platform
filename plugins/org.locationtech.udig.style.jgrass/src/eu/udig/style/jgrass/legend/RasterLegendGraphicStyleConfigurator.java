@@ -7,18 +7,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.jgrass.legend;
+package org.locationtech.udig.style.jgrass.legend;
 
 import java.awt.Color;
 import java.io.File;
 import java.util.List;
 
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.dialogs.ColorEditor;
-import net.refractions.udig.style.IStyleConfigurator;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.dialogs.ColorEditor;
+import org.locationtech.udig.style.IStyleConfigurator;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -37,9 +37,9 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import eu.udig.catalog.jgrass.activeregion.dialogs.JGRasterChooserDialog;
-import eu.udig.catalog.jgrass.core.JGrassMapGeoResource;
-import eu.udig.style.jgrass.messages.Messages;
+import org.locationtech.udig.catalog.jgrass.activeregion.dialogs.JGRasterChooserDialog;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
+import org.locationtech.udig.style.jgrass.messages.Messages;
 
 public class RasterLegendGraphicStyleConfigurator extends IStyleConfigurator implements SelectionListener, ModifyListener {
 

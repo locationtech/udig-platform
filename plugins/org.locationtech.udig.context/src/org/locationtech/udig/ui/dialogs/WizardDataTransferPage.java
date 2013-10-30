@@ -13,11 +13,11 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package net.refractions.udig.ui.dialogs;
+package org.locationtech.udig.ui.dialogs;
 
-import net.refractions.udig.context.internal.Messages;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.context.internal.Messages;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;

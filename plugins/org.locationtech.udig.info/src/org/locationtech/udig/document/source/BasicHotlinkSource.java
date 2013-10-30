@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.document.source;
+package org.locationtech.udig.document.source;
 
 import java.io.File;
 import java.net.URL;
@@ -16,16 +16,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IHotlink;
-import net.refractions.udig.catalog.document.IHotlinkSource;
-import net.refractions.udig.catalog.document.IDocument.ContentType;
-import net.refractions.udig.document.model.AbstractDocument;
-import net.refractions.udig.document.model.AbstractHotlinkDocument;
-import net.refractions.udig.document.model.ActionHotlinkDocument;
-import net.refractions.udig.document.model.FileHotlinkDocument;
-import net.refractions.udig.document.model.WebHotlinkDocument;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.document.IDocument;
+import org.locationtech.udig.catalog.document.IHotlink;
+import org.locationtech.udig.catalog.document.IHotlinkSource;
+import org.locationtech.udig.catalog.document.IDocument.ContentType;
+import org.locationtech.udig.document.model.AbstractDocument;
+import org.locationtech.udig.document.model.AbstractHotlinkDocument;
+import org.locationtech.udig.document.model.ActionHotlinkDocument;
+import org.locationtech.udig.document.model.FileHotlinkDocument;
+import org.locationtech.udig.document.model.WebHotlinkDocument;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.opengis.feature.simple.SimpleFeature;

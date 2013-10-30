@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.internal.ui;
+package org.locationtech.udig.internal.ui;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
@@ -22,12 +22,12 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.ui.IDropAction;
-import net.refractions.udig.ui.IDropHandlerListener;
-import net.refractions.udig.ui.ProgressMonitorTaskNamer;
-import net.refractions.udig.ui.UDIGDragDropUtilities;
-import net.refractions.udig.ui.ViewerDropLocation;
-import net.refractions.udig.ui.internal.Messages;
+import org.locationtech.udig.ui.IDropAction;
+import org.locationtech.udig.ui.IDropHandlerListener;
+import org.locationtech.udig.ui.ProgressMonitorTaskNamer;
+import org.locationtech.udig.ui.UDIGDragDropUtilities;
+import org.locationtech.udig.ui.ViewerDropLocation;
+import org.locationtech.udig.ui.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;

@@ -8,19 +8,19 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.postgis.ui;
+package org.locationtech.udig.catalog.internal.postgis.ui;
 import static org.geotools.data.postgis.PostgisNGDataStoreFactory.*;
 
 import java.util.Map;
 
-import net.refractions.udig.catalog.PostgisServiceExtension2;
-import net.refractions.udig.catalog.internal.postgis.PostgisPlugin;
-import net.refractions.udig.catalog.service.database.DataConnectionPage;
-import net.refractions.udig.catalog.service.database.DatabaseConnectionRunnable;
-import net.refractions.udig.catalog.service.database.DatabaseServiceDialect;
-import net.refractions.udig.catalog.service.database.DatabaseWizardLocalization;
-import net.refractions.udig.catalog.service.database.LookUpSchemaRunnable;
-import net.refractions.udig.catalog.service.database.Tab;
+import org.locationtech.udig.catalog.PostgisServiceExtension2;
+import org.locationtech.udig.catalog.internal.postgis.PostgisPlugin;
+import org.locationtech.udig.catalog.service.database.DataConnectionPage;
+import org.locationtech.udig.catalog.service.database.DatabaseConnectionRunnable;
+import org.locationtech.udig.catalog.service.database.DatabaseServiceDialect;
+import org.locationtech.udig.catalog.service.database.DatabaseWizardLocalization;
+import org.locationtech.udig.catalog.service.database.LookUpSchemaRunnable;
+import org.locationtech.udig.catalog.service.database.Tab;
 
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.swt.SWT;

@@ -8,14 +8,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.internal;
+package org.locationtech.udig.mapgraphic.internal;
 
 import java.io.IOException;
 
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
 
 public class MapGraphicRenderMetricsFactory implements IRenderMetricsFactory {
 
@@ -28,7 +28,7 @@ public class MapGraphicRenderMetricsFactory implements IRenderMetricsFactory {
     }
 
     /**
-     * @see net.refractions.udig.project.render.IRenderMetricsFactory#getRendererType()
+     * @see org.locationtech.udig.project.render.IRenderMetricsFactory#getRendererType()
      */
     public Class<MapGraphicRenderer> getRendererType() {
         return MapGraphicRenderer.class;

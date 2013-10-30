@@ -9,38 +9,38 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.trim;
+package org.locationtech.udig.tools.trim;
 
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.tools.edit.AbstractEditTool;
-import net.refractions.udig.tools.edit.Activator;
-import net.refractions.udig.tools.edit.Behaviour;
-import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
-import net.refractions.udig.tools.edit.EnablementBehaviour;
-import net.refractions.udig.tools.edit.activator.DrawCurrentGeomVerticesActivator;
-import net.refractions.udig.tools.edit.activator.DrawGeomsActivator;
-import net.refractions.udig.tools.edit.activator.EditStateListenerActivator;
-import net.refractions.udig.tools.edit.activator.ResetAllStateActivator;
-import net.refractions.udig.tools.edit.activator.SetSnapBehaviourCommandHandlerActivator;
-import net.refractions.udig.tools.edit.behaviour.AcceptOnDoubleClickBehaviour;
-import net.refractions.udig.tools.edit.behaviour.AddVertexWhileCreatingBehaviour;
-import net.refractions.udig.tools.edit.behaviour.DefaultCancelBehaviour;
-import net.refractions.udig.tools.edit.behaviour.DrawCreateVertexSnapAreaBehaviour;
-import net.refractions.udig.tools.edit.behaviour.SetSnapSizeBehaviour;
-import net.refractions.udig.tools.edit.behaviour.StartEditingBehaviour;
-import net.refractions.udig.tools.edit.enablement.ValidToolDetectionActivator;
-import net.refractions.udig.tools.edit.support.ShapeType;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.tools.edit.AbstractEditTool;
+import org.locationtech.udig.tools.edit.Activator;
+import org.locationtech.udig.tools.edit.Behaviour;
+import org.locationtech.udig.tools.edit.EditToolConfigurationHelper;
+import org.locationtech.udig.tools.edit.EnablementBehaviour;
+import org.locationtech.udig.tools.edit.activator.DrawCurrentGeomVerticesActivator;
+import org.locationtech.udig.tools.edit.activator.DrawGeomsActivator;
+import org.locationtech.udig.tools.edit.activator.EditStateListenerActivator;
+import org.locationtech.udig.tools.edit.activator.ResetAllStateActivator;
+import org.locationtech.udig.tools.edit.activator.SetSnapBehaviourCommandHandlerActivator;
+import org.locationtech.udig.tools.edit.behaviour.AcceptOnDoubleClickBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.AddVertexWhileCreatingBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.DefaultCancelBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.DrawCreateVertexSnapAreaBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.SetSnapSizeBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.StartEditingBehaviour;
+import org.locationtech.udig.tools.edit.enablement.ValidToolDetectionActivator;
+import org.locationtech.udig.tools.edit.support.ShapeType;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiLineString;
 
-import eu.udig.tools.trim.internal.TrimGeometryBehaviour;
-import eu.udig.tools.internal.i18n.Messages;
-import eu.udig.tools.internal.ui.util.StatusBar;
+import org.locationtech.udig.tools.trim.internal.TrimGeometryBehaviour;
+import org.locationtech.udig.tools.internal.i18n.Messages;
+import org.locationtech.udig.tools.internal.ui.util.StatusBar;
 
 /**
  * UDig modal tool to draw a linestring and cut the linestrings from the selected layer from the

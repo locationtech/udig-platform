@@ -1,12 +1,12 @@
 /**
  * 
  */
-package net.refractions.udig.catalog.internal.shp;
+package org.locationtech.udig.catalog.internal.shp;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import net.refractions.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.IServiceInfo;
 
 class ShpServiceInfo extends IServiceInfo {
 

@@ -9,13 +9,13 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Layer;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;

@@ -9,10 +9,10 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal.ui;
+package org.locationtech.udig.catalog.internal.ui;
 
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.core.IBlockingAdaptable;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.core.IBlockingAdaptable;
 
 import org.eclipse.core.runtime.IAdapterFactory;
 

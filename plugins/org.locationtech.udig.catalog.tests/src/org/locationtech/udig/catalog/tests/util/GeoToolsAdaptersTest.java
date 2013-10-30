@@ -8,10 +8,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.tests.util;
+package org.locationtech.udig.catalog.tests.util;
 
-import net.refractions.udig.catalog.util.GeoToolsAdapters;
-import net.refractions.udig.ui.ProgressMonitorTaskNamer;
+import org.locationtech.udig.catalog.util.GeoToolsAdapters;
+import org.locationtech.udig.ui.ProgressMonitorTaskNamer;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.util.ProgressListener;

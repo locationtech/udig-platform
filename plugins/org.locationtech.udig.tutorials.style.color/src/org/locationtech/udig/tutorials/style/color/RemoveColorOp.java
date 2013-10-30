@@ -8,13 +8,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.style.color;
+package org.locationtech.udig.tutorials.style.color;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.ui.operations.IOp;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.ui.operations.IOp;
 
 public class RemoveColorOp implements IOp {
 

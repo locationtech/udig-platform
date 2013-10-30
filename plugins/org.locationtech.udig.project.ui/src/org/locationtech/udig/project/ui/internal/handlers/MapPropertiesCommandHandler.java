@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.handlers;
+package org.locationtech.udig.project.ui.internal.handlers;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.ui.properties.ProperitesCommandHandler;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.ui.properties.ProperitesCommandHandler;
 
 /**
  * Command hander for the MapProperties command, opens a Property Dialog focused on the IMap associated with

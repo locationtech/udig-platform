@@ -10,9 +10,9 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.ui.preferences;
+package org.locationtech.udig.catalog.ui.preferences;
 
-import net.refractions.udig.catalog.ui.wizard.DataBaseRegistryWizardPage;
+import org.locationtech.udig.catalog.ui.wizard.DataBaseRegistryWizardPage;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;

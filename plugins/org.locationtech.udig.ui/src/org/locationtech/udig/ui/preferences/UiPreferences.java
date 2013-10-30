@@ -8,10 +8,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.preferences;
+package org.locationtech.udig.ui.preferences;
 
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.ui.internal.Messages;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.internal.Messages;
 
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.ComboFieldEditor;
@@ -45,17 +45,17 @@ public class UiPreferences extends FieldEditorPreferencePage implements IWorkben
      */
     public void createFieldEditors() {
         addField(new CharSetFieldEditor(
-                net.refractions.udig.ui.preferences.PreferenceConstants.P_DEFAULT_CHARSET,
+                org.locationtech.udig.ui.preferences.PreferenceConstants.P_DEFAULT_CHARSET,
                 Messages.UiPreferences_charset, getFieldEditorParent()));
 
         //if (Platform.getOS().equals(Platform.OS_LINUX)) {
             addField(new BooleanFieldEditor(
-                    net.refractions.udig.ui.preferences.PreferenceConstants.P_ADVANCED_GRAPHICS,
+                    org.locationtech.udig.ui.preferences.PreferenceConstants.P_ADVANCED_GRAPHICS,
                     Messages.UiPreferences_advancedGraphics_label, getFieldEditorParent()));
         //}
            
             String[][] values = {{Messages.UiPreferences_AutoUnits, PreferenceConstants.AUTO_UNITS}, {Messages.UiPreferences_MetricUnits, PreferenceConstants.METRIC_UNITS}, {Messages.UiPreferences_ImperialUnits,PreferenceConstants.IMPERIAL_UNITS}};
-            addField(new ComboFieldEditor(net.refractions.udig.ui.preferences.PreferenceConstants.P_DEFAULT_UNITS, Messages.UiPreferences_UnitsLabel, values, getFieldEditorParent()));
+            addField(new ComboFieldEditor(org.locationtech.udig.ui.preferences.PreferenceConstants.P_DEFAULT_UNITS, Messages.UiPreferences_UnitsLabel, values, getFieldEditorParent()));
 
     }
 

@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.style.sld.simple;
+package org.locationtech.udig.style.sld.simple;
 
 import java.text.MessageFormat;
 
-import net.refractions.udig.style.sld.AbstractSimpleConfigurator;
-import net.refractions.udig.style.sld.internal.Messages;
+import org.locationtech.udig.style.sld.AbstractSimpleConfigurator;
+import org.locationtech.udig.style.sld.internal.Messages;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyListener;

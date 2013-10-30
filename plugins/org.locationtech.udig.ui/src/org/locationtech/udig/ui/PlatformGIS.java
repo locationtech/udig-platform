@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.Callable;
@@ -18,9 +18,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import net.refractions.udig.aoi.IAOIService;
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.ui.internal.Messages;
+import org.locationtech.udig.aoi.IAOIService;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;

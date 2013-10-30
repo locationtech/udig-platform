@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.omsbox.core;
+package org.locationtech.udig.omsbox.core;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -30,8 +30,8 @@ import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.Platform;
 import org.joda.time.DateTime;
 
-import eu.udig.omsbox.OmsBoxPlugin;
-import eu.udig.omsbox.utils.OmsBoxConstants;
+import org.locationtech.udig.omsbox.OmsBoxPlugin;
+import org.locationtech.udig.omsbox.utils.OmsBoxConstants;
 
 /**
  * Executor of OMS scripts.

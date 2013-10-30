@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.mapgraphic" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.mapgraphic" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.mapgraphic" id="mapgraphic" name="Map Graphic"/>
+         <meta.schema plugin="org.locationtech.udig.mapgraphic" id="mapgraphic" name="Map Graphic"/>
       </appInfo>
       <documentation>
          Provide visual feedback in the form of a map decoration (such as a scalebar or north arrow) where the visual does not do any data access.
@@ -70,7 +70,7 @@ Also useful to visualisation of an in memory domain model - but please be carefu
                   The class that draws the information
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.mapgraphic.MapGraphic"/>
+                  <meta.attribute kind="java" basedOn=":org.locationtech.udig.mapgraphic.MapGraphic"/>
                </appInfo>
             </annotation>
          </attribute>

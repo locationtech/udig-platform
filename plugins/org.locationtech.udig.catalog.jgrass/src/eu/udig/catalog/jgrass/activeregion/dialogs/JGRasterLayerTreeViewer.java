@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.jgrass.activeregion.dialogs;
+package org.locationtech.udig.catalog.jgrass.activeregion.dialogs;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,13 +19,13 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.catalog.ui.ISharedImages;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.ISharedImages;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -46,9 +46,9 @@ import org.eclipse.ui.dialogs.PatternFilter;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.gce.grassraster.JGrassConstants;
 
-import eu.udig.catalog.jgrass.JGrassPlugin;
-import eu.udig.catalog.jgrass.core.JGrassMapGeoResource;
-import eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
+import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
 
 /**
  * <p>

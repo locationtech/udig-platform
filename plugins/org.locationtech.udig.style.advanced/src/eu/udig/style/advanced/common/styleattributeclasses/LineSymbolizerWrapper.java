@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.common.styleattributeclasses;
+package org.locationtech.udig.style.advanced.common.styleattributeclasses;
 
-import static eu.udig.style.advanced.utils.Utilities.DEFAULT_COLOR;
-import static eu.udig.style.advanced.utils.Utilities.DEFAULT_OFFSET;
-import static eu.udig.style.advanced.utils.Utilities.DEFAULT_OPACITY;
-import static eu.udig.style.advanced.utils.Utilities.DEFAULT_WIDTH;
-import static eu.udig.style.advanced.utils.Utilities.ff;
-import static eu.udig.style.advanced.utils.Utilities.getDashString;
-import static eu.udig.style.advanced.utils.Utilities.getOffset;
-import static eu.udig.style.advanced.utils.Utilities.sf;
+import static org.locationtech.udig.style.advanced.utils.Utilities.DEFAULT_COLOR;
+import static org.locationtech.udig.style.advanced.utils.Utilities.DEFAULT_OFFSET;
+import static org.locationtech.udig.style.advanced.utils.Utilities.DEFAULT_OPACITY;
+import static org.locationtech.udig.style.advanced.utils.Utilities.DEFAULT_WIDTH;
+import static org.locationtech.udig.style.advanced.utils.Utilities.ff;
+import static org.locationtech.udig.style.advanced.utils.Utilities.getDashString;
+import static org.locationtech.udig.style.advanced.utils.Utilities.getOffset;
+import static org.locationtech.udig.style.advanced.utils.Utilities.sf;
 
 import java.awt.geom.Point2D;
 import java.util.List;
@@ -30,7 +30,7 @@ import org.geotools.styling.Symbolizer;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.GraphicalSymbol;
 
-import eu.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.style.advanced.utils.Utilities;
 
 /**
  * A wrapper for a {@link LineSymbolizer} to ease interaction with gui.

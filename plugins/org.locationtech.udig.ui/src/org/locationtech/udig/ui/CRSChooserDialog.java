@@ -1,9 +1,9 @@
 /**
  * 
  */
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
-import net.refractions.udig.ui.internal.Messages;
+import org.locationtech.udig.ui.internal.Messages;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.widgets.Composite;

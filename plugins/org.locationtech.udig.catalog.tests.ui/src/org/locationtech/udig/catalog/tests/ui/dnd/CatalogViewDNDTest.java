@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.tests.ui.dnd;
+package org.locationtech.udig.catalog.tests.ui.dnd;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -19,20 +19,20 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.ui.CatalogView;
-import net.refractions.udig.catalog.tests.DummyService;
-import net.refractions.udig.catalog.tests.ui.workflow.DummyMonitor;
-import net.refractions.udig.internal.ui.StaticDestinationProvider;
-import net.refractions.udig.internal.ui.UDIGDropHandler;
-import net.refractions.udig.internal.ui.UDIGViewerDropAdapter;
-import net.refractions.udig.ui.IDropAction;
-import net.refractions.udig.ui.IDropHandlerListener;
-import net.refractions.udig.ui.ViewerDropLocation;
-import net.refractions.udig.ui.WaitCondition;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.ui.CatalogView;
+import org.locationtech.udig.catalog.tests.DummyService;
+import org.locationtech.udig.catalog.tests.ui.workflow.DummyMonitor;
+import org.locationtech.udig.internal.ui.StaticDestinationProvider;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
+import org.locationtech.udig.internal.ui.UDIGViewerDropAdapter;
+import org.locationtech.udig.ui.IDropAction;
+import org.locationtech.udig.ui.IDropHandlerListener;
+import org.locationtech.udig.ui.ViewerDropLocation;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.PlatformUI;

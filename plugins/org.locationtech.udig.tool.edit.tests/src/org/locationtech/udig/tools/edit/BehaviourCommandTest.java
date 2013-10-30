@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit;
+package org.locationtech.udig.tools.edit;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -17,11 +17,11 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.command.Command;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.tools.edit.support.TestHandler;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.Command;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.tools.edit.support.TestHandler;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -30,7 +30,7 @@ import org.junit.Test;
 public class BehaviourCommandTest {
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.EventBehaviourCommand.run(IProgressMonitor)'
+     * Test method for 'org.locationtech.udig.tools.edit.EventBehaviourCommand.run(IProgressMonitor)'
      */
     @Test
     public void testRun() throws Exception {

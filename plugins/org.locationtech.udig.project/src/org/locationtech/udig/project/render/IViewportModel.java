@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.render;
+package org.locationtech.udig.project.render;
 
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.util.SortedSet;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.render.impl.ViewportModelImpl;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.render.impl.ViewportModelImpl;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -193,7 +193,7 @@ public interface IViewportModel {
      * Adds a IViewportModelListener to this map.  A given listener will only be added once.
      *
      * @param listener Listener to be added
-     * @see net.refractions.udig.project.ViewportModelEvent.ViewportModelEventType
+     * @see org.locationtech.udig.project.ViewportModelEvent.ViewportModelEventType
      */
     public void addViewportModelListener( IViewportModelListener listener );
     

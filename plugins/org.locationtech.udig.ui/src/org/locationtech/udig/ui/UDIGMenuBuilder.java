@@ -7,17 +7,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.ui.action.NewObjectContribution;
-import net.refractions.udig.ui.action.NewObjectDelegate;
-import net.refractions.udig.ui.action.NewObjectDelegateComparator;
-import net.refractions.udig.ui.internal.Messages;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.action.NewObjectContribution;
+import org.locationtech.udig.ui.action.NewObjectDelegate;
+import org.locationtech.udig.ui.action.NewObjectDelegateComparator;
+import org.locationtech.udig.ui.internal.Messages;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.action.Action;
@@ -50,10 +50,10 @@ import org.eclipse.ui.actions.ContributionItemFactory;
  * View" submenus.
  * </p>
  * To enable this class please include the following in your plugin.xml:<code><pre>
- * &lt;extension point=&quot;net.refractions.udig.ui.menuBuilders&quot;&gt;
+ * &lt;extension point=&quot;org.locationtech.udig.ui.menuBuilders&quot;&gt;
  *    &lt;menuBuilder
- *        class=&quot;net.refractions.udig.ui.UDIGMenuBuilder&quot;
- *        id=&quot;net.refractions.udig.ui.uDigMenuBuilder&quot;/&gt;
+ *        class=&quot;org.locationtech.udig.ui.UDIGMenuBuilder&quot;
+ *        id=&quot;org.locationtech.udig.ui.uDigMenuBuilder&quot;/&gt;
  * &lt;/extension&gt;
  * </pre></code>
  * 

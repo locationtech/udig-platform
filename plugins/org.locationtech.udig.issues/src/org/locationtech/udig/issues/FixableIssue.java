@@ -8,14 +8,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues;
+package org.locationtech.udig.issues;
 
 import org.eclipse.ui.IMemento;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 
 public class FixableIssue extends AbstractFixableIssue {
 
-    public static final String ID = "net.refractions.udig.issues.FixableIssue"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.issues.FixableIssue"; //$NON-NLS-1$
     public static final String KEY_PROBLEMOBJECT = "problemObject"; //$NON-NLS-1$
     
     String problemObject = null;

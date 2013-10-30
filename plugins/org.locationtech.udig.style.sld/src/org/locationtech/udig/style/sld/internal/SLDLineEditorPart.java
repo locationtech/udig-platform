@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld.internal;
+package org.locationtech.udig.style.sld.internal;
 
 import java.awt.Color;
 
-import net.refractions.udig.style.sld.SLDEditorPart;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.style.sld.SLDEditorPart;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -50,7 +50,7 @@ public class SLDLineEditorPart extends SLDEditorPart implements SelectionListene
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.style.sld.SLDEditorPart#getContentType()
+     * @see org.locationtech.udig.style.sld.SLDEditorPart#getContentType()
      */
     public Class<?> getContentType() {
         return LineSymbolizer.class;
@@ -59,7 +59,7 @@ public class SLDLineEditorPart extends SLDEditorPart implements SelectionListene
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.style.sld.SLDEditorPart#init()
+     * @see org.locationtech.udig.style.sld.SLDEditorPart#init()
      */
     public void init() {
         //Nothing to do
@@ -68,7 +68,7 @@ public class SLDLineEditorPart extends SLDEditorPart implements SelectionListene
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.style.sld.SLDEditorPart#reset()
+     * @see org.locationtech.udig.style.sld.SLDEditorPart#reset()
      */
     public void reset() {
         // initialize the ui

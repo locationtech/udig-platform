@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.tile;
+package org.locationtech.udig.catalog.internal.wmt.tile;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -20,10 +20,10 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-import net.refractions.udig.catalog.internal.wmt.WMTPlugin;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSource;
-import net.refractions.udig.catalog.wmsc.server.Tile;
-import net.refractions.udig.catalog.wmsc.server.TileSet;
+import org.locationtech.udig.catalog.internal.wmt.WMTPlugin;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.WMTSource;
+import org.locationtech.udig.catalog.wmsc.server.Tile;
+import org.locationtech.udig.catalog.wmsc.server.TileSet;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -96,14 +96,14 @@ public abstract class WMTTile implements Tile{
     }
 
     /* (non-Javadoc)
-     * @see net.refractions.udig.catalog.wmsc.server.Tile#getTileState()
+     * @see org.locationtech.udig.catalog.wmsc.server.Tile#getTileState()
      */
     public int getTileState(){
         return this.state;
     }
     
     /* (non-Javadoc)
-     * @see net.refractions.udig.catalog.wmsc.server.Tile#setTileState(int)
+     * @see org.locationtech.udig.catalog.wmsc.server.Tile#setTileState(int)
      */
     public void setTileState(int state){
         this.state = state;

@@ -7,22 +7,22 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit;
+package org.locationtech.udig.tools.edit;
 
 import java.util.List;
 
-import net.refractions.udig.project.AdaptableFeature;
-import net.refractions.udig.project.EditManagerEvent;
-import net.refractions.udig.project.IEditManagerListener;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.MapPart;
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.project.ui.tool.selection.provider.AbstractMapEditorSelectionProvider;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
-import net.refractions.udig.tools.edit.support.EditBlackboardEvent;
-import net.refractions.udig.tools.edit.support.EditBlackboardListener;
+import org.locationtech.udig.project.AdaptableFeature;
+import org.locationtech.udig.project.EditManagerEvent;
+import org.locationtech.udig.project.IEditManagerListener;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ui.tool.selection.provider.AbstractMapEditorSelectionProvider;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.EditBlackboardEvent;
+import org.locationtech.udig.tools.edit.support.EditBlackboardListener;
 
 import org.eclipse.jface.viewers.StructuredSelection;
 

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.ui;
+package org.locationtech.udig.catalog.ui;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -19,9 +19,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Stack;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ui.workflow.EndConnectionState;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPage;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ui.workflow.EndConnectionState;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPage;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -117,7 +117,7 @@ public abstract class AbstractUDIGImportPage extends WorkflowWizardPage implemen
      * <p>
      * Example: The postgis wizard pages permits the user to select the table of interest. When
      * moving to a new state (for example the Resource Selection State in
-     * net.refractions.udig.project.ui) that state should use that as the selected IGeoResources if
+     * org.locationtech.udig.project.ui) that state should use that as the selected IGeoResources if
      * it needs a selection of IGeoResources <br>
      * In the ResourceSelectionState example it would use this collection and not need to query the
      * user with a wizard page for that input

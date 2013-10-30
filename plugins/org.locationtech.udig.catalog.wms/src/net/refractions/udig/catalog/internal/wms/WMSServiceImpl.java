@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wms;
+package org.locationtech.udig.catalog.internal.wms;
 
-import static net.refractions.udig.catalog.internal.wms.Trace.REQUEST;
+import static org.locationtech.udig.catalog.internal.wms.Trace.REQUEST;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -23,14 +23,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceInfo;
-import net.refractions.udig.catalog.IResolve.Status;
-import net.refractions.udig.catalog.wms.internal.Messages;
-import net.refractions.udig.ui.ErrorManager;
-import net.refractions.udig.ui.UDIGDisplaySafeLock;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.IResolve.Status;
+import org.locationtech.udig.catalog.wms.internal.Messages;
+import org.locationtech.udig.ui.ErrorManager;
+import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -65,8 +65,8 @@ public class WMSServiceImpl extends IService {
     /**
      * <code>WMS_URL_KEY</code> field Magic param key for Catalog WMS persistence.
      */
-    public static final String WMS_URL_KEY = "net.refractions.udig.catalog.internal.wms.WMSServiceImpl.WMS_URL_KEY"; //$NON-NLS-1$
-    public static final String WMS_WMS_KEY = "net.refractions.udig.catalog.internal.wms.WMSServiceImpl.WMS_WMS_KEY"; //$NON-NLS-1$
+    public static final String WMS_URL_KEY = "org.locationtech.udig.catalog.internal.wms.WMSServiceImpl.WMS_URL_KEY"; //$NON-NLS-1$
+    public static final String WMS_WMS_KEY = "org.locationtech.udig.catalog.internal.wms.WMSServiceImpl.WMS_WMS_KEY"; //$NON-NLS-1$
 
     private Map<String, Serializable> params;
 
@@ -171,7 +171,7 @@ public class WMSServiceImpl extends IService {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IService#resolve(java.lang.Class,
+     * @see org.locationtech.udig.catalog.IService#resolve(java.lang.Class,
      * org.eclipse.core.runtime.IProgressMonitor)
      */
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
@@ -195,14 +195,14 @@ public class WMSServiceImpl extends IService {
     }
 
     /**
-     * @see net.refractions.udig.catalog.IService#getConnectionParams()
+     * @see org.locationtech.udig.catalog.IService#getConnectionParams()
      */
     public Map<String, Serializable> getConnectionParams() {
         return params;
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
+     * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     public <T> boolean canResolve( Class<T> adaptee ) {
         if (adaptee == null)
@@ -276,14 +276,14 @@ public class WMSServiceImpl extends IService {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getMessage()
+     * @see org.locationtech.udig.catalog.IResolve#getMessage()
      */
     public Throwable getMessage() {
         return error;
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getIdentifier()
+     * @see org.locationtech.udig.catalog.IResolve#getIdentifier()
      */
     public URL getIdentifier() {
         return url;

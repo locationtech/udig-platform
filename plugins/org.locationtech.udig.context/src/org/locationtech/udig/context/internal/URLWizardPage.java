@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.context.internal;
+package org.locationtech.udig.context.internal;
 
 import java.io.File;
 import java.net.MalformedURLException;

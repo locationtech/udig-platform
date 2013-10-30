@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.model;
+package org.locationtech.udig.printing.model;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public interface Box extends Element, IAdaptable {
      * This is used by the GEF system to access the source connections on this Box
      * 
      * @return a List of Connections that use this Box as a source
-     * @model resolveProxy="false" type="net.refractions.udig.printing.model.Connection"
+     * @model resolveProxy="false" type="org.locationtech.udig.printing.model.Connection"
      */
     public List<Connection> getSourceConnections();
     
@@ -44,7 +44,7 @@ public interface Box extends Element, IAdaptable {
      * This is used by the GEF system to access the target connections on this Box
      * 
      * @return a List of Connections that use this Box as a target
-     * @model resolveProxy="false" type="net.refractions.udig.printing.model.Connection"
+     * @model resolveProxy="false" type="org.locationtech.udig.printing.model.Connection"
      */
     public List<Connection> getTargetConnections();
     
@@ -73,7 +73,7 @@ public interface Box extends Element, IAdaptable {
     BoxPrinter getBoxPrinter();
     
 	/**
-     * Sets the value of the '{@link net.refractions.udig.printing.model.Box#getBoxPrinter <em>Box Printer</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.printing.model.Box#getBoxPrinter <em>Box Printer</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Box Printer</em>' attribute.
@@ -112,7 +112,7 @@ public interface Box extends Element, IAdaptable {
     String getID();
 
 	/**
-     * Sets the value of the '{@link net.refractions.udig.printing.model.Box#getID <em>ID</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.printing.model.Box#getID <em>ID</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>ID</em>' attribute.

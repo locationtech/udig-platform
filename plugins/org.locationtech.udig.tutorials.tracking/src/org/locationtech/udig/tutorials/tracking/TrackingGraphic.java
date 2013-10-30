@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.tracking;
+package org.locationtech.udig.tutorials.tracking;
 
 import java.util.List;
 
@@ -18,26 +18,26 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import com.vividsolutions.jts.geom.Envelope;
 
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.mapgraphic.MapGraphicContext;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.tutorials.tracking.trackingitem.SeagullFlock;
-import net.refractions.udig.tutorials.tracking.trackingitem.TrackingItem;
-import net.refractions.udig.tutorials.tracking.trackingitem.TrackingItemListener;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.tutorials.tracking.trackingitem.SeagullFlock;
+import org.locationtech.udig.tutorials.tracking.trackingitem.TrackingItem;
+import org.locationtech.udig.tutorials.tracking.trackingitem.TrackingItemListener;
 
 public class TrackingGraphic implements MapGraphic {
  
     public final static String LISTENER_BLACKBOARD_KEY = 
-        "net.refractions.udig.tutorials.tracking.TrackingItemListenerImpl"; //$NON-NLS-1$
+        "org.locationtech.udig.tutorials.tracking.TrackingItemListenerImpl"; //$NON-NLS-1$
     
     public final static String NEEDSREFRESH_BLACKBOARD_KEY = 
-        "net.refractions.udig.tutorials.tracking.TrackingItemListenerImpl"; //$NON-NLS-1$
+        "org.locationtech.udig.tutorials.tracking.TrackingItemListenerImpl"; //$NON-NLS-1$
     
     public final static String REFRESHJOB_BLACKBOARD_KEY = 
-        "net.refractions.udig.tutorials.tracking.CheckRefreshJob"; //$NON-NLS-1$
+        "org.locationtech.udig.tutorials.tracking.CheckRefreshJob"; //$NON-NLS-1$
     
     /**
      * This job will check if the layer needs a refresh and then reschedule itself to check

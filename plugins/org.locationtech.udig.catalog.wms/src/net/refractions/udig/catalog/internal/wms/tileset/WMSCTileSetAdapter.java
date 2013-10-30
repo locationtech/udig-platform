@@ -7,20 +7,20 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wms.tileset;
+package org.locationtech.udig.catalog.internal.wms.tileset;
 
 import java.io.IOException;
 
 import javax.management.ServiceNotFoundException;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveAdapterFactory;
-import net.refractions.udig.catalog.internal.wms.WmsPlugin;
-import net.refractions.udig.catalog.wmsc.WMSCTileUtils;
-import net.refractions.udig.catalog.wmsc.server.TileSet;
-import net.refractions.udig.catalog.wmsc.server.TiledWebMapServer;
-import net.refractions.udig.project.ui.preferences.PreferenceConstants;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveAdapterFactory;
+import org.locationtech.udig.catalog.internal.wms.WmsPlugin;
+import org.locationtech.udig.catalog.wmsc.WMSCTileUtils;
+import org.locationtech.udig.catalog.wmsc.server.TileSet;
+import org.locationtech.udig.catalog.wmsc.server.TiledWebMapServer;
+import org.locationtech.udig.project.ui.preferences.PreferenceConstants;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.ows.AbstractOpenWebService;

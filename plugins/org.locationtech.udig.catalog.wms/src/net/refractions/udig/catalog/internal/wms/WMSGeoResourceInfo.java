@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wms;
+package org.locationtech.udig.catalog.internal.wms;
 
 import java.io.IOException;
 import java.net.URI;
@@ -16,9 +16,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.catalog.ui.ISharedImages;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.ISharedImages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.ows.CRSEnvelope;

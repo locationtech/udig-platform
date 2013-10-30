@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.shp.tests;
+package org.locationtech.udig.catalog.shp.tests;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -16,18 +16,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocument.ContentType;
-import net.refractions.udig.catalog.document.IDocument.Type;
-import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
-import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
-import net.refractions.udig.document.model.ActionHotlinkDocument;
-import net.refractions.udig.document.model.FileAttachmentDocument;
-import net.refractions.udig.document.model.FileHotlinkDocument;
-import net.refractions.udig.document.model.FileLinkedDocument;
-import net.refractions.udig.document.model.WebHotlinkDocument;
-import net.refractions.udig.document.model.WebLinkedDocument;
-import net.refractions.udig.document.source.ShpDocFactory;
+import org.locationtech.udig.catalog.document.IDocument;
+import org.locationtech.udig.catalog.document.IDocument.ContentType;
+import org.locationtech.udig.catalog.document.IDocument.Type;
+import org.locationtech.udig.catalog.document.IDocumentSource.DocumentInfo;
+import org.locationtech.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import org.locationtech.udig.document.model.ActionHotlinkDocument;
+import org.locationtech.udig.document.model.FileAttachmentDocument;
+import org.locationtech.udig.document.model.FileHotlinkDocument;
+import org.locationtech.udig.document.model.FileLinkedDocument;
+import org.locationtech.udig.document.model.WebHotlinkDocument;
+import org.locationtech.udig.document.model.WebLinkedDocument;
+import org.locationtech.udig.document.source.ShpDocFactory;
 
 import org.junit.Test;
 

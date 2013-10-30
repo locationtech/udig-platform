@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 import java.net.URI;
 import java.util.Set;
 
 import javax.swing.Icon;
 
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IResourceInterceptor;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IResourceInterceptor;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.geometry.jts.ReferencedEnvelope;

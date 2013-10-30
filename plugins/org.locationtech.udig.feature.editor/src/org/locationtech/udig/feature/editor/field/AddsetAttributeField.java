@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.feature.editor.field;
+package org.locationtech.udig.feature.editor.field;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.rcp;
+package org.locationtech.udig.tutorials.rcp;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
@@ -73,11 +73,11 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         register(messagePopupAction);
         
         openMapAction = new OpenViewAction(window, "Open Map ", MapView.ID );
-        openMapAction.setImageDescriptor(net.refractions.udig.tutorials.rcp.Activator.getImageDescriptor("/icons/createmap.gif"));
+        openMapAction.setImageDescriptor(org.locationtech.udig.tutorials.rcp.Activator.getImageDescriptor("/icons/createmap.gif"));
         register(openMapAction);
         
         openMapOverviewAction = new OpenViewAction(window, "Open Map With Overview", OverviewMapView.ID );
-        openMapOverviewAction.setImageDescriptor(net.refractions.udig.tutorials.rcp.Activator.getImageDescriptor("/icons/createmapoverview.gif"));
+        openMapOverviewAction.setImageDescriptor(org.locationtech.udig.tutorials.rcp.Activator.getImageDescriptor("/icons/createmapoverview.gif"));
         register(openMapOverviewAction);
 
     }

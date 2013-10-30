@@ -7,23 +7,23 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.commands.selection;
+package org.locationtech.udig.tools.edit.commands.selection;
 
 import java.util.List;
 
-import net.refractions.udig.project.command.UndoableComposite;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.commands.ClearEditBlackboardCommand;
-import net.refractions.udig.tools.edit.commands.DeselectEditGeomCommand;
-import net.refractions.udig.tools.edit.commands.DeselectionStrategy;
-import net.refractions.udig.tools.edit.commands.SelectionParameter;
-import net.refractions.udig.tools.edit.commands.SetEditStateCommand;
-import net.refractions.udig.tools.edit.commands.StartEditingCommand;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
-import net.refractions.udig.tools.edit.support.EditGeom;
-import net.refractions.udig.tools.edit.support.ShapeType;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.tools.edit.EditState;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.commands.ClearEditBlackboardCommand;
+import org.locationtech.udig.tools.edit.commands.DeselectEditGeomCommand;
+import org.locationtech.udig.tools.edit.commands.DeselectionStrategy;
+import org.locationtech.udig.tools.edit.commands.SelectionParameter;
+import org.locationtech.udig.tools.edit.commands.SetEditStateCommand;
+import org.locationtech.udig.tools.edit.commands.StartEditingCommand;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.EditGeom;
+import org.locationtech.udig.tools.edit.support.ShapeType;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 

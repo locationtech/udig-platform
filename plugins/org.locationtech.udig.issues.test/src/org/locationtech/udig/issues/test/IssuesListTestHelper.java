@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.test;
+package org.locationtech.udig.issues.test;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,16 +17,16 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Map;
 
-import net.refractions.udig.core.enums.Priority;
-import net.refractions.udig.core.enums.Resolution;
-import net.refractions.udig.issues.FeatureIssue;
-import net.refractions.udig.issues.IListStrategy;
-import net.refractions.udig.issues.IRemoteIssuesList;
-import net.refractions.udig.issues.StrategizedIssuesList;
-import net.refractions.udig.issues.internal.datastore.AbstractDatastoreStrategy;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.tests.support.MapTests;
+import org.locationtech.udig.core.enums.Priority;
+import org.locationtech.udig.core.enums.Resolution;
+import org.locationtech.udig.issues.FeatureIssue;
+import org.locationtech.udig.issues.IListStrategy;
+import org.locationtech.udig.issues.IRemoteIssuesList;
+import org.locationtech.udig.issues.StrategizedIssuesList;
+import org.locationtech.udig.issues.internal.datastore.AbstractDatastoreStrategy;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.tests.support.MapTests;
 
 import org.geotools.data.DataStore;
 import org.geotools.data.DataUtilities;

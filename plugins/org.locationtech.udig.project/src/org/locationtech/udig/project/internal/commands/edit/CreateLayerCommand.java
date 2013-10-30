@@ -1,18 +1,18 @@
 /**
  * 
  */
-package net.refractions.udig.project.internal.commands.edit;
+package org.locationtech.udig.project.internal.commands.edit;
 
 import java.net.URL;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Messages;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -49,7 +49,7 @@ public class CreateLayerCommand extends AbstractCommand implements UndoableMapCo
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.refractions.udig.project.command.Command#run(org.eclipse.core.runtime.IProgressMonitor)
+	 * @see org.locationtech.udig.project.command.Command#run(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	public void run(IProgressMonitor monitor) throws Exception {
 		if( resource==null ){
@@ -64,7 +64,7 @@ public class CreateLayerCommand extends AbstractCommand implements UndoableMapCo
 	}
 
 	/* (non-Javadoc)
-	 * @see net.refractions.udig.project.command.Command#getName()
+	 * @see org.locationtech.udig.project.command.Command#getName()
 	 */
 	public String getName() {
 		return Messages.CreateLayerCommand_name+id; 

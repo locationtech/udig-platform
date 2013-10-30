@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.commands;
+package org.locationtech.udig.project.internal.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -18,14 +18,14 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.ui.palette.ColourScheme;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.ui.palette.ColourScheme;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Test;

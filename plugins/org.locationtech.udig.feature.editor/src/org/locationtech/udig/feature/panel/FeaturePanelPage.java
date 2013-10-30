@@ -13,7 +13,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package net.refractions.udig.feature.panel;
+package org.locationtech.udig.feature.panel;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,11 +22,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.feature.editor.FeatureEditorPlugin;
-import net.refractions.udig.feature.editor.IFeaturePage;
-import net.refractions.udig.project.ui.IFeaturePanel;
-import net.refractions.udig.project.ui.IFeatureSite;
-import net.refractions.udig.project.ui.feature.FeaturePanelEntry;
+import org.locationtech.udig.feature.editor.FeatureEditorPlugin;
+import org.locationtech.udig.feature.editor.IFeaturePage;
+import org.locationtech.udig.project.ui.IFeaturePanel;
+import org.locationtech.udig.project.ui.IFeatureSite;
+import org.locationtech.udig.project.ui.feature.FeaturePanelEntry;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;

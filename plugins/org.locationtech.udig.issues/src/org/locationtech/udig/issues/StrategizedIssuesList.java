@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues;
+package org.locationtech.udig.issues;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -18,11 +18,11 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
-import net.refractions.udig.issues.listeners.IIssuesListListener;
-import net.refractions.udig.issues.listeners.IssuesListEvent;
-import net.refractions.udig.issues.listeners.IssuesListEventType;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.issues.listeners.IIssuesListListener;
+import org.locationtech.udig.issues.listeners.IssuesListEvent;
+import org.locationtech.udig.issues.listeners.IssuesListEventType;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;

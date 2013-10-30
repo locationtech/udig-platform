@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog;
+package org.locationtech.udig.catalog;
 
 import java.net.URI;
 import java.util.Arrays;
@@ -20,7 +20,7 @@ import java.util.Set;
 
 import javax.swing.Icon;
 
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
+import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.data.Parameter;

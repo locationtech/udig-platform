@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.render.displayAdapter.impl;
+package org.locationtech.udig.project.ui.internal.render.displayAdapter.impl;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,23 +19,23 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.awt.image.VolatileImage;
 
-import net.refractions.udig.project.internal.render.RenderExecutor;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplayListener;
-import net.refractions.udig.project.ui.commands.IDrawCommand;
-import net.refractions.udig.project.ui.internal.MapPart;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.render.glass.GlassPane;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.graphics.AWTGraphics;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.project.internal.render.RenderExecutor;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
+import org.locationtech.udig.project.ui.commands.IDrawCommand;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseListener;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.render.glass.GlassPane;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.graphics.AWTGraphics;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
@@ -123,7 +123,7 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.render.displayAdapter.ViewportPane#setRenderManager(net.refractions.udig.project.render.RenderManager)
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#setRenderManager(org.locationtech.udig.project.render.RenderManager)
      */
     public void setRenderManager( RenderManager manager ) {
         this.renderManager = manager;
@@ -270,7 +270,7 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
     }
 
     /**
-     * @see net.refractions.udig.project.render.displayAdapter.IMapDisplay#getDisplaySize()
+     * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplay#getDisplaySize()
      * @return the size of the viewportpane
      */
     public Dimension getDisplaySize() {
@@ -315,14 +315,14 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.render.displayAdapter.ViewportPane#renderStarting()
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#renderStarting()
      */
     public void renderStarting() {
         painter.renderStart();
         repaint();
     }
     /**
-     * @see net.refractions.udig.project.ui.render.displayAdapter.ViewportPane#renderDone()
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#renderDone()
      */
     public void renderDone() {
         renderUpdate();
@@ -330,7 +330,7 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.render.displayAdapter.ViewportPane#renderUpdate()
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#renderUpdate()
      */
     public void renderUpdate() {
         initMap();
@@ -341,19 +341,19 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.render.displayAdapter.ViewportPane#addPaneListener(net.refractions.udig.project.render.displayAdapter.MapDisplayListener)
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#addPaneListener(org.locationtech.udig.project.render.displayAdapter.MapDisplayListener)
      */
     public void addPaneListener( IMapDisplayListener listener ) {
         eventJob.addMapEditorListener(listener);
     }
     /**
-     * @see net.refractions.udig.project.ui.render.displayAdapter.ViewportPane#removePaneListener(net.refractions.udig.project.render.displayAdapter.MapDisplayListener)
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#removePaneListener(org.locationtech.udig.project.render.displayAdapter.MapDisplayListener)
      */
     public void removePaneListener( IMapDisplayListener listener ) {
         eventJob.removeMapEditorListener(listener);
     }
     /**
-     * @see net.refractions.udig.project.ui.render.displayAdapter.ViewportPane#setCursor(org.eclipse.swt.graphics.Cursor)
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#setCursor(org.eclipse.swt.graphics.Cursor)
      */
     public void setCursor( final Cursor cursor ) {
     	PlatformGIS.asyncInDisplayThread(new Runnable() {
@@ -364,7 +364,7 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.render.displayAdapter.ViewportPane#getMapEditor()
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#getMapEditor()
      */
     public MapPart getMapEditor() {
         return editor;

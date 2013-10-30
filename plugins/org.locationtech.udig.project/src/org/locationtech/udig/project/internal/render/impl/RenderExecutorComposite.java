@@ -7,21 +7,21 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.render.impl;
+package org.locationtech.udig.project.internal.render.impl;
 
 import java.text.MessageFormat;
 import java.util.Collection;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.Messages;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.Trace;
-import net.refractions.udig.project.internal.render.ExecutorVisitor;
-import net.refractions.udig.project.internal.render.RenderExecutor;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.project.render.RenderException;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.Trace;
+import org.locationtech.udig.project.internal.render.ExecutorVisitor;
+import org.locationtech.udig.project.internal.render.RenderExecutor;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.render.RenderException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -73,7 +73,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
         }
 
         /**
-         * @see net.refractions.udig.project.internal.render.impl.RenderJob#getExecutor()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderJob#getExecutor()
          */
         public RenderExecutorComposite getExecutor() {
             return (RenderExecutorComposite) executor;
@@ -134,7 +134,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
         }
 
         /**
-         * @see net.refractions.udig.project.internal.render.impl.RenderJob#postRendering()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderJob#postRendering()
          */
         protected void postRendering() {
 
@@ -155,7 +155,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
         }
 
         /**
-         * @see net.refractions.udig.project.internal.render.impl.RenderJob#startRendering()
+         * @see org.locationtech.udig.project.internal.render.impl.RenderJob#startRendering()
          */
         protected void startRendering( Envelope bounds, IProgressMonitor monitor ) throws Throwable {
             // need to show that we are in update just in case a renderer triggers a state event
@@ -194,7 +194,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
         }
 
         /**
-         * @see net.refractions.udig.project.internal.render.impl.RenderExecutorMultiLayer.MultiLayerRendererListener#stateChanged(org.eclipse.emf.common.notify.Notification)
+         * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorMultiLayer.MultiLayerRendererListener#stateChanged(org.eclipse.emf.common.notify.Notification)
          */
         protected void stateChanged( Notification msg ) {
             switch( msg.getNewIntValue() ) {
@@ -316,7 +316,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.impl.RenderExecutorImpl#getRenderer()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl#getRenderer()
      */
     public CompositeRendererImpl getRenderer() {
         return (CompositeRendererImpl) renderer;
@@ -358,7 +358,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.impl.RenderExecutorMultiLayer#registerFeatureListener()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorMultiLayer#registerFeatureListener()
      */
     protected void registerFeatureListener() {
         // do nothing
@@ -392,7 +392,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.impl.RenderExecutorImpl#setRenderer(net.refractions.udig.project.render.Renderer)
+     * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl#setRenderer(org.locationtech.udig.project.render.Renderer)
      */
     public void setRenderer( Renderer newRenderer ) {
         renderJob.setSystem(false);
@@ -400,7 +400,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.impl.RenderExecutorImpl#stopRendering()
+     * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl#stopRendering()
      */
     public void stopRendering() {
         for( RenderExecutor executor : getRenderer().getRenderExecutors() ) {
@@ -410,7 +410,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.impl.RenderExecutorImpl#visit(net.refractions.udig.project.render.ExecutorVisitor)
+     * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl#visit(org.locationtech.udig.project.render.ExecutorVisitor)
      */
     public void visit( ExecutorVisitor visitor ) {
         visitor.visit(this);

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.catalog.memory;
+package org.locationtech.udig.catalog.memory;
 
 import java.io.Serializable;
 import java.net.URL;
@@ -9,11 +9,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.memory.internal.MemoryGeoResourceImpl;
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.catalog.ui.UDIGConnectionFactory;
-import net.refractions.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.memory.internal.MemoryGeoResourceImpl;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.UDIGConnectionFactory;
+import org.locationtech.udig.catalog.ui.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;

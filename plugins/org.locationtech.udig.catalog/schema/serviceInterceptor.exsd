@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.catalog" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.catalog" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.catalog" id="serviceInterceptor" name="Service Interceptor"/>
+         <meta.schema plugin="org.locationtech.udig.catalog" id="serviceInterceptor" name="Service Interceptor"/>
       </appInfo>
       <documentation>
          Allows an interceptor to be run at various points during the lifecycle of a Service.
@@ -82,7 +82,7 @@ Will be displayed in the progesss view while the interceptor is running.
                   Interceptor to run when the service is being created.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.catalog.interceptor.ServiceInterceptor"/>
+                  <meta.attribute kind="java" basedOn=":org.locationtech.udig.catalog.interceptor.ServiceInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -116,7 +116,7 @@ Will be displayed in the progesss view while the interceptor is running.
                   Interceptor to run when the service is being added to the local catalog
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.catalog.interceptor.ServiceInterceptor"/>
+                  <meta.attribute kind="java" basedOn=":org.locationtech.udig.catalog.interceptor.ServiceInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -150,7 +150,7 @@ Will be displayed in the progesss view while the interceptor is running.
                   Interceptor to run when the service is being removed from the catalog
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.catalog.interceptor.ServiceInterceptor"/>
+                  <meta.attribute kind="java" basedOn=":org.locationtech.udig.catalog.interceptor.ServiceInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -184,7 +184,7 @@ Will be displayed in the progesss view while the interceptor is running.
                   Interceptor to run when the resource is added to the catalog.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.catalog.interceptor.ResourceInterceptor"/>
+                  <meta.attribute kind="java" basedOn=":org.locationtech.udig.catalog.interceptor.ResourceInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -218,7 +218,7 @@ Will be displayed in the progesss view while the interceptor is running.
                   Interceptor to run when the resource is removed from the catalog.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.catalog.interceptor.ResourceInterceptor"/>
+                  <meta.attribute kind="java" basedOn=":org.locationtech.udig.catalog.interceptor.ResourceInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>

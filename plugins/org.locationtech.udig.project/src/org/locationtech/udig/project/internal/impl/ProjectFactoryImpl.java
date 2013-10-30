@@ -1,7 +1,7 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -14,41 +14,41 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.Interaction;
-import net.refractions.udig.core.internal.CorePlugin;
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.project.command.CommandStack;
-import net.refractions.udig.project.command.EditCommand;
-import net.refractions.udig.project.command.EditManagerControlCommand;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.NavCommand;
-import net.refractions.udig.project.command.NavCommandStack;
-import net.refractions.udig.project.interceptor.MapInterceptor;
-import net.refractions.udig.project.internal.Blackboard;
-import net.refractions.udig.project.internal.BlackboardEntry;
-import net.refractions.udig.project.internal.CatalogRef;
-import net.refractions.udig.project.internal.ContextModel;
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.internal.Folder;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerFactory;
-import net.refractions.udig.project.internal.LayerLegendItem;
-import net.refractions.udig.project.internal.LegendItem;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.ProjectRegistry;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.internal.StyleEntry;
-import net.refractions.udig.project.internal.render.RenderFactory;
-import net.refractions.udig.project.internal.render.impl.ViewportModelImpl;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-import net.refractions.udig.ui.palette.ColourPalette;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.palette.ColourScheme;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.core.internal.CorePlugin;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.project.command.CommandStack;
+import org.locationtech.udig.project.command.EditCommand;
+import org.locationtech.udig.project.command.EditManagerControlCommand;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.NavCommand;
+import org.locationtech.udig.project.command.NavCommandStack;
+import org.locationtech.udig.project.interceptor.MapInterceptor;
+import org.locationtech.udig.project.internal.Blackboard;
+import org.locationtech.udig.project.internal.BlackboardEntry;
+import org.locationtech.udig.project.internal.CatalogRef;
+import org.locationtech.udig.project.internal.ContextModel;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.Folder;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerFactory;
+import org.locationtech.udig.project.internal.LayerLegendItem;
+import org.locationtech.udig.project.internal.LegendItem;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.ProjectRegistry;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.StyleEntry;
+import org.locationtech.udig.project.internal.render.RenderFactory;
+import org.locationtech.udig.project.internal.render.impl.ViewportModelImpl;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.ui.palette.ColourPalette;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.palette.ColourScheme;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -1188,7 +1188,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
     }
 
     /**
-     * @see net.refractions.udig.project.ProjectFactory#createMap(net.refractions.udig.project.Project,
+     * @see org.locationtech.udig.project.ProjectFactory#createMap(org.locationtech.udig.project.Project,
      *      java.lang.String, java.util.List)
      */
     @SuppressWarnings("unchecked")//$NON-NLS-1$

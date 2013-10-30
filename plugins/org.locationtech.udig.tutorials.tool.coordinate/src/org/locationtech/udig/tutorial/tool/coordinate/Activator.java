@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorial.tool.coordinate;
+package org.locationtech.udig.tutorial.tool.coordinate;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -59,6 +59,6 @@ public class Activator extends AbstractUIPlugin {
 	 * @return the image descriptor
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
-		return AbstractUIPlugin.imageDescriptorFromPlugin("net.refractions.udig.tutorial.tool.coordinate", path); //$NON-NLS-1$
+		return AbstractUIPlugin.imageDescriptorFromPlugin("org.locationtech.udig.tutorial.tool.coordinate", path); //$NON-NLS-1$
 	}
 }

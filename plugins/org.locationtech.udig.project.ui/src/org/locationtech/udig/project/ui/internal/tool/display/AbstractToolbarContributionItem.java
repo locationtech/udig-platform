@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.tool.display;
+package org.locationtech.udig.project.ui.internal.tool.display;
 
 import java.text.MessageFormat;
 import java.util.List;
 
-import net.refractions.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.Messages;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -171,8 +171,8 @@ public abstract class AbstractToolbarContributionItem extends CurrentContributio
      *  and not disposed. Otherwise just ignore selection until the widget will be created.
      *  
      * 
-     * @see net.refractions.udig.project.ui.internal.tool.display.CurrentContributionItem#setSelection(boolean,
-     *      net.refractions.udig.project.ui.internal.tool.display.ModalItem)
+     * @see org.locationtech.udig.project.ui.internal.tool.display.CurrentContributionItem#setSelection(boolean,
+     *      org.locationtech.udig.project.ui.internal.tool.display.ModalItem)
      */
     public void setSelection( boolean checked, ModalItem tool ) {
         if (toolItem !=null && !toolItem.isDisposed()) {
@@ -192,7 +192,7 @@ public abstract class AbstractToolbarContributionItem extends CurrentContributio
     }
 
     /**
-     * @see net.refractions.udig.project.ui.internal.tool.display.CurrentContributionItem#isChecked()
+     * @see org.locationtech.udig.project.ui.internal.tool.display.CurrentContributionItem#isChecked()
      */
     protected boolean isChecked() {
         return checked;
@@ -225,7 +225,7 @@ public abstract class AbstractToolbarContributionItem extends CurrentContributio
     }
 
     /**
-     * @see net.refractions.udig.project.ui.internal.tool.display.CurrentContributionItem#isDisposed()
+     * @see org.locationtech.udig.project.ui.internal.tool.display.CurrentContributionItem#isDisposed()
      */
     public boolean isDisposed() {
         return toolItem != null && toolItem.isDisposed();

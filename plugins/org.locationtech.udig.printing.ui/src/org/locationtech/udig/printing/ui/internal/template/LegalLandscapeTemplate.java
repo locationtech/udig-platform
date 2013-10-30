@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.ui.internal.template;
+package org.locationtech.udig.printing.ui.internal.template;
 
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Rectangle;

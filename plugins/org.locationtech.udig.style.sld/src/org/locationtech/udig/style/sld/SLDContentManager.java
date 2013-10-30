@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.style.sld;
+package org.locationtech.udig.style.sld;
 
 import java.awt.Color;
 import java.util.List;
 
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.FeatureTypeStyle;

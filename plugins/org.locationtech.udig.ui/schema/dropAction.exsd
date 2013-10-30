@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.ui">
+<schema targetNamespace="org.locationtech.udig.ui">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.ui" id="dropActions2" name="Drop Actions"/>
+         <meta.schema plugin="org.locationtech.udig.ui" id="dropActions2" name="Drop Actions"/>
       </appInfo>
       <documentation>
          This extension point is used to attach an action to the drop event in a drag n drop transaction.  
@@ -60,7 +60,7 @@
                   Class of the action, must be a sublcass of IDropAction.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.ui.IDropAction"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.ui.IDropAction"/>
                </appInfo>
             </annotation>
          </attribute>

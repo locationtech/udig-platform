@@ -7,19 +7,19 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILayerListener;
-import net.refractions.udig.project.LayerEvent;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerLegendItem;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.commands.AddLayersCommand;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILayerListener;
+import org.locationtech.udig.project.LayerEvent;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerLegendItem;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.commands.AddLayersCommand;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.jface.action.Action;

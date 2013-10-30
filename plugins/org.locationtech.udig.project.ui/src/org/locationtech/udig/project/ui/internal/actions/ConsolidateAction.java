@@ -8,20 +8,20 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.actions;
+package org.locationtech.udig.project.ui.internal.actions;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ServiceMover;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.impl.MapImpl;
-import net.refractions.udig.project.ui.UDIGGenericAction;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ServiceMover;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.impl.MapImpl;
+import org.locationtech.udig.project.ui.UDIGGenericAction;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.dialogs.MessageDialog;

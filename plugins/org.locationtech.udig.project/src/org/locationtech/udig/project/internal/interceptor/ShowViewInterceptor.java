@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.interceptor;
+package org.locationtech.udig.project.internal.interceptor;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -21,15 +21,15 @@ import java.net.URLEncoder;
 
 import javax.xml.transform.TransformerException;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.internal.ui.FilterTextTransfer.SimpleFilterHandler;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IResourceInterceptor;
-import net.refractions.udig.project.ProjectBlackboardConstants;
-import net.refractions.udig.project.StyleContent;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.internal.ui.FilterTextTransfer.SimpleFilterHandler;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IResourceInterceptor;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.StyleContent;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;

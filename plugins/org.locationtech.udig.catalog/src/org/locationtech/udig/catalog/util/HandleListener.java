@@ -9,14 +9,14 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.util;
+package org.locationtech.udig.catalog.util;
 
 import java.lang.ref.WeakReference;
 
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveChangeEvent;
-import net.refractions.udig.catalog.IResolveChangeListener;
-import net.refractions.udig.catalog.IResolveDelta;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveChangeEvent;
+import org.locationtech.udig.catalog.IResolveChangeListener;
+import org.locationtech.udig.catalog.IResolveDelta;
 /**
  * Easy example that listens to a specific IResolve.
  * <p>

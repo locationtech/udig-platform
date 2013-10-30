@@ -9,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.parallel.internal;
+package org.locationtech.udig.tools.parallel.internal;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,9 +30,9 @@ import com.vividsolutions.jts.geomgraph.Quadrant;
 import com.vividsolutions.jts.operation.polygonize.Polygonizer;
 
 //import es.axios.lib.geometry.util.GeometryUtil;
-import eu.udig.tools.geometry.internal.util.GeometryUtil;
+import org.locationtech.udig.tools.geometry.internal.util.GeometryUtil;
 //import es.axios.udig.ui.editingtools.precisionparallels.internal.QuadrantAnalyzer.AnalyzerPosition;
-import eu.udig.tools.parallel.internal.QuadrantAnalyzer.AnalyzerPosition;
+import org.locationtech.udig.tools.parallel.internal.QuadrantAnalyzer.AnalyzerPosition;
 
 /**
  * <p>

@@ -22,7 +22,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package net.refractions.udig.feature.panel;
+package org.locationtech.udig.feature.panel;
 
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;

@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.google;
+package org.locationtech.udig.catalog.google;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,15 +22,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalogInfo;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveChangeEvent;
-import net.refractions.udig.catalog.IResolveChangeListener;
-import net.refractions.udig.catalog.ISearch;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.google.internal.Messages;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalogInfo;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveChangeEvent;
+import org.locationtech.udig.catalog.IResolveChangeListener;
+import org.locationtech.udig.catalog.ISearch;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.google.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ListenerList;
@@ -62,21 +62,21 @@ public class GoogleCatalog extends ISearch {
     private ListenerList catalogListeners;
     
     /*
-     * @see net.refractions.udig.catalog.ICatalog#add(net.refractions.udig.catalog.IService)
+     * @see org.locationtech.udig.catalog.ICatalog#add(org.locationtech.udig.catalog.IService)
      */
     public void add( IService service ) throws UnsupportedOperationException {
         throw new UnsupportedOperationException();
     }
 
     /*
-     * @see net.refractions.udig.catalog.ICatalog#remove(net.refractions.udig.catalog.IService)
+     * @see org.locationtech.udig.catalog.ICatalog#remove(org.locationtech.udig.catalog.IService)
      */
     public void remove( IService service ) throws UnsupportedOperationException {
         throw new UnsupportedOperationException();
     }
 
     /*
-     * @see net.refractions.udig.catalog.ICatalog#replace(java.net.URL, net.refractions.udig.catalog.IService)
+     * @see org.locationtech.udig.catalog.ICatalog#replace(java.net.URL, org.locationtech.udig.catalog.IService)
      */
     public void replace( URL id, IService service ) throws UnsupportedOperationException {
         throw new UnsupportedOperationException();
@@ -104,7 +104,7 @@ public class GoogleCatalog extends ISearch {
 
     private ICatalogInfo info = null;
     /*
-     * @see net.refractions.udig.catalog.ICatalog#getInfo(org.eclipse.core.runtime.IProgressMonitor)
+     * @see org.locationtech.udig.catalog.ICatalog#getInfo(org.eclipse.core.runtime.IProgressMonitor)
      */
     public ICatalogInfo getInfo(IProgressMonitor monitor){
         if(info != null){
@@ -123,7 +123,7 @@ public class GoogleCatalog extends ISearch {
     }
     
     /*
-     * @see net.refractions.udig.catalog.ICatalog#find(java.net.URL)
+     * @see org.locationtech.udig.catalog.ICatalog#find(java.net.URL)
      */
     public List<IResolve> find( ID id, IProgressMonitor monitor ) {
         return new LinkedList<IResolve>();
@@ -132,7 +132,7 @@ public class GoogleCatalog extends ISearch {
     /*
      * hits the server using soap ...
      * 
-     * @see net.refractions.udig.catalog.ICatalog#search(java.lang.String, com.vividsolutions.jts.geom.Envelope, org.eclipse.core.runtime.IProgressMonitor)
+     * @see org.locationtech.udig.catalog.ICatalog#search(java.lang.String, com.vividsolutions.jts.geom.Envelope, org.eclipse.core.runtime.IProgressMonitor)
      */
     public List<IResolve> search( String pattern, Envelope bbox, IProgressMonitor monitor ) throws IOException{
         
@@ -214,35 +214,35 @@ public class GoogleCatalog extends ISearch {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
+     * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     public <T> boolean canResolve( Class<T> adaptee ) {
         return adaptee!=null && (adaptee.isAssignableFrom(ICatalogInfo.class) || adaptee.isAssignableFrom(List.class));
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
+     * @see org.locationtech.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
      */
     public List<IResolve> members( IProgressMonitor monitor ) throws IOException{
         return search("",new Envelope(),monitor); //$NON-NLS-1$
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getStatus()
+     * @see org.locationtech.udig.catalog.IResolve#getStatus()
      */
     public Status getStatus() {
         return msg == null?Status.CONNECTED:Status.BROKEN;
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getMessage()
+     * @see org.locationtech.udig.catalog.IResolve#getMessage()
      */
     public Throwable getMessage() {
         return msg;
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getIdentifier()
+     * @see org.locationtech.udig.catalog.IResolve#getIdentifier()
      */
     public URL getIdentifier() {
         return url;
@@ -267,7 +267,7 @@ public class GoogleCatalog extends ISearch {
     
     /**
      * 
-     * @see net.refractions.udig.catalog.ICatalog#addCatalogListener(net.refractions.udig.catalog.ICatalog.ICatalogListener)
+     * @see org.locationtech.udig.catalog.ICatalog#addCatalogListener(org.locationtech.udig.catalog.ICatalog.ICatalogListener)
      * @param listener
      */
     public void addCatalogListener( IResolveChangeListener listener ) {
@@ -276,7 +276,7 @@ public class GoogleCatalog extends ISearch {
 
     /**
      * 
-     * @see net.refractions.udig.catalog.ICatalog#removeCatalogListener(net.refractions.udig.catalog.ICatalog.ICatalogListener)
+     * @see org.locationtech.udig.catalog.ICatalog#removeCatalogListener(org.locationtech.udig.catalog.ICatalog.ICatalogListener)
      * @param listener
      */
     public void removeCatalogListener( IResolveChangeListener listener ) {

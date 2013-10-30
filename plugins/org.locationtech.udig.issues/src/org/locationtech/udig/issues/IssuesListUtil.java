@@ -1,15 +1,15 @@
 /**
  * 
  */
-package net.refractions.udig.issues;
+package org.locationtech.udig.issues;
 
-import static net.refractions.udig.issues.IssueConstants.EXTENSION_CLASS_ATTR;
-import static net.refractions.udig.issues.IssueConstants.ISSUES_EXTENSION_ID;
+import static org.locationtech.udig.issues.IssueConstants.EXTENSION_CLASS_ATTR;
+import static org.locationtech.udig.issues.IssueConstants.ISSUES_EXTENSION_ID;
 
 import java.util.List;
 
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.issues.internal.IssuesActivator;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.issues.internal.IssuesActivator;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;

@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.graph.internal;
+package org.locationtech.udig.graph.internal;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.tool.SimpleTool;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.tool.SimpleTool;
 
 import org.eclipse.jface.action.IStatusLineManager;
 import org.geotools.graph.structure.Graph;

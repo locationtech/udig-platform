@@ -9,11 +9,11 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.tool.display;
+package org.locationtech.udig.project.ui.internal.tool.display;
 
 import java.util.List;
 
-import net.refractions.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.project.ui.tool.IToolManager;
 
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -67,28 +67,28 @@ public class ActionToolCategory extends ToolCategory {
     protected class ActionToolContribution extends AbstractToolbarContributionItem {
 
         /**
-         * @see net.refractions.udig.project.ui.internal.tool.display.CurrentContributionItem#setSelection(boolean)
+         * @see org.locationtech.udig.project.ui.internal.tool.display.CurrentContributionItem#setSelection(boolean)
          */
         public void setSelection( boolean checked, ModalItem proxy ) {
             // do nothing.
         }
 
         /**
-         * @see net.refractions.udig.project.ui.internal.tool.display.CurrentContributionItem#isChecked()
+         * @see org.locationtech.udig.project.ui.internal.tool.display.CurrentContributionItem#isChecked()
          */
         protected boolean isChecked() {
             return false;
         }
 
         /**
-         * @see net.refractions.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#isDefaultItem()
+         * @see org.locationtech.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#isDefaultItem()
          */
         protected boolean isDefaultItem() {
             return false;
         }
 
         /**
-         * @see net.refractions.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#createToolItem(org.eclipse.swt.widgets.ToolBar,
+         * @see org.locationtech.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#createToolItem(org.eclipse.swt.widgets.ToolBar,
          *      int)
          */
         protected ToolItem createToolItem( ToolBar parent, int index ) {
@@ -96,7 +96,7 @@ public class ActionToolCategory extends ToolCategory {
         }
 
         /**
-         * @see net.refractions.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#getTools()
+         * @see org.locationtech.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#getTools()
          */
         protected List<ModalItem> getTools() {
             return items;
@@ -110,7 +110,7 @@ public class ActionToolCategory extends ToolCategory {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.internal.tool.display.ToolCategory#getHandlerSubmission(java.lang.String)
+     * @see org.locationtech.udig.project.ui.internal.tool.display.ToolCategory#getHandlerSubmission(java.lang.String)
      */
     protected IHandler getHandler() {
         return null;

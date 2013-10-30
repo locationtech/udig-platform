@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal.shp;
+package org.locationtech.udig.catalog.internal.shp;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,12 +18,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureSource;
@@ -109,14 +109,14 @@ public class ShpGeoResourceImpl extends IGeoResource {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IGeoResource#getStatus()
+     * @see org.locationtech.udig.catalog.IGeoResource#getStatus()
      */
     public Status getStatus() {
         return parent.getStatus();
     }
 
     /*
-     * @see net.refractions.udig.catalog.IGeoResource#getStatusMessage()
+     * @see org.locationtech.udig.catalog.IGeoResource#getStatusMessage()
      */
     public Throwable getMessage() {
         return parent.getMessage();
@@ -128,7 +128,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
      * <li>IGeoResourceInfo.class
      * <li>IService.class
      * </ul>
-     * @see net.refractions.udig.catalog.IResolve#resolve(java.lang.Class, org.eclipse.core.runtime.IProgressMonitor)
+     * @see org.locationtech.udig.catalog.IResolve#resolve(java.lang.Class, org.eclipse.core.runtime.IProgressMonitor)
      */
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
         if (adaptee == null) {
@@ -395,7 +395,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
+     * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     public <T> boolean canResolve( Class<T> adaptee ) {
         if (adaptee == null) {

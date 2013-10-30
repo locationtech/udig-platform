@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.render;
+package org.locationtech.udig.project.internal.render;
 
-import net.refractions.udig.project.render.RenderException;
+import org.locationtech.udig.project.render.RenderException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
  */
 public interface RenderExecutor extends Renderer {
     /** The Extension point id declaring available RenderExecutors */
-    String EXTENSION_ID = "net.refractions.udig.project.renderExecutor"; //$NON-NLS-1$
+    String EXTENSION_ID = "org.locationtech.udig.project.renderExecutor"; //$NON-NLS-1$
 
     /** The name of the RenderExecutor class attribute in the Extension point */
     String EXECUTOR_ATTR = "executorClass"; //$NON-NLS-1$
@@ -45,14 +45,14 @@ public interface RenderExecutor extends Renderer {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Renderer</em>' reference.
      * @see #setRenderer(Renderer)
-     * @see net.refractions.udig.project.internal.render.RenderPackage#getRenderExecutor_Renderer()
+     * @see org.locationtech.udig.project.internal.render.RenderPackage#getRenderExecutor_Renderer()
      * @model resolveProxies="false" required="true" transient="true"
      * @generated
      */
     Renderer getRenderer();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.render.RenderExecutor#getRenderer <em>Renderer</em>}' reference.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.RenderExecutor#getRenderer <em>Renderer</em>}' reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Renderer</em>' reference.
      * @see #getRenderer()
@@ -70,13 +70,13 @@ public interface RenderExecutor extends Renderer {
     /**
      * This method does not use the monitor parameter. It is the same as calling render(bounds);
      * 
-     * @see net.refractions.udig.project.internal.render.Renderer#render(com.vividsolutions.jts.geom.Envelope,
+     * @see org.locationtech.udig.project.internal.render.Renderer#render(com.vividsolutions.jts.geom.Envelope,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
     public void render( IProgressMonitor monitor ) throws RenderException;
 
     /**
-     * @see net.refractions.udig.project.internal.render.Renderer#render(com.vividsolutions.jts.geom.Envelope,
+     * @see org.locationtech.udig.project.internal.render.Renderer#render(com.vividsolutions.jts.geom.Envelope,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
     public void render() throws RenderException;

@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.internal.ui;
+package org.locationtech.udig.internal.ui;
 
 import java.io.UnsupportedEncodingException;
 import java.net.Authenticator;
@@ -18,7 +18,7 @@ import java.net.URLEncoder;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;

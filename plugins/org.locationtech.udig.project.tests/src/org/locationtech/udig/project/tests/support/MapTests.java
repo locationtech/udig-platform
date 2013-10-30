@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.tests.support;
+package org.locationtech.udig.project.tests.support;
 
 import java.awt.Dimension;
 import java.io.IOException;
@@ -18,30 +18,30 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.tests.CatalogTests;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.internal.impl.LayerImpl;
-import net.refractions.udig.project.internal.render.CompositeRenderContext;
-import net.refractions.udig.project.internal.render.MultiLayerRenderer;
-import net.refractions.udig.project.internal.render.RenderContext;
-import net.refractions.udig.project.internal.render.RenderExecutor;
-import net.refractions.udig.project.internal.render.RenderFactory;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.impl.CompositeRenderContextImpl;
-import net.refractions.udig.project.internal.render.impl.RenderContextImpl;
-import net.refractions.udig.project.internal.render.impl.RenderManagerImpl;
-import net.refractions.udig.project.internal.render.impl.RendererCreatorImpl;
-import net.refractions.udig.style.sld.SLDContent;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.tests.CatalogTests;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.impl.LayerImpl;
+import org.locationtech.udig.project.internal.render.CompositeRenderContext;
+import org.locationtech.udig.project.internal.render.MultiLayerRenderer;
+import org.locationtech.udig.project.internal.render.RenderContext;
+import org.locationtech.udig.project.internal.render.RenderExecutor;
+import org.locationtech.udig.project.internal.render.RenderFactory;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.impl.CompositeRenderContextImpl;
+import org.locationtech.udig.project.internal.render.impl.RenderContextImpl;
+import org.locationtech.udig.project.internal.render.impl.RenderManagerImpl;
+import org.locationtech.udig.project.internal.render.impl.RendererCreatorImpl;
+import org.locationtech.udig.style.sld.SLDContent;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureStore;

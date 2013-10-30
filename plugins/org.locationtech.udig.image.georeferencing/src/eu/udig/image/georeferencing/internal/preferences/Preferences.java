@@ -10,11 +10,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.image.georeferencing.internal.preferences;
+package org.locationtech.udig.image.georeferencing.internal.preferences;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 
-import eu.udig.image.georeferencing.Activator;
+import org.locationtech.udig.image.georeferencing.Activator;
 
 /**
  * Single access for Image Georeferencing preferences.

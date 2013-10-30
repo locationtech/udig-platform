@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.catalog.ui" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.catalog.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.catalog.ui" id="fileFormat" name="fileFormat"/>
+         <meta.schema plugin="org.locationtech.udig.catalog.ui" id="fileFormat" name="fileFormat"/>
       </appInfo>
       <documentation>
          Used to teach uDig about new file extensions suitable for use in the File wizard page.
@@ -92,7 +92,7 @@
 Should only be used to sort out &quot;optional&quot; file formats where supporting the format is sorted out at runtime. For static listing of a file format please use the normal fileService element.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.catalog.service.FormatProvider"/>
+                  <meta.attribute kind="java" basedOn=":org.locationtech.udig.catalog.service.FormatProvider"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -113,7 +113,7 @@ Should only be used to sort out &quot;optional&quot; file formats where supporti
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         net.refractions.udig.catalog.shp contrinutes the &quot;*.shp&quot; format; and provides a service connection factory capable of working with &quot;*.shp&quot; files.
+         org.locationtech.udig.catalog.shp contrinutes the &quot;*.shp&quot; format; and provides a service connection factory capable of working with &quot;*.shp&quot; files.
       </documentation>
    </annotation>
 

@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.render.impl;
+package org.locationtech.udig.project.internal.render.impl;
 
 import java.util.List;
 
-import net.refractions.udig.project.internal.render.CompositeRenderContext;
-import net.refractions.udig.project.internal.render.RenderContext;
+import org.locationtech.udig.project.internal.render.CompositeRenderContext;
+import org.locationtech.udig.project.internal.render.RenderContext;
 
 /**
  * Listener listening for composition changes in the CompositeContext object.

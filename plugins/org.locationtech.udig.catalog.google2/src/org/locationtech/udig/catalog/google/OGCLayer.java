@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.google;
+package org.locationtech.udig.catalog.google;
 
 import java.net.URL;
 

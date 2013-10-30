@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit;
+package org.locationtech.udig.tools.edit;
 
-import net.refractions.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.command.UndoableMapCommand;
 
 
 /**
- * This is a Stategy object for the (@link net.refractions.udig.tools.edit.latest.EditToolHandler} behaviour. 
+ * This is a Stategy object for the (@link org.locationtech.udig.tools.edit.latest.EditToolHandler} behaviour. 
  * Each Behaviour is valid in a particular context and will be run by the 
- * (@link net.refractions.udig.tools.edit.latest.EditToolHandler} if the isValid method returns true.  
+ * (@link org.locationtech.udig.tools.edit.latest.EditToolHandler} if the isValid method returns true.  
  * 
  * @author jones
  * @since 1.1.0

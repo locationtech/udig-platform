@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.printing.ui.internal.editor.parts;
+package org.locationtech.udig.printing.ui.internal.editor.parts;
 
-import net.refractions.udig.printing.ui.internal.editor.BoxAction;
+import org.locationtech.udig.printing.ui.internal.editor.BoxAction;
 
 import org.eclipse.gef.Request;
 import org.eclipse.gef.editpolicies.AbstractEditPolicy;

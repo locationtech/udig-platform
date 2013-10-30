@@ -9,18 +9,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.merge.internal.view;
+package org.locationtech.udig.tools.merge.internal.view;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.UndoableComposite;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.command.factory.EditCommandFactory;
-import net.refractions.udig.project.internal.Map;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.command.factory.EditCommandFactory;
+import org.locationtech.udig.project.internal.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.feature.FeatureCollection;

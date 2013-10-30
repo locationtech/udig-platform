@@ -9,11 +9,11 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.tool;
+package org.locationtech.udig.project.ui.tool;
 
 import java.util.List;
 
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 
 import org.eclipse.jface.action.IStatusLineManager;
@@ -100,7 +100,7 @@ public abstract class AbstractModalTool extends AbstractTool implements ModalToo
     }
     
     /**
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#setContext(net.refractions.udig.project.ui.tool.IToolContext)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#setContext(org.locationtech.udig.project.ui.tool.IToolContext)
      */
     public void setContext( IToolContext context ) {
         deregisterMouseListeners();
@@ -114,7 +114,7 @@ public abstract class AbstractModalTool extends AbstractTool implements ModalToo
     
 	/**
 	 *  (non-Javadoc)
-	 * @see net.refractions.udig.project.ui.tool.ModalTool#getCursorID()
+	 * @see org.locationtech.udig.project.ui.tool.ModalTool#getCursorID()
 	 */
 	public final String getCursorID() {
 		return currentCursorID;
@@ -123,7 +123,7 @@ public abstract class AbstractModalTool extends AbstractTool implements ModalToo
 	
 	/**
 	 *  (non-Javadoc)
-	 * @see net.refractions.udig.project.ui.tool.ModalTool#setCursorID(java.lang.String)
+	 * @see org.locationtech.udig.project.ui.tool.ModalTool#setCursorID(java.lang.String)
 	 */
 	public final void setCursorID(String id) {
 		this.currentCursorID = id;
@@ -140,7 +140,7 @@ public abstract class AbstractModalTool extends AbstractTool implements ModalToo
 	
 	/** 
 	 * (non-Javadoc)
-	 * @see net.refractions.udig.project.ui.tool.Tool#setEnabled(boolean)
+	 * @see org.locationtech.udig.project.ui.tool.Tool#setEnabled(boolean)
 	 */
 	public void setEnabled(boolean enabled) {
 		boolean oldValue = isEnabled();

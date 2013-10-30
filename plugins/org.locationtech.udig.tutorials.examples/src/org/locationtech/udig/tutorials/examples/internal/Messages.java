@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.examples.internal;
+package org.locationtech.udig.tutorials.examples.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "net.refractions.udig.tutorials.examples.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.tutorials.examples.internal.messages"; //$NON-NLS-1$
 	public static String InternationalizedDialog_Prompt;
 	public static String InternationalizedDialog_Title;
 	static {

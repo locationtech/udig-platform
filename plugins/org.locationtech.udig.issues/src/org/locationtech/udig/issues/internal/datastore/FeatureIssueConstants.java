@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.internal.datastore;
+package org.locationtech.udig.issues.internal.datastore;
 
-import net.refractions.udig.issues.IssueConstants;
+import org.locationtech.udig.issues.IssueConstants;
 
 /**
  * Contains constants used by package such as the attribute name of the features.

@@ -9,17 +9,17 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.internal.wmsc.basic;
+package org.locationtech.udig.render.internal.wmsc.basic;
 
 import java.io.IOException;
 
-import net.refractions.udig.catalog.wmsc.server.TileSet;
-import net.refractions.udig.catalog.wmsc.server.TiledWebMapServer;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderMetricsFactory;
-import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.render.wms.basic.WMSPlugin;
+import org.locationtech.udig.catalog.wmsc.server.TileSet;
+import org.locationtech.udig.catalog.wmsc.server.TiledWebMapServer;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.render.wms.basic.WMSPlugin;
 
 import org.geotools.data.wms.WebMapServer;
 

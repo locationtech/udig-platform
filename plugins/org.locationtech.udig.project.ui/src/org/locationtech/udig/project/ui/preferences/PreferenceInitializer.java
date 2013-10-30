@@ -8,10 +8,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.preferences;
+package org.locationtech.udig.project.ui.preferences;
 
-import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;

@@ -8,13 +8,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.internal.ui.UiPlugin;
 
 import org.eclipse.core.commands.Category;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -60,7 +60,7 @@ public class StartupOperations implements IStartup {
         IMenuService menuService = (IMenuService) workbench.getService(IMenuService.class);
         IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
         
-        List<IConfigurationElement> list = ExtensionPointList.getExtensionPointList("net.refractions.udig.ui.operation"); //$NON-NLS-1$
+        List<IConfigurationElement> list = ExtensionPointList.getExtensionPointList("org.locationtech.udig.ui.operation"); //$NON-NLS-1$
         List<IConfigurationElement> categoryElements = listCategories(list);
         if( categoryElements == null || categoryElements.isEmpty() ) return;
         

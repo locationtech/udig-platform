@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.internal.ui;
+package org.locationtech.udig.mapgraphic.internal.ui;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.mapgraphic.MapGraphicChooserDialog;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.mapgraphic.MapGraphicChooserDialog;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;

@@ -7,23 +7,23 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.printing.ui.internal.editor;
+package org.locationtech.udig.printing.ui.internal.editor;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.EventObject;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.printing.ui.internal.PrintAction;
-import net.refractions.udig.printing.ui.internal.PrintingPlugin;
-import net.refractions.udig.printing.ui.internal.editor.parts.PartFactory;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.printing.ui.internal.PrintAction;
+import org.locationtech.udig.printing.ui.internal.PrintingPlugin;
+import org.locationtech.udig.printing.ui.internal.editor.parts.PartFactory;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -73,7 +73,7 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAdaptable {
 
     public final static String EDIT_MAP = "edit map"; //$NON-NLS-1$
-    public final static String ID = "net.refractions.udig.printing.ui.internal.editor.pageEditor"; //$NON-NLS-1$
+    public final static String ID = "org.locationtech.udig.printing.ui.internal.editor.pageEditor"; //$NON-NLS-1$
 
     private boolean savePreviouslyNeeded;
     private Page page;
@@ -98,7 +98,7 @@ public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAda
         ContextMenuProvider provider = new PageContextMenuProvider(graphicalViewer,
                 getActionRegistry());
         graphicalViewer.setContextMenu(provider);
-        getSite().registerContextMenu("net.refractions.udig.printing.editor.contextmenu", //$NON-NLS-1$
+        getSite().registerContextMenu("org.locationtech.udig.printing.editor.contextmenu", //$NON-NLS-1$
                 provider, graphicalViewer);
 
     }

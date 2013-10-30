@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.omsbox.view.actions;
+package org.locationtech.udig.omsbox.view.actions;
 
 import java.io.File;
 
-import net.refractions.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.IStatus;
@@ -25,9 +25,9 @@ import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 import org.joda.time.DateTime;
 
-import eu.udig.omsbox.OmsBoxPlugin;
-import eu.udig.omsbox.utils.OmsBoxConstants;
-import eu.udig.omsbox.view.OmsBoxView;
+import org.locationtech.udig.omsbox.OmsBoxPlugin;
+import org.locationtech.udig.omsbox.utils.OmsBoxConstants;
+import org.locationtech.udig.omsbox.view.OmsBoxView;
 
 /**
  * @author Andrea Antonello (www.hydrologis.com)

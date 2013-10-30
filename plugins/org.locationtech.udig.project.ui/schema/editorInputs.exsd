@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project.ui" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.project.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.project.ui" id="editorInputs" name="Editor Inputs"/>
+         <meta.schema plugin="org.locationtech.udig.project.ui" id="editorInputs" name="Editor Inputs"/>
       </appInfo>
       <documentation>
          [Enter description of this extension point.]
@@ -52,7 +52,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.UDIGEditorInput:"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.ui.UDIGEditorInput:"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -69,7 +69,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.IProjectElement"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.IProjectElement"/>
                </appInfo>
             </annotation>
          </attribute>

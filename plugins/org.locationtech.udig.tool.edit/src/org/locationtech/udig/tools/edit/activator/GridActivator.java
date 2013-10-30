@@ -7,27 +7,27 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.activator;
+package org.locationtech.udig.tools.edit.activator;
 
 import java.io.IOException;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.mapgraphic.grid.GridMapGraphic;
-import net.refractions.udig.mapgraphic.internal.MapGraphicService;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.command.SetLayerVisibilityCommand;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerFactory;
-import net.refractions.udig.project.internal.commands.AddLayerCommand;
-import net.refractions.udig.tools.edit.Activator;
-import net.refractions.udig.tools.edit.EditPlugin;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
-import net.refractions.udig.tools.edit.support.SnapBehaviour;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.mapgraphic.grid.GridMapGraphic;
+import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.SetLayerVisibilityCommand;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerFactory;
+import org.locationtech.udig.project.internal.commands.AddLayerCommand;
+import org.locationtech.udig.tools.edit.Activator;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.preferences.PreferenceUtil;
+import org.locationtech.udig.tools.edit.support.SnapBehaviour;
+import org.locationtech.udig.ui.ProgressManager;
 
 /**
  * If the snap behaviour is GRID then enables the grid map graphic on activation and 

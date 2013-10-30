@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.command;
+package org.locationtech.udig.project.command;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -16,14 +16,14 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.project.internal.Messages;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.commands.edit.RollbackCommand;
-import net.refractions.udig.project.internal.commands.selection.CommitCommand;
-import net.refractions.udig.project.internal.impl.MapImpl.MapCommandListener;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.ProgressMonitorTaskNamer;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.commands.edit.RollbackCommand;
+import org.locationtech.udig.project.internal.commands.selection.CommitCommand;
+import org.locationtech.udig.project.internal.impl.MapImpl.MapCommandListener;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.ProgressMonitorTaskNamer;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -45,7 +45,7 @@ import org.eclipse.ui.PlatformUI;
  */
 public class CommandManager implements CommandStack, NavCommandStack {
 
-    private static final String TRACE_ID = "net.refractions.udig.project/debug/commands/manager/trace"; //$NON-NLS-1$
+    private static final String TRACE_ID = "org.locationtech.udig.project/debug/commands/manager/trace"; //$NON-NLS-1$
     /**
      * If -1 then Synchronous commands will wait indefinately. Otherwise they will try for this many
      * milliseconds.
@@ -232,7 +232,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
     }
 
     /**
-     * @see net.refractions.udig.project.command.CommandStack#canUndo()
+     * @see org.locationtech.udig.project.command.CommandStack#canUndo()
      */
     public boolean canUndo() {
         if( commandExecutor ==null )
@@ -248,7 +248,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
     }
 
     /**
-     * @see net.refractions.udig.project.command.CommandStack#canRedo()
+     * @see org.locationtech.udig.project.command.CommandStack#canRedo()
      */
     public boolean canRedo() {
         if (commandExecutor!=null && !commandExecutor.undone.isEmpty()) {
@@ -258,14 +258,14 @@ public class CommandManager implements CommandStack, NavCommandStack {
     }
 
     /**
-     * @see net.refractions.udig.project.command.NavCommandStack#hasBackHistory()
+     * @see org.locationtech.udig.project.command.NavCommandStack#hasBackHistory()
      */
     public boolean hasBackHistory() {
         return canUndo();
     }
 
     /**
-     * @see net.refractions.udig.project.command.NavCommandStack#hasForwardHistory()
+     * @see org.locationtech.udig.project.command.NavCommandStack#hasForwardHistory()
      */
     public boolean hasForwardHistory() {
         return canRedo();
@@ -580,7 +580,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
         }
     }
     /**
-     * TODO Purpose of net.refractions.udig.project.command
+     * TODO Purpose of org.locationtech.udig.project.command
      * <p>
      * </p>
      * 

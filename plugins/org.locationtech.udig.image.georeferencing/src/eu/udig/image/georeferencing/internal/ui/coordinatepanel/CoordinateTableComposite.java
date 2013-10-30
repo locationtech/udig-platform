@@ -10,7 +10,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.image.georeferencing.internal.ui.coordinatepanel;
+package org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -21,13 +21,13 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.impl.EditManagerImpl;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.project.ui.tool.Tool;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.impl.EditManagerImpl;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ui.tool.Tool;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
@@ -61,24 +61,24 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
-import eu.udig.image.georeferencing.internal.i18n.Messages;
-import eu.udig.image.georeferencing.internal.process.MarkModel;
-import eu.udig.image.georeferencing.internal.process.MarkModel.MarkModelChange;
-import eu.udig.image.georeferencing.internal.ui.GeoReferencingCommand;
-import eu.udig.image.georeferencing.internal.ui.GeoReferencingComposite;
-import eu.udig.image.georeferencing.internal.ui.GeoreferencingCommandEventChange;
-import eu.udig.image.georeferencing.internal.ui.InputEvent;
-import eu.udig.image.georeferencing.internal.ui.MainComposite;
-import eu.udig.image.georeferencing.internal.ui.MouseSelectionListener;
-import eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.AddCoordinateTool;
-import eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CapturedCoordinateListener;
-import eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue;
-import eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.DeleteCoordinateTool;
-import eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.DeletedCoordinateListener;
-import eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.MoveCoordinateListener;
-import eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.MoveCoordinateTool;
-import eu.udig.image.georeferencing.internal.ui.message.InfoMessage;
-import eu.udig.image.georeferencing.internal.ui.message.InfoMessage.Type;
+import org.locationtech.udig.image.georeferencing.internal.i18n.Messages;
+import org.locationtech.udig.image.georeferencing.internal.process.MarkModel;
+import org.locationtech.udig.image.georeferencing.internal.process.MarkModel.MarkModelChange;
+import org.locationtech.udig.image.georeferencing.internal.ui.GeoReferencingCommand;
+import org.locationtech.udig.image.georeferencing.internal.ui.GeoReferencingComposite;
+import org.locationtech.udig.image.georeferencing.internal.ui.GeoreferencingCommandEventChange;
+import org.locationtech.udig.image.georeferencing.internal.ui.InputEvent;
+import org.locationtech.udig.image.georeferencing.internal.ui.MainComposite;
+import org.locationtech.udig.image.georeferencing.internal.ui.MouseSelectionListener;
+import org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools.AddCoordinateTool;
+import org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CapturedCoordinateListener;
+import org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue;
+import org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools.DeleteCoordinateTool;
+import org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools.DeletedCoordinateListener;
+import org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools.MoveCoordinateListener;
+import org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools.MoveCoordinateTool;
+import org.locationtech.udig.image.georeferencing.internal.ui.message.InfoMessage;
+import org.locationtech.udig.image.georeferencing.internal.ui.message.InfoMessage.Type;
 
 /**
  * Composite responsible of managing the mark model coordinates edit operations

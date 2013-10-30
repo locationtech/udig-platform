@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld.editor;
+package org.locationtech.udig.style.sld.editor;
 
 import java.lang.reflect.Field;
 
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.style.sld.SLD;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.sld.SLD;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Plugin;
@@ -37,7 +37,7 @@ public class OpenStyleEditorAction extends Action implements IWorkbenchWindowAct
     public static final String ATT_CLASS = "class"; //$NON-NLS-1$
     public static final String ATT_LABEL = "label"; //$NON-NLS-1$
     public static final String ATT_REQUIRES = "requires"; //$NON-NLS-1$
-    public static final String STYLE_ID = "net.refractions.udig.style.sld"; //$NON-NLS-1$
+    public static final String STYLE_ID = "org.locationtech.udig.style.sld"; //$NON-NLS-1$
 
     private Layer selectedLayer;
 
@@ -87,23 +87,23 @@ public class OpenStyleEditorAction extends Action implements IWorkbenchWindowAct
 
         try {
             if (SLD.POINT.supports(selectedLayer)) {
-                Class< ? > pointClass = Class.forName("eu.udig.style.advanced.editorpages.SimplePointEditorPage"); //$NON-NLS-1$
+                Class< ? > pointClass = Class.forName("org.locationtech.udig.style.advanced.editorpages.SimplePointEditorPage"); //$NON-NLS-1$
                 Field idField = pointClass.getField("ID"); //$NON-NLS-1$
                 Object value = idField.get(null);
                 pageId = value.toString();
             } else if (SLD.LINE.supports(selectedLayer)) {
-                Class< ? > pointClass = Class.forName("eu.udig.style.advanced.editorpages.SimpleLineEditorPage"); //$NON-NLS-1$
+                Class< ? > pointClass = Class.forName("org.locationtech.udig.style.advanced.editorpages.SimpleLineEditorPage"); //$NON-NLS-1$
                 Field idField = pointClass.getField("ID"); //$NON-NLS-1$
                 Object value = idField.get(null);
                 pageId = value.toString();
             } else if (SLD.POLYGON.supports(selectedLayer)) {
-                Class< ? > pointClass = Class.forName("eu.udig.style.advanced.editorpages.SimplePolygonEditorPage"); //$NON-NLS-1$
+                Class< ? > pointClass = Class.forName("org.locationtech.udig.style.advanced.editorpages.SimplePolygonEditorPage"); //$NON-NLS-1$
                 Field idField = pointClass.getField("ID"); //$NON-NLS-1$
                 Object value = idField.get(null);
                 pageId = value.toString();
             } else if (selectedLayer.getGeoResource().getInfo(new NullProgressMonitor()).getDescription()
                     .equals("grassbinaryraster")) { //$NON-NLS-1$
-                Class< ? > pointClass = Class.forName("eu.udig.style.jgrass.colors.JGrassRasterStyleEditorPage"); //$NON-NLS-1$
+                Class< ? > pointClass = Class.forName("org.locationtech.udig.style.jgrass.colors.JGrassRasterStyleEditorPage"); //$NON-NLS-1$
                 Field idField = pointClass.getField("ID"); //$NON-NLS-1$
                 Object value = idField.get(null);
                 pageId = value.toString();

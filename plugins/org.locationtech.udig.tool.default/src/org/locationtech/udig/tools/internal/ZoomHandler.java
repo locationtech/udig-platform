@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.internal;
+package org.locationtech.udig.tools.internal;
 
-import net.refractions.udig.project.ui.tool.AbstractToolCommandHandler;
-import net.refractions.udig.project.ui.tool.ActionTool;
+import org.locationtech.udig.project.ui.tool.AbstractToolCommandHandler;
+import org.locationtech.udig.project.ui.tool.ActionTool;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;

@@ -7,21 +7,21 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.common.styleattributeclasses;
+package org.locationtech.udig.style.advanced.common.styleattributeclasses;
 
-import static eu.udig.style.advanced.utils.Utilities.DEFAULT_COLOR;
-import static eu.udig.style.advanced.utils.Utilities.DEFAULT_OFFSET;
-import static eu.udig.style.advanced.utils.Utilities.DEFAULT_OPACITY;
-import static eu.udig.style.advanced.utils.Utilities.DEFAULT_ROTATION;
-import static eu.udig.style.advanced.utils.Utilities.DEFAULT_WIDTH;
-import static eu.udig.style.advanced.utils.Utilities.externalGraphicsFromGraphic;
-import static eu.udig.style.advanced.utils.Utilities.ff;
-import static eu.udig.style.advanced.utils.Utilities.sf;
+import static org.locationtech.udig.style.advanced.utils.Utilities.DEFAULT_COLOR;
+import static org.locationtech.udig.style.advanced.utils.Utilities.DEFAULT_OFFSET;
+import static org.locationtech.udig.style.advanced.utils.Utilities.DEFAULT_OPACITY;
+import static org.locationtech.udig.style.advanced.utils.Utilities.DEFAULT_ROTATION;
+import static org.locationtech.udig.style.advanced.utils.Utilities.DEFAULT_WIDTH;
+import static org.locationtech.udig.style.advanced.utils.Utilities.externalGraphicsFromGraphic;
+import static org.locationtech.udig.style.advanced.utils.Utilities.ff;
+import static org.locationtech.udig.style.advanced.utils.Utilities.sf;
 
 import java.awt.geom.Point2D;
 import java.util.List;
 
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.geotools.styling.ExternalGraphic;
 import org.geotools.styling.Fill;
@@ -32,7 +32,7 @@ import org.geotools.styling.Stroke;
 import org.geotools.styling.Symbolizer;
 import org.opengis.filter.expression.Expression;
 
-import eu.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.style.advanced.utils.Utilities;
 
 /**
  * A wrapper for a {@link PointSymbolizer} to ease interaction with gui.

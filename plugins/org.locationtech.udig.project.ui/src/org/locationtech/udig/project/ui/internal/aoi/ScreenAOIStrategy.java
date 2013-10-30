@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.aoi;
+package org.locationtech.udig.project.ui.internal.aoi;
 
-import net.refractions.udig.aoi.AOIListener;
-import net.refractions.udig.aoi.IAOIStrategy;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.project.render.IViewportModelListener;
-import net.refractions.udig.project.render.ViewportModelEvent;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.aoi.AOIListener;
+import org.locationtech.udig.aoi.IAOIStrategy;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.render.IViewportModelListener;
+import org.locationtech.udig.project.render.ViewportModelEvent;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;

@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.info;
+package org.locationtech.udig.tool.info;
 
 import java.io.IOException;
 import java.net.URL;
 import java.text.MessageFormat;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.tool.info.internal.Messages;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.tool.info.internal.Messages;
 
 /**
  * The response to a getInfo request of a service w.r.t. a layer.

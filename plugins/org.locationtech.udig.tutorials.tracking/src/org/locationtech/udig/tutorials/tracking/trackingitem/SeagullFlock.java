@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.tracking.trackingitem;
+package org.locationtech.udig.tutorials.tracking.trackingitem;
 
 import java.util.Iterator;
 
@@ -17,12 +17,12 @@ import org.opengis.util.InternationalString;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
-import net.refractions.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
 
 public class SeagullFlock extends AbstractTrackingItem {
     
     public static final String BLACKBOARD_KEY = 
-        "net.refractions.udig.tutorials.tracking.trackingitem.SeagullFlock"; //$NON-NLS-1$
+        "org.locationtech.udig.tutorials.tracking.trackingitem.SeagullFlock"; //$NON-NLS-1$
     
     public SeagullFlock(String flockId, InternationalString displayname, CoordinateReferenceSystem crs) {
         this(null, flockId, displayname, crs, null);

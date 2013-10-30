@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.actions;
+package org.locationtech.udig.project.ui.internal.actions;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,16 +16,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.LayersView;
-import net.refractions.udig.project.ui.internal.MapEditor;
-import net.refractions.udig.project.ui.internal.MapEditorPart;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.ui.IDropAction;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.LayersView;
+import org.locationtech.udig.project.ui.internal.MapEditor;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.ui.IDropAction;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;

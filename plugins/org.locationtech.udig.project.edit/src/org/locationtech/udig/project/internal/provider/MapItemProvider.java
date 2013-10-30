@@ -4,22 +4,22 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.internal.provider;
+package org.locationtech.udig.project.internal.provider;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.project.edit.internal.Messages;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerDecorator;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.impl.SynchronizedEList;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.internal.render.provider.ViewportModelItemProvider;
+import org.locationtech.udig.project.edit.internal.Messages;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerDecorator;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.impl.SynchronizedEList;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.internal.render.provider.ViewportModelItemProvider;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
@@ -48,7 +48,7 @@ import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.Bundle;
 
 /**
- * This is the item provider adapter for a {@link net.refractions.udig.project.internal.Map} object.
+ * This is the item provider adapter for a {@link org.locationtech.udig.project.internal.Map} object.
  * <!-- begin-user-doc --> <!-- end-user-doc -->
  * 
  * @generated NOT
@@ -478,7 +478,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     }
 
     @SuppressWarnings("unchecked")
-    protected net.refractions.udig.project.internal.provider.LoadingPlaceHolder getLoadingItem() {
+    protected org.locationtech.udig.project.internal.provider.LoadingPlaceHolder getLoadingItem() {
         return LOADING_LAYER;
     };
 

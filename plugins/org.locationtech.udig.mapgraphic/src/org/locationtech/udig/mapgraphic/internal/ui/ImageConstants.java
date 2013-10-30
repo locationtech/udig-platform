@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.internal.ui;
+package org.locationtech.udig.mapgraphic.internal.ui;
 
 /**
  * These keys are used to look up some of the icons used internally by this plugin.

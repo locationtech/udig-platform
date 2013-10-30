@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project.ui">
+<schema targetNamespace="org.locationtech.udig.project.ui">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.project.ui" id="toolManagers" name="toolManagers"/>
+         <meta.schema plugin="org.locationtech.udig.project.ui" id="toolManagers" name="toolManagers"/>
       </appInfo>
       <documentation>
          This extension point is used to declare possible candidates for the use the IToolManager used by ApplicationGIS. The one that is actually to be used must be declared in your application&apos;s plugin_customization.ini file, using the key specified at IToolManager.P_TOOL_MANAGER.
@@ -57,7 +57,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.tool.IToolManager"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.ui.tool.IToolManager"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -79,10 +79,10 @@
       </appInfo>
       <documentation>
             &lt;extension
-         point=&quot;net.refractions.udig.project.ui.toolManagers&quot;&gt;
+         point=&quot;org.locationtech.udig.project.ui.toolManagers&quot;&gt;
       &lt;toolManager
-            class=&quot;net.refractions.udig.project.ui.internal.tool.display.ToolManager&quot;
-            id=&quot;net.refractions.udig.project.ui.toolManager&quot;/&gt;
+            class=&quot;org.locationtech.udig.project.ui.internal.tool.display.ToolManager&quot;
+            id=&quot;org.locationtech.udig.project.ui.toolManager&quot;/&gt;
    &lt;/extension&gt;
       </documentation>
    </annotation>

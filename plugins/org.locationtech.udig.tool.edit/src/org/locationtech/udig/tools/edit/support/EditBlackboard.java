@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.tools.edit.support;
+package org.locationtech.udig.tools.edit.support;
 
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
@@ -16,10 +16,10 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
-import net.refractions.udig.tools.edit.EditPlugin;
-import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
-import net.refractions.udig.tools.edit.support.EditBlackboardEvent.EventType;
-import net.refractions.udig.tools.edit.support.PrimitiveShape.Mutator;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.preferences.PreferenceUtil;
+import org.locationtech.udig.tools.edit.support.EditBlackboardEvent.EventType;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape.Mutator;
 
 import org.opengis.referencing.operation.MathTransform;
 

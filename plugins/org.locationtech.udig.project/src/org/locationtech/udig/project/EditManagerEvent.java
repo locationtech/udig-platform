@@ -9,9 +9,9 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project;
+package org.locationtech.udig.project;
 
-import net.refractions.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPackage;
 
 /**
  * An event indicating a attribute of the EditManager has changed.

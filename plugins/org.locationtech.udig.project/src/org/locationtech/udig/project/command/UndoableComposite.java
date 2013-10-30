@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.command;
+package org.locationtech.udig.project.command;
 
 import java.util.List;
 
@@ -52,7 +52,7 @@ UndoableMapCommand, PostDeterminedEffectCommand {
     }
     
 	/**
-	 * @see net.refractions.udig.project.internal.command.UndoableCommand#rollback()
+	 * @see org.locationtech.udig.project.internal.command.UndoableCommand#rollback()
 	 */
 	public void rollback(IProgressMonitor monitor) throws Exception {
 

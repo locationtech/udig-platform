@@ -7,17 +7,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.aoi;
+package org.locationtech.udig.ui.aoi;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.aoi.AOIListener;
-import net.refractions.udig.aoi.AOIProxy;
-import net.refractions.udig.aoi.IAOIService;
-import net.refractions.udig.aoi.IAOIStrategy;
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.aoi.AOIListener;
+import org.locationtech.udig.aoi.AOIProxy;
+import org.locationtech.udig.aoi.IAOIService;
+import org.locationtech.udig.aoi.IAOIStrategy;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;

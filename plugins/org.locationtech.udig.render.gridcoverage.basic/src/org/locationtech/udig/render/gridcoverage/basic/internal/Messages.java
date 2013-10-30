@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.gridcoverage.basic.internal;
+package org.locationtech.udig.render.gridcoverage.basic.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "net.refractions.udig.render.gridcoverage.basic.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.render.gridcoverage.basic.internal.messages"; //$NON-NLS-1$
 	public static String BasicGridCoverageRenderer_0;
     public static String BasicGridCoverageRenderer_error_message;
 	public static String BasicGridCoverageRenderer_errorPainting;

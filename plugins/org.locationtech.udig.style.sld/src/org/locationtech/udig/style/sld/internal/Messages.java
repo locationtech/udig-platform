@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.style.sld.internal;
+package org.locationtech.udig.style.sld.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "net.refractions.udig.style.sld.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.style.sld.internal.messages"; //$NON-NLS-1$
 	public static String ChannelViewer_BandLabel;
     public static String ChannelViewer_GammaLabel;
     public static String ChannelViewer_HistogramLabel;

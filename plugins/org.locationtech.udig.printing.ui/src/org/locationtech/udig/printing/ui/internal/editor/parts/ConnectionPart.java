@@ -8,10 +8,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.printing.ui.internal.editor.parts;
+package org.locationtech.udig.printing.ui.internal.editor.parts;
 
-import net.refractions.udig.printing.model.Connection;
-import net.refractions.udig.printing.ui.internal.editor.commands.ConnectionDeleteCommand;
+import org.locationtech.udig.printing.model.Connection;
+import org.locationtech.udig.printing.ui.internal.editor.commands.ConnectionDeleteCommand;
 
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;

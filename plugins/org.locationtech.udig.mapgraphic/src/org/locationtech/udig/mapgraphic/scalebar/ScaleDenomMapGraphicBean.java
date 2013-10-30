@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.scalebar;
+package org.locationtech.udig.mapgraphic.scalebar;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -28,7 +28,7 @@ public class ScaleDenomMapGraphicBean {
     /**
      * Style Blackboard key
      */
-    public static final String KEY = "net.refractions.udig.mapgraphic.scalebar.ScaleDenomMapGraphic"; //$NON-NLS-1$
+    public static final String KEY = "org.locationtech.udig.mapgraphic.scalebar.ScaleDenomMapGraphic"; //$NON-NLS-1$
     
     public static final int ALIGN_LEFT = 0;
     public static final int ALIGN_RIGHT = 1;

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.document.ui;
+package org.locationtech.udig.document.ui;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,26 +19,26 @@ import java.util.List;
 import java.util.Map;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.document.IAbstractDocumentSource;
-import net.refractions.udig.catalog.document.IAttachment;
-import net.refractions.udig.catalog.document.IAttachmentSource;
-import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocument.ContentType;
-import net.refractions.udig.catalog.document.IDocument.Type;
-import net.refractions.udig.catalog.document.IDocumentFolder;
-import net.refractions.udig.catalog.document.IDocumentSource;
-import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
-import net.refractions.udig.catalog.document.IHotlink;
-import net.refractions.udig.catalog.document.IHotlinkSource;
-import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
-import net.refractions.udig.core.AdapterUtil;
-import net.refractions.udig.document.source.ShpDocFactory;
-import net.refractions.udig.document.ui.DocumentDialog.Mode;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.commands.edit.SetAttributeCommand;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.tool.info.internal.Messages;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.document.IAbstractDocumentSource;
+import org.locationtech.udig.catalog.document.IAttachment;
+import org.locationtech.udig.catalog.document.IAttachmentSource;
+import org.locationtech.udig.catalog.document.IDocument;
+import org.locationtech.udig.catalog.document.IDocument.ContentType;
+import org.locationtech.udig.catalog.document.IDocument.Type;
+import org.locationtech.udig.catalog.document.IDocumentFolder;
+import org.locationtech.udig.catalog.document.IDocumentSource;
+import org.locationtech.udig.catalog.document.IDocumentSource.DocumentInfo;
+import org.locationtech.udig.catalog.document.IHotlink;
+import org.locationtech.udig.catalog.document.IHotlinkSource;
+import org.locationtech.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import org.locationtech.udig.core.AdapterUtil;
+import org.locationtech.udig.document.source.ShpDocFactory;
+import org.locationtech.udig.document.ui.DocumentDialog.Mode;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.commands.edit.SetAttributeCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.tool.info.internal.Messages;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;

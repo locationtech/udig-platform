@@ -8,15 +8,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.render.internal.wmt.basic;
+package org.locationtech.udig.render.internal.wmt.basic;
 
 import java.util.Arrays;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
 
 
 public class BasicWMTMetrics extends AbstractRenderMetrics {
@@ -41,7 +41,7 @@ public class BasicWMTMetrics extends AbstractRenderMetrics {
     }
 
     /**
-     * @see net.refractions.udig.project.render.IRenderMetrics#getRenderMetricsFactory()
+     * @see org.locationtech.udig.project.render.IRenderMetrics#getRenderMetricsFactory()
      */
     public IRenderMetricsFactory getRenderMetricsFactory() {
         return factory;

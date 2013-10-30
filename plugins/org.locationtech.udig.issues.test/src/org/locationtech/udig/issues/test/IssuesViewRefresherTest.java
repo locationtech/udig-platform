@@ -8,13 +8,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.test;
+package org.locationtech.udig.issues.test;
 
 import static org.junit.Assert.assertTrue;
-import net.refractions.udig.issues.IssueConfiguration;
-import net.refractions.udig.issues.IssueConstants;
-import net.refractions.udig.issues.internal.view.IssuesContentProvider;
-import net.refractions.udig.issues.internal.view.IssuesView;
+import org.locationtech.udig.issues.IssueConfiguration;
+import org.locationtech.udig.issues.IssueConstants;
+import org.locationtech.udig.issues.internal.view.IssuesContentProvider;
+import org.locationtech.udig.issues.internal.view.IssuesView;
 
 import org.eclipse.ui.PlatformUI;
 import org.junit.Test;

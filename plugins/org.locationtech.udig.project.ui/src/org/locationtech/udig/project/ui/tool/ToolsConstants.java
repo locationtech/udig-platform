@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.tool;
+package org.locationtech.udig.project.ui.tool;
 
 /**
  * Some of the <em>generic</em> tool categories
@@ -17,9 +17,9 @@ package net.refractions.udig.project.ui.tool;
  * @since 0.6.0
  */
 public interface ToolsConstants {
-    public final String SELECTION_CATEGORY="net.refractions.udig.tool.category.selection";  //$NON-NLS-1$
-    public final String ZOOM_CATEGORY="net.refractions.udig.tool.category.zoom";  //$NON-NLS-1$
-    public final String PAN_CATEGORY="net.refractions.udig.tool.category.pan"; //$NON-NLS-1$
-    public final String INFORMATION_CATEGORY="net.refractions.udig.tool.category.info";  //$NON-NLS-1$
-    public final String EDITING_CATEGORY="net.refractions.udig.tool.category.editing";  //$NON-NLS-1$
+    public final String SELECTION_CATEGORY="org.locationtech.udig.tool.category.selection";  //$NON-NLS-1$
+    public final String ZOOM_CATEGORY="org.locationtech.udig.tool.category.zoom";  //$NON-NLS-1$
+    public final String PAN_CATEGORY="org.locationtech.udig.tool.category.pan"; //$NON-NLS-1$
+    public final String INFORMATION_CATEGORY="org.locationtech.udig.tool.category.info";  //$NON-NLS-1$
+    public final String EDITING_CATEGORY="org.locationtech.udig.tool.category.editing";  //$NON-NLS-1$
 }

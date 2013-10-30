@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.catalog" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.catalog" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.catalog" id="ICatalog" name="%catalogs.name"/>
+         <meta.schema plugin="org.locationtech.udig.catalog" id="ICatalog" name="%catalogs.name"/>
       </appInfo>
       <documentation>
          Allows addition of Catalogs to be used by the uDig search facilities. This extention point is processed to geospatial resources for visualization and analysis.
@@ -70,7 +70,7 @@
                   ICatalog implementation to be used for searching.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.catalog.ICatalog"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.catalog.ICatalog"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -100,7 +100,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.catalog.ISearch:"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.catalog.ISearch:"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -130,7 +130,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.catalog.IRepository:"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.catalog.IRepository:"/>
                </appInfo>
             </annotation>
          </attribute>

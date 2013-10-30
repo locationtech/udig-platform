@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.core.internal;
+package org.locationtech.udig.core.internal;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -18,7 +18,7 @@ import org.eclipse.core.runtime.Plugin;
 /**
  * This interface should be implemented by all classes that wish to process Extensions.
  * 
- * @see net.refractions.udig.core.internal.ExtensionPointUtil
+ * @see org.locationtech.udig.core.internal.ExtensionPointUtil
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
@@ -27,7 +27,7 @@ public interface ExtensionPointProcessor {
      * This method is called by ExtensionPointUtil.process(String, ExtensionPointProcessor). This is
      * a callback method for the ExtensionPointUtil class.
      * 
-     * @see net.refractions.udig.core.internal.ExtensionPointUtil#process(Plugin, String,
+     * @see org.locationtech.udig.core.internal.ExtensionPointUtil#process(Plugin, String,
      *      ExtensionPointProcessor)
      * @param extension An extension that extends the Extension point id specified in the
      *        ExtensionPointUtil.process() call.

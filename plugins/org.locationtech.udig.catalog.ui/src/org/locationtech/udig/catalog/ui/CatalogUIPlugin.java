@@ -8,27 +8,27 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.ui;
+package org.locationtech.udig.catalog.ui;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveChangeEvent;
-import net.refractions.udig.catalog.IResolveChangeEvent.Type;
-import net.refractions.udig.catalog.IResolveChangeListener;
-import net.refractions.udig.catalog.IResolveDelta;
-import net.refractions.udig.catalog.IResolveDelta.Kind;
-import net.refractions.udig.catalog.IResolveFolder;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceInfo;
-import net.refractions.udig.core.AbstractUdigUIPlugin;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveChangeEvent;
+import org.locationtech.udig.catalog.IResolveChangeEvent.Type;
+import org.locationtech.udig.catalog.IResolveChangeListener;
+import org.locationtech.udig.catalog.IResolveDelta;
+import org.locationtech.udig.catalog.IResolveDelta.Kind;
+import org.locationtech.udig.catalog.IResolveFolder;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceInfo;
+import org.locationtech.udig.core.AbstractUdigUIPlugin;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -78,9 +78,9 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
     /**
      * The id of the plug-in
      */
-    public static final String ID = "net.refractions.udig.catalog.ui"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.catalog.ui"; //$NON-NLS-1$
 
-    // public static final String DECORATOR_ID = "net.refractions.udig.registry.ui.decorator";
+    // public static final String DECORATOR_ID = "org.locationtech.udig.registry.ui.decorator";
     // //$NON-NLS-1$
     /** Preference store for the last directory open by the file selection dialog */
     public static final String PREF_OPEN_DIALOG_DIRECTORY = "udig.preferences.openDialog.lastDirectory"; //$NON-NLS-1$
@@ -176,7 +176,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
      * It is much prefered to do this:
      * 
      * <pre><code>
-     * private static final String RENDERING = &quot;net.refractions.udig.project/render/trace&quot;;
+     * private static final String RENDERING = &quot;org.locationtech.udig.project/render/trace&quot;;
      * if (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
      *     System.out.println(&quot;your message here&quot;);
      * }
@@ -450,7 +450,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
 	}
 
 	/* (non-Javadoc)
-	 * @see net.refractions.udig.core.AbstractUdigUIPlugin#getIconPath()
+	 * @see org.locationtech.udig.core.AbstractUdigUIPlugin#getIconPath()
 	 */
 	public IPath getIconPath() {
 		return new Path(ICONS_PATH);

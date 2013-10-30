@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package net.refractions.udig.style.sld.editor.raster;
+package org.locationtech.udig.style.sld.editor.raster;
 
 import java.awt.Color;
 import java.io.BufferedReader;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import net.refractions.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.style.sld.SLDPlugin;
 
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.core.runtime.FileLocator;
@@ -161,7 +161,7 @@ public class PredefinedColorRules {
 			colorRules.add(new PredefinedColorRule("rainbow", rainbow)); //$NON-NLS-1$
 
 			File colorTablesFolder = null;
-			Bundle bundle = Platform.getBundle("eu.udig.style.advanced"); //$NON-NLS-1$
+			Bundle bundle = Platform.getBundle("org.locationtech.udig.style.advanced"); //$NON-NLS-1$
 			if (bundle != null) {
 				URL queriesUrl = bundle.getResource("colortables"); //$NON-NLS-1$
 				String colorTablesFolderPath = FileLocator

@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.catalog.ui">
+<schema targetNamespace="org.locationtech.udig.catalog.ui">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.catalog.ui" id="reshapePostAction" name="reshapePostAction"/>
+         <meta.schema plugin="org.locationtech.udig.catalog.ui" id="reshapePostAction" name="reshapePostAction"/>
       </appInfo>
       <documentation>
          This extension point allows the option of doing something with the reshaped resource for example adding to a map or writing to disk etc...
@@ -65,7 +65,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.catalog.ui.operation.PostReshapeAction"/>
+                  <meta.attribute kind="java" basedOn=":org.locationtech.udig.catalog.ui.operation.PostReshapeAction"/>
                </appInfo>
             </annotation>
          </attribute>

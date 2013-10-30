@@ -9,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.internal.ui.util;
+package org.locationtech.udig.tools.internal.ui.util;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -22,8 +22,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import eu.udig.tools.internal.mediator.PlatformGISMediator;
-import eu.udig.tools.internal.i18n.Messages;
+import org.locationtech.udig.tools.internal.mediator.PlatformGISMediator;
+import org.locationtech.udig.tools.internal.i18n.Messages;
 
 /**
  * Constructs common dialog

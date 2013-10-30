@@ -10,15 +10,15 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.element.util;
+package org.locationtech.udig.project.element.util;
 
 import java.util.List;
 
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.element.*;
-import net.refractions.udig.project.element.ElementPackage;
-import net.refractions.udig.project.element.ProjectElementAdapter;
-import net.refractions.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.element.*;
+import org.locationtech.udig.project.element.ElementPackage;
+import org.locationtech.udig.project.element.ProjectElementAdapter;
+import org.locationtech.udig.project.internal.ProjectElement;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.ecore.EClass;
@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.util.Switch;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see net.refractions.udig.project.element.ElementPackage
+ * @see org.locationtech.udig.project.element.ElementPackage
  * @generated
  */
 public class ElementSwitch<T> extends Switch<T> {

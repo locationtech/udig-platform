@@ -9,16 +9,16 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.internal.gridcoverage.basic;
+package org.locationtech.udig.render.internal.gridcoverage.basic;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.rasterings.GridCoverageLoader;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.ICompositeRenderContext;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderMetricsFactory;
-import net.refractions.udig.project.render.IRenderer;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.rasterings.GridCoverageLoader;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.ICompositeRenderContext;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.project.render.IRenderer;
 
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 
@@ -34,7 +34,7 @@ public class MemoryGridCoverageMetricsFactory implements IRenderMetricsFactory {
     /**
      * Ensures that we can get an AbstractGridCoverage2DReader out of this class.
      * 
-     * @see net.refractions.udig.project.render.RenderMetricsFactory#canRender(net.refractions.udig.project.render.RenderTools)
+     * @see org.locationtech.udig.project.render.RenderMetricsFactory#canRender(org.locationtech.udig.project.render.RenderTools)
      * @param context
      * @return true if we can render the provided context using BasicGridCoverageRenderer
      */
@@ -59,7 +59,7 @@ public class MemoryGridCoverageMetricsFactory implements IRenderMetricsFactory {
     /**
      * Strategy object used to indicate how well a renderer can draw.
      * 
-     * @see net.refractions.udig.project.render.RenderMetricsFactory#createMetrics(net.refractions.udig.project.render.RenderTools)
+     * @see org.locationtech.udig.project.render.RenderMetricsFactory#createMetrics(org.locationtech.udig.project.render.RenderTools)
      * @param context
      * @return render metrics for the provided context
      */

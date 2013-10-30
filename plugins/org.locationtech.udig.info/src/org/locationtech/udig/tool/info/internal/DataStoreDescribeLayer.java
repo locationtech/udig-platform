@@ -8,14 +8,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.info.internal;
+package org.locationtech.udig.tool.info.internal;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.project.AdaptableFeature;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.tool.info.LayerPointInfo;
+import org.locationtech.udig.project.AdaptableFeature;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.tool.info.LayerPointInfo;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureSource;
@@ -36,7 +36,7 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 public class DataStoreDescribeLayer {
     
     /**
-     * @see net.refractions.udig.project.internal.render.impl.RendererImpl#createInfo(java.awt.Point)
+     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#createInfo(java.awt.Point)
      */
     public static List<LayerPointInfo> info( final ILayer layer, ReferencedEnvelope bbox, IProgressMonitor monitor ) throws Exception{
         List<SimpleFeature> features = info2( layer, bbox, monitor );

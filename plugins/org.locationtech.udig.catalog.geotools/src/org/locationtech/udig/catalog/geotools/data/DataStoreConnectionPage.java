@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.geotools.data;
+package org.locationtech.udig.catalog.geotools.data;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -15,10 +15,10 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.catalog.ui.ISharedImages;
-import net.refractions.udig.catalog.ui.UDIGConnectionPage;
+import org.locationtech.udig.catalog.ui.AbstractUDIGImportPage;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.ISharedImages;
+import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;

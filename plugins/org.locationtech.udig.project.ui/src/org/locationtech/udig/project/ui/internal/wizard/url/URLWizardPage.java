@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.wizard.url;
+package org.locationtech.udig.project.ui.internal.wizard.url;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,14 +17,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.ServiceFactoryImpl;
-import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
-import net.refractions.udig.catalog.ui.UDIGConnectionPage;
-import net.refractions.udig.core.RecentHistory;
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.ServiceFactoryImpl;
+import org.locationtech.udig.catalog.ui.AbstractUDIGImportPage;
+import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
+import org.locationtech.udig.core.RecentHistory;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogSettings;

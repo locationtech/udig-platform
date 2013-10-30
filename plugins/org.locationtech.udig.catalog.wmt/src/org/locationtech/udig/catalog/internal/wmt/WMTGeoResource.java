@@ -7,17 +7,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt;
+package org.locationtech.udig.catalog.internal.wmt;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSource;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSourceFactory;
-import net.refractions.udig.core.internal.CorePlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.WMTSource;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.WMTSourceFactory;
+import org.locationtech.udig.core.internal.CorePlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -58,13 +58,13 @@ public class WMTGeoResource extends IGeoResource {
     /**
      * Gets the init data from an url:
      * 
-     * wmt://localhost/wmt/net.refractions.udig.catalog.internal.wmt.wmtsource.OSMCloudMadeSource/3
+     * wmt://localhost/wmt/org.locationtech.udig.catalog.internal.wmt.wmtsource.OSMCloudMadeSource/3
      *  -->
      *  3 
      *
      *  or
      *  
-     *  wmt://localhost/wmt/net.refractions.udig.catalog.internal.wmt.wmtsource.CSSource/tile.openstreetmap.org/{z}/{x}/{y}.png/2/18
+     *  wmt://localhost/wmt/org.locationtech.udig.catalog.internal.wmt.wmtsource.CSSource/tile.openstreetmap.org/{z}/{x}/{y}.png/2/18
      *  -->
      *  tile.openstreetmap.org/{z}/{x}/{y}.png/2/18
      *  
@@ -113,7 +113,7 @@ public class WMTGeoResource extends IGeoResource {
     }
     
     /*
-     * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
+     * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     public <T> boolean canResolve( Class<T> adaptee ) {
         return adaptee != null
@@ -122,7 +122,7 @@ public class WMTGeoResource extends IGeoResource {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IGeoResource#resolve(java.lang.Class,
+     * @see org.locationtech.udig.catalog.IGeoResource#resolve(java.lang.Class,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
@@ -141,7 +141,7 @@ public class WMTGeoResource extends IGeoResource {
 
 
     /*
-     * @see net.refractions.udig.catalog.IGeoResourceInfo#createInfo(java.lang.Class,
+     * @see org.locationtech.udig.catalog.IGeoResourceInfo#createInfo(java.lang.Class,
      *      org.eclipse.core.runtime.IProgressMonitor
      */
     protected IGeoResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
@@ -157,7 +157,7 @@ public class WMTGeoResource extends IGeoResource {
 
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getStatus()
+     * @see org.locationtech.udig.catalog.IResolve#getStatus()
      */
     public Status getStatus() {
         if (msg != null) {
@@ -170,14 +170,14 @@ public class WMTGeoResource extends IGeoResource {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getMessage()
+     * @see org.locationtech.udig.catalog.IResolve#getMessage()
      */
     public Throwable getMessage() {
         return msg;
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getIdentifier()
+     * @see org.locationtech.udig.catalog.IResolve#getIdentifier()
      */
     public URL getIdentifier() {
         try {

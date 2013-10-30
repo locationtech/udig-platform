@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.project" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.project" id="mapInterceptor" name="mapInterceptor"/>
+         <meta.schema plugin="org.locationtech.udig.project" id="mapInterceptor" name="mapInterceptor"/>
       </appInfo>
       <documentation>
          This extension point allows interceptor actions to be run at various points during the lifecycle of a Map.
@@ -91,7 +91,7 @@
                   The interceptor that will be ran when the map is being created.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.project.interceptor.MapInterceptor"/>
+                  <meta.attribute kind="java" basedOn=":org.locationtech.udig.project.interceptor.MapInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -131,7 +131,7 @@
                   The interceptor that will be ran when the map is opening.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.project.interceptor.MapInterceptor"/>
+                  <meta.attribute kind="java" basedOn=":org.locationtech.udig.project.interceptor.MapInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -171,7 +171,7 @@
                   The interceptor that will be ran when the map is closing.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.project.interceptor.MapInterceptor"/>
+                  <meta.attribute kind="java" basedOn=":org.locationtech.udig.project.interceptor.MapInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -211,7 +211,7 @@
                   The interceptor class.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.interceptor.LayerInterceptor"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.interceptor.LayerInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -251,7 +251,7 @@
                   The interceptor class.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.interceptor.LayerInterceptor"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.interceptor.LayerInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>

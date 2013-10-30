@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.ui.internal.editor.parts;
+package org.locationtech.udig.printing.ui.internal.editor.parts;
 
 import java.util.List;
 
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.printing.model.PropertyListener;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.printing.model.PropertyListener;
 
 import org.eclipse.gef.editparts.AbstractTreeEditPart;
 
@@ -68,7 +68,7 @@ public class PageTreeEditPart extends AbstractTreeEditPart {
             /**
          * TODO summary sentence for boxesChanged ...
          * 
-         * @see net.refractions.udig.printing.model.PropertyListener#boxesChanged()
+         * @see org.locationtech.udig.printing.model.PropertyListener#boxesChanged()
          * 
          */
         protected void boxesChanged() {

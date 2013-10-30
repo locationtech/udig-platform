@@ -8,16 +8,16 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 
-package net.refractions.udig.tool.select.internal;
+package org.locationtech.udig.tool.select.internal;
 
 import java.util.List;
 
-import net.refractions.udig.aoi.AOIListener;
-import net.refractions.udig.aoi.AOIProxy;
-import net.refractions.udig.aoi.IAOIService;
-import net.refractions.udig.aoi.IAOIStrategy;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.aoi.AOIListener;
+import org.locationtech.udig.aoi.AOIProxy;
+import org.locationtech.udig.aoi.IAOIService;
+import org.locationtech.udig.aoi.IAOIStrategy;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -48,7 +48,7 @@ public class AOILayerPage extends Page {
     private ComboViewer comboViewer;
 //    private ListViewer listViewer;
     
-    private static String AOI_LAYER_ID = "net.refractions.udig.tool.select.internal.aoiLayer";
+    private static String AOI_LAYER_ID = "org.locationtech.udig.tool.select.internal.aoiLayer";
 
     private ISelectionChangedListener comboListener = new ISelectionChangedListener(){
         @Override

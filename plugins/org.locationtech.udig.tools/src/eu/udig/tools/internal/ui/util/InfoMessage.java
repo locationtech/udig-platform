@@ -9,14 +9,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.internal.ui.util;
+package org.locationtech.udig.tools.internal.ui.util;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.graphics.Image;
 
-import eu.udig.tools.internal.ui.util.InfoMessage.Type;
+import org.locationtech.udig.tools.internal.ui.util.InfoMessage.Type;
 
 /**
  * Human Message

@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.operations;
+package org.locationtech.udig.ui.operations;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import net.refractions.udig.ui.WaitCondition;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -58,7 +58,7 @@ public class LazyOpFilterTest {
     }
     
     /**
-     * Test method for {@link net.refractions.udig.ui.operations.LazyOpFilter#accept(java.lang.Object)}.
+     * Test method for {@link org.locationtech.udig.ui.operations.LazyOpFilter#accept(java.lang.Object)}.
      */
     @Test
     public void testAcceptWithCachingNoBlocking() {
@@ -256,7 +256,7 @@ public class LazyOpFilterTest {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.ui.operations.LazyOpFilter#addListener(net.refractions.udig.ui.operations.IOpFilterListener)}.
+     * Test method for {@link org.locationtech.udig.ui.operations.LazyOpFilter#addListener(org.locationtech.udig.ui.operations.IOpFilterListener)}.
      */
     @Test
     public void testUnsupportedMethods() {

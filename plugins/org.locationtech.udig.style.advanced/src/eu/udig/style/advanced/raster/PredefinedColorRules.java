@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.raster;
+package org.locationtech.udig.style.advanced.raster;
 
 import java.awt.Color;
 import java.io.BufferedReader;
@@ -24,7 +24,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 
-import eu.udig.style.advanced.StylePlugin;
+import org.locationtech.udig.style.advanced.StylePlugin;
 
 /**
  * The class reading default colortables from disk.

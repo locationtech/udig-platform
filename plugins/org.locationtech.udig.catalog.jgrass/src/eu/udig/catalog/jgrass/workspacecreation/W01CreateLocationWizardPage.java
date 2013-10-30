@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.jgrass.workspacecreation;
+package org.locationtech.udig.catalog.jgrass.workspacecreation;
 
 import java.io.File;
 
@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import eu.udig.catalog.jgrass.core.ChooseCoordinateReferenceSystemDialog;
+import org.locationtech.udig.catalog.jgrass.core.ChooseCoordinateReferenceSystemDialog;
 
 /**
  * @author Andrea Antonello - www.hydrologis.com

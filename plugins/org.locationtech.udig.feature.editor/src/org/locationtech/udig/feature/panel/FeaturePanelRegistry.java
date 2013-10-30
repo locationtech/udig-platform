@@ -13,7 +13,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package net.refractions.udig.feature.panel;
+package org.locationtech.udig.feature.panel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,14 +21,14 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.feature.editor.FeatureEditorPlugin;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.IFeatureSite;
-import net.refractions.udig.project.ui.feature.FeaturePanelEntry;
-import net.refractions.udig.project.ui.feature.FeaturePanelProcessor;
-import net.refractions.udig.project.ui.feature.FeatureSiteImpl;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.feature.editor.FeatureEditorPlugin;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.IFeatureSite;
+import org.locationtech.udig.project.ui.feature.FeaturePanelEntry;
+import org.locationtech.udig.project.ui.feature.FeaturePanelProcessor;
+import org.locationtech.udig.project.ui.feature.FeatureSiteImpl;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IConfigurationElement;

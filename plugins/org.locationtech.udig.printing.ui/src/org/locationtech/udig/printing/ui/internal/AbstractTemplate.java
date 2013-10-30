@@ -9,17 +9,17 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.ui.internal;
+package org.locationtech.udig.printing.ui.internal;
 
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.printing.model.impl.MapBoxPrinter;
-import net.refractions.udig.printing.ui.Template;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.printing.model.impl.MapBoxPrinter;
+import org.locationtech.udig.printing.ui.Template;
 
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
@@ -53,7 +53,7 @@ public abstract class AbstractTemplate implements Template {
     }
 
     /** (non-Javadoc)
-     * @see net.refractions.udig.printing.ui.Template#iterator()
+     * @see org.locationtech.udig.printing.ui.Template#iterator()
      */
     public Iterator<Box> iterator() {
         return boxes.iterator();

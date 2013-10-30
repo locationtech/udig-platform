@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.socket;
+package org.locationtech.udig.socket;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,15 +13,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.core.Pair;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.core.Pair;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 

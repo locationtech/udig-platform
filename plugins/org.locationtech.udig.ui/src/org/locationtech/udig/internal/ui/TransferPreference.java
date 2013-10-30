@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.internal.ui;
+package org.locationtech.udig.internal.ui;
 
 import java.util.Set;
 
-import net.refractions.udig.ui.AbstractStrategizedTransfer;
-import net.refractions.udig.ui.internal.Messages;
+import org.locationtech.udig.ui.AbstractStrategizedTransfer;
+import org.locationtech.udig.ui.internal.Messages;
 
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;

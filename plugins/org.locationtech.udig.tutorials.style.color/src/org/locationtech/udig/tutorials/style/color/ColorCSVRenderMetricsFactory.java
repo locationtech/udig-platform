@@ -8,15 +8,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.style.color;
+package org.locationtech.udig.tutorials.style.color;
 
 import java.io.IOException;
 
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderMetricsFactory;
-import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.tutorials.catalog.csv.CSV;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.tutorials.catalog.csv.CSV;
 
 public class ColorCSVRenderMetricsFactory implements IRenderMetricsFactory {
     public boolean canRender( IRenderContext context ) throws IOException {

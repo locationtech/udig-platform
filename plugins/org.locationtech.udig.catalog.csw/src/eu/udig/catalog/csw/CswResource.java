@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package eu.udig.catalog.csw;
+package org.locationtech.udig.catalog.csw;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -18,15 +18,15 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IResolveChangeEvent;
-import net.refractions.udig.catalog.IResolveDelta;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.CatalogImpl;
-import net.refractions.udig.catalog.internal.ResolveChangeEvent;
-import net.refractions.udig.catalog.internal.ResolveDelta;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IResolveChangeEvent;
+import org.locationtech.udig.catalog.IResolveDelta;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.CatalogImpl;
+import org.locationtech.udig.catalog.internal.ResolveChangeEvent;
+import org.locationtech.udig.catalog.internal.ResolveDelta;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -81,7 +81,7 @@ abstract class CswResource extends IGeoResource {
      * <li>IService.class
      * </ul>
      * 
-     * @see net.refractions.udig.catalog.IResolve#resolve(java.lang.Class, org.eclipse.core.runtime.IProgressMonitor)
+     * @see org.locationtech.udig.catalog.IResolve#resolve(java.lang.Class, org.eclipse.core.runtime.IProgressMonitor)
      */
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException{
         if(adaptee == null)
@@ -108,7 +108,7 @@ abstract class CswResource extends IGeoResource {
     protected abstract void loadReal(IProgressMonitor monitor) throws IOException;
     
     /*
-     * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
+     * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     public <T> boolean canResolve( Class<T> adaptee ) {
         if(adaptee == null)
@@ -119,21 +119,21 @@ abstract class CswResource extends IGeoResource {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getStatus()
+     * @see org.locationtech.udig.catalog.IResolve#getStatus()
      */
     public Status getStatus() {
         return msg==null?Status.CONNECTED:Status.BROKEN;
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getMessage()
+     * @see org.locationtech.udig.catalog.IResolve#getMessage()
      */
     public Throwable getMessage() {
         return msg;
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getIdentifier()
+     * @see org.locationtech.udig.catalog.IResolve#getIdentifier()
      */
     public URL getIdentifier() {
         if( real!=null )
@@ -156,14 +156,14 @@ static class CswWMSResource extends CswResource{
     private URL url = null;
 
     /*
-     * @see net.refractions.udig.catalog.Csw.CswResource#getSchema()
+     * @see org.locationtech.udig.catalog.Csw.CswResource#getSchema()
      */
     protected URI getSchema() {
         return WMSSchema.NAMESPACE;
     }
 
     /*
-     * @see net.refractions.udig.catalog.Csw.CswResource#getIcon()
+     * @see org.locationtech.udig.catalog.Csw.CswResource#getIcon()
      */
     protected ImageDescriptor getIcon() {
         return null;
@@ -181,7 +181,7 @@ static class CswWMSResource extends CswResource{
     }
 
     /*
-     * @see net.refractions.udig.catalog.Csw.CswResource#loadReal(org.eclipse.core.runtime.IProgressMonitor)
+     * @see org.locationtech.udig.catalog.Csw.CswResource#loadReal(org.eclipse.core.runtime.IProgressMonitor)
      */
     protected void loadReal( IProgressMonitor monitor ) throws IOException {
         createInfo(monitor); // load me
@@ -241,21 +241,21 @@ static class CswWFSResource extends CswResource{
     private URL url = null;
 
     /*
-     * @see net.refractions.udig.catalog.Csw.CswResource#getSchema()
+     * @see org.locationtech.udig.catalog.Csw.CswResource#getSchema()
      */
     protected URI getSchema() {
         return WFSSchema.NAMESPACE;
     }
 
     /*
-     * @see net.refractions.udig.catalog.Csw.CswResource#getIcon()
+     * @see org.locationtech.udig.catalog.Csw.CswResource#getIcon()
      */
     protected ImageDescriptor getIcon() {
         return null;
     }
 
     /*
-     * @see net.refractions.udig.catalog.Csw.CswResource#loadReal(org.eclipse.core.runtime.IProgressMonitor)
+     * @see org.locationtech.udig.catalog.Csw.CswResource#loadReal(org.eclipse.core.runtime.IProgressMonitor)
      */
     protected void loadReal( IProgressMonitor monitor ) throws IOException {
         createInfo(monitor); // load me

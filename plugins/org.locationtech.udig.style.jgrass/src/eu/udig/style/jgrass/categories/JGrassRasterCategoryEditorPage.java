@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.jgrass.categories;
+package org.locationtech.udig.style.jgrass.categories;
 
 import java.io.File;
 import java.io.IOException;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.style.sld.editor.StyleEditorPage;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.sld.editor.StyleEditorPage;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -23,13 +23,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.geotools.gce.grassraster.JGrassConstants;
 
-import eu.udig.catalog.jgrass.core.JGrassMapGeoResource;
-import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
-import eu.udig.style.jgrass.JGrassrasterStyleActivator;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
+import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
+import org.locationtech.udig.style.jgrass.JGrassrasterStyleActivator;
 
 public class JGrassRasterCategoryEditorPage extends StyleEditorPage {
 
-    public static String JGRASSRASTERSTYLEID = "eu.udig.style.jgrass.cats";
+    public static String JGRASSRASTERSTYLEID = "org.locationtech.udig.style.jgrass.cats";
     private CategoryEditor categoryRulesEditor = null;
     private boolean editorSupported = false;
     private String type = "unknown";

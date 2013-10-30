@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project;
+package org.locationtech.udig.project;
 
 /**
  * The interface for all classes that decorate non-eclipse classes. This allows access to the "Real"

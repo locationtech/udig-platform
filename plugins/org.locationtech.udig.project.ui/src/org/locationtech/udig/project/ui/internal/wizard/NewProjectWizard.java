@@ -9,15 +9,15 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.wizard;
+package org.locationtech.udig.project.ui.internal.wizard;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.viewers.IStructuredSelection;

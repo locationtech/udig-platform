@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.property.pages;
+package org.locationtech.udig.project.ui.internal.property.pages;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.project.ProjectBlackboardConstants;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.ui.filter.FilterInput;
-import net.refractions.udig.ui.filter.FilterViewer;
-import net.refractions.udig.ui.filter.IFilterViewer;
-import net.refractions.udig.ui.properties.UDIGPropertyPage;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.ui.filter.FilterInput;
+import org.locationtech.udig.ui.filter.FilterViewer;
+import org.locationtech.udig.ui.filter.IFilterViewer;
+import org.locationtech.udig.ui.properties.UDIGPropertyPage;
 
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.viewers.ISelectionChangedListener;

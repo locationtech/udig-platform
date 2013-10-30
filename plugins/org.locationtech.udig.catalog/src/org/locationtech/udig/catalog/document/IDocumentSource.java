@@ -9,14 +9,14 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.document;
+package org.locationtech.udig.catalog.document;
 
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import net.refractions.udig.catalog.document.IDocument.ContentType;
-import net.refractions.udig.catalog.document.IDocument.Type;
+import org.locationtech.udig.catalog.document.IDocument.ContentType;
+import org.locationtech.udig.catalog.document.IDocument.Type;
 
 /**
  * Access to documents associated with a resource.

@@ -8,16 +8,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tests.catalog.wmt;
+package org.locationtech.udig.tests.catalog.wmt;
 
 import static org.junit.Assert.assertEquals;
-import net.refractions.udig.catalog.internal.wmt.tile.NASATile;
-import net.refractions.udig.catalog.internal.wmt.tile.NASATile.NASATileName;
-import net.refractions.udig.catalog.internal.wmt.tile.NASATile.NASATileName.NASAZoomLevel;
-import net.refractions.udig.catalog.internal.wmt.tile.WMTTile.WMTTileFactory;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.NASASource;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSource;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSourceFactory;
+import org.locationtech.udig.catalog.internal.wmt.tile.NASATile;
+import org.locationtech.udig.catalog.internal.wmt.tile.NASATile.NASATileName;
+import org.locationtech.udig.catalog.internal.wmt.tile.NASATile.NASATileName.NASAZoomLevel;
+import org.locationtech.udig.catalog.internal.wmt.tile.WMTTile.WMTTileFactory;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.NASASource;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.WMTSource;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.WMTSourceFactory;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;

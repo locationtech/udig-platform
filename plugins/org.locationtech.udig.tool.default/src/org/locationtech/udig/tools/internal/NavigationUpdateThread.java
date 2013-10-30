@@ -7,17 +7,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.internal;
+package org.locationtech.udig.tools.internal;
 
 import java.awt.Point;
 import java.util.ArrayList;
 
-import net.refractions.udig.project.command.NavCommand;
-import net.refractions.udig.project.internal.command.navigation.NavComposite;
-import net.refractions.udig.project.internal.command.navigation.PanCommand;
-import net.refractions.udig.project.internal.command.navigation.ZoomCommand;
-import net.refractions.udig.project.ui.commands.TransformDrawCommand;
-import net.refractions.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.command.NavCommand;
+import org.locationtech.udig.project.internal.command.navigation.NavComposite;
+import org.locationtech.udig.project.internal.command.navigation.PanCommand;
+import org.locationtech.udig.project.internal.command.navigation.ZoomCommand;
+import org.locationtech.udig.project.ui.commands.TransformDrawCommand;
+import org.locationtech.udig.project.ui.tool.IToolContext;
 
 import com.vividsolutions.jts.geom.Coordinate;
 

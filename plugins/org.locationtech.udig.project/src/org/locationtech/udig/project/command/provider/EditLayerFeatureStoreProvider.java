@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.command.provider;
+package org.locationtech.udig.project.command.provider;
 
 import java.io.IOException;
 
-import net.refractions.udig.core.IBlockingProvider;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.command.MapCommand;
+import org.locationtech.udig.core.IBlockingProvider;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.MapCommand;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureStore;

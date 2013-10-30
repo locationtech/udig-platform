@@ -1,19 +1,19 @@
 /**
  * 
  */
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import net.refractions.udig.internal.ui.IDropTargetProvider;
-import net.refractions.udig.internal.ui.UDIGControlDragListener;
-import net.refractions.udig.internal.ui.UDIGControlDropListener;
-import net.refractions.udig.internal.ui.UDIGDNDProcessor;
-import net.refractions.udig.internal.ui.UDIGDropHandler;
-import net.refractions.udig.internal.ui.UDIGTransfer;
-import net.refractions.udig.internal.ui.UDIGViewerDropAdapter;
+import org.locationtech.udig.internal.ui.IDropTargetProvider;
+import org.locationtech.udig.internal.ui.UDIGControlDragListener;
+import org.locationtech.udig.internal.ui.UDIGControlDropListener;
+import org.locationtech.udig.internal.ui.UDIGDNDProcessor;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
+import org.locationtech.udig.internal.ui.UDIGTransfer;
+import org.locationtech.udig.internal.ui.UDIGViewerDropAdapter;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.viewers.ISelectionChangedListener;

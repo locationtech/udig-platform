@@ -9,11 +9,11 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.tools.internal;
+package org.locationtech.udig.tools.internal;
 
-import net.refractions.udig.project.internal.command.navigation.ZoomExtentCommand;
-import net.refractions.udig.project.ui.tool.AbstractActionTool;
-import net.refractions.udig.project.ui.tool.AbstractTool;
+import org.locationtech.udig.project.internal.command.navigation.ZoomExtentCommand;
+import org.locationtech.udig.project.ui.tool.AbstractActionTool;
+import org.locationtech.udig.project.ui.tool.AbstractTool;
 
 /**
  * This class Provides zoom box and click functionality.
@@ -31,7 +31,7 @@ public class ZoomExtent extends AbstractActionTool{
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.ActionTool#run()
+     * @see org.locationtech.udig.project.ui.tool.ActionTool#run()
      */
     public void run() {
     	NavigationUpdateThread.getUpdater().cancel();

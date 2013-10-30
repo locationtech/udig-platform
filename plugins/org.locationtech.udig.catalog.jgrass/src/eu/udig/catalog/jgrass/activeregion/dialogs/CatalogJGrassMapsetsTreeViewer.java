@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.jgrass.activeregion.dialogs;
+package org.locationtech.udig.catalog.jgrass.activeregion.dialogs;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,9 +18,9 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IResolve;
 
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -39,10 +39,10 @@ import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.PatternFilter;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-import eu.udig.catalog.jgrass.JGrassPlugin;
-import eu.udig.catalog.jgrass.core.JGrassMapGeoResource;
-import eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
-import eu.udig.catalog.jgrass.core.JGrassService;
+import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
+import org.locationtech.udig.catalog.jgrass.core.JGrassService;
 
 /**
  * <p>

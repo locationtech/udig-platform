@@ -4,16 +4,16 @@
  *
  * $Id$
  */
-package net.refractions.udig.printing.model.impl;
+package org.locationtech.udig.printing.model.impl;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.BoxPrinter;
-import net.refractions.udig.printing.model.Connection;
-import net.refractions.udig.printing.model.ModelPackage;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.BoxPrinter;
+import org.locationtech.udig.printing.model.Connection;
+import org.locationtech.udig.printing.model.ModelPackage;
 
 import org.eclipse.core.internal.runtime.AdapterManager;
 import org.eclipse.core.runtime.IAdaptable;
@@ -36,12 +36,12 @@ import org.eclipse.swt.widgets.Display;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link net.refractions.udig.printing.model.impl.BoxImpl#getSourceConnections <em>Source
+ * <li>{@link org.locationtech.udig.printing.model.impl.BoxImpl#getSourceConnections <em>Source
  * Connections</em>}</li>
- * <li>{@link net.refractions.udig.printing.model.impl.BoxImpl#getTargetConnections <em>Target
+ * <li>{@link org.locationtech.udig.printing.model.impl.BoxImpl#getTargetConnections <em>Target
  * Connections</em>}</li>
- * <li>{@link net.refractions.udig.printing.model.impl.BoxImpl#getBoxPrinter <em>Box Printer</em>}</li>
- * <li>{@link net.refractions.udig.printing.model.impl.BoxImpl#getID <em>ID</em>}</li>
+ * <li>{@link org.locationtech.udig.printing.model.impl.BoxImpl#getBoxPrinter <em>Box Printer</em>}</li>
+ * <li>{@link org.locationtech.udig.printing.model.impl.BoxImpl#getID <em>ID</em>}</li>
  * </ul>
  * </p>
  * 

@@ -7,33 +7,33 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.command.factory;
+package org.locationtech.udig.project.command.factory;
 
 import java.net.URL;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.core.IBlockingProvider;
-import net.refractions.udig.core.StaticBlockingProvider;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.EditCommand;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.commands.DeleteLayerCommand;
-import net.refractions.udig.project.internal.commands.DeleteLayersCommand;
-import net.refractions.udig.project.internal.commands.edit.AddFeatureCommand;
-import net.refractions.udig.project.internal.commands.edit.CopyFeaturesCommand;
-import net.refractions.udig.project.internal.commands.edit.CreateFeatureCommand;
-import net.refractions.udig.project.internal.commands.edit.CreateLayerCommand;
-import net.refractions.udig.project.internal.commands.edit.DeleteFeatureCommand;
-import net.refractions.udig.project.internal.commands.edit.DeleteManyFeaturesCommand;
-import net.refractions.udig.project.internal.commands.edit.ResetEditFeatureCommand;
-import net.refractions.udig.project.internal.commands.edit.RollbackCommand;
-import net.refractions.udig.project.internal.commands.edit.SetAttributeCommand;
-import net.refractions.udig.project.internal.commands.edit.SetEditFeatureCommand;
-import net.refractions.udig.project.internal.commands.edit.SetGeometryCommand;
-import net.refractions.udig.project.internal.commands.edit.WriteEditFeatureCommand;
-import net.refractions.udig.project.internal.commands.selection.CommitCommand;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.IBlockingProvider;
+import org.locationtech.udig.core.StaticBlockingProvider;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.EditCommand;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.commands.DeleteLayerCommand;
+import org.locationtech.udig.project.internal.commands.DeleteLayersCommand;
+import org.locationtech.udig.project.internal.commands.edit.AddFeatureCommand;
+import org.locationtech.udig.project.internal.commands.edit.CopyFeaturesCommand;
+import org.locationtech.udig.project.internal.commands.edit.CreateFeatureCommand;
+import org.locationtech.udig.project.internal.commands.edit.CreateLayerCommand;
+import org.locationtech.udig.project.internal.commands.edit.DeleteFeatureCommand;
+import org.locationtech.udig.project.internal.commands.edit.DeleteManyFeaturesCommand;
+import org.locationtech.udig.project.internal.commands.edit.ResetEditFeatureCommand;
+import org.locationtech.udig.project.internal.commands.edit.RollbackCommand;
+import org.locationtech.udig.project.internal.commands.edit.SetAttributeCommand;
+import org.locationtech.udig.project.internal.commands.edit.SetEditFeatureCommand;
+import org.locationtech.udig.project.internal.commands.edit.SetGeometryCommand;
+import org.locationtech.udig.project.internal.commands.edit.WriteEditFeatureCommand;
+import org.locationtech.udig.project.internal.commands.selection.CommitCommand;
 
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
@@ -49,7 +49,7 @@ import com.vividsolutions.jts.geom.Geometry;
  * @since 0.3
  */
 @SuppressWarnings("deprecation")
-public class EditCommandFactory extends net.refractions.udig.project.command.EditCommandFactory {
+public class EditCommandFactory extends org.locationtech.udig.project.command.EditCommandFactory {
     /**
      * Creates a new EditCommandFactory object
      * 

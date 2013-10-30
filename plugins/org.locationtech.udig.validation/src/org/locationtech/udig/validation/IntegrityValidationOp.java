@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.validation;
+package org.locationtech.udig.validation;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.operations.IOp;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;
@@ -47,7 +47,7 @@ public abstract class IntegrityValidationOp implements IOp  {
     
     /** 
      * 
-     * @see net.refractions.udig.ui.operations.IOp#op(org.eclipse.swt.widgets.Display, java.lang.Object, org.eclipse.core.runtime.IProgressMonitor)
+     * @see org.locationtech.udig.ui.operations.IOp#op(org.eclipse.swt.widgets.Display, java.lang.Object, org.eclipse.core.runtime.IProgressMonitor)
      */
     public void op(final Display display, Object target, IProgressMonitor monitor) throws Exception {
         // define the ILayer array

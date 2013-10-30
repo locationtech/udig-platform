@@ -1,7 +1,7 @@
 /*
  * Created on 28-Mar-2005
  */
-package net.refractions.udig.catalog.tests;
+package org.locationtech.udig.catalog.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -17,14 +17,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.ICatalogInfo;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveChangeEvent;
-import net.refractions.udig.catalog.IResolveChangeListener;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.ICatalogInfo;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveChangeEvent;
+import org.locationtech.udig.catalog.IResolveChangeListener;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceInfo;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.junit.Ignore;

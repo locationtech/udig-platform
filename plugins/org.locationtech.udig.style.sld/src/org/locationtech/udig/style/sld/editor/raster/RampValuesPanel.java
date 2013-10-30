@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld.editor.raster;
+package org.locationtech.udig.style.sld.editor.raster;
 
 import java.io.IOException;
 
-import net.refractions.udig.style.sld.SLDPlugin;
-import net.refractions.udig.style.sld.internal.Messages;
+import org.locationtech.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.style.sld.internal.Messages;
 
 import org.eclipse.jface.window.Window;
 import org.geotools.styling.ColorMap;
@@ -40,7 +40,7 @@ public class RampValuesPanel extends UniqueValuesPanel {
 	}
 
 	/**
-	 * @see net.refractions.udig.style.raster.ui.UniqueValuesPanel#getColorMap()
+	 * @see org.locationtech.udig.style.raster.ui.UniqueValuesPanel#getColorMap()
 	 */
 	@Override
 	public ColorMap getColorMap() throws Exception{

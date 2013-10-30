@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.style.jgrass.legend;
+package org.locationtech.udig.style.jgrass.legend;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.swt.widgets.Display;
 import org.geotools.data.DataUtilities;

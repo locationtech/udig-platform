@@ -9,9 +9,9 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.tools.internal;
+package org.locationtech.udig.tools.internal;
 
-import net.refractions.udig.project.ui.tool.AbstractActionTool;
+import org.locationtech.udig.project.ui.tool.AbstractActionTool;
 
 /**
  * Rollback current transaction
@@ -22,14 +22,14 @@ public class RollbackTool  extends AbstractActionTool {
 
 
     /*
-     * @see net.refractions.udig.project.ui.tool.ActionTool#run()
+     * @see org.locationtech.udig.project.ui.tool.ActionTool#run()
      */
     public void run() {
         getContext().sendASyncCommand(getContext().getEditFactory().createRollbackCommand());
     }
 
     /*
-     * @see net.refractions.udig.project.ui.tool.Tool#dispose()
+     * @see org.locationtech.udig.project.ui.tool.Tool#dispose()
      */
     public void dispose() {
     }

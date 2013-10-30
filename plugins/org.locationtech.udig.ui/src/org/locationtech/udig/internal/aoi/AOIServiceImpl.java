@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.internal.aoi;
+package org.locationtech.udig.internal.aoi;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,12 +15,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.aoi.AOIListener;
-import net.refractions.udig.aoi.AOIProxy;
-import net.refractions.udig.aoi.IAOIService;
-import net.refractions.udig.core.internal.ExtensionPointProcessor;
-import net.refractions.udig.core.internal.ExtensionPointUtil;
-import net.refractions.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.aoi.AOIListener;
+import org.locationtech.udig.aoi.AOIProxy;
+import org.locationtech.udig.aoi.IAOIService;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.internal.ui.UiPlugin;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -38,12 +38,12 @@ import com.vividsolutions.jts.geom.Geometry;
 public class AOIServiceImpl implements IAOIService {
 
     /** This is the AOI extension point processed to get AOIStrategy entries */
-    private static final String EXT_ID = "net.refractions.udig.ui.aoi";
+    private static final String EXT_ID = "org.locationtech.udig.ui.aoi";
 
     /**
      * the id of the all strategy (ie the default)
      */
-    public static final String STRATEGY_ALL_ID = "net.refractions.udig.ui.aoiAll";
+    public static final String STRATEGY_ALL_ID = "org.locationtech.udig.ui.aoiAll";
 
     /*
      * A list of all the strategies

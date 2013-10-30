@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.filter;
+package org.locationtech.udig.ui.filter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.awt.Color;
 
-import net.refractions.udig.ui.filter.ViewerFactory.Appropriate;
+import org.locationtech.udig.ui.filter.ViewerFactory.Appropriate;
 
 import org.eclipse.swt.SWT;
 import org.geotools.filter.expression.LiteralBuilder;

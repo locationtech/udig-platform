@@ -8,14 +8,14 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package eu.udig.jconsole;
+package org.locationtech.udig.jconsole;
 
 
-import eu.udig.jconsole.java.JavaAutoIndentStrategy;
-import eu.udig.jconsole.java.JavaCompletionProcessor;
-import eu.udig.jconsole.java.JavaDoubleClickSelector;
-import eu.udig.jconsole.javadoc.JavaDocCompletionProcessor;
-import eu.udig.jconsole.util.JavaColorProvider;
+import org.locationtech.udig.jconsole.java.JavaAutoIndentStrategy;
+import org.locationtech.udig.jconsole.java.JavaCompletionProcessor;
+import org.locationtech.udig.jconsole.java.JavaDoubleClickSelector;
+import org.locationtech.udig.jconsole.javadoc.JavaDocCompletionProcessor;
+import org.locationtech.udig.jconsole.util.JavaColorProvider;
 
 import org.eclipse.swt.graphics.RGB;
 

@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.document.source;
+package org.locationtech.udig.document.source;
 
-import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
+import org.locationtech.udig.catalog.internal.shp.ShpGeoResourceImpl;
 
 /**
  * The base class for shape document sources. This sets up needs utility objects like the document

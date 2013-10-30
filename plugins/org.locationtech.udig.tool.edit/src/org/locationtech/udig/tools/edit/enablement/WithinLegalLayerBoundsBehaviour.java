@@ -7,18 +7,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.enablement;
+package org.locationtech.udig.tools.edit.enablement;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.EnablementBehaviour;
-import net.refractions.udig.tools.edit.EventType;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.tools.edit.EditState;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.EnablementBehaviour;
+import org.locationtech.udig.tools.edit.EventType;
 
 import org.opengis.referencing.operation.MathTransform;
 

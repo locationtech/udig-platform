@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.tile;
+package org.locationtech.udig.catalog.internal.wmt.tile;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,12 +17,12 @@ import org.geotools.referencing.crs.DefaultGeographicCRS;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
-import net.refractions.udig.catalog.internal.wmt.Trace;
-import net.refractions.udig.catalog.internal.wmt.WMTPlugin;
-import net.refractions.udig.catalog.internal.wmt.tile.OSMTile.OSMTileName.OSMZoomLevel;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.OSMSource;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSource;
-import net.refractions.udig.core.internal.CorePlugin;
+import org.locationtech.udig.catalog.internal.wmt.Trace;
+import org.locationtech.udig.catalog.internal.wmt.WMTPlugin;
+import org.locationtech.udig.catalog.internal.wmt.tile.OSMTile.OSMTileName.OSMZoomLevel;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.OSMSource;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.WMTSource;
+import org.locationtech.udig.core.internal.CorePlugin;
 
 
 public class OSMTile extends WMTTile {

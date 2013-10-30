@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.browser.ui;
+package org.locationtech.udig.browser.ui;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -19,15 +19,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.browser.BrowserPlugin;
-import net.refractions.udig.browser.ExternalCatalogueImportDescriptor;
-import net.refractions.udig.browser.ExternalCatalogueImportPage;
-import net.refractions.udig.browser.ExternalCatalogueImportPageDescriptor;
-import net.refractions.udig.browser.ExternalCatalogueImportURLDescriptor;
-import net.refractions.udig.catalog.ui.IDataWizard;
-import net.refractions.udig.core.internal.ExtensionPointProcessor;
-import net.refractions.udig.core.internal.ExtensionPointUtil;
-import net.refractions.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.browser.BrowserPlugin;
+import org.locationtech.udig.browser.ExternalCatalogueImportDescriptor;
+import org.locationtech.udig.browser.ExternalCatalogueImportPage;
+import org.locationtech.udig.browser.ExternalCatalogueImportPageDescriptor;
+import org.locationtech.udig.browser.ExternalCatalogueImportURLDescriptor;
+import org.locationtech.udig.catalog.ui.IDataWizard;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.internal.ui.UiPlugin;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;

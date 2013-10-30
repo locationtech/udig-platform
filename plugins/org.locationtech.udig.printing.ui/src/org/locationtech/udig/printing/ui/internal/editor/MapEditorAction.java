@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.printing.ui.internal.editor;
+package org.locationtech.udig.printing.ui.internal.editor;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.impl.MapBoxPrinter;
-import net.refractions.udig.printing.ui.IBoxEditAction;
-import net.refractions.udig.printing.ui.internal.editor.parts.BoxPart;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.impl.MapBoxPrinter;
+import org.locationtech.udig.printing.ui.IBoxEditAction;
+import org.locationtech.udig.printing.ui.internal.editor.parts.BoxPart;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.gef.commands.Command;
 

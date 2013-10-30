@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.omsbox.view.widgets;
+package org.locationtech.udig.omsbox.view.widgets;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -18,8 +18,8 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import eu.udig.omsbox.core.FieldData;
-import eu.udig.omsbox.utils.OmsBoxConstants;
+import org.locationtech.udig.omsbox.core.FieldData;
+import org.locationtech.udig.omsbox.utils.OmsBoxConstants;
 
 /**
  * Class representing a gui for combobox choice.

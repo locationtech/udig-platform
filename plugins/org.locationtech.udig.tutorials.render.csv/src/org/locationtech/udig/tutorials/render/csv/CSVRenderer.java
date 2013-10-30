@@ -8,17 +8,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.render.csv;
+package org.locationtech.udig.tutorials.render.csv;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.IOException;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.render.impl.RendererImpl;
-import net.refractions.udig.project.render.RenderException;
-import net.refractions.udig.tutorials.catalog.csv.CSV;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.render.impl.RendererImpl;
+import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.tutorials.catalog.csv.CSV;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;

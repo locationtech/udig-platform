@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.omsbox.processingregion;
+package org.locationtech.udig.omsbox.processingregion;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,12 +17,12 @@ import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
 import java.util.Collections;
 
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.mapgraphic.MapGraphicContext;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IStyleBlackboard;
-import net.refractions.udig.ui.graphics.AWTGraphics;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IStyleBlackboard;
+import org.locationtech.udig.ui.graphics.AWTGraphics;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
@@ -37,7 +37,7 @@ import com.vividsolutions.jts.geom.Coordinate;
  */
 public class ProcessingRegionMapGraphic implements MapGraphic {
 
-    public static final String ID = "eu.udig.omsbox.processingregion.ProcessingRegionMapGraphic";
+    public static final String ID = "org.locationtech.udig.omsbox.processingregion.ProcessingRegionMapGraphic";
 
     public ProcessingRegionMapGraphic() {
     }

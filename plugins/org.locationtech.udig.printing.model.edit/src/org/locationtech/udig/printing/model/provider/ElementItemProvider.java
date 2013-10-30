@@ -4,14 +4,14 @@
  *
  * $Id$
  */
-package net.refractions.udig.printing.model.provider;
+package org.locationtech.udig.printing.model.provider;
 
 
 import java.util.Collection;
 import java.util.List;
 
-import net.refractions.udig.printing.model.Element;
-import net.refractions.udig.printing.model.ModelPackage;
+import org.locationtech.udig.printing.model.Element;
+import org.locationtech.udig.printing.model.ModelPackage;
 
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -29,7 +29,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link net.refractions.udig.printing.model.Element} object.
+ * This is the item provider adapter for a {@link org.locationtech.udig.printing.model.Element} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

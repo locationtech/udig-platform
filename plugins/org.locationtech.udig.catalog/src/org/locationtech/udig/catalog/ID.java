@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog;
+package org.locationtech.udig.catalog;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +21,7 @@ import java.net.URL;
 
 import org.geotools.data.DataUtilities;
 
-import net.refractions.udig.core.internal.CorePlugin;
+import org.locationtech.udig.core.internal.CorePlugin;
 
 /**
  * Identifier used to lookup entries in an local IRespository or remote ISearch.

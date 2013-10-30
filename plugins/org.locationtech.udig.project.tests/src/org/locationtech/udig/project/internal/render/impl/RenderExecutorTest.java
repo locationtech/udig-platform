@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.render.impl;
+package org.locationtech.udig.project.internal.render.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
@@ -25,14 +25,14 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.render.RenderExecutor;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.style.sld.SLDContent;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.render.RenderExecutor;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.style.sld.SLDContent;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
@@ -104,7 +104,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	}
 	
 	/*
-	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.setState(int)'
+	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.setState(int)'
 	 */
 	@Test
 	public void testSetState() {
@@ -112,7 +112,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.render(Graphics2D, IProgressMonitor)'
+	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.render(Graphics2D, IProgressMonitor)'
 	 */
 	@Ignore
 	@Test
@@ -135,7 +135,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.render(Envelope, IProgressMonitor)'
+	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.render(Envelope, IProgressMonitor)'
 	 */
 	@Ignore
     @Test
@@ -178,7 +178,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	}
 
     /*
-	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.render(Envelope, IProgressMonitor)'
+	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.render(Envelope, IProgressMonitor)'
 	 */
 	@Ignore
     @Test
@@ -235,7 +235,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.dispose()'
+	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.dispose()'
 	 */
     @Test
 	public void testDispose() {
@@ -243,7 +243,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.resyncState(Renderer)'
+	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.resyncState(Renderer)'
 	 */
     @Test
 	public void testResyncState() {
@@ -251,7 +251,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.setLayerState(IRenderContext, int)'
+	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.setLayerState(IRenderContext, int)'
 	 */
     @Test
 	public void testSetLayerState() {
@@ -259,7 +259,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.stopRendering()'
+	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.stopRendering()'
 	 */
     @Test
 	public void testStopRendering() {
@@ -267,7 +267,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.render()'
+	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.render()'
 	 */
 	@Ignore
     @Test
@@ -294,7 +294,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.getContext()'
+	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.getContext()'
 	 */
     @Test
 	public void testGetContext() {
@@ -302,7 +302,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.getRenderer()'
+	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.getRenderer()'
 	 */
     @Test
 	public void testGetRenderer() {
@@ -310,7 +310,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.addLayerListener(RenderContext)'
+	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.addLayerListener(RenderContext)'
 	 */
     @Test
 	public void testAddLayerListener() {
@@ -318,7 +318,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.render(Envelope)'
+	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.render(Envelope)'
 	 */
     @Ignore
     @Test

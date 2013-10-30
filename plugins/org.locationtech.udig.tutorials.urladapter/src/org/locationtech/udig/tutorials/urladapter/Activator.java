@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.urladapter;
+package org.locationtech.udig.tutorials.urladapter;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -19,7 +19,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "net.refractions.udig.tutorials.urladapter";
+	public static final String PLUGIN_ID = "org.locationtech.udig.tutorials.urladapter";
 
 	// The shared instance
 	private static Activator plugin;

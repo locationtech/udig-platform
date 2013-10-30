@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.tool.display;
+package org.locationtech.udig.project.ui.internal.tool.display;
 
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -26,49 +26,49 @@ import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.core.filter.AdaptingFilter;
-import net.refractions.udig.core.filter.AdaptingFilterFactory;
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.internal.ui.UDIGDNDProcessor;
-import net.refractions.udig.internal.ui.UDIGDropHandler;
-import net.refractions.udig.internal.ui.UDigByteAndLocalTransfer;
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.internal.ui.operations.OperationCategory;
-import net.refractions.udig.internal.ui.operations.OperationMenuFactory;
-import net.refractions.udig.internal.ui.operations.RunOperationsAction;
-import net.refractions.udig.project.EditManagerEvent;
-import net.refractions.udig.project.IEditManagerListener;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.commands.CreateMapCommand;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
-import net.refractions.udig.project.ui.internal.MapEditor;
-import net.refractions.udig.project.ui.internal.MapEditorPart;
-import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
-import net.refractions.udig.project.ui.internal.MapPart;
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.internal.actions.Delete;
-import net.refractions.udig.project.ui.internal.tool.ToolContext;
-import net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl;
-import net.refractions.udig.project.ui.tool.IContextMenuContributionTool;
-import net.refractions.udig.project.ui.tool.IToolManager;
-import net.refractions.udig.project.ui.tool.ModalTool;
-import net.refractions.udig.project.ui.tool.Tool;
-import net.refractions.udig.project.ui.tool.ToolConstants;
-import net.refractions.udig.project.ui.tool.options.PreferencesShortcutToolOptionsContributionItem;
-import net.refractions.udig.project.ui.viewers.MapEditDomain;
-import net.refractions.udig.ui.IDropAction;
-import net.refractions.udig.ui.IDropHandlerListener;
-import net.refractions.udig.ui.UDIGDragDropUtilities;
-import net.refractions.udig.ui.ViewerDropLocation;
-import net.refractions.udig.ui.operations.LazyOpFilter;
-import net.refractions.udig.ui.operations.OpAction;
-import net.refractions.udig.ui.operations.OpFilter;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.filter.AdaptingFilter;
+import org.locationtech.udig.core.filter.AdaptingFilterFactory;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.internal.ui.UDIGDNDProcessor;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
+import org.locationtech.udig.internal.ui.UDigByteAndLocalTransfer;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.internal.ui.operations.OperationCategory;
+import org.locationtech.udig.internal.ui.operations.OperationMenuFactory;
+import org.locationtech.udig.internal.ui.operations.RunOperationsAction;
+import org.locationtech.udig.project.EditManagerEvent;
+import org.locationtech.udig.project.IEditManagerListener;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.commands.CreateMapCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.project.ui.internal.MapEditor;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.internal.actions.Delete;
+import org.locationtech.udig.project.ui.internal.tool.ToolContext;
+import org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl;
+import org.locationtech.udig.project.ui.tool.IContextMenuContributionTool;
+import org.locationtech.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.project.ui.tool.ModalTool;
+import org.locationtech.udig.project.ui.tool.Tool;
+import org.locationtech.udig.project.ui.tool.ToolConstants;
+import org.locationtech.udig.project.ui.tool.options.PreferencesShortcutToolOptionsContributionItem;
+import org.locationtech.udig.project.ui.viewers.MapEditDomain;
+import org.locationtech.udig.ui.IDropAction;
+import org.locationtech.udig.ui.IDropHandlerListener;
+import org.locationtech.udig.ui.UDIGDragDropUtilities;
+import org.locationtech.udig.ui.ViewerDropLocation;
+import org.locationtech.udig.ui.operations.LazyOpFilter;
+import org.locationtech.udig.ui.operations.OpAction;
+import org.locationtech.udig.ui.operations.OpFilter;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -850,7 +850,7 @@ public class ToolManager implements IToolManager {
 
     /** (non-Javadoc)
      * 
-     * @see net.refractions.udig.project.ui.tool.IToolManager#contributeActiveModalTool(org.eclipse.jface.action.IMenuManager)
+     * @see org.locationtech.udig.project.ui.tool.IToolManager#contributeActiveModalTool(org.eclipse.jface.action.IMenuManager)
      */
     public void contributeActiveModalTool( IMenuManager manager ) {
         
@@ -1327,7 +1327,7 @@ public class ToolManager implements IToolManager {
         enterLock.lock();
         try{
             if (zoomToSelectionAction == null) {
-                zoomToSelectionAction = getToolAction("net.refractions.udig.tool.default.show.selection", "net.refractions.udig.tool.category.zoom");
+                zoomToSelectionAction = getToolAction("org.locationtech.udig.tool.default.show.selection", "org.locationtech.udig.tool.category.zoom");
             }
             
             return zoomToSelectionAction;
@@ -1373,8 +1373,8 @@ public class ToolManager implements IToolManager {
      * 
      * @param cbmanager
      * @param bars
-     * @see net.refractions.udig.project.ui.tool.ModalTool
-     * @see net.refractions.udig.project.ui.tool.ActionTool
+     * @see org.locationtech.udig.project.ui.tool.ModalTool
+     * @see org.locationtech.udig.project.ui.tool.ActionTool
      */
     public void contributeToCoolBar( SubCoolBarManager cbmanager, IActionBars bars ) {
         cbmanager.setVisible(true);
@@ -1386,7 +1386,7 @@ public class ToolManager implements IToolManager {
 
 
     /* (non-Javadoc)
-     * @see net.refractions.udig.project.ui.tool.IToolManager#contributeActionTools(org.eclipse.jface.action.IToolBarManager, org.eclipse.ui.IActionBars)
+     * @see org.locationtech.udig.project.ui.tool.IToolManager#contributeActionTools(org.eclipse.jface.action.IToolBarManager, org.eclipse.ui.IActionBars)
      */
     public void contributeActionTools(IToolBarManager toolBarManager, IActionBars bars ) {
         toolBarManager.add(getBACKWARD_HISTORYAction());
@@ -1399,7 +1399,7 @@ public class ToolManager implements IToolManager {
     }
 
     /* (non-Javadoc)
-     * @see net.refractions.udig.project.ui.tool.IToolManager#contributeModalTools(org.eclipse.jface.action.IToolBarManager, org.eclipse.ui.IActionBars)
+     * @see org.locationtech.udig.project.ui.tool.IToolManager#contributeModalTools(org.eclipse.jface.action.IToolBarManager, org.eclipse.ui.IActionBars)
      */
     public void contributeModalTools(IToolBarManager toolBarManager, IActionBars bars ) {
         for( String id : categoryIds ) {
@@ -1799,7 +1799,7 @@ public class ToolManager implements IToolManager {
         String[] scopes = site.getKeyBindingService().getScopes();
         String[] newScopes = new String[scopes.length + 1];
         System.arraycopy(scopes, 0, newScopes, 1, scopes.length);
-        newScopes[0] = "net.refractions.udig.project.ui.tool"; //$NON-NLS-1$
+        newScopes[0] = "org.locationtech.udig.project.ui.tool"; //$NON-NLS-1$
         site.getKeyBindingService().setScopes(newScopes);
     }
 
@@ -1884,7 +1884,7 @@ public class ToolManager implements IToolManager {
 
     /**
      *  (non-Javadoc)
-     * @see net.refractions.udig.project.ui.tool.IToolManager#getActiveTool()
+     * @see org.locationtech.udig.project.ui.tool.IToolManager#getActiveTool()
      */
     public Tool getActiveTool() {
     	return activeModalToolProxy.getTool();

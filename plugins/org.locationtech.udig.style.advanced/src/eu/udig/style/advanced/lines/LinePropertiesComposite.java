@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.lines;
+package org.locationtech.udig.style.advanced.lines;
 
-import static eu.udig.style.advanced.utils.Utilities.sb;
+import static org.locationtech.udig.style.advanced.utils.Utilities.sb;
 
 import java.net.MalformedURLException;
 import java.util.List;
 
-import net.refractions.udig.style.sld.SLD;
+import org.locationtech.udig.style.sld.SLD;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -32,16 +32,16 @@ import org.geotools.styling.Graphic;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.Filter;
 
-import eu.udig.style.advanced.common.BoderParametersComposite;
-import eu.udig.style.advanced.common.FiltersComposite;
-import eu.udig.style.advanced.common.IStyleChangesListener;
-import eu.udig.style.advanced.common.styleattributeclasses.LineSymbolizerWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
-import eu.udig.style.advanced.internal.Messages;
-import eu.udig.style.advanced.lines.widgets.LineGeneralParametersComposite;
-import eu.udig.style.advanced.lines.widgets.LineLabelsParametersComposite;
-import eu.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.style.advanced.common.BoderParametersComposite;
+import org.locationtech.udig.style.advanced.common.FiltersComposite;
+import org.locationtech.udig.style.advanced.common.IStyleChangesListener;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.LineSymbolizerWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
+import org.locationtech.udig.style.advanced.internal.Messages;
+import org.locationtech.udig.style.advanced.lines.widgets.LineGeneralParametersComposite;
+import org.locationtech.udig.style.advanced.lines.widgets.LineLabelsParametersComposite;
+import org.locationtech.udig.style.advanced.utils.Utilities;
 
 /**
  * The line properties composite.

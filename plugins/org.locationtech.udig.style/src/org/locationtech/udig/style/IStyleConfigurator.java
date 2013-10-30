@@ -8,10 +8,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style;
+package org.locationtech.udig.style;
 
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.internal.Layer;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.internal.Layer;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.widgets.Composite;
@@ -115,7 +115,7 @@ import org.eclipse.ui.PartInitException;
 public abstract class IStyleConfigurator {
     
     /** extension point id **/
-    public static final String XPID = "net.refractions.udig.style.styleConfigurator"; //$NON-NLS-1$
+    public static final String XPID = "org.locationtech.udig.style.styleConfigurator"; //$NON-NLS-1$
     private String styleId;
     private String label;
     private IViewSite site;

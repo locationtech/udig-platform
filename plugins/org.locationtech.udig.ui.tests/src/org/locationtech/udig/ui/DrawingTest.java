@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
-import net.refractions.udig.ui.graphics.SWTGraphics;
+import org.locationtech.udig.ui.graphics.SWTGraphics;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;

@@ -1,27 +1,27 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.render.util;
+package org.locationtech.udig.project.internal.render.util;
 
-import net.refractions.udig.project.IAbstractContext;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.AbstractContext;
-import net.refractions.udig.project.internal.render.CompositeRenderContext;
-import net.refractions.udig.project.internal.render.MultiLayerRenderer;
-import net.refractions.udig.project.internal.render.RenderContext;
-import net.refractions.udig.project.internal.render.RenderExecutor;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.RenderPackage;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.internal.render.RendererCreator;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.render.ICompositeRenderContext;
-import net.refractions.udig.project.render.IMultiLayerRenderer;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderManager;
-import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplayListener;
+import org.locationtech.udig.project.IAbstractContext;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.AbstractContext;
+import org.locationtech.udig.project.internal.render.CompositeRenderContext;
+import org.locationtech.udig.project.internal.render.MultiLayerRenderer;
+import org.locationtech.udig.project.internal.render.RenderContext;
+import org.locationtech.udig.project.internal.render.RenderExecutor;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.internal.render.RendererCreator;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.render.ICompositeRenderContext;
+import org.locationtech.udig.project.render.IMultiLayerRenderer;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderManager;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -29,7 +29,7 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * TODO Purpose of net.refractions.udig.project.internal.render.util
+ * TODO Purpose of org.locationtech.udig.project.internal.render.util
  * <p>
  * </p>
  * 
@@ -154,12 +154,12 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.render.IRenderManager <em>IRender Manager</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.render.IRenderManager <em>IRender Manager</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.render.IRenderManager
+     * @see org.locationtech.udig.project.render.IRenderManager
      * @generated
      */
     public Adapter createIRenderManagerAdapter() {
@@ -167,12 +167,12 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.render.IViewportModel <em>IViewport Model</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.render.IViewportModel <em>IViewport Model</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.render.IViewportModel
+     * @see org.locationtech.udig.project.render.IViewportModel
      * @generated
      */
     public Adapter createIViewportModelAdapter() {
@@ -180,12 +180,12 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.render.IMultiLayerRenderer <em>IMulti Layer Renderer</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.render.IMultiLayerRenderer <em>IMulti Layer Renderer</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.render.IMultiLayerRenderer
+     * @see org.locationtech.udig.project.render.IMultiLayerRenderer
      * @generated
      */
     public Adapter createIMultiLayerRendererAdapter() {
@@ -193,12 +193,12 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.render.IRenderContext <em>IRender Context</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.render.IRenderContext <em>IRender Context</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.render.IRenderContext
+     * @see org.locationtech.udig.project.render.IRenderContext
      * @generated
      */
     public Adapter createIRenderContextAdapter() {
@@ -206,12 +206,12 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.render.IRenderer <em>IRenderer</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.render.IRenderer <em>IRenderer</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.render.IRenderer
+     * @see org.locationtech.udig.project.render.IRenderer
      * @generated
      */
     public Adapter createIRendererAdapter() {
@@ -219,12 +219,12 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.ILayer <em>ILayer</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.ILayer <em>ILayer</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.ILayer
+     * @see org.locationtech.udig.project.ILayer
      * @generated
      */
     public Adapter createILayerAdapter() {
@@ -233,13 +233,13 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
 
     /**
      * Creates a new adapter for an object of class '
-     * {@link net.refractions.udig.project.render.RenderManager <em>Manager</em>}'. <!--
+     * {@link org.locationtech.udig.project.render.RenderManager <em>Manager</em>}'. <!--
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * 
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.render.RenderManager
+     * @see org.locationtech.udig.project.internal.render.RenderManager
      * @generated
      */
     public Adapter createRenderManagerAdapter() {
@@ -247,12 +247,12 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.render.Renderer <em>Renderer</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.internal.render.Renderer <em>Renderer</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.render.Renderer
+     * @see org.locationtech.udig.project.internal.render.Renderer
      * @generated
      */
     public Adapter createRendererAdapter() {
@@ -261,13 +261,13 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
 
     /**
      * Creates a new adapter for an object of class '
-     * {@link net.refractions.udig.project.render.ViewportModel <em>Viewport Model</em>}'. <!--
+     * {@link org.locationtech.udig.project.render.ViewportModel <em>Viewport Model</em>}'. <!--
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * 
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.render.ViewportModel
+     * @see org.locationtech.udig.project.internal.render.ViewportModel
      * @generated
      */
     public Adapter createViewportModelAdapter() {
@@ -276,13 +276,13 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
 
     /**
      * Creates a new adapter for an object of class '
-     * {@link net.refractions.udig.project.render.RenderExecutor <em>Executor</em>}'. <!--
+     * {@link org.locationtech.udig.project.render.RenderExecutor <em>Executor</em>}'. <!--
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * 
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.render.RenderExecutor
+     * @see org.locationtech.udig.project.internal.render.RenderExecutor
      * @generated
      */
     public Adapter createRenderExecutorAdapter() {
@@ -304,12 +304,12 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.render.MultiLayerRenderer <em>Multi Layer Renderer</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.internal.render.MultiLayerRenderer <em>Multi Layer Renderer</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.render.MultiLayerRenderer
+     * @see org.locationtech.udig.project.internal.render.MultiLayerRenderer
      * @generated
      */
     public Adapter createMultiLayerRendererAdapter() {
@@ -317,12 +317,12 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.render.displayAdapter.IMapDisplayListener <em>IMap Display Listener</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener <em>IMap Display Listener</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.render.displayAdapter.IMapDisplayListener
+     * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener
      * @generated
      */
     public Adapter createIMapDisplayListenerAdapter() {

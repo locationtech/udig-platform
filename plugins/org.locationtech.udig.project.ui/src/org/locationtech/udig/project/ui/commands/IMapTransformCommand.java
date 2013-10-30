@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.commands;
+package org.locationtech.udig.project.ui.commands;
 
 /**
  * DrawCommand that is valid until the map is rerendered. Translation is an example. A Translation

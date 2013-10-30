@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.jgrass.core;
+package org.locationtech.udig.catalog.jgrass.core;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,26 +19,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveChangeEvent;
-import net.refractions.udig.catalog.IResolveChangeEvent.Type;
-import net.refractions.udig.catalog.IResolveDelta;
-import net.refractions.udig.catalog.IResolveDelta.Kind;
-import net.refractions.udig.catalog.IResolveFolder;
-import net.refractions.udig.catalog.IResolveManager;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.catalog.internal.CatalogImpl;
-import net.refractions.udig.catalog.internal.ResolveChangeEvent;
-import net.refractions.udig.catalog.internal.ResolveDelta;
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.catalog.ui.ISharedImages;
-import net.refractions.udig.ui.ExceptionDetailsDialog;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveChangeEvent;
+import org.locationtech.udig.catalog.IResolveChangeEvent.Type;
+import org.locationtech.udig.catalog.IResolveDelta;
+import org.locationtech.udig.catalog.IResolveDelta.Kind;
+import org.locationtech.udig.catalog.IResolveFolder;
+import org.locationtech.udig.catalog.IResolveManager;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.internal.CatalogImpl;
+import org.locationtech.udig.catalog.internal.ResolveChangeEvent;
+import org.locationtech.udig.catalog.internal.ResolveDelta;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.ISharedImages;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -49,7 +49,7 @@ import org.geotools.gce.grassraster.JGrassUtilities;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import eu.udig.catalog.jgrass.JGrassPlugin;
+import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
 
 /**
  * Represents the GRASS Mapset in the JGrass Location service for uDig.

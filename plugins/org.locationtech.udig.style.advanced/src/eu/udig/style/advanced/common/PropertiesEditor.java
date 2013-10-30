@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.common;
+package org.locationtech.udig.style.advanced.common;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.style.internal.StyleLayer;
-import net.refractions.udig.style.sld.SLD;
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
+import org.locationtech.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.sld.SLD;
+import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -36,11 +36,11 @@ import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.feature.type.Name;
 
-import eu.udig.style.advanced.common.styleattributeclasses.FeatureTypeStyleWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
-import eu.udig.style.advanced.internal.Messages;
-import eu.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.FeatureTypeStyleWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
+import org.locationtech.udig.style.advanced.internal.Messages;
+import org.locationtech.udig.style.advanced.utils.Utilities;
 
 /**
  * Common class for properties editors.

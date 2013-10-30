@@ -9,7 +9,7 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 import java.net.MalformedURLException;
 import java.net.URL;

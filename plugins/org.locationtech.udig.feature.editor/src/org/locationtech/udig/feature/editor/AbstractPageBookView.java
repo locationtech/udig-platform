@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.feature.editor;
+package org.locationtech.udig.feature.editor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -17,9 +17,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import net.refractions.udig.core.Util;
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.project.IMap;
+import org.locationtech.udig.core.Util;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.project.IMap;
 
 import org.eclipse.core.commands.common.EventManager;
 import org.eclipse.core.runtime.IAdaptable;

@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.issues">
+<schema targetNamespace="org.locationtech.udig.issues">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.issues" id="issue" name="issue"/>
+         <meta.schema plugin="org.locationtech.udig.issues" id="issue" name="issue"/>
       </appInfo>
       <documentation>
          Defines a type of issue.
@@ -55,7 +55,7 @@
                   The IIssue implementation.  Recommended that AbstractIssue is extended.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.issues.AbstractIssue"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.issues.AbstractIssue"/>
                </appInfo>
             </annotation>
          </attribute>

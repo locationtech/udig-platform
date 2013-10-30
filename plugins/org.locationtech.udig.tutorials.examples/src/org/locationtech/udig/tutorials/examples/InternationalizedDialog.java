@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.examples;
+package org.locationtech.udig.tutorials.examples;
 
-import net.refractions.udig.tutorials.examples.internal.Messages;
+import org.locationtech.udig.tutorials.examples.internal.Messages;
 
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;

@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.jgrass.activeregion.dialogs;
+package org.locationtech.udig.catalog.jgrass.activeregion.dialogs;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.project.internal.impl.UDIGFeatureStore;
-import net.refractions.udig.project.internal.impl.UDIGSimpleFeatureStore;
+import org.locationtech.udig.project.internal.impl.UDIGFeatureStore;
+import org.locationtech.udig.project.internal.impl.UDIGSimpleFeatureStore;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;

@@ -8,9 +8,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.location;
+package org.locationtech.udig.location;
 
-import net.refractions.udig.core.AbstractUdigUIPlugin;
+import org.locationtech.udig.core.AbstractUdigUIPlugin;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
@@ -24,7 +24,7 @@ import org.eclipse.core.runtime.Status;
 public class LocationUIPlugin extends AbstractUdigUIPlugin {
 
 	private static LocationUIPlugin INSTANCE;
-    public static String ID = "net.refractions.udig.location"; //$NON-NLS-1$
+    public static String ID = "org.locationtech.udig.location"; //$NON-NLS-1$
     /** Icons path (value "icons/") */
     public final static String ICONS_PATH = "icons/";//$NON-NLS-1$
     
@@ -64,7 +64,7 @@ public class LocationUIPlugin extends AbstractUdigUIPlugin {
      * It is much prefered to do this:
      * 
      * <pre><code>
-     * private static final String RENDERING = &quot;net.refractions.udig.project/render/trace&quot;;
+     * private static final String RENDERING = &quot;org.locationtech.udig.project/render/trace&quot;;
      * if (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
      *     System.out.println(&quot;your message here&quot;);
      * }
@@ -107,7 +107,7 @@ public class LocationUIPlugin extends AbstractUdigUIPlugin {
     }
 
 	/* (non-Javadoc)
-	 * @see net.refractions.udig.core.AbstractUdigUIPlugin#getIconPath()
+	 * @see org.locationtech.udig.core.AbstractUdigUIPlugin#getIconPath()
 	 */
 	public IPath getIconPath() {
 		return new Path(ICONS_PATH);

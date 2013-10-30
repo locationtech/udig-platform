@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.element.extensible.impl;
+package org.locationtech.udig.project.internal.element.extensible.impl;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.refractions.udig.project.internal.render.impl.ScaleUtils;
+import org.locationtech.udig.project.internal.render.impl.ScaleUtils;
 
 import org.geotools.data.ows.CRSEnvelope;
 import org.geotools.geometry.jts.ReferencedEnvelope;

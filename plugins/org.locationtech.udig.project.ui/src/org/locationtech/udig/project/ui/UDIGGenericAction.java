@@ -9,18 +9,18 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui;
+package org.locationtech.udig.project.ui;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import net.refractions.udig.core.filter.AdaptingFilter;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectElement;
-import net.refractions.udig.project.ui.internal.actions.Rename;
+import org.locationtech.udig.core.filter.AdaptingFilter;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.ui.internal.actions.Rename;
 
 import org.eclipse.emf.common.ui.action.WorkbenchWindowActionDelegate;
 import org.eclipse.jface.action.IAction;

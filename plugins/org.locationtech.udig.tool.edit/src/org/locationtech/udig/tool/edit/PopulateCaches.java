@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.edit;
+package org.locationtech.udig.tool.edit;
 
-import net.refractions.udig.tools.edit.EditBlackboardUtil;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.EditBlackboardUtil;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
 
 import org.eclipse.ui.IStartup;
 

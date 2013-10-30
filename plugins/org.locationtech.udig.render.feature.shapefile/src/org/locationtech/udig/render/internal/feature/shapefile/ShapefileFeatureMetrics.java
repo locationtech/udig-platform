@@ -9,19 +9,19 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.internal.feature.shapefile;
+package org.locationtech.udig.render.internal.feature.shapefile;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.core.MinMaxScaleCalculator;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.IRenderContext;
+import org.locationtech.udig.core.MinMaxScaleCalculator;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.IRenderContext;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.geotools.styling.Style;
@@ -36,8 +36,8 @@ import org.geotools.util.Range;
 public class ShapefileFeatureMetrics extends AbstractRenderMetrics {
 
     protected static List<String> EXPECTED = Collections.unmodifiableList(Arrays
-            .asList(new String[]{"net.refractions.udig.project.view",
-                    "net.refractions.udig.style.sld",}));
+            .asList(new String[]{"org.locationtech.udig.project.view",
+                    "org.locationtech.udig.style.sld",}));
 
     public ShapefileFeatureMetrics( IRenderContext context2, ShapefileFeatureMetricsFactory factory ) {
         super(context2, factory, EXPECTED);
@@ -57,7 +57,7 @@ public class ShapefileFeatureMetrics extends AbstractRenderMetrics {
     }
 
     /**
-     * @see net.refractions.udig.project.render.IRenderMetrics#createRenderer()
+     * @see org.locationtech.udig.project.render.IRenderMetrics#createRenderer()
      */
     public Renderer createRenderer() {
         Renderer renderer = new ShapefileFeatureRenderer();
@@ -73,7 +73,7 @@ public class ShapefileFeatureMetrics extends AbstractRenderMetrics {
 
     public Set<Range<Double>> getValidScaleRanges() {
         Style style = (Style) context.getLayer().getStyleBlackboard().get(
-                "net.refractions.udig.style.sld");
+                "org.locationtech.udig.style.sld");
         return MinMaxScaleCalculator.getValidScaleRanges(style);
     }
 }

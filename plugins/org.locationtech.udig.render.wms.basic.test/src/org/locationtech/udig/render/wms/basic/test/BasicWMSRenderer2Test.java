@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.render.wms.basic.test;
+package org.locationtech.udig.render.wms.basic.test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,12 +18,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.render.internal.wms.basic.BasicWMSRenderer2;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.render.internal.wms.basic.BasicWMSRenderer2;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.ows.Layer;

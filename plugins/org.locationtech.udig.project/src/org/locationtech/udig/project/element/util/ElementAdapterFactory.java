@@ -10,13 +10,13 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.element.util;
+package org.locationtech.udig.project.element.util;
 
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.element.*;
-import net.refractions.udig.project.element.ElementPackage;
-import net.refractions.udig.project.element.ProjectElementAdapter;
-import net.refractions.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.element.*;
+import org.locationtech.udig.project.element.ElementPackage;
+import org.locationtech.udig.project.element.ProjectElementAdapter;
+import org.locationtech.udig.project.internal.ProjectElement;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.notify.Adapter;
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see net.refractions.udig.project.element.ElementPackage
+ * @see org.locationtech.udig.project.element.ElementPackage
  * @generated
  */
 public class ElementAdapterFactory extends AdapterFactoryImpl {
@@ -115,13 +115,13 @@ public class ElementAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.element.ProjectElementAdapter <em>Project Element Adapter</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.element.ProjectElementAdapter <em>Project Element Adapter</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.element.ProjectElementAdapter
+     * @see org.locationtech.udig.project.element.ProjectElementAdapter
      * @generated
      */
     public Adapter createProjectElementAdapterAdapter() {
@@ -129,13 +129,13 @@ public class ElementAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.IProjectElement <em>IProject Element</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.IProjectElement <em>IProject Element</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.IProjectElement
+     * @see org.locationtech.udig.project.IProjectElement
      * @generated
      */
     public Adapter createIProjectElementAdapter() {
@@ -157,13 +157,13 @@ public class ElementAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.ProjectElement <em>Element</em>}'.
+     * Creates a new adapter for an object of class '{@link org.locationtech.udig.project.internal.ProjectElement <em>Element</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.refractions.udig.project.internal.ProjectElement
+     * @see org.locationtech.udig.project.internal.ProjectElement
      * @generated
      */
     public Adapter createProjectElementAdapter() {

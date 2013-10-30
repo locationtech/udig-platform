@@ -9,16 +9,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.trim.internal;
+package org.locationtech.udig.tools.trim.internal;
 
 import java.io.IOException;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.tools.edit.Behaviour;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.support.GeometryCreationUtil;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.tools.edit.Behaviour;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.support.GeometryCreationUtil;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
 
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.feature.FeatureCollection;
@@ -33,10 +33,10 @@ import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.LineString;
 
-import eu.udig.tools.internal.i18n.Messages;
-import eu.udig.tools.internal.ui.util.DialogUtil;
-import eu.udig.tools.internal.ui.util.LayerUtil;
-import eu.udig.tools.trim.TrimTool;
+import org.locationtech.udig.tools.internal.i18n.Messages;
+import org.locationtech.udig.tools.internal.ui.util.DialogUtil;
+import org.locationtech.udig.tools.internal.ui.util.LayerUtil;
+import org.locationtech.udig.tools.trim.TrimTool;
 
 /**
  * {@link Behaviour} to use the blackboard's linestring as a trimming line for

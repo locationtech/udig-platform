@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.geotiff.internal;
+package org.locationtech.udig.catalog.geotiff.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "net.refractions.udig.catalog.geotiff.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.catalog.geotiff.internal.messages"; //$NON-NLS-1$
 	public static String GeoTiffGeoResource_connect;
     public static String GeoTiffServiceExtension_badExt;
     public static String GeoTiffServiceExtension_notExist;

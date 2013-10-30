@@ -7,22 +7,22 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 import java.awt.Color;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IResolveChangeListener;
-import net.refractions.udig.core.IBlockingAdaptable;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.Interaction;
-import net.refractions.udig.ui.palette.ColourScheme;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IResolveChangeListener;
+import org.locationtech.udig.core.IBlockingAdaptable;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.ui.palette.ColourScheme;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -58,7 +58,7 @@ public interface Layer
     public ContextModel getContextModel();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getContextModel <em>Context Model</em>}' container reference.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Layer#getContextModel <em>Context Model</em>}' container reference.
      * <!-- begin-user-doc --> TODO: Remove Context Model (1 to 1 relationship
      * does not added anything) <!-- end-user-doc -->
      * @param value the new value of the '<em>Context Model</em>' container reference.
@@ -88,7 +88,7 @@ public interface Layer
     Filter getFilter();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getFilter <em>Filter</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Layer#getFilter <em>Filter</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Filter</em>' attribute.
      * @see #getFilter()
@@ -119,7 +119,7 @@ public interface Layer
     public StyleBlackboard getStyleBlackboard();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getStyleBlackboard <em>Style Blackboard</em>}'
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Layer#getStyleBlackboard <em>Style Blackboard</em>}'
      * containment reference. <!-- begin-user-doc --> Note: The Rendering Process will be restarted
      * as appearance information changes, this is usual limited to a single Layer. <!-- end-user-doc
      * -->
@@ -138,7 +138,7 @@ public interface Layer
     public int getZorder();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getZorder <em>Zorder</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Layer#getZorder <em>Zorder</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Zorder</em>' attribute.
      * @see #getZorder()
@@ -159,7 +159,7 @@ public interface Layer
     public int getStatus();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getStatus <em>Status</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Layer#getStatus <em>Status</em>}' attribute.
      * <!-- begin-user-doc --> Indication of Layer status.
      * <p>
      * This is used to provide feedback for a Layers rendering status.
@@ -201,14 +201,14 @@ public interface Layer
      * <!-- end-user-doc -->
      * @return the value of the '<em>Shown</em>' attribute.
      * @see #setShown(boolean)
-     * @see net.refractions.udig.project.internal.ProjectPackage#getLayer_Shown()
+     * @see org.locationtech.udig.project.internal.ProjectPackage#getLayer_Shown()
      * @model
      * @generated
      */
     boolean isShown();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#isShown <em>Shown</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Layer#isShown <em>Shown</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Shown</em>' attribute.
@@ -245,7 +245,7 @@ public interface Layer
     public boolean isSelectable();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#isSelectable <em>Selectable</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Layer#isSelectable <em>Selectable</em>}' attribute.
      * <!-- begin-user-doc --> Used by the user to control which layers are selectable,
      * may be ignored for GeoResources that do not support editing. <!-- end-user-doc -->
      * @param value the new value of the '<em>Selectable</em>' attribute.
@@ -264,7 +264,7 @@ public interface Layer
     public String getName();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getName <em>Name</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Layer#getName <em>Name</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Name</em>' attribute.
      * @see #getName()
@@ -275,12 +275,12 @@ public interface Layer
     /**
      * Returns the layer reference information..
      * 
-     * @model type="net.refractions.udig.project.internal.CatalogRef"
+     * @model type="org.locationtech.udig.project.internal.CatalogRef"
      */
     CatalogRef getCatalogRef();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getCatalogRef <em>Catalog Ref</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Layer#getCatalogRef <em>Catalog Ref</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Catalog Ref</em>' attribute.
      * @see #getCatalogRef()
@@ -298,7 +298,7 @@ public interface Layer
     public URL getID();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getID <em>ID</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Layer#getID <em>ID</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>ID</em>' attribute.
      * @see #getID()
@@ -316,7 +316,7 @@ public interface Layer
     public boolean isVisible();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#isVisible <em>Visible</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Layer#isVisible <em>Visible</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Visible</em>' attribute.
      * @see #isVisible()
@@ -332,7 +332,7 @@ public interface Layer
     public IGeoResource getGeoResource();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getGeoResource <em>Geo Resource</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Layer#getGeoResource <em>Geo Resource</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Geo Resource</em>' attribute.
      * @see #getGeoResource()
@@ -361,7 +361,7 @@ public interface Layer
     public ImageDescriptor getIcon();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getIcon <em>Icon</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Layer#getIcon <em>Icon</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Icon</em>' attribute.
@@ -411,7 +411,7 @@ public interface Layer
     CoordinateReferenceSystem getCRS();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getCRS <em>CRS</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Layer#getCRS <em>CRS</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>CRS</em>' attribute.
      * @see #getCRS()
@@ -443,7 +443,7 @@ public interface Layer
      * 
      * @return
      */
-    net.refractions.udig.project.internal.Map getMapInternal();
+    org.locationtech.udig.project.internal.Map getMapInternal();
 
     /**
      * @return
@@ -452,7 +452,7 @@ public interface Layer
     ColourScheme getColourScheme();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getColourScheme <em>Colour Scheme</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Layer#getColourScheme <em>Colour Scheme</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Colour Scheme</em>' attribute.
      * @see #getColourScheme()
@@ -468,7 +468,7 @@ public interface Layer
     Color getDefaultColor();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getDefaultColor <em>Default Color</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Layer#getDefaultColor <em>Default Color</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Default Color</em>' attribute.
      * @see #getDefaultColor()

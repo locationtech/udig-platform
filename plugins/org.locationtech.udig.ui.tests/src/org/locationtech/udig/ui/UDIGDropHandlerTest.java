@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -17,9 +17,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
-import net.refractions.udig.internal.ui.UDIGDropHandler;
-import net.refractions.udig.ui.AcceptLessTen.Data;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
+import org.locationtech.udig.ui.AcceptLessTen.Data;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.junit.After;

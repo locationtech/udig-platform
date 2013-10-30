@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.wizard.export.image;
+package org.locationtech.udig.project.ui.wizard.export.image;
 
 import java.awt.Graphics2D;
 import java.awt.geom.NoninvertibleTransformException;
@@ -23,20 +23,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceFactory;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.core.internal.Icons;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.render.RenderException;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.ApplicationGIS.DrawMapParameter;
-import net.refractions.udig.project.ui.BoundsStrategy;
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceFactory;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.core.internal.Icons;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.ApplicationGIS.DrawMapParameter;
+import org.locationtech.udig.project.ui.BoundsStrategy;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;

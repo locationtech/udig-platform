@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.commands.edit;
+package org.locationtech.udig.project.internal.commands.edit;
 
 import java.awt.Rectangle;
 import java.io.IOException;
@@ -20,16 +20,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.refractions.udig.core.internal.FeatureUtils;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.LayerEvent;
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Messages;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.impl.LayerImpl;
-import net.refractions.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.LayerEvent;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.impl.LayerImpl;
+import org.locationtech.udig.project.internal.render.ViewportModel;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;

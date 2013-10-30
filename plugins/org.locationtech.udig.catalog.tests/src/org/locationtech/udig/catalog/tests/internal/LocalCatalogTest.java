@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.tests.internal;
+package org.locationtech.udig.catalog.tests.internal;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -20,13 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceInfo;
-import net.refractions.udig.catalog.internal.CatalogImpl;
-import net.refractions.udig.catalog.tests.AbstractCatalogTest;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.internal.CatalogImpl;
+import org.locationtech.udig.catalog.tests.AbstractCatalogTest;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -45,7 +45,7 @@ public class LocalCatalogTest extends AbstractCatalogTest {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.catalog.tests.AbstractCatalogTest#getResolve()
+     * @see org.locationtech.udig.catalog.tests.AbstractCatalogTest#getResolve()
      */
     protected ICatalog getResolve() {
         return instance;
@@ -173,7 +173,7 @@ public class LocalCatalogTest extends AbstractCatalogTest {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.catalog.tests.AbstractCatalogTest#mutable()
+     * @see org.locationtech.udig.catalog.tests.AbstractCatalogTest#mutable()
      */
     protected boolean mutable() {
         return true;
@@ -182,7 +182,7 @@ public class LocalCatalogTest extends AbstractCatalogTest {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.catalog.tests.AbstractCatalogTest#getSearchBounds()
+     * @see org.locationtech.udig.catalog.tests.AbstractCatalogTest#getSearchBounds()
      */
     protected Envelope getSearchBounds() {
         return new Envelope(-180,180,-90,90);
@@ -191,7 +191,7 @@ public class LocalCatalogTest extends AbstractCatalogTest {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.catalog.tests.AbstractCatalogTest#getSearchString()
+     * @see org.locationtech.udig.catalog.tests.AbstractCatalogTest#getSearchString()
      */
     protected String getSearchString() {
         return "Test"; //$NON-NLS-1$
@@ -200,7 +200,7 @@ public class LocalCatalogTest extends AbstractCatalogTest {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.catalog.tests.AbstractResolveTest#hasParent()
+     * @see org.locationtech.udig.catalog.tests.AbstractResolveTest#hasParent()
      */
     protected boolean hasParent() {
         return false;
@@ -209,7 +209,7 @@ public class LocalCatalogTest extends AbstractCatalogTest {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.catalog.tests.AbstractResolveTest#isLeaf()
+     * @see org.locationtech.udig.catalog.tests.AbstractResolveTest#isLeaf()
      */
     protected boolean isLeaf() {
         return false;

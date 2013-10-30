@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.omsbox.view.widgets;
+package org.locationtech.udig.omsbox.view.widgets;
 
 import java.io.File;
 import java.net.URL;
@@ -15,11 +15,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.internal.ui.UDigByteAndLocalTransfer;
-import net.refractions.udig.project.internal.impl.LayerImpl;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.internal.ui.UDigByteAndLocalTransfer;
+import org.locationtech.udig.project.internal.impl.LayerImpl;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -49,9 +49,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
-import eu.udig.omsbox.OmsBoxPlugin;
-import eu.udig.omsbox.core.FieldData;
-import eu.udig.omsbox.utils.OmsBoxConstants;
+import org.locationtech.udig.omsbox.OmsBoxPlugin;
+import org.locationtech.udig.omsbox.core.FieldData;
+import org.locationtech.udig.omsbox.utils.OmsBoxConstants;
 
 /**
  * Class representing an swt files input list.

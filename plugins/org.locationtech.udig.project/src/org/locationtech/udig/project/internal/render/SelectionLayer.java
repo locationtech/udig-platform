@@ -7,17 +7,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.render;
+package org.locationtech.udig.project.internal.render;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerDecorator;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.internal.impl.LayerImpl;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerDecorator;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.impl.LayerImpl;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -25,7 +25,7 @@ import org.geotools.styling.Style;
 import org.opengis.filter.Filter;
 
 /**
- * TODO Purpose of net.refractions.udig.project.internal.render
+ * TODO Purpose of org.locationtech.udig.project.internal.render
  * <p>
  * </p>
  * 
@@ -48,14 +48,14 @@ public class SelectionLayer extends LayerDecorator {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.Layer#isVisible()
+     * @see org.locationtech.udig.project.internal.Layer#isVisible()
      */
     public boolean isVisible() {
         return layer.isVisible() && !Filter.EXCLUDE.equals(getFilter());
     }
 
     /**
-     * @see net.refractions.udig.project.internal.Layer#getStyleBlackboard()
+     * @see org.locationtech.udig.project.internal.Layer#getStyleBlackboard()
      * @uml.property name="styleBlackboard"
      */
     public StyleBlackboard getStyleBlackboard() {
@@ -84,7 +84,7 @@ public class SelectionLayer extends LayerDecorator {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.Layer#setStyleBlackboard(net.refractions.udig.project.StyleBlackboard)
+     * @see org.locationtech.udig.project.internal.Layer#setStyleBlackboard(org.locationtech.udig.project.StyleBlackboard)
      * @uml.property name="styleBlackboard"
      */
     public void setStyleBlackboard( StyleBlackboard value ) {
@@ -95,7 +95,7 @@ public class SelectionLayer extends LayerDecorator {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.LayerDecorator#getZorder()
+     * @see org.locationtech.udig.project.internal.LayerDecorator#getZorder()
      */
     @Override
     public int getZorder() {
@@ -114,7 +114,7 @@ public class SelectionLayer extends LayerDecorator {
 
     
     /**
-     * @see net.refractions.udig.project.internal.Layer#setStatus(int)
+     * @see org.locationtech.udig.project.internal.Layer#setStatus(int)
      */
     public void setStatus( int status ) {
         // FIXME: Selection layer is always setting wait on us
@@ -124,14 +124,14 @@ public class SelectionLayer extends LayerDecorator {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.LayerDecorator#setStatusMessage(java.lang.String)
+     * @see org.locationtech.udig.project.internal.LayerDecorator#setStatusMessage(java.lang.String)
      */
     public void setStatusMessage( String message ) {
         this.message = message;
     }
 
     /**
-     * @see net.refractions.udig.project.internal.LayerDecorator#getStatusMessage()
+     * @see org.locationtech.udig.project.internal.LayerDecorator#getStatusMessage()
      */
     public String getStatusMessage() {
         return message;

@@ -9,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.merge;
+package org.locationtech.udig.tools.merge;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -18,13 +18,13 @@ import java.util.List;
 
 import org.opengis.feature.simple.SimpleFeature;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
-import net.refractions.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ui.commands.SelectionBoxCommand;
+import org.locationtech.udig.project.ui.tool.IToolContext;
 
 import com.vividsolutions.jts.geom.Envelope;
 
-import eu.udig.tools.merge.internal.view.MergeView;
+import org.locationtech.udig.tools.merge.internal.view.MergeView;
 
 /**
  * Stores the status values of merge interactions.

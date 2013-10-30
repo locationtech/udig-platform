@@ -7,22 +7,22 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit;
+package org.locationtech.udig.tools.edit;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.tools.edit.activator.ClearCurrentSelectionActivator;
-import net.refractions.udig.tools.edit.activator.DrawCurrentGeomVerticesActivator;
-import net.refractions.udig.tools.edit.activator.DrawGeomsActivator;
-import net.refractions.udig.tools.edit.activator.EditStateListenerActivator;
-import net.refractions.udig.tools.edit.activator.SetRenderingFilter;
-import net.refractions.udig.tools.edit.activator.DrawGeomsActivator.DrawType;
-import net.refractions.udig.tools.edit.behaviour.DefaultCancelBehaviour;
-import net.refractions.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
-import net.refractions.udig.tools.edit.enablement.ValidToolDetectionActivator;
+import org.locationtech.udig.tools.edit.activator.ClearCurrentSelectionActivator;
+import org.locationtech.udig.tools.edit.activator.DrawCurrentGeomVerticesActivator;
+import org.locationtech.udig.tools.edit.activator.DrawGeomsActivator;
+import org.locationtech.udig.tools.edit.activator.EditStateListenerActivator;
+import org.locationtech.udig.tools.edit.activator.SetRenderingFilter;
+import org.locationtech.udig.tools.edit.activator.DrawGeomsActivator.DrawType;
+import org.locationtech.udig.tools.edit.behaviour.DefaultCancelBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
+import org.locationtech.udig.tools.edit.enablement.ValidToolDetectionActivator;
 
 import org.opengis.feature.simple.SimpleFeature;
 

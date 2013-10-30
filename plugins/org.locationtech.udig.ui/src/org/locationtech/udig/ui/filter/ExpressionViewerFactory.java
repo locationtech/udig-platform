@@ -8,13 +8,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.filter;
+package org.locationtech.udig.ui.filter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.internal.ui.UiPlugin;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -93,7 +93,7 @@ public abstract class ExpressionViewerFactory extends ViewerFactory<IExpressionV
     // Factory and Extension Point Support
     //
     /** General purpose {@link IFilterViewer} suitable for use as a default */
-    public static final String CQL_EXPRESSION_VIEWER = "net.refractions.udig.ui.filter.cqlExpressionViewer";
+    public static final String CQL_EXPRESSION_VIEWER = "org.locationtech.udig.ui.filter.cqlExpressionViewer";
 
     /** Extension point ID each "expressionViewer" will be processed into our {@link #factoryList()} */
     public static final String FILTER_VIEWER_EXTENSION = FilterViewerFactory.FILTER_VIEWER_EXTENSION;

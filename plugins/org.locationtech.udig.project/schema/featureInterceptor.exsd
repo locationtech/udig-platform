@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.project" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.project" id="featureInterceptor" name="Feature Interceptor"/>
+         <meta.schema plugin="org.locationtech.udig.project" id="featureInterceptor" name="Feature Interceptor"/>
       </appInfo>
       <documentation>
          Used to process a feature during creation.
@@ -79,7 +79,7 @@ This is only ran if the feature is created by CreateFeatureCommand at this time.
                   The FeatureInterceptor class.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.project.interceptor.FeatureInterceptor"/>
+                  <meta.attribute kind="java" basedOn=":org.locationtech.udig.project.interceptor.FeatureInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>

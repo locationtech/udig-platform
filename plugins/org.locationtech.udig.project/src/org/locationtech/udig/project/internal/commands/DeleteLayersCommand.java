@@ -8,17 +8,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.commands;
+package org.locationtech.udig.project.internal.commands;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.Messages;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -53,7 +53,7 @@ public class DeleteLayersCommand extends AbstractCommand implements UndoableMapC
     }
 
     /**
-     * @see net.refractions.udig.project.command.UndoableCommand#rollback()
+     * @see org.locationtech.udig.project.command.UndoableCommand#rollback()
      */
     public void rollback( IProgressMonitor monitor ) throws Exception {
         map.getMapLayers().addAll(index, removedLayers);
@@ -62,7 +62,7 @@ public class DeleteLayersCommand extends AbstractCommand implements UndoableMapC
     }
 
     /**
-     * @see net.refractions.udig.project.command.MapCommand#run()
+     * @see org.locationtech.udig.project.command.MapCommand#run()
      */
     public void run( IProgressMonitor monitor ) throws Exception {
 
@@ -80,7 +80,7 @@ public class DeleteLayersCommand extends AbstractCommand implements UndoableMapC
     }
 
     /**
-     * @see net.refractions.udig.project.command.MapCommand#getName()
+     * @see org.locationtech.udig.project.command.MapCommand#getName()
      */
     public String getName() {
         // TODO Internationalization

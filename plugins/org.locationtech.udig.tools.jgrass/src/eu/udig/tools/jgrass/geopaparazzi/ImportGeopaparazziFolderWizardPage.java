@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.tools.jgrass.geopaparazzi;
+package org.locationtech.udig.tools.jgrass.geopaparazzi;
 
 import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-import eu.udig.tools.jgrass.JGrassToolsPlugin;
+import org.locationtech.udig.tools.jgrass.JGrassToolsPlugin;
 
 /**
  * @author Andrea Antonello (www.hydrologis.com)

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.test;
+package org.locationtech.udig.issues.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.issues.IIssue;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.issues.IIssue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -55,7 +55,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.add(IIssue)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.IssuesList.add(IIssue)'
      */
     @Test
     public void testAddIIssue() {
@@ -107,7 +107,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     }
     
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.add(int, IIssue)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.IssuesList.add(int, IIssue)'
      */
     @Test
     public void testAddIntIIssue() {
@@ -133,7 +133,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     }
     
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.addAll(Collection<? extends IIssue>)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.IssuesList.addAll(Collection<? extends IIssue>)'
      */
     @Test
     public void testAddAllCollectionOfQextendsIIssue() {
@@ -155,7 +155,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.addAll(int, Collection<? extends IIssue>)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.IssuesList.addAll(int, Collection<? extends IIssue>)'
      */
     @Test
     public void testAddAllIntCollectionOfQextendsIIssue() {
@@ -177,7 +177,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.addFirst(IIssue)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.IssuesList.addFirst(IIssue)'
      */
     @Test
     public void testAddFirstIIssue() {
@@ -189,7 +189,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.addLast(IIssue)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.IssuesList.addLast(IIssue)'
      */
     @Test
     public void testAddLastIIssue() {
@@ -200,7 +200,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.remove()'
+     * Test method for 'org.locationtech.udig.project.ui.internal.IssuesList.remove()'
      */
     @Test
     public void testRemove() {
@@ -213,7 +213,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.remove(int)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.IssuesList.remove(int)'
      */
     @Test
     public void testRemoveInt() {
@@ -226,7 +226,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.remove(Object)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.IssuesList.remove(Object)'
      */
     @Test
     public void testRemoveObject() {
@@ -239,7 +239,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.removeAll(Collection<?>)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.IssuesList.removeAll(Collection<?>)'
      */
     @Test
     public void testRemoveAllCollectionOfQ() {
@@ -261,7 +261,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.removeFirst()'
+     * Test method for 'org.locationtech.udig.project.ui.internal.IssuesList.removeFirst()'
      */
     @Test
     public void testRemoveFirst() {
@@ -275,7 +275,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.removeLast()'
+     * Test method for 'org.locationtech.udig.project.ui.internal.IssuesList.removeLast()'
      */
     @Test
     public void testRemoveLast() {

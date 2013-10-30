@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.impl;
+package org.locationtech.udig.tools.edit.impl;
 
 import static org.junit.Assert.assertNull;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.impl.EditManagerImpl;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.tools.edit.AbstractEditTool;
-import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
-import net.refractions.udig.tools.edit.EventType;
-import net.refractions.udig.tools.edit.support.Point;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.impl.EditManagerImpl;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.tools.edit.AbstractEditTool;
+import org.locationtech.udig.tools.edit.EditToolConfigurationHelper;
+import org.locationtech.udig.tools.edit.EventType;
+import org.locationtech.udig.tools.edit.support.Point;
 
 import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;

@@ -7,17 +7,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.edit;
+package org.locationtech.udig.tool.edit;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
-import net.refractions.udig.ui.operations.IOpFilterListener;
-import net.refractions.udig.ui.operations.PropertyValue;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.ui.operations.IOpFilterListener;
+import org.locationtech.udig.ui.operations.PropertyValue;
 
 /**
- * Returns true if the current editGeom, see {@link net.refractions.udig.tools.edit.EditToolHandler#getCurrentGeom()}
+ * Returns true if the current editGeom, see {@link org.locationtech.udig.tools.edit.EditToolHandler#getCurrentGeom()}
  * matches the type of the value passed.  Legal values are POLYGON, LINE, POINT, UNKNOWN
  * @author Jesse
  * @since 1.1.0

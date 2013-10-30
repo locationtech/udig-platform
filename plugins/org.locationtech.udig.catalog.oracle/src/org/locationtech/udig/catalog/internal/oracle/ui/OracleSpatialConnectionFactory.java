@@ -9,17 +9,17 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal.oracle.ui;
+package org.locationtech.udig.catalog.internal.oracle.ui;
 
 import java.io.Serializable;
 import java.net.URL;
 import java.util.Map;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.ServiceExtension2;
-import net.refractions.udig.catalog.internal.oracle.OracleServiceExtension;
-import net.refractions.udig.catalog.internal.oracle.OracleServiceImpl;
-import net.refractions.udig.catalog.ui.AbstractUDIGConnectionFactory;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.ServiceExtension2;
+import org.locationtech.udig.catalog.internal.oracle.OracleServiceExtension;
+import org.locationtech.udig.catalog.internal.oracle.OracleServiceImpl;
+import org.locationtech.udig.catalog.ui.AbstractUDIGConnectionFactory;
 
 /**
  * This appears to be glue code added by Jesse.

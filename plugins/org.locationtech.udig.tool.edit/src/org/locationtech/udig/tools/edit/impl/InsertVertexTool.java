@@ -7,25 +7,25 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.impl;
+package org.locationtech.udig.tools.edit.impl;
 
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.core.StaticProvider;
-import net.refractions.udig.tool.edit.internal.Messages;
-import net.refractions.udig.tools.edit.AbstractEditTool;
-import net.refractions.udig.tools.edit.Activator;
-import net.refractions.udig.tools.edit.Behaviour;
-import net.refractions.udig.tools.edit.DefaultEditToolBehaviour;
-import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
-import net.refractions.udig.tools.edit.EnablementBehaviour;
-import net.refractions.udig.tools.edit.activator.DrawGeomsActivator;
-import net.refractions.udig.tools.edit.activator.DrawGeomsActivator.DrawType;
-import net.refractions.udig.tools.edit.behaviour.AcceptOnDoubleClickBehaviour;
-import net.refractions.udig.tools.edit.behaviour.CursorControlBehaviour;
-import net.refractions.udig.tools.edit.behaviour.InsertVertexOnEdgeBehaviour;
-import net.refractions.udig.tools.edit.behaviour.SelectFeatureBehaviour;
+import org.locationtech.udig.core.StaticProvider;
+import org.locationtech.udig.tool.edit.internal.Messages;
+import org.locationtech.udig.tools.edit.AbstractEditTool;
+import org.locationtech.udig.tools.edit.Activator;
+import org.locationtech.udig.tools.edit.Behaviour;
+import org.locationtech.udig.tools.edit.DefaultEditToolBehaviour;
+import org.locationtech.udig.tools.edit.EditToolConfigurationHelper;
+import org.locationtech.udig.tools.edit.EnablementBehaviour;
+import org.locationtech.udig.tools.edit.activator.DrawGeomsActivator;
+import org.locationtech.udig.tools.edit.activator.DrawGeomsActivator.DrawType;
+import org.locationtech.udig.tools.edit.behaviour.AcceptOnDoubleClickBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.CursorControlBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.InsertVertexOnEdgeBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.SelectFeatureBehaviour;
 
 import org.eclipse.swt.SWT;
 import org.opengis.filter.spatial.Intersects;

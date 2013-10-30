@@ -8,10 +8,10 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package net.refractions.udig.style.sld.editor.internal;
+package org.locationtech.udig.style.sld.editor.internal;
 
 
-import net.refractions.udig.style.sld.internal.Messages;
+import org.locationtech.udig.style.sld.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;

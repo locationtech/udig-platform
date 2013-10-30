@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -15,14 +15,14 @@ import static org.junit.Assert.assertTrue;
 import java.awt.Dimension;
 import java.util.Iterator;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.provider.ContextModelItemProvider;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.WaitCondition;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.provider.ContextModelItemProvider;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.Viewer;

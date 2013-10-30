@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.internal.gridcoverage.basic;
+package org.locationtech.udig.render.internal.gridcoverage.basic;
 
 
 import org.eclipse.core.runtime.IStatus;
@@ -25,7 +25,7 @@ import org.osgi.framework.BundleContext;
  * @since 0.6.0
  */
 public class RendererPlugin extends Plugin {
-    public static final String ID = "net.refractions.udig.render.gridcoverage.basic"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.render.gridcoverage.basic"; //$NON-NLS-1$
     private static RendererPlugin plugin;
 
     /**
@@ -71,7 +71,7 @@ public class RendererPlugin extends Plugin {
      * @return the image descriptor
      */
     public static ImageDescriptor getImageDescriptor(String path) {
-        return AbstractUIPlugin.imageDescriptorFromPlugin("net.refractions.udig.render.gridcoverage.basic", path); //$NON-NLS-1$
+        return AbstractUIPlugin.imageDescriptorFromPlugin("org.locationtech.udig.render.gridcoverage.basic", path); //$NON-NLS-1$
     }
     
 }

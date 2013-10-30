@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.ui.internal.editor.policies;
+package org.locationtech.udig.printing.ui.internal.editor.policies;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.impl.LabelBoxPrinter;
-import net.refractions.udig.printing.ui.internal.editor.commands.RenameLabelCommand;
-import net.refractions.udig.printing.ui.internal.editor.figures.BoxFigure;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.impl.LabelBoxPrinter;
+import org.locationtech.udig.printing.ui.internal.editor.commands.RenameLabelCommand;
+import org.locationtech.udig.printing.ui.internal.editor.figures.BoxFigure;
 
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.DirectEditPolicy;

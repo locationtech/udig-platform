@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal.geotiff;
+package org.locationtech.udig.catalog.internal.geotiff;
 
 import java.io.File;
 import java.io.Serializable;
@@ -18,11 +18,11 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ServiceExtension2;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.catalog.geotiff.internal.Messages;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ServiceExtension2;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.geotiff.internal.Messages;
 
 import org.geotools.gce.geotiff.GeoTiffFormat;
 import org.geotools.gce.geotiff.GeoTiffFormatFactorySpi;

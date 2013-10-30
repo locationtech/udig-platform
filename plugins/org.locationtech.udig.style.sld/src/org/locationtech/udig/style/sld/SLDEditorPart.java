@@ -8,9 +8,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld;
+package org.locationtech.udig.style.sld;
 
-import net.refractions.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Layer;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
@@ -44,7 +44,7 @@ import org.geotools.styling.StyleBuilder;
  */
 public abstract class SLDEditorPart {
 
-    public static final String XPID = "net.refractions.udig.style.sld.sldEditorPart"; //$NON-NLS-1$
+    public static final String XPID = "org.locationtech.udig.style.sld.sldEditorPart"; //$NON-NLS-1$
 
     /** the ui control for the SLDEditor part * */
     private Composite page;

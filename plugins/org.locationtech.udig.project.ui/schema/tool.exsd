@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.render" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.render" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="net.refractions.udig.render" id="Tool" name="Tool"/>
+         <meta.schema plugin="org.locationtech.udig.render" id="Tool" name="Tool"/>
       </appinfo>
       <documentation>
          &lt;p&gt;The tool extension point allows third-party developers to develop new tools for UDIG and is one of the most used points of extension.  There are three different type of tools and two ways of grouping tools.  The three type of tools are as follows:&lt;/p&gt;
@@ -114,7 +114,7 @@
 This declaration can be overridden by the selectionProvider attribute of a particular tool.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.tool.selection.provider.AbstractMapEditorSelectionProvider"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.ui.tool.selection.provider.AbstractMapEditorSelectionProvider"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -201,7 +201,7 @@ For internationalization you should consider using %toolName.tooltip%, where too
                   The Tool implementation.  It is recommended that the AbstractTool class is exteneded for mouse tools.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.tool.SimpleTool"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.ui.tool.SimpleTool"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -218,7 +218,7 @@ For internationalization you should consider using %toolName.tooltip%, where too
                   The id of the category that the tool is a part of.  In the toolbar it will be part of the drop down menu.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="identifier" basedOn="net.refractions.udig.project.ui.tool/category/@id"/>
+                  <meta.attribute kind="identifier" basedOn="org.locationtech.udig.project.ui.tool/category/@id"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -236,7 +236,7 @@ See the command extension point.
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="identifier" basedOn="net.refractions.udig.project.ui.tool/toolCursor/@id"/>
+                  <meta.attribute kind="identifier" basedOn="org.locationtech.udig.project.ui.tool/toolCursor/@id"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -246,7 +246,7 @@ See the command extension point.
                   This handler will handle called when a command has been requested.  See the command extension point
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.tool.IToolHandler"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.ui.tool.IToolHandler"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -257,7 +257,7 @@ See the command extension point.
 If this attribute is not used then the selectionProvider attribute in the category declaration is used.  If that is null then the default is used (MapEditorSelectionProvider)
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.tool.selection.provider.AbstractMapEditorSelectionProvider"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.ui.tool.selection.provider.AbstractMapEditorSelectionProvider"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -294,7 +294,7 @@ If this attribute is not used then the selectionProvider attribute in the catego
                   The Tool implementation.  It is recommended that the AbstractTool class is exteneded for mouse tools.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.tool.AbstractTool:net.refractions.udig.project.ui.tool.Tool"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.ui.tool.AbstractTool:org.locationtech.udig.project.ui.tool.Tool"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -369,7 +369,7 @@ See the command extension point
                   The Tool implementation.  It is recommended that the AbstractTool class is exteneded for mouse tools.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.tool.AbstractActionTool"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.ui.tool.AbstractActionTool"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -425,7 +425,7 @@ See the command extension point
                   This handler will handle called when a command has been requested.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.tool.AbstractToolCommandHandler"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.ui.tool.AbstractToolCommandHandler"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -554,12 +554,12 @@ The system cursors can be accessed using one of the following constants: default
             <annotation>
                <documentation>
                   The id of the property extension to use.
-See net.refractions.udig.ui.objectProperty
+See org.locationtech.udig.ui.objectProperty
 
 It is the id of the property element which is a grandchild of the ObjectProperty element.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="identifier" basedOn="net.refractions.udig.ui.objectProperty/object/property/@id"/>
+                  <meta.attribute kind="identifier" basedOn="org.locationtech.udig.ui.objectProperty/object/property/@id"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -626,7 +626,7 @@ It is the id of the property element which is a grandchild of the ObjectProperty
          <attribute name="categoryID" type="string" use="required">
             <annotation>
                <documentation>
-                  This attribute should be the same as the id attribute of the category element of the operation extension point, which is located in the net.refractions.udig.ui plug-in.
+                  This attribute should be the same as the id attribute of the category element of the operation extension point, which is located in the org.locationtech.udig.ui plug-in.
                </documentation>
             </annotation>
          </attribute>

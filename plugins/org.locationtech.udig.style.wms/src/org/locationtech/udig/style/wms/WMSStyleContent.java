@@ -8,15 +8,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.wms;
+package org.locationtech.udig.style.wms;
 
 import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.StyleContent;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.StyleContent;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
@@ -28,7 +28,7 @@ public class WMSStyleContent extends StyleContent {
     /**
      * Key used to store a wms style on the style blackboard of a layer.
      */
-    public static final String WMSSTYLE = "net.refractions.udig.render.wmsStyle"; //$NON-NLS-1$
+    public static final String WMSSTYLE = "org.locationtech.udig.render.wmsStyle"; //$NON-NLS-1$
 
 	public WMSStyleContent() {
 		super(WMSSTYLE);

@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.tools.jgrass.coverageexport;
+package org.locationtech.udig.tools.jgrass.coverageexport;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.ui.ExceptionDetailsDialog;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -45,7 +45,7 @@ import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 
-import eu.udig.tools.jgrass.JGrassToolsPlugin;
+import org.locationtech.udig.tools.jgrass.JGrassToolsPlugin;
 
 /**
  * @author Andrea Antonello (www.hydrologis.com)

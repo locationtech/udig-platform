@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
- package eu.udig.style.jgrass.categories;
+ package org.locationtech.udig.style.jgrass.categories;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;

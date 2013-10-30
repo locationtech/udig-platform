@@ -4,10 +4,10 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
-import net.refractions.udig.project.internal.BlackboardEntry;
-import net.refractions.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.BlackboardEntry;
+import org.locationtech.udig.project.internal.ProjectPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
- * TODO Purpose of net.refractions.udig.project.internal.impl
+ * TODO Purpose of org.locationtech.udig.project.internal.impl
  * <p>
  * </p>
  * 

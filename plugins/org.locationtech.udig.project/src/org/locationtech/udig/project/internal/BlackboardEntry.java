@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * TODO Purpose of net.refractions.udig.project.internal
+ * TODO Purpose of org.locationtech.udig.project.internal
  * <p>
  * </p>
  * 
@@ -32,7 +32,7 @@ public interface BlackboardEntry extends EObject {
     String getKey();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.BlackboardEntry#getKey <em>Key</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.BlackboardEntry#getKey <em>Key</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Key</em>' attribute.
      * @see #getKey()
@@ -49,7 +49,7 @@ public interface BlackboardEntry extends EObject {
     String getMemento();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.BlackboardEntry#getMemento <em>Memento</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.BlackboardEntry#getMemento <em>Memento</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Memento</em>' attribute.
      * @see #getMemento()
@@ -66,7 +66,7 @@ public interface BlackboardEntry extends EObject {
     Class getObjectClass();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.BlackboardEntry#getObjectClass <em>Object Class</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.BlackboardEntry#getObjectClass <em>Object Class</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Object Class</em>' attribute.
      * @see #getObjectClass()
@@ -87,7 +87,7 @@ public interface BlackboardEntry extends EObject {
     Object getObject();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.BlackboardEntry#getObject <em>Object</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.BlackboardEntry#getObject <em>Object</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Object</em>' attribute.
      * @see #getObject()

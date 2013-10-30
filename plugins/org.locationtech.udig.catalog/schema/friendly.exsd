@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.catalog" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.catalog" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="net.refractions.udig.catalog" id="friendly" name="%friendly.name"/>
+         <meta.schema plugin="org.locationtech.udig.catalog" id="friendly" name="%friendly.name"/>
       </appinfo>
       <documentation>
          Allows additional associations be be discovered between peer geospatial resources (known as friends).
@@ -60,7 +60,7 @@
                   Class responsible for examining the source and checking in the catalog to see if it has any known friends.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.catalog.util.IFriend:"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.catalog.util.IFriend:"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -70,7 +70,7 @@
                   Used to perform an &quot;instanceof&quot; check to ensure friend relationship is limited to indicated class.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.catalog.IResolve"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.catalog.IResolve"/>
                </appinfo>
             </annotation>
          </attribute>

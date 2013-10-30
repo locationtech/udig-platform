@@ -9,13 +9,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.parallel.view;
+package org.locationtech.udig.tools.parallel.view;
 
 import java.util.Observable;
 import java.util.Observer;
 
-import net.refractions.udig.project.ui.IUDIGView;
-import net.refractions.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ui.IUDIGView;
+import org.locationtech.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
@@ -26,13 +26,13 @@ import org.eclipse.ui.part.ViewPart;
 import org.opengis.feature.simple.SimpleFeature;
 
 //import es.axios.udig.ui.editingtools.internal.i18n.Messages;
-import eu.udig.tools.internal.i18n.Messages;
+import org.locationtech.udig.tools.internal.i18n.Messages;
 //import es.axios.udig.ui.editingtools.precisionparallels.PrecisionParallelTool;
 //import es.axios.udig.ui.editingtools.precisionparallels.internal.ParallelContext;
 //import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsMode;
-import eu.udig.tools.parallel.ParallelTool;
-import eu.udig.tools.parallel.internal.ParallelContext;
-import eu.udig.tools.parallel.internal.PrecisionToolsMode;
+import org.locationtech.udig.tools.parallel.ParallelTool;
+import org.locationtech.udig.tools.parallel.internal.ParallelContext;
+import org.locationtech.udig.tools.parallel.internal.PrecisionToolsMode;
 
 
 
@@ -52,7 +52,7 @@ public class ParallelParametersView extends ViewPart implements IUDIGView, Obser
 	private ParallelContext				parallelContext		= null;
 	private ParallelParametersComposite	parametersComposite	= null;
 	private IToolContext				context				= null;
-	public static final String			id					= "eu.udig.tools.parallel.view.ParallelParametersView";	//$NON-NLS-1$
+	public static final String			id					= "org.locationtech.udig.tools.parallel.view.ParallelParametersView";	//$NON-NLS-1$
 
 	private cancelButtonAction			cancelButton		= null;
 	private acceptButtonAction			acceptButton		= null;

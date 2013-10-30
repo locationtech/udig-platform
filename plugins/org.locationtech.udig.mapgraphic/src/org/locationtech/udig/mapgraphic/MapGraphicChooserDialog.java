@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic;
+package org.locationtech.udig.mapgraphic;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,15 +16,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ui.ResolveLabelProviderSimple;
-import net.refractions.udig.catalog.ui.ResolveTitlesDecorator;
-import net.refractions.udig.mapgraphic.internal.MapGraphicResource;
-import net.refractions.udig.mapgraphic.internal.MapGraphicService;
-import net.refractions.udig.mapgraphic.internal.Messages;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ui.ResolveLabelProviderSimple;
+import org.locationtech.udig.catalog.ui.ResolveTitlesDecorator;
+import org.locationtech.udig.mapgraphic.internal.MapGraphicResource;
+import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
+import org.locationtech.udig.mapgraphic.internal.Messages;
+import org.locationtech.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogConstants;

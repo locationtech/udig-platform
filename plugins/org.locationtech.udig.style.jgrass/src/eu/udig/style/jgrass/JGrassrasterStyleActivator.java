@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.jgrass;
+package org.locationtech.udig.style.jgrass;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -20,7 +20,7 @@ import org.osgi.framework.BundleContext;
 public class JGrassrasterStyleActivator extends AbstractUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "eu.udig.style.jgrass";
+    public static final String PLUGIN_ID = "org.locationtech.udig.style.jgrass";
 
     // The shared instance
     private static JGrassrasterStyleActivator plugin;

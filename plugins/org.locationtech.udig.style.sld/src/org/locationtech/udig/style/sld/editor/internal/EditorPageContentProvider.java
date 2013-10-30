@@ -18,9 +18,9 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package net.refractions.udig.style.sld.editor.internal;
+package org.locationtech.udig.style.sld.editor.internal;
 
-import net.refractions.udig.style.sld.editor.EditorPageManager;
+import org.locationtech.udig.style.sld.editor.EditorPageManager;
 
 import org.eclipse.jface.preference.PreferenceContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;

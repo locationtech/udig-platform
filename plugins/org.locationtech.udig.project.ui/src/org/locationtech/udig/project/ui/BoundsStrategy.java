@@ -8,10 +8,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui;
+package org.locationtech.udig.project.ui;
 
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.FactoryException;
@@ -23,11 +23,11 @@ import org.opengis.referencing.operation.TransformException;
  * viewport. Or a particualr scale is required
  * 
  * This is used by
- * {@link ApplicationGIS#drawMap(net.refractions.udig.project.ui.ApplicationGIS.DrawMapParameter)}
+ * {@link ApplicationGIS#drawMap(org.locationtech.udig.project.ui.ApplicationGIS.DrawMapParameter)}
  * 
  * @author jesse
  * 
- * @see ApplicationGIS#drawMap(net.refractions.udig.project.ui.ApplicationGIS.DrawMapParameter)
+ * @see ApplicationGIS#drawMap(org.locationtech.udig.project.ui.ApplicationGIS.DrawMapParameter)
  */
 public class BoundsStrategy {
 

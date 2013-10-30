@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.project.render;
+package org.locationtech.udig.project.render;
 
 import java.awt.Dimension;
 import java.awt.Point;

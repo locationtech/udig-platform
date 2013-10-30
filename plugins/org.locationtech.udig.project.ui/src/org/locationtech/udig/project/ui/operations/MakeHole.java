@@ -9,18 +9,18 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.operations;
+package org.locationtech.udig.project.ui.operations;
 
-import net.refractions.udig.catalog.util.GeoToolsAdapters;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IStyleBlackboard;
-import net.refractions.udig.project.ProjectBlackboardConstants;
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.command.Command;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.ui.operations.IOp;
+import org.locationtech.udig.catalog.util.GeoToolsAdapters;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IStyleBlackboard;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.Command;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
@@ -93,7 +93,7 @@ public class MakeHole implements IOp {
                     Filter cut= ff.not( ff.within( ff.property( targetGeomName ), ff.literal(hole) ) );
                     
                     //put it on style blackboard
-                    //Key:  ProjectBlackboardConstants    String LAYER__DATA_QUERY = "net.refractions.udig.project.view"; //$NON-NLS-1$
+                    //Key:  ProjectBlackboardConstants    String LAYER__DATA_QUERY = "org.locationtech.udig.project.view"; //$NON-NLS-1$
                     IStyleBlackboard styleBlackboard = layer.getStyleBlackboard();
                     styleBlackboard.put(ProjectBlackboardConstants.LAYER__DATA_QUERY, cut);
                 }

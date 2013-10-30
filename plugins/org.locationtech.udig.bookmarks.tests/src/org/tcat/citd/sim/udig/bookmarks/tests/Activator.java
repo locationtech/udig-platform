@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.tcat.citd.sim.udig.bookmarks.tests;
+package org.locationtech.udig.bookmarks.tests;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -18,7 +18,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.tcat.citd.sim.udig.bookmarks.tests"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.locationtech.udig.bookmarks.tests"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;

@@ -10,7 +10,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.image.georeferencing.internal.ui;
+package org.locationtech.udig.image.georeferencing.internal.ui;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,18 +23,18 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Logger;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.mapgraphic.internal.MapGraphicService;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.MapCompositionEvent;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.commands.DeleteLayerCommand;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.MapCompositionEvent;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.commands.DeleteLayerCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
@@ -58,14 +58,14 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import eu.udig.image.georeferencing.internal.i18n.Messages;
-import eu.udig.image.georeferencing.internal.preferences.Preferences;
-import eu.udig.image.georeferencing.internal.process.MarkModel;
-import eu.udig.image.georeferencing.internal.ui.coordinatepanel.CoordinateTableComposite;
-import eu.udig.image.georeferencing.internal.ui.coordinatepanel.MapMarksGraphics;
-import eu.udig.image.georeferencing.internal.ui.imagepanel.ImageComposite;
-import eu.udig.image.georeferencing.internal.ui.message.InfoMessage;
-import eu.udig.image.georeferencing.internal.ui.message.InfoMessage.Type;
+import org.locationtech.udig.image.georeferencing.internal.i18n.Messages;
+import org.locationtech.udig.image.georeferencing.internal.preferences.Preferences;
+import org.locationtech.udig.image.georeferencing.internal.process.MarkModel;
+import org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.CoordinateTableComposite;
+import org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.MapMarksGraphics;
+import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.ImageComposite;
+import org.locationtech.udig.image.georeferencing.internal.ui.message.InfoMessage;
+import org.locationtech.udig.image.georeferencing.internal.ui.message.InfoMessage.Type;
 
 /**
  * Main composite of the georeferencing view.

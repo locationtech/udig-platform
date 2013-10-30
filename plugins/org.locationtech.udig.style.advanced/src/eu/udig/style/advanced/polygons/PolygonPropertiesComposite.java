@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.polygons;
+package org.locationtech.udig.style.advanced.polygons;
 
-import static eu.udig.style.advanced.utils.Utilities.sb;
+import static org.locationtech.udig.style.advanced.utils.Utilities.sb;
 
 import java.net.MalformedURLException;
 import java.util.List;
 
-import net.refractions.udig.style.sld.SLD;
+import org.locationtech.udig.style.sld.SLD;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -32,17 +32,17 @@ import org.geotools.styling.Graphic;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.Filter;
 
-import eu.udig.style.advanced.common.BoderParametersComposite;
-import eu.udig.style.advanced.common.FiltersComposite;
-import eu.udig.style.advanced.common.IStyleChangesListener;
-import eu.udig.style.advanced.common.styleattributeclasses.PolygonSymbolizerWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
-import eu.udig.style.advanced.internal.Messages;
-import eu.udig.style.advanced.polygons.widgets.PolygonFillParametersComposite;
-import eu.udig.style.advanced.polygons.widgets.PolygonGeneralParametersComposite;
-import eu.udig.style.advanced.polygons.widgets.PolygonLabelsParametersComposite;
-import eu.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.style.advanced.common.BoderParametersComposite;
+import org.locationtech.udig.style.advanced.common.FiltersComposite;
+import org.locationtech.udig.style.advanced.common.IStyleChangesListener;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.PolygonSymbolizerWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
+import org.locationtech.udig.style.advanced.internal.Messages;
+import org.locationtech.udig.style.advanced.polygons.widgets.PolygonFillParametersComposite;
+import org.locationtech.udig.style.advanced.polygons.widgets.PolygonGeneralParametersComposite;
+import org.locationtech.udig.style.advanced.polygons.widgets.PolygonLabelsParametersComposite;
+import org.locationtech.udig.style.advanced.utils.Utilities;
 
 /**
  * The polygon properties composite.

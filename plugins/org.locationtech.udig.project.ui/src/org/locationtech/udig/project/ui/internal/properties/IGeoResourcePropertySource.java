@@ -9,14 +9,14 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.properties;
+package org.locationtech.udig.project.ui.internal.properties;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ui.internal.Messages;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ui.internal.Messages;
 
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource2;

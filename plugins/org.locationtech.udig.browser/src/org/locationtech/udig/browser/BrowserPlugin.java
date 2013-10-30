@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.browser;
+package org.locationtech.udig.browser;
 
 
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -65,6 +65,6 @@ public class BrowserPlugin extends AbstractUIPlugin {
 	 * @return the image descriptor
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
-		return AbstractUIPlugin.imageDescriptorFromPlugin("net.refractions.udig.browser", path); //$NON-NLS-1$
+		return AbstractUIPlugin.imageDescriptorFromPlugin("org.locationtech.udig.browser", path); //$NON-NLS-1$
 	}
 }

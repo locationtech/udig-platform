@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.feature.editor.field;
+package org.locationtech.udig.feature.editor.field;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.resource.JFaceResources;

@@ -4,31 +4,31 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.ui.internal.tool.impl;
+package org.locationtech.udig.project.ui.internal.tool.impl;
 
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.refractions.udig.project.command.Command;
-import net.refractions.udig.project.command.EditCommand;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.NavCommand;
-import net.refractions.udig.project.command.factory.BasicCommandFactory;
-import net.refractions.udig.project.command.factory.EditCommandFactory;
-import net.refractions.udig.project.command.factory.NavigationCommandFactory;
-import net.refractions.udig.project.command.factory.SelectionCommandFactory;
-import net.refractions.udig.project.internal.impl.AbstractContextImpl;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.internal.render.impl.ScaleUtils;
-import net.refractions.udig.project.internal.render.impl.ScaleUtils.CalculateZoomLevelParameter;
-import net.refractions.udig.project.ui.commands.DrawCommandFactory;
-import net.refractions.udig.project.ui.commands.IDrawCommand;
-import net.refractions.udig.project.ui.internal.MapPart;
-import net.refractions.udig.project.ui.internal.tool.ToolContext;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.command.Command;
+import org.locationtech.udig.project.command.EditCommand;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.NavCommand;
+import org.locationtech.udig.project.command.factory.BasicCommandFactory;
+import org.locationtech.udig.project.command.factory.EditCommandFactory;
+import org.locationtech.udig.project.command.factory.NavigationCommandFactory;
+import org.locationtech.udig.project.command.factory.SelectionCommandFactory;
+import org.locationtech.udig.project.internal.impl.AbstractContextImpl;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.internal.render.impl.ScaleUtils;
+import org.locationtech.udig.project.internal.render.impl.ScaleUtils.CalculateZoomLevelParameter;
+import org.locationtech.udig.project.ui.commands.DrawCommandFactory;
+import org.locationtech.udig.project.ui.commands.IDrawCommand;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.tool.ToolContext;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
@@ -57,19 +57,19 @@ import com.vividsolutions.jts.geom.Coordinate;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl#getContextModel <em>Context Model</em>}</li>
- * <li>{@link net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl#getPixelSize <em>Pixel Size</em>}</li>
- * <li>{@link net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl#getViewportModel <em>Viewport Model</em>}</li>
- * <li>{@link net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl#getEditManager <em>Edit Manager</em>}</li>
- * <li>{@link net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl#getRenderManager <em>Render Manager</em>}</li>
- * <li>{@link net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl#getMapDisplay <em>Map Display</em>}</li>
- * <li>{@link net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl#getMap <em>Map</em>}</li>
- * <li>{@link net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl#getProject <em>Project</em>}</li>
- * <li>{@link net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl#getViewportPane <em>Viewport Pane</em>}</li>
- * <li>{@link net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl#getDrawFactory <em>Draw Factory</em>}</li>
- * <li>{@link net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl#getEditFactory <em>Edit Factory</em>}</li>
- * <li>{@link net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl#getNavigationFactory <em>Navigation Factory</em>}</li>
- * <li>{@link net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl#getSelectionFactory <em>Selection Factory</em>}</li>
+ * <li>{@link org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl#getContextModel <em>Context Model</em>}</li>
+ * <li>{@link org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl#getPixelSize <em>Pixel Size</em>}</li>
+ * <li>{@link org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl#getViewportModel <em>Viewport Model</em>}</li>
+ * <li>{@link org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl#getEditManager <em>Edit Manager</em>}</li>
+ * <li>{@link org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl#getRenderManager <em>Render Manager</em>}</li>
+ * <li>{@link org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl#getMapDisplay <em>Map Display</em>}</li>
+ * <li>{@link org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl#getMap <em>Map</em>}</li>
+ * <li>{@link org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl#getProject <em>Project</em>}</li>
+ * <li>{@link org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl#getViewportPane <em>Viewport Pane</em>}</li>
+ * <li>{@link org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl#getDrawFactory <em>Draw Factory</em>}</li>
+ * <li>{@link org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl#getEditFactory <em>Edit Factory</em>}</li>
+ * <li>{@link org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl#getNavigationFactory <em>Navigation Factory</em>}</li>
+ * <li>{@link org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl#getSelectionFactory <em>Selection Factory</em>}</li>
  * </ul>
  * </p>
  * 

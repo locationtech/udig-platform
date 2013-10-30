@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.tools.jgrass.coverageexport;
+package org.locationtech.udig.tools.jgrass.coverageexport;
 
 import java.io.IOException;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.ui.CRSChooserDialog;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.ui.CRSChooserDialog;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.fieldassist.ControlDecoration;
@@ -42,7 +42,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
  * @author Andrea Antonello (www.hydrologis.com)
  */
 public class TiffAsciiExportWizardPage extends WizardPage {
-    public static final String ID = "eu.udig.tools.jgrass.rasterexport.TiffAsciiExportWizardPage";
+    public static final String ID = "org.locationtech.udig.tools.jgrass.rasterexport.TiffAsciiExportWizardPage";
 
     private Text outFolderText;
     private Text crsText;

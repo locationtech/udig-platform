@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.wms.basic.internal;
+package org.locationtech.udig.render.wms.basic.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "net.refractions.udig.render.wms.basic.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.render.wms.basic.internal.messages"; //$NON-NLS-1$
 	public static String BasicWMSRenderer2_error;
 	public static String BasicWMSRenderer2_errorObtainingImage;
 	public static String BasicWMSRenderer2_no_layers_to_render;

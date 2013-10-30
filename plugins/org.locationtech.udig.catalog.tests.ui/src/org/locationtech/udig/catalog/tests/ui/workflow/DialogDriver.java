@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.catalog.tests.ui.workflow;
+package org.locationtech.udig.catalog.tests.ui.workflow;
 
 import java.util.ArrayList;
 

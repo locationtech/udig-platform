@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.palette;
+package org.locationtech.udig.ui.palette;
 
 import java.awt.Color;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import net.refractions.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.internal.ui.UiPlugin;
 
 import org.geotools.brewer.color.BrewerPalette;
 

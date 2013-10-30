@@ -8,23 +8,23 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.commands;
+package org.locationtech.udig.project.ui.commands;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.command.Command;
-import net.refractions.udig.project.command.UndoableCommand;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.UDIGEditorInput;
-import net.refractions.udig.project.ui.internal.MapEditor;
-import net.refractions.udig.project.ui.internal.MapEditorPart;
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.internal.ProjectExplorer;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.command.Command;
+import org.locationtech.udig.project.command.UndoableCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.UDIGEditorInput;
+import org.locationtech.udig.project.ui.internal.MapEditor;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectExplorer;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;

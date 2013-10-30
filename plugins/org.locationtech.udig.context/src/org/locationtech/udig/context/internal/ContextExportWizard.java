@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.context.internal;
+package org.locationtech.udig.context.internal;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -22,12 +22,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.context.ContextPlugin;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.Interaction;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.context.ContextPlugin;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;

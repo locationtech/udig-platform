@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.style.sld.internal;
+package org.locationtech.udig.style.sld.internal;
 
 import java.awt.Color;
 
-import net.refractions.udig.style.sld.SLDEditorPart;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.style.sld.SLDEditorPart;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -58,7 +58,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.style.sld.SLDEditorPart#getContentType()
+     * @see org.locationtech.udig.style.sld.SLDEditorPart#getContentType()
      */
     public Class getContentType() {
         return PointSymbolizer.class;
@@ -67,7 +67,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.style.sld.SLDEditorPart#init()
+     * @see org.locationtech.udig.style.sld.SLDEditorPart#init()
      */
     public void init() {
         // do nothing
@@ -76,7 +76,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.style.sld.SLDEditorPart#reset()
+     * @see org.locationtech.udig.style.sld.SLDEditorPart#reset()
      */
     public void reset() {
         // initialize the ui
@@ -149,7 +149,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.style.StyleConfigurator#apply()
+     * @see org.locationtech.udig.style.StyleConfigurator#apply()
      */
     private void apply() {
         PointSymbolizer symbolizer = (PointSymbolizer) getContent();
@@ -223,7 +223,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
     /**
      * Create a row layout, with individual rows provided by sub part.
      * 
-     * @see net.refractions.udig.style.StyleConfigurator#createControl(org.eclipse.swt.widgets.Composite)
+     * @see org.locationtech.udig.style.StyleConfigurator#createControl(org.eclipse.swt.widgets.Composite)
      */
     protected Control createPartControl( Composite parent ) {
         RowLayout layout = new RowLayout();

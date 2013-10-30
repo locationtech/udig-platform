@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.scalebar;
+package org.locationtech.udig.mapgraphic.scalebar;
 
 import java.awt.Color;
 
-import net.refractions.udig.mapgraphic.MapGraphicPlugin;
-import net.refractions.udig.mapgraphic.internal.Messages;
-import net.refractions.udig.mapgraphic.internal.ui.ImageConstants;
-import net.refractions.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.mapgraphic.MapGraphicPlugin;
+import org.locationtech.udig.mapgraphic.internal.Messages;
+import org.locationtech.udig.mapgraphic.internal.ui.ImageConstants;
+import org.locationtech.udig.project.internal.StyleBlackboard;
 
 import org.eclipse.swt.graphics.Image;
 

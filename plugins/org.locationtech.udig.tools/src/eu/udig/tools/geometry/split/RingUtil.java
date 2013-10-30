@@ -1,7 +1,7 @@
 /**
  * 
  */
-package eu.udig.tools.geometry.split;
+package org.locationtech.udig.tools.geometry.split;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.LinearRing;
 
-import eu.udig.tools.geometry.internal.util.GeometryList;
+import org.locationtech.udig.tools.geometry.internal.util.GeometryList;
 
 /**
  * Provides utility method to manipulate rings

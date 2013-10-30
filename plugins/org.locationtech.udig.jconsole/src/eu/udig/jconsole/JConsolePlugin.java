@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.jconsole;
+package org.locationtech.udig.jconsole;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -21,12 +21,12 @@ import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import eu.udig.jconsole.java.JavaCodeScanner;
-import eu.udig.jconsole.javadoc.JavaDocScanner;
-import eu.udig.jconsole.util.JavaColorProvider;
-import eu.udig.omsbox.core.FieldData;
-import eu.udig.omsbox.core.ModuleDescription;
-import eu.udig.omsbox.core.OmsModulesManager;
+import org.locationtech.udig.jconsole.java.JavaCodeScanner;
+import org.locationtech.udig.jconsole.javadoc.JavaDocScanner;
+import org.locationtech.udig.jconsole.util.JavaColorProvider;
+import org.locationtech.udig.omsbox.core.FieldData;
+import org.locationtech.udig.omsbox.core.ModuleDescription;
+import org.locationtech.udig.omsbox.core.OmsModulesManager;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -34,7 +34,7 @@ import eu.udig.omsbox.core.OmsModulesManager;
 public class JConsolePlugin extends AbstractUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "eu.udig.jconsole";
+    public static final String PLUGIN_ID = "org.locationtech.udig.jconsole";
 
     public final static String JAVA_PARTITIONING = "__java_example_partitioning"; //$NON-NLS-1$
 

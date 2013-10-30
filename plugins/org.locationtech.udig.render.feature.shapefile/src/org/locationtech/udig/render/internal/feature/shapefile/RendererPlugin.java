@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.internal.feature.shapefile;
+package org.locationtech.udig.render.internal.feature.shapefile;
 
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -33,7 +33,7 @@ public class RendererPlugin extends Plugin {
 
     private static RendererPlugin plugin;
 
-    public static final String ID = "net.refractions.udig.render.feature.shapefile"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.render.feature.shapefile"; //$NON-NLS-1$
     /**
      * Construct <code>RendererPlugin</code>.
      */
@@ -50,7 +50,7 @@ public class RendererPlugin extends Plugin {
         try {
             Thread.currentThread().setContextClassLoader(ShapefileRenderer.class.getClassLoader());
             Logger logger = Logger.getLogger("org.geotools.renderer.shape");//$NON-NLS-1$
-            if (isDebugging("net.refractions.udig.render.feature.shapefile/finest")) { //$NON-NLS-1$
+            if (isDebugging("org.locationtech.udig.render.feature.shapefile/finest")) { //$NON-NLS-1$
                 logger.setLevel(Level.FINEST);
                 logger.addHandler(new Handler(){
                     @Override
@@ -95,7 +95,7 @@ public class RendererPlugin extends Plugin {
      * It is much prefered to do this:
      * 
      * <pre><code>
-     * private static final String RENDERING = "net.refractions.udig.project/render/trace";
+     * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
      * }

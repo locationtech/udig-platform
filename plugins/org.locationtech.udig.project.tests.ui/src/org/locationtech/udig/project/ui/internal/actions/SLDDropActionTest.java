@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.actions;
+package org.locationtech.udig.project.ui.internal.actions;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -16,17 +16,17 @@ import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.internal.ui.UDIGDropHandler;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.TestsUIPlugin;
-import net.refractions.udig.ui.ViewerDropLocation;
-import net.refractions.udig.ui.WaitCondition;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.TestsUIPlugin;
+import org.locationtech.udig.ui.ViewerDropLocation;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -71,7 +71,7 @@ public class SLDDropActionTest {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.project.ui.internal.actions.SLDDropAction#accept()}.
+     * Test method for {@link org.locationtech.udig.project.ui.internal.actions.SLDDropAction#accept()}.
      */
     @Test
     public void testAccept() {
@@ -196,7 +196,7 @@ public class SLDDropActionTest {
     }
 
     boolean isTestStyle( final ILayer destination, final String expectedName ) {
-        Style style=(Style) destination.getStyleBlackboard().get("net.refractions.udig.style.sld"); //$NON-NLS-1$
+        Style style=(Style) destination.getStyleBlackboard().get("org.locationtech.udig.style.sld"); //$NON-NLS-1$
         String name = style.getName();
         return name.equals(expectedName);
     }

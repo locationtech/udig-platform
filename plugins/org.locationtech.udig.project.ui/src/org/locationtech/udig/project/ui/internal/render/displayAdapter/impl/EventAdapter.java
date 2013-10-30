@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.project.ui.internal.render.displayAdapter.impl;
+package org.locationtech.udig.project.ui.internal.render.displayAdapter.impl;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;

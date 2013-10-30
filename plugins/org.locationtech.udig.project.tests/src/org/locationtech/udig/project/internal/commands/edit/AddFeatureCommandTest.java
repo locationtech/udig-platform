@@ -8,16 +8,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.commands.edit;
+package org.locationtech.udig.project.internal.commands.edit;
 
 import static org.junit.Assert.assertEquals;
 
 import java.awt.Dimension;
 import java.util.Iterator;
 
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.tests.support.MapTests;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureSource;
@@ -31,7 +31,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
 public class AddFeatureCommandTest {
 
     /*
-     * Test method for 'net.refractions.udig.project.internal.commands.edit.AddFeatureCommand.run(IProgressMonitor)'
+     * Test method for 'org.locationtech.udig.project.internal.commands.edit.AddFeatureCommand.run(IProgressMonitor)'
      */
     @Test
     public void testRun() throws Exception {

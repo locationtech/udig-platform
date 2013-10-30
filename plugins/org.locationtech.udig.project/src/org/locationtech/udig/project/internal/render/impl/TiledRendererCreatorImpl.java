@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.render.impl;
+package org.locationtech.udig.project.internal.render.impl;
 
 import java.awt.Dimension;
 import java.io.IOException;
@@ -23,23 +23,23 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.core.internal.ExtensionPointUtil;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.ContextModel;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.render.CompositeRenderContext;
-import net.refractions.udig.project.internal.render.RenderContext;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.internal.render.RendererCreator;
-import net.refractions.udig.project.internal.render.SelectionLayer;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.IMultiLayerRenderer;
-import net.refractions.udig.project.render.IRenderMetricsFactory;
-import net.refractions.udig.project.render.IRenderer;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.ContextModel;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.CompositeRenderContext;
+import org.locationtech.udig.project.internal.render.RenderContext;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.internal.render.RendererCreator;
+import org.locationtech.udig.project.internal.render.SelectionLayer;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.IMultiLayerRenderer;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.project.render.IRenderer;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.geotools.data.FeatureSource;

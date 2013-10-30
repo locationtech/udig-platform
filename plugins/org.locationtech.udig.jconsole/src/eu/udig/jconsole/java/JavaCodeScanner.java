@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package eu.udig.jconsole.java;
+package org.locationtech.udig.jconsole.java;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +25,10 @@ import org.eclipse.jface.text.rules.WhitespaceRule;
 import org.eclipse.jface.text.rules.WordRule;
 import org.eclipse.swt.SWT;
 
-import eu.udig.jconsole.util.JavaColorProvider;
-import eu.udig.jconsole.util.JavaWhitespaceDetector;
-import eu.udig.jconsole.util.JavaWordDetector;
-import eu.udig.jconsole.util.Keywords;
+import org.locationtech.udig.jconsole.util.JavaColorProvider;
+import org.locationtech.udig.jconsole.util.JavaWhitespaceDetector;
+import org.locationtech.udig.jconsole.util.JavaWordDetector;
+import org.locationtech.udig.jconsole.util.Keywords;
 
 /**
  * A Java code scanner.

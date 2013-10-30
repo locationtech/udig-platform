@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.ui">
+<schema targetNamespace="org.locationtech.udig.ui">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.ui" id="tip" name="tip"/>
+         <meta.schema plugin="org.locationtech.udig.ui" id="tip" name="tip"/>
       </appInfo>
       <documentation>
          A tip is a usage tip that will be displayed upon startup.  A single tip will be shows each startup.

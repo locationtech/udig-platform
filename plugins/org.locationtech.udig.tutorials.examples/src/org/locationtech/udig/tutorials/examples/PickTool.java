@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.examples;
+package org.locationtech.udig.tutorials.examples;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.tool.SimpleTool;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.tool.SimpleTool;
+import org.locationtech.udig.ui.ProgressManager;
 
 import org.geotools.data.FeatureSource;
 import org.geotools.feature.FeatureCollection;
@@ -29,10 +29,10 @@ import com.vividsolutions.jts.geom.Envelope;
  * 
  * <pre>
  *    &lt extension
- *          point="net.refractions.udig.project.ui.tool" &gt
+ *          point="org.locationtech.udig.project.ui.tool" &gt
  *       &lt modalTool
- *             class="net.refractions.udig.code.examples.PickTool"
- *             id="net.refractions.udig.code.examples.pick"
+ *             class="org.locationtech.udig.code.examples.PickTool"
+ *             id="org.locationtech.udig.code.examples.pick"
  *             name="Pick Features"
  *             onToolbar="true"
  *            tooltip="Pick Features" /&gt

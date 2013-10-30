@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.render.internal.feature.basic;
+package org.locationtech.udig.render.internal.feature.basic;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -15,7 +15,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
-import net.refractions.udig.project.render.ILabelPainter;
+import org.locationtech.udig.project.render.ILabelPainter;
 
 import org.geotools.geometry.jts.LiteShape2;
 import org.geotools.renderer.lite.LabelCache;

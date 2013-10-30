@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.render.internal.gridcoverage.basic;
+package org.locationtech.udig.render.internal.gridcoverage.basic;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -26,17 +26,17 @@ import javax.media.jai.InterpolationNearest;
 import javax.media.jai.JAI;
 import javax.media.jai.TileCache;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.rasterings.GridCoverageLoader;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.internal.render.impl.RendererImpl;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.RenderException;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-import net.refractions.udig.render.gridcoverage.basic.internal.Messages;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.rasterings.GridCoverageLoader;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.render.impl.RendererImpl;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.render.gridcoverage.basic.internal.Messages;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.coverage.CoverageFactoryFinder;

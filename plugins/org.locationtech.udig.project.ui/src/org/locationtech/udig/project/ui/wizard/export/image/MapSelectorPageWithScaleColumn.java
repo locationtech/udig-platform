@@ -1,15 +1,15 @@
 /**
  * 
  */
-package net.refractions.udig.project.ui.wizard.export.image;
+package org.locationtech.udig.project.ui.wizard.export.image;
 
 import java.util.Collection;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.AdapterFactoryLabelProviderDecorator;
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.internal.ProjectExplorer;
-import net.refractions.udig.project.ui.wizard.export.MapSelectorPage;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.AdapterFactoryLabelProviderDecorator;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectExplorer;
+import org.locationtech.udig.project.ui.wizard.export.MapSelectorPage;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.CellEditor;

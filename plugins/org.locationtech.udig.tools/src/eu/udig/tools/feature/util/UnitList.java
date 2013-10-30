@@ -9,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.feature.util;
+package org.locationtech.udig.tools.feature.util;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -38,8 +38,8 @@ import org.opengis.referencing.crs.CRSAuthorityFactory;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.osgi.framework.Bundle;
 
-import eu.udig.tools.Activator;
-import eu.udig.tools.internal.i18n.Messages;
+import org.locationtech.udig.tools.Activator;
+import org.locationtech.udig.tools.internal.i18n.Messages;
 
 
 /**

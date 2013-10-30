@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.rasterings;
+package org.locationtech.udig.catalog.rasterings;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -88,7 +88,7 @@ public class RasteringsPlugin extends AbstractUIPlugin {
 	public ResourceBundle getResourceBundle() {
 		try {
 			if (this.resourceBundle == null)
-				this.resourceBundle = ResourceBundle.getBundle("net.refractions.udig.catalog.rasterings.RasteringsPluginResources"); //$NON-NLS-1$
+				this.resourceBundle = ResourceBundle.getBundle("org.locationtech.udig.catalog.rasterings.RasteringsPluginResources"); //$NON-NLS-1$
 		} catch (MissingResourceException x) {
 			this.resourceBundle = null;
 		}
@@ -103,7 +103,7 @@ public class RasteringsPlugin extends AbstractUIPlugin {
 	 * @return the image descriptor
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
-		return AbstractUIPlugin.imageDescriptorFromPlugin("net.refractions.udig.catalog.rasterings", path); //$NON-NLS-1$
+		return AbstractUIPlugin.imageDescriptorFromPlugin("org.locationtech.udig.catalog.rasterings", path); //$NON-NLS-1$
 	}
 	
     public static void log( String message2, Throwable t ) {

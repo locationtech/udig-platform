@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.render.displayAdapter.impl;
+package org.locationtech.udig.project.ui.internal.render.displayAdapter.impl;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -20,24 +20,24 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.project.render.Tile;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplayListener;
-import net.refractions.udig.project.ui.commands.IDrawCommand;
-import net.refractions.udig.project.ui.internal.MapPart;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.internal.Trace;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.render.glass.GlassPane;
-import net.refractions.udig.ui.graphics.NonAdvancedSWTGraphics;
-import net.refractions.udig.ui.graphics.SWTGraphics;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.render.Tile;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
+import org.locationtech.udig.project.ui.commands.IDrawCommand;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.internal.Trace;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseListener;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.render.glass.GlassPane;
+import org.locationtech.udig.ui.graphics.NonAdvancedSWTGraphics;
+import org.locationtech.udig.ui.graphics.SWTGraphics;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -125,7 +125,7 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
      * This image is *not* expected to be hardware accelarated, althought the blit process will be.
      * </p>
      * 
-     * @see net.refractions.udig.project.render.ViewportPane#acquireImage(int, int)
+     * @see org.locationtech.udig.project.render.ViewportPane#acquireImage(int, int)
      * @param w width
      * @param h height
      * @return BufferedImage with same color model as SWT Image.
@@ -210,7 +210,7 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.render.displayAdapter.ViewportPane#setRenderManager(net.refractions.udig.project.render.RenderManager)
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#setRenderManager(org.locationtech.udig.project.render.RenderManager)
      */
     public void setRenderManager( RenderManager manager ) {
         this.renderManager = manager;
@@ -266,7 +266,7 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
 
     private void getDoubleBufferGraphics( final Display display, GC gc, Map<ReferencedEnvelope, Tile> tiles, int minWidth, int minHeight ) {
     	IPreferenceStore store = UiPlugin.getDefault().getPreferenceStore();
-    	boolean useAdvancedGraphics = store.getBoolean(net.refractions.udig.ui.preferences.PreferenceConstants.P_ADVANCED_GRAPHICS); 
+    	boolean useAdvancedGraphics = store.getBoolean(org.locationtech.udig.ui.preferences.PreferenceConstants.P_ADVANCED_GRAPHICS); 
     	
         if ((getStyle()&SWT.DOUBLE_BUFFERED)==0){
             if (buffer == null) {
@@ -453,7 +453,7 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.render.displayAdapter.ViewportPane#renderStarting()
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#renderStarting()
      */
     public void renderStarting() {
         painter.renderStart();
@@ -461,7 +461,7 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.render.displayAdapter.ViewportPane#renderDone()
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#renderDone()
      */
     public void renderDone() {
         renderUpdate();
@@ -469,7 +469,7 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.render.displayAdapter.ViewportPane#renderUpdate()
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#renderUpdate()
      */
     public void renderUpdate() {
         initMap();
@@ -478,11 +478,11 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportPane#setTransform(AffineTransform)
+     * @see org.locationtech.udig.project.render.ViewportPane#setTransform(AffineTransform)
      */
 
     /**
-     * @see net.refractions.udig.project.render.ViewportPane#dispose()
+     * @see org.locationtech.udig.project.render.ViewportPane#dispose()
      */
     public void dispose() {
         super.dispose();
@@ -495,14 +495,14 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportPane#addDrawCommand(net.refractions.udig.project.internal.commands.draw.IDrawCommand)
+     * @see org.locationtech.udig.project.render.ViewportPane#addDrawCommand(org.locationtech.udig.project.internal.commands.draw.IDrawCommand)
      */
     public void addDrawCommand( IDrawCommand command ) {
         painter.addDrawCommand(command);
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportPane#setCursor(java.awt.Cursor)
+     * @see org.locationtech.udig.project.render.ViewportPane#setCursor(java.awt.Cursor)
      */
     public void setCursor( final Cursor cursor ) {
         display.asyncExec(new Runnable(){
@@ -542,84 +542,84 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportPane#removeMouseListener(net.refractions.udig.project.render.MapMouseListener)
+     * @see org.locationtech.udig.project.render.ViewportPane#removeMouseListener(org.locationtech.udig.project.render.MapMouseListener)
      */
     public void removeMouseListener( MapMouseListener l ) {
         eventJob.removeMouseListener(l);
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportPane#removeMouseMotionListener(net.refractions.udig.project.render.MapMouseMotionListener)
+     * @see org.locationtech.udig.project.render.ViewportPane#removeMouseMotionListener(org.locationtech.udig.project.render.MapMouseMotionListener)
      */
     public void removeMouseMotionListener( MapMouseMotionListener l ) {
         eventJob.removeMouseMotionListener(l);
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportPane#removeMouseWheelListener(net.refractions.udig.project.render.MapMouseWheelListener)
+     * @see org.locationtech.udig.project.render.ViewportPane#removeMouseWheelListener(org.locationtech.udig.project.render.MapMouseWheelListener)
      */
     public void removeMouseWheelListener( MapMouseWheelListener l ) {
         eventJob.removeMouseWheelListener(l);
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportPane#addMouseListener(net.refractions.udig.project.render.MapMouseListener)
+     * @see org.locationtech.udig.project.render.ViewportPane#addMouseListener(org.locationtech.udig.project.render.MapMouseListener)
      */
     public void addMouseListener( MapMouseListener l ) {
         eventJob.addMouseListener(l);
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportPane#addMouseMotionListener(net.refractions.udig.project.render.MapMouseMotionListener)
+     * @see org.locationtech.udig.project.render.ViewportPane#addMouseMotionListener(org.locationtech.udig.project.render.MapMouseMotionListener)
      */
     public void addMouseMotionListener( MapMouseMotionListener l ) {
         eventJob.addMouseMotionListener(l);
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportPane#addMouseWheelListener(net.refractions.udig.project.render.MapMouseWheelListener)
+     * @see org.locationtech.udig.project.render.ViewportPane#addMouseWheelListener(org.locationtech.udig.project.render.MapMouseWheelListener)
      */
     public void addMouseWheelListener( MapMouseWheelListener l ) {
         eventJob.addMouseWheelListener(l);
     }
 
     /**
-     * @see net.refractions.udig.project.render.MapDisplay#getDisplaySize()
+     * @see org.locationtech.udig.project.render.MapDisplay#getDisplaySize()
      */
     public Dimension getDisplaySize() {
         return displaySize;
     }
 
     /**
-     * @see net.refractions.udig.project.render.MapDisplay#getWidth()
+     * @see org.locationtech.udig.project.render.MapDisplay#getWidth()
      */
     public int getWidth() {
         return getDisplaySize().width;
     }
 
     /**
-     * @see net.refractions.udig.project.render.MapDisplay#getHeight()
+     * @see org.locationtech.udig.project.render.MapDisplay#getHeight()
      */
     public int getHeight() {
         return getDisplaySize().height;
     }
 
     /**
-     * @see net.refractions.udig.project.ui.render.displayAdapter.ViewportPane#addPaneListener(net.refractions.udig.project.render.displayAdapter.MapDisplayListener)
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#addPaneListener(org.locationtech.udig.project.render.displayAdapter.MapDisplayListener)
      */
     public void addPaneListener( IMapDisplayListener listener ) {
         eventJob.addMapEditorListener(listener);
     }
 
     /**
-     * @see net.refractions.udig.project.ui.render.displayAdapter.ViewportPane#removePaneListener(net.refractions.udig.project.render.displayAdapter.MapDisplayListener)
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#removePaneListener(org.locationtech.udig.project.render.displayAdapter.MapDisplayListener)
      */
     public void removePaneListener( IMapDisplayListener listener ) {
         eventJob.removeMapEditorListener(listener);
     }
 
     /**
-     * @see net.refractions.udig.project.ui.render.displayAdapter.ViewportPane#getMapEditor()
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#getMapEditor()
      */
     public MapPart getMapEditor() {
         return editor;
@@ -673,7 +673,7 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportPane#repaint()
+     * @see org.locationtech.udig.project.render.ViewportPane#repaint()
      */
     public void repaint() {
         repaint(0, 0, displaySize.width, displaySize.height);

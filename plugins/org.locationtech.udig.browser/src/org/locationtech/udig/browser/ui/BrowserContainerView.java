@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.browser.ui;
+package org.locationtech.udig.browser.ui;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,15 +20,15 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Pattern;
 
-import net.refractions.udig.browser.BrowserPlugin;
-import net.refractions.udig.browser.internal.Messages;
-import net.refractions.udig.catalog.ui.FileConnectionFactory;
-import net.refractions.udig.internal.ui.UDIGDropHandler;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
-import net.refractions.udig.project.ui.internal.MapEditor;
-import net.refractions.udig.project.ui.internal.MapEditorPart;
-import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
+import org.locationtech.udig.browser.BrowserPlugin;
+import org.locationtech.udig.browser.internal.Messages;
+import org.locationtech.udig.catalog.ui.FileConnectionFactory;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.project.ui.internal.MapEditor;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.Action;
@@ -82,8 +82,8 @@ import org.eclipse.ui.part.ViewPart;
 public class BrowserContainerView extends ViewPart {
     /** BrowserContainerView ID field */
     public final static String VIEW_ID = 
-            "net.refractions.udig.browser.ui.browserContainerView"; //$NON-NLS-1$
-    private static String BROWSER_TYPE = "net.refractions.udig.browser.TYPE"; //$NON-NLS-1$
+            "org.locationtech.udig.browser.ui.browserContainerView"; //$NON-NLS-1$
+    private static String BROWSER_TYPE = "org.locationtech.udig.browser.TYPE"; //$NON-NLS-1$
     private static String BROWSER_NAME = "BROWSER_NAME"; //$NON-NLS-1$
     private static String BROWSER_URL = "BROWSER_URL"; //$NON-NLS-1$
     private static String BROWSER_LISTENER = "BROWSER_LISTENER"; //$NON-NLS-1$

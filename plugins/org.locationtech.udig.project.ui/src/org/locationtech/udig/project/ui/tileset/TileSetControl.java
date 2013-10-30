@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.tileset;
+package org.locationtech.udig.project.ui.tileset;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -15,10 +15,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.preferences.PreferenceConstants;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.preferences.PreferenceConstants;
 
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.preference.BooleanFieldEditor;

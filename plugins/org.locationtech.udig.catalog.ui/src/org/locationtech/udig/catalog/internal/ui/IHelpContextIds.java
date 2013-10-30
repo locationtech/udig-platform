@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.ui;
+package org.locationtech.udig.catalog.internal.ui;
 
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
 
 /**
  * Here's how to reference the help context in code: WorkbenchHelp.setHelp(actionOrControl,

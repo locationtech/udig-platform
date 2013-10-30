@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.tcat.citd.sim.udig.bookmarks.internal.command;
+package org.locationtech.udig.bookmarks.internal.command;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.command.Command;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.command.navigation.AbstractNavCommand;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.Command;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.command.navigation.AbstractNavCommand;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.URI;
@@ -23,7 +23,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
-import org.tcat.citd.sim.udig.bookmarks.Bookmark;
+import org.locationtech.udig.bookmarks.Bookmark;
 
 import com.vividsolutions.jts.geom.Envelope;
 

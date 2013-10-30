@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.tests;
+package org.locationtech.udig.catalog.tests;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import net.refractions.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.CatalogPlugin;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
@@ -21,7 +21,7 @@ import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleContext;
 
 public class TestActivator extends Plugin {
-    public static final String ID = "net.refractions.udig.catalog.tests"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.catalog.tests"; //$NON-NLS-1$
 
     // The shared instance.
     private static TestActivator plugin;
@@ -84,7 +84,7 @@ public class TestActivator extends Plugin {
         try {
             if (resourceBundle == null)
                 resourceBundle = ResourceBundle
-                        .getBundle("net.refractions.udig.catalog.tests.TestActivatorResources"); //$NON-NLS-1$
+                        .getBundle("org.locationtech.udig.catalog.tests.TestActivatorResources"); //$NON-NLS-1$
         } catch (MissingResourceException x) {
             resourceBundle = null;
         }

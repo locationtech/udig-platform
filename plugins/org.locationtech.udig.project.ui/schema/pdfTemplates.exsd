@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project.ui">
+<schema targetNamespace="org.locationtech.udig.project.ui">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.project.ui" id="pdfTemplates" name="PDF Templates"/>
+         <meta.schema plugin="org.locationtech.udig.project.ui" id="pdfTemplates" name="PDF Templates"/>
       </appInfo>
       <documentation>
          This extention point allows contributions of additional PDF Templates for the Export to PDF Wizard.

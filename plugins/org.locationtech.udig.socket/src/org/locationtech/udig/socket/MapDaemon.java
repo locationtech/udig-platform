@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.socket;
+package org.locationtech.udig.socket;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,7 +23,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.jface.dialogs.MessageDialog;

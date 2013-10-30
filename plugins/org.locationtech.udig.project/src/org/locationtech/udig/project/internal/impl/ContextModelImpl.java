@@ -1,19 +1,19 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 import java.util.Collection;
 import java.util.List;
 
-import net.refractions.udig.project.ILegendItem;
-import net.refractions.udig.project.internal.ContextModel;
-import net.refractions.udig.project.internal.Folder;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerLegendItem;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.ILegendItem;
+import org.locationtech.udig.project.internal.ContextModel;
+import org.locationtech.udig.project.internal.Folder;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerLegendItem;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.ProjectPackage;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;

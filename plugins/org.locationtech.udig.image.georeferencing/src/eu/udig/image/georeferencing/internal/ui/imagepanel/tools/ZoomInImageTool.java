@@ -10,11 +10,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.image.georeferencing.internal.ui.imagepanel.tools;
+package org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.tools;
 
 import org.eclipse.swt.graphics.Cursor;
 
-import eu.udig.image.georeferencing.internal.ui.imagepanel.ImageComposite;
+import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.ImageComposite;
 
 /**
  * 

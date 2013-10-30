@@ -7,42 +7,42 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.internal.ui.IDropTargetProvider;
-import net.refractions.udig.project.BlackboardEvent;
-import net.refractions.udig.project.EditManagerEvent;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.IBlackboardListener;
-import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.IEditManagerListener;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILegendItem;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.command.map.LayerMoveBackCommand;
-import net.refractions.udig.project.command.map.LayerMoveDownCommand;
-import net.refractions.udig.project.command.map.LayerMoveFrontCommand;
-import net.refractions.udig.project.command.map.LayerMoveUpCommand;
-import net.refractions.udig.project.internal.Folder;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerLegendItem;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.commands.AddFolderItemCommand;
-import net.refractions.udig.project.render.IViewportModelListener;
-import net.refractions.udig.project.render.ViewportModelEvent;
-import net.refractions.udig.project.ui.AdapterFactoryLabelProviderDecorator;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.actions.Delete;
-import net.refractions.udig.project.ui.internal.actions.MylarAction;
-import net.refractions.udig.project.ui.tool.IToolManager;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.UDIGDragDropUtilities;
+import org.locationtech.udig.internal.ui.IDropTargetProvider;
+import org.locationtech.udig.project.BlackboardEvent;
+import org.locationtech.udig.project.EditManagerEvent;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IBlackboardListener;
+import org.locationtech.udig.project.IEditManager;
+import org.locationtech.udig.project.IEditManagerListener;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILegendItem;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.map.LayerMoveBackCommand;
+import org.locationtech.udig.project.command.map.LayerMoveDownCommand;
+import org.locationtech.udig.project.command.map.LayerMoveFrontCommand;
+import org.locationtech.udig.project.command.map.LayerMoveUpCommand;
+import org.locationtech.udig.project.internal.Folder;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerLegendItem;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.commands.AddFolderItemCommand;
+import org.locationtech.udig.project.render.IViewportModelListener;
+import org.locationtech.udig.project.render.ViewportModelEvent;
+import org.locationtech.udig.project.ui.AdapterFactoryLabelProviderDecorator;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.actions.Delete;
+import org.locationtech.udig.project.ui.internal.actions.MylarAction;
+import org.locationtech.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.UDIGDragDropUtilities;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.notify.Adapter;
@@ -97,7 +97,7 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
  */
 public class LegendView extends ViewPart implements IDropTargetProvider, ISelectionChangedListener {
     
-    public static final String ID = "net.refractions.udig.project.ui.legendManager"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.project.ui.legendManager"; //$NON-NLS-1$
     
     private Map currentMap;
     

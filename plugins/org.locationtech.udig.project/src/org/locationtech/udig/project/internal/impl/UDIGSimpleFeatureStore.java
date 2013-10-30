@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 import java.awt.RenderingHints.Key;
 import java.io.IOException;
@@ -16,13 +16,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.Interaction;
-import net.refractions.udig.project.LayerEvent;
-import net.refractions.udig.project.ProjectBlackboardConstants;
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.internal.Messages;
-import net.refractions.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.project.LayerEvent;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.ProjectPlugin;
 
 import org.geotools.data.DataStore;
 import org.geotools.data.DataUtilities;

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.jgrass.core;
+package org.locationtech.udig.catalog.jgrass.core;
 
 import java.io.File;
 import java.io.Serializable;
@@ -16,9 +16,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ServiceExtension;
-import net.refractions.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ServiceExtension;
+import org.locationtech.udig.catalog.URLUtils;
 
 /**
  * <p>
@@ -33,7 +33,7 @@ public class JGTtmsServiceExtension implements ServiceExtension {
     /**
      * the JGrasstools TMS service key
      */
-    public static final String KEY = "eu.udig.catalog.jgrasstoolstms.urlKey"; //$NON-NLS-1$
+    public static final String KEY = "org.locationtech.udig.catalog.jgrasstoolstms.urlKey"; //$NON-NLS-1$
 
     public JGTtmsServiceExtension() {
         super();

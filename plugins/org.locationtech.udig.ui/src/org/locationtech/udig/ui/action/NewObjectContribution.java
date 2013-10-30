@@ -8,15 +8,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.action;
+package org.locationtech.udig.ui.action;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.internal.ui.ImageConstants;
-import net.refractions.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.internal.ui.ImageConstants;
+import org.locationtech.udig.internal.ui.UiPlugin;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.action.ContributionItem;
@@ -39,7 +39,7 @@ import org.eclipse.ui.IWorkbenchWindow;
  * @since 0.6.0
  */
 public class NewObjectContribution extends ContributionItem {
-    public static final String NEW_ACTION_ID = "net.refractions.udig.ui.newObjectAction"; //$NON-NLS-1$
+    public static final String NEW_ACTION_ID = "org.locationtech.udig.ui.newObjectAction"; //$NON-NLS-1$
 
     
     private ArrayList<NewObjectDelegate> newItems;

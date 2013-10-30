@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.jconsole.util;
+package org.locationtech.udig.jconsole.util;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -20,7 +20,7 @@ import java.util.List;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 
-import eu.udig.jconsole.JConsolePlugin;
+import org.locationtech.udig.jconsole.JConsolePlugin;
 
 /**
  * A singleton cache for images.

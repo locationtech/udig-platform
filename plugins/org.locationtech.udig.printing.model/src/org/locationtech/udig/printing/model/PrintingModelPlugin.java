@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.printing.model;
+package org.locationtech.udig.printing.model;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -27,13 +27,13 @@ public class PrintingModelPlugin extends Plugin {
 	private static PrintingModelPlugin plugin;
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
-    public static final String BOX_PRINTER_EXTENSION_ID = "net.refractions.udig.printing.ui.boxprinter"; //$NON-NLS-1$
-    public static final String EDIT_ACTION_EXTENSION_ID = "net.refractions.udig.printing.ui.editAction"; //$NON-NLS-1$
+    public static final String BOX_PRINTER_EXTENSION_ID = "org.locationtech.udig.printing.ui.boxprinter"; //$NON-NLS-1$
+    public static final String EDIT_ACTION_EXTENSION_ID = "org.locationtech.udig.printing.ui.editAction"; //$NON-NLS-1$
 	
 	/**
 	 * Plugin ID
 	 */
-    public static final String ID = "net.refractions.udig.printing.model"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.printing.model"; //$NON-NLS-1$
 	
 	/**
 	 * The constructor.
@@ -87,7 +87,7 @@ public class PrintingModelPlugin extends Plugin {
 	public ResourceBundle getResourceBundle() {
 		try {
 			if (resourceBundle == null)
-				resourceBundle = ResourceBundle.getBundle("net.refractions.udig.printing.model.PrintingModelPluginResources"); //$NON-NLS-1$
+				resourceBundle = ResourceBundle.getBundle("org.locationtech.udig.printing.model.PrintingModelPluginResources"); //$NON-NLS-1$
 		} catch (MissingResourceException x) {
 			resourceBundle = null;
 		}
@@ -115,7 +115,7 @@ public class PrintingModelPlugin extends Plugin {
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:<pre><code>
-     * private static final String RENDERING = "net.refractions.udig.project/render/trace";
+     * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
      * }

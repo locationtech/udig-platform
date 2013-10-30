@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -17,21 +17,21 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.catalog.tests.CatalogTests;
-import net.refractions.udig.mapgraphic.internal.MapGraphicService;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.render.CompositeRenderContext;
-import net.refractions.udig.project.internal.render.RenderContext;
-import net.refractions.udig.project.internal.render.SelectionLayer;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.ui.WaitCondition;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.catalog.tests.CatalogTests;
+import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.render.CompositeRenderContext;
+import org.locationtech.udig.project.internal.render.RenderContext;
+import org.locationtech.udig.project.internal.render.SelectionLayer;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.junit.Before;
 import org.junit.Ignore;

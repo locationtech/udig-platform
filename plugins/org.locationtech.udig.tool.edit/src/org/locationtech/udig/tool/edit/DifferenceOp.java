@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.edit;
+package org.locationtech.udig.tool.edit;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,17 +15,17 @@ import java.net.URL;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IRepository;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerFactory;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.tool.edit.internal.Messages;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.operations.IOp;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IRepository;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerFactory;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.tool.edit.internal.Messages;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;

@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.rasterings;
+package org.locationtech.udig.catalog.rasterings;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,8 +17,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IService;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IService;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;

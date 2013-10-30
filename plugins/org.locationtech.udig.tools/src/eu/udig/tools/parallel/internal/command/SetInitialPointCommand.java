@@ -9,21 +9,21 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.parallel.internal.command;
+package org.locationtech.udig.tools.parallel.internal.command;
 
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.UndoableMapCommand;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
 //import es.axios.udig.ui.editingtools.internal.i18n.Messages;
-import eu.udig.tools.internal.i18n.Messages;
+import org.locationtech.udig.tools.internal.i18n.Messages;
 //import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsContext;
 //import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsMode;
-import eu.udig.tools.parallel.internal.PrecisionToolsContext;
-import eu.udig.tools.parallel.internal.PrecisionToolsMode;
+import org.locationtech.udig.tools.parallel.internal.PrecisionToolsContext;
+import org.locationtech.udig.tools.parallel.internal.PrecisionToolsMode;
 
 /**
  * Sets the initial point into the {@link PrecisionToolsContext}

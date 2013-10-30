@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.internal.provider;
+package org.locationtech.udig.project.internal.provider;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.impl.LayerImpl;
-import net.refractions.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.impl.LayerImpl;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -45,7 +45,7 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.geotools.util.Range;
 
 /**
- * This is the item provider adapter for a {@link net.refractions.udig.project.internal.Layer} object.
+ * This is the item provider adapter for a {@link org.locationtech.udig.project.internal.Layer} object.
  * <!-- begin-user-doc --> The handling of this class is very important:
  * <ul>
  * <li>No method can block

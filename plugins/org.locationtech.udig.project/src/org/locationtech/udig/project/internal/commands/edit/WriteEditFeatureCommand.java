@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.commands.edit;
+package org.locationtech.udig.project.internal.commands.edit;
 
-import net.refractions.udig.core.internal.FeatureUtils;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Messages;
-import net.refractions.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.ProjectPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureStore;
@@ -48,7 +48,7 @@ public class WriteEditFeatureCommand extends AbstractEditCommand implements Undo
     
 
     /**
-     * @see net.refractions.udig.project.internal.command.MapCommand#run()
+     * @see org.locationtech.udig.project.internal.command.MapCommand#run()
      */
     @SuppressWarnings("deprecation") 
     public void run( IProgressMonitor monitor ) throws Exception {
@@ -92,14 +92,14 @@ public class WriteEditFeatureCommand extends AbstractEditCommand implements Undo
     }
 
     /**
-     * @see net.refractions.udig.project.internal.command.MapCommand#copy()
+     * @see org.locationtech.udig.project.internal.command.MapCommand#copy()
      */
     public MapCommand copy() {
         return new WriteEditFeatureCommand();
     }
 
     /**
-     * @see net.refractions.udig.project.command.MapCommand#getName()
+     * @see org.locationtech.udig.project.command.MapCommand#getName()
      */
     public String getName() {
         return Messages.SetEditFeatureCommand_setCurrentEditFeature; 

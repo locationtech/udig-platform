@@ -8,14 +8,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wfs;
+package org.locationtech.udig.catalog.internal.wfs;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Set;
 
-import net.refractions.udig.catalog.IServiceInfo;
-import net.refractions.udig.catalog.wfs.internal.Messages;
+import org.locationtech.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.wfs.internal.Messages;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.data.wfs.WFSDataStore;

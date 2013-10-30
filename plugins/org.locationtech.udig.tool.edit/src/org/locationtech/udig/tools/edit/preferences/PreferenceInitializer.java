@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.preferences;
+package org.locationtech.udig.tools.edit.preferences;
 
-import net.refractions.udig.tools.edit.EditPlugin;
-import net.refractions.udig.tools.edit.support.SnapBehaviour;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.support.SnapBehaviour;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;

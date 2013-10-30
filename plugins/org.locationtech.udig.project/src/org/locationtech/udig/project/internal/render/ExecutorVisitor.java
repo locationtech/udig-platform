@@ -9,10 +9,10 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.internal.render;
+package org.locationtech.udig.project.internal.render;
 
-import net.refractions.udig.project.internal.render.impl.RenderExecutorComposite;
-import net.refractions.udig.project.internal.render.impl.RenderExecutorMultiLayer;
+import org.locationtech.udig.project.internal.render.impl.RenderExecutorComposite;
+import org.locationtech.udig.project.internal.render.impl.RenderExecutorMultiLayer;
 
 /**
  * A Visitor that visit the tree of RenderExecutors.

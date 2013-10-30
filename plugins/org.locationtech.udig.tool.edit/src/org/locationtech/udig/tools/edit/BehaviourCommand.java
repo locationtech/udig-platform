@@ -7,22 +7,22 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit;
+package org.locationtech.udig.tools.edit;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.command.PostDeterminedEffectCommand;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.tool.edit.internal.Messages;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.PostDeterminedEffectCommand;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.tool.edit.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 
 /**
- * Command used by (@link net.refractions.udig.tools.edit.EditToolHandler} and 
- * {@link net.refractions.udig.tools.edit.OrderedCompositeEventBehavior} for executing the 
+ * Command used by (@link org.locationtech.udig.tools.edit.EditToolHandler} and 
+ * {@link org.locationtech.udig.tools.edit.OrderedCompositeEventBehavior} for executing the 
  * behaviours in a tool.
  * 
  * @author jones

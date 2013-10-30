@@ -8,13 +8,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.tool.display.ModalItem;
-import net.refractions.udig.project.ui.internal.tool.display.ToolProxy;
-import net.refractions.udig.project.ui.tool.IToolManager;
-import net.refractions.udig.project.ui.tool.ModalTool;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.tool.display.ModalItem;
+import org.locationtech.udig.project.ui.internal.tool.display.ToolProxy;
+import org.locationtech.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.project.ui.tool.ModalTool;
 
 import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteEntry;

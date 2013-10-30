@@ -1,7 +1,7 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.render.impl;
+package org.locationtech.udig.project.internal.render.impl;
 
 import java.awt.image.RenderedImage;
 import java.io.IOException;
@@ -12,27 +12,27 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.render.CompositeRenderContext;
-import net.refractions.udig.project.internal.render.ExecutorVisitor;
-import net.refractions.udig.project.internal.render.RenderContext;
-import net.refractions.udig.project.internal.render.RenderExecutor;
-import net.refractions.udig.project.internal.render.RenderFactory;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.RenderPackage;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.internal.render.RendererCreator;
-import net.refractions.udig.project.internal.render.SelectionLayer;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderManager;
-import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.project.render.Tile;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.CompositeRenderContext;
+import org.locationtech.udig.project.internal.render.ExecutorVisitor;
+import org.locationtech.udig.project.internal.render.RenderContext;
+import org.locationtech.udig.project.internal.render.RenderExecutor;
+import org.locationtech.udig.project.internal.render.RenderFactory;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.internal.render.RendererCreator;
+import org.locationtech.udig.project.internal.render.SelectionLayer;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderManager;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.render.Tile;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -290,7 +290,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.RenderManager#setMap(IMap)
+     * @see org.locationtech.udig.project.internal.render.RenderManager#setMap(IMap)
      * @uml.property name="mapInternal"
      */
     public void setMapInternal( Map newMap ) {
@@ -387,14 +387,14 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * @throws IOException
-     * @see net.refractions.udig.project.internal.render.RenderManager#getInfo(java.awt.Point)
+     * @see org.locationtech.udig.project.internal.render.RenderManager#getInfo(java.awt.Point)
      *      public List getInfo(Point screenLocation) throws IOException { return
      *      getRenderExecutor().getInfo(screenLocation); }
      */
 
     /**
      * @throws IOException
-     * @see net.refractions.udig.project.internal.render.RenderManager#createInfo(java.awt.Point)
+     * @see org.locationtech.udig.project.internal.render.RenderManager#createInfo(java.awt.Point)
      *      public List getInfo(Point screenLocation) throws IOException { return
      *      getRenderExecutor().getInfo(screenLocation); }
      * @uml.property name="renderExecutor"
@@ -596,7 +596,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.RenderManager#refresh(net.refractions.udig.project.Layer,
+     * @see org.locationtech.udig.project.internal.render.RenderManager#refresh(org.locationtech.udig.project.Layer,
      *      com.vividsolutions.jts.geom.Envelope)
      */
     public void refresh( ILayer layer, Envelope bounds ) {
@@ -605,28 +605,28 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.RenderManager#refresh(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.internal.render.RenderManager#refresh(com.vividsolutions.jts.geom.Envelope)
      */
     public void refresh( Envelope bounds ) {
         throw new UnsupportedOperationException();
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.RenderManager#refreshImage()
+     * @see org.locationtech.udig.project.internal.render.RenderManager#refreshImage()
      */
     public void refreshImage() {
         throw new UnsupportedOperationException();
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.RenderManager#refreshSelection(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.internal.render.RenderManager#refreshSelection(com.vividsolutions.jts.geom.Envelope)
      */
     public void refreshSelection( ILayer layer, Envelope bounds ) {
         throw new UnsupportedOperationException();
     }
 
     /**
-     * @see net.refractions.udig.project.render.IRenderManager#getMap()
+     * @see org.locationtech.udig.project.render.IRenderManager#getMap()
      */
     public IMap getMap() {
         checkState();
@@ -634,7 +634,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     }
 
     /**
-     * @see net.refractions.udig.project.render.IRenderManager#getRenderers()
+     * @see org.locationtech.udig.project.render.IRenderManager#getRenderers()
      */
     public List<IRenderer> getRenderers() {
         checkState();

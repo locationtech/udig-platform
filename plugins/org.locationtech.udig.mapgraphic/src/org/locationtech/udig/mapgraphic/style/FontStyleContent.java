@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.style;
+package org.locationtech.udig.mapgraphic.style;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.mapgraphic.MapGraphicPlugin;
-import net.refractions.udig.project.StyleContent;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.mapgraphic.MapGraphicPlugin;
+import org.locationtech.udig.project.StyleContent;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
@@ -28,7 +28,7 @@ import org.eclipse.ui.IMemento;
  */
 public class FontStyleContent extends StyleContent {
     /** extension id */
-    public static final String ID = "net.refractions.udig.mapgraphic.style.font"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.mapgraphic.style.font"; //$NON-NLS-1$
     private static final String FONT_NAME = "FONT_NAME"; //$NON-NLS-1$
     private static final String STYLE = "STYLE"; //$NON-NLS-1$
     private static final String SIZE = "SIZE"; //$NON-NLS-1$

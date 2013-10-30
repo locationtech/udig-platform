@@ -4,7 +4,7 @@
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-package net.refractions.udig.printing.ui.internal;
+package org.locationtech.udig.printing.ui.internal;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,11 +12,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.printing.model.PrintingModelPlugin;
-import net.refractions.udig.printing.ui.Template;
-import net.refractions.udig.printing.ui.TemplateFactory;
-import net.refractions.udig.printing.ui.internal.editor.BoxAction;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.printing.model.PrintingModelPlugin;
+import org.locationtech.udig.printing.ui.Template;
+import org.locationtech.udig.printing.ui.TemplateFactory;
+import org.locationtech.udig.printing.ui.internal.editor.BoxAction;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -41,10 +41,10 @@ public class PrintingPlugin extends AbstractUIPlugin {
 
     private Map<String, TemplateFactory> templateFactories;
 
-    public static final String TEMPLATE_FACTORIES_ID = "net.refractions.udig.printing.ui.templateFactories"; //$NON-NLS-1$
+    public static final String TEMPLATE_FACTORIES_ID = "org.locationtech.udig.printing.ui.templateFactories"; //$NON-NLS-1$
     public static final String PREF_DEFAULT_TEMPLATE = "udig.preferences.defaultTemplate"; //$NON-NLS-1$
 
-    public static final String ID = "net.refractions.udig.printing.ui"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.printing.ui"; //$NON-NLS-1$
 
     private static final String boxEditActionGroupName = "editActionGroup"; //$NON-NLS-1$
 
@@ -234,7 +234,7 @@ public class PrintingPlugin extends AbstractUIPlugin {
         getDefault().getLog().log(new Status(IStatus.INFO, ID, IStatus.OK, message, e));
     }
 
-    public final static String TRACE_PRINTING = "net.refractions.udig.printing.ui/debug/printing"; //$NON-NLS-1$
+    public final static String TRACE_PRINTING = "org.locationtech.udig.printing.ui/debug/printing"; //$NON-NLS-1$
 
     /**
      * Performs the Platform.getDebugOption true check on the provided trace

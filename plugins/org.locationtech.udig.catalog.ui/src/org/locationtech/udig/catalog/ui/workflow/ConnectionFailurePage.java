@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.ui.workflow;
+package org.locationtech.udig.catalog.ui.workflow;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,8 +18,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.catalog.ui.workflow.ConnectionFailureState.Data;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.catalog.ui.workflow.ConnectionFailureState.Data;
 
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ILabelProvider;

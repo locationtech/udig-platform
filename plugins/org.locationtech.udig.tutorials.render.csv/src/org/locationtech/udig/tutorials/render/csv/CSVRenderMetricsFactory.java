@@ -8,17 +8,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.render.csv;
+package org.locationtech.udig.tutorials.render.csv;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderMetricsFactory;
-import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.tutorials.catalog.csv.CSV;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.tutorials.catalog.csv.CSV;
 
 public class CSVRenderMetricsFactory implements IRenderMetricsFactory {
 
@@ -43,7 +43,7 @@ public class CSVRenderMetricsFactory implements IRenderMetricsFactory {
         return false;
     }
     /** 
-     * Used to create an object of class net.refractions.udig.project.render.IRenderMetrics.
+     * Used to create an object of class org.locationtech.udig.project.render.IRenderMetrics.
      * <p>
      * This class will evaulate how well our renderer can handle the provided context.
      * @param context Content of a Layer and GeoResource to be drawn

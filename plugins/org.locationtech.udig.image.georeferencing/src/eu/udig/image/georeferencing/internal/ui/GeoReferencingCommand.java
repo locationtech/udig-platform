@@ -10,7 +10,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.image.georeferencing.internal.ui;
+package org.locationtech.udig.image.georeferencing.internal.ui;
 
 import java.awt.Point;
 import java.awt.geom.Point2D;
@@ -21,21 +21,21 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
 
 import org.eclipse.swt.graphics.ImageData;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
-import eu.udig.image.georeferencing.internal.i18n.Messages;
-import eu.udig.image.georeferencing.internal.process.GeoReferencingProcess;
-import eu.udig.image.georeferencing.internal.process.MarkModel;
-import eu.udig.image.georeferencing.internal.process.MarkModelFactory;
-import eu.udig.image.georeferencing.internal.ui.GeoreferencingCommandEventChange.ChangeEvent;
-import eu.udig.image.georeferencing.internal.ui.message.InfoMessage;
-import eu.udig.image.georeferencing.internal.ui.message.InfoMessage.Type;
+import org.locationtech.udig.image.georeferencing.internal.i18n.Messages;
+import org.locationtech.udig.image.georeferencing.internal.process.GeoReferencingProcess;
+import org.locationtech.udig.image.georeferencing.internal.process.MarkModel;
+import org.locationtech.udig.image.georeferencing.internal.process.MarkModelFactory;
+import org.locationtech.udig.image.georeferencing.internal.ui.GeoreferencingCommandEventChange.ChangeEvent;
+import org.locationtech.udig.image.georeferencing.internal.ui.message.InfoMessage;
+import org.locationtech.udig.image.georeferencing.internal.ui.message.InfoMessage.Type;
 
 /**
  * Command used to store all the valuable data used by the composites and the

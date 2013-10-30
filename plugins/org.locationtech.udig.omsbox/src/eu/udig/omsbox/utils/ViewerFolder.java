@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.omsbox.utils;
+package org.locationtech.udig.omsbox.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import eu.udig.omsbox.core.ModuleDescription;
+import org.locationtech.udig.omsbox.core.ModuleDescription;
 
 /**
  * A folder for the treeviewer of the modules.

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.ui.workflow;
+package org.locationtech.udig.catalog.ui.workflow;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,12 +16,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ui.ConnectionFactoryManager;
-import net.refractions.udig.catalog.ui.UDIGConnectionFactory;
-import net.refractions.udig.catalog.ui.UDIGConnectionFactoryDescriptor;
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.core.Pair;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ui.ConnectionFactoryManager;
+import org.locationtech.udig.catalog.ui.UDIGConnectionFactory;
+import org.locationtech.udig.catalog.ui.UDIGConnectionFactoryDescriptor;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.core.Pair;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -97,7 +97,7 @@ public class DataSourceSelectionState extends State {
                 for( Iterator<UDIGConnectionFactoryDescriptor> i= shortlist.iterator(); i.hasNext();){
                     UDIGConnectionFactoryDescriptor d = i.next();
                     String id = d.getId();
-                    if( "net.refractions.udig.catalog.geotools.connection.dataStore".equals(id)){
+                    if( "org.locationtech.udig.catalog.geotools.connection.dataStore".equals(id)){
                         i.remove();
                     }
                 }

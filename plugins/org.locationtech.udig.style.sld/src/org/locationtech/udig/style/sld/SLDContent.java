@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.style.sld;
+package org.locationtech.udig.style.sld;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -21,11 +21,11 @@ import java.util.Random;
 
 import javax.xml.transform.TransformerException;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.StyleContent;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.StyleContent;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
@@ -79,9 +79,9 @@ import com.vividsolutions.jts.geom.Polygon;
  * <p>
  * Other recommended utility classes are:
  * <ul>
- * <li>net.refractions.udig.graphics.SLDs - a utility class for handling the "Default" rule in a style</li>
+ * <li>org.locationtech.udig.graphics.SLDs - a utility class for handling the "Default" rule in a style</li>
  * <li>org.geotools.styling.SLD - a port of our SLDs class to GeoTools/li>
- * <li>net.refractions.udig.style.sld.SLD - an enum with methods for checking for POINT, LINE, POLYGON
+ * <li>org.locationtech.udig.style.sld.SLD - an enum with methods for checking for POINT, LINE, POLYGON
  * <li>SLDContentManager 
  * <li>StyleFactory, StyleFactory2 - direct creation of style objects
  * <li>StyleBuilder - creation of style objects; but allowing for default values
@@ -92,7 +92,7 @@ import com.vividsolutions.jts.geom.Polygon;
 public final class SLDContent extends StyleContent {
 
     /** style id, used to identify sld style on a blackboard * */
-    public static final String ID = "net.refractions.udig.style.sld"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.style.sld"; //$NON-NLS-1$
 
     /** factory used to create style and builder * */
     private static StyleFactory styleFactory = CommonFactoryFinder.getStyleFactory(GeoTools.getDefaultHints());
@@ -113,7 +113,7 @@ public final class SLDContent extends StyleContent {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.project.StyleContent#getStyleClass()
+     * @see org.locationtech.udig.project.StyleContent#getStyleClass()
      */
     public Class<?> getStyleClass() {
         return Style.class;
@@ -122,7 +122,7 @@ public final class SLDContent extends StyleContent {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.project.StyleContent#save(org.eclipse.ui.IMemento,
+     * @see org.locationtech.udig.project.StyleContent#save(org.eclipse.ui.IMemento,
      *      java.lang.Object)
      */
     public void save( IMemento memento, Object value ) {
@@ -147,7 +147,7 @@ public final class SLDContent extends StyleContent {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.project.StyleContent#load(org.eclipse.ui.IMemento)
+     * @see org.locationtech.udig.project.StyleContent#load(org.eclipse.ui.IMemento)
      */
     public Object load( IMemento momento ) {
         // parse the sld object
@@ -166,7 +166,7 @@ public final class SLDContent extends StyleContent {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.project.StyleContent#load(java.net.URL)
+     * @see org.locationtech.udig.project.StyleContent#load(java.net.URL)
      */
     public Object load( URL url, IProgressMonitor m ) throws IOException {
         return parse(url);

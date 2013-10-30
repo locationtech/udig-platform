@@ -7,20 +7,20 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.ui.properties;
+package org.locationtech.udig.catalog.internal.wmt.ui.properties;
 
-import net.refractions.udig.style.sld.editor.DialogSettingsStyleContent;
+import org.locationtech.udig.style.sld.editor.DialogSettingsStyleContent;
 
 
 /**
  * Persist an IMemento onto the style blackboard to save 
  * Style Dialog Settings between runs.
  * 
- * @see net.refractions.udig.style.sld.editor.DialogSettingsStyleContent
+ * @see org.locationtech.udig.style.sld.editor.DialogSettingsStyleContent
  */
 public class WMTLayerStyleContent extends DialogSettingsStyleContent{
 
-    public static final String EXTENSION_ID = "net.refractions.udig.catalog.internal.wmt.ui.properties.dialogSettings"; //$NON-NLS-1$
+    public static final String EXTENSION_ID = "org.locationtech.udig.catalog.internal.wmt.ui.properties.dialogSettings"; //$NON-NLS-1$
 
     @Override
     public String getId() {

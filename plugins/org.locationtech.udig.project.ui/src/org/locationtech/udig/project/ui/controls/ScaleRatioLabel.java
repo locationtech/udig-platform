@@ -8,18 +8,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.controls;
+package org.locationtech.udig.project.ui.controls;
 
 import java.text.NumberFormat;
 
-import net.refractions.udig.project.internal.commands.SetScaleCommand;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.project.render.IViewportModelListener;
-import net.refractions.udig.project.render.ViewportModelEvent;
-import net.refractions.udig.project.render.ViewportModelEvent.EventType;
-import net.refractions.udig.project.ui.internal.MapEditorPart;
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.ui.ZoomingDialog;
+import org.locationtech.udig.project.internal.commands.SetScaleCommand;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.render.IViewportModelListener;
+import org.locationtech.udig.project.render.ViewportModelEvent;
+import org.locationtech.udig.project.render.ViewportModelEvent.EventType;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.ui.ZoomingDialog;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.ContributionItem;

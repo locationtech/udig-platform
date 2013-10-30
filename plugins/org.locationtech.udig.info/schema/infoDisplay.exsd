@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.tool.info">
+<schema targetNamespace="org.locationtech.udig.tool.info">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.tool.info" id="infoDisplay" name="InfoDisplays"/>
+         <meta.schema plugin="org.locationtech.udig.tool.info" id="infoDisplay" name="InfoDisplays"/>
       </appInfo>
       <documentation>
          [Enter description of this extension point.]
@@ -54,7 +54,7 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  a fully qualified name of the Java class implementing net.refractions.udig.tool.info.InfoDisplay
+                  a fully qualified name of the Java class implementing org.locationtech.udig.tool.info.InfoDisplay
                </documentation>
                <appInfo>
                   <meta.attribute kind="java"/>

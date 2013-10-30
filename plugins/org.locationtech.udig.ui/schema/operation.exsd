@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.ui" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.ui" id="Operation" name="Operation"/>
+         <meta.schema plugin="org.locationtech.udig.ui" id="Operation" name="Operation"/>
       </appInfo>
       <documentation>
          Contribute operations to the user interface; will show up in menu bars, toolbars and context menus as appropriate.
@@ -56,7 +56,7 @@
          <documentation>
             A way of organizing operations in menus. The operation menus will be organized into submenus for each category of operations.
 
-For example: &quot;net.refractions.udig.ui.edit&quot;
+For example: &quot;org.locationtech.udig.ui.edit&quot;
          </documentation>
       </annotation>
       <complexType>
@@ -161,7 +161,7 @@ For example: &quot;net.refractions.udig.ui.edit&quot;
                   The operation class that will perform an operation on the targetClass.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.ui.operations.IOp"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.ui.operations.IOp"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -291,7 +291,7 @@ For example if the menuPath=layer/additions then the operation will appear the l
                   The id of the property extension to use.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="identifier" basedOn="net.refractions.udig.ui.objectProperty/object/property/@id"/>
+                  <meta.attribute kind="identifier" basedOn="org.locationtech.udig.ui.objectProperty/object/property/@id"/>
                </appInfo>
             </annotation>
          </attribute>

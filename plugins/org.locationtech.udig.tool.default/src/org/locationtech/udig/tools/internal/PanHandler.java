@@ -9,10 +9,10 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.tools.internal;
+package org.locationtech.udig.tools.internal;
 
-import net.refractions.udig.project.ui.tool.IToolHandler;
-import net.refractions.udig.project.ui.tool.Tool;
+import org.locationtech.udig.project.ui.tool.IToolHandler;
+import org.locationtech.udig.project.ui.tool.Tool;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -28,10 +28,10 @@ public class PanHandler extends AbstractHandler implements IToolHandler {
     
     private static PanTool TOOL;
     private String id;
-    private static final String LEFT = "net.refractions.udig.tools.panLeftCommand"; //$NON-NLS-1$
-    private static final String RIGHT = "net.refractions.udig.tools.panRightCommand"; //$NON-NLS-1$
-    private static final String UP = "net.refractions.udig.tools.panUpCommand"; //$NON-NLS-1$
-    private static final String DOWN = "net.refractions.udig.tools.panDownCommand"; //$NON-NLS-1$
+    private static final String LEFT = "org.locationtech.udig.tools.panLeftCommand"; //$NON-NLS-1$
+    private static final String RIGHT = "org.locationtech.udig.tools.panRightCommand"; //$NON-NLS-1$
+    private static final String UP = "org.locationtech.udig.tools.panUpCommand"; //$NON-NLS-1$
+    private static final String DOWN = "org.locationtech.udig.tools.panDownCommand"; //$NON-NLS-1$
     private static NavigationUpdateThread PANNER=NavigationUpdateThread.getUpdater();
     
     public void setTool( Tool tool ) {
@@ -39,7 +39,7 @@ public class PanHandler extends AbstractHandler implements IToolHandler {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.IToolHandler#setCurrentCommandId(java.lang.String)
+     * @see org.locationtech.udig.project.ui.tool.IToolHandler#setCurrentCommandId(java.lang.String)
      */
     public void setCurrentCommandId( String currentCommandId ) {
         id=currentCommandId;

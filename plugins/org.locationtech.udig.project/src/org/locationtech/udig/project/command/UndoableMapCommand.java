@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.command;
+package org.locationtech.udig.project.command;
 
 /**
  * Describes an undoable MapCommand as opposed to a normal undoable command.

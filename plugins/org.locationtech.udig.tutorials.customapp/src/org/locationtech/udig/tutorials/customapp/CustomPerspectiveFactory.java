@@ -8,16 +8,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.customapp;
+package org.locationtech.udig.tutorials.customapp;
 
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
 
 public class CustomPerspectiveFactory implements IPerspectiveFactory {
 
-    private static final String BOOKMARKS = "org.tcat.citd.sim.udig.bookmarks.internal.ui.BookmarksView";
-    private static final String PROJECTS = "net.refractions.udig.project.ui.projectExplorer";
-    private static final String LAYERS = "net.refractions.udig.project.ui.layerManager";
+    private static final String BOOKMARKS = "org.locationtech.udig.bookmarks.internal.ui.BookmarksView";
+    private static final String PROJECTS = "org.locationtech.udig.project.ui.projectExplorer";
+    private static final String LAYERS = "org.locationtech.udig.project.ui.layerManager";
 
     public void createInitialLayout(IPageLayout layout) {
         layout.addFastView(PROJECTS);

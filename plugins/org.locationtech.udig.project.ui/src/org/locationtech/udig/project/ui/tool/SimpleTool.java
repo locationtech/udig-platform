@@ -9,11 +9,11 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.tool;
+package org.locationtech.udig.project.ui.tool;
 
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelEvent;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 
 /**
  * An abstract class for all tools that wish to be "selection" tools. A selection tool is
@@ -140,7 +140,7 @@ public class SimpleTool extends AbstractModalTool {
     /**
      * Consumes the event if the second mouse button is released and calls noContextMousePressed().
      * 
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseReleased(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseReleased(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */
     public final void mouseReleased( MapMouseEvent e ) {
@@ -152,7 +152,7 @@ public class SimpleTool extends AbstractModalTool {
      * Consumes the event if the second mouse button is doubleclicked and calls
      * onContextMouseDoubleClicked().
      * 
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseDoubleClicked(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseDoubleClicked(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */
     public final void mouseDoubleClicked( MapMouseEvent e ) {
@@ -161,7 +161,7 @@ public class SimpleTool extends AbstractModalTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseDragged(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseDragged(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */
     public final void mouseDragged( MapMouseEvent e ) {
@@ -170,7 +170,7 @@ public class SimpleTool extends AbstractModalTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseEntered(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseEntered(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */
     public final void mouseEntered( MapMouseEvent e ) {
@@ -179,7 +179,7 @@ public class SimpleTool extends AbstractModalTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseMoved(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseMoved(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */
     public final void mouseMoved( MapMouseEvent e ) {
@@ -188,7 +188,7 @@ public class SimpleTool extends AbstractModalTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseMoved(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseMoved(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */
     public final void mouseHovered( MapMouseEvent e ) {
@@ -197,14 +197,14 @@ public class SimpleTool extends AbstractModalTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseExited(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseExited(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public final void mouseExited( MapMouseEvent e ) {
         if (e.button != MapMouseEvent.BUTTON3)
             onMouseExited(e);
     }
     /**
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseWheelMoved(net.refractions.udig.project.render.displayAdapter.MapMouseWheelEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseWheelMoved(org.locationtech.udig.project.render.displayAdapter.MapMouseWheelEvent)
      * @see MapMouseEvent
      */
     public final void mouseWheelMoved( MapMouseWheelEvent e ) {

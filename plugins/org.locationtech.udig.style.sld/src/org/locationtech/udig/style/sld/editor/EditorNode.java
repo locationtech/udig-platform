@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld.editor;
+package org.locationtech.udig.style.sld.editor;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,12 +16,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.style.IStyleConfigurator;
-import net.refractions.udig.style.sld.IEditorPage;
-import net.refractions.udig.style.sld.IEditorPageContainer;
-import net.refractions.udig.style.sld.IStyleEditorPage;
-import net.refractions.udig.style.sld.SLDPlugin;
-import net.refractions.udig.style.sld.editor.internal.IEditorNode;
+import org.locationtech.udig.style.IStyleConfigurator;
+import org.locationtech.udig.style.sld.IEditorPage;
+import org.locationtech.udig.style.sld.IEditorPageContainer;
+import org.locationtech.udig.style.sld.IStyleEditorPage;
+import org.locationtech.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.style.sld.editor.internal.IEditorNode;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;

@@ -7,25 +7,25 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.commands.edit;
+package org.locationtech.udig.project.internal.commands.edit;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.core.internal.FeatureUtils;
-import net.refractions.udig.core.internal.GeometryBuilder;
-import net.refractions.udig.project.AdaptableFeature;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.interceptor.FeatureInterceptor;
-import net.refractions.udig.project.interceptor.MapInterceptor;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.Messages;
-import net.refractions.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.core.internal.GeometryBuilder;
+import org.locationtech.udig.project.AdaptableFeature;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.interceptor.FeatureInterceptor;
+import org.locationtech.udig.project.interceptor.MapInterceptor;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.ProjectPlugin;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -79,7 +79,7 @@ public class CreateFeatureCommand extends AbstractEditCommand implements Undoabl
     }
 
     /**
-     * @see net.refractions.udig.project.command.MapCommand#run()
+     * @see org.locationtech.udig.project.command.MapCommand#run()
      */
     @SuppressWarnings("unchecked")
     public void run( IProgressMonitor monitor ) throws Exception {
@@ -208,14 +208,14 @@ public class CreateFeatureCommand extends AbstractEditCommand implements Undoabl
     }
 
     /**
-     * @see net.refractions.udig.project.command.MapCommand#getName()
+     * @see org.locationtech.udig.project.command.MapCommand#getName()
      */
     public String getName() {
         return Messages.CreateFeatureCommand_createFeature;
     }
 
     /**
-     * @see net.refractions.udig.project.command.UndoableCommand#rollback()
+     * @see org.locationtech.udig.project.command.UndoableCommand#rollback()
      */
     public void rollback( IProgressMonitor monitor ) throws Exception {
         ILayer editLayer = getMap().getEditManager().getEditLayer();

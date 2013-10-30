@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.tcat.citd.sim.udig.bookmarks.tests;
+package org.locationtech.udig.bookmarks.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -19,11 +19,11 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.junit.Before;
 import org.junit.Test;
-import org.tcat.citd.sim.udig.bookmarks.Bookmark;
-import org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin;
-import org.tcat.citd.sim.udig.bookmarks.IBookmark;
-import org.tcat.citd.sim.udig.bookmarks.IBookmarkService;
-import org.tcat.citd.sim.udig.bookmarks.internal.MapReference;
+import org.locationtech.udig.bookmarks.Bookmark;
+import org.locationtech.udig.bookmarks.BookmarksPlugin;
+import org.locationtech.udig.bookmarks.IBookmark;
+import org.locationtech.udig.bookmarks.IBookmarkService;
+import org.locationtech.udig.bookmarks.internal.MapReference;
 
 public class BookmarkServiceTest {
 

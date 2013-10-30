@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.commands;
+package org.locationtech.udig.tools.edit.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -18,18 +18,18 @@ import java.awt.geom.AffineTransform;
 import java.util.Arrays;
 import java.util.List;
 
-import net.refractions.udig.TestViewportPane;
-import net.refractions.udig.core.internal.FeatureUtils;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.render.impl.ViewportModelImpl;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
-import net.refractions.udig.tools.edit.support.Point;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
-import net.refractions.udig.tools.edit.support.TestHandler;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.TestViewportPane;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.render.impl.ViewportModelImpl;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.tools.edit.EditState;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.Point;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.tools.edit.support.TestHandler;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureSource;
@@ -93,7 +93,7 @@ public class DifferenceFeatureCommandTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.commands.SplitFeatureCommand.run(IProgressMonitor)'
+     * Test method for 'org.locationtech.udig.tools.edit.commands.SplitFeatureCommand.run(IProgressMonitor)'
      */
     @Test
     public void testDifferencePolygonOnce() throws Exception {
@@ -139,7 +139,7 @@ public class DifferenceFeatureCommandTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.commands.SplitFeatureCommand.run(IProgressMonitor)'
+     * Test method for 'org.locationtech.udig.tools.edit.commands.SplitFeatureCommand.run(IProgressMonitor)'
      */
     @Test
     public void testDifferenceMultiPolygon() throws Exception {

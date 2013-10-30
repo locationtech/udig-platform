@@ -9,11 +9,11 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.model;
+package org.locationtech.udig.printing.model;
 
 import java.util.List;
 
-import net.refractions.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.internal.ProjectElement;
 
 /**
  * Represents a set of positioned Boxes to be drawn. 
@@ -32,7 +32,7 @@ public interface Page extends Element, ProjectElement{
      * resized and repositioned.
      * 
      * @return the List of Boxes on this Page
-     * @model containment="true" resolveProxy="false" type="net.refractions.udig.printing.model.Box"
+     * @model containment="true" resolveProxy="false" type="org.locationtech.udig.printing.model.Box"
      */
     public List<Box> getBoxes();
 }

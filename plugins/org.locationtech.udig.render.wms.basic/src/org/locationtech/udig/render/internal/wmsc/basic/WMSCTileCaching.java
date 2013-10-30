@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.render.internal.wmsc.basic;
+package org.locationtech.udig.render.internal.wmsc.basic;
 
 /**
  * Indicates the different ways that WMS-C tiles can be cached.

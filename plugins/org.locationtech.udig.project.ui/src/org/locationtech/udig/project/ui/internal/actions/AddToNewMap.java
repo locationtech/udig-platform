@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.actions;
+package org.locationtech.udig.project.ui.internal.actions;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,21 +20,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.ui.ResourceSelectionPage;
-import net.refractions.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
-import net.refractions.udig.catalog.ui.workflow.ResourceSelectionState;
-import net.refractions.udig.catalog.ui.workflow.State;
-import net.refractions.udig.catalog.ui.workflow.Workflow;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardDialog;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.ui.ResourceSelectionPage;
+import org.locationtech.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
+import org.locationtech.udig.catalog.ui.workflow.ResourceSelectionState;
+import org.locationtech.udig.catalog.ui.workflow.State;
+import org.locationtech.udig.catalog.ui.workflow.Workflow;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardDialog;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.jface.action.IAction;

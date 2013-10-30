@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.rcp;
+package org.locationtech.udig.tutorials.rcp;
 
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -27,7 +27,7 @@ import org.eclipse.ui.part.ViewPart;
 
 public class View extends ViewPart {
 
-	public static final String ID = "net.refractions.udig.tutorials.rcp.view";
+	public static final String ID = "org.locationtech.udig.tutorials.rcp.view";
 	
 	public void createPartControl(Composite parent) {
 		Composite top = new Composite(parent, SWT.NONE);

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.lines;
+package org.locationtech.udig.style.advanced.lines;
 
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -15,7 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
+import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.viewers.ISelection;
@@ -36,13 +36,13 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.styling.Style;
 
-import eu.udig.style.advanced.StylePlugin;
-import eu.udig.style.advanced.common.StyleFilter;
-import eu.udig.style.advanced.common.StyleManager;
-import eu.udig.style.advanced.common.styleattributeclasses.FeatureTypeStyleWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
-import eu.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.style.advanced.StylePlugin;
+import org.locationtech.udig.style.advanced.common.StyleFilter;
+import org.locationtech.udig.style.advanced.common.StyleManager;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.FeatureTypeStyleWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
+import org.locationtech.udig.style.advanced.utils.Utilities;
 
 /**
  * A style viewer that manages {@link Style}s.

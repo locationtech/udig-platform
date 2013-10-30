@@ -7,25 +7,25 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.document.ui;
+package org.locationtech.udig.document.ui;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.document.IAttachmentSource;
-import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocument.ContentType;
-import net.refractions.udig.catalog.document.IDocumentSource;
-import net.refractions.udig.catalog.document.IHotlinkSource;
-import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
-import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
-import net.refractions.udig.document.source.BasicHotlinkDescriptorParser;
-import net.refractions.udig.document.source.ShpDocPropertyParser;
-import net.refractions.udig.tool.info.InfoPlugin;
-import net.refractions.udig.tool.info.internal.Messages;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.document.IAttachmentSource;
+import org.locationtech.udig.catalog.document.IDocument;
+import org.locationtech.udig.catalog.document.IDocument.ContentType;
+import org.locationtech.udig.catalog.document.IDocumentSource;
+import org.locationtech.udig.catalog.document.IHotlinkSource;
+import org.locationtech.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import org.locationtech.udig.catalog.internal.shp.ShpGeoResourceImpl;
+import org.locationtech.udig.document.source.BasicHotlinkDescriptorParser;
+import org.locationtech.udig.document.source.ShpDocPropertyParser;
+import org.locationtech.udig.tool.info.InfoPlugin;
+import org.locationtech.udig.tool.info.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;

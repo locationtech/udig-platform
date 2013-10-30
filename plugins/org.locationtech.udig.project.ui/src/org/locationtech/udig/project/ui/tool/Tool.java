@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.tool;
+package org.locationtech.udig.project.ui.tool;
 
 /**
  * The general interface for tools interacting with the Map Editor.
@@ -17,7 +17,7 @@ package net.refractions.udig.project.ui.tool;
  * Must have a public default constructor so that the plug-in frame work can instantiate the class.
  * </p>
  * 
- * @see net.refractions.udig.project.ui.tool.AbstractTool
+ * @see org.locationtech.udig.project.ui.tool.AbstractTool
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
@@ -28,7 +28,7 @@ public interface Tool {
     /** Tool category for tools that modify. Examples are Add Vertex and Add SimpleFeature */
     public final static String EDIT = "edit"; //$NON-NLS-1$
     /** The extension point id for tools */
-    public static final String EXTENSION_ID = "net.refractions.udig.project.ui.tool"; //$NON-NLS-1$
+    public static final String EXTENSION_ID = "org.locationtech.udig.project.ui.tool"; //$NON-NLS-1$
 
     /**
      * Releases resource, Cursor and image resources possibly.

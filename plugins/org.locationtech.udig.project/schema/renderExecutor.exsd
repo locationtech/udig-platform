@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project">
+<schema targetNamespace="org.locationtech.udig.project">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.project" id="RenderExecutor" name="RenderExecutor"/>
+         <meta.schema plugin="org.locationtech.udig.project" id="RenderExecutor" name="RenderExecutor"/>
       </appInfo>
       <documentation>
          [Enter description of this extension point.]
@@ -66,7 +66,7 @@
                   The class of the RenderExecutor
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.render.IRenderExecutor"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.render.IRenderExecutor"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -76,7 +76,7 @@
                   The renderClass that the executor will execute.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.render.IRenderer"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.render.IRenderer"/>
                </appInfo>
             </annotation>
          </attribute>

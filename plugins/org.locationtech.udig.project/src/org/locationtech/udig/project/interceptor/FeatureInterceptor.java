@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.interceptor;
+package org.locationtech.udig.project.interceptor;
 
 import org.opengis.feature.Feature;
 
@@ -22,7 +22,7 @@ public interface FeatureInterceptor {
     /**
      * Extension Point ID of feature interceptors
      */
-    String EXTENSION_ID = "net.refractions.udig.project.featureInterceptor"; //$NON-NLS-1$
+    String EXTENSION_ID = "org.locationtech.udig.project.featureInterceptor"; //$NON-NLS-1$
     
     /**
      * Attribute name of layer created interceptors

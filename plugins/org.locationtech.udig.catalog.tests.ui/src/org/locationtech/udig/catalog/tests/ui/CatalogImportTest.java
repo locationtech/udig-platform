@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.tests.ui;
+package org.locationtech.udig.catalog.tests.ui;
 
 import static org.junit.Assert.assertTrue;
 
@@ -18,17 +18,17 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.wms.WMSServiceImpl;
-import net.refractions.udig.catalog.tests.ui.workflow.Assertion;
-import net.refractions.udig.catalog.tests.ui.workflow.DialogDriver;
-import net.refractions.udig.catalog.tests.ui.workflow.DummyMonitor;
-import net.refractions.udig.catalog.ui.ConnectionErrorPage;
-import net.refractions.udig.catalog.ui.wizard.CatalogImport;
-import net.refractions.udig.ui.WaitCondition;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.wms.WMSServiceImpl;
+import org.locationtech.udig.catalog.tests.ui.workflow.Assertion;
+import org.locationtech.udig.catalog.tests.ui.workflow.DialogDriver;
+import org.locationtech.udig.catalog.tests.ui.workflow.DummyMonitor;
+import org.locationtech.udig.catalog.ui.ConnectionErrorPage;
+import org.locationtech.udig.catalog.ui.wizard.CatalogImport;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.junit.Before;

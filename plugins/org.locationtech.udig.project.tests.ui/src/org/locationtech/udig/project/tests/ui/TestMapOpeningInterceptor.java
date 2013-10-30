@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.tests.ui;
+package org.locationtech.udig.project.tests.ui;
 
 import org.junit.Ignore;
 
-import net.refractions.udig.project.interceptor.MapInterceptor;
-import net.refractions.udig.project.internal.Map;
+import org.locationtech.udig.project.interceptor.MapInterceptor;
+import org.locationtech.udig.project.internal.Map;
 
 /**
  * prints message when map is opened.

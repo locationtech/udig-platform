@@ -1,14 +1,14 @@
 /**
  * 
  */
-package net.refractions.udig.issues.internal.view;
+package org.locationtech.udig.issues.internal.view;
 
 import java.util.Set;
 
-import net.refractions.udig.issues.IIssue;
-import net.refractions.udig.issues.IIssuesContentProvider;
-import net.refractions.udig.issues.IIssuesList;
-import net.refractions.udig.issues.internal.Messages;
+import org.locationtech.udig.issues.IIssue;
+import org.locationtech.udig.issues.IIssuesContentProvider;
+import org.locationtech.udig.issues.IIssuesList;
+import org.locationtech.udig.issues.internal.Messages;
 
 import org.eclipse.jface.viewers.Viewer;
 

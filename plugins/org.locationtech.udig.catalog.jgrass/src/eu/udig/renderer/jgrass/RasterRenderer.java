@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.renderer.jgrass;
+package org.locationtech.udig.renderer.jgrass;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -22,11 +22,11 @@ import javax.media.jai.InterpolationNearest;
 import javax.media.jai.JAI;
 import javax.media.jai.TileCache;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.render.impl.RendererImpl;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.RenderException;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.render.impl.RendererImpl;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.RenderException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -46,9 +46,9 @@ import org.opengis.referencing.operation.MathTransform;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 
-import eu.udig.catalog.jgrass.core.JGrassMapGeoResource;
-import eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
-import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
+import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
 
 /**
  * The renderer for GRASS type rasters, as wrapped by the JGrassMapGeoResource

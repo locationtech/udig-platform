@@ -24,8 +24,8 @@ import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.operation.polygonize.Polygonizer;
 
-import eu.udig.tools.geometry.split.RingExtractor;
-import eu.udig.tools.geometry.split.RingExtractor.ResultRingExtractor;
+import org.locationtech.udig.tools.geometry.split.RingExtractor;
+import org.locationtech.udig.tools.geometry.split.RingExtractor.ResultRingExtractor;
 
 /**
  * @author Mauricio Pazos (www.axios.es)

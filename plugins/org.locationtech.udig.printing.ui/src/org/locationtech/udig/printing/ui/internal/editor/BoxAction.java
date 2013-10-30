@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.printing.ui.internal.editor;
+package org.locationtech.udig.printing.ui.internal.editor;
 
-import net.refractions.udig.core.AdapterUtil;
-import net.refractions.udig.printing.model.BoxPrinter;
-import net.refractions.udig.printing.ui.IBoxEditAction;
-import net.refractions.udig.printing.ui.internal.PrintingPlugin;
-import net.refractions.udig.printing.ui.internal.editor.parts.PrintingEditPolicy;
+import org.locationtech.udig.core.AdapterUtil;
+import org.locationtech.udig.printing.model.BoxPrinter;
+import org.locationtech.udig.printing.ui.IBoxEditAction;
+import org.locationtech.udig.printing.ui.internal.PrintingPlugin;
+import org.locationtech.udig.printing.ui.internal.editor.parts.PrintingEditPolicy;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;

@@ -1,7 +1,7 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,13 +10,13 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.project.command.Command;
-import net.refractions.udig.project.command.CommandManager;
-import net.refractions.udig.project.internal.Messages;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectElement;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.commands.DefaultErrorHandler;
+import org.locationtech.udig.project.command.Command;
+import org.locationtech.udig.project.command.CommandManager;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.commands.DefaultErrorHandler;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Adapter;
@@ -290,7 +290,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
     CommandManager commandManager;
 
     /**
-     * @see net.refractions.udig.project.IProject#getElements()
+     * @see org.locationtech.udig.project.IProject#getElements()
      */
     @SuppressWarnings("unchecked")
     public List getElements() {

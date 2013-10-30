@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.shp.tests;
+package org.locationtech.udig.catalog.shp.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -20,16 +20,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ServiceExtension;
-import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocument.ContentType;
-import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
-import net.refractions.udig.catalog.internal.shp.ShpServiceExtension;
-import net.refractions.udig.document.source.BasicHotlinkDescriptorParser;
-import net.refractions.udig.document.source.BasicHotlinkSource;
-import net.refractions.udig.tool.info.tests.Activator;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ServiceExtension;
+import org.locationtech.udig.catalog.document.IDocument;
+import org.locationtech.udig.catalog.document.IDocument.ContentType;
+import org.locationtech.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import org.locationtech.udig.catalog.internal.shp.ShpServiceExtension;
+import org.locationtech.udig.document.source.BasicHotlinkDescriptorParser;
+import org.locationtech.udig.document.source.BasicHotlinkSource;
+import org.locationtech.udig.tool.info.tests.Activator;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.NullProgressMonitor;

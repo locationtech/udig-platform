@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog;
+package org.locationtech.udig.catalog;
 
 
 import java.io.Serializable;
@@ -18,9 +18,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.internal.mysql.MySQLPlugin;
-import net.refractions.udig.catalog.mysql.internal.Messages;
-import net.refractions.udig.core.internal.CorePlugin;
+import org.locationtech.udig.catalog.internal.mysql.MySQLPlugin;
+import org.locationtech.udig.catalog.mysql.internal.Messages;
+import org.locationtech.udig.core.internal.CorePlugin;
 
 import org.geotools.data.DataStoreFactorySpi;
 import org.geotools.data.DataAccessFactory.Param;
@@ -76,7 +76,7 @@ public class MySQLServiceExtension extends AbstractDataStoreServiceExtension
     /**
      * Creates some  Params for mysql based off a url that is passed in
      * 
-     * @see net.refractions.udig.catalog.ServiceExtension#createParams(java.net.URL)
+     * @see org.locationtech.udig.catalog.ServiceExtension#createParams(java.net.URL)
      * @param url for the mysql database
      * @return x
      */

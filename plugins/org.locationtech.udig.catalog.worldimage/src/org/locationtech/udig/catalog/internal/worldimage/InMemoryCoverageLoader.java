@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.worldimage;
+package org.locationtech.udig.catalog.internal.worldimage;
 
-import static net.refractions.udig.catalog.worldimage.internal.Messages.InMemoryCoverageLoader_close_button;
-import static net.refractions.udig.catalog.worldimage.internal.Messages.InMemoryCoverageLoader_message;
-import static net.refractions.udig.catalog.worldimage.internal.Messages.InMemoryCoverageLoader_msgTitle;
-import static net.refractions.udig.catalog.worldimage.internal.Messages.InMemoryCoverageLoader_restart_button;
+import static org.locationtech.udig.catalog.worldimage.internal.Messages.InMemoryCoverageLoader_close_button;
+import static org.locationtech.udig.catalog.worldimage.internal.Messages.InMemoryCoverageLoader_message;
+import static org.locationtech.udig.catalog.worldimage.internal.Messages.InMemoryCoverageLoader_msgTitle;
+import static org.locationtech.udig.catalog.worldimage.internal.Messages.InMemoryCoverageLoader_restart_button;
 import static org.eclipse.jface.dialogs.MessageDialog.QUESTION;
 
 import java.awt.Graphics2D;
@@ -24,10 +24,10 @@ import java.lang.ref.SoftReference;
 import java.text.MessageFormat;
 import java.util.Hashtable;
 
-import net.refractions.udig.catalog.rasterings.AbstractRasterGeoResource;
-import net.refractions.udig.catalog.rasterings.GridCoverageLoader;
-import net.refractions.udig.catalog.rasterings.RasteringsPlugin;
-import net.refractions.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResource;
+import org.locationtech.udig.catalog.rasterings.GridCoverageLoader;
+import org.locationtech.udig.catalog.rasterings.RasteringsPlugin;
+import org.locationtech.udig.internal.ui.UiPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;

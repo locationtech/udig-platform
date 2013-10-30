@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.omsbox.view.actions;
+package org.locationtech.udig.omsbox.view.actions;
 
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
@@ -18,8 +18,8 @@ import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewSite;
 
-import eu.udig.omsbox.OmsBoxPlugin;
-import eu.udig.omsbox.view.OmsBoxView;
+import org.locationtech.udig.omsbox.OmsBoxPlugin;
+import org.locationtech.udig.omsbox.view.OmsBoxView;
 
 public class ProcessingRegionToggleAction implements IViewActionDelegate {
 
@@ -59,7 +59,7 @@ public class ProcessingRegionToggleAction implements IViewActionDelegate {
     public IAction getAction() {
         IViewSite site = (IViewSite) this.view.getSite();
         IContributionItem item = site.getActionBars().getToolBarManager()
-                .find("eu.udig.omsbox.view.actions.ProcessingRegionToggleAction");
+                .find("org.locationtech.udig.omsbox.view.actions.ProcessingRegionToggleAction");
         return ((ActionContributionItem) item).getAction();
     }
 

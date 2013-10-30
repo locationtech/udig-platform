@@ -8,31 +8,31 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.tests.ui;
+package org.locationtech.udig.project.tests.ui;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.render.CompositeRenderContext;
-import net.refractions.udig.project.internal.render.RenderContext;
-import net.refractions.udig.project.internal.render.RenderListenerAdapter;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.RenderPackage;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.internal.render.impl.CompositeContextListener;
-import net.refractions.udig.project.internal.render.impl.CompositeRendererImpl;
-import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
-import net.refractions.udig.project.ui.internal.LayersView;
-import net.refractions.udig.ui.WaitCondition;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.render.CompositeRenderContext;
+import org.locationtech.udig.project.internal.render.RenderContext;
+import org.locationtech.udig.project.internal.render.RenderListenerAdapter;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.internal.render.impl.CompositeContextListener;
+import org.locationtech.udig.project.internal.render.impl.CompositeRendererImpl;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.project.ui.internal.LayersView;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;

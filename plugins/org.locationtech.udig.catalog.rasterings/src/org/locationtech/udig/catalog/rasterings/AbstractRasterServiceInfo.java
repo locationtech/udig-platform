@@ -10,7 +10,7 @@
  *
  */
 
-package net.refractions.udig.catalog.rasterings;
+package org.locationtech.udig.catalog.rasterings;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -19,8 +19,8 @@ import org.geotools.geometry.GeneralEnvelope;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IServiceInfo;
 
 public class AbstractRasterServiceInfo extends IServiceInfo {
 

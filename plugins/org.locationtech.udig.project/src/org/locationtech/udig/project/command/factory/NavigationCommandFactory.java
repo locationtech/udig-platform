@@ -7,19 +7,19 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.command.factory;
+package org.locationtech.udig.project.command.factory;
 
 import java.util.Arrays;
 
-import net.refractions.udig.project.command.NavCommand;
-import net.refractions.udig.project.internal.command.navigation.NavComposite;
-import net.refractions.udig.project.internal.command.navigation.PanCommand;
-import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxCommand;
-import net.refractions.udig.project.internal.command.navigation.SetViewportCenterCommand;
-import net.refractions.udig.project.internal.command.navigation.SetViewportHeight;
-import net.refractions.udig.project.internal.command.navigation.SetViewportWidth;
-import net.refractions.udig.project.internal.command.navigation.ZoomCommand;
-import net.refractions.udig.project.internal.command.navigation.ZoomExtentCommand;
+import org.locationtech.udig.project.command.NavCommand;
+import org.locationtech.udig.project.internal.command.navigation.NavComposite;
+import org.locationtech.udig.project.internal.command.navigation.PanCommand;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportCenterCommand;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportHeight;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportWidth;
+import org.locationtech.udig.project.internal.command.navigation.ZoomCommand;
+import org.locationtech.udig.project.internal.command.navigation.ZoomExtentCommand;
 
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
@@ -34,7 +34,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * @deprecated Please use navigation commands directly
  */
 @SuppressWarnings("deprecation")
-public class NavigationCommandFactory /*extends net.refractions.udig.project.command.NavigationCommandFactory */ {
+public class NavigationCommandFactory /*extends org.locationtech.udig.project.command.NavigationCommandFactory */ {
     /**
      * Creates a new NavigationCommandFactory object
      * 

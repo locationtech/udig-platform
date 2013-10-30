@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,27 +17,27 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.internal.ui.IDropTargetProvider;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.element.ProjectElementAdapter;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectElement;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.ProjectRegistry;
-import net.refractions.udig.project.internal.provider.LoadingPlaceHolder;
-import net.refractions.udig.project.ui.AdapterFactoryLabelProviderDecorator;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.UDIGAdapterFactoryContentProvider.InputChangedListener;
-import net.refractions.udig.project.ui.internal.actions.Delete;
-import net.refractions.udig.project.ui.internal.actions.OpenProject;
-import net.refractions.udig.project.ui.tool.IToolManager;
-import net.refractions.udig.ui.UDIGDragDropUtilities;
-import net.refractions.udig.ui.ZoomingDialog;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.internal.ui.IDropTargetProvider;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.element.ProjectElementAdapter;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.ProjectRegistry;
+import org.locationtech.udig.project.internal.provider.LoadingPlaceHolder;
+import org.locationtech.udig.project.ui.AdapterFactoryLabelProviderDecorator;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.UDIGAdapterFactoryContentProvider.InputChangedListener;
+import org.locationtech.udig.project.ui.internal.actions.Delete;
+import org.locationtech.udig.project.ui.internal.actions.OpenProject;
+import org.locationtech.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.ui.UDIGDragDropUtilities;
+import org.locationtech.udig.ui.ZoomingDialog;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
@@ -104,7 +104,7 @@ public class ProjectExplorer extends ViewPart
             IDropTargetProvider {
 
     /** The Extension ID of ProjectExplorer */
-    public static final String ID = "net.refractions.udig.project.ui.projectExplorer"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.project.ui.projectExplorer"; //$NON-NLS-1$
 
     public static final String PROJECT_EXPLORER_LINKED = "PROJECT_EXPLORER_LINKED"; //$NON-NLS-1$
 

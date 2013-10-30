@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal.ui;
+package org.locationtech.udig.catalog.internal.ui;
 
 import java.io.IOException;
 
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.core.IBlockingAdaptable;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.core.IBlockingAdaptable;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -37,7 +37,7 @@ public class IResolveAdaptable implements IBlockingAdaptable {
     }
 
     /**
-     * @see net.refractions.udig.ui.operations.IBlockingAdaptable#getAdapter(java.lang.Class,
+     * @see org.locationtech.udig.ui.operations.IBlockingAdaptable#getAdapter(java.lang.Class,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
     public <T> T getAdapter( Class<T> adapter, IProgressMonitor monitor ) throws IOException {
@@ -45,7 +45,7 @@ public class IResolveAdaptable implements IBlockingAdaptable {
     }
 
     /**
-     * @see net.refractions.udig.ui.operations.IBlockingAdaptable#canAdaptTo(java.lang.Class)
+     * @see org.locationtech.udig.ui.operations.IBlockingAdaptable#canAdaptTo(java.lang.Class)
      */
     public <T> boolean canAdaptTo( Class<T> adapter ) {
         return resolve.canResolve(adapter);

@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.core.internal;
+package org.locationtech.udig.core.internal;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import org.eclipse.core.runtime.Status;
 /**
  * A utility class to assist in processing extensions
  * 
- * @see net.refractions.udig.core.internal.ExtensionPointProcessor
+ * @see org.locationtech.udig.core.internal.ExtensionPointProcessor
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
@@ -38,7 +38,7 @@ public class ExtensionPointUtil {
      * Finds all the Extension or the Extension point identified by the xpid method and calls a
      * callback method on the processor class for processing of the extension.
      * 
-     * @see net.refractions.udig.core.internal.ExtensionPointProcessor#process(IExtension,
+     * @see org.locationtech.udig.core.internal.ExtensionPointProcessor#process(IExtension,
      *      IConfigurationElement)
      * @param xpid The id of the ExtensionPoint for which the extensions are to be processed
      * @param processor The object that wishes to process the extension for the ExtensionPoint
@@ -52,7 +52,7 @@ public class ExtensionPointUtil {
      * Finds all the Extension or the Extension point identified by the xpid method and calls a
      * callback method on the processor class for processing of the extension.
      * 
-     * @see net.refractions.udig.core.internal.ExtensionPointProcessor#process(IExtension,
+     * @see org.locationtech.udig.core.internal.ExtensionPointProcessor#process(IExtension,
      *      IConfigurationElement)
      * @param plugin plugin processing this extention point
      * @param xpid The id of the ExtensionPoint for which the extensions are to be processed

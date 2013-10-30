@@ -7,18 +7,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.ui.export;
+package org.locationtech.udig.catalog.ui.export;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.ui.ResolveLabelProviderSimple;
-import net.refractions.udig.catalog.ui.ResolveTitlesDecorator;
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPage;
-import net.refractions.udig.ui.CRSDialogCellEditor;
+import org.locationtech.udig.catalog.ui.ResolveLabelProviderSimple;
+import org.locationtech.udig.catalog.ui.ResolveTitlesDecorator;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPage;
+import org.locationtech.udig.ui.CRSDialogCellEditor;
 
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.IPageChangedListener;

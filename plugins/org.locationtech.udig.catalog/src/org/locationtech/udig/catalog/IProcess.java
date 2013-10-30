@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog;
+package org.locationtech.udig.catalog;
 
 import java.io.IOException;
 import java.net.URL;
@@ -197,7 +197,7 @@ public abstract class IProcess implements IResolve {
      * The provided implementation indicates that this Process is a leaf.
      * </p>
      * @return Collections.emptyList();
-     * @see net.refractions.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
+     * @see org.locationtech.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
      */
     public List<IResolve> members( IProgressMonitor monitor ) {        
         return Collections.emptyList(); // type safe EMPTY_LIST

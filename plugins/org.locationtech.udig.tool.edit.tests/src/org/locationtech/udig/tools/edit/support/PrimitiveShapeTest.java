@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.support;
+package org.locationtech.udig.tools.edit.support;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -50,7 +50,7 @@ public class PrimitiveShapeTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.getNumPoints()'
+     * Test method for 'org.locationtech.udig.tools.edit.support.PrimitiveShape.getNumPoints()'
      */
     @Test
     public void testGetNumPoints() {
@@ -58,7 +58,7 @@ public class PrimitiveShapeTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.getPoint(int)'
+     * Test method for 'org.locationtech.udig.tools.edit.support.PrimitiveShape.getPoint(int)'
      */
     @Test
     public void testGetPoint() {
@@ -70,7 +70,7 @@ public class PrimitiveShapeTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.getNumCoords()'
+     * Test method for 'org.locationtech.udig.tools.edit.support.PrimitiveShape.getNumCoords()'
      */
     @Test
     public void testGetNumCoords() {
@@ -78,7 +78,7 @@ public class PrimitiveShapeTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.getCoord(int)'
+     * Test method for 'org.locationtech.udig.tools.edit.support.PrimitiveShape.getCoord(int)'
      */
     @Test
     public void testGetCoord() {
@@ -92,7 +92,7 @@ public class PrimitiveShapeTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.iterator()'
+     * Test method for 'org.locationtech.udig.tools.edit.support.PrimitiveShape.iterator()'
      */
     @Test
     public void testIterator() {
@@ -127,7 +127,7 @@ public class PrimitiveShapeTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.coordIterator()'
+     * Test method for 'org.locationtech.udig.tools.edit.support.PrimitiveShape.coordIterator()'
      */
     @Test
     public void testCoordIterator() {
@@ -144,7 +144,7 @@ public class PrimitiveShapeTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.coordArray()'
+     * Test method for 'org.locationtech.udig.tools.edit.support.PrimitiveShape.coordArray()'
      */
     @Test
     public void testCoordArray() {
@@ -159,7 +159,7 @@ public class PrimitiveShapeTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.hasVertex(Point)'
+     * Test method for 'org.locationtech.udig.tools.edit.support.PrimitiveShape.hasVertex(Point)'
      */
     @Test
     public void testHasVertexPoint() {
@@ -171,7 +171,7 @@ public class PrimitiveShapeTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.hasVertex(Point,
+     * Test method for 'org.locationtech.udig.tools.edit.support.PrimitiveShape.hasVertex(Point,
      * LazyCoord)'
      */
     @Test
@@ -181,7 +181,7 @@ public class PrimitiveShapeTest {
 
     /*
      * Test method for
-     * 'net.refractions.udig.tools.edit.support.PrimitiveShape.getClosestEdge(Point)'
+     * 'org.locationtech.udig.tools.edit.support.PrimitiveShape.getClosestEdge(Point)'
      */
     @Test
     public void testGetClosestEdge() {
@@ -213,7 +213,7 @@ public class PrimitiveShapeTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.getBounds()'
+     * Test method for 'org.locationtech.udig.tools.edit.support.PrimitiveShape.getBounds()'
      */
     @Test
     public void testGetBounds() {
@@ -221,7 +221,7 @@ public class PrimitiveShapeTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.contains(Point,
+     * Test method for 'org.locationtech.udig.tools.edit.support.PrimitiveShape.contains(Point,
      * boolean)'
      */
     @Test
@@ -230,7 +230,7 @@ public class PrimitiveShapeTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.getBounds2D()'
+     * Test method for 'org.locationtech.udig.tools.edit.support.PrimitiveShape.getBounds2D()'
      */
     @Test
     public void testGetBounds2D() {
@@ -238,7 +238,7 @@ public class PrimitiveShapeTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.contains(double,
+     * Test method for 'org.locationtech.udig.tools.edit.support.PrimitiveShape.contains(double,
      * double)'
      */
     @Test
@@ -247,7 +247,7 @@ public class PrimitiveShapeTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.contains(Point2D)'
+     * Test method for 'org.locationtech.udig.tools.edit.support.PrimitiveShape.contains(Point2D)'
      */
     @Test
     public void testContainsPoint2D() {
@@ -255,7 +255,7 @@ public class PrimitiveShapeTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.intersects(double,
+     * Test method for 'org.locationtech.udig.tools.edit.support.PrimitiveShape.intersects(double,
      * double, double, double)'
      */
     @Test
@@ -265,7 +265,7 @@ public class PrimitiveShapeTest {
 
     /*
      * Test method for
-     * 'net.refractions.udig.tools.edit.support.PrimitiveShape.intersects(Rectangle2D)'
+     * 'org.locationtech.udig.tools.edit.support.PrimitiveShape.intersects(Rectangle2D)'
      */
     @Test
     public void testIntersectsRectangle2D() {
@@ -273,7 +273,7 @@ public class PrimitiveShapeTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.contains(double,
+     * Test method for 'org.locationtech.udig.tools.edit.support.PrimitiveShape.contains(double,
      * double, double, double)'
      */
     @Test
@@ -283,7 +283,7 @@ public class PrimitiveShapeTest {
 
     /*
      * Test method for
-     * 'net.refractions.udig.tools.edit.support.PrimitiveShape.contains(Rectangle2D)'
+     * 'org.locationtech.udig.tools.edit.support.PrimitiveShape.contains(Rectangle2D)'
      */
     @Test
     public void testContainsRectangle2D() {
@@ -292,7 +292,7 @@ public class PrimitiveShapeTest {
 
     /*
      * Test method for
-     * 'net.refractions.udig.tools.edit.support.PrimitiveShape.getPathIterator(AffineTransform)'
+     * 'org.locationtech.udig.tools.edit.support.PrimitiveShape.getPathIterator(AffineTransform)'
      */
     @Test
     public void testGetPathIteratorAffineTransform() {
@@ -301,7 +301,7 @@ public class PrimitiveShapeTest {
 
     /*
      * Test method for
-     * 'net.refractions.udig.tools.edit.support.PrimitiveShape.getPathIterator(AffineTransform,
+     * 'org.locationtech.udig.tools.edit.support.PrimitiveShape.getPathIterator(AffineTransform,
      * double)'
      */
     @Test
@@ -310,7 +310,7 @@ public class PrimitiveShapeTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.getCoordsAt(int)'
+     * Test method for 'org.locationtech.udig.tools.edit.support.PrimitiveShape.getCoordsAt(int)'
      */
     @Test
     public void testGetCoordsAt() {

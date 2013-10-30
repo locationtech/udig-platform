@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package eu.udig.jconsole.javadoc;
+package org.locationtech.udig.jconsole.javadoc;
 
 
 import org.eclipse.jface.text.ITextViewer;

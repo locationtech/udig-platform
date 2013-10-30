@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.style.advanced.utils;
+package org.locationtech.udig.style.advanced.utils;
 
 import static java.lang.Math.toRadians;
 
@@ -27,11 +27,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.refractions.udig.ui.graphics.AWTGraphics;
-import net.refractions.udig.ui.graphics.NonAdvancedSWTGraphics;
-import net.refractions.udig.ui.graphics.SLDs;
-import net.refractions.udig.ui.graphics.SWTGraphics;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.ui.graphics.AWTGraphics;
+import org.locationtech.udig.ui.graphics.NonAdvancedSWTGraphics;
+import org.locationtech.udig.ui.graphics.SLDs;
+import org.locationtech.udig.ui.graphics.SWTGraphics;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.graphics.GC;
@@ -81,7 +81,7 @@ import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
-import eu.udig.style.advanced.common.styleattributeclasses.PointSymbolizerWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.PointSymbolizerWrapper;
 
 /**
  * Drawing utility package - make your own previews and glyphs!

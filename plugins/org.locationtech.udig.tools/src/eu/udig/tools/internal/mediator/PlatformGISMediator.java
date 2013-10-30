@@ -9,11 +9,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.internal.mediator;
+package org.locationtech.udig.tools.internal.mediator;
 
 import java.lang.reflect.InvocationTargetException;
 
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;

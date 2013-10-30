@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.catalog.teradata;
+package org.locationtech.udig.catalog.teradata;
 
 import static java.util.Collections.emptyMap;
 
@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.FileLocator;
@@ -49,14 +49,14 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 import ucar.unidata.io.RandomAccessFile;
-import eu.udig.catalog.teradata.internal.Messages;
+import org.locationtech.udig.catalog.teradata.internal.Messages;
 
 /**
  * The activator class controls the plug-in life cycle
  */
 public class Activator extends AbstractUIPlugin {
-	private static final String GEOTOOLS_LIBS_PLUGIN = "eu.udig.libs.teradata";
-	private static final String LICENSE_PLUGIN_ID = "eu.udig.libs.teradata.license_10.0";
+	private static final String GEOTOOLS_LIBS_PLUGIN = "org.locationtech.udig.libs.teradata";
+	private static final String LICENSE_PLUGIN_ID = "org.locationtech.udig.libs.teradata.license_10.0";
 	static final String CONFIG_FILE_NAME = "tdgssconfig.jar"; //$NON-NLS-1$
 	static final String JDBC_FILE_NAME = "terajdbc4.jar"; //$NON-NLS-1$
 
@@ -189,7 +189,7 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "eu.udig.catalog.teradata"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.locationtech.udig.catalog.teradata"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;

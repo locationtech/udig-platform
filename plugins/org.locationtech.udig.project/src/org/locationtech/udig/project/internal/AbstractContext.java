@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 
-import net.refractions.udig.project.IAbstractContext;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.IAbstractContext;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 
 /**
  * Superclass for all context objects.  Has basic functionality.  Also provides methods to return type safe
@@ -43,7 +43,7 @@ public interface AbstractContext extends IAbstractContext {
     public RenderManager getRenderManagerInternal();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.AbstractContext#getRenderManagerInternal <em>Render Manager Internal</em>}' reference.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.AbstractContext#getRenderManagerInternal <em>Render Manager Internal</em>}' reference.
      * 
      * @param value the new value of the '<em>Render Manager Internal</em>' reference.
      */
@@ -64,7 +64,7 @@ public interface AbstractContext extends IAbstractContext {
     Map getMapInternal();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.AbstractContext#getMapInternal <em>Map Internal</em>}' reference.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.AbstractContext#getMapInternal <em>Map Internal</em>}' reference.
      * 
      * @param value the new value of the '<em>Map Internal</em>' reference.
      * @see #getMapInternal()

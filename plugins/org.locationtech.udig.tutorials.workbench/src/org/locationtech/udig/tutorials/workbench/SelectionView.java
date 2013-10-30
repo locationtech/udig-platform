@@ -8,15 +8,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.workbench;
+package org.locationtech.udig.tutorials.workbench;
 
 import java.net.URL;
 import java.util.Iterator;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.ISelection;
@@ -94,7 +94,7 @@ public class SelectionView extends ViewPart {
             buffer.append(separator);
             buffer.append("==========================");
             buffer.append(separator);
-            // from net.refractions.udig.project
+            // from org.locationtech.udig.project
             if( object instanceof IMap ){
                 buffer.append("instance of Map");
                 buffer.append(separator);                
@@ -103,7 +103,7 @@ public class SelectionView extends ViewPart {
                 buffer.append("instance of ILayer");
                 buffer.append(separator);                
             }
-            // from net.refractions.udig.catalog
+            // from org.locationtech.udig.catalog
             if( object instanceof IService ){
                 buffer.append("instance of IService");
                 buffer.append(separator);                
@@ -136,7 +136,7 @@ public class SelectionView extends ViewPart {
                     buffer.append("adapts to ILayer");
                     buffer.append(separator);                    
                 }
-                // from net.refractions.udig.catalog
+                // from org.locationtech.udig.catalog
                 if( adaptable.getAdapter(IService.class) != null ){
                     buffer.append("adapts to IService");
                     buffer.append(separator);                    

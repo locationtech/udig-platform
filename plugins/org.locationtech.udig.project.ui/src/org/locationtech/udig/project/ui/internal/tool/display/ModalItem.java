@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.tool.display;
+package org.locationtech.udig.project.ui.internal.tool.display;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,17 +18,17 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import net.refractions.udig.internal.ui.operations.OperationCategory;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
-import net.refractions.udig.project.ui.internal.MapPart;
-import net.refractions.udig.project.ui.internal.MapToolEntry;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.viewers.MapEditDomain;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.graphics.Glyph;
-import net.refractions.udig.ui.operations.ILazyOpListener;
-import net.refractions.udig.ui.operations.OpFilter;
+import org.locationtech.udig.internal.ui.operations.OperationCategory;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.MapToolEntry;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.viewers.MapEditDomain;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.graphics.Glyph;
+import org.locationtech.udig.ui.operations.ILazyOpListener;
+import org.locationtech.udig.ui.operations.OpFilter;
 
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.gef.EditPart;
@@ -145,7 +145,7 @@ public abstract class ModalItem implements ILazyOpListener {
      * This method is overriden by the one subclass ModalTool (so that the tool manager
      * is kept informed on what tool is active).
      * 
-     * @see net.refractions.udig.project.ui.tool.ActionTool#run()
+     * @see org.locationtech.udig.project.ui.tool.ActionTool#run()
      */
     public void run() {
         if( isModeless() ){

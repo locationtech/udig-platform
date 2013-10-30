@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.ui;
+package org.locationtech.udig.catalog.ui;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,12 +22,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ui.FileConnectionFactory.FileType;
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ui.FileConnectionFactory.FileType;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
@@ -65,7 +65,7 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
     private ListViewer viewer;
 
     public String getId() {
-        return "net.refractions.udig.catalog.ui.openFilePage"; //$NON-NLS-1$
+        return "org.locationtech.udig.catalog.ui.openFilePage"; //$NON-NLS-1$
     }
 
     /**

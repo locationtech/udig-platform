@@ -8,11 +8,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.render.internal.gridcoverage.basic;
+package org.locationtech.udig.render.internal.gridcoverage.basic;
 
 import java.awt.Rectangle;
 
-import net.refractions.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderContext;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 

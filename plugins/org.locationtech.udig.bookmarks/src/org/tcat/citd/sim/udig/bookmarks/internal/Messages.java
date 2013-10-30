@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package org.tcat.citd.sim.udig.bookmarks.internal;
+package org.locationtech.udig.bookmarks.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "org.tcat.citd.sim.udig.bookmarks.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.bookmarks.internal.messages"; //$NON-NLS-1$
 	public static String BookmarkAction_dialogtitle_renamebookmark;
 	public static String BookmarkAction_dialogtitle_bookmarklocation;
 	public static String BookmarkAction_dialogprompt_removebookmark;

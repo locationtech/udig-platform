@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.command.navigation;
+package org.locationtech.udig.project.internal.command.navigation;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.command.NavCommand;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.NavCommand;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.render.ViewportModel;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.referencing.CRS;
@@ -21,7 +21,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * TODO Purpose of net.refractions.udig.project.internal.command.navigation
+ * TODO Purpose of org.locationtech.udig.project.internal.command.navigation
  * <p>
  * </p>
  * 
@@ -39,7 +39,7 @@ public abstract class AbstractNavCommand implements NavCommand {
 	private CoordinateReferenceSystem oldCRS;
 
 	/**
-	 * @see net.refractions.udig.project.internal.command.UndoableCommand#rollback()
+	 * @see org.locationtech.udig.project.internal.command.UndoableCommand#rollback()
 	 */
 	public void rollback(IProgressMonitor monitor) throws Exception {      
 	    if ( model == null ){
@@ -60,7 +60,7 @@ public abstract class AbstractNavCommand implements NavCommand {
 	}
 
 	/**
-	 * @see net.refractions.udig.project.internal.command.MapCommand#run()
+	 * @see org.locationtech.udig.project.internal.command.MapCommand#run()
 	 */
 	public void run(IProgressMonitor monitor) throws Exception {
 	    if ( model == null ){
@@ -81,14 +81,14 @@ public abstract class AbstractNavCommand implements NavCommand {
 	protected abstract void runImpl(IProgressMonitor monitor) throws Exception;
 
 	/**
-	 * @see net.refractions.udig.project.internal.command.navigation.NavCommand#setViewportModel(net.refractions.udig.project.ViewportModelControl)
+	 * @see org.locationtech.udig.project.internal.command.navigation.NavCommand#setViewportModel(org.locationtech.udig.project.ViewportModelControl)
 	 */
 	public void setViewportModel(ViewportModel model) {
 		this.model = model;
 	}
 
 	/**
-	 * @see net.refractions.udig.project.command.MapCommand#setMap(IMap)
+	 * @see org.locationtech.udig.project.command.MapCommand#setMap(IMap)
 	 * @uml.property name="map"
 	 */
 	public void setMap(IMap map) {
@@ -96,7 +96,7 @@ public abstract class AbstractNavCommand implements NavCommand {
 	}
 
 	/**
-	 * @see net.refractions.udig.project.command.MapCommand#getMap()
+	 * @see org.locationtech.udig.project.command.MapCommand#getMap()
 	 * @uml.property name="map"
 	 */
 	public Map getMap() {

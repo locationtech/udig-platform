@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.ui;
+package org.locationtech.udig.catalog.internal.ui;
 
 import java.io.Serializable;
 import java.net.URL;
@@ -18,17 +18,17 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
-import net.refractions.udig.catalog.ui.UDIGConnectionPage;
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.catalog.ui.workflow.EndConnectionState;
-import net.refractions.udig.catalog.ui.workflow.IntermediateState;
-import net.refractions.udig.catalog.ui.workflow.Listener;
-import net.refractions.udig.catalog.ui.workflow.State;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardDialog;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPage;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ui.AbstractUDIGImportPage;
+import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.catalog.ui.workflow.EndConnectionState;
+import org.locationtech.udig.catalog.ui.workflow.IntermediateState;
+import org.locationtech.udig.catalog.ui.workflow.Listener;
+import org.locationtech.udig.catalog.ui.workflow.State;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardDialog;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPage;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.IWizardPage;

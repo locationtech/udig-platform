@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.imageio;
+package org.locationtech.udig.catalog.imageio;
 
 import it.geosolutions.imageio.gdalframework.GDALUtilities;
 
@@ -34,7 +34,7 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin {
     private static Activator plugin;
-    public final static String ID = "net.refractions.udig.catalog.imageio"; //$NON-NLS-1$
+    public final static String ID = "org.locationtech.udig.catalog.imageio"; //$NON-NLS-1$
     private ResourceBundle resourceBundle;
 
     /**
@@ -112,7 +112,7 @@ public class Activator extends AbstractUIPlugin {
         try {
             if(this.resourceBundle == null) {
                 this.resourceBundle = ResourceBundle.getBundle(
-                        "net.refractions.udig.catalog.imageio.MrSIDPluginResources"); //$NON-NLS-1$
+                        "org.locationtech.udig.catalog.imageio.MrSIDPluginResources"); //$NON-NLS-1$
             }
         } catch(MissingResourceException ex) {
             this.resourceBundle = null;

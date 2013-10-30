@@ -9,16 +9,16 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.mapgraphic.style;
+package org.locationtech.udig.mapgraphic.style;
 
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.io.IOException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.project.StyleContent;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.project.StyleContent;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
@@ -58,7 +58,7 @@ public class LocationStyleContent extends StyleContent {
     private static final String X = "x";  //$NON-NLS-1$
 
     /** extension id */
-    public static final String ID = "net.refractions.udig.printing.ui.locationStyle"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.printing.ui.locationStyle"; //$NON-NLS-1$
     
     /** padding constants */
     public static final int YPAD_BOTTOM = 5;

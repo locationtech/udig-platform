@@ -10,16 +10,16 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.element.provider;
+package org.locationtech.udig.project.element.provider;
 
 import java.util.List;
 
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.project.element.ElementPackage;
-import net.refractions.udig.project.element.IGenericProjectElement;
-import net.refractions.udig.project.element.ProjectElementAdapter;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.provider.ProjectEditPlugin;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.project.element.ElementPackage;
+import org.locationtech.udig.project.element.IGenericProjectElement;
+import org.locationtech.udig.project.element.ProjectElementAdapter;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.provider.ProjectEditPlugin;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -45,7 +45,7 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
- * This is the item provider adapter for a {@link net.refractions.udig.project.element.ProjectElementAdapter} object.
+ * This is the item provider adapter for a {@link org.locationtech.udig.project.element.ProjectElementAdapter} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

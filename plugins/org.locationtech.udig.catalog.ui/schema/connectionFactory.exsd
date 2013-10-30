@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.catalog.ui" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.catalog.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.catalog.ui" id="connectionFactory" name="Connection Factory"/>
+         <meta.schema plugin="org.locationtech.udig.catalog.ui" id="connectionFactory" name="Connection Factory"/>
       </appInfo>
       <documentation>
          The extension point that must be implemented when adding new Services to the catalog.  The connection factory is used by drag and drop to check if a given input can be used to create a service.  In addition it specifies the wizard pages for the import wizard.
@@ -71,7 +71,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.catalog.ui.UDIGConnectionFactory"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.catalog.ui.UDIGConnectionFactory"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -140,7 +140,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.catalog.ui.AbstractUDIGImportPage:net.refractions.udig.catalog.ui.UDIGConnectionPage"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.catalog.ui.AbstractUDIGImportPage:org.locationtech.udig.catalog.ui.UDIGConnectionPage"/>
                </appInfo>
             </annotation>
          </attribute>

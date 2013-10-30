@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wms.ui;
+package org.locationtech.udig.catalog.internal.wms.ui;
 import java.io.Serializable;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
@@ -19,15 +19,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.wms.WMSServiceExtension;
-import net.refractions.udig.catalog.internal.wms.WMSServiceImpl;
-import net.refractions.udig.catalog.internal.wms.WmsPlugin;
-import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
-import net.refractions.udig.catalog.ui.UDIGConnectionPage;
-import net.refractions.udig.catalog.ui.workflow.EndConnectionState;
-import net.refractions.udig.catalog.wms.internal.Messages;
-import net.refractions.udig.core.RecentHistory;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.wms.WMSServiceExtension;
+import org.locationtech.udig.catalog.internal.wms.WMSServiceImpl;
+import org.locationtech.udig.catalog.internal.wms.WmsPlugin;
+import org.locationtech.udig.catalog.ui.AbstractUDIGImportPage;
+import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
+import org.locationtech.udig.catalog.ui.workflow.EndConnectionState;
+import org.locationtech.udig.catalog.wms.internal.Messages;
+import org.locationtech.udig.core.RecentHistory;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -91,7 +91,7 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
     }
 
     public String getId() {
-        return "net.refractions.udig.catalog.ui.WMS"; //$NON-NLS-1$
+        return "org.locationtech.udig.catalog.ui.WMS"; //$NON-NLS-1$
     }
 
     /** Can be called during createControl */

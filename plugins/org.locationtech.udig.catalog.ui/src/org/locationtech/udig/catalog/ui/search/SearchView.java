@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.ui.search;
+package org.locationtech.udig.catalog.ui.search;
 
 import java.io.IOException;
 import java.net.URL;
@@ -16,31 +16,31 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 
-import net.refractions.udig.aoi.IAOIService;
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.ICatalogInfo;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveChangeEvent;
-import net.refractions.udig.catalog.IResolveChangeEvent.Type;
-import net.refractions.udig.catalog.IResolveChangeListener;
-import net.refractions.udig.catalog.ISearch;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceInfo;
-import net.refractions.udig.catalog.internal.ui.ImageConstants;
-import net.refractions.udig.catalog.ui.CatalogTreeViewer;
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.catalog.ui.ResolveContentProvider;
-import net.refractions.udig.catalog.ui.ResolveLabelProviderSimple;
-import net.refractions.udig.catalog.ui.ResolveTitlesDecorator;
-import net.refractions.udig.catalog.ui.StatusLineMessageBoardAdapter;
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.SearchPart;
-import net.refractions.udig.ui.UDIGDragDropUtilities;
+import org.locationtech.udig.aoi.IAOIService;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.ICatalogInfo;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveChangeEvent;
+import org.locationtech.udig.catalog.IResolveChangeEvent.Type;
+import org.locationtech.udig.catalog.IResolveChangeListener;
+import org.locationtech.udig.catalog.ISearch;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.internal.ui.ImageConstants;
+import org.locationtech.udig.catalog.ui.CatalogTreeViewer;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.ResolveContentProvider;
+import org.locationtech.udig.catalog.ui.ResolveLabelProviderSimple;
+import org.locationtech.udig.catalog.ui.ResolveTitlesDecorator;
+import org.locationtech.udig.catalog.ui.StatusLineMessageBoardAdapter;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.SearchPart;
+import org.locationtech.udig.ui.UDIGDragDropUtilities;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.Action;
@@ -98,7 +98,7 @@ import com.vividsolutions.jts.geom.Envelope;
  */
 public class SearchView extends SearchPart {
     /** ID for this view */
-    public static final String VIEW_ID = "net.refractions.udig.catalog.ui.search.searchView"; //$NON-NLS-1$
+    public static final String VIEW_ID = "org.locationtech.udig.catalog.ui.search.searchView"; //$NON-NLS-1$
 
     public Text text;
     private Button bbox;

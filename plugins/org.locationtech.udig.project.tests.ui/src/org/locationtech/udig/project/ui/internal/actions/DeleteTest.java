@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.actions;
+package org.locationtech.udig.project.ui.internal.actions;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -23,16 +23,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectElement;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.ProjectRegistry;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.ProjectRegistry;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -80,7 +80,7 @@ public class DeleteTest extends AbstractProjectUITestCase {
 	}
 	
 	/*
-	 * Test method for 'net.refractions.udig.project.ui.internal.actions.Delete.operate(SimpleFeature)'
+	 * Test method for 'org.locationtech.udig.project.ui.internal.actions.Delete.operate(SimpleFeature)'
 	 */
 	@Test
 	public void testOperateFeature() {
@@ -88,7 +88,7 @@ public class DeleteTest extends AbstractProjectUITestCase {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.project.ui.internal.actions.Delete.operate(Layer)'
+	 * Test method for 'org.locationtech.udig.project.ui.internal.actions.Delete.operate(Layer)'
 	 */
 	@Test
 	public void testOperateLayer() {
@@ -96,7 +96,7 @@ public class DeleteTest extends AbstractProjectUITestCase {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.project.ui.internal.actions.Delete.operate(ProjectElement)'
+	 * Test method for 'org.locationtech.udig.project.ui.internal.actions.Delete.operate(ProjectElement)'
 	 */
 	@Test
 	public void testOperateProjectElement() {
@@ -113,7 +113,7 @@ public class DeleteTest extends AbstractProjectUITestCase {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.project.ui.internal.actions.Delete.operate(Project)'
+	 * Test method for 'org.locationtech.udig.project.ui.internal.actions.Delete.operate(Project)'
 	 */
 	@Ignore
 	@Test

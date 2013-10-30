@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld.simple;
+package org.locationtech.udig.style.sld.simple;
 
 /**
  * Captures the current *mode* of the style configurator making use

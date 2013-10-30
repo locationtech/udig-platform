@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.style.sld.internal;
+package org.locationtech.udig.style.sld.internal;
 
 import java.awt.Color;
 
-import net.refractions.udig.style.sld.SLDEditorPart;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.style.sld.SLDEditorPart;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -55,7 +55,7 @@ public class SLDPolygonEditorPart extends SLDEditorPart implements SelectionList
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.style.sld.SLDEditorPart#getContentType()
+     * @see org.locationtech.udig.style.sld.SLDEditorPart#getContentType()
      */
     public Class getContentType() {
         return PolygonSymbolizer.class;
@@ -64,7 +64,7 @@ public class SLDPolygonEditorPart extends SLDEditorPart implements SelectionList
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.style.sld.SLDEditorPart#init()
+     * @see org.locationtech.udig.style.sld.SLDEditorPart#init()
      */
     public void init() {
         // Nothing to do
@@ -73,7 +73,7 @@ public class SLDPolygonEditorPart extends SLDEditorPart implements SelectionList
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.style.sld.SLDEditorPart#reset()
+     * @see org.locationtech.udig.style.sld.SLDEditorPart#reset()
      */
     public void reset() {
         setStylingElements((PolygonSymbolizer) getContent());

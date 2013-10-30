@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.internal.wmt.basic;
+package org.locationtech.udig.render.internal.wmt.basic;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -25,31 +25,31 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.internal.PreferenceConstants;
-import net.refractions.udig.catalog.internal.wmt.WMTRenderJob;
-import net.refractions.udig.catalog.internal.wmt.tile.WMTTile;
-import net.refractions.udig.catalog.internal.wmt.tile.WMTTileImageReadWriter;
-import net.refractions.udig.catalog.internal.wmt.tile.WMTTileSetWrapper;
-import net.refractions.udig.catalog.internal.wmt.ui.properties.WMTLayerProperties;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSource;
-import net.refractions.udig.catalog.wmsc.server.Tile;
-import net.refractions.udig.catalog.wmsc.server.TileListener;
-import net.refractions.udig.catalog.wmsc.server.TileRange;
-import net.refractions.udig.catalog.wmsc.server.TileRangeInMemory;
-import net.refractions.udig.catalog.wmsc.server.TileRangeOnDisk;
-import net.refractions.udig.catalog.wmsc.server.TileSet;
-import net.refractions.udig.catalog.wmsc.server.TileWorkerQueue;
-import net.refractions.udig.catalog.wmsc.server.WMSTile;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.internal.render.impl.RendererImpl;
-import net.refractions.udig.project.render.RenderException;
-import net.refractions.udig.render.internal.wmsc.basic.BasicWMSCRenderer;
-import net.refractions.udig.render.internal.wmsc.basic.WMSCTileCaching;
-import net.refractions.udig.render.wmt.basic.WMTPlugin;
-import net.refractions.udig.render.wmt.basic.internal.Messages;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.internal.PreferenceConstants;
+import org.locationtech.udig.catalog.internal.wmt.WMTRenderJob;
+import org.locationtech.udig.catalog.internal.wmt.tile.WMTTile;
+import org.locationtech.udig.catalog.internal.wmt.tile.WMTTileImageReadWriter;
+import org.locationtech.udig.catalog.internal.wmt.tile.WMTTileSetWrapper;
+import org.locationtech.udig.catalog.internal.wmt.ui.properties.WMTLayerProperties;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.WMTSource;
+import org.locationtech.udig.catalog.wmsc.server.Tile;
+import org.locationtech.udig.catalog.wmsc.server.TileListener;
+import org.locationtech.udig.catalog.wmsc.server.TileRange;
+import org.locationtech.udig.catalog.wmsc.server.TileRangeInMemory;
+import org.locationtech.udig.catalog.wmsc.server.TileRangeOnDisk;
+import org.locationtech.udig.catalog.wmsc.server.TileSet;
+import org.locationtech.udig.catalog.wmsc.server.TileWorkerQueue;
+import org.locationtech.udig.catalog.wmsc.server.WMSTile;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.render.impl.RendererImpl;
+import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.render.internal.wmsc.basic.BasicWMSCRenderer;
+import org.locationtech.udig.render.internal.wmsc.basic.WMSCTileCaching;
+import org.locationtech.udig.render.wmt.basic.WMTPlugin;
+import org.locationtech.udig.render.wmt.basic.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -427,7 +427,7 @@ public class BasicWMTRenderer extends RendererImpl {
 
     /**
      * 
-     * @see net.refractions.udig.render.internal.wmsc.basic#renderTile(Graphics2D graphics, WMTTile tile, CoordinateReferenceSystem crs, RasterSymbolizer style)
+     * @see org.locationtech.udig.render.internal.wmsc.basic#renderTile(Graphics2D graphics, WMTTile tile, CoordinateReferenceSystem crs, RasterSymbolizer style)
      * @param graphics
      * @param tile
      * @param style
@@ -547,7 +547,7 @@ public class BasicWMTRenderer extends RendererImpl {
         public TileListenerImpl() {
             
         }
-        public void notifyTileReady( net.refractions.udig.catalog.wmsc.server.Tile tile ) {
+        public void notifyTileReady( org.locationtech.udig.catalog.wmsc.server.Tile tile ) {
             // set the area that needs updating
             //setRenderBounds(tile.getBounds());
             

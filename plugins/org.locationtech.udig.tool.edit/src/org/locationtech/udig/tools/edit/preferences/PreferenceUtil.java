@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.preferences;
+package org.locationtech.udig.tools.edit.preferences;
 
 import java.awt.Color;
 
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.tools.edit.EditPlugin;
-import net.refractions.udig.tools.edit.support.SnapBehaviour;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.support.SnapBehaviour;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
@@ -66,7 +66,7 @@ public class PreferenceUtil {
      */
     public Color getDrawVertexLineColor() {
         return getColor(ProjectPlugin.getPlugin().getPreferenceStore(),
-                net.refractions.udig.project.preferences.PreferenceConstants.P_SELECTION2_COLOR);
+                org.locationtech.udig.project.preferences.PreferenceConstants.P_SELECTION2_COLOR);
         }
 
     private Color getColor( IPreferenceStore store2, String preferenceID ) {
@@ -82,7 +82,7 @@ public class PreferenceUtil {
      */
     public Color getDrawSelectionFillColor() {
         return getColor(ProjectPlugin.getPlugin().getPreferenceStore(),
-                net.refractions.udig.project.preferences.PreferenceConstants.P_SELECTION_COLOR);
+                org.locationtech.udig.project.preferences.PreferenceConstants.P_SELECTION_COLOR);
     }
 
     /**
@@ -117,7 +117,7 @@ public class PreferenceUtil {
      */
     public Color getSelectionColor() {
         return getColor(ProjectPlugin.getPlugin().getPreferenceStore(), 
-                net.refractions.udig.project.preferences.PreferenceConstants.P_SELECTION_COLOR);
+                org.locationtech.udig.project.preferences.PreferenceConstants.P_SELECTION_COLOR);
     }
 
 

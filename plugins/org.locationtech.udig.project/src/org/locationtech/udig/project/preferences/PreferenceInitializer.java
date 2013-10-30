@@ -8,10 +8,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.preferences;
+package org.locationtech.udig.project.preferences;
 
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.interceptor.ResourceCacheInterceptor;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.interceptor.ResourceCacheInterceptor;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -22,7 +22,7 @@ import org.eclipse.swt.graphics.RGB;
  * Class used to initialize default preference values.
  */
 public class PreferenceInitializer extends AbstractPreferenceInitializer {
-    public static final String P_DEFAULT_FEATURE_EDITOR_VALUE="net.refractions.udig.tool.select.view"; //$NON-NLS-1$
+    public static final String P_DEFAULT_FEATURE_EDITOR_VALUE="org.locationtech.udig.tool.select.view"; //$NON-NLS-1$
 	public void initializeDefaultPreferences() {
 		IPreferenceStore store = ProjectPlugin.getPlugin()
 				.getPreferenceStore();

@@ -9,19 +9,19 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.operations.example;
+package org.locationtech.udig.project.ui.operations.example;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.summary.SummaryData;
-import net.refractions.udig.project.ui.summary.SummaryDialog;
-import net.refractions.udig.ui.operations.IOp;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.summary.SummaryData;
+import org.locationtech.udig.project.ui.summary.SummaryDialog;
+import org.locationtech.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;
@@ -47,7 +47,7 @@ import com.vividsolutions.jts.geom.Envelope;
 public class MultiTargetOp implements IOp {
 
     /**
-     * @see net.refractions.udig.ui.operations.IOp#op(java.lang.Object)
+     * @see org.locationtech.udig.ui.operations.IOp#op(java.lang.Object)
      */
     public void op( final Display display, Object target, IProgressMonitor monitor )
             throws Exception {

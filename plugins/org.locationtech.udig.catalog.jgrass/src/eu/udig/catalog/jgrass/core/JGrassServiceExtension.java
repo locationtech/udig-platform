@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.jgrass.core;
+package org.locationtech.udig.catalog.jgrass.core;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -17,9 +17,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ServiceExtension;
-import net.refractions.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ServiceExtension;
+import org.locationtech.udig.catalog.URLUtils;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -28,7 +28,7 @@ import org.geotools.gce.grassraster.JGrassConstants;
 import org.geotools.gce.grassraster.JGrassMapEnvironment;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import eu.udig.catalog.jgrass.JGrassPlugin;
+import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
 
 /**
  * <p>
@@ -43,7 +43,7 @@ public class JGrassServiceExtension implements ServiceExtension {
     /**
      * the jgrass service key, it is used to store the url to the jgrass location
      */
-    public static final String KEY = "eu.udig.catalog.jgrass.urlKey"; //$NON-NLS-1$
+    public static final String KEY = "org.locationtech.udig.catalog.jgrass.urlKey"; //$NON-NLS-1$
 
     public JGrassServiceExtension() {
         super();

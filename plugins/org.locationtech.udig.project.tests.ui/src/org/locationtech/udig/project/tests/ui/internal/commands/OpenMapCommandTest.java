@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.tests.ui.internal.commands;
+package org.locationtech.udig.project.tests.ui.internal.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -16,21 +16,21 @@ import static org.junit.Assert.assertNotNull;
 import java.util.HashMap;
 import java.util.List;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceFactory;
-import net.refractions.udig.catalog.tests.DummyService;
-import net.refractions.udig.catalog.tests.ui.workflow.Runner;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.commands.CreateMapCommand;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.commands.OpenProjectElementCommand;
-import net.refractions.udig.project.ui.internal.MapEditorInput;
-import net.refractions.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceFactory;
+import org.locationtech.udig.catalog.tests.DummyService;
+import org.locationtech.udig.catalog.tests.ui.workflow.Runner;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.commands.CreateMapCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.commands.OpenProjectElementCommand;
+import org.locationtech.udig.project.ui.internal.MapEditorInput;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;

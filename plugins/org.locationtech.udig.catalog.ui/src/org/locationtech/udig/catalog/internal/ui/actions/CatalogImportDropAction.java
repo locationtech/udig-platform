@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.ui.actions;
+package org.locationtech.udig.catalog.internal.ui.actions;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -21,18 +21,18 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.catalog.ui.UDIGConnectionFactory;
-import net.refractions.udig.catalog.ui.wizard.CatalogImport;
-import net.refractions.udig.core.internal.CorePlugin;
-import net.refractions.udig.core.internal.ExtensionPointProcessor;
-import net.refractions.udig.core.internal.ExtensionPointUtil;
-import net.refractions.udig.internal.ui.Trace;
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.ui.IDropAction;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.UDIGConnectionFactory;
+import org.locationtech.udig.catalog.ui.wizard.CatalogImport;
+import org.locationtech.udig.core.internal.CorePlugin;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.internal.ui.Trace;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.IDropAction;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;

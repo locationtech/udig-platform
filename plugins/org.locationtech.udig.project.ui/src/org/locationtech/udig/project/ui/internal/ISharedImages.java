@@ -9,13 +9,13 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
-import static net.refractions.udig.core.internal.Icons.DLOCALTOOL;
-import static net.refractions.udig.core.internal.Icons.ELOCALTOOL;
-import static net.refractions.udig.core.internal.Icons.ETOOL;
-import static net.refractions.udig.core.internal.Icons.OBJECT;
-import net.refractions.udig.core.internal.Icons;
+import static org.locationtech.udig.core.internal.Icons.DLOCALTOOL;
+import static org.locationtech.udig.core.internal.Icons.ELOCALTOOL;
+import static org.locationtech.udig.core.internal.Icons.ETOOL;
+import static org.locationtech.udig.core.internal.Icons.OBJECT;
+import org.locationtech.udig.core.internal.Icons;
 
 /**
  * A registry for common images which may be useful to other plug-ins.

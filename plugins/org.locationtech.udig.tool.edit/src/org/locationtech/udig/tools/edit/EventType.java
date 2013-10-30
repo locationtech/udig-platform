@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit;
+package org.locationtech.udig.tools.edit;
 
 /**
- * Enumerates the type of Events that a {@link net.refractions.udig.tools.edit.EventBehaviour} can react to.
+ * Enumerates the type of Events that a {@link org.locationtech.udig.tools.edit.EventBehaviour} can react to.
  * 
  * @author jones
  * @since 1.1.0

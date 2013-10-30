@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.document;
+package org.locationtech.udig.catalog.document;
 
 import static org.junit.Assert.assertEquals;
-import net.refractions.udig.catalog.document.IDocument.ContentType;
-import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import org.locationtech.udig.catalog.document.IDocument.ContentType;
+import org.locationtech.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 
 import org.junit.Test;
 

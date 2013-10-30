@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.render;
+package org.locationtech.udig.project.internal.render;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.SortedSet;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -66,7 +66,7 @@ public interface RendererCreator{
     RenderContext getContext();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.render.RendererCreator#getContext <em>Context</em>}'
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.RendererCreator#getContext <em>Context</em>}'
      * reference. 
      * 
      * @param value the new value of the '<em>Context</em>' reference.

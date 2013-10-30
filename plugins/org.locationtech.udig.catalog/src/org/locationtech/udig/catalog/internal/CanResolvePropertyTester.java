@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal;
+package org.locationtech.udig.catalog.internal;
 
-import net.refractions.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolve;
 
 import org.eclipse.core.expressions.PropertyTester;
 import org.geotools.data.DataStore;

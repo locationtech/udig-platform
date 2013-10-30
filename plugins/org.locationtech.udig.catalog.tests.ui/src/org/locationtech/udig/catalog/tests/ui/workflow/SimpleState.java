@@ -1,11 +1,11 @@
 /**
  * 
  */
-package net.refractions.udig.catalog.tests.ui.workflow;
+package org.locationtech.udig.catalog.tests.ui.workflow;
 
 import java.io.IOException;
 
-import net.refractions.udig.catalog.ui.workflow.State;
+import org.locationtech.udig.catalog.ui.workflow.State;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 

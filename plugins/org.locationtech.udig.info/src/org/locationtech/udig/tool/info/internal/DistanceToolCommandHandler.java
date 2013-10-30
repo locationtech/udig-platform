@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.info.internal;
+package org.locationtech.udig.tool.info.internal;
 
-import net.refractions.udig.project.ui.tool.IToolHandler;
-import net.refractions.udig.project.ui.tool.Tool;
-import net.refractions.udig.tool.info.DistanceTool;
+import org.locationtech.udig.project.ui.tool.IToolHandler;
+import org.locationtech.udig.project.ui.tool.Tool;
+import org.locationtech.udig.tool.info.DistanceTool;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -23,7 +23,7 @@ public class DistanceToolCommandHandler extends AbstractHandler implements ITool
 
     private DistanceTool tool;
     private String current;
-    private final static String ID = "net.refractions.udig.tool.edit.clearAction"; //$NON-NLS-1$
+    private final static String ID = "org.locationtech.udig.tool.edit.clearAction"; //$NON-NLS-1$
     public void setTool( Tool tool ) {
         this.tool = (DistanceTool) tool;
     }
