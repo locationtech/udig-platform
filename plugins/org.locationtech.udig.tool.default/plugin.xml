@@ -3,33 +3,33 @@
 <plugin>
 
      <extension
-         point="net.refractions.udig.project.ui.tool">
+         point="org.locationtech.udig.project.ui.tool">
          <actionTool
-               categoryId="net.refractions.udig.tool.category.render"
-               class="net.refractions.udig.tools.internal.RefreshTool"
-               commandIds="net.refractions.udig.tools.refreshCommand"
+               categoryId="org.locationtech.udig.tool.category.render"
+               class="org.locationtech.udig.tools.internal.RefreshTool"
+               commandIds="org.locationtech.udig.tools.refreshCommand"
                icon="icons/etool16/refresh_co.gif"
-               id="net.refractions.udig.tools.refresh"
+               id="org.locationtech.udig.tools.refresh"
                menuPath="file/refresh"
                name="%refresh.name"
                onToolbar="true"
                tooltip="%refresh.tooltip">
          </actionTool>   
          <actionTool
-               class="net.refractions.udig.tools.internal.CancelTool"
+               class="org.locationtech.udig.tools.internal.CancelTool"
                icon="icons/etool16/cancel_all_co.gif"
                tooltip="%cancel.tooltip"
-               categoryId="net.refractions.udig.tool.category.render"
+               categoryId="org.locationtech.udig.tool.category.render"
                onToolbar="true"
                name="%cancel.name"
-               id="net.refractions.udig.tools.cancel">
+               id="org.locationtech.udig.tools.cancel">
          </actionTool>   
          <modalTool
-               categoryId="net.refractions.udig.tool.category.zoom"
-               class="net.refractions.udig.tools.internal.Zoom"
+               categoryId="org.locationtech.udig.tool.category.zoom"
+               class="org.locationtech.udig.tools.internal.Zoom"
                cursor="crosshair"
                icon="icons/etool16/zoom_mode.gif"
-               id="net.refractions.udig.tools.Zoom"
+               id="org.locationtech.udig.tools.Zoom"
                largeIcon="icons/etool24/zoom_mode.png"
                name="%zoom.tool.name"
                onToolbar="true"
@@ -37,35 +37,35 @@
                tooltip="%zoom.tool.tooltip">
          </modalTool>
          <modalTool
-               categoryId="net.refractions.udig.tool.category.pan"
-               class="net.refractions.udig.tools.internal.PanTool"
-               commandHandler="net.refractions.udig.tools.internal.PanHandler"
-               commandIds="net.refractions.udig.tools.panRightCommand,net.refractions.udig.tools.panLeftCommand,net.refractions.udig.tools.panUpCommand,net.refractions.udig.tools.panDownCommand"
+               categoryId="org.locationtech.udig.tool.category.pan"
+               class="org.locationtech.udig.tools.internal.PanTool"
+               commandHandler="org.locationtech.udig.tools.internal.PanHandler"
+               commandIds="org.locationtech.udig.tools.panRightCommand,org.locationtech.udig.tools.panLeftCommand,org.locationtech.udig.tools.panUpCommand,org.locationtech.udig.tools.panDownCommand"
                icon="icons/etool16/pan_mode.gif"
-               id="net.refractions.udig.tools.Pan"
+               id="org.locationtech.udig.tools.Pan"
                largeIcon="icons/etool24/pan_mode.png"
                name="%pan.tool.name"
                onToolbar="true"
-               preferencePageId="net.refractions.udig.tool.default.navPage"
+               preferencePageId="org.locationtech.udig.tool.default.navPage"
                toolCursorId="move"
                tooltip="%pan.tool.tooltip">
             <toolOption
-                  class="net.refractions.udig.tools.internal.PanTool$OptionContribtionItem"
+                  class="org.locationtech.udig.tools.internal.PanTool$OptionContribtionItem"
                   id="panOptions">
             </toolOption>
          </modalTool>
          <backgroundTool
                name="ScrollZoom"
-               class="net.refractions.udig.tools.internal.ScrollZoom"
-               id="net.refractions.udig.tools.ScrollZoom">
+               class="org.locationtech.udig.tools.internal.ScrollZoom"
+               id="org.locationtech.udig.tools.ScrollZoom">
          </backgroundTool>
          <actionTool
-               categoryId="net.refractions.udig.tool.category.zoom"
-               class="net.refractions.udig.tools.internal.ZoomExtent"
-               commandHandler="net.refractions.udig.tools.internal.ZoomHandler"
-               commandIds="net.refractions.udig.tool.default.zoom.all"
+               categoryId="org.locationtech.udig.tool.category.zoom"
+               class="org.locationtech.udig.tools.internal.ZoomExtent"
+               commandHandler="org.locationtech.udig.tools.internal.ZoomHandler"
+               commandIds="org.locationtech.udig.tool.default.zoom.all"
                icon="icons/etool16/zoom_extent_co.gif"
-               id="net.refractions.udig.tools.ZoomExtent"
+               id="org.locationtech.udig.tools.ZoomExtent"
                menuPath="navigate/zoom.ext"
                name="%zoom.all.name"
                onToolbar="true"
@@ -82,27 +82,27 @@
 
          <backgroundTool
                name="%cursorPosition.name"
-               class="net.refractions.udig.tools.internal.CursorPosition"
-               id="net.refractions.udig.tools.backgroundTool1">
+               class="org.locationtech.udig.tools.internal.CursorPosition"
+               id="org.locationtech.udig.tools.backgroundTool1">
          </backgroundTool>
                <actionTool
-                     categoryId="net.refractions.udig.tool.category.zoom"
-                     class="net.refractions.udig.tools.internal.ZoomIn"
-                     commandHandler="net.refractions.udig.tools.internal.ZoomHandler"
-                     commandIds="net.refractions.udig.tool.default.zoom.in"
+                     categoryId="org.locationtech.udig.tool.category.zoom"
+                     class="org.locationtech.udig.tools.internal.ZoomIn"
+                     commandHandler="org.locationtech.udig.tools.internal.ZoomHandler"
+                     commandIds="org.locationtech.udig.tool.default.zoom.in"
                      icon="icons/etool16/zoom_in_co.gif"
-                     id="net.refractions.udig.tool.default.ZoomIn"
+                     id="org.locationtech.udig.tool.default.ZoomIn"
                      menuPath="navigate/zoom.ext"
                      name="%zoomin.name"
                      onToolbar="true"
                      tooltip="%zoomin.tooltip"/>
                <actionTool
-                     categoryId="net.refractions.udig.tool.category.zoom"
-                     class="net.refractions.udig.tools.internal.ZoomOut"
-                     commandHandler="net.refractions.udig.tools.internal.ZoomHandler"
-                     commandIds="net.refractions.udig.tool.default.zoom.out"
+                     categoryId="org.locationtech.udig.tool.category.zoom"
+                     class="org.locationtech.udig.tools.internal.ZoomOut"
+                     commandHandler="org.locationtech.udig.tools.internal.ZoomHandler"
+                     commandIds="org.locationtech.udig.tool.default.zoom.out"
                      icon="icons/etool16/zoom_out_co.gif"
-                     id="net.refractions.udig.tool.default.ZoomOut"
+                     id="org.locationtech.udig.tool.default.ZoomOut"
                      menuPath="navigate/zoom.ext"
                      name="%zoomout.name"
                      onToolbar="true"
@@ -110,19 +110,19 @@
                <actionTool
                      tooltip="%commit.tooltip"
                      icon="icons/etool16/outgo_synch.gif"
-                     class="net.refractions.udig.tools.internal.CommitTool"
+                     class="org.locationtech.udig.tools.internal.CommitTool"
                      onToolbar="true"
                      name="%commit.name"
                      menuPath="edit/commit.ext"
-                     id="net.refractions.udig.tool.default.commit"/>
+                     id="org.locationtech.udig.tool.default.commit"/>
                <actionTool
-                     class="net.refractions.udig.tools.internal.RollbackTool"
+                     class="org.locationtech.udig.tools.internal.RollbackTool"
                      icon="icons/etool16/clear_co.gif"
                      tooltip="%rollback.tooltip"
                      onToolbar="true"
                      name="%rollback.name"
                      menuPath="edit/commit.ext"
-                     id="net.refractions.udig.tool.default.rollback"/>
+                     id="org.locationtech.udig.tool.default.rollback"/>
                <toolCursor
                      hotspotX="10"
                      hotspotY="10"
@@ -139,8 +139,8 @@
                      id="boxSelectionCursor"
                      image="icons/pointers/point_select_source.gif"/>
                <backgroundTool
-                     class="net.refractions.udig.tools.internal.PanMiddleMouse"
-                     id="net.refractions.udig.tool.default.backgroundTool1"
+                     class="org.locationtech.udig.tools.internal.PanMiddleMouse"
+                     id="org.locationtech.udig.tool.default.backgroundTool1"
                      name="Middle Mouse Pan"
                      tooltip="Pan holding the middle mouse down.">
                </backgroundTool>
@@ -148,99 +148,99 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
+            categoryId="org.locationtech.udig.tools.toolCategory"
             name="%pan.right.name"
-            id="net.refractions.udig.tools.panRightCommand"/>
+            id="org.locationtech.udig.tools.panRightCommand"/>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
+            categoryId="org.locationtech.udig.tools.toolCategory"
             name="%pan.left.name"
-            id="net.refractions.udig.tools.panLeftCommand"/>
+            id="org.locationtech.udig.tools.panLeftCommand"/>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
+            categoryId="org.locationtech.udig.tools.toolCategory"
             name="%pan.up.name"
-            id="net.refractions.udig.tools.panUpCommand"/>
+            id="org.locationtech.udig.tools.panUpCommand"/>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
+            categoryId="org.locationtech.udig.tools.toolCategory"
             name="%pan.down.name"
-            id="net.refractions.udig.tools.panDownCommand"/>
+            id="org.locationtech.udig.tools.panDownCommand"/>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
+            categoryId="org.locationtech.udig.tools.toolCategory"
             description="%zoomin.tooltip"
-            id="net.refractions.udig.tool.default.zoom.in"
+            id="org.locationtech.udig.tool.default.zoom.in"
             name="%zoom.command.in.name"/>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
+            categoryId="org.locationtech.udig.tools.toolCategory"
             description="%zoomout.tooltip"
-            id="net.refractions.udig.tool.default.zoom.out"
+            id="org.locationtech.udig.tool.default.zoom.out"
             name="%zoom.command.out.name"/>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
+            categoryId="org.locationtech.udig.tools.toolCategory"
             description="%zoom.all.tooltip"
-            id="net.refractions.udig.tool.default.zoom.all"
+            id="org.locationtech.udig.tool.default.zoom.all"
             name="%zoom.command.all.name">
       </command>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
+            categoryId="org.locationtech.udig.tools.toolCategory"
             description="%refresh.tooltip"
-            id="net.refractions.udig.tools.refreshCommand"
+            id="org.locationtech.udig.tools.refreshCommand"
             name="%refresh.name"/>
    </extension> 
       <extension
          point="org.eclipse.ui.bindings">
       <key
-            commandId="net.refractions.udig.tools.panRightCommand"
+            commandId="org.locationtech.udig.tools.panRightCommand"
             contextId="org.eclipse.ui.contexts.window"
             sequence="M1+ARROW_RIGHT"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
       <key
-            commandId="net.refractions.udig.tools.panLeftCommand"
+            commandId="org.locationtech.udig.tools.panLeftCommand"
             contextId="org.eclipse.ui.contexts.window"
             sequence="M1+ARROW_LEFT"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
       <key
-            commandId="net.refractions.udig.tools.panUpCommand"
+            commandId="org.locationtech.udig.tools.panUpCommand"
             contextId="org.eclipse.ui.contexts.window"
             sequence="M1+ARROW_UP"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
       <key
-            commandId="net.refractions.udig.tools.panDownCommand"
+            commandId="org.locationtech.udig.tools.panDownCommand"
             contextId="org.eclipse.ui.contexts.window"
             sequence="M1+ARROW_DOWN"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
       <key
-            commandId="net.refractions.udig.tool.default.zoom.in"
+            commandId="org.locationtech.udig.tool.default.zoom.in"
             contextId="org.eclipse.ui.contexts.window"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
             sequence="M1+="/>
       <key
-            commandId="net.refractions.udig.tool.default.zoom.out"
+            commandId="org.locationtech.udig.tool.default.zoom.out"
             contextId="org.eclipse.ui.contexts.window"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
             sequence="M1+-"/>
       <key
-            commandId="net.refractions.udig.tool.default.zoom.all"
+            commandId="org.locationtech.udig.tool.default.zoom.all"
             contextId="org.eclipse.ui.contexts.window"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
             sequence="M1+BACKSPACE"/>
       <key
-            commandId="net.refractions.udig.tools.refreshCommand"
+            commandId="org.locationtech.udig.tools.refreshCommand"
             contextId="org.eclipse.ui.contexts.window"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
             sequence="F5"/>
    </extension>
       <extension
             point="org.eclipse.ui.preferencePages">
          <page
-               category="net.refractions.udig.project.ui.preferences.tool"
-               class="net.refractions.udig.tools.internal.NavigationToolPreferencePage"
-               id="net.refractions.udig.tool.default.navPage"
+               category="org.locationtech.udig.project.ui.preferences.tool"
+               class="org.locationtech.udig.tools.internal.NavigationToolPreferencePage"
+               id="org.locationtech.udig.tool.default.navPage"
                name="%navPage.name">
          </page>
       </extension>
       <extension
             point="org.eclipse.equinox.preferences.preferences">
          <initializer
-               class="net.refractions.udig.tools.internal.NavigationPreferenceInitializer">
+               class="org.locationtech.udig.tools.internal.NavigationPreferenceInitializer">
          </initializer>
       </extension>
 </plugin>

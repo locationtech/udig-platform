@@ -2,21 +2,21 @@
 <?eclipse version="3.0"?>
 <plugin>
   <extension
-  		 id="net.refractions.udig.catalog.internal.wmt"
+  		 id="org.locationtech.udig.catalog.internal.wmt"
          name="Service Extentions"
-         point="net.refractions.udig.catalog.ServiceExtension">
+         point="org.locationtech.udig.catalog.ServiceExtension">
       <service
-            class="net.refractions.udig.catalog.internal.wmt.WMTServiceExtension"
-            id="net.refractions.udig.catalog.internal.wmt.service"
+            class="org.locationtech.udig.catalog.internal.wmt.WMTServiceExtension"
+            id="org.locationtech.udig.catalog.internal.wmt.service"
             name="WMT Service Extension"/>
   </extension>
   <extension
-       point="net.refractions.udig.catalog.ui.connectionFactory">
-    <factory class="net.refractions.udig.catalog.internal.wmt.ui.wizard.WMTConnectionFactory"
-          id="net.refractions.udig.catalog.ui.WMT"/>
+       point="org.locationtech.udig.catalog.ui.connectionFactory">
+    <factory class="org.locationtech.udig.catalog.internal.wmt.ui.wizard.WMTConnectionFactory"
+          id="org.locationtech.udig.catalog.ui.WMT"/>
     <wizardPage
           banner="icons/wizban/wms_wiz.gif"
-          class="net.refractions.udig.catalog.internal.wmt.ui.wizard.WMTWizardPage"
+          class="org.locationtech.udig.catalog.internal.wmt.ui.wizard.WMTWizardPage"
           description="%wizard.description"
           icon="icons/etool16/wms_wiz.gif"
           name="%wizard.name">
@@ -26,14 +26,14 @@
   <extension
          point="org.eclipse.ui.propertyPages">
       <page
-            class="net.refractions.udig.catalog.internal.wmt.ui.properties.WMTLayerPropertyPage"
-            id="net.refractions.udig.catalog.internal.wmt.ui.properties.wmtlayerproperties"
+            class="org.locationtech.udig.catalog.internal.wmt.ui.properties.WMTLayerPropertyPage"
+            id="org.locationtech.udig.catalog.internal.wmt.ui.properties.wmtlayerproperties"
             name="%propertiesLayer.name"
-            objectClass="net.refractions.udig.project.ILayer">
+            objectClass="org.locationtech.udig.project.ILayer">
    		<enabledWhen>
 			<test
                     args=""
-                    property="net.refractions.udig.catalog.internal.wmt.ui.properties.showTest"
+                    property="org.locationtech.udig.catalog.internal.wmt.ui.properties.showTest"
                     value="true">
          	</test>	
    		</enabledWhen>
@@ -42,19 +42,19 @@
   <extension
        point="org.eclipse.core.expressions.propertyTesters">
     <propertyTester
-          class="net.refractions.udig.catalog.internal.wmt.ui.properties.WMTShowPropertiesTester"
-          id="net.refractions.udig.catalog.internal.wmt.ui.properties.showTester"
-          namespace="net.refractions.udig.catalog.internal.wmt.ui.properties"
+          class="org.locationtech.udig.catalog.internal.wmt.ui.properties.WMTShowPropertiesTester"
+          id="org.locationtech.udig.catalog.internal.wmt.ui.properties.showTester"
+          namespace="org.locationtech.udig.catalog.internal.wmt.ui.properties"
           properties="showTest"
-          type="net.refractions.udig.project.ILayer">
+          type="org.locationtech.udig.project.ILayer">
     </propertyTester>
   </extension>
   
   <extension
-         point="net.refractions.udig.project.style">
+         point="org.locationtech.udig.project.style">
       <style
-            class="net.refractions.udig.catalog.internal.wmt.ui.properties.WMTLayerStyleContent"
-            id="net.refractions.udig.catalog.internal.wmt.ui.properties.dialogSettings"
+            class="org.locationtech.udig.catalog.internal.wmt.ui.properties.WMTLayerStyleContent"
+            id="org.locationtech.udig.catalog.internal.wmt.ui.properties.dialogSettings"
             name="WMT Style Properties">
       </style>
   </extension>  
@@ -63,9 +63,9 @@
         point="org.eclipse.ui.views">
      <view
            allowMultiple="false"
-           class="net.refractions.udig.catalog.internal.wmt.ui.view.WMTZoomLevelSwitcher"
+           class="org.locationtech.udig.catalog.internal.wmt.ui.view.WMTZoomLevelSwitcher"
            icon="icons/etool16/wms_wiz.gif"
-           id="net.refractions.udig.catalog.wmt.viewZoomLevelSwitcher"
+           id="org.locationtech.udig.catalog.wmt.viewZoomLevelSwitcher"
            name="%zoomLevelSwitcher.name"
            restorable="true">
      </view>
@@ -76,9 +76,9 @@
         <menuContribution
               locationURI="toolbar:org.eclipse.ui.main.toolbar">
               <toolbar
-                    id="net.refractions.udig.catalog.wmt.toolbarZoomLevelSwitcher">
+                    id="org.locationtech.udig.catalog.wmt.toolbarZoomLevelSwitcher">
                     <control
-                          class="net.refractions.udig.catalog.internal.wmt.ui.view.WMTZoomLevelToolbar">
+                          class="org.locationtech.udig.catalog.internal.wmt.ui.view.WMTZoomLevelToolbar">
                     </control>
               </toolbar>
         </menuContribution>
@@ -86,19 +86,19 @@
   -->
   
     <extension
-         point="net.refractions.udig.catalog.ServiceExtension">
+         point="org.locationtech.udig.catalog.ServiceExtension">
       <service
-            class="net.refractions.udig.catalog.internal.wmt.ww.WWServiceExtension"
-            id="net.refractions.udig.catalog.internal.wmt.ww.service"
+            class="org.locationtech.udig.catalog.internal.wmt.ww.WWServiceExtension"
+            id="org.locationtech.udig.catalog.internal.wmt.ww.service"
             name="WW Service Extension"/>
   </extension>
   <extension
-       point="net.refractions.udig.catalog.ui.connectionFactory">
-    <factory class="net.refractions.udig.catalog.internal.wmt.ui.wizard.WWConnectionFactory"
-          id="net.refractions.udig.catalog.ui.WW"/>
+       point="org.locationtech.udig.catalog.ui.connectionFactory">
+    <factory class="org.locationtech.udig.catalog.internal.wmt.ui.wizard.WWConnectionFactory"
+          id="org.locationtech.udig.catalog.ui.WW"/>
     <wizardPage
           banner="icons/wizban/wms_wiz.gif"
-          class="net.refractions.udig.catalog.internal.wmt.ui.wizard.WWWizardPage"
+          class="org.locationtech.udig.catalog.internal.wmt.ui.wizard.WWWizardPage"
           description="%wizardWW.description"
           icon="icons/etool16/wms_wiz.gif"
           name="%wizardWW.name">
@@ -108,14 +108,14 @@
 
   <extension
        point="org.eclipse.core.runtime.preferences">
-    <initializer class="net.refractions.udig.catalog.internal.wmt.ui.preferences.WMTPreferenceInitializer"/>
+    <initializer class="org.locationtech.udig.catalog.internal.wmt.ui.preferences.WMTPreferenceInitializer"/>
   </extension>
   <extension
        point="org.eclipse.ui.preferencePages">
     <page
-          category="net.refractions.udig.render.internal.wmsc.basic.wmsctile"
-          class="net.refractions.udig.catalog.internal.wmt.ui.preferences.WMTTilePreferencesPage"
-          id="net.refractions.udig.render.internal.wmt.basic.wmttile"
+          category="org.locationtech.udig.render.internal.wmsc.basic.wmsctile"
+          class="org.locationtech.udig.catalog.internal.wmt.ui.preferences.WMTTilePreferencesPage"
+          id="org.locationtech.udig.render.internal.wmt.basic.wmttile"
           name="%preferences.name">
     </page>
   </extension>

@@ -7,7 +7,7 @@
       <actionSet
             label="Sample Action Set"
             visible="true"
-            id="eu.udig.tools.tests.actionSet">
+            id="org.locationtech.udig.tools.tests.actionSet">
          <menu
                label="Sample &amp;Menu"
                id="sampleMenu">
@@ -18,11 +18,11 @@
          <action
                label="&amp;Sample Action"
                icon="icons/sample.gif"
-               class="eu.udig.tools.tests.actions.SampleAction"
+               class="org.locationtech.udig.tools.tests.actions.SampleAction"
                tooltip="Hello, Eclipse world"
                menubarPath="sampleMenu/sampleGroup"
                toolbarPath="sampleGroup"
-               id="eu.udig.tools.tests.actions.SampleAction">
+               id="org.locationtech.udig.tools.tests.actions.SampleAction">
          </action>
       </actionSet>
    </extension>

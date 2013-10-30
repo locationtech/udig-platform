@@ -3,12 +3,12 @@
 <plugin>
 
    <extension
-         point="net.refractions.udig.project.ui.tool">
+         point="org.locationtech.udig.project.ui.tool">
             <modalTool
-                  categoryId="net.refractions.udig.tool.category.selection"
-                  class="net.refractions.udig.tool.select.BBoxSelection"
+                  categoryId="org.locationtech.udig.tool.category.selection"
+                  class="org.locationtech.udig.tool.select.BBoxSelection"
                   icon="icons/etool16/selection_mode.gif"
-                  id="net.refractions.udig.tools.BBoxSelect"
+                  id="org.locationtech.udig.tools.BBoxSelect"
                   largeIcon="icons/etool24/selection_mode.png"
                   name="%selection.bbox.name"
                   onToolbar="true"
@@ -27,10 +27,10 @@
                   </enablement>
          </modalTool>
           <modalTool
-                categoryId="net.refractions.udig.tool.category.selection"
-                class="net.refractions.udig.tool.select.ArrowSelection"
+                categoryId="org.locationtech.udig.tool.category.selection"
+                class="org.locationtech.udig.tool.select.ArrowSelection"
                 icon="icons/etool16/select_feature_mode.gif"
-                id="net.refractions.udig.tools.ArrowSelect"
+                id="org.locationtech.udig.tools.ArrowSelect"
                 largeIcon="icons/etool24/select_feature_mode.png"
                 name="%selection.arrow.name"
                 onToolbar="false"
@@ -45,12 +45,12 @@
                   	<and>
                         <property propertyId="FeatureSourceResourceProperty" expectedValue=""/>                  	
 	                     <or>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
-	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
+	                        <property propertyId="org.locationtech.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="org.locationtech.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="org.locationtech.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="org.locationtech.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="org.locationtech.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                        <property propertyId="org.locationtech.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
 	                     </or>
                       <property
                             expectedValue="SELECT"
@@ -60,26 +60,26 @@
                   </enablement>
          </modalTool>
           <modalTool
-                categoryId="net.refractions.udig.tool.category.selection"
-                class="net.refractions.udig.tool.select.internal.AOILayerSelectionTool"
+                categoryId="org.locationtech.udig.tool.category.selection"
+                class="org.locationtech.udig.tool.select.internal.AOILayerSelectionTool"
                 icon="icons/etool16/aoi_mode.png"
-                id="net.refractions.udig.tool.selection.aoi"
+                id="org.locationtech.udig.tool.selection.aoi"
                 largeIcon="icons/etool24/aoi_mode.png"
                 name="%selection.aoi.name"
                 onToolbar="true"
-                preferencePageId="net.refractions.udig.tool.select.page"
+                preferencePageId="org.locationtech.udig.tool.select.page"
                 toolCursorId="aoiSelectCursor"
                 tooltip="%selection.aoi.tooltip">
              <toolOption
-                   class="net.refractions.udig.tool.select.internal.AOILayerSelectionTool$OptionContribtionItem"
+                   class="org.locationtech.udig.tool.select.internal.AOILayerSelectionTool$OptionContribtionItem"
                    id="setAOIToolOptions">
              </toolOption>
           </modalTool>
                 <actionTool
-                     categoryId="net.refractions.udig.tool.category.zoom"
-                     class="net.refractions.udig.tool.select.internal.ZoomSelection"
+                     categoryId="org.locationtech.udig.tool.category.zoom"
+                     class="org.locationtech.udig.tool.select.internal.ZoomSelection"
                      icon="icons/elcl16/zoom_select_co.png"
-                     id="net.refractions.udig.tool.default.show.selection"
+                     id="org.locationtech.udig.tool.default.show.selection"
                      menuPath="navigate/zoom.ext"
                      name="%zoom.select.name"
                      onToolbar="true"
@@ -87,7 +87,7 @@
                   <enablement>
                      <property
                            expectedValue="unimportant"
-                           propertyId="net.refractions.udig.tool.select.layerHasSelectionProperty"/>
+                           propertyId="org.locationtech.udig.tool.select.layerHasSelectionProperty"/>
                   </enablement>
                </actionTool>
                <toolCursor
@@ -119,48 +119,48 @@
       <view
             allowMultiple="true"
             category="layer"
-            class="net.refractions.udig.tool.select.TableView"
+            class="org.locationtech.udig.tool.select.TableView"
             fastViewWidthRatio="30%"
             icon="icons/eview16/table_view.gif"
-            id="net.refractions.udig.tool.select.TableView"
+            id="org.locationtech.udig.tool.select.TableView"
             name="%TableViewName"/>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension targetID="net.refractions.udig.ui.mapPerspective">
+      <perspectiveExtension targetID="org.locationtech.udig.ui.mapPerspective">
          <view
-               id="net.refractions.udig.tool.select.TableView"
+               id="org.locationtech.udig.tool.select.TableView"
                relationship="stack"
-               relative="net.refractions.udig.catalog.ui.CatalogView"
+               relative="org.locationtech.udig.catalog.ui.CatalogView"
                visible="true"/>
-         <viewShortcut id="net.refractions.udig.tool.select.TableView"/>
+         <viewShortcut id="org.locationtech.udig.tool.select.TableView"/>
       </perspectiveExtension>
    </extension>
       <extension
-            point="net.refractions.udig.ui.objectProperty">
-         <object targetClass="net.refractions.udig.project.ILayer">
+            point="org.locationtech.udig.ui.objectProperty">
+         <object targetClass="org.locationtech.udig.project.ILayer">
             <property
                   id="layerHasSelectionProperty"
-                  class="net.refractions.udig.tool.select.internal.LayerHasSelectionProperty"/>
+                  class="org.locationtech.udig.tool.select.internal.LayerHasSelectionProperty"/>
          </object>
       </extension>
       <extension
-            point="net.refractions.udig.project.ui.featureEditor">
+            point="org.locationtech.udig.project.ui.featureEditor">
          <editor
                icon="icons/eview16/table_view.gif"
-               id="net.refractions.udig.tool.select.view"
+               id="org.locationtech.udig.tool.select.view"
                name="Table View"
-               viewId="net.refractions.udig.tool.select.TableView"/>
+               viewId="org.locationtech.udig.tool.select.TableView"/>
       </extension>
       <extension
             point="org.eclipse.ui.viewActions">
          <viewContribution
-               id="net.refractions.udig.tool.select.tableContribution"
-               targetID="net.refractions.udig.tool.select.TableView">
+               id="org.locationtech.udig.tool.select.tableContribution"
+               targetID="org.locationtech.udig.tool.select.TableView">
             <action
-                  class="net.refractions.udig.tool.select.AOIActionDelegate"
+                  class="org.locationtech.udig.tool.select.AOIActionDelegate"
                   icon="icons/etool16/aoi_filter_obj.png"
-                  id="net.refractions.udig.tool.select.aoiAction"
+                  id="org.locationtech.udig.tool.select.aoiAction"
                   label="AOI Filter"
                   style="toggle"
                   toolbarPath="additions">
@@ -170,25 +170,25 @@
       <extension
             point="org.eclipse.ui.preferencePages">
          <page
-               category="net.refractions.udig.project.ui.preferences.tool"
-               class="net.refractions.udig.tool.select.internal.SelectionToolPreferencePage"
-               id="net.refractions.udig.tool.select.page"
+               category="org.locationtech.udig.project.ui.preferences.tool"
+               class="org.locationtech.udig.tool.select.internal.SelectionToolPreferencePage"
+               id="org.locationtech.udig.tool.select.page"
                name="%selection.page">
          </page>
       </extension>
       <extension
             point="org.eclipse.core.runtime.preferences">
          <initializer
-               class="net.refractions.udig.tool.select.SelectionToolPreferenceInitializer">
+               class="org.locationtech.udig.tool.select.SelectionToolPreferenceInitializer">
          </initializer>
       </extension>
       <extension
-            point="net.refractions.udig.ui.aoi">
+            point="org.locationtech.udig.ui.aoi">
          <aoi
-               class="net.refractions.udig.tool.select.internal.AOILayerStrategy"
-               id="net.refractions.udig.tool.select.internal.aoiLayer"
+               class="org.locationtech.udig.tool.select.internal.AOILayerStrategy"
+               id="org.locationtech.udig.tool.select.internal.aoiLayer"
                name="Area of Interest Layer"
-               page="net.refractions.udig.tool.select.internal.AOILayerPage">
+               page="org.locationtech.udig.tool.select.internal.AOILayerPage">
          </aoi>
       </extension>
 </plugin>

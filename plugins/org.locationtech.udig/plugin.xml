@@ -6,7 +6,7 @@
          id="product"
          point="org.eclipse.core.runtime.products">
       <product
-            application="net.refractions.udig.ui.application"
+            application="org.locationtech.udig.ui.application"
             name="%product.name">
          <property
                name="startupForegroundColor"
@@ -46,11 +46,11 @@
          point="org.eclipse.ui.intro">
       <intro
             class="org.eclipse.ui.intro.config.CustomizableIntroPart"
-            id="net.refractions.udig.ui.intro">
+            id="org.locationtech.udig.ui.intro">
       </intro>
       <introProductBinding
-            introId="net.refractions.udig.ui.intro"
-            productId="net.refractions.udig.product">
+            introId="org.locationtech.udig.ui.intro"
+            productId="org.locationtech.udig.product">
       </introProductBinding>
    </extension>
    <extension
@@ -58,8 +58,8 @@
          point="org.eclipse.ui.intro.config">
       <config
             content="introContent.xml"
-            id="net.refractions.udig.ui.introConfig"
-            introId="net.refractions.udig.ui.intro">
+            id="org.locationtech.udig.ui.introConfig"
+            introId="org.locationtech.udig.ui.intro">
          <presentation
                home-page-id="root"
                standby-page-id="standby">
@@ -73,26 +73,26 @@
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
-            targetID="net.refractions.udig.ui.mapPerspective">
+            targetID="org.locationtech.udig.ui.mapPerspective">
          <actionSet
-               id="net.refractions.udig.project.ui.layer.menu">
+               id="org.locationtech.udig.project.ui.layer.menu">
          </actionSet>
          <actionSet
-               id="net.refractions.udig.project.ui.LayerActions">
+               id="org.locationtech.udig.project.ui.LayerActions">
          </actionSet>
          <actionSet
-               id="net.refractions.udig.project.ui.map.menu">
+               id="org.locationtech.udig.project.ui.map.menu">
          </actionSet>
          <actionSet
-               id="net.refractions.udig.catalog.ui.data.menu">
+               id="org.locationtech.udig.catalog.ui.data.menu">
          </actionSet>
       </perspectiveExtension>
    </extension>
    <extension
-         point="net.refractions.udig.browser.externalCatalogWizard">
+         point="org.locationtech.udig.browser.externalCatalogWizard">
       <externalCatalogue
-            id="net.refractions.udig.browser.externalCatalogue1"
-            name="net.refractions.udig.browser.externalCatalogue1">
+            id="org.locationtech.udig.browser.externalCatalogue1"
+            name="org.locationtech.udig.browser.externalCatalogue1">
          <externalCatalogueURL url="http://udig.refractions.net"/>
       </externalCatalogue>
    </extension>
@@ -100,7 +100,7 @@
          id="sdk"
          point="org.eclipse.core.runtime.products">
       <product
-            application="net.refractions.udig.ui.application"
+            application="org.locationtech.udig.ui.application"
             description="User-friendly Desktop Internet GIS"
             name="uDig SDK">
          <property

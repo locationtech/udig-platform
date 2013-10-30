@@ -4,19 +4,19 @@
    <extension
          point="org.eclipse.ui.exportWizards">
       <wizard
-            class="eu.udig.catalog.kml.wizard.KmlExportWizard"
+            class="org.locationtech.udig.catalog.kml.wizard.KmlExportWizard"
             icon="icons/icon_kml.png"
-            id="eu.udig.catalog.kml.wizard.KmlExportWizard"
+            id="org.locationtech.udig.catalog.kml.wizard.KmlExportWizard"
             name="%kmlExport.wizard.name">
       </wizard>
    </extension>
    <extension
          point="org.eclipse.ui.importWizards">
       <wizard
-            category="eu.udig.featureimportcategory"
-            class="eu.udig.catalog.kml.wizard.KmlImportWizard"
+            category="org.locationtech.udig.featureimportcategory"
+            class="org.locationtech.udig.catalog.kml.wizard.KmlImportWizard"
             icon="icons/icon_kml.png"
-            id="eu.udig.catalog.kml.wizard.KmlImportWizard"
+            id="org.locationtech.udig.catalog.kml.wizard.KmlImportWizard"
             name="%kmlImport.wizardName">
          <description>
             %kmlImport.wizardDescription

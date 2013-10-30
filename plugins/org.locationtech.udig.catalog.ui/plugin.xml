@@ -9,31 +9,31 @@
          point="org.eclipse.ui.actionSets">
       <actionSet
             description="%Resource.Query.ActionSet.Description"
-            id="net.refractions.udig.catalog.ui.resourceQuerySet"
+            id="org.locationtech.udig.catalog.ui.resourceQuerySet"
             label="%Resource.Query.ActionSet"
             visible="false">
       </actionSet>
       <actionSet
             description="%Resource.Modify.ActionSet.Description"
-            id="net.refractions.udig.catalog.ui.resourceModifySet"
+            id="org.locationtech.udig.catalog.ui.resourceModifySet"
             label="%Resource.Modify.ActionSet"
             visible="false">
       </actionSet>
       <actionSet
             description="%Service.Query.ActionSet.Description"
-            id="net.refractions.udig.catalog.ui.serviceQuerySet"
+            id="org.locationtech.udig.catalog.ui.serviceQuerySet"
             label="%Service.Query.ActionSet"
             visible="false">
       </actionSet>
       <actionSet
             description="%Service.Modify.ActionSet.Description"
-            id="net.refractions.udig.catalog.ui.serviceModifySet"
+            id="org.locationtech.udig.catalog.ui.serviceModifySet"
             label="%Service.Modify.ActionSet"
             visible="false">
       </actionSet>
       <actionSet
             description="%Data.ActionSet.Description"
-            id="net.refractions.udig.catalog.ui.data.menu"
+            id="org.locationtech.udig.catalog.ui.data.menu"
             label="%Data.ActionSet"
             visible="false">
       </actionSet>
@@ -41,61 +41,61 @@
    <extension
          point="org.eclipse.core.expressions.definitions">
       <definition
-            id="net.refractions.udig.catalog.ui.contribution.inResourceQuerySet">
+            id="org.locationtech.udig.catalog.ui.contribution.inResourceQuerySet">
          <with
                variable="activeContexts">
             <iterate
                   operator="or">
                <equals
-                     value="net.refractions.udig.catalog.ui.resourceQuerySet">
+                     value="org.locationtech.udig.catalog.ui.resourceQuerySet">
                </equals>
             </iterate>
          </with>
       </definition>
       <definition
-            id="net.refractions.udig.catalog.ui.contribution.inResourceModifySet">
+            id="org.locationtech.udig.catalog.ui.contribution.inResourceModifySet">
          <with
                variable="activeContexts">
             <iterate
                   operator="or">
                <equals
-                     value="net.refractions.udig.catalog.ui.resourceModifySet">
+                     value="org.locationtech.udig.catalog.ui.resourceModifySet">
                </equals>
             </iterate>
          </with>
       </definition>
       <definition
-            id="net.refractions.udig.catalog.ui.contribution.inServiceQuerySet">
+            id="org.locationtech.udig.catalog.ui.contribution.inServiceQuerySet">
          <with
                variable="activeContexts">
             <iterate
                   operator="or">
                <equals
-                     value="net.refractions.udig.catalog.ui.serviceQuerySet">
+                     value="org.locationtech.udig.catalog.ui.serviceQuerySet">
                </equals>
             </iterate>
          </with>
       </definition>
       <definition
-            id="net.refractions.udig.catalog.ui.contribution.inServiceModifySet">
+            id="org.locationtech.udig.catalog.ui.contribution.inServiceModifySet">
          <with
                variable="activeContexts">
             <iterate
                   operator="or">
                <equals
-                     value="net.refractions.udig.catalog.ui.serviceModifySet">
+                     value="org.locationtech.udig.catalog.ui.serviceModifySet">
                </equals>
             </iterate>
          </with>
       </definition>
       <definition
-            id="net.refractions.udig.catalog.ui.contribution.data.menu">
+            id="org.locationtech.udig.catalog.ui.contribution.data.menu">
          <with
                variable="activeContexts">
             <iterate
                   operator="or">
                <equals
-                     value="net.refractions.udig.catalog.ui.data.menu">
+                     value="org.locationtech.udig.catalog.ui.data.menu">
                </equals>
             </iterate>
          </with>
@@ -104,8 +104,8 @@
    <extension
          point="org.eclipse.ui.handlers">
     <handler
-          class="net.refractions.udig.catalog.internal.ui.actions.ResetServiceHandler"
-          commandId="net.refractions.udig.catalog.ui.command.reset">
+          class="org.locationtech.udig.catalog.internal.ui.actions.ResetServiceHandler"
+          commandId="org.locationtech.udig.catalog.ui.command.reset">
        <activeWhen>
           <iterate
                 ifEmpty="false"
@@ -116,10 +116,10 @@
                 </count>
                 <or>
                    <instanceof
-                         value="net.refractions.udig.catalog.IService">
+                         value="org.locationtech.udig.catalog.IService">
                    </instanceof>
                    <adapt
-                         type="net.refractions.udig.catalog.IService">
+                         type="org.locationtech.udig.catalog.IService">
                    </adapt>
                 </or>
              </and>
@@ -127,8 +127,8 @@
        </activeWhen>
     </handler>
     <handler
-          class="net.refractions.udig.catalog.ui.internal.IGeoResourcePropertiesCommandHandler"
-          commandId="net.refractions.udig.catalog.ui.command.resourceProperties">
+          class="org.locationtech.udig.catalog.ui.internal.IGeoResourcePropertiesCommandHandler"
+          commandId="org.locationtech.udig.catalog.ui.command.resourceProperties">
        <activeWhen>
           <iterate
                 ifEmpty="false"
@@ -139,10 +139,10 @@
                 </count>
                 <or>
                    <instanceof
-                         value="net.refractions.udig.catalog.IGeoResource">
+                         value="org.locationtech.udig.catalog.IGeoResource">
                    </instanceof>
                    <adapt
-                         type="net.refractions.udig.catalog.IGeoResource">
+                         type="org.locationtech.udig.catalog.IGeoResource">
                    </adapt>
                 </or>
              </and>
@@ -150,8 +150,8 @@
        </activeWhen>
     </handler>
     <handler
-          class="net.refractions.udig.catalog.ui.internal.IServicePropertiesCommandHandler"
-          commandId="net.refractions.udig.catalog.ui.command.serviceProperties">
+          class="org.locationtech.udig.catalog.ui.internal.IServicePropertiesCommandHandler"
+          commandId="org.locationtech.udig.catalog.ui.command.serviceProperties">
        <activeWhen>
           <iterate
                 ifEmpty="false"
@@ -162,10 +162,10 @@
                 </count>
                 <or>
                    <instanceof
-                         value="net.refractions.udig.catalog.IService">
+                         value="org.locationtech.udig.catalog.IService">
                    </instanceof>
                    <adapt
-                         type="net.refractions.udig.catalog.IService">
+                         type="org.locationtech.udig.catalog.IService">
                    </adapt>
                 </or>
              </and>
@@ -177,48 +177,48 @@
          id="serviceCommand"
          point="org.eclipse.ui.commands">
       <commandParameterType
-            id="net.refractions.udig.catalog.service"
-            type="net.refractions.udig.catalog.IService">
+            id="org.locationtech.udig.catalog.service"
+            type="org.locationtech.udig.catalog.IService">
       </commandParameterType>
       <category
             description="%service.commands.description"
-            id="net.refractions.udig.catalog.ui.service"
+            id="org.locationtech.udig.catalog.ui.service"
             name="%service.commands">
       </category>
       <command
-            categoryId="net.refractions.udig.catalog.ui.service"
-            defaultHandler="net.refractions.udig.catalog.ui.internal.IServicePropertiesCommandHandler"
+            categoryId="org.locationtech.udig.catalog.ui.service"
+            defaultHandler="org.locationtech.udig.catalog.ui.internal.IServicePropertiesCommandHandler"
             description="%serviceProperties.description"
-            id="net.refractions.udig.catalog.ui.command.serviceProperties"
+            id="org.locationtech.udig.catalog.ui.command.serviceProperties"
             name="%serviceProperties">
       </command>
       <command
-            categoryId="net.refractions.udig.catalog.ui.service"
-            defaultHandler="net.refractions.udig.catalog.internal.ui.actions.ResetServiceHandler"
+            categoryId="org.locationtech.udig.catalog.ui.service"
+            defaultHandler="org.locationtech.udig.catalog.internal.ui.actions.ResetServiceHandler"
             description="%resetService.tooltip"
-            id="net.refractions.udig.catalog.ui.command.reset"
+            id="org.locationtech.udig.catalog.ui.command.reset"
             name="%resetService.label"
-            returnTypeId="net.refractions.udig.catalog.service">
+            returnTypeId="org.locationtech.udig.catalog.service">
       </command>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
       <commandParameterType
-            id="net.refractions.udig.catalog.geoResource"
-            type="net.refractions.udig.catalog.IGeoResource">
+            id="org.locationtech.udig.catalog.geoResource"
+            type="org.locationtech.udig.catalog.IGeoResource">
       </commandParameterType>
       <category
             description="%resource.commands.description"
-            id="net.refractions.udig.catalog.ui.resource"
+            id="org.locationtech.udig.catalog.ui.resource"
             name="%resource.commands">
       </category>
       <command
-            categoryId="net.refractions.udig.catalog.ui.resource"
-            defaultHandler="net.refractions.udig.catalog.ui.internal.IGeoResourcePropertiesCommandHandler"
+            categoryId="org.locationtech.udig.catalog.ui.resource"
+            defaultHandler="org.locationtech.udig.catalog.ui.internal.IGeoResourcePropertiesCommandHandler"
             description="%resourceProperties.description"
-            id="net.refractions.udig.catalog.ui.command.resourceProperties"
+            id="org.locationtech.udig.catalog.ui.command.resourceProperties"
             name="%resourceProperties"
-            returnTypeId="net.refractions.udig.catalog.geoResource">
+            returnTypeId="org.locationtech.udig.catalog.geoResource">
       </command>
    </extension>
       <extension
@@ -232,7 +232,7 @@
                   tooltip="%data.tooltip">
               <visibleWhen>
                   <reference
-                        definitionId="net.refractions.udig.catalog.ui.contribution.data.menu">
+                        definitionId="org.locationtech.udig.catalog.ui.contribution.data.menu">
                   </reference>
                </visibleWhen>
             </menu>
@@ -243,7 +243,7 @@
                   name="mbStart">
             </separator>
             <dynamic
-                  class="net.refractions.udig.ui.operations.OpCategoryContributionItem:net.refractions.udig.catalog.ui.operation.resourceCategory"
+                  class="org.locationtech.udig.ui.operations.OpCategoryContributionItem:org.locationtech.udig.catalog.ui.operation.resourceCategory"
                   id="resource.ext">
                <visibleWhen
                      checkEnabled="true">
@@ -254,21 +254,21 @@
                   visible="true">
             </separator>
             <dynamic
-                  class="net.refractions.udig.ui.operations.OpCategoryContributionItem:net.refractions.udig.catalog.ui.operation.serviceCategory"
+                  class="org.locationtech.udig.ui.operations.OpCategoryContributionItem:org.locationtech.udig.catalog.ui.operation.serviceCategory"
                   id="service.ext">
                <visibleWhen
                      checkEnabled="true">
                </visibleWhen>
             </dynamic>
             <command
-                  commandId="net.refractions.udig.catalog.ui.command.reset"
+                  commandId="org.locationtech.udig.catalog.ui.command.reset"
                   id="reset"
                   label="%resetService.label"
                   mnemonic="R"
                   tooltip="%resetService.tooltip">
                <visibleWhen>
                   <reference
-                        definitionId="net.refractions.udig.catalog.ui.contribution.inServiceActionSet">
+                        definitionId="org.locationtech.udig.catalog.ui.contribution.inServiceActionSet">
                   </reference>
                </visibleWhen>
             </command>
@@ -276,12 +276,12 @@
                   name="mbEnd">
             </separator>
             <command
-                  commandId="net.refractions.udig.catalog.ui.command.resourceProperties"
+                  commandId="org.locationtech.udig.catalog.ui.command.resourceProperties"
                   label="%resourceProperties"
                   tooltip="%resourceProperties.description">
             </command>
             <command
-                  commandId="net.refractions.udig.catalog.ui.command.serviceProperties"
+                  commandId="org.locationtech.udig.catalog.ui.command.serviceProperties"
                   label="%Service.Properties.Name"
                   tooltip="%Service.Properties.Tooltip">
             </command>
@@ -293,7 +293,7 @@
          point="org.eclipse.help.contexts">
       <contexts
             file="contexts.xml"
-            plugin="net.refractions.udig.catalog.ui">
+            plugin="org.locationtech.udig.catalog.ui">
       </contexts>
    </extension>
    <extension
@@ -303,8 +303,8 @@
             allowMultiple="true"
             icon="icons/eview16/catalog_view.gif"
             category="catalog"
-            class="net.refractions.udig.catalog.internal.ui.CatalogView"
-            id="net.refractions.udig.catalog.ui.CatalogView">
+            class="org.locationtech.udig.catalog.internal.ui.CatalogView"
+            id="org.locationtech.udig.catalog.ui.CatalogView">
          <description>
             %catalog.description
          </description>
@@ -315,11 +315,11 @@
       </category>
       <view
             allowMultiple="true"
-            class="net.refractions.udig.catalog.ui.search.SearchView"
+            class="org.locationtech.udig.catalog.ui.search.SearchView"
             icon="icons/eview16/searchres.gif"
             category="catalog"
             name="%Search"
-            id="net.refractions.udig.catalog.ui.Search">
+            id="org.locationtech.udig.catalog.ui.Search">
          <description>
             %search.description
          </description>
@@ -328,47 +328,47 @@
    <extension
          name="catalogPerspectiveContributions"
          point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension targetID="net.refractions.udig.ui.mapPerspective">
-         <viewShortcut id="net.refractions.udig.catalog.ui.Search"/>  
+      <perspectiveExtension targetID="org.locationtech.udig.ui.mapPerspective">
+         <viewShortcut id="org.locationtech.udig.catalog.ui.Search"/>  
 		 <view
                closeable="true"
                standalone="true"
                moveable="true"
                visible="true"
                showTitle="true"
-               relative="net.refractions.udig.catalog.ui.CatalogView"
+               relative="org.locationtech.udig.catalog.ui.CatalogView"
                relationship="stack"
-               id="net.refractions.udig.catalog.ui.Search"/>               
+               id="org.locationtech.udig.catalog.ui.Search"/>               
       </perspectiveExtension>
    </extension>
    
 
    <extension
-         point="net.refractions.udig.catalog.ui.connectionFactory">
-     <factory class="net.refractions.udig.catalog.ui.FileConnectionFactory"
-            id="net.refractions.udig.catalog.ui.openFileConnection"/>
+         point="org.locationtech.udig.catalog.ui.connectionFactory">
+     <factory class="org.locationtech.udig.catalog.ui.FileConnectionFactory"
+            id="org.locationtech.udig.catalog.ui.openFileConnection"/>
       <wizardPage
             banner="icons/wizban/feature_file_wiz.gif"
-            class="net.refractions.udig.catalog.ui.FileConnectionPage"
+            class="org.locationtech.udig.catalog.ui.FileConnectionPage"
             description="%wizard.fileopen.description"
             icon="icons/etool16/file_wiz.gif"
-            id="net.refractions.udig.catalog.ui.openFilePage"
+            id="org.locationtech.udig.catalog.ui.openFilePage"
             name="%wizard.fileopen.name"/>
    </extension>
    <extension
          point="org.eclipse.core.runtime.adapters">
       <factory
-            class="net.refractions.udig.catalog.internal.ui.IResolveAdapterFactory"
-            adaptableType="net.refractions.udig.catalog.IResolve">
-         <adapter type="net.refractions.udig.core.IBlockingAdaptable"/>
+            class="org.locationtech.udig.catalog.internal.ui.IResolveAdapterFactory"
+            adaptableType="org.locationtech.udig.catalog.IResolve">
+         <adapter type="org.locationtech.udig.core.IBlockingAdaptable"/>
       </factory>
    </extension>
    <extension
         point="org.eclipse.ui.exportWizards">
      <wizard
-           class="net.refractions.udig.catalog.ui.export.CatalogExport$CatalogExportAdapter"
+           class="org.locationtech.udig.catalog.ui.export.CatalogExport$CatalogExportAdapter"
            icon="icons/etool16/exportshapefile_wiz.gif"
-           id="net.refractions.udig.catalog.ui.dataExportWizard"
+           id="org.locationtech.udig.catalog.ui.dataExportWizard"
            name="%layerExport.name">
         <description>
            %layerExport.desc
@@ -378,9 +378,9 @@
    <extension
          point="org.eclipse.ui.importWizards">
       <wizard
-            class="net.refractions.udig.catalog.ui.wizard.CatalogImport$CatalogImportAdapter"
+            class="org.locationtech.udig.catalog.ui.wizard.CatalogImport$CatalogImportAdapter"
             icon="icons/obj16/repository_obj.gif"
-            id="net.refractions.udig.catalog.ui.dataImportWizard"
+            id="org.locationtech.udig.catalog.ui.dataImportWizard"
             name="%dataImportWizard.name">
          <description>%dataImportWizard.description</description>
       </wizard>
@@ -390,72 +390,72 @@
          point="org.eclipse.ui.popupMenus">
       <objectContribution
             adaptable="true"
-            objectClass="net.refractions.udig.catalog.IService"
-            id="net.refractions.udig.project.ui.IServiceContribution">
+            objectClass="org.locationtech.udig.catalog.IService"
+            id="org.locationtech.udig.project.ui.IServiceContribution">
          <action
-               class="net.refractions.udig.catalog.internal.ui.actions.ResetService"
-               id="net.refractions.udig.catalog.ui.ResetService"
+               class="org.locationtech.udig.catalog.internal.ui.actions.ResetService"
+               id="org.locationtech.udig.catalog.ui.ResetService"
                label="%resetService.label"
                menubarPath="additions"
                tooltip="%resetService.tooltip"/>
       </objectContribution>         
    </extension>
   <extension
-        point="net.refractions.udig.ui.dropAction">
+        point="org.locationtech.udig.ui.dropAction">
         <action
-              class="net.refractions.udig.catalog.internal.ui.actions.CatalogImportDropAction"
+              class="org.locationtech.udig.catalog.internal.ui.actions.CatalogImportDropAction"
               enablesFor="+"
               name="%import.action.name">
 	       <acceptedType class="java.net.URL"/>
 	       <acceptedType class="java.lang.String"/>
 	       <acceptedType class="java.io.File"/>
-	       <destination class="net.refractions.udig.catalog.internal.ui.CatalogView"/>
+	       <destination class="org.locationtech.udig.catalog.internal.ui.CatalogView"/>
            <acceptedType
                  adapt="true"
-                 class="net.refractions.udig.catalog.IResolve"/>
+                 class="org.locationtech.udig.catalog.IResolve"/>
            <destination
                  adapt="false"
-                 class="net.refractions.udig.catalog.IResolve"/>
+                 class="org.locationtech.udig.catalog.IResolve"/>
 	    </action>
   </extension>
   <extension
-        id="net.refractions.udig.catalog.operations"
-        point="net.refractions.udig.ui.operation">
+        id="org.locationtech.udig.catalog.operations"
+        point="org.locationtech.udig.ui.operation">
      <operation
-           categoryId="net.refractions.udig.ui.edit"
-           class="net.refractions.udig.catalog.internal.ui.ops.NewFeatureTypeOp"
+           categoryId="org.locationtech.udig.ui.edit"
+           class="org.locationtech.udig.catalog.internal.ui.ops.NewFeatureTypeOp"
            enablesFor="1"
-           id="net.refractions.udig.catalog.ui.newFeatureType"
+           id="org.locationtech.udig.catalog.ui.newFeatureType"
            menuPath="layer/new"
            name="%newFeatureType"
-           targetClass="net.refractions.udig.catalog.IService">
+           targetClass="org.locationtech.udig.catalog.IService">
         <enablement>
            <adaptsTo target="org.geotools.data.DataStore"/>
         </enablement>
      </operation>
      <category
            context="Service"
-           id="net.refractions.udig.catalog.ui.operation.serviceCategory"
+           id="org.locationtech.udig.catalog.ui.operation.serviceCategory"
            name="%Service.Category">
      </category>
 
      <operation
-           categoryId="net.refractions.udig.catalog.ui.operation.serviceCategory"
-           class="net.refractions.udig.catalog.internal.ui.ops.NewFeatureTypeOp"
+           categoryId="org.locationtech.udig.catalog.ui.operation.serviceCategory"
+           class="org.locationtech.udig.catalog.internal.ui.ops.NewFeatureTypeOp"
            enablesFor="1"
-           id="net.refractions.udig.catalog.ui.addFeatureType"
+           id="org.locationtech.udig.catalog.ui.addFeatureType"
            name="%AddFeatureType"
-           targetClass="net.refractions.udig.catalog.IService">
+           targetClass="org.locationtech.udig.catalog.IService">
         <enablement>
            <adaptsTo target="org.geotools.data.DataStore"/>
         </enablement>
      </operation>
        <operation
-             categoryId="net.refractions.udig.catalog.ui.operation.resourceCategory"
-             class="net.refractions.udig.catalog.ui.operation.ReshapeOperation"
-             id="net.refractions.udig.catalog.ui.operation.operationReshape"
+             categoryId="org.locationtech.udig.catalog.ui.operation.resourceCategory"
+             class="org.locationtech.udig.catalog.ui.operation.ReshapeOperation"
+             id="org.locationtech.udig.catalog.ui.operation.operationReshape"
              name="%Reshape"
-             targetClass="net.refractions.udig.catalog.IGeoResource">
+             targetClass="org.locationtech.udig.catalog.IGeoResource">
           <enablement>
              <adaptsTo
                    target="org.geotools.data.simple.SimpleFeatureSource">
@@ -463,11 +463,11 @@
           </enablement>
        </operation>
        <operation
-             categoryId="net.refractions.udig.catalog.ui.operation.resourceCategory"
-             class="net.refractions.udig.catalog.ui.operation.TransformOperation"
-             id="net.refractions.udig.catalog.ui.operation.transform"
+             categoryId="org.locationtech.udig.catalog.ui.operation.resourceCategory"
+             class="org.locationtech.udig.catalog.ui.operation.TransformOperation"
+             id="org.locationtech.udig.catalog.ui.operation.transform"
              name="%Transform"
-             targetClass="net.refractions.udig.catalog.IGeoResource">
+             targetClass="org.locationtech.udig.catalog.IGeoResource">
           <enablement>
              <adaptsTo
                    target="org.geotools.data.simple.SimpleFeatureSource">
@@ -476,7 +476,7 @@
        </operation>
      <category
            context="GeoResource"
-           id="net.refractions.udig.catalog.ui.operation.resourceCategory"
+           id="org.locationtech.udig.catalog.ui.operation.resourceCategory"
            name="%Resource.Category">
      </category>
      
@@ -484,24 +484,24 @@
   <extension
         point="org.eclipse.ui.preferencePages">
      <page
-           class="net.refractions.udig.catalog.ui.preferences.CatalogPreferencePage"
-           id="net.refractions.udig.catalog.ui.preferences.CatalogPreferencePage"
+           class="org.locationtech.udig.catalog.ui.preferences.CatalogPreferencePage"
+           id="org.locationtech.udig.catalog.ui.preferences.CatalogPreferencePage"
            name="%catalog.preferences.name"/>
   </extension>
   <extension
-          point="net.refractions.udig.catalog.ui.connectionFactory">
-       <factory class="net.refractions.udig.catalog.memory.NewServiceConnectionFactory"
-       			 id = "net.refractions.udig.catalog.import.memory"/>
+          point="org.locationtech.udig.catalog.ui.connectionFactory">
+       <factory class="org.locationtech.udig.catalog.memory.NewServiceConnectionFactory"
+       			 id = "org.locationtech.udig.catalog.import.memory"/>
   </extension>
   <extension
         point="org.eclipse.ui.viewActions">
      <viewContribution
-           id="net.refractions.udig.catalog.ui.searchContribution"
-           targetID="net.refractions.udig.catalog.ui.Search">
+           id="org.locationtech.udig.catalog.ui.searchContribution"
+           targetID="org.locationtech.udig.catalog.ui.Search">
         <action
-              class="net.refractions.udig.catalog.ui.AOIViewActionDelegate"
+              class="org.locationtech.udig.catalog.ui.AOIViewActionDelegate"
               icon="icons/etool16/aoi_filter_obj.png"
-              id="net.refractions.udig.catalog.ui.aoiAction"
+              id="org.locationtech.udig.catalog.ui.aoiAction"
               label="AOI Filter"
               style="toggle"
               toolbarPath="additions">
@@ -509,57 +509,57 @@
      </viewContribution>
   </extension>
   <extension
-        id="net.refractions.udig.catalog.propertyPages"
+        id="org.locationtech.udig.catalog.propertyPages"
         name="Catalog Property Pages"
         point="org.eclipse.ui.propertyPages">
      <page
-           class="net.refractions.udig.catalog.ui.property.ServicePropertyPage"
+           class="org.locationtech.udig.catalog.ui.property.ServicePropertyPage"
            icon="icons/obj16/datastore_obj.gif"
-           id="net.refractions.udig.catalog.ui.property.servicePage"
+           id="org.locationtech.udig.catalog.ui.property.servicePage"
            name="%servicePage.name">
         <enabledWhen>
            <or>
               <instanceof
-                    value="net.refractions.udig.catalog.IService">
+                    value="org.locationtech.udig.catalog.IService">
               </instanceof>
               <adapt
-                    type="net.refractions.udig.catalog.IService">
+                    type="org.locationtech.udig.catalog.IService">
               </adapt>
            </or>
         </enabledWhen>
         <keywordReference
-              id="net.refractions.udig.catalog.ui.keyword.service">
+              id="org.locationtech.udig.catalog.ui.keyword.service">
         </keywordReference>
      </page>
      <page
-           class="net.refractions.udig.catalog.ui.property.ResourcePropertyPage"
+           class="org.locationtech.udig.catalog.ui.property.ResourcePropertyPage"
            icon="icons/obj16/feature_obj.gif"
-           id="net.refractions.udig.catalog.ui.property.resourcePage"
+           id="org.locationtech.udig.catalog.ui.property.resourcePage"
            name="%resourcePage.name">
         <enabledWhen>
            <or>
               <instanceof
-                    value="net.refractions.udig.catalog.IGeoResource">
+                    value="org.locationtech.udig.catalog.IGeoResource">
               </instanceof>
               <adapt
-                    type="net.refractions.udig.catalog.IGeoResource">
+                    type="org.locationtech.udig.catalog.IGeoResource">
               </adapt>
            </or>
         </enabledWhen>
         <keywordReference
-              id="net.refractions.udig.catalog.ui.keyword.resource"></keywordReference>
+              id="org.locationtech.udig.catalog.ui.keyword.resource"></keywordReference>
      </page>
   </extension>
   <extension
-        id="net.refractions.udig.catalog.keywords"
+        id="org.locationtech.udig.catalog.keywords"
         name="Catalog Keywords"
         point="org.eclipse.ui.keywords">
      <keyword
-           id="net.refractions.udig.catalog.ui.keyword.service"
+           id="org.locationtech.udig.catalog.ui.keyword.service"
            label="%service.keyword">
      </keyword>
      <keyword
-           id="net.refractions.udig.catalog.ui.keyword.resource"
+           id="org.locationtech.udig.catalog.ui.keyword.resource"
            label="%resource.keyword">
      </keyword>
   </extension>

@@ -3,20 +3,20 @@
 <plugin>
 	<extension
 		point="org.eclipse.ui.startup">
-      <startup class="eu.udig.tools.merge.MergeStartup"/>
+      <startup class="org.locationtech.udig.tools.merge.MergeStartup"/>
    </extension>
    <extension
-         point="net.refractions.udig.project.ui.tool">
+         point="org.locationtech.udig.project.ui.tool">
       <modalTool
-            categoryId="net.refractions.udig.tool.edit.feature"
-            class="eu.udig.tools.split.SplitTool"
+            categoryId="org.locationtech.udig.tool.edit.feature"
+            class="org.locationtech.udig.tools.split.SplitTool"
             icon="icons/etool16/split_feature_mode.gif"
-            id="eu.udig.tools.split.SplitTool"
+            id="org.locationtech.udig.tools.split.SplitTool"
             largeIcon="icons/etool24/split_24.png"
-            name="%eu.udig.tools.split.name"
+            name="%org.locationtech.udig.tools.split.name"
             onToolbar="true"
             toolCursorId="arrowCursor"
-            tooltip="%eu.udig.tools.split.tooltip">
+            tooltip="%org.locationtech.udig.tools.split.tooltip">
           <enablement>
           	<and>
                 <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
@@ -31,15 +31,15 @@
           </enablement>
       </modalTool>
       <modalTool
-            categoryId="net.refractions.udig.tool.edit.feature"
-            class="eu.udig.tools.merge.MergeTool"
+            categoryId="org.locationtech.udig.tool.edit.feature"
+            class="org.locationtech.udig.tools.merge.MergeTool"
             icon="icons/etool16/merge_feature_mode.gif"
-            id="eu.udig.tools.merge.MergeTool"
+            id="org.locationtech.udig.tools.merge.MergeTool"
             largeIcon="icons/etool24/merge_24.png"
-            name="%eu.udig.tools.merge.name"
+            name="%org.locationtech.udig.tools.merge.name"
             onToolbar="true"
             toolCursorId="arrowCursor"
-            tooltip="%eu.udig.tools.merge.tooltip">
+            tooltip="%org.locationtech.udig.tools.merge.tooltip">
 	      <enablement>
 	      	<and>
 	            <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
@@ -56,14 +56,14 @@
 	      </enablement>
       </modalTool>
       <modalTool
-            categoryId="net.refractions.udig.tool.edit.create"
-            class="eu.udig.tools.arc.ArcTool"
+            categoryId="org.locationtech.udig.tool.edit.create"
+            class="org.locationtech.udig.tools.arc.ArcTool"
             icon="icons/etool16/arc_tool.gif"
-            id="eu.udig.tools.arc.ArcTool"
-            name="%eu.udig.tools.arc.name"
+            id="org.locationtech.udig.tools.arc.ArcTool"
+            name="%org.locationtech.udig.tools.arc.name"
             onToolbar="true"
             toolCursorId="arrowCursor"
-            tooltip="%eu.udig.tools.arc.tooltip">
+            tooltip="%org.locationtech.udig.tools.arc.tooltip">
          <enablement>
             <or>
                <property
@@ -78,14 +78,14 @@
          </enablement>
       </modalTool>
       <modalTool
-            categoryId="net.refractions.udig.tool.edit.create"
-            class="eu.udig.tools.parallel.ParallelTool"
+            categoryId="org.locationtech.udig.tool.edit.create"
+            class="org.locationtech.udig.tools.parallel.ParallelTool"
             icon="icons/etool16/parallel_mode.gif"
-            id="eu.udig.tools.parallel.ParallelTool"
-            name="%eu.udig.tools.parallel.name"
+            id="org.locationtech.udig.tools.parallel.ParallelTool"
+            name="%org.locationtech.udig.tools.parallel.name"
             onToolbar="true"
             toolCursorId="arrowCursor"
-            tooltip="%eu.udig.tools.parallel.tooltip">
+            tooltip="%org.locationtech.udig.tools.parallel.tooltip">
          <cursor
                hotspotX="10"
                hotspotY="10"
@@ -102,15 +102,15 @@
          </enablement>
       </modalTool>
       <modalTool
-            categoryId="net.refractions.udig.tool.edit.edit"
-            class="eu.udig.tools.trim.TrimTool"
+            categoryId="org.locationtech.udig.tool.edit.edit"
+            class="org.locationtech.udig.tools.trim.TrimTool"
             icon="icons/etool16/trim_feature_mode.gif"
-            id="eu.udig.tools.trim.TrimTool"
+            id="org.locationtech.udig.tools.trim.TrimTool"
             largeIcon="icons/etool24/trim_24.png"
-            name="%eu.udig.tools.trim.name"
+            name="%org.locationtech.udig.tools.trim.name"
             onToolbar="true"
             toolCursorId="arrowCursor"
-            tooltip="%eu.udig.tools.trim.tooltip">
+            tooltip="%org.locationtech.udig.tools.trim.tooltip">
          <enablement>
           	<and>
                 <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
@@ -128,30 +128,30 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="false"
-            category="net.refractions.udig.project.ui.project"
-            class="eu.udig.tools.parallel.view.ParallelParametersView"
+            category="org.locationtech.udig.project.ui.project"
+            class="org.locationtech.udig.tools.parallel.view.ParallelParametersView"
             icon="icons/etool16/parallel_mode.gif"
-            id="eu.udig.tools.parallel.view.ParallelParametersView"
-            name="%eu.udig.tools.parallel.name">
+            id="org.locationtech.udig.tools.parallel.view.ParallelParametersView"
+            name="%org.locationtech.udig.tools.parallel.name">
       </view>
       <view
             allowMultiple="false"
-            category="net.refractions.udig.project.ui.project"
-            class="eu.udig.tools.merge.internal.view.MergeView"
+            category="org.locationtech.udig.project.ui.project"
+            class="org.locationtech.udig.tools.merge.internal.view.MergeView"
             icon="icons/etool16/merge_feature_mode.gif"
-            id="eu.udig.tools.merge.internal.view.MergeView"
+            id="org.locationtech.udig.tools.merge.internal.view.MergeView"
             name="Merge Features"
             restorable="true">
       </view>
    </extension>
    <extension
-         point="net.refractions.udig.ui.operation">
+         point="org.locationtech.udig.ui.operation">
       <operation
-            class="eu.udig.tools.merge.MergeOperation"
+            class="org.locationtech.udig.tools.merge.MergeOperation"
             description="Merge the selected features"
             enablesFor="1"
             icon="icons/etool16/merge_feature_mode.gif"
-            id="eu.udig.tools.merge.mergeoperation"
+            id="org.locationtech.udig.tools.merge.mergeoperation"
             name="Merge selected"
             targetClass="org.geotools.data.FeatureSource">
       </operation>
@@ -159,12 +159,12 @@
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
-            targetID="net.refractions.udig.ui.mapPerspective">
+            targetID="org.locationtech.udig.ui.mapPerspective">
          <viewShortcut
-               id="eu.udig.tools.merge.internal.view.MergeView">
+               id="org.locationtech.udig.tools.merge.internal.view.MergeView">
          </viewShortcut>
          <viewShortcut
-               id="eu.udig.tools.parallel.view.ParallelParametersView">
+               id="org.locationtech.udig.tools.parallel.view.ParallelParametersView">
          </viewShortcut>
       </perspectiveExtension>
    </extension>

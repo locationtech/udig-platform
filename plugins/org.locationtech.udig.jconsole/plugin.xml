@@ -7,9 +7,9 @@
             name="JConsole Editor"
             icon="icons/obj16/java.gif"
             extensions="groovy"
-            contributorClass="eu.udig.jconsole.JavaActionContributor"
-            class="eu.udig.jconsole.JavaEditor"
-            id=" eu.udig.jconsole.editor">
+            contributorClass="org.locationtech.udig.jconsole.JavaActionContributor"
+            class="org.locationtech.udig.jconsole.JavaEditor"
+            id=" org.locationtech.udig.jconsole.editor">
       </editor>
    </extension>
    
@@ -19,13 +19,13 @@
          point="org.eclipse.core.filebuffers.documentSetup">
       <participant
             extensions="groovy"
-            class="eu.udig.jconsole.JavaDocumentSetupParticipant">
+            class="org.locationtech.udig.jconsole.JavaDocumentSetupParticipant">
       </participant>
    </extension>
    <extension
          point="org.eclipse.ui.actionSets">
       <actionSet
-            id=" eu.udig.jconsole.actionSet1"
+            id=" org.locationtech.udig.jconsole.actionSet1"
             label="JConsole"
             visible="true">
             <menu
@@ -34,18 +34,18 @@
                   path="jconsolepath">
             </menu>
             <action
-                  class="eu.udig.jconsole.actions.ConsoleEditorActionFromOld"
+                  class="org.locationtech.udig.jconsole.actions.ConsoleEditorActionFromOld"
                   icon="icons/consolefile.gif"
-                  id=" eu.udig.jconsole.jconsoleaction1"
+                  id=" org.locationtech.udig.jconsole.jconsoleaction1"
                   label="Open Script"
                   style="push"
                   toolbarPath="jconsolepath"
                   tooltip="Open and existing Script">
             </action>
             <action
-                  class="eu.udig.jconsole.actions.ConsoleEditorActionNew"
+                  class="org.locationtech.udig.jconsole.actions.ConsoleEditorActionNew"
                   icon="icons/console.gif"
-                  id=" eu.udig.jconsole.jconsoleaction2"
+                  id=" org.locationtech.udig.jconsole.jconsoleaction2"
                   label="New Script"
                   style="push"
                   toolbarPath="jconsolepath"
@@ -57,23 +57,23 @@
          point="org.eclipse.ui.activities">
       <activity
             description="Clean up extentions from contributed plugins."
-            id="eu.udig.jconsole.activity"
+            id="org.locationtech.udig.jconsole.activity"
             name="CleanupActitvity">
       </activity>
       <category
-            id="eu.udig.jconsole.activitycategory"
+            id="org.locationtech.udig.jconsole.activitycategory"
             name="Console Activity Category">
       </category>
       <categoryActivityBinding
-            activityId="eu.udig.jconsole.activity"
-            categoryId="eu.udig.jconsole.activitycategory">
+            activityId="org.locationtech.udig.jconsole.activity"
+            categoryId="org.locationtech.udig.jconsole.activitycategory">
       </categoryActivityBinding>
       <activityPatternBinding
-            activityId="eu.udig.jconsole.activity"
+            activityId="org.locationtech.udig.jconsole.activity"
             pattern="org.eclipse.ui.ide/.*">
       </activityPatternBinding>
       <activityPatternBinding
-            activityId="eu.udig.jconsole.activity"
+            activityId="org.locationtech.udig.jconsole.activity"
             pattern="org.eclipse.ui.editors/.*">
       </activityPatternBinding>
    </extension>

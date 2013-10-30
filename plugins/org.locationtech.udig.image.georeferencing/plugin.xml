@@ -5,38 +5,38 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="false"
-            category="eu.udig.image.georeferencing.categoryImage"
-            class="eu.udig.image.georeferencing.ui.GeoreferencingView"
+            category="org.locationtech.udig.image.georeferencing.categoryImage"
+            class="org.locationtech.udig.image.georeferencing.ui.GeoreferencingView"
             icon="icons/etool16/georeferencing.png"
-            id="eu.udig.image.georeferencing.ui.GeoreferencingView"
+            id="org.locationtech.udig.image.georeferencing.ui.GeoreferencingView"
             name="Image Georeferencing"
             restorable="true">
       </view>
       <category
-            id="eu.udig.image.georeferencing.categoryImage"
+            id="org.locationtech.udig.image.georeferencing.categoryImage"
             name="Imagery">
       </category>
    </extension>
    <extension
-         point="net.refractions.udig.mapgraphic.mapgraphic">
+         point="org.locationtech.udig.mapgraphic.mapgraphic">
       <mapGraphic
-            class="eu.udig.image.georeferencing.internal.ui.coordinatepanel.MapMarksGraphics"
-            id="eu.udig.image.georeferencing.internal.ui.MapMarksGraphics"
+            class="org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.MapMarksGraphics"
+            id="org.locationtech.udig.image.georeferencing.internal.ui.MapMarksGraphics"
             name="Georeferencing">
       </mapGraphic>
    </extension>
    <extension
-         point="net.refractions.udig.project.ui.tool">
+         point="org.locationtech.udig.project.ui.tool">
       <category
-            commandId="eu.udig.image.georeferencing.categorytools"
-            id="eu.udig.image.georeferencing.categorytools"
+            commandId="org.locationtech.udig.image.georeferencing.categorytools"
+            id="org.locationtech.udig.image.georeferencing.categorytools"
             name="Georeferencing">
       </category>
       <modalTool
-            categoryId="eu.udig.image.georeferencing.categorytools"
-            class="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.AddCoordinateTool"
+            categoryId="org.locationtech.udig.image.georeferencing.categorytools"
+            class="org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools.AddCoordinateTool"
             icon="icons/etool16/place.png"
-            id="eu.udig.image.georeferencing.tools.addcoordinate"
+            id="org.locationtech.udig.image.georeferencing.tools.addcoordinate"
             name="Add coordinate"
             onToolbar="false"
             toolCursorId="addCoordinateCursor"
@@ -44,15 +44,15 @@
          <enablement>
                <property
                      expectedValue="false"
-                     propertyId="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue">
+                     propertyId="org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue">
                </property>
          </enablement>
       </modalTool>
       <modalTool
-            categoryId="eu.udig.image.georeferencing.categorytools"
-            class="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.DeleteCoordinateTool"
+            categoryId="org.locationtech.udig.image.georeferencing.categorytools"
+            class="org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools.DeleteCoordinateTool"
             icon="icons/etool16/delete.gif"
-            id="eu.udig.image.georeferencing.tools.deletecoordinate"
+            id="org.locationtech.udig.image.georeferencing.tools.deletecoordinate"
             name="Delete coordinate"
             onToolbar="false"
             toolCursorId="deleteCoordinateCursor"
@@ -60,15 +60,15 @@
          <enablement>
                <property
                      expectedValue="false"
-                     propertyId="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue">
+                     propertyId="org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue">
                </property>
          </enablement>
       </modalTool>
       <modalTool
-            categoryId="eu.udig.image.georeferencing.categorytools"
-            class="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.MoveCoordinateTool"
+            categoryId="org.locationtech.udig.image.georeferencing.categorytools"
+            class="org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools.MoveCoordinateTool"
             icon="icons/etool16/movemarker.png"
-            id="eu.udig.image.georeferencing.tools.movecoordinate"
+            id="org.locationtech.udig.image.georeferencing.tools.movecoordinate"
             name="Move coordinate"
             onToolbar="false"
             toolCursorId="moveCoordinateCursor"
@@ -76,7 +76,7 @@
          <enablement>
                <property
                      expectedValue="false"
-                     propertyId="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue">
+                     propertyId="org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue">
                </property>
          </enablement>
       </modalTool>
@@ -102,16 +102,16 @@
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
-            class="eu.udig.image.georeferencing.internal.preferences.PreferencesInitializer">
+            class="org.locationtech.udig.image.georeferencing.internal.preferences.PreferencesInitializer">
       </initializer>
    </extension>
    <extension
-         point="net.refractions.udig.ui.objectProperty">
+         point="org.locationtech.udig.ui.objectProperty">
       <object
             targetClass="java.lang.Object">
          <property
-               class="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue"
-               id="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue">
+               class="org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue"
+               id="org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue">
          </property>
       </object>
    </extension>

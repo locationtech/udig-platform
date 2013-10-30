@@ -3,10 +3,10 @@
 <plugin>
 
      <extension
-         point="net.refractions.udig.project.projectElementFactories">
+         point="org.locationtech.udig.project.projectElementFactories">
       <projectElementFactory
-            class="net.refractions.udig.printing.model.PageProjectElementFactory"
-            id="net.refractions.udig.printing.model.pageProjectElementFactory"/>
+            class="org.locationtech.udig.printing.model.PageProjectElementFactory"
+            id="org.locationtech.udig.printing.model.pageProjectElementFactory"/>
    </extension>
 
 </plugin>

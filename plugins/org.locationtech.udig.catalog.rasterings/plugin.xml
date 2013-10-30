@@ -2,10 +2,10 @@
 <?eclipse version="3.0"?>
 <plugin>
    <extension
-         point="net.refractions.udig.catalog.resolvers">
+         point="org.locationtech.udig.catalog.resolvers">
       <factory
-            class="net.refractions.udig.catalog.rasterings.ShpImageMoasicAdaptorFactory"
-            resolveableType="net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl">
+            class="org.locationtech.udig.catalog.rasterings.ShpImageMoasicAdaptorFactory"
+            resolveableType="org.locationtech.udig.catalog.internal.shp.ShpGeoResourceImpl">
          <resolve
                type="org.opengis.coverage.grid.GridCoverageReader">
          </resolve>

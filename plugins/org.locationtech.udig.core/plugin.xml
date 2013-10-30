@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.ui.startup">
       <startup
-            class="net.refractions.udig.JaiInstallerBootstrap"></startup>
+            class="org.locationtech.udig.JaiInstallerBootstrap"></startup>
    </extension>
 
 </plugin>

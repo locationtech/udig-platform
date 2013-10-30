@@ -7,7 +7,7 @@
          point="org.eclipse.core.runtime.applications">
       <application>
          <run
-               class="eu.udig.tutorials.preferredzoomlevels.Application">
+               class="org.locationtech.udig.tutorials.preferredzoomlevels.Application">
          </run>
       </application>
    </extension>
@@ -15,16 +15,16 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             name="Perspective"
-            class="eu.udig.tutorials.preferredzoomlevels.Perspective"
-            id="eu.udig.tutorials.preferredzoomlevels.perspective">
+            class="org.locationtech.udig.tutorials.preferredzoomlevels.Perspective"
+            id="org.locationtech.udig.tutorials.preferredzoomlevels.perspective">
       </perspective>
    </extension>
    <extension
          point="org.eclipse.ui.views">
       <view
             name="View"
-            class="eu.udig.tutorials.preferredzoomlevels.View"
-            id="eu.udig.tutorials.preferredzoomlevels.view">
+            class="org.locationtech.udig.tutorials.preferredzoomlevels.View"
+            id="org.locationtech.udig.tutorials.preferredzoomlevels.view">
       </view>
    </extension>
    <extension
@@ -36,7 +36,7 @@
                minimized="false"
                relative="org.eclipse.ui.editorss"
                relationship="left"
-               id="eu.udig.tutorials.preferredzoomlevels.view">
+               id="org.locationtech.udig.tutorials.preferredzoomlevels.view">
          </view>
       </perspectiveExtension>
    </extension>
@@ -54,10 +54,10 @@
       </menuContribution>
    </extension>
    <extension
-         point="net.refractions.udig.project.ui.tool">
+         point="org.locationtech.udig.project.ui.tool">
       <actionTool
-            class="eu.udig.tutorials.preferredzoomlevels.ZoomToFeatures"
-            id="eu.udig.tutorials.preferredzoomlevels.zoomToFeatures"
+            class="org.locationtech.udig.tutorials.preferredzoomlevels.ZoomToFeatures"
+            id="org.locationtech.udig.tutorials.preferredzoomlevels.zoomToFeatures"
             name="ZoomToFeatures"
             onToolbar="true">
          <enablement></enablement>

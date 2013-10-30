@@ -13,11 +13,11 @@
 <plugin>
 
     <extension
-            point="net.refractions.udig.project.ui.itemProviderAdapterFactories">
-         <itemProviderAdapterFactory class="net.refractions.udig.project.internal.provider.ProjectItemProviderAdapterFactory"/>
+            point="org.locationtech.udig.project.ui.itemProviderAdapterFactories">
+         <itemProviderAdapterFactory class="org.locationtech.udig.project.internal.provider.ProjectItemProviderAdapterFactory"/>
          <itemProviderAdapterFactory class="org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory"/>
-         <itemProviderAdapterFactory class="net.refractions.udig.project.internal.render.provider.RenderItemProviderAdapterFactory"/>
-         <itemProviderAdapterFactory class="net.refractions.udig.project.element.provider.ElementItemProviderAdapterFactory"/>
+         <itemProviderAdapterFactory class="org.locationtech.udig.project.internal.render.provider.RenderItemProviderAdapterFactory"/>
+         <itemProviderAdapterFactory class="org.locationtech.udig.project.element.provider.ElementItemProviderAdapterFactory"/>
       </extension>
 </plugin>
 

@@ -7,14 +7,14 @@
          point="org.eclipse.core.runtime.applications">
       <application>
          <run
-               class="eu.udig.tutorials.toolview.Application">
+               class="org.locationtech.udig.tutorials.toolview.Application">
          </run>
       </application>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            class="eu.udig.tutorials.toolview.Perspective"
+            class="org.locationtech.udig.tutorials.toolview.Perspective"
             fixed="false"
             id="X.perspective"
             name="Perspective">
@@ -23,7 +23,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            class="eu.udig.tutorials.toolview.View"
+            class="org.locationtech.udig.tutorials.toolview.View"
             icon="icons/view16/alert_view.png"
             id="X.view"
             name="View">
@@ -56,39 +56,39 @@
       </menuContribution>
    </extension>
    <extension
-         point="net.refractions.udig.project.ui.tool">
+         point="org.locationtech.udig.project.ui.tool">
       <modalTool
-            categoryId="eu.udig.tutorials.tool-view.alerts"
-            class="eu.udig.tutorials.toolview.SendAlertTool"
+            categoryId="org.locationtech.udig.tutorials.tool-view.alerts"
+            class="org.locationtech.udig.tutorials.toolview.SendAlertTool"
             icon="icons/etool16/alert_mode.png"
-            id="eu.udig.tutorials.tool-view.sendalerttool"
+            id="org.locationtech.udig.tutorials.tool-view.sendalerttool"
             name="Send Alert"
             onToolbar="true"
-            toolCursorId="eu.udig.tutorials.tool-view.toolCursor1">
+            toolCursorId="org.locationtech.udig.tutorials.tool-view.toolCursor1">
       </modalTool>
       <toolCursor
             hotspotX="5"
             hotspotY="5"
-            id="eu.udig.tutorials.tool-view.toolCursor1"
+            id="org.locationtech.udig.tutorials.tool-view.toolCursor1"
             image="icons/pointer/alert_source.png">
       </toolCursor>
       <category
-            id="eu.udig.tutorials.tool-view.alerts"
+            id="org.locationtech.udig.tutorials.tool-view.alerts"
             name="Alerts">
       </category>
    </extension>
    <extension
-         point="net.refractions.udig.project.ui.toolManagers">
+         point="org.locationtech.udig.project.ui.toolManagers">
       <toolManager
-            class="eu.udig.tutorials.toolview.CustomToolManager"
-            id="eu.udig.tutorials.tool-view.customToolManager">
+            class="org.locationtech.udig.tutorials.toolview.CustomToolManager"
+            id="org.locationtech.udig.tutorials.tool-view.customToolManager">
       </toolManager>
    </extension>
    <extension
          id="product"
          point="org.eclipse.core.runtime.products">
       <product
-            application="eu.udig.tutorials.tool-view.application"
+            application="org.locationtech.udig.tutorials.tool-view.application"
             name="Tool View">
          <property
                name="appName"
@@ -105,11 +105,11 @@
       </product>
    </extension>
    <extension
-         point="net.refractions.udig.mapgraphic.mapgraphic">
+         point="org.locationtech.udig.mapgraphic.mapgraphic">
       <mapGraphic
-            class="eu.udig.tutorials.toolview.ShowAlertsMapGraphic"
+            class="org.locationtech.udig.tutorials.toolview.ShowAlertsMapGraphic"
             icon="icons/view16/alert_view.png"
-            id="eu.udig.tutorials.tool-view.showalertmapgraphic">
+            id="org.locationtech.udig.tutorials.tool-view.showalertmapgraphic">
       </mapGraphic>
    </extension>
 

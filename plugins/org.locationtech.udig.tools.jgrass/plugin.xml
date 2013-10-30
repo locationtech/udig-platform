@@ -2,12 +2,12 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="net.refractions.udig.project.ui.tool">
+         point="org.locationtech.udig.project.ui.tool">
       <modalTool
-            categoryId="net.refractions.udig.tool.category.info"
-            class="eu.udig.tools.jgrass.profile.ProfileTool"
+            categoryId="org.locationtech.udig.tool.category.info"
+            class="org.locationtech.udig.tools.jgrass.profile.ProfileTool"
             icon="icons/profileview.png"
-            id="eu.udig.tools.jgrass.profiletool"
+            id="org.locationtech.udig.tools.jgrass.profiletool"
             name="%profile.name"
             onToolbar="true"
             toolCursorId="profileCursor"
@@ -34,27 +34,27 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="true"
-            class="eu.udig.tools.jgrass.profile.ProfileView"
+            class="org.locationtech.udig.tools.jgrass.profile.ProfileView"
             icon="icons/profileview.png"
-            id="eu.udig.tools.jgrass.profileview"
+            id="org.locationtech.udig.tools.jgrass.profileview"
             name="Profile View"
             restorable="false">
       </view>
       <view
             allowMultiple="false"
-            class="eu.udig.tools.jgrass.navigationview.NavigationView"
+            class="org.locationtech.udig.tools.jgrass.navigationview.NavigationView"
             fastViewWidthRatio="0.20"
             icon="icons/globe16.png"
-            id="eu.udig.tools.jgrass.navigationview.NavigationView"
+            id="org.locationtech.udig.tools.jgrass.navigationview.NavigationView"
             name="Navigation"
             restorable="true">
       </view>
       <view
             allowMultiple="false"
-            class="eu.udig.tools.jgrass.featuremovieview.FeatureMovieView"
+            class="org.locationtech.udig.tools.jgrass.featuremovieview.FeatureMovieView"
             fastViewWidthRatio="0.20"
             icon="icons/movieview.gif"
-            id="eu.udig.tools.jgrass.featuremovieview.FeatureMovieView"
+            id="org.locationtech.udig.tools.jgrass.featuremovieview.FeatureMovieView"
             name="Feature Walker View"
             restorable="true">
       </view>
@@ -62,97 +62,97 @@
    <extension
          point="org.eclipse.ui.exportWizards">
       <wizard
-            class="eu.udig.tools.jgrass.coverageexport.TiffAsciiExportWizard"
+            class="org.locationtech.udig.tools.jgrass.coverageexport.TiffAsciiExportWizard"
             icon="icons/grid_obj.gif"
-            id="eu.udig.tools.jgrass.rasterexport.TiffAsciiExportWizard"
+            id="org.locationtech.udig.tools.jgrass.rasterexport.TiffAsciiExportWizard"
             name="Export coverage to tiff or esri ascii">
       </wizard>
    </extension>
    <extension
-         point="net.refractions.udig.ui.operation">
+         point="org.locationtech.udig.ui.operation">
       <operation
-            categoryId="eu.udig.tools.jgrass.toolscategory"
-            class="eu.udig.tools.jgrass.orientationview.ViewFeatureOrientation"
+            categoryId="org.locationtech.udig.tools.jgrass.toolscategory"
+            class="org.locationtech.udig.tools.jgrass.orientationview.ViewFeatureOrientation"
             enablesFor="1"
             icon="icons/view_orientation.gif"
-            id="eu.udig.tools.jgrass.orientationview.ViewFeatureOrientation"
+            id="org.locationtech.udig.tools.jgrass.orientationview.ViewFeatureOrientation"
             name="View lines orientation"
-            targetClass="net.refractions.udig.project.ILayer">
+            targetClass="org.locationtech.udig.project.ILayer">
             <enablement>
              <and>
-               <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>  
+               <property propertyId="org.locationtech.udig.project.FeatureStoreResourceProperty" expectedValue=""/>  
                <or>
-                    <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-                    <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+                    <property propertyId="org.locationtech.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+                    <property propertyId="org.locationtech.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
                </or>
              </and>
             </enablement>
       </operation>
       <operation
-            categoryId="eu.udig.tools.jgrass.toolscategory"
-            class="eu.udig.tools.jgrass.orientationview.ReverseFeatureOrientation"
+            categoryId="org.locationtech.udig.tools.jgrass.toolscategory"
+            class="org.locationtech.udig.tools.jgrass.orientationview.ReverseFeatureOrientation"
             enablesFor="1"
             icon="icons/invert.gif"
-            id="eu.udig.tools.jgrass.orientationview.ReverseFeatureOrientation"
+            id="org.locationtech.udig.tools.jgrass.orientationview.ReverseFeatureOrientation"
             name="Invert geometry orientation"
-            targetClass="net.refractions.udig.project.ILayer">
+            targetClass="org.locationtech.udig.project.ILayer">
             <enablement>
              <and>
-               <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>  
+               <property propertyId="org.locationtech.udig.project.FeatureStoreResourceProperty" expectedValue=""/>  
                <or>
-                    <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-                    <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-                    <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-                    <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+                    <property propertyId="org.locationtech.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+                    <property propertyId="org.locationtech.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+                    <property propertyId="org.locationtech.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+                    <property propertyId="org.locationtech.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
                </or>
              </and>
             </enablement>
       </operation>
       <operation
-            categoryId="eu.udig.tools.jgrass.toolscategory"
-            class="eu.udig.tools.jgrass.movefeatures.FeatureUpMover"
+            categoryId="org.locationtech.udig.tools.jgrass.toolscategory"
+            class="org.locationtech.udig.tools.jgrass.movefeatures.FeatureUpMover"
             enablesFor="1"
             icon="icons/prev_nav.gif"
-            id="eu.udig.tools.jgrass.movefeatures.FeatureUpMover"
+            id="org.locationtech.udig.tools.jgrass.movefeatures.FeatureUpMover"
             name="Move features one layer up"
-            targetClass="net.refractions.udig.project.ILayer">
+            targetClass="org.locationtech.udig.project.ILayer">
             <enablement>
              <and>
-               <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>  
+               <property propertyId="org.locationtech.udig.project.FeatureStoreResourceProperty" expectedValue=""/>  
              </and>
             </enablement>
       </operation>
       <operation
-            categoryId="eu.udig.tools.jgrass.toolscategory"
-            class="eu.udig.tools.jgrass.movefeatures.FeatureDownMover"
+            categoryId="org.locationtech.udig.tools.jgrass.toolscategory"
+            class="org.locationtech.udig.tools.jgrass.movefeatures.FeatureDownMover"
             enablesFor="1"
             icon="icons/next_nav.gif"
-            id="eu.udig.tools.jgrass.movefeatures.FeatureDownMover"
+            id="org.locationtech.udig.tools.jgrass.movefeatures.FeatureDownMover"
             name="Move features one layer down"
-            targetClass="net.refractions.udig.project.ILayer">
+            targetClass="org.locationtech.udig.project.ILayer">
             <enablement>
              <and>
-               <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>  
+               <property propertyId="org.locationtech.udig.project.FeatureStoreResourceProperty" expectedValue=""/>  
              </and>
             </enablement>
       </operation>
       <operation
-            categoryId="eu.udig.tools.jgrass.toolscategory"
-            class="eu.udig.tools.jgrass.profile.FeatureOnCoverageProfileOperation"
+            categoryId="org.locationtech.udig.tools.jgrass.toolscategory"
+            class="org.locationtech.udig.tools.jgrass.profile.FeatureOnCoverageProfileOperation"
             enablesFor="2"
-            id="eu.udig.tools.jgrass.profile.fromfeature"
+            id="org.locationtech.udig.tools.jgrass.profile.fromfeature"
             name="%feature.profile"
-            targetClass="net.refractions.udig.project.ILayer">
+            targetClass="org.locationtech.udig.project.ILayer">
       </operation>
       <category
-            id="eu.udig.tools.jgrass.toolscategory"
+            id="org.locationtech.udig.tools.jgrass.toolscategory"
             name="JGrass Tools">
       </category>
       <operation
-            categoryId="eu.udig.tools.jgrass.toolscategory"
-            class="eu.udig.tools.jgrass.copypath.CopyPathOp"
+            categoryId="org.locationtech.udig.tools.jgrass.toolscategory"
+            class="org.locationtech.udig.tools.jgrass.copypath.CopyPathOp"
             enablesFor="1"
-            id="eu.udig.tools.jgrass.copypath.CopyPathOp"
+            id="org.locationtech.udig.tools.jgrass.copypath.CopyPathOp"
             name="%copy.file.path"
             targetClass="java.io.File">
       </operation>
@@ -160,18 +160,18 @@
    <extension
          point="org.eclipse.ui.importWizards">
       <wizard
-            category="eu.udig.featureimportcategory"
-            class="eu.udig.tools.jgrass.csv.CsvImportWizard"
+            category="org.locationtech.udig.featureimportcategory"
+            class="org.locationtech.udig.tools.jgrass.csv.CsvImportWizard"
             icon="icons/goto_input.gif"
-            id="eu.udig.tools.jgrass.csv.CsvImportWizard"
+            id="org.locationtech.udig.tools.jgrass.csv.CsvImportWizard"
             name="%csvImport.wizardName">
          <description>
             %csvImport.wizardDescription
          </description>
       </wizard>
       <wizard
-            category="eu.udig.featureimportcategory"
-            class="eu.udig.tools.jgrass.geopaparazzi.ImportGeopaparazziFolderWizard"
+            category="org.locationtech.udig.featureimportcategory"
+            class="org.locationtech.udig.tools.jgrass.geopaparazzi.ImportGeopaparazziFolderWizard"
             icon="icons/geopaparazzi_small.png"
             id="eu.hydrologis.jgrass.geopaparazziimport"
             name="%geopapImport.wizardName">
@@ -183,43 +183,43 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="eu.udig.tools.jgrass.orientationview.ViewFeatureOrientationCommand"
-            id="eu.udig.tools.jgrass.orientationview.ViewFeatureOrientationCommand"
+            defaultHandler="org.locationtech.udig.tools.jgrass.orientationview.ViewFeatureOrientationCommand"
+            id="org.locationtech.udig.tools.jgrass.orientationview.ViewFeatureOrientationCommand"
             name="View lines orientation">
       </command>
       <keyBinding
-            commandId="eu.udig.tools.jgrass.orientationview.ViewFeatureOrientationCommand"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            commandId="org.locationtech.udig.tools.jgrass.orientationview.ViewFeatureOrientationCommand"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
             keySequence="Alt+Shift+A">
       </keyBinding>
       <command
-            defaultHandler="eu.udig.tools.jgrass.orientationview.ReverseFeatureOrientationCommand"
-            id="eu.udig.tools.jgrass.orientationview.ReverseFeatureOrientationCommand"
+            defaultHandler="org.locationtech.udig.tools.jgrass.orientationview.ReverseFeatureOrientationCommand"
+            id="org.locationtech.udig.tools.jgrass.orientationview.ReverseFeatureOrientationCommand"
             name="Invert lines orientation">
       </command>
       <keyBinding
-            commandId="eu.udig.tools.jgrass.orientationview.ReverseFeatureOrientationCommand"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            commandId="org.locationtech.udig.tools.jgrass.orientationview.ReverseFeatureOrientationCommand"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
             keySequence="Alt+Shift+S">
       </keyBinding>
       <command
-            defaultHandler="eu.udig.tools.jgrass.movefeatures.FeatureDownMoverCommand"
-            id="eu.udig.tools.jgrass.movefeatures.FeatureDownMoverCommand"
+            defaultHandler="org.locationtech.udig.tools.jgrass.movefeatures.FeatureDownMoverCommand"
+            id="org.locationtech.udig.tools.jgrass.movefeatures.FeatureDownMoverCommand"
             name="Move feature a layer down">
       </command>
       <keyBinding
-            commandId="eu.udig.tools.jgrass.movefeatures.FeatureDownMoverCommand"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            commandId="org.locationtech.udig.tools.jgrass.movefeatures.FeatureDownMoverCommand"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
             keySequence="Alt+Shift+Z">
       </keyBinding>
       <command
-            defaultHandler="eu.udig.tools.jgrass.movefeatures.FeatureUpMoverCommand"
-            id="eu.udig.tools.jgrass.movefeatures.FeatureUpMoverCommand"
+            defaultHandler="org.locationtech.udig.tools.jgrass.movefeatures.FeatureUpMoverCommand"
+            id="org.locationtech.udig.tools.jgrass.movefeatures.FeatureUpMoverCommand"
             name="Move feature a layer up">
       </command>
       <keyBinding
-            commandId="eu.udig.tools.jgrass.movefeatures.FeatureUpMoverCommand"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            commandId="org.locationtech.udig.tools.jgrass.movefeatures.FeatureUpMoverCommand"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
             keySequence="Alt+Shift+W">
       </keyBinding>
    </extension>

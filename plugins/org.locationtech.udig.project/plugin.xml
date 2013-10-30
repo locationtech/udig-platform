@@ -6,14 +6,14 @@
     <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
        uri = "http:///net/refractions/udig/project/internal/render.ecore" 
-       class = "net.refractions.udig.project.internal.render.RenderPackage" />
+       class = "org.locationtech.udig.project.internal.render.RenderPackage" />
   </extension>
 
 
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
        uri = "http:///net/refractions/udig/project/internal.ecore" 
-       class = "net.refractions.udig.project.internal.ProjectPackage" />
+       class = "org.locationtech.udig.project.internal.ProjectPackage" />
   </extension>
 
 
@@ -30,141 +30,141 @@
    <extension-point id="element" name="element" schema="schema/element.exsd"/>
    <extension-point id="featureInterceptor" name="Feature Interceptor" schema="schema/featureInterceptor.exsd"/>
    <extension
-         point="net.refractions.udig.project.projectElementFactories">
+         point="org.locationtech.udig.project.projectElementFactories">
       <projectElementFactory
-            class="net.refractions.udig.project.internal.MapFactory"
-            id="net.refractions.udig.project.mapFactory"/>
+            class="org.locationtech.udig.project.internal.MapFactory"
+            id="org.locationtech.udig.project.mapFactory"/>
    </extension>
    <extension
-         point="net.refractions.udig.project.style">
+         point="org.locationtech.udig.project.style">
       <style
-            class="net.refractions.udig.project.internal.render.SelectionStyleContent"
+            class="org.locationtech.udig.project.internal.render.SelectionStyleContent"
             name="%selectionStyle.name"
-            id="net.refractions.udig.project.selectionStyle"/>
+            id="org.locationtech.udig.project.selectionStyle"/>
       <style
-            class="net.refractions.udig.project.internal.interceptor.ShowViewInterceptor$ViewStyleContent"
-            id="net.refractions.udig.project.view"
-            name="net.refractions.udig.project.View">
+            class="org.locationtech.udig.project.internal.interceptor.ShowViewInterceptor$ViewStyleContent"
+            id="org.locationtech.udig.project.view"
+            name="org.locationtech.udig.project.View">
       </style>
    </extension>
    <extension
-         point="net.refractions.udig.project.renderExecutor">
+         point="org.locationtech.udig.project.renderExecutor">
       <RenderExecutor
-            executorClass="net.refractions.udig.project.internal.render.impl.RenderExecutorImpl"
+            executorClass="org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl"
             name="%default.name"
-            rendererClass="net.refractions.udig.project.render.IRenderer">
+            rendererClass="org.locationtech.udig.project.render.IRenderer">
          <Description>
             %default.description
          </Description>
       </RenderExecutor>
       <RenderExecutor
-            executorClass="net.refractions.udig.project.internal.render.impl.RenderExecutorMultiLayer"
+            executorClass="org.locationtech.udig.project.internal.render.impl.RenderExecutorMultiLayer"
             name="%default.multiLayer.name"
-            rendererClass="net.refractions.udig.project.render.IMultiLayerRenderer">
+            rendererClass="org.locationtech.udig.project.render.IMultiLayerRenderer">
          <Description>
             %default.multiLayer.description
          </Description>
       </RenderExecutor>
       <RenderExecutor
-            executorClass="net.refractions.udig.project.internal.render.impl.RenderExecutorComposite"
+            executorClass="org.locationtech.udig.project.internal.render.impl.RenderExecutorComposite"
             name="%composite.name"
-            rendererClass="net.refractions.udig.project.internal.render.impl.CompositeRendererImpl">
+            rendererClass="org.locationtech.udig.project.internal.render.impl.CompositeRendererImpl">
          <Description>
             %composite.description
          </Description>
       </RenderExecutor>
    </extension>
    <extension
-         point="net.refractions.udig.project.persister">
-      <persister class="net.refractions.udig.project.internal.ColorPersister"/>
+         point="org.locationtech.udig.project.persister">
+      <persister class="org.locationtech.udig.project.internal.ColorPersister"/>
       <persister
-            class="net.refractions.udig.project.internal.TextPersister">
+            class="org.locationtech.udig.project.internal.TextPersister">
       </persister>
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">
-      <initializer class="net.refractions.udig.project.preferences.PreferenceInitializer"/>
+      <initializer class="org.locationtech.udig.project.preferences.PreferenceInitializer"/>
    </extension>
    <extension
-         point="net.refractions.udig.project.resourceInterceptor">
+         point="org.locationtech.udig.project.resourceInterceptor">
       <cachingStrategy
-            class="net.refractions.udig.project.internal.interceptor.ResourceCacheInterceptor"
+            class="org.locationtech.udig.project.internal.interceptor.ResourceCacheInterceptor"
             id="caching"
             />
       <interceptor
-            class="net.refractions.udig.project.internal.interceptor.WrapFeatureStore"
-            id="net.refractions.udig.project.wrap.featurestore"
+            class="org.locationtech.udig.project.internal.interceptor.WrapFeatureStore"
+            id="org.locationtech.udig.project.wrap.featurestore"
             order="PRE"
             target="org.geotools.data.FeatureStore"/>
       <interceptor
-            class="net.refractions.udig.project.internal.interceptor.WrapSimpleFeatureStore"
-            id="net.refractions.udig.project.wrap.simplefeaturestore"
+            class="org.locationtech.udig.project.internal.interceptor.WrapSimpleFeatureStore"
+            id="org.locationtech.udig.project.wrap.simplefeaturestore"
             order="PRE"
             target="org.geotools.data.SimpleFeatureStore"/>
       <interceptor
-            class="net.refractions.udig.project.internal.impl.ListenerAddingInterceptor"
-            id="net.refractions.udig.project.AddEditingListener"
+            class="org.locationtech.udig.project.internal.impl.ListenerAddingInterceptor"
+            id="org.locationtech.udig.project.AddEditingListener"
             order="PRE"
             target="org.geotools.data.FeatureSource"/>
       <interceptor
-            class="net.refractions.udig.project.internal.interceptor.ShowViewInterceptor"
-            id="net.refractions.udig.project.showViewInterceptor"
+            class="org.locationtech.udig.project.internal.interceptor.ShowViewInterceptor"
+            id="org.locationtech.udig.project.showViewInterceptor"
             order="POST"
             target="org.geotools.data.FeatureSource"/>
       <interceptor
-            class="net.refractions.udig.project.internal.interceptor.CacheInterceptor"
-            id="net.refractions.udig.project.cacheFeatureSourceInterceptor"
+            class="org.locationtech.udig.project.internal.interceptor.CacheInterceptor"
+            id="org.locationtech.udig.project.cacheFeatureSourceInterceptor"
             order="POST"
             target="org.geotools.data.FeatureSource">
       </interceptor>
       <interceptor
-            class="net.refractions.udig.project.internal.impl.GeoResourceInfoInterceptor"
-            id="net.refractions.udig.project.interceptor.info"
+            class="org.locationtech.udig.project.internal.impl.GeoResourceInfoInterceptor"
+            id="org.locationtech.udig.project.interceptor.info"
             order="POST"
-            target="net.refractions.udig.catalog.IGeoResourceInfo"/>
+            target="org.locationtech.udig.catalog.IGeoResourceInfo"/>
    </extension>
    <extension
-         point="net.refractions.udig.project.layerInterceptor">
+         point="org.locationtech.udig.project.layerInterceptor">
       <layerCreated
-            class="net.refractions.udig.project.internal.impl.SetStyleInterceptor"
-            id="net.refractions.udig.project.setStyleInterceptor"
+            class="org.locationtech.udig.project.internal.impl.SetStyleInterceptor"
+            id="org.locationtech.udig.project.setStyleInterceptor"
             name="Set Layer Style"/>
       <layerCreated
-            class="net.refractions.udig.project.internal.impl.SetLayerNameInterceptor"
-            id="net.refractions.udig.project.layercreated.set.name"
+            class="org.locationtech.udig.project.internal.impl.SetLayerNameInterceptor"
+            id="org.locationtech.udig.project.layercreated.set.name"
             name="SetLayerName"/>
       <layerAdded
-            class="net.refractions.udig.project.internal.impl.InitMapCRS"
-            id="net.refractions.udig.project.initmapcrs"
+            class="org.locationtech.udig.project.internal.impl.InitMapCRS"
+            id="org.locationtech.udig.project.initmapcrs"
             name="Initialize Map CRS">
       </layerAdded>
       <layerAdded
-            class="net.refractions.udig.project.internal.impl.InitMapBoundsInterceptor"
-            id="net.refractions.udig.project.setmapbounds"
+            class="org.locationtech.udig.project.internal.impl.InitMapBoundsInterceptor"
+            id="org.locationtech.udig.project.setmapbounds"
             name="InitializeMapBounds">
       </layerAdded>
    </extension>
    <extension
-         point="net.refractions.udig.ui.objectProperty">
+         point="org.locationtech.udig.ui.objectProperty">
       <object
-            targetClass="net.refractions.udig.project.ILayer">
+            targetClass="org.locationtech.udig.project.ILayer">
          <property
-               class="net.refractions.udig.project.internal.property.FeatureStoreResourceProperty"
+               class="org.locationtech.udig.project.internal.property.FeatureStoreResourceProperty"
                id="FeatureStoreResourceProperty"/>
          <property
-               class="net.refractions.udig.project.internal.property.LayerInteractionProperty"
+               class="org.locationtech.udig.project.internal.property.LayerInteractionProperty"
                id="InteractionProperty"/>
          <property
-               class="net.refractions.udig.project.internal.property.FeatureSourceResourceProperty"
+               class="org.locationtech.udig.project.internal.property.FeatureSourceResourceProperty"
                id="FeatureSourceResourceProperty">
          </property>               
       </object>
    </extension>
    <extension
-         point="net.refractions.udig.project.featureInterceptor">
+         point="org.locationtech.udig.project.featureInterceptor">
       <featureCreated
-            class="net.refractions.udig.project.internal.interceptor.DefaultValueFeatureInterceptor"
-            id="net.refractions.udig.project.setDefaultValuesInterceptor"
+            class="org.locationtech.udig.project.internal.interceptor.DefaultValueFeatureInterceptor"
+            id="org.locationtech.udig.project.setDefaultValuesInterceptor"
             name="Default Values">
       </featureCreated>
    </extension>

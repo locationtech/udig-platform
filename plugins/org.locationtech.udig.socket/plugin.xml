@@ -4,13 +4,13 @@
    <extension
          point="org.eclipse.ui.startup">
       <startup
-            class="net.refractions.udig.socket.StartListening">
+            class="org.locationtech.udig.socket.StartListening">
       </startup>
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
-            class="net.refractions.udig.socket.SocketPreferenceInitializer">
+            class="org.locationtech.udig.socket.SocketPreferenceInitializer">
       </initializer>
    </extension>
 

@@ -2,51 +2,51 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         id="net.refractions.udig.graph.graphics"
+         id="org.locationtech.udig.graph.graphics"
          name="Graphing Graphics"
-         point="net.refractions.udig.mapgraphic.mapgraphic">
+         point="org.locationtech.udig.mapgraphic.mapgraphic">
       <mapGraphic
-            class="net.refractions.udig.graph.internal.GraphMapGraphic"
+            class="org.locationtech.udig.graph.internal.GraphMapGraphic"
             icon="icons/etool16/graph.png"
-            id="net.refractions.udig.graph.graphics.grah"
+            id="org.locationtech.udig.graph.graphics.grah"
             name="Graph">
       </mapGraphic>
       <mapGraphic
-            class="net.refractions.udig.graph.internal.PathMapGraphic"
+            class="org.locationtech.udig.graph.internal.PathMapGraphic"
             icon="icons/etool16/path.png"
-            id="net.refractions.udig.graph.graph.graphics.path"
+            id="org.locationtech.udig.graph.graph.graphics.path"
             name="Path">            
       </mapGraphic>
    </extension>
    
    <extension
-         id="net.refractions.udig.tutorials.tracking.createdata"
+         id="org.locationtech.udig.tutorials.tracking.createdata"
          name="create data"
-         point="net.refractions.udig.ui.operation">
+         point="org.locationtech.udig.ui.operation">
       <operation
-            class="net.refractions.udig.graph.internal.FindPathOp"
+            class="org.locationtech.udig.graph.internal.FindPathOp"
             enablesFor="1"
-            id="net.refractions.udig.tutorials.tracking.graph.findpath"
+            id="org.locationtech.udig.tutorials.tracking.graph.findpath"
             name="Generate route through all waypoints"
-            targetClass="net.refractions.udig.project.ILayer">
+            targetClass="org.locationtech.udig.project.ILayer">
          <enablement></enablement>
       </operation>
       <operation
-            class="net.refractions.udig.graph.internal.LineGraphOp"
+            class="org.locationtech.udig.graph.internal.LineGraphOp"
             enablesFor="1"
-            id="net.refractions.udig.tutorials.tracking.ops.linegrah"
+            id="org.locationtech.udig.tutorials.tracking.ops.linegrah"
             name="Line Graph"
-            targetClass="net.refractions.udig.project.ILayer">
+            targetClass="org.locationtech.udig.project.ILayer">
       </operation>      
    </extension>
    
       <extension
-         point="net.refractions.udig.project.ui.tool">
+         point="org.locationtech.udig.project.ui.tool">
       <modalTool
-            categoryId="net.refractions.udig.graph.tools"
-            class="net.refractions.udig.graph.internal.WayPointTool"
+            categoryId="org.locationtech.udig.graph.tools"
+            class="org.locationtech.udig.graph.internal.WayPointTool"
             icon="icons/etool16/path.png"
-            id="net.refractions.udig.graph.tools.wayPoint"
+            id="org.locationtech.udig.graph.tools.wayPoint"
             name="Way Point"
             onToolbar="true"
             tooltip="Define way points before calculating the path">
@@ -56,8 +56,8 @@
                image="icons/pointer/waypoint_source.gif"/>
       </modalTool>
       <category
-            commandId="net.refractions.udig.graph.tools"
-            id="net.refractions.udig.graph.tools"
+            commandId="org.locationtech.udig.graph.tools"
+            id="org.locationtech.udig.graph.tools"
             name="Graph Tools">
       </category>
    </extension>

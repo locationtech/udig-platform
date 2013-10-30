@@ -3,9 +3,9 @@
 <plugin>
 
      <extension
-         point="net.refractions.udig.project.renderer">
+         point="org.locationtech.udig.project.renderer">
       <renderer
-            class="net.refractions.udig.render.internal.feature.basic.BasicFeatureMetricsFactory"
+            class="org.locationtech.udig.render.internal.feature.basic.BasicFeatureMetricsFactory"
             name="%renderer.name">
          <description>
             %renderer.desc

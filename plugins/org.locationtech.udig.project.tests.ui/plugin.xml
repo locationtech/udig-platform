@@ -8,20 +8,20 @@
             label="test"
             description="TestActions"
             visible="true"
-            id="net.refractions.udig.project.ui.TestActions">
+            id="org.locationtech.udig.project.ui.TestActions">
                   <menu
                         id="test"
                         label="Test"
                         path="additions"/>
                   <action
-                        class="net.refractions.udig.project.tests.ui.TestSelectFirstLayer"
-                        id="net.refractions.udig.project.ui.action1"
+                        class="org.locationtech.udig.project.tests.ui.TestSelectFirstLayer"
+                        id="org.locationtech.udig.project.ui.action1"
                         label="selectFirstLayer"
                         menubarPath="test/additions"
                         style="push"/>
                   <action
-                        class="net.refractions.udig.project.tests.ui.TestGetRenderers"
-                        id="net.refractions.udig.project.tests.ui.test.getrenderers"
+                        class="org.locationtech.udig.project.tests.ui.TestGetRenderers"
+                        id="org.locationtech.udig.project.tests.ui.test.getrenderers"
                         label="TestGetRenderers"
                         menubarPath="test/additions"
                         style="push"/>
@@ -29,44 +29,44 @@
     </actionSet>
     </extension>
       <extension
-            point="net.refractions.udig.ui.operation">
+            point="org.locationtech.udig.ui.operation">
              <operation
-               categoryId="net.refractions.udig.project.ui.informationOperations"
-               class="net.refractions.udig.project.ui.operations.example.FeaturesInView"
-               id="net.refractions.udig.project.ui.featuresInView"
+               categoryId="org.locationtech.udig.project.ui.informationOperations"
+               class="org.locationtech.udig.project.ui.operations.example.FeaturesInView"
+               id="org.locationtech.udig.project.ui.featuresInView"
                menuPath="test/additions"
                name="TestOpMenuPath"
-               targetClass="net.refractions.udig.project.IMap"/>
+               targetClass="org.locationtech.udig.project.IMap"/>
              <operation
-                   class="net.refractions.udig.project.tests.ui.EnablesFor2"
+                   class="org.locationtech.udig.project.tests.ui.EnablesFor2"
                    enablesFor="2"
-                   id="net.refractions.udig.project.tests.ui.operation1"
+                   id="org.locationtech.udig.project.tests.ui.operation1"
                    name="EnablesFor2Layres"
-                   targetClass="net.refractions.udig.project.ILayer"/>
+                   targetClass="org.locationtech.udig.project.ILayer"/>
              <operation
-                   class="net.refractions.udig.project.tests.ui.TestSelectProject"
+                   class="org.locationtech.udig.project.tests.ui.TestSelectProject"
                    enablesFor="1"
-                   id="net.refractions.udig.project.tests.ui.operation1"
+                   id="org.locationtech.udig.project.tests.ui.operation1"
                    name="select 2nd project"
                    targetClass="java.lang.Object"/>
              <operation
-                   class="net.refractions.udig.project.tests.ui.select2ndMap"
+                   class="org.locationtech.udig.project.tests.ui.select2ndMap"
                    enablesFor="1"
-                   id="net.refractions.udig.project.tests.ui.operation2"
+                   id="org.locationtech.udig.project.tests.ui.operation2"
                    name="select 2nd map"
                    targetClass="java.lang.Object"/>
              <operation
-                   class="net.refractions.udig.project.tests.ui.selectLayer"
+                   class="org.locationtech.udig.project.tests.ui.selectLayer"
                    enablesFor="1"
-                   id="net.refractions.udig.project.tests.ui.operation3"
+                   id="org.locationtech.udig.project.tests.ui.operation3"
                    name="select layer of 1st map"
                    targetClass="java.lang.Object"/>
       </extension>
       <extension
-            point="net.refractions.udig.project.ui.featureEditor">
+            point="org.locationtech.udig.project.ui.featureEditor">
 	      <editor
-             dialogPage="net.refractions.udig.feature.editor.DialogEditor"
-             id="net.refractions.udig.feature.editor.MatchAnyGeom"
+             dialogPage="org.locationtech.udig.feature.editor.DialogEditor"
+             id="org.locationtech.udig.feature.editor.MatchAnyGeom"
              name="MatchAnyGeom">
           <featureType>
              <attribute
@@ -74,13 +74,13 @@
           </featureType>
        </editor>
 	      <editor
-             dialogPage="net.refractions.udig.feature.editor.DialogEditor"
-             id="net.refractions.udig.feature.editor.MatchAll"
+             dialogPage="org.locationtech.udig.feature.editor.DialogEditor"
+             id="org.locationtech.udig.feature.editor.MatchAll"
              name="MatchAll">
        </editor>
 	      <editor
-             dialogPage="net.refractions.udig.feature.editor.DialogEditor"
-             id="net.refractions.udig.feature.editor.MatchGeomNamedGeo"
+             dialogPage="org.locationtech.udig.feature.editor.DialogEditor"
+             id="org.locationtech.udig.feature.editor.MatchGeomNamedGeo"
              name="MatchGeomNamedGeo">
           <featureType>
              <attribute
@@ -88,10 +88,10 @@
                    type="com.vividsolutions.jts.geom.Geometry"/>
           </featureType>
        </editor>
-            point="net.refractions.udig.project.ui.featureEditor">
+            point="org.locationtech.udig.project.ui.featureEditor">
 	      <editor
-             dialogPage="net.refractions.udig.feature.editor.DialogEditor"
-             id="net.refractions.udig.feature.editor.MatchOnTypeName"
+             dialogPage="org.locationtech.udig.feature.editor.DialogEditor"
+             id="org.locationtech.udig.feature.editor.MatchOnTypeName"
              name="MatchOnTypeName">
           <featureType>
              <typeName
@@ -99,10 +99,10 @@
                    namespace="http://test.uri"/>
           </featureType>
        </editor>
-            point="net.refractions.udig.project.ui.featureEditor">
+            point="org.locationtech.udig.project.ui.featureEditor">
 	      <editor
-             dialogPage="net.refractions.udig.feature.editor.DialogEditor"
-             id="net.refractions.udig.feature.editor.NeverShown"
+             dialogPage="org.locationtech.udig.feature.editor.DialogEditor"
+             id="org.locationtech.udig.feature.editor.NeverShown"
              name="NeverShown">
           <featureType/>
        </editor>
@@ -110,42 +110,42 @@
       <extension
             point="org.eclipse.ui.perspectives">
          <perspective
-               class="net.refractions.udig.project.tests.ui.TestPerspectiveFactory"
-               id="net.refractions.udig.project.tests.ui.perspective.test"
+               class="org.locationtech.udig.project.tests.ui.TestPerspectiveFactory"
+               id="org.locationtech.udig.project.tests.ui.perspective.test"
                name="TestPerspective"/>
       </extension>
       <extension
             point="org.eclipse.ui.views">
          <view
-               class="net.refractions.udig.project.tests.ui.ViewPart1"
-               id="net.refractions.udig.project.tests.ui.view1"
-               name="net.refractions.udig.project.tests.ui.view1"/>
+               class="org.locationtech.udig.project.tests.ui.ViewPart1"
+               id="org.locationtech.udig.project.tests.ui.view1"
+               name="org.locationtech.udig.project.tests.ui.view1"/>
       </extension>
       <extension
-            point="net.refractions.udig.project.ui.tool">
+            point="org.locationtech.udig.project.ui.tool">
          <actionTool
-               class="net.refractions.udig.RunModalTool"
-               id="net.refractions.udig.project.tests.ui.actionTool1"
+               class="org.locationtech.udig.RunModalTool"
+               id="org.locationtech.udig.project.tests.ui.actionTool1"
                name="ActivateToolAction"
                onToolbar="true">
             <enablement>
                <property
                      expectedValue="whatever"
-                     name="net.refractions.udig.project.tests.ui.test.tool.manager"
-                     propertyId="net.refractions.udig.project.tests.ui.test.tool.manager"
+                     name="org.locationtech.udig.project.tests.ui.test.tool.manager"
+                     propertyId="org.locationtech.udig.project.tests.ui.test.tool.manager"
                      target="whatever"/>
             </enablement>
          </actionTool>
       </extension>
       <extension
-            point="net.refractions.udig.ui.objectProperty">
+            point="org.locationtech.udig.ui.objectProperty">
          <object
                class="java.lang.Object"
                targetClass="java.lang.Object">
             <property
-                  class="net.refractions.udig.project.ui.internal.tool.display.TestProperty"
+                  class="org.locationtech.udig.project.ui.internal.tool.display.TestProperty"
                   id="test.tool.manager"
-                  value="net.refractions.udig.project.ui.internal.tool.display.TestProperty"/>
+                  value="org.locationtech.udig.project.ui.internal.tool.display.TestProperty"/>
          </object>
       </extension>
 </plugin>

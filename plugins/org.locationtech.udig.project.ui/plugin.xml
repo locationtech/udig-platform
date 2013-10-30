@@ -13,33 +13,33 @@
  	<extension
          point="org.eclipse.ui.popupMenus">
       <objectContribution
-            objectClass="net.refractions.udig.catalog.IGeoResource"
+            objectClass="org.locationtech.udig.catalog.IGeoResource"
             adaptable="true"
-            id="net.refractions.udig.project.ui.GeoResourceContributions">
+            id="org.locationtech.udig.project.ui.GeoResourceContributions">
          <action
                label="%addToNewMap.label"
                icon="icons/etool16/newmap_wiz.gif"
                tooltip="%addToNewMap.tooltip"
-               class="net.refractions.udig.project.ui.internal.actions.AddToNewMap"
-               id="net.refractions.udig.project.ui.AddGeoToNewMap">
+               class="org.locationtech.udig.project.ui.internal.actions.AddToNewMap"
+               id="org.locationtech.udig.project.ui.AddGeoToNewMap">
          </action>
          <action
                label="%addToCurrentMap.label"
                icon="icons/etool16/addlayer_wiz.gif"
                tooltip="%addToCurrentMap.tooltip"
-               class="net.refractions.udig.project.ui.internal.actions.AddToCurrentMap"
+               class="org.locationtech.udig.project.ui.internal.actions.AddToCurrentMap"
                menubarPath="additions"
-               id="net.refractions.udig.project.ui.AddGeoToCurrentMap">
+               id="org.locationtech.udig.project.ui.AddGeoToCurrentMap">
          </action>
       </objectContribution>      
       <objectContribution
-            objectClass="net.refractions.udig.project.IProject"
+            objectClass="org.locationtech.udig.project.IProject"
             adaptable="true"
-            id="net.refractions.udig.project.ui.ProjectContributions">
+            id="org.locationtech.udig.project.ui.ProjectContributions">
        <!--  <action
-               class="net.refractions.udig.project.ui.internal.actions.ConsolidateAction"
+               class="org.locationtech.udig.project.ui.internal.actions.ConsolidateAction"
                enablesFor="1"
-               id="net.refractions.udig.project.ui.action1"
+               id="org.locationtech.udig.project.ui.action1"
                label="%consolidate.action"
                menubarPath="additions"
                style="push">
@@ -48,94 +48,94 @@
                enablesFor="1"
                label="%rename.label"
                tooltip="%rename.tooltip"
-               class="net.refractions.udig.project.ui.internal.actions.Rename"
-               id="net.refractions.udig.project.ui.actionRename"/>
+               class="org.locationtech.udig.project.ui.internal.actions.Rename"
+               id="org.locationtech.udig.project.ui.actionRename"/>
          <action
-               class="net.refractions.udig.project.ui.internal.actions.AddToNewMap"
+               class="org.locationtech.udig.project.ui.internal.actions.AddToNewMap"
                enablesFor="1"
                icon="icons/etool16/newmap_wiz.gif"
-               id="net.refractions.udig.project.ui.newMap"
+               id="org.locationtech.udig.project.ui.newMap"
                label="%map.new.label"/>
          <action
-                 class="net.refractions.udig.project.ui.internal.actions.SaveAsProject"
+                 class="org.locationtech.udig.project.ui.internal.actions.SaveAsProject"
                  enablesFor="1"
                  icon="icons/obj16/project_save.gif"
-                 id="net.refractions.udig.project.ui.saveAsProject"
+                 id="org.locationtech.udig.project.ui.saveAsProject"
                  label="%project.action.save.name"
                  tooltip="%project.action.save.tooltip">
          </action>
          <action
-               class="net.refractions.udig.project.ui.internal.actions.OpenMapAction"
+               class="org.locationtech.udig.project.ui.internal.actions.OpenMapAction"
                enablesFor="+"
                icon="icons/obj16/project_obj.gif"
-               id="net.refractions.udig.project.ui.action2"
+               id="org.locationtech.udig.project.ui.action2"
                label="%map.action.open.name">
          </action>
       </objectContribution>
      <objectContribution
             adaptable="true"
-            objectClass="net.refractions.udig.project.ILayer"
-            id="net.refractions.udig.project.ui.LayerContribution">
+            objectClass="org.locationtech.udig.project.ILayer"
+            id="org.locationtech.udig.project.ui.LayerContribution">
          <action
                enablesFor="1"
                label="%rename.label"
                tooltip="%rename.tooltip"
-               class="net.refractions.udig.project.ui.internal.actions.Rename"
-               id="net.refractions.udig.project.ui.actionRename"/>
+               class="org.locationtech.udig.project.ui.internal.actions.Rename"
+               id="org.locationtech.udig.project.ui.actionRename"/>
          <!--action
                label="%delete.label"
                definitionId="org.eclipse.ui.edit.delete"
                tooltip="%delete.tooltip"
-               class="net.refractions.udig.project.ui.internal.actions.Delete"
+               class="org.locationtech.udig.project.ui.internal.actions.Delete"
                icon="icons/etool16/delete.gif"
-               id="net.refractions.udig.project.ui.deleteLayer"/-->
+               id="org.locationtech.udig.project.ui.deleteLayer"/-->
          <action
                label="%zoomToLayer.label"
                icon="icons/elcl16/zoom_layer_co.gif"
                tooltip="%zoomToLayer.tooltip"
-               class="net.refractions.udig.project.ui.internal.actions.ZoomToLayer"
+               class="org.locationtech.udig.project.ui.internal.actions.ZoomToLayer"
                style="push"
-               id="net.refractions.udig.project.ui.zoomTo"/>
+               id="org.locationtech.udig.project.ui.zoomTo"/>
       </objectContribution>
       <objectContribution
             adaptable="false"
-            objectClass="net.refractions.udig.catalog.IService"
-            id="net.refractions.udig.project.ui.IServiceContribution">
+            objectClass="org.locationtech.udig.catalog.IService"
+            id="org.locationtech.udig.project.ui.IServiceContribution">
          <action
                label="%addToCurrentMap.label"
                tooltip="%addToCurrentMap.label"
                icon="icons/etool16/addlayer_wiz.gif"
-               class="net.refractions.udig.project.ui.internal.actions.AddToCurrentMap"
+               class="org.locationtech.udig.project.ui.internal.actions.AddToCurrentMap"
                menubarPath="additions"
-               id="net.refractions.udig.project.ui.AddIServToCurrentMap"/>
+               id="org.locationtech.udig.project.ui.AddIServToCurrentMap"/>
          <action
                label="%addToNewMap.label"
                tooltip="%addToNewMap.tooltip"
                icon="icons/etool16/newmap_wiz.gif"
-               class="net.refractions.udig.project.ui.internal.actions.AddToNewMap"
-               id="net.refractions.udig.project.ui.AddIServToNewMap"/>
+               class="org.locationtech.udig.project.ui.internal.actions.AddToNewMap"
+               id="org.locationtech.udig.project.ui.AddIServToNewMap"/>
       </objectContribution>
       <objectContribution
             adaptable="false"
-            objectClass="net.refractions.udig.project.internal.Map"
-            id="net.refractions.udig.project.ui.MapContribution">
+            objectClass="org.locationtech.udig.project.internal.Map"
+            id="org.locationtech.udig.project.ui.MapContribution">
          <action
                label="%add.label"
                tooltip="%add.tooltip"
                icon="icons/etool16/addlayer_wiz.gif"
-               definitionId="net.refractions.udig.project.ui.addLayerCommand"
-               class="net.refractions.udig.project.ui.internal.actions.AddLayersAction"
+               definitionId="org.locationtech.udig.project.ui.addLayerCommand"
+               class="org.locationtech.udig.project.ui.internal.actions.AddLayersAction"
                style="push"
-               id="net.refractions.udig.project.ui.map.AddLayerAction"/>
+               id="org.locationtech.udig.project.ui.map.AddLayerAction"/>
       </objectContribution>
       <objectContribution
             adaptable="true"
-            id="net.refractions.udig.project.ui.projectElementContribution"
-            objectClass="net.refractions.udig.project.IProjectElement">
+            id="org.locationtech.udig.project.ui.projectElementContribution"
+            objectClass="org.locationtech.udig.project.IProjectElement">
          <action
-               class="net.refractions.udig.project.ui.internal.actions.Rename"
+               class="org.locationtech.udig.project.ui.internal.actions.Rename"
                enablesFor="1"
-               id="net.refractions.udig.project.ui.rename"
+               id="org.locationtech.udig.project.ui.rename"
                label="%rename.label"
                menubarPath="additions"/>
       </objectContribution>
@@ -144,62 +144,62 @@
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
-            targetID="net.refractions.udig.ui.mapPerspective">
+            targetID="org.locationtech.udig.ui.mapPerspective">
          <viewShortcut
-               id="net.refractions.udig.project.ui.projectExplorer">
+               id="org.locationtech.udig.project.ui.projectExplorer">
          </viewShortcut>
          <viewShortcut
-               id="net.refractions.udig.project.ui.layerManager">
+               id="org.locationtech.udig.project.ui.layerManager">
          </viewShortcut>
          <viewShortcut
-               id="net.refractions.udig.project.ui.legendManager">
+               id="org.locationtech.udig.project.ui.legendManager">
          </viewShortcut>
          <newWizardShortcut
-               id="net.refractions.udig.project.ui.wizard.newMap">
+               id="org.locationtech.udig.project.ui.wizard.newMap">
          </newWizardShortcut>
          <newWizardShortcut
-               id="net.refractions.udig.project.ui.wizards.newProject">
+               id="org.locationtech.udig.project.ui.wizards.newProject">
          </newWizardShortcut>
          <newWizardShortcut
-               id="net.refractions.udig.project.ui.wizard.newLayer">
+               id="org.locationtech.udig.project.ui.wizard.newLayer">
          </newWizardShortcut>
          <perspectiveShortcut
-               id="net.refractions.udig.ui.mapPerspective">
+               id="org.locationtech.udig.ui.mapPerspective">
          </perspectiveShortcut>
-         <actionSet id="net.refractions.udig.project.ui.LayerActions"/>
-         <actionSet id="net.refractions.udig.project.ui.renameSet"/>
-         <actionSet id="net.refractions.udig.project.ui.OpenProjectSet"/>
+         <actionSet id="org.locationtech.udig.project.ui.LayerActions"/>
+         <actionSet id="org.locationtech.udig.project.ui.renameSet"/>
+         <actionSet id="org.locationtech.udig.project.ui.OpenProjectSet"/>
       </perspectiveExtension>
-      <perspectiveExtension targetID="net.refractions.udig.ui.stylePerspective">
-         <actionSet id="net.refractions.udig.project.ui.LayerActions"/>
-         <actionSet id="net.refractions.udig.project.ui.renameSet"/>
-         <actionSet id="net.refractions.udig.project.ui.OpenProjectSet"/>
+      <perspectiveExtension targetID="org.locationtech.udig.ui.stylePerspective">
+         <actionSet id="org.locationtech.udig.project.ui.LayerActions"/>
+         <actionSet id="org.locationtech.udig.project.ui.renameSet"/>
+         <actionSet id="org.locationtech.udig.project.ui.OpenProjectSet"/>
       </perspectiveExtension>
    </extension>
    <extension
-         id="net.refractions.udig.ui.new"
+         id="org.locationtech.udig.ui.new"
          point="org.eclipse.ui.newWizards">
       <category
             name="%NewMap.category"
-            id="net.refractions.udig.project.ui.new.map">
+            id="org.locationtech.udig.project.ui.new.map">
       </category>
       <category
             name="%NewProject.category"
-            id="net.refractions.udig.project.ui.new">
+            id="org.locationtech.udig.project.ui.new">
       </category>
       <primaryWizard
-            id="net.refractions.udig.project.ui.wizards.newProject">
+            id="org.locationtech.udig.project.ui.wizards.newProject">
       </primaryWizard>
       <wizard
-            category="net.refractions.udig.project.ui.new"
-            class="net.refractions.udig.project.ui.internal.wizard.NewProjectWizard"
+            category="org.locationtech.udig.project.ui.new"
+            class="org.locationtech.udig.project.ui.internal.wizard.NewProjectWizard"
             descriptionImage="icons/wizban/newprj_wiz.gif"
-            finalPerspective="net.refractions.udig.ui.mapPerspective"
+            finalPerspective="org.locationtech.udig.ui.mapPerspective"
             helpHref="New Project wizard.html"
             icon="icons/etool16/newprj_wiz.gif"
-            id="net.refractions.udig.project.ui.wizards.newProject"
+            id="org.locationtech.udig.project.ui.wizards.newProject"
             name="%NewProjectWizard.name"
-            preferredPerspectives="net.refractions.udig.ui.mapPerspective"
+            preferredPerspectives="org.locationtech.udig.ui.mapPerspective"
             project="false">
          <description>
             %NewProjectWizard.description
@@ -209,79 +209,79 @@
    <extension
          point="org.eclipse.ui.propertyPages">
       <page
-            class="net.refractions.udig.project.ui.internal.property.pages.MapSummary"
-            id="net.refractions.udig.configuration.property.map.summary"
+            class="org.locationtech.udig.project.ui.internal.property.pages.MapSummary"
+            id="org.locationtech.udig.configuration.property.map.summary"
             name="%MapSummary.name"
-            objectClass="net.refractions.udig.project.IMap"/>
+            objectClass="org.locationtech.udig.project.IMap"/>
       <page
-            class="net.refractions.udig.project.ui.internal.property.pages.MapCRSPropertyPage"
-            id="net.refractions.udig.project.ui.property.mapCrs"
+            class="org.locationtech.udig.project.ui.internal.property.pages.MapCRSPropertyPage"
+            id="org.locationtech.udig.project.ui.property.mapCrs"
             name="%crs.page.name"
-            objectClass="net.refractions.udig.project.IMap"/>
+            objectClass="org.locationtech.udig.project.IMap"/>
       <page
-            class="net.refractions.udig.project.ui.internal.PalettePropertyPage"
+            class="org.locationtech.udig.project.ui.internal.PalettePropertyPage"
             icon="icons/obj16/style_obj.gif"
-            id="net.refractions.udig.project.ui.palettePropertyPage"
+            id="org.locationtech.udig.project.ui.palettePropertyPage"
             name="%Palette.name"
-            objectClass="net.refractions.udig.project.IMap"/>
+            objectClass="org.locationtech.udig.project.IMap"/>
       <page
-            class="net.refractions.udig.project.ui.internal.property.pages.LayerSummary"
-            id="net.refractions.udig.configuration.property.layer.summary"
+            class="org.locationtech.udig.project.ui.internal.property.pages.LayerSummary"
+            id="org.locationtech.udig.configuration.property.layer.summary"
             name="%LayerSummary.name">
          <enabledWhen>
             <or>
                <instanceof
-                     value="net.refractions.udig.project.internal.Layer">
+                     value="org.locationtech.udig.project.internal.Layer">
                </instanceof>
                <adapt
-                     type="net.refractions.udig.project.internal.Layer">
+                     type="org.locationtech.udig.project.internal.Layer">
                </adapt>
             </or>
          </enabledWhen>
       </page>
       <page
-            class="net.refractions.udig.project.ui.internal.property.pages.LayerCRSPropertyPage"
-            id="net.refractions.udig.project.ui.layer.crs"
+            class="org.locationtech.udig.project.ui.internal.property.pages.LayerCRSPropertyPage"
+            id="org.locationtech.udig.project.ui.layer.crs"
             name="%layer.crs.propertypage"
-            objectClass="net.refractions.udig.project.internal.Layer">
+            objectClass="org.locationtech.udig.project.internal.Layer">
       </page>
       <page
-            class="net.refractions.udig.project.ui.internal.property.pages.LayerInteractionPropertyPage"
-            id="net.refractions.udig.project.ui.property.layer.interaction"
+            class="org.locationtech.udig.project.ui.internal.property.pages.LayerInteractionPropertyPage"
+            id="org.locationtech.udig.project.ui.property.layer.interaction"
             name="Interaction"
-            objectClass="net.refractions.udig.project.internal.Layer"
+            objectClass="org.locationtech.udig.project.internal.Layer"
             selectionFilter="single">
       </page>
       <page
-            class="net.refractions.udig.project.ui.tileset.TileSetPropertyPage"
-            id="net.refractions.udig.configuration.property.layer.tileset"
+            class="org.locationtech.udig.project.ui.tileset.TileSetPropertyPage"
+            id="org.locationtech.udig.configuration.property.layer.tileset"
             name="%tilesetDefine"
             selectionFilter="single">
          <enabledWhen>
             <or>
                <instanceof
-                     value="net.refractions.udig.project.internal.Layer">
+                     value="org.locationtech.udig.project.internal.Layer">
                </instanceof>
                <adapt
-                     type="net.refractions.udig.project.internal.Layer">
+                     type="org.locationtech.udig.project.internal.Layer">
                </adapt>
             </or>
          </enabledWhen>
       </page>
       <page
-            class="net.refractions.udig.project.ui.internal.property.pages.LayerQueryPropertyPage"
-            id="net.refractions.udig.project.ui.property.layer.query"
+            class="org.locationtech.udig.project.ui.internal.property.pages.LayerQueryPropertyPage"
+            id="org.locationtech.udig.project.ui.property.layer.query"
             name="Query"
-            objectClass="net.refractions.udig.project.internal.Layer"
+            objectClass="org.locationtech.udig.project.internal.Layer"
             selectionFilter="single">
       </page>
    </extension>
 
       <extension
-            id="net.refractions.udig.project.ui.adapters"
+            id="org.locationtech.udig.project.ui.adapters"
             point="org.eclipse.core.runtime.adapters">
      <factory
-           class="net.refractions.udig.project.ui.internal.adapters.FeatureAdapterFactory"
+           class="org.locationtech.udig.project.ui.internal.adapters.FeatureAdapterFactory"
            adaptableType="org.opengis.feature.Feature">
         <adapter type="org.eclipse.ui.views.properties.IPropertySource"/>
         <adapter type="org.eclipse.ui.views.properties.IPropertySource2"/>
@@ -291,11 +291,11 @@
         <adapter type="org.eclipse.jface.viewers.ILabelProvider"/>
         <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>       
         <adapter type="org.eclipse.jface.viewers.ITableLabelProvider"/>   
-        <adapter type="net.refractions.udig.project.ui.internal.adapters.FeatureTableProvider"/>
+        <adapter type="org.locationtech.udig.project.ui.internal.adapters.FeatureTableProvider"/>
         <adapter type="org.eclipse.core.runtime.IAdaptable"/>
      </factory>
      <factory
-           class="net.refractions.udig.project.ui.internal.adapters.FeatureAdapterFactory"
+           class="org.locationtech.udig.project.ui.internal.adapters.FeatureAdapterFactory"
            adaptableType="com.vividsolutions.jts.geom.Geometry">
         <adapter type="org.eclipse.ui.views.properties.IPropertySource"/>
         <adapter type="org.eclipse.ui.views.properties.IPropertySource2"/>
@@ -305,10 +305,10 @@
         <adapter type="org.eclipse.jface.viewers.ILabelProvider"/>   
         <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>       
         <adapter type="org.eclipse.jface.viewers.ITableLabelProvider"/>   
-        <adapter type="net.refractions.udig.project.ui.internal.adapters.FeatureTableProvider"/>
+        <adapter type="org.locationtech.udig.project.ui.internal.adapters.FeatureTableProvider"/>
 	</factory>
      <factory
-           class="net.refractions.udig.project.ui.internal.adapters.FeatureAdapterFactory"
+           class="org.locationtech.udig.project.ui.internal.adapters.FeatureAdapterFactory"
            adaptableType="com.vividsolutions.jts.geom.Coordinate">
         <adapter type="org.eclipse.ui.views.properties.IPropertySource"/>
         <adapter type="org.eclipse.ui.views.properties.IPropertySource2"/>
@@ -318,10 +318,10 @@
         <adapter type="org.eclipse.jface.viewers.ILabelProvider"/>
         <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>       
         <adapter type="org.eclipse.jface.viewers.ITableLabelProvider"/>   
-        <adapter type="net.refractions.udig.project.ui.internal.adapters.FeatureTableProvider"/>
+        <adapter type="org.locationtech.udig.project.ui.internal.adapters.FeatureTableProvider"/>
      </factory>
      <factory
-           class="net.refractions.udig.project.ui.internal.adapters.FeatureAdapterFactory"
+           class="org.locationtech.udig.project.ui.internal.adapters.FeatureAdapterFactory"
            adaptableType="com.vividsolutions.jts.geom.Coordinate">
         <adapter type="org.eclipse.jface.viewers.ITreeContentProvider"/>
         <adapter type="org.eclipse.jface.viewers.IStructuredContentProvider"/>
@@ -329,11 +329,11 @@
         <adapter type="org.eclipse.jface.viewers.ILabelProvider"/>
         <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>       
         <adapter type="org.eclipse.jface.viewers.ITableLabelProvider"/>   
-        <adapter type="net.refractions.udig.project.ui.internal.adapters.FeatureTableProvider"/>
+        <adapter type="org.locationtech.udig.project.ui.internal.adapters.FeatureTableProvider"/>
      </factory>
      <factory
-           class="net.refractions.udig.project.ui.internal.adapters.FeatureAdapterFactory"
-           adaptableType="net.refractions.udig.catalog.IService">
+           class="org.locationtech.udig.project.ui.internal.adapters.FeatureAdapterFactory"
+           adaptableType="org.locationtech.udig.catalog.IService">
         <adapter type="org.eclipse.ui.views.properties.IPropertySource"/>
         <adapter type="org.eclipse.ui.views.properties.IPropertySource2"/>
         <adapter type="org.eclipse.jface.viewers.ITreeContentProvider"/>
@@ -341,200 +341,200 @@
         <adapter type="org.eclipse.jface.viewers.IContentProvider"/>
         <adapter type="org.eclipse.jface.viewers.ILabelProvider"/>
         <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>       
-        <adapter type="net.refractions.udig.project.ui.internal.adapters.FeatureTableProvider"/>
+        <adapter type="org.locationtech.udig.project.ui.internal.adapters.FeatureTableProvider"/>
      </factory>
   </extension>
       <extension
             point="org.eclipse.ui.viewActions">
          <viewContribution
-               targetID="net.refractions.udig.project.ui.layerManager"
-               id="net.refractions.udig.project.ui.layersContributor">
+               targetID="org.locationtech.udig.project.ui.layerManager"
+               id="org.locationtech.udig.project.ui.layersContributor">
             <action
                   disabledIcon="icons/dlcl16/zoom_layer_co.gif"
                   enablesFor="+"
                   toolbarPath="additions"
                   label="%zoomToMultipleLayers.label"
-                  class="net.refractions.udig.project.ui.internal.actions.ZoomToLayer"
+                  class="org.locationtech.udig.project.ui.internal.actions.ZoomToLayer"
                   icon="icons/elcl16/zoom_layer_co.gif"
                   tooltip="%zoomToMultipleLayers.tooltip"
                   style="push"
-                  id="net.refractions.udig.project.ui.zoomToLayerViewAction">
+                  id="org.locationtech.udig.project.ui.zoomToLayerViewAction">
                <enablement>
-                  <objectClass name="net.refractions.udig.project.ILayer"/>
+                  <objectClass name="org.locationtech.udig.project.ILayer"/>
                </enablement>
             </action>
             <action
-                  class="net.refractions.udig.project.ui.internal.actions.MylarAction"
+                  class="org.locationtech.udig.project.ui.internal.actions.MylarAction"
                   enablesFor="+"
                   icon="icons/elcl16/mylar_mode.gif"
-                  id="net.refractions.udig.project.ui.mylar"
+                  id="org.locationtech.udig.project.ui.mylar"
                   label="%mylarAction.label"
                   style="toggle"
                   tooltip="%mylarAction.tooltip"
                   toolbarPath="additions">
                <enablement>
-                  <objectClass name="net.refractions.udig.project.ILayer"/>
+                  <objectClass name="org.locationtech.udig.project.ILayer"/>
                </enablement>
             </action>
          </viewContribution>
          <viewContribution
-               id="net.refractions.udig.project.ui.legendContributor"
-               targetID="net.refractions.udig.project.ui.legendManager">
+               id="org.locationtech.udig.project.ui.legendContributor"
+               targetID="org.locationtech.udig.project.ui.legendManager">
             <action
                   disabledIcon="icons/dlcl16/zoom_layer_co.gif"
                   enablesFor="+"
                   toolbarPath="additions"
                   label="%zoomToMultipleLayers.label"
-                  class="net.refractions.udig.project.ui.internal.actions.ZoomToLayer"
+                  class="org.locationtech.udig.project.ui.internal.actions.ZoomToLayer"
                   icon="icons/elcl16/zoom_layer_co.gif"
                   tooltip="%zoomToMultipleLayers.tooltip"
                   style="push"
-                  id="net.refractions.udig.project.ui.zoomToLayerViewAction">
+                  id="org.locationtech.udig.project.ui.zoomToLayerViewAction">
                <enablement>
-                  <objectClass name="net.refractions.udig.project.ILayer"/>
+                  <objectClass name="org.locationtech.udig.project.ILayer"/>
                </enablement>
             </action>
             <action
-                  class="net.refractions.udig.project.ui.internal.actions.MylarAction"
+                  class="org.locationtech.udig.project.ui.internal.actions.MylarAction"
                   enablesFor="+"
                   icon="icons/elcl16/mylar_mode.gif"
-                  id="net.refractions.udig.project.ui.mylar"
+                  id="org.locationtech.udig.project.ui.mylar"
                   label="%mylarAction.label"
                   style="toggle"
                   tooltip="%mylarAction.tooltip"
                   toolbarPath="additions">
                <enablement>
-                  <objectClass name="net.refractions.udig.project.ILayer"/>
+                  <objectClass name="org.locationtech.udig.project.ILayer"/>
                </enablement>
             </action>
          </viewContribution>
       </extension>
       <extension
-            id="net.refractions.udig.ui.layerDecorators"
+            id="org.locationtech.udig.ui.layerDecorators"
             name="%layerDecorators.name"
             point="org.eclipse.ui.decorators">      
          <decorator
                lightweight="false"
                adaptable="false"
                label="%layerGlyph.label"
-               class="net.refractions.udig.project.ui.internal.LayerGeneratedGlyphDecorator"
+               class="org.locationtech.udig.project.ui.internal.LayerGeneratedGlyphDecorator"
                state="true"
-               id="net.refractions.udig.project.ui.layerGeneratedGlyph">
+               id="org.locationtech.udig.project.ui.layerGeneratedGlyph">
            <description>
               %layerGlyph.description
            </description>
             <enablement>
-               <objectClass name="net.refractions.udig.project.ILayer"/>
+               <objectClass name="org.locationtech.udig.project.ILayer"/>
             </enablement>
         </decorator>
         <decorator
-              class="net.refractions.udig.project.ui.internal.LayerStatusDecorator"
-              id="net.refractions.udig.project.ui.layerStatus"
+              class="org.locationtech.udig.project.ui.internal.LayerStatusDecorator"
+              id="org.locationtech.udig.project.ui.layerStatus"
               label="%layerStatus.label"
               lightweight="true"
               location="BOTTOM_LEFT"
-              objectClass="net.refractions.udig.project.ILayer"
+              objectClass="org.locationtech.udig.project.ILayer"
               state="true">
             <description>
 				%layerStatus.description
             </description>
             <enablement>
-               <objectClass name="net.refractions.udig.project.ILayer"/>
+               <objectClass name="org.locationtech.udig.project.ILayer"/>
             </enablement>
          </decorator>
         <decorator
               adaptable="false"
-              class="net.refractions.udig.project.ui.internal.TemporaryLayerDecorator"
-              id="net.refractions.udig.project.ui.decorator.temporary.layer"
+              class="org.locationtech.udig.project.ui.internal.TemporaryLayerDecorator"
+              id="org.locationtech.udig.project.ui.decorator.temporary.layer"
               label="Temporary Layer"
               lightweight="true"
               location="TOP_RIGHT"
-              objectClass="net.refractions.udig.project.ILayer"
+              objectClass="org.locationtech.udig.project.ILayer"
               state="true"/>
      </extension>
       <extension
             point="org.eclipse.ui.contexts">
          <context
                description="%context.tool.description"
-               id="net.refractions.udig.project.ui.tool"
+               id="org.locationtech.udig.project.ui.tool"
                name="%Tools"
                parentId="org.eclipse.ui.contexts.window"/>
       </extension>
       
 	<extension
-       point="net.refractions.udig.ui.dropAction">
+       point="org.locationtech.udig.ui.dropAction">
 	    <action
-           class="net.refractions.udig.project.ui.internal.actions.MapDropAction"
+           class="org.locationtech.udig.project.ui.internal.actions.MapDropAction"
            enablesFor="+"
            name="%MapDropAction.name">
 	       <acceptedType class="java.net.URL"/>
 	       <acceptedType class="java.lang.String"/>
 	       <acceptedType class="java.io.File"/>
-	       <destination class="net.refractions.udig.project.ui.internal.MapPart"/>
+	       <destination class="org.locationtech.udig.project.ui.internal.MapPart"/>
            <destination
-                 class="net.refractions.udig.project.ui.internal.LayersView"/>
+                 class="org.locationtech.udig.project.ui.internal.LayersView"/>
            <destination
-                 class="net.refractions.udig.project.ui.internal.LegendView">
+                 class="org.locationtech.udig.project.ui.internal.LegendView">
            </destination>
            <acceptedType
                  adapt="true"
-                 class="net.refractions.udig.catalog.IResolve"/>
-           <destination class="net.refractions.udig.project.ILayer"/>
-           <destination class="net.refractions.udig.project.IMap"/>
+                 class="org.locationtech.udig.catalog.IResolve"/>
+           <destination class="org.locationtech.udig.project.ILayer"/>
+           <destination class="org.locationtech.udig.project.IMap"/>
 	    </action>
      <action
-           class="net.refractions.udig.project.ui.internal.actions.SLDDropAction"
+           class="org.locationtech.udig.project.ui.internal.actions.SLDDropAction"
            name="%SLDDrop.name">
-        <destination class="net.refractions.udig.project.ILayer"/>
+        <destination class="org.locationtech.udig.project.ILayer"/>
         <acceptedType class="java.io.File"/>
         <acceptedType class="java.net.URL"/>
         <acceptedType class="java.lang.String"/>
-        <destination class="net.refractions.udig.project.internal.Map"/>
+        <destination class="org.locationtech.udig.project.internal.Map"/>
      </action>
      <action
-           class="net.refractions.udig.project.ui.internal.actions.LegendDropAction"
+           class="org.locationtech.udig.project.ui.internal.actions.LegendDropAction"
            enablesFor="+"
            name="Legend Drag and Drop">
         <destination
-              class="net.refractions.udig.project.ILegendItem">
+              class="org.locationtech.udig.project.ILegendItem">
         </destination>
         <acceptedType
-              class="net.refractions.udig.project.ILegendItem">
+              class="org.locationtech.udig.project.ILegendItem">
         </acceptedType>
      </action>
      <action
-           class="net.refractions.udig.project.ui.internal.actions.LayerDropAction"
+           class="org.locationtech.udig.project.ui.internal.actions.LayerDropAction"
            enablesFor="+"
            name="%LayerDropAction.name">
-        <destination class="net.refractions.udig.project.ILayer"/>
-        <acceptedType class="net.refractions.udig.project.ILayer"/>
+        <destination class="org.locationtech.udig.project.ILayer"/>
+        <acceptedType class="org.locationtech.udig.project.ILayer"/>
      </action>
      <action
-           class="net.refractions.udig.project.ui.internal.dragdrop.DropFilterAction"
+           class="org.locationtech.udig.project.ui.internal.dragdrop.DropFilterAction"
            name="%FilterDropAction.name">
         <destination
               adapt="true"
-              class="net.refractions.udig.project.ILayer"/>
+              class="org.locationtech.udig.project.ILayer"/>
         <acceptedType
               adapt="true"
               class="org.opengis.filter.Filter"/>
         <acceptedType class="org.opengis.feature.Feature"/>
         <destination
               adapt="true"
-              class="net.refractions.udig.project.IMap"/>
+              class="org.locationtech.udig.project.IMap"/>
      </action>
      <action
-           class="net.refractions.udig.project.ui.internal.actions.DropMap"
+           class="org.locationtech.udig.project.ui.internal.actions.DropMap"
            name="%OpenMapAction.name">
         <destination class="org.eclipse.ui.IEditorPart"/>
-        <acceptedType class="net.refractions.udig.project.IMap"/>
+        <acceptedType class="org.locationtech.udig.project.IMap"/>
         <acceptedType class="java.lang.String"/>
-        <destination class="net.refractions.udig.project.ui.internal.LayersView"/>
+        <destination class="org.locationtech.udig.project.ui.internal.LayersView"/>
         <destination
-              class="net.refractions.udig.project.ui.internal.LegendView">
+              class="org.locationtech.udig.project.ui.internal.LegendView">
         </destination>
         <acceptedType class="java.net.URL"/>
-        <destination class="net.refractions.udig.project.ILayer"/>
+        <destination class="org.locationtech.udig.project.ILayer"/>
         <acceptedType
               adapt="false"
               class="org.eclipse.emf.ecore.EObject"/>
@@ -543,24 +543,24 @@
         </description>
      </action>
      <action
-           class="net.refractions.udig.project.ui.internal.actions.OnProjectDropAction"
+           class="org.locationtech.udig.project.ui.internal.actions.OnProjectDropAction"
            enablesFor="+"
            name="%drop.project.name">
         <destination
               adapt="true"
-              class="net.refractions.udig.project.internal.Project"/>
+              class="org.locationtech.udig.project.internal.Project"/>
         <description>
            %ProjectDropAction.desc
         </description>
         <acceptedType
               adapt="true"
-              class="net.refractions.udig.catalog.IGeoResource"/>
+              class="org.locationtech.udig.catalog.IGeoResource"/>
         <acceptedType
         	  adapt="true"
-        	  class="net.refractions.udig.catalog.IResolveFolder"/>
+        	  class="org.locationtech.udig.catalog.IResolveFolder"/>
         <acceptedType
               adapt="true"
-              class="net.refractions.udig.catalog.IService"/>
+              class="org.locationtech.udig.catalog.IService"/>
         <acceptedType
               adapt="true"
               class="java.lang.String"/>
@@ -569,47 +569,47 @@
               class="java.io.File"/>
      </action>
      <action
-           class="net.refractions.udig.project.ui.internal.dragdrop.MoveLayerDropAction"
+           class="org.locationtech.udig.project.ui.internal.dragdrop.MoveLayerDropAction"
            enablesFor="+"
            name="%MoveLayerAction.name">
         <destination
               adapt="false"
-              class="net.refractions.udig.project.internal.Map"/>
+              class="org.locationtech.udig.project.internal.Map"/>
         <acceptedType
               adapt="false"
-              class="net.refractions.udig.project.ILayer"/>
+              class="org.locationtech.udig.project.ILayer"/>
         <description>
            %MoveLayerAction.desc
         </description>
-        <destination class="net.refractions.udig.project.ui.internal.LayersView"/>
+        <destination class="org.locationtech.udig.project.ui.internal.LayersView"/>
         <destination
-              class="net.refractions.udig.project.ui.internal.LegendView">
+              class="org.locationtech.udig.project.ui.internal.LegendView">
         </destination>
         <acceptedType
               adapt="false"
-              class="net.refractions.udig.project.ui.internal.MapEditorPart"/>
+              class="org.locationtech.udig.project.ui.internal.MapEditorPart"/>
      </action>
      <action
-           class="net.refractions.udig.project.ui.internal.dragdrop.MoveLayerDropActionLayer"
+           class="org.locationtech.udig.project.ui.internal.dragdrop.MoveLayerDropActionLayer"
            enablesFor="+"
            name="%MoveLayerAction.name">
         <destination
               adapt="false"
-              class="net.refractions.udig.project.internal.Layer"/>
+              class="org.locationtech.udig.project.internal.Layer"/>
         <acceptedType
               adapt="false"
-              class="net.refractions.udig.project.internal.Layer"/>
+              class="org.locationtech.udig.project.internal.Layer"/>
         <description>
            %MoveLayerAction.desc
         </description>
      </action>
      <action
-           class="net.refractions.udig.project.ui.internal.dragdrop.MoveProjectElement"
+           class="org.locationtech.udig.project.ui.internal.dragdrop.MoveProjectElement"
            enablesFor="+"
            name="%MoveMapAction.name">
         <destination
               adapt="false"
-              class="net.refractions.udig.project.internal.Project"/>
+              class="org.locationtech.udig.project.internal.Project"/>
         <acceptedType
               adapt="false"
               class="org.eclipse.emf.ecore.EObject"/>
@@ -619,27 +619,27 @@
      </action>
 	 </extension>
    <extension
-         point="net.refractions.udig.project.ui.tool">
+         point="org.locationtech.udig.project.ui.tool">
       <category
-            commandId="net.refractions.udig.tools.renderingCategoryCommand"
-            id="net.refractions.udig.tool.category.render"
+            commandId="org.locationtech.udig.tools.renderingCategoryCommand"
+            id="org.locationtech.udig.tool.category.render"
             name="%rendering.tools.name"/>
       <category
-            commandId="net.refractions.udig.tools.ZoomCommand"
-            id="net.refractions.udig.tool.category.zoom"
+            commandId="org.locationtech.udig.tools.ZoomCommand"
+            id="org.locationtech.udig.tool.category.zoom"
             name="%zoom.tools.name"/>
       <category
-            commandId="net.refractions.udig.tools.PanCommand"
-            id="net.refractions.udig.tool.category.pan"
+            commandId="org.locationtech.udig.tools.PanCommand"
+            id="org.locationtech.udig.tool.category.pan"
             name="%pan.tools.name"/>
        <category
-             commandId="net.refractions.udig.tools.selectionCommand"
-             id="net.refractions.udig.tool.category.selection"
+             commandId="org.locationtech.udig.tools.selectionCommand"
+             id="org.locationtech.udig.tool.category.selection"
              name="%selection.tools.name"
-             selectionProvider="net.refractions.udig.project.ui.tool.selection.provider.FilterSelectionProvider"/>
+             selectionProvider="org.locationtech.udig.project.ui.tool.selection.provider.FilterSelectionProvider"/>
       <category
-            commandId="net.refractions.udig.tools.infoCommand"
-            id="net.refractions.udig.tool.category.info"
+            commandId="org.locationtech.udig.tools.infoCommand"
+            id="org.locationtech.udig.tool.category.info"
             name="%info.tools.name"/>
 
     </extension>
@@ -648,193 +648,193 @@
       <category
             description="%category.description"
             name="%category.name"
-            id="net.refractions.udig.tools.toolCategory"/>
+            id="org.locationtech.udig.tools.toolCategory"/>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
+            categoryId="org.locationtech.udig.tools.toolCategory"
             name="%zoom.category.name"
-            id="net.refractions.udig.tools.ZoomCommand"/>
+            id="org.locationtech.udig.tools.ZoomCommand"/>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
+            categoryId="org.locationtech.udig.tools.toolCategory"
             name="%pan.category.name"
-            id="net.refractions.udig.tools.PanCommand"/>
+            id="org.locationtech.udig.tools.PanCommand"/>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
+            categoryId="org.locationtech.udig.tools.toolCategory"
             name="%selection.category.name"
-            id="net.refractions.udig.tools.selectionCommand"/>
+            id="org.locationtech.udig.tools.selectionCommand"/>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
+            categoryId="org.locationtech.udig.tools.toolCategory"
             name="%info.category.name"
-            id="net.refractions.udig.tools.infoCommand"/>
+            id="org.locationtech.udig.tools.infoCommand"/>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
+            categoryId="org.locationtech.udig.tools.toolCategory"
             name="%zoom.category.name"
-            id="net.refractions.udig.tools.editCommand"/>
+            id="org.locationtech.udig.tools.editCommand"/>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
+            categoryId="org.locationtech.udig.tools.toolCategory"
             name="%rendering.category.name"
-            id="net.refractions.udig.tools.renderingCategoryCommand"/>
+            id="org.locationtech.udig.tools.renderingCategoryCommand"/>
       <command
-            categoryId="net.refractions.udig.project.ui.LayerCommands"
-            id="net.refractions.udig.project.ui.command.new.layer"
+            categoryId="org.locationtech.udig.project.ui.LayerCommands"
+            id="org.locationtech.udig.project.ui.command.new.layer"
             name="%new.command.name"/>
       <category
-            id="net.refractions.udig.project.ui.LayerCommands"
+            id="org.locationtech.udig.project.ui.LayerCommands"
             name="%LayerCategory.name"/>
       <command
-            categoryId="net.refractions.udig.project.ui.LayerCommands"
+            categoryId="org.locationtech.udig.project.ui.LayerCommands"
             description="%command.open.description"
-            id="net.refractions.udig.project.ui.addLayerCommand"
+            id="org.locationtech.udig.project.ui.addLayerCommand"
             name="%command.open.label"/>
    	  <command
             categoryId="org.eclipse.ui.category.file"
-            id="net.refractions.udig.project.ui.openProjectCommand"
+            id="org.locationtech.udig.project.ui.openProjectCommand"
             name="%command.open.name"/>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
+            categoryId="org.locationtech.udig.tools.toolCategory"
             description="Rename action binding"
-            id="net.refractions.udig.project.ui.renameCommand"
+            id="org.locationtech.udig.project.ui.renameCommand"
             name="%rename.label"/>
       <command
             description="%Map.properties.tooltip"
-            id="net.refractions.udig.project.ui.mapProperties"
+            id="org.locationtech.udig.project.ui.mapProperties"
             name="%Map.properties.name"/>
       <command
             description="%Layer.properties.tooltip"
-            id="net.refractions.udig.project.ui.layerProperties"
+            id="org.locationtech.udig.project.ui.layerProperties"
             name="%Layer.properties.name"/>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
          <key
-               commandId="net.refractions.udig.project.ui.addLayerCommand"
-               schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+               commandId="org.locationtech.udig.project.ui.addLayerCommand"
+               schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
            	   contextId="org.eclipse.ui.contexts.window"
                sequence="M1+L A"/>
          <key
-               commandId="net.refractions.udig.project.ui.openProjectCommand"
-               schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+               commandId="org.locationtech.udig.project.ui.openProjectCommand"
+               schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
                contextId="org.eclipse.ui.contexts.window"
                sequence="M1+O"/>
      <key
-            commandId="net.refractions.udig.tools.renderingCategoryCommand"
-            contextId="net.refractions.udig.project.ui.tool"
+            commandId="org.locationtech.udig.tools.renderingCategoryCommand"
+            contextId="org.locationtech.udig.project.ui.tool"
             sequence="R"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
       <key
-            commandId="net.refractions.udig.tools.ZoomCommand"
-            contextId="net.refractions.udig.project.ui.tool"
+            commandId="org.locationtech.udig.tools.ZoomCommand"
+            contextId="org.locationtech.udig.project.ui.tool"
             sequence="Z"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
       <key
-            commandId="net.refractions.udig.tools.PanCommand"
-            contextId="net.refractions.udig.project.ui.tool"
+            commandId="org.locationtech.udig.tools.PanCommand"
+            contextId="org.locationtech.udig.project.ui.tool"
             sequence="P"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
       <key
-            commandId="net.refractions.udig.tools.selectionCommand"
-            contextId="net.refractions.udig.project.ui.tool"
+            commandId="org.locationtech.udig.tools.selectionCommand"
+            contextId="org.locationtech.udig.project.ui.tool"
             sequence="S"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
 
       <key
-            commandId="net.refractions.udig.tools.infoCommand"
-            contextId="net.refractions.udig.project.ui.tool"
+            commandId="org.locationtech.udig.tools.infoCommand"
+            contextId="org.locationtech.udig.project.ui.tool"
             sequence="I"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
       <key
-            commandId="net.refractions.udig.project.ui.command.new.layer"
+            commandId="org.locationtech.udig.project.ui.command.new.layer"
             contextId="org.eclipse.ui.contexts.window"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
             sequence="M1+L C"/>
       <key
-            commandId="net.refractions.udig.project.ui.renameCommand"
+            commandId="org.locationtech.udig.project.ui.renameCommand"
             contextId="org.eclipse.ui.contexts.window"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
             sequence="F2"/>
 
    </extension>
 
    <extension
-         point="net.refractions.udig.catalog.ui.connectionFactory">
-      <factory class="net.refractions.udig.project.internal.ui.wizard.URLConnectionFactory"
-      			id = "net.refractions.udig.project.ui.import.url"/>
+         point="org.locationtech.udig.catalog.ui.connectionFactory">
+      <factory class="org.locationtech.udig.project.internal.ui.wizard.URLConnectionFactory"
+      			id = "org.locationtech.udig.project.ui.import.url"/>
    </extension>
    <extension
-         point="net.refractions.udig.ui.objectProperty">
-      <object targetClass="net.refractions.udig.project.ILayer">
+         point="org.locationtech.udig.ui.objectProperty">
+      <object targetClass="org.locationtech.udig.project.ILayer">
          <property
                id="GeometryType"
-               class="net.refractions.udig.project.ui.internal.tool.display.GeometryProperty"/>
+               class="org.locationtech.udig.project.ui.internal.tool.display.GeometryProperty"/>
          <property
-               class="net.refractions.udig.project.ui.operations.LayerSelectionProperty"
+               class="org.locationtech.udig.project.ui.operations.LayerSelectionProperty"
                id="hasSelection"/>
       </object>
       <object targetClass="java.lang.Object">
          <property
                id="OpenMap"
-               class="net.refractions.udig.project.ui.properties.OpenMap"/>
+               class="org.locationtech.udig.project.ui.properties.OpenMap"/>
       </object>
    </extension>
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="net.refractions.udig.project.ui.preferences.RenderPreferences"
-            id="net.refractions.udig.project.ui.preferences.render"
+            class="org.locationtech.udig.project.ui.preferences.RenderPreferences"
+            id="org.locationtech.udig.project.ui.preferences.render"
             name="%renderPref.name"/>
       <page
-            category="net.refractions.udig.project.ui.preferences.project"
-            class="net.refractions.udig.project.ui.preferences.MapPreferencePage"
-            id="net.refractions.udig.project.ui.preferences.map"
+            category="org.locationtech.udig.project.ui.preferences.project"
+            class="org.locationtech.udig.project.ui.preferences.MapPreferencePage"
+            id="org.locationtech.udig.project.ui.preferences.map"
             name="%map.preferences.name"/>
       <page
-            class="net.refractions.udig.project.ui.preferences.ProjectPreferencePage"
-            id="net.refractions.udig.project.ui.preferences.project"
+            class="org.locationtech.udig.project.ui.preferences.ProjectPreferencePage"
+            id="org.locationtech.udig.project.ui.preferences.project"
             name="%project.preferences.name"/>
      <page
-           category="net.refractions.udig.project.ui.preferences.project"
-           class="net.refractions.udig.project.ui.preferences.LayerPreferencePage"
-           id="net.refractions.udig.project.ui.preferences.layer"
+           category="org.locationtech.udig.project.ui.preferences.project"
+           class="org.locationtech.udig.project.ui.preferences.LayerPreferencePage"
+           id="org.locationtech.udig.project.ui.preferences.layer"
            name="%layer.preferences.name"/>
      <page
-           class="net.refractions.udig.project.ui.ToolPreferences"
-           id="net.refractions.udig.project.ui.preferences.tool"
+           class="org.locationtech.udig.project.ui.ToolPreferences"
+           id="org.locationtech.udig.project.ui.preferences.tool"
            name="%tool.preferences.name"/>
      <page
-           category="net.refractions.udig.project.ui.preferences.project"
-           class="net.refractions.udig.project.ui.preferences.StylePreferencePage"
-           id="net.refractions.udig.project.ui.preferences.style"
+           category="org.locationtech.udig.project.ui.preferences.project"
+           class="org.locationtech.udig.project.ui.preferences.StylePreferencePage"
+           id="org.locationtech.udig.project.ui.preferences.style"
            name="%style.preferences.name"/>
      <page
-           category="net.refractions.udig.project.ui.preferences.tool"
-           class="net.refractions.udig.project.ui.MousePreferences"
-           id="net.refractions.udig.project.ui.preferences.mouse"
+           category="org.locationtech.udig.project.ui.preferences.tool"
+           class="org.locationtech.udig.project.ui.MousePreferences"
+           id="org.locationtech.udig.project.ui.preferences.mouse"
            name="%tool.mouse.preferences.name">
      </page>
    </extension>
    <extension
         point="org.eclipse.ui.exportWizards">
       <wizard
-            class="net.refractions.udig.project.ui.wizard.export.image.ExportMapToImageWizard"
+            class="org.locationtech.udig.project.ui.wizard.export.image.ExportMapToImageWizard"
             icon="icons/etool16/exportimage_wiz.gif"
-            id="net.refractions.udig.project.ui.export.image"
+            id="org.locationtech.udig.project.ui.export.image"
             name="%exportToImage.name">
          <description>
             %exportToImage.desc
          </description>
       </wizard>     
      <wizard
-           class="net.refractions.udig.project.ui.wizard.export.ExportFeatureSelection$FeatureSelectionExportWizard"
+           class="org.locationtech.udig.project.ui.wizard.export.ExportFeatureSelection$FeatureSelectionExportWizard"
            icon="icons/etool16/exportselection_wiz.gif"
-           id="net.refractions.udig.project.ui.dataExportWizard"
+           id="org.locationtech.udig.project.ui.dataExportWizard"
            name="%selectionExport.name">
         <description>
            %selectionExport.desc
         </description>
      </wizard>
      <wizard
-           class="net.refractions.udig.project.ui.wizard.export.project.ExportProjectWizard"
+           class="org.locationtech.udig.project.ui.wizard.export.project.ExportProjectWizard"
            icon="icons/etool16/exportproject_wiz.png"
-           id="net.refractions.udig.project.ui.export.project"
+           id="org.locationtech.udig.project.ui.export.project"
            name="%exportProject.name">
         <description>
            %exportProject.desc
@@ -842,86 +842,86 @@
      </wizard>
    </extension>
    <extension
-         point="net.refractions.udig.project.ui.toolManagers">
+         point="org.locationtech.udig.project.ui.toolManagers">
       <toolManager
-            class="net.refractions.udig.project.ui.internal.tool.display.ToolManager"
-            id="net.refractions.udig.project.ui.toolManager"/>
+            class="org.locationtech.udig.project.ui.internal.tool.display.ToolManager"
+            id="org.locationtech.udig.project.ui.toolManager"/>
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">
-      <initializer class="net.refractions.udig.project.ui.preferences.PreferenceInitializer"/>
+      <initializer class="org.locationtech.udig.project.ui.preferences.PreferenceInitializer"/>
    </extension>
 
    <extension
          point="org.eclipse.core.expressions.definitions">
       <definition
-            id="net.refractions.udig.project.ui.contribution.inLayerQuerySet">
+            id="org.locationtech.udig.project.ui.contribution.inLayerQuerySet">
          <with
                variable="activeContexts">
             <iterate
                   operator="or">
                <equals
-                     value="net.refractions.udig.project.ui.layerQuerySet">
+                     value="org.locationtech.udig.project.ui.layerQuerySet">
                </equals>
             </iterate>
          </with>
       </definition>
       <definition
-            id="net.refractions.udig.project.ui.contribution.inLayerModifySet">
+            id="org.locationtech.udig.project.ui.contribution.inLayerModifySet">
          <with
                variable="activeContexts">
             <iterate
                   operator="or">
                <equals
-                     value="net.refractions.udig.project.ui.layerModifySet">
+                     value="org.locationtech.udig.project.ui.layerModifySet">
                </equals>
             </iterate>
          </with>
       </definition>
       <definition
-            id="net.refractions.udig.project.ui.contribution.inLayerStyleSet">
+            id="org.locationtech.udig.project.ui.contribution.inLayerStyleSet">
          <with
                variable="activeContexts">
             <iterate
                   operator="or">
                <equals
-                     value="net.refractions.udig.project.ui.layer.StyleSet">
+                     value="org.locationtech.udig.project.ui.layer.StyleSet">
                </equals>
             </iterate>
          </with>
       </definition>
       <definition
-            id="net.refractions.udig.project.ui.contribution.inMapMenu">
+            id="org.locationtech.udig.project.ui.contribution.inMapMenu">
          <with
                variable="activeContexts">
             <iterate
                   operator="or">
                <equals
-                     value="net.refractions.udig.project.ui.map.menu">
+                     value="org.locationtech.udig.project.ui.map.menu">
                </equals>
             </iterate>
          </with>
       </definition>
       <definition
-            id="net.refractions.udig.project.ui.contribution.inLayerMenu">
+            id="org.locationtech.udig.project.ui.contribution.inLayerMenu">
          <with
                variable="activeContexts">
             <iterate
                   operator="or">
                <equals
-                     value="net.refractions.udig.project.ui.layer.menu">
+                     value="org.locationtech.udig.project.ui.layer.menu">
                </equals>
             </iterate>
          </with>
       </definition>
       <definition
-            id="net.refractions.udig.project.ui.contribution.inLayerActions">
+            id="org.locationtech.udig.project.ui.contribution.inLayerActions">
          <with
                variable="activeContexts">
             <iterate
                   operator="or">
                <equals
-                     value="net.refractions.udig.project.ui.layerActions">
+                     value="org.locationtech.udig.project.ui.layerActions">
                </equals>
             </iterate>
          </with>
@@ -930,107 +930,107 @@
 	
  	
 	<extension
-        point="net.refractions.udig.ui.operation"
-        id="net.refractions.udig.project.ui.op">
+        point="org.locationtech.udig.ui.operation"
+        id="org.locationtech.udig.project.ui.op">
 		<category
 	    	   context="Layer"
-               id="net.refractions.udig.project.ui.operation.addCategory"
+               id="org.locationtech.udig.project.ui.operation.addCategory"
                name="%Add.Category">
                </category> 
          <operation
-               categoryId="net.refractions.udig.catalog.ui.operation.resourceCategory"
-               class="net.refractions.udig.project.ui.operations.example.MultiTargetOp"
-               id="net.refractions.udig.project.ui.define.tileset"
+               categoryId="org.locationtech.udig.catalog.ui.operation.resourceCategory"
+               class="org.locationtech.udig.project.ui.operations.example.MultiTargetOp"
+               id="org.locationtech.udig.project.ui.define.tileset"
                name="%resourceSummary"
-               targetClass="net.refractions.udig.catalog.IGeoResource">
+               targetClass="org.locationtech.udig.catalog.IGeoResource">
          </operation>      
  	</extension>
       
       <extension
-            id="net.refractions.udig.project.ui.op.map"
+            id="org.locationtech.udig.project.ui.op.map"
             name="Map Operations"
-            point="net.refractions.udig.ui.operation">
+            point="org.locationtech.udig.ui.operation">
          <category
                context="Map"
-               id="net.refractions.udig.project.ui.operation.mapCategory"
+               id="org.locationtech.udig.project.ui.operation.mapCategory"
                name="%Map.Name">
          </category>
          <category
                context="Map"
-               id="net.refractions.udig.project.ui.operation.mapModifyCategory"
+               id="org.locationtech.udig.project.ui.operation.mapModifyCategory"
                name="%Map.Modify">
          </category>
          <operation
-               categoryId="net.refractions.udig.project.ui.operation.mapCategory"
-               class="net.refractions.udig.project.ui.operations.example.FeaturesInView"
-               id="net.refractions.udig.project.ui.featuresInView"
+               categoryId="org.locationtech.udig.project.ui.operation.mapCategory"
+               class="org.locationtech.udig.project.ui.operations.example.FeaturesInView"
+               id="org.locationtech.udig.project.ui.featuresInView"
                name="%featuresView"
-               targetClass="net.refractions.udig.project.IMap"/>
+               targetClass="org.locationtech.udig.project.IMap"/>
      </extension>
      
       <extension
-            id="net.refractions.udig.project.ui.op.layer"
+            id="org.locationtech.udig.project.ui.op.layer"
             name="Layer Operations"
-            point="net.refractions.udig.ui.operation">
+            point="org.locationtech.udig.ui.operation">
         <category
-	            id="net.refractions.udig.project.ui.operation.layerCategory"
+	            id="org.locationtech.udig.project.ui.operation.layerCategory"
 	            name="%Layer.Category">
 	            </category>	            
         <operation
-               categoryId="net.refractions.udig.project.ui.operation.layerCategory"
-               class="net.refractions.udig.project.ui.operations.SyncProjection"
+               categoryId="org.locationtech.udig.project.ui.operation.layerCategory"
+               class="org.locationtech.udig.project.ui.operations.SyncProjection"
                enablesFor="1"
-               id="net.refractions.udig.project.ui.syncProjection"
+               id="org.locationtech.udig.project.ui.syncProjection"
                name="%Layer.SetMapProjection"
-               targetClass="net.refractions.udig.project.ILayer">
+               targetClass="org.locationtech.udig.project.ILayer">
          </operation>      
  	</extension>
  	         
       <extension
-            id="net.refractions.udig.project.ui.op.feature"
+            id="org.locationtech.udig.project.ui.op.feature"
             name="Feature Operations"
-            point="net.refractions.udig.ui.operation">
+            point="org.locationtech.udig.ui.operation">
 		<category
                context="Feature"
-               id="net.refractions.udig.project.ui.operation.featureCategory"
+               id="org.locationtech.udig.project.ui.operation.featureCategory"
                name="%Feature.Category">
         </category>
         <category
                context="Feature"
-               id="net.refractions.udig.project.ui.operation.featureModifyCategory"
+               id="org.locationtech.udig.project.ui.operation.featureModifyCategory"
                name="%Feature.Modify.Category">
         </category>
  	</extension> 
         
      <extension
-           id="net.refractions.udig.project.ui.op.selection"
+           id="org.locationtech.udig.project.ui.op.selection"
            name="Selection Operations"
-           point="net.refractions.udig.ui.operation">
+           point="org.locationtech.udig.ui.operation">
          <category
                context="Selection"
-               id="net.refractions.udig.project.ui.operation.selectionCategory"
+               id="org.locationtech.udig.project.ui.operation.selectionCategory"
                name="%Selection.Category">
          </category>            
          <category
                context="Selection"
-               id="net.refractions.udig.project.ui.operation.selectionModifyCategory"
+               id="org.locationtech.udig.project.ui.operation.selectionModifyCategory"
                name="%Selection.Modify.Category">
          </category>
          <operation
-               categoryId="net.refractions.udig.project.ui.operation.selectionCategory"
-               class="net.refractions.udig.project.ui.operations.MakeHole"
+               categoryId="org.locationtech.udig.project.ui.operation.selectionCategory"
+               class="org.locationtech.udig.project.ui.operations.MakeHole"
                enablesFor="1"
-               id="net.refractions.udig.project.ui.operations.MakeHole"
+               id="org.locationtech.udig.project.ui.operations.MakeHole"
                name="%Selection.MakeHole"
-               targetClass="net.refractions.udig.project.ILayer">
+               targetClass="org.locationtech.udig.project.ILayer">
          </operation>         
          <operation
-               categoryId="net.refractions.udig.project.ui.operation.selectionCategory"
-               class="net.refractions.udig.project.ui.operations.SelectAllFeaturesOp"
+               categoryId="org.locationtech.udig.project.ui.operation.selectionCategory"
+               class="org.locationtech.udig.project.ui.operations.SelectAllFeaturesOp"
                enablesFor="1"
-               id="net.refractions.udig.project.ui.operations.SelectAllFeaturesOp"
+               id="org.locationtech.udig.project.ui.operations.SelectAllFeaturesOp"
                name="Select all features"
-               targetClass="net.refractions.udig.project.ILayer">
+               targetClass="org.locationtech.udig.project.ILayer">
            <enablement>
              <and>
                <property
@@ -1040,12 +1040,12 @@
             </enablement>
          </operation>         
          <!--operation
-               categoryId="net.refractions.udig.project.ui.operation.selectionCategory"
-               class="net.refractions.udig.project.ui.operations.CreateLayerView"
+               categoryId="org.locationtech.udig.project.ui.operation.selectionCategory"
+               class="org.locationtech.udig.project.ui.operations.CreateLayerView"
                enablesFor="1"
-               id="net.refractions.udig.project.ui.createView"
+               id="org.locationtech.udig.project.ui.createView"
                name="Selection To Layer"
-               targetClass="net.refractions.udig.project.ILayer">
+               targetClass="org.locationtech.udig.project.ILayer">
             <enablement>
                <and>
                   <property
@@ -1062,58 +1062,58 @@
      <extension
            point="org.eclipse.ui.handlers">
         <handler
-              class="net.refractions.udig.project.ui.internal.handlers.MapPropertiesCommandHandler"
-              commandId="net.refractions.udig.project.ui.mapProperties">
+              class="org.locationtech.udig.project.ui.internal.handlers.MapPropertiesCommandHandler"
+              commandId="org.locationtech.udig.project.ui.mapProperties">
            <activeWhen>
               <iterate
                     ifEmpty="false"
                     operator="or">
                  <adapt
-                       type="net.refractions.udig.project.IMap">
+                       type="org.locationtech.udig.project.IMap">
                  </adapt>
                  <instanceof
-                       value="net.refractions.udig.project.IMap">
+                       value="org.locationtech.udig.project.IMap">
                  </instanceof>
               </iterate>
            </activeWhen>
         </handler>
         <handler
-              class="net.refractions.udig.project.ui.internal.handlers.LayerPropertiesCommandHandler"
-              commandId="net.refractions.udig.project.ui.layerProperties">
+              class="org.locationtech.udig.project.ui.internal.handlers.LayerPropertiesCommandHandler"
+              commandId="org.locationtech.udig.project.ui.layerProperties">
            <enabledWhen>
               <iterate
                     ifEmpty="false"
                     operator="or">
                  <adapt
-                       type="net.refractions.udig.project.ILayer">
+                       type="org.locationtech.udig.project.ILayer">
                  </adapt>
                  <instanceof
-                       value="net.refractions.udig.project.ILayer">
+                       value="org.locationtech.udig.project.ILayer">
                  </instanceof>
               </iterate>
            </enabledWhen>
         </handler>
      </extension>
      <extension
-           point="net.refractions.udig.catalog.ui.reshapePostAction">
+           point="org.locationtech.udig.catalog.ui.reshapePostAction">
         <action
         	  id="reshape.addtomap"
-              class="net.refractions.udig.project.ui.internal.AddReshapedToMap"
+              class="org.locationtech.udig.project.ui.internal.AddReshapedToMap"
               name="%AddToMap">
         </action>
      </extension>
      <extension
-           id="net.refractions.udig.project.ui.map"
+           id="org.locationtech.udig.project.ui.map"
            point="org.eclipse.ui.actionSets">
         <actionSet
-              id="net.refractions.udig.project.ui.OpenProjectSet"
+              id="org.locationtech.udig.project.ui.OpenProjectSet"
               label="%OpenProjectSet.label"
               visible="false">
            <action
-                 class="net.refractions.udig.project.ui.internal.actions.OpenMapAction"
-                 definitionId="net.refractions.udig.project.ui.openMapCommand"
+                 class="org.locationtech.udig.project.ui.internal.actions.OpenMapAction"
+                 definitionId="org.locationtech.udig.project.ui.openMapCommand"
                  icon="icons/obj16/project_obj.gif"
-                 id="net.refractions.udig.project.ui.openMapAction"
+                 id="org.locationtech.udig.project.ui.openMapAction"
                  label="%map.action.open.name"
                  menubarPath="file/project.ext"
                  style="push"
@@ -1121,42 +1121,42 @@
            </action>
            <action
                  allowLabelUpdate="true"
-                 class="net.refractions.udig.project.ui.internal.actions.CloseProject"
+                 class="org.locationtech.udig.project.ui.internal.actions.CloseProject"
                  enablesFor="+"
                  icon="icons/obj16/project_close.gif"
-                 id="net.refractions.udig.project.ui.closeProject"
+                 id="org.locationtech.udig.project.ui.closeProject"
                  label="%project.close.label"
                  menubarPath="file/project.ext"
                  style="push"
                  tooltip="%project.close.tooltip">
               <enablement>
                  <objectClass
-                       name="net.refractions.udig.project.IProject">
+                       name="org.locationtech.udig.project.IProject">
                  </objectClass>
               </enablement>
            </action>
            <action
                  allowLabelUpdate="true"
-                 class="net.refractions.udig.project.ui.internal.actions.SaveAsProject"
+                 class="org.locationtech.udig.project.ui.internal.actions.SaveAsProject"
                  enablesFor="1"
                  icon="icons/obj16/project_save.gif"
-                 id="net.refractions.udig.project.ui.saveAsProject"
+                 id="org.locationtech.udig.project.ui.saveAsProject"
                  label="%project.action.save.name"
                  menubarPath="file/project.ext"
                  style="push"
                  tooltip="%project.action.save.tooltip">
               <enablement>
                <or>
-                  <objectClass name="net.refractions.udig.project.IMap"/>
-                  <objectClass name="net.refractions.udig.project.IProject"/>
+                  <objectClass name="org.locationtech.udig.project.IMap"/>
+                  <objectClass name="org.locationtech.udig.project.IProject"/>
                </or>
             </enablement>
            </action>
            <action
-                 class="net.refractions.udig.project.ui.internal.actions.OpenProject"
-                 definitionId="net.refractions.udig.project.ui.openProjectCommand"
+                 class="org.locationtech.udig.project.ui.internal.actions.OpenProject"
+                 definitionId="org.locationtech.udig.project.ui.openProjectCommand"
                  icon="icons/obj16/project_obj.gif"
-                 id="net.refractions.udig.project.ui.openProject"
+                 id="org.locationtech.udig.project.ui.openProject"
                  label="%project.action.open.name"
                  menubarPath="file/project.ext"
                  style="push"
@@ -1165,15 +1165,15 @@
         </actionSet>
      </extension>     
      <extension
-           point="net.refractions.udig.ui.aoi">
+           point="org.locationtech.udig.ui.aoi">
         <aoi
-              class="net.refractions.udig.project.ui.internal.aoi.ScreenAOIStrategy"
-              id="net.refractions.udig.project.ui.screenAOI"
+              class="org.locationtech.udig.project.ui.internal.aoi.ScreenAOIStrategy"
+              id="org.locationtech.udig.project.ui.screenAOI"
               name="%aoi.screen.name">
         </aoi>
         <aoi
-              class="net.refractions.udig.project.ui.internal.aoi.MapCrsAOIStrategy"
-              id="net.refractions.udig.project.ui.crsAOI"
+              class="org.locationtech.udig.project.ui.internal.aoi.MapCrsAOIStrategy"
+              id="org.locationtech.udig.project.ui.crsAOI"
               name="%aoi.crs.name">
         </aoi>
      </extension>

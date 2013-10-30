@@ -2,14 +2,14 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         id="net.refractions.udig.tutorials.workbenchview"
+         id="org.locationtech.udig.tutorials.workbenchview"
          name="workbenchView"
          point="org.eclipse.ui.views">
       <view
             allowMultiple="false"
-            class="net.refractions.udig.tutorials.workbench.SelectionView"
+            class="org.locationtech.udig.tutorials.workbench.SelectionView"
             icon="icons/etool16/workbench.png"
-            id="net.refractions.udig.tutorials.SelectionView"
+            id="org.locationtech.udig.tutorials.SelectionView"
             name="Selection View">
          <description>
             This is a description

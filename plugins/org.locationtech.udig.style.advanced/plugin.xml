@@ -2,39 +2,39 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="net.refractions.udig.style.sld.StyleEditorPage">
+         point="org.locationtech.udig.style.sld.StyleEditorPage">
       <StyleEditorPage
-            class="eu.udig.style.advanced.editorpages.SimplePointEditorPage"
-            contentType="net.refractions.udig.project.ILayer"
-            id="eu.udig.style.advanced.editorpages.SimplePointEditorPage"
+            class="org.locationtech.udig.style.advanced.editorpages.SimplePointEditorPage"
+            contentType="org.locationtech.udig.project.ILayer"
+            id="org.locationtech.udig.style.advanced.editorpages.SimplePointEditorPage"
             label="Points"
             requires="org.geotools.data.FeatureSource">
       </StyleEditorPage>
       <StyleEditorPage
-            class="eu.udig.style.advanced.editorpages.SimpleLineEditorPage"
-            contentType="net.refractions.udig.project.ILayer"
-            id="eu.udig.style.advanced.editorpages.SimpleLineEditorPage"
+            class="org.locationtech.udig.style.advanced.editorpages.SimpleLineEditorPage"
+            contentType="org.locationtech.udig.project.ILayer"
+            id="org.locationtech.udig.style.advanced.editorpages.SimpleLineEditorPage"
             label="Lines"
             requires="org.geotools.data.FeatureSource">
       </StyleEditorPage>
       <StyleEditorPage
-            class="eu.udig.style.advanced.editorpages.SimplePolygonEditorPage"
-            contentType="net.refractions.udig.project.ILayer"
-            id="eu.udig.style.advanced.editorpages.SimplePolygonEditorPage"
+            class="org.locationtech.udig.style.advanced.editorpages.SimplePolygonEditorPage"
+            contentType="org.locationtech.udig.project.ILayer"
+            id="org.locationtech.udig.style.advanced.editorpages.SimplePolygonEditorPage"
             label="Polygons"
             requires="org.geotools.data.FeatureSource">
       </StyleEditorPage>
       <StyleEditorPage
-            class="eu.udig.style.advanced.editorpages.CoverageStyleEditorPage"
-            contentType="net.refractions.udig.project.ILayer"
-            id="eu.udig.style.advanced.editorpages.CoverageStyleEditorPage"
+            class="org.locationtech.udig.style.advanced.editorpages.CoverageStyleEditorPage"
+            contentType="org.locationtech.udig.project.ILayer"
+            id="org.locationtech.udig.style.advanced.editorpages.CoverageStyleEditorPage"
             label="Legacy Raster"
             requires="org.opengis.coverage.grid.GridCoverage">
       </StyleEditorPage>
       <StyleEditorPage
-            class="eu.udig.style.advanced.editorpages.CoverageColorMaskStyleEditorPage"
-            contentType="net.refractions.udig.project.ILayer"
-            id="eu.udig.style.advanced.editorpages.CoverageColorMaskStyleEditorPage"
+            class="org.locationtech.udig.style.advanced.editorpages.CoverageColorMaskStyleEditorPage"
+            contentType="org.locationtech.udig.project.ILayer"
+            id="org.locationtech.udig.style.advanced.editorpages.CoverageColorMaskStyleEditorPage"
             label="Raster Color Mask"
             requires="org.opengis.coverage.grid.GridCoverage">
       </StyleEditorPage>

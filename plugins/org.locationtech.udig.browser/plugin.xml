@@ -4,32 +4,32 @@
    <extension-point id="externalCatalogWizard" name="externalCatalogWizard" schema="schema/externalCatalogWizard.exsd"/>
 
    <extension
-         point="net.refractions.udig.browser.externalCatalogWizard">
+         point="org.locationtech.udig.browser.externalCatalogWizard">
          <externalCatalogue
                description="%external.catalogue.desc"
                icon="icons/sample.gif"
-               id="net.refractions.udig.uid.browser.generic"
+               id="org.locationtech.udig.uid.browser.generic"
                name="%external.catalogue.name"
-               viewName="net.refractions.udig.browser.default">
+               viewName="org.locationtech.udig.browser.default">
              <externalCataloguePage
-                 class="net.refractions.udig.browser.ui.URLImportPage"/>
+                 class="org.locationtech.udig.browser.ui.URLImportPage"/>
          </externalCatalogue>
    </extension>
    <extension
          point="org.eclipse.ui.views">
       <view
-            class="net.refractions.udig.browser.ui.BrowserContainerView"
-            id="net.refractions.udig.browser.ui.browserContainerView"
+            class="org.locationtech.udig.browser.ui.BrowserContainerView"
+            id="org.locationtech.udig.browser.ui.browserContainerView"
             name="%view.name"/>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension targetID="net.refractions.udig.ui.mapPerspective">
-         <viewShortcut id="net.refractions.udig.browser.ui.browserContainerView"/>
+      <perspectiveExtension targetID="org.locationtech.udig.ui.mapPerspective">
+         <viewShortcut id="org.locationtech.udig.browser.ui.browserContainerView"/>
          <view
-               id="net.refractions.udig.browser.ui.browserContainerView"
+               id="org.locationtech.udig.browser.ui.browserContainerView"
                relationship="stack"
-               relative="net.refractions.udig.catalog.ui.CatalogView"
+               relative="org.locationtech.udig.catalog.ui.CatalogView"
                visible="true"/>
       </perspectiveExtension>
    </extension>

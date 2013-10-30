@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.ui.startup">
       <startup
-            class="eu.udig.catalog.csw.LoadSearchCatalogs">
+            class="org.locationtech.udig.catalog.csw.LoadSearchCatalogs">
       </startup>
    </extension>
 
