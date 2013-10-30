@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %plugin.name
+Bundle-SymbolicName: org.locationtech.udig.render.feature.shapefile; singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.locationtech.udig.render.internal.feature.shapefile.RendererPlugin
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Export-Package: org.locationtech.udig.render.internal.feature.shapefile
+Require-Bundle: org.eclipse.core.runtime,
+ org.locationtech.udig.project,
+ org.locationtech.udig.render.feature.basic,
+ org.eclipse.ui
+Eclipse-LazyStart: true
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Distancetool Plug-in
+Bundle-SymbolicName: org.locationtech.udig.tutorials.distanceTool; singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.locationtech.udig.tutorials.distancetool.DistancetoolPlugin
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.libs,
+ org.locationtech.udig.project.ui
+Bundle-ActivationPolicy: lazy

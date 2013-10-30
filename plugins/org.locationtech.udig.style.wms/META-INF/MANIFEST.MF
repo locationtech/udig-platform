@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: WMS Style Plug-in
+Bundle-SymbolicName: org.locationtech.udig.style.wms; singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.locationtech.udig.style.wms.WMSStylePlugin
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.style,
+ org.locationtech.udig.project.ui,
+ org.locationtech.udig.ui
+Bundle-ActivationPolicy: lazy
+Export-Package: org.locationtech.udig.style.wms
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

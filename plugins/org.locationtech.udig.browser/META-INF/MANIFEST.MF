@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Manifest.name
+Bundle-SymbolicName: org.locationtech.udig.browser; singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.locationtech.udig.browser.BrowserPlugin
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.ui,
+ org.locationtech.udig.catalog.ui,
+ org.locationtech.udig.core,
+ org.locationtech.udig.project.ui,
+ org.locationtech.udig.mapgraphic
+Bundle-ActivationPolicy: lazy
+Export-Package: org.locationtech.udig.browser,
+ org.locationtech.udig.browser.ui

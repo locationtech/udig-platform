@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %plugin.name
+Bundle-SymbolicName: org.locationtech.udig.tool.default;singleton:=true
+Bundle-Version: 1.3.0.qualifier
+Bundle-Activator: org.locationtech.udig.tools.internal.ToolsPlugin
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Export-Package: org.locationtech.udig.tools.internal
+Require-Bundle: org.locationtech.udig.project,
+ org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.ui,
+ org.locationtech.udig.project.ui
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

@@ -13,7 +13,7 @@
         </plugins>
     </build>
 
-    <groupId>net.refractions</groupId>
+    <groupId>org.locationtech</groupId>
     <artifactId>udig-target</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>

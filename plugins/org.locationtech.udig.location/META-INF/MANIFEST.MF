@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Usg Plug-in
+Bundle-SymbolicName: org.locationtech.udig.location; singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.locationtech.udig.location.LocationUIPlugin
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.core.runtime,
+ org.locationtech.udig.libs,
+ org.locationtech.udig.ui,
+ org.eclipse.ui,
+ org.locationtech.udig.project,
+ org.locationtech.udig.project.ui
+Bundle-ActivationPolicy: lazy
+Export-Package: org.locationtech.udig.location,
+ org.locationtech.udig.location.ui
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

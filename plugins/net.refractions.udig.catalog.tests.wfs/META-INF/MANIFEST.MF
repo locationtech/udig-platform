@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Wfs Test Plug-in
-Bundle-SymbolicName: net.refractions.udig.catalog.tests.wfs;singleton:=true
-Bundle-Version: 1.2.0.qualifier
-Require-Bundle: org.eclipse.core.runtime,
- net.refractions.udig.catalog.wfs,
- net.refractions.udig.catalog.tests
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6

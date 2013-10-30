@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.locationtech.udig_unstable-feature"
+      label="%feature.name"
+      version="1.3.0.qualifier"
+      provider-name="udig.refractions.net">
+
+   <description url="http://udig.refractions.net/">
+      Unstable uDig plugins available for preview
+   </description>
+
+   <copyright url="http://udig.refractions.net/">
+      (c) 2005-2012 Refractions Research
+   </copyright>
+
+   <license url="http://udig.refractions.net/files/bsd3-v10.html">
+      uDig - User Friendly Desktop Internet GIS client
+http://udig.refractions.net
+(C) 2004-2012, Refractions Research Inc.
+
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+(http://www.eclipse.org/legal/epl-v10.html), and Refractions BSD
+License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
+   </license>
+
+   <url>
+      <update label="User-friendly Desktop Internet GIS Updates" url="http://udig.refractions.net/update/"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.locationtech.udig.catalog"/>
+      <import plugin="org.locationtech.udig.catalog.ui"/>
+      <import plugin="org.locationtech.udig.libs"/>
+   </requires>
+
+   <plugin
+         id="org.locationtech.udig.context"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.issues"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.location"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.validation"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.feature.editor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Validation Plug-in
+Bundle-SymbolicName: org.locationtech.udig.validation; singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.locationtech.udig.validation.ValidationPlugin
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui;visibility:=reexport,
+ org.eclipse.core.runtime;visibility:=reexport,
+ org.locationtech.udig.libs;visibility:=reexport,
+ org.locationtech.udig.project;visibility:=reexport,
+ org.locationtech.udig.ui;visibility:=reexport,
+ org.locationtech.udig.project.ui,
+ org.locationtech.udig.issues
+Bundle-ActivationPolicy: lazy
+Export-Package: org.locationtech.udig.validation
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

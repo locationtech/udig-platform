@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>net.refractions</groupId>
+    <groupId>org.locationtech</groupId>
     <artifactId>udig-tycho</artifactId>
     <version>1.4.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -52,7 +52,7 @@
 
         The build supports the use of profiles - the following profiles are defined:
 
-        To quickly build the product (result is in features/net.refractions.udig-product/target):
+        To quickly build the product (result is in features/org.locationtech.udig-product/target):
            mvn install -Pproduct
 
         Builds documentation (requires sphinx-build is installed):
@@ -191,7 +191,7 @@
                     <!-- target from sub-module eclipse-target-definition project -->
                     <target>
                         <artifact>
-                            <groupId>net.refractions.udig-target</groupId>
+                            <groupId>org.locationtech.udig-target</groupId>
                             <artifactId>udig-indigo-target</artifactId>
                             <version>3.7</version>
                         </artifact>
@@ -305,7 +305,7 @@
                     <version>${tycho-version}</version>
                     <configuration>
                         <useUIHarness>true</useUIHarness>
-                        <product>net.refractions.udig-product</product>
+                        <product>org.locationtech.udig-product</product>
                         <argLine>-Xmx1024m -XX:MaxPermSize=256m -Dlauncher.suppressErrors -Dsdtcore.headless ${tycho.test.OSspecific}</argLine>
                     </configuration>
                 </plugin>

@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test WMT Plug-in
+Bundle-SymbolicName: org.locationtech.udig.tests.catalog.wmt
+Bundle-Version: 1.3.0.qualifier
+Bundle-Activator: org.locationtech.udig.tests.catalog.wmt.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.catalog.wmt;bundle-version="1.2.0",
+ org.junit;bundle-version="[4.0.0,5.0.0)"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.locationtech.udig.catalog.wmsc.server

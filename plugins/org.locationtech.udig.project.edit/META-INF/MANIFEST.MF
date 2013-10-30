@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.locationtech.udig.project.edit; singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.locationtech.udig.project.internal.provider.ProjectEditPlugin$Implementation
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Export-Package: org.locationtech.udig.project.internal.provider,
+ org.locationtech.udig.project.internal.render.provider
+Require-Bundle: org.locationtech.udig.project;visibility:=reexport,
+ org.eclipse.jface,
+ org.locationtech.udig.catalog,
+ org.locationtech.udig.ui,
+ org.eclipse.emf.edit.ui;visibility:=reexport,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.catalog.ui,
+ org.eclipse.emf.ecore.edit
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

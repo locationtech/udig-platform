@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JGrass Catalog Plugin
+Bundle-SymbolicName: org.locationtech.udig.catalog.jgrass;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.locationtech.udig.catalog.jgrass.JGrassPlugin
+Bundle-Vendor: HydroloGIS S.r.l.
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.libs,
+ org.locationtech.udig.core,
+ org.locationtech.udig.catalog,
+ org.locationtech.udig.catalog.rasterings;bundle-version="1.2.0",
+ org.locationtech.udig.catalog.ui,
+ org.locationtech.udig.project.ui,
+ org.locationtech.udig.mapgraphic
+Eclipse-LazyStart: true
+Export-Package: org.locationtech.udig.catalog.jgrass,
+ org.locationtech.udig.catalog.jgrass.activeregion,
+ org.locationtech.udig.catalog.jgrass.activeregion.dialogs,
+ org.locationtech.udig.catalog.jgrass.core,
+ org.locationtech.udig.catalog.jgrass.messages,
+ org.locationtech.udig.catalog.jgrass.operations,
+ org.locationtech.udig.catalog.jgrass.utils,
+ org.locationtech.udig.catalog.jgrass.workspacecreation
+Import-Package: javax.media.jai,
+ javax.media.jai.iterator
+

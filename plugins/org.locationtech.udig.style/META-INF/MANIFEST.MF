@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %plugin.name
+Bundle-SymbolicName: org.locationtech.udig.style; singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.locationtech.udig.style.StylePlugin
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Export-Package: org.locationtech.udig.style,
+ org.locationtech.udig.style.internal,
+ org.locationtech.udig.style.ui
+Require-Bundle: org.locationtech.udig.core,
+ org.locationtech.udig.project,
+ org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.locationtech.udig.ui
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
