@@ -2,7 +2,7 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
     <parent>
-        <groupId>net.refractions.udig</groupId>
+        <groupId>org.locationtech.udig</groupId>
         <artifactId>pom-libs.parent</artifactId>
         <version>0.0.1</version>
         <relativePath>../../pom-libs.xml</relativePath>
@@ -16,7 +16,7 @@
             mvn package -f pom-libs.xml 
 
         After they have downloaded, make sure you:
-          - refresh the net.refractions.udig.libs project in Eclipse;
+          - refresh the org.locationtech.udig.libs project in Eclipse;
           - verify the classpath (Manfiest Runtime tab) references the libs;
           - ensure the lib versions in the classpath are also correct. -->
 
@@ -44,7 +44,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     
-    <groupId>net.refractions.udig</groupId>
+    <groupId>org.locationtech.udig</groupId>
     <artifactId>libs</artifactId>
     <version>1.3.3</version>
     <name>uDig 3rd-Party Core libraries Download</name>
@@ -508,7 +508,7 @@
         </dependency>
 
         <!-- We get this from the base RCP as such they are already provided by 
-        our net.refractions.udig.libs dependencies in the MANIFEST.MF 
+        our org.locationtech.udig.libs dependencies in the MANIFEST.MF 
         and we don't need to ask for them to be downloaded now. -->
         <!--<dependency>
             <groupId>org.apache</groupId>
