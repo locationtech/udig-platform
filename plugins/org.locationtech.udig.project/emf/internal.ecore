@@ -2,26 +2,26 @@
 <ecore:EPackage xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="internal"
-    nsURI="http:///net/refractions/udig/project/internal.ecore" nsPrefix="net.refractions.udig.project.internal">
+    nsURI="http:///org/locationtech/udig/project/internal.ecore" nsPrefix="org.locationtech.udig.project.internal">
   <eClassifiers xsi:type="ecore:EClass" name="Comparable" instanceTypeName="Comparable"
       abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IMap" instanceClassName="net.refractions.udig.project.IMap"
+  <eClassifiers xsi:type="ecore:EClass" name="IMap" instanceClassName="org.locationtech.udig.project.IMap"
       abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ILayer" instanceClassName="net.refractions.udig.project.ILayer"
+  <eClassifiers xsi:type="ecore:EClass" name="ILayer" instanceClassName="org.locationtech.udig.project.ILayer"
       abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IEditManager" instanceClassName="net.refractions.udig.project.IEditManager"
+  <eClassifiers xsi:type="ecore:EClass" name="IEditManager" instanceClassName="org.locationtech.udig.project.IEditManager"
       abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IProject" instanceClassName="net.refractions.udig.project.IProject"
+  <eClassifiers xsi:type="ecore:EClass" name="IProject" instanceClassName="org.locationtech.udig.project.IProject"
       abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IAbstractContext" instanceClassName="net.refractions.udig.project.IAbstractContext"
+  <eClassifiers xsi:type="ecore:EClass" name="IAbstractContext" instanceClassName="org.locationtech.udig.project.IAbstractContext"
       abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IBlackboard" instanceClassName="net.refractions.udig.project.IBlackboard"
+  <eClassifiers xsi:type="ecore:EClass" name="IBlackboard" instanceClassName="org.locationtech.udig.project.IBlackboard"
       abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IProjectElement" instanceClassName="net.refractions.udig.project.IProjectElement"
+  <eClassifiers xsi:type="ecore:EClass" name="IProjectElement" instanceClassName="org.locationtech.udig.project.IProjectElement"
       abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IRenderManager" instanceClassName="net.refractions.udig.project.render.IRenderManager"
+  <eClassifiers xsi:type="ecore:EClass" name="IRenderManager" instanceClassName="org.locationtech.udig.project.render.IRenderManager"
       abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IViewportModel" instanceClassName="net.refractions.udig.project.render.IViewportModel"
+  <eClassifiers xsi:type="ecore:EClass" name="IViewportModel" instanceClassName="org.locationtech.udig.project.render.IViewportModel"
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="ContextModel">
     <eStructuralFeatures xsi:type="ecore:EReference" name="layers" upperBound="-1"
@@ -190,7 +190,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IAdaptable" instanceClassName="org.eclipse.core.runtime.IAdaptable"
       abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IBlockingAdaptable" instanceClassName="net.refractions.udig.core.IBlockingAdaptable"
+  <eClassifiers xsi:type="ecore:EClass" name="IBlockingAdaptable" instanceClassName="org.locationtech.udig.core.IBlockingAdaptable"
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="Blackboard" eSuperTypes="#//IBlackboard">
     <eStructuralFeatures xsi:type="ecore:EReference" name="entries" upperBound="-1"
@@ -204,54 +204,54 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="object" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"
         volatile="true" transient="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IResolveChangeListener" instanceClassName="net.refractions.udig.catalog.IResolveChangeListener"
+  <eClassifiers xsi:type="ecore:EClass" name="IResolveChangeListener" instanceClassName="org.locationtech.udig.catalog.IResolveChangeListener"
       abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IStyleBlackboard" instanceClassName="net.refractions.udig.project.IStyleBlackboard"
+  <eClassifiers xsi:type="ecore:EClass" name="IStyleBlackboard" instanceClassName="org.locationtech.udig.project.IStyleBlackboard"
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="InteractionToEBooleanObjectMapEntry"
       instanceClassName="java.util.Map$Entry">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="#//Interaction"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBooleanObject"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IFolder" instanceClassName="net.refractions.udig.project.IFolder"
+  <eClassifiers xsi:type="ecore:EClass" name="IFolder" instanceClassName="org.locationtech.udig.project.IFolder"
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="Folder" eSuperTypes="#//IFolder #//LegendItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="items" upperBound="-1"
         eType="#//ILegendItem" containment="true" resolveProxies="false"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ILayerLegendItem" instanceClassName="net.refractions.udig.project.ILayerLegendItem"
+  <eClassifiers xsi:type="ecore:EClass" name="ILayerLegendItem" instanceClassName="org.locationtech.udig.project.ILayerLegendItem"
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="LegendItem" eSuperTypes="#//ILegendItem">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="shown" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="icon" eType="#//ImageDescriptor"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ILegendItem" instanceClassName="net.refractions.udig.project.ILegendItem"
+  <eClassifiers xsi:type="ecore:EClass" name="ILegendItem" instanceClassName="org.locationtech.udig.project.ILegendItem"
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Coordinate" instanceClassName="com.vividsolutions.jts.geom.Coordinate"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="MapDisplay" instanceClassName="net.refractions.udig.project.render.displayAdapter.IMapDisplay"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="MapDisplay" instanceClassName="org.locationtech.udig.project.render.displayAdapter.IMapDisplay"/>
   <eClassifiers xsi:type="ecore:EDataType" name="List" instanceClassName="java.util.List"/>
   <eClassifiers xsi:type="ecore:EDataType" name="AffineTransform" instanceClassName="java.awt.geom.AffineTransform"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="NavCommandStack" instanceClassName="net.refractions.udig.project.command.NavCommandStack"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="IGeoResource" instanceClassName="net.refractions.udig.catalog.IGeoResource"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="NavCommandStack" instanceClassName="org.locationtech.udig.project.command.NavCommandStack"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="IGeoResource" instanceClassName="org.locationtech.udig.catalog.IGeoResource"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Filter" instanceClassName="org.opengis.filter.Filter"/>
   <eClassifiers xsi:type="ecore:EDataType" name="CoordinateReferenceSystem" instanceClassName="org.opengis.referencing.crs.CoordinateReferenceSystem"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="CommandStack" instanceClassName="net.refractions.udig.project.command.CommandStack"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="CommandStack" instanceClassName="org.locationtech.udig.project.command.CommandStack"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Point" instanceClassName="java.awt.Point"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Adapter" instanceClassName="org.eclipse.emf.common.notify.Adapter"/>
   <eClassifiers xsi:type="ecore:EDataType" name="IProgressMonitor" instanceClassName="org.eclipse.core.runtime.IProgressMonitor"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Query" instanceClassName="org.geotools.data.Query"/>
   <eClassifiers xsi:type="ecore:EDataType" name="URL" instanceClassName="java.net.URL"/>
   <eClassifiers xsi:type="ecore:EDataType" name="ImageDescriptor" instanceClassName="org.eclipse.jface.resource.ImageDescriptor"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="EditCommand" instanceClassName="net.refractions.udig.project.command.EditCommand"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="NavCommand" instanceClassName="net.refractions.udig.project.command.NavCommand"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="EditCommand" instanceClassName="org.locationtech.udig.project.command.EditCommand"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="NavCommand" instanceClassName="org.locationtech.udig.project.command.NavCommand"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Envelope" instanceClassName="com.vividsolutions.jts.geom.Envelope"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="EditManagerControlCommand" instanceClassName="net.refractions.udig.project.command.EditManagerControlCommand"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="Command" instanceClassName="net.refractions.udig.project.command.MapCommand"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="EditManagerControlCommand" instanceClassName="org.locationtech.udig.project.command.EditManagerControlCommand"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Command" instanceClassName="org.locationtech.udig.project.command.MapCommand"/>
   <eClassifiers xsi:type="ecore:EDataType" name="URI" instanceClassName="org.eclipse.emf.common.util.URI"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="CatalogRef" instanceClassName="net.refractions.udig.project.internal.CatalogRef"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="ColourPalette" instanceClassName="net.refractions.udig.ui.palette.ColourPalette"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="ColourScheme" instanceClassName="net.refractions.udig.ui.palette.ColourScheme"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="CatalogRef" instanceClassName="org.locationtech.udig.project.internal.CatalogRef"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ColourPalette" instanceClassName="org.locationtech.udig.ui.palette.ColourPalette"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ColourScheme" instanceClassName="org.locationtech.udig.ui.palette.ColourScheme"/>
   <eClassifiers xsi:type="ecore:EDataType" name="MutablePicoContainer" instanceClassName="org.picocontainer.MutablePicoContainer"/>
   <eClassifiers xsi:type="ecore:EDataType" name="ReferencedEnvelope" instanceClassName="org.geotools.geometry.jts.ReferencedEnvelope"/>
   <eClassifiers xsi:type="ecore:EDataType" name="FeatureEvent" instanceClassName="org.geotools.data.FeatureEvent"/>
@@ -260,7 +260,7 @@
   <eClassifiers xsi:type="ecore:EDataType" name="IOException" instanceClassName="java.io.IOException"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Color" instanceClassName="java.awt.Color"/>
   <eClassifiers xsi:type="ecore:EDataType" name="BrewerPalette" instanceClassName="org.geotools.brewer.color.BrewerPalette"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="Interaction" instanceClassName="net.refractions.udig.project.Interaction"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Interaction" instanceClassName="org.locationtech.udig.project.Interaction"/>
   <eClassifiers xsi:type="ecore:EClass" name="LayerLegendItem" eSuperTypes="#//LegendItem #//ILayerLegendItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="layer" lowerBound="1" eType="#//Layer"/>
   </eClassifiers>
