@@ -42,4 +42,11 @@ Export-Package: org.locationtech.udig.project,
  org.locationtech.udig.project.preferences,
  org.locationtech.udig.project.render,
  org.locationtech.udig.project.render.displayAdapter
-Import-Package: javax.media.jai
+Import-Package: javax.media.jai,
+ javax.media.jai.iterator,
+ javax.media.jai.operator,
+ javax.media.jai.registry,
+ javax.media.jai.remote,
+ javax.media.jai.tilecodec,
+ javax.media.jai.util,
+ javax.media.jai.widget

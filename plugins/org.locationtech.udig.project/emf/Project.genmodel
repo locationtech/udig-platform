@@ -2,22 +2,22 @@
 <genmodel:GenModel xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="uDig - User Friendly Desktop Internet GIS client&#xD;&#xA;http://udig.refractions.net&#xD;&#xA;(C) 2004-2012, Refractions Research Inc.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;(http://www.eclipse.org/legal/epl-v10.html), and Refractions BSD&#xD;&#xA;License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html)."
-    modelDirectory="/net.refractions.udig.project/src" creationCommands="false" creationIcons="false"
-    editDirectory="/net.refractions.udig.project.edit/src" editorDirectory="" modelPluginID="net.refractions.udig.project"
+    modelDirectory="/org.locationtech.udig.project/src" creationCommands="false" creationIcons="false"
+    editDirectory="/org.locationtech.udig.project.edit/src" editorDirectory="" modelPluginID="org.locationtech.udig.project"
     templateDirectory="" runtimeJar="true" forceOverwrite="true" modelName="Project"
-    modelPluginClass="net.refractions.udig.project.internal.ProjectPlugin" editPluginClass="net.refractions.udig.project.internal.provider.ProjectEditPlugin"
+    modelPluginClass="org.locationtech.udig.project.internal.ProjectPlugin" editPluginClass="org.locationtech.udig.project.internal.provider.ProjectEditPlugin"
     editorPluginClass="" nonNLSMarkers="true" suppressEMFTypes="true" codeFormatting="true"
     testsDirectory="" testSuiteClass="" importerID="org.eclipse.emf.importer.java"
     complianceLevel="5.0" copyrightFields="false" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
   <foreignModel>@model</foreignModel>
-  <genPackages prefix="Element" basePackage="net.refractions.udig.project" disposableProviderFactory="true"
+  <genPackages prefix="Element" basePackage="org.locationtech.udig.project" disposableProviderFactory="true"
       ecorePackage="element.ecore#/">
     <genDataTypes ecoreDataType="element.ecore#//IGenericProjectElement"/>
     <genClasses ecoreClass="element.ecore#//ProjectElementAdapter">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute element.ecore#//ProjectElementAdapter/backingObject"/>
     </genClasses>
   </genPackages>
-  <genPackages prefix="Project" basePackage="net.refractions.udig.project" ecorePackage="internal.ecore#/">
+  <genPackages prefix="Project" basePackage="org.locationtech.udig.project" ecorePackage="internal.ecore#/">
     <genDataTypes ecoreDataType="internal.ecore#//Coordinate"/>
     <genDataTypes ecoreDataType="internal.ecore#//MapDisplay"/>
     <genDataTypes ecoreDataType="internal.ecore#//List"/>
@@ -213,7 +213,7 @@
     </genClasses>
     <genClasses image="false" ecoreClass="internal.ecore#//ILegendItem"/>
   </genPackages>
-  <genPackages prefix="Render" basePackage="net.refractions.udig.project.internal"
+  <genPackages prefix="Render" basePackage="org.locationtech.udig.project.internal"
       ecorePackage="render.ecore#/">
     <genDataTypes ecoreDataType="render.ecore#//CoordinateReferenceSystem"/>
     <genDataTypes ecoreDataType="render.ecore#//Envelope"/>

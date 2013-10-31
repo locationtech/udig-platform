@@ -2,16 +2,16 @@
 <ecore:EPackage xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="render"
-    nsURI="http:///net/refractions/udig/project/internal/render.ecore" nsPrefix="net.refractions.udig.project.internal.render">
-  <eClassifiers xsi:type="ecore:EClass" name="IRenderManager" instanceClassName="net.refractions.udig.project.render.IRenderManager"
+    nsURI="http:///org/locationtech/udig/project/internal/render.ecore" nsPrefix="org.locationtech.udig.project.internal.render">
+  <eClassifiers xsi:type="ecore:EClass" name="IRenderManager" instanceClassName="org.locationtech.udig.project.render.IRenderManager"
       abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IViewportModel" instanceClassName="net.refractions.udig.project.render.IViewportModel"
+  <eClassifiers xsi:type="ecore:EClass" name="IViewportModel" instanceClassName="org.locationtech.udig.project.render.IViewportModel"
       abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IMultiLayerRenderer" instanceClassName="net.refractions.udig.project.render.IMultiLayerRenderer"
+  <eClassifiers xsi:type="ecore:EClass" name="IMultiLayerRenderer" instanceClassName="org.locationtech.udig.project.render.IMultiLayerRenderer"
       abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IRenderer" instanceClassName="net.refractions.udig.project.render.IRenderer"
+  <eClassifiers xsi:type="ecore:EClass" name="IRenderer" instanceClassName="org.locationtech.udig.project.render.IRenderer"
       abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ILayer" instanceClassName="net.refractions.udig.project.ILayer"
+  <eClassifiers xsi:type="ecore:EClass" name="ILayer" instanceClassName="org.locationtech.udig.project.ILayer"
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="MultiLayerRenderer" abstract="true"
       eSuperTypes="#//Renderer #//IMultiLayerRenderer">
@@ -109,13 +109,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="context" eType="#//IRenderContext"
         transient="true" resolveProxies="false"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IMapDisplayListener" instanceClassName="net.refractions.udig.project.render.displayAdapter.IMapDisplayListener"
+  <eClassifiers xsi:type="ecore:EClass" name="IMapDisplayListener" instanceClassName="org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener"
       abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IRenderContext" instanceClassName="net.refractions.udig.project.render.IRenderContext"
+  <eClassifiers xsi:type="ecore:EClass" name="IRenderContext" instanceClassName="org.locationtech.udig.project.render.IRenderContext"
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EDataType" name="CoordinateReferenceSystem" instanceClassName="org.opengis.referencing.crs.CoordinateReferenceSystem"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Envelope" instanceClassName="com.vividsolutions.jts.geom.Envelope"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="IGeoResource" instanceClassName="net.refractions.udig.catalog.IGeoResource"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="IGeoResource" instanceClassName="org.locationtech.udig.catalog.IGeoResource"/>
   <eClassifiers xsi:type="ecore:EDataType" name="BufferedImage" instanceClassName="java.awt.image.BufferedImage"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Rectangle" instanceClassName="java.awt.Rectangle"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Query" instanceClassName="org.geotools.data.Query"/>
@@ -124,9 +124,9 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Coordinate" instanceClassName="com.vividsolutions.jts.geom.Coordinate"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Point" instanceClassName="java.awt.Point"/>
   <eClassifiers xsi:type="ecore:EDataType" name="AffineTransform" instanceClassName="java.awt.geom.AffineTransform"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="MapDisplay" instanceClassName="net.refractions.udig.project.render.displayAdapter.IMapDisplay"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="MapDisplay" instanceClassName="org.locationtech.udig.project.render.displayAdapter.IMapDisplay"/>
   <eClassifiers xsi:type="ecore:EDataType" name="IProgressMonitor" instanceClassName="org.eclipse.core.runtime.IProgressMonitor"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="RenderException" instanceClassName="net.refractions.udig.project.render.RenderException"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="RenderException" instanceClassName="org.locationtech.udig.project.render.RenderException"/>
   <eClassifiers xsi:type="ecore:EDataType" name="SortedSet" instanceClassName="java.util.SortedSet">
     <eTypeParameters name="T"/>
   </eClassifiers>

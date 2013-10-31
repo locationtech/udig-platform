@@ -63,4 +63,5 @@ Import-Package: javax.media.jai,
  javax.media.jai.remote,
  javax.media.jai.tilecodec,
  javax.media.jai.util,
+ javax.media.jai.widget,
  net.miginfocom.swt;version="[3.7.0,3.8.0)"
