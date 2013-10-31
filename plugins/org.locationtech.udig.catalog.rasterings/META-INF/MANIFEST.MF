@@ -14,3 +14,10 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.locationtech.udig.catalog.rasterings
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: udig.refractions.net
+Import-Package: javax.media.jai,
+ javax.media.jai.iterator,
+ javax.media.jai.operator,
+ javax.media.jai.registry,
+ javax.media.jai.remote,
+ javax.media.jai.tilecodec,
+ javax.media.jai.util

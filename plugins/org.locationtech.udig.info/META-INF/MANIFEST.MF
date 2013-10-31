@@ -24,4 +24,11 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.catalog.shp;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: net.miginfocom.swt;version="[3.7.0,3.8.0)"
+Import-Package: javax.media.jai,
+ javax.media.jai.iterator,
+ javax.media.jai.operator,
+ javax.media.jai.registry,
+ javax.media.jai.remote,
+ javax.media.jai.tilecodec,
+ javax.media.jai.util,
+ net.miginfocom.swt;version="[3.7.0,3.8.0)"

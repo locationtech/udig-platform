@@ -17,3 +17,10 @@ Require-Bundle: org.eclipse.ui,
 Eclipse-LazyStart: true
 Bundle-ClassPath: .
 Export-Package: org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools
+Import-Package: javax.media.jai,
+ javax.media.jai.iterator,
+ javax.media.jai.operator,
+ javax.media.jai.registry,
+ javax.media.jai.remote,
+ javax.media.jai.tilecodec,
+ javax.media.jai.util
