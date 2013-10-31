@@ -28,3 +28,10 @@ Export-Package: org.locationtech.udig.image.georeferencing;uses:="org.eclipse.ui
  org.locationtech.udig.image.georeferencing.internal.ui.message;x-internal:=true,
  org.locationtech.udig.image.georeferencing.ui,
  org.locationtech.udig.image.georeferencing.ui.images
+Import-Package: javax.media.jai,
+ javax.media.jai.iterator,
+ javax.media.jai.operator,
+ javax.media.jai.registry,
+ javax.media.jai.remote,
+ javax.media.jai.tilecodec,
+ javax.media.jai.util
