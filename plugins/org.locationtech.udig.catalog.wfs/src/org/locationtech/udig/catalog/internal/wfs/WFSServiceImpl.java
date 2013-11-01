@@ -20,26 +20,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.data.DataStore;
+import org.geotools.data.wfs.WFSDataStore;
+import org.geotools.data.wfs.WFSDataStoreFactory;
 import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.IResolveChangeEvent;
 import org.locationtech.udig.catalog.IResolveDelta;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.IServiceInfo;
-import org.locationtech.udig.catalog.IResolve.Status;
 import org.locationtech.udig.catalog.internal.CatalogImpl;
 import org.locationtech.udig.catalog.internal.ResolveChangeEvent;
 import org.locationtech.udig.catalog.internal.ResolveDelta;
 import org.locationtech.udig.catalog.wfs.internal.Messages;
-import org.locationtech.udig.ui.ErrorManager;
 import org.locationtech.udig.ui.UDIGDisplaySafeLock;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.geotools.data.DataStore;
-import org.geotools.data.wfs.WFSDataStore;
-import org.geotools.data.wfs.WFSDataStoreFactory;
 
 /**
  * Handle for a WFS service.

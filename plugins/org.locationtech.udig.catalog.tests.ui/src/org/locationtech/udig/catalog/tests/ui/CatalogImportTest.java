@@ -34,21 +34,21 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CatalogImportTest {
-	
+public abstract class CatalogImportTest {
+
 	CatalogImport catalogImport;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		catalogImport = new CatalogImport();
 	}
-	
+
     @Test
 	public void testNormal() throws Exception{
 			Object context = getContext();
-			
+
 			final ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
-			
+
 			List members = catalog.members(new DummyMonitor());
 			if (!members.isEmpty()) {
 				//clear the catalog
@@ -59,11 +59,11 @@ public class CatalogImportTest {
 			}
 			members = catalog.members(new DummyMonitor());
 			assertTrue(members.isEmpty());
-			
+
 			catalogImport.getDialog().getWorkflowWizard().getWorkflow()
 				.setContext(context);
 			catalogImport.run(new DummyMonitor(),context);
-			
+
             //sleep for 10 seconds, if dialog still active by then kill it
             UDIGTestUtil.inDisplayThreadWait(2000000, new WaitCondition(){
 
@@ -74,9 +74,9 @@ public class CatalogImportTest {
                         return false;
                     }
                 }
-                
+
             }, true);
-            
+
 			members = catalog.members(new DummyMonitor());
 			assertTrue(!members.isEmpty());
 			for (Iterator itr = members.iterator(); itr.hasNext();) {
@@ -84,38 +84,7 @@ public class CatalogImportTest {
 			}
 	}
 
-    @Test
-	public void testConnectionError() throws MalformedURLException {
-			//create a bad context object, lets say a wfs that doesn't exist
-			URL context = new URL("http://foo.blah.hehehe/geoserver/wfs"); //$NON-NLS-1$
-			
-			
-			Assertion a1 = new Assertion() {
-				@Override
-				public void run() {
-					fail = !(catalogImport.getDialog().getCurrentPage() instanceof ConnectionErrorPage);
-				}
-			};
-			//sleep for 10 seconds, if dialog still active by then kill it
-			DialogDriver driver = new DialogDriver(
-				catalogImport.getDialog(), 
-				new Object[]{
-					a1, IDialogConstants.CANCEL_ID
-				}
-			);
-			
-			driver.schedule();
-			catalogImport.getDialog().getWorkflowWizard().getWorkflow()
-				.setContext(context);
-			catalogImport.run(new DummyMonitor(),context);
-			driver.cancel();
-	}
-	
-	Object getContext() throws Exception {
-		return new URL("http://demo.opengeo.org/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
-	}
-	
-	void assertServiceType(IService service) {
-		assertTrue(service instanceof WMSServiceImpl);
-	}
+	abstract Object getContext() throws Exception;
+
+	abstract void assertServiceType(IService service);
 }

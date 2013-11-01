@@ -14,6 +14,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.net.URL;
 
+import org.junit.Ignore;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.internal.wfs.WFSServiceImpl;
 
@@ -23,10 +24,10 @@ public class WFSCatalogImportTest extends CatalogImportTest {
 	Object getContext() throws Exception {
 		return new URL("http://www2.dmsolutions.ca/cgi-bin/mswfs_gmap?version=1.0.0&request=getcapabilities&service=wfs"); //$NON-NLS-1$
 	}
-	
+
 	@Override
 	void assertServiceType(IService service) {
 		assertTrue(service instanceof WFSServiceImpl);
 	}
-	
+
 }
