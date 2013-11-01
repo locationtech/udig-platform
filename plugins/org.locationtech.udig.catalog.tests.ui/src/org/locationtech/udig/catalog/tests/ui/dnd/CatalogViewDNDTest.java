@@ -39,7 +39,7 @@ import org.eclipse.ui.PlatformUI;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CatalogViewDNDTest {
+public abstract class CatalogViewDNDTest {
 
 	private ICatalog catalog;
 
@@ -72,7 +72,7 @@ public class CatalogViewDNDTest {
         handler.setTarget(view);
 		handler.setViewerLocation(ViewerDropLocation.NONE);
 	}
-	
+
     @Test
 	public void testSingle() throws Throwable {
 		Object data = getData();
@@ -91,7 +91,7 @@ public class CatalogViewDNDTest {
 
             public void starting( IDropAction action ) {
             }
-            
+
         });
 		handler.performDrop(data, null);
 
@@ -131,7 +131,7 @@ public class CatalogViewDNDTest {
 
             public void starting( IDropAction action ) {
             }
-            
+
         });
 
 
@@ -149,7 +149,7 @@ public class CatalogViewDNDTest {
 		};
 
 		UDIGTestUtil.inDisplayThreadWait(20000, condition, false);
-        
+
         if( failure[0]!=null )
             throw failure[0];
 
@@ -164,18 +164,8 @@ public class CatalogViewDNDTest {
         return "At least 1 dummy resource objects should be in catalog"; //$NON-NLS-1$
     }
 
-    protected Object getData() throws Exception {
-		return DummyService.url;
-
-	}
-
-	Object getDataMulti() throws Exception {
-		return new URL[] {
-				new URL(DummyService.url.toExternalForm() + "/dummy1"), //$NON-NLS-1$
-				new URL(DummyService.url.toExternalForm() + "/dummy2"), //$NON-NLS-1$
-				new File("Does Not Exist").toURI().toURL() //$NON-NLS-1$
-		};
-	}
+    abstract Object getData() throws Exception;
+	abstract Object getDataMulti() throws Exception;
 
 	void makeAssertion(String assertionDescription, ICatalog catalog) throws Exception {
 		assertTrue(assertionDescription, !catalog.members(null).isEmpty());

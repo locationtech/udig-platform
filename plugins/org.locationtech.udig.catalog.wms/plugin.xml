@@ -30,11 +30,11 @@
  <extension
        point="org.locationtech.udig.catalog.friendly">
     <friend
-          class="net.refractions.catalog.util.internal.GeoServerFriend"
+          class="org.locationtech.catalog.util.internal.GeoServerFriend"
           contain="geoserver/wms"
           source="org.locationtech.udig.catalog.internal.wms.WMSGeoResourceImpl"/>
     <friend
-          class="net.refractions.catalog.util.internal.GeoServerTileSetFriend"
+          class="org.locationtech.catalog.util.internal.GeoServerTileSetFriend"
           contain="geoserver/wms"
           source="org.locationtech.udig.catalog.internal.wms.WMSGeoResourceImpl">
     </friend>
