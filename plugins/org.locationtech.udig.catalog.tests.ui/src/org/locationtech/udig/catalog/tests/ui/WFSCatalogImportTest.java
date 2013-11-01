@@ -14,7 +14,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.net.URL;
 
-import org.junit.Ignore;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.internal.wfs.WFSServiceImpl;
 
