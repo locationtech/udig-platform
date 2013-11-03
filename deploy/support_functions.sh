@@ -5,10 +5,10 @@ function assemble() {
     EXT=$2
     PLATFORM_JRE=$3
     
-    echo "Looking for ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip"
+    echo "Looking for ${PRODUCT_TARGET}/org.locationtech.udig-product-${EXT}.zip"
     
     # Release win32 if available
-    if [ -f ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip ] 
+    if [ -f ${PRODUCT_TARGET}/org.locationtech.udig-product-${EXT}.zip ] 
     then
         echo "Releasing ${PLATFORM}"
 
@@ -22,8 +22,8 @@ function assemble() {
         then
             echo "Building ${BUILD}/udig-${VERSION}.${EXT}.zip ..."
 
-            echo "Extracting ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip"
-            unzip -q -d ${BUILD}/${PLATFORM}/udig ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip
+            echo "Extracting ${PRODUCT_TARGET}/org.locationtech.udig-product-${EXT}.zip"
+            unzip -q -d ${BUILD}/${PLATFORM}/udig ${PRODUCT_TARGET}/org.locationtech.udig-product-${EXT}.zip
 
             echo "Preparing ${BUILD}/${PLATFORM} with ${JRE}/${PLATFORM_JRE}"
 
@@ -39,9 +39,9 @@ function assemble() {
            echo "Already Exists ${BUILD}/udig-${VERSION}.${EXT}.zip"
         fi
     else 
-        echo "Unable to locate ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip"
+        echo "Unable to locate ${PRODUCT_TARGET}/org.locationtech.udig-product-${EXT}.zip"
         echo
-        echo "Available for release in net.refractions.udig_sdk-feature:"
+        echo "Available for release in org.locationtech.udig_sdk-feature:"
         ls ${PRODUCT_TARGET}/*.zip | xargs -n1 basename
         echo
         echo "To generate use: mvn install -Pproduct"
@@ -58,7 +58,7 @@ function prepare_resources () {
     cp ${BASE}/bsd3-v10.html ${BUILD}/${PLATFORM}/udig
     cp ${BASE}/notice.html ${BUILD}/${PLATFORM}/udig
     
-    cat ../plugins/net.refractions.udig.libs/.options >> ${BUILD}/${PLATFORM}/udig/.options
+    cat ../plugins/org.locationtech.udig.libs/.options >> ${BUILD}/${PLATFORM}/udig/.options
     mkdir ${BUILD}/${PLATFORM}/udig/dropins
     
     if [ ! -f ${BUILD}/udig-${VERSION}.html ]
