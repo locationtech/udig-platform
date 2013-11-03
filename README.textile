@@ -45,18 +45,22 @@ There are two ways to take part: indirectly using github pull requests; and dire
 
 h1. Build Instructions
 
-1. Here is the branch, check it out, or fork as you see fit:
-
-   * https://github.com/uDig/udig-platform/tree/locationtech_ip
+1. We have three branches in our short term roadmap:
+   
+   * https://github.com/uDig/udig-platform/tree/master
+   * https://github.com/uDig/udig-platform/tree/locationtech_rename
+   * https://github.com/uDig/udig-platform/tree/locationtech_ip2
+   
+   Check out the branch you wish to work with (or fork as you see fit).
 
    To check it out:
    <pre><code>
      git clone https://github.com/uDig/udig-platform.git udig
      cd udig
-     git checkout locationtech_ip
+     git checkout locationtech_rename
    </pre></code>
 
-2. Download stuff (using maven and wget):
+2. Download stuff (using maven to launch small ant download scripts):
    <pre><code>
      mvn clean install -f pom-libs.xml
 
@@ -66,14 +70,7 @@ h1. Build Instructions
      [INFO] Total time: 8:05.291s
    </code></pre>
 
-3. Build native fragments used for target platform:
-   <pre><code>
-     cd libs
-     cd jai-imageio
-     mvn clean install
-   </code></pre>
-
-4. Build Online Help (requires and sphinx-build to be installed):
+3. Build Online Help (requires and sphinx-build to be installed):
    <pre><code>
      cd docs
      ant help-deploy
@@ -84,6 +81,23 @@ h1. Build Instructions
      BUILD SUCCESSFUL
      Total time: 13 seconds
    </code></pre>
+
+h2. Option - JAI Native Fragments
+
+The JAI and ImageIO Java Runtime Extensions are not open source (source code available under research license). As such these items can be made available via:
+
+* Normal JRE Installation (use osgi.parentClassLoader=ext runtime  option for this to work)
+* Published in a Refractions P2 repository for SDK developers who wish to continue to use bundles to manage these dependencies
+
+To build native fragments used for target platform:
+   
+   <pre><code>
+     cd libs
+     cd jai-imageio
+     mvn clean install
+   </code></pre>
+
+You will need to ask Frank where this source code went.
 
 h2. Option - Command Line Build
 
