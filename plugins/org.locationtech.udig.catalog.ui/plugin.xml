@@ -267,6 +267,7 @@
                   mnemonic="R"
                   tooltip="%resetService.tooltip">
                <visibleWhen>
+                  <!-- TODO Review : Reference identifier .. cannot be found -->
                   <reference
                         definitionId="org.locationtech.udig.catalog.ui.contribution.inServiceActionSet">
                   </reference>

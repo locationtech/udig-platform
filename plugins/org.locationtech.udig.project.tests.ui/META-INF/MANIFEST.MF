@@ -4,7 +4,6 @@ Bundle-Name: Project UI Test Plug-in
 Bundle-SymbolicName: org.locationtech.udig.project.tests.ui; singleton:=true
 Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: org.locationtech.udig.project.ui.TestsUIPlugin
-Bundle-Localization: plugin
 Export-Package: org.locationtech.udig;
   uses:="org.locationtech.udig.project.render.displayAdapter,
    org.locationtech.udig.project.internal.render,

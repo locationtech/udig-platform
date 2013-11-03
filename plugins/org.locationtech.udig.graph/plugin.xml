@@ -2,8 +2,6 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         id="org.locationtech.udig.graph.graphics"
-         name="Graphing Graphics"
          point="org.locationtech.udig.mapgraphic.mapgraphic">
       <mapGraphic
             class="org.locationtech.udig.graph.internal.GraphMapGraphic"
@@ -15,7 +13,7 @@
             class="org.locationtech.udig.graph.internal.PathMapGraphic"
             icon="icons/etool16/path.png"
             id="org.locationtech.udig.graph.graph.graphics.path"
-            name="Path">            
+            name="Path">
       </mapGraphic>
    </extension>
    
@@ -29,7 +27,6 @@
             id="org.locationtech.udig.tutorials.tracking.graph.findpath"
             name="Generate route through all waypoints"
             targetClass="org.locationtech.udig.project.ILayer">
-         <enablement></enablement>
       </operation>
       <operation
             class="org.locationtech.udig.graph.internal.LineGraphOp"

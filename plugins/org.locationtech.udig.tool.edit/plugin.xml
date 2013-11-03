@@ -494,7 +494,7 @@
          <enablement>
             <and>
                 <property propertyId="org.locationtech.udig.tools.edit.CurrentShape.ShapeType" expectedValue="LINE"/>
-			    <property propertyId="org.locationtech.udig.project.ui.OpenMap" expectedValue="java.lang.Object"/>
+                <property propertyId="org.locationtech.udig.project.ui.OpenMap" expectedValue="java.lang.Object"/>
             </and>
          </enablement>
       </operation>
