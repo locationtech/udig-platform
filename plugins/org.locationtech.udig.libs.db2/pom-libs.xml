@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <parent>
+        <groupId>org.locationtech.udig</groupId>
+        <artifactId>pom-libs.parent</artifactId>
+        <version>0.0.1</version>
+        <relativePath>../../pom-libs.xml</relativePath>
+    </parent>
+
+    <!-- 
+        At the time of writing we cannot distrubtue the DB2 JDBC drivers
+        and have created placeholder using a an empty DUMMY.txt file.
+        
+        At runtime users can in stall the readl thing downloaded from IBM.
+        
+        You will need to generate the dummy jars using:
+            
+            mvn package -f pom-libs.xml 
+        
+        Details:
+        
+        1. Zip up a single DUMMY.txt file into an db2jcc.jar and db2jcc_license_cu.jar
+        2. This gives us something to add to the plugin MANIFEST.MF
+        3. Proivde a wizard for users to replace these jars
+     -->
+
+    <developers>
+        <developer>
+            <id>jodygarnett</id>
+            <name>Jody Garnett</name>
+            <email>jody.garnett@gmail.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+10</timezone>
+        </developer>
+        <developer>
+            <id>fgdrf</id>
+            <name>Frank Gasdorf</name>
+            <email>fgdrf@users.sourceforge.net</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>org.locationtech.udig.libs.db2</groupId>
+    <artifactId>download</artifactId>
+    <version>1.4.0</version>
+    <name>DB2 Dummy Jar Creation</name>
+    
+    <packaging>pom</packaging>
+
+    <properties>
+        <lib.dir>${basedir}/libs</lib.dir>
+        <lib.dummy.dir>${lib.dir}/dummy</lib.dummy.dir>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${lib.dir}</directory>
+                            <includes>
+                                <include>*.jar</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                        <fileset>
+                            <directory>${lib.dummy.dir}</directory>
+                            <includes>
+                                <include>*.*</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>create_dummy</id>
+                        <phase>compile</phase>
+                        <configuration>
+                            <target>
+                                <mkdir dir="${lib.dir}"/>
+                                <mkdir dir="${lib.dummy.dir}"/>
+                                <touch file="${lib.dummy.dir}/DUMMY.txt"/>
+                                
+                                <jar destfile="${lib.dir}/db2jcc.jar"
+                                     basedir="${lib.dummy.dir}">
+                                    <manifest>
+                                      <attribute name="Built-By" value="${user.name}"/>
+                                      <attribute name="Implementation-Title" value="Dummy"/>
+                                      <attribute name="Implementation-Version" value="1.0.0"/>
+                                    </manifest>
+                                </jar>
+                                <jar destfile="${lib.dir}/db2jcc_license_cu.jar">
+                                     basedir="${lib.dummy.dir}">
+                                    <manifest>
+                                      <attribute name="Built-By" value="${user.name}"/>
+                                      <attribute name="Implementation-Title" value="Dummy"/>
+                                      <attribute name="Implementation-Version" value="1.0.0"/>
+                                    </manifest>
+                                </jar>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+         </plugins>
+    </build>
+    
+</project>

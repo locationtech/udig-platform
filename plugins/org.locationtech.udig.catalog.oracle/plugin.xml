@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+    	<extension
+         point="org.locationtech.udig.catalog.ServiceExtension">
+      <service
+            class="org.locationtech.udig.catalog.internal.oracle.OracleServiceExtension"
+            id="Oracle"
+            name="Oracle"/>
+   	</extension>
+    <extension
+       point="org.locationtech.udig.catalog.ui.connectionFactory">
+
+	<factory class="org.locationtech.udig.catalog.internal.oracle.ui.OracleSpatialConnectionFactory"
+          id="org.locationtech.udig.catalog.ui.oracle"/>       
+    <wizardPage
+          banner="icons/wizban/oracle_wiz.gif"
+          class="org.locationtech.udig.catalog.internal.oracle.ui.OracleSpatialWizardPage"
+          description="%wizard.description"
+          icon="icons/etool16/oracle_wiz.gif"
+          name="%wizard.name"/>
+
+ </extension>
+    <extension
+          point="org.eclipse.ui.preferencePages">
+       <page
+             category="org.locationtech.udig.catalog.ui.preferences.CatalogPreferencePage"
+             class="org.locationtech.udig.catalog.internal.oracle.ui.OracleSpatialPreferences"
+             id="org.locationtech.udig.catalog.oracle.lib preferences"
+             name="%oracle.preferences"/>
+    </extension>
+</plugin>

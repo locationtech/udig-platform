@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>%friendly.name</title>
+<style type="text/css">@import url("file:/Users/jody/eclipse/372/eclipse-modeling/configuration/org.eclipse.osgi/bundles/396/1/.cp/book.css");</style>
+<style type="text/css">@import url("file:/Users/jody/eclipse/372/eclipse-modeling/configuration/org.eclipse.osgi/bundles/408/1/.cp/schema.css");</style>
+</HEAD>
+<BODY>
+<H1 style="text-align:center">%friendly.name</H1>
+<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Identifier: </h6>net.refractions.udig.catalog.friendly<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Since: </h6>uDig 1.1
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">Description: </h6>Allows additional associations be be discovered between peer geospatial resources (known as friends).<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Configuration Markup:</h6>
+<p></p>
+<p class="code SchemaDtd">&lt;!ELEMENT <a name="e.extension">extension</a> (<a href="#e.friend">friend</a>)*&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST extension</p>
+<p class="code SchemaDtdAttlist">point&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">id&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED</p><p class="code SchemaDtdAttlist">name&nbsp;&nbsp;CDATA #IMPLIED</p>&gt;</p>
+<p></p>
+<ul class="ConfigMarkupAttlistDesc">
+</ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.friend">friend</a> EMPTY&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST friend</p>
+<p class="code SchemaDtdAttlist">class&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">source&nbsp;&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">contain&nbsp;CDATA #IMPLIED</p>&gt;</p>
+<p></p>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>class</b> - Class responsible for examining the source and checking in the catalog to see if it has any known friends.</li>
+<li><b>source</b> - Used to perform an "instanceof" check to ensure friend relationship is limited to indicated class.</li>
+<li><b>contain</b> - Used to limit processing to resources that contain the indicated text. You can use this to only engage on a geoserver wms server by supplying the string "geoserver/wms"; similar tricks can be used to focus on mapserver or geowebcache servers.</li>
+</ul>
+<br><h6 class="CaptionFigColumn SchemaHeader">Examples: </h6>This extension point can be used to build up additional associations into the catalog reflecting knoweldege that is "well known". Normally associations are built up by asking a CatalogService; or by checking the various GetCapabilities information published by each service and noticing when two services refer to each other.
+
+This extension point offers an alternative; you may be able to "assume" that a geoserver installation and a geowebcache installation on the same machine are serving up the same data. At the very least you can assume that a geoserver wms and a geoserver wfs are serving the same data via two different protocols.
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">API Information: </h6>This extension point will ask that you implement an instance of IFriend.
+<p></p>
+
+<br>
+<p class="note SchemaCopyright">
+</p>
+</BODY>
+</HTML>

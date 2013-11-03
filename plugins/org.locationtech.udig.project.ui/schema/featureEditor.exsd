@@ -1,0 +1,235 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="org.locationtech.udig.project.ui" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="org.locationtech.udig.project.ui" id="featureEditor" name="Feature Editor"/>
+      </appInfo>
+      <documentation>
+         Declares a feature editor.  If a feature type is declared for the editor then the editor will only be available for use on features with a &lt;i&gt;matching&lt;/i&gt; feature type otherwise (if there is no decalred featureType element) the editor will be available for all features.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+         <documentation>
+            An extension point where extenders can add custom features editors to udig.  Context menus that open when the ActivePage has a feature as part of the selection will have an &quot;Edit Feature&quot; item and an &quot;Edit With&quot; submenu.  These new feature editors will begin the &quot;Edit With&quot; menu and if chosen will be also accessible when the &quot;Edit Feature&quot; item is selected(until the time that a different editor is chosen in the &quot;Edit With&quot; menu&quot;
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="editor" minOccurs="1" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The id of the extension point.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  The id of the extension.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  A human readable name for the extension.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="editor">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="name" icon="icon"/>
+         </appInfo>
+         <documentation>
+            The definition of the editor.  Either the viewId or the dialogPage must be specified. If both are specified then the view will be opened.
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="0" maxOccurs="1">
+            <element ref="featureType"/>
+         </sequence>
+         <attribute name="icon" type="string">
+            <annotation>
+               <documentation>
+                  The icon that will be displayed in the &quot;Edit With&quot; menu.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="resource"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The unique id of the editor.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The human readable name of the editor.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="viewId" type="string">
+            <annotation>
+               <documentation>
+                  If the feature editor is an eclipse view then this attribute will have the id of the view.
+The view must implement org.locationtech.udig.project.ui.IUDIGView
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="dialogPage" type="string">
+            <annotation>
+               <documentation>
+                  If this is defined then a dialog will be opened with the declared IUDIGDialogPage.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.ui.IUDIGDialogPage"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="featureType">
+      <annotation>
+         <documentation>
+            &lt;p&gt;FeatureType defines the feature type signature that the editor can edit.  If the selected feature is does not have the signature of the defined featureType then the editor will not show up in the &quot;edit with&quot; menu.&lt;/p&gt;
+&lt;p&gt;Either a typename is defined, which declares that the editor will edit only one type of feature, or a set of attributes.  If a set of attributes are declared then the editor will be available for editing any feature with a feature type that contains the set of attributes.&lt;/p&gt;
+         </documentation>
+      </annotation>
+      <complexType>
+         <choice>
+            <element ref="attribute" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="typeName"/>
+         </choice>
+      </complexType>
+   </element>
+
+   <element name="attribute">
+      <annotation>
+         <documentation>
+            &lt;p&gt;Defines an attribute in the featureType.  Defines a 1-many mapping between an editor and featureTypes.  If the name of the attribute is not set then the attribute will match all attributes of the declared type. &lt;/p&gt; 
+&lt;p&gt;See definition of featureType for more information.&lt;/p&gt;
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="type" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="typeName">
+      <annotation>
+         <documentation>
+            They typename of the featureType.  Defines a 1-1 mapping between an editor and a featureType.  See definition of featureType for more information.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="namespace" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Namespace of the feature type
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  name of the featuretype, without the namespace.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         0.9
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         CountryEditor from the udig tutorials is an example implementation:
+- http://svn.refractions.net/udig/udig/trunk/tutorials/org.locationtech.udig.tutorials.featureeditor/
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiInfo"/>
+      </appInfo>
+      <documentation>
+         The featureEditor extension point can be used to reference:
+- Views
+- Dialogs
+
+The featureEditor extension point just adds the option to open the view or dialog when editing a feature.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         See DefaultFeatureEditor
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+uDig - User Friendly Desktop Internet GIS client
+<A HREF="http://udig.refractions.net">http://udig.refractions.net</A>
+(C) 2004-2012, Refractions Research Inc.
+
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+(<A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>), and Refractions BSD
+License v1.0 (<A HREF="http://www.eclipse.org/org/documents/edl-v10.html">http://www.eclipse.org/org/documents/edl-v10.html</A>).
+      </documentation>
+   </annotation>
+
+</schema>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="org.locationtech.udig.project.ui.tool">
+      <modalTool
+            class="org.locationtech.udig.tutorial.tool.coordinate.CoordinateTool"
+            icon="icons/etool16/xy.png"
+            id="org.locationtech.udig.tutorial.tool.coordinate"
+            name="XY Coordinate Tool"
+            onToolbar="true"/>
+   </extension>
+
+</plugin>

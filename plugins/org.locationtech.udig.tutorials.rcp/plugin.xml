@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="org.locationtech.udig.tutorials.rcp.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="RCP Perspective"
+            class="org.locationtech.udig.tutorials.rcp.Perspective"
+            id="org.locationtech.udig.tutorials.rcp.perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="Message"
+            allowMultiple="true"
+            icon="icons/sample2.gif"
+            class="org.locationtech.udig.tutorials.rcp.View"
+            id="org.locationtech.udig.tutorials.rcp.view">
+      </view>
+      <view
+            name="Mailboxes"
+            allowMultiple="true"
+            icon="icons/sample3.gif"
+            class="org.locationtech.udig.tutorials.rcp.NavigationView"
+            id="org.locationtech.udig.tutorials.rcp.navigationView">
+      </view>
+      <view
+            allowMultiple="true"
+            class="org.locationtech.udig.tutorials.rcp.MapView"
+            icon="icons/createmap.gif"
+            id="org.locationtech.udig.tutorials.rcp.mapView"
+            name="Map View"
+            restorable="true">
+      </view>
+      <view
+            allowMultiple="true"
+            class="org.locationtech.udig.tutorials.rcp.OverviewMapView"
+            icon="icons/createmapoverview.gif"
+            id="org.locationtech.udig.tutorials.rcp.mapViewOverview"
+            name="Overview Map View"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Mail"
+            id="org.locationtech.udig.tutorials.rcp.category">
+      </category>
+      <command
+            name="Open Mailbox"
+            description="Opens a mailbox"
+            categoryId="org.locationtech.udig.tutorials.rcp.category"
+            id="org.locationtech.udig.tutorials.rcp.open">
+      </command>
+      <command
+            name="Open Message Dialog"
+            description="Open a message dialog"
+            categoryId="org.locationtech.udig.tutorials.rcp.category"
+            id="org.locationtech.udig.tutorials.rcp.openMessage">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="org.locationtech.udig.tutorials.rcp.open"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="CTRL+2">
+      </key>
+      <key
+            commandId="org.locationtech.udig.tutorials.rcp.openMessage"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="CTRL+3">
+      </key>
+      <key
+            commandId="org.eclipse.ui.file.exit"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="CTRL+X">
+      </key>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.locationtech.udig.tutorials.rcp.application"
+            name="RCP Product">
+         <property
+               name="aboutText"
+               value="RCP Mail template created by PDE">
+         </property>
+         <property
+               name="windowImages"
+               value="icons/sample2.gif">
+         </property>
+         <property
+               name="aboutImage"
+               value="product_lg.gif">
+         </property>
+         <property
+               name="appName"
+               value="RCP Product">
+         </property>
+      </product>
+   </extension>
+
+</plugin>

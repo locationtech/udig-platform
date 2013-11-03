@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="org.locationtech.udig.catalog" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="org.locationtech.udig.catalog" id="resolvers" name="%resolvers.name"/>
+      </appInfo>
+      <documentation>
+         Allows additional content types to be made available through geospatial resources handles.
+
+This extention point is used to provide the following:
+1. Additional content through use of metadata:
+   - prior knowledge: ie. makeing shape.sld file available as a Style.class
+   - Making a CSW 2.0 association query for a related information Style.class
+2. Making additional Java API available
+
+In practice this is analagous to the org.eclipse.runtime.adapters extension point except that it applies to org.locationtech.udig.catalog.IResolve objects instead of IAdaptable objects.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+         <documentation>
+            The resolves extension point.  Allows IResolves to be extended via the extension point mechanism.
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="factory" minOccurs="1" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  id of the extension
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  name of the extension
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="factory">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="resolveableType"/>
+         </appInfo>
+         <documentation>
+            Declares a factory that is used by an IResolve to find what classes it/they can resolve to.  The canResolve method on the IResolveAdapterFactory will not be called.  The canResolve will rely on the xml.
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="resolve" minOccurs="1" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="resolveableType" type="string">
+            <annotation>
+               <documentation>
+                  The fully qualified name of a class (typically implementing IResolve) that this factory provides resolvers for.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.catalog.IResolve"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string">
+            <annotation>
+               <documentation>
+                  The fully qualified name of the adapter factory class. Must implement org.locationtech.udig.catalog.IResolveAdapterFactory
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.catalog.IResolveAdapterFactory"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="resolve">
+      <annotation>
+         <documentation>
+            Declares the class that the factory can resolve to.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="type" type="string">
+            <annotation>
+               <documentation>
+                  The fully qualified name of a Java class or interface that this factory can connect to via the resolve method.
+
+This information is used to quickly report back from the canResolve method without requiring that the factory be loaded.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         [Enter the first release in which this extension point appears.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         [Enter extension point usage example here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiInfo"/>
+      </appInfo>
+      <documentation>
+         [Enter API information here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         [Enter information about supplied implementation of this extension point.]
+      </documentation>
+   </annotation>
+
+
+</schema>

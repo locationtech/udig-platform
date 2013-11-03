@@ -1,0 +1,50 @@
+# A palette file containing info from the ColorBrewer application
+#
+# These keys provide enough information for us to grab the contents
+# and construct a friendly ui for this information
+#
+palette.key=brbg
+palette.display=Brown Blue-Green
+palette.min=2
+palette.max=11
+palette.type=DIVERGING
+
+# good & doubtful can the following:
+#    colorBlind, photoCopy, projector, lcd, crt, print
+#
+# not case sensititve, bad is assumed by default
+
+brbg2={216, 179, 101},{ 90, 180, 172}
+#{GOOD, GOOD, DOUBTFUL, GOOD, GOOD, GOOD},
+brbg2.good=colorBlind, projector, lcd, crt
+
+brbg3={216, 179, 101},{245, 245, 245},{ 90, 180, 172}
+brbg3.good=colorBlind, projector, lcd, crt
+
+brbg4={166,  97,  26},{223, 194, 125},{128, 205, 193},{  1, 133, 113}
+brbg4.good=colorBlind, projector, lcd, crt
+brbg4.doubtful=print
+
+brbg5={166,  97,  26},{223, 194, 125},{245, 245, 245},{128, 205, 193},{  1, 133, 113}
+brbg5.good=colorBlind, projector, lcd, crt
+brbg5.doubtful=print
+
+brbg6={140,  81,  10},{216, 179, 101},{246, 232, 195},{199, 234, 229},{ 90, 180, 172},{  1, 102,  94}
+brbg4.good=colorBlind, projector, lcd
+brbg4.doubtful=crt, print
+
+brbg7={140,  81,  10},{216, 179, 101},{246, 232, 195},{245, 245, 245},{199, 234, 229},{ 90, 180, 172},{  1, 102,  94}
+brbg4.good=colorBlind
+brbg4.doubtful=projector,lcd, print
+
+brbg8={140,  81,  10},{191, 129,  45},{223, 194, 125},{246, 232, 195},{199, 234, 229},{128, 205, 193},{ 53, 151, 143},{  1, 102,  94}
+brbg8.good=colorBlind
+
+brbg9={140,  81,  10},{191, 129,  45},{223, 194, 125},{246, 232, 195},{245, 245, 245},{199, 234, 229},{128, 205, 193},{ 53, 151, 143},{  1, 102,  94}
+brbg9.good=colorBlind
+
+brbg10={ 84,  48,   5},{140,  81,  10},{191, 129,  45},{223, 194, 125},{246, 232, 195},{199, 234, 229},{128, 205, 193},{ 53, 151, 143},{  1, 102,  94},{  0,  60,  48}
+brbg10.good=colorBlind
+
+brbg11={ 84,  48,   5},{140,  81,  10},{191, 129,  45},{223, 194, 125},{246, 232, 195},{245, 245, 245},{199, 234, 229},{128, 205, 193},{ 53, 151, 143},{  1, 102,  94},{  0,  60,  48}
+brbg11.good=colorBlind

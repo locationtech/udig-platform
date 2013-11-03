@@ -1,0 +1,44 @@
+# A palette file containing info from the ColorBrewer application
+#
+# These keys provide enough information for us to grab the contents
+# and construct a friendly ui for this information
+#
+palette.key=blues
+palette.display=Blues
+palette.min=2
+palette.max=9
+palette.type=SEQUENTIAL
+
+# good & doubtful can the following:
+#    colorBlind, photoCopy, projector, lcd, crt, print
+#
+# not case sensititve, bad is assumed by default
+
+blues2={158, 202, 225},{ 49, 130, 189}
+blues2.good=colorBlind, photoCopy, projector, lcd, crt, print
+blues2.doubtful=projector
+
+blues3={222, 235, 247},{158, 202, 225},{ 49, 130, 189}
+blues3.good=colorBlind, photoCopy, projector, lcd, crt, print
+blues3.doubtful=projector
+
+blues4={239, 243, 255},{189, 215, 231},{107, 174, 214},{ 33, 113, 181}
+blues4.good=colorBlind, photoCopy, projector, lcd, print
+blues4.doubtful=projector, crt
+
+blues5={239, 243, 255},{189, 215, 231},{107, 174, 214},{ 49, 130, 189},{  8,  81, 156}
+blues5.good=colorBlind, lcd
+blues5.doubtful=photoCopy, projector, crt, print
+
+blues6={239, 243, 255},{198, 219, 239},{158, 202, 225},{107, 174, 214},{ 49, 130, 189},{  8,  81, 156}
+blues6.good=colorBlind
+blues6.doubtful=print
+
+blues7={239, 243, 255},{198, 219, 239},{158, 202, 225},{107, 174, 214},{ 66, 146, 198},{ 33, 113, 181},{  8,  69, 148}
+blues7.good=colorBlind
+
+blues8={247, 251, 255},{222, 235, 247},{198, 219, 239},{158, 202, 225},{107, 174, 214},{ 66, 146, 198},{ 33, 113, 181},{  8,  69, 148}
+blues8.good=colorBlind
+
+blues9={247, 251, 255},{222, 235, 247},{198, 219, 239},{158, 202, 225},{107, 174, 214},{ 66, 146, 198},{ 33, 113, 181},{  8,  81, 156},{  8,  48, 107}
+blues9.good=colorBlind

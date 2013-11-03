@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.locationtech.udig.style.sld.StyleEditorPage">
+      <StyleEditorPage
+            class="org.locationtech.udig.style.jgrass.colors.JGrassRasterStyleEditorPage"
+            contentType="org.locationtech.udig.project.ILayer"
+            id="org.locationtech.udig.style.jgrass.color"
+            label="%jgrassrasterstyle.name"
+            requires="org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource"/>
+      <StyleEditorPage
+            class="org.locationtech.udig.style.jgrass.categories.JGrassRasterCategoryEditorPage"
+            contentType="org.locationtech.udig.project.ILayer"
+            id="org.locationtech.udig.style.jgrass.cats"
+            label="%jgrassrastercategories.name"
+            requires="org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource"/>
+   </extension>
+   <extension
+         point="org.locationtech.udig.style.styleConfigurator">
+      <styleConfigurator
+            class="org.locationtech.udig.style.jgrass.legend.RasterLegendGraphicStyleConfigurator"
+            id="jgrassrasterlegend"
+            label="%legend.style.conf.label"
+            requires="org.locationtech.udig.style.jgrass.legend.RasterLegendGraphic"
+            styleId="org.locationtech.udig.style.jgrass.legend.rasterlegendStyle">
+      </styleConfigurator>
+      <!--
+      <styleConfigurator
+            class="org.locationtech.udig.style.jgrass.legend.VectorLegendGraphicStyleConfigurator"
+            id="jgrassvectorlegend"
+            label="JGrass Vector Legend"
+            requires="org.locationtech.udig.style.jgrass.legend.VectorLegendGraphic"
+            styleId="org.locationtech.udig.style.jgrass.legend.vectorlegendStyle">
+      </styleConfigurator>
+      -->
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.style">
+      <style
+            class="org.locationtech.udig.style.jgrass.legend.RasterLegendStyleContent"
+            id="org.locationtech.udig.style.jgrass.legend.rasterlegendStyleeu.hydrologis.jgrass.rasterlegend.rasterlegendStyle"
+            name="%legend.style.name">
+      </style>
+      <style
+            class="org.locationtech.udig.style.jgrass.legend.VectorLegendStyleContent"
+            id="org.locationtech.udig.style.jgrass.legend.vectorlegendStyle"
+            name="%vectorlegend.style.name">
+      </style>
+   </extension>
+   <extension
+         point="org.locationtech.udig.mapgraphic.mapgraphic">
+      <mapGraphic
+            class="org.locationtech.udig.style.jgrass.legend.RasterLegendGraphic"
+            icon="icons/rasterlegend.gif"
+            id="jgrassrasterlegend"
+            name="%legend.name">
+      </mapGraphic>
+      <!--
+      <mapGraphic
+            class="org.locationtech.udig.style.jgrass.legend.VectorLegendGraphic"
+            icon="icons/vectorlegend.gif"
+            id="jgrassvectorlegend"
+            name="JGrass Vector Legend">
+      </mapGraphic>
+      -->
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.ui.tool">
+      <modalTool
+            categoryId="eu.hydrologis.jgrass.tools.category"
+            class="org.locationtech.udig.style.jgrass.legend.MapgraphicDragger"
+            commandHandler="org.locationtech.udig.tools.internal.PanHandler"
+            icon="icons/pan_mg.gif"
+            id="org.locationtech.udig.style.jgrass.legend.dragtool"
+            name="Move Mapgraphic"
+            onToolbar="true"
+            toolCursorId="move"
+            tooltip="change the position of the selected mapgraphic by dragging with the mouse">
+      </modalTool>
+   </extension>
+
+</plugin>

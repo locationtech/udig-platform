@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="org.locationtech.udig.tutorials.preferredzoomlevels.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="Perspective"
+            class="org.locationtech.udig.tutorials.preferredzoomlevels.Perspective"
+            id="org.locationtech.udig.tutorials.preferredzoomlevels.perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="View"
+            class="org.locationtech.udig.tutorials.preferredzoomlevels.View"
+            id="org.locationtech.udig.tutorials.preferredzoomlevels.view">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="*">
+         <view
+               standalone="true"
+               minimized="false"
+               relative="org.eclipse.ui.editorss"
+               relationship="left"
+               id="org.locationtech.udig.tutorials.preferredzoomlevels.view">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               label="File">
+            <command
+                  commandId="org.eclipse.ui.file.exit"
+                  label="Exit">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.ui.tool">
+      <actionTool
+            class="org.locationtech.udig.tutorials.preferredzoomlevels.ZoomToFeatures"
+            id="org.locationtech.udig.tutorials.preferredzoomlevels.zoomToFeatures"
+            name="ZoomToFeatures"
+            onToolbar="true">
+         <enablement></enablement>
+      </actionTool>
+   </extension>
+
+</plugin>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="org.locationtech.udig.ui.tests.actionSet1"
+            label="org.locationtech.udig.ui.tests.actionSet1"
+            visible="true">
+         <action
+               class="org.locationtech.udig.ui.TestZoomDialogAction"
+               id="org.locationtech.udig.ui.tests.action1"
+               label="TestZoomDialog"
+               style="push"
+               toolbarPath="additions"/>
+      </actionSet>
+   </extension>
+   <extension
+         point="org.locationtech.udig.ui.dropAction">
+      <action
+            class="org.locationtech.udig.ui.AlwaysAcceptDropAction"
+            name="org.locationtech.udig.ui.tests.action1">
+         <acceptedType
+               class="java.lang.String"/>
+         <destination
+               class="org.locationtech.udig.ui.TestDropDestination"/>
+         <acceptedType
+               adapt="true"
+               class="java.lang.Integer"/>
+      </action>
+      <action
+            class="org.locationtech.udig.ui.AlwaysAcceptDropAction"
+            enablesFor="1+"
+            name="org.locationtech.udig.ui.tests.action2">
+         <destination class="org.locationtech.udig.ui.TestDropDestination"/>
+         <acceptedType class="java.lang.Double"/>
+         <acceptedType class="java.lang.Character"/>
+      </action>
+      <action
+            class="org.locationtech.udig.ui.AlwaysAcceptDropAction"
+            enablesFor="2"
+            name="org.locationtech.udig.ui.tests.action3">
+         <destination class="org.locationtech.udig.ui.TestDropDestination"/>
+         <acceptedType class="java.lang.Byte"/>
+      </action>
+      <action
+            class="org.locationtech.udig.ui.AlwaysAcceptDropAction"
+            enablesFor="+"
+            name="org.locationtech.udig.ui.tests.action4">
+         <destination class="org.locationtech.udig.ui.TestDropDestination"/>
+         <acceptedType class="java.lang.Long"/>
+      </action>
+      <action
+            class="org.locationtech.udig.ui.AlwaysAcceptDropAction"
+            enablesFor="10+"
+            name="org.locationtech.udig.ui.tests.action5">
+         <destination class="org.locationtech.udig.ui.TestDropDestination"/>
+         <acceptedType class="java.lang.Short"/>
+      </action>
+      <action
+            class="org.locationtech.udig.ui.AcceptLessTen"
+            enablesFor="1"
+            name="org.locationtech.udig.ui.tests.action6">
+         <destination class="org.locationtech.udig.ui.TestDropDestination"/>
+         <acceptedType class="org.locationtech.udig.ui.AcceptLessTen$Data"/>
+      </action>
+   </extension>
+
+</plugin>

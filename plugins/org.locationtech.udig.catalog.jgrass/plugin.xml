@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.locationtech.udig.catalog.ServiceExtension">
+      <service
+            class="org.locationtech.udig.catalog.jgrass.core.JGrassServiceExtension"
+            id="org.locationtech.udig.catalog.jgrass.jgservice"/>
+      <service
+            class="org.locationtech.udig.catalog.jgrass.core.JGTtmsServiceExtension"
+            id="org.locationtech.udig.catalog.jgrass.jgttmsservice">
+      </service>
+   </extension>
+   <extension
+         point="org.locationtech.udig.catalog.ui.connectionFactory">
+      <factory
+            class="org.locationtech.udig.catalog.jgrass.core.JGrassConnectionFactory"
+            id="eu.hydrologis.udig.catalog.internal.jgrass.ui.JGrassConnectionFactory"/>
+      <wizardPage
+            banner="icons/wizban/jgrass_wiz.png"
+            class="org.locationtech.udig.catalog.jgrass.core.JGrassWizardPage"
+            description="%wizard.description"
+            icon="icons/etool16/jgrass_wiz.png"
+            id="eu.hydrologis.udig.catalog.internal.jgrass.ui.jgrasswizardpage"
+            name="%wizard.name"/>
+   </extension>
+   <extension
+         point="org.locationtech.udig.catalog.ui.connectionFactory">
+      <factory
+            class="org.locationtech.udig.catalog.jgrass.core.JGTtmsConnectionFactory"
+            id="org.locationtech.udig.catalog.jgrass.core.JGTtmsConnectionFactory"/>
+   </extension>
+   <extension
+         point="org.locationtech.udig.catalog.ui.fileFormat">
+      <fileService
+            fileExtension="*.jgrass"
+            name="%fileService.name"/>
+      <fileService
+            fileExtension="*.mapurl"
+            name="JGrasstools TMS Files (*.mapurl)">
+      </fileService>
+   </extension>
+   <extension
+         id="org.locationtech.udig.catalog.shp.jgrasstofileresolver"
+         point="org.locationtech.udig.catalog.resolvers">
+      <factory
+            class="org.locationtech.udig.catalog.jgrass.core.JGrassServiceMover"
+            resolveableType="org.locationtech.udig.catalog.jgrass.core.JGrassService">
+         <resolve
+               type="org.locationtech.udig.catalog.ServiceMover">
+         </resolve>
+      </factory>
+   </extension>
+   <extension
+         point="org.locationtech.udig.ui.operation">
+      <category
+            description="%jgrass.catalog.operations.toltip"
+            id="org.locationtech.udig.catalog.jgrass.category"
+            name="%jgrass.catalog.operations">
+      </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.locationtech.udig.catalog.jgrass.category"
+            class="org.locationtech.udig.catalog.jgrass.workspacecreation.NewJGrassLocationWizard"
+            descriptionImage="icons/wizban/jgrass_wiz.png"
+            icon="icons/obj16/jgrass_obj.png"
+            id="org.locationtech.udig.catalog.jgrass.wizard.createworkspace"
+            name="%wizard.name">
+      </wizard>
+      <wizard
+            category="org.locationtech.udig.catalog.jgrass.category"
+            class="org.locationtech.udig.catalog.jgrass.workspacecreation.NewJGrassLocationFromFileWizard"
+            descriptionImage="icons/wizban/jgrass_wiz.png"
+            icon="icons/obj16/jgrass_obj.png"
+            id="org.locationtech.udig.catalog.jgrass.wizard.createworkspacefromfile"
+            name="%wizardfromfile.name">
+      </wizard>
+      <category
+            id="org.locationtech.udig.catalog.jgrass.category"
+            name="JGrass">
+      </category>
+   </extension>
+<extension
+         id="activemapgraphicid"
+         point="org.locationtech.udig.mapgraphic.mapgraphic">
+      <mapGraphic
+            class="org.locationtech.udig.catalog.jgrass.activeregion.ActiveRegionMapGraphic"
+            icon="icons/etool16/active.png"
+            id="org.locationtech.udig.catalog.jgrass.activeregion.activeregionmapgraphic"
+            name="%activeregion.name"/>
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.style">
+      <style
+            class="org.locationtech.udig.catalog.jgrass.activeregion.ActiveregionStyleContent"
+            id="org.locationtech.udig.catalog.jgrass.activeregion.activeregionStyle"
+            name="%activeregion.style.name">
+      </style>
+   </extension>
+   <extension
+         point="org.locationtech.udig.style.styleConfigurator">
+      <styleConfigurator
+            class="org.locationtech.udig.catalog.jgrass.activeregion.ActiveregionGraphicStyleConfigurator"
+            id="activeregion"
+            label="%activeregion.style.conf.label"
+            requires="org.locationtech.udig.catalog.jgrass.activeregion.ActiveRegionMapGraphic"
+            styleId="org.locationtech.udig.catalog.jgrass.activeregion.activeregionStyle">
+      </styleConfigurator>
+   </extension>
+   <!--
+   <extension
+         point="org.locationtech.udig.project.ui.tool">
+      <modalTool
+            categoryId="eu.hydrologis.jgrass.tools.category"
+            class="org.locationtech.udig.catalog.jgrass.activeregion.ActiveRegionBBoxSelection"
+            icon="icons/etool16/active.png"
+            id="org.locationtech.udig.tools.selectactiveregion"
+            name="%activeregion.bbox"
+            onToolbar="true"
+            toolCursorId="bboxactiveregion"
+            tooltip="%activeregion.bbox">
+         <cursor
+               hotspotX="10"
+               hotspotY="10"
+               id="bboxactiveregion"
+               image="icons/select_source.png">
+         </cursor>
+      </modalTool>
+      <toolCursor
+            hotspotX="10"
+            hotspotY="10"
+            id="bboxactiveregion"
+            image="icons/select_source.png">
+      </toolCursor>
+   </extension>
+   -->
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="false"
+            id="org.locationtech.udig.catalog.jgrass.core.JGrassMapsetGeoResource.contribution"
+            objectClass="org.locationtech.udig.catalog.jgrass.core.JGrassMapsetGeoResource">
+         <action
+               class="org.locationtech.udig.catalog.jgrass.operations.RemoveMapsetAction"
+               icon="icons/delete_mapset.png"
+               id="org.locationtech.udig.catalog.jgrass.operations.RemoveMapsetAction"
+               label="Delete Mapsets"
+               tooltip="Delete mapset from location on disk">
+         </action>
+         <action
+               class="org.locationtech.udig.catalog.jgrass.operations.ImportEsriAsciiOrGeotiffAction"
+               icon="icons/map_add.png"
+               id="org.locationtech.udig.catalog.jgrass.operations.ImportEsriAsciiAction"
+               label="Import Esri Ascii or Geotiff"
+               tooltip="Import an Esri Ascii grid into the mapset">
+         </action>
+         <action
+               class="org.locationtech.udig.catalog.jgrass.operations.OpenFolderAction"
+               icon="icons/folder_layer.png"
+               id="org.locationtech.udig.catalog.jgrass.operations.OpenFolderAction"
+               label="Open folder"
+               tooltip="Open this folder in a file browser">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.locationtech.udig.catalog.jgrass.core.JGrassService.contribution"
+            objectClass="org.locationtech.udig.catalog.jgrass.core.JGrassService">
+                     <action
+                           class="org.locationtech.udig.catalog.jgrass.operations.OpenFolderAction"
+                           icon="icons/folder_layer.png"
+                           id="org.locationtech.udig.catalog.jgrass.operations.OpenFolderAction"
+                           label="Open folder"
+                           tooltip="Open this folder in a file browser">
+         </action>
+                     <action
+                           class="org.locationtech.udig.catalog.jgrass.operations.AddMapsetAction"
+                           icon="icons/add_mapset.png"
+                           id="org.locationtech.udig.catalog.jgrass.operations.AddMapsetAction"
+                           label="Add new Mapset"
+                           tooltip="Create a new mapset in the location">
+                     </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource.contribution"
+            objectClass="org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource">
+                     <action
+                           class="org.locationtech.udig.catalog.jgrass.operations.GrassReprojectAction"
+                           icon="icons/reproject_map.png"
+                           id="org.locationtech.udig.catalog.jgrass.operations.GrassReprojectAction"
+                           label="%export.grassreproject"
+                           tooltip="%export.grassreproject">
+         </action>
+                     <action
+                           class="org.locationtech.udig.catalog.jgrass.operations.SetActiveRegionToMapsAction"
+                           icon="icons/etool16/active.png"
+                           id="org.locationtech.udig.catalog.jgrass.operations.SetActiveRegionToMapsAction"
+                           label="Set active region to maps"
+                           tooltip="Set the active region to wrap all the selected maps">
+         </action>
+                     <action
+                           class="org.locationtech.udig.catalog.jgrass.operations.CopyOnActiveRegionAction"
+                           icon="icons/raster_copy.png"
+                           id="org.locationtech.udig.catalog.jgrass.operations.CopyOnActiveRegionAction"
+                           label="Copy Map"
+                           tooltip="Duplicate map on active region">
+         </action>
+                     <action
+                           class="org.locationtech.udig.catalog.jgrass.operations.RemoveMapAction"
+                           icon="icons/raster_delete.png"
+                           id="org.locationtech.udig.catalog.jgrass.operations.RemoveMapAction"
+                           label="Delete Maps"
+                           tooltip="Delete the selected maps from the mapset on disk">
+         </action>
+                     <action
+                           class="org.locationtech.udig.catalog.jgrass.operations.RenameMapAction"
+                           icon="icons/raster_rename.png"
+                           id="org.locationtech.udig.catalog.jgrass.operations.RenameMapAction"
+                           label="Rename Maps"
+                           tooltip="Rename the selected map on disk">
+         </action>
+                     <action
+                           class="org.locationtech.udig.catalog.jgrass.operations.ExportEsriAsciiAction"
+                           icon="icons/map_go.png"
+                           id="org.locationtech.udig.catalog.jgrass.operations.ExportEsriAsciiAction"
+                           label="Export maps"
+                           tooltip="Export the selected maps as Ersi Ascii to disk">
+         </action>
+                     <action
+                           class="org.locationtech.udig.catalog.jgrass.operations.MapSummaryAction"
+                           icon="icons/report.png"
+                           id="org.locationtech.udig.catalog.jgrass.operations.MapSummaryAction"
+                           label="Map summary"
+                           tooltip="View a simple map summary on the active region">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.locationtech.udig.catalog.jgrass.core.GridCoverage.contribution"
+            objectClass="org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResource">
+                     <action
+                           class="org.locationtech.udig.catalog.jgrass.operations.MapSummaryAction"
+                           icon="icons/report.png"
+                           id="org.locationtech.udig.catalog.jgrass.operations.MapSummaryAction"
+                           label="Map summary"
+                           tooltip="View a simple map summary">
+         </action>
+      </objectContribution>
+   </extension>
+   <extension
+         id="GrassRasterRenderer"
+         name="GrassRasterRenderer"
+         point="org.locationtech.udig.project.renderer">
+      <renderer
+            class="org.locationtech.udig.renderer.jgrass.RasterRenderMetricsFactory"
+            id="eu.hydrologis.jgrass.renderer.raster.rasterrender"
+            name="Grass Raster Renderer">
+         <description>
+            A renderer for GRASS raster layers.
+         </description>
+      </renderer>
+   </extension>
+   <extension
+         id="JGTtmsRenderer"
+         name="JGTtmsRenderer"
+         point="org.locationtech.udig.project.renderer">
+      <renderer
+            class="org.locationtech.udig.renderer.jgttms.JGTtmsRenderMetricsFactory"
+            id="org.locationtech.udig.renderer.jgttms.jgttmsrenderer"
+            name="JGrasstools TMS Renderer">
+         <description>
+            A renderer for JGrasstools TMS layers.
+         </description>
+      </renderer>
+   </extension>
+
+</plugin>

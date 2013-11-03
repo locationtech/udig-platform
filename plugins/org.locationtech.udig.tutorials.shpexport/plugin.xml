@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="org.locationtech.udig.tutorials.shpexport.operations"
+         name="shpExportOperations"
+         point="org.locationtech.udig.ui.operation">
+      <category
+            description="Additional operations for exporting shapefiles"
+            id="org.locationtech.udig.tutorials.shpexport.category"
+            name="Shapefile Export Operations">
+      </category>
+      <operation
+            categoryId="org.locationtech.udig.tutorials.shpexport.category"
+            class="org.locationtech.udig.tutorials.shpexport.ShpExportOp"
+            id="org.locationtech.udig.tutorials.shpexport.operation"
+            name="Export to Shapefile"
+            targetClass="org.geotools.data.FeatureSource">
+      </operation>
+      <operation
+            class="org.locationtech.udig.tutorials.shpexport.CalculateLengthOp"
+            enablesFor="1"
+            id="org.locationtech.udig.tutorials.shpexport.operation1"
+            name="Calculate Length"
+            targetClass="org.geotools.data.FeatureSource">
+      </operation>
+   </extension>
+
+</plugin>

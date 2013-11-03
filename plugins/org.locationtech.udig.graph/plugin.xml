@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="org.locationtech.udig.graph.graphics"
+         name="Graphing Graphics"
+         point="org.locationtech.udig.mapgraphic.mapgraphic">
+      <mapGraphic
+            class="org.locationtech.udig.graph.internal.GraphMapGraphic"
+            icon="icons/etool16/graph.png"
+            id="org.locationtech.udig.graph.graphics.grah"
+            name="Graph">
+      </mapGraphic>
+      <mapGraphic
+            class="org.locationtech.udig.graph.internal.PathMapGraphic"
+            icon="icons/etool16/path.png"
+            id="org.locationtech.udig.graph.graph.graphics.path"
+            name="Path">            
+      </mapGraphic>
+   </extension>
+   
+   <extension
+         id="org.locationtech.udig.tutorials.tracking.createdata"
+         name="create data"
+         point="org.locationtech.udig.ui.operation">
+      <operation
+            class="org.locationtech.udig.graph.internal.FindPathOp"
+            enablesFor="1"
+            id="org.locationtech.udig.tutorials.tracking.graph.findpath"
+            name="Generate route through all waypoints"
+            targetClass="org.locationtech.udig.project.ILayer">
+         <enablement></enablement>
+      </operation>
+      <operation
+            class="org.locationtech.udig.graph.internal.LineGraphOp"
+            enablesFor="1"
+            id="org.locationtech.udig.tutorials.tracking.ops.linegrah"
+            name="Line Graph"
+            targetClass="org.locationtech.udig.project.ILayer">
+      </operation>      
+   </extension>
+   
+      <extension
+         point="org.locationtech.udig.project.ui.tool">
+      <modalTool
+            categoryId="org.locationtech.udig.graph.tools"
+            class="org.locationtech.udig.graph.internal.WayPointTool"
+            icon="icons/etool16/path.png"
+            id="org.locationtech.udig.graph.tools.wayPoint"
+            name="Way Point"
+            onToolbar="true"
+            tooltip="Define way points before calculating the path">
+         <cursor
+               hotspotX="10"
+               hotspotY="10"
+               image="icons/pointer/waypoint_source.gif"/>
+      </modalTool>
+      <category
+            commandId="org.locationtech.udig.graph.tools"
+            id="org.locationtech.udig.graph.tools"
+            name="Graph Tools">
+      </category>
+   </extension>
+   
+</plugin>

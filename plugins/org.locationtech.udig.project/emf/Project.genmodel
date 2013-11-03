@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="uDig - User Friendly Desktop Internet GIS client&#xD;&#xA;http://udig.refractions.net&#xD;&#xA;(C) 2004-2012, Refractions Research Inc.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;(http://www.eclipse.org/legal/epl-v10.html), and Refractions BSD&#xD;&#xA;License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html)."
+    modelDirectory="/org.locationtech.udig.project/src" creationCommands="false" creationIcons="false"
+    editDirectory="/org.locationtech.udig.project.edit/src" editorDirectory="" modelPluginID="org.locationtech.udig.project"
+    templateDirectory="" runtimeJar="true" forceOverwrite="true" modelName="Project"
+    modelPluginClass="org.locationtech.udig.project.internal.ProjectPlugin" editPluginClass="org.locationtech.udig.project.internal.provider.ProjectEditPlugin"
+    editorPluginClass="" nonNLSMarkers="true" suppressEMFTypes="true" codeFormatting="true"
+    testsDirectory="" testSuiteClass="" importerID="org.eclipse.emf.importer.java"
+    complianceLevel="5.0" copyrightFields="false" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
+  <foreignModel>@model</foreignModel>
+  <genPackages prefix="Element" basePackage="org.locationtech.udig.project" disposableProviderFactory="true"
+      ecorePackage="element.ecore#/">
+    <genDataTypes ecoreDataType="element.ecore#//IGenericProjectElement"/>
+    <genClasses ecoreClass="element.ecore#//ProjectElementAdapter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute element.ecore#//ProjectElementAdapter/backingObject"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="Project" basePackage="org.locationtech.udig.project" ecorePackage="internal.ecore#/">
+    <genDataTypes ecoreDataType="internal.ecore#//Coordinate"/>
+    <genDataTypes ecoreDataType="internal.ecore#//MapDisplay"/>
+    <genDataTypes ecoreDataType="internal.ecore#//List"/>
+    <genDataTypes ecoreDataType="internal.ecore#//AffineTransform"/>
+    <genDataTypes ecoreDataType="internal.ecore#//NavCommandStack"/>
+    <genDataTypes ecoreDataType="internal.ecore#//IGeoResource"/>
+    <genDataTypes ecoreDataType="internal.ecore#//Filter"/>
+    <genDataTypes ecoreDataType="internal.ecore#//CoordinateReferenceSystem"/>
+    <genDataTypes ecoreDataType="internal.ecore#//CommandStack"/>
+    <genDataTypes ecoreDataType="internal.ecore#//Point"/>
+    <genDataTypes ecoreDataType="internal.ecore#//Adapter"/>
+    <genDataTypes ecoreDataType="internal.ecore#//IProgressMonitor"/>
+    <genDataTypes ecoreDataType="internal.ecore#//Query"/>
+    <genDataTypes ecoreDataType="internal.ecore#//URL"/>
+    <genDataTypes ecoreDataType="internal.ecore#//ImageDescriptor"/>
+    <genDataTypes ecoreDataType="internal.ecore#//EditCommand"/>
+    <genDataTypes ecoreDataType="internal.ecore#//NavCommand"/>
+    <genDataTypes ecoreDataType="internal.ecore#//Envelope"/>
+    <genDataTypes ecoreDataType="internal.ecore#//EditManagerControlCommand"/>
+    <genDataTypes ecoreDataType="internal.ecore#//Command"/>
+    <genDataTypes ecoreDataType="internal.ecore#//URI"/>
+    <genDataTypes ecoreDataType="internal.ecore#//CatalogRef"/>
+    <genDataTypes ecoreDataType="internal.ecore#//ColourPalette"/>
+    <genDataTypes ecoreDataType="internal.ecore#//ColourScheme"/>
+    <genDataTypes ecoreDataType="internal.ecore#//MutablePicoContainer"/>
+    <genDataTypes ecoreDataType="internal.ecore#//ReferencedEnvelope"/>
+    <genDataTypes ecoreDataType="internal.ecore#//FeatureEvent"/>
+    <genDataTypes ecoreDataType="internal.ecore#//SimpleFeature"/>
+    <genDataTypes ecoreDataType="internal.ecore#//IllegalArgumentException"/>
+    <genDataTypes ecoreDataType="internal.ecore#//IOException"/>
+    <genDataTypes ecoreDataType="internal.ecore#//Color"/>
+    <genDataTypes ecoreDataType="internal.ecore#//BrewerPalette"/>
+    <genDataTypes ecoreDataType="internal.ecore#//Interaction"/>
+    <genClasses ecoreClass="internal.ecore#//Comparable"/>
+    <genClasses ecoreClass="internal.ecore#//IMap"/>
+    <genClasses ecoreClass="internal.ecore#//ILayer"/>
+    <genClasses ecoreClass="internal.ecore#//IEditManager"/>
+    <genClasses ecoreClass="internal.ecore#//IProject"/>
+    <genClasses ecoreClass="internal.ecore#//IAbstractContext"/>
+    <genClasses ecoreClass="internal.ecore#//IBlackboard"/>
+    <genClasses ecoreClass="internal.ecore#//IProjectElement"/>
+    <genClasses ecoreClass="internal.ecore#//IRenderManager"/>
+    <genClasses ecoreClass="internal.ecore#//IViewportModel"/>
+    <genClasses ecoreClass="internal.ecore#//ContextModel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//ContextModel/layers"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference internal.ecore#//ContextModel/map"/>
+    </genClasses>
+    <genClasses ecoreClass="internal.ecore#//EditManager">
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//EditManager/editFeature"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference internal.ecore#//EditManager/mapInternal"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference internal.ecore#//EditManager/editLayerInternal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//EditManager/transactionType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//EditManager/editLayerLocked"/>
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference internal.ecore#//EditManager/selectedLayer"/>
+      <genOperations ecoreOperation="internal.ecore#//EditManager/setEditFeature">
+        <genParameters ecoreParameter="internal.ecore#//EditManager/setEditFeature/value"/>
+        <genParameters ecoreParameter="internal.ecore#//EditManager/setEditFeature/layer"/>
+      </genOperations>
+      <genOperations ecoreOperation="internal.ecore#//EditManager/startTransaction"/>
+      <genOperations ecoreOperation="internal.ecore#//EditManager/commitTransaction"/>
+      <genOperations ecoreOperation="internal.ecore#//EditManager/rollbackTransaction"/>
+    </genClasses>
+    <genClasses provider="Stateful" ecoreClass="internal.ecore#//Layer">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference internal.ecore#//Layer/contextModel"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/filter"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Layer/styleBlackboard"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/zorder"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/status"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/catalogRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/iD"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/visible"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/geoResource"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/geoResources"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/cRS"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference internal.ecore#//Layer/properties"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/colourScheme"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/defaultColor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/featureChanges"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/minScaleDenominator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/maxScaleDenominator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Layer/interactionMap"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/shown"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/icon"/>
+      <genOperations ecoreOperation="internal.ecore#//Layer/getQuery">
+        <genParameters ecoreParameter="internal.ecore#//Layer/getQuery/selection"/>
+      </genOperations>
+      <genOperations ecoreOperation="internal.ecore#//Layer/getCRS">
+        <genParameters ecoreParameter="internal.ecore#//Layer/getCRS/monitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses provider="Stateful" ecoreClass="internal.ecore#//Map">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Map/contextModel"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Map/abstract"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Map/navCommandStack"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Map/commandStack"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Map/layerFactory"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Map/viewportModelInternal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Map/colorPalette"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Map/editManagerInternal"/>
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference internal.ecore#//Map/renderManagerInternal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Map/colourScheme"/>
+      <genFeatures notify="false" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Map/blackBoardInternal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Map/legend"/>
+      <genOperations ecoreOperation="internal.ecore#//Map/getBounds">
+        <genParameters ecoreParameter="internal.ecore#//Map/getBounds/monitor"/>
+      </genOperations>
+      <genOperations ecoreOperation="internal.ecore#//Map/getAspectRatio">
+        <genParameters ecoreParameter="internal.ecore#//Map/getAspectRatio/monitor"/>
+      </genOperations>
+      <genOperations ecoreOperation="internal.ecore#//Map/redo"/>
+      <genOperations ecoreOperation="internal.ecore#//Map/undo"/>
+      <genOperations ecoreOperation="internal.ecore#//Map/backwardHistory"/>
+      <genOperations ecoreOperation="internal.ecore#//Map/forwardHistory"/>
+    </genClasses>
+    <genClasses provider="Stateful" ecoreClass="internal.ecore#//Project">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Project/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Project/elementsInternal"/>
+    </genClasses>
+    <genClasses ecoreClass="internal.ecore#//ProjectElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//ProjectElement/name"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference internal.ecore#//ProjectElement/projectInternal"/>
+    </genClasses>
+    <genClasses ecoreClass="internal.ecore#//ProjectRegistry">
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference internal.ecore#//ProjectRegistry/currentProject"/>
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference internal.ecore#//ProjectRegistry/projects"/>
+      <genOperations ecoreOperation="internal.ecore#//ProjectRegistry/getProject">
+        <genParameters ecoreParameter="internal.ecore#//ProjectRegistry/getProject/uri"/>
+      </genOperations>
+      <genOperations ecoreOperation="internal.ecore#//ProjectRegistry/getProject.1">
+        <genParameters ecoreParameter="internal.ecore#//ProjectRegistry/getProject.1/projectPath"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="internal.ecore#//StyleBlackboard">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//StyleBlackboard/content"/>
+      <genOperations ecoreOperation="internal.ecore#//StyleBlackboard/get">
+        <genParameters ecoreParameter="internal.ecore#//StyleBlackboard/get/styleId"/>
+      </genOperations>
+      <genOperations ecoreOperation="internal.ecore#//StyleBlackboard/lookup">
+        <genParameters ecoreParameter="internal.ecore#//StyleBlackboard/lookup/theClass"/>
+      </genOperations>
+      <genOperations ecoreOperation="internal.ecore#//StyleBlackboard/contains">
+        <genParameters ecoreParameter="internal.ecore#//StyleBlackboard/contains/styleId"/>
+      </genOperations>
+      <genOperations ecoreOperation="internal.ecore#//StyleBlackboard/put">
+        <genParameters ecoreParameter="internal.ecore#//StyleBlackboard/put/styleId"/>
+        <genParameters ecoreParameter="internal.ecore#//StyleBlackboard/put/style"/>
+      </genOperations>
+      <genOperations ecoreOperation="internal.ecore#//StyleBlackboard/put.1">
+        <genParameters ecoreParameter="internal.ecore#//StyleBlackboard/put.1/url"/>
+        <genParameters ecoreParameter="internal.ecore#//StyleBlackboard/put.1/monitor"/>
+      </genOperations>
+      <genOperations ecoreOperation="internal.ecore#//StyleBlackboard/remove">
+        <genParameters ecoreParameter="internal.ecore#//StyleBlackboard/remove/styleId"/>
+      </genOperations>
+      <genOperations ecoreOperation="internal.ecore#//StyleBlackboard/clone"/>
+    </genClasses>
+    <genClasses ecoreClass="internal.ecore#//StyleEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//StyleEntry/iD"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//StyleEntry/memento"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//StyleEntry/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//StyleEntry/styleClass"/>
+    </genClasses>
+    <genClasses ecoreClass="internal.ecore#//Cloneable"/>
+    <genClasses ecoreClass="internal.ecore#//LayerFactory">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference internal.ecore#//LayerFactory/map"/>
+    </genClasses>
+    <genClasses ecoreClass="internal.ecore#//IAdaptable"/>
+    <genClasses ecoreClass="internal.ecore#//IBlockingAdaptable"/>
+    <genClasses ecoreClass="internal.ecore#//Blackboard">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Blackboard/entries"/>
+    </genClasses>
+    <genClasses ecoreClass="internal.ecore#//BlackboardEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//BlackboardEntry/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//BlackboardEntry/memento"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//BlackboardEntry/objectClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//BlackboardEntry/object"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="internal.ecore#//IResolveChangeListener"/>
+    <genClasses image="false" ecoreClass="internal.ecore#//IStyleBlackboard"/>
+    <genClasses ecoreClass="internal.ecore#//InteractionToEBooleanObjectMapEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//InteractionToEBooleanObjectMapEntry/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//InteractionToEBooleanObjectMapEntry/value"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="internal.ecore#//IFolder"/>
+    <genClasses ecoreClass="internal.ecore#//Folder">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Folder/items"/>
+    </genClasses>
+    <genClasses ecoreClass="internal.ecore#//LegendItem">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//LegendItem/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//LegendItem/shown"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//LegendItem/icon"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="internal.ecore#//ILegendItem"/>
+  </genPackages>
+  <genPackages prefix="Render" basePackage="org.locationtech.udig.project.internal"
+      ecorePackage="render.ecore#/">
+    <genDataTypes ecoreDataType="render.ecore#//CoordinateReferenceSystem"/>
+    <genDataTypes ecoreDataType="render.ecore#//Envelope"/>
+    <genDataTypes ecoreDataType="render.ecore#//IGeoResource"/>
+    <genDataTypes ecoreDataType="render.ecore#//BufferedImage"/>
+    <genDataTypes ecoreDataType="render.ecore#//Rectangle"/>
+    <genDataTypes ecoreDataType="render.ecore#//Query"/>
+    <genDataTypes ecoreDataType="render.ecore#//Graphics2D"/>
+    <genDataTypes ecoreDataType="render.ecore#//List"/>
+    <genDataTypes ecoreDataType="render.ecore#//Coordinate"/>
+    <genDataTypes ecoreDataType="render.ecore#//Point"/>
+    <genDataTypes ecoreDataType="render.ecore#//AffineTransform"/>
+    <genDataTypes ecoreDataType="render.ecore#//MapDisplay"/>
+    <genDataTypes ecoreDataType="render.ecore#//IProgressMonitor"/>
+    <genDataTypes ecoreDataType="render.ecore#//RenderException"/>
+    <genDataTypes ecoreDataType="render.ecore#//SortedSet">
+      <genTypeParameters ecoreTypeParameter="render.ecore#//SortedSet/T"/>
+    </genDataTypes>
+    <genDataTypes ecoreDataType="render.ecore#//ReferencedEnvelope"/>
+    <genDataTypes ecoreDataType="render.ecore#//DateTime"/>
+    <genDataTypes ecoreDataType="render.ecore#//IllegalArgumentException"/>
+    <genClasses ecoreClass="render.ecore#//IRenderManager"/>
+    <genClasses ecoreClass="render.ecore#//IViewportModel"/>
+    <genClasses ecoreClass="render.ecore#//IMultiLayerRenderer"/>
+    <genClasses ecoreClass="render.ecore#//IRenderer"/>
+    <genClasses ecoreClass="render.ecore#//ILayer"/>
+    <genClasses ecoreClass="render.ecore#//MultiLayerRenderer">
+      <genOperations ecoreOperation="render.ecore#//MultiLayerRenderer/refreshImage"/>
+    </genClasses>
+    <genClasses ecoreClass="render.ecore#//RenderExecutor">
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference render.ecore#//RenderExecutor/renderer"/>
+    </genClasses>
+    <genClasses ecoreClass="render.ecore#//RenderManager">
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference render.ecore#//RenderManager/renderExecutor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//RenderManager/mapDisplay"/>
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference render.ecore#//RenderManager/mapInternal"/>
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference render.ecore#//RenderManager/viewportModelInternal"/>
+      <genOperations ecoreOperation="render.ecore#//RenderManager/refresh">
+        <genParameters ecoreParameter="render.ecore#//RenderManager/refresh/bounds"/>
+      </genOperations>
+      <genOperations ecoreOperation="render.ecore#//RenderManager/dispose"/>
+    </genClasses>
+    <genClasses ecoreClass="render.ecore#//ViewportModel">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//ViewportModel/cRS"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//ViewportModel/bounds"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//ViewportModel/center"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//ViewportModel/height"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//ViewportModel/width"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//ViewportModel/aspectRatio"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//ViewportModel/pixelSize"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference render.ecore#//ViewportModel/mapInternal"/>
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference render.ecore#//ViewportModel/renderManagerInternal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//ViewportModel/preferredScaleDenominators"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//ViewportModel/availableTimesteps"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//ViewportModel/currentTimestep"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//ViewportModel/availableElevation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//ViewportModel/currentElevation"/>
+      <genOperations ecoreOperation="render.ecore#//ViewportModel/setBounds">
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/setBounds/minx"/>
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/setBounds/maxx"/>
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/setBounds/miny"/>
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/setBounds/maxy"/>
+      </genOperations>
+      <genOperations ecoreOperation="render.ecore#//ViewportModel/worldToScreenTransform"/>
+      <genOperations ecoreOperation="render.ecore#//ViewportModel/worldToPixel">
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/worldToPixel/coord"/>
+      </genOperations>
+      <genOperations ecoreOperation="render.ecore#//ViewportModel/pixelToWorld">
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/pixelToWorld/x"/>
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/pixelToWorld/y"/>
+      </genOperations>
+      <genOperations ecoreOperation="render.ecore#//ViewportModel/panUsingScreenCoords">
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/panUsingScreenCoords/xpixels"/>
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/panUsingScreenCoords/ypixels"/>
+      </genOperations>
+      <genOperations ecoreOperation="render.ecore#//ViewportModel/panUsingWorldCoords">
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/panUsingWorldCoords/x"/>
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/panUsingWorldCoords/y"/>
+      </genOperations>
+      <genOperations ecoreOperation="render.ecore#//ViewportModel/zoom">
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/zoom/zoom"/>
+      </genOperations>
+      <genOperations ecoreOperation="render.ecore#//ViewportModel/zoom.1">
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/zoom.1/zoom"/>
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/zoom.1/fixedPoint"/>
+      </genOperations>
+      <genOperations ecoreOperation="render.ecore#//ViewportModel/zoomToExtent"/>
+      <genOperations ecoreOperation="render.ecore#//ViewportModel/zoomToBox">
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/zoomToBox/box"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="render.ecore#//Comparable"/>
+    <genClasses ecoreClass="render.ecore#//Renderer">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//Renderer/state"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//Renderer/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference render.ecore#//Renderer/context"/>
+      <genOperations ecoreOperation="render.ecore#//Renderer/dispose"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="render.ecore#//IMapDisplayListener"/>
+    <genClasses image="false" ecoreClass="render.ecore#//IRenderContext"/>
+  </genPackages>
+</genmodel:GenModel>

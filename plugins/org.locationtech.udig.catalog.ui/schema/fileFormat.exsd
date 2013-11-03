@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="org.locationtech.udig.catalog.ui" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="org.locationtech.udig.catalog.ui" id="fileFormat" name="fileFormat"/>
+      </appInfo>
+      <documentation>
+         Used to teach uDig about new file extensions suitable for use in the File wizard page.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
+      <complexType>
+         <sequence>
+            <choice minOccurs="0" maxOccurs="unbounded">
+               <element ref="fileService"/>
+               <element ref="provider"/>
+            </choice>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="fileService">
+      <annotation>
+         <documentation>
+            Used to register a static file extension (such as &quot;*.txt&quot; or &quot;*.shp) for use.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  Name of the file format (may be translated into the local language)
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="fileExtension" type="string" use="required">
+            <annotation>
+               <documentation>
+                  This is the actual file extension being declaired.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="provider">
+      <annotation>
+         <documentation>
+            Dynamically generate a list of supported file formats. Used to communicate the capabilieis of an external library such as GDAL, ImageIO-Ext or GeoTools.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  FormatProvider instance used to list file format extensions and translated file format names.
+
+Should only be used to sort out &quot;optional&quot; file formats where supporting the format is sorted out at runtime. For static listing of a file format please use the normal fileService element.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":org.locationtech.udig.catalog.service.FormatProvider"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         1.0
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         org.locationtech.udig.catalog.shp contrinutes the &quot;*.shp&quot; format; and provides a service connection factory capable of working with &quot;*.shp&quot; files.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiInfo"/>
+      </appInfo>
+      <documentation>
+         Implement a FormatProvider to list your supported file extensions (along with their format names).
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         Day 4 tutorial materials cover the addition of a &quot;*.csv&quot; file; you may review this source code in the tutorials directory.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+uDig - User Friendly Desktop Internet GIS client
+<A HREF="http://udig.refractions.net">http://udig.refractions.net</A>
+(C) 2004-2012, Refractions Research Inc.
+
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+(<A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>), and Refractions BSD
+License v1.0 (<A HREF="http://www.eclipse.org/org/documents/edl-v10.html">http://www.eclipse.org/org/documents/edl-v10.html</A>).
+      </documentation>
+   </annotation>
+
+</schema>

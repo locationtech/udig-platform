@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="org.locationtech.udig.catalog.geotools.services"
+         name="GeoTools Services"
+         point="org.locationtech.udig.catalog.ServiceExtension">
+      <service
+            class="org.locationtech.udig.catalog.geotools.data.DataStoreServiceExtension"
+            id="org.locationtech.udig.catalog.geotools.serviceDataStore"
+            name="DataStore">
+      </service>
+      <service
+            class="org.locationtech.udig.catalog.geotools.process.LocalProcessServiceExtension"
+            id="org.locationtech.udig.catalog.geotools.serviceLocalProcess"
+            name="LocalProcess">
+      </service>
+   </extension>
+   <extension
+         id="org.locationtech.udig.catalog.geotools.connection"
+         name="GeoTools Connection"
+         point="org.locationtech.udig.catalog.ui.connectionFactory">
+      <factory
+            class="org.locationtech.udig.catalog.geotools.data.DataStoreConnectionFactory"
+            id="org.locationtech.udig.catalog.geotools.connection.dataStore">
+      </factory>
+      <wizardPage
+            banner="icons/wizban/datastore_wiz.gif"
+            class="org.locationtech.udig.catalog.geotools.data.DataStoreConnectionPage"
+            description="Direct access to GeoTools data stores"
+            icon="icons/obj16/datastore_obj.gif"
+            id="org.locationtech.udig.catalog.geotools.connection.dataStorePage"
+            name="DataStore">
+      </wizardPage>
+      <wizardPage
+            banner="icons/wizban/datastore_wiz.gif"
+            class="org.locationtech.udig.catalog.geotools.data.DataStoreParameterPage"
+            icon="icons/obj16/datastore_obj.gif"
+            id="org.locationtech.udig.catalog.geotools.connection.dataStoreParametersPage"
+            name="DataStore Parameters">
+      </wizardPage>
+   </extension>
+   <extension
+         point="org.locationtech.udig.catalog.ui.fileFormat">
+      <provider
+            class="org.locationtech.udig.catalog.geotools.data.FileDataStoreFormatProvider">
+      </provider>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.locationtech.udig.catalog.internal.geotools.AddToCatalog">
+      </startup>
+   </extension>
+</plugin>

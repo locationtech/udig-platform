@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.locationtech.udig.project.renderer">
+      <renderer
+            class="org.locationtech.udig.tutorials.render.csv.CSVRenderMetricsFactory"
+            id="org.locationtech.udig.tutorials.renderer.csv.csvRenderer"
+            name="CSV Renderer">
+      </renderer>
+   </extension>
+</plugin>

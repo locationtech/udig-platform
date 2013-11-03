@@ -1,0 +1,1180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension-point id="editorInputs" name="%editorInputs.point" schema="schema/editorInputs.exsd"/>
+   <extension-point id="itemProviderAdapterFactories" name="%adapterFactories.name" schema="schema/itemProviderAdapterFactories.exsd"/>
+   <extension-point id="tool" name="%tool.point" schema="schema/tool.exsd"/>
+   <extension-point id="featureEditor" name="%featureEditor.point" schema="schema/featureEditor.exsd"/>
+   <extension-point id="toolManagers" name="toolManagers" schema="schema/toolManagers.exsd"/>
+   <extension-point id="pdfTemplates" name="PDF Templates" schema="schema/pdfTemplates.exsd"/>
+   <extension-point id="featurePanel" name="%featurePanel.point" schema="schema/featurePanel.exsd"/>
+   
+ 	<extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.locationtech.udig.catalog.IGeoResource"
+            adaptable="true"
+            id="org.locationtech.udig.project.ui.GeoResourceContributions">
+         <action
+               label="%addToNewMap.label"
+               icon="icons/etool16/newmap_wiz.gif"
+               tooltip="%addToNewMap.tooltip"
+               class="org.locationtech.udig.project.ui.internal.actions.AddToNewMap"
+               id="org.locationtech.udig.project.ui.AddGeoToNewMap">
+         </action>
+         <action
+               label="%addToCurrentMap.label"
+               icon="icons/etool16/addlayer_wiz.gif"
+               tooltip="%addToCurrentMap.tooltip"
+               class="org.locationtech.udig.project.ui.internal.actions.AddToCurrentMap"
+               menubarPath="additions"
+               id="org.locationtech.udig.project.ui.AddGeoToCurrentMap">
+         </action>
+      </objectContribution>      
+      <objectContribution
+            objectClass="org.locationtech.udig.project.IProject"
+            adaptable="true"
+            id="org.locationtech.udig.project.ui.ProjectContributions">
+       <!--  <action
+               class="org.locationtech.udig.project.ui.internal.actions.ConsolidateAction"
+               enablesFor="1"
+               id="org.locationtech.udig.project.ui.action1"
+               label="%consolidate.action"
+               menubarPath="additions"
+               style="push">
+         </action> -->
+         <action
+               enablesFor="1"
+               label="%rename.label"
+               tooltip="%rename.tooltip"
+               class="org.locationtech.udig.project.ui.internal.actions.Rename"
+               id="org.locationtech.udig.project.ui.actionRename"/>
+         <action
+               class="org.locationtech.udig.project.ui.internal.actions.AddToNewMap"
+               enablesFor="1"
+               icon="icons/etool16/newmap_wiz.gif"
+               id="org.locationtech.udig.project.ui.newMap"
+               label="%map.new.label"/>
+         <action
+                 class="org.locationtech.udig.project.ui.internal.actions.SaveAsProject"
+                 enablesFor="1"
+                 icon="icons/obj16/project_save.gif"
+                 id="org.locationtech.udig.project.ui.saveAsProject"
+                 label="%project.action.save.name"
+                 tooltip="%project.action.save.tooltip">
+         </action>
+         <action
+               class="org.locationtech.udig.project.ui.internal.actions.OpenMapAction"
+               enablesFor="+"
+               icon="icons/obj16/project_obj.gif"
+               id="org.locationtech.udig.project.ui.action2"
+               label="%map.action.open.name">
+         </action>
+      </objectContribution>
+     <objectContribution
+            adaptable="true"
+            objectClass="org.locationtech.udig.project.ILayer"
+            id="org.locationtech.udig.project.ui.LayerContribution">
+         <action
+               enablesFor="1"
+               label="%rename.label"
+               tooltip="%rename.tooltip"
+               class="org.locationtech.udig.project.ui.internal.actions.Rename"
+               id="org.locationtech.udig.project.ui.actionRename"/>
+         <!--action
+               label="%delete.label"
+               definitionId="org.eclipse.ui.edit.delete"
+               tooltip="%delete.tooltip"
+               class="org.locationtech.udig.project.ui.internal.actions.Delete"
+               icon="icons/etool16/delete.gif"
+               id="org.locationtech.udig.project.ui.deleteLayer"/-->
+         <action
+               label="%zoomToLayer.label"
+               icon="icons/elcl16/zoom_layer_co.gif"
+               tooltip="%zoomToLayer.tooltip"
+               class="org.locationtech.udig.project.ui.internal.actions.ZoomToLayer"
+               style="push"
+               id="org.locationtech.udig.project.ui.zoomTo"/>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            objectClass="org.locationtech.udig.catalog.IService"
+            id="org.locationtech.udig.project.ui.IServiceContribution">
+         <action
+               label="%addToCurrentMap.label"
+               tooltip="%addToCurrentMap.label"
+               icon="icons/etool16/addlayer_wiz.gif"
+               class="org.locationtech.udig.project.ui.internal.actions.AddToCurrentMap"
+               menubarPath="additions"
+               id="org.locationtech.udig.project.ui.AddIServToCurrentMap"/>
+         <action
+               label="%addToNewMap.label"
+               tooltip="%addToNewMap.tooltip"
+               icon="icons/etool16/newmap_wiz.gif"
+               class="org.locationtech.udig.project.ui.internal.actions.AddToNewMap"
+               id="org.locationtech.udig.project.ui.AddIServToNewMap"/>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            objectClass="org.locationtech.udig.project.internal.Map"
+            id="org.locationtech.udig.project.ui.MapContribution">
+         <action
+               label="%add.label"
+               tooltip="%add.tooltip"
+               icon="icons/etool16/addlayer_wiz.gif"
+               definitionId="org.locationtech.udig.project.ui.addLayerCommand"
+               class="org.locationtech.udig.project.ui.internal.actions.AddLayersAction"
+               style="push"
+               id="org.locationtech.udig.project.ui.map.AddLayerAction"/>
+      </objectContribution>
+      <objectContribution
+            adaptable="true"
+            id="org.locationtech.udig.project.ui.projectElementContribution"
+            objectClass="org.locationtech.udig.project.IProjectElement">
+         <action
+               class="org.locationtech.udig.project.ui.internal.actions.Rename"
+               enablesFor="1"
+               id="org.locationtech.udig.project.ui.rename"
+               label="%rename.label"
+               menubarPath="additions"/>
+      </objectContribution>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.locationtech.udig.ui.mapPerspective">
+         <viewShortcut
+               id="org.locationtech.udig.project.ui.projectExplorer">
+         </viewShortcut>
+         <viewShortcut
+               id="org.locationtech.udig.project.ui.layerManager">
+         </viewShortcut>
+         <viewShortcut
+               id="org.locationtech.udig.project.ui.legendManager">
+         </viewShortcut>
+         <newWizardShortcut
+               id="org.locationtech.udig.project.ui.wizard.newMap">
+         </newWizardShortcut>
+         <newWizardShortcut
+               id="org.locationtech.udig.project.ui.wizards.newProject">
+         </newWizardShortcut>
+         <newWizardShortcut
+               id="org.locationtech.udig.project.ui.wizard.newLayer">
+         </newWizardShortcut>
+         <perspectiveShortcut
+               id="org.locationtech.udig.ui.mapPerspective">
+         </perspectiveShortcut>
+         <actionSet id="org.locationtech.udig.project.ui.LayerActions"/>
+         <actionSet id="org.locationtech.udig.project.ui.renameSet"/>
+         <actionSet id="org.locationtech.udig.project.ui.OpenProjectSet"/>
+      </perspectiveExtension>
+      <perspectiveExtension targetID="org.locationtech.udig.ui.stylePerspective">
+         <actionSet id="org.locationtech.udig.project.ui.LayerActions"/>
+         <actionSet id="org.locationtech.udig.project.ui.renameSet"/>
+         <actionSet id="org.locationtech.udig.project.ui.OpenProjectSet"/>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         id="org.locationtech.udig.ui.new"
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="%NewMap.category"
+            id="org.locationtech.udig.project.ui.new.map">
+      </category>
+      <category
+            name="%NewProject.category"
+            id="org.locationtech.udig.project.ui.new">
+      </category>
+      <primaryWizard
+            id="org.locationtech.udig.project.ui.wizards.newProject">
+      </primaryWizard>
+      <wizard
+            category="org.locationtech.udig.project.ui.new"
+            class="org.locationtech.udig.project.ui.internal.wizard.NewProjectWizard"
+            descriptionImage="icons/wizban/newprj_wiz.gif"
+            finalPerspective="org.locationtech.udig.ui.mapPerspective"
+            helpHref="New Project wizard.html"
+            icon="icons/etool16/newprj_wiz.gif"
+            id="org.locationtech.udig.project.ui.wizards.newProject"
+            name="%NewProjectWizard.name"
+            preferredPerspectives="org.locationtech.udig.ui.mapPerspective"
+            project="false">
+         <description>
+            %NewProjectWizard.description
+         </description>
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            class="org.locationtech.udig.project.ui.internal.property.pages.MapSummary"
+            id="org.locationtech.udig.configuration.property.map.summary"
+            name="%MapSummary.name"
+            objectClass="org.locationtech.udig.project.IMap"/>
+      <page
+            class="org.locationtech.udig.project.ui.internal.property.pages.MapCRSPropertyPage"
+            id="org.locationtech.udig.project.ui.property.mapCrs"
+            name="%crs.page.name"
+            objectClass="org.locationtech.udig.project.IMap"/>
+      <page
+            class="org.locationtech.udig.project.ui.internal.PalettePropertyPage"
+            icon="icons/obj16/style_obj.gif"
+            id="org.locationtech.udig.project.ui.palettePropertyPage"
+            name="%Palette.name"
+            objectClass="org.locationtech.udig.project.IMap"/>
+      <page
+            class="org.locationtech.udig.project.ui.internal.property.pages.LayerSummary"
+            id="org.locationtech.udig.configuration.property.layer.summary"
+            name="%LayerSummary.name">
+         <enabledWhen>
+            <or>
+               <instanceof
+                     value="org.locationtech.udig.project.internal.Layer">
+               </instanceof>
+               <adapt
+                     type="org.locationtech.udig.project.internal.Layer">
+               </adapt>
+            </or>
+         </enabledWhen>
+      </page>
+      <page
+            class="org.locationtech.udig.project.ui.internal.property.pages.LayerCRSPropertyPage"
+            id="org.locationtech.udig.project.ui.layer.crs"
+            name="%layer.crs.propertypage"
+            objectClass="org.locationtech.udig.project.internal.Layer">
+      </page>
+      <page
+            class="org.locationtech.udig.project.ui.internal.property.pages.LayerInteractionPropertyPage"
+            id="org.locationtech.udig.project.ui.property.layer.interaction"
+            name="Interaction"
+            objectClass="org.locationtech.udig.project.internal.Layer"
+            selectionFilter="single">
+      </page>
+      <page
+            class="org.locationtech.udig.project.ui.tileset.TileSetPropertyPage"
+            id="org.locationtech.udig.configuration.property.layer.tileset"
+            name="%tilesetDefine"
+            selectionFilter="single">
+         <enabledWhen>
+            <or>
+               <instanceof
+                     value="org.locationtech.udig.project.internal.Layer">
+               </instanceof>
+               <adapt
+                     type="org.locationtech.udig.project.internal.Layer">
+               </adapt>
+            </or>
+         </enabledWhen>
+      </page>
+      <page
+            class="org.locationtech.udig.project.ui.internal.property.pages.LayerQueryPropertyPage"
+            id="org.locationtech.udig.project.ui.property.layer.query"
+            name="Query"
+            objectClass="org.locationtech.udig.project.internal.Layer"
+            selectionFilter="single">
+      </page>
+   </extension>
+
+      <extension
+            id="org.locationtech.udig.project.ui.adapters"
+            point="org.eclipse.core.runtime.adapters">
+     <factory
+           class="org.locationtech.udig.project.ui.internal.adapters.FeatureAdapterFactory"
+           adaptableType="org.opengis.feature.Feature">
+        <adapter type="org.eclipse.ui.views.properties.IPropertySource"/>
+        <adapter type="org.eclipse.ui.views.properties.IPropertySource2"/>
+        <adapter type="org.eclipse.jface.viewers.ITreeContentProvider"/>
+        <adapter type="org.eclipse.jface.viewers.IStructuredContentProvider"/>
+        <adapter type="org.eclipse.jface.viewers.IContentProvider"/>
+        <adapter type="org.eclipse.jface.viewers.ILabelProvider"/>
+        <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>       
+        <adapter type="org.eclipse.jface.viewers.ITableLabelProvider"/>   
+        <adapter type="org.locationtech.udig.project.ui.internal.adapters.FeatureTableProvider"/>
+        <adapter type="org.eclipse.core.runtime.IAdaptable"/>
+     </factory>
+     <factory
+           class="org.locationtech.udig.project.ui.internal.adapters.FeatureAdapterFactory"
+           adaptableType="com.vividsolutions.jts.geom.Geometry">
+        <adapter type="org.eclipse.ui.views.properties.IPropertySource"/>
+        <adapter type="org.eclipse.ui.views.properties.IPropertySource2"/>
+        <adapter type="org.eclipse.jface.viewers.ITreeContentProvider"/>
+        <adapter type="org.eclipse.jface.viewers.IStructuredContentProvider"/>
+        <adapter type="org.eclipse.jface.viewers.IContentProvider"/>
+        <adapter type="org.eclipse.jface.viewers.ILabelProvider"/>   
+        <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>       
+        <adapter type="org.eclipse.jface.viewers.ITableLabelProvider"/>   
+        <adapter type="org.locationtech.udig.project.ui.internal.adapters.FeatureTableProvider"/>
+	</factory>
+     <factory
+           class="org.locationtech.udig.project.ui.internal.adapters.FeatureAdapterFactory"
+           adaptableType="com.vividsolutions.jts.geom.Coordinate">
+        <adapter type="org.eclipse.ui.views.properties.IPropertySource"/>
+        <adapter type="org.eclipse.ui.views.properties.IPropertySource2"/>
+        <adapter type="org.eclipse.jface.viewers.ITreeContentProvider"/>
+        <adapter type="org.eclipse.jface.viewers.IStructuredContentProvider"/>
+        <adapter type="org.eclipse.jface.viewers.IContentProvider"/>
+        <adapter type="org.eclipse.jface.viewers.ILabelProvider"/>
+        <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>       
+        <adapter type="org.eclipse.jface.viewers.ITableLabelProvider"/>   
+        <adapter type="org.locationtech.udig.project.ui.internal.adapters.FeatureTableProvider"/>
+     </factory>
+     <factory
+           class="org.locationtech.udig.project.ui.internal.adapters.FeatureAdapterFactory"
+           adaptableType="com.vividsolutions.jts.geom.Coordinate">
+        <adapter type="org.eclipse.jface.viewers.ITreeContentProvider"/>
+        <adapter type="org.eclipse.jface.viewers.IStructuredContentProvider"/>
+        <adapter type="org.eclipse.jface.viewers.IContentProvider"/>
+        <adapter type="org.eclipse.jface.viewers.ILabelProvider"/>
+        <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>       
+        <adapter type="org.eclipse.jface.viewers.ITableLabelProvider"/>   
+        <adapter type="org.locationtech.udig.project.ui.internal.adapters.FeatureTableProvider"/>
+     </factory>
+     <factory
+           class="org.locationtech.udig.project.ui.internal.adapters.FeatureAdapterFactory"
+           adaptableType="org.locationtech.udig.catalog.IService">
+        <adapter type="org.eclipse.ui.views.properties.IPropertySource"/>
+        <adapter type="org.eclipse.ui.views.properties.IPropertySource2"/>
+        <adapter type="org.eclipse.jface.viewers.ITreeContentProvider"/>
+        <adapter type="org.eclipse.jface.viewers.IStructuredContentProvider"/>
+        <adapter type="org.eclipse.jface.viewers.IContentProvider"/>
+        <adapter type="org.eclipse.jface.viewers.ILabelProvider"/>
+        <adapter type="org.eclipse.jface.viewers.ITableColorProvider"/>       
+        <adapter type="org.locationtech.udig.project.ui.internal.adapters.FeatureTableProvider"/>
+     </factory>
+  </extension>
+      <extension
+            point="org.eclipse.ui.viewActions">
+         <viewContribution
+               targetID="org.locationtech.udig.project.ui.layerManager"
+               id="org.locationtech.udig.project.ui.layersContributor">
+            <action
+                  disabledIcon="icons/dlcl16/zoom_layer_co.gif"
+                  enablesFor="+"
+                  toolbarPath="additions"
+                  label="%zoomToMultipleLayers.label"
+                  class="org.locationtech.udig.project.ui.internal.actions.ZoomToLayer"
+                  icon="icons/elcl16/zoom_layer_co.gif"
+                  tooltip="%zoomToMultipleLayers.tooltip"
+                  style="push"
+                  id="org.locationtech.udig.project.ui.zoomToLayerViewAction">
+               <enablement>
+                  <objectClass name="org.locationtech.udig.project.ILayer"/>
+               </enablement>
+            </action>
+            <action
+                  class="org.locationtech.udig.project.ui.internal.actions.MylarAction"
+                  enablesFor="+"
+                  icon="icons/elcl16/mylar_mode.gif"
+                  id="org.locationtech.udig.project.ui.mylar"
+                  label="%mylarAction.label"
+                  style="toggle"
+                  tooltip="%mylarAction.tooltip"
+                  toolbarPath="additions">
+               <enablement>
+                  <objectClass name="org.locationtech.udig.project.ILayer"/>
+               </enablement>
+            </action>
+         </viewContribution>
+         <viewContribution
+               id="org.locationtech.udig.project.ui.legendContributor"
+               targetID="org.locationtech.udig.project.ui.legendManager">
+            <action
+                  disabledIcon="icons/dlcl16/zoom_layer_co.gif"
+                  enablesFor="+"
+                  toolbarPath="additions"
+                  label="%zoomToMultipleLayers.label"
+                  class="org.locationtech.udig.project.ui.internal.actions.ZoomToLayer"
+                  icon="icons/elcl16/zoom_layer_co.gif"
+                  tooltip="%zoomToMultipleLayers.tooltip"
+                  style="push"
+                  id="org.locationtech.udig.project.ui.zoomToLayerViewAction">
+               <enablement>
+                  <objectClass name="org.locationtech.udig.project.ILayer"/>
+               </enablement>
+            </action>
+            <action
+                  class="org.locationtech.udig.project.ui.internal.actions.MylarAction"
+                  enablesFor="+"
+                  icon="icons/elcl16/mylar_mode.gif"
+                  id="org.locationtech.udig.project.ui.mylar"
+                  label="%mylarAction.label"
+                  style="toggle"
+                  tooltip="%mylarAction.tooltip"
+                  toolbarPath="additions">
+               <enablement>
+                  <objectClass name="org.locationtech.udig.project.ILayer"/>
+               </enablement>
+            </action>
+         </viewContribution>
+      </extension>
+      <extension
+            id="org.locationtech.udig.ui.layerDecorators"
+            name="%layerDecorators.name"
+            point="org.eclipse.ui.decorators">      
+         <decorator
+               lightweight="false"
+               adaptable="false"
+               label="%layerGlyph.label"
+               class="org.locationtech.udig.project.ui.internal.LayerGeneratedGlyphDecorator"
+               state="true"
+               id="org.locationtech.udig.project.ui.layerGeneratedGlyph">
+           <description>
+              %layerGlyph.description
+           </description>
+            <enablement>
+               <objectClass name="org.locationtech.udig.project.ILayer"/>
+            </enablement>
+        </decorator>
+        <decorator
+              class="org.locationtech.udig.project.ui.internal.LayerStatusDecorator"
+              id="org.locationtech.udig.project.ui.layerStatus"
+              label="%layerStatus.label"
+              lightweight="true"
+              location="BOTTOM_LEFT"
+              objectClass="org.locationtech.udig.project.ILayer"
+              state="true">
+            <description>
+				%layerStatus.description
+            </description>
+            <enablement>
+               <objectClass name="org.locationtech.udig.project.ILayer"/>
+            </enablement>
+         </decorator>
+        <decorator
+              adaptable="false"
+              class="org.locationtech.udig.project.ui.internal.TemporaryLayerDecorator"
+              id="org.locationtech.udig.project.ui.decorator.temporary.layer"
+              label="Temporary Layer"
+              lightweight="true"
+              location="TOP_RIGHT"
+              objectClass="org.locationtech.udig.project.ILayer"
+              state="true"/>
+     </extension>
+      <extension
+            point="org.eclipse.ui.contexts">
+         <context
+               description="%context.tool.description"
+               id="org.locationtech.udig.project.ui.tool"
+               name="%Tools"
+               parentId="org.eclipse.ui.contexts.window"/>
+      </extension>
+      
+	<extension
+       point="org.locationtech.udig.ui.dropAction">
+	    <action
+           class="org.locationtech.udig.project.ui.internal.actions.MapDropAction"
+           enablesFor="+"
+           name="%MapDropAction.name">
+	       <acceptedType class="java.net.URL"/>
+	       <acceptedType class="java.lang.String"/>
+	       <acceptedType class="java.io.File"/>
+	       <destination class="org.locationtech.udig.project.ui.internal.MapPart"/>
+           <destination
+                 class="org.locationtech.udig.project.ui.internal.LayersView"/>
+           <destination
+                 class="org.locationtech.udig.project.ui.internal.LegendView">
+           </destination>
+           <acceptedType
+                 adapt="true"
+                 class="org.locationtech.udig.catalog.IResolve"/>
+           <destination class="org.locationtech.udig.project.ILayer"/>
+           <destination class="org.locationtech.udig.project.IMap"/>
+	    </action>
+     <action
+           class="org.locationtech.udig.project.ui.internal.actions.SLDDropAction"
+           name="%SLDDrop.name">
+        <destination class="org.locationtech.udig.project.ILayer"/>
+        <acceptedType class="java.io.File"/>
+        <acceptedType class="java.net.URL"/>
+        <acceptedType class="java.lang.String"/>
+        <destination class="org.locationtech.udig.project.internal.Map"/>
+     </action>
+     <action
+           class="org.locationtech.udig.project.ui.internal.actions.LegendDropAction"
+           enablesFor="+"
+           name="Legend Drag and Drop">
+        <destination
+              class="org.locationtech.udig.project.ILegendItem">
+        </destination>
+        <acceptedType
+              class="org.locationtech.udig.project.ILegendItem">
+        </acceptedType>
+     </action>
+     <action
+           class="org.locationtech.udig.project.ui.internal.actions.LayerDropAction"
+           enablesFor="+"
+           name="%LayerDropAction.name">
+        <destination class="org.locationtech.udig.project.ILayer"/>
+        <acceptedType class="org.locationtech.udig.project.ILayer"/>
+     </action>
+     <action
+           class="org.locationtech.udig.project.ui.internal.dragdrop.DropFilterAction"
+           name="%FilterDropAction.name">
+        <destination
+              adapt="true"
+              class="org.locationtech.udig.project.ILayer"/>
+        <acceptedType
+              adapt="true"
+              class="org.opengis.filter.Filter"/>
+        <acceptedType class="org.opengis.feature.Feature"/>
+        <destination
+              adapt="true"
+              class="org.locationtech.udig.project.IMap"/>
+     </action>
+     <action
+           class="org.locationtech.udig.project.ui.internal.actions.DropMap"
+           name="%OpenMapAction.name">
+        <destination class="org.eclipse.ui.IEditorPart"/>
+        <acceptedType class="org.locationtech.udig.project.IMap"/>
+        <acceptedType class="java.lang.String"/>
+        <destination class="org.locationtech.udig.project.ui.internal.LayersView"/>
+        <destination
+              class="org.locationtech.udig.project.ui.internal.LegendView">
+        </destination>
+        <acceptedType class="java.net.URL"/>
+        <destination class="org.locationtech.udig.project.ILayer"/>
+        <acceptedType
+              adapt="false"
+              class="org.eclipse.emf.ecore.EObject"/>
+        <description>
+           %OpenMapAction.desc
+        </description>
+     </action>
+     <action
+           class="org.locationtech.udig.project.ui.internal.actions.OnProjectDropAction"
+           enablesFor="+"
+           name="%drop.project.name">
+        <destination
+              adapt="true"
+              class="org.locationtech.udig.project.internal.Project"/>
+        <description>
+           %ProjectDropAction.desc
+        </description>
+        <acceptedType
+              adapt="true"
+              class="org.locationtech.udig.catalog.IGeoResource"/>
+        <acceptedType
+        	  adapt="true"
+        	  class="org.locationtech.udig.catalog.IResolveFolder"/>
+        <acceptedType
+              adapt="true"
+              class="org.locationtech.udig.catalog.IService"/>
+        <acceptedType
+              adapt="true"
+              class="java.lang.String"/>
+              <acceptedType
+              adapt="true"
+              class="java.io.File"/>
+     </action>
+     <action
+           class="org.locationtech.udig.project.ui.internal.dragdrop.MoveLayerDropAction"
+           enablesFor="+"
+           name="%MoveLayerAction.name">
+        <destination
+              adapt="false"
+              class="org.locationtech.udig.project.internal.Map"/>
+        <acceptedType
+              adapt="false"
+              class="org.locationtech.udig.project.ILayer"/>
+        <description>
+           %MoveLayerAction.desc
+        </description>
+        <destination class="org.locationtech.udig.project.ui.internal.LayersView"/>
+        <destination
+              class="org.locationtech.udig.project.ui.internal.LegendView">
+        </destination>
+        <acceptedType
+              adapt="false"
+              class="org.locationtech.udig.project.ui.internal.MapEditorPart"/>
+     </action>
+     <action
+           class="org.locationtech.udig.project.ui.internal.dragdrop.MoveLayerDropActionLayer"
+           enablesFor="+"
+           name="%MoveLayerAction.name">
+        <destination
+              adapt="false"
+              class="org.locationtech.udig.project.internal.Layer"/>
+        <acceptedType
+              adapt="false"
+              class="org.locationtech.udig.project.internal.Layer"/>
+        <description>
+           %MoveLayerAction.desc
+        </description>
+     </action>
+     <action
+           class="org.locationtech.udig.project.ui.internal.dragdrop.MoveProjectElement"
+           enablesFor="+"
+           name="%MoveMapAction.name">
+        <destination
+              adapt="false"
+              class="org.locationtech.udig.project.internal.Project"/>
+        <acceptedType
+              adapt="false"
+              class="org.eclipse.emf.ecore.EObject"/>
+        <description>
+           %MoveMapAction.desc
+        </description>
+     </action>
+	 </extension>
+   <extension
+         point="org.locationtech.udig.project.ui.tool">
+      <category
+            commandId="org.locationtech.udig.tools.renderingCategoryCommand"
+            id="org.locationtech.udig.tool.category.render"
+            name="%rendering.tools.name"/>
+      <category
+            commandId="org.locationtech.udig.tools.ZoomCommand"
+            id="org.locationtech.udig.tool.category.zoom"
+            name="%zoom.tools.name"/>
+      <category
+            commandId="org.locationtech.udig.tools.PanCommand"
+            id="org.locationtech.udig.tool.category.pan"
+            name="%pan.tools.name"/>
+       <category
+             commandId="org.locationtech.udig.tools.selectionCommand"
+             id="org.locationtech.udig.tool.category.selection"
+             name="%selection.tools.name"
+             selectionProvider="org.locationtech.udig.project.ui.tool.selection.provider.FilterSelectionProvider"/>
+      <category
+            commandId="org.locationtech.udig.tools.infoCommand"
+            id="org.locationtech.udig.tool.category.info"
+            name="%info.tools.name"/>
+
+    </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            description="%category.description"
+            name="%category.name"
+            id="org.locationtech.udig.tools.toolCategory"/>
+      <command
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            name="%zoom.category.name"
+            id="org.locationtech.udig.tools.ZoomCommand"/>
+      <command
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            name="%pan.category.name"
+            id="org.locationtech.udig.tools.PanCommand"/>
+      <command
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            name="%selection.category.name"
+            id="org.locationtech.udig.tools.selectionCommand"/>
+      <command
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            name="%info.category.name"
+            id="org.locationtech.udig.tools.infoCommand"/>
+      <command
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            name="%zoom.category.name"
+            id="org.locationtech.udig.tools.editCommand"/>
+      <command
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            name="%rendering.category.name"
+            id="org.locationtech.udig.tools.renderingCategoryCommand"/>
+      <command
+            categoryId="org.locationtech.udig.project.ui.LayerCommands"
+            id="org.locationtech.udig.project.ui.command.new.layer"
+            name="%new.command.name"/>
+      <category
+            id="org.locationtech.udig.project.ui.LayerCommands"
+            name="%LayerCategory.name"/>
+      <command
+            categoryId="org.locationtech.udig.project.ui.LayerCommands"
+            description="%command.open.description"
+            id="org.locationtech.udig.project.ui.addLayerCommand"
+            name="%command.open.label"/>
+   	  <command
+            categoryId="org.eclipse.ui.category.file"
+            id="org.locationtech.udig.project.ui.openProjectCommand"
+            name="%command.open.name"/>
+      <command
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            description="Rename action binding"
+            id="org.locationtech.udig.project.ui.renameCommand"
+            name="%rename.label"/>
+      <command
+            description="%Map.properties.tooltip"
+            id="org.locationtech.udig.project.ui.mapProperties"
+            name="%Map.properties.name"/>
+      <command
+            description="%Layer.properties.tooltip"
+            id="org.locationtech.udig.project.ui.layerProperties"
+            name="%Layer.properties.name"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+         <key
+               commandId="org.locationtech.udig.project.ui.addLayerCommand"
+               schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
+           	   contextId="org.eclipse.ui.contexts.window"
+               sequence="M1+L A"/>
+         <key
+               commandId="org.locationtech.udig.project.ui.openProjectCommand"
+               schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
+               contextId="org.eclipse.ui.contexts.window"
+               sequence="M1+O"/>
+     <key
+            commandId="org.locationtech.udig.tools.renderingCategoryCommand"
+            contextId="org.locationtech.udig.project.ui.tool"
+            sequence="R"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
+      <key
+            commandId="org.locationtech.udig.tools.ZoomCommand"
+            contextId="org.locationtech.udig.project.ui.tool"
+            sequence="Z"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
+      <key
+            commandId="org.locationtech.udig.tools.PanCommand"
+            contextId="org.locationtech.udig.project.ui.tool"
+            sequence="P"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
+      <key
+            commandId="org.locationtech.udig.tools.selectionCommand"
+            contextId="org.locationtech.udig.project.ui.tool"
+            sequence="S"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
+
+      <key
+            commandId="org.locationtech.udig.tools.infoCommand"
+            contextId="org.locationtech.udig.project.ui.tool"
+            sequence="I"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
+      <key
+            commandId="org.locationtech.udig.project.ui.command.new.layer"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
+            sequence="M1+L C"/>
+      <key
+            commandId="org.locationtech.udig.project.ui.renameCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
+            sequence="F2"/>
+
+   </extension>
+
+   <extension
+         point="org.locationtech.udig.catalog.ui.connectionFactory">
+      <factory class="org.locationtech.udig.project.internal.ui.wizard.URLConnectionFactory"
+      			id = "org.locationtech.udig.project.ui.import.url"/>
+   </extension>
+   <extension
+         point="org.locationtech.udig.ui.objectProperty">
+      <object targetClass="org.locationtech.udig.project.ILayer">
+         <property
+               id="GeometryType"
+               class="org.locationtech.udig.project.ui.internal.tool.display.GeometryProperty"/>
+         <property
+               class="org.locationtech.udig.project.ui.operations.LayerSelectionProperty"
+               id="hasSelection"/>
+      </object>
+      <object targetClass="java.lang.Object">
+         <property
+               id="OpenMap"
+               class="org.locationtech.udig.project.ui.properties.OpenMap"/>
+      </object>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.locationtech.udig.project.ui.preferences.RenderPreferences"
+            id="org.locationtech.udig.project.ui.preferences.render"
+            name="%renderPref.name"/>
+      <page
+            category="org.locationtech.udig.project.ui.preferences.project"
+            class="org.locationtech.udig.project.ui.preferences.MapPreferencePage"
+            id="org.locationtech.udig.project.ui.preferences.map"
+            name="%map.preferences.name"/>
+      <page
+            class="org.locationtech.udig.project.ui.preferences.ProjectPreferencePage"
+            id="org.locationtech.udig.project.ui.preferences.project"
+            name="%project.preferences.name"/>
+     <page
+           category="org.locationtech.udig.project.ui.preferences.project"
+           class="org.locationtech.udig.project.ui.preferences.LayerPreferencePage"
+           id="org.locationtech.udig.project.ui.preferences.layer"
+           name="%layer.preferences.name"/>
+     <page
+           class="org.locationtech.udig.project.ui.ToolPreferences"
+           id="org.locationtech.udig.project.ui.preferences.tool"
+           name="%tool.preferences.name"/>
+     <page
+           category="org.locationtech.udig.project.ui.preferences.project"
+           class="org.locationtech.udig.project.ui.preferences.StylePreferencePage"
+           id="org.locationtech.udig.project.ui.preferences.style"
+           name="%style.preferences.name"/>
+     <page
+           category="org.locationtech.udig.project.ui.preferences.tool"
+           class="org.locationtech.udig.project.ui.MousePreferences"
+           id="org.locationtech.udig.project.ui.preferences.mouse"
+           name="%tool.mouse.preferences.name">
+     </page>
+   </extension>
+   <extension
+        point="org.eclipse.ui.exportWizards">
+      <wizard
+            class="org.locationtech.udig.project.ui.wizard.export.image.ExportMapToImageWizard"
+            icon="icons/etool16/exportimage_wiz.gif"
+            id="org.locationtech.udig.project.ui.export.image"
+            name="%exportToImage.name">
+         <description>
+            %exportToImage.desc
+         </description>
+      </wizard>     
+     <wizard
+           class="org.locationtech.udig.project.ui.wizard.export.ExportFeatureSelection$FeatureSelectionExportWizard"
+           icon="icons/etool16/exportselection_wiz.gif"
+           id="org.locationtech.udig.project.ui.dataExportWizard"
+           name="%selectionExport.name">
+        <description>
+           %selectionExport.desc
+        </description>
+     </wizard>
+     <wizard
+           class="org.locationtech.udig.project.ui.wizard.export.project.ExportProjectWizard"
+           icon="icons/etool16/exportproject_wiz.png"
+           id="org.locationtech.udig.project.ui.export.project"
+           name="%exportProject.name">
+        <description>
+           %exportProject.desc
+        </description>
+     </wizard>
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.ui.toolManagers">
+      <toolManager
+            class="org.locationtech.udig.project.ui.internal.tool.display.ToolManager"
+            id="org.locationtech.udig.project.ui.toolManager"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.locationtech.udig.project.ui.preferences.PreferenceInitializer"/>
+   </extension>
+
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="org.locationtech.udig.project.ui.contribution.inLayerQuerySet">
+         <with
+               variable="activeContexts">
+            <iterate
+                  operator="or">
+               <equals
+                     value="org.locationtech.udig.project.ui.layerQuerySet">
+               </equals>
+            </iterate>
+         </with>
+      </definition>
+      <definition
+            id="org.locationtech.udig.project.ui.contribution.inLayerModifySet">
+         <with
+               variable="activeContexts">
+            <iterate
+                  operator="or">
+               <equals
+                     value="org.locationtech.udig.project.ui.layerModifySet">
+               </equals>
+            </iterate>
+         </with>
+      </definition>
+      <definition
+            id="org.locationtech.udig.project.ui.contribution.inLayerStyleSet">
+         <with
+               variable="activeContexts">
+            <iterate
+                  operator="or">
+               <equals
+                     value="org.locationtech.udig.project.ui.layer.StyleSet">
+               </equals>
+            </iterate>
+         </with>
+      </definition>
+      <definition
+            id="org.locationtech.udig.project.ui.contribution.inMapMenu">
+         <with
+               variable="activeContexts">
+            <iterate
+                  operator="or">
+               <equals
+                     value="org.locationtech.udig.project.ui.map.menu">
+               </equals>
+            </iterate>
+         </with>
+      </definition>
+      <definition
+            id="org.locationtech.udig.project.ui.contribution.inLayerMenu">
+         <with
+               variable="activeContexts">
+            <iterate
+                  operator="or">
+               <equals
+                     value="org.locationtech.udig.project.ui.layer.menu">
+               </equals>
+            </iterate>
+         </with>
+      </definition>
+      <definition
+            id="org.locationtech.udig.project.ui.contribution.inLayerActions">
+         <with
+               variable="activeContexts">
+            <iterate
+                  operator="or">
+               <equals
+                     value="org.locationtech.udig.project.ui.layerActions">
+               </equals>
+            </iterate>
+         </with>
+      </definition>
+   </extension>
+	
+ 	
+	<extension
+        point="org.locationtech.udig.ui.operation"
+        id="org.locationtech.udig.project.ui.op">
+		<category
+	    	   context="Layer"
+               id="org.locationtech.udig.project.ui.operation.addCategory"
+               name="%Add.Category">
+               </category> 
+         <operation
+               categoryId="org.locationtech.udig.catalog.ui.operation.resourceCategory"
+               class="org.locationtech.udig.project.ui.operations.example.MultiTargetOp"
+               id="org.locationtech.udig.project.ui.define.tileset"
+               name="%resourceSummary"
+               targetClass="org.locationtech.udig.catalog.IGeoResource">
+         </operation>      
+ 	</extension>
+      
+      <extension
+            id="org.locationtech.udig.project.ui.op.map"
+            name="Map Operations"
+            point="org.locationtech.udig.ui.operation">
+         <category
+               context="Map"
+               id="org.locationtech.udig.project.ui.operation.mapCategory"
+               name="%Map.Name">
+         </category>
+         <category
+               context="Map"
+               id="org.locationtech.udig.project.ui.operation.mapModifyCategory"
+               name="%Map.Modify">
+         </category>
+         <operation
+               categoryId="org.locationtech.udig.project.ui.operation.mapCategory"
+               class="org.locationtech.udig.project.ui.operations.example.FeaturesInView"
+               id="org.locationtech.udig.project.ui.featuresInView"
+               name="%featuresView"
+               targetClass="org.locationtech.udig.project.IMap"/>
+     </extension>
+     
+      <extension
+            id="org.locationtech.udig.project.ui.op.layer"
+            name="Layer Operations"
+            point="org.locationtech.udig.ui.operation">
+        <category
+	            id="org.locationtech.udig.project.ui.operation.layerCategory"
+	            name="%Layer.Category">
+	            </category>	            
+        <operation
+               categoryId="org.locationtech.udig.project.ui.operation.layerCategory"
+               class="org.locationtech.udig.project.ui.operations.SyncProjection"
+               enablesFor="1"
+               id="org.locationtech.udig.project.ui.syncProjection"
+               name="%Layer.SetMapProjection"
+               targetClass="org.locationtech.udig.project.ILayer">
+         </operation>      
+ 	</extension>
+ 	         
+      <extension
+            id="org.locationtech.udig.project.ui.op.feature"
+            name="Feature Operations"
+            point="org.locationtech.udig.ui.operation">
+		<category
+               context="Feature"
+               id="org.locationtech.udig.project.ui.operation.featureCategory"
+               name="%Feature.Category">
+        </category>
+        <category
+               context="Feature"
+               id="org.locationtech.udig.project.ui.operation.featureModifyCategory"
+               name="%Feature.Modify.Category">
+        </category>
+ 	</extension> 
+        
+     <extension
+           id="org.locationtech.udig.project.ui.op.selection"
+           name="Selection Operations"
+           point="org.locationtech.udig.ui.operation">
+         <category
+               context="Selection"
+               id="org.locationtech.udig.project.ui.operation.selectionCategory"
+               name="%Selection.Category">
+         </category>            
+         <category
+               context="Selection"
+               id="org.locationtech.udig.project.ui.operation.selectionModifyCategory"
+               name="%Selection.Modify.Category">
+         </category>
+         <operation
+               categoryId="org.locationtech.udig.project.ui.operation.selectionCategory"
+               class="org.locationtech.udig.project.ui.operations.MakeHole"
+               enablesFor="1"
+               id="org.locationtech.udig.project.ui.operations.MakeHole"
+               name="%Selection.MakeHole"
+               targetClass="org.locationtech.udig.project.ILayer">
+         </operation>         
+         <operation
+               categoryId="org.locationtech.udig.project.ui.operation.selectionCategory"
+               class="org.locationtech.udig.project.ui.operations.SelectAllFeaturesOp"
+               enablesFor="1"
+               id="org.locationtech.udig.project.ui.operations.SelectAllFeaturesOp"
+               name="Select all features"
+               targetClass="org.locationtech.udig.project.ILayer">
+           <enablement>
+             <and>
+               <property
+                     expectedValue="true"
+                     propertyId="FeatureStoreResourceProperty"/>  
+             </and>
+            </enablement>
+         </operation>         
+         <!--operation
+               categoryId="org.locationtech.udig.project.ui.operation.selectionCategory"
+               class="org.locationtech.udig.project.ui.operations.CreateLayerView"
+               enablesFor="1"
+               id="org.locationtech.udig.project.ui.createView"
+               name="Selection To Layer"
+               targetClass="org.locationtech.udig.project.ILayer">
+            <enablement>
+               <and>
+                  <property
+                        expectedValue="true"
+                        propertyId="hasSelection">
+                  </property>
+                  <adaptsTo
+                        target="org.geotools.data.FeatureSource">
+                  </adaptsTo>
+               </and>
+            </enablement>
+         </operation-->
+      </extension>
+     <extension
+           point="org.eclipse.ui.handlers">
+        <handler
+              class="org.locationtech.udig.project.ui.internal.handlers.MapPropertiesCommandHandler"
+              commandId="org.locationtech.udig.project.ui.mapProperties">
+           <activeWhen>
+              <iterate
+                    ifEmpty="false"
+                    operator="or">
+                 <adapt
+                       type="org.locationtech.udig.project.IMap">
+                 </adapt>
+                 <instanceof
+                       value="org.locationtech.udig.project.IMap">
+                 </instanceof>
+              </iterate>
+           </activeWhen>
+        </handler>
+        <handler
+              class="org.locationtech.udig.project.ui.internal.handlers.LayerPropertiesCommandHandler"
+              commandId="org.locationtech.udig.project.ui.layerProperties">
+           <enabledWhen>
+              <iterate
+                    ifEmpty="false"
+                    operator="or">
+                 <adapt
+                       type="org.locationtech.udig.project.ILayer">
+                 </adapt>
+                 <instanceof
+                       value="org.locationtech.udig.project.ILayer">
+                 </instanceof>
+              </iterate>
+           </enabledWhen>
+        </handler>
+     </extension>
+     <extension
+           point="org.locationtech.udig.catalog.ui.reshapePostAction">
+        <action
+        	  id="reshape.addtomap"
+              class="org.locationtech.udig.project.ui.internal.AddReshapedToMap"
+              name="%AddToMap">
+        </action>
+     </extension>
+     <extension
+           id="org.locationtech.udig.project.ui.map"
+           point="org.eclipse.ui.actionSets">
+        <actionSet
+              id="org.locationtech.udig.project.ui.OpenProjectSet"
+              label="%OpenProjectSet.label"
+              visible="false">
+           <action
+                 class="org.locationtech.udig.project.ui.internal.actions.OpenMapAction"
+                 definitionId="org.locationtech.udig.project.ui.openMapCommand"
+                 icon="icons/obj16/project_obj.gif"
+                 id="org.locationtech.udig.project.ui.openMapAction"
+                 label="%map.action.open.name"
+                 menubarPath="file/project.ext"
+                 style="push"
+                 tooltip="%project.action.open.tooltip">
+           </action>
+           <action
+                 allowLabelUpdate="true"
+                 class="org.locationtech.udig.project.ui.internal.actions.CloseProject"
+                 enablesFor="+"
+                 icon="icons/obj16/project_close.gif"
+                 id="org.locationtech.udig.project.ui.closeProject"
+                 label="%project.close.label"
+                 menubarPath="file/project.ext"
+                 style="push"
+                 tooltip="%project.close.tooltip">
+              <enablement>
+                 <objectClass
+                       name="org.locationtech.udig.project.IProject">
+                 </objectClass>
+              </enablement>
+           </action>
+           <action
+                 allowLabelUpdate="true"
+                 class="org.locationtech.udig.project.ui.internal.actions.SaveAsProject"
+                 enablesFor="1"
+                 icon="icons/obj16/project_save.gif"
+                 id="org.locationtech.udig.project.ui.saveAsProject"
+                 label="%project.action.save.name"
+                 menubarPath="file/project.ext"
+                 style="push"
+                 tooltip="%project.action.save.tooltip">
+              <enablement>
+               <or>
+                  <objectClass name="org.locationtech.udig.project.IMap"/>
+                  <objectClass name="org.locationtech.udig.project.IProject"/>
+               </or>
+            </enablement>
+           </action>
+           <action
+                 class="org.locationtech.udig.project.ui.internal.actions.OpenProject"
+                 definitionId="org.locationtech.udig.project.ui.openProjectCommand"
+                 icon="icons/obj16/project_obj.gif"
+                 id="org.locationtech.udig.project.ui.openProject"
+                 label="%project.action.open.name"
+                 menubarPath="file/project.ext"
+                 style="push"
+                 tooltip="%project.action.open.tooltip">
+           </action>
+        </actionSet>
+     </extension>     
+     <extension
+           point="org.locationtech.udig.ui.aoi">
+        <aoi
+              class="org.locationtech.udig.project.ui.internal.aoi.ScreenAOIStrategy"
+              id="org.locationtech.udig.project.ui.screenAOI"
+              name="%aoi.screen.name">
+        </aoi>
+        <aoi
+              class="org.locationtech.udig.project.ui.internal.aoi.MapCrsAOIStrategy"
+              id="org.locationtech.udig.project.ui.crsAOI"
+              name="%aoi.crs.name">
+        </aoi>
+     </extension>
+   </plugin>

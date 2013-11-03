@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Url Adapter Plug-in
+Bundle-SymbolicName: org.locationtech.udig.tutorials.urladapter;singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.locationtech.udig.tutorials.urladapter.Activator
+Bundle-Vendor: udig.refractions.net
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.ui,
+ org.locationtech.udig.catalog,
+ org.locationtech.udig.catalog.shp
+Bundle-ActivationPolicy: lazy

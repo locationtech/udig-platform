@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Color Plug-in
+Bundle-SymbolicName: org.locationtech.udig.tutorials.style.color;singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.locationtech.udig.tutorials.style.color.Activator
+Require-Bundle: org.locationtech.udig.project.ui,
+ org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.tutorials.catalog.csv,
+ org.locationtech.udig.style
+Bundle-ActivationPolicy: lazy

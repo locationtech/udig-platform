@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="org.locationtech.udig.catalog" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appinfo>
+         <meta.schema plugin="org.locationtech.udig.catalog" id="friendly" name="%friendly.name"/>
+      </appinfo>
+      <documentation>
+         Allows additional associations be be discovered between peer geospatial resources (known as friends).
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="0" maxOccurs="unbounded">
+            <element ref="friend"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="friend">
+      <annotation>
+         <appinfo>
+            <meta.element labelAttribute="contain"/>
+         </appinfo>
+      </annotation>
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Class responsible for examining the source and checking in the catalog to see if it has any known friends.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.catalog.util.IFriend:"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="source" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Used to perform an &quot;instanceof&quot; check to ensure friend relationship is limited to indicated class.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.catalog.IResolve"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="contain" type="string">
+            <annotation>
+               <documentation>
+                  Used to limit processing to resources that contain the indicated text. You can use this to only engage on a geoserver wms server by supplying the string &quot;geoserver/wms&quot;; similar tricks can be used to focus on mapserver or geowebcache servers.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="since"/>
+      </appinfo>
+      <documentation>
+         uDig 1.1
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="examples"/>
+      </appinfo>
+      <documentation>
+         This extension point can be used to build up additional associations into the catalog reflecting knoweldege that is &quot;well known&quot;. Normally associations are built up by asking a CatalogService; or by checking the various GetCapabilities information published by each service and noticing when two services refer to each other.
+
+This extension point offers an alternative; you may be able to &quot;assume&quot; that a geoserver installation and a geowebcache installation on the same machine are serving up the same data. At the very least you can assume that a geoserver wms and a geoserver wfs are serving the same data via two different protocols.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="apiInfo"/>
+      </appinfo>
+      <documentation>
+         This extension point will ask that you implement an instance of IFriend.
+      </documentation>
+   </annotation>
+
+
+
+</schema>

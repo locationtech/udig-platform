@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="true"
+            class="org.locationtech.udig.location.ui.LocationView"
+            icon="icons/eview16/location.gif"
+            id="org.locationtech.udig.location.view"
+            name="%view.name"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="org.locationtech.udig.ui.mapPerspective">
+         <viewShortcut id="org.locationtech.udig.location.view"/>
+         <view
+               closeable="true"
+               id="org.locationtech.udig.location.view"
+               moveable="true"
+               relationship="stack"
+               relative="org.locationtech.udig.catalog.ui.CatalogView"
+               showTitle="true"
+               standalone="true"
+               visible="false"/>
+      </perspectiveExtension>
+      <perspectiveExtension targetID="org.locationtech.udig.ui.stylePerspective">
+         <viewShortcut id="org.locationtech.udig.location.view"/>
+         <view
+               closeable="true"
+               id="org.locationtech.udig.location.view"
+               moveable="true"
+               relationship="stack"
+               relative="org.locationtech.udig.catalog.ui.CatalogView"
+               showTitle="true"
+               standalone="true"
+               visible="true"/>
+      </perspectiveExtension>
+   </extension>
+</plugin>

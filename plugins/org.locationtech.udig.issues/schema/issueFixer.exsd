@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="org.locationtech.udig.issues" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="org.locationtech.udig.issues" id="issueFixer" name="issueFixer"/>
+      </appInfo>
+      <documentation>
+         Declares a fixer for fixing subclasses of AbstractFixableIssue.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="fixer" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="fixer">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="id"/>
+         </appInfo>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="0" maxOccurs="unbounded">
+            <element ref="requiredKey"/>
+         </sequence>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The IFixer implementation being contributed by this extension.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.core.IFixer"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="targetClass" type="string">
+            <annotation>
+               <documentation>
+                  AbstractFixableIssue subclass that the fixer operates on (this will filter the classes for which IFixer.canFix is called which object is an instance of targetClass).
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.issues.AbstractFixableIssue"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="requiredKey">
+      <annotation>
+         <documentation>
+            String representation of a key which must be found within the memento.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="key" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         1.1.0
+      </documentation>
+   </annotation>
+
+
+
+
+
+</schema>

@@ -1,0 +1,4 @@
+net.refractions.udig.ui/debug=true
+net.refractions.udig.ui/debug/dnd=true
+net.refractions.udig.ui/debug/udigdisplaysafelock=true
+net.refractions.udig.ui/debug/featuretable=true

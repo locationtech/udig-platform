@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension-point id="issue" name="issue" schema="schema/issue.exsd"/>
+   <extension-point id="issuesList" name="issuesList" schema="schema/issuesList.exsd"/>
+   <extension-point id="issueFixer" name="issueFixer" schema="schema/issueFixer.exsd"/>
+   <extension-point id="issuesViewConfiguration" name="issuesViewConfiguration" schema="schema/issuesViewConfiguration.exsd"/>
+      <extension
+         point="org.locationtech.udig.issues.issuesList">
+      <list
+            class="org.locationtech.udig.issues.IssuesList"
+            id="memory"
+            name="%issues.list.memory.name"/>
+      <list
+            class="org.locationtech.udig.issues.StrategizedIssuesList"
+            configurator="org.locationtech.udig.issues.internal.datastore.PostgisIssuesListConfigurator"
+            id="issuesList"
+            name="%issues.list.wfs.name"/>
+   </extension>
+      <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="org.locationtech.udig.project.ui.project"
+            class="org.locationtech.udig.issues.internal.view.IssuesView"
+            icon="icons/eview/issues_view.gif"
+            id="org.locationtech.udig.issues.view.issues"
+            name="%issues.view.name"/>
+   </extension>
+      <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.locationtech.udig.ui.mapPerspective">
+         <viewShortcut id="org.locationtech.udig.issues.view.issues"/>
+      </perspectiveExtension>
+   </extension>
+      <extension
+         id="org.locationtech.udig.issue.standard"
+         name="%issues.name"
+         point="org.locationtech.udig.issues.issue">
+      <Issue
+            class="org.locationtech.udig.issues.FeatureIssue"
+            id="featureIssue"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+     <page
+           category="org.locationtech.udig.ui.page.general"
+           class="org.locationtech.udig.issues.internal.IssuesPreferencePage"
+           id="org.locationtech.udig.issues.preference.issues"
+           name="%preferences.issues.name"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.locationtech.udig.issues.internal.IssuesPreferenceInitializer"/>
+   </extension>
+   <extension
+         point="org.locationtech.udig.ui.operation">
+      <operation
+            categoryId="org.locationtech.udig.project.ui.operation.selectionCategory"
+            class="org.locationtech.udig.issues.AddIssueOperation"
+            enablesFor="+"
+            icon="icons/eview/issues_view.gif"
+            id="org.locationtech.udig.issues.operation.addTask"
+            name="%Add.Task"
+            targetClass="java.lang.Object">
+         <enablement>
+            <and>
+               <adaptsTo target="org.locationtech.udig.project.ILayer"/>
+               <or>
+                  <adaptsTo target="org.opengis.feature.Feature"/>
+                  <adaptsTo target="org.geotools.filter.Filter"/>
+               </or>
+            </and>
+         </enablement>
+      </operation>
+   </extension>
+</plugin>

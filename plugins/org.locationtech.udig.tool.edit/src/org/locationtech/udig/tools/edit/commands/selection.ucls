@@ -1,0 +1,76 @@
+<class-diagram generalizations="true" realizations="true" associations="true" dependencies="false" 
+  nesting-relationships="true">  
+  <classifier-display autosize="true" package="true" attributes="true" operations="true" initial-value="false" 
+    signature="true" visibility="true"/>  
+  <association-display labels="true" multiplicity="true"/>  
+  <class type="java" name="net.refractions.udig.tools.edit.commands.SelectionParameter" 
+    project="net.refractions.udig.tool.edit" 
+    file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/commands/SelectionParameter.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="true" operations="false" initial-value="false" signature="true" 
+      visibility="false"/>    
+    <position x="183" y="145" width="-1" height="-1"/>  
+  </class>  
+  <interface type="java" name="net.refractions.udig.tools.edit.commands.SelectionStrategy" 
+    project="net.refractions.udig.tool.edit" 
+    file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/commands/SelectionStrategy.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="true" operations="true" initial-value="false" signature="true" 
+      visibility="false"/>    
+    <position x="667" y="198" width="-1" height="-1"/>  
+  </interface>  
+  <interface type="java" name="net.refractions.udig.tools.edit.commands.DeselectionStrategy" 
+    project="net.refractions.udig.tool.edit" 
+    file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/commands/DeselectionStrategy.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="true" operations="true" initial-value="false" signature="true" 
+      visibility="false"/>    
+    <position x="612" y="103" width="-1" height="-1"/>  
+  </interface>  
+  <class type="java" name="net.refractions.udig.tools.edit.commands.SelectFeaturesAtPointCommand" 
+    project="net.refractions.udig.tool.edit" 
+    file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/commands/SelectFeaturesAtPointCommand.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="true" operations="true" initial-value="false" signature="true" 
+      visibility="false"/>    
+    <position x="393" y="457" width="-1" height="-1"/>  
+  </class>  
+  <association>    
+    <display labels="true" multiplicity="true"/>    
+    <source navigable="false" project="net.refractions.udig.tool.edit" 
+      name="net.refractions.udig.tools.edit.commands.SelectionParameter" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/commands/SelectionParameter.java">      
+      <attribute name="selectionStrategies"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target navigable="true" project="net.refractions.udig.tool.edit" 
+      name="net.refractions.udig.tools.edit.commands.SelectionStrategy" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/commands/SelectionStrategy.java"/>    
+    <bendpoint x="430" y="220"/>  
+  </association>  
+  <association>    
+    <display labels="true" multiplicity="true"/>    
+    <source navigable="false" project="net.refractions.udig.tool.edit" 
+      name="net.refractions.udig.tools.edit.commands.SelectionParameter" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/commands/SelectionParameter.java">      
+      <attribute name="deselectionStrategies"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target navigable="true" project="net.refractions.udig.tool.edit" 
+      name="net.refractions.udig.tools.edit.commands.DeselectionStrategy" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/commands/DeselectionStrategy.java"/>    
+    <bendpoint x="415" y="98"/>  
+  </association>  
+  <association>    
+    <display labels="true" multiplicity="true"/>    
+    <source navigable="false" project="net.refractions.udig.tool.edit" 
+      name="net.refractions.udig.tools.edit.commands.SelectFeaturesAtPointCommand" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/commands/SelectFeaturesAtPointCommand.java">      
+      <attribute name="parameters"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target navigable="true" project="net.refractions.udig.tool.edit" 
+      name="net.refractions.udig.tools.edit.commands.SelectionParameter" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/commands/SelectionParameter.java"/>  
+  </association>
+</class-diagram>

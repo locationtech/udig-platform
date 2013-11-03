@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="org.locationtech.udig.tutorials.mapgraphic.mapgraphics"
+         point="org.locationtech.udig.mapgraphic.mapgraphic">
+      <mapGraphic
+            class="org.locationtech.udig.tutorials.mapgraphic.CoordinateGraphic"
+            icon="icons/etool16/xy.png"
+            id="org.locationtech.udig.tutorials.mapgraphic.coordinate"
+            name="Coordinate Graphic">
+      </mapGraphic>
+   </extension>
+
+</plugin>

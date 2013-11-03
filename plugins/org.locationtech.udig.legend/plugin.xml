@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="org.locationtech.udig.mapgraphic.mapgraphic">
+		 <mapGraphic
+         class="org.locationtech.udig.legend.ui.LegendGraphic"
+         icon="icons/obj16/legend_obj.gif"
+         id="legend"
+         name="%legend.name"/>
+   </extension>
+   <extension
+         point="org.locationtech.udig.style.styleConfigurator">
+      <styleConfigurator
+            class="org.locationtech.udig.legend.ui.LegendGraphicStyleConfigurator"
+            id="legend"
+            label="%legend.style.conf.label"
+            requires="org.locationtech.udig.legend.ui.LegendGraphic"
+            styleId="org.locationtech.udig.legend.style"/>
+      <styleConfigurator
+            class="org.locationtech.udig.mapgraphic.style.LocationStyleConfigurator"
+            id="org.locationtech.udig.legend.location"
+            label="%location.label"
+            requires="org.locationtech.udig.legend.ui.LegendGraphic"
+            styleId="org.locationtech.udig.printing.ui.locationStyle"/>
+      <styleConfigurator
+            class="org.locationtech.udig.mapgraphic.style.FontStyleConfigurator"
+            id="org.locationtech.udig.legend.ui.style.font"
+            label="Font"
+            requires="org.locationtech.udig.legend.ui.LegendGraphic"
+            styleId="org.locationtech.udig.mapgraphic.style.font">
+      </styleConfigurator>
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.style">
+      <style
+            class="org.locationtech.udig.legend.ui.LegendStyleContent"
+            id="org.locationtech.udig.legend.legendStyle"
+            name="%legend.style.name"/>
+   </extension>
+      <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="org.locationtech.udig.legend.mapGraphic.action"
+            label="%actionset.mapgraphic.label"
+            visible="false">
+         <action
+               class="org.locationtech.udig.legend.ui.actions.LegendAction"
+               icon="icons/obj16/legend_obj.gif"
+               id="org.locationtech.udig.project.ui.action.addlegend"
+               label="%action.addlegend.label"
+               menubarPath="layer/mapGraphic.ext"
+               style="push"/>
+      </actionSet>
+   </extension>
+      <extension
+            point="org.eclipse.ui.perspectiveExtensions">
+         <perspectiveExtension targetID="org.locationtech.udig.ui.stylePerspective">
+            <actionSet id="org.locationtech.udig.legend.mapGraphic.action"/>
+         </perspectiveExtension>
+         <perspectiveExtension targetID="org.locationtech.udig.ui.mapPerspective">
+            <actionSet id="org.locationtech.udig.legend.mapGraphic.action"/>
+         </perspectiveExtension>
+      </extension>
+      <extension
+            point="org.locationtech.udig.catalog.resolvers">
+         <factory
+               class="org.locationtech.udig.legend.internal.ResolversFactory"
+               resolveableType="org.locationtech.udig.mapgraphic.internal.MapGraphicResource">
+            <resolve
+                  type="java.awt.Rectangle">
+            </resolve>
+         </factory>
+      </extension>
+       <extension
+            point="org.locationtech.udig.project.layerInterceptor">
+         <layerRemoved
+               class="org.locationtech.udig.legend.internal.RemoveMapgraphicLayerInterceptor"
+               id="org.locationtech.udig.legend.layerRemoved">
+         </layerRemoved>
+         <layerAdded
+               class="org.locationtech.udig.legend.internal.AddMapgraphicLayerInterceptor"
+               id="org.locationtech.udig.legend.layerAdded">
+         </layerAdded>
+      </extension>
+</plugin>

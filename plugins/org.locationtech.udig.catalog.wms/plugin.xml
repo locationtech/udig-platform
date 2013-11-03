@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+    	<extension
+         point="org.locationtech.udig.catalog.ServiceExtension">
+      <service
+            class="org.locationtech.udig.catalog.internal.wms.WMSServiceExtension"
+            id="wms"
+            name="Web Map Service"/>
+      <service
+            class="org.locationtech.udig.catalog.internal.wmsc.WMSCServiceExtension"
+            id="wmsc"
+            name="Tiled Client Web Map Service">
+      </service>
+   	</extension>
+ <extension
+       point="org.locationtech.udig.catalog.ui.connectionFactory">
+    <factory class="org.locationtech.udig.catalog.internal.wms.ui.WMSConnectionFactory"
+          id="org.locationtech.udig.catalog.ui.WMS"/>
+    <wizardPage
+          banner="icons/wizban/wms_wiz.gif"
+          class="org.locationtech.udig.catalog.internal.wms.ui.WMSWizardPage"
+          description="%wizard.description"
+          icon="icons/etool16/wms_wiz.gif"
+          name="%wizard.name">
+    </wizardPage>
+
+ </extension>
+ <extension
+       point="org.locationtech.udig.catalog.friendly">
+    <friend
+          class="org.locationtech.catalog.util.internal.GeoServerFriend"
+          contain="geoserver/wms"
+          source="org.locationtech.udig.catalog.internal.wms.WMSGeoResourceImpl"/>
+    <friend
+          class="org.locationtech.catalog.util.internal.GeoServerTileSetFriend"
+          contain="geoserver/wms"
+          source="org.locationtech.udig.catalog.internal.wms.WMSGeoResourceImpl">
+    </friend>
+ </extension>
+ <extension
+       point="org.locationtech.udig.catalog.ui.connectionFactory">
+    <factory
+          class="org.locationtech.udig.catalog.internal.wmsc.ui.WMSCConnectionFactory"
+          id="org.locationtech.udig.catalog.ui.WMSC">
+    </factory>
+    <wizardPage
+          banner="icons/wizban/wms_wiz.gif"
+          class="org.locationtech.udig.catalog.internal.wmsc.ui.WMSCWizardPage"
+          description="%wmsc.wizard.description"
+          icon="icons/etool16/wms_wiz.gif"
+          name="%wmsc.wizard.name">
+    </wizardPage>
+ </extension>
+ <extension
+          id="org.locationtech.udig.catalog.tileset.resolvers"
+          point="org.locationtech.udig.catalog.resolvers">
+       <factory
+             class="org.locationtech.udig.catalog.internal.wms.tileset.WMSCTileSetAdapter"
+             resolveableType="org.locationtech.udig.catalog.internal.wms.WMSGeoResourceImpl">
+          <resolve
+                type="org.locationtech.udig.catalog.wmsc.server.TileSet">
+          </resolve>
+       </factory>
+    </extension>
+</plugin>

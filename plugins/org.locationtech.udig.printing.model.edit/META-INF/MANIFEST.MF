@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.locationtech.udig.printing.model.edit; singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.locationtech.udig.printing.model.provider.PageEditPlugin$Implementation
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Require-Bundle: org.locationtech.udig.printing.model;visibility:=reexport,
+ org.locationtech.udig.project;visibility:=reexport,
+ org.locationtech.udig.project.edit;visibility:=reexport,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.project.ui,
+ org.eclipse.draw2d,
+ org.locationtech.udig.ui
+Bundle-ActivationPolicy: lazy
+Export-Package: org.locationtech.udig.printing.model.provider
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

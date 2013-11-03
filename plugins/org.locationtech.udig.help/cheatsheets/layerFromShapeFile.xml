@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Add Shape File" >
+  <intro 
+  href="/net.refractions.udig.help/EN/Shapefile.html">
+    <description>
+    	We are going to load a shape file into our workspace using the New Layer dialog.
+	</description>
+  </intro>  
+  
+  <item 
+  title="New Layer Wizard" 
+  dialog="true" 
+  href="/net.refractions.udig.help/EN/Add Data wizard.html">
+     <description>
+		Choose <b>File > New > New Layer</b> from the menu bar to open up the Add Data wizard
+	</description>
+	<action 
+  		class="net.refractions.udig.project.ui.internal.actions.AddLayersAction" 
+  		pluginId="net.refractions.udig.project.ui.editor"
+  		confirm="false"/>
+  </item>
+  
+  <item title="Select Files">
+     <description>
+		Select <b>Files</b> from the list of data sources and press <b>Next</b> to open up a file dialog.
+		<br/><br/>
+		A file dialog will open, then select a shape file from your data folder and press <b>Open</b>
+		<br/><br/>
+		<b>Example:</b> countries.shp
+	</description>
+  </item>
+	
+<item skip="true" title="Load Data">
+   <description>
+   		A new Map editor will be opened based on the contents of your shape file. The default name and projection of the Map has been taken from your shapefile.
+<br/><br/>
+You can see the Catalog view has been updated with an entry for the layer <b>countries.shp</b>. This view is used to track the use of resources by the uDig application.
+<br/><br/>
+The Layers view shows a single layer displayed on this map. This view is used to change the order and appearance of information in your Map.
+<br/><br/>
+The Projects view has been updated to show that your map is stored in projects. You can have multiple projects open at a time, each project can have several maps.
+<br/><br/>
+<b>Tip</b> You can also drag and drop shape files directly into the uDig application.
+	</description>
+  </item>
+  
+  
+</cheatsheet>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension-point id="styleConfigurator" name="%styleConfigurators.name" schema="schema/styleConfigurator.exsd"/>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            icon="icons/style_tsk.gif"
+            class="org.locationtech.udig.style.ui.StyleView"
+            category="org.locationtech.udig.project.ui.project"
+            name="%styleViewName"
+            id="org.locationtech.udig.style.styleView"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="org.locationtech.udig.ui.mapPerspective">
+         <viewShortcut id="org.locationtech.udig.style.styleView"/>
+      </perspectiveExtension>
+   </extension>
+   
+   
+</plugin>

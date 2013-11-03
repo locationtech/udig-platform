@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Menu Builders</title>
+<style type="text/css">@import url("file:/Users/jody/eclipse/372/eclipse-modeling/configuration/org.eclipse.osgi/bundles/396/1/.cp/book.css");</style>
+<style type="text/css">@import url("file:/Users/jody/eclipse/372/eclipse-modeling/configuration/org.eclipse.osgi/bundles/408/1/.cp/schema.css");</style>
+</HEAD>
+<BODY>
+<H1 style="text-align:center">Menu Builders</H1>
+<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Identifier: </h6>net.refractions.udig.ui.menuBuilders<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Since: </h6>1.1
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">Description: </h6>Provides a mechanism to configure the menu bar and cool bar without supplying your own application. Use this if you creating your own uDig based application but do not wish to supply your own Application or WorkbenchAdvisor<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Configuration Markup:</h6>
+<p></p>
+<p class="code SchemaDtd">&lt;!ELEMENT <a name="e.extension">extension</a> (<a href="#e.menuBuilder">menuBuilder</a>)+&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST extension</p>
+<p class="code SchemaDtdAttlist">point&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">id&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED</p><p class="code SchemaDtdAttlist">name&nbsp;&nbsp;CDATA #IMPLIED</p>&gt;</p>
+<p></p>
+<ul class="ConfigMarkupAttlistDesc">
+</ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.menuBuilder">menuBuilder</a> EMPTY&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST menuBuilder</p>
+<p class="code SchemaDtdAttlist">id&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">class&nbsp;CDATA #REQUIRED</p>&gt;</p>
+<p></p>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>id</b> - </li>
+<li><b>class</b> - </li>
+</ul>
+<br><h6 class="CaptionFigColumn SchemaHeader">Examples: </h6><extension
+      point="net.refractions.udig.ui.menuBuilders">
+   <workbenchConfiguration
+         class="com.xyz.ui.internal.XYZMenuBuilder"
+         id="com.xyz.ui.menuBuilder"/>
+</extension>
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">API Information: </h6>The class attribute must be a fully qualified identifier for an implementation of net.refractions.udig.ui.MenuBuilder.
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">Supplied Implementation: </h6>The default implementation for uDig is provided in plug-in "net.refractions.udig.ui" in the class net.refractions.udig.ui.UDIGMenuBuilder.
+<p></p>
+
+<br>
+<p class="note SchemaCopyright">
+uDig - User Friendly Desktop Internet GIS client
+
+</p>
+</BODY>
+</HTML>

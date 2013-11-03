@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="org.locationtech.udig.printing.ui.templateFactories">
+      <templateFactory
+            class="org.locationtech.udig.tutorials.template.ImageTemplateFactory"
+            id="org.locationtech.udig.tutorials.template.imageTemplateFactory"/>
+   </extension>
+   <extension
+         id="image"
+         point="org.locationtech.udig.printing.ui.boxprinter">
+      <boxprinter
+            class="org.locationtech.udig.tutorials.template.ImageBoxPrinter"
+            name="org.locationtech.udig.tutorials.template.imageBoxPrinter"
+            visible="true"/>
+   </extension>
+
+</plugin>

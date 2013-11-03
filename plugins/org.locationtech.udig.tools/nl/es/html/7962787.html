@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Spanish Users Guide : Herramienta Ajuste de Líneas</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Spanish Users Guide : Herramienta Ajuste de Líneas -->
+       <h1>Herramienta Ajuste de Líneas</h1>
+       
+<p><img src="download/attachments/7962787/trim_feature_mode.gif" align="absmiddle" border="0"/> Ajusta LineStrings hasta un punto usando una línea de ajuste</p>
+
+<p>La <em>Herramienta Ajuste de Líneas</em> utiliza una <em>Línea de Ajuste</em> dibujada por el usuario para cortar <em>Features LineString</em> desde el punto donde las geometrías intersectan la <em>Línea de Ajuste</em>, <b>hacia la derecha</b> de la <em>Línea de Ajuste</em>.
+<br clear="all" /></p>
+
+<h2><a name="HerramientaAjustedeL%C3%ADneas-Comportamiento"></a>Comportamiento</h2>
+
+<p><br clear="all" />
+La <em>Herramienta Ajuste de Líneas</em> opera sobre los features seleccionados en la Capa actual. Se puede usar un <em>Bounding Box</em> o cualquier otro método de selección de features para limitar los features a ajustar antes de utilizar la <em>Herramienta Ajuste de Líneas</em>. Si la Capa actual no tiene establecida ninguna selección, la <em>Herramienta Ajuste de Líneas</em> operará sobre cualquier Feature en la Capa actual cuya geometría por defecto sea cruzada por la <em>Línea de Ajuste</em>.
+<br clear="all" />
+Es <b>muy importante</b> entender como la manera en la que se dibuja la <em>Línea de Ajuste</em> afecta al resultado final, en el sentido de que los features fuente serán cortados desde el punto de intersección hacia la <b>derecha</b> de la <em>Línea de Ajuste</em>.
+<br clear="all" />
+Cuando la <em>Herramienta Ajuste de Líneas</em> procede a cortar un feature, ésta modificará el feature que se está ajustando asignándole un nuevo valor a su atributo de geometría por defecto.
+<br clear="all" />
+Hay que recordar que la <em>Herramienta Ajuste de Líneas</em> no guarda el resultado, sino que le permite deshacer la operación si se desea, o guardar los cambios al repositorio de datos de fondo como haría normalmente en uDig.
+<br clear="all" /></p>
+
+<h2><a name="HerramientaAjustedeL%C3%ADneas-Uso"></a>Uso</h2>
+
+<p><br clear="all" />
+Seleccionar la <em>Herramienta Ajuste de Líneas</em> en la lista desplegable como se muestra en la <em>Figura 1</em>.
+<br clear="all" />  <img src="download/attachments/7962787/trim_1_select_tool.png" align="left" border="0"/><br clear="all" />
+<b>Figura 1. Seleccionando la Herramienta Ajuste de Líneas.</b>
+<br clear="all" />
+<br clear="all" />
+Dibujar la línea que va a ser usada como <em>Línea de Ajuste</em>, asegurándose de que cruza las geometrías que se desean dividir, como se muestra en la <em>Figura 2</em>.</p>
+<div class='panelMacro'><table class='infoMacro'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="images/icons/emoticons/information.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b>Consejo</b><br />
+<p>Puedes hacer uso del <em>Comportamiento del Snap</em> para hacer que el vértice de la <em>Línea de Ajuste</em> salte automáticamente a los vértices de otros features.</p></td></tr></table></div>
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962787/trim_2_draw_trimline.png' target='trim_2_draw_trimline.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962787/trim_2_draw_trimline.png", "trim_2_draw_trimline.png", "height=570,width=813,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962787/trim_2_draw_trimline.png" align="left" border="0"/></a><br clear="all" />
+<b>Figura 2. Dibujar la línea de Ajuste para cortar un LineString.</b>
+<br clear="all" />
+<br clear="all" />
+Hacer doble click para añadir el último vértice de la <em>Línea de Ajuste</em> e indicar a la <em>Herramienta Ajuste de Líneas</em> que proceda.<br/>
+La <em>Figura 3</em> muestra como el LineString de la capa actual que era cruzado por la <em>Línea de Ajuste</em> ha sido cortada desde el punto de intersección hacia la derecha de la <em>Línea de Ajuste</em>.
+<br clear="all" />  <a href='http://udig.refractions.net/confluence//download/attachments/7962787/trim_3_finish.png' target='trim_3_finish.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962787/trim_3_finish.png", "trim_3_finish.png", "height=570,width=813,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962787/trim_3_finish.png" align="left" border="0"/></a><br clear="all" />
+<b>Figura 3. LineString ajustado.</b></p>
+
+<small>(c) Copyright (c) 2004-2008 Refractions Research Inc. and others.</small>
+    </body>
+</html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="org.locationtech.udig.style.styleConfigurator">
+      <styleConfigurator
+            class="org.locationtech.udig.style.wms.WMSStyleConfigurator"
+            id="wms-style"
+            label="%WMSStyle.label"
+            requires="org.eclipse.jface.resource.ImageDescriptor"
+            styleId="org.locationtech.udig.render.wmsStyle"/>
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.style">
+      <style
+            class="org.locationtech.udig.style.wms.WMSStyleContent"
+            id="org.locationtech.udig.render.wmsStyle"
+            name="%style.name"/>
+   </extension>
+
+</plugin>

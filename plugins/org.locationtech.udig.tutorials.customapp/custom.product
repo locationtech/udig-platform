@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="Custom" id="org.locationtech.udig.tutorials.customapp.customapp" application="org.locationtech.udig.tutorials.customapp.id1" useFeatures="true" includeLaunchers="true">
+
+   <aboutInfo>
+      <image path="/org.locationtech.udig.tutorials.customapp/nl/en/about.gif"/>
+      <text>
+         Hello World
+
+This is a custom application generated using the uDig SDK.
+For more information visit http://udig.refractions.net
+      </text>
+   </aboutInfo>
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <vmArgs>-Xmx386M -Dosgi.parentClassloader=ext</vmArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts -Djava.awt.headless=true</vmArgsMac>
+   </launcherArgs>
+
+   <windowImages i16="/org.locationtech.udig.tutorials.customapp/icons/world16.gif" i32="/org.locationtech.udig.tutorials.customapp/icons/world32.gif" i48="/org.locationtech.udig.tutorials.customapp/icons/world48.gif" i64="/org.locationtech.udig.tutorials.customapp/icons/world64.gif" i128="/org.locationtech.udig.tutorials.customapp/icons/world128.gif"/>
+
+   <splash
+      startupProgressRect="0,196,500,10"
+      startupMessageRect="7,180,445,16"
+      startupForegroundColor="FFFFFF" />
+   <launcher name="custom">
+      <linux icon="/org.locationtech.udig/icons/udig.xpm"/>
+      <solaris/>
+      <win useIco="true">
+         <ico path="/org.locationtech.udig.tutorials.customapp/icons/world.ico"/>
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+      <macos include="true">JVM 1.5</macos>
+   </vm>
+
+   <plugins>
+   </plugins>
+
+   <features>
+      <feature id="org.locationtech.udig_tutorials.custom_feature"/>
+      <feature id="org.locationtech.udig_base"/>
+      <feature id="org.locationtech.udig_platform"/>
+      <feature id="org.locationtech.udig_application"/>
+      <feature id="org.locationtech.udig_printing"/>
+      <feature id="org.eclipse.rcp"/>
+   </features>
+
+
+</product>

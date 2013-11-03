@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+<!--
+ This is the table of contents definition file for this plugin's help,
+ as required by the org.eclipse.help.toc extension point 
+ -->
+<toc label="Additional Editing Tools">
+	<topic label="Additional Edit Tools Users Guide"  href="html/Editing Tools Users Guide.html"> 
+		<topic label="Merge Tool" href="html/Merge Tool.html"/> 
+		<topic label="Split Tool" href="html/Split Tool (Axios Tools).html"/> 
+		<topic label="Parallel Tool" href="html/Parallel Tool.html"/> 
+		<topic label="Trim Line Tool" href="html/Trim Line Tool.html"/> 
+		<topic label="Arc Tool" href="html/Arc Tool.html"/> 
+		<!--
+		<topic label="Modes for &quot;Create Geometry&quot; Tools " href="html/Modes for Create Geometry Tools.html">
+			<topic label="Ortho Mode" href="html/Ortho Mode.html"/>
+			<topic label="Parallel Mode" href="html/Parallel Mode.html"/>
+			<topic label="Snap to Line Mode" href="html/Snap to Line Mode.html"/>
+			<topic label="Snap to Vertex Mode" href="html/Snap to Vertex Mode.html"/>
+		</topic> 
+		 -->
+	</topic>
+</toc>

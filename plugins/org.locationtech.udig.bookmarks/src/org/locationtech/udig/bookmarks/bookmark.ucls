@@ -1,0 +1,212 @@
+<class-diagram version="1.0.4" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" corner="BOTTOM_RIGHT" language="java" name="org.tcat.citd.sim.udig.bookmarks.Bookmark" 
+    project="org.tcat.citd.sim.udig.bookmarks" 
+    file="/org.tcat.citd.sim.udig.bookmarks/src/org/tcat/citd/sim/udig/bookmarks/Bookmark.java" binary="false">    
+    <position height="-1" width="-1" x="184" y="396"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="4" corner="BOTTOM_RIGHT" language="java" name="org.tcat.citd.sim.udig.bookmarks.internal.MapWrapper" 
+    project="org.tcat.citd.sim.udig.bookmarks" 
+    file="/org.tcat.citd.sim.udig.bookmarks/src/org/tcat/citd/sim/udig/bookmarks/internal/MapWrapper.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="597" y="107"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="5" corner="BOTTOM_RIGHT" language="java" name="org.tcat.citd.sim.udig.bookmarks.internal.MapReference" 
+    project="org.tcat.citd.sim.udig.bookmarks" 
+    file="/org.tcat.citd.sim.udig.bookmarks/src/org/tcat/citd/sim/udig/bookmarks/internal/MapReference.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="533" y="396"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="6" corner="BOTTOM_RIGHT" language="java" 
+    name="org.tcat.citd.sim.udig.bookmarks.internal.BookmarksContentProvider" project="org.tcat.citd.sim.udig.bookmarks" 
+    file="/org.tcat.citd.sim.udig.bookmarks/src/org/tcat/citd/sim/udig/bookmarks/internal/BookmarksContentProvider.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="535" y="802"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="8" corner="BOTTOM_RIGHT" language="java" name="org.tcat.citd.sim.udig.bookmarks.internal.ProjectWrapper" 
+    project="org.tcat.citd.sim.udig.bookmarks" 
+    file="/org.tcat.citd.sim.udig.bookmarks/src/org/tcat/citd/sim/udig/bookmarks/internal/ProjectWrapper.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="910" y="96"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="9" corner="BOTTOM_RIGHT" language="java" name="org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin" 
+    project="org.tcat.citd.sim.udig.bookmarks" 
+    file="/org.tcat.citd.sim.udig.bookmarks/src/org/tcat/citd/sim/udig/bookmarks/BookmarksPlugin.java" binary="false">    
+    <position height="-1" width="-1" x="1262" y="395"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="10" corner="BOTTOM_RIGHT" language="java" name="org.tcat.citd.sim.udig.bookmarks.BookmarkCommandFactory" 
+    project="org.tcat.citd.sim.udig.bookmarks" 
+    file="/org.tcat.citd.sim.udig.bookmarks/src/org/tcat/citd/sim/udig/bookmarks/BookmarkCommandFactory.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="222" y="64"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="11" corner="BOTTOM_RIGHT" language="java" name="org.tcat.citd.sim.udig.bookmarks.internal.ui.BookmarksView" 
+    project="org.tcat.citd.sim.udig.bookmarks" 
+    file="/org.tcat.citd.sim.udig.bookmarks/src/org/tcat/citd/sim/udig/bookmarks/internal/ui/BookmarksView.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="179" y="801"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="12" corner="BOTTOM_RIGHT" language="java" 
+    name="org.tcat.citd.sim.udig.bookmarks.internal.command.GotoBookmarkCommand" 
+    project="org.tcat.citd.sim.udig.bookmarks" 
+    file="/org.tcat.citd.sim.udig.bookmarks/src/org/tcat/citd/sim/udig/bookmarks/internal/command/GotoBookmarkCommand.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="185" y="187"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="13" corner="BOTTOM_RIGHT" language="java" 
+    name="org.tcat.citd.sim.udig.bookmarks.internal.actions.BookmarkAction" project="org.tcat.citd.sim.udig.bookmarks" 
+    file="/org.tcat.citd.sim.udig.bookmarks/src/org/tcat/citd/sim/udig/bookmarks/internal/actions/BookmarkAction.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="1254" y="805"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="14" corner="BOTTOM_RIGHT" language="java" 
+    name="org.tcat.citd.sim.udig.bookmarks.internal.BookmarksLabelProvider" project="org.tcat.citd.sim.udig.bookmarks" 
+    file="/org.tcat.citd.sim.udig.bookmarks/src/org/tcat/citd/sim/udig/bookmarks/internal/BookmarksLabelProvider.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="180" y="579"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <interface id="15" corner="BOTTOM_RIGHT" language="java" name="org.tcat.citd.sim.udig.bookmarks.IBookmarkService" 
+    project="org.tcat.citd.sim.udig.bookmarks" 
+    file="/org.tcat.citd.sim.udig.bookmarks/src/org/tcat/citd/sim/udig/bookmarks/IBookmarkService.java" binary="false">    
+    <position height="-1" width="-1" x="894" y="803"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <class id="16" corner="BOTTOM_RIGHT" language="java" 
+    name="org.tcat.citd.sim.udig.bookmarks.internal.BookmarkServiceImpl" project="org.tcat.citd.sim.udig.bookmarks" 
+    file="/org.tcat.citd.sim.udig.bookmarks/src/org/tcat/citd/sim/udig/bookmarks/internal/BookmarkServiceImpl.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="890" y="389"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <association>    
+    <end type="SOURCE" nodeId="11" navigable="false">      
+      <attribute name="labelProvider"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <end type="SOURCE" nodeId="1" navigable="false">      
+      <attribute name="mapID"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <end type="SOURCE" nodeId="12" navigable="false">      
+      <attribute name="target"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <end type="SOURCE" nodeId="6" navigable="false">      
+      <attribute name="currentMap"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <end type="SOURCE" nodeId="10" navigable="false">      
+      <attribute name="instance"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <end type="SOURCE" nodeId="11" navigable="false">      
+      <attribute name="bookmarksProvider"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <end type="SOURCE" nodeId="16" navigable="false">      
+      <attribute name="mapReferences"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" nodeId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <end type="SOURCE" nodeId="9" navigable="false">      
+      <attribute name="plugin"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization>    
+    <end type="SOURCE" nodeId="16"/>    
+    <end type="TARGET" nodeId="15"/>  
+  </realization>  
+  <association>    
+    <end type="SOURCE" nodeId="6" navigable="false">      
+      <attribute name="bManager"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" package="true" initial-value="false" signature="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true"/>    
+    <operations public="true" package="true" protected="true" private="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

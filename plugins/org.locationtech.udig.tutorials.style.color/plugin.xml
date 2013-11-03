@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.locationtech.udig.project.style">
+      <style
+            class="org.locationtech.udig.tutorials.style.color.ColorStyle"
+            id="org.locationtech.udig.tutorials.style.color.colorStyle"
+            name="Color">
+      </style>
+   </extension>
+   <extension
+         point="org.locationtech.udig.catalog.resolvers">
+      <factory
+            class="org.locationtech.udig.tutorials.style.color.CSVColorFactory"
+            resolveableType="org.locationtech.udig.tutorials.catalog.csv.CSVGeoResource">
+         <resolve
+               type="java.awt.Color"></resolve>
+      </factory>
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.renderer">
+      <renderer
+            class="org.locationtech.udig.tutorials.style.color.ColorCSVRenderMetricsFactory"
+            id="org.locationtech.udig.tutorials.style.color.render.csvRender"
+            name="Color CSV Render">
+      </renderer>
+   </extension>
+   <extension
+         point="org.locationtech.udig.style.styleConfigurator">
+      <styleConfigurator
+            class="org.locationtech.udig.tutorials.style.color.ColorConfigurator"
+            id="org.locationtech.udig.tutorials.style.color.colorConfigurator"
+            label="Color"
+            requires="org.locationtech.udig.tutorials.catalog.csv.CSVGeoResource"
+            styleId="org.locationtech.udig.tutorials.style.color.colorStyle">
+      </styleConfigurator>
+   </extension>
+   <extension
+         point="org.locationtech.udig.ui.operation">
+      <operation
+            class="org.locationtech.udig.tutorials.style.color.RemoveColorOp"
+            enablesFor="1"
+            id="org.locationtech.udig.tutorials.style.color.removeOp"
+            name="Remove Color"
+            targetClass="org.locationtech.udig.project.internal.Layer">
+         <enablement></enablement>
+      </operation>
+   </extension>
+
+</plugin>

@@ -1,0 +1,72 @@
+<class-diagram generalizations="true" realizations="true" associations="true" dependencies="false" 
+  nesting-relationships="true">  
+  <classifier-display autosize="true" package="true" attributes="true" operations="false" initial-value="false" 
+    signature="true" visibility="true"/>  
+  <association-display labels="true" multiplicity="true"/>  
+  <interface type="java" name="net.refractions.udig.tools.edit.Behaviour" project="net.refractions.udig.tool.edit" 
+    file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/Behaviour.java" corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="true" operations="true" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="202" y="245" width="-1" height="-1"/>  
+  </interface>  
+  <class type="java" name="net.refractions.udig.tools.edit.behaviour.DefaultCancelBehaviour" 
+    project="net.refractions.udig.tool.edit" 
+    file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/behaviour/DefaultCancelBehaviour.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="true" operations="false" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="568" y="222" width="-1" height="-1"/>  
+  </class>  
+  <class type="java" name="net.refractions.udig.tools.edit.behaviour.RefreshLayersBehaviour" 
+    project="net.refractions.udig.tool.edit" 
+    file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/behaviour/RefreshLayersBehaviour.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="true" operations="false" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="568" y="286" width="-1" height="-1"/>  
+  </class>  
+  <class type="java" name="net.refractions.udig.tools.edit.behaviour.accept.DeselectEditShapeAcceptBehaviour" 
+    project="net.refractions.udig.tool.edit" 
+    file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/behaviour/accept/DeselectEditShapeAcceptBehaviour.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="true" operations="false" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="587" y="350" width="-1" height="-1"/>  
+  </class>  
+  <class type="java" name="net.refractions.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour" 
+    project="net.refractions.udig.tool.edit" 
+    file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/behaviour/accept/AcceptChangesBehaviour.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="true" operations="false" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="594" y="140" width="-1" height="-1"/>  
+  </class>  
+  <realization>    
+    <source project="net.refractions.udig.tool.edit" 
+      name="net.refractions.udig.tools.edit.behaviour.accept.DeselectEditShapeAcceptBehaviour" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/behaviour/accept/DeselectEditShapeAcceptBehaviour.java"/>    
+    <target project="net.refractions.udig.tool.edit" name="net.refractions.udig.tools.edit.Behaviour" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/Behaviour.java"/>  
+  </realization>  
+  <realization>    
+    <source project="net.refractions.udig.tool.edit" 
+      name="net.refractions.udig.tools.edit.behaviour.DefaultCancelBehaviour" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/behaviour/DefaultCancelBehaviour.java"/>    
+    <target project="net.refractions.udig.tool.edit" name="net.refractions.udig.tools.edit.Behaviour" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/Behaviour.java"/>  
+  </realization>  
+  <realization>    
+    <source project="net.refractions.udig.tool.edit" 
+      name="net.refractions.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/behaviour/accept/AcceptChangesBehaviour.java"/>    
+    <target project="net.refractions.udig.tool.edit" name="net.refractions.udig.tools.edit.Behaviour" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/Behaviour.java"/>  
+  </realization>  
+  <realization>    
+    <source project="net.refractions.udig.tool.edit" 
+      name="net.refractions.udig.tools.edit.behaviour.RefreshLayersBehaviour" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/behaviour/RefreshLayersBehaviour.java"/>    
+    <target project="net.refractions.udig.tool.edit" name="net.refractions.udig.tools.edit.Behaviour" 
+      file="/net.refractions.udig.tool.edit/src/net/refractions/udig/tools/edit/Behaviour.java"/>  
+  </realization>
+</class-diagram>

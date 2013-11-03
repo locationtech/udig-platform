@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         id="BasicWMSRenderer"
+         name="BasicWMSRenderer"
+         point="org.locationtech.udig.project.renderer">
+      <renderer
+            class="org.locationtech.udig.render.internal.wms.basic.BasicWMSMetricsFactory2"
+            id="org.locationtech.udig.render.internal.wms.basic.basicwmsrenderer"
+            name="%renderer.name">
+         <description>
+            %renderer.desc
+         </description>
+         
+      </renderer>
+      <renderer
+            class="org.locationtech.udig.render.internal.wmsc.basic.BasicWMSCMetricsFactory"
+            id="org.locationtech.udig.render.internal.wmsc.basic.basicwmscrenderer"
+            name="WMSC Renderer">
+      </renderer>
+      <!--renderer
+            class="org.locationtech.udig.render.internal.wms.basic.BasicWMSMetricsFactory2"
+            id="org.locationtech.udig.render.internal.wms.basic.wmsrenderer"
+            name="WMS Renderer">
+      </renderer-->
+   </extension>
+     <extension
+           point="org.eclipse.core.runtime.preferences">
+        <initializer class="org.locationtech.udig.render.wms.basic.preferences.PreferenceInitializer"/>
+     </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.locationtech.udig.project.ui.preferences.render"
+            class="org.locationtech.udig.render.wms.basic.preferences.BasicWMSRendererPreferencePage"
+            id="org.locationtech.udig.render.wms.basic.preferences.BasicWMSRendererPreferencePage"
+            name="%BasicWMSPreference"/>
+      <page
+            class="org.locationtech.udig.render.internal.wmsc.basic.WMSCTilePreferencesPage"
+            id="org.locationtech.udig.render.internal.wmsc.basic.wmsctile"
+            name="%wmscPref.name">
+      </page>
+   </extension>
+   <extension
+         point="org.locationtech.udig.ui.operation">
+      <operation
+            class="org.locationtech.udig.catalog.wmsc.WMSCPreloadTilesOp"
+            enablesFor="1"
+            id="org.locationtech.udig.catalog.wmsc.wmscpreloadtiles"
+            name="Preload all WMS-C Tiles"
+            targetClass="org.locationtech.udig.catalog.internal.wmsc.WMSCGeoResourceImpl">
+      </operation>
+   </extension>   
+</plugin>

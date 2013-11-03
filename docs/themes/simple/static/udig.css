@@ -1,0 +1,154 @@
+/*@import url("http://extjs.cachefly.net/ext-2.2.1/resources/css/ext-all.css");*/
+
+@import url("sphinxdoc.css");
+
+/* override some of ext-all.css 
+ul, ol {
+    margin: 14px 0;
+    padding-left: 40px;
+}
+ul {
+    list-style: disc;
+}
+ol {
+    list-style-type:decimal;
+}
+strong {
+    font-weight: bolder;
+}
+*/
+
+/* override some of sphinxdoc.css */
+
+/* from http://udig.refractions.net/includes/css/udig.css */
+html {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 9pt;
+    color: #555;
+    border: none;
+    background-color: white;
+    margin: 0;
+    padding: 0;
+    min-width: 200px;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:100;
+    line-height:1.1em;
+    color:#000000;
+    margin:0;
+    padding:10px 0;
+}
+h1 {
+    font-size:160%;
+    padding-bottom:9px;
+}
+h2 {
+    font-size:110%;
+    color:#000000;
+    text-transform:uppercase;
+    padding-bottom:7px;
+}
+h3 {
+    font-size:100%;
+    font-weight:bold;
+    color:#000000;
+    text-transform:uppercase;
+    padding-bottom:5px;
+}
+img {
+    border-width:0;
+    margin:0;
+    padding:5px 10px;
+    vertical-align:middle;
+}
+p {
+    margin:0;
+    padding:5px 0 5px 0;
+}
+ol {
+    margin-top:5px;
+    margin-bottom:5px;
+    margin-left:0px;
+    padding-left:2em;
+}
+ul {
+    margin-top:5px;
+    margin-bottom:5px;
+    margin-left:0px;
+    padding-left:1.5em;
+}
+a {
+    color:#0074BC;
+    text-decoration:none;
+}
+a:hover {
+    text-decoration:underline;
+}
+dd {
+    padding-left:0;
+    padding-bottom:5px;
+    margin-left:1em;
+}
+table {
+    width:100%;
+    border-width:0;
+    border-color:#cdc;
+    font-size:100%;
+    cell-spacing:0;
+}
+td, th {
+    vertical-align:top;
+    padding:6px;
+}
+pre {
+    background-color:#eee;
+    padding:7px 12px 7px 12px;
+}
+
+/* back to sphinx overrides */
+
+div.related {
+    margin: 0px;
+    width: auto;
+}
+div.related ul {
+  background-image: none;
+  border-top: 0px;
+}
+div.related ul li a {
+   /*font-size: 0.8em;*/
+   color: #078c00;
+}
+a.reference em {
+    font-style: normal;
+}
+div.sphinxsidebar {
+    padding-right: 95px;
+}
+div.sphinxsidebar h3, div.sphinxsidebar h4 {
+    background: inherit;
+    border: none;
+    color: #385F95;
+    padding: 0;
+}
+div.sphinxsidebar h3 a {
+    color: inherit;
+}
+div.document {
+    margin: 0px;
+    background-image: none;
+}
+div.documentwrapper {
+    width: auto;
+}
+div.footer {
+    background: #fff;
+    color: #000000;
+    padding: 0px 0 35px;
+    text-align: center;
+}

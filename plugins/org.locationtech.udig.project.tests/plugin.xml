@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         point="org.locationtech.udig.project.persister">
+      <persister class="org.locationtech.udig.project.internal.impl.APersister"/>
+      <persister class="org.locationtech.udig.project.internal.impl.BPersister"/>
+      <persister class="org.locationtech.udig.project.internal.impl.CPersister"/>
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.provider">
+      <provider
+            class="org.locationtech.udig.project.internal.impl.AProvider"
+            key="a"/>
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.resourceInterceptor">
+      <interceptor
+            class="org.locationtech.udig.project.tests.TestInterceptorPre"
+            id="org.locationtech.udig.project.tests.interceptor"
+            order="PRE"
+            target="org.geotools.data.FeatureSource"/>
+      <cachingStrategy
+            class="org.locationtech.udig.project.tests.TestInterceptorCaching"
+            id="org.locationtech.udig.project.tests.interceptor2"/>
+      <interceptor
+            class="org.locationtech.udig.project.tests.TestInterceptorPost"
+            id="org.locationtech.udig.project.tests.interceptor3"
+            order="POST"/>
+      <interceptor
+            class="org.locationtech.udig.project.tests.TestInterceptorPost2"
+            id="org.locationtech.udig.project.tests.interceptor4"
+            order="POST"
+            target="org.geotools.data.FeatureSource"/>
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.renderer">
+      <renderer
+            class="org.locationtech.udig.project.internal.render.impl.renderercreator.SingleRenderMetricsFactory"
+            id="single"
+            name="singletest"/>
+      <renderer
+            class="org.locationtech.udig.project.internal.render.impl.renderercreator.SingleRenderMetricsFactory2"
+            id="single2"
+            name="singletest2"/>
+      <renderer
+            class="org.locationtech.udig.project.internal.render.impl.renderercreator.MultiRenderMetricsFactory"
+            id="multi"
+            name="multitest"/>
+      <renderer
+            class="org.locationtech.udig.project.internal.render.impl.renderercreator.BadRenderMetricsFactory"
+            />
+   </extension>
+      <extension
+            point="org.locationtech.udig.project.mapInterceptor">
+         <mapCreation
+               class="org.locationtech.udig.project.internal.TestMapCreationInterceptor"
+               id="org.locationtech.udig.project.tests.ui.mapCreation1"
+               name="testMapCreationInterceptor"/>
+         <mapOpening
+               class="org.locationtech.udig.project.internal.TestMapOpeningInterceptor"
+               id="org.locationtech.udig.project.tests.ui.mapOpening1"
+               name="TestMapOpeningInterceptor"/>
+      </extension>
+      <extension
+            point="org.locationtech.udig.project.style">
+         <style
+               class="org.locationtech.udig.project.internal.render.impl.renderercreator.SingleRendererStyleContent"
+               id="org.locationtech.udig.project.tests.single"
+               name="Single Renderer Style"/>
+         <style
+               class="org.locationtech.udig.project.internal.render.impl.renderercreator.MultiRendererStyleContent"
+               id="org.locationtech.udig.project.tests.multi"
+               name="Mulit Renderer Style"/>
+      </extension>
+      <extension
+            point="org.locationtech.udig.project.layerInterceptor">
+         <layerAdded
+               class="org.locationtech.udig.project.internal.TestLayerAddedInterceptor"
+               id="org.locationtech.udig.project.tests.ui.layerAdded1"
+               name="TestLayerAddedInterceptor"/>
+         <layerRemoved
+               class="org.locationtech.udig.project.internal.TestLayerRemovedInterceptor"
+               id="org.locationtech.udig.project.tests.ui.layerRemoved1"
+               name="TestLayerRemovedInterceptor"/>
+         <layerCreated
+               class="org.locationtech.udig.project.internal.TestLayerCreatedInterceptor"
+               id="org.locationtech.udig.project.tests.layerCreated1"
+               name="TestLayerCreatedInterceptor"/>
+      </extension>
+</plugin>

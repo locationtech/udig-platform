@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension
+         point="org.locationtech.udig.project.ui.tool">
+            <modalTool
+                  categoryId="org.locationtech.udig.tool.category.selection"
+                  class="org.locationtech.udig.tool.select.BBoxSelection"
+                  icon="icons/etool16/selection_mode.gif"
+                  id="org.locationtech.udig.tools.BBoxSelect"
+                  largeIcon="icons/etool24/selection_mode.png"
+                  name="%selection.bbox.name"
+                  onToolbar="true"
+                  toolCursorId="bboxCursor"
+                  tooltip="%selection.bbox.tooltip">
+   			<cursor
+            hotspotY="10"
+            hotspotX="10"
+            image="icons/pointers/select_source.png"
+            id="bbox_cursor"/>
+              <enablement>
+                 <property
+                       expectedValue="SELECT"
+                       propertyId="InteractionProperty">
+                 </property>
+                  </enablement>
+         </modalTool>
+          <modalTool
+                categoryId="org.locationtech.udig.tool.category.selection"
+                class="org.locationtech.udig.tool.select.ArrowSelection"
+                icon="icons/etool16/select_feature_mode.gif"
+                id="org.locationtech.udig.tools.ArrowSelect"
+                largeIcon="icons/etool24/select_feature_mode.png"
+                name="%selection.arrow.name"
+                onToolbar="false"
+                toolCursorId="selectFeatureCursor"
+                tooltip="%selection.arrow.tooltip">
+   			<cursor
+            hotspotY="10"
+            hotspotX="10"
+            image="icons/pointers/select_feature_cursor.gif"
+            id="arrow_cursor"/>
+               <enablement>
+                  	<and>
+                        <property propertyId="FeatureSourceResourceProperty" expectedValue=""/>                  	
+	                     <or>
+	                        <property propertyId="org.locationtech.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="org.locationtech.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="org.locationtech.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="org.locationtech.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="org.locationtech.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                        <property propertyId="org.locationtech.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
+	                     </or>
+                      <property
+                            expectedValue="SELECT"
+                            propertyId="InteractionProperty">
+                      </property>
+                     </and>
+                  </enablement>
+         </modalTool>
+          <modalTool
+                categoryId="org.locationtech.udig.tool.category.selection"
+                class="org.locationtech.udig.tool.select.internal.AOILayerSelectionTool"
+                icon="icons/etool16/aoi_mode.png"
+                id="org.locationtech.udig.tool.selection.aoi"
+                largeIcon="icons/etool24/aoi_mode.png"
+                name="%selection.aoi.name"
+                onToolbar="true"
+                preferencePageId="org.locationtech.udig.tool.select.page"
+                toolCursorId="aoiSelectCursor"
+                tooltip="%selection.aoi.tooltip">
+             <toolOption
+                   class="org.locationtech.udig.tool.select.internal.AOILayerSelectionTool$OptionContribtionItem"
+                   id="setAOIToolOptions">
+             </toolOption>
+          </modalTool>
+                <actionTool
+                     categoryId="org.locationtech.udig.tool.category.zoom"
+                     class="org.locationtech.udig.tool.select.internal.ZoomSelection"
+                     icon="icons/elcl16/zoom_select_co.png"
+                     id="org.locationtech.udig.tool.default.show.selection"
+                     menuPath="navigate/zoom.ext"
+                     name="%zoom.select.name"
+                     onToolbar="true"
+                     tooltip="%zoom.select.tooltip">
+                  <enablement>
+                     <property
+                           expectedValue="unimportant"
+                           propertyId="org.locationtech.udig.tool.select.layerHasSelectionProperty"/>
+                  </enablement>
+               </actionTool>
+               <toolCursor
+                     hotspotX="10"
+                     hotspotY="10"
+                     id="bboxCursor"
+                     image="icons/pointers/select_source.png"/>
+               <toolCursor
+                     hotspotX="10"
+                     hotspotY="10"
+                     id="selectFeatureCursor"
+                     image="icons/pointers/select_feature_cursor.gif"/>
+               <toolCursor
+                     hotspotX="9"
+                     hotspotY="6"
+                     id="aoiSelectCursor"
+                     image="icons/pointers/aoi_select_sorce.png">
+               </toolCursor>
+               <toolCursor
+                     hotspotX="11"
+                     hotspotY="11"
+                     id="aoiBoxSelectCursor"
+                     image="icons/pointers/aoi_box_select_sorce.png">
+               </toolCursor>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="true"
+            category="layer"
+            class="org.locationtech.udig.tool.select.TableView"
+            fastViewWidthRatio="30%"
+            icon="icons/eview16/table_view.gif"
+            id="org.locationtech.udig.tool.select.TableView"
+            name="%TableViewName"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="org.locationtech.udig.ui.mapPerspective">
+         <view
+               id="org.locationtech.udig.tool.select.TableView"
+               relationship="stack"
+               relative="org.locationtech.udig.catalog.ui.CatalogView"
+               visible="true"/>
+         <viewShortcut id="org.locationtech.udig.tool.select.TableView"/>
+      </perspectiveExtension>
+   </extension>
+      <extension
+            point="org.locationtech.udig.ui.objectProperty">
+         <object targetClass="org.locationtech.udig.project.ILayer">
+            <property
+                  id="layerHasSelectionProperty"
+                  class="org.locationtech.udig.tool.select.internal.LayerHasSelectionProperty"/>
+         </object>
+      </extension>
+      <extension
+            point="org.locationtech.udig.project.ui.featureEditor">
+         <editor
+               icon="icons/eview16/table_view.gif"
+               id="org.locationtech.udig.tool.select.view"
+               name="Table View"
+               viewId="org.locationtech.udig.tool.select.TableView"/>
+      </extension>
+      <extension
+            point="org.eclipse.ui.viewActions">
+         <viewContribution
+               id="org.locationtech.udig.tool.select.tableContribution"
+               targetID="org.locationtech.udig.tool.select.TableView">
+            <action
+                  class="org.locationtech.udig.tool.select.AOIActionDelegate"
+                  icon="icons/etool16/aoi_filter_obj.png"
+                  id="org.locationtech.udig.tool.select.aoiAction"
+                  label="AOI Filter"
+                  style="toggle"
+                  toolbarPath="additions">
+            </action>
+         </viewContribution>
+      </extension>
+      <extension
+            point="org.eclipse.ui.preferencePages">
+         <page
+               category="org.locationtech.udig.project.ui.preferences.tool"
+               class="org.locationtech.udig.tool.select.internal.SelectionToolPreferencePage"
+               id="org.locationtech.udig.tool.select.page"
+               name="%selection.page">
+         </page>
+      </extension>
+      <extension
+            point="org.eclipse.core.runtime.preferences">
+         <initializer
+               class="org.locationtech.udig.tool.select.SelectionToolPreferenceInitializer">
+         </initializer>
+      </extension>
+      <extension
+            point="org.locationtech.udig.ui.aoi">
+         <aoi
+               class="org.locationtech.udig.tool.select.internal.AOILayerStrategy"
+               id="org.locationtech.udig.tool.select.internal.aoiLayer"
+               name="Area of Interest Layer"
+               page="org.locationtech.udig.tool.select.internal.AOILayerPage">
+         </aoi>
+      </extension>
+</plugin>

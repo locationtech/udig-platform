@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Csw
+Bundle-SymbolicName: org.locationtech.udig.catalog.csw;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.locationtech.udig.catalog.csw.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.locationtech.udig.catalog;bundle-version="1.2.0",
+ org.locationtech.udig.catalog.ui;bundle-version="1.2.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .
+Eclipse-BundleShape: dir

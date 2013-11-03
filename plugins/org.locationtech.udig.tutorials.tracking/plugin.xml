@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="org.locationtech.udig.tutorials.tracking.graphics"
+         name="Tracking MapGraphic"
+         point="org.locationtech.udig.mapgraphic.mapgraphic">
+      <mapGraphic
+            class="org.locationtech.udig.tutorials.tracking.TrackingGraphic"
+            icon="icons/etool16/gull.png"
+            id="org.locationtech.udig.tutorials.tracking.mapgraphic"
+            name="Tracking Graphic">
+      </mapGraphic>
+   </extension>
+   <extension
+         id="org.locationtech.udig.tutorials.tracking.createdata"
+         name="create data"
+         point="org.locationtech.udig.ui.operation">
+      <operation
+            class="org.locationtech.udig.tutorials.tracking.CreateSeagulls"
+            enablesFor="1"
+            id="org.locationtech.udig.tutorials.tracking.createdata.seagulls"
+            name="create seagulls"
+            targetClass="org.locationtech.udig.project.IMap">
+         <enablement></enablement>
+      </operation>
+      <operation
+            class="org.locationtech.udig.tutorials.tracking.glasspane.SeagullGlassPaneOp"
+            enablesFor="1"
+            id="org.locationtech.udig.tutorials.tracking.operation.seagull.glasspane"
+            name="Create Seagull GlassPane"
+            targetClass="org.locationtech.udig.project.IMap">
+         <enablement></enablement>
+      </operation>
+      <operation
+            class="org.locationtech.udig.tutorials.tracking.glasspane.TrackSeagullOp"
+            enablesFor="1"
+            id="org.locationtech.udig.tutorials.tracking.TrackSeagull"
+            name="Track Seagull"
+            targetClass="org.locationtech.udig.project.IMap">
+         <enablement></enablement>
+      </operation>
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.ui.tool">
+      <modalTool
+            class="org.locationtech.udig.tutorials.tracking.glasspane.SeagullTool"
+            icon="icons/etool16/gull.png"
+            id="org.locationtech.udig.tutorials.tracking.mousetracking"
+            name="Seagulls Mouse"
+            onToolbar="true"
+            tooltip="Seagulls Follow Mouse">
+      </modalTool>      
+   </extension>
+
+</plugin>

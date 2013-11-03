@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="org.locationtech.udig.catalog.resolvers">
+      <factory
+            class="org.locationtech.udig.catalog.rasterings.ShpImageMoasicAdaptorFactory"
+            resolveableType="org.locationtech.udig.catalog.internal.shp.ShpGeoResourceImpl">
+         <resolve
+               type="org.opengis.coverage.grid.GridCoverageReader">
+         </resolve>
+         <resolve
+               type="org.geotools.coverage.grid.io.AbstractGridCoverage2DReader">
+         </resolve>
+      </factory>
+   </extension>
+
+    
+</plugin>

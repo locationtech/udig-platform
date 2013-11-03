@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.locationtech.udig.project.ui.tool">
+      <modalTool
+            class="org.locationtech.udig.tutorials.examples.PickTool"
+            icon="icons/etool16/pick_mode.gif"
+            id="org.locationtech.udig.code.examples.pick"
+            name="Pick Features"
+            onToolbar="true"
+            toolCursorId="crosshair"
+            tooltip="Pick Features"/>
+   </extension>
+   <extension
+         point="org.locationtech.udig.mapgraphic.mapgraphic">
+      <mapGraphic
+            class="org.locationtech.udig.tutorials.examples.AnimationMapGraphic"
+            id="org.locationtech.udig.code.examples.runAnimationMapGraphic">
+      </mapGraphic>
+   </extension>
+
+</plugin>

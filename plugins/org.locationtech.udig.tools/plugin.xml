@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension
+		point="org.eclipse.ui.startup">
+      <startup class="org.locationtech.udig.tools.merge.MergeStartup"/>
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.ui.tool">
+      <modalTool
+            categoryId="org.locationtech.udig.tool.edit.feature"
+            class="org.locationtech.udig.tools.split.SplitTool"
+            icon="icons/etool16/split_feature_mode.gif"
+            id="org.locationtech.udig.tools.split.SplitTool"
+            largeIcon="icons/etool24/split_24.png"
+            name="%split.name"
+            onToolbar="true"
+            toolCursorId="arrowCursor"
+            tooltip="%split.tooltip">
+          <enablement>
+          	<and>
+                <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+                 <or>
+                    <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+                    <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+                    <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+                    <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+                 </or>
+             </and>
+          </enablement>
+      </modalTool>
+      <modalTool
+            categoryId="org.locationtech.udig.tool.edit.feature"
+            class="org.locationtech.udig.tools.merge.MergeTool"
+            icon="icons/etool16/merge_feature_mode.gif"
+            id="org.locationtech.udig.tools.merge.MergeTool"
+            largeIcon="icons/etool24/merge_24.png"
+            name="%merge.name"
+            onToolbar="true"
+            toolCursorId="arrowCursor"
+            tooltip="%merge.tooltip">
+	      <enablement>
+	      	<and>
+	            <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+	            <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	             <or>
+	                <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
+	             </or>
+	         </and>
+	      </enablement>
+      </modalTool>
+      <modalTool
+            categoryId="org.locationtech.udig.tool.edit.create"
+            class="org.locationtech.udig.tools.arc.ArcTool"
+            icon="icons/etool16/arc_tool.gif"
+            id="org.locationtech.udig.tools.arc.ArcTool"
+            name="%arc.name"
+            onToolbar="true"
+            toolCursorId="arrowCursor"
+            tooltip="%arc.tooltip">
+         <enablement>
+            <or>
+               <property
+                     expectedValue="com.vividsolutions.jts.geom.LineString"
+                     propertyId="GeometryType">
+               </property>
+               <property
+                     expectedValue="com.vividsolutions.jts.geom.MultiLineString"
+                     propertyId="GeometryType">
+               </property>
+            </or>
+         </enablement>
+      </modalTool>
+      <modalTool
+            categoryId="org.locationtech.udig.tool.edit.create"
+            class="org.locationtech.udig.tools.parallel.ParallelTool"
+            icon="icons/etool16/parallel_mode.gif"
+            id="org.locationtech.udig.tools.parallel.ParallelTool"
+            name="%parallel.name"
+            onToolbar="true"
+            toolCursorId="arrowCursor"
+            tooltip="%parallel.tooltip">
+         <cursor
+               hotspotX="10"
+               hotspotY="10"
+               image="icons/pointers/merge_cursor.gif"/>
+         <enablement>
+          	<and>
+                <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+                 <or>
+                    <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+                    <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+                 </or>
+             </and>
+         </enablement>
+      </modalTool>
+      <modalTool
+            categoryId="org.locationtech.udig.tool.edit.edit"
+            class="org.locationtech.udig.tools.trim.TrimTool"
+            icon="icons/etool16/trim_feature_mode.gif"
+            id="org.locationtech.udig.tools.trim.TrimTool"
+            largeIcon="icons/etool24/trim_24.png"
+            name="%trim.name"
+            onToolbar="true"
+            toolCursorId="arrowCursor"
+            tooltip="%trim.tooltip">
+         <enablement>
+          	<and>
+                <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+                 <or>
+                    <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+                    <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+                 </or>
+             </and>
+         </enablement>
+      </modalTool>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="org.locationtech.udig.project.ui.project"
+            class="org.locationtech.udig.tools.parallel.view.ParallelParametersView"
+            icon="icons/etool16/parallel_mode.gif"
+            id="org.locationtech.udig.tools.parallel.view.ParallelParametersView"
+            name="%parallel.view.name">
+      </view>
+      <view
+            allowMultiple="false"
+            category="org.locationtech.udig.project.ui.project"
+            class="org.locationtech.udig.tools.merge.internal.view.MergeView"
+            icon="icons/etool16/merge_feature_mode.gif"
+            id="org.locationtech.udig.tools.merge.internal.view.MergeView"
+            name="%merge.view.name"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.locationtech.udig.ui.operation">
+      <operation
+            class="org.locationtech.udig.tools.merge.MergeOperation"
+            description="Merge the selected features"
+            enablesFor="1"
+            icon="icons/etool16/merge_feature_mode.gif"
+            id="org.locationtech.udig.tools.merge.mergeoperation"
+            name="%merge.operation.name"
+            targetClass="org.geotools.data.FeatureSource">
+      </operation>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.locationtech.udig.ui.mapPerspective">
+         <viewShortcut
+               id="org.locationtech.udig.tools.merge.internal.view.MergeView">
+         </viewShortcut>
+         <viewShortcut
+               id="org.locationtech.udig.tools.parallel.view.ParallelParametersView">
+         </viewShortcut>
+      </perspectiveExtension>
+   </extension>
+
+</plugin>

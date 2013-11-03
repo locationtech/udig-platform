@@ -1,0 +1,11 @@
+STATE: n/a
+TYPE: wizard banner
+SIZE: 55x45
+PALETTE: full color
+
+Wizard Banner
+-------------
+    Wizard Banners are used in in wizard dialog windows
+
+    All wizard banners have a destinictive blue gradient behind them,
+please adapat an example.

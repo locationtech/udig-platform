@@ -1,0 +1,209 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="org.locationtech.udig.ui">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="org.locationtech.udig.ui" id="dropActions2" name="Drop Actions"/>
+      </appInfo>
+      <documentation>
+         This extension point is used to attach an action to the drop event in a drag n drop transaction.  
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <complexType>
+         <sequence>
+            <element ref="action" minOccurs="1" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="action">
+      <annotation>
+         <documentation>
+            The action to be performed.
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="0" maxOccurs="unbounded">
+            <element ref="destination" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="acceptedType" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="description" minOccurs="0" maxOccurs="1"/>
+         </sequence>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Class of the action, must be a sublcass of IDropAction.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.ui.IDropAction"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Name of the action. Should be a short description of the action purpose. Should be human readable and usable in ui.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="enablesFor" type="string">
+            <annotation>
+               <documentation>
+                  &lt;p&gt;a value indicating the selection count which must be met to enable the action. If specified and the condition is not met, the action is disabled. If omitted, the value is assumed to be 1. The following attribute formats are supported:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;+  - 1 or more items selected&lt;/li&gt;
+&lt;li&gt;multiple, 2+  - 2 or more items selected&lt;/li&gt;
+&lt;li&gt;n  - A precise number of items selected.  For example: enablesFor=&quot; 4&quot; enables the action only when 4 items are selected&lt;/li&gt;
+&lt;/ul&gt;
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="destination">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="class"/>
+         </appInfo>
+         <documentation>
+            The target of a drop. Destinations are advertised by the the entitiy enabling drop support. It is usually a user interface construct such as a specific editor or view, however it can be any type of object.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The destination class.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="java.lang.Object"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="adapt" type="boolean">
+            <annotation>
+               <documentation>
+                  indicates whether the framework should try to adapt the target object to the type declared in this attribute.  If not specified then it is assumed to be false.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="acceptedType">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="class"/>
+         </appInfo>
+         <documentation>
+            The object being dropped. The type of object is based upon the assiociated transfer object in
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  A class that this dropAction knows how to handle
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="java.lang.Object"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="adapt" type="boolean">
+            <annotation>
+               <documentation>
+                  indicates whether the framework should try to adapt the dropped object to the type declared in this attribute.  If not specified then it is assumed to be false.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="description" type="string">
+      <annotation>
+         <documentation>
+            Describes the action
+         </documentation>
+      </annotation>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         1.0
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         [Enter extension point usage example here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiInfo"/>
+      </appInfo>
+      <documentation>
+         [Enter API information here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         [Enter information about supplied implementation of this extension point.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+uDig - User Friendly Desktop Internet GIS client
+<A HREF="http://udig.refractions.net">http://udig.refractions.net</A>
+(C) 2004-2012, Refractions Research Inc.
+
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+(<A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>), and Refractions BSD
+License v1.0 (<A HREF="http://www.eclipse.org/org/documents/edl-v10.html">http://www.eclipse.org/org/documents/edl-v10.html</A>).
+      </documentation>
+   </annotation>
+
+</schema>

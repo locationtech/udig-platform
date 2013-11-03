@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>resourceInterceptor</title>
+<style type="text/css">@import url("file:/Users/jody/eclipse/372/eclipse-modeling/configuration/org.eclipse.osgi/bundles/396/1/.cp/book.css");</style>
+<style type="text/css">@import url("file:/Users/jody/eclipse/372/eclipse-modeling/configuration/org.eclipse.osgi/bundles/408/1/.cp/schema.css");</style>
+</HEAD>
+<BODY>
+<H1 style="text-align:center">resourceInterceptor</H1>
+<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Identifier: </h6>net.refractions.udig.project.resourceInterceptor<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Since: </h6>1.1
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">Description: </h6>resourceInterceptors are ran when getResource(Class<?>, IProgressMonitor) is called on a Layer.  It allows the returned resource to be modified.<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Configuration Markup:</h6>
+<p></p>
+<p class="code SchemaDtd">&lt;!ELEMENT <a name="e.extension">extension</a> (<a href="#e.interceptor">interceptor</a>* , <a href="#e.cachingStrategy">cachingStrategy</a>*)&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST extension</p>
+<p class="code SchemaDtdAttlist">point&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">id&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED</p>&gt;</p>
+<p></p>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>id</b> - id of the extension</li>
+</ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.interceptor">interceptor</a> EMPTY&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST interceptor</p>
+<p class="code SchemaDtdAttlist">id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">class&nbsp;&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">target&nbsp;CDATA #IMPLIED</p><p class="code SchemaDtdAttlist">order&nbsp;&nbsp;(POST|PRE) </p>&gt;</p>
+<p></p>
+<p class="ConfigMarkupElementDesc">
+Declares an interceptor to run when a resource is obtained from a layer.</p>
+<br>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>id</b> - The id of the interceptor</li>
+<li><b>class</b> - The resource intercepter to run if the target type is correct.</li>
+<li><b>target</b> - If provided, the interceptor will only be called when the resource being requested is of the type declared as the target.</li>
+<li><b>order</b> - Indicates when, with respect to other interceptors, that this interceptor will be ran.  Interceptors in a category are ran in random order.  
+<ul>
+<li>PRE-CACHING - The first category of interceptors to run.  This will be ran only if the cache claims to not contain the resource.  If a PRE-CACHING interceptor needs to affect the state of the resource each time then consider making it a POST-CACHING interceptor or implementing a custom CACHING strategy.  See the cachingInterceptor extension element for more details.<p>Example: SetTransactionInterceptor sets the transaction on FeatureStores.  It only needs to be done once per FeatureStore so it can be done before the caching takes place.</li>
+<li>POST-CACHING - These interceptors are ran after the resource has been obtained from the cache.  So the effects will affect all resources regarless of whether the cache takes place.</li>
+</ul></li>
+</ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.cachingStrategy">cachingStrategy</a> EMPTY&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST cachingStrategy</p>
+<p class="code SchemaDtdAttlist">id&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">class&nbsp;CDATA #REQUIRED</p>&gt;</p>
+<p></p>
+<div class="ConfigMarkupElementDesc">
+Declares an caching strategy for Resources fetched from a Layer.  Becareful changing this can have unexpected side effects.  Make sure you test the entire application well.
+<p>
+For example if a new feature store was returned each time then every plugin that is interested in events would need to create a resource interceptor and every request for a FeatureStore would result in both a new FeatureStore and a new listener for every interested plugin.  Since the Datastore's Listener manager often keeps the listeners indefinately then we would very quickly have 10s to 100s of listeners that can't be garbage collected and possibly featurestores as well.
+</p></div>
+<br>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>id</b> - The id of the interceptor</li>
+<li><b>class</b> - The resource caching intercepter to run if the target type is correct.</li>
+</ul>
+<br><h6 class="CaptionFigColumn SchemaHeader">Examples: </h6>An example is the case where a FeatureStore is requested.  All features stores need a transaction set on them.  The setTransaction functionality could be implemented as a resourceInterceptor
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">API Information: </h6>[Enter API information here.]
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">Supplied Implementation: </h6>[Enter information about supplied implementation of this extension point.]
+<p></p>
+
+<br>
+<p class="note SchemaCopyright">
+uDig - User Friendly Desktop Internet GIS client
+
+</p>
+</BODY>
+</HTML>

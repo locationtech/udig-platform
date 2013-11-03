@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+    <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http:///net/refractions/udig/project/internal/render.ecore" 
+       class = "org.locationtech.udig.project.internal.render.RenderPackage" />
+  </extension>
+
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http:///net/refractions/udig/project/internal.ecore" 
+       class = "org.locationtech.udig.project.internal.ProjectPackage" />
+  </extension>
+
+
+   <extension-point id="style" name="style" schema="schema/style.exsd"/>
+   <extension-point id="renderer" name="renderer" schema="schema/renderer.exsd"/>
+   <extension-point id="projectElementFactories" name="%projectElementFactories" schema="schema/projectElementFactories.exsd"/>
+   <extension-point id="decorator" name="%decorator.name" schema="schema/decorator.exsd"/>
+   <extension-point id="renderExecutor" name="renderExecutor" schema="schema/renderExecutor.exsd"/>
+   <extension-point id="persister" name="Persister" schema="schema/persister.exsd"/>
+   <extension-point id="provider" name="Provider" schema="schema/provider.exsd"/>
+   <extension-point id="mapInterceptor" name="mapInterceptor" schema="schema/mapInterceptor.exsd"/>
+   <extension-point id="resourceInterceptor" name="resourceInterceptor" schema="schema/resourceInterceptor.exsd"/>
+   <extension-point id="layerInterceptor" name="layerInterceptor" schema="schema/layerInterceptor.exsd"/>
+   <extension-point id="element" name="element" schema="schema/element.exsd"/>
+   <extension-point id="featureInterceptor" name="Feature Interceptor" schema="schema/featureInterceptor.exsd"/>
+   <extension
+         point="org.locationtech.udig.project.projectElementFactories">
+      <projectElementFactory
+            class="org.locationtech.udig.project.internal.MapFactory"
+            id="org.locationtech.udig.project.mapFactory"/>
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.style">
+      <style
+            class="org.locationtech.udig.project.internal.render.SelectionStyleContent"
+            name="%selectionStyle.name"
+            id="org.locationtech.udig.project.selectionStyle"/>
+      <style
+            class="org.locationtech.udig.project.internal.interceptor.ShowViewInterceptor$ViewStyleContent"
+            id="org.locationtech.udig.project.view"
+            name="org.locationtech.udig.project.View">
+      </style>
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.renderExecutor">
+      <RenderExecutor
+            executorClass="org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl"
+            name="%default.name"
+            rendererClass="org.locationtech.udig.project.render.IRenderer">
+         <Description>
+            %default.description
+         </Description>
+      </RenderExecutor>
+      <RenderExecutor
+            executorClass="org.locationtech.udig.project.internal.render.impl.RenderExecutorMultiLayer"
+            name="%default.multiLayer.name"
+            rendererClass="org.locationtech.udig.project.render.IMultiLayerRenderer">
+         <Description>
+            %default.multiLayer.description
+         </Description>
+      </RenderExecutor>
+      <RenderExecutor
+            executorClass="org.locationtech.udig.project.internal.render.impl.RenderExecutorComposite"
+            name="%composite.name"
+            rendererClass="org.locationtech.udig.project.internal.render.impl.CompositeRendererImpl">
+         <Description>
+            %composite.description
+         </Description>
+      </RenderExecutor>
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.persister">
+      <persister class="org.locationtech.udig.project.internal.ColorPersister"/>
+      <persister
+            class="org.locationtech.udig.project.internal.TextPersister">
+      </persister>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.locationtech.udig.project.preferences.PreferenceInitializer"/>
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.resourceInterceptor">
+      <cachingStrategy
+            class="org.locationtech.udig.project.internal.interceptor.ResourceCacheInterceptor"
+            id="caching"
+            />
+      <interceptor
+            class="org.locationtech.udig.project.internal.interceptor.WrapFeatureStore"
+            id="org.locationtech.udig.project.wrap.featurestore"
+            order="PRE"
+            target="org.geotools.data.FeatureStore"/>
+      <interceptor
+            class="org.locationtech.udig.project.internal.interceptor.WrapSimpleFeatureStore"
+            id="org.locationtech.udig.project.wrap.simplefeaturestore"
+            order="PRE"
+            target="org.geotools.data.SimpleFeatureStore"/>
+      <interceptor
+            class="org.locationtech.udig.project.internal.impl.ListenerAddingInterceptor"
+            id="org.locationtech.udig.project.AddEditingListener"
+            order="PRE"
+            target="org.geotools.data.FeatureSource"/>
+      <interceptor
+            class="org.locationtech.udig.project.internal.interceptor.ShowViewInterceptor"
+            id="org.locationtech.udig.project.showViewInterceptor"
+            order="POST"
+            target="org.geotools.data.FeatureSource"/>
+      <interceptor
+            class="org.locationtech.udig.project.internal.interceptor.CacheInterceptor"
+            id="org.locationtech.udig.project.cacheFeatureSourceInterceptor"
+            order="POST"
+            target="org.geotools.data.FeatureSource">
+      </interceptor>
+      <interceptor
+            class="org.locationtech.udig.project.internal.impl.GeoResourceInfoInterceptor"
+            id="org.locationtech.udig.project.interceptor.info"
+            order="POST"
+            target="org.locationtech.udig.catalog.IGeoResourceInfo"/>
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.layerInterceptor">
+      <layerCreated
+            class="org.locationtech.udig.project.internal.impl.SetStyleInterceptor"
+            id="org.locationtech.udig.project.setStyleInterceptor"
+            name="Set Layer Style"/>
+      <layerCreated
+            class="org.locationtech.udig.project.internal.impl.SetLayerNameInterceptor"
+            id="org.locationtech.udig.project.layercreated.set.name"
+            name="SetLayerName"/>
+      <layerAdded
+            class="org.locationtech.udig.project.internal.impl.InitMapCRS"
+            id="org.locationtech.udig.project.initmapcrs"
+            name="Initialize Map CRS">
+      </layerAdded>
+      <layerAdded
+            class="org.locationtech.udig.project.internal.impl.InitMapBoundsInterceptor"
+            id="org.locationtech.udig.project.setmapbounds"
+            name="InitializeMapBounds">
+      </layerAdded>
+   </extension>
+   <extension
+         point="org.locationtech.udig.ui.objectProperty">
+      <object
+            targetClass="org.locationtech.udig.project.ILayer">
+         <property
+               class="org.locationtech.udig.project.internal.property.FeatureStoreResourceProperty"
+               id="FeatureStoreResourceProperty"/>
+         <property
+               class="org.locationtech.udig.project.internal.property.LayerInteractionProperty"
+               id="InteractionProperty"/>
+         <property
+               class="org.locationtech.udig.project.internal.property.FeatureSourceResourceProperty"
+               id="FeatureSourceResourceProperty">
+         </property>               
+      </object>
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.featureInterceptor">
+      <featureCreated
+            class="org.locationtech.udig.project.internal.interceptor.DefaultValueFeatureInterceptor"
+            id="org.locationtech.udig.project.setDefaultValuesInterceptor"
+            name="Default Values">
+      </featureCreated>
+   </extension>
+</plugin>
+

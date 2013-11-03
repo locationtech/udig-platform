@@ -1,0 +1,154 @@
+h1. uDig Overview
+
+The User-friendly Desktop Internet GIS (uDig) is an open source ("EPL":http://www.eclipse.org/legal/epl-v10.html + "BSD":http://udig.refractions.net/files/bsd3-v10.html) desktop application framework, built with the Eclipse Rich Client (RCP) technology.
+
+* uDig can be used as a stand-alone application
+* uDig can be extended with RCP "plug-ins"
+* uDig can be used as a plug-in in an existing RCP application
+
+uDig is an open project, with developers from multiple companies participating in the decision making process and project direction. All decisions are made transparently, on the public mailing list, or in open "IRC":http://en.wikipedia.org/wiki/IRC discussions.
+
+* <a href="irc://us.freenode.net/udig">#udig</a> on "freenode":http://freenode.net/irc_servers.shtml
+* <a href="irc://us.freenode.net/geotools">#geotools</a> on "freenode":http://freenode.net/irc_servers.shtml
+
+h2. Website
+
+* uDig Project - http://locationtech.org/projects/technology.udig
+* uDig Website - "http://udig.refractions.net/":http://udig.refractions.net/
+* Developers Guide - "http://udig.refractions.net/developers/":http://udig.refractions.net/developers/
+
+h2. Project Outline
+
+The goal of uDig is to provide a complete Java solution for desktop GIS data access, editing, and viewing. uDig aims to be:
+* <b>U</b>ser friendly, providing a familiar graphical environment for GIS users;
+* <b>D</b>esktop located, running as a thick client, natively on Windows, Mac OS/X and Linux;
+* <b>I</b>nternet oriented, consuming standard (WMS, WFS, WCS) and de facto (GeoRSS, KML, tiles) geospatial web services; and,
+* <b>G</b>IS ready, providing the framework on which complex analytical capabilities can be built, and gradually subsuming those capabilities into the main application.
+
+h2. Steering Committee
+
+* Andrea Antonello
+* Frank Gasdorf
+* Jesse Eichar
+* Jody Garnett
+* Mauricio Pazos
+
+h2. Contributing
+
+Join us in working on uDig
+
+* "How to Take part":http://udig.refractions.net/confluence/display/ADMIN/How+to+take+part
+* "Development Environment":http://udig.refractions.net/confluence/display/ADMIN/02+Development+Environment
+* "Project Procedures":http://udig.refractions.net/confluence/display/ADMIN/04+Project+Procedures
+
+There are two ways to take part: indirectly using github pull requests; and directly by obtaining commit access.
+
+h1. Build Instructions
+
+1. We have three branches in our short term roadmap:
+   
+   * https://github.com/uDig/udig-platform/tree/master
+   * https://github.com/uDig/udig-platform/tree/locationtech_rename
+   * https://github.com/uDig/udig-platform/tree/locationtech_ip2
+   
+   Check out the branch you wish to work with (or fork as you see fit).
+
+   To check it out:
+   <pre><code>
+     git clone https://github.com/uDig/udig-platform.git udig
+     cd udig
+     git checkout locationtech_rename
+   </pre></code>
+
+2. Download stuff (using maven to launch small ant download scripts):
+   <pre><code>
+     mvn clean install -f pom-libs.xml
+
+     [INFO] ------------------------------------------------------------------------
+     [INFO] BUILD SUCCESS
+     [INFO] ------------------------------------------------------------------------
+     [INFO] Total time: 8:05.291s
+   </code></pre>
+
+3. Build Online Help (requires and sphinx-build to be installed):
+   <pre><code>
+     cd docs
+     ant help-deploy
+
+     help-deploy:
+        [copy] Copying 1078 files to /Volumes/Fiore/jody/java/udig/jive/plugins/net.refractions.udig.help/EN
+
+     BUILD SUCCESSFUL
+     Total time: 13 seconds
+   </code></pre>
+
+h2. Option - JAI Native Fragments
+
+The JAI and ImageIO Java Runtime Extensions are not open source (source code available under research license). As such these items can be made available via:
+
+* Normal JRE Installation (use osgi.parentClassLoader=ext runtime  option for this to work)
+* Published in a Refractions P2 repository for SDK developers who wish to continue to use bundles to manage these dependencies
+
+To build native fragments used for target platform:
+   
+   <pre><code>
+     cd libs
+     cd jai-imageio
+     mvn clean install
+   </code></pre>
+
+You will need to ask Frank where this source code went.
+
+h2. Option - Command Line Build
+
+1. Tycho Build
+   <pre><code>
+      mvn clean install -Pproduct -Psdk
+
+      [INFO] ------------------------------------------------------------------------
+      [INFO] BUILD SUCCESS
+      [INFO] ------------------------------------------------------------------------
+      [INFO] Total time: 12:44.827s
+   </code></pre>
+
+2. Packaging, branding and installers::
+   <pre><code>
+      cd deploy
+      ./all.sh
+
+      ..snip..
+      Releasing linux64
+      Creating ./build/linux64/udig
+      Building ./build/udig-1.5-SNAPSHOT.linux.gtk.x86_64.zip ...
+      Extracting ./../features/net.refractions.udig-product/target/products/net.refractions.udig-product-linux.gtk.x86_64.zip
+      Preparing ./build/linux64 with ./jre/jre1.6.0_25.lin64_gdal_ecw
+      Looking for ./jre/jre1.6.0_25.lin64_gdal_ecw.tar.gz
+      Extracting ./jre/jre1.6.0_25.lin64_gdal_ecw.tar.gz
+      Preparing ./build/linux64 with start up scripts and html files
+      Assemble ./build/udig-1.5-SNAPSHOT.linux.gtk.x86_64.zip
+   </code></pre>
+
+3. Upload to website
+
+See results at http://udig.refractions.net/download/unstable/ there should be a 1.5-SNAPSHOT by the time you read this.
+
+h2. Option - Eclipse Build
+
+uDig makes use of a target platform, in order to download and reference bundles from:
+
+* Eclipse Rich Client Platform (we are using Indigo)
+* Babel Project (providing translations)
+* Orbit (open source components that have been checked by the Eclipse legal team)
+
+Here is how to set that up:
+
+1. Import the targets/indigo/eu.udig.targets.indgo project.
+2. Open up udig-indigo-target.target and click on Set as Target Platform
+
+   !target.jpg!
+
+   This will reset the target platform which will take some time.
+3. Once that is done you can import the remaining uDig projects
+4. And open up *net.refractions.udig/udig.product and click *Run*
+
+   !product.gif!

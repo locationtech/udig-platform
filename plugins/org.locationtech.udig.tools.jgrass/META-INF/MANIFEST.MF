@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JGrass Tools Plug-in
+Bundle-SymbolicName: org.locationtech.udig.tools.jgrass;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.locationtech.udig.tools.jgrass.JGrassToolsPlugin
+Bundle-Vendor: HydroloGIS S.r.l.
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.libs,
+ org.locationtech.udig.project.ui,
+ org.locationtech.udig.catalog.rasterings;bundle-version="1.2.0",
+ org.locationtech.udig.style.sld;bundle-version="1.2.0",
+ org.locationtech.udig.catalog.jgrass;bundle-version="1.0.0",
+ org.eclipse.xsd;bundle-version="2.7.0"
+Eclipse-LazyStart: true
+Bundle-ClassPath: .
+Export-Package: org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools
+Import-Package: javax.media.jai,
+ javax.media.jai.iterator,
+ javax.media.jai.operator,
+ javax.media.jai.registry,
+ javax.media.jai.remote,
+ javax.media.jai.tilecodec,
+ javax.media.jai.util

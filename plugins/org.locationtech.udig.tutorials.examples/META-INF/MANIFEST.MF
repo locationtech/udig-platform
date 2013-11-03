@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Examples Plug-in
+Bundle-SymbolicName: org.locationtech.udig.tutorials.examples;singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.locationtech.udig.tutorials.examples.Activator
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.project.ui,
+ org.locationtech.udig.catalog.ui,
+ org.locationtech.udig.project.edit,
+ org.locationtech.udig.mapgraphic,
+ org.locationtech.udig.catalog.shp
+Bundle-ActivationPolicy: lazy

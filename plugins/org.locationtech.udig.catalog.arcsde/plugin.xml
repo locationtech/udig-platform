@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+    	<extension
+         point="org.locationtech.udig.catalog.ServiceExtension">
+      <service
+            class="org.locationtech.udig.catalog.internal.arcsde.ArcServiceExtension"
+            id="ArcSDE"
+            name="ArcSDE"/>
+   	</extension>
+ <extension
+       point="org.locationtech.udig.catalog.ui.connectionFactory">
+	<factory class="org.locationtech.udig.catalog.internal.arcsde.ui.ArcSDEConnectionFactory"
+          id="org.locationtech.udig.catalog.ui.arcsde"/>
+    <wizardPage
+          banner="icons/wizban/arcsde_wiz.gif"
+          class="org.locationtech.udig.catalog.internal.arcsde.ui.ArcSDEWizardPage"
+          description="%wizard.description"
+          icon="icons/etool16/acrsde_wiz.gif"
+          name="%wizard.name"/>
+
+ </extension>
+    <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.locationtech.udig.catalog.ui.preferences.CatalogPreferencePage"
+            class="org.locationtech.udig.catalog.internal.arcsde.ui.ArcSDEPreferences"
+            id="org.locationtech.udig.catalog.arcsde.preference"
+            name="%SDEPreference"/>
+   </extension>
+</plugin>

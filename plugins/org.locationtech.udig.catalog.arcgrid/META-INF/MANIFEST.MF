@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ArcGrid Plug-in
+Bundle-SymbolicName: org.locationtech.udig.catalog.arcgrid;singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Vendor: udig.refractions.net
+Require-Bundle: org.locationtech.udig.catalog,
+ org.locationtech.udig.catalog.rasterings,
+ org.eclipse.core.runtime,
+ org.eclipse.ui,
+  org.locationtech.udig.libs
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

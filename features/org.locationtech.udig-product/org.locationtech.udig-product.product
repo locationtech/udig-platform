@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="uDig" uid="org.locationtech.udig-product" id="org.locationtech.udig.product" application="org.locationtech.udig.ui.application" version="1.4.0.qualifier" useFeatures="true" includeLaunchers="true">
+
+   <aboutInfo>
+      <image path="./icons/about.png"/>
+      <text>
+         %verboseAboutText
+      </text>
+   </aboutInfo>
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <vmArgs>-Xmx386M -Dosgi.parentClassloader=ext -Dorg.eclipse.emf.ecore.plugin.EcorePlugin.doNotLoadResourcesPlugin=true -XX:MaxPermSize=256m</vmArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts -Djava.awt.headless=true</vmArgsMac>
+   </launcherArgs>
+
+   <windowImages i16="./icons/icon16.gif" i32="./icons/icon32.gif" i48="./icons/icon48.gif" i64="./icons/icon64.gif" i128="./icons/icon128.gif"/>
+
+   <splash
+      location="org.locationtech.udig"
+      startupProgressRect="0,196,500,8"
+      startupMessageRect="7,180,445,16"
+      startupForegroundColor="FFFFFF" />
+   <launcher name="udig_internal">
+      <linux icon="./icons/udig.xpm"/>
+      <macosx icon="./icons/icon128.icns"/>
+      <solaris/>
+      <win useIco="true">
+         <ico path="./icons/udig.ico"/>
+         <bmp/>
+      </win>
+   </launcher>
+
+   <intro introId="org.locationtech.udig.ui.intro"/>
+
+   <vm>
+   </vm>
+
+   <license>
+        <url>http://udig.refractions.net/files/bsd3-v10.html</url>
+        <text>
+   Copyright (c) 2013, Refractions Research Inc.
+All rights reserved.
+
+Refractions Research makes available all content in this product (&quot;Content&quot;). Unless otherwise indicated below, the Content is provided to you under the terms
+and conditions of the &lt;a href=&quot;http://www.eclipse.org/legal/epl-v10.html&quot;&gt;Eclipse Public License Version 1.0&lt;/a&gt; (&quot;EPL&quot;), and 
+the &lt;a href=&quot;http://udig.refractions.net/files/bsd3-v10.html&quot;&gt;Refractions BSD License 1.0&lt;/a&gt; (&quot;BSD&quot;). For purposes of the EPL and BSD, &quot;Program&quot; will 
+mean the Content.
+
+If you did not receive this Content directly from the Refractions Research, the Content is being redistributed by another party (&quot;Redistributor&quot;) and different 
+terms and conditions may apply to your use of any object code in the Content. Check the Redistributor&apos;s license that was provided with the Content. If no 
+such license exists, contact the Redistributor. Unless otherwise indicated below, the terms and conditions of the EPL still apply to any source code in the 
+Content and such source code may be obtained at http://github.com/udig .
+         </text>
+   </license>
+
+   <plugins>
+   </plugins>
+
+   <features>
+      <feature id="org.locationtech.udig-feature"/>
+      <feature id="javax.media.jai_imageio-feature"/>
+   </features>
+
+   <configurations>
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.p2.reconciler.dropins" autoStart="true" startLevel="5" />
+      <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
+   </configurations>
+
+</product>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="org.locationtech.udig.ui.operation">
+      <operation
+            class="org.locationtech.udig.validation.ui.ValidationDialogOp"
+            id="org.locationtech.udig.validation.validationDialog"
+            name="%validation.menuTitle"
+            targetClass="org.locationtech.udig.project.ILayer"/>
+   </extension>
+
+</plugin>

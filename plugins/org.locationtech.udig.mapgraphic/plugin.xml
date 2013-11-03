@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension-point id="mapgraphic" name="%extensionPoint.name" schema="schema/mapgraphic.exsd"/>
+   <extension
+         point="org.locationtech.udig.project.renderer">
+      <renderer
+            class="org.locationtech.udig.mapgraphic.internal.MapGraphicRenderMetricsFactory"
+            id="org.locationtech.udig.mapgraphic"
+            name="%renderer.name"/>
+   </extension>
+   <extension
+         id="org.locationtech.udig.mapgraphic.serviceExtension"
+         name="%extension.name"
+         point="org.locationtech.udig.catalog.ServiceExtension">
+      <service
+            class="org.locationtech.udig.mapgraphic.internal.MapGraphicServiceExtension"
+            id="mapgraphic"
+            name="Map Graphic"/>
+   </extension>
+   <extension
+         id="org.locationtech.udig.mapgraphic.decoratorConnection"
+         point="org.locationtech.udig.catalog.ui.connectionFactory">
+         <factory class="org.locationtech.udig.mapgraphic.internal.ui.MapGraphicConnectionFactory"
+            id="org.locationtech.udig.mapgraphic.decoratorFactory"/>
+      <wizardPage
+            class="org.locationtech.udig.mapgraphic.internal.ui.MapGraphicWizardPage"
+            description="%mapGraphic.wizardPageDescription"
+            icon="icons/obj16/graphic_obj.gif"
+            id="org.locationtech.udig.mapgraphic.decoratorPage"
+            name="%mapGraphic.wizardPageName"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup class="org.locationtech.udig.mapgraphic.internal.AddToCatalog"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="org.locationtech.udig.mapgraphic.commonDecorators"
+            label="Common Decorators"
+            visible="false">
+         <action
+               class="org.locationtech.udig.mapgraphic.scalebar.ScalebarAction"
+               icon="icons/obj16/scalebar_obj.gif"
+               id="org.locationtech.udig.project.ui.action.addscalebar"
+               label="%action.scalebar.label"
+               menubarPath="layer/mapGraphic.ext"
+               style="push"/>
+         <action
+               class="org.locationtech.udig.mapgraphic.grid.AddGridAction"
+               icon="icons/obj16/grid_obj.gif"
+               id="org.locationtech.udig.project.ui.action.addgrid"
+               label="%action.addgrid.label"
+               menubarPath="layer/mapGraphic.ext"
+               style="push"/>
+         <action
+               class="org.locationtech.udig.mapgraphic.graticule.AddGraticuleAction"
+               icon="icons/obj16/graticule_obj.gif"
+               id="org.locationtech.udig.project.ui.action.addgraticule"
+               label="%action.addgraticule.label"
+               menubarPath="layer/mapGraphic.ext"
+               style="push">
+         </action>
+         <action
+               class="org.locationtech.udig.mapgraphic.internal.ui.OtherAction"
+               id="org.locationtech.udig.mapgraphic.other"
+               label="%action.other.name"
+               menubarPath="layer/mapGraphicOther.ext"
+               style="push"/>
+      </actionSet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="org.locationtech.udig.ui.mapPerspective">
+         <actionSet id="org.locationtech.udig.mapgraphic.commonDecorators"/>
+      </perspectiveExtension>
+      <perspectiveExtension targetID="org.locationtech.udig.ui.stylePerspective">
+         <actionSet id="org.locationtech.udig.mapgraphic.commonDecorators"/>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.locationtech.udig.project.style">
+      <style
+            class="org.locationtech.udig.mapgraphic.style.LocationStyleContent"
+            name="%printing.ui.locationStyle.name"
+            id="org.locationtech.udig.printing.ui.locationStyle"/>
+    <style
+          class="org.locationtech.udig.mapgraphic.grid.GridStyleContent"
+          id="org.locationtech.udig.tool.edit.mapgraphic.grid.style"
+          name="Grid Style"/>
+    <style
+          class="org.locationtech.udig.mapgraphic.graticule.GraticuleStyleContent"
+          id="org.locationtech.udig.tool.edit.mapgraphic.graticule.style"
+          name="Graticule Style">
+    </style>
+    <style
+          class="org.locationtech.udig.mapgraphic.style.FontStyleContent"
+          id="org.locationtech.udig.mapgraphic.style.font"
+          name="Font Style">
+    </style>
+    <style
+          class="org.locationtech.udig.mapgraphic.scalebar.BarStyleContent"
+          id="org.locationtech.udig.mapgraphic.style.bartype"
+          name="BarType Style">
+    </style>
+   </extension>
+   <extension
+         point="org.locationtech.udig.style.styleConfigurator">
+      <styleConfigurator
+            class="org.locationtech.udig.mapgraphic.style.LocationStyleConfigurator"
+            id="location"
+            label="%printing.ui.location.config.label"
+            requires="org.locationtech.udig.mapgraphic.scalebar.ScalebarMapGraphic"
+            styleId="org.locationtech.udig.printing.ui.locationStyle"/>
+    <styleConfigurator
+          class="org.locationtech.udig.mapgraphic.style.FontStyleConfigurator"
+          id="font"
+          label="%font.style.label"
+          requires="org.locationtech.udig.mapgraphic.scalebar.ScalebarMapGraphic"
+          styleId="org.locationtech.udig.mapgraphic.style.font">
+    </styleConfigurator>
+    <styleConfigurator
+          class="org.locationtech.udig.mapgraphic.scalebar.BarStyleConfigurator"
+          id="bartype"
+          label="BarType"
+          requires="org.locationtech.udig.mapgraphic.scalebar.ScalebarMapGraphic"
+          styleId="org.locationtech.udig.mapgraphic.style.bartype">
+    </styleConfigurator>
+    <styleConfigurator
+          class="org.locationtech.udig.mapgraphic.grid.GridStyleConfigurator"
+          id="org.locationtech.udig.tool.edit.mapgraphic.grid.configurator"
+          label="Grid"
+          requires="org.locationtech.udig.mapgraphic.grid.GridMapGraphic"
+          styleId="org.locationtech.udig.tool.edit.mapgraphic.grid.style"/>
+    <styleConfigurator
+          class="org.locationtech.udig.mapgraphic.style.FontStyleConfigurator"
+          id="font"
+          label="%font.style.label"
+          requires="org.locationtech.udig.mapgraphic.graticule.GraticuleGraphic"
+          styleId="org.locationtech.udig.mapgraphic.style.font">
+    </styleConfigurator>
+    <styleConfigurator
+          class="org.locationtech.udig.mapgraphic.graticule.GraticuleCRSConfigurator"
+          id="org.locationtech.udig.tool.edit.mapgraphic.graticule.crs"
+          label="Projection"
+          requires="org.locationtech.udig.mapgraphic.graticule.GraticuleGraphic"
+          styleId="org.locationtech.udig.tool.edit.mapgraphic.graticule.style">
+    </styleConfigurator>
+    <styleConfigurator
+          class="org.locationtech.udig.mapgraphic.graticule.GraticuleLinesConfigurator"
+          id="org.locationtech.udig.tool.edit.mapgraphic.graticule.lines"
+          label="Lines"
+          requires="org.locationtech.udig.mapgraphic.graticule.GraticuleGraphic"
+          styleId="org.locationtech.udig.tool.edit.mapgraphic.graticule.style">
+    </styleConfigurator>
+   </extension>
+   <extension
+         point="org.locationtech.udig.mapgraphic.mapgraphic">
+      <mapGraphic
+            class="org.locationtech.udig.mapgraphic.scalebar.ScalebarMapGraphic"
+            icon="icons/obj16/scalebar_obj.gif"
+            id="scalebar"
+            name="%printing.ui.scalebar.mapgraphic.name"/>
+      <mapGraphic
+            class="org.locationtech.udig.mapgraphic.grid.GridMapGraphic"
+            icon="icons/obj16/grid_obj.gif"
+            id="grid"
+            name="%mapgraphic.grid.name"/>
+      <mapGraphic
+            class="org.locationtech.udig.mapgraphic.northarrow.NorthArrowMapGraphic"
+            icon="icons/obj16/graphic_obj.gif"
+            id="org.locationtech.udig.mapgraphic.NorthArrowMapGraphic"
+            name="%mapgraphic.northarrow.name">
+      </mapGraphic>
+	<mapGraphic
+            class="org.locationtech.udig.mapgraphic.graticule.GraticuleGraphic"
+            icon="icons/etool16/graticule.png"
+            id="graticule"
+            name="Graticule">
+      </mapGraphic>      
+    <!--  <mapGraphic
+            class="org.locationtech.udig.mapgraphic.scalebar.ScaleDenomMapGraphic"
+            id="org.locationtech.udig.mapgraphic.scalebar.ScaleDenomMapGraphic"
+            name="%mapgraphic.scale.name">
+      </mapGraphic> -->
+   </extension>
+   <!--
+   <extension
+         point="org.locationtech.udig.project.ui.tool">
+      <modalTool
+            class="org.locationtech.udig.mapgraphic.northarrow.NorthArrowTool"
+            icon="icons/etool16/xy.png"
+            id="org.locationtech.udig.mapgraphic.tool.locationTool"
+            name="%location.tool.name"
+            onToolbar="true">
+      </modalTool>
+   </extension>
+   -->
+</plugin>

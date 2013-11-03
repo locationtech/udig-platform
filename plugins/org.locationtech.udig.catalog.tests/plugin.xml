@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+    <extension
+         point="org.locationtech.udig.catalog.ServiceExtension">
+      <service
+            class="org.locationtech.udig.catalog.tests.DummyServiceExtension"
+            id="Dummy"
+            name="Dummy"/>
+      <service
+            class="org.locationtech.udig.catalog.tests.DummyMultiResourceServiceExtension"
+            id="MultiDummy"
+            name="MultiDummy"/>
+   </extension>
+    <extension
+          point="org.locationtech.udig.catalog.resolvers">
+       <factory
+             class="org.locationtech.udig.catalog.tests.internal.DummyResolverFactory"
+             resolveableType="org.locationtech.udig.catalog.tests.DummyGeoResource">
+          <resolve type="org.locationtech.udig.catalog.tests.internal.ResolvedTo"/>
+       </factory>
+       <factory
+             class="org.locationtech.udig.catalog.tests.internal.DummyResolverFactory"
+             resolveableType="org.locationtech.udig.catalog.tests.DummyService">
+          <resolve type="org.locationtech.udig.catalog.tests.internal.ResolvedTo"/>
+       </factory>
+    </extension>
+   
+</plugin>

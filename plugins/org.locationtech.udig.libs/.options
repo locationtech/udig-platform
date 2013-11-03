@@ -1,0 +1,3 @@
+net.refractions.udig.libs/debug=true
+net.refractions.udig.libs/debug/jdbc/fine=true
+net.refractions.udig.libs/debug/data/jdbc/fine=true

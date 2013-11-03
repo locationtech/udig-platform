@@ -1,0 +1,778 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="org.locationtech.udig.render" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appinfo>
+         <meta.schema plugin="org.locationtech.udig.render" id="Tool" name="Tool"/>
+      </appinfo>
+      <documentation>
+         &lt;p&gt;The tool extension point allows third-party developers to develop new tools for UDIG and is one of the most used points of extension.  There are three different type of tools and two ways of grouping tools.  The three type of tools are as follows:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Action Tool - A single fire tool that performs a single action and is not modal, a buttons that sets the viewport so it frames the current selection is an example of an action tool.  Action tools must implement the ActionTool interface.&lt;/li&gt;
+&lt;li&gt;Modal Tool - A tool that has on and off modes. When a modal tool is &quot;on&quot; it waits for user input and reacts on it.  An example of a modal tool is the zoom tool.  Modal tools must implement the ModalTool interface and are recommended to implement the AbstractModalTool class.&lt;/li&gt;
+&lt;li&gt;Background Tool - A tool that is always active in the background. A typical background tool would be limited to providing user feedback. An example is the cursor position tool that displays the current mouse location in world coordinates. Background tools must implement the Tool interface and are recommended to implement the AbstractTool class.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To address the need to provide locations for large numbers of tools developers can add tools to views.  In addition, a standard tool views is defined and new tools are added to the tool viewer by default.  It is recommended that if a large number of tools are being added then a new view should be created to hold the tool set.&lt;/p&gt;
+
+&lt;p&gt;The setToolkit method is called by UDIG in order to provide a tools with a toolkit object that it can use as a facade for access UDIG, UDIG command factories and send command object to UDIG.&lt;/p&gt;
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+      </annotation>
+      <complexType>
+         <choice minOccurs="0" maxOccurs="unbounded">
+            <element ref="category"/>
+            <element ref="modalTool"/>
+            <element ref="backgroundTool"/>
+            <element ref="actionTool"/>
+            <element ref="toolCursor"/>
+         </choice>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="category">
+      <annotation>
+         <appinfo>
+            <meta.element labelAttribute="name" icon="icon"/>
+         </appinfo>
+         <documentation>
+            A category represents a collection of tools.  In toolbars tools within a category are grouped together and accessed via the same keyboard shortcut.
+         </documentation>
+      </annotation>
+      <complexType>
+         <choice>
+         </choice>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  A category to used to group buttons.  The standard categories are found as constants in Tool.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="commandId" type="string">
+            <annotation>
+               <documentation>
+                  The command that will cycle and activate the modal tools in a category.  This must identify a command extension.
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="icon" type="string">
+            <annotation>
+               <documentation>
+                  A icon that will appear in menu.  Optional.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  A human readable name of the category.
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="selectionProvider" type="string">
+            <annotation>
+               <documentation>
+                  Tools are responsible for declaring the selection provider used by the MapEditor.  This attribute declares the IMapEditorSelectionProvider used.  If the attribute is declared a selection provider that has the map selected is used.  It is the MapEditorSelectionProvider.
+This declaration can be overridden by the selectionProvider attribute of a particular tool.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.ui.tool.selection.provider.AbstractMapEditorSelectionProvider"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="applicabilityId" type="string">
+            <annotation>
+               <documentation>
+                  Indicates which applicability this tool is part of.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="modalTool">
+      <annotation>
+         <appinfo>
+            <meta.element icon="icon"/>
+         </appinfo>
+         <documentation>
+            A modal tool is a tool that has an on and an off.  Examples are the zoom tool.  Some types of tools may be exclusive, for example the zoom tool cannot be on at the same time as other exclusively modal tools, such as the pan tool.
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="cursor" minOccurs="0" maxOccurs="1"/>
+            <element ref="enablement" minOccurs="0" maxOccurs="1"/>
+            <element ref="operationCategory" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="toolOption" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  The human readable, display, name of the tool.
+
+For internationalization you should consider using %toolName.name%, where toolName.name is an entry in plugin.propertiers
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="icon" type="string">
+            <annotation>
+               <documentation>
+                  icon used to represent the tool in a palette, toolbar or menu. The icon should be 16x16 and conform to the Eclipse User Interface Guidelines.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="resource"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="largeIcon" type="string">
+            <annotation>
+               <documentation>
+                  icon used to represent the tool in a palette when the use has requested Large Icons.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="resource"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  A unique id for tool extension
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="tooltip" type="string">
+            <annotation>
+               <documentation>
+                  The tooltip that will be displayed.
+
+For internationalization you should consider using %toolName.tooltip%, where toolName.tooltip is an entry in plugin.propertiers
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string">
+            <annotation>
+               <documentation>
+                  The Tool implementation.  It is recommended that the AbstractTool class is exteneded for mouse tools.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.ui.tool.SimpleTool"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="onToolbar" type="boolean" use="default" value="true">
+            <annotation>
+               <documentation>
+                  Mark the tool as suitable for the toolbar or palette.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="categoryId" type="string">
+            <annotation>
+               <documentation>
+                  The id of the category that the tool is a part of.  In the toolbar it will be part of the drop down menu.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="identifier" basedOn="org.locationtech.udig.project.ui.tool/category/@id"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="commandIds" type="string">
+            <annotation>
+               <documentation>
+                  A comma seperated list of CommandIds that the tool wishes to handle.  The defined IHandler will be handed all the requests.
+See the command extension point.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="toolCursorId" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="identifier" basedOn="org.locationtech.udig.project.ui.tool/toolCursor/@id"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="commandHandler" type="string">
+            <annotation>
+               <documentation>
+                  This handler will handle called when a command has been requested.  See the command extension point
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.ui.tool.IToolHandler"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="selectionProvider" type="string">
+            <annotation>
+               <documentation>
+                  Tools are responsible for declaring the selection provider used by the MapEditor.  This attribute declares the IMapEditorSelectionProvider used.  
+If this attribute is not used then the selectionProvider attribute in the category declaration is used.  If that is null then the default is used (MapEditorSelectionProvider)
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.ui.tool.selection.provider.AbstractMapEditorSelectionProvider"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="preferencePageId" type="string">
+            <annotation>
+               <documentation>
+                  The id of the preference page used to conviger this tool, if null the parent tool preference page will be used.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="backgroundTool">
+      <annotation>
+         <appinfo>
+            <meta.element icon="icon"/>
+         </appinfo>
+         <documentation>
+            A background tool is a tool that runs the entire time an editor is active. Often they do things like update the status bar.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="tooltip" type="string">
+            <annotation>
+               <documentation>
+                  The tooltip that will be displayed
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string">
+            <annotation>
+               <documentation>
+                  The Tool implementation.  It is recommended that the AbstractTool class is exteneded for mouse tools.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.ui.tool.AbstractTool:org.locationtech.udig.project.ui.tool.Tool"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="icon" type="string">
+            <annotation>
+               <documentation>
+                  The icon that will be used as a display for the icon
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="resource"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  A unique id for tool extension
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  The human readable, display, name of the tool
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="commandIds" type="string">
+            <annotation>
+               <documentation>
+                  A comma seperated list of CommandIds that the tool wishes to handle.  The defined IHandler will be handed all the requests.
+See the command extension point
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="commandHandler" type="string">
+            <annotation>
+               <documentation>
+                  This handler will handle called when a command has been requested.  See the command extension point
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.eclipse.ui.commands.IHandler"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="actionTool">
+      <annotation>
+         <appinfo>
+            <meta.element icon="icon"/>
+         </appinfo>
+         <documentation>
+            An action tool is a tool that is equivalent to a eclipse action.  The only difference is that it implements the ActionTool interface
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="enablement"/>
+         </sequence>
+         <attribute name="tooltip" type="string">
+            <annotation>
+               <documentation>
+                  The tooltip that will be displayed
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string">
+            <annotation>
+               <documentation>
+                  The Tool implementation.  It is recommended that the AbstractTool class is exteneded for mouse tools.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.ui.tool.AbstractActionTool"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="icon" type="string">
+            <annotation>
+               <documentation>
+                  The icon that will be used as a display for the icon
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="resource"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  A unique id for tool extension
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  The human readable, display, name of the tool
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="onToolbar" type="boolean">
+            <annotation>
+               <documentation>
+                  True if the the tool will appear on the Toolbar.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="categoryId" type="string">
+            <annotation>
+               <documentation>
+                  The id of the category that the tool is a part of.  In the toolbar it will be part of the drop down menu.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="commandIds" type="string">
+            <annotation>
+               <documentation>
+                  A comma seperated list of CommandIds that the tool wishes to handle.  The defined IHandler will be handed all the requests.
+See the command extension point
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="commandHandler" type="string">
+            <annotation>
+               <documentation>
+                  This handler will handle called when a command has been requested.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.ui.tool.AbstractToolCommandHandler"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="menuPath" type="string">
+            <annotation>
+               <documentation>
+                  The menu location that the action will be placed
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="cursor">
+      <annotation>
+         <appinfo>
+            <meta.element icon="image"/>
+         </appinfo>
+         <documentation>
+            A user defined cursor that will be displayed when the tool is active.  See org.eclipse.swt.graphics.Cursor for more information.  The attributes of this element correspond to the constructor arguments.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="image" type="string">
+            <annotation>
+               <documentation>
+                  The cursor image. The background of the image must be blank (Alpha value of 0).
+
+In previous versions of eclipse there were some problems showing color PNG cursors on linux and OS-X.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="resource"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="hotspotX" type="string">
+            <annotation>
+               <documentation>
+                  The x coordinate of the cursor&apos;s hotspot.  Default is 0.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="hotspotY" type="string">
+            <annotation>
+               <documentation>
+                  The y coordinate of the cursor&apos;s hotspot.  Default is 0.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  The system cursor or toolCuror id to use if image is null.
+
+The system cursors can be accessed using one of the following constants: default, crosshair, text, wait, sw_resize, se_resize, nw_resize, ne_resize, n_resize, s_resize, w_resize, e_resize, hand, move, no
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="and">
+      <complexType>
+         <sequence>
+            <element ref="adaptsTo" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="property" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="and" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="or" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="not" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
+      </complexType>
+   </element>
+
+   <element name="or">
+      <complexType>
+         <sequence>
+            <element ref="adaptsTo" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="property" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="and" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="or" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="not" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
+      </complexType>
+   </element>
+
+   <element name="not">
+      <complexType>
+         <choice>
+            <element ref="adaptsTo"/>
+            <element ref="and"/>
+            <element ref="or"/>
+            <element ref="not"/>
+            <element ref="property"/>
+         </choice>
+      </complexType>
+   </element>
+
+   <element name="enablement">
+      <annotation>
+         <documentation>
+            The extension is only enabled if the enablement is true for the selection
+         </documentation>
+      </annotation>
+      <complexType>
+         <choice>
+            <element ref="adaptsTo"/>
+            <element ref="and"/>
+            <element ref="or"/>
+            <element ref="not"/>
+            <element ref="property"/>
+         </choice>
+      </complexType>
+   </element>
+
+   <element name="property">
+      <annotation>
+         <appinfo>
+            <meta.element labelAttribute="target"/>
+         </appinfo>
+         <documentation>
+            Declares the property and the expected value that a condition element operates on.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="propertyId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The id of the property extension to use.
+See org.locationtech.udig.ui.objectProperty
+
+It is the id of the property element which is a grandchild of the ObjectProperty element.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="identifier" basedOn="org.locationtech.udig.ui.objectProperty/object/property/@id"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="expectedValue" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The value that the property is expected to match
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  The id of the property extension to use. Please use propertyId.
+               </documentation>
+               <appinfo>
+                  <meta.attribute deprecated="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="target" type="string">
+            <annotation>
+               <documentation>
+                  The value that the property is expected to match. Please use expectedValue.
+               </documentation>
+               <appinfo>
+                  <meta.attribute deprecated="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="adaptsTo">
+      <annotation>
+         <appinfo>
+            <meta.element labelAttribute="target"/>
+         </appinfo>
+         <documentation>
+            If the selection can adapt to object of type target then this enablement is considered true.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="target" type="string">
+            <annotation>
+               <documentation>
+                  The name of the class that the selection must be able to adapt to.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="operationCategory">
+      <annotation>
+         <documentation>
+            Connects this tool to a category of operations. This allows the UI to optimize itself accordingly, perhaps by prominently displaying the operations that are in the specified categories.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="categoryID" type="string" use="required">
+            <annotation>
+               <documentation>
+                  This attribute should be the same as the id attribute of the category element of the operation extension point, which is located in the org.locationtech.udig.ui plug-in.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="toolCursor">
+      <annotation>
+         <appinfo>
+            <meta.element labelAttribute="id" icon="image"/>
+         </appinfo>
+         <documentation>
+            Defines a cursor that can be reused by several tools, tools will refer to this cursor via the id listed here.
+
+Ids are already defined for the system cursors and are listed as constants in the ModalTool interface: default, crosshair, text, wait, sw_resize, se_resize, nw_resize, ne_resize, n_resize, s_resize, w_resize, e_resize, hand, move, no
+
+It is undefined what happens when two tool cursors are defined with the same id; or define with any of the system cursor ids mentioned above.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  id used by a tool to refer to this cursor.
+
+Ids are already defined for the system cursors and are listed as constants in the ModalTool interface: default, crosshair, text, wait, sw_resize, se_resize, nw_resize, ne_resize, n_resize, s_resize, w_resize, e_resize, hand, move, no
+
+It is undefined what happens when two tool cursors are defined with the same id; or define with any of the system cursor ids mentioned above.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="image" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The cursor image. The background of the image must be blank (Alpha value of 0).
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="resource"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="hotspotX" type="string">
+            <annotation>
+               <documentation>
+                  The x coordinate of the cursor&apos;s hotspot.  Default is 0.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="hotspotY" type="string">
+            <annotation>
+               <documentation>
+                  The y coordinate of the cursor&apos;s hotspot.  Default is 0.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="toolOption">
+      <annotation>
+         <documentation>
+            Allows a tool to contribute a ContributionItem to the status area when the tool is active. This ContributionItem can be used to control tool options; we ask that this facility be used to provide quick access to tool preferences (as defined by preferencePageId).
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  id used by the status bar to refer to this cursor.
+
+id are used to add and remove the option contribution from the status bar, if multiple option contributions exist with the same id they may be added and removes twice.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string">
+            <annotation>
+               <documentation>
+                  We recommend the use of AbstractToolOptionsContributionItem which provides easy access to the tool preference settings.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.eclipse.jface.action.ContributionItem:"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="since"/>
+      </appinfo>
+      <documentation>
+         0.1.1
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="examples"/>
+      </appinfo>
+      <documentation>
+         An example use of the condition element:
+
+&lt;pre&gt;
+&lt;property&gt;
+  &lt;name&gt;Layer.GeometryType&lt;/name&gt;
+  &lt;target&gt;MultiPolygon&lt;/target&gt;
+&lt;/property&gt;
+&lt;/pre&gt;
+
+This will equate to true if the current layer&apos;s geometry type is multipolyon. It will equate to false otherwise.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="apiInfo"/>
+      </appinfo>
+      <documentation>
+         [Enter API information here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="implementation"/>
+      </appinfo>
+      <documentation>
+         [Enter information about supplied implementation of this extension point.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="copyright"/>
+      </appinfo>
+      <documentation>
+uDig - User Friendly Desktop Internet GIS client
+<A HREF="http://udig.refractions.net">http://udig.refractions.net</A>
+(C) 2004-2012, Refractions Research Inc.
+
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+(<A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>), and Refractions BSD
+License v1.0 (<A HREF="http://www.eclipse.org/org/documents/edl-v10.html">http://www.eclipse.org/org/documents/edl-v10.html</A>).
+      </documentation>
+   </annotation>
+
+</schema>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   id="org.locationtech.udig.catalog.db2"
+   name="%plugin.name"
+   version="1.0.1"
+   provider-name="Justin Deoliveira, Refractions Research"
+   class="org.locationtech.udig.catalog.internal.db2.DB2Plugin">
+
+
+   	<extension
+         point="org.locationtech.udig.catalog.ServiceExtension">
+      <service
+            class="org.locationtech.udig.catalog.internal.db2.DB2ServiceExtension"
+            id="DB2"
+            name="DB2"/>
+   	</extension>
+   <extension
+         point="org.locationtech.udig.catalog.ui.connectionFactory">
+     <factory class="org.locationtech.udig.catalog.internal.db2.ui.DB2ConnectionFactory"
+            id="org.locationtech.udig.catalog.ui.db2"/>
+      <wizardPage
+            banner="icons/wizban/repository_wiz.gif"
+            class="org.locationtech.udig.catalog.internal.db2.ui.DB2WizardPage"
+            description="%wizard.description"
+            icon="icons/etool16/database_obj.gif"
+            name="%wizard.name"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.locationtech.udig.catalog.ui.preferences.CatalogPreferencePage"
+            class="org.locationtech.udig.catalog.internal.db2.ui.DB2Preferences"
+            id="org.locationtech.udig.catalog.db2.preference"
+            name="%DB2Preference"/>
+   </extension>
+
+
+</plugin>

@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         id="org.locationtech.udig.tool.edit.tools"
+         name="Edit Tools"
+         point="org.locationtech.udig.project.ui.tool">
+
+               <modalTool
+                     categoryId="org.locationtech.udig.tool.edit.create"
+                     class="org.locationtech.udig.tools.edit.impl.PolygonTool"
+                     icon="icons/etool16/new_polygon_mode.gif"
+                     id="org.locationtech.udig.tools.polygonEdit"
+                     largeIcon="icons/etool24/new_polygon_mode.png"
+                     name="%edit.polygon.name"
+                     onToolbar="true"
+                     toolCursorId="arrowCursor"
+                     tooltip="%edit.polygon.tooltip">
+                  <cursor
+                        hotspotX="10"
+                        hotspotY="10"
+                        image="icons/pointers/edit_source.gif"/>
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property
+                               expectedValue="com.vividsolutions.jts.geom.MultiPolygon"
+                               propertyId="GeometryType"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                     </or>
+                     </and>
+                  </enablement>
+                  <toolOption
+                        class="org.locationtech.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
+               </modalTool>
+               <modalTool
+                     categoryId="org.locationtech.udig.tool.edit.create"
+                     class="org.locationtech.udig.tools.edit.impl.LineTool"
+                     icon="icons/etool16/new_line_mode.gif"
+                     id="org.locationtech.udig.tools.lineEdit"
+                     largeIcon="icons/etool24/new_line_mode.png"
+                     name="%edit.line.name"
+                     onToolbar="true"
+                     toolCursorId="arrowCursor"
+                     tooltip="%edit.line.tooltip">
+                  <cursor
+                        hotspotX="10"
+                        hotspotY="10"
+                        image="icons/pointers/edit_source.gif"/>
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                     </or>
+                     </and>
+                  </enablement>
+                  <toolOption
+                        class="org.locationtech.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
+               </modalTool>
+               <!-- 
+               <modalTool
+                     categoryId="org.locationtech.udig.tool.edit.create"
+                     class="org.locationtech.udig.tools.edit.impl.FreeHandTool"
+                     icon="icons/etool16/new_freehand_mode.gif"
+                     id="org.locationtech.udig.tools.freeHandTool"
+                     name="%edit.freehand.name"
+                     onToolbar="true"
+                     toolCursorId="arrowCursor"
+                     tooltip="%edit.freehand.tooltip">
+                  <cursor
+                        hotspotX="10"
+                        hotspotY="10"
+                        image="icons/pointers/edit_source.gif"/>
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                     </or>
+                     </and>
+                  </enablement>
+               </modalTool> 
+               -->
+               <modalTool
+                     categoryId="org.locationtech.udig.tool.edit.create"
+                     class="org.locationtech.udig.tools.edit.impl.PointTool"
+                     icon="icons/etool16/new_point_mode.gif"
+                     id="org.locationtech.udig.tools.pointEdit"
+                     largeIcon="icons/etool24/new_point_mode.png"
+                     name="%edit.point.name"
+                     onToolbar="true"
+                     toolCursorId="arrowCursor"
+                     tooltip="%edit.point.tooltip">
+                  <cursor
+                        hotspotX="10"
+                        hotspotY="10"
+                        image="icons/pointers/edit_source.gif"/>
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
+	                     </or>
+                     </and>
+                  </enablement>
+                  <toolOption
+                        class="org.locationtech.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
+               </modalTool>
+               <modalTool
+                     categoryId="org.locationtech.udig.tool.edit.edit"
+                     class="org.locationtech.udig.tools.edit.impl.SelectionTool"
+                     icon="icons/etool16/edit_vertex_mode.gif"
+                     id="org.locationtech.udig.tools.selectionTool"
+                     largeIcon="icons/etool24/edit_vertex_mode.png"
+                     name="%edit.selection.name"
+                     onToolbar="true"
+                     toolCursorId="arrowCursor"
+                     tooltip="%edit.selection.tooltip">
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
+	                     </or>
+                     </and>
+                  </enablement>
+                  <toolOption
+                        class="org.locationtech.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
+               </modalTool>
+               <modalTool
+                     categoryId="org.locationtech.udig.tool.edit.edit"
+                     class="org.locationtech.udig.tools.edit.impl.InsertVertexTool"
+                     icon="icons/etool16/add_vertext_mode.gif"
+                     id="org.locationtech.udig.tools.addVertexTool"
+                     largeIcon="icons/etool24/add_vertext_mode.png"
+                     name="%edit.vertex.add.name"
+                     onToolbar="true"
+                     toolCursorId="addVertexCursor"
+                     tooltip="%edit.vertex.add.tooltip">
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                     </or>
+                     </and>
+                  </enablement>
+                  <toolOption
+                        class="org.locationtech.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
+               </modalTool>
+               <modalTool
+                     categoryId="org.locationtech.udig.tool.edit.edit"
+                     class="org.locationtech.udig.tools.edit.impl.RemoveVertexTool"
+                     icon="icons/etool16/remove_vertext_mode.gif"
+                     id="org.locationtech.udig.tools.removeVertexTool"
+                     largeIcon="icons/etool24/remove_vertext_mode.png"
+                     name="%edit.vertex.remove.name"
+                     onToolbar="true"
+                     toolCursorId="deleteVertexCursor"
+                     tooltip="%edit.vertex.remove.tooltip">
+                  <enablement>
+                	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                     </or>
+                     </and>
+                  </enablement>
+               </modalTool>
+               <modalTool
+                     categoryId="org.locationtech.udig.tool.edit.edit"
+                     class="org.locationtech.udig.tools.edit.impl.HoleTool"
+                     icon="icons/etool16/hole_vertex_mode.gif"
+                     id="org.locationtech.udig.tools.holeEdit"
+                     largeIcon="icons/etool24/hole_vertex_mode.png"
+                     name="%edit.hole.name"
+                     onToolbar="true"
+                     toolCursorId="arrowCursor"
+                     tooltip="%edit.hole.tooltip">
+                  <cursor
+                        hotspotX="10"
+                        hotspotY="10"
+                        image="icons/pointers/edit_source.gif"/>
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                     </or>
+                     </and>
+                  </enablement>
+                  <toolOption
+                        class="org.locationtech.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
+               </modalTool>
+			   <modalTool
+            categoryId="org.locationtech.udig.tool.edit.create"
+            class="org.locationtech.udig.tools.edit.impl.FillDifferenceTool"
+            icon="icons/etool16/difference_feature_mode.gif"
+            id="org.locationtech.udig.tools.differenceTool"
+            largeIcon="icons/etool24/difference_feature_mode.png"
+            name="%edit.difference.name"
+            onToolbar="true"
+            toolCursorId="arrowCursor"
+            tooltip="%edit.difference.tooltip">
+                  <cursor
+                        hotspotX="10"
+                        hotspotY="10"
+                        image="icons/pointers/edit_source.gif"/>
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                     </or>
+                     </and>
+                  </enablement>
+                  <toolOption
+                        class="org.locationtech.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
+               </modalTool>
+               <modalTool
+                     categoryId="org.locationtech.udig.tool.edit.create"
+                     class="org.locationtech.udig.tools.edit.impl.RectangleTool"
+                     icon="icons/etool16/new_rectangle_mode.gif"
+                     id="org.locationtech.udig.tool.edit.createRectangle"
+                     largeIcon="icons/etool24/new_rectangle_mode.png"
+                     name="%edit.rectangle.name"
+                     onToolbar="true"
+                     toolCursorId="arrowCursor"
+                     tooltip="%edit.rectangle.tooltip">
+                  <cursor
+                        hotspotX="10"
+                        hotspotY="10"
+                        image="icons/pointers/edit_source.gif"/>
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                     </or>
+					</and>
+                  </enablement>
+                  <toolOption
+                        class="org.locationtech.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
+                </modalTool>
+               <modalTool
+                     categoryId="org.locationtech.udig.tool.edit.create"
+                     class="org.locationtech.udig.tools.edit.impl.EllipseTool"
+                     icon="icons/etool16/new_circle_mode.gif"
+                     id="org.locationtech.udig.tool.edit.createEllipse"
+                     largeIcon="icons/etool24/new_circle_mode.png"
+                     name="%edit.ellipse.name"
+                     onToolbar="true"
+                     toolCursorId="arrowCursor"
+                     tooltip="%edit.ellipse.tooltip">
+                  <cursor
+                        hotspotX="10"
+                        hotspotY="10"
+                        image="icons/pointers/edit_source.gif"/>
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                     </or>
+                     </and>
+                  </enablement>
+                  <toolOption
+                        class="org.locationtech.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
+                </modalTool>
+                <modalTool
+                      categoryId="org.locationtech.udig.tool.edit.feature"
+                      class="org.locationtech.udig.tools.edit.impl.DeleteTool"
+                      icon="icons/etool16/delete_feature_mode.gif"
+                      id="org.locationtech.udig.tools.deleteTool"
+                      largeIcon="icons/etool24/delete_feature_mode.png"
+                      name="%edit.delete.name"
+                      onToolbar="true"
+                      toolCursorId="deleteCursor"
+                      tooltip="%edit.delete.tooltip">
+                  <cursor
+                        hotspotX="3"
+                        hotspotY="3"
+                        image="icons/pointers/delete_select_source.gif"/>
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
+	                     </or>
+                     </and>
+                  </enablement>
+               </modalTool>
+               <actionTool
+                     categoryId="org.locationtech.udig.tool.category.selection"
+                     class="org.locationtech.udig.tools.edit.ClearSelection"
+                     id="org.locationtech.udig.tools.clearSelection"
+                     menuPath="edit/additions"
+                     name="%clear.selection.name"
+                     onToolbar="false"
+                     tooltip="%clear.selection.tooltip">
+                  <enablement>
+                    <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+                  </enablement>                     
+               </actionTool>
+               <category
+                     commandId="org.locationtech.udig.tool.edit.editCategoryCommand"
+                     id="org.locationtech.udig.tool.edit.edit"
+                     name="%editCategory.name"
+                     selectionProvider="org.locationtech.udig.tools.edit.EditSelectionProvider"/>
+               <category
+                     commandId="org.locationtech.udig.tool.edit.createCategoryCommand"
+                     id="org.locationtech.udig.tool.edit.create"
+                     name="%createCategory.name"
+                     selectionProvider="org.locationtech.udig.tools.edit.EditSelectionProvider"/>
+               <category
+                     commandId="org.locationtech.udig.tool.edit.featureCategoryCommand"
+                     id="org.locationtech.udig.tool.edit.feature"
+                     name="%featureCategory.name"
+                     selectionProvider="org.locationtech.udig.tools.edit.EditSelectionProvider"/>
+               <toolCursor
+                     hotspotX="10"
+                     hotspotY="10"
+                     id="arrowCursor"
+                     image="icons/pointers/edit_source.gif"/>
+               <toolCursor
+                     hotspotX="5"
+                     hotspotY="5"
+                     id="deleteCursor"
+                     image="icons/pointers/delete_select_source.gif"/>
+               <toolCursor
+                     hotspotX="10"
+                     hotspotY="10"
+                     id="addVertexCursor"
+                     image="icons/pointers/edit_add_source.gif">
+               </toolCursor>
+               <toolCursor
+                     hotspotX="10"
+                     hotspotY="10"
+                     id="deleteVertexCursor"
+                     image="icons/pointers/edit_remove_source.gif">
+               </toolCursor>
+              </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            id="org.locationtech.udig.tool.edit.clearAction"
+            name="%cancel.command"/>
+      <command
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            id="org.locationtech.udig.tool.edit.acceptAction"
+            name="%accept.command"/>
+      <command
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            id="org.locationtech.udig.tool.edit.createCategoryCommand"
+            name="%createCategory.command"/>
+      <command
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            id="org.locationtech.udig.tool.edit.editCategoryCommand"
+            name="%editCategory.command"/>
+      <command
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            id="org.locationtech.udig.tool.edit.featureCategoryCommand"
+            name="%featureCategory.command"/>
+      <command
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            id="org.locationtech.udig.tool.edit.cycle.snap.behaviour"
+            name="%snapBehaviourCommand.name"/>
+      <command
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            id="org.locationtech.udig.tool.edit.advanced.edit.command"
+            name="%command.advance.edit.name"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="org.locationtech.udig.tool.edit.clearAction"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="ESC"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
+      <key
+            commandId="org.locationtech.udig.tool.edit.acceptAction"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="ENTER"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
+      <key
+            commandId="org.locationtech.udig.tool.edit.createCategoryCommand"
+            contextId="org.locationtech.udig.project.ui.tool"
+            sequence="C"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
+      <key
+            commandId="org.locationtech.udig.tool.edit.editCategoryCommand"
+            contextId="org.locationtech.udig.project.ui.tool"
+            sequence="E"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
+      <key
+            commandId="org.locationtech.udig.tool.edit.featureCategoryCommand"
+            contextId="org.locationtech.udig.project.ui.tool"
+            sequence="F"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
+      <key
+            commandId="org.locationtech.udig.tool.edit.cycle.snap.behaviour"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
+            sequence="M1+SHIFT+S"/>
+      <key
+            commandId="org.locationtech.udig.tool.edit.advanced.edit.command"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
+            sequence="M1+SHIFT+A"/>
+   </extension>
+   <extension
+         point="org.locationtech.udig.ui.operation">
+      <operation
+            class="org.locationtech.udig.tool.edit.DifferenceOp"
+            enablesFor="2"
+            id="org.locationtech.udig.tool.edit.difference"
+            name="%difference.name"
+            targetClass="org.locationtech.udig.project.ILayer">
+          <enablement>
+		        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	      </enablement>   
+      </operation>
+      <operation
+            class="org.locationtech.udig.tool.edit.SplitLineOp"
+            enablesFor="+"
+            id="org.locationtech.udig.tool.edit.operation1"
+            menuPath="edit/add.ext"
+            name="%operation.splitLine.name"
+            targetClass="org.locationtech.udig.tools.edit.support.Point">
+         <enablement>
+            <and>
+                <property propertyId="org.locationtech.udig.tools.edit.CurrentShape.ShapeType" expectedValue="LINE"/>
+			    <property propertyId="org.locationtech.udig.project.ui.OpenMap" expectedValue="java.lang.Object"/>
+            </and>
+         </enablement>
+      </operation>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.locationtech.udig.project.ui.preferences.tool"
+            class="org.locationtech.udig.tools.edit.preferences.EditToolPreferences"
+            id="org.locationtech.udig.tools.edit.preferences"
+            name="%preferences.edit.tool.name"/>
+      <page
+            category="org.locationtech.udig.tools.edit.preferences"
+            class="org.locationtech.udig.tools.edit.preferences.PerformancelPreferences"
+            id="org.locationtech.udig.tool.edit.preference.performance"
+            name="%preferences.edit.tool.performance.name"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.locationtech.udig.tools.edit.preferences.PreferenceInitializer"/>
+   </extension>
+   <extension
+         point="org.locationtech.udig.ui.objectProperty">
+      <object targetClass="java.lang.Object">
+         <property
+               id="CurrentShape.ShapeType"
+               class="org.locationtech.udig.tool.edit.CurrentShapeTypePropertyValue"/>
+      </object>
+   </extension>
+         <extension
+               point="org.locationtech.udig.project.mapInterceptor">
+            <mapClosing
+                  class="org.locationtech.udig.tools.edit.support.DisposeBlackboardOnCloseInterceptor"
+                  id="org.locationtech.udig.tool.edit.mapClosing1"
+                  name="Dispose EditBlackboards on close.">
+            </mapClosing>
+         </extension>
+   </plugin>

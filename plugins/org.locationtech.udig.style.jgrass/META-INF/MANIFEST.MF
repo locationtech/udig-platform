@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JGrassraster Style Plug-in
+Bundle-SymbolicName: org.locationtech.udig.style.jgrass;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.locationtech.udig.style.jgrass.JGrassrasterStyleActivator
+Bundle-Vendor: HydroloGIS S.r.l.
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.project.ui,
+ org.locationtech.udig.style,
+ org.locationtech.udig.ui,
+ org.locationtech.udig.catalog.jgrass,
+ org.locationtech.udig.style.sld,
+ org.locationtech.udig.mapgraphic,
+ org.locationtech.udig.legend;bundle-version="1.2.0"
+Eclipse-LazyStart: true
+Export-Package: org.locationtech.udig.style.jgrass.categories,
+ org.locationtech.udig.style.jgrass.colors

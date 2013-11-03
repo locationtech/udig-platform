@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %plugin.name
+Bundle-SymbolicName: org.locationtech.udig.catalog; singleton:=true
+Bundle-Version: 1.3.0.qualifier
+Bundle-Activator: org.locationtech.udig.catalog.CatalogPlugin
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Export-Package: org.locationtech.udig.catalog,
+ org.locationtech.udig.catalog.document,
+ org.locationtech.udig.catalog.interceptor,
+ org.locationtech.udig.catalog.internal;x-friends:="org.locationtech.udig.catalog.tests",
+ org.locationtech.udig.catalog.memory,
+ org.locationtech.udig.catalog.memory.internal;x-internal:=true,
+ org.locationtech.udig.catalog.moved,
+ org.locationtech.udig.catalog.objectproperty,
+ org.locationtech.udig.catalog.util
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.locationtech.udig.core;visibility:=reexport,
+ org.locationtech.udig.ui
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="org.locationtech.udig.tutorials.urladapter.operation"
+         name="urlOperations"
+         point="org.locationtech.udig.ui.operation">
+      <operation
+            categoryId="org.locationtech.udig.project.ui.informationOperations"
+            class="org.locationtech.udig.tutorials.urladapter.DisplayURLOp"
+            id="org.locationtech.udig.tutorials.urladapter.operation"
+            name="Display URL"
+            targetClass="java.net.URL">
+      </operation>
+   </extension>
+   <extension
+         id="org.locationtech.udig.tutorials.urladapter.adapters"
+         name="urlAdapters"
+         point="org.eclipse.core.runtime.adapters">
+      <factory
+            adaptableType="org.locationtech.udig.catalog.IGeoResource"
+            class="org.locationtech.udig.tutorials.urladapter.URLAdapterFactory">
+         <adapter
+               type="java.net.URL">
+         </adapter>
+      </factory>
+	  <factory
+            adaptableType="org.locationtech.udig.catalog.IService"
+            class="org.locationtech.udig.tutorials.urladapter.URLAdapterFactory">
+         <adapter
+               type="java.net.URL">
+         </adapter>
+      </factory>
+   </extension>
+
+</plugin>

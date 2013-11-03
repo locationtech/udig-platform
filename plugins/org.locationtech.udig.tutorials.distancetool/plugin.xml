@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         id="org.locationtech.udig.tutorials.distancetool"
+         name="Distance Tool Example"
+         point="org.locationtech.udig.project.ui.tool">
+      <modalTool
+            categoryId="org.locationtech.udig.tutorials.distancetool.mycategory"
+            class="org.locationtech.udig.tutorials.distancetool.DistanceTool"
+            icon="icons/etool16/measure_mode.gif"
+            id="org.locationtech.udig.tutorials.distancetool"
+            name="Distance"
+            onToolbar="true"
+            tooltip="Measure the surface distance between two points">
+         <cursor
+               hotspotX="10"
+               hotspotY="10"
+               image="icons/pointers/measure_source.gif"/>
+      </modalTool>
+	  <category
+            commandId="org.locationtech.udig.tutorials.mycommand"
+            icon="icons/pointers/measure_source.gif"
+            id="org.locationtech.udig.tutorials.distancetool.mycategory"
+            name="My Category">
+      </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+       <key
+            commandId="org.locationtech.udig.tutorials.mycommand"
+            contextId="org.locationtech.udig.project.ui.tool"
+            sequence="M"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+         <category
+            description="%category.description"
+            name="%category.name"
+            id="org.locationtech.udig.tools.toolCategory"/>
+         <command
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            name="My Command"
+            id="org.locationtech.udig.tutorials.mycommand"/>
+   </extension>
+
+</plugin>
