@@ -155,14 +155,16 @@
                id="org.locationtech.udig.project.ui.legendManager">
          </viewShortcut>
          <newWizardShortcut
-               id="org.locationtech.udig.project.ui.wizard.newMap">
-         </newWizardShortcut>
-         <newWizardShortcut
                id="org.locationtech.udig.project.ui.wizards.newProject">
+         </newWizardShortcut>
+<!-- TODO REVIEW : These two wizards doesnt seems to exist anymore ..  
+         <newWizardShortcut
+               id="org.locationtech.udig.project.ui.wizard.newMap">
          </newWizardShortcut>
          <newWizardShortcut
                id="org.locationtech.udig.project.ui.wizard.newLayer">
          </newWizardShortcut>
+-->
          <perspectiveShortcut
                id="org.locationtech.udig.ui.mapPerspective">
          </perspectiveShortcut>
@@ -1111,7 +1113,6 @@
               visible="false">
            <action
                  class="org.locationtech.udig.project.ui.internal.actions.OpenMapAction"
-                 definitionId="org.locationtech.udig.project.ui.openMapCommand"
                  icon="icons/obj16/project_obj.gif"
                  id="org.locationtech.udig.project.ui.openMapAction"
                  label="%map.action.open.name"

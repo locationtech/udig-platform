@@ -41,7 +41,6 @@
             targetID="org.locationtech.udig.bookmarks.internal.ui.BookmarksView">
          <action
                class="org.locationtech.udig.bookmarks.internal.actions.BookmarkAction"
-               disabledIcon="icons/dlcl16/add_bkmrk.gif"
                icon="icons/elcl16/add_co.gif"
                id="org.locationtech.udig.bookmarks.actions.addbookmarkaction"
                label="%Bookmarks.actions.AddBookmark"
@@ -50,7 +49,6 @@
                tooltip="%Bookmarks.actions.AddBookmark.tt"/>
          <action
                class="org.locationtech.udig.bookmarks.internal.actions.BookmarkAction"
-               disabledIcon="icons/bookmark_remall.gif"
                icon="icons/elcl16/removeall_co.gif"
                id="org.locationtech.udig.bookmarks.actions.removeallbookmarksaction"
                label="%Bookmarks.actions.RemoveAllBookmarks"
