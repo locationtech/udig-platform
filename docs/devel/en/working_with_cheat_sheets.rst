@@ -8,7 +8,7 @@ launching the required tools for the user. Other tasks need to be completed manu
 Add a Cheat Sheet
 =================
 
-The help plugin (net.refractions.udig.help) is responsible for holding the cheat sheet contributions
+The help plugin (org.locationtech.udig.help) is responsible for holding the cheat sheet contributions
 and content. Cheat sheets are defined using the org.eclipse.ui.cheatsheets.cheatSheetContent
 extension point. The cheat sheet content itself is defined in a separate XML file stored in the
 cheatsheet folder.
@@ -52,10 +52,10 @@ Contributing a cheat sheet is pretty straightforward.
        <extension
               point="org.eclipse.ui.cheatsheets.cheatSheetContent">
                <cheatsheet
-               category="net.refractions.udig.help.cheatsheet.category.myCategory"
+               category="org.locationtech.udig.help.cheatsheet.category.myCategory"
                composite="false"
                contentFile="cheatsheets/myCheatSheetContent.xml"
-               id="net.refractions.udig.help.cheatsheet.myCheatSheetContent"
+               id="org.locationtech.udig.help.cheatsheet.myCheatSheetContent"
                name="My Cheat Sheet">
            </cheatsheet>
        </extension>
@@ -75,13 +75,13 @@ defines the action. You can then add an <action> to your item.
     <item 
       title="New Layer Wizard" 
       dialog="true" 
-      href="/net.refractions.udig.help/EN/Add Data wizard.html">
+      href="/org.locationtech.udig.help/EN/Add Data wizard.html">
         <description>
             Choose <b>File > New > New Layer</b> from the menu bar to open up the Add Data wizard
         </description>
         <action 
-            class="net.refractions.udig.project.ui.internal.actions.AddLayersAction" 
-            pluginId="net.refractions.udig.project.ui.editor"
+            class="org.locationtech.udig.project.ui.internal.actions.AddLayersAction" 
+            pluginId="org.locationtech.udig.project.ui.editor"
             confirm="false"/>
     </item>
 
@@ -101,7 +101,7 @@ defines the command. You can then add an <command> to your item.
         <b>Window > Open Perspective > Style Perspective</b>
          </description>
          <command
-              serialization = "org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=net.refractions.udig.ui.stylePerspective)" 
+              serialization = "org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=org.locationtech.udig.ui.stylePerspective)" 
             required="false" 
             translate=""/>
     </item>
@@ -110,7 +110,7 @@ The above example has:
 
 -  command: "org.eclipse.ui.perspectives.showPerspective( ... )"
 -  parameter:
-   org.eclipse.ui.perspectives.showPerspective.perspectiveId=net.refractions.udig.ui.stylePerspective
+   org.eclipse.ui.perspectives.showPerspective.perspectiveId=org.locationtech.udig.ui.stylePerspective
 
 Contributing a category
 -----------------------
@@ -122,7 +122,7 @@ Add a cheat sheet category to the org.eclipse.ui.cheatsheets.cheatSheetContent e
     <extension
            point="org.eclipse.ui.cheatsheets.cheatSheetContent">
         <category
-              id="net.refractions.udig.help.cheatsheet.category.categoryName"
+              id="org.locationtech.udig.help.cheatsheet.category.categoryName"
               name="Category Name">
         </category>
     </extension>
@@ -177,12 +177,12 @@ plugin to depend on everything (so not a good idea).
 -  net.refractions.project.ui.editor - use of GIS Application (Map / Layer / Style )
 -  net.refractions.catalog.ui - use of GIS Platform (Catalog / Data )
 -  net.refractions.printing.ui - use of printing facilities
--  net.refractions.udig - location for cheatsheets that need to use everything
+-  org.locationtech.udig - location for cheatsheets that need to use everything
 
 The usual guidelines for handling of resources apply with respect to Internationalisation:
 
--  net.refractions.udig.project.ui.editor/nl/en/style\_cheatsheet.xml
--  net.refractions.udig.project.ui.editor/nl/de/style\_cheatsheet.xml (translation to German)
+-  org.locationtech.udig.project.ui.editor/nl/en/style\_cheatsheet.xml
+-  org.locationtech.udig.project.ui.editor/nl/de/style\_cheatsheet.xml (translation to German)
 
 Reference:
 

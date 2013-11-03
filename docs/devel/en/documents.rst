@@ -15,7 +15,7 @@ These facilities are also used to allow an IGeoResource to publish support files
 Document
 --------
 
-.. figure:: /../../../plugins/net.refractions.udig.catalog/docs/IDocument.PNG
+.. figure:: /../../../plugins/org.locationtech.udig.catalog/docs/IDocument.PNG
    :align: center
    :alt: 
    
@@ -37,7 +37,7 @@ Documents Sources
 These are the document sources that we can implement to provide access to documents and allow
 getting, adding, updating and deleting of documents.
 
-.. image:: /../../../plugins/net.refractions.udig.catalog/docs/DocumentSource.PNG
+.. image:: /../../../plugins/org.locationtech.udig.catalog/docs/DocumentSource.PNG
    :scale: 50 %
    :alt: Document Source Classes
    :align: center
@@ -90,7 +90,7 @@ IHotlinkSource
 Provides access to feature hotlinks. IHotlinkSource is interesting in that it is used to update
 the value of a feature, which you then need to commit in the usual manner.
   
-Example Implementation: net.refractions.udig.document.source.ShpHotlinkSource
+Example Implementation: org.locationtech.udig.document.source.ShpHotlinkSource
 
 To list hotlinks for a feature::
    
@@ -174,23 +174,23 @@ How to hook up a document source:
 2. If you have your own custom IGeoResource class you can update the IResolve methods **canReoslve** and **resolve**.
 
 3. If you are working with a provided **IGeoResource** class you can use the
-   the *net.refractions.udig.catalog.resolvers* extension point
+   the *org.locationtech.udig.catalog.resolvers* extension point
 
 ::
 
    <extension
          id="shp"
          name="Shapefile Document Resolvers"
-         point="net.refractions.udig.catalog.resolvers">
+         point="org.locationtech.udig.catalog.resolvers">
       <factory
-            class="net.refractions.udig.document.source.ShpDocumentResolveFactory"
-            resolveableType="net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl">
+            class="org.locationtech.udig.document.source.ShpDocumentResolveFactory"
+            resolveableType="org.locationtech.udig.catalog.internal.shp.ShpGeoResourceImpl">
          <resolve
-               type="net.refractions.udig.catalog.document.IHotlinkSource"></resolve>
+               type="org.locationtech.udig.catalog.document.IHotlinkSource"></resolve>
          <resolve
-               type="net.refractions.udig.catalog.document.IDocumentSource"></resolve>
+               type="org.locationtech.udig.catalog.document.IDocumentSource"></resolve>
          <resolve
-               type="net.refractions.udig.catalog.document.IAttachmentSource">
+               type="org.locationtech.udig.catalog.document.IAttachmentSource">
          </resolve>
       </factory>
    </extension> 

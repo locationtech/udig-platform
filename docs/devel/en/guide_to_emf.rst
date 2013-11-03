@@ -178,7 +178,7 @@ following must be added to the Package interface:
 .. code-block:: java
 
     /**
-    * @model instanceClass="net.refractions.udig.project.IBlackboard"
+    * @model instanceClass="org.locationtech.udig.project.IBlackboard"
     */
     EClass getIBlackboard();
 

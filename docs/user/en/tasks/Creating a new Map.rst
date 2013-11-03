@@ -19,7 +19,7 @@ New layer (when no map is open):
 Toolbar
 =======
 
-.. |new_map_icon| image:: ../../../../plugins/net.refractions.udig.project.ui/icons/etool16/newmap_wiz.gif
+.. |new_map_icon| image:: ../../../../plugins/org.locationtech.udig.project.ui/icons/etool16/newmap_wiz.gif
 
 New map:
 

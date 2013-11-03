@@ -25,8 +25,8 @@ Traceing WMS Requests
 
           #Master Tracing Options
           #Tue Aug 05 14:56:31 PDT 2008
-          net.refractions.udig.catalog.wms/debug=true
-          net.refractions.udig.catalog.wms/debug/request=true
+          org.locationtech.udig.catalog.wms/debug=true
+          org.locationtech.udig.catalog.wms/debug/request=true
 
    -  Place it in your uDig folder (next to your udig.exe file):
        C:\\Program Files\\uDig\\1.1\\eclipse
@@ -43,10 +43,10 @@ produced:
 
 ::
 
-   !ENTRY net.refractions.udig.catalog.internal.wms 4 0 2008-09-05 08:26:15.561
+   !ENTRY org.locationtech.udig.catalog.internal.wms 4 0 2008-09-05 08:26:15.561
     !MESSAGE GetCapabilities: `http://wms.jpl.nasa.gov/wms.cgi?REQUEST=GetCapabilities&VERSION=1.1.1&SERVICE=WMS`_
 
-   !ENTRY net.refractions.udig.catalog.internal.wms 4 0 2008-09-05 08:26:24.781
+   !ENTRY org.locationtech.udig.catalog.internal.wms 4 0 2008-09-05 08:26:24.781
     !MESSAGE GetMap: `http://wms.jpl.nasa.gov/wms.cgi?SERVICE=WMS&LAYERS=BMNG&EXCEPTIONS=application/vnd.ogc.se\_xml&FORMAT=image/png&HEIGHT=357&TRANSPARENT=TRUE&REQUEST=GetMap&BBOX=-180.0,-90.0,180.0,90.0&WIDTH=714&STYLES=default&SRS=EPSG:4326&VERSION=1.1.1 <http://wms.jpl.nasa.gov/wms.cgi?SERVICE=WMS&LAYERS=BMNG&EXCEPTIONS=application/vnd.ogc.se_xml&FORMAT=image/png&HEIGHT=357&TRANSPARENT=TRUE&REQUEST=GetMap&BBOX=-180.0,-90.0,180.0,90.0&WIDTH=714&STYLES=default&SRS=EPSG:4326&VERSION=1.1.1>`_
 
 

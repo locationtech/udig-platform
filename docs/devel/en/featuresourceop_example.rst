@@ -17,7 +17,7 @@ In a eclipse plugin the following lines must be added to the plugin.xml file:
 ::
 
     <extension
-             point="net.refractions.udig.registry.ui.featureType">
+             point="org.locationtech.udig.registry.ui.featureType">
           <process
                 class="xyz.examplepackage.CountOp"
                 name="Count">
@@ -27,7 +27,7 @@ In a eclipse plugin the following lines must be added to the plugin.xml file:
           </process>
        </extension>
 
-The xml fragment above declares an extension of the net.refractions.udig.registry.ui.featureType.
+The xml fragment above declares an extension of the org.locationtech.udig.registry.ui.featureType.
 The type of operation is a process operation (A child of the <extension> tag is the <process> tag).
 The name of the process is Count and the operation class is xyz.examplepackage.CountOp. The
 <tooltip> tag provides the plugin with a tooltip, this is optional.
@@ -43,7 +43,7 @@ Next the operation class must be defined:
         /**
          * Counts the features in the feature source
          * 
-         * @see net.refractions.udig.registry.ui.FeatureSourceOp#op(org.geotools.data.FeatureSource)
+         * @see org.locationtech.udig.registry.ui.FeatureSourceOp#op(org.geotools.data.FeatureSource)
          */
         public void op( FeatureSource source ) throws Exception {
             FeatureReader reader=source.getFeatures().reader();

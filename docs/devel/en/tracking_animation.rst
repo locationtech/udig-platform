@@ -13,12 +13,12 @@ Source code:
    view)
 -  features:
 
-   * `net.refractions.udig.tutorials.rcp-feature <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.rcp-feature>`_
+   * `org.locationtech.udig.tutorials.rcp-feature <https://github.com/uDig/udig-platform/tree/master/tutorials/org.locationtech.udig.tutorials.rcp-feature>`_
 
 -  plugin:
 
-   * `net.refractions.udig.tutorials.tracking <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.tracking>`_
+   * `org.locationtech.udig.tutorials.tracking <https://github.com/uDig/udig-platform/tree/master/tutorials/org.locationtech.udig.tutorials.tracking>`_
       (github)
-   * `net.refractions.udig.tutorials.rcp <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.rcp>`_
+   * `org.locationtech.udig.tutorials.rcp <https://github.com/uDig/udig-platform/tree/master/tutorials/org.locationtech.udig.tutorials.rcp>`_
 
 

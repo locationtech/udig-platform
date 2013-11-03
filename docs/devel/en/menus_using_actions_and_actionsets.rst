@@ -38,7 +38,7 @@ When possible please make use of **org.eclipse.ui.menu**.
 Default RCP Menus Paths
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-For the uDig application (net.refractions.udig.ui) these reference points are contributed directly
+For the uDig application (org.locationtech.udig.ui) these reference points are contributed directly
 by the UDIGActionBarAdvisor. Most of these are from IWorkbenchActionConstants and can be expected in
 any RCP application.
 
@@ -127,7 +127,7 @@ Geospatial Platform Menu Paths
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 These paths are contributed by the **org.eclipse.ui.menu** extension point as part of
-**net.refractions.udig.catalog.ui**.
+**org.locationtech.udig.catalog.ui**.
 
 Data menu:
 
@@ -138,13 +138,13 @@ Data menu:
 
 Catalog view:
 
--  menu:net.refractions.udig.catalog.ui.CatalogView?after=additions
--  popup:net.refractions.udig.catalog.ui.CatalogView?after=additions
+-  menu:org.locationtech.udig.catalog.ui.CatalogView?after=additions
+-  popup:org.locationtech.udig.catalog.ui.CatalogView?after=additions
 
 Search view:
 
--  menu:net.refractions.udig.catalog.ui.Search?after=additions
--  popup:net.refractions.udig.catalog.ui.Search?after=additions
+-  menu:org.locationtech.udig.catalog.ui.Search?after=additions
+-  popup:org.locationtech.udig.catalog.ui.Search?after=additions
 
 Available Nouns
 ^^^^^^^^^^^^^^^

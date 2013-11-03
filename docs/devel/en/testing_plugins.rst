@@ -21,7 +21,7 @@ uDig Support Classes
 
 There are a few classes to assist writing uDig tests.
 
-In **net.refractions.udig.ui.tests**:
+In **org.locationtech.udig.ui.tests**:
 
 -  **UDIGTestUtil** - Provides methods for:
 
@@ -30,13 +30,13 @@ In **net.refractions.udig.ui.tests**:
    -  Creating Services
    -  Waiting for UI events to complete
 
-In **net.refractions.udig.project.tests**:
+In **org.locationtech.udig.project.tests**:
 
 -  **MapTests** - Provides methods for creating maps
 -  **AbstractProjectTest** - Super class for test cases. Attempts to clean up after running by
    clearing the project registry, maps, and projects
 
-In **net.refractions.udig.project.ui.tests**:
+In **org.locationtech.udig.project.ui.tests**:
 
 -  **AbstractProjectUITest** - Extends **AbstractProjectTest** and tries to close mapeditors in
    addition to what **AbstractProjectTest** does..
@@ -51,10 +51,10 @@ include:
 
     the feature.xml file
 
-    net.refractions.udig.catalog
-    net.refractions.udig.catalog.wfs
+    org.locationtech.udig.catalog
+    org.locationtech.udig.catalog.wfs
 
-    net.refractions.udig.project
+    org.locationtech.udig.project
     net.refractoins.udig.project.ui
 
 the feature.xml file
@@ -64,10 +64,10 @@ subsystem]. Examples include:
 
 ::
 
-    net.refractions.udig.catalog.tests
-    net.refractions.udig.catalog.tests.wfs
+    org.locationtech.udig.catalog.tests
+    org.locationtech.udig.catalog.tests.wfs
 
-    net.refractions.udig.project.tests
+    org.locationtech.udig.project.tests
     net.refractoins.udig.project.tests.ui
 
 Running Tests in the IDE
@@ -88,7 +88,7 @@ steps must be taken:
 
 #. Create a test suite
 #. Create a **test.xml** from the template
-#. Add your test plugin to the net.refractions.udig.test feature
+#. Add your test plugin to the org.locationtech.udig.test feature
 #. Add your test plugin to the automated test set
 
 Creating a Test Suite
@@ -140,12 +140,12 @@ include:
 .. warning::
    It must be unique among all other test plugins.
 
-Adding the Plugin to the net.refractions.udig.test Feature
+Adding the Plugin to the org.locationtech.udig.test Feature
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The easiest way to add a plugin to a particular feature is using the eclipse feature editor.
 
-#. Navigate to the net.refractions.udig.test feature while in the Java Perspective
+#. Navigate to the org.locationtech.udig.test feature while in the Java Perspective
 
    .. image:: /images/testing_plugins/nav.png
 
@@ -181,10 +181,10 @@ looks as follows:
 ::
 
     org.eclipse.test=org.eclipse.test_3.1.0
-    net.refractions.udig.catalog.tests=net.refractions.udig.catalog.tests_1.0.0
-    net.refractions.udig.catalog.tests.wfs=net.refractions.udig.catalog.tests.wfs_1.0.0
-    net.refractions.udig.project.tests=net.refractions.udig.project.tests_1.0.0
-    net.refractions.udig.project.tests.ui=net.refractions.udig.project.tests.ui_1.0.0
+    org.locationtech.udig.catalog.tests=org.locationtech.udig.catalog.tests_1.0.0
+    org.locationtech.udig.catalog.tests.wfs=org.locationtech.udig.catalog.tests.wfs_1.0.0
+    org.locationtech.udig.project.tests=org.locationtech.udig.project.tests_1.0.0
+    org.locationtech.udig.project.tests.ui=org.locationtech.udig.project.tests.ui_1.0.0
 
 The name of the property MUST match the plugin-name declared in the test.xml file.
 
@@ -192,7 +192,7 @@ To add the **catalog.tests.ui** plugin, we would add the following property:
 
 ::
 
-    net.refractions.udig.catalog.tests.ui=net.refractions.udig.catalog.tests.ui_1.0.0
+    org.locationtech.udig.catalog.tests.ui=org.locationtech.udig.catalog.tests.ui_1.0.0
 
 test.xml
 ''''''''
@@ -227,8 +227,8 @@ The following is an example of a target:
 
      <target name="catalog.ui">
         <antcall target="runtests">
-          <param name="testPlugin" value="${net.refractions.udig.catalog.tests.ui}"/>
-          <param name="report" value="net.refractions.udig.catalog.tests.ui"/>
+          <param name="testPlugin" value="${org.locationtech.udig.catalog.tests.ui}"/>
+          <param name="report" value="org.locationtech.udig.catalog.tests.ui"/>
         </antcall>   
      </target>
 

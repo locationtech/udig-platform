@@ -7,7 +7,7 @@ these are uDig specific solutions they will processed into the right RCP techniq
 Adding a Menu using Operation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The operation extention point provided as part of the GIS Platform (net.refractions.udig.catalog.ui)
+The operation extention point provided as part of the GIS Platform (org.locationtech.udig.catalog.ui)
 allows you to indicate where operations will be added to the menu bar.
 
 This information should only be filled in as an override; Operation category will be used to
@@ -21,7 +21,7 @@ Related:
 Adding a Menu using Tool
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-The tool extension point provided as part of the GIS Application (net.refractions.udig.project.ui)
+The tool extension point provided as part of the GIS Application (org.locationtech.udig.project.ui)
 allows you to indicate where tools will be added to the menu bar.
 
 This information should only be filled in as an override; Tool category will be used to position

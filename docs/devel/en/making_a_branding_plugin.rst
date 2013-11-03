@@ -16,7 +16,7 @@ Creating your Branding Plug-in
 The following example assumes you are packaging up something in the uDig community folder, please
 adapt this example to your need.
 
-To create a branding plug-in for **net.refractions.udig.community.jody.visual-feature**:
+To create a branding plug-in for **org.locationtech.udig.community.jody.visual-feature**:
 
 #. Start up the new wizard and select "Plug-in Project" before pressing :guilabel:`Next`
 
@@ -27,12 +27,12 @@ To create a branding plug-in for **net.refractions.udig.community.jody.visual-fe
    -  Name your project accoding to the feature you are branding, you want to set this up so your
       feature and brading plugin have the same "id" at the end of the day.
 
-      Project name: net.refractions.udig.community.jody.visual
+      Project name: org.locationtech.udig.community.jody.visual
 
    -  Create your branding plugin in your community folder, uncheck "Use default location" and
       specify the directory to be created.
 
-      Location: C:\\java\\udig\\community\\jody\\net.refractions.udig.community.jody.visual
+      Location: C:\\java\\udig\\community\\jody\\org.locationtech.udig.community.jody.visual
 
    -  The branding plug-in does not contain any java code:
 
@@ -46,7 +46,7 @@ To create a branding plug-in for **net.refractions.udig.community.jody.visual-fe
 
    -  The plug-in id should match your feature id, if not we can correct for it later.
 
-      Plug-in ID: net.refractions.udig.community.jody.visual
+      Plug-in ID: org.locationtech.udig.community.jody.visual
 
    -  You can credit your organization (or yourself) as the provider, please do not use any spaces
       as this is a "magic key" we will use later in the branding process.

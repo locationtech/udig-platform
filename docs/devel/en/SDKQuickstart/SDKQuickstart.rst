@@ -358,12 +358,12 @@ is a good way to test that everything is installed correctly.
    |perspective_open_jpg|
 
 
-3.  Click on the :guilabel:`Plugins view` and right click on **net.refractions.udig** plug-in the list.
+3.  Click on the :guilabel:`Plugins view` and right click on **org.locationtech.udig** plug-in the list.
     Select :menuselection:`Import As --> Source Project` to copy the plugin into your workspace.
 
     |import_source_project_jpg|
 
-4.  Change to the :guilabel:`Package Explorer` view and open up the **net.refractions.udig** plugin
+4.  Change to the :guilabel:`Package Explorer` view and open up the **org.locationtech.udig** plugin
     and double click to open **udig.product**.
 
     |product_open_jpg|
@@ -513,7 +513,7 @@ ClassNotFoundException at EclipseStarter
 If your uDig application fails to load due to a ClassNotFoundException at
 org.eclipse.core.runtime.adaptor.EclipseStarter then we have a problem with the plugin dependencies.
 The EclipseStarter is doing its best to load the UDIGApplication; however the UDIGApplication is
-not available as the Platform refused to load the net.refractions.udig.ui plugin as some of the
+not available as the Platform refused to load the org.locationtech.udig.ui plugin as some of the
 dependencies were not available.
 
 This usually happens each time we update the version of Eclipse we use. Each version of eclipse
@@ -524,7 +524,7 @@ As a temporary measure:
 #. Open up your Run Configuration
 #. Navigate to the Plugins tab
 #. Hit "Verify Plugins" (to list the plugins that failed to load; you should see that
-   net.refractions.udig.ui is in this list)
+   org.locationtech.udig.ui is in this list)
 #. Hit add required plugins
 
 Please email the `udig-devel <http://lists.refractions.net/mailman/listinfo/udig-devel>`_ list; and

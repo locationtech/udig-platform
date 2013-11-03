@@ -16,13 +16,13 @@ and we will make one feature to hold our branding plugin.
 
 * In the same manner add the following features:
 
-  * **net.refractions.udig_base**
+  * **org.locationtech.udig_base**
 
-  * **net.refractions.udig_platform**
+  * **org.locationtech.udig_platform**
 
-  * **net.refractions.udig_application**
+  * **org.locationtech.udig_application**
 
-  * **net.refractions.udig_printing**
+  * **org.locationtech.udig_printing**
 
 
   |10000201000002BF000000E90443EC06_png|
@@ -37,7 +37,7 @@ and we will make one feature to hold our branding plugin.
 
 * In the New Feature wizard enter the following values:
 
-  **Project name:** net.refractions.udig_tutorials.custom-feature
+  **Project name:** org.locationtech.udig_tutorials.custom-feature
 
   **Feature Name:** Feature for Custom Application
 
@@ -51,9 +51,9 @@ and we will make one feature to hold our branding plugin.
 * On the Referenced Plug-ins and Fragments page select:
 
 
-  * net.refractions.udig.tutorials.customapp
+  * org.locationtech.udig.tutorials.customapp
 
-  * net.refractions.udig.tutorials.distancetool (optional)
+  * org.locationtech.udig.tutorials.distancetool (optional)
 
 
 * Press :guilabel:`Finish`

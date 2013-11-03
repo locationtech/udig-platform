@@ -34,7 +34,7 @@ Here are some additional challenges for you to try. Each of these ideas results 
   it is even better then trying to use google or koders.
 
 
-* Add branding to the net.refractions.udig_tutorials.custom-feature feature. This is how 
+* Add branding to the org.locationtech.udig_tutorials.custom-feature feature. This is how 
   you can get your organization's name included in the about box.
 
 

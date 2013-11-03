@@ -77,7 +77,7 @@ Fiddling around with drawing programs is a bit beyond the scope of this workbook
 
   From archive file: `rcp_branding.zip`
 
-  Into folder: ``net.refractions.udig.tutorials.customapp``
+  Into folder: ``org.locationtech.udig.tutorials.customapp``
 
   |100000000000021F000002267C4B4FA7_png|
 

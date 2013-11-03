@@ -13,7 +13,7 @@ In this section we create a plug-in that contains all of the custom â€œbrandingâ
 
 * On the New Plug-in Project page enter:
 
-  Project name: ``net.refractions.udig.tutorials.customapp``
+  Project name: ``org.locationtech.udig.tutorials.customapp``
 
   |10000000000001F40000023E1031E2AF_png|
 

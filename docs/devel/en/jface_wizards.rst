@@ -11,9 +11,9 @@ Add a ImportWizard extension in the plugin.xml of your plugin.
     <extension
              point="org.eclipse.ui.importWizards">
           <wizard
-                class="net.refractions.udig.catalog.internal.ui.CatalogImportWizard"
+                class="org.locationtech.udig.catalog.internal.ui.CatalogImportWizard"
                 icon="icons/obj16/repository_obj.gif"
-                id="net.refractions.udig.catalog.ui.dataImportWizard"
+                id="org.locationtech.udig.catalog.ui.dataImportWizard"
                 name="%dataImportWizard.name">
              <description>Import from a data source.</description>
           </wizard>
@@ -27,13 +27,13 @@ Add a dataWizard extension in the plugin.xml of your plugin.
 .. code-block:: xml
 
     <extension
-           point="net.refractions.udig.catalog.ui.dataWizards">
+           point="org.locationtech.udig.catalog.ui.dataWizards">
         <wizard
               banner="icons/wizban/postgis_wiz.gif"
-              class="net.refractions.udig.catalog.internal.postgis.ui.MifWizardPage"
+              class="org.locationtech.udig.catalog.internal.postgis.ui.MifWizardPage"
               description="%wizard.description"
               icon="icons/etool16/postgis_wiz.gif"
-              id="net.refractions.udig.catalog.ui.mif"
+              id="org.locationtech.udig.catalog.ui.mif"
               name="%wizard.name">
         </wizard>
      </extension>

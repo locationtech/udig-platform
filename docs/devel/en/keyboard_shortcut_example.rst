@@ -25,12 +25,12 @@ an Action.
 -  org.eclipse.ui.contexts.dialogAndWindow
 -  org.eclipse.ui.contexts.window
 -  org.eclipse.ui.contexts.dialog
--  net.refractions.udig.project.ui.tool
+-  org.locationtech.udig.project.ui.tool
 
 #. Define a org.eclipse.ui.bindings extension
 
    #. Define a scheme (or use udig's default scheme:
-      net.refractions.udig.defaultUDIGKeyConfiguration ). Schemes are part of the
+      org.locationtech.udig.defaultUDIGKeyConfiguration ). Schemes are part of the
       org.eclipse.ui.bindings extension.
 
 #. Only 1 scheme is active at a time. So if you create a new scheme you have to create new bindings
@@ -78,24 +78,24 @@ an Action.
                 point="org.eclipse.ui.contexts">
              <context
                    description="%context.tool.description"
-                   id="net.refractions.udig.project.ui.tool"
+                   id="org.locationtech.udig.project.ui.tool"
                    name="%Tools"
                    parentId="org.eclipse.ui.contexts.window"/>
           </extension>
-    <!-- This is part of net.refractions.udig.project.ui plugin.xml -->
+    <!-- This is part of org.locationtech.udig.project.ui plugin.xml -->
           <extension
              point="org.eclipse.ui.commands">
             <command
-                categoryId="net.refractions.udig.tools.toolCategory"
+                categoryId="org.locationtech.udig.tools.toolCategory"
                 name="%zoom.category.name"
-                id="net.refractions.udig.tools.ZoomCommand"/>
+                id="org.locationtech.udig.tools.ZoomCommand"/>
           </extension>
        <extension
              point="org.eclipse.ui.bindings">
           <key
-                commandId="net.refractions.udig.tools.ZoomCommand"
-                contextId="net.refractions.udig.project.ui.tool"
-                sequence="Z" schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+                commandId="org.locationtech.udig.tools.ZoomCommand"
+                contextId="org.locationtech.udig.project.ui.tool"
+                sequence="Z" schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
           </extension>
 
 ::
@@ -105,12 +105,12 @@ an Action.
       public void createPartControl( Composite parent ){
         // You don't need this step because it is included by default
         String[] newScopes = new String[];
-        newScopes[0] = "net.refractions.udig.project.ui.tool";           
+        newScopes[0] = "org.locationtech.udig.project.ui.tool";           
         getSite().getKeyBindingService().setScopes(newScopes);
 
         // Create action, assign and register action and its command
         IAction action=createAction();
-        Action.setActionDefinitionId("net.refractions.udig.tools.ZoomCommand");
+        Action.setActionDefinitionId("org.locationtech.udig.tools.ZoomCommand");
         IKeyBindingService service = part.getSite().getKeyBindingService();
         service.registerAction(action);
       }

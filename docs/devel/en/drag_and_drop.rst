@@ -15,13 +15,13 @@ Drag and Drop within uDig
 
 There are two drag and drop extension points that control the behaviour of drag and drop within
 udig. The most important of the two is the
-`net.refractions.udig.ui.dropAction <http://svn.geotools.org/udig/trunk/plugins/net.refractions.udig.ui/schema/dropAction.exsd>`_
+`org.locationtech.udig.ui.dropAction <http://svn.geotools.org/udig/trunk/plugins/org.locationtech.udig.ui/schema/dropAction.exsd>`_
 extention point. This extension point defines a destination object (the object that objects can be
 dropped on), an action to take when objects are dropped on the object and the objects that can be
 dropped on the object for that action.
 
 The second extension point is the
-`net.refractions.udig.ui.dropTransfers <http://svn.geotools.org/udig/trunk/plugins/net.refractions.udig.ui/schema/dropTransfer.exsd>`_
+`org.locationtech.udig.ui.dropTransfers <http://svn.geotools.org/udig/trunk/plugins/org.locationtech.udig.ui/schema/dropTransfer.exsd>`_
 extension point. This extension point advertises
 `Transfer <http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html>`_
 objects that are available for use. The Transfers defined by the normal udig platform are:
@@ -41,7 +41,7 @@ Drag and Drop to and from uDig
 
 To drag things into uDig a dropAction extension must be defined that expects data to be in the form
 provided by one of the standard transfer types.
-`net.refractions.udig.project.ui/project.xml <http://svn.geotools.org/udig/trunk/plugins/net.refractions.udig.project.ui/plugin.xml>`_
+`org.locationtech.udig.project.ui/project.xml <http://svn.geotools.org/udig/trunk/plugins/org.locationtech.udig.project.ui/plugin.xml>`_
 has contains examples of both. Drop actions that accept String objects will activate if a url or
 some text are dropped from outside of udig.
 
@@ -60,8 +60,8 @@ plugin.xml Extension Definition
 
 .. code-block:: xml
 
-    <action class="net.refractions.udig.project.ui.internal.actions.SLDDropAction" name="SLD Drag and Drop">
-            <destination class="net.refractions.udig.project.ILayer"/>
+    <action class="org.locationtech.udig.project.ui.internal.actions.SLDDropAction" name="SLD Drag and Drop">
+            <destination class="org.locationtech.udig.project.ILayer"/>
             <acceptedType class="java.io.File"/>
             <acceptedType class="java.net.URL"/>
             <acceptedType class="java.lang.String"/>
@@ -76,11 +76,11 @@ DropAction Code
     import java.net.MalformedURLException;
     import java.net.URL;
 
-    import net.refractions.udig.project.internal.Layer;
-    import net.refractions.udig.project.ui.internal.Policy;
-    import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-    import net.refractions.udig.style.sld.SLDContent;
-    import net.refractions.udig.ui.IDropAction;
+    import org.locationtech.udig.project.internal.Layer;
+    import org.locationtech.udig.project.ui.internal.Policy;
+    import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+    import org.locationtech.udig.style.sld.SLDContent;
+    import org.locationtech.udig.ui.IDropAction;
 
     import org.eclipse.core.runtime.IProgressMonitor;
     import org.geotools.styling.Style;

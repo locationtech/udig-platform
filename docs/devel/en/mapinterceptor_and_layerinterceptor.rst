@@ -1,7 +1,7 @@
 MapInterceptor and LayerInterceptor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A Map interceptor is declared using **net.refractions.udig.project.mapInterceptor** and can be used
+A Map interceptor is declared using **org.locationtech.udig.project.mapInterceptor** and can be used
 to configure a Map or Layer prior to use.
 
 Map Interceptor
