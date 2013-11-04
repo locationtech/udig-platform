@@ -2,18 +2,18 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Style Plugin
 Bundle-SymbolicName: org.locationtech.udig.style.advanced;singleton:=true
-Bundle-Version: 1.0.2.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.locationtech.udig.style.advanced.StylePlugin
 Bundle-Vendor: HydroloGIS S.r.l.
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.locationtech.udig.libs;bundle-version="1.2.0",
- org.locationtech.udig.project;bundle-version="1.2.0",
+ org.locationtech.udig.libs,
+ org.locationtech.udig.project,
  org.locationtech.udig.project.ui,
- org.locationtech.udig.ui;bundle-version="1.2.0",
- org.locationtech.udig.catalog.rasterings;bundle-version="1.2.0",
+ org.locationtech.udig.ui,
+ org.locationtech.udig.catalog.rasterings,
  org.locationtech.udig.style,
- org.locationtech.udig.style.sld;bundle-version="1.2.0"
+ org.locationtech.udig.style.sld
 Bundle-ActivationPolicy: lazy
 Export-Package: org.locationtech.udig.style.advanced,
  org.locationtech.udig.style.advanced.common,

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Map Graphic Tests
 Bundle-SymbolicName: org.locationtech.udig.mapgraphic.tests
-Bundle-Version: 1.3.3
+Bundle-Version: 2.0.0.qualifier
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
- org.locationtech.udig.mapgraphic;bundle-version="1.3.3"
+ org.locationtech.udig.mapgraphic
 Bundle-ActivationPolicy: lazy

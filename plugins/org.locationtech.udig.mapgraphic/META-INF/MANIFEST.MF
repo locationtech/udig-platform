@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: org.locationtech.udig.mapgraphic; singleton:=true
-Bundle-Version: 1.4.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.locationtech.udig.mapgraphic.MapGraphicPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
@@ -16,12 +16,10 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.style;visibility:=reexport,
  org.locationtech.udig.style.sld
 Bundle-ActivationPolicy: lazy
-Export-Package: org.locationtech.udig.mapgraphic,
- org.locationtech.udig.mapgraphic.grid,
- org.locationtech.udig.mapgraphic.internal,
- org.locationtech.udig.mapgraphic.northarrow,
- org.locationtech.udig.mapgraphic.scalebar,
- org.locationtech.udig.mapgraphic.style
+Export-Package: org.locationtech.udig.mapgraphic,org.locationtech.udig
+ .mapgraphic.grid,org.locationtech.udig.mapgraphic.internal,org.locati
+ ontech.udig.mapgraphic.northarrow,org.locationtech.udig.mapgraphic.sc
+ alebar,org.locationtech.udig.mapgraphic.style
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: javax.media.jai,
  javax.media.jai.iterator,
