@@ -15,7 +15,7 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.project.ui,
  org.locationtech.udig.mapgraphic,
  org.locationtech.udig.catalog.jgrass,
- org.eclipse.ui.console;bundle-version="[3.4.0,3.5)"
+ org.eclipse.ui.console;bundle-version="3.4.0"
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Export-Package: org.locationtech.udig.omsbox,
