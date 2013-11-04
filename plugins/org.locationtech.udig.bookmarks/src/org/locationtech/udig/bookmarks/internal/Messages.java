@@ -29,15 +29,6 @@ public class Messages extends NLS {
 	public static String BookmarkAction_dialogtitle_removebookmarks;
 	public static String BookmarkManager_name_bookmarkmanager;
 	public static String BookmarkManager_bookmarkdefaultname;
-	public static String BookmarkAction_restorebookmarksaction;
-	public static String BookmarkAction_savebookmarksaction;
-	public static String BookmarkAction_renamebookmarkaction;
-	public static String BookmarkAction_addbookmarkaction;
-	public static String BookmarkAction_gotobookmarkaction;
-	public static String BookmarkAction_removeallbookmarksaction;
-	public static String BookmarkAction_removeprojectaction;
-	public static String BookmarkAction_removemapaction;
-	public static String BookmarkAction_removebookmarkaction;
 	public static String BookmarkAction_dialogprompt_enterbookmarkname;
 	
     static {
