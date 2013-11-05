@@ -21,6 +21,9 @@ Eclipse framework.
 
 Some of these entries were filled out for you during :doc:`Creating a Plugin <creating_a_plugin>`.
 
+.. todo:: 
+   Change provider-name example ..
+   
 -  id: id for the plugin, each plug-in gets its own package tree to prevent source code conflict
 -  name: externalized to plugin.properties, display name for Plug-in
 -  version: release version based

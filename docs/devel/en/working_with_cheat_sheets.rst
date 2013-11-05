@@ -174,9 +174,9 @@ Cheatsheets in uDig
 We briefly considered adding cheatsheets to the "help" plugin; however that would force the help
 plugin to depend on everything (so not a good idea).
 
--  net.refractions.project.ui.editor - use of GIS Application (Map / Layer / Style )
--  net.refractions.catalog.ui - use of GIS Platform (Catalog / Data )
--  net.refractions.printing.ui - use of printing facilities
+-  org.locationtech.project.ui.editor - use of GIS Application (Map / Layer / Style )
+-  org.locationtech.catalog.ui - use of GIS Platform (Catalog / Data )
+-  org.locationtech.printing.ui - use of printing facilities
 -  org.locationtech.udig - location for cheatsheets that need to use everything
 
 The usual guidelines for handling of resources apply with respect to Internationalisation:

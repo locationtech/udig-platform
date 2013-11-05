@@ -138,7 +138,7 @@ IssueFixer
 
 IssuesFixer is a framework described below that is used by the FixableIssue class to allow the
 workflow or method of fixing an issue to be declared as extension of the
-net.refractions.issues.issueFixer extension point. See the next section for more details.
+org.locationtech.issues.issueFixer extension point. See the next section for more details.
 
 IssueFixer
 ==========

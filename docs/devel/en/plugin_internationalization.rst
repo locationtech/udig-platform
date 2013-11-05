@@ -15,6 +15,10 @@ Change the name to a %LocalRegistry (in this example)
 
 Cerate a plugin.properties file with an entry for LocalRegistry.
 
+.. todo:: 
+   Change provider here ..
+
+   
 ::
 
     LocalRegistry=Local Registry
