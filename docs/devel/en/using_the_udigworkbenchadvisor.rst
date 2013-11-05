@@ -6,7 +6,7 @@ it defines how the menu and tool bars are structured, provides a default perspec
 views and so on.
 
 You may wish to override the
-`UDIGWorkbenchAdvisor <http://svn.geotools.org/udig/trunk/plugins/org.locationtech.udig.ui/src/net/refractions/udig/internal/ui/UDIGWorkbenchAdvisor.java>`_
+`UDIGWorkbenchAdvisor <https://raw.github.com/uDig/udig-platform/locationtech_rename/plugins/org.locationtech.udig.ui/src/org/locationtech/udig/internal/ui/UDIGWorkbenchAdvisor.java>`_
 (link to source code) when creating your own application.
 
 The menus scene in the uDig are a combination of:

@@ -26,7 +26,7 @@ ServiceInterceptor can be used to hook into the service lifecycle events:
 Note that the catalog does maintains persisted properties; you can interact with these properties
 uding serviceAdded / serviceRemoved to provide such things as a better default title.
 
-`ShpPropertiesInterceptor.java <http://svn.refractions.net/udig/udig/trunk/tutorials/org.locationtech.udig.tutorials.examples/src/net/refractions/udig/tutorials/examples/ShpPropertiesInterceptor.java>`_
+`ShpPropertiesInterceptor.java <https://raw.github.com/uDig/udig-platform/master/plugins/org.locationtech.udig.tutorials.examples/src/org/locationtech/udig/tutorials/examples/ShpPropertiesInterceptor.java>`_
 code example of grabbing a good title from a shapefile sidecar "properties" file:
 
 ::

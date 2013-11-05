@@ -43,8 +43,8 @@ $PLUGIN/src/$PLUGIN-AS-PACKAGE/internal/Messages.java
 
 For example, if your plug-in is org.locationtech.udig.catalog.ui, it would look like:
 
-org.locationtech.udig.catalog.ui/src/net/refractions/udig/catalog/ui/internal/messages.properties
-org.locationtech.udig.catalog.ui/src/net/refractions/udig/catalog/ui/internal/Messages.java
+org.locationtech.udig.catalog.ui/src/org/locationtech/udig/catalog/ui/internal/messages.properties
+org.locationtech.udig.catalog.ui/src/org/locationtech/udig/catalog/ui/internal/Messages.java
 
 Policy class
 ^^^^^^^^^^^^
