@@ -13,15 +13,15 @@ Use from an ActionTool
 ^^^^^^^^^^^^^^^^^^^^^^
 
 Action Tools are a good place to issue commands from; this example places a "Go Home" option in the
-Navigate menu. This example is included in net.refractions.udig.tutorials.examples.
+Navigate menu. This example is included in org.locationtech.udig.tutorials.examples.
 
 ::
 
     <extension
-             point="net.refractions.udig.project.ui.tool">
+             point="org.locationtech.udig.project.ui.tool">
           <actionTool
-                class="net.refractions.udig.tutorials.examples.GoHomeActionTool"
-                id="net.refractions.udig.tutorials.examples.actionTool1"
+                class="org.locationtech.udig.tutorials.examples.GoHomeActionTool"
+                id="org.locationtech.udig.tutorials.examples.actionTool1"
                 menuPath="navigate/gohome"
                 name="Home"
                 onToolbar="false"
@@ -109,7 +109,7 @@ INavCommand Code Example
         }
 
         /**
-         * @see net.refractions.udig.project.internal.command.navigation.AbstractNavCommand#runImpl()
+         * @see org.locationtech.udig.project.internal.command.navigation.AbstractNavCommand#runImpl()
          */
         protected void runImpl() throws Exception {
             if (inPixel)
@@ -119,7 +119,7 @@ INavCommand Code Example
         }
 
         /**
-         * @see net.refractions.udig.project.internal.command.Command#copy()
+         * @see org.locationtech.udig.project.internal.command.Command#copy()
          */
         public Command copy() {
             if (inPixel)
@@ -129,7 +129,7 @@ INavCommand Code Example
         }
 
         /**
-         * @see net.refractions.udig.project.command.Command#getName()
+         * @see org.locationtech.udig.project.command.Command#getName()
          */
         public String getName() {
             return Policy.bind("PanCommand.pan"); //$NON-NLS-1$

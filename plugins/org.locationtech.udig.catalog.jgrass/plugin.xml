@@ -83,7 +83,6 @@
       </category>
    </extension>
 <extension
-         id="activemapgraphicid"
          point="org.locationtech.udig.mapgraphic.mapgraphic">
       <mapGraphic
             class="org.locationtech.udig.catalog.jgrass.activeregion.ActiveRegionMapGraphic"

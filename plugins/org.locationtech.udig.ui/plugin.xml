@@ -35,27 +35,6 @@
             id="org.locationtech.udig.ui.stylePerspective"
             name="%style.perspective.name"/>
    </extension>
-      <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            category="org.locationtech.udig.ui.page.general"
-            class="org.locationtech.udig.ui.preferences.UiPreferences"
-            id="org.locationtech.udig.ui.preferences"
-            name="%uiPreferences">
-         <keywordReference
-               id="charset">
-         </keywordReference>
-      </page>
-      <page
-            category="org.locationtech.udig.ui.page.general"
-            class="org.locationtech.udig.ui.preferences.RuntimePreferences"
-            id="org.locationtech.udig.ui.runntimepreferences"
-            name="%runntimePreferences">
-         <keywordReference
-               id="charset">
-         </keywordReference>
-      </page>
-       </extension>
    <extension
          id="application"
          name="%application.name"
@@ -156,11 +135,29 @@
              category="org.locationtech.udig.ui.page.general"
              class="org.locationtech.udig.internal.ui.TransferPreference"
              id="org.locationtech.udig.ui.transfer.preference"
-             name="%org.locationtech.udig.ui.transfer.preference.name"/>
+             name="%transfer.preference.name"/>
        <page
              class="org.locationtech.udig.internal.ui.GeneralPreferences"
              id="org.locationtech.udig.ui.page.general"
              name="%general.preference.name"/>
+       <page
+             category="org.locationtech.udig.ui.page.general"
+             class="org.locationtech.udig.ui.preferences.UiPreferences"
+             id="org.locationtech.udig.ui.preferences"
+             name="%uiPreferences">
+          <keywordReference
+                id="charset">
+          </keywordReference>
+       </page>
+       <page
+             category="org.locationtech.udig.ui.page.general"
+             class="org.locationtech.udig.ui.preferences.RuntimePreferences"
+             id="org.locationtech.udig.ui.runntimepreferences"
+             name="%runntimePreferences">
+          <keywordReference
+                id="charset">
+          </keywordReference>
+       </page>
     </extension>
     <extension
           point="org.locationtech.udig.ui.operation">

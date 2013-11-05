@@ -7,16 +7,16 @@ export BASE=`dirname $0`
 # Release Configuration
 export INSTALLER="${BASE}/installer"
 #export TARGET=${BASE}/target
-#export TARGET=${BASE}/../features/net.refractions.udig-product/target/products/
+#export TARGET=${BASE}/../features/org.locationtech.udig-product/target/products/
 export SERIES=1.5
 export VERSION=1.5-SNAPSHOT
 export BUILD="${BASE}/build"
 
 # Tycho Build
-export PRODUCT_TARGET="${BASE}/../features/net.refractions.udig-product/target/products"
+export PRODUCT_TARGET="${BASE}/../features/org.locationtech.udig-product/target/products"
 
 # Tycho SDK Build
-export SDK_TARGET="${BASE}/../features/net.refractions.udig_sdk-feature/target"
+export SDK_TARGET="${BASE}/../features/org.locationtech.udig_sdk-feature/target"
 
 # Build Resources
 export JRE="${BASE}/jre"

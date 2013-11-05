@@ -54,14 +54,14 @@ in this developers guide.
 Distance Tool Tutorial
 ----------------------
 
--  net.refractions.udig.tutorials.distancetool
+-  org.locationtech.udig.tutorials.distancetool
 
 Example used as part of :doc:`Tool Plugin Tutorial <tool_plugin_tutorial>` tutorial.
 
 Custom Application Tutorial
 ---------------------------
 
--  net.refractions.udig.tutorials.distancetool
+-  org.locationtech.udig.tutorials.distancetool
 
 Example used as part of :doc:`Custom Application Tutorial <custom_application_tutorial>`
 
@@ -88,7 +88,7 @@ UDIG Workshop Introduction
 IAdaptable
 ``````````
 
--  net.refractions.udig.tutorials.urladapter
+-  org.locationtech.udig.tutorials.urladapter
 
 An example of what makes Eclipse such a powerful framework to develop against; example shows how to
 add an Adapter to an existing uDig class. This is the technique you will often use to provide your
@@ -97,7 +97,7 @@ own API against existing entries in the Catalog.
 Export Shapefile
 ````````````````
 
--  net.refractions.udig.tutorials.shpexport
+-  org.locationtech.udig.tutorials.shpexport
 
 Make use of an IGeoResource; by requesting a FeatureSource API for data access. This example shows
 how to create a new Shapfile using the GeoTools library.
@@ -105,8 +105,8 @@ how to create a new Shapfile using the GeoTools library.
 Map Graphic
 ```````````
 
--  net.refractions.udig.tutorials.mapgraphic.coordinate
--  net.refractions.udig.tutorials.tool.coordinate
+-  org.locationtech.udig.tutorials.mapgraphic.coordinate
+-  org.locationtech.udig.tutorials.tool.coordinate
 
 Make use of a Map Graphic for quickly drawing your own thing on the screen. The example uses a Tool
 to place points on the Map blackboard, the map graphic takes any points on the Map blackboard and
@@ -141,7 +141,7 @@ CSV Service
 ```````````
 
 -  com.csvreader
--  net.refractions.udig.tutorials.catalog.csv
+-  org.locationtech.udig.tutorials.catalog.csv
 
 This covers how to package a third-party jar as an eclipse plug-in, and how to make a catalog
 service representing a new file format.
@@ -149,7 +149,7 @@ service representing a new file format.
 Testing
 ```````
 
--  net.refractions.udig.tests.catalog.csv
+-  org.locationtech.udig.tests.catalog.csv
 
 A JUnit plug-in test that tests the above CSV Service. When you run a JUnit Plug-in test a slaved
 copy of uDig is started up; the test is run and then the slaved copy of UDig is exited.
@@ -157,7 +157,7 @@ copy of uDig is started up; the test is run and then the slaved copy of UDig is 
 CSV Renderer
 ````````````
 
-- net.refractions.udig.tutorials.render.csv
+- org.locationtech.udig.tutorials.render.csv
 
 Defines a renderer capable of drawing a "CSVGeoResource" onto the screen. Renderers can be defined
 for each kind of data access API (ie a Java Interface). In this case we are using the CSVReader API
@@ -170,7 +170,7 @@ OSSIM).
 Style
 `````
 
--  net.refractions.udig.tutorials.style.color
+-  org.locationtech.udig.tutorials.style.color
 
 Contains an alternative CSVRenderer that is used when a color is added to the blackboard.
 
@@ -186,8 +186,8 @@ This tutorial covers:
 Tracking
 ````````
 
--  net.refractions.udig.tutorials.rcp
--  net.refractions.udig.tutorials.rcp-feature
+-  org.locationtech.udig.tutorials.rcp
+-  org.locationtech.udig.tutorials.rcp-feature
 
 This tutorial covers:
 

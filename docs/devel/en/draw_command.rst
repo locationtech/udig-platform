@@ -102,7 +102,7 @@ Draw Command Example
             this.offset=new Point(x,y);
         }
         /**
-         * @see net.refractions.udig.project.internal.command.Command#run()
+         * @see org.locationtech.udig.project.internal.command.Command#run()
          */
         public void run() throws Exception {
             if(offset.x>0){
@@ -119,7 +119,7 @@ Draw Command Example
         }
 
         /**
-         * @see net.refractions.udig.project.internal.command.Command#copy()
+         * @see org.locationtech.udig.project.internal.command.Command#copy()
          */
         public Command copy() {
             return new TranslateCommand(offset);
@@ -145,7 +145,7 @@ Draw Command Example
         }
 
         /**
-         * @see net.refractions.udig.project.command.Command#getName()
+         * @see org.locationtech.udig.project.command.Command#getName()
          */
         public String getName() {
             return Policy.bind("TranslateCommand.translateDisplayArea"); //$NON-NLS-1$

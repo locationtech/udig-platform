@@ -21,7 +21,7 @@ Source code:
 -  Available in your uDig SDK (import the :doc:`source code <code_examples>` from the plugins
    view)
 -  plugin:
-   `net.refractions.udig.tutorials.distancetool <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.distancetool>`_
+   `org.locationtech.udig.tutorials.distancetool <https://github.com/uDig/udig-platform/tree/master/tutorials/org.locationtech.udig.tutorials.distancetool>`_
    (github)
 
 Introduction
@@ -107,7 +107,7 @@ others to refer to.
 
 ::
 
-    public static final String PLUGIN_ID = "net.refractions.udig.tutorials.distancetool";
+    public static final String PLUGIN_ID = "org.locationtech.udig.tutorials.distancetool";
 
 This may already be done by the wizard.
 
@@ -122,8 +122,8 @@ To enable this, add a **.options** file to your plug-in next to plugin.xml. The 
 
 ::
 
-    net.refractions.udig.tutorials.distancetool/debug=true
-    net.refractions.udig.tutorials.distancetool/debug/distance=true
+    org.locationtech.udig.tutorials.distancetool/debug=true
+    org.locationtech.udig.tutorials.distancetool/debug/distance=true
 
 At runtime use your Activator to check if tracing is turned on, put the following in the start
 method:

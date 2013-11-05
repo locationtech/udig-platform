@@ -2,15 +2,15 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Preferred Zoom Levels
 Bundle-SymbolicName: org.locationtech.udig.tutorials.preferredzoomlevels;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.locationtech.udig.tutorials.preferredzoomlevels.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.locationtech.udig.tool.default;bundle-version="1.2.0",
- org.locationtech.udig.tool.select;bundle-version="1.2.0",
- org.locationtech.udig.project.ui;bundle-version="1.2.0",
- org.locationtech.udig.project.ui.editor;bundle-version="1.2.0",
- org.locationtech.udig.catalog.shp;bundle-version="1.2.0",
- org.locationtech.udig.render.feature.basic;bundle-version="1.2.1"
+ org.locationtech.udig.tool.default,
+ org.locationtech.udig.tool.select,
+ org.locationtech.udig.project.ui,
+ org.locationtech.udig.project.ui.editor,
+ org.locationtech.udig.catalog.shp,
+ org.locationtech.udig.render.feature.basic
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

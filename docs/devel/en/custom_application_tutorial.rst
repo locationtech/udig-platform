@@ -29,9 +29,9 @@ Source code:
 
 -  Available in your uDig SDK (import the :doc:`source code <code_examples>` from the plugins
    view)
--  plugin: `net.refractions.udig.tutorials.customapp <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.customapp>`_ (github)
+-  plugin: `org.locationtech.udig.tutorials.customapp <https://github.com/uDig/udig-platform/tree/master/tutorials/org.locationtech.udig.tutorials.customapp>`_ (github)
 -  feature:
-   `net.refractions.udig\_tutorials.custom-feature <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig_tutorials.custom-feature>`_ (github)
+   `org.locationtech.udig\_tutorials.custom-feature <https://github.com/uDig/udig-platform/tree/master/tutorials/org.locationtech.udig_tutorials.custom-feature>`_ (github)
 
 Introduction
 ------------
@@ -116,7 +116,7 @@ better then trying to use google or
 Branding
 ^^^^^^^^
 
-Add branding to the net.refractions.udig\_tutorials.custom-feature feature. This is how you can get
+Add branding to the org.locationtech.udig\_tutorials.custom-feature feature. This is how you can get
 your organization's name included in the about box.
 
 Internationalisation

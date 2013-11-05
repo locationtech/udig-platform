@@ -19,7 +19,7 @@ The same information is included as part of your SDK, to locate an extension poi
 
 #. Press the **Search** button
 #. The **Search view** is opened showing the results of your query
-#. Right click on **net.refractions.udig.project.ui.tool** and select **Show Description**
+#. Right click on **org.locationtech.udig.project.ui.tool** and select **Show Description**
     |image1|
 
 .. |image0| image:: /images/extension_point_reference/ExtentionSearch.png

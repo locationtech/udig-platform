@@ -8,9 +8,9 @@ A product is a main entry point into your uDig (or Eclipse) based application. I
 Eclipse SDK to package your application for release, and to launch it from within Eclipse. The file
 is XML-based, but Eclipse provides a very nice GUI editor.
 
-uDig's application lives in the net.refractions.udig plug-in:
+uDig's application lives in the org.locationtech.udig plug-in:
 
-`<https://github.com/uDig/udig-platform/blob/master/plugins/net.refractions.udig/udig.product>`_ 
+`<https://github.com/uDig/udig-platform/blob/master/plugins/org.locationtech.udig/udig.product>`_ 
 
 Creating the .product File
 --------------------------
@@ -23,10 +23,10 @@ In your Eclipse SDK:
 #. Select :menuselection:`File  --> New --> Other...`
 #. In the **Plug-in Development** folder, select **Product Configuration** and press **Next**
 #. Select your **branding plug-in** for the parent folder. (eg:
-   "**net.refractions.udig.community.jody.visual**\ ")
+   "**org.locationtech.udig.community.jody.visual**\ ")
 #. Under **File name**, enter a file name (eg: "**visual.product"**)
 #. If you are basing your application off of uDig, under **Use an existing product**, select
-   **net.refractions.udig.product** (Recommended)
+   **org.locationtech.udig.product** (Recommended)
 #. Press **Finish**
 
 This screenshot shows a newly created visual.product file based on udig.product:
@@ -41,15 +41,15 @@ Configuring your Product
 Note that **product name** is set to "%product.name". You should either create a plugin.properties
 file and provide a value, or change it to an appropriate product name (eg: "Visual Application").
 For an example properties file, see 
-`<https://github.com/uDig/udig-platform/blob/master/plugins/net.refractions.udig/plugin.properties>`_ 
+`<https://github.com/uDig/udig-platform/blob/master/plugins/org.locationtech.udig/plugin.properties>`_ 
 
 **Feature-Based Product**
 
 You can base your product on plug-ins or features. Features are generally preferable as they enable
 the use of an update-site. This is what uDig uses. If you change it to features, you will have to
 add the two features uDig depends on, on the **Configuration** page. These two features are
-**net.refractions.udig** and **org.eclipse.rcp**. You should also add in your own feature for
-plug-ins you want to include (ex: **net.refractions.udig.community.jody.visual\_feature**)
+**org.locationtech.udig** and **org.eclipse.rcp**. You should also add in your own feature for
+plug-ins you want to include (ex: **org.locationtech.udig.community.jody.visual\_feature**)
 
 The following screenshot shows the **Configuration** page of a product based on features:
 

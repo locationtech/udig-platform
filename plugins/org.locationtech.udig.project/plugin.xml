@@ -100,7 +100,7 @@
             class="org.locationtech.udig.project.internal.interceptor.WrapSimpleFeatureStore"
             id="org.locationtech.udig.project.wrap.simplefeaturestore"
             order="PRE"
-            target="org.geotools.data.SimpleFeatureStore"/>
+            target="org.geotools.data.simple.SimpleFeatureStore"/>
       <interceptor
             class="org.locationtech.udig.project.internal.impl.ListenerAddingInterceptor"
             id="org.locationtech.udig.project.AddEditingListener"

@@ -41,18 +41,16 @@
             targetID="org.locationtech.udig.bookmarks.internal.ui.BookmarksView">
          <action
                class="org.locationtech.udig.bookmarks.internal.actions.BookmarkAction"
-               disabledIcon="icons/dlcl16/add_bkmrk.gif"
                icon="icons/elcl16/add_co.gif"
-               id="org.locationtech.udig.bookmarks.actions.addbookmarkaction"
+               id="bookmarks.actions.addbookmarkaction"
                label="%Bookmarks.actions.AddBookmark"
                style="push"
                toolbarPath="additions"
                tooltip="%Bookmarks.actions.AddBookmark.tt"/>
          <action
                class="org.locationtech.udig.bookmarks.internal.actions.BookmarkAction"
-               disabledIcon="icons/bookmark_remall.gif"
                icon="icons/elcl16/removeall_co.gif"
-               id="org.locationtech.udig.bookmarks.actions.removeallbookmarksaction"
+               id="bookmarks.actions.removeallbookmarksaction"
                label="%Bookmarks.actions.RemoveAllBookmarks"
                style="push"
                toolbarPath="additions"
@@ -69,7 +67,7 @@
          <action
                class="org.locationtech.udig.bookmarks.internal.actions.BookmarkAction"
                enablesFor="+"
-               id="org.locationtech.udig.bookmarks.actions.removebookmarkaction"
+               id="bookmarks.actions.removebookmarkaction"
                label="%Bookmarks.actions.Remove"
                menubarPath="additions"
                style="push"
@@ -77,7 +75,7 @@
          <action
                class="org.locationtech.udig.bookmarks.internal.actions.BookmarkAction"
                enablesFor="1"
-               id="org.locationtech.udig.bookmarks.actions.gotobookmarkaction"
+               id="bookmarks.actions.gotobookmarkaction"
                label="%Bookmarks.actions.GoToBookmark"
                menubarPath="additions"
                style="push"
@@ -85,7 +83,7 @@
          <action
                class="org.locationtech.udig.bookmarks.internal.actions.BookmarkAction"
                enablesFor="1"
-               id="org.locationtech.udig.bookmarks.actions.renamebookmarkaction"
+               id="bookmarks.actions.renamebookmarkaction"
                label="%Bookmarks.actions.Rename"
                menubarPath="additions"
                tooltip="%Bookmarks.actions.Rename.tt"/>
@@ -97,7 +95,7 @@
          <action
                class="org.locationtech.udig.bookmarks.internal.actions.BookmarkAction"
                enablesFor="+"
-               id="org.locationtech.udig.bookmarks.actions.removemapaction"
+               id="bookmarks.actions.removemapaction"
                label="%Bookmarks.actions.RemoveAll"
                menubarPath="additions"
                tooltip="%Bookmarks.actions.RemoveAll.tt"/>
@@ -109,7 +107,7 @@
          <action
                class="org.locationtech.udig.bookmarks.internal.actions.BookmarkAction"
                enablesFor="+"
-               id="org.locationtech.udig.bookmarks.actions.removeprojectaction"
+               id="bookmarks.actions.removeprojectaction"
                label="%Bookmarks.actions.Remove"
                menubarPath="additions"
                tooltip="%Bookmarks.actions.Remove.tt2"/>

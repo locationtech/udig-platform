@@ -18,30 +18,30 @@ can be maintained both by uDig and Toolkit providers.
 ::
 
     <extension
-             point="net.refractions.udig.ui.operation">
+             point="org.locationtech.udig.ui.operation">
           <operation
-                class="net.refractions.udig.tool.edit.DifferenceOp"
+                class="org.locationtech.udig.tool.edit.DifferenceOp"
                 enablesFor="2"
-                id="net.refractions.udig.tool.edit.difference"
+                id="org.locationtech.udig.tool.edit.difference"
                 name="%difference.name"
-                targetClass="net.refractions.udig.project.ILayer"/>
+                targetClass="org.locationtech.udig.project.ILayer"/>
           <operation
-                class="net.refractions.udig.tool.edit.SplitLineOp"
+                class="org.locationtech.udig.tool.edit.SplitLineOp"
                 enablesFor="+"
-                id="net.refractions.udig.tool.edit.operation1"
+                id="org.locationtech.udig.tool.edit.operation1"
                 menuPath="edit/add.ext"
                 name="%operation.splitLine.name"
-                targetClass="net.refractions.udig.tools.edit.support.Point">
+                targetClass="org.locationtech.udig.tools.edit.support.Point">
              <enablement>
                 <and>
-                    <property propertyId="net.refractions.udig.tools.edit.CurrentShape.ShapeType" expectedValue="LINE"/>
-                    <property propertyId="net.refractions.udig.project.ui.OpenMap" expectedValue="java.lang.Object"/>
+                    <property propertyId="org.locationtech.udig.tools.edit.CurrentShape.ShapeType" expectedValue="LINE"/>
+                    <property propertyId="org.locationtech.udig.project.ui.OpenMap" expectedValue="java.lang.Object"/>
                 </and>
              </enablement>
           </operation>
        </extension>
 
-The above example (from net.refractions.udig.tool.edit) contributes two "operations" to the system:
+The above example (from org.locationtech.udig.tool.edit) contributes two "operations" to the system:
 
 -  DifferenceOp which is available whenever the user is working with a ILayer (or even something
    that can adapt to an ILayer)
@@ -105,8 +105,8 @@ system as shown below:
            <menuContribution
                  locationURI="menu:data?before=reset">
               <dynamic
-                    class="net.refractions.udig.ui.operations.OpCategoryContributionItem:net.refractions.udig.catalog.shp.operationCategory"
-                    id="net.refractions.udig.catalog.shp.menu">
+                    class="org.locationtech.udig.ui.operations.OpCategoryContributionItem:org.locationtech.udig.catalog.shp.operationCategory"
+                    id="org.locationtech.udig.catalog.shp.menu">
               </dynamic>
            </menuContribution>
         </extension>

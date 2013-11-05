@@ -5,15 +5,15 @@ This is the second attempt at "reusing the existing uDig workbench but let me ch
 story". In general the use of these hacks is discouraged please make your own Application following
 RCP conventions.
 
-The extentions point here is **net.refractions.udig.ui.workbenchConfigurations**:
+The extentions point here is **org.locationtech.udig.ui.workbenchConfigurations**:
 
 ::
 
     <extension
-              point="net.refractions.udig.ui.workbenchConfigurations">
+              point="org.locationtech.udig.ui.workbenchConfigurations">
            <workbenchConfiguration
-                 class="net.refractions.udig.internal.ui.UDIGWorkbenchConfiguration"
-                 id="net.refractions.udig.internal.ui.UDIGWorkbenchConfiguration"/>
+                 class="org.locationtech.udig.internal.ui.UDIGWorkbenchConfiguration"
+                 id="org.locationtech.udig.internal.ui.UDIGWorkbenchConfiguration"/>
         </extension>
 
 By implementing this extention in your own application you may specify an instance of

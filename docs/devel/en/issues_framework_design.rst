@@ -34,7 +34,7 @@ IIssues implementations:
 -  FeatureIssue - An issue that indicates that a feature needs to be inspected. Description should
    provide more details as to what the issue is with the feature. The fix method opens the map and
    zooms to the issue with the problem. The FeatureEditor is also opened with the feature selected.
--  FixableIssue - An issue that uses the net.refractions.udig.issues.issueFixer extension point to
+-  FixableIssue - An issue that uses the org.locationtech.udig.issues.issueFixer extension point to
    determine how to fix the issue. An accompanying IFixer
 
 IIssuesList implementations:
@@ -91,9 +91,9 @@ IIssuesList implementations:
    The PostgisDatastoreStrategy is a strategy for the StrategizedIssuesList so more implementations 
    will be forthcoming in the future. If you desire an implementation that backs onto another datastore 
    look at the classes: 
-   * net.refractions.udig.issues.StrategizedIssuesList
-   * net.refractions.udig.issues.internal.datastore.PostgisDatastoreStrategy
-   * net.refractions.udig.issues.internal.datastore.AbstractDatastoreStrategy
+   * org.locationtech.udig.issues.StrategizedIssuesList
+   * org.locationtech.udig.issues.internal.datastore.PostgisDatastoreStrategy
+   * org.locationtech.udig.issues.internal.datastore.AbstractDatastoreStrategy
 
 
 Extension points
@@ -108,11 +108,11 @@ be of interest to you:
 
    * - Extension point ID
      - Description
-   * - net.refractions.udig.issues.issue
+   * - org.locationtech.udig.issues.issue
      - Allows new issue types to be declared. The getExtensionID should return the id of your extension
-   * - net.refractions.udig.issues.issuesList
+   * - org.locationtech.udig.issues.issuesList
      - Declares a new issues list implementation
-   * - net.refractions.udig.issues.issueFixer
+   * - org.locationtech.udig.issues.issueFixer
      - Declares a fixer for subclasses of AbstractFixableIssue
 
 Support Classes
@@ -147,7 +147,7 @@ extension attributes
 --------------------
 
 -  **id**: extension identifier
--  **class**: the fixer class which implements net.refractions.udig.core.IFixer and provides the
+-  **class**: the fixer class which implements org.locationtech.udig.core.IFixer and provides the
    mechanism for resolving issues
 -  **targetClass**: the IIssue class this fixer expects to see (a subclass of AbstractFixableIssue).
    If you have a specific IIssue implementation implementation, chances are your issue fixer will be

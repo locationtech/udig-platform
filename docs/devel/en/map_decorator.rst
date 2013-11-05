@@ -24,7 +24,7 @@ To use **GridMapGraphic** we can look up its definition:
 .. code-block:: xml
 
     <mapGraphic
-                class="net.refractions.udig.mapgraphic.grid.GridMapGraphic"
+                class="org.locationtech.udig.mapgraphic.grid.GridMapGraphic"
                 icon="icons/obj16/grid_obj.gif"
                 id="grid"
                 name="%mapgraphic.grid.name"/>
@@ -54,7 +54,7 @@ The interface for MapGraphic is straight forward:
 
     public interface MapGraphic {
         /** extension point id **/
-        public static final String XPID = "net.refractions.udig.mapgraphic.mapgraphic"; //$NON-NLS-1$
+        public static final String XPID = "org.locationtech.udig.mapgraphic.mapgraphic"; //$NON-NLS-1$
         /**
          * Draws the graphic.  Check the clip area of the {@link ViewportGraphics} object to determine what
          * area needs to be refreshed.

@@ -24,7 +24,7 @@ useful; and not so much that the result is intimidating.
 
 The actual uDig application does not do much:
 
--  Kicks the net.refractions.udig.libs "Activator" into loading the EPSG database
+-  Kicks the org.locationtech.udig.libs "Activator" into loading the EPSG database
 -  Does a few sanity checks about the execution environment; displaying warning dialogs if
    everything is not right
 -  Starts up a workbench using the UDIGWorkbenchAdvisor
@@ -39,7 +39,7 @@ include examples of each kind of contribution.
 
 **Check for JAI**
 
-This has moved to an **org.eclipse.ui.startup** for the net.refractions.udig.ui. It will display a
+This has moved to an **org.eclipse.ui.startup** for the org.locationtech.udig.ui. It will display a
 dialog if JAI is not found.
 
 **Login**
@@ -138,7 +138,7 @@ The above example made use of a really simple MessageDialog shown bellow:
 
 **Init**
 
-The init method as provided will kick the net.refractions.udig.libs Activator class into loading the
+The init method as provided will kick the org.locationtech.udig.libs Activator class into loading the
 EPSG database. It actually does a quick sanity check first (to see if loading will take a long
 time).
 

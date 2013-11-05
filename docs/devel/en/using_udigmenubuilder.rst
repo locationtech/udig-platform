@@ -3,16 +3,16 @@ Using Udigmenubuilder
 
 This is the first attempt at the "use the UDIGWorkBenchAdvisor but let me change some stuff story".
 
-The use of this class is triggered by providing the **net.refractions.udig.ui.menuBuilders**
+The use of this class is triggered by providing the **org.locationtech.udig.ui.menuBuilders**
 extention:
 
 ::
 
     <extension
-              point="net.refractions.udig.ui.menuBuilders">
+              point="org.locationtech.udig.ui.menuBuilders">
            <menuBuilder
-                 class="net.refractions.udig.ui.UDIGMenuBuilder"
-                 id="net.refractions.udig.ui.menuBuilder">
+                 class="org.locationtech.udig.ui.UDIGMenuBuilder"
+                 id="org.locationtech.udig.ui.menuBuilder">
            </menuBuilder>
         </extension>
 
@@ -37,7 +37,7 @@ I have not figured out the best place to call UDIGMenuBuilder from an RCP applic
 
 -  extention org.eclipse.ui.startup: happens too late in the startup process, probably as a result
    of everything moving to OSGi
--  extention net.refractions.udig.ui.workbenchConfigurations: happens too early in the start up
+-  extention org.locationtech.udig.ui.workbenchConfigurations: happens too early in the start up
    process (before org.eclipse.ui.menus has been processed) so positioning menus relative to
    expected ones does not work
 -  Only working advise is to call it from your ``ActionBarAdvisor`` implementation as used for your

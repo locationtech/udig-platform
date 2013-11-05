@@ -22,7 +22,7 @@ Create a New Plugin
 
       *Figure 1 - New Plug-in Project*
 
-#. Create a name for the plug-in by entering **net.refractions.udig.sld.export** in the **Project
+#. Create a name for the plug-in by entering **org.locationtech.udig.sld.export** in the **Project
    Name** text field and click the **Next** button.
 
    .. figure:: /images/export_sld_plugin_tutorial/2NewPluginProject.png
@@ -60,10 +60,10 @@ dependencies on other plug-ins in order to create a new feature editor.
    editor area.
 #. Click the **Add** button in the Required plugins column and add the following plugin:
 
--  **net.refractions.udig.project**
--  **net.refractions.udig.project.ui**
--  **net.refractions.udig.style.sld**
--  **net.refractions.udig.udig.ui**
+-  **org.locationtech.udig.project**
+-  **org.locationtech.udig.project.ui**
+-  **org.locationtech.udig.style.sld**
+-  **org.locationtech.udig.udig.ui**
 
    .. figure:: /images/export_sld_plugin_tutorial/5AddDependencies.png
       :alt:
@@ -89,7 +89,7 @@ export SLD operation.
 
 #. Download :doc:`Export SLD Plugin Tutorial <export_sld_plugin_tutorial>` and 
    :doc:`Export SLD Plugin Tutorial <export_sld_plugin_tutorial>` to your desktop (Right click and **Save Link As...**)
-#. Select your plug-in project, **net.refractions.udig.tutorials.distancetool**, in the **Package
+#. Select your plug-in project, **org.locationtech.udig.tutorials.distancetool**, in the **Package
    Explorer**.
 #. Select :menuselection:`File --> New --> Folder` from the Menubar.
 #. Enter **icons/etool16** as the folder name.
@@ -119,14 +119,14 @@ Define a New Extension
 #. Open the extensions page by clicking on the **Extensions** tab
 
 #. Click the **Add** button
-#. Select the **net.refractions.udig.ui.operation** extension point from the list.
+#. Select the **org.locationtech.udig.ui.operation** extension point from the list.
 
    |image11|
 
 #. Click the **Finish** button.
 #. Enter the following Extention Details:
 
-   -  ID: *net.refractions.udig.sld.export*
+   -  ID: *org.locationtech.udig.sld.export*
    -  Name: *SLD Export to File*
 
    |image12|
@@ -134,22 +134,22 @@ Define a New Extension
 Create a New Operation
 ``````````````````````
 
-#. Right click on newly added extension, **net.refractions.udig.ui.operation**, and select 
+#. Right click on newly added extension, **org.locationtech.udig.ui.operation**, and select 
    :menuselection:`New --> Operation`
 #. Replace the default data in the id field with
-   **net.refractions.udig.style.sld.export.ExportSLD**.
-#. Enter **net.refractions.udig.sld.export.ExportSLD** into the class field.
+   **org.locationtech.udig.style.sld.export.ExportSLD**.
+#. Enter **org.locationtech.udig.sld.export.ExportSLD** into the class field.
 #. Enter **icons/etool16/** into the icon field.  (Or press the Browse button and locate the icon)
 #. Enter **Export SLD** into the name field.
-#. Enter **net.refractions.udig.project.ui.exportOps** into the categoryId field.
+#. Enter **org.locationtech.udig.project.ui.exportOps** into the categoryId field.
 
    |image13|
 
 Implementing a export operation
 ```````````````````````````````
 
-#. Select net.refractions.udig.style.sld.export.ExportSLD (operation) in the Extensions editor.
-#. It is a child of the net.refractions.udig.style.sld.export.
+#. Select org.locationtech.udig.style.sld.export.ExportSLD (operation) in the Extensions editor.
+#. It is a child of the org.locationtech.udig.style.sld.export.
 #. Click the class hotlink.
 #. A dialog is brought up describing the class to be created, Check Generate comments and Inherited
    abstract methods.

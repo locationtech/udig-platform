@@ -29,6 +29,10 @@
             hotspotY="10"
             id="profileCursor"
             image="icons/profilecursor.gif"/>
+      <category
+            id="eu.hydrologis.jgrass.tools.category"
+            name="JGrass Tools">
+      </category>
    </extension>
    <extension
          point="org.eclipse.ui.views">

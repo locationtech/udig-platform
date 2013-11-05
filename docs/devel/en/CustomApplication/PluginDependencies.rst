@@ -15,7 +15,7 @@ The plug-in MANIFEST.MF file is used to define the requirements and capabilities
   |100002010000015E000000C28304E1EB_png|
 
 
-* Select the net.refractions.udig.ui plug-in and press :guilabel:`OK`.
+* Select the org.locationtech.udig.ui plug-in and press :guilabel:`OK`.
   
   .. tip::
      You can start typing \*.udig.ui to quickly filter the list.
@@ -38,7 +38,7 @@ The plug-in MANIFEST.MF file is used to define the requirements and capabilities
 
 
 * With this information in place the wizards and dialogs we used in the next section will be able to find 
-  classes defined by the **net.refractions.udig.ui** plug-in.
+  classes defined by the **org.locationtech.udig.ui** plug-in.
 
 
 .. |1000000000000146000000F851DB08F7_png| image:: images/1000000000000146000000F851DB08F7.png

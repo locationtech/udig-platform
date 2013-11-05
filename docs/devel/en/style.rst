@@ -14,7 +14,7 @@ Related Reference:
 uDig Style Framework
 --------------------
 
-The style api has three major extension points (defined by the **net.refractions.udig.project**
+The style api has three major extension points (defined by the **org.locationtech.udig.project**
 plug-in):
 
 -  **StyleBlackboard**: a persisted blackboard of all the user supplied rendering settings for a
@@ -72,7 +72,7 @@ By having an extension-point here we are able to store objects on the style blac
 normally be serialized; or choose the format in which the object is serialized.
 
 For an example of the production of a StyleContent please review the
-net.refractions.udig.tutorials.style.color tutorial.
+org.locationtech.udig.tutorials.style.color tutorial.
 
 StyleConfigurator
 -----------------
@@ -152,7 +152,7 @@ The SLDContent entry is used to store a "Style Layer Descriptor" document on the
 The OGC Style Layer Descriptor specification defines a style that can be used to portray Features
 and GridCoverages.
 
-The **net.refractions.udig.style.sld** plug-in captures everything we know about these SLD files:
+The **org.locationtech.udig.style.sld** plug-in captures everything we know about these SLD files:
 
 -  org.geotools.styling.Style - is the data structure we use to represent an SLD file
 -  SLDContent - is the class used to hold this data structure on the style blackboard

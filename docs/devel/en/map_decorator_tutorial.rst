@@ -25,9 +25,9 @@ Source code:
    view)
 -  plugin:
 
-   * `net.refractions.udig.tutorials.tool.coordinate <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.tool.coordinate>`_
+   * `org.locationtech.udig.tutorials.tool.coordinate <https://github.com/uDig/udig-platform/tree/master/tutorials/org.locationtech.udig.tutorials.tool.coordinate>`_
       (github)
-   * `net.refractions.udig.tutorials.mapgraphic <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.mapgraphic>`_
+   * `org.locationtech.udig.tutorials.mapgraphic <https://github.com/uDig/udig-platform/tree/master/tutorials/org.locationtech.udig.tutorials.mapgraphic>`_
 
 Introduction
 ------------

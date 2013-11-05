@@ -24,7 +24,7 @@ Everything in eclipse is handled through the plug-in extension mechanism, and de
   |100000000000018B000001253448E274_png|
 
 
-* In the class text field enter: ``net.refractions.udig.tutorials.customapp.CustomApp``
+* In the class text field enter: ``org.locationtech.udig.tutorials.customapp.CustomApp``
 
   |10000000000002C6000000CE80B84FF1_png|
 
@@ -32,7 +32,7 @@ Everything in eclipse is handled through the plug-in extension mechanism, and de
 
 * Eclipse will open up a wizard for creating a New Java Class. Enter the following:
 
-  Superclass: ``net.refractions.udig.internal.ui.UDIGApplication``
+  Superclass: ``org.locationtech.udig.internal.ui.UDIGApplication``
 
   |200000070000380500004138E9C60406_svm|
 
@@ -48,7 +48,7 @@ Everything in eclipse is handled through the plug-in extension mechanism, and de
         return new UDIGWorkbenchAdvisor() {
            @Override
            public String getInitialWindowPerspectiveId() {
-              return "net.refractions.udig.tutorials.customapp.perspective";
+              return "org.locationtech.udig.tutorials.customapp.perspective";
            }
         };
      }
@@ -69,7 +69,7 @@ Everything in eclipse is handled through the plug-in extension mechanism, and de
 
    .. code-block:: java
 
-      import net.refractions.udig.internal.ui.UDIGWorkbenchAdvisor;
+      import org.locationtech.udig.internal.ui.UDIGWorkbenchAdvisor;
 
   
 * Save your work and lets move on.

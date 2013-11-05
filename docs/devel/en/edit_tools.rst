@@ -555,7 +555,7 @@ make use of the following:
 -  **SelectStratagy** a callback object that will be run as a feature is selected
 -  **DeselectionStratagy**
 
-For more information please review the **net.refractions.udig.tutorials.tool.coverage**
+For more information please review the **org.locationtech.udig.tutorials.tool.coverage**
 implementation of a selection command that works on a single feature while selecting its neighbors
 as well.
 
@@ -706,7 +706,7 @@ Archived Edit Tool Docs
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Edit tools are another sub-type of tools, however they do not (yet) have their own extension point.
-Instead they are extensions of the net.refractions.udig.project.ui.tool extension point. Because
+Instead they are extensions of the org.locationtech.udig.project.ui.tool extension point. Because
 there are a large number of editing tools that can be created an many of them have similar
 functionality there is a little framework associated with edit tools development.
 

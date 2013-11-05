@@ -26,13 +26,13 @@ their own purpose.
 Example How to turn off the Data Menu
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The net.refractions.udig.catalog.ui plugin contributes a "Data" menu, as an example here are some
+The org.locationtech.udig.catalog.ui plugin contributes a "Data" menu, as an example here are some
 ways to "turn it off".
 
 Don't include the plugin
 ''''''''''''''''''''''''
 
-It is more that you should not include net.refractions.udig.catalog.ui if you don't want what it is
+It is more that you should not include org.locationtech.udig.catalog.ui if you don't want what it is
 offering.
 This is the approach taken by the "rcp tutorial" where just enough uDig plugins are assembled to
 display a map; carefully not taking any "ui" plugins so as to avoid menu contributions to the host 
@@ -44,7 +44,7 @@ ActionSet
 Some extension points provide a mechanism to include/exclude functionality from the current
 perspective. For menus, operations and tools this mechanism is called "actionSets".
 
-Indeed the data menu is controlled by an ActionSet "net.refractions.udig.catalog.ui.data.menu"and
+Indeed the data menu is controlled by an ActionSet "org.locationtech.udig.catalog.ui.data.menu"and
 this is on Page 18 of the Custom App tutorial. Just don't include this actionset in your perspective
 and this menu will not be added.
 
@@ -82,7 +82,7 @@ make use of checks against the current selection and so forth).
 
     <extension point="org.eclipse.ui.activities"> 
       <activity id="my.rcp.app.Activity" 
-                description="Contributions from net.refractions.udig.catalog.ui." 
+                description="Contributions from org.locationtech.udig.catalog.ui." 
                 name="My RCP Activity" />
       <category id="my.rcp.app.Category" 
                 description="my.rcp.app Activities" 
@@ -92,30 +92,30 @@ make use of checks against the current selection and so forth).
          <categoryActivityBinding activityId="my.rcp.app.Activity"
                                   categoryId="my.rcp.app.Category"/>
 
-         <!-- bind all contributions from plugin net.refractions.udig.ui -->
+         <!-- bind all contributions from plugin org.locationtech.udig.ui -->
          <activityPatternBinding id="my.rcp.app.Activity"
-                                 pattern="net.refractions.udig.catalog.ui/.*"/>
+                                 pattern="org.locationtech.udig.catalog.ui/.*"/>
     </extension>
 
 The interesting bit is the **pattern** which is a regular expression of things
  to filter out. You can also add isEqualityPattern="true" to target one specific
  entry.
 
-This would turn off the extension "foo" in the **net.refractions.udig.catalog.ui** plugin.
+This would turn off the extension "foo" in the **org.locationtech.udig.catalog.ui** plugin.
 
 .. code-block:: xml
 
     <activityPatternBinding id="my.rcp.app.Activity"
        isEqualityPattern="true"
-       pattern="net.refractions.udig.catalog.ui/foo" />
+       pattern="org.locationtech.udig.catalog.ui/foo" />
 
-This would turn off any extension ending in "wizard" from the **net.refractions.udig.catalog.ui**
+This would turn off any extension ending in "wizard" from the **org.locationtech.udig.catalog.ui**
 plugin
 
 .. code-block:: xml
 
     <activityPatternBinding id="my.rcp.app.Activity"
-       pattern="net.refractions.udig.catalog.ui/[a-z[.]]*Wizard" />
+       pattern="org.locationtech.udig.catalog.ui/[a-z[.]]*Wizard" />
 
 The above example is adapted from the links above; and needs to be tested.
 Since the data menu is already controlled by an ActionSet we have not had

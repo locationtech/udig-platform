@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: org.locationtech.udig.render.wmt.basic;singleton:=true
-Bundle-Version: 1.2.0
+Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.locationtech.udig.render.wmt.basic.WMTPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
@@ -15,8 +15,8 @@ Require-Bundle: org.locationtech.udig.project,
  org.locationtech.udig.style.sld,
  org.locationtech.udig.ui,
  org.locationtech.udig.render.gridcoverage.basic,
- org.locationtech.udig.catalog.wmt;bundle-version="1.2.0",
- org.locationtech.udig.render.wms.basic;bundle-version="1.2.0",
- org.locationtech.udig.catalog.wms;bundle-version="1.2.0"
+ org.locationtech.udig.catalog.wmt,
+ org.locationtech.udig.render.wms.basic,
+ org.locationtech.udig.catalog.wms
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

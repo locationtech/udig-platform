@@ -8,7 +8,7 @@ Please note these instructions can be followed to access both code examples (ie 
 and tutorials from the training course. In addition you can use this technique to load up parts of
 the uDig application into your workspace for study and fixing.
 
-We will use the **net.refractions.udig.tutorials.examples** plug-in in the instructions provided
+We will use the **org.locationtech.udig.tutorials.examples** plug-in in the instructions provided
 below; you can use the same technique to import any plug-in for study.
 
 h14 Import Examples Directly from your SDK
@@ -21,7 +21,7 @@ You can do this quickly now:
    -  From the **Open Perspective** dialog choose **Plug-in Development**
 
 #. Open the **Plug-ins** view
-#. Select **net.refractions.udig.tutorials.examples** from the list
+#. Select **org.locationtech.udig.tutorials.examples** from the list
 #. Right click and choose **Import As > Source Project**
 #. The plug-in will be copied into your workspace so you can review it
 
@@ -33,7 +33,7 @@ Reading the Code Examples
 
 You can view the "live" code examples directly from git:
 
-* `https://github.com/uDig/udig-platform/tree/master/plugins/net.refractions.udig.tutorials.examples/src/net/refractions/udig/tutorials/examples <https://github.com/uDig/udig-platform/tree/master/plugins/net.refractions.udig.tutorials.examples/src/net/refractions/udig/tutorials/examples>`_
+* `https://github.com/uDig/udig-platform/tree/master/plugins/org.locationtech.udig.tutorials.examples/src/net/refractions/udig/tutorials/examples <https://github.com/uDig/udig-platform/tree/master/plugins/org.locationtech.udig.tutorials.examples/src/net/refractions/udig/tutorials/examples>`_
 
 Checking out Examples from GIT
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -46,7 +46,7 @@ You can also check out the source code for the project:
 #. Select **File > Import**
 #. Choose **General > Existing Projects into Workspace**
 #. From the **Import Projects** page browse to: **tutorials**
-#. Choose **net.refractions.udig.code.examples** from the list
+#. Choose **org.locationtech.udig.code.examples** from the list
     |image0|
 #. Press **Finish**
 

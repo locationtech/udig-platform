@@ -12,6 +12,6 @@ Source code:
 -  Available in your uDig SDK (import the :doc:`source code <code_examples>` from the plugins
    view)
 -  plugin:
-   `net.refractions.udig.tutorials.tool.coverage <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.tool.coverage>`_
+   `org.locationtech.udig.tutorials.tool.coverage <https://github.com/uDig/udig-platform/tree/master/tutorials/org.locationtech.udig.tutorials.tool.coverage>`_
    (github)
 

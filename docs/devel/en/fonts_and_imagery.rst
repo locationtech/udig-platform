@@ -25,7 +25,7 @@ The color used is:
 
 Example Use:
 
--  /../plugins/net.refractions.udig/nl/en/splash.bmp
+-  /../plugins/org.locationtech.udig/nl/en/splash.bmp
 
 In the above image the font heights are:
 
@@ -38,15 +38,15 @@ Imagery
 
 We store are "raw" materials used when creating new images in version control:
 
--  net.refractions.udig.dev
+-  org.locationtech.udig.dev
 
 Location of Welcome graphics:
 
--  net.refractions.udig.ui/
+-  org.locationtech.udig.ui/
 
 Product Branding:
 
--  net.refractions.udig/
+-  org.locationtech.udig/
 
 Core Icon Concepts
 ^^^^^^^^^^^^^^^^^^
@@ -118,18 +118,18 @@ Overlays
 These elements are used as overlays (or in the construction of new icons ) and usually represent an
 ver (ie action) or agective (ie additional description).
 
--  /../dev/net.refractions.udig.dev/\_add\_co.gif
--  /../dev/net.refractions.udig.dev/\_edit.gif
--  /../dev/net.refractions.udig.dev/\_error.gif
--  /../dev/net.refractions.udig.dev/\_filter.gif
--  /../dev/net.refractions.udig.dev/\_goto.gif
--  /../dev/net.refractions.udig.dev/\_info.gif
--  /../dev/net.refractions.udig.dev/\_refresh.gif
--  /../dev/net.refractions.udig.dev/\_rem\_co.gif
--  /../dev/net.refractions.udig.dev/\_select\_co.gif
--  /../dev/net.refractions.udig.dev/\_sort\_co.gif
--  /../dev/net.refractions.udig.dev/\_wiz.gif
--  /../dev/net.refractions.udig.dev/\_zoom.gif
+-  /../dev/org.locationtech.udig.dev/\_add\_co.gif
+-  /../dev/org.locationtech.udig.dev/\_edit.gif
+-  /../dev/org.locationtech.udig.dev/\_error.gif
+-  /../dev/org.locationtech.udig.dev/\_filter.gif
+-  /../dev/org.locationtech.udig.dev/\_goto.gif
+-  /../dev/org.locationtech.udig.dev/\_info.gif
+-  /../dev/org.locationtech.udig.dev/\_refresh.gif
+-  /../dev/org.locationtech.udig.dev/\_rem\_co.gif
+-  /../dev/org.locationtech.udig.dev/\_select\_co.gif
+-  /../dev/org.locationtech.udig.dev/\_sort\_co.gif
+-  /../dev/org.locationtech.udig.dev/\_wiz.gif
+-  /../dev/org.locationtech.udig.dev/\_zoom.gif
 
 Where possible you should "harvest" imagery from the latest eclipse release, these just represent
 imagery we were forced to harvest several times.
@@ -139,25 +139,25 @@ Wizard Banners
 
 Wizard banners are the largest representation of our imagery in uDig.
 
--  /../plugins/net.refractions.udig.catalog.ui/icons/wizban/repository\_wiz.gif Repository
--  /../plugins/net.refractions.udig.catalog.ui/icons/wizban/catalog\_wiz.gif Catalog
--  /../plugins/net.refractions.udig.catalog.ui/icons/wizban/datastore\_wiz.gif Feature Generic
--  /../plugins/net.refractions.udig.catalog.ui/icons/wizban/gce\_wiz.gif Raster Generic
--  /../plugins/net.refractions.udig.catalog.ui/icons/wizban/file\_wiz.gif! File Generic
--  /../plugins/net.refractions.udig.catalog.ui/icons/wizban/feature\_file\_wiz.gif File Features
--  /../plugins/net.refractions.udig.catalog.ui/icons/wizban/grid\_file\_wiz.gif File Raster
--  /../plugins/net.refractions.udig.catalog.ui/icons/wizban/server\_wiz.gif! Server
--  /../plugins/net.refractions.udig.catalog.ui/icons/wizban/wrs\_wiz.gif Server Catalog (ie WRS)
--  /../plugins/net.refractions.udig.catalog.ui/icons/wizban/wfs\_wiz.gif Feature Server (ie WFS)
--  /../plugins/net.refractions.udig.catalog.ui/icons/wizban/wms\_wiz.gif Server Map (ie WMS)
--  /../plugins/net.refractions.udig.catalog.ui/icons/wizban/export\_wiz.gif Export
--  /../plugins/net.refractions.udig.catalog.ui/icons/wizban/import\_wiz.gif Import
--  /../plugins/net.refractions.udig.ui/icons/wizban/log\_wiz.png Log Wizard
--  /../plugins/net.refractions.udig.catalog.ui/icons/wizban/add\_wiz.gif Add
+-  /../plugins/org.locationtech.udig.catalog.ui/icons/wizban/repository\_wiz.gif Repository
+-  /../plugins/org.locationtech.udig.catalog.ui/icons/wizban/catalog\_wiz.gif Catalog
+-  /../plugins/org.locationtech.udig.catalog.ui/icons/wizban/datastore\_wiz.gif Feature Generic
+-  /../plugins/org.locationtech.udig.catalog.ui/icons/wizban/gce\_wiz.gif Raster Generic
+-  /../plugins/org.locationtech.udig.catalog.ui/icons/wizban/file\_wiz.gif! File Generic
+-  /../plugins/org.locationtech.udig.catalog.ui/icons/wizban/feature\_file\_wiz.gif File Features
+-  /../plugins/org.locationtech.udig.catalog.ui/icons/wizban/grid\_file\_wiz.gif File Raster
+-  /../plugins/org.locationtech.udig.catalog.ui/icons/wizban/server\_wiz.gif! Server
+-  /../plugins/org.locationtech.udig.catalog.ui/icons/wizban/wrs\_wiz.gif Server Catalog (ie WRS)
+-  /../plugins/org.locationtech.udig.catalog.ui/icons/wizban/wfs\_wiz.gif Feature Server (ie WFS)
+-  /../plugins/org.locationtech.udig.catalog.ui/icons/wizban/wms\_wiz.gif Server Map (ie WMS)
+-  /../plugins/org.locationtech.udig.catalog.ui/icons/wizban/export\_wiz.gif Export
+-  /../plugins/org.locationtech.udig.catalog.ui/icons/wizban/import\_wiz.gif Import
+-  /../plugins/org.locationtech.udig.ui/icons/wizban/log\_wiz.png Log Wizard
+-  /../plugins/org.locationtech.udig.catalog.ui/icons/wizban/add\_wiz.gif Add
 
 When creating a wizard you will need the following background:
 
--  /../dev/net.refractions.udig.dev/wizbanner.gif
+-  /../dev/org.locationtech.udig.dev/wizbanner.gif
 
 Standard Eclipse Metaphors
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -196,15 +196,15 @@ In addition to the graphics below, room should be allocated for a porgress bar.
 
 Splash English
 
--  /../plugins/net.refractions.udig/nl/en/splash.bmp
+-  /../plugins/org.locationtech.udig/nl/en/splash.bmp
 
 Splash German
 
--  /../plugins/!net.refractions.udig/nl/de/splash.bmp
+-  /../plugins/!org.locationtech.udig/nl/de/splash.bmp
 
 Splash French
 
--  /../plugins/net.refractions.udig/nl/fr/splash.bmp
+-  /../plugins/org.locationtech.udig/nl/fr/splash.bmp
 
 About
 ^^^^^
@@ -212,7 +212,7 @@ About
 The about image is under strict restrictions of no more the 250x300 pixels (or the text gets
 squished).
 
--  /../plugins/net.refractions.udig/icons/about.gif
+-  /../plugins/org.locationtech.udig/icons/about.gif
 
 Welcome
 ^^^^^^^
@@ -221,28 +221,28 @@ The welcome screen is displayed when the user first opens up uDig.
 
 Welcome Large:
 
--  /../plugins/net.refractions.udig/intro/css/graphics/UDIG\_WelcomeScreen.gif
--  /../plugins/net.refractions.udig/intro/css/graphics/built%20on%20eclipse.gif
+-  /../plugins/org.locationtech.udig/intro/css/graphics/UDIG\_WelcomeScreen.gif
+-  /../plugins/org.locationtech.udig/intro/css/graphics/built%20on%20eclipse.gif
 
 Welcome Small:
 
--  /../plugins/net.refractions.udig/intro/css/graphics/UDIG\_WelcomeScreen\_small.gif
--  /../plugins/net.refractions.udig/intro/css/graphics/bui\_eclipse\_pos\_logo\_fc\_sm.gif
+-  /../plugins/org.locationtech.udig/intro/css/graphics/UDIG\_WelcomeScreen\_small.gif
+-  /../plugins/org.locationtech.udig/intro/css/graphics/bui\_eclipse\_pos\_logo\_fc\_sm.gif
 
 Welcome Topics:
 
--  /../plugins/net.refractions.udig/intro/css/graphics/icons/etool/overview72.gif
--  /../plugins/net.refractions.udig/intro/css/graphics/icons/etool/overview48.gif
--  /../plugins/net.refractions.udig/intro/css/graphics/icons/etool/overview48sel.gif
--  /../plugins/net.refractions.udig/intro/css/graphics/icons/etool/samples72.gif
--  /../plugins/net.refractions.udig/intro/css/graphics/icons/etool/samples48.gif
--  /../plugins/net.refractions.udig/intro/css/graphics/icons/etool/samples48sel.gif
--  /../plugins/net.refractions.udig/intro/css/graphics/icons/etool/tutorials72.gif
--  /../plugins/net.refractions.udig/intro/css/graphics/icons/etool/tutorials48.gif
--  /../plugins/net.refractions.udig/intro/css/graphics/icons/etool/tutorials48sel.gif
--  /../plugins/net.refractions.udig/intro/css/graphics/icons/etool/whatsnew72.gif
--  /../plugins/net.refractions.udig/intro/css/graphics/icons/etool/whatsnew48.gif
--  /../plugins/net.refractions.udig/intro/css/graphics/icons/etool/whatsnew48sel.gif!
--  /../plugins/net.refractions.udig/intro/css/graphics/icons/etool/wb48.gif
+-  /../plugins/org.locationtech.udig/intro/css/graphics/icons/etool/overview72.gif
+-  /../plugins/org.locationtech.udig/intro/css/graphics/icons/etool/overview48.gif
+-  /../plugins/org.locationtech.udig/intro/css/graphics/icons/etool/overview48sel.gif
+-  /../plugins/org.locationtech.udig/intro/css/graphics/icons/etool/samples72.gif
+-  /../plugins/org.locationtech.udig/intro/css/graphics/icons/etool/samples48.gif
+-  /../plugins/org.locationtech.udig/intro/css/graphics/icons/etool/samples48sel.gif
+-  /../plugins/org.locationtech.udig/intro/css/graphics/icons/etool/tutorials72.gif
+-  /../plugins/org.locationtech.udig/intro/css/graphics/icons/etool/tutorials48.gif
+-  /../plugins/org.locationtech.udig/intro/css/graphics/icons/etool/tutorials48sel.gif
+-  /../plugins/org.locationtech.udig/intro/css/graphics/icons/etool/whatsnew72.gif
+-  /../plugins/org.locationtech.udig/intro/css/graphics/icons/etool/whatsnew48.gif
+-  /../plugins/org.locationtech.udig/intro/css/graphics/icons/etool/whatsnew48sel.gif!
+-  /../plugins/org.locationtech.udig/intro/css/graphics/icons/etool/wb48.gif
 
 .. |image0| image:: /images/fonts_and_imagery/udig_logo32.gif

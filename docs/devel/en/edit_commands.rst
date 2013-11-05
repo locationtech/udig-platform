@@ -44,7 +44,7 @@ supports a shared "Issues List", so Tools, Opperations an wizards can request us
         }
 
         /**
-         * @see net.refractions.udig.project.command.Command#run()
+         * @see org.locationtech.udig.project.command.Command#run()
          */
         public void run() throws Exception {
             sourceLayer.getResource(FeatureStore.class, null).removeFeatures(
@@ -54,21 +54,21 @@ supports a shared "Issues List", so Tools, Opperations an wizards can request us
         }
 
         /**
-         * @see net.refractions.udig.project.command.Command#copy()
+         * @see org.locationtech.udig.project.command.Command#copy()
          */
         public Command copy() {
             return new DeleteFeatureCommand(feature, sourceLayer);
         }
 
         /**
-         * @see net.refractions.udig.project.command.Command#getName()
+         * @see org.locationtech.udig.project.command.Command#getName()
          */
         public String getName() {
             return Policy.bind("DeleteFeatureCommand.deleteFeature"); //$NON-NLS-1$
      }
 
         /**
-         * @see net.refractions.udig.project.command.UndoableCommand#rollback()
+         * @see org.locationtech.udig.project.command.UndoableCommand#rollback()
          */
         public void rollback() throws Exception {
             map.getEditManagerInternal().setEditFeature(feature, sourceLayer);

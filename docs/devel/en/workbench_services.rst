@@ -14,7 +14,7 @@ Additional Boundary Strategies are added by the boundary extension point.
 
 Details:
 
--  Add a boundary extension (net.refractions.udig.ui.boundary)
+-  Add a boundary extension (org.locationtech.udig.ui.boundary)
 -  Add a new boundary to the extension
 -  Create a strategy class which extends the abstract IBoundaryStrategy class
 
