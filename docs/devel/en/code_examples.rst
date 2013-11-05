@@ -33,7 +33,7 @@ Reading the Code Examples
 
 You can view the "live" code examples directly from git:
 
-* `https://github.com/uDig/udig-platform/tree/master/plugins/org.locationtech.udig.tutorials.examples/src/net/refractions/udig/tutorials/examples <https://github.com/uDig/udig-platform/tree/master/plugins/org.locationtech.udig.tutorials.examples/src/net/refractions/udig/tutorials/examples>`_
+* `https://github.com/uDig/udig-platform/tree/master/plugins/org.locationtech.udig.tutorials.examples/src/org/locationtech/udig/tutorials/examples <https://github.com/uDig/udig-platform/tree/master/plugins/org.locationtech.udig.tutorials.examples/src/org/locationtech/udig/tutorials/examples>`_
 
 Checking out Examples from GIT
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

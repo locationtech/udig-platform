@@ -14,31 +14,31 @@ Links are povided to the pages where the file is discussed.
      - Links to definition/explaination
    * - **src/**
      - :doc:`source_files <creating_a_plugin>` 
-   * - **src/net/refractions/udig/xyz**
+   * - **src/org/locationtech/udig/xyz**
      - :doc:`API Package <api_rules_of_engagement>`
-   * - src/net/refractions/udig/xyz/\ :doc:`XYZPlugin.java <plugin_activator>`
+   * - src/org/locationtech/udig/xyz/\ :doc:`XYZPlugin.java <plugin_activator>`
      - plugin resource and lifecycle management
-   * - src/net/refractions/udig/xyz/\ :doc:`XYZPlugin.properties <plugin_internationalization_with_resourcebundles>`
+   * - src/org/locationtech/udig/xyz/\ :doc:`XYZPlugin.properties <plugin_internationalization_with_resourcebundles>`
      - option 1 for internationlization
-   * - src/net/refractions/udig/xyz/\ :doc:`ISharedImages.java <imageregistry_and_images>`
+   * - src/org/locationtech/udig/xyz/\ :doc:`ISharedImages.java <imageregistry_and_images>`
      - Constants to retrive shared images
-   * - **src/net/refractions/udig/xyz/internal**
+   * - **src/org/locationtech/udig/xyz/internal**
      - :doc:`Non API Package <api_rules_of_engagement>`
-   * - src/net/refractions/udig/xyz/internal/\ :doc:`IHelpContextIds.java <plugin_help>`
+   * - src/org/locationtech/udig/xyz/internal/\ :doc:`IHelpContextIds.java <plugin_help>`
      - constants used for context sensitve help
-   * - src/net/refractions/udig/xyz/internal/\ :doc:`IImageConstants.java <imageregistry_and_images>`
+   * - src/org/locationtech/udig/xyz/internal/\ :doc:`IImageConstants.java <imageregistry_and_images>`
      - Constants used to retrive images
-   * - src/net/refractions/udig/xyz/internal/\ :doc:`Images.java <imageregistry_and_images>`
+   * - src/org/locationtech/udig/xyz/internal/\ :doc:`Images.java <imageregistry_and_images>`
      - Manages images for plugin class
-   * - src/net/refractions/udig/xyz/internal/\ :doc:`Messages.java <plugin_internationalization_with_resourcebundles>`
+   * - src/org/locationtech/udig/xyz/internal/\ :doc:`Messages.java <plugin_internationalization_with_resourcebundles>`
      - option 2 for internationlization
-   * - src/net/refractions/udig/xyz/internal/\ :doc:`Messages.properties <plugin_internationalization_with_resourcebundles>`
+   * - src/org/locationtech/udig/xyz/internal/\ :doc:`Messages.properties <plugin_internationalization_with_resourcebundles>`
      - text for internationlization
-   * - src/net/refractions/udig/xyz/internal/\ :doc:`Policy.java <plugin_internationalization_with_resourcebundles>`
+   * - src/org/locationtech/udig/xyz/internal/\ :doc:`Policy.java <plugin_internationalization_with_resourcebundles>`
      - option 3 for internationlization
-   * - **src/net/refractions/udig/xyz/examples**
+   * - **src/org/locationtech/udig/xyz/examples**
      - :doc:`Non API Package <api_rules_of_engagement>`
-   * - **src/net/refractions/udig/xyz/tests**
+   * - **src/org/locationtech/udig/xyz/tests**
      - :doc:`Non API Package <api_rules_of_engagement>`
    * - **bin/** - don't add to svn/git
      - :doc:`generated_class_files <creating_a_plugin>`
