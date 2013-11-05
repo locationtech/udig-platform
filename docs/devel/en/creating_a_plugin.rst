@@ -20,7 +20,7 @@ Plug-in Project
 
 -  Set the project name:
 
-   agrees with package structure, starts with net.refractions.udig.\*
+   agrees with package structure, starts with org.locationtech.udig.\*
 
 -  Project contents:
 
@@ -50,19 +50,19 @@ Plug-in Project
      - Example
      - Naming Convention
    * - Plug-In
-     - net.refractions.udig.render
+     - org.locationtech.udig.render
      - named in agreement with internal package structure
    * - JUnit Test Plug-In
-     - net.refractions.udig.render-test
+     - org.locationtech.udig.render-test
      - Append "-test"
    * - Plug-In Fragment
-     - net.refractions.udig.german
+     - org.locationtech.udig.german
      - Provide ".\ *language*" file at the root udig
    * - Plug-In Fragment
      - net.refractions.render-1
      - Do anything except add a dot
    * - Features
-     - net.refractions.udig.render-feature
+     - org.locationtech.udig.render-feature
      - Append "-feature" to associated root Plug-In
 
 

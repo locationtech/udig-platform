@@ -23,7 +23,7 @@ type.
 Catalog service
 ~~~~~~~~~~~~~~~
 
-The catalog service is contributed via the **net.refractions.udig.catalog.ServiceExtension**
+The catalog service is contributed via the **org.locationtech.udig.catalog.ServiceExtension**
 extension point. This boils down to writing implementations of the following interfaces.
 
 -  IService
@@ -33,7 +33,7 @@ extension point. This boils down to writing implementations of the following int
 Renderer
 ~~~~~~~~
 
-The renderer is contributed via the **net.refractions.udig.project.renderer** extension point. This
+The renderer is contributed via the **org.locationtech.udig.project.renderer** extension point. This
 involves writing implementations of the following interfaces
 
 -  IRenderer
@@ -46,7 +46,7 @@ Plugin.xml
 ::
 
     <extension
-          point="net.refractions.udig.catalog.ui.fileFormat">
+          point="org.locationtech.udig.catalog.ui.fileFormat">
           <fileService fileExtension="*.mif"/>
           <fileService fileExtension="*.dxf"/>
        </extension>

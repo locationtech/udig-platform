@@ -71,7 +71,7 @@ There is also a service factory used to create services to add to the local cata
 
 There are several more examples of using the ServiceFactory below.
 
-The CatalogPlugin is the "Activator" or "Plugin" class for **net.refractions.udig.catalog** - as
+The CatalogPlugin is the "Activator" or "Plugin" class for **org.locationtech.udig.catalog** - as
 such it extends AbstractUIPlugin for the following.
 
 -  getDialogSettings() - used to hold persistent state data for wizards and plug-ins
@@ -585,7 +585,7 @@ Common mistakes:
 - If you are used to making your own Eclipse plugins you may accidently depend on IResource, it
   will not be available at runtime since it is part of the Eclipse IDE.
 - :doc:`Eclipse House Rules <eclipse_house_rules>`: You may only depend on public API packages
-  (example net.refractions.udig.catalog). This is less of a problem since we are able to properly
+  (example org.locationtech.udig.catalog). This is less of a problem since we are able to properly
   restrict packages in Eclipse 3.3.
 
 ResolveManager

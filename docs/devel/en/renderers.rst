@@ -192,7 +192,7 @@ background image (from the render manager) and before the draw commands.
 Example of GlassPane
 ````````````````````
 
-Two examples of using a glass pane can be found in the net.refractions.udig.tutorials.tracking
+Two examples of using a glass pane can be found in the org.locationtech.udig.tutorials.tracking
 tutorial.
 
 -  SeagullGlassPaneOp - This adds an operation to the map.  When executed a glass pane is added to

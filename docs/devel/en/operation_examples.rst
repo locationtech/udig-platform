@@ -2,8 +2,8 @@ Operation Examples
 ~~~~~~~~~~~~~~~~~~
 
 Operations in uDig are extremely simple to make. A developer extends the
-net.refractions.udig.operation extension point and implements the
-net.refractions.udig.ui.operations.IOp interface which has a single op() method. An example is the
+org.locationtech.udig.operation extension point and implements the
+org.locationtech.udig.ui.operations.IOp interface which has a single op() method. An example is the
 Layer Summary Operation.
 
 The operation is ran in a background thread so updating the UI must be done by calling
@@ -90,12 +90,12 @@ object. This operation would be enabled in the MapEditor and the Project Explore
 
 .. code-block:: xml
 
-    <operation categoryId="net.refractions.udig.project.ui.informationOperations"
-        class="net.refractions.udig.project.ui.operations.example.FeaturesInView"
+    <operation categoryId="org.locationtech.udig.project.ui.informationOperations"
+        class="org.locationtech.udig.project.ui.operations.example.FeaturesInView"
         enablesFor="1"
-        id="net.refractions.udig.project.ui.featuresInView"
+        id="org.locationtech.udig.project.ui.featuresInView"
         name="%featuresView"
-        targetClass="net.refractions.udig.project.IMap"/>
+        targetClass="org.locationtech.udig.project.IMap"/>
 
 **FeaturesInView.java**
 
@@ -117,11 +117,11 @@ Explorer.
 .. code-block:: xml
 
     <operation
-                class="net.refractions.udig.tool.edit.DifferenceOp"
+                class="org.locationtech.udig.tool.edit.DifferenceOp"
                 enablesFor="2"
-                id="net.refractions.udig.tool.edit.difference"
+                id="org.locationtech.udig.tool.edit.difference"
                 name="%difference.name"
-                targetClass="net.refractions.udig.project.ILayer"/>
+                targetClass="org.locationtech.udig.project.ILayer"/>
 
 
 **DifferenceOp.java**
@@ -144,13 +144,13 @@ is required and not the functionality of a DataStore.
 .. code-block:: xml
 
     <operation
-         categoryId="net.refractions.udig.ui.edit"
-              class="net.refractions.udig.catalog.internal.ui.ops.NewFeatureTypeOp"
+         categoryId="org.locationtech.udig.ui.edit"
+              class="org.locationtech.udig.catalog.internal.ui.ops.NewFeatureTypeOp"
                enablesFor="1"
-               id="net.refractions.udig.catalog.ui.newFeatureType"
+               id="org.locationtech.udig.catalog.ui.newFeatureType"
                menuPath="file/new"
                name="%newFeatureType"
-               targetClass="net.refractions.udig.catalog.IService">
+               targetClass="org.locationtech.udig.catalog.IService">
             <enablement>
                <filter adaptsTo="org.geotools.data.DataStore"/>
             </enablement>
@@ -179,16 +179,16 @@ Plugin.xml extension declaration
 .. code-block:: xml
 
     <extension
-       point="net.refractions.udig.ui.operation">
+       point="org.locationtech.udig.ui.operation">
        <operation
-          targetClass="net.refractions.udig.project.ILayer"
-          class="net.refractions.udig.project.ui.LayerSummary"
-          categoryId="net.refractions.udig.project.ui.informationOperations"
+          targetClass="org.locationtech.udig.project.ILayer"
+          class="org.locationtech.udig.project.ui.LayerSummary"
+          categoryId="org.locationtech.udig.project.ui.informationOperations"
           name="Layer Summary"
-          id="net.refractions.udig.project.ui.Operation1"/>
+          id="org.locationtech.udig.project.ui.Operation1"/>
        <category
           name="Information"
-          id="net.refractions.udig.project.ui.informationOperations"/>
+          id="org.locationtech.udig.project.ui.informationOperations"/>
     </extension>
 
 The **targetClass** indicates which type of objects the operation can operate on. The an instance of
@@ -217,7 +217,7 @@ Layer Summary Class
      */
     public class LayerSummary implements IOp {
         /**
-         * @see net.refractions.udig.ui.operations.IOp#op(org.eclipse.swt.widgets.Display,
+         * @see org.locationtech.udig.ui.operations.IOp#op(org.eclipse.swt.widgets.Display,
              * java.lang.Object, org.eclipse.core.runtime.IProgressMonitor)
          */
         public void op(final Display display, Object target, IProgressMonitor monitor) throws Exception {

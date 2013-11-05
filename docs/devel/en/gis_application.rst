@@ -16,9 +16,9 @@ You can extend uDig in two ways:
 -  customize uDig for your needs through the addition of plug-ins
 -  defining a new application based on uDig
 
-The uDig Application is an extension point; defined by the net.refractions.udig.ui plug-in. It
+The uDig Application is an extension point; defined by the org.locationtech.udig.ui plug-in. It
 publishes the UDIGApplicaiton class; this extension point is then referred to by the
-net.refractions.udig plugin as it defines the udig.product.
+org.locationtech.udig plugin as it defines the udig.product.
 
 GIS Application Tier
 ^^^^^^^^^^^^^^^^^^^^

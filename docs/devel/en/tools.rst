@@ -1,7 +1,7 @@
 Tools
 ^^^^^
 
-Tools must extend the **net.refractions.udig.project.ui.tool** extension point. The reference
+Tools must extend the **org.locationtech.udig.project.ui.tool** extension point. The reference
 section provides a list of the extension points and technical documentation for the extension
 points.
 
@@ -31,11 +31,11 @@ Extension Point Example:
 
 ::
 
-    <extension point="net.refractions.udig.project.ui.tool">
+    <extension point="org.locationtech.udig.project.ui.tool">
         <backgroundTool
             name="%cursorPosition.name"
-            class="net.refractions.udig.tools.internal.CursorPosition"
-            id="net.refractions.udig.tools.backgroundTool1">
+            class="org.locationtech.udig.tools.internal.CursorPosition"
+            id="org.locationtech.udig.tools.backgroundTool1">
         </backgroundTool>
         ...
     </extension>
@@ -56,15 +56,15 @@ Extension Point example:
 
 ::
 
-    <extension point="net.refractions.udig.project.ui.tool">
+    <extension point="org.locationtech.udig.project.ui.tool">
          <extension
-             point="net.refractions.udig.project.ui.tool">
+             point="org.locationtech.udig.project.ui.tool">
              <actionTool
-                   categoryId="net.refractions.udig.tool.category.render"
-                   class="net.refractions.udig.tools.internal.RefreshTool"
-                   commandIds="net.refractions.udig.tools.refreshCommand"
+                   categoryId="org.locationtech.udig.tool.category.render"
+                   class="org.locationtech.udig.tools.internal.RefreshTool"
+                   commandIds="org.locationtech.udig.tools.refreshCommand"
                    icon="icons/etool16/refresh_co.gif"
-                   id="net.refractions.udig.tools.refresh"
+                   id="org.locationtech.udig.tools.refresh"
                    menuPath="file/refresh"
                    name="%refresh.name"
                    onToolbar="true"
@@ -93,13 +93,13 @@ Extension point example:
 
 ::
 
-    <extension point="net.refractions.udig.project.ui.tool">
+    <extension point="org.locationtech.udig.project.ui.tool">
              <modalTool
-                   categoryId="net.refractions.udig.tool.category.zoom"
-                   class="net.refractions.udig.tools.internal.Zoom"
+                   categoryId="org.locationtech.udig.tool.category.zoom"
+                   class="org.locationtech.udig.tools.internal.Zoom"
                    cursor="crosshair"
                    icon="icons/etool16/zoom_mode.gif"
-                   id="net.refractions.udig.tools.Zoom"
+                   id="org.locationtech.udig.tools.Zoom"
                    name="%zoom.tool.name"
                    onToolbar="true"
                    toolCursorId="zoomCursor"
@@ -122,9 +122,9 @@ functionality is to open the normal Tool Preference page.
     <extension
                 point="org.eclipse.ui.preferencePages">
              <page
-                   category="net.refractions.udig.project.ui.preferences.tool"
-                   class="net.refractions.udig.tools.internal.NavigationToolPreferencePage"
-                   id="net.refractions.udig.tool.default.navPage"
+                   category="org.locationtech.udig.project.ui.preferences.tool"
+                   class="org.locationtech.udig.tools.internal.NavigationToolPreferencePage"
+                   id="org.locationtech.udig.tool.default.navPage"
                    name="%navPage.name">
              </page>
           </extension>
@@ -162,7 +162,7 @@ With the details looking something like this (note we made a static final consta
 ::
 
     <extension point="org.eclipse.equinox.preferences.preferences">
-      <initializer class="net.refractions.udig.tools.internal.NavigationPreferenceInitializer">
+      <initializer class="org.locationtech.udig.tools.internal.NavigationPreferenceInitializer">
       </initializer>
     </extension>
 
@@ -183,19 +183,19 @@ With the class filling in a few default values:
 ::
 
     <modalTool
-                   categoryId="net.refractions.udig.tool.category.pan"
-                   class="net.refractions.udig.tools.internal.PanTool"
-                   commandHandler="net.refractions.udig.tools.internal.PanHandler"
-                   commandIds="net.refractions.udig.tools.panRightCommand,net.refractions.udig.tools.panLeftCommand,net.refractions.udig.tools.panUpCommand,net.refractions.udig.tools.panDownCommand"
+                   categoryId="org.locationtech.udig.tool.category.pan"
+                   class="org.locationtech.udig.tools.internal.PanTool"
+                   commandHandler="org.locationtech.udig.tools.internal.PanHandler"
+                   commandIds="org.locationtech.udig.tools.panRightCommand,org.locationtech.udig.tools.panLeftCommand,org.locationtech.udig.tools.panUpCommand,org.locationtech.udig.tools.panDownCommand"
                    icon="icons/etool16/pan_mode.gif"
-                   id="net.refractions.udig.tools.Pan"
+                   id="org.locationtech.udig.tools.Pan"
                    name="%pan.tool.name"
                    onToolbar="true"
-                   preferencePageId="net.refractions.udig.tool.default.navPage"
+                   preferencePageId="org.locationtech.udig.tool.default.navPage"
                    toolCursorId="move"
                    tooltip="%pan.tool.tooltip">
                 <toolOption
-                      class="net.refractions.udig.tools.internal.OptionContribtionItem"
+                      class="org.locationtech.udig.tools.internal.OptionContribtionItem"
                       id="panOptions">
                 </toolOption>
              </modalTool>
@@ -233,7 +233,7 @@ the \*\ **toolOptionContribution**\ \*:
 ::
 
     <toolOption
-                      class="net.refractions.udig.tools.internal.OptionContribtionItem"
+                      class="org.locationtech.udig.tools.internal.OptionContribtionItem"
                       id="panOptions">
                 </toolOption>
 
@@ -288,10 +288,10 @@ Extension point example:
 
 ::
 
-    <extension point="net.refractions.udig.project.ui.tool">
+    <extension point="org.locationtech.udig.project.ui.tool">
           <category
-                commandId="net.refractions.udig.tools.infoCommand"
-                id="net.refractions.udig.tool.category.info"
+                commandId="org.locationtech.udig.tools.infoCommand"
+                id="org.locationtech.udig.tool.category.info"
                 name="%info.tools.name"/>
         ...
     </extension>
@@ -443,7 +443,7 @@ Extension example:
 
 ::
 
-    <extension point="net.refractions.udig.project.ui.tool">
+    <extension point="org.locationtech.udig.project.ui.tool">
         <toolCursor
             hotspotX="10"
             hotspotY="10"
@@ -614,7 +614,7 @@ manner as *ToolProxy* object before:
 
 ::
 
-    net.refractions.udig.project.ui.internal.tool.display.CursorProxy
+    org.locationtech.udig.project.ui.internal.tool.display.CursorProxy
 
 ToolManager is responsible to create full list of cursor proxies and cache them by ID from extension
 point. Whenever the actual *org.eclipse.swt.graphics.Cursor* object is needed you must call the

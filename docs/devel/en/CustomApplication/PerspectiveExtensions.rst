@@ -21,17 +21,17 @@ are displayed and so forth.
 
 * Press :guilabel:`Finish`
 
-* Select the **targetID** element and enter **net.refractions.udig.tutorials.customapp.perspective**
+* Select the **targetID** element and enter **org.locationtech.udig.tutorials.customapp.perspective**
 
   Save the Manifest.
 
   |10000000000002800000010448246634_png|
 
 
-* Right click on **net.refractions.udig.tutorials.customapp.perpsective**
+* Right click on **org.locationtech.udig.tutorials.customapp.perpsective**
   and select :menuselection:`New --> actionSet`
 
-* Select the id* field and enter: **net.refractions.udig.project.ui.LayerActions**
+* Select the id* field and enter: **org.locationtech.udig.project.ui.LayerActions**
 
   |100000000000027D000001189B8695B9_png|
 
@@ -39,9 +39,9 @@ are displayed and so forth.
 * Repeat this process for the following additional entries:
 
 
-  * **net.refractions.udig.project.ui.layer.menu**
-  * **net.refractions.udig.project.ui.map.menu**
-  * **net.refractions.udig.catalog.ui.data.menu**
+  * **org.locationtech.udig.project.ui.layer.menu**
+  * **org.locationtech.udig.project.ui.map.menu**
+  * **org.locationtech.udig.catalog.ui.data.menu**
 
   .. hint::
      Eclipse 3.5 includes a :guilabel:`Browse` button allowing you to look up action sets to add.

@@ -17,7 +17,7 @@ Source code:
 -  Available in your uDig SDK (import the :doc:`source code <code_examples>` from the plugins
    view)
 -  plugin:
-   `net.refractions.udig.tutorials.render.csv <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.render.csv>`_
+   `org.locationtech.udig.tutorials.render.csv <https://github.com/uDig/udig-platform/tree/master/tutorials/org.locationtech.udig.tutorials.render.csv>`_
    (github)
 
 Introduction

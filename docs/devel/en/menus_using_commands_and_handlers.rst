@@ -40,13 +40,13 @@ Creating a new Command using the Extension Point:
           point="org.eclipse.ui.commands">
        <category
              description="Actions that change what is shown"
-             id="net.refractions.udig.navigation"
+             id="org.locationtech.udig.navigation"
              name="Navigation">
        </category>
        <command
-             categoryId="net.refractions.udig.navigation"
+             categoryId="org.locationtech.udig.navigation"
              description="Show all content"
-             id="net.refractions.udig.show"
+             id="org.locationtech.udig.show"
              name="Show All">
        </command>
     </extension>
@@ -59,14 +59,14 @@ Creating a new Command using Java:
       (ICommandService) getSite().getService(ICommandService.class);
 
     Category navigation =
-      cmdService.getCategory("net.refractions.udig.navigation");
+      cmdService.getCategory("org.locationtech.udig.navigation");
 
     if (!navigation.isDefined()) {
       navigation.define("Navigation", "Actions that change what is shown");
     }
 
     Command show =
-      cmdService.getCommand("net.refractions.udig.show");
+      cmdService.getCommand("org.locationtech.udig.show");
 
     if (!show.isDefined()) {
       show.define("Show", "Show content on screen", navigation);

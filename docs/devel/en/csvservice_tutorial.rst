@@ -20,7 +20,7 @@ Source code:
 
    * `com.csvreader <https://github.com/uDig/udig-platform/tree/master/tutorials/com.csvreader>`_
       (github)
-   * `net.refractions.udig.tutorials.catalog.csv <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.catalog.csv>`_
+   * `org.locationtech.udig.tutorials.catalog.csv <https://github.com/uDig/udig-platform/tree/master/tutorials/org.locationtech.udig.tutorials.catalog.csv>`_
       (github)
 
 Introduction

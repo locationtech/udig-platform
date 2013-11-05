@@ -53,7 +53,7 @@ Code Example
         
         /**
          * Remove the layer that was added during execution.
-         * @see net.refractions.udig.project.command.UndoableCommand#rollback()
+         * @see org.locationtech.udig.project.command.UndoableCommand#rollback()
          */
         public void rollback() throws Exception {
             getMap().getLayersInternal().remove(layer);
@@ -62,7 +62,7 @@ Code Example
         /**
          * Adds a layer to the map.  Defensive programming is recommended but command
          * framework protects against exceptions raised in commands.
-         * @see net.refractions.udig.project.command.Command#run()
+         * @see org.locationtech.udig.project.command.Command#run()
          */
         public void run() throws Exception {
             if( index<0 || index>getMap().getLayersInternal().size())
@@ -76,7 +76,7 @@ Code Example
          * command is to be used multiple times the command should be copied.  Some commands
          * contain internal state.
          * 
-         * @see net.refractions.udig.project.command.Command#copy()
+         * @see org.locationtech.udig.project.command.Command#copy()
          */
         public Command copy() {
             return new AddLayerCommand(layer, index);
@@ -84,7 +84,7 @@ Code Example
 
         /**
          * Each command has a name that is displayed with the undo/redo buttons.
-         * @see net.refractions.udig.project.command.Command#getName()
+         * @see org.locationtech.udig.project.command.Command#getName()
          */
         public String getName() {
             return Policy.bind("AddLayerCommand.Name")+layer.getName(); //$NON-NLS-1$

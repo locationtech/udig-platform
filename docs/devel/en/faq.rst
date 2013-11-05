@@ -125,7 +125,7 @@ Q: How to copy an existing Plugin
 #. Select **Plugin Development** and **Plugins and Fragments** wizard, and press **Next**
 #. On the right you can see EVERYTHING in the uDig SDK
 #. Select a plugin that is similar to what you want to do:
-   net.refractions.udig.catalog.world.image
+   org.locationtech.udig.catalog.world.image
 #. Press **Add**
 #. Press **Finish** to the plugin(s) into your workspace
 
@@ -145,10 +145,10 @@ The views initially displayed are provided by a perspective:
 -  Extend the current Map Perspective (that is an extension point); or
 -  Create your own perspective
 
-An example of extending a perspective is in the net.refractions.udig.feature.editor/plugin.xml file.
+An example of extending a perspective is in the org.locationtech.udig.feature.editor/plugin.xml file.
 
 If you define a new perspective and you want it to be loaded by default you have to create a fragment 
-for net.refractions.udig.ui and in the fragment override the UDIGWorkbenchAdvisor class to return 
+for org.locationtech.udig.ui and in the fragment override the UDIGWorkbenchAdvisor class to return 
 your perspective ID in the getInitialWindowPerspectiveId method.
 
 Examples:
@@ -330,7 +330,7 @@ Follow the :doc:`Custom Application Tutorial <custom_application_tutorial>` for 
 splash screen information.
 
 Alternative: Make a fragment which overrides the provided intro/root.xml or the introContent.xml 
-in the net.refractions.udig.ui plugin.
+in the org.locationtech.udig.ui plugin.
 
 Q: How do I add a layer programmatically
                                         
@@ -579,17 +579,17 @@ Example: Layer(s) added/removed
        });
 
 Example: Map opens/created/closes If you have to do something when a map opens, was created or is
-about to close, use the extension point *net.refractions.udig.project.mapInterceptor* in your
+about to close, use the extension point *org.locationtech.udig.project.mapInterceptor* in your
 **plugin.xml**:
 
 .. code-block:: xml
 
     [..]
       <extension
-            point="net.refractions.udig.project.mapInterceptor">
+            point="org.locationtech.udig.project.mapInterceptor">
             <mapOpening
-                  class="net.refractions.udig.yourplugin.OpenMapListener"
-                  id="net.refractions.udig.yourplugin.mapOpens">
+                  class="org.locationtech.udig.yourplugin.OpenMapListener"
+                  id="org.locationtech.udig.yourplugin.mapOpens">
             </mapOpening>
       </extension>
     [..]
@@ -598,8 +598,8 @@ And create a new class:
 
 .. code-block:: java
 
-    import net.refractions.udig.project.interceptor.MapInterceptor;
-    import net.refractions.udig.project.internal.Map;
+    import org.locationtech.udig.project.interceptor.MapInterceptor;
+    import org.locationtech.udig.project.internal.Map;
 
     public class OpenMapListener implements MapInterceptor{
 

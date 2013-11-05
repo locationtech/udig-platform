@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: DB2 Catalog Plug-in
 Bundle-SymbolicName: org.locationtech.udig.catalog.db2; singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.locationtech.udig.catalog.db2.DB2Plugin
 Eclipse-BuddyPolicy: registered
 Bundle-Localization: plugin

@@ -26,8 +26,8 @@ name segment.
 
 There is an example from udig:
 
-*  net.refractions.udig (model or core)
-*  net.refractions.udig.ui (user interface)
+*  org.locationtech.udig (model or core)
+*  org.locationtech.udig.ui (user interface)
 
 As a clue anything that is *core* can run in headless mode.
 

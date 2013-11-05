@@ -41,10 +41,10 @@ package of your plug-in:
 $PLUGIN/src/$PLUGIN-AS-PACKAGE/internal/messages.properties
 $PLUGIN/src/$PLUGIN-AS-PACKAGE/internal/Messages.java
 
-For example, if your plug-in is net.refractions.udig.catalog.ui, it would look like:
+For example, if your plug-in is org.locationtech.udig.catalog.ui, it would look like:
 
-net.refractions.udig.catalog.ui/src/net/refractions/udig/catalog/ui/internal/messages.properties
-net.refractions.udig.catalog.ui/src/net/refractions/udig/catalog/ui/internal/Messages.java
+org.locationtech.udig.catalog.ui/src/net/refractions/udig/catalog/ui/internal/messages.properties
+org.locationtech.udig.catalog.ui/src/net/refractions/udig/catalog/ui/internal/Messages.java
 
 Policy class
 ^^^^^^^^^^^^

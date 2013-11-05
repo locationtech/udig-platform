@@ -2,22 +2,22 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tool View
 Bundle-SymbolicName: org.locationtech.udig.tutorials.tool-view;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.locationtech.udig.tutorials.toolview.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.locationtech.udig.project.ui;bundle-version="1.2.0",
- org.locationtech.udig.catalog.geotiff;bundle-version="1.2.0",
- org.locationtech.udig.catalog.shp;bundle-version="1.2.0",
- org.locationtech.udig.render.feature.basic;bundle-version="1.2.1",
- org.locationtech.udig.render.feature.shapefile;bundle-version="1.2.0",
- org.locationtech.udig.render.gridcoverage.basic;bundle-version="1.2.0",
- org.locationtech.udig.render.wms.basic;bundle-version="1.2.0",
- org.locationtech.udig.render.wmt.basic;bundle-version="1.2.0",
- org.locationtech.udig.tool.default;bundle-version="1.2.0",
- org.locationtech.udig.tool.select;bundle-version="1.2.0",
- org.locationtech.udig.style.sld;bundle-version="1.2.0",
- org.locationtech.udig.mapgraphic;bundle-version="1.2.0"
+ org.locationtech.udig.project.ui,
+ org.locationtech.udig.catalog.geotiff,
+ org.locationtech.udig.catalog.shp,
+ org.locationtech.udig.render.feature.basic,
+ org.locationtech.udig.render.feature.shapefile,
+ org.locationtech.udig.render.gridcoverage.basic,
+ org.locationtech.udig.render.wms.basic,
+ org.locationtech.udig.render.wmt.basic,
+ org.locationtech.udig.tool.default,
+ org.locationtech.udig.tool.select,
+ org.locationtech.udig.style.sld,
+ org.locationtech.udig.mapgraphic
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.locationtech.udig.tutorials.toolview

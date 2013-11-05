@@ -44,11 +44,11 @@ To hook up the interceptor:
 ::
 
     <extension
-          id="net.refractions.udig.tutorials.examples.layerInterceptor"
-          point="net.refractions.udig.project.layerInterceptor">
+          id="org.locationtech.udig.tutorials.examples.layerInterceptor"
+          point="org.locationtech.udig.project.layerInterceptor">
        <layerAdded
-             class="net.refractions.udig.tutorials.RasterToBottomOfZOrder"
-             id="net.refractions.udig.tutorials.examples.interceptors.rasterToBottomOfZOrder">
+             class="org.locationtech.udig.tutorials.RasterToBottomOfZOrder"
+             id="org.locationtech.udig.tutorials.examples.interceptors.rasterToBottomOfZOrder">
        </layerAdded>
     </extension>
 
@@ -143,8 +143,8 @@ The xml to hook this up is:
 ::
 
     <interceptor
-      class="net.refractions.udig.project.internal.interceptor.WrapFeatureStore"
-      id="net.refractions.udig.project.wrap.featurestore"
+      class="org.locationtech.udig.project.internal.interceptor.WrapFeatureStore"
+      id="org.locationtech.udig.project.wrap.featurestore"
       order="PRE"
       target="org.geotools.data.FeatureStore"/>
 

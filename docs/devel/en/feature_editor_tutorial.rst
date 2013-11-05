@@ -94,7 +94,7 @@ Creating the Plug-In
 
 Let us start off by creating a plug-in that will contain our feature editor.
 
-1. Create plug-in named **net.refractions.udig.tutorials.featureeditor**.
+1. Create plug-in named **org.locationtech.udig.tutorials.featureeditor**.
 
 .. figure:: /images/feature_editor_tutorial/create_plugin.png
    :align: left
@@ -104,7 +104,7 @@ Fig. Create plugin dialog
 2. In the **MANIFTEST.MF** editor switch to the **Dependencies** tab.
 3. Add the following plug-in dependency:
 
-- **net.refractions.udig.project.ui**
+- **org.locationtech.udig.project.ui**
 - **org.eclipse.ui.forms**
 
 .. figure:: /images/feature_editor_tutorial/add_dependencies.png
@@ -125,8 +125,8 @@ Create the FormCellEditorListener
 1. Select **File** > **New** > **Class** from the menu bar to open the New Java Class wizard
 2. On the **New Java Class** dialog, set the following:
 
-- **Source folder**: net.refractions.udig.tutorials.featureeditor/src
-- **package**: net.refractions.udig.tutorials.featureeditor
+- **Source folder**: org.locationtech.udig.tutorials.featureeditor/src
+- **package**: org.locationtech.udig.tutorials.featureeditor
 - **Name**: FormCellEditorListener
 
 3. Add the interface:
@@ -202,8 +202,8 @@ Create the MandatoryFormTextCellEditorValidator
 1. Select **File** > **New** > **Class** from the menu bar to open the New Java Class wizard
 2. On the **New Java Class** dialog, set the following:
 
-- **Source folder**: net.refractions.udig.tutorials.featureeditor/src
-- **package**: net.refractions.udig.tutorials.featureeditor
+- **Source folder**: org.locationtech.udig.tutorials.featureeditor/src
+- **package**: org.locationtech.udig.tutorials.featureeditor
 - **Name**: MandatoryFormTextCellEditorValidator
 
 3. Add the interface:
@@ -245,8 +245,8 @@ Create the FormTextCellEditor
 1. Select **File** > **New** > **Class** from the menu bar to open the New Java Class wizard
 2. On the **New Java Class** dialog, set the following:
 
-- **Source folder**: net.refractions.udig.tutorials.featureeditor/src
-- **package**: net.refractions.udig.tutorials.featureeditor
+- **Source folder**: org.locationtech.udig.tutorials.featureeditor/src
+- **package**: org.locationtech.udig.tutorials.featureeditor
 - **Name**: FormTextCellEditor
 
 3. Set the class below as superclass:
@@ -311,8 +311,8 @@ In this section we will create **CountryPanel** that populates a *Composite* wit
 1. Select **File** > **New** > **Class** from the menu bar to open the New Java Class wizard
 2. On the **New Java Class** dialog, set the following:
 
-- **Source folder**: net.refractions.udig.tutorials.featureeditor/src
-- **package**: net.refractions.udig.tutorials.featureeditor
+- **Source folder**: org.locationtech.udig.tutorials.featureeditor/src
+- **package**: org.locationtech.udig.tutorials.featureeditor
 - **Name**: CountryPanel
 
 3. Add the following interfaces:
@@ -714,7 +714,7 @@ A view is used to display or explore information. Views often allow direct manip
 
 3. You can fill in the details for your view extension:
 
-- **ID**: net.refractions.udig.tutorials.featureeditor.views
+- **ID**: org.locationtech.udig.tutorials.featureeditor.views
 - **Name**: Feature Editor Views
 
 This information is only used in error messages when something goes wrong which is very helpful when debugging! We are using the plural (*views*) because more than one view can be provided.
@@ -722,9 +722,9 @@ This information is only used in error messages when something goes wrong which 
 4. Right click on **org.eclipse.ui.views** and select **New** > **view**
 5. Select **name (view)** and configure the following:
 
-- **id**: net.refractions.udig.tutorials.featureeditor.views.country
+- **id**: org.locationtech.udig.tutorials.featureeditor.views.country
 - **name**: Country
-- **class**: net.refractions.udig.tutorials.featureeditor.CountryView
+- **class**: org.locationtech.udig.tutorials.featureeditor.CountryView
 
 .. figure:: /images/feature_editor_tutorial/add_extension_view.png
    :align: left
@@ -735,7 +735,7 @@ Fig. Add view extension
 7. Press the **class** link to open the **New Java Class** wizard.
 8. Add the following interfaces:
 
-- **net.refractions.udig.project.ui.IUDIGView**
+- **org.locationtech.udig.project.ui.IUDIGView**
 
 9. The dialog should look like this when you are done:
 

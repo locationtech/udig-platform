@@ -21,11 +21,11 @@ the application will maintain the arrangement as the user left them.
 
 * Select the name element.
 
-  **id:** net.refractions.udig.tutorials.customapp.perspective
+  **id:** org.locationtech.udig.tutorials.customapp.perspective
 
   **name:** Custom Perspective
 
-  **class:** net.refractions.udig.tutorials.customapp.CustomPerspectiveFactory
+  **class:** org.locationtech.udig.tutorials.customapp.CustomPerspectiveFactory
 
   |10000201000002C5000000D17802F89A_png|
 
@@ -47,9 +47,9 @@ the application will maintain the arrangement as the user left them.
 
      private static final String BOOKMARKS = "org.tcat.citd.sim.udig.bookmarks.internal.ui.BookmarksView";
 
-     private static final String PROJECTS = "net.refractions.udig.project.ui.projectExplorer";
+     private static final String PROJECTS = "org.locationtech.udig.project.ui.projectExplorer";
 
-     private static final String LAYERS = "net.refractions.udig.project.ui.layerManager";
+     private static final String LAYERS = "org.locationtech.udig.project.ui.layerManager";
 
 
 * In the createInitialLayout method, add the following code:

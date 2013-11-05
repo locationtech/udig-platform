@@ -95,7 +95,7 @@ The support libraries used by uDig are:
    defined by GeoAPI
 
 These libraries provide useful abstractions (such as Geometry and Feature) and data connectivity.
-These libraries are all gathered into a single plug-in (net.refractions.udig.libs plugin) so they
+These libraries are all gathered into a single plug-in (org.locationtech.udig.libs plugin) so they
 may share a classloader.
 
 Currently the GeoTools library makes use of a plug-in system called "factory spi" that depends on

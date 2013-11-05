@@ -5,11 +5,11 @@ Now that we have an application we can bundle it up as a product for others, and
 
 To start lets add a product file to our branding plugin:
 
-* Select **net.refractions.udig.tutorials.customapp** in the Project Explorer
+* Select **org.locationtech.udig.tutorials.customapp** in the Project Explorer
 
 * Selection :menuselection:`File --> New --> Product Configuration`
 
-* Select **net.refractions.udig.tutorials.customapp**
+* Select **org.locationtech.udig.tutorials.customapp**
 
 * Enter **custom.product** in the File name field
 
@@ -23,7 +23,7 @@ To start lets add a product file to our branding plugin:
 
   **Name:** Custom
 
-  **Application:** net.refractions.udig.tutorials.customapp.id1
+  **Application:** org.locationtech.udig.tutorials.customapp.id1
 
   **The product configuration is based on:** features
 

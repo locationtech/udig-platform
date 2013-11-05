@@ -13,10 +13,10 @@
             icon="icons/etool16/split_feature_mode.gif"
             id="org.locationtech.udig.tools.split.SplitTool"
             largeIcon="icons/etool24/split_24.png"
-            name="%org.locationtech.udig.tools.split.name"
+            name="%split.name"
             onToolbar="true"
             toolCursorId="arrowCursor"
-            tooltip="%org.locationtech.udig.tools.split.tooltip">
+            tooltip="%split.tooltip">
           <enablement>
           	<and>
                 <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
@@ -36,10 +36,10 @@
             icon="icons/etool16/merge_feature_mode.gif"
             id="org.locationtech.udig.tools.merge.MergeTool"
             largeIcon="icons/etool24/merge_24.png"
-            name="%org.locationtech.udig.tools.merge.name"
+            name="%merge.name"
             onToolbar="true"
             toolCursorId="arrowCursor"
-            tooltip="%org.locationtech.udig.tools.merge.tooltip">
+            tooltip="%merge.tooltip">
 	      <enablement>
 	      	<and>
 	            <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
@@ -60,10 +60,10 @@
             class="org.locationtech.udig.tools.arc.ArcTool"
             icon="icons/etool16/arc_tool.gif"
             id="org.locationtech.udig.tools.arc.ArcTool"
-            name="%org.locationtech.udig.tools.arc.name"
+            name="%arc.name"
             onToolbar="true"
             toolCursorId="arrowCursor"
-            tooltip="%org.locationtech.udig.tools.arc.tooltip">
+            tooltip="%arc.tooltip">
          <enablement>
             <or>
                <property
@@ -82,10 +82,10 @@
             class="org.locationtech.udig.tools.parallel.ParallelTool"
             icon="icons/etool16/parallel_mode.gif"
             id="org.locationtech.udig.tools.parallel.ParallelTool"
-            name="%org.locationtech.udig.tools.parallel.name"
+            name="%parallel.name"
             onToolbar="true"
             toolCursorId="arrowCursor"
-            tooltip="%org.locationtech.udig.tools.parallel.tooltip">
+            tooltip="%parallel.tooltip">
          <cursor
                hotspotX="10"
                hotspotY="10"
@@ -107,10 +107,10 @@
             icon="icons/etool16/trim_feature_mode.gif"
             id="org.locationtech.udig.tools.trim.TrimTool"
             largeIcon="icons/etool24/trim_24.png"
-            name="%org.locationtech.udig.tools.trim.name"
+            name="%trim.name"
             onToolbar="true"
             toolCursorId="arrowCursor"
-            tooltip="%org.locationtech.udig.tools.trim.tooltip">
+            tooltip="%trim.tooltip">
          <enablement>
           	<and>
                 <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
@@ -132,7 +132,7 @@
             class="org.locationtech.udig.tools.parallel.view.ParallelParametersView"
             icon="icons/etool16/parallel_mode.gif"
             id="org.locationtech.udig.tools.parallel.view.ParallelParametersView"
-            name="%org.locationtech.udig.tools.parallel.name">
+            name="%parallel.view.name">
       </view>
       <view
             allowMultiple="false"
@@ -140,7 +140,7 @@
             class="org.locationtech.udig.tools.merge.internal.view.MergeView"
             icon="icons/etool16/merge_feature_mode.gif"
             id="org.locationtech.udig.tools.merge.internal.view.MergeView"
-            name="Merge Features"
+            name="%merge.view.name"
             restorable="true">
       </view>
    </extension>
@@ -152,7 +152,7 @@
             enablesFor="1"
             icon="icons/etool16/merge_feature_mode.gif"
             id="org.locationtech.udig.tools.merge.mergeoperation"
-            name="Merge selected"
+            name="%merge.operation.name"
             targetClass="org.geotools.data.FeatureSource">
       </operation>
    </extension>

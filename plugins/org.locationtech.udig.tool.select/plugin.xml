@@ -118,7 +118,6 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="true"
-            category="layer"
             class="org.locationtech.udig.tool.select.TableView"
             fastViewWidthRatio="30%"
             icon="icons/eview16/table_view.gif"

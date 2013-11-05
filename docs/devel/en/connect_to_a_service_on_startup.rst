@@ -8,7 +8,7 @@ Related:
 
 * :doc:`catalog`
 
-* `net.refractions.udig.community.jody.tile <http://svn.refractions.net/udig/udig/community/jody/trunk/plugins/net.refractions.udig.community.jody.tile/>`_
+* `org.locationtech.udig.community.jody.tile <http://svn.refractions.net/udig/udig/community/jody/trunk/plugins/org.locationtech.udig.community.jody.tile/>`_
    (example that adds a custom service on startup)
 
 Add an Eclipse "Startup" extension that adds
@@ -20,7 +20,7 @@ Here is the part of the plugin.xml used in the above example:
 
     <extension
              point="org.eclipse.ui.startup">
-          <startup class="net.refractions.udig.community.jody.tile.Preload"/>
+          <startup class="org.locationtech.udig.community.jody.tile.Preload"/>
        </extension>
 
 **Implement an IStartup**

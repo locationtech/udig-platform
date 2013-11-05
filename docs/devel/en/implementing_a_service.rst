@@ -16,7 +16,7 @@ PostGIS
 
 Notes
 
-net.refractions.udig.catalog.ui.connectionFactory
+org.locationtech.udig.catalog.ui.connectionFactory
 
  
 
@@ -24,7 +24,7 @@ x
 
 Data Wizard Page, parameters for connecting to datastore
 
-net.refractions.udig.catalog.ui.fileFormat
+org.locationtech.udig.catalog.ui.fileFormat
 
 x
 
@@ -32,7 +32,7 @@ x
 
 This extension point just sets the file extension of your datastore
 
-net.refractions.udig.catalog.ServiceExtention
+org.locationtech.udig.catalog.ServiceExtention
 
 x
 
@@ -67,5 +67,5 @@ You are going to have to implement (by rewriting the copy of) a couple of the co
 The "CSV Tutorial" from the training course covers all these steps, the source code is available
 from svn here:
 
-* `http://svn.refractions.net/udig/udig/branches/1.1.x/udig/tutorials/net.refractions.udig.tutorials.catalog.csv/ <http://svn.refractions.net/udig/udig/branches/1.1.x/udig/tutorials/net.refractions.udig.tutorials.catalog.csv/>`_
+* `http://svn.refractions.net/udig/udig/branches/1.1.x/udig/tutorials/org.locationtech.udig.tutorials.catalog.csv/ <http://svn.refractions.net/udig/udig/branches/1.1.x/udig/tutorials/org.locationtech.udig.tutorials.catalog.csv/>`_
 

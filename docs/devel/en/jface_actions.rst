@@ -48,7 +48,7 @@ Uses IWorkbenchWindowActionDelegate ...
 
     public class EditStyleAction implements IWorkbenchWindowActionDelegate {
 
-        public final static String ID = "net.refractions.udig.style.openStyleEditorAction"; //$NON-NLS-1$
+        public final static String ID = "org.locationtech.udig.style.openStyleEditorAction"; //$NON-NLS-1$
         
         private Layer selectedLayer;
         
@@ -142,15 +142,15 @@ Create an object contribution to ILayer class and add the zoom to layer action t
 
    <objectContribution
              adaptable="false"
-             objectClass="net.refractions.udig.project.ILayer"
-             id="net.refractions.udig.project.ui.LayerContribution">
+             objectClass="org.locationtech.udig.project.ILayer"
+             id="org.locationtech.udig.project.ui.LayerContribution">
       <action
            label="%zoomToLayer.label"
            icon="icons/elcl16/zoom_layer_co.gif"
            tooltip="%zoomToLayer.tooltip"
-           class="net.refractions.udig.project.ui.internal.actions.ZoomToLayer"
+           class="org.locationtech.udig.project.ui.internal.actions.ZoomToLayer"
            style="push"
-           id="net.refractions.udig.project.ui.zoomTo"/>
+           id="org.locationtech.udig.project.ui.zoomTo"/>
    </objectContribution>
 
 
@@ -237,7 +237,7 @@ targetEditor).
             } catch (IOException e) {
                 // Shouldn't happen but...
                 ProjectUIPlugin.getDefault().getLog().log(new Status(IStatus.ERROR,
-                        "net.refractions.udig.project",0,"Error commiting transaction",e)); //$NON-NLS-1$ //$NON-NLS-2$
+                        "org.locationtech.udig.project",0,"Error commiting transaction",e)); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
         public void selectionChanged( IAction action, ISelection selection ) {

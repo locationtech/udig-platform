@@ -24,14 +24,14 @@ For more information:
 
 * `<http://help.eclipse.org/juno/topic/org.eclipse.platform.doc.isv/reference/misc/api-usage-rules.html>`_
 
-Q: net.refractions.udig.xyz is optional?
+Q: org.locationtech.udig.xyz is optional?
 
 Yes - if you don't have any plublic API (because you are a pure extention) don't declare any public api
 
 Q: Implementation is not required?
 
 Correct - if you are simply republishing some jars so that other may depend on them. The
-net.refractions.udig.libs plug-in is an example of this.
+org.locationtech.udig.libs plug-in is an example of this.
 
 Q: Can I have subpackages?
 
@@ -42,5 +42,5 @@ Eclipse does keep everything in different class loaders - so one can have two pl
 Class and different implementations. While this is possible it is not sane.
 
 The RCP forces us to make sharing explicit - hense the reason for plug-ins like
-net.refractions.udig.libs.
+org.locationtech.udig.libs.
 

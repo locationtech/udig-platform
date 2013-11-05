@@ -17,7 +17,7 @@ Source code:
 -  Available in your uDig SDK (import the :doc:`source code <code_examples>` from the plugins
    view)
 -  plugin:
-   `net.refractions.udig.tutorials.style.color <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.style.color>`_
+   `org.locationtech.udig.tutorials.style.color <https://github.com/uDig/udig-platform/tree/master/tutorials/org.locationtech.udig.tutorials.style.color>`_
    (github)
 
 Introduction
@@ -60,7 +60,7 @@ Can you modify the code to read in a default color stored in a CSV file comment?
 SLD
 ^^^
 
-Advanced: The net.refractions.udig.style.sld plug-in holds a GeoTools FeatureTypeStyle object on the
+Advanced: The org.locationtech.udig.style.sld plug-in holds a GeoTools FeatureTypeStyle object on the
 blackboard using the key SLDStyle.ID.
 
 Adjust your ColorCSVRenderer to recognize **SLDStyle.ID** as well.
