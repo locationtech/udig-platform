@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cheatsheet title="New Project Wizard">
-  <intro href="/net.refractions.udig.help/EN/Working with Projects.html">
+  <intro href="/org.locationtech.udig.help/EN/Working with Projects.html">
     <description>
     In this cheat sheet we are going to creating a simple project. 
 </description>
   </intro>  
   <item  
-  	href="/net.refractions.udig.help/EN/Wizards and Dialogs.html" 
+  	href="/org.locationtech.udig.help/EN/Wizards and Dialogs.html" 
   	title="New Project Wizard" 
   	dialog="true">
      <description>
      Create a simple project by selecting <b>File > New > New Project</b> from the menu bar.
      </description>
         <command 
-		serialization="org.eclipse.ui.newWizard(newWizardId=net.refractions.udig.project.ui.wizards.newProject)" 
+		serialization="org.eclipse.ui.newWizard(newWizardId=org.locationtech.udig.project.ui.wizards.newProject)" 
 		required="false"/>
      
   </item>

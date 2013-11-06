@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cheatsheet title="Layer Style">
-  <intro href="/net.refractions.udig.help/EN/Change a Layers Style.html">
+  <intro href="/org.locationtech.udig.help/EN/Change a Layers Style.html">
     <description>
     	In this cheat sheet we are going to learn how to change the style of a layer.
 	</description>
   </intro>  
   
-  <item skip="false" title="Open Style Editor" dialog="true" href="/net.refractions.udig.help/EN/Style Editor Dialog.html">
+  <item skip="false" title="Open Style Editor" dialog="true" href="/org.locationtech.udig.help/EN/Style Editor Dialog.html">
      <description>
     The style of a layer may be changed by opening the Style Editor.
     <br/><br/> 
@@ -41,7 +41,7 @@ Select a new colour and close the dialog.
   
   <item
         title="XML"
-        href="/net.refractions.udig.help/EN/Style Layer Descriptor.html">
+        href="/org.locationtech.udig.help/EN/Style Layer Descriptor.html">
      <description>
        Should you need to do something a little more complex than what the simple or theme pages offer, the XML page allows you to directly modify the Styled Layer Descriptor document (this describes how you would like your layer drawn).
      </description>
@@ -52,6 +52,6 @@ Select a new colour and close the dialog.
      <description>
       uDig also offers a Style View that can be utilised to perform simple layer styling. To see the Style View in action change to the Style Perspective by selecting  <b>Window > Open Perspective > Style Perspective</b>
       </description>
-     <command serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=net.refractions.udig.ui.stylePerspective)" required="false" translate=""/>
+     <command serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=org.locationtech.udig.ui.stylePerspective)" required="false" translate=""/>
   </item> 
 </cheatsheet>
