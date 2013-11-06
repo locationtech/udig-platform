@@ -24,7 +24,6 @@ import org.locationtech.udig.internal.ui.operations.OperationCategory;
 import org.locationtech.udig.internal.ui.operations.OperationMenuFactory;
 import org.locationtech.udig.ui.internal.Messages;
 import org.locationtech.udig.ui.operations.EnablementUtil.EnablesForData;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -143,6 +142,9 @@ public class OpAction extends Action implements ISelectionListener {
         }
         
         protected IStatus run( IProgressMonitor monitor ) {
+            if ( selection == null ) {
+                return new Status(IStatus.CANCEL, UiPlugin.ID, "OpAction", new IllegalArgumentException()); //$NON-NLS-1$
+            }
             try {
                 Object target;
                 if( enablesForData.minHits==1 && enablesForData.exactMatch){
