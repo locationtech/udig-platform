@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cheatsheet title="Add Shape File" >
   <intro 
-  href="/net.refractions.udig.help/EN/Shapefile.html">
+  href="/org.locationtech.udig.help/EN/Shapefile.html">
     <description>
     	We are going to load a shape file into our workspace using the New Layer dialog.
 	</description>
@@ -10,13 +10,13 @@
   <item 
   title="New Layer Wizard" 
   dialog="true" 
-  href="/net.refractions.udig.help/EN/Add Data wizard.html">
+  href="/org.locationtech.udig.help/EN/Add Data wizard.html">
      <description>
 		Choose <b>File > New > New Layer</b> from the menu bar to open up the Add Data wizard
 	</description>
 	<action 
-  		class="net.refractions.udig.project.ui.internal.actions.AddLayersAction" 
-  		pluginId="net.refractions.udig.project.ui.editor"
+  		class="org.locationtech.udig.project.ui.internal.actions.AddLayersAction" 
+  		pluginId="org.locationtech.udig.project.ui.editor"
   		confirm="false"/>
   </item>
   

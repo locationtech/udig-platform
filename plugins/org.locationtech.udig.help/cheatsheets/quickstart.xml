@@ -12,14 +12,14 @@ When asked for the file location choose an appropriate location such as your des
          <onCompletion>Congratulations you have completed the Quickstart.</onCompletion>  
                     
          <task kind="cheatsheet" name= "Workbench" skip="true">
-              <param name = "id" value = "net.refractions.udig.help.cheatsheet.workbench" />
+              <param name = "id" value = "org.locationtech.udig.help.cheatsheet.workbench" />
               <intro>This Cheat Sheet will introduce you to the basic layout of the Workbench. If you are already familiar with the Workbench layout you can skip this task.
               </intro>
                <onCompletion>Congratulations you now know about the Workbenck layout.</onCompletion>                  
          </task>
          
          <task kind="cheatsheet" name= "Project" skip="true">
-              <param name="id" value="net.refractions.udig.help.cheatsheet.newprojectwizard" />
+              <param name="id" value="org.locationtech.udig.help.cheatsheet.newprojectwizard" />
               <intro>
               This cheat sheet introduce you to Projects.
               <br/><br/>
@@ -38,7 +38,7 @@ When asked for the file location choose an appropriate location such as your des
                  <intro>
                  	This cheat sheet walks you through the process of adding a shape file to uDig.
                  </intro>
-                 <param name="id" value = "net.refractions.udig.help.cheatsheet.loadShapeFile"/>
+                 <param name="id" value = "org.locationtech.udig.help.cheatsheet.loadShapeFile"/>
                  <onCompletion>Congratulations you have succeeded added a shape file.</onCompletion>
              </task>
              <task kind="cheatsheet" name= "Drag in Layer">
@@ -48,7 +48,7 @@ When asked for the file location choose an appropriate location such as your des
 					
 					This task will walk you through dragging a layer onto you map.
                  </intro>
-                 <param name = "id" value = "net.refractions.udig.help.cheatsheet.dragFromFileSystem" />
+                 <param name = "id" value = "org.locationtech.udig.help.cheatsheet.dragFromFileSystem" />
                  <onCompletion>Congratulations you have succeeded dragging a layer onto your map.</onCompletion>           
              </task> 
              
@@ -56,7 +56,7 @@ When asked for the file location choose an appropriate location such as your des
                  <intro>
 					This section covers the use of Web Map Servers, which make available layers of information that can be added to your map.
                  </intro>
-                 <param name = "id" value = "net.refractions.udig.help.cheatsheet.webmapservice" />
+                 <param name = "id" value = "org.locationtech.udig.help.cheatsheet.webmapservice" />
                  <onCompletion>Congratulations you have succeeded added Web Map Services (WMS) to your map.</onCompletion>           
              </task>       
          </taskGroup>
@@ -67,21 +67,21 @@ When asked for the file location choose an appropriate location such as your des
              </intro>
               <onCompletion>Congratulations you now know how to work with the map.</onCompletion>
          <task kind="cheatsheet" name= "Layer Order" skip="true">
-              <param name = "id" value = "net.refractions.udig.help.cheatsheet.layerorder" />
+              <param name = "id" value = "org.locationtech.udig.help.cheatsheet.layerorder" />
               <intro>In this cheat sheet we are going to order some of the layers we just added.
               </intro>
                <onCompletion>Congratulations you now know how to order layers.</onCompletion>                  
          </task>
          
          <task kind="cheatsheet" name= "Style Layer" skip="true">
-              <param name = "id" value = "net.refractions.udig.help.cheatsheet.stylelayer" />
+              <param name = "id" value = "org.locationtech.udig.help.cheatsheet.stylelayer" />
               <intro>In this cheat sheet we are going to apply some simple styles to a layer.
               </intro>
                <onCompletion>Congratulations you now know how to style a layer.</onCompletion>                  
          </task>
          
          <task kind="cheatsheet" name= "Map Navigation" skip="true">
-              <param name = "id" value = "net.refractions.udig.help.cheatsheet.mapnavigation" />
+              <param name = "id" value = "org.locationtech.udig.help.cheatsheet.mapnavigation" />
               <intro>
               In this cheat sheet we are going to learn about using some of the tools available to navigate around the map.
               </intro>

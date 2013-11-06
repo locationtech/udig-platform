@@ -15,7 +15,7 @@ workbench and what some of the key views are.
 		<br/><br/>
 		You can change to the Style Perspective by selecting the <b>Window > Open Perspective > Style Perspective</b>
 		</description>
-	<command serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=net.refractions.udig.ui.stylePerspective)" required="false" translate=""/>
+	<command serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=org.locationtech.udig.ui.stylePerspective)" required="false" translate=""/>
   
   </item>
 
@@ -23,7 +23,7 @@ workbench and what some of the key views are.
      <description>
 		Similarly, you can change back to the Map Perspective by selecting the <b>Window > Open Perspective > Map Perspective</b>
 	</description>
-  	<command serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=net.refractions.udig.ui.mapPerspective)" required="false" translate=""/>
+  	<command serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=org.locationtech.udig.ui.mapPerspective)" required="false" translate=""/>
   
   </item>
   
@@ -34,7 +34,7 @@ workbench and what some of the key views are.
 		The Project View is used to display opened projects, and their contents.
 		</description>
   		<command when = "Search View" 
-            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=net.refractions.udig.project.ui.projectExplorer)"/>
+            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.locationtech.udig.project.ui.projectExplorer)"/>
   </item>
   
   <item title="Layer View">
@@ -46,7 +46,7 @@ workbench and what some of the key views are.
 		set which tools will work on the layer (Tool Applicability).
 	</description>
 	<command when = "Search View" 
-            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=net.refractions.udig.project.ui.layerManager)"/>
+            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.locationtech.udig.project.ui.layerManager)"/>
   
   </item>
   
@@ -56,6 +56,6 @@ workbench and what some of the key views are.
 		Resources in the catalog view can be added to your map using drag and drop.
 	</description>
 	<command when = "Search View" 
-            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=net.refractions.udig.catalog.ui.CatalogView)"/>
+            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.locationtech.udig.catalog.ui.CatalogView)"/>
   </item>
 </cheatsheet>

@@ -33,7 +33,7 @@
   </item>
   
   <item title="Drag and Drop" 
-  	href="/net.refractions.udig.help/EN/Drag andDrop.html">
+  	href="/org.locationtech.udig.help/EN/Drag andDrop.html">
      <description>
      In addition to using the up and down arrows you can also drag and drop layers to change the order. 
      <br/><br/>
