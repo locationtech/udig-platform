@@ -527,7 +527,7 @@ As a temporary measure:
    org.locationtech.udig.ui is in this list)
 #. Hit add required plugins
 
-Please email the `udig-devel <http://lists.refractions.net/mailman/listinfo/udig-devel>`_ list; and
+Please email the `udig-dev <https://locationtech.org/mailman/listinfo/udig-dev>`_ list; and
 volunteer to test the SDK with the version of eclipse you are using.
 
 NoClassDefFoundError JAI
