@@ -24,9 +24,9 @@ are made available under the terms of the Eclipse Public License v1.0
 License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
   </license>
 
-   <includes
-         id="org.locationtech.udig_base-feature"
-         version="0.0.0"/>
+   <requires>
+      <import feature="org.locationtech.udig_base-feature"/>
+   </requires>
 
    <plugin
          id="org.locationtech.udig.catalog"
@@ -103,12 +103,6 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
-   <plugin
-         id="com.lowagie.text"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
 
    <plugin
          id="org.locationtech.udig.project.edit"
