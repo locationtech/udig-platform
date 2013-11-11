@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.locationtech.udig</groupId>
         <artifactId>pom-libs.parent</artifactId>
-        <version>0.0.1</version>
+        <version>0.0.2</version>
         <relativePath>../../pom-libs.xml</relativePath>
     </parent>
 
@@ -63,7 +63,7 @@
     
     <groupId>org.locationtech.udig.libs.oracle</groupId>
     <artifactId>download</artifactId>
-    <version>1.4.0</version>
+    <version>0.0.2</version>
     <name>Oracle Dummy Jar Creation</name>
     
     <packaging>pom</packaging>

@@ -50,7 +50,7 @@
     
     <groupId>net.refractions.catalog.arcsde</groupId>
     <artifactId>download</artifactId>
-    <version>1.4.0</version>
+    <version>0.0.2</version>
     <name>ArcSDE Dummy Jar Creation</name>
     
     <packaging>pom</packaging>
