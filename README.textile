@@ -149,6 +149,6 @@ Here is how to set that up:
 
    This will reset the target platform which will take some time.
 3. Once that is done you can import the remaining uDig projects
-4. And open up *net.refractions.udig/udig.product and click *Run*
+4. And open up *org.locationtech.udig/udig.product and click *Run*
 
    !product.gif!
