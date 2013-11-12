@@ -64,7 +64,7 @@
         </antcall>
     </target>
 
-    <target name="full" depends="user,devel">
+    <target name="full" depends="user,devel,user-help">
     </target>
 
     <target name="user-help" depends="init">

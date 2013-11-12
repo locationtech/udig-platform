@@ -39,17 +39,18 @@
    -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                                 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <parent>
-    <artifactId>udig-tycho</artifactId>
     <groupId>org.locationtech</groupId>
+    <artifactId>udig-tycho</artifactId>
     <version>2.0.0-SNAPSHOT</version>
   </parent>
   
 	<!-- =========================================================== -->
 	<!-- Module Description -->
 	<!-- =========================================================== -->
-	<artifactId>docs</artifactId>
-	<name>uDig Documentation</name>
+    <artifactId>udig-docs</artifactId>
+    <name>uDig Documentation</name>
 
     <description>
      Documentation generation for the uDig project including user guide and developer guide.
@@ -67,9 +68,8 @@
   
   <build>
     <plugins>
-    <plugin>
+      <plugin>
         <artifactId>maven-clean-plugin</artifactId>
-        <version>2.5</version>
         <configuration>
           <filesets>
             <fileset>
@@ -112,8 +112,48 @@
               <goal>run</goal>
             </goals>
           </execution>
+          <execution>
+            <id>package</id>
+            <phase>package</phase>
+            <configuration>
+              <tasks>
+                 <!-- create online-help.zip artifact and attach it afterwards as a build result -->
+                 <copy todir="${project.build.directory}/udig-eclipse-help/EN">
+                    <fileset dir="${build.directory}/user/en/simple" excludes="**/_sources/**"/>
+                 </copy>
+                 <copy file="${basedir}/user/toc.xml" todir="${project.build.directory}/udig-eclipse-help" />
+                 <zip destfile="${project.build.directory}/udig-eclipse-help.zip" basedir="${project.build.directory}/udig-eclipse-help" />
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-artifacts</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attach-artifact</goal>
+            </goals>
+            <configuration>
+              <artifacts>
+                <artifact>
+                  <file>${project.build.directory}/udig-eclipse-help.zip</file>
+                  <type>zip</type>
+                  <classifier>udig-eclipse-help</classifier>
+                </artifact>
+              </artifacts>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
     <pluginManagement>
     	<plugins>
