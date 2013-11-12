@@ -1,37 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/net.refractions.udig.printing.model/src"
-    editDirectory="/net.refractions.udig.printing.model.edit/src" editorDirectory=""
-    modelPluginID="net.refractions.udig.printing.model" runtimeJar="true" modelName="page"
-    editPluginClass="net.refractions.udig.printing.model.provider.PageEditPlugin"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="uDig - User Friendly Desktop Internet GIS client&#xD;&#xA;http://udig.refractions.net&#xD;&#xA;(C) 2004-2013, Refractions Research Inc.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;(http://www.eclipse.org/legal/epl-v10.html), and Refractions BSD&#xD;&#xA;License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html)."
+    modelDirectory="/net.refractions.udig.printing.model/src" editDirectory="/net.refractions.udig.printing.model.edit/src"
+    editorDirectory="" modelPluginID="net.refractions.udig.printing.model" runtimeJar="true"
+    modelName="page" editPluginClass="net.refractions.udig.printing.model.provider.PageEditPlugin"
     editorPluginClass="" rootImplementsInterface="" suppressEMFTypes="true" importerID="org.eclipse.emf.importer.java"
-    complianceLevel="5.0" usedGenPackages="../../net.refractions.udig.project/emf/Project.genmodel#//internal ../../net.refractions.udig.project/emf/Project.genmodel#//render">
+    complianceLevel="5.0" usedGenPackages="../../org.locationtech.udig.project/emf/Project.genmodel#//internal ../../org.locationtech.udig.project/emf/Project.genmodel#//render platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
   <foreignModel>@model</foreignModel>
-  <genPackages prefix="Model" basePackage="net.refractions.udig.printing" ecorePackage="model.ecore#/">
+  <genPackages prefix="Model" basePackage="org.locationtech.udig.printing" disposableProviderFactory="true"
+      ecorePackage="model.ecore#/">
     <genDataTypes ecoreDataType="model.ecore#//Graphics2D"/>
     <genDataTypes ecoreDataType="model.ecore#//Dimension"/>
     <genDataTypes ecoreDataType="model.ecore#//Point"/>
     <genDataTypes ecoreDataType="model.ecore#//IProgressMonitor"/>
     <genDataTypes ecoreDataType="model.ecore#//BoxPrinter"/>
-    <genClasses provider="Stateful" ecoreClass="model.ecore#//Box">
-      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference model.ecore#//Box/sourceConnections"/>
-      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference model.ecore#//Box/targetConnections"/>
+    <genClasses ecoreClass="model.ecore#//Box">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Box/sourceConnections"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Box/targetConnections"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Box/boxPrinter"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Box/iD"/>
     </genClasses>
-    <genClasses provider="Stateful" ecoreClass="model.ecore#//Connection">
+    <genClasses ecoreClass="model.ecore#//Connection">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Connection/connected"/>
-      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference model.ecore#//Connection/source"/>
-      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference model.ecore#//Connection/target"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Connection/source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Connection/target"/>
     </genClasses>
-    <genClasses provider="Stateful" ecoreClass="model.ecore#//Element">
+    <genClasses ecoreClass="model.ecore#//Element">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Element/location"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Element/size"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Element/paperSize"/>
     </genClasses>
-    <genClasses provider="Stateful" ecoreClass="model.ecore#//Page">
+    <genClasses ecoreClass="model.ecore#//Page">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//Page/boxes"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="model.ecore#//IAdaptable"/>
   </genPackages>
 </genmodel:GenModel>

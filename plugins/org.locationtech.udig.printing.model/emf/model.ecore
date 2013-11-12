@@ -2,8 +2,8 @@
 <ecore:EPackage xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model"
-    nsURI="http:///org/locationtech/udig/printing/model.ecore" nsPrefix="org.locationtech.udig.printing.model">
-  <eClassifiers xsi:type="ecore:EClass" name="Box" eSuperTypes="#//Element">
+    nsURI="http:///net/refractions/udig/printing/model.ecore" nsPrefix="org.locationtech.udig.printing.model">
+  <eClassifiers xsi:type="ecore:EClass" name="Box" eSuperTypes="#//Element #//IAdaptable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sourceConnections" upperBound="-1"
         eType="#//Connection"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="targetConnections" upperBound="-1"
@@ -30,4 +30,6 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Point" instanceClassName="org.eclipse.draw2d.geometry.Point"/>
   <eClassifiers xsi:type="ecore:EDataType" name="IProgressMonitor" instanceClassName="org.eclipse.core.runtime.IProgressMonitor"/>
   <eClassifiers xsi:type="ecore:EDataType" name="BoxPrinter" instanceClassName="org.locationtech.udig.printing.model.BoxPrinter"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IAdaptable" instanceClassName="org.eclipse.core.runtime.IAdaptable"
+      abstract="true" interface="true"/>
 </ecore:EPackage>
