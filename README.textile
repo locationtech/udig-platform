@@ -70,40 +70,11 @@ h1. Build Instructions
      [INFO] Total time: 8:05.291s
    </code></pre>
 
-3. Build Online Help (requires and sphinx-build to be installed):
-   <pre><code>
-     cd docs
-     ant help-deploy
-
-     help-deploy:
-        [copy] Copying 1078 files to /Volumes/Fiore/jody/java/udig/jive/plugins/net.refractions.udig.help/EN
-
-     BUILD SUCCESSFUL
-     Total time: 13 seconds
-   </code></pre>
-
-h2. Option - JAI Native Fragments
-
-The JAI and ImageIO Java Runtime Extensions are not open source (source code available under research license). As such these items can be made available via:
-
-* Normal JRE Installation (use osgi.parentClassLoader=ext runtime  option for this to work)
-* Published in a Refractions P2 repository for SDK developers who wish to continue to use bundles to manage these dependencies
-
-To build native fragments used for target platform:
-   
-   <pre><code>
-     cd libs
-     cd jai-imageio
-     mvn clean install
-   </code></pre>
-
-You will need to ask Frank where this source code went.
-
 h2. Option - Command Line Build
 
 1. Tycho Build
    <pre><code>
-      mvn clean install -Pproduct -Psdk
+      mvn clean install -Pproduct -Psdk -Pdocs
 
       [INFO] ------------------------------------------------------------------------
       [INFO] BUILD SUCCESS

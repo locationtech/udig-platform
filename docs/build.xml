@@ -81,14 +81,6 @@
         </delete>
 	</target>
 	
-	<target name="help-deploy" depends="user-help">
-		<description>Deploy docs.zip and toc.xml to org.locationtech.udig.help</description>
-		<copy file="${basedir}/user/toc.xml" todir="${basedir}/../plugins/org.locationtech.udig.help"/>
-        <copy todir="${basedir}/../plugins/org.locationtech.udig.help/EN">
-            <fileset dir="${build.directory}/user/en/simple" excludes="**/_sources/**"/>
-        </copy>
-	</target>
-	
     <target name="sphinx" if="sphinx.available">
         <echo message="Running sphinx-build -D release=${project.version} -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/> 
         <exec executable="sphinx-build" failonerror="true" dir="${basedir}/${id}">
