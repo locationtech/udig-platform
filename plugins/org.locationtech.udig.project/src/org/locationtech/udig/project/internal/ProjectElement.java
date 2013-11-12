@@ -37,7 +37,7 @@ public interface ProjectElement extends EObject, IProjectElement, IAdaptable {
      * @see #getProjectInternal()
      * @generated
      */
-    void setProjectInternal( Project value );
+    void setProjectInternal(Project value);
 
     /**
      * Returns the owner project of Map.
@@ -54,7 +54,7 @@ public interface ProjectElement extends EObject, IProjectElement, IAdaptable {
      * @param name
      * @uml.property name="name"
      */
-    public void setName( String name );
+    public void setName(String name);
 
     /**
      * Returns the default file extension for this type of project element.

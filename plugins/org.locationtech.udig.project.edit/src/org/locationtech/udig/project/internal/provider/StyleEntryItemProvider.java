@@ -30,20 +30,16 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- begin-user-doc --> <!-- end-user-doc -->
  * @generated
  */
-public class StyleEntryItemProvider extends ItemProviderAdapter
-        implements
-            IEditingDomainItemProvider,
-            IStructuredItemContentProvider,
-            ITreeItemContentProvider,
-            IItemLabelProvider,
-            IItemPropertySource {
+public class StyleEntryItemProvider extends ItemProviderAdapter implements
+        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
+        IItemLabelProvider, IItemPropertySource {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @generated
      */
-    public StyleEntryItemProvider( AdapterFactory adapterFactory ) {
+    public StyleEntryItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -54,7 +50,7 @@ public class StyleEntryItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public List<IItemPropertyDescriptor> getPropertyDescriptors( Object object ) {
+    public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
@@ -72,7 +68,7 @@ public class StyleEntryItemProvider extends ItemProviderAdapter
      * 
      * @generated
      */
-    protected void addIDPropertyDescriptor( Object object ) {
+    protected void addIDPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -90,7 +86,7 @@ public class StyleEntryItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addMementoPropertyDescriptor( Object object ) {
+    protected void addMementoPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -108,7 +104,7 @@ public class StyleEntryItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addStylePropertyDescriptor( Object object ) {
+    protected void addStylePropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -126,7 +122,7 @@ public class StyleEntryItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addStyleClassPropertyDescriptor( Object object ) {
+    protected void addStyleClassPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -144,7 +140,7 @@ public class StyleEntryItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public Object getImage( Object object ) {
+    public Object getImage(Object object) {
         return overlayImage(object, getResourceLocator().getImage("full/obj16/StyleEntry")); //$NON-NLS-1$
     }
 
@@ -164,7 +160,7 @@ public class StyleEntryItemProvider extends ItemProviderAdapter
      * 
      * @generated NOT
      */
-    public String getText( Object object ) {
+    public String getText(Object object) {
         String label = ((StyleEntry) object).getID();
         return label == null || label.length() == 0 ? "StyleEntry" : label;
     }
@@ -176,10 +172,10 @@ public class StyleEntryItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public void notifyChanged( Notification notification ) {
+    public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch( notification.getFeatureID(StyleEntry.class) ) {
+        switch (notification.getFeatureID(StyleEntry.class)) {
         case ProjectPackage.STYLE_ENTRY__ID:
         case ProjectPackage.STYLE_ENTRY__MEMENTO:
         case ProjectPackage.STYLE_ENTRY__STYLE:

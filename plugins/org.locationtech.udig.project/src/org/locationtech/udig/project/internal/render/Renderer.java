@@ -49,7 +49,7 @@ public interface Renderer extends EObject, IRenderer {
      * @see #getState()
      * @generated
      */
-    void setState( int value );
+    void setState(int value);
 
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
@@ -70,7 +70,7 @@ public interface Renderer extends EObject, IRenderer {
      * @see #getName()
      * @generated
      */
-    void setName( String value );
+    void setName(String value);
 
     /**
      * Returns the value of the '<em><b>Toolkit</b></em>' attribute. <!-- begin-user-doc -->
@@ -93,7 +93,7 @@ public interface Renderer extends EObject, IRenderer {
      * @see #getContext()
      * @generated
      */
-    void setContext( IRenderContext value );
+    void setContext(IRenderContext value);
 
     /**
      * Informs the renderer to dispose of resources

@@ -35,7 +35,7 @@ public interface LayerFactory extends EObject {
      * @return a list of {@linkplain Layer}objects from the provided selection.
      * @throws IOException
      */
-    public abstract List<Layer> getLayers( List selection ) throws IOException;
+    public abstract List<Layer> getLayers(List selection) throws IOException;
 
     /**
      * Creates a list of layers from a service. Each GeoResource in the service will have a
@@ -45,7 +45,7 @@ public interface LayerFactory extends EObject {
      * @return a list of layers
      * @throws IOException
      */
-    public abstract List<Layer> getLayers( IService service ) throws IOException;
+    public abstract List<Layer> getLayers(IService service) throws IOException;
 
     /**
      * Creates a layer from a service and a resource. The layer is represented the data in resource.
@@ -56,7 +56,8 @@ public interface LayerFactory extends EObject {
      * @return
      * @throws IOException
      */
-    public abstract Layer createLayer( IGeoResource resource ) throws IOException;
+    public abstract Layer createLayer(IGeoResource resource) throws IOException;
+
     /**
      * @return
      * @model opposite="layerFactory" many="false"
@@ -70,6 +71,6 @@ public interface LayerFactory extends EObject {
      * @see #getMap()
      * @generated
      */
-    void setMap( Map value );
+    void setMap(Map value);
 
 }

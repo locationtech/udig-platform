@@ -33,25 +33,20 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * <!-- end-user-doc -->
  * @generated
  */
-public class LayerLegendItemItemProvider extends LegendItemItemProvider
-        implements
-            IEditingDomainItemProvider,
-            IStructuredItemContentProvider,
-            ITreeItemContentProvider,
-            IItemLabelProvider,
-            IItemPropertySource {
-    
+public class LayerLegendItemItemProvider extends LegendItemItemProvider implements
+        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
+        IItemLabelProvider, IItemPropertySource {
+
     private LayerItemProvider layerItemProvider;
-    
+
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public LayerLegendItemItemProvider( AdapterFactory adapterFactory ) {
+    public LayerLegendItemItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
-        this.layerItemProvider = new LayerItemProvider(adapterFactory);
     }
 
     /**
@@ -61,7 +56,7 @@ public class LayerLegendItemItemProvider extends LegendItemItemProvider
      * @generated
      */
     @Override
-    public List<IItemPropertyDescriptor> getPropertyDescriptors( Object object ) {
+    public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
@@ -76,7 +71,7 @@ public class LayerLegendItemItemProvider extends LegendItemItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addLayerPropertyDescriptor( Object object ) {
+    protected void addLayerPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -95,9 +90,8 @@ public class LayerLegendItemItemProvider extends LegendItemItemProvider
      * @generated
      */
     @Override
-    public Object getImage( Object object ) {
-        final LayerLegendItem layerLegendItem = (LayerLegendItem) object;
-        return layerItemProvider.getImage(layerLegendItem.getLayer());
+    public Object getImage(Object object) {
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/LayerLegendItem")); //$NON-NLS-1$
     }
 
     /**
@@ -117,9 +111,10 @@ public class LayerLegendItemItemProvider extends LegendItemItemProvider
      * @generated
      */
     @Override
-    public String getText( Object object ) {
-        final LayerLegendItem layerLegendItem = (LayerLegendItem) object;
-        return layerItemProvider.getText(layerLegendItem.getLayer());
+    public String getText(Object object) {
+        String label = ((LayerLegendItem) object).getName();
+        return label == null || label.length() == 0 ? getString("_UI_LayerLegendItem_type") : //$NON-NLS-1$
+                getString("_UI_LayerLegendItem_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
@@ -130,7 +125,7 @@ public class LayerLegendItemItemProvider extends LegendItemItemProvider
      * @generated
      */
     @Override
-    public void notifyChanged( Notification notification ) {
+    public void notifyChanged(Notification notification) {
         updateChildren(notification);
         super.notifyChanged(notification);
     }

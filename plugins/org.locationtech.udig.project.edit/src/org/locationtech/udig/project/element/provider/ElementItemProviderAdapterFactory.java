@@ -41,11 +41,8 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ElementItemProviderAdapterFactory extends ElementAdapterFactory
-        implements
-            ComposeableAdapterFactory,
-            IChangeNotifier,
-            IDisposable {
+public class ElementItemProviderAdapterFactory extends ElementAdapterFactory implements
+        ComposeableAdapterFactory, IChangeNotifier, IDisposable {
     /**
      * This keeps track of the root adapter factory that delegates to this adapter factory.
      * <!-- begin-user-doc -->
@@ -123,7 +120,7 @@ public class ElementItemProviderAdapterFactory extends ElementAdapterFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setParentAdapterFactory( ComposedAdapterFactory parentAdapterFactory ) {
+    public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
         this.parentAdapterFactory = parentAdapterFactory;
     }
 
@@ -133,7 +130,7 @@ public class ElementItemProviderAdapterFactory extends ElementAdapterFactory
      * @generated
      */
     @Override
-    public boolean isFactoryForType( Object type ) {
+    public boolean isFactoryForType(Object type) {
         return supportedTypes.contains(type) || super.isFactoryForType(type);
     }
 
@@ -144,7 +141,7 @@ public class ElementItemProviderAdapterFactory extends ElementAdapterFactory
      * @generated
      */
     @Override
-    public Adapter adapt( Notifier notifier, Object type ) {
+    public Adapter adapt(Notifier notifier, Object type) {
         return super.adapt(notifier, this);
     }
 
@@ -154,10 +151,10 @@ public class ElementItemProviderAdapterFactory extends ElementAdapterFactory
      * @generated
      */
     @Override
-    public Object adapt( Object object, Object type ) {
+    public Object adapt(Object object, Object type) {
         if (isFactoryForType(type)) {
             Object adapter = super.adapt(object, type);
-            if (!(type instanceof Class< ? >) || (((Class< ? >) type).isInstance(adapter))) {
+            if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter))) {
                 return adapter;
             }
         }
@@ -171,7 +168,7 @@ public class ElementItemProviderAdapterFactory extends ElementAdapterFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public void addListener( INotifyChangedListener notifyChangedListener ) {
+    public void addListener(INotifyChangedListener notifyChangedListener) {
         changeNotifier.addListener(notifyChangedListener);
     }
 
@@ -181,7 +178,7 @@ public class ElementItemProviderAdapterFactory extends ElementAdapterFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public void removeListener( INotifyChangedListener notifyChangedListener ) {
+    public void removeListener(INotifyChangedListener notifyChangedListener) {
         changeNotifier.removeListener(notifyChangedListener);
     }
 
@@ -191,7 +188,7 @@ public class ElementItemProviderAdapterFactory extends ElementAdapterFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public void fireNotifyChanged( Notification notification ) {
+    public void fireNotifyChanged(Notification notification) {
         changeNotifier.fireNotifyChanged(notification);
 
         if (parentAdapterFactory != null) {
@@ -206,7 +203,8 @@ public class ElementItemProviderAdapterFactory extends ElementAdapterFactory
      * @generated
      */
     public void dispose() {
-        if (projectElementAdapterItemProvider != null) projectElementAdapterItemProvider.dispose();
+        if (projectElementAdapterItemProvider != null)
+            projectElementAdapterItemProvider.dispose();
     }
 
 }

@@ -61,8 +61,8 @@ public interface ElementFactory extends EFactory {
      * 
      * @return the new {@link ProjectElementAdapter} (it has been added to the project already)
      */
-    ProjectElementAdapter createProjectElementAdapter( IProject project,
-            Class< ? extends IGenericProjectElement> typeToCreate, String extensionId );
+    ProjectElementAdapter createProjectElementAdapter(IProject project,
+            Class<? extends IGenericProjectElement> typeToCreate, String extensionId);
 
     /**
      * Creates a {@link IGenericProjectElement} with an adapter that allows it to integrate with the 
@@ -75,7 +75,7 @@ public interface ElementFactory extends EFactory {
      * 
      * @return the new {@link ProjectElementAdapter} (it has been added to the project already)
      */
-    ProjectElementAdapter createProjectElementAdapter( IProject project, String elemName,
-            Class< ? extends IGenericProjectElement> typeToCreate, String extensionId );
+    ProjectElementAdapter createProjectElementAdapter(IProject project, String elemName,
+            Class<? extends IGenericProjectElement> typeToCreate, String extensionId);
 
 } // ElementFactory

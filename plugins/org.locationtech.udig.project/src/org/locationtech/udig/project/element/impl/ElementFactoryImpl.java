@@ -43,6 +43,7 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  */
 public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
     private static final String EXTENSION_POINT_ID_KEY = "@ElementFactoryImpl.ExtensionPointId.key@"; //$NON-NLS-1$
+
     /**
      * Creates the default factory implementation.
      * <!-- begin-user-doc -->
@@ -78,8 +79,8 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
      * @generated
      */
     @Override
-    public EObject create( EClass eClass ) {
-        switch( eClass.getClassifierID() ) {
+    public EObject create(EClass eClass) {
+        switch (eClass.getClassifierID()) {
         case ElementPackage.PROJECT_ELEMENT_ADAPTER:
             return createProjectElementAdapter();
         default:
@@ -94,8 +95,8 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
      * @generated
      */
     @Override
-    public Object createFromString( EDataType eDataType, String initialValue ) {
-        switch( eDataType.getClassifierID() ) {
+    public Object createFromString(EDataType eDataType, String initialValue) {
+        switch (eDataType.getClassifierID()) {
         case ElementPackage.IGENERIC_PROJECT_ELEMENT:
             return createIGenericProjectElementFromString(eDataType, initialValue);
         default:
@@ -110,8 +111,8 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
      * @generated
      */
     @Override
-    public String convertToString( EDataType eDataType, Object instanceValue ) {
-        switch( eDataType.getClassifierID() ) {
+    public String convertToString(EDataType eDataType, Object instanceValue) {
+        switch (eDataType.getClassifierID()) {
         case ElementPackage.IGENERIC_PROJECT_ELEMENT:
             return convertIGenericProjectElementToString(eDataType, instanceValue);
         default:
@@ -135,8 +136,8 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
      * <!-- end-user-doc -->
      * @generated NO MORE
      */
-    public IGenericProjectElement createIGenericProjectElementFromString( EDataType eDataType,
-            String initialValue ) {
+    public IGenericProjectElement createIGenericProjectElementFromString(EDataType eDataType,
+            String initialValue) {
         try {
             UdigMemento memento = UdigMemento.readString(initialValue);
             IGenericProjectElement backingObject = createGenericProjectElement(
@@ -153,7 +154,7 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
      * Uses the IMemento pattern to obtain persistence data from the object
      * @generated NO MORE
      */
-    public String convertIGenericProjectElementToString( EDataType eDataType, Object instanceValue ) {
+    public String convertIGenericProjectElementToString(EDataType eDataType, Object instanceValue) {
         IGenericProjectElement elem = (IGenericProjectElement) instanceValue;
         UdigMemento memento = new UdigMemento();
         elem.save(memento);
@@ -181,8 +182,8 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
         return ElementPackage.eINSTANCE;
     }
 
-    public ProjectElementAdapter createProjectElementAdapter( IProject project,
-            Class< ? extends IGenericProjectElement> typeToCreate, String extensionId ) {
+    public ProjectElementAdapter createProjectElementAdapter(IProject project,
+            Class<? extends IGenericProjectElement> typeToCreate, String extensionId) {
         ProjectElementAdapter adapter = createProjectElementAdapter();
 
         IGenericProjectElement genericProjectElement = createGenericProjectElement(typeToCreate,
@@ -193,8 +194,8 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
         return adapter;
     }
 
-    public ProjectElementAdapter createProjectElementAdapter( IProject project, String elemName,
-            Class< ? extends IGenericProjectElement> typeToCreate, String extensionId ) {
+    public ProjectElementAdapter createProjectElementAdapter(IProject project, String elemName,
+            Class<? extends IGenericProjectElement> typeToCreate, String extensionId) {
         ProjectElementAdapter adapter = createProjectElementAdapter();
         adapter.setName(elemName);
 
@@ -206,11 +207,11 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
         return adapter;
     }
 
-    private <T extends IGenericProjectElement> T createGenericProjectElement(
-            Class<T> typeToCreate, String extensionId ) {
+    private <T extends IGenericProjectElement> T createGenericProjectElement(Class<T> typeToCreate,
+            String extensionId) {
         List<IConfigurationElement> list = ExtensionPointList
                 .getExtensionPointList(ProjectElementAdapter.EXT_ID);
-        for( IConfigurationElement configurationElement : list ) {
+        for (IConfigurationElement configurationElement : list) {
             String id = configurationElement.getAttribute("id"); //$NON-NLS-1$
             if (id != null && id.equals(extensionId)) {
                 try {

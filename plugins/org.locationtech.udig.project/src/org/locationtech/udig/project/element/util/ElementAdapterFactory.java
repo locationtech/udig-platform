@@ -62,7 +62,7 @@ public class ElementAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     @Override
-    public boolean isFactoryForType( Object object ) {
+    public boolean isFactoryForType(Object object) {
         if (object == modelPackage) {
             return true;
         }
@@ -78,25 +78,29 @@ public class ElementAdapterFactory extends AdapterFactoryImpl {
      * <!-- end-user-doc -->
      * @generated
      */
-    protected ElementSwitch<Adapter> modelSwitch = new ElementSwitch<Adapter>(){
+    protected ElementSwitch<Adapter> modelSwitch = new ElementSwitch<Adapter>() {
         @Override
-        public Adapter caseProjectElementAdapter( ProjectElementAdapter object ) {
+        public Adapter caseProjectElementAdapter(ProjectElementAdapter object) {
             return createProjectElementAdapterAdapter();
         }
+
         @Override
-        public Adapter caseIProjectElement( IProjectElement object ) {
+        public Adapter caseIProjectElement(IProjectElement object) {
             return createIProjectElementAdapter();
         }
+
         @Override
-        public Adapter caseIAdaptable( IAdaptable object ) {
+        public Adapter caseIAdaptable(IAdaptable object) {
             return createIAdaptableAdapter();
         }
+
         @Override
-        public Adapter caseProjectElement( ProjectElement object ) {
+        public Adapter caseProjectElement(ProjectElement object) {
             return createProjectElementAdapter();
         }
+
         @Override
-        public Adapter defaultCase( EObject object ) {
+        public Adapter defaultCase(EObject object) {
             return createEObjectAdapter();
         }
     };
@@ -110,7 +114,7 @@ public class ElementAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     @Override
-    public Adapter createAdapter( Notifier target ) {
+    public Adapter createAdapter(Notifier target) {
         return modelSwitch.doSwitch((EObject) target);
     }
 

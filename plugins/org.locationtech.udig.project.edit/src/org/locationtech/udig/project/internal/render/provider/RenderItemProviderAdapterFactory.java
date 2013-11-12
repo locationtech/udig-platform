@@ -18,6 +18,7 @@ import org.eclipse.emf.edit.provider.ChangeNotifier;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IChangeNotifier;
+import org.eclipse.emf.edit.provider.IDisposable;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
@@ -34,10 +35,8 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * end-user-doc -->
  * @generated
  */
-public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
-        implements
-            ComposeableAdapterFactory,
-            IChangeNotifier {
+public class RenderItemProviderAdapterFactory extends RenderAdapterFactory implements
+        ComposeableAdapterFactory, IChangeNotifier, IDisposable {
     /**
      * This keeps track of the root adapter factory that delegates to this adapter factory. <!--
      * begin-user-doc --> <!-- end-user-doc -->
@@ -162,7 +161,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setParentAdapterFactory( ComposedAdapterFactory parentAdapterFactory ) {
+    public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
         this.parentAdapterFactory = parentAdapterFactory;
     }
 
@@ -171,7 +170,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
      * @generated
      */
     @Override
-    public boolean isFactoryForType( Object type ) {
+    public boolean isFactoryForType(Object type) {
         return supportedTypes.contains(type) || super.isFactoryForType(type);
     }
 
@@ -182,7 +181,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
      * @generated
      */
     @Override
-    public Adapter adapt( Notifier notifier, Object type ) {
+    public Adapter adapt(Notifier notifier, Object type) {
         return super.adapt(notifier, this);
     }
 
@@ -191,10 +190,10 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
      * @generated
      */
     @Override
-    public Object adapt( Object object, Object type ) {
+    public Object adapt(Object object, Object type) {
         if (isFactoryForType(type)) {
             Object adapter = super.adapt(object, type);
-            if (!(type instanceof Class< ? >) || (((Class< ? >) type).isInstance(adapter))) {
+            if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter))) {
                 return adapter;
             }
         }
@@ -207,7 +206,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public void addListener( INotifyChangedListener notifyChangedListener ) {
+    public void addListener(INotifyChangedListener notifyChangedListener) {
         changeNotifier.addListener(notifyChangedListener);
     }
 
@@ -216,7 +215,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public void removeListener( INotifyChangedListener notifyChangedListener ) {
+    public void removeListener(INotifyChangedListener notifyChangedListener) {
         changeNotifier.removeListener(notifyChangedListener);
     }
 
@@ -226,12 +225,27 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
      * 
      * @generated
      */
-    public void fireNotifyChanged( Notification notification ) {
+    public void fireNotifyChanged(Notification notification) {
         changeNotifier.fireNotifyChanged(notification);
 
         if (parentAdapterFactory != null) {
             parentAdapterFactory.fireNotifyChanged(notification);
         }
+    }
+
+    /**
+     * This disposes all of the item providers created by this factory. 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void dispose() {
+        if (renderExecutorItemProvider != null)
+            renderExecutorItemProvider.dispose();
+        if (renderManagerItemProvider != null)
+            renderManagerItemProvider.dispose();
+        if (viewportModelItemProvider != null)
+            viewportModelItemProvider.dispose();
     }
 
 }

@@ -72,12 +72,12 @@ public class ProjectImpl extends EObjectImpl implements Project {
      */
     protected EList<ProjectElement> elementsInternal;
 
-    private Adapter projectPersistenceListener = new AdapterImpl(){
+    private Adapter projectPersistenceListener = new AdapterImpl() {
         /**
          * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
          */
-        public void notifyChanged( Notification msg ) {
-            switch( msg.getFeatureID(Project.class) ) {
+        public void notifyChanged(Notification msg) {
+            switch (msg.getFeatureID(Project.class)) {
             case ProjectPackage.PROJECT__ELEMENTS_INTERNAL:
             case ProjectPackage.PROJECT__NAME:
                 if (ProjectImpl.this.eResource() != null)
@@ -118,7 +118,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public void setName( String newName ) {
+    public void setName(String newName) {
         String oldName = name;
         name = newName;
         if (eNotificationRequired())
@@ -134,19 +134,19 @@ public class ProjectImpl extends EObjectImpl implements Project {
         if (elementsInternal == null) {
             elementsInternal = new SynchronizedEObjectWithInverseResolvingEList<ProjectElement>(
                     ProjectElement.class, this, ProjectPackage.PROJECT__ELEMENTS_INTERNAL,
-                    ProjectPackage.PROJECT_ELEMENT__PROJECT_INTERNAL){
+                    ProjectPackage.PROJECT_ELEMENT__PROJECT_INTERNAL) {
 
                 /** long serialVersionUID field */
                 private static final long serialVersionUID = 3978658123285628492L;
 
                 @Override
-                protected void didAdd( int index, ProjectElement newObject ) {
+                protected void didAdd(int index, ProjectElement newObject) {
                     createResourceAndAddElement(ProjectImpl.this, (ProjectElement) newObject);
                     super.didAdd(index, newObject);
                 }
 
                 @Override
-                protected void didSet( int index, ProjectElement newObject, ProjectElement oldObject ) {
+                protected void didSet(int index, ProjectElement newObject, ProjectElement oldObject) {
                     createResourceAndAddElement(ProjectImpl.this, (ProjectElement) newObject);
                     super.didSet(index, newObject, oldObject);
                 }
@@ -162,11 +162,11 @@ public class ProjectImpl extends EObjectImpl implements Project {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
-            NotificationChain msgs ) {
-        switch( featureID ) {
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID,
+            NotificationChain msgs) {
+        switch (featureID) {
         case ProjectPackage.PROJECT__ELEMENTS_INTERNAL:
-            return ((InternalEList<InternalEObject>) (InternalEList< ? >) getElementsInternal())
+            return ((InternalEList<InternalEObject>) (InternalEList<?>) getElementsInternal())
                     .basicAdd(otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -178,11 +178,11 @@ public class ProjectImpl extends EObjectImpl implements Project {
      * @generated
      */
     @Override
-    public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
-            NotificationChain msgs ) {
-        switch( featureID ) {
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+            NotificationChain msgs) {
+        switch (featureID) {
         case ProjectPackage.PROJECT__ELEMENTS_INTERNAL:
-            return ((InternalEList< ? >) getElementsInternal()).basicRemove(otherEnd, msgs);
+            return ((InternalEList<?>) getElementsInternal()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -193,8 +193,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
      * @generated
      */
     @Override
-    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
-        switch( featureID ) {
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
         case ProjectPackage.PROJECT__NAME:
             return getName();
         case ProjectPackage.PROJECT__ELEMENTS_INTERNAL:
@@ -210,14 +210,14 @@ public class ProjectImpl extends EObjectImpl implements Project {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public void eSet( int featureID, Object newValue ) {
-        switch( featureID ) {
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
         case ProjectPackage.PROJECT__NAME:
             setName((String) newValue);
             return;
         case ProjectPackage.PROJECT__ELEMENTS_INTERNAL:
             getElementsInternal().clear();
-            getElementsInternal().addAll((Collection< ? extends ProjectElement>) newValue);
+            getElementsInternal().addAll((Collection<? extends ProjectElement>) newValue);
             return;
         }
         super.eSet(featureID, newValue);
@@ -229,8 +229,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
      * @generated
      */
     @Override
-    public void eUnset( int featureID ) {
-        switch( featureID ) {
+    public void eUnset(int featureID) {
+        switch (featureID) {
         case ProjectPackage.PROJECT__NAME:
             setName(NAME_EDEFAULT);
             return;
@@ -247,8 +247,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
      * @generated
      */
     @Override
-    public boolean eIsSet( int featureID ) {
-        switch( featureID ) {
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
         case ProjectPackage.PROJECT__NAME:
             return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
         case ProjectPackage.PROJECT__ELEMENTS_INTERNAL:
@@ -263,11 +263,12 @@ public class ProjectImpl extends EObjectImpl implements Project {
      * @generated NOT
      */
     @SuppressWarnings("unchecked")
-    public List getElements( Class type ) {
+    public List getElements(Class type) {
         List lists = new ArrayList();
-        for( Iterator iter = getElementsInternal().iterator(); iter.hasNext(); ) {
+        for (Iterator iter = getElementsInternal().iterator(); iter.hasNext();) {
             Object obj = iter.next();
-            if (type.isAssignableFrom(obj.getClass())) lists.add(obj);
+            if (type.isAssignableFrom(obj.getClass()))
+                lists.add(obj);
         }
         return lists;
     }
@@ -278,7 +279,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
      */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+        if (eIsProxy())
+            return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (name: "); //$NON-NLS-1$
@@ -296,6 +298,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
     public List getElements() {
         return Collections.unmodifiableList(getElementsInternal());
     }
+
     private void initCommandManager() {
 
         synchronized (CommandManager.class) {
@@ -306,12 +309,12 @@ public class ProjectImpl extends EObjectImpl implements Project {
         }
     }
 
-    public void sendASync( Command command ) {
+    public void sendASync(Command command) {
         initCommandManager();
         commandManager.aSyncExecute(command);
     }
 
-    public void sendSync( Command command ) {
+    public void sendSync(Command command) {
         initCommandManager();
         commandManager.syncExecute(command);
     }
@@ -321,8 +324,9 @@ public class ProjectImpl extends EObjectImpl implements Project {
      * resource.  The Resource will start with map appended with a number that will make the name unique.
      * The resource will end in .umap.
      */
-    private void createResourceAndAddElement( Project value, ProjectElement projectElement ) {
-        if (projectElement == null || projectElement.eIsProxy()) return;
+    private void createResourceAndAddElement(Project value, ProjectElement projectElement) {
+        if (projectElement == null || projectElement.eIsProxy())
+            return;
         Resource projectResource = eResource();
         if (projectResource != null) {
             URI projectURI = projectResource.getURI();
@@ -338,8 +342,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
     }
 
     @SuppressWarnings("unchecked")
-    private static void doCreation( ProjectElement projectElement, Resource projectResource,
-            String elementPath, String projectPath ) {
+    private static void doCreation(ProjectElement projectElement, Resource projectResource,
+            String elementPath, String projectPath) {
         Resource resource = null;
 
         URI uri = createNewResource(projectResource, projectPath, projectElement);
@@ -349,10 +353,10 @@ public class ProjectImpl extends EObjectImpl implements Project {
         resource.setModified(true);
     }
 
-    private static String findProjectResourcePath( URI projectURI ) {
+    private static String findProjectResourcePath(URI projectURI) {
         String projectPath = projectURI.toFileString();
         projectPath = projectPath.substring(0, projectPath.lastIndexOf(File.separatorChar));
-        while( projectPath.startsWith(File.separator + File.separator) ) {
+        while (projectPath.startsWith(File.separator + File.separator)) {
             projectPath = projectPath.substring(1);
         }
         if (Platform.getOS().equals(Platform.OS_WIN32) && projectPath.startsWith(File.separator)) {
@@ -361,12 +365,12 @@ public class ProjectImpl extends EObjectImpl implements Project {
         return projectPath;
     }
 
-    private String findElementResourcePath( ProjectElement projectElement, String elementPath2 ) {
+    private String findElementResourcePath(ProjectElement projectElement, String elementPath2) {
         String elementPath = elementPath2;
         if (projectElement.eResource() != null) {
             elementPath = projectElement.eResource().getURI().toFileString();
             elementPath = elementPath.substring(0, elementPath.lastIndexOf(File.separatorChar));
-            while( elementPath.startsWith(File.separator + File.separator) ) {
+            while (elementPath.startsWith(File.separator + File.separator)) {
                 elementPath = elementPath.substring(1);
             }
             if (Platform.getOS().equals(Platform.OS_WIN32)
@@ -378,8 +382,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
     }
 
     @SuppressWarnings("unchecked")
-    private static URI createNewResource( Resource projectResource, String projectPath,
-            ProjectElement projectElement ) {
+    private static URI createNewResource(Resource projectResource, String projectPath,
+            ProjectElement projectElement) {
         int i = 0;
         List<Resource> list = projectResource.getResourceSet().getResources();
         URIConverter uriConverter = projectResource.getResourceSet().getURIConverter();
@@ -392,7 +396,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
             uri = generateResourceName(projectPath, projectElement, i);
 
             URI normalizedURI = uriConverter.normalize(uri);
-            for( Resource resource2 : list ) {
+            for (Resource resource2 : list) {
                 if (uriConverter.normalize(resource2.getURI()).equals(normalizedURI)) {
                     found = true;
                     break;
@@ -400,18 +404,17 @@ public class ProjectImpl extends EObjectImpl implements Project {
             }
             if (!found) {
                 File file = new File(uri.toFileString());
-                if (file.exists()) found = true;
+                if (file.exists())
+                    found = true;
             }
-        } while( found );
+        } while (found);
         uri.deresolve(projectResource.getURI(), true, true, true);
         return uri;
     }
 
-    private static URI generateResourceName( String projectPath, ProjectElement projectElement,
-            int i ) {
+    private static URI generateResourceName(String projectPath, ProjectElement projectElement, int i) {
         URI uri;
-        String resourceName = (projectElement.getName() == null
-                ? "element" : projectElement.getName()) + i; //$NON-NLS-1$
+        String resourceName = (projectElement.getName() == null ? "element" : projectElement.getName()) + i; //$NON-NLS-1$
         resourceName = resourceName.replaceAll("[/\\\\]", ""); //$NON-NLS-1$ //$NON-NLS-2$
         resourceName = resourceName.replaceAll("\\s", "_"); //$NON-NLS-1$ //$NON-NLS-2$
         resourceName = resourceName.replaceAll("_+", "_"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -425,7 +428,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
     }
 
     public URI getID() {
-        if (eResource() == null) return URI.createFileURI(getName());
+        if (eResource() == null)
+            return URI.createFileURI(getName());
         return eResource().getURI();
     }
 

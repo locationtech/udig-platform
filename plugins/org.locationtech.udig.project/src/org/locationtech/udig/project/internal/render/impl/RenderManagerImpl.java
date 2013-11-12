@@ -137,15 +137,17 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
         super();
 
         rendererCreator = new RendererCreatorImpl();
-        RenderContext context = new RenderContextImpl(){
+        RenderContext context = new RenderContextImpl() {
             @Override
             public Map getMapInternal() {
                 return RenderManagerImpl.this.getMapInternal();
             }
+
             @Override
             public Map getMap() {
                 return RenderManagerImpl.this.getMapInternal();
             }
+
             @Override
             public RenderManager getRenderManagerInternal() {
                 return RenderManagerImpl.this;
@@ -175,9 +177,10 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
         checkState();
         if (getRenderExecutor() != null) {
             final StringBuffer msg = new StringBuffer();
-            getRenderExecutor().visit(new ExecutorVisitor(){
+            getRenderExecutor().visit(new ExecutorVisitor() {
                 int i = 0;
-                public void visit( RenderExecutor executor ) {
+
+                public void visit(RenderExecutor executor) {
                     i++;
                     String layername = executor.getContext().getLayer().getID().toString();
                     if (executor.getContext().getLayer() instanceof SelectionLayer) {
@@ -187,8 +190,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
                 }
 
-                public void visit( RenderExecutorMultiLayer executor ) {
-                    for( ILayer layer : executor.getContext().getLayers() ) {
+                public void visit(RenderExecutorMultiLayer executor) {
+                    for (ILayer layer : executor.getContext().getLayers()) {
                         i++;
                         String layername = layer.getID().toString();
                         if (layer instanceof SelectionLayer) {
@@ -198,8 +201,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
                     }
                 }
 
-                public void visit( RenderExecutorComposite executor ) {
-                    for( RenderExecutor renderer : executor.getRenderer().getRenderExecutors() ) {
+                public void visit(RenderExecutorComposite executor) {
+                    for (RenderExecutor renderer : executor.getRenderer().getRenderExecutors()) {
                         renderer.visit(this);
                     }
                 }
@@ -237,7 +240,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetMapInternal( Map newMapInternal, NotificationChain msgs ) {
+    public NotificationChain basicSetMapInternal(Map newMapInternal, NotificationChain msgs) {
         Map oldMapInternal = mapInternal;
         mapInternal = newMapInternal;
         if (eNotificationRequired()) {
@@ -255,7 +258,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public void setMapInternalGen( Map newMapInternal ) {
+    public void setMapInternalGen(Map newMapInternal) {
         if (newMapInternal != mapInternal) {
             NotificationChain msgs = null;
             if (mapInternal != null)
@@ -265,7 +268,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
                 msgs = ((InternalEObject) newMapInternal).eInverseAdd(this,
                         ProjectPackage.MAP__RENDER_MANAGER_INTERNAL, Map.class, msgs);
             msgs = basicSetMapInternal(newMapInternal, msgs);
-            if (msgs != null) msgs.dispatch();
+            if (msgs != null)
+                msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     RenderPackage.RENDER_MANAGER__MAP_INTERNAL, newMapInternal, newMapInternal));
@@ -284,7 +288,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      * @param viewer The viewer to set.
      * @uml.property name="viewer"
      */
-    public void setViewer( boolean viewer ) {
+    public void setViewer(boolean viewer) {
         checkState();
         this.viewer = viewer;
     }
@@ -293,7 +297,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      * @see org.locationtech.udig.project.internal.render.RenderManager#setMap(IMap)
      * @uml.property name="mapInternal"
      */
-    public void setMapInternal( Map newMap ) {
+    public void setMapInternal(Map newMap) {
         checkState();
         if (isViewer()) {
             basicSetMapInternal(newMap, new NotificationChainImpl());
@@ -313,7 +317,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public void setMapDisplay( IMapDisplay newMapDisplay ) {
+    public void setMapDisplay(IMapDisplay newMapDisplay) {
         IMapDisplay oldMapDisplay = mapDisplay;
         mapDisplay = newMapDisplay;
         if (eNotificationRequired())
@@ -345,8 +349,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetViewportModelInternal( ViewportModel newViewportModelInternal,
-            NotificationChain msgs ) {
+    public NotificationChain basicSetViewportModelInternal(ViewportModel newViewportModelInternal,
+            NotificationChain msgs) {
         ViewportModel oldViewportModelInternal = viewportModelInternal;
         viewportModelInternal = newViewportModelInternal;
         if (eNotificationRequired()) {
@@ -366,7 +370,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      * 
      * @generated NOT
      */
-    public void setViewportModelInternal( ViewportModel newViewportModelInternal ) {
+    public void setViewportModelInternal(ViewportModel newViewportModelInternal) {
         if (newViewportModelInternal != viewportModelInternal) {
             NotificationChain msgs = null;
             if (viewportModelInternal != null)
@@ -378,7 +382,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
                         RenderPackage.VIEWPORT_MODEL__RENDER_MANAGER_INTERNAL, ViewportModel.class,
                         msgs);
             msgs = basicSetViewportModelInternal(newViewportModelInternal, msgs);
-            if (msgs != null) msgs.dispatch();
+            if (msgs != null)
+                msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     RenderPackage.RENDER_MANAGER__VIEWPORT_MODEL_INTERNAL,
@@ -412,7 +417,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public void setRenderExecutor( RenderExecutor newRenderExecutor ) {
+    public void setRenderExecutor(RenderExecutor newRenderExecutor) {
         RenderExecutor oldRenderExecutor = renderExecutor;
         renderExecutor = newRenderExecutor;
         if (eNotificationRequired())
@@ -451,9 +456,9 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      * @generated
      */
     @Override
-    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
-            NotificationChain msgs ) {
-        switch( featureID ) {
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID,
+            NotificationChain msgs) {
+        switch (featureID) {
         case RenderPackage.RENDER_MANAGER__MAP_INTERNAL:
             if (mapInternal != null)
                 msgs = ((InternalEObject) mapInternal).eInverseRemove(this,
@@ -475,9 +480,9 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      * @generated
      */
     @Override
-    public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
-            NotificationChain msgs ) {
-        switch( featureID ) {
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+            NotificationChain msgs) {
+        switch (featureID) {
         case RenderPackage.RENDER_MANAGER__MAP_INTERNAL:
             return basicSetMapInternal(null, msgs);
         case RenderPackage.RENDER_MANAGER__VIEWPORT_MODEL_INTERNAL:
@@ -492,14 +497,15 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      * @generated
      */
     @Override
-    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
-        switch( featureID ) {
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
         case RenderPackage.RENDER_MANAGER__RENDER_EXECUTOR:
             return getRenderExecutor();
         case RenderPackage.RENDER_MANAGER__MAP_DISPLAY:
             return getMapDisplay();
         case RenderPackage.RENDER_MANAGER__MAP_INTERNAL:
-            if (resolve) return getMapInternal();
+            if (resolve)
+                return getMapInternal();
             return basicGetMapInternal();
         case RenderPackage.RENDER_MANAGER__VIEWPORT_MODEL_INTERNAL:
             return getViewportModelInternal();
@@ -513,8 +519,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      * @generated
      */
     @Override
-    public void eSet( int featureID, Object newValue ) {
-        switch( featureID ) {
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
         case RenderPackage.RENDER_MANAGER__RENDER_EXECUTOR:
             setRenderExecutor((RenderExecutor) newValue);
             return;
@@ -537,8 +543,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      * @generated
      */
     @Override
-    public void eUnset( int featureID ) {
-        switch( featureID ) {
+    public void eUnset(int featureID) {
+        switch (featureID) {
         case RenderPackage.RENDER_MANAGER__RENDER_EXECUTOR:
             setRenderExecutor((RenderExecutor) null);
             return;
@@ -561,8 +567,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      * @generated
      */
     @Override
-    public boolean eIsSet( int featureID ) {
-        switch( featureID ) {
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
         case RenderPackage.RENDER_MANAGER__RENDER_EXECUTOR:
             return renderExecutor != null;
         case RenderPackage.RENDER_MANAGER__MAP_DISPLAY:
@@ -577,7 +583,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     }
 
     public void checkState() throws IllegalStateException {
-        if (disposed) throw new IllegalStateException("RenderManager is disposed"); //$NON-NLS-1$
+        if (disposed)
+            throw new IllegalStateException("RenderManager is disposed"); //$NON-NLS-1$
     }
 
     /**
@@ -586,7 +593,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+        if (eIsProxy())
+            return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (mapDisplay: "); //$NON-NLS-1$
@@ -599,7 +607,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      * @see org.locationtech.udig.project.internal.render.RenderManager#refresh(org.locationtech.udig.project.Layer,
      *      com.vividsolutions.jts.geom.Envelope)
      */
-    public void refresh( ILayer layer, Envelope bounds ) {
+    public void refresh(ILayer layer, Envelope bounds) {
         throw new UnsupportedOperationException();
 
     }
@@ -607,7 +615,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     /**
      * @see org.locationtech.udig.project.internal.render.RenderManager#refresh(com.vividsolutions.jts.geom.Envelope)
      */
-    public void refresh( Envelope bounds ) {
+    public void refresh(Envelope bounds) {
         throw new UnsupportedOperationException();
     }
 
@@ -621,7 +629,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     /**
      * @see org.locationtech.udig.project.internal.render.RenderManager#refreshSelection(com.vividsolutions.jts.geom.Envelope)
      */
-    public void refreshSelection( ILayer layer, Envelope bounds ) {
+    public void refreshSelection(ILayer layer, Envelope bounds) {
         throw new UnsupportedOperationException();
     }
 
@@ -639,29 +647,29 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     public List<IRenderer> getRenderers() {
         checkState();
         final List<IRenderer> renderers = new ArrayList<IRenderer>();
-        getRenderExecutor().visit(new ExecutorVisitor(){
+        getRenderExecutor().visit(new ExecutorVisitor() {
 
-            public void visit( RenderExecutor executor ) {
+            public void visit(RenderExecutor executor) {
                 if (!(executor.getContext().getLayer() instanceof SelectionLayer)) {
                     Renderer renderer = executor.getRenderer();
                     renderers.add(renderer);
                 }
             }
 
-            public void visit( RenderExecutorMultiLayer executor ) {
+            public void visit(RenderExecutorMultiLayer executor) {
                 renderers.add(executor.getRenderer());
             }
 
-            public void visit( RenderExecutorComposite executor ) {
-                for( RenderExecutor currentExecutor : executor.getRenderer().getRenderExecutors() )
+            public void visit(RenderExecutorComposite executor) {
+                for (RenderExecutor currentExecutor : executor.getRenderer().getRenderExecutors())
                     currentExecutor.visit(this);
             }
 
         });
 
-        Collections.sort(renderers, new Comparator<IRenderer>(){
+        Collections.sort(renderers, new Comparator<IRenderer>() {
 
-            public int compare( IRenderer arg0, IRenderer arg1 ) {
+            public int compare(IRenderer arg0, IRenderer arg1) {
                 return arg0.getContext().getLayer().compareTo(arg1.getContext().getLayer());
             }
 
@@ -671,7 +679,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     public void stopRendering() {
         checkState();
-        if (getRenderExecutor() != null) getRenderExecutor().stopRendering();
+        if (getRenderExecutor() != null)
+            getRenderExecutor().stopRendering();
     }
 
     public boolean isDisposed() {
@@ -680,7 +689,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     public RenderedImage getImage() {
         if (renderExecutor == null || renderExecutor.getState() == IRenderer.NEVER
-                || getRenderExecutor().getContext() == null) return null;
+                || getRenderExecutor().getContext() == null)
+            return null;
         //        try {
         //            ((CompositeRendererImpl)getRenderExecutor()).refreshImage();
         //        } catch (RenderException e) {
@@ -689,7 +699,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
         return getRenderExecutor().getContext().getImage();
     }
 
-    public void clearSelection( ILayer layer ) {
+    public void clearSelection(ILayer layer) {
         throw new UnsupportedOperationException();
     }
 
@@ -718,12 +728,13 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      * 
      * @returns true if the two layers are part of the same context
      */
-    public boolean areLayersRelatedByContext( ILayer layer, ILayer contained ) {
+    public boolean areLayersRelatedByContext(ILayer layer, ILayer contained) {
         //they are the same; so they are related
-        if (layer == contained) return true;
+        if (layer == contained)
+            return true;
 
         //for each renderer check the contexts
-        for( Iterator<IRenderer> iterator = getRenderers().iterator(); iterator.hasNext(); ) {
+        for (Iterator<IRenderer> iterator = getRenderers().iterator(); iterator.hasNext();) {
             IRenderContext context = ((IRenderer) iterator.next()).getContext();
             if (context instanceof CompositeRenderContext) {
                 if (((CompositeRenderContext) context).getLayers().contains(layer)) {
@@ -747,12 +758,13 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
         }
         return false;
     }
-    public Collection<ReferencedEnvelope> computeTileBounds( ReferencedEnvelope viewBounds,
-            double worldunitsperpixel ) {
+
+    public Collection<ReferencedEnvelope> computeTileBounds(ReferencedEnvelope viewBounds,
+            double worldunitsperpixel) {
         return null;
     }
 
-    public java.util.Map<ReferencedEnvelope, Tile> getTiles( Collection<ReferencedEnvelope> bounds ) {
+    public java.util.Map<ReferencedEnvelope, Tile> getTiles(Collection<ReferencedEnvelope> bounds) {
         return null;
     }
 } // RenderManagerImpl

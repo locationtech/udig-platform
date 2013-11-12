@@ -26,7 +26,7 @@ public interface Project extends EObject, IProject {
     /**
      * Returns an unmodifiable
      */
-    public <E> List<E> getElements( Class<E> type );
+    public <E> List<E> getElements(Class<E> type);
 
     /**
      * Returns a List with all elements in the project
@@ -53,6 +53,6 @@ public interface Project extends EObject, IProject {
      * @see #getName()
      * @generated
      */
-    void setName( String value );
+    void setName(String value);
 
 }

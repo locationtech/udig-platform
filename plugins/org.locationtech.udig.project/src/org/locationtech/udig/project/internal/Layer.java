@@ -8,6 +8,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.project.internal;
+
 import java.awt.Color;
 import java.net.URL;
 import java.util.List;
@@ -41,13 +42,8 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
  * @since 1.0.0
  * @model
  */
-public interface Layer
-        extends
-            EObject,
-            ILayer,
-            IAdaptable,
-            IBlockingAdaptable,
-            IResolveChangeListener {
+public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
+        IResolveChangeListener {
 
     /**
      * Returns the owning ContextModel object
@@ -65,7 +61,7 @@ public interface Layer
      * @see #getContextModel()
      * @generated
      */
-    void setContextModel( ContextModel value );
+    void setContextModel(ContextModel value);
 
     /**
      * Filter indicating the selected features.
@@ -94,7 +90,7 @@ public interface Layer
      * @see #getFilter()
      * @generated
      */
-    void setFilter( Filter value );
+    void setFilter(Filter value);
 
     /**
      * Sets the spatial bounds of this layer. This property is normally
@@ -103,7 +99,7 @@ public interface Layer
      *
      * @param bounds a ReferencedEnvelope indicating the new bounds for the layer
      */
-    public void setBounds( ReferencedEnvelope bounds );
+    public void setBounds(ReferencedEnvelope bounds);
 
     /**
      * StyleBlackboard used to persist user supplied appearance settings.
@@ -128,7 +124,7 @@ public interface Layer
      * @see #getStyleBlackboard()
      * @generated
      */
-    void setStyleBlackboard( StyleBlackboard value );
+    void setStyleBlackboard(StyleBlackboard value);
 
     /**
      * Returns the zorder of the layer
@@ -144,7 +140,7 @@ public interface Layer
      * @see #getZorder()
      * @generated
      */
-    void setZorder( int value );
+    void setZorder(int value);
 
     /**
      * Indication of Layer status.
@@ -177,14 +173,14 @@ public interface Layer
      * @see #getStatus()
      * @generated
      */
-    void setStatus( int value );
+    void setStatus(int value);
 
     /**
      * Sets the current rendering status message
      * 
      * @param message the status message
      */
-    void setStatusMessage( String message );
+    void setStatusMessage(String message);
 
     /**
      * @model keyType="Interaction" valueType="java.lang.Boolean" 
@@ -215,7 +211,7 @@ public interface Layer
      * @see #isShown()
      * @generated
      */
-    void setShown( boolean value );
+    void setShown(boolean value);
 
     /**
      * Set interaction applicability.
@@ -223,7 +219,7 @@ public interface Layer
      * @param interaction of the layer being considered
      * @param isApplicable true if layer is to be used with indicated interaction
      */
-    public void setInteraction( Interaction interaction, boolean isApplicable );
+    public void setInteraction(Interaction interaction, boolean isApplicable);
 
     /**
      * Indicates this layer is capable of selectable.
@@ -252,7 +248,7 @@ public interface Layer
      * @see #isSelectable()
      * @deprecated use setInteraction(Interaction.SELECT, value)
      */
-    void setSelectable( boolean value );
+    void setSelectable(boolean value);
 
     /**
      * Gets the name from the associated metadata.
@@ -270,7 +266,7 @@ public interface Layer
      * @see #getName()
      * @generated
      */
-    void setName( String value );
+    void setName(String value);
 
     /**
      * Returns the layer reference information..
@@ -286,7 +282,7 @@ public interface Layer
      * @see #getCatalogRef()
      * @generated
      */
-    void setCatalogRef( CatalogRef value );
+    void setCatalogRef(CatalogRef value);
 
     /**
      * Gets the id of the IGeoResource that the layer uses as its data source.  
@@ -304,7 +300,7 @@ public interface Layer
      * @see #getID()
      * @generated
      */
-    void setID( URL value );
+    void setID(URL value);
 
     /**
      * Returns whether this layer is currently visible
@@ -322,7 +318,7 @@ public interface Layer
      * @see #isVisible()
      * @generated
      */
-    void setVisible( boolean value );
+    void setVisible(boolean value);
 
     /**
      * Returns the currently preferred.
@@ -338,7 +334,7 @@ public interface Layer
      * @see #getGeoResource()
      * @generated
      */
-    void setGeoResource( IGeoResource value );
+    void setGeoResource(IGeoResource value);
 
     /**
      * Access to resources that hold data for this layer.
@@ -368,7 +364,7 @@ public interface Layer
      * @see #getIcon()
      * @generated
      */
-    void setIcon( ImageDescriptor value );
+    void setIcon(ImageDescriptor value);
 
     /**
      * Query that selects all the features for the layer.
@@ -386,7 +382,7 @@ public interface Layer
      *         a query that selects all the selected features is returned.
      * @model volatile="true"
      */
-    public Query getQuery( boolean selection );
+    public Query getQuery(boolean selection);
 
     /**
      * Gets the CRS for the layer. NOTE: THIS METHOD MAY BLOCK!!!
@@ -396,7 +392,7 @@ public interface Layer
      *         current map's CRS will be returned, or if this fails the CRS will be WGS84.
      * @model
      */
-    CoordinateReferenceSystem getCRS( IProgressMonitor monitor );
+    CoordinateReferenceSystem getCRS(IProgressMonitor monitor);
 
     /**
      * A convenience method for getCRS(null). Logs any exceptions with the Plugin log.
@@ -417,7 +413,7 @@ public interface Layer
      * @see #getCRS()
      * @generated
      */
-    void setCRS( CoordinateReferenceSystem value );
+    void setCRS(CoordinateReferenceSystem value);
 
     /**
      * Temporary layer properties, used for lightweight collaboration.
@@ -458,7 +454,7 @@ public interface Layer
      * @see #getColourScheme()
      * @generated
      */
-    void setColourScheme( ColourScheme value );
+    void setColourScheme(ColourScheme value);
 
     /**
      * @return
@@ -474,7 +470,7 @@ public interface Layer
      * @see #getDefaultColor()
      * @generated
      */
-    void setDefaultColor( Color value );
+    void setDefaultColor(Color value);
 
     /**
      * Returns a list of all the FeatureEvents since the last commit.
@@ -507,7 +503,7 @@ public interface Layer
      * @param value the new value of the '<em>Min Scale Denominator</em>' attribute.
      * @see #getMinScaleDenominator()
      */
-    public void setMinScaleDenominator( double value );
+    public void setMinScaleDenominator(double value);
 
     /**
      * Gets the min scale.  Will never return Double.NaN or 0
@@ -522,6 +518,6 @@ public interface Layer
      * @param value the new value of the '<em>Max Scale Denominator</em>' attribute.
      * @see #getMaxScaleDenominator()
      */
-    public void setMaxScaleDenominator( double value );
+    public void setMaxScaleDenominator(double value);
 
 }

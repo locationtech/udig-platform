@@ -63,16 +63,16 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     public static class LayerListener extends AdapterImpl {
         protected RenderExecutorImpl executor;
 
-        LayerListener( RenderExecutorImpl executor ) {
+        LayerListener(RenderExecutorImpl executor) {
             this.executor = executor;
         }
 
         /**
          * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
          */
-        public void notifyChanged( Notification msg ) {
+        public void notifyChanged(Notification msg) {
             Layer layer = (Layer) msg.getNotifier();
-            switch( msg.getFeatureID(Layer.class) ) {
+            switch (msg.getFeatureID(Layer.class)) {
             case ProjectPackage.LAYER__STYLE_BLACKBOARD:
                 //dealt with by the layer listener created in the RenderManagerAdapters (added to the render manager)
                 //therefore we don't need to deal with this here.
@@ -82,7 +82,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
                 //                styleBlackboardChanged(msg);
                 break;
             case ProjectPackage.LAYER__VISIBLE:
-                if (executor.getContext().getLayer() instanceof SelectionLayer) return;
+                if (executor.getContext().getLayer() instanceof SelectionLayer)
+                    return;
                 if (msg.getNewBooleanValue())
                     layerVisible(layer, msg);
                 else
@@ -94,7 +95,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
             }
         }
 
-        protected void layerNotVisible( Layer layer, Notification msg ) {
+        protected void layerNotVisible(Layer layer, Notification msg) {
             RenderContext context2 = executor.getContext();
             context2.getLabelPainter().disableLayer(context2.getLayer().getID().toString());
             if (executor.getState() == RENDERING) {
@@ -111,10 +112,11 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
             }
         }
 
-        protected void layerVisible( Layer layer, Notification msg ) {
+        protected void layerVisible(Layer layer, Notification msg) {
             RenderContext context2 = executor.getContext();
             context2.getLabelPainter().enableLayer(context2.getLayer().getID().toString());
-            if (executor.getState() == IRenderer.RENDERING) return;
+            if (executor.getState() == IRenderer.RENDERING)
+                return;
             if (executor.getState() != IRenderer.DONE || executor.dirty) {
                 RenderManager renderManager = (RenderManager) layer.getMapInternal()
                         .getRenderManager();
@@ -133,6 +135,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         //            executor.getContext().getRenderManager().refresh((ILayer) msg.getNotifier(), null);
         //        }
     }
+
     /**
      * Calls the render() function when a RENDER_REQUEST goes by...
      * <p>
@@ -149,14 +152,14 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
 
         protected RenderExecutor executor;
 
-        RendererListener( RenderExecutor executor ) {
+        RendererListener(RenderExecutor executor) {
             this.executor = executor;
         }
 
         /**
          * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
          */
-        public void notifyChanged( Notification msg ) {
+        public void notifyChanged(Notification msg) {
             if (msg.getNotifier() instanceof Renderer) {
                 if (msg.getFeatureID(Renderer.class) == RenderPackage.RENDERER__STATE) {
                     if (msg.getNewIntValue() == IRenderer.RENDER_REQUEST) {
@@ -168,7 +171,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
 
         }
 
-        protected void stateChanged( Notification msg ) {
+        protected void stateChanged(Notification msg) {
             executor.setState(msg.getNewIntValue());
             if (msg.getNewIntValue() == IRenderer.RENDER_REQUEST) {
                 try {
@@ -182,7 +185,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         }
     }
 
-    protected static void clearImage( Envelope bounds2, RenderExecutor executor ) {
+    protected static void clearImage(Envelope bounds2, RenderExecutor executor) {
         if (bounds2 != null
                 && !bounds2.contains(executor.getContext().getViewportModel().getBounds())) {
             Point min = executor.getContext().worldToPixel(
@@ -230,6 +233,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         super();
         renderJob = new RenderJob(this);
     }
+
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
@@ -245,7 +249,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      * @generated NOT
      */
     public void dispose() {
-        while( getRenderer().eAdapters().remove(renderListener) );
+        while (getRenderer().eAdapters().remove(renderListener))
+            ;
         eAdapters().clear();
         removeLayerListener(getContext());
         stopRendering();
@@ -266,13 +271,14 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
             exc.printStackTrace();
         }
 
-        if (getRenderer().getState() != DISPOSED) getRenderer().setState(DISPOSED);
+        if (getRenderer().getState() != DISPOSED)
+            getRenderer().setState(DISPOSED);
     }
 
     /**
      * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#setState(int)
      */
-    public void setState( int newState ) {
+    public void setState(int newState) {
         super.setState(newState);
     }
 
@@ -282,11 +288,12 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      * @generated NOT
      */
     public void stopRendering() {
-        if (renderJob.cancel()) return;
+        if (renderJob.cancel())
+            return;
         final AtomicBoolean done = new AtomicBoolean(renderJob.cancel());
-        IJobChangeListener listener = new JobChangeAdapter(){
+        IJobChangeListener listener = new JobChangeAdapter() {
             @Override
-            public void done( IJobChangeEvent event ) {
+            public void done(IJobChangeEvent event) {
                 done.set(true);
                 synchronized (done) {
                     done.notify();
@@ -297,7 +304,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         renderJob.addJobChangeListener(listener);
         try {
             long start = System.currentTimeMillis();
-            while( !done.get() && !renderJob.cancel() && start + 2000 < System.currentTimeMillis() )
+            while (!done.get() && !renderJob.cancel() && start + 2000 < System.currentTimeMillis())
                 synchronized (done) {
                     try {
                         done.wait(200);
@@ -321,14 +328,16 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      * @throws RenderException
      * @generated NOT
      */
-    public void render( Graphics2D destination, IProgressMonitor monitor ) throws RenderException {
+    public void render(Graphics2D destination, IProgressMonitor monitor) throws RenderException {
 
-        if (getState() == DISPOSED) return;
+        if (getState() == DISPOSED)
+            return;
         getRenderer().render(destination, validateMonitor(monitor));
     }
 
-    private IProgressMonitor validateMonitor( IProgressMonitor monitor ) {
-        if (monitor != null) return monitor;
+    private IProgressMonitor validateMonitor(IProgressMonitor monitor) {
+        if (monitor != null)
+            return monitor;
 
         return new NullProgressMonitor();
     }
@@ -337,7 +346,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      * @see org.locationtech.udig.project.internal.render.Renderer#getContext()
      */
     public RenderContext getContext() {
-        if (getRenderer() == null) return null;
+        if (getRenderer() == null)
+            return null;
         return (RenderContext) getRenderer().getContext();
     }
 
@@ -350,7 +360,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     }
 
     protected String getRenderJobName() {
-        return MessageFormat.format(Messages.RenderExecutorImpl_message, new Object[]{getName()});
+        return MessageFormat
+                .format(Messages.RenderExecutorImpl_message, new Object[] { getName() });
     }
 
     /**
@@ -358,7 +369,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      * @uml.property name="renderer"
      */
     @SuppressWarnings("unchecked")
-    public void setRenderer( Renderer newRenderer ) {
+    public void setRenderer(Renderer newRenderer) {
         if (getRenderer() != null) {
             getRenderer().eAdapters().remove(renderListener);
             removeLayerListener((RenderContext) getRenderer().getContext());
@@ -372,7 +383,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     }
 
     @SuppressWarnings("unchecked")
-    protected void removeLayerListener( IRenderContext context ) {
+    protected void removeLayerListener(IRenderContext context) {
         if (context.getLayer() != null) {
             Layer layer = ((Layer) context.getLayer());
             List<Adapter> adapters = layer.eAdapters();
@@ -381,7 +392,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
             }
             try {
                 ArrayList<Adapter> toRemove = new ArrayList<Adapter>();
-                for( Iterator<Adapter> iter = adapters.iterator(); iter.hasNext(); ) {
+                for (Iterator<Adapter> iter = adapters.iterator(); iter.hasNext();) {
                     Adapter t = iter.next();
                     if (t instanceof RenderExecutorImpl.LayerListener) {
                         //                        iter.remove();
@@ -397,8 +408,9 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
             }
         }
     }
+
     @SuppressWarnings("unchecked")
-    protected void addLayerListener( IRenderContext context ) {
+    protected void addLayerListener(IRenderContext context) {
 
         if (context.getLayer() != null && !(context.getLayer() instanceof SelectionLayer)) {
             removeLayerListener(context);
@@ -410,67 +422,72 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public void setRendererGen( Renderer newRenderer ) {
+    public void setRendererGen(Renderer newRenderer) {
         Renderer oldRenderer = renderer;
         renderer = newRenderer;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     RenderPackage.RENDER_EXECUTOR__RENDERER, oldRenderer, renderer));
     }
+
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
-    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
-        switch( featureID ) {
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
         case RenderPackage.RENDER_EXECUTOR__RENDERER:
             return getRenderer();
         }
         return super.eGet(featureID, resolve, coreType);
     }
+
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
-    public void eSet( int featureID, Object newValue ) {
-        switch( featureID ) {
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
         case RenderPackage.RENDER_EXECUTOR__RENDERER:
             setRenderer((Renderer) newValue);
             return;
         }
         super.eSet(featureID, newValue);
     }
+
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
-    public void eUnset( int featureID ) {
-        switch( featureID ) {
+    public void eUnset(int featureID) {
+        switch (featureID) {
         case RenderPackage.RENDER_EXECUTOR__RENDERER:
             setRenderer((Renderer) null);
             return;
         }
         super.eUnset(featureID);
     }
+
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
-    public boolean eIsSet( int featureID ) {
-        switch( featureID ) {
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
         case RenderPackage.RENDER_EXECUTOR__RENDERER:
             return renderer != null;
         }
         return super.eIsSet(featureID);
     }
+
     /**
      * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#getInfo(Point, Layer)
      *      public InfoList getInfo(Point screenLocation) throws IOException { if
@@ -482,7 +499,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     /**
      * @see org.locationtech.udig.project.internal.render.RenderExecutor#visit(org.locationtech.udig.project.render.ExecutorVisitor)
      */
-    public void visit( ExecutorVisitor visitor ) {
+    public void visit(ExecutorVisitor visitor) {
         visitor.visit(this);
     }
 
@@ -505,7 +522,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         if (getState() == DISPOSED || !getRenderer().getContext().isVisible()) {
             dirty = true;
             getContext().getLayer().setStatus(ILayer.DONE);
-            if (getRenderer().getState() != IRenderer.DONE) getRenderer().setState(IRenderer.DONE);
+            if (getRenderer().getState() != IRenderer.DONE)
+                getRenderer().setState(IRenderer.DONE);
             return;
         }
 
@@ -520,14 +538,15 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#render(com.vividsolutions.jts.geom.Envelope,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
-    public void render( IProgressMonitor monitor ) {
+    public void render(IProgressMonitor monitor) {
         render();
     }
 
     @Override
     public String toString() {
         String selection = ""; //$NON-NLS-1$
-        if (getContext().getLayer() instanceof SelectionLayer) selection = "Selection "; //$NON-NLS-1$
+        if (getContext().getLayer() instanceof SelectionLayer)
+            selection = "Selection "; //$NON-NLS-1$
         return getContext().getMap().getName()
                 + ":" + selection + (getRenderer() != null ? getRenderer().getName() : "null"); //$NON-NLS-1$ //$NON-NLS-2$
     }

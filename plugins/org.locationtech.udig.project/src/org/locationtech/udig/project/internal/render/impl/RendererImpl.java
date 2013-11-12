@@ -115,10 +115,11 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
     public String getName() {
         if (name == null) {
             ILayer layer = getContext().getLayer();
-            if (layer == null) return ""; //$NON-NLS-1$
+            if (layer == null)
+                return ""; //$NON-NLS-1$
             if (layer instanceof SelectionLayer)
                 return MessageFormat.format(Messages.RendererImpl_selectionFor,
-                        new Object[]{layer.getName()});
+                        new Object[] { layer.getName() });
             else
                 return layer.getName();
         } else
@@ -129,7 +130,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public void setName( String newName ) {
+    public void setName(String newName) {
         String oldName = name;
         name = newName;
         if (eNotificationRequired())
@@ -149,7 +150,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public void setState( int newState ) {
+    public void setState(int newState) {
         int oldState = state;
         state = newState;
         if (eNotificationRequired())
@@ -161,7 +162,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
         return context;
     }
 
-    public void setContext( IRenderContext newContext ) {
+    public void setContext(IRenderContext newContext) {
         ProjectPlugin.trace(Trace.RENDER, getClass(),
                 "RenderContext changed. \nOld:" + context + "\nNew:" + newContext, null); //$NON-NLS-1$ //$NON-NLS-2$
         context = newContext;
@@ -174,10 +175,10 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
      * @throws RenderException
      * @generated NOT
      */
-    public abstract void render( Graphics2D destination, IProgressMonitor monitor )
+    public abstract void render(Graphics2D destination, IProgressMonitor monitor)
             throws RenderException;
 
-    public abstract void render( IProgressMonitor monitor ) throws RenderException;
+    public abstract void render(IProgressMonitor monitor) throws RenderException;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -203,8 +204,8 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
      * @generated
      */
     @Override
-    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
-        switch( featureID ) {
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
         case RenderPackage.RENDERER__STATE:
             return getState();
         case RenderPackage.RENDERER__NAME:
@@ -221,8 +222,8 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
      * @generated
      */
     @Override
-    public void eSet( int featureID, Object newValue ) {
-        switch( featureID ) {
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
         case RenderPackage.RENDERER__STATE:
             setState((Integer) newValue);
             return;
@@ -242,8 +243,8 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
      * @generated
      */
     @Override
-    public void eUnset( int featureID ) {
-        switch( featureID ) {
+    public void eUnset(int featureID) {
+        switch (featureID) {
         case RenderPackage.RENDERER__STATE:
             setState(STATE_EDEFAULT);
             return;
@@ -263,8 +264,8 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
      * @generated
      */
     @Override
-    public boolean eIsSet( int featureID ) {
-        switch( featureID ) {
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
         case RenderPackage.RENDERER__STATE:
             return state != STATE_EDEFAULT;
         case RenderPackage.RENDERER__NAME:
@@ -281,7 +282,8 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
      */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+        if (eIsProxy())
+            return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (state: "); //$NON-NLS-1$
@@ -305,7 +307,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
      * If a ReferencedEnvelope is provided it would be best; if not the context CoordinateReferenceSystem (ie world crs) will be assumed.
      * </p>
      */
-    public synchronized void setRenderBounds( Envelope boundsToRender ) {
+    public synchronized void setRenderBounds(Envelope boundsToRender) {
         if (boundsToRender == null) {
             renderbounds = null;
         } else if (boundsToRender instanceof ReferencedEnvelope) {
@@ -327,10 +329,11 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
             renderbounds = referencedEnvelope;
         }
     }
+
     /**
      * Set the bounds to the indicated screenArea (by using the pixelToWorld method to produced a ReferencedEnvelope.
      */
-    public synchronized void setRenderBounds( Rectangle screenArea ) {
+    public synchronized void setRenderBounds(Rectangle screenArea) {
         Coordinate min = getContext().pixelToWorld(screenArea.x, screenArea.y);
         Coordinate max = getContext().pixelToWorld(screenArea.width + screenArea.x,
                 screenArea.height + screenArea.y);
@@ -338,6 +341,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
                 getContext().getCRS());
         setRenderBounds(worldArea);
     }
+
     /**
      * The area of the world that we wish to draw.
      * <p>

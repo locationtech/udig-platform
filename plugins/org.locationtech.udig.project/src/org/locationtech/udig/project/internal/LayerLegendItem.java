@@ -54,6 +54,6 @@ public interface LayerLegendItem extends LegendItem, ILayerLegendItem {
      * @see #getLayer()
      * @generated
      */
-    void setLayer( Layer value );
+    void setLayer(Layer value);
 
 } // LayerLegendItem

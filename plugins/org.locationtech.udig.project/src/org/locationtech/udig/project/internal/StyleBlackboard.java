@@ -48,7 +48,7 @@ public interface StyleBlackboard extends EObject, IStyleBlackboard, Cloneable {
      * @return The requested style object or null if it does not exist
      * @model
      */
-    Object get( String styleId );
+    Object get(String styleId);
 
     /**
      * Retreives the style value by the class of the style object. Returns the first object that
@@ -58,7 +58,7 @@ public interface StyleBlackboard extends EObject, IStyleBlackboard, Cloneable {
      * @return The requested style object or null if it does not exist
      * @model
      */
-    Object lookup( Class< ? > theClass );
+    Object lookup(Class<?> theClass);
 
     /**
      * Convenience method for testing for the existance of a style.
@@ -68,7 +68,7 @@ public interface StyleBlackboard extends EObject, IStyleBlackboard, Cloneable {
      * @return true if the style extists, otherwise false.
      * @model
      */
-    boolean contains( String styleId );
+    boolean contains(String styleId);
 
     /**
      * Places a style onto the blackboard.
@@ -79,7 +79,7 @@ public interface StyleBlackboard extends EObject, IStyleBlackboard, Cloneable {
      * @param style An object containing all the styling information.
      * @model
      */
-    void put( String styleId, Object style );
+    void put(String styleId, Object style);
 
     /**
      * Loads a style from a URL pointing to a resource. This method blocks.
@@ -89,7 +89,7 @@ public interface StyleBlackboard extends EObject, IStyleBlackboard, Cloneable {
      * @throws IOException if there is an error getting the style.
      * @model
      */
-    void put( URL url, IProgressMonitor monitor ) throws IOException;
+    void put(URL url, IProgressMonitor monitor) throws IOException;
 
     /**
      * Sets the styles indicated by the ids to be <em>selected</em>.  
@@ -105,7 +105,7 @@ public interface StyleBlackboard extends EObject, IStyleBlackboard, Cloneable {
      *
      * @param ids
      */
-    void setSelected( String[] ids );
+    void setSelected(String[] ids);
 
     /**
      * Removes the style value identified by styleId from the blackboard. FIXME: Can we reduce this
@@ -116,7 +116,7 @@ public interface StyleBlackboard extends EObject, IStyleBlackboard, Cloneable {
      * @return The style object removed from the blackboard, or null if no such entry exists.
      * @model
      */
-    Object remove( String styleId );
+    Object remove(String styleId);
 
     /**
      * Creates a clone of the blackboard.

@@ -29,20 +29,16 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * 
  * @generated
  */
-public class MultiLayerRendererItemProvider extends RendererItemProvider
-        implements
-            IEditingDomainItemProvider,
-            IStructuredItemContentProvider,
-            ITreeItemContentProvider,
-            IItemLabelProvider,
-            IItemPropertySource {
+public class MultiLayerRendererItemProvider extends RendererItemProvider implements
+        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
+        IItemLabelProvider, IItemPropertySource {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @generated
      */
-    public MultiLayerRendererItemProvider( AdapterFactory adapterFactory ) {
+    public MultiLayerRendererItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -53,22 +49,12 @@ public class MultiLayerRendererItemProvider extends RendererItemProvider
      * @generated
      */
     @Override
-    public List<IItemPropertyDescriptor> getPropertyDescriptors( Object object ) {
+    public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
         }
         return itemPropertyDescriptors;
-    }
-
-    /**
-     * This returns MultiLayerRenderer.gif.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Object getImage( Object object ) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/MultiLayerRenderer")); //$NON-NLS-1$
     }
 
     /**
@@ -87,7 +73,7 @@ public class MultiLayerRendererItemProvider extends RendererItemProvider
      * 
      * @generated NOT
      */
-    public String getText( Object object ) {
+    public String getText(Object object) {
         String label = ((MultiLayerRenderer) object).getName();
         return label == null || label.length() == 0 ? "MultiLayerRenderer" : label;
     }
@@ -99,7 +85,7 @@ public class MultiLayerRendererItemProvider extends RendererItemProvider
      * @generated
      */
     @Override
-    public void notifyChanged( Notification notification ) {
+    public void notifyChanged(Notification notification) {
         updateChildren(notification);
         super.notifyChanged(notification);
     }

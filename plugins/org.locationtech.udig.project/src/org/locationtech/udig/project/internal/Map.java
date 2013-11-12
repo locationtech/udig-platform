@@ -56,7 +56,7 @@ public interface Map extends ProjectElement, IMap {
      * @see #getContextModel()
      * @generated
      */
-    void setContextModel( ContextModel value );
+    void setContextModel(ContextModel value);
 
     /**
      * Returns the Viewport model for this map.
@@ -73,7 +73,7 @@ public interface Map extends ProjectElement, IMap {
      * @see #getViewportModelInternal()
      * @generated
      */
-    void setViewportModelInternal( ViewportModel value );
+    void setViewportModelInternal(ViewportModel value);
 
     /**
      * Returns the colour palette that layer's default colours are picked from.
@@ -90,7 +90,7 @@ public interface Map extends ProjectElement, IMap {
      * @see #getColorPalette()
      * @generated
      */
-    void setColorPalette( BrewerPalette value );
+    void setColorPalette(BrewerPalette value);
 
     /**
      * @return
@@ -105,7 +105,7 @@ public interface Map extends ProjectElement, IMap {
      * @see #getColourScheme()
      * @generated
      */
-    void setColourScheme( ColourScheme value );
+    void setColourScheme(ColourScheme value);
 
     /**
      * Iterates through the current layers and returns the default colours in use.
@@ -130,7 +130,7 @@ public interface Map extends ProjectElement, IMap {
      * @see #getAbstract()
      * @generated
      */
-    void setAbstract( String value );
+    void setAbstract(String value);
 
     /**
      * Gets the Envelope that indicates the maximum bounding box of the map.
@@ -147,7 +147,7 @@ public interface Map extends ProjectElement, IMap {
      * @throws IOException
      * @model transient="true" changeable="false" unsettable='true' default=''
      */
-    public ReferencedEnvelope getBounds( IProgressMonitor monitor );
+    public ReferencedEnvelope getBounds(IProgressMonitor monitor);
 
     /**
      * Returns the Aspect ratio of the map. It is normally no the same as the aspect ratio of the
@@ -156,7 +156,7 @@ public interface Map extends ProjectElement, IMap {
      * @return The aspect ratio of the map.
      * @model volatile="true" changeable="false" transient="true"
      */
-    public double getAspectRatio( IProgressMonitor monitor );
+    public double getAspectRatio(IProgressMonitor monitor);
 
     /**
      * Returns the Rendermanager for the current map.
@@ -173,7 +173,7 @@ public interface Map extends ProjectElement, IMap {
      * @see #getEditManagerInternal()
      * @generated
      */
-    void setEditManagerInternal( EditManager value );
+    void setEditManagerInternal(EditManager value);
 
     /**
      * Returns the SelectionManager for the current map.
@@ -190,7 +190,7 @@ public interface Map extends ProjectElement, IMap {
      * @see #getRenderManagerInternal()
      * @generated
      */
-    void setRenderManagerInternal( RenderManager value );
+    void setRenderManagerInternal(RenderManager value);
 
     /**
      * Redo the last command undone.
@@ -246,7 +246,7 @@ public interface Map extends ProjectElement, IMap {
      * @see #getLayerFactory()
      * @generated
      */
-    void setLayerFactory( LayerFactory value );
+    void setLayerFactory(LayerFactory value);
 
     /**
      * @return the blackboard for the map.
@@ -261,7 +261,7 @@ public interface Map extends ProjectElement, IMap {
      * @see #getBlackBoardInternal()
      * @generated
      */
-    void setBlackBoardInternal( Blackboard value );
+    void setBlackBoardInternal(Blackboard value);
 
     /**
      * Returns the value of the '<em><b>Legend</b></em>' containment reference list.
@@ -293,14 +293,16 @@ public interface Map extends ProjectElement, IMap {
      *
      * @param adapter adapter to add as a deep adapter
      */
-    public void addDeepAdapter( Adapter adapter );
+    public void addDeepAdapter(Adapter adapter);
+
     /**
      * Removes the adapter from all layers and context model.
      *
      *@see #addDeepAdapter(Adapter)
      * @param adapter adapter to remove.
      */
-    public void removeDeepAdapter( Adapter adapter );
+    public void removeDeepAdapter(Adapter adapter);
+
     /**
      * Increases the ZOrder of the layer so it is rendered earlier with incomparison to the other
      * layers. If the Layer is at the bottom of the render list(first to be drawn) it is not
@@ -308,14 +310,16 @@ public interface Map extends ProjectElement, IMap {
      * 
      * @param layer The layer whose rendering order will be modified
      */
-    public void lowerLayer( Layer layer );
+    public void lowerLayer(Layer layer);
+
     /**
      * Decreases the ZOrder of the layer so it is rendered later with incomparison to the other
      * layers. If the Layer is at the top of the render list(last to be drawn) it is not affected.
      * 
      * @param layer The layer whose rendering order will be modified
      */
-    public void raiseLayer( Layer layer );
+    public void raiseLayer(Layer layer);
+
     /**
      * Increases the ZOrder of the layer so it is rendered first with incomparison to the other
      * layers. If the Layer is at the bottom of the render list(first to be drawn) it is not
@@ -323,22 +327,24 @@ public interface Map extends ProjectElement, IMap {
      * 
      * @param layer The layer whose rendering order will be modified
      */
-    public void sendToFrontLayer( Layer layer );
+    public void sendToFrontLayer(Layer layer);
+
     /**
      * Decreases the ZOrder of the layer so it is rendered last with incomparison to the other
      * layers. If the Layer is at the top of the render list(last to be drawn) it is not affected.
      * 
      * @param layer The layer whose rendering order will be modified
      */
-    public void sendToBackLayer( Layer layer );
+    public void sendToBackLayer(Layer layer);
+
     /**
      * Sets the ZOrder of the layer to the specified index so it is rendered relative to the new
      * ordering created by the change.
      * 
      * @param layer The layer whose rendering order will be modified
      */
-    public void sendToIndexLayer( Layer layer, int index );
-    
+    public void sendToIndexLayer(Layer layer, int index);
+
     /**
      * Select all selectable layers, with a BoundingBox Geometry filter. Boundingbox must be in the
      * same CRS as the ViewportModel
@@ -349,7 +355,7 @@ public interface Map extends ProjectElement, IMap {
      * @param boundingBox the bounding box in Viewportmodel CRS to create a filter with
      * 
      */
-    public void select( Envelope boundingBox );
+    public void select(Envelope boundingBox);
 
     /**
      * Select all selectable layers, with a BoundingBox Geometry filter. Boundingbox must be in the
@@ -362,7 +368,7 @@ public interface Map extends ProjectElement, IMap {
      * @param add true adds (or with current filter)to the current selection, false removes from the
      *        current selection(and with current filter).
      */
-    public void select( Envelope boundingBox, boolean add );
+    public void select(Envelope boundingBox, boolean add);
 
     /**
      * Select all selectable layers, with the provided filter.
@@ -372,7 +378,7 @@ public interface Map extends ProjectElement, IMap {
      * 
      * @param filter new selection filter
      */
-    public void select( Filter filter );
+    public void select(Filter filter);
 
     /**
      * Combines selection, from the selectable layers, with the provided filter.
@@ -384,7 +390,7 @@ public interface Map extends ProjectElement, IMap {
      * @param add true adds (or with current filter)to the current selection, false removes from the
      *        current selection.
      */
-    public void select( Filter filter, boolean add );
+    public void select(Filter filter, boolean add);
 
     /**
      * Makes a selection in a specified layer of this map (not necessarily a selected layer ).
@@ -393,6 +399,6 @@ public interface Map extends ProjectElement, IMap {
      * @param filter
      * @param layer
      */
-    public void select( Filter filter, ILayer layer );
+    public void select(Filter filter, ILayer layer);
 
 }

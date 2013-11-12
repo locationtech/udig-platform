@@ -105,8 +105,11 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
     }
 
     private static final String CARTESIAN_2D = "CARTESIAN_2D";
+
     private static final String CARTESIAN_3D = "CARTESIAN_3D";
+
     private static final String GENERIC_2D = "GENERIC_2D";
+
     private static final String GENERIC_3D = "GENERIC_3D";
 
     /**
@@ -123,8 +126,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * @generated
      */
     @Override
-    public EObject create( EClass eClass ) {
-        switch( eClass.getClassifierID() ) {
+    public EObject create(EClass eClass) {
+        switch (eClass.getClassifierID()) {
         case ProjectPackage.CONTEXT_MODEL:
             return createContextModel();
         case ProjectPackage.EDIT_MANAGER:
@@ -166,8 +169,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * @generated
      */
     @Override
-    public Object createFromString( EDataType eDataType, String initialValue ) {
-        switch( eDataType.getClassifierID() ) {
+    public Object createFromString(EDataType eDataType, String initialValue) {
+        switch (eDataType.getClassifierID()) {
         case ProjectPackage.COORDINATE:
             return createCoordinateFromString(eDataType, initialValue);
         case ProjectPackage.MAP_DISPLAY:
@@ -245,8 +248,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * @generated
      */
     @Override
-    public String convertToString( EDataType eDataType, Object instanceValue ) {
-        switch( eDataType.getClassifierID() ) {
+    public String convertToString(EDataType eDataType, Object instanceValue) {
+        switch (eDataType.getClassifierID()) {
         case ProjectPackage.COORDINATE:
             return convertCoordinateToString(eDataType, instanceValue);
         case ProjectPackage.MAP_DISPLAY:
@@ -453,7 +456,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public Query createQueryFromString( EDataType eDataType, String initialValue ) {
+    public Query createQueryFromString(EDataType eDataType, String initialValue) {
         return (Query) super.createFromString(eDataType, initialValue);
     }
 
@@ -461,7 +464,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertQueryToString( EDataType eDataType, Object instanceValue ) {
+    public String convertQueryToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -470,7 +473,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * 
      * @generated NOT
      */
-    public Envelope createEnvelopeFromString( EDataType eDataType, String initialValue ) {
+    public Envelope createEnvelopeFromString(EDataType eDataType, String initialValue) {
         return createReferencedEnvelopeFromString(eDataType, initialValue);
     }
 
@@ -479,7 +482,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * 
      * @generated NOT
      */
-    public String convertEnvelopeToString( EDataType eDataType, Object instanceValue ) {
+    public String convertEnvelopeToString(EDataType eDataType, Object instanceValue) {
         return convertReferencedEnvelopeToString(eDataType, instanceValue);
     }
 
@@ -488,8 +491,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EditManagerControlCommand createEditManagerControlCommandFromString(
-            EDataType eDataType, String initialValue ) {
+    public EditManagerControlCommand createEditManagerControlCommandFromString(EDataType eDataType,
+            String initialValue) {
         return (EditManagerControlCommand) super.createFromString(eDataType, initialValue);
     }
 
@@ -497,7 +500,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public Coordinate createCoordinateFromString( EDataType eDataType, String initialValue ) {
+    public Coordinate createCoordinateFromString(EDataType eDataType, String initialValue) {
         return (Coordinate) super.createFromString(eDataType, initialValue);
     }
 
@@ -505,7 +508,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertCoordinateToString( EDataType eDataType, Object instanceValue ) {
+    public String convertCoordinateToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -513,7 +516,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public NavCommand createNavCommandFromString( EDataType eDataType, String initialValue ) {
+    public NavCommand createNavCommandFromString(EDataType eDataType, String initialValue) {
         return (NavCommand) super.createFromString(eDataType, initialValue);
     }
 
@@ -521,7 +524,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertNavCommandToString( EDataType eDataType, Object instanceValue ) {
+    public String convertNavCommandToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -529,7 +532,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public ImageDescriptor createImageDescriptorFromString( EDataType eDataType, String initialValue ) {
+    public ImageDescriptor createImageDescriptorFromString(EDataType eDataType, String initialValue) {
         return (ImageDescriptor) super.createFromString(eDataType, initialValue);
     }
 
@@ -537,7 +540,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertImageDescriptorToString( EDataType eDataType, Object instanceValue ) {
+    public String convertImageDescriptorToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -545,7 +548,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public AffineTransform createAffineTransformFromString( EDataType eDataType, String initialValue ) {
+    public AffineTransform createAffineTransformFromString(EDataType eDataType, String initialValue) {
         return (AffineTransform) super.createFromString(eDataType, initialValue);
     }
 
@@ -553,7 +556,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertAffineTransformToString( EDataType eDataType, Object instanceValue ) {
+    public String convertAffineTransformToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -561,7 +564,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public NavCommandStack createNavCommandStackFromString( EDataType eDataType, String initialValue ) {
+    public NavCommandStack createNavCommandStackFromString(EDataType eDataType, String initialValue) {
         return (NavCommandStack) super.createFromString(eDataType, initialValue);
     }
 
@@ -569,7 +572,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertNavCommandStackToString( EDataType eDataType, Object instanceValue ) {
+    public String convertNavCommandStackToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -578,8 +581,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * 
      * @generated NOT
      */
-    public CoordinateReferenceSystem createCoordinateReferenceSystemFromString(
-            EDataType eDataType, String initialValue ) {
+    public CoordinateReferenceSystem createCoordinateReferenceSystemFromString(EDataType eDataType,
+            String initialValue) {
         if (initialValue.equals(CARTESIAN_2D)) {
             return DefaultEngineeringCRS.CARTESIAN_2D;
         } else if (initialValue.equals(CARTESIAN_3D)) {
@@ -602,8 +605,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * 
      * @generated NOT
      */
-    public String convertCoordinateReferenceSystemToString( EDataType eDataType,
-            Object instanceValue ) {
+    public String convertCoordinateReferenceSystemToString(EDataType eDataType, Object instanceValue) {
         try {
             if (instanceValue == DefaultEngineeringCRS.CARTESIAN_2D) {
                 return CARTESIAN_2D;
@@ -625,7 +627,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public CommandStack createCommandStackFromString( EDataType eDataType, String initialValue ) {
+    public CommandStack createCommandStackFromString(EDataType eDataType, String initialValue) {
         return (CommandStack) super.createFromString(eDataType, initialValue);
     }
 
@@ -633,7 +635,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertCommandStackToString( EDataType eDataType, Object instanceValue ) {
+    public String convertCommandStackToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -641,7 +643,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public Point createPointFromString( EDataType eDataType, String initialValue ) {
+    public Point createPointFromString(EDataType eDataType, String initialValue) {
         return (Point) super.createFromString(eDataType, initialValue);
     }
 
@@ -649,7 +651,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertPointToString( EDataType eDataType, Object instanceValue ) {
+    public String convertPointToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -657,7 +659,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public Adapter createAdapterFromString( EDataType eDataType, String initialValue ) {
+    public Adapter createAdapterFromString(EDataType eDataType, String initialValue) {
         return (Adapter) super.createFromString(eDataType, initialValue);
     }
 
@@ -665,7 +667,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertAdapterToString( EDataType eDataType, Object instanceValue ) {
+    public String convertAdapterToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -673,7 +675,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated NOT
      */
-    public URL createURLFromString( EDataType eDataType, String initialValue ) {
+    public URL createURLFromString(EDataType eDataType, String initialValue) {
         try {
             return new URL(null, initialValue, CorePlugin.RELAXED_HANDLER);
         } catch (MalformedURLException e) {
@@ -685,7 +687,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertURLToString( EDataType eDataType, Object instanceValue ) {
+    public String convertURLToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -693,7 +695,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public EditCommand createEditCommandFromString( EDataType eDataType, String initialValue ) {
+    public EditCommand createEditCommandFromString(EDataType eDataType, String initialValue) {
         return (EditCommand) super.createFromString(eDataType, initialValue);
     }
 
@@ -701,7 +703,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertEditCommandToString( EDataType eDataType, Object instanceValue ) {
+    public String convertEditCommandToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -709,7 +711,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public URI createURIFromString( EDataType eDataType, String initialValue ) {
+    public URI createURIFromString(EDataType eDataType, String initialValue) {
         return (URI) super.createFromString(eDataType, initialValue);
     }
 
@@ -717,7 +719,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertURIToString( EDataType eDataType, Object instanceValue ) {
+    public String convertURIToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -725,7 +727,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public MapCommand createCommandFromString( EDataType eDataType, String initialValue ) {
+    public MapCommand createCommandFromString(EDataType eDataType, String initialValue) {
         return (MapCommand) super.createFromString(eDataType, initialValue);
     }
 
@@ -733,7 +735,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertCommandToString( EDataType eDataType, Object instanceValue ) {
+    public String convertCommandToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -741,7 +743,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public IMapDisplay createMapDisplayFromString( EDataType eDataType, String initialValue ) {
+    public IMapDisplay createMapDisplayFromString(EDataType eDataType, String initialValue) {
         return (IMapDisplay) super.createFromString(eDataType, initialValue);
     }
 
@@ -749,7 +751,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertMapDisplayToString( EDataType eDataType, Object instanceValue ) {
+    public String convertMapDisplayToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -757,7 +759,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public List createListFromString( EDataType eDataType, String initialValue ) {
+    public List createListFromString(EDataType eDataType, String initialValue) {
         return (List) super.createFromString(eDataType, initialValue);
     }
 
@@ -765,7 +767,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertListToString( EDataType eDataType, Object instanceValue ) {
+    public String convertListToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -773,7 +775,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public IGeoResource createIGeoResourceFromString( EDataType eDataType, String initialValue ) {
+    public IGeoResource createIGeoResourceFromString(EDataType eDataType, String initialValue) {
         return (IGeoResource) super.createFromString(eDataType, initialValue);
     }
 
@@ -781,7 +783,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertIGeoResourceToString( EDataType eDataType, Object instanceValue ) {
+    public String convertIGeoResourceToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -790,7 +792,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * 
      * @generated NOT
      */
-    public CatalogRef createCatalogRefFromString( EDataType eDataType, String initialValue ) {
+    public CatalogRef createCatalogRefFromString(EDataType eDataType, String initialValue) {
         CatalogRef ref = new CatalogRef();
         try {
             ref.parseResourceParameters(initialValue);
@@ -806,7 +808,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * 
      * @generated NOT
      */
-    public String convertCatalogRefToString( EDataType eDataType, Object instanceValue ) {
+    public String convertCatalogRefToString(EDataType eDataType, Object instanceValue) {
         try {
             return ((CatalogRef) instanceValue).marshalConnectionParameters();
         } catch (Exception e) {
@@ -818,7 +820,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated NOT
      */
-    public BrewerPalette createBrewerPaletteFromString( EDataType eDataType, String initialValue ) {
+    public BrewerPalette createBrewerPaletteFromString(EDataType eDataType, String initialValue) {
         return PlatformGIS.getColorBrewer().getPalette(initialValue);
     }
 
@@ -826,7 +828,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated NOT
      */
-    public String convertBrewerPaletteToString( EDataType eDataType, Object instanceValue ) {
+    public String convertBrewerPaletteToString(EDataType eDataType, Object instanceValue) {
         return ((BrewerPalette) instanceValue).getName();
     }
 
@@ -835,7 +837,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Interaction createInteractionFromString( EDataType eDataType, String initialValue ) {
+    public Interaction createInteractionFromString(EDataType eDataType, String initialValue) {
         return (Interaction) super.createFromString(eDataType, initialValue);
     }
 
@@ -844,7 +846,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String convertInteractionToString( EDataType eDataType, Object instanceValue ) {
+    public String convertInteractionToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -852,7 +854,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated NOT
      */
-    public BrewerPalette createColourPaletteFromString( EDataType eDataType, String initialValue ) {
+    public BrewerPalette createColourPaletteFromString(EDataType eDataType, String initialValue) {
         return PlatformGIS.getColorBrewer().getPalette(initialValue);
     }
 
@@ -860,7 +862,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated NOT
      */
-    public String convertColourPaletteToString( EDataType eDataType, Object instanceValue ) {
+    public String convertColourPaletteToString(EDataType eDataType, Object instanceValue) {
         return ((BrewerPalette) instanceValue).getName();
     }
 
@@ -869,7 +871,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * 
      * @generated NOT
      */
-    public ColourScheme createColourSchemeFromString( EDataType eDataType, String initialValue ) {
+    public ColourScheme createColourSchemeFromString(EDataType eDataType, String initialValue) {
         String[] parts = initialValue.split(";"); //$NON-NLS-1$
         if (parts.length != 4) {
             //something is wrong...
@@ -879,12 +881,12 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
         String[] strap = parts[2].split(","); //$NON-NLS-1$
         BrewerPalette palette = PlatformGIS.getColorBrewer().getPalette(parts[0]);
         HashMap<Integer, Integer> colourMapping = new HashMap<Integer, Integer>();
-        for( int i = 0; i < strap.length; i++ ) {
+        for (int i = 0; i < strap.length; i++) {
             colourMapping.put(i, Integer.parseInt(strap[i]));
         }
         String[] strap2 = parts[3].split(","); //$NON-NLS-1$
         HashMap<String, Integer> idMapping = new HashMap<String, Integer>();
-        for( int i = 0; i < strap2.length; i++ ) {
+        for (int i = 0; i < strap2.length; i++) {
             idMapping.put(strap2[i], Integer.parseInt(strap2[++i]));
         }
         ColourScheme scheme = new ColourScheme(palette, colourMapping, idMapping, strap.length,
@@ -897,21 +899,22 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * 
      * @generated NOT
      */
-    public String convertColourSchemeToString( EDataType eDataType, Object instanceValue ) {
+    public String convertColourSchemeToString(EDataType eDataType, Object instanceValue) {
         ColourScheme instance = (ColourScheme) instanceValue;
         String value = instance.getColourPalette().getName() + ";"; //$NON-NLS-1$;
         int numItems = instance.getSizeScheme();
         int numColours = instance.getSizePalette();
         value = value + numColours + ";"; //$NON-NLS-1$
         HashMap colourMap = instance.getColourMap();
-        for( int i = 0; i < numItems; i++ ) {
-            if (i > 0) value = value + ","; //$NON-NLS-1$
+        for (int i = 0; i < numItems; i++) {
+            if (i > 0)
+                value = value + ","; //$NON-NLS-1$
             value = value + colourMap.get(i);
         }
         value = value + ";"; //$NON-NLS-1$
         HashMap<String, Integer> idMap = instance.getIdMap();
         Iterator<Entry<String, Integer>> it = idMap.entrySet().iterator();
-        while( it.hasNext() ) {
+        while (it.hasNext()) {
             Entry<String, Integer> entry = it.next();
             value = value + entry.getKey() + "," + entry.getValue(); //$NON-NLS-1$
             if (it.hasNext()) {
@@ -926,7 +929,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * 
      * @generated NOT
      */
-    public Color createDefaultColorFromString( EDataType eDataType, String initialValue ) {
+    public Color createDefaultColorFromString(EDataType eDataType, String initialValue) {
 
         return SLD.toColor(initialValue);
     }
@@ -936,7 +939,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * 
      * @generated NOT
      */
-    public String convertDefaultColorToString( EDataType eDataType, Object instanceValue ) {
+    public String convertDefaultColorToString(EDataType eDataType, Object instanceValue) {
         Color instance = (Color) instanceValue;
         return SLD.toHTMLColor(instance);
     }
@@ -946,7 +949,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * 
      * @generated NOT
      */
-    public Color createColorFromString( EDataType eDataType, String initialValue ) {
+    public Color createColorFromString(EDataType eDataType, String initialValue) {
 
         return SLD.toColor(initialValue);
     }
@@ -956,7 +959,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * 
      * @generated NOT
      */
-    public String convertColorToString( EDataType eDataType, Object instanceValue ) {
+    public String convertColorToString(EDataType eDataType, Object instanceValue) {
         Color instance = (Color) instanceValue;
         return SLD.toHTMLColor(instance);
     }
@@ -965,8 +968,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public MutablePicoContainer createMutablePicoContainerFromString( EDataType eDataType,
-            String initialValue ) {
+    public MutablePicoContainer createMutablePicoContainerFromString(EDataType eDataType,
+            String initialValue) {
         return (MutablePicoContainer) super.createFromString(eDataType, initialValue);
     }
 
@@ -974,11 +977,11 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertMutablePicoContainerToString( EDataType eDataType, Object instanceValue ) {
+    public String convertMutablePicoContainerToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
-    private Envelope createEnvelope( String initialValue ) {
+    private Envelope createEnvelope(String initialValue) {
         if (initialValue.equals("")) //$NON-NLS-1$
             return new Envelope();
 
@@ -993,8 +996,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated NOT
      */
-    public ReferencedEnvelope createReferencedEnvelopeFromString( EDataType eDataType,
-            String initialValue ) {
+    public ReferencedEnvelope createReferencedEnvelopeFromString(EDataType eDataType,
+            String initialValue) {
         String[] parts = initialValue.split("@", 2); //$NON-NLS-1$
         Envelope env = createEnvelope(parts[0]);
         if (parts.length == 2) {
@@ -1010,9 +1013,10 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated NOT
      */
-    public String convertReferencedEnvelopeToString( EDataType eDataType, Object instanceValue ) {
+    public String convertReferencedEnvelopeToString(EDataType eDataType, Object instanceValue) {
         Envelope env = (Envelope) instanceValue;
-        if (env.isNull()) return ""; //$NON-NLS-1$
+        if (env.isNull())
+            return ""; //$NON-NLS-1$
 
         String envString = env.getMinX()
                 + "," + env.getMaxX() + "," + env.getMinY() + "," + env.getMaxY(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -1032,7 +1036,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public FeatureEvent createFeatureEventFromString( EDataType eDataType, String initialValue ) {
+    public FeatureEvent createFeatureEventFromString(EDataType eDataType, String initialValue) {
         return (FeatureEvent) super.createFromString(eDataType, initialValue);
     }
 
@@ -1040,7 +1044,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertFeatureEventToString( EDataType eDataType, Object instanceValue ) {
+    public String convertFeatureEventToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -1049,7 +1053,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public SimpleFeature createSimpleFeatureFromString( EDataType eDataType, String initialValue ) {
+    public SimpleFeature createSimpleFeatureFromString(EDataType eDataType, String initialValue) {
         return (SimpleFeature) super.createFromString(eDataType, initialValue);
     }
 
@@ -1058,7 +1062,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String convertSimpleFeatureToString( EDataType eDataType, Object instanceValue ) {
+    public String convertSimpleFeatureToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -1067,8 +1071,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public IllegalArgumentException createIllegalArgumentExceptionFromString( EDataType eDataType,
-            String initialValue ) {
+    public IllegalArgumentException createIllegalArgumentExceptionFromString(EDataType eDataType,
+            String initialValue) {
         return (IllegalArgumentException) super.createFromString(eDataType, initialValue);
     }
 
@@ -1077,7 +1081,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String convertIllegalArgumentExceptionToString( EDataType eDataType, Object instanceValue ) {
+    public String convertIllegalArgumentExceptionToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -1086,7 +1090,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public IOException createIOExceptionFromString( EDataType eDataType, String initialValue ) {
+    public IOException createIOExceptionFromString(EDataType eDataType, String initialValue) {
         return (IOException) super.createFromString(eDataType, initialValue);
     }
 
@@ -1095,7 +1099,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String convertIOExceptionToString( EDataType eDataType, Object instanceValue ) {
+    public String convertIOExceptionToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -1103,7 +1107,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public Filter createFilterFromString( EDataType eDataType, String initialValue ) {
+    public Filter createFilterFromString(EDataType eDataType, String initialValue) {
         return (Filter) super.createFromString(eDataType, initialValue);
     }
 
@@ -1111,7 +1115,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertFilterToString( EDataType eDataType, Object instanceValue ) {
+    public String convertFilterToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -1119,8 +1123,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public IProgressMonitor createIProgressMonitorFromString( EDataType eDataType,
-            String initialValue ) {
+    public IProgressMonitor createIProgressMonitorFromString(EDataType eDataType,
+            String initialValue) {
         return (IProgressMonitor) super.createFromString(eDataType, initialValue);
     }
 
@@ -1128,7 +1132,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertIProgressMonitorToString( EDataType eDataType, Object instanceValue ) {
+    public String convertIProgressMonitorToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -1136,8 +1140,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertEditManagerControlCommandToString( EDataType eDataType,
-            Object instanceValue ) {
+    public String convertEditManagerControlCommandToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -1171,10 +1174,10 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
         return map;
     }
 
-    private void runMapCreationInterceptors( Map map ) {
+    private void runMapCreationInterceptors(Map map) {
         List<IConfigurationElement> interceptors = ExtensionPointList
                 .getExtensionPointList(MapInterceptor.MAP_INTERCEPTOR_EXTENSIONPOINT); //$NON-NLS-1$
-        for( IConfigurationElement element : interceptors ) {
+        for (IConfigurationElement element : interceptors) {
             if (!"mapCreation".equals(element.getName())) //$NON-NLS-1$
                 continue;
             try {
@@ -1192,7 +1195,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      *      java.lang.String, java.util.List)
      */
     @SuppressWarnings("unchecked")//$NON-NLS-1$
-    public Map createMap( Project owner, String name, List layers ) {
+    public Map createMap(Project owner, String name, List layers) {
         Map map = createMap();
 
         map.setName(name);

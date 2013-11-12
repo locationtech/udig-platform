@@ -129,7 +129,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setName( String newName ) {
+    public void setName(String newName) {
         String oldName = name;
         name = newName;
         if (eNotificationRequired())
@@ -170,8 +170,8 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetProjectInternal( Project newProjectInternal,
-            NotificationChain msgs ) {
+    public NotificationChain basicSetProjectInternal(Project newProjectInternal,
+            NotificationChain msgs) {
         Project oldProjectInternal = projectInternal;
         projectInternal = newProjectInternal;
         if (eNotificationRequired()) {
@@ -191,7 +191,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setProjectInternal( Project newProjectInternal ) {
+    public void setProjectInternal(Project newProjectInternal) {
         if (newProjectInternal != projectInternal) {
             NotificationChain msgs = null;
             if (projectInternal != null)
@@ -201,7 +201,8 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
                 msgs = ((InternalEObject) newProjectInternal).eInverseAdd(this,
                         ProjectPackage.PROJECT__ELEMENTS_INTERNAL, Project.class, msgs);
             msgs = basicSetProjectInternal(newProjectInternal, msgs);
-            if (msgs != null) msgs.dispatch();
+            if (msgs != null)
+                msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ElementPackage.PROJECT_ELEMENT_ADAPTER__PROJECT_INTERNAL, newProjectInternal,
@@ -222,7 +223,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * <!-- end-user-doc -->
      * @generated NOT
      */
-    public synchronized void setBackingObject( IGenericProjectElement newBackingObject ) {
+    public synchronized void setBackingObject(IGenericProjectElement newBackingObject) {
         IGenericProjectElement oldBackingObject = backingObject;
         backingObject = newBackingObject;
         newBackingObject.setProjectElementAdapter(this);
@@ -238,9 +239,9 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * @generated
      */
     @Override
-    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
-            NotificationChain msgs ) {
-        switch( featureID ) {
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID,
+            NotificationChain msgs) {
+        switch (featureID) {
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__PROJECT_INTERNAL:
             if (projectInternal != null)
                 msgs = ((InternalEObject) projectInternal).eInverseRemove(this,
@@ -256,9 +257,9 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * @generated
      */
     @Override
-    public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
-            NotificationChain msgs ) {
-        switch( featureID ) {
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+            NotificationChain msgs) {
+        switch (featureID) {
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__PROJECT_INTERNAL:
             return basicSetProjectInternal(null, msgs);
         }
@@ -271,12 +272,13 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * @generated
      */
     @Override
-    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
-        switch( featureID ) {
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__NAME:
             return getName();
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__PROJECT_INTERNAL:
-            if (resolve) return getProjectInternal();
+            if (resolve)
+                return getProjectInternal();
             return basicGetProjectInternal();
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__BACKING_OBJECT:
             return getBackingObject();
@@ -290,8 +292,8 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * @generated
      */
     @Override
-    public void eSet( int featureID, Object newValue ) {
-        switch( featureID ) {
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__NAME:
             setName((String) newValue);
             return;
@@ -311,8 +313,8 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * @generated
      */
     @Override
-    public void eUnset( int featureID ) {
-        switch( featureID ) {
+    public void eUnset(int featureID) {
+        switch (featureID) {
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__NAME:
             setName(NAME_EDEFAULT);
             return;
@@ -332,15 +334,14 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * @generated
      */
     @Override
-    public boolean eIsSet( int featureID ) {
-        switch( featureID ) {
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__NAME:
             return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__PROJECT_INTERNAL:
             return projectInternal != null;
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__BACKING_OBJECT:
-            return BACKING_OBJECT_EDEFAULT == null
-                    ? backingObject != null
+            return BACKING_OBJECT_EDEFAULT == null ? backingObject != null
                     : !BACKING_OBJECT_EDEFAULT.equals(backingObject);
         }
         return super.eIsSet(featureID);
@@ -353,7 +354,8 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+        if (eIsProxy())
+            return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (name: "); //$NON-NLS-1$
@@ -368,7 +370,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
         List<IConfigurationElement> list = ExtensionPointList
                 .getExtensionPointList(ProjectElementAdapter.EXT_ID);
         String extensionId = getBackingObject().getExtensionId();
-        for( IConfigurationElement configurationElement : list ) {
+        for (IConfigurationElement configurationElement : list) {
             String id = configurationElement.getAttribute("id"); //$NON-NLS-1$
             if (id != null && id.equals(extensionId)) {
                 return configurationElement.getAttribute("fileExtension"); //$NON-NLS-1$
@@ -382,7 +384,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
     }
 
     @SuppressWarnings("unchecked")
-    public Object getAdapter( Class adapter ) {
+    public Object getAdapter(Class adapter) {
         if (getBackingObject() != null && adapter.isAssignableFrom(getBackingObject().getClass())) {
             return getBackingObject();
         }
@@ -390,7 +392,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
     }
 
     @SuppressWarnings("unchecked")
-    public List getElements( Class type ) {
+    public List getElements(Class type) {
         return getBackingObject().getElements(type);
     }
 

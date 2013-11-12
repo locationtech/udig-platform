@@ -33,34 +33,28 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * 
  * @generated NOT
  */
-public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
-        implements
-            IEditingDomainItemProvider,
-            IStructuredItemContentProvider,
-            ITreeItemContentProvider,
-            IItemLabelProvider,
-            IItemPropertySource {
+public class ProjectItemProvider extends AbstractLazyLoadingItemProvider implements
+        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
+        IItemLabelProvider, IItemPropertySource {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @generated
      */
-    public static final String copyright = 
-            "uDig - User Friendly Desktop Internet GIS client\n"
-          + "http://udig.refractions.net\n"
-          + "(C) 2004-2012, Refractions Research Inc.\n"
-          + "\n\n"
-          + "All rights reserved. This program and the accompanying materials\n"
-          + "are made available under the terms of the Eclipse Public License v1.0\n"
-          + "(http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD\n"
-          + "License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).\n";
+    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client\n"
+            + "http://udig.refractions.net\n" + "(C) 2004-2012, Refractions Research Inc.\n"
+            + "\n\n" + "All rights reserved. This program and the accompanying materials\n"
+            + "are made available under the terms of the Eclipse Public License v1.0\n"
+            + "(http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD\n"
+            + "License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).\n";
+
     /**
      * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * 
      * @generated
      */
-    public ProjectItemProvider( AdapterFactory adapterFactory ) {
+    public ProjectItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -70,7 +64,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
      * 
      * @generated
      */
-    public List getPropertyDescriptors( Object object ) {
+    public List getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
@@ -85,7 +79,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
      * 
      * @generated
      */
-    protected void addNamePropertyDescriptor( Object object ) {
+    protected void addNamePropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -106,7 +100,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
      * 
      * @generated
      */
-    public Collection getChildrenFeatures( Object object ) {
+    public Collection getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
             childrenFeatures.add(ProjectPackage.eINSTANCE.getProject_ElementsInternal());
@@ -125,7 +119,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
      * 
      * @generated
      */
-    public Object getImage( Object object ) {
+    public Object getImage(Object object) {
         return getResourceLocator().getImage("full/obj16/Project"); //$NON-NLS-1$
     }
 
@@ -135,7 +129,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
      * 
      * @generated NOT
      */
-    public String getText( Object object ) {
+    public String getText(Object object) {
         String label = ((Project) object).getName();
         return label == null || label.length() == 0 ? "Project" : //$NON-NLS-1$
                 label;
@@ -144,7 +138,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * @see org.eclipse.emf.edit.provider.ITreeItemContentProvider#hasChildren(java.lang.Object)
      */
-    public boolean hasChildren( Object object ) {
+    public boolean hasChildren(Object object) {
         return true;
     }
 
@@ -155,10 +149,10 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
      * 
      * @generated
      */
-    public void notifyChanged( Notification notification ) {
+    public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch( notification.getFeatureID(Project.class) ) {
+        switch (notification.getFeatureID(Project.class)) {
         case ProjectPackage.PROJECT__NAME:
             fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
                     false, true));
@@ -176,7 +170,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
     }
 
     @Override
-    protected Collection< ? extends Object> getConcreteChildren( Object object ) {
+    protected Collection<? extends Object> getConcreteChildren(Object object) {
         if (object instanceof IProject) {
             List<IProjectElement> elements = new ArrayList<IProjectElement>(
                     ((IProject) object).getElements());

@@ -274,10 +274,12 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         return cRS;
     }
 
-    public void setCRS( CoordinateReferenceSystem newCRS ) {
+    public void setCRS(CoordinateReferenceSystem newCRS) {
         double scale = getScaleDenominator();
-        if (newCRS == null) throw new IllegalArgumentException("A CRS cannot be null"); //$NON-NLS-1$
-        if (newCRS.equals(cRS)) return;
+        if (newCRS == null)
+            throw new IllegalArgumentException("A CRS cannot be null"); //$NON-NLS-1$
+        if (newCRS.equals(cRS))
+            return;
         CoordinateReferenceSystem oldCRS = getCRS();
         if (getBounds().isNull() || !validState()) {
             setCRSGen(newCRS);
@@ -315,10 +317,11 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
             }
         }
     }
+
     /**
      * @generated
      */
-    public void setCRSGen( CoordinateReferenceSystem newCRS ) {
+    public void setCRSGen(CoordinateReferenceSystem newCRS) {
         CoordinateReferenceSystem oldCRS = cRS;
         cRS = newCRS;
         boolean oldCRSESet = cRSESet;
@@ -364,18 +367,20 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         return bounds;
     }
 
-    public void setBounds( ReferencedEnvelope newBounds ) {
+    public void setBounds(ReferencedEnvelope newBounds) {
         setBounds(newBounds, false);
     }
-    public void setBounds( ReferencedEnvelope newBounds, boolean forceContainBBoxZoom ) {
+
+    public void setBounds(ReferencedEnvelope newBounds, boolean forceContainBBoxZoom) {
         setCRS(newBounds.getCoordinateReferenceSystem());
         setBoundsInternal(newBounds, forceContainBBoxZoom);
     }
 
-    public void setBounds( Envelope newBounds ) {
+    public void setBounds(Envelope newBounds) {
         setBoundsInternal(newBounds, false);
     }
-    public void setBoundsInternal( Envelope newBounds, boolean forceContainBBoxZoom ) {
+
+    public void setBoundsInternal(Envelope newBounds, boolean forceContainBBoxZoom) {
         Envelope finalBounds = newBounds;
         if (getDefaultPreferredScaleDenominators() != getPreferredScaleDenominators()
                 && validState()) {
@@ -409,7 +414,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         if (!getBounds().isNull() && !Double.isNaN(getAspectRatio())
                 && !Double.isNaN(finalBounds.getWidth()) && !Double.isNaN(finalBounds.getHeight())) {
             double nRatio = finalBounds.getWidth() / finalBounds.getHeight();
-            if (Double.isNaN(nRatio)) nRatio = 0.0;
+            if (Double.isNaN(nRatio))
+                nRatio = 0.0;
             double dRatio = getAspectRatio();
             if (validState() && Math.abs(nRatio - dRatio) > ACCURACY) {
                 // Returning the same newBounds box is ok, but sometimes causes an infinite loop if
@@ -444,7 +450,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
-    public void setCenter( Coordinate newCenter ) {
+    public void setCenter(Coordinate newCenter) {
         // Coordinate center=getCenter();
         double dw = getBounds().getWidth() / 2, dh = getBounds().getHeight() / 2;
         setBounds(new Envelope(newCenter.x - dw, newCenter.x + dw, newCenter.y - dh, newCenter.y
@@ -465,7 +471,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
-    public void setHeight( double newHeight ) {
+    public void setHeight(double newHeight) {
         zoom(getHeight() / newHeight);
     }
 
@@ -483,7 +489,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
-    public void setWidth( double newWidth ) {
+    public void setWidth(double newWidth) {
         zoom(getWidth() / newWidth);
     }
 
@@ -493,7 +499,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @generated NOT
      */
     public double getAspectRatio() {
-        if (!validState()) return Double.NaN;
+        if (!validState())
+            return Double.NaN;
         return getRenderManagerInternal().getMapDisplay().getWidth()
                 / (double) getRenderManagerInternal().getMapDisplay().getHeight();
     }
@@ -516,7 +523,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @generated
      */
     public Map getMapInternal() {
-        if (eContainerFeatureID() != RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL) return null;
+        if (eContainerFeatureID() != RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL)
+            return null;
         return (Map) eContainer();
     }
 
@@ -525,7 +533,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetMapInternal( Map newMapInternal, NotificationChain msgs ) {
+    public NotificationChain basicSetMapInternal(Map newMapInternal, NotificationChain msgs) {
         msgs = eBasicSetContainer((InternalEObject) newMapInternal,
                 RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL, msgs);
         return msgs;
@@ -535,19 +543,21 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public void setMapInternalGen( Map newMapInternal ) {
+    public void setMapInternalGen(Map newMapInternal) {
         if (newMapInternal != eInternalContainer()
                 || (eContainerFeatureID() != RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL && newMapInternal != null)) {
             if (EcoreUtil.isAncestor(this, newMapInternal))
                 throw new IllegalArgumentException(
                         "Recursive containment not allowed for " + toString()); //$NON-NLS-1$
             NotificationChain msgs = null;
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
             if (newMapInternal != null)
                 msgs = ((InternalEObject) newMapInternal).eInverseAdd(this,
                         ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL, Map.class, msgs);
             msgs = basicSetMapInternal(newMapInternal, msgs);
-            if (msgs != null) msgs.dispatch();
+            if (msgs != null)
+                msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL, newMapInternal, newMapInternal));
@@ -572,14 +582,14 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @param viewer The viewer to set.
      * @uml.property name="viewer"
      */
-    public void setViewer( boolean viewer ) {
+    public void setViewer(boolean viewer) {
         this.viewer = viewer;
     }
 
     /**
      * @see org.locationtech.udig.project.internal.render.RenderManager#setMap(IMap)
      */
-    public void setMapInternal( Map newMap ) {
+    public void setMapInternal(Map newMap) {
         if (isViewer()) {
             eBasicSetContainer((InternalEObject) newMap, RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL);
         } else
@@ -598,8 +608,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetRenderManagerInternal( RenderManager newRenderManagerInternal,
-            NotificationChain msgs ) {
+    public NotificationChain basicSetRenderManagerInternal(RenderManager newRenderManagerInternal,
+            NotificationChain msgs) {
         RenderManager oldRenderManagerInternal = renderManagerInternal;
         renderManagerInternal = newRenderManagerInternal;
         if (eNotificationRequired()) {
@@ -618,7 +628,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public void setRenderManagerInternal( RenderManager newRenderManagerInternal ) {
+    public void setRenderManagerInternal(RenderManager newRenderManagerInternal) {
         if (newRenderManagerInternal != renderManagerInternal) {
             NotificationChain msgs = null;
             if (renderManagerInternal != null)
@@ -630,7 +640,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
                         RenderPackage.RENDER_MANAGER__VIEWPORT_MODEL_INTERNAL, RenderManager.class,
                         msgs);
             msgs = basicSetRenderManagerInternal(newRenderManagerInternal, msgs);
-            if (msgs != null) msgs.dispatch();
+            if (msgs != null)
+                msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     RenderPackage.VIEWPORT_MODEL__RENDER_MANAGER_INTERNAL,
@@ -647,12 +658,14 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     private double getXPixelToWorldScale() {
-        if (!validState()) return Double.NaN;
+        if (!validState())
+            return Double.NaN;
         return getWidth() / getRenderManagerInternal().getMapDisplay().getWidth();
     }
 
     private double getYPixelToWorldScale() {
-        if (!validState()) return Double.NaN;
+        if (!validState())
+            return Double.NaN;
         return getHeight() / getRenderManagerInternal().getMapDisplay().getHeight();
     }
 
@@ -661,7 +674,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
-    public void setBounds( double minx, double maxx, double miny, double maxy ) {
+    public void setBounds(double minx, double maxx, double miny, double maxy) {
         setBounds(new Envelope(minx, maxx, miny, maxy));
     }
 
@@ -671,7 +684,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @generated NOT
      */
     public AffineTransform worldToScreenTransform() {
-        if (!validState()) return null;
+        if (!validState())
+            return null;
         // set up the affine transform and calculate scale values
         return worldToScreenTransform(getBounds(), getRenderManagerInternal().getMapDisplay()
                 .getDisplaySize());
@@ -680,20 +694,23 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * @see ViewportModel#worldToScreenTransform(Envelope, Dimension)
      */
-    public AffineTransform worldToScreenTransform( Envelope mapExtent, Dimension screenSize ) {
-        if (!validState()) return null;
+    public AffineTransform worldToScreenTransform(Envelope mapExtent, Dimension screenSize) {
+        if (!validState())
+            return null;
 
         return ScaleUtils.worldToScreenTransform(mapExtent, screenSize);
     }
 
-    public Point worldToPixel( Coordinate coord ) {
-        if (!validState()) return null;
+    public Point worldToPixel(Coordinate coord) {
+        if (!validState())
+            return null;
         return ScaleUtils.worldToPixel(coord, getBounds(), getRenderManagerInternal()
                 .getMapDisplay().getDisplaySize());
     }
 
-    public Coordinate pixelToWorld( int x, int y ) {
-        if (!validState()) return null;
+    public Coordinate pixelToWorld(int x, int y) {
+        if (!validState())
+            return null;
 
         return ScaleUtils.pixelToWorld(x, y, getBounds(), getRenderManagerInternal()
                 .getMapDisplay().getDisplaySize());
@@ -704,8 +721,9 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
-    public ViewportModel panUsingScreenCoords( int xpixels, int ypixels ) {
-        if (!validState()) return this;
+    public ViewportModel panUsingScreenCoords(int xpixels, int ypixels) {
+        if (!validState())
+            return this;
         panUsingWorldCoords(xpixels * getXPixelToWorldScale(), -ypixels * getYPixelToWorldScale());
         return this;
     }
@@ -715,7 +733,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
-    public ViewportModel panUsingWorldCoords( double x, double y ) {
+    public ViewportModel panUsingWorldCoords(double x, double y) {
         Envelope bounds = getBounds();
         setBounds(bounds.getMinX() + x, bounds.getMaxX() + x, bounds.getMinY() + y,
                 bounds.getMaxY() + y);
@@ -727,13 +745,13 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
-    public ViewportModel zoom( double zoom ) {
+    public ViewportModel zoom(double zoom) {
         Coordinate center = getCenter();
         zoom(zoom, center);
         return this;
     }
 
-    public ViewportModel zoom( double zoom, Coordinate fixedPoint ) {
+    public ViewportModel zoom(double zoom, Coordinate fixedPoint) {
         if (fixedPoint == null) {
             fixedPoint = getCenter();
         }
@@ -753,7 +771,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      */
     public void zoomToExtent() {
         try {
-            if (!validState()) return;
+            if (!validState())
+                return;
 
             ReferencedEnvelope bounds2 = new ReferencedEnvelope(getCRS());
 
@@ -768,7 +787,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
                 // search the map for visible layers and construct a bounds from those layers.
                 // otherwise default to what the map's extent is.
                 List<ILayer> layers = getMap().getMapLayers();
-                for( ILayer layer : layers ) {
+                for (ILayer layer : layers) {
                     ReferencedEnvelope layerBounds = layer.getBounds(ProgressManager.instance()
                             .get(), getCRS());
                     if (layer.isVisible() && !layerBounds.isNull()) {
@@ -818,7 +837,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+        if (eIsProxy())
+            return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (cRS: "); //$NON-NLS-1$
@@ -845,10 +865,11 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener#sizeChanged(org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent)
      */
-    public void sizeChanged( final MapDisplayEvent event ) {
-        if (event.getSize().width < 1 || event.getSize().height < 1) return;
+    public void sizeChanged(final MapDisplayEvent event) {
+        if (event.getSize().width < 1 || event.getSize().height < 1)
+            return;
 
-        Runnable handler = new Runnable(){
+        Runnable handler = new Runnable() {
             public void run() {
                 Envelope oldBounds = getBounds();
 
@@ -879,7 +900,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         }
     }
 
-    private void fireNotification( Envelope oldBounds ) {
+    private void fireNotification(Envelope oldBounds) {
         if (eNotificationRequired()) {
             eNotify(new ENotificationImpl(this, Notification.SET,
                     RenderPackage.VIEWPORT_MODEL__BOUNDS, oldBounds, bounds));
@@ -889,7 +910,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         }
     }
 
-    private void calculateNewBounds( MapDisplayEvent event, Envelope oldBounds ) {
+    private void calculateNewBounds(MapDisplayEvent event, Envelope oldBounds) {
         double oldXscale = getWidth() / event.getOldSize().width;
         double oldYscale = getHeight() / event.getOldSize().height;
         double minx = oldBounds.getMinX();
@@ -899,13 +920,14 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         this.bounds = new ReferencedEnvelope(minx, maxx, miny, maxy, getCRS());
     }
 
-    private boolean oldSizeIsValid( MapDisplayEvent event ) {
+    private boolean oldSizeIsValid(MapDisplayEvent event) {
         return event.getOldSize() != null && event.getOldSize().width != 0
                 && event.getOldSize().height != 0;
     }
 
-    private boolean newSizeIsSmaller( MapDisplayEvent event ) {
-        if (event.getOldSize() == null) return false;
+    private boolean newSizeIsSmaller(MapDisplayEvent event) {
+        if (event.getOldSize() == null)
+            return false;
         return event.getOldSize().width > event.getSize().width
                 && event.getOldSize().height > event.getSize().height;
     }
@@ -913,7 +935,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * @see org.locationtech.udig.project.internal.render.ViewportModel#zoomToBox(com.vividsolutions.jts.geom.Envelope)
      */
-    public void zoomToBox( Envelope newbbox ) {
+    public void zoomToBox(Envelope newbbox) {
         setInitialized(true);
         if (Math.abs(newbbox.getWidth() / newbbox.getHeight() - this.getAspectRatio()) > ACCURACY) {
             IMapDisplay display = this.getRenderManagerInternal().getMapDisplay();
@@ -943,11 +965,12 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @generated
      */
     @Override
-    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
-            NotificationChain msgs ) {
-        switch( featureID ) {
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID,
+            NotificationChain msgs) {
+        switch (featureID) {
         case RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL:
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
             return basicSetMapInternal((Map) otherEnd, msgs);
         case RenderPackage.VIEWPORT_MODEL__RENDER_MANAGER_INTERNAL:
             if (renderManagerInternal != null)
@@ -965,9 +988,9 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @generated
      */
     @Override
-    public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
-            NotificationChain msgs ) {
-        switch( featureID ) {
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+            NotificationChain msgs) {
+        switch (featureID) {
         case RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL:
             return basicSetMapInternal(null, msgs);
         case RenderPackage.VIEWPORT_MODEL__RENDER_MANAGER_INTERNAL:
@@ -982,8 +1005,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @generated
      */
     @Override
-    public NotificationChain eBasicRemoveFromContainerFeature( NotificationChain msgs ) {
-        switch( eContainerFeatureID() ) {
+    public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+        switch (eContainerFeatureID()) {
         case RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL:
             return eInternalContainer().eInverseRemove(this,
                     ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL, Map.class, msgs);
@@ -997,8 +1020,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @generated
      */
     @Override
-    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
-        switch( featureID ) {
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
         case RenderPackage.VIEWPORT_MODEL__CRS:
             return getCRS();
         case RenderPackage.VIEWPORT_MODEL__BOUNDS:
@@ -1038,8 +1061,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public void eSet( int featureID, Object newValue ) {
-        switch( featureID ) {
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
         case RenderPackage.VIEWPORT_MODEL__CRS:
             setCRS((CoordinateReferenceSystem) newValue);
             return;
@@ -1066,14 +1089,14 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
             return;
         case RenderPackage.VIEWPORT_MODEL__AVAILABLE_TIMESTEPS:
             getAvailableTimesteps().clear();
-            getAvailableTimesteps().addAll((Collection< ? extends DateTime>) newValue);
+            getAvailableTimesteps().addAll((Collection<? extends DateTime>) newValue);
             return;
         case RenderPackage.VIEWPORT_MODEL__CURRENT_TIMESTEP:
             setCurrentTimestep((DateTime) newValue);
             return;
         case RenderPackage.VIEWPORT_MODEL__AVAILABLE_ELEVATION:
             getAvailableElevation().clear();
-            getAvailableElevation().addAll((Collection< ? extends Double>) newValue);
+            getAvailableElevation().addAll((Collection<? extends Double>) newValue);
             return;
         case RenderPackage.VIEWPORT_MODEL__CURRENT_ELEVATION:
             setCurrentElevation((Double) newValue);
@@ -1088,8 +1111,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @generated
      */
     @Override
-    public void eUnset( int featureID ) {
-        switch( featureID ) {
+    public void eUnset(int featureID) {
+        switch (featureID) {
         case RenderPackage.VIEWPORT_MODEL__CRS:
             unsetCRS();
             return;
@@ -1136,8 +1159,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @generated
      */
     @Override
-    public boolean eIsSet( int featureID ) {
-        switch( featureID ) {
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
         case RenderPackage.VIEWPORT_MODEL__CRS:
             return isSetCRS();
         case RenderPackage.VIEWPORT_MODEL__BOUNDS:
@@ -1163,14 +1186,12 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         case RenderPackage.VIEWPORT_MODEL__AVAILABLE_TIMESTEPS:
             return availableTimesteps != null && !availableTimesteps.isEmpty();
         case RenderPackage.VIEWPORT_MODEL__CURRENT_TIMESTEP:
-            return CURRENT_TIMESTEP_EDEFAULT == null
-                    ? currentTimestep != null
+            return CURRENT_TIMESTEP_EDEFAULT == null ? currentTimestep != null
                     : !CURRENT_TIMESTEP_EDEFAULT.equals(currentTimestep);
         case RenderPackage.VIEWPORT_MODEL__AVAILABLE_ELEVATION:
             return availableElevation != null && !availableElevation.isEmpty();
         case RenderPackage.VIEWPORT_MODEL__CURRENT_ELEVATION:
-            return CURRENT_ELEVATION_EDEFAULT == null
-                    ? currentElevation != null
+            return CURRENT_ELEVATION_EDEFAULT == null ? currentElevation != null
                     : !CURRENT_ELEVATION_EDEFAULT.equals(currentElevation);
         }
         return super.eIsSet(featureID);
@@ -1183,7 +1204,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         try {
             IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
             int i = store.getInt(PreferenceConstants.P_DEFAULT_CRS);
-            if (i == -1) return CRS.decode("EPSG:4326");//$NON-NLS-1$
+            if (i == -1)
+                return CRS.decode("EPSG:4326");//$NON-NLS-1$
             return CRS.decode("EPSG:" + i); //$NON-NLS-1$
         } catch (FactoryException e) {
             return ViewportModel.BAD_DEFAULT;
@@ -1196,7 +1218,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @param firing
      */
-    public void setFiringEvents( boolean firing ) {
+    public void setFiringEvents(boolean firing) {
         if (firing) {
             eFlags |= EDELIVER;
         } else {
@@ -1217,7 +1239,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @param initialized The initialized to set.
      * @uml.property name="initialized"
      */
-    public void setInitialized( boolean initialized ) {
+    public void setInitialized(boolean initialized) {
         this.initialized = initialized;
     }
 
@@ -1234,7 +1256,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         }
         RenderManager renderManager = getRenderManagerInternal();
         ReferencedEnvelope bounds2 = getBounds();
-        if (renderManager == null || renderManager.getMapDisplay() == null) return -1;
+        if (renderManager == null || renderManager.getMapDisplay() == null)
+            return -1;
 
         IMapDisplay display = renderManager.getMapDisplay();
         return ScaleUtils.calculateScaleDenominator(bounds2, display.getDisplaySize(),
@@ -1266,7 +1289,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         return preferredScaleDenominators;
     }
 
-    public void setPreferredScaleDenominators( SortedSet<Double> newPreferredScaleDenominators ) {
+    public void setPreferredScaleDenominators(SortedSet<Double> newPreferredScaleDenominators) {
         SortedSet<Double> oldPreferredScaleDenominators = preferredScaleDenominators;
         if (newPreferredScaleDenominators == getDefaultPreferredScaleDenominators()) {
             preferredScaleDenominators = null;
@@ -1307,7 +1330,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setCurrentTimestep( DateTime newCurrentTimestep ) {
+    public void setCurrentTimestep(DateTime newCurrentTimestep) {
         DateTime oldCurrentTimestep = currentTimestep;
         currentTimestep = newCurrentTimestep;
         if (eNotificationRequired())
@@ -1343,7 +1366,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setCurrentElevation( Double newCurrentElevation ) {
+    public void setCurrentElevation(Double newCurrentElevation) {
         Double oldCurrentElevation = currentElevation;
         currentElevation = newCurrentElevation;
         if (eNotificationRequired())
@@ -1356,7 +1379,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * This method will calculate the current width based on ScaleUtils and 
      * the current RenderManager.
      */
-    public void setScale( double scaleDenominator ) {
+    public void setScale(double scaleDenominator) {
         RenderManager rm = getRenderManagerInternal();
         IMapDisplay display = rm.getMapDisplay();
         ReferencedEnvelope newExtents = ScaleUtils.calculateBoundsFromScale(scaleDenominator,
@@ -1367,7 +1390,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * Calculates new map bounds according to the given scale, DPI, and display dimensions
      */
-    public void setScale( double scaleDenominator, int dpi, int displayWidth, int displayHeight ) {
+    public void setScale(double scaleDenominator, int dpi, int displayWidth, int displayHeight) {
 
         ReferencedEnvelope newExtents = ScaleUtils.calculateBoundsFromScale(scaleDenominator,
                 new Dimension(displayWidth, displayHeight), dpi, getBounds());
@@ -1376,16 +1399,16 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     CopyOnWriteArraySet<IViewportModelListener> listeners = new CopyOnWriteArraySet<IViewportModelListener>();
 
-    public void addViewportModelListener( IViewportModelListener listener ) {
+    public void addViewportModelListener(IViewportModelListener listener) {
         listeners.add(listener);
     }
 
-    public void removeViewportModelListener( IViewportModelListener listener ) {
+    public void removeViewportModelListener(IViewportModelListener listener) {
         listeners.remove(listener);
     }
 
-    private void notifyListeners( ViewportModelEvent event ) {
-        for( IViewportModelListener listener : listeners ) {
+    private void notifyListeners(ViewportModelEvent event) {
+        for (IViewportModelListener listener : listeners) {
             try {
                 listener.changed(event);
             } catch (Throwable t) {
@@ -1396,7 +1419,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     private boolean boundsChanging = false;
 
-    public void setIsBoundsChanging( boolean changing ) {
+    public void setIsBoundsChanging(boolean changing) {
         this.boundsChanging = changing;
     }
 

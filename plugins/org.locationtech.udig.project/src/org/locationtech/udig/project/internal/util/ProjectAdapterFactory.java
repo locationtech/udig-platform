@@ -87,7 +87,7 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     @Override
-    public boolean isFactoryForType( Object object ) {
+    public boolean isFactoryForType(Object object) {
         if (object == modelPackage) {
             return true;
         }
@@ -103,146 +103,180 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * <!-- end-user-doc -->
      * @generated
      */
-    protected ProjectSwitch<Adapter> modelSwitch = new ProjectSwitch<Adapter>(){
+    protected ProjectSwitch<Adapter> modelSwitch = new ProjectSwitch<Adapter>() {
         @Override
-        public Adapter caseComparable( Comparable object ) {
+        public Adapter caseComparable(Comparable object) {
             return createComparableAdapter();
         }
+
         @Override
-        public Adapter caseIMap( IMap object ) {
+        public Adapter caseIMap(IMap object) {
             return createIMapAdapter();
         }
+
         @Override
-        public Adapter caseILayer( ILayer object ) {
+        public Adapter caseILayer(ILayer object) {
             return createILayerAdapter();
         }
+
         @Override
-        public Adapter caseIEditManager( IEditManager object ) {
+        public Adapter caseIEditManager(IEditManager object) {
             return createIEditManagerAdapter();
         }
+
         @Override
-        public Adapter caseIProject( IProject object ) {
+        public Adapter caseIProject(IProject object) {
             return createIProjectAdapter();
         }
+
         @Override
-        public Adapter caseIAbstractContext( IAbstractContext object ) {
+        public Adapter caseIAbstractContext(IAbstractContext object) {
             return createIAbstractContextAdapter();
         }
+
         @Override
-        public Adapter caseIBlackboard( IBlackboard object ) {
+        public Adapter caseIBlackboard(IBlackboard object) {
             return createIBlackboardAdapter();
         }
+
         @Override
-        public Adapter caseIProjectElement( IProjectElement object ) {
+        public Adapter caseIProjectElement(IProjectElement object) {
             return createIProjectElementAdapter();
         }
+
         @Override
-        public Adapter caseIRenderManager( IRenderManager object ) {
+        public Adapter caseIRenderManager(IRenderManager object) {
             return createIRenderManagerAdapter();
         }
+
         @Override
-        public Adapter caseIViewportModel( IViewportModel object ) {
+        public Adapter caseIViewportModel(IViewportModel object) {
             return createIViewportModelAdapter();
         }
+
         @Override
-        public Adapter caseContextModel( ContextModel object ) {
+        public Adapter caseContextModel(ContextModel object) {
             return createContextModelAdapter();
         }
+
         @Override
-        public Adapter caseEditManager( EditManager object ) {
+        public Adapter caseEditManager(EditManager object) {
             return createEditManagerAdapter();
         }
+
         @Override
-        public Adapter caseLayer( Layer object ) {
+        public Adapter caseLayer(Layer object) {
             return createLayerAdapter();
         }
+
         @Override
-        public Adapter caseMap( Map object ) {
+        public Adapter caseMap(Map object) {
             return createMapAdapter();
         }
+
         @Override
-        public Adapter caseProject( Project object ) {
+        public Adapter caseProject(Project object) {
             return createProjectAdapter();
         }
+
         @Override
-        public Adapter caseProjectElement( ProjectElement object ) {
+        public Adapter caseProjectElement(ProjectElement object) {
             return createProjectElementAdapter();
         }
+
         @Override
-        public Adapter caseProjectRegistry( ProjectRegistry object ) {
+        public Adapter caseProjectRegistry(ProjectRegistry object) {
             return createProjectRegistryAdapter();
         }
+
         @Override
-        public Adapter caseStyleBlackboard( StyleBlackboard object ) {
+        public Adapter caseStyleBlackboard(StyleBlackboard object) {
             return createStyleBlackboardAdapter();
         }
+
         @Override
-        public Adapter caseStyleEntry( StyleEntry object ) {
+        public Adapter caseStyleEntry(StyleEntry object) {
             return createStyleEntryAdapter();
         }
+
         @Override
-        public Adapter caseCloneable( Cloneable object ) {
+        public Adapter caseCloneable(Cloneable object) {
             return createCloneableAdapter();
         }
+
         @Override
-        public Adapter caseLayerFactory( LayerFactory object ) {
+        public Adapter caseLayerFactory(LayerFactory object) {
             return createLayerFactoryAdapter();
         }
+
         @Override
-        public Adapter caseIAdaptable( IAdaptable object ) {
+        public Adapter caseIAdaptable(IAdaptable object) {
             return createIAdaptableAdapter();
         }
+
         @Override
-        public Adapter caseIBlockingAdaptable( IBlockingAdaptable object ) {
+        public Adapter caseIBlockingAdaptable(IBlockingAdaptable object) {
             return createIBlockingAdaptableAdapter();
         }
+
         @Override
-        public Adapter caseBlackboard( Blackboard object ) {
+        public Adapter caseBlackboard(Blackboard object) {
             return createBlackboardAdapter();
         }
+
         @Override
-        public Adapter caseBlackboardEntry( BlackboardEntry object ) {
+        public Adapter caseBlackboardEntry(BlackboardEntry object) {
             return createBlackboardEntryAdapter();
         }
+
         @Override
-        public Adapter caseIResolveChangeListener( IResolveChangeListener object ) {
+        public Adapter caseIResolveChangeListener(IResolveChangeListener object) {
             return createIResolveChangeListenerAdapter();
         }
+
         @Override
-        public Adapter caseIStyleBlackboard( IStyleBlackboard object ) {
+        public Adapter caseIStyleBlackboard(IStyleBlackboard object) {
             return createIStyleBlackboardAdapter();
         }
+
         @Override
         public Adapter caseInteractionToEBooleanObjectMapEntry(
-                java.util.Map.Entry<Interaction, Boolean> object ) {
+                java.util.Map.Entry<Interaction, Boolean> object) {
             return createInteractionToEBooleanObjectMapEntryAdapter();
         }
+
         @Override
-        public Adapter caseIFolder( IFolder object ) {
+        public Adapter caseIFolder(IFolder object) {
             return createIFolderAdapter();
         }
+
         @Override
-        public Adapter caseFolder( Folder object ) {
+        public Adapter caseFolder(Folder object) {
             return createFolderAdapter();
         }
+
         @Override
-        public Adapter caseILayerLegendItem( ILayerLegendItem object ) {
+        public Adapter caseILayerLegendItem(ILayerLegendItem object) {
             return createILayerLegendItemAdapter();
         }
+
         @Override
-        public Adapter caseLegendItem( LegendItem object ) {
+        public Adapter caseLegendItem(LegendItem object) {
             return createLegendItemAdapter();
         }
+
         @Override
-        public Adapter caseILegendItem( ILegendItem object ) {
+        public Adapter caseILegendItem(ILegendItem object) {
             return createILegendItemAdapter();
         }
+
         @Override
-        public Adapter caseLayerLegendItem( LayerLegendItem object ) {
+        public Adapter caseLayerLegendItem(LayerLegendItem object) {
             return createLayerLegendItemAdapter();
         }
+
         @Override
-        public Adapter defaultCase( EObject object ) {
+        public Adapter defaultCase(EObject object) {
             return createEObjectAdapter();
         }
     };
@@ -256,7 +290,7 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     @Override
-    public Adapter createAdapter( Notifier target ) {
+    public Adapter createAdapter(Notifier target) {
         return modelSwitch.doSwitch((EObject) target);
     }
 

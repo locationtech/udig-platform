@@ -69,7 +69,7 @@ public class ElementSwitch<T> extends Switch<T> {
      * @generated
      */
     @Override
-    protected boolean isSwitchFor( EPackage ePackage ) {
+    protected boolean isSwitchFor(EPackage ePackage) {
         return ePackage == modelPackage;
     }
 
@@ -81,15 +81,19 @@ public class ElementSwitch<T> extends Switch<T> {
      * @generated
      */
     @Override
-    protected T doSwitch( int classifierID, EObject theEObject ) {
-        switch( classifierID ) {
+    protected T doSwitch(int classifierID, EObject theEObject) {
+        switch (classifierID) {
         case ElementPackage.PROJECT_ELEMENT_ADAPTER: {
             ProjectElementAdapter projectElementAdapter = (ProjectElementAdapter) theEObject;
             T result = caseProjectElementAdapter(projectElementAdapter);
-            if (result == null) result = caseProjectElement(projectElementAdapter);
-            if (result == null) result = caseIProjectElement(projectElementAdapter);
-            if (result == null) result = caseIAdaptable(projectElementAdapter);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = caseProjectElement(projectElementAdapter);
+            if (result == null)
+                result = caseIProjectElement(projectElementAdapter);
+            if (result == null)
+                result = caseIAdaptable(projectElementAdapter);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         default:
@@ -108,7 +112,7 @@ public class ElementSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseProjectElementAdapter( ProjectElementAdapter object ) {
+    public T caseProjectElementAdapter(ProjectElementAdapter object) {
         return null;
     }
 
@@ -123,7 +127,7 @@ public class ElementSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseIProjectElement( IProjectElement object ) {
+    public T caseIProjectElement(IProjectElement object) {
         return null;
     }
 
@@ -138,7 +142,7 @@ public class ElementSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseIAdaptable( IAdaptable object ) {
+    public T caseIAdaptable(IAdaptable object) {
         return null;
     }
 
@@ -153,7 +157,7 @@ public class ElementSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseProjectElement( ProjectElement object ) {
+    public T caseProjectElement(ProjectElement object) {
         return null;
     }
 
@@ -169,7 +173,7 @@ public class ElementSwitch<T> extends Switch<T> {
      * @generated
      */
     @Override
-    public T defaultCase( EObject object ) {
+    public T defaultCase(EObject object) {
         return null;
     }
 

@@ -121,7 +121,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public void setID( String newID ) {
+    public void setID(String newID) {
         String oldID = iD;
         iD = newID;
         if (eNotificationRequired())
@@ -141,7 +141,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public void setMemento( String newMemento ) {
+    public void setMemento(String newMemento) {
         String oldMemento = memento;
         memento = newMemento;
         if (eNotificationRequired())
@@ -165,7 +165,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * @uml.property name="style"
      * @generated NOT
      */
-    public void setStyle( Object newStyle ) {
+    public void setStyle(Object newStyle) {
         style = newStyle;
     }
 
@@ -185,7 +185,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * @uml.property name="styleClass"
      * @generated NOT
      */
-    public void setStyleClass( Class newStyleClass ) {
+    public void setStyleClass(Class newStyleClass) {
         styleClass = newStyleClass;
     }
 
@@ -195,8 +195,8 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * @generated
      */
     @Override
-    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
-        switch( featureID ) {
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
         case ProjectPackage.STYLE_ENTRY__ID:
             return getID();
         case ProjectPackage.STYLE_ENTRY__MEMENTO:
@@ -215,8 +215,8 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * @generated
      */
     @Override
-    public void eSet( int featureID, Object newValue ) {
-        switch( featureID ) {
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
         case ProjectPackage.STYLE_ENTRY__ID:
             setID((String) newValue);
             return;
@@ -239,8 +239,8 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * @generated
      */
     @Override
-    public void eUnset( int featureID ) {
-        switch( featureID ) {
+    public void eUnset(int featureID) {
+        switch (featureID) {
         case ProjectPackage.STYLE_ENTRY__ID:
             setID(ID_EDEFAULT);
             return;
@@ -263,8 +263,8 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * @generated
      */
     @Override
-    public boolean eIsSet( int featureID ) {
-        switch( featureID ) {
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
         case ProjectPackage.STYLE_ENTRY__ID:
             return ID_EDEFAULT == null ? iD != null : !ID_EDEFAULT.equals(iD);
         case ProjectPackage.STYLE_ENTRY__MEMENTO:
@@ -282,7 +282,8 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * @generated NOT
      */
     public String toString() {
-        if (eIsProxy()) return super.toString();
+        if (eIsProxy())
+            return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (iD: "); //$NON-NLS-1$
@@ -299,7 +300,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
         return selected;
     }
 
-    public void setSelected( boolean selected ) {
+    public void setSelected(boolean selected) {
         this.selected = selected;
     }
 

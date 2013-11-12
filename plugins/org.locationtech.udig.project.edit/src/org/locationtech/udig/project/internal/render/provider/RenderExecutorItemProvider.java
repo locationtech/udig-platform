@@ -30,13 +30,9 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * --> <!-- end-user-doc -->
  * @generated
  */
-public class RenderExecutorItemProvider extends RendererItemProvider
-        implements
-            IEditingDomainItemProvider,
-            IStructuredItemContentProvider,
-            ITreeItemContentProvider,
-            IItemLabelProvider,
-            IItemPropertySource {
+public class RenderExecutorItemProvider extends RendererItemProvider implements
+        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
+        IItemLabelProvider, IItemPropertySource {
 
     /**
      * This constructs an instance from a factory and a notifier.
@@ -44,7 +40,7 @@ public class RenderExecutorItemProvider extends RendererItemProvider
      * end-user-doc -->
      * @generated
      */
-    public RenderExecutorItemProvider( AdapterFactory adapterFactory ) {
+    public RenderExecutorItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -55,7 +51,7 @@ public class RenderExecutorItemProvider extends RendererItemProvider
      * @generated
      */
     @Override
-    public List<IItemPropertyDescriptor> getPropertyDescriptors( Object object ) {
+    public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
@@ -70,7 +66,7 @@ public class RenderExecutorItemProvider extends RendererItemProvider
      * end-user-doc -->
      * @generated
      */
-    protected void addRendererPropertyDescriptor( Object object ) {
+    protected void addRendererPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -78,7 +74,7 @@ public class RenderExecutorItemProvider extends RendererItemProvider
                         getString("_UI_RenderExecutor_renderer_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_RenderExecutor_renderer_feature", "_UI_RenderExecutor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        RenderPackage.Literals.RENDER_EXECUTOR__RENDERER, true, false, false, null,
+                        RenderPackage.Literals.RENDER_EXECUTOR__RENDERER, true, false, true, null,
                         null, null));
     }
 
@@ -88,7 +84,7 @@ public class RenderExecutorItemProvider extends RendererItemProvider
      * @generated
      */
     @Override
-    public Object getImage( Object object ) {
+    public Object getImage(Object object) {
         return overlayImage(object, getResourceLocator().getImage("full/obj16/RenderExecutor")); //$NON-NLS-1$
     }
 
@@ -108,7 +104,7 @@ public class RenderExecutorItemProvider extends RendererItemProvider
      * 
      * @generated NOT
      */
-    public String getText( Object object ) {
+    public String getText(Object object) {
         String label = ((RenderExecutor) object).getName();
         return label == null || label.length() == 0 ? "RenderExecutor" : label;
     }
@@ -120,7 +116,7 @@ public class RenderExecutorItemProvider extends RendererItemProvider
      * @generated
      */
     @Override
-    public void notifyChanged( Notification notification ) {
+    public void notifyChanged(Notification notification) {
         updateChildren(notification);
         super.notifyChanged(notification);
     }

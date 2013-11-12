@@ -34,20 +34,16 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
  * --> <!-- end-user-doc -->
  * @generated
  */
-public class ViewportModelItemProvider extends ItemProviderAdapter
-        implements
-            IEditingDomainItemProvider,
-            IStructuredItemContentProvider,
-            ITreeItemContentProvider,
-            IItemLabelProvider,
-            IItemPropertySource {
+public class ViewportModelItemProvider extends ItemProviderAdapter implements
+        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
+        IItemLabelProvider, IItemPropertySource {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @generated
      */
-    public ViewportModelItemProvider( AdapterFactory adapterFactory ) {
+    public ViewportModelItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -57,7 +53,7 @@ public class ViewportModelItemProvider extends ItemProviderAdapter
      * 
      * @generated NOT
      */
-    public List getPropertyDescriptors( Object object ) {
+    public List getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
@@ -76,7 +72,7 @@ public class ViewportModelItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addCRSPropertyDescriptor( Object object ) {
+    protected void addCRSPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -94,7 +90,7 @@ public class ViewportModelItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addBoundsPropertyDescriptor( Object object ) {
+    protected void addBoundsPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -112,7 +108,7 @@ public class ViewportModelItemProvider extends ItemProviderAdapter
      * 
      * @generated NOT
      */
-    protected void addCenterPropertyDescriptor( Object object ) {
+    protected void addCenterPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(new ItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -130,7 +126,7 @@ public class ViewportModelItemProvider extends ItemProviderAdapter
      * 
      * @generated NOT
      */
-    protected void addHeightPropertyDescriptor( Object object ) {
+    protected void addHeightPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(new ItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -148,7 +144,7 @@ public class ViewportModelItemProvider extends ItemProviderAdapter
      * 
      * @generated NOT
      */
-    protected void addWidthPropertyDescriptor( Object object ) {
+    protected void addWidthPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(new ItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -166,7 +162,7 @@ public class ViewportModelItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addAspectRatioPropertyDescriptor( Object object ) {
+    protected void addAspectRatioPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -184,7 +180,7 @@ public class ViewportModelItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addPixelSizePropertyDescriptor( Object object ) {
+    protected void addPixelSizePropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -202,7 +198,7 @@ public class ViewportModelItemProvider extends ItemProviderAdapter
      * --> <!-- end-user-doc -->
      * @generated
      */
-    protected void addRenderManagerInternalPropertyDescriptor( Object object ) {
+    protected void addRenderManagerInternalPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -211,7 +207,7 @@ public class ViewportModelItemProvider extends ItemProviderAdapter
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_ViewportModel_renderManagerInternal_feature", "_UI_ViewportModel_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                         RenderPackage.Literals.VIEWPORT_MODEL__RENDER_MANAGER_INTERNAL, true,
-                        false, false, null, null, null));
+                        false, true, null, null, null));
     }
 
     /**
@@ -220,7 +216,7 @@ public class ViewportModelItemProvider extends ItemProviderAdapter
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addPreferredScaleDenominatorsPropertyDescriptor( Object object ) {
+    protected void addPreferredScaleDenominatorsPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -238,7 +234,7 @@ public class ViewportModelItemProvider extends ItemProviderAdapter
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addAvailableTimestepsPropertyDescriptor( Object object ) {
+    protected void addAvailableTimestepsPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -256,7 +252,7 @@ public class ViewportModelItemProvider extends ItemProviderAdapter
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addCurrentTimestepPropertyDescriptor( Object object ) {
+    protected void addCurrentTimestepPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -274,7 +270,7 @@ public class ViewportModelItemProvider extends ItemProviderAdapter
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addAvailableElevationPropertyDescriptor( Object object ) {
+    protected void addAvailableElevationPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -292,7 +288,7 @@ public class ViewportModelItemProvider extends ItemProviderAdapter
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addCurrentElevationPropertyDescriptor( Object object ) {
+    protected void addCurrentElevationPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -310,7 +306,7 @@ public class ViewportModelItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public Object getImage( Object object ) {
+    public Object getImage(Object object) {
         return overlayImage(object, getResourceLocator().getImage("full/obj16/ViewportModel")); //$NON-NLS-1$
     }
 
@@ -330,7 +326,7 @@ public class ViewportModelItemProvider extends ItemProviderAdapter
      * 
      * @generated NOT
      */
-    public String getText( Object object ) {
+    public String getText(Object object) {
         return "ViewportModel";
 
     }
@@ -342,10 +338,10 @@ public class ViewportModelItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public void notifyChanged( Notification notification ) {
+    public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch( notification.getFeatureID(ViewportModel.class) ) {
+        switch (notification.getFeatureID(ViewportModel.class)) {
         case RenderPackage.VIEWPORT_MODEL__CRS:
         case RenderPackage.VIEWPORT_MODEL__BOUNDS:
         case RenderPackage.VIEWPORT_MODEL__CENTER:

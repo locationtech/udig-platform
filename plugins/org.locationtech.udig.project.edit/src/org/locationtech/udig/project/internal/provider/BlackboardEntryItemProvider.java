@@ -31,20 +31,16 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * @generated
  */
-public class BlackboardEntryItemProvider extends ItemProviderAdapter
-        implements
-            IEditingDomainItemProvider,
-            IStructuredItemContentProvider,
-            ITreeItemContentProvider,
-            IItemLabelProvider,
-            IItemPropertySource {
+public class BlackboardEntryItemProvider extends ItemProviderAdapter implements
+        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
+        IItemLabelProvider, IItemPropertySource {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @generated
      */
-    public BlackboardEntryItemProvider( AdapterFactory adapterFactory ) {
+    public BlackboardEntryItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -55,7 +51,7 @@ public class BlackboardEntryItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public List<IItemPropertyDescriptor> getPropertyDescriptors( Object object ) {
+    public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
@@ -73,7 +69,7 @@ public class BlackboardEntryItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addKeyPropertyDescriptor( Object object ) {
+    protected void addKeyPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -91,7 +87,7 @@ public class BlackboardEntryItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addMementoPropertyDescriptor( Object object ) {
+    protected void addMementoPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -109,7 +105,7 @@ public class BlackboardEntryItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addObjectClassPropertyDescriptor( Object object ) {
+    protected void addObjectClassPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -127,7 +123,7 @@ public class BlackboardEntryItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addObjectPropertyDescriptor( Object object ) {
+    protected void addObjectPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -145,7 +141,7 @@ public class BlackboardEntryItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public Object getImage( Object object ) {
+    public Object getImage(Object object) {
         return overlayImage(object, getResourceLocator().getImage("full/obj16/BlackboardEntry")); //$NON-NLS-1$
     }
 
@@ -165,7 +161,7 @@ public class BlackboardEntryItemProvider extends ItemProviderAdapter
      * 
      * @generated NOT
      */
-    public String getText( Object object ) {
+    public String getText(Object object) {
         String label = ((BlackboardEntry) object).getKey();
         return label == null || label.length() == 0 ? "Blackboard Entry" : label;
     }
@@ -177,10 +173,10 @@ public class BlackboardEntryItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public void notifyChanged( Notification notification ) {
+    public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch( notification.getFeatureID(BlackboardEntry.class) ) {
+        switch (notification.getFeatureID(BlackboardEntry.class)) {
         case ProjectPackage.BLACKBOARD_ENTRY__KEY:
         case ProjectPackage.BLACKBOARD_ENTRY__MEMENTO:
         case ProjectPackage.BLACKBOARD_ENTRY__OBJECT_CLASS:

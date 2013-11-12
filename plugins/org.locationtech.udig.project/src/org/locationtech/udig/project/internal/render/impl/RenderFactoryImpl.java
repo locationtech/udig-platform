@@ -93,8 +93,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * @generated
      */
     @Override
-    public EObject create( EClass eClass ) {
-        switch( eClass.getClassifierID() ) {
+    public EObject create(EClass eClass) {
+        switch (eClass.getClassifierID()) {
         case RenderPackage.RENDER_EXECUTOR:
             return createRenderExecutor();
         case RenderPackage.RENDER_MANAGER:
@@ -119,8 +119,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * @generated
      */
     @Override
-    public Object createFromString( EDataType eDataType, String initialValue ) {
-        switch( eDataType.getClassifierID() ) {
+    public Object createFromString(EDataType eDataType, String initialValue) {
+        switch (eDataType.getClassifierID()) {
         case RenderPackage.COORDINATE_REFERENCE_SYSTEM:
             return createCoordinateReferenceSystemFromString(eDataType, initialValue);
         case RenderPackage.ENVELOPE:
@@ -168,8 +168,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * @generated
      */
     @Override
-    public String convertToString( EDataType eDataType, Object instanceValue ) {
-        switch( eDataType.getClassifierID() ) {
+    public String convertToString(EDataType eDataType, Object instanceValue) {
+        switch (eDataType.getClassifierID()) {
         case RenderPackage.COORDINATE_REFERENCE_SYSTEM:
             return convertCoordinateReferenceSystemToString(eDataType, instanceValue);
         case RenderPackage.ENVELOPE:
@@ -254,10 +254,11 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * 
      * @generated NOT
      */
-    public RenderExecutor createRenderExecutor( Renderer renderer ) {
+    public RenderExecutor createRenderExecutor(Renderer renderer) {
 
         RenderExecutor executor = locateMatch(renderer);
-        if (executor == null) executor = locateClosestFit(renderer);
+        if (executor == null)
+            executor = locateClosestFit(renderer);
 
         executor.setRenderer(renderer);
         return executor;
@@ -270,30 +271,31 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * 
      * @return The closest renderexecutor for the renderer.
      */
-    private RenderExecutor locateClosestFit( Renderer r ) {
+    private RenderExecutor locateClosestFit(Renderer r) {
         Renderer ofInterest = r;
         if (r instanceof RendererDecorator) {
             ofInterest = ((RendererDecorator) r).getRenderer();
         }
         final Renderer renderer = ofInterest;
         List<IConfigurationElement> list = new ArrayList<IConfigurationElement>();
-        for( Iterator<IConfigurationElement> iter = ExtensionPointList.getExtensionPointList(
-                RenderExecutor.EXTENSION_ID).iterator(); iter.hasNext(); ) {
+        for (Iterator<IConfigurationElement> iter = ExtensionPointList.getExtensionPointList(
+                RenderExecutor.EXTENSION_ID).iterator(); iter.hasNext();) {
             IConfigurationElement elem = iter.next();
             try {
                 Bundle bundle = Platform.getBundle(elem.getNamespaceIdentifier());
-                Class< ? > rendererClass = bundle.loadClass(elem
+                Class<?> rendererClass = bundle.loadClass(elem
                         .getAttribute(RenderExecutor.RENDERER_ATTR));
-                if (rendererClass.isAssignableFrom(renderer.getClass())) list.add(elem);
+                if (rendererClass.isAssignableFrom(renderer.getClass()))
+                    list.add(elem);
             } catch (Exception e) {
                 ProjectPlugin.log(null, e);
                 // do nothing
             }
         }
         if (!list.isEmpty()) {
-            Collections.sort(list, new Comparator<IConfigurationElement>(){
+            Collections.sort(list, new Comparator<IConfigurationElement>() {
 
-                public int compare( IConfigurationElement o1, IConfigurationElement o2 ) {
+                public int compare(IConfigurationElement o1, IConfigurationElement o2) {
                     try {
                         Bundle bundle = Platform.getBundle(o1.getNamespaceIdentifier());
                         Class clazz1 = bundle.loadClass(o1
@@ -305,7 +307,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
 
                         int dist1 = getDistance(renderer.getClass(), clazz1);
                         int dist2 = getDistance(renderer.getClass(), clazz2);
-                        if (dist1 == dist2) return 0;
+                        if (dist1 == dist2)
+                            return 0;
                         return dist1 < dist2 ? -1 : 1;
                     } catch (Exception e) {
                         ProjectPlugin.log(null, e);
@@ -314,16 +317,19 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
                     return 0;
                 }
 
-                private int getDistance( Class< ? > rendererClass, Class< ? > target ) {
-                    if (!target.isAssignableFrom(rendererClass)) return -1;
-                    if (target == rendererClass) return 0;
+                private int getDistance(Class<?> rendererClass, Class<?> target) {
+                    if (!target.isAssignableFrom(rendererClass))
+                        return -1;
+                    if (target == rendererClass)
+                        return 0;
 
-                    for( Class iClass : rendererClass.getInterfaces() ) {
+                    for (Class iClass : rendererClass.getInterfaces()) {
                         if (iClass == target)
                             return 1;
                         else {
                             int distance = getDistance(iClass, target);
-                            if (distance != -1) return 1 + distance;
+                            if (distance != -1)
+                                return 1 + distance;
                         }
                     }
                     return 1 + getDistance(rendererClass.getSuperclass(), target);
@@ -347,17 +353,18 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * 
      * @return a renderExecutor for the renderer
      */
-    private RenderExecutor locateMatch( Renderer renderer ) {
+    private RenderExecutor locateMatch(Renderer renderer) {
         Renderer ofInterest = renderer;
         if (renderer instanceof RendererDecorator) {
             ofInterest = ((RendererDecorator) renderer).getRenderer();
         }
         List<IConfigurationElement> list = new ArrayList<IConfigurationElement>();
-        for( Iterator<IConfigurationElement> iter = ExtensionPointList.getExtensionPointList(
-                RenderExecutor.EXTENSION_ID).iterator(); iter.hasNext(); ) {
+        for (Iterator<IConfigurationElement> iter = ExtensionPointList.getExtensionPointList(
+                RenderExecutor.EXTENSION_ID).iterator(); iter.hasNext();) {
             IConfigurationElement elem = iter.next();
             if (elem.getAttribute(RenderExecutor.RENDERER_ATTR).equals(
-                    ofInterest.getClass().getName())) list.add(elem);
+                    ofInterest.getClass().getName()))
+                list.add(elem);
         }
 
         if (!list.isEmpty()) {
@@ -383,7 +390,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * @return a new RenderContext object for a renderer that renders
      *         selections.
      */
-    public RenderContextImpl createRenderContext( boolean selection ) {
+    public RenderContextImpl createRenderContext(boolean selection) {
         RenderContextImpl renderContext = new RenderContextImpl(selection);
         return renderContext;
     }
@@ -392,7 +399,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public Rectangle createRectangleFromString( EDataType eDataType, String initialValue ) {
+    public Rectangle createRectangleFromString(EDataType eDataType, String initialValue) {
         return (Rectangle) super.createFromString(eDataType, initialValue);
     }
 
@@ -400,7 +407,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertRectangleToString( EDataType eDataType, Object instanceValue ) {
+    public String convertRectangleToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -408,7 +415,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public AffineTransform createAffineTransformFromString( EDataType eDataType, String initialValue ) {
+    public AffineTransform createAffineTransformFromString(EDataType eDataType, String initialValue) {
         return (AffineTransform) super.createFromString(eDataType, initialValue);
     }
 
@@ -416,7 +423,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertAffineTransformToString( EDataType eDataType, Object instanceValue ) {
+    public String convertAffineTransformToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -424,7 +431,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public Point createPointFromString( EDataType eDataType, String initialValue ) {
+    public Point createPointFromString(EDataType eDataType, String initialValue) {
         return (Point) super.createFromString(eDataType, initialValue);
     }
 
@@ -432,7 +439,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertPointToString( EDataType eDataType, Object instanceValue ) {
+    public String convertPointToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -440,7 +447,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public IMapDisplay createMapDisplayFromString( EDataType eDataType, String initialValue ) {
+    public IMapDisplay createMapDisplayFromString(EDataType eDataType, String initialValue) {
         return (IMapDisplay) super.createFromString(eDataType, initialValue);
     }
 
@@ -448,7 +455,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertMapDisplayToString( EDataType eDataType, Object instanceValue ) {
+    public String convertMapDisplayToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -456,8 +463,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public IProgressMonitor createIProgressMonitorFromString( EDataType eDataType,
-            String initialValue ) {
+    public IProgressMonitor createIProgressMonitorFromString(EDataType eDataType,
+            String initialValue) {
         return (IProgressMonitor) super.createFromString(eDataType, initialValue);
     }
 
@@ -465,7 +472,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertIProgressMonitorToString( EDataType eDataType, Object instanceValue ) {
+    public String convertIProgressMonitorToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -482,7 +489,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public RenderException createRenderExceptionFromString( EDataType eDataType, String initialValue ) {
+    public RenderException createRenderExceptionFromString(EDataType eDataType, String initialValue) {
         return (RenderException) super.createFromString(eDataType, initialValue);
     }
 
@@ -491,7 +498,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String convertRenderExceptionToString( EDataType eDataType, Object instanceValue ) {
+    public String convertRenderExceptionToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -500,8 +507,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public SortedSet< ? > createSortedSetFromString( EDataType eDataType, String initialValue ) {
-        return (SortedSet< ? >) super.createFromString(initialValue);
+    public SortedSet<?> createSortedSetFromString(EDataType eDataType, String initialValue) {
+        return (SortedSet<?>) super.createFromString(initialValue);
     }
 
     /**
@@ -509,7 +516,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String convertSortedSetToString( EDataType eDataType, Object instanceValue ) {
+    public String convertSortedSetToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(instanceValue);
     }
 
@@ -517,7 +524,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public Graphics2D createGraphics2DFromString( EDataType eDataType, String initialValue ) {
+    public Graphics2D createGraphics2DFromString(EDataType eDataType, String initialValue) {
         return (Graphics2D) super.createFromString(eDataType, initialValue);
     }
 
@@ -525,7 +532,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertGraphics2DToString( EDataType eDataType, Object instanceValue ) {
+    public String convertGraphics2DToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -533,7 +540,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public Coordinate createCoordinateFromString( EDataType eDataType, String initialValue ) {
+    public Coordinate createCoordinateFromString(EDataType eDataType, String initialValue) {
         return (Coordinate) super.createFromString(eDataType, initialValue);
     }
 
@@ -541,7 +548,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertCoordinateToString( EDataType eDataType, Object instanceValue ) {
+    public String convertCoordinateToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -550,8 +557,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * 
      * @generated NOT
      */
-    public CoordinateReferenceSystem createCoordinateReferenceSystemFromString(
-            EDataType eDataType, String initialValue ) {
+    public CoordinateReferenceSystem createCoordinateReferenceSystemFromString(EDataType eDataType,
+            String initialValue) {
 
         return (CoordinateReferenceSystem) ProjectFactory.eINSTANCE.createFromString(
                 ProjectPackage.eINSTANCE.getCoordinateReferenceSystem(), initialValue);
@@ -562,8 +569,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * 
      * @generated NOT
      */
-    public String convertCoordinateReferenceSystemToString( EDataType eDataType,
-            Object instanceValue ) {
+    public String convertCoordinateReferenceSystemToString(EDataType eDataType, Object instanceValue) {
         return ProjectFactory.eINSTANCE.convertToString(
                 ProjectPackage.eINSTANCE.getCoordinateReferenceSystem(), instanceValue);
     }
@@ -573,7 +579,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * 
      * @generated NOT
      */
-    public Envelope createEnvelopeFromString( EDataType eDataType, String initialValue ) {
+    public Envelope createEnvelopeFromString(EDataType eDataType, String initialValue) {
         return (Envelope) ProjectFactory.eINSTANCE.createFromString(
                 ProjectPackage.eINSTANCE.getEnvelope(), initialValue);
     }
@@ -583,16 +589,17 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * 
      * @generated NOT
      */
-    public String convertEnvelopeToString( EDataType eDataType, Object instanceValue ) {
+    public String convertEnvelopeToString(EDataType eDataType, Object instanceValue) {
         return ProjectFactory.eINSTANCE.convertToString(ProjectPackage.eINSTANCE.getEnvelope(),
                 instanceValue);
     }
+
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated NOT
      */
-    public ReferencedEnvelope createReferencedEnvelopeFromString( EDataType eDataType,
-            String initialValue ) {
+    public ReferencedEnvelope createReferencedEnvelopeFromString(EDataType eDataType,
+            String initialValue) {
         return (ReferencedEnvelope) ProjectFactory.eINSTANCE.createFromString(
                 ProjectPackage.eINSTANCE.getReferencedEnvelope(), initialValue);
     }
@@ -601,7 +608,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated NOT
      */
-    public String convertReferencedEnvelopeToString( EDataType eDataType, Object instanceValue ) {
+    public String convertReferencedEnvelopeToString(EDataType eDataType, Object instanceValue) {
         return ProjectFactory.eINSTANCE.convertToString(
                 ProjectPackage.eINSTANCE.getReferencedEnvelope(), instanceValue);
     }
@@ -611,7 +618,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public DateTime createDateTimeFromString( EDataType eDataType, String initialValue ) {
+    public DateTime createDateTimeFromString(EDataType eDataType, String initialValue) {
         return (DateTime) super.createFromString(eDataType, initialValue);
     }
 
@@ -620,7 +627,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String convertDateTimeToString( EDataType eDataType, Object instanceValue ) {
+    public String convertDateTimeToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -629,8 +636,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public IllegalArgumentException createIllegalArgumentExceptionFromString( EDataType eDataType,
-            String initialValue ) {
+    public IllegalArgumentException createIllegalArgumentExceptionFromString(EDataType eDataType,
+            String initialValue) {
         return (IllegalArgumentException) super.createFromString(eDataType, initialValue);
     }
 
@@ -639,7 +646,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String convertIllegalArgumentExceptionToString( EDataType eDataType, Object instanceValue ) {
+    public String convertIllegalArgumentExceptionToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -647,7 +654,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public BufferedImage createBufferedImageFromString( EDataType eDataType, String initialValue ) {
+    public BufferedImage createBufferedImageFromString(EDataType eDataType, String initialValue) {
         return (BufferedImage) super.createFromString(eDataType, initialValue);
     }
 
@@ -655,7 +662,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertBufferedImageToString( EDataType eDataType, Object instanceValue ) {
+    public String convertBufferedImageToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -663,7 +670,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public Query createQueryFromString( EDataType eDataType, String initialValue ) {
+    public Query createQueryFromString(EDataType eDataType, String initialValue) {
         return (Query) super.createFromString(eDataType, initialValue);
     }
 
@@ -671,7 +678,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertQueryToString( EDataType eDataType, Object instanceValue ) {
+    public String convertQueryToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -679,7 +686,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public List createListFromString( EDataType eDataType, String initialValue ) {
+    public List createListFromString(EDataType eDataType, String initialValue) {
         return (List) super.createFromString(eDataType, initialValue);
     }
 
@@ -687,7 +694,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertListToString( EDataType eDataType, Object instanceValue ) {
+    public String convertListToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -695,7 +702,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public IGeoResource createIGeoResourceFromString( EDataType eDataType, String initialValue ) {
+    public IGeoResource createIGeoResourceFromString(EDataType eDataType, String initialValue) {
         return (IGeoResource) super.createFromString(eDataType, initialValue);
     }
 
@@ -703,7 +710,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertIGeoResourceToString( EDataType eDataType, Object instanceValue ) {
+    public String convertIGeoResourceToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 

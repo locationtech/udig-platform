@@ -67,7 +67,7 @@ public class RenderSwitch<T> extends Switch<T> {
      * @generated
      */
     @Override
-    protected boolean isSwitchFor( EPackage ePackage ) {
+    protected boolean isSwitchFor(EPackage ePackage) {
         return ePackage == modelPackage;
     }
 
@@ -78,45 +78,59 @@ public class RenderSwitch<T> extends Switch<T> {
      * @generated
      */
     @Override
-    protected T doSwitch( int classifierID, EObject theEObject ) {
-        switch( classifierID ) {
+    protected T doSwitch(int classifierID, EObject theEObject) {
+        switch (classifierID) {
         case RenderPackage.MULTI_LAYER_RENDERER: {
             MultiLayerRenderer multiLayerRenderer = (MultiLayerRenderer) theEObject;
             T result = caseMultiLayerRenderer(multiLayerRenderer);
-            if (result == null) result = caseRenderer(multiLayerRenderer);
-            if (result == null) result = caseIMultiLayerRenderer(multiLayerRenderer);
-            if (result == null) result = caseIRenderer(multiLayerRenderer);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = caseRenderer(multiLayerRenderer);
+            if (result == null)
+                result = caseIMultiLayerRenderer(multiLayerRenderer);
+            if (result == null)
+                result = caseIRenderer(multiLayerRenderer);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         case RenderPackage.RENDER_EXECUTOR: {
             RenderExecutor renderExecutor = (RenderExecutor) theEObject;
             T result = caseRenderExecutor(renderExecutor);
-            if (result == null) result = caseRenderer(renderExecutor);
-            if (result == null) result = caseIRenderer(renderExecutor);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = caseRenderer(renderExecutor);
+            if (result == null)
+                result = caseIRenderer(renderExecutor);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         case RenderPackage.RENDER_MANAGER: {
             RenderManager renderManager = (RenderManager) theEObject;
             T result = caseRenderManager(renderManager);
-            if (result == null) result = caseIRenderManager(renderManager);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = caseIRenderManager(renderManager);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         case RenderPackage.VIEWPORT_MODEL: {
             ViewportModel viewportModel = (ViewportModel) theEObject;
             T result = caseViewportModel(viewportModel);
-            if (result == null) result = caseIMapDisplayListener(viewportModel);
-            if (result == null) result = caseIViewportModel(viewportModel);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = caseIMapDisplayListener(viewportModel);
+            if (result == null)
+                result = caseIViewportModel(viewportModel);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         case RenderPackage.RENDERER: {
             Renderer renderer = (Renderer) theEObject;
             T result = caseRenderer(renderer);
-            if (result == null) result = caseIRenderer(renderer);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = caseIRenderer(renderer);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         default:
@@ -133,7 +147,7 @@ public class RenderSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseIRenderManager( IRenderManager object ) {
+    public T caseIRenderManager(IRenderManager object) {
         return null;
     }
 
@@ -146,7 +160,7 @@ public class RenderSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseIViewportModel( IViewportModel object ) {
+    public T caseIViewportModel(IViewportModel object) {
         return null;
     }
 
@@ -159,7 +173,7 @@ public class RenderSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseIMultiLayerRenderer( IMultiLayerRenderer object ) {
+    public T caseIMultiLayerRenderer(IMultiLayerRenderer object) {
         return null;
     }
 
@@ -172,7 +186,7 @@ public class RenderSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseIRenderContext( IRenderContext object ) {
+    public T caseIRenderContext(IRenderContext object) {
         return null;
     }
 
@@ -185,7 +199,7 @@ public class RenderSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseIRenderer( IRenderer object ) {
+    public T caseIRenderer(IRenderer object) {
         return null;
     }
 
@@ -199,7 +213,7 @@ public class RenderSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseILayer( ILayer object ) {
+    public T caseILayer(ILayer object) {
         return null;
     }
 
@@ -213,7 +227,7 @@ public class RenderSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseRenderManager( RenderManager object ) {
+    public T caseRenderManager(RenderManager object) {
         return null;
     }
 
@@ -227,7 +241,7 @@ public class RenderSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseRenderer( Renderer object ) {
+    public T caseRenderer(Renderer object) {
         return null;
     }
 
@@ -240,7 +254,7 @@ public class RenderSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseViewportModel( ViewportModel object ) {
+    public T caseViewportModel(ViewportModel object) {
         return null;
     }
 
@@ -253,7 +267,7 @@ public class RenderSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseRenderExecutor( RenderExecutor object ) {
+    public T caseRenderExecutor(RenderExecutor object) {
         return null;
     }
 
@@ -266,7 +280,7 @@ public class RenderSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseComparable( Comparable object ) {
+    public T caseComparable(Comparable object) {
         return null;
     }
 
@@ -279,7 +293,7 @@ public class RenderSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseMultiLayerRenderer( MultiLayerRenderer object ) {
+    public T caseMultiLayerRenderer(MultiLayerRenderer object) {
         return null;
     }
 
@@ -292,7 +306,7 @@ public class RenderSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseIMapDisplayListener( IMapDisplayListener object ) {
+    public T caseIMapDisplayListener(IMapDisplayListener object) {
         return null;
     }
 
@@ -307,7 +321,7 @@ public class RenderSwitch<T> extends Switch<T> {
      * @generated
      */
     @Override
-    public T defaultCase( EObject object ) {
+    public T defaultCase(EObject object) {
         return null;
     }
 

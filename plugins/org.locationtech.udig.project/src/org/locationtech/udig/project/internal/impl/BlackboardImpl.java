@@ -67,7 +67,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     HashMap<String, BlackboardEntry> blackboard = new HashMap<String, BlackboardEntry>();
 
     /** persisters */
-    ArrayList<IPersister< ? >> persisters;
+    ArrayList<IPersister<?>> persisters;
 
     /** providers * */
     ArrayList<IProvider<Object>> providers;
@@ -119,11 +119,11 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * @generated
      */
     @Override
-    public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
-            NotificationChain msgs ) {
-        switch( featureID ) {
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+            NotificationChain msgs) {
+        switch (featureID) {
         case ProjectPackage.BLACKBOARD__ENTRIES:
-            return ((InternalEList< ? >) getEntries()).basicRemove(otherEnd, msgs);
+            return ((InternalEList<?>) getEntries()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -134,8 +134,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * @generated
      */
     @Override
-    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
-        switch( featureID ) {
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
         case ProjectPackage.BLACKBOARD__ENTRIES:
             return getEntries();
         }
@@ -149,11 +149,11 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public void eSet( int featureID, Object newValue ) {
-        switch( featureID ) {
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
         case ProjectPackage.BLACKBOARD__ENTRIES:
             getEntries().clear();
-            getEntries().addAll((Collection< ? extends BlackboardEntry>) newValue);
+            getEntries().addAll((Collection<? extends BlackboardEntry>) newValue);
             return;
         }
         super.eSet(featureID, newValue);
@@ -165,8 +165,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * @generated
      */
     @Override
-    public void eUnset( int featureID ) {
-        switch( featureID ) {
+    public void eUnset(int featureID) {
+        switch (featureID) {
         case ProjectPackage.BLACKBOARD__ENTRIES:
             getEntries().clear();
             return;
@@ -180,8 +180,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * @generated
      */
     @Override
-    public boolean eIsSet( int featureID ) {
-        switch( featureID ) {
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
         case ProjectPackage.BLACKBOARD__ENTRIES:
             return entries != null && !entries.isEmpty();
         }
@@ -192,7 +192,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * (non-Javadoc)
      * @see org.locationtech.udig.project.IBlackboard#contains(java.lang.String)
      */
-    public boolean contains( String key ) {
+    public boolean contains(String key) {
         return get(key) != null;
     }
 
@@ -201,11 +201,12 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * @see org.locationtech.udig.project.IBlackboard#get(java.lang.String)
      */
     @SuppressWarnings("unchecked")//$NON-NLS-1$
-    public Object get( String key ) {
+    public Object get(String key) {
         if (!initialized) {
             initialize();
         }
-        if (key == null) return null;
+        if (key == null)
+            return null;
 
         // look up the entry
         BlackboardEntry entry = blackboard.get(key);
@@ -263,13 +264,14 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     private void initialize() {
         initialized = true;
-        for( BlackboardEntry entry : this.getEntries() ) {
+        for (BlackboardEntry entry : this.getEntries()) {
             blackboard.put(entry.getKey(), entry);
         }
     }
 
-    public Object remove( String key ) {
-        if (key == null) return null;
+    public Object remove(String key) {
+        if (key == null)
+            return null;
 
         // look up the entry
         BlackboardEntry entry = blackboard.remove(key);
@@ -281,7 +283,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         entry.setObject(null);
 
         BlackboardEvent event = new BlackboardEvent(this, key, oldValue, null);
-        for( IBlackboardListener l : listeners ) {
+        for (IBlackboardListener l : listeners) {
             try {
                 l.blackBoardChanged(event);
             } catch (Exception e) {
@@ -290,11 +292,12 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         }
         return oldValue;
     }
+
     /*
      * (non-Javadoc)
      * @see org.locationtech.udig.project.IBlackboard#put(java.lang.String, java.lang.Object)
      */
-    public void put( String key, Object value ) {
+    public void put(String key, Object value) {
         if (key == null) {
             return; // stop you fool!
         }
@@ -340,7 +343,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
             }
         }
         BlackboardEvent event = new BlackboardEvent(this, key, oldValue, value);
-        for( IBlackboardListener l : listeners ) {
+        for (IBlackboardListener l : listeners) {
             try {
                 l.blackBoardChanged(event);
             } catch (Exception e) {
@@ -353,7 +356,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * (non-Javadoc)
      * @see org.locationtech.udig.project.IBlackboard#getFloat(java.lang.String)
      */
-    public Float getFloat( String key ) {
+    public Float getFloat(String key) {
         Object o = get(key);
         if (o != null && o instanceof Float) {
             return (Float) o;
@@ -366,7 +369,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * (non-Javadoc)
      * @see org.locationtech.udig.project.IBlackboard#getInteger(java.lang.String)
      */
-    public Integer getInteger( String key ) {
+    public Integer getInteger(String key) {
         Object o = get(key);
         if (o != null && o instanceof Integer) {
             return (Integer) o;
@@ -379,7 +382,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * (non-Javadoc)
      * @see org.locationtech.udig.project.IBlackboard#getString(java.lang.String)
      */
-    public String getString( String key ) {
+    public String getString(String key) {
         Object o = get(key);
         if (o != null && o instanceof String) {
             return (String) o;
@@ -392,7 +395,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * (non-Javadoc)
      * @see org.locationtech.udig.project.IBlackboard#putFloat(java.lang.String, float)
      */
-    public void putFloat( String key, float value ) {
+    public void putFloat(String key, float value) {
         put(key, value);
     }
 
@@ -400,7 +403,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * (non-Javadoc)
      * @see org.locationtech.udig.project.IBlackboard#putInteger(java.lang.String, int)
      */
-    public void putInteger( String key, int value ) {
+    public void putInteger(String key, int value) {
         put(key, value);
 
     }
@@ -409,7 +412,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * (non-Javadoc)
      * @see org.locationtech.udig.project.IBlackboard#putString(java.lang.String, java.lang.String)
      */
-    public void putString( String key, String value ) {
+    public void putString(String key, String value) {
         put(key, value);
     }
 
@@ -419,17 +422,18 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      */
     public void clear() {
         blackboard.clear();
-        for( IBlackboardListener l : listeners ) {
+        for (IBlackboardListener l : listeners) {
             l.blackBoardCleared(this);
         }
     }
 
     CopyOnWriteArraySet<IBlackboardListener> listeners = new CopyOnWriteArraySet<IBlackboardListener>();
-    public boolean addListener( IBlackboardListener listener ) {
+
+    public boolean addListener(IBlackboardListener listener) {
         return listeners.add(listener);
     }
 
-    public boolean removeListener( IBlackboardListener listener ) {
+    public boolean removeListener(IBlackboardListener listener) {
         return listeners.remove(listener);
     }
 
@@ -437,12 +441,12 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * Flushes all the cached objects. Useful for testing.
      */
     public void flush() {
-        for( BlackboardEntry entry : blackboard.values() ) {
+        for (BlackboardEntry entry : blackboard.values()) {
             entry.setObject(null);
         }
     }
 
-    private IProvider findProvider( String key ) {
+    private IProvider findProvider(String key) {
         if (providers == null) {
             providers = new ArrayList<IProvider<Object>>();
             ProviderProcessor p = new ProviderProcessor(providers);
@@ -450,15 +454,16 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         }
 
         // search for provider matching key
-        for( IProvider<Object> provider : providers ) {
-            if (provider.getKey() != null && provider.getKey().equals(key)) return provider;
+        for (IProvider<Object> provider : providers) {
+            if (provider.getKey() != null && provider.getKey().equals(key))
+                return provider;
         }
 
         return null;
     }
 
     @SuppressWarnings("unchecked")
-    private BlackboardEntryImpl createEntry( String key, Object object ) {
+    private BlackboardEntryImpl createEntry(String key, Object object) {
 
         BlackboardEntryImpl entry = new BlackboardEntryImpl();
 
@@ -473,11 +478,11 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     }
 
     @SuppressWarnings("unchecked")
-    private IPersister< ? > findPersister( BlackboardEntry entry, XMLMemento memento ) {
+    private IPersister<?> findPersister(BlackboardEntry entry, XMLMemento memento) {
         if (persisters == null) {
             synchronized (this) {
                 if (persisters == null) {
-                    persisters = new ArrayList<IPersister< ? >>();
+                    persisters = new ArrayList<IPersister<?>>();
                     PersisterProcessor p = new PersisterProcessor(persisters);
                     ExtensionPointUtil.process(ProjectPlugin.getPlugin(), IPersister.XPID, p);
                 }
@@ -485,15 +490,15 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         }
 
         // look for a class closest down in the class hierarchy
-        ArrayList<IPersister< ? >> possible = new ArrayList<IPersister< ? >>();
+        ArrayList<IPersister<?>> possible = new ArrayList<IPersister<?>>();
 
-        for( IPersister< ? > persister : persisters ) {
-            Class< ? > persistenceTarget = persister.getPersistee();
+        for (IPersister<?> persister : persisters) {
+            Class<?> persistenceTarget = persister.getPersistee();
             if (persistenceTarget == null) {
                 continue; // this persister does not seem to be set up correctly
             }
             if (entry.getObjectClass() != null) {
-                Class< ? > type = entry.getObjectClass();
+                Class<?> type = entry.getObjectClass();
                 if (persistenceTarget.isAssignableFrom(type)) {
                     possible.add(persister);
                     continue;
@@ -533,8 +538,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
             return null;
         }
 
-        Collections.sort(possible, new Comparator<IPersister< ? >>(){
-            public int compare( IPersister< ? > p1, IPersister< ? > p2 ) {
+        Collections.sort(possible, new Comparator<IPersister<?>>() {
+            public int compare(IPersister<?> p1, IPersister<?> p2) {
                 if (p1.getPersistee().equals(p2.getPersistee())) {
                     return 0;
                 }
@@ -552,12 +557,12 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
         List<IProvider<Object>> providers;
 
-        ProviderProcessor( List<IProvider<Object>> providers ) {
+        ProviderProcessor(List<IProvider<Object>> providers) {
             this.providers = providers;
         }
 
         @SuppressWarnings("unchecked")
-        public void process( IExtension extension, IConfigurationElement element ) throws Exception {
+        public void process(IExtension extension, IConfigurationElement element) throws Exception {
             try {
                 IProvider<Object> provider = (IProvider<Object>) element
                         .createExecutableExtension("class"); //$NON-NLS-1$
@@ -577,16 +582,16 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     static class PersisterProcessor implements ExtensionPointProcessor {
 
-        List<IPersister< ? >> persisters;
+        List<IPersister<?>> persisters;
 
-        PersisterProcessor( List<IPersister< ? >> persisters ) {
+        PersisterProcessor(List<IPersister<?>> persisters) {
             this.persisters = persisters;
         }
 
-        public void process( IExtension extension, IConfigurationElement element ) throws Exception {
+        public void process(IExtension extension, IConfigurationElement element) throws Exception {
 
             try {
-                IPersister< ? > persister = (IPersister< ? >) element
+                IPersister<?> persister = (IPersister<?>) element
                         .createExecutableExtension("class"); //$NON-NLS-1$
 
                 if (persister != null) {
@@ -599,9 +604,10 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
         }
     }
-    public void addAll( IBlackboard blackboard ) {
+
+    public void addAll(IBlackboard blackboard) {
         Set<String> keySet = blackboard.keySet();
-        for( String key : keySet ) {
+        for (String key : keySet) {
             put(key, blackboard.get(key));
         }
     }
@@ -617,7 +623,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         buf.append("StyleBlackBoardImpl: ");
         buf.append(blackboard.size());
         buf.append(" entries");
-        for( Map.Entry entry : blackboard.entrySet() ) {
+        for (Map.Entry entry : blackboard.entrySet()) {
             buf.append("\n\t");
             buf.append(entry.getKey());
             buf.append("=");

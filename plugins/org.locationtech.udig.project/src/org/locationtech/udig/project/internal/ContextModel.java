@@ -40,7 +40,7 @@ public interface ContextModel extends EObject {
      * @param boundingBox the bounding box in Viewportmodel CRS to create a filter with
      * @deprecated use {@link Map#select(Envelope)}
      */
-    public void select( Envelope boundingBox );
+    public void select(Envelope boundingBox);
 
     /**
      * Select all selectable layers, with a BoundingBox Geometry filter. Boundingbox must be in the
@@ -54,7 +54,7 @@ public interface ContextModel extends EObject {
      *        current selection(and with current filter).
      * @deprecated use {@link Map#select(Envelope, boolean)}
      */
-    public void select( Envelope boundingBox, boolean and );
+    public void select(Envelope boundingBox, boolean and);
 
     /**
      * Select all selectable layers, with the provided filter.
@@ -65,7 +65,7 @@ public interface ContextModel extends EObject {
      * @param filter new selection filter
      * @deprecated use {@link Map#select(Filter)}
      */
-    public void select( Filter filter );
+    public void select(Filter filter);
 
     /**
      * Combines selection, from the selectable layers, with the provided filter.
@@ -78,7 +78,7 @@ public interface ContextModel extends EObject {
      *        current selection(and with current filter).
      * @deprecated use {@link Map#select(Filter, boolean)}
      */
-    public void select( Filter filter, boolean and );
+    public void select(Filter filter, boolean and);
 
     /**
      * Gets the complete set of Layer objects. The order of the objects represents the the z-order
@@ -115,7 +115,7 @@ public interface ContextModel extends EObject {
      * @see #getMap()
      * @generated
      */
-    void setMap( Map value );
+    void setMap(Map value);
 
     /**
      * Adds an adapter to the context model and all of the layers in the model.
@@ -124,7 +124,8 @@ public interface ContextModel extends EObject {
      * @param adapter adapter to add as a deep adapter
      * @deprecated use {@link Map#addDeepAdapter(Adapter)}
      */
-    public void addDeepAdapter( Adapter adapter );
+    public void addDeepAdapter(Adapter adapter);
+
     /**
      * Removes the adapter from all layers and context model.
      *
@@ -132,7 +133,7 @@ public interface ContextModel extends EObject {
      * @param adapter adapter to remove.
      * @deprecated use {@link Map#removeDeepAdapter(Adapter)}
      */
-    public void removeDeepAdapter( Adapter adapter );
+    public void removeDeepAdapter(Adapter adapter);
 
     /**
      * Increases the ZOrder of the layer so it is rendered earlier with incomparison to the other
@@ -142,7 +143,7 @@ public interface ContextModel extends EObject {
      * @param layer The layer whose rendering order will be modified
      * @deprecated use {@link Map#lowerLayer(Layer)}
      */
-    public void lowerLayer( Layer layer );
+    public void lowerLayer(Layer layer);
 
     /**
      * Decreases the ZOrder of the layer so it is rendered later with incomparison to the other
@@ -151,6 +152,6 @@ public interface ContextModel extends EObject {
      * @param layer The layer whose rendering order will be modified
      * @deprecated use {@link Map#raiseLayer(Layer)}
      */
-    public void raiseLayer( Layer layer );
+    public void raiseLayer(Layer layer);
 
 }

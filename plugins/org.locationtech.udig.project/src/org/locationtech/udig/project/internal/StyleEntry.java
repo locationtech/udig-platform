@@ -36,7 +36,7 @@ public interface StyleEntry extends EObject {
      * @see #getID()
      * @generated
      */
-    void setID( String value );
+    void setID(String value);
 
     /**
      * Contents to persist, genrated StyleContent.save( Memento mem, value ).
@@ -54,7 +54,7 @@ public interface StyleEntry extends EObject {
      * @see #getMemento()
      * @generated
      */
-    void setMemento( String value );
+    void setMemento(String value);
 
     /**
      * Returns the cached style object.
@@ -75,7 +75,7 @@ public interface StyleEntry extends EObject {
      * @see #getStyle()
      * @generated
      */
-    void setStyle( Object value );
+    void setStyle(Object value);
 
     /**
      * Returns the cached class of the style object. Used for doing class based lookups on the style
@@ -93,7 +93,7 @@ public interface StyleEntry extends EObject {
      * @see #getStyleClass()
      * @generated
      */
-    void setStyleClass( Class value );
+    void setStyleClass(Class value);
 
     /**
      * Indicates whether the entry is <em>selected</em>.
@@ -101,7 +101,7 @@ public interface StyleEntry extends EObject {
      * @param selected true if the entry is selected.
      * @see StyleBlackboard#setSelected(String[])
      */
-    void setSelected( boolean selected );
+    void setSelected(boolean selected);
 
     /**
      * Indicates whether the entry is <em>selected</em>.

@@ -65,7 +65,7 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     @Override
-    public boolean isFactoryForType( Object object ) {
+    public boolean isFactoryForType(Object object) {
         if (object == modelPackage) {
             return true;
         }
@@ -81,61 +81,74 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
      * <!-- end-user-doc -->
      * @generated
      */
-    protected RenderSwitch<Adapter> modelSwitch = new RenderSwitch<Adapter>(){
+    protected RenderSwitch<Adapter> modelSwitch = new RenderSwitch<Adapter>() {
         @Override
-        public Adapter caseIRenderManager( IRenderManager object ) {
+        public Adapter caseIRenderManager(IRenderManager object) {
             return createIRenderManagerAdapter();
         }
+
         @Override
-        public Adapter caseIViewportModel( IViewportModel object ) {
+        public Adapter caseIViewportModel(IViewportModel object) {
             return createIViewportModelAdapter();
         }
+
         @Override
-        public Adapter caseIMultiLayerRenderer( IMultiLayerRenderer object ) {
+        public Adapter caseIMultiLayerRenderer(IMultiLayerRenderer object) {
             return createIMultiLayerRendererAdapter();
         }
+
         @Override
-        public Adapter caseIRenderer( IRenderer object ) {
+        public Adapter caseIRenderer(IRenderer object) {
             return createIRendererAdapter();
         }
+
         @Override
-        public Adapter caseILayer( ILayer object ) {
+        public Adapter caseILayer(ILayer object) {
             return createILayerAdapter();
         }
+
         @Override
-        public Adapter caseMultiLayerRenderer( MultiLayerRenderer object ) {
+        public Adapter caseMultiLayerRenderer(MultiLayerRenderer object) {
             return createMultiLayerRendererAdapter();
         }
+
         @Override
-        public Adapter caseRenderExecutor( RenderExecutor object ) {
+        public Adapter caseRenderExecutor(RenderExecutor object) {
             return createRenderExecutorAdapter();
         }
+
         @Override
-        public Adapter caseRenderManager( RenderManager object ) {
+        public Adapter caseRenderManager(RenderManager object) {
             return createRenderManagerAdapter();
         }
+
         @Override
-        public Adapter caseViewportModel( ViewportModel object ) {
+        public Adapter caseViewportModel(ViewportModel object) {
             return createViewportModelAdapter();
         }
+
         @Override
-        public Adapter caseComparable( Comparable object ) {
+        public Adapter caseComparable(Comparable object) {
             return createComparableAdapter();
         }
+
         @Override
-        public Adapter caseRenderer( Renderer object ) {
+        public Adapter caseRenderer(Renderer object) {
             return createRendererAdapter();
         }
+
         @Override
-        public Adapter caseIMapDisplayListener( IMapDisplayListener object ) {
+        public Adapter caseIMapDisplayListener(IMapDisplayListener object) {
             return createIMapDisplayListenerAdapter();
         }
+
         @Override
-        public Adapter caseIRenderContext( IRenderContext object ) {
+        public Adapter caseIRenderContext(IRenderContext object) {
             return createIRenderContextAdapter();
         }
+
         @Override
-        public Adapter defaultCase( EObject object ) {
+        public Adapter defaultCase(EObject object) {
             return createEObjectAdapter();
         }
     };
@@ -149,7 +162,7 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     @Override
-    public Adapter createAdapter( Notifier target ) {
+    public Adapter createAdapter(Notifier target) {
         return modelSwitch.doSwitch((EObject) target);
     }
 

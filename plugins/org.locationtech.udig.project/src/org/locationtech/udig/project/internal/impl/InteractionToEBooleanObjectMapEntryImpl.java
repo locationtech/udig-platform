@@ -40,9 +40,8 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl
-        implements
-            BasicEMap.Entry<Interaction, Boolean> {
+public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl implements
+        BasicEMap.Entry<Interaction, Boolean> {
     /**
      * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -116,7 +115,7 @@ public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setTypedKey( Interaction newKey ) {
+    public void setTypedKey(Interaction newKey) {
         Interaction oldKey = key;
         key = newKey;
         if (eNotificationRequired())
@@ -138,7 +137,7 @@ public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setTypedValue( Boolean newValue ) {
+    public void setTypedValue(Boolean newValue) {
         Boolean oldValue = value;
         value = newValue;
         if (eNotificationRequired())
@@ -152,8 +151,8 @@ public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl
      * @generated
      */
     @Override
-    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
-        switch( featureID ) {
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
         case ProjectPackage.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__KEY:
             return getTypedKey();
         case ProjectPackage.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__VALUE:
@@ -168,8 +167,8 @@ public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl
      * @generated
      */
     @Override
-    public void eSet( int featureID, Object newValue ) {
-        switch( featureID ) {
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
         case ProjectPackage.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__KEY:
             setTypedKey((Interaction) newValue);
             return;
@@ -186,8 +185,8 @@ public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl
      * @generated
      */
     @Override
-    public void eUnset( int featureID ) {
-        switch( featureID ) {
+    public void eUnset(int featureID) {
+        switch (featureID) {
         case ProjectPackage.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__KEY:
             setTypedKey(KEY_EDEFAULT);
             return;
@@ -204,8 +203,8 @@ public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl
      * @generated
      */
     @Override
-    public boolean eIsSet( int featureID ) {
-        switch( featureID ) {
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
         case ProjectPackage.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__KEY:
             return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
         case ProjectPackage.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__VALUE:
@@ -221,7 +220,8 @@ public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl
      */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+        if (eIsProxy())
+            return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (key: "); //$NON-NLS-1$
@@ -257,7 +257,7 @@ public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setHash( int hash ) {
+    public void setHash(int hash) {
         this.hash = hash;
     }
 
@@ -275,7 +275,7 @@ public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setKey( Interaction key ) {
+    public void setKey(Interaction key) {
         setTypedKey(key);
     }
 
@@ -293,7 +293,7 @@ public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl
      * <!-- end-user-doc -->
      * @generated
      */
-    public Boolean setValue( Boolean value ) {
+    public Boolean setValue(Boolean value) {
         Boolean oldValue = getValue();
         setTypedValue(value);
         return oldValue;

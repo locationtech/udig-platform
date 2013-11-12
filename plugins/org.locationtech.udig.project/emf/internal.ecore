@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="internal"
-    nsURI="http:///org/locationtech/udig/project/internal.ecore" nsPrefix="org.locationtech.udig.project.internal">
+    nsURI="http:///net/refractions/udig/project/internal.ecore" nsPrefix="org.locationtech.udig.project.internal">
   <eClassifiers xsi:type="ecore:EClass" name="Comparable" instanceTypeName="Comparable"
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="IMap" instanceClassName="org.locationtech.udig.project.IMap"
@@ -228,6 +228,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ILegendItem" instanceClassName="org.locationtech.udig.project.ILegendItem"
       abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LayerLegendItem" eSuperTypes="#//LegendItem #//ILayerLegendItem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="layer" lowerBound="1" eType="#//Layer"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Coordinate" instanceClassName="com.vividsolutions.jts.geom.Coordinate"/>
   <eClassifiers xsi:type="ecore:EDataType" name="MapDisplay" instanceClassName="org.locationtech.udig.project.render.displayAdapter.IMapDisplay"/>
   <eClassifiers xsi:type="ecore:EDataType" name="List" instanceClassName="java.util.List"/>
@@ -261,7 +264,4 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Color" instanceClassName="java.awt.Color"/>
   <eClassifiers xsi:type="ecore:EDataType" name="BrewerPalette" instanceClassName="org.geotools.brewer.color.BrewerPalette"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Interaction" instanceClassName="org.locationtech.udig.project.Interaction"/>
-  <eClassifiers xsi:type="ecore:EClass" name="LayerLegendItem" eSuperTypes="#//LegendItem #//ILayerLegendItem">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="layer" lowerBound="1" eType="#//Layer"/>
-  </eClassifiers>
 </ecore:EPackage>

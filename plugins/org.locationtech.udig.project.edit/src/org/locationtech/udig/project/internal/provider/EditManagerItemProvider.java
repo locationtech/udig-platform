@@ -31,20 +31,16 @@ import org.opengis.feature.simple.SimpleFeature;
  * <!-- begin-user-doc --> <!-- end-user-doc -->
  * @generated
  */
-public class EditManagerItemProvider extends ItemProviderAdapter
-        implements
-            IEditingDomainItemProvider,
-            IStructuredItemContentProvider,
-            ITreeItemContentProvider,
-            IItemLabelProvider,
-            IItemPropertySource {
+public class EditManagerItemProvider extends ItemProviderAdapter implements
+        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
+        IItemLabelProvider, IItemPropertySource {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @generated
      */
-    public EditManagerItemProvider( AdapterFactory adapterFactory ) {
+    public EditManagerItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -55,7 +51,7 @@ public class EditManagerItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public List<IItemPropertyDescriptor> getPropertyDescriptors( Object object ) {
+    public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
@@ -74,7 +70,7 @@ public class EditManagerItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addEditFeaturePropertyDescriptor( Object object ) {
+    protected void addEditFeaturePropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -92,7 +88,7 @@ public class EditManagerItemProvider extends ItemProviderAdapter
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addEditLayerInternalPropertyDescriptor( Object object ) {
+    protected void addEditLayerInternalPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -110,7 +106,7 @@ public class EditManagerItemProvider extends ItemProviderAdapter
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addTransactionTypePropertyDescriptor( Object object ) {
+    protected void addTransactionTypePropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -118,8 +114,8 @@ public class EditManagerItemProvider extends ItemProviderAdapter
                         getString("_UI_EditManager_transactionType_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_EditManager_transactionType_feature", "_UI_EditManager_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.EDIT_MANAGER__TRANSACTION_TYPE, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+                        ProjectPackage.Literals.EDIT_MANAGER__TRANSACTION_TYPE, false, false,
+                        false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -128,7 +124,7 @@ public class EditManagerItemProvider extends ItemProviderAdapter
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addEditLayerLockedPropertyDescriptor( Object object ) {
+    protected void addEditLayerLockedPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -146,7 +142,7 @@ public class EditManagerItemProvider extends ItemProviderAdapter
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addSelectedLayerPropertyDescriptor( Object object ) {
+    protected void addSelectedLayerPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -154,7 +150,7 @@ public class EditManagerItemProvider extends ItemProviderAdapter
                         getString("_UI_EditManager_selectedLayer_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_EditManager_selectedLayer_feature", "_UI_EditManager_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.EDIT_MANAGER__SELECTED_LAYER, true, false, false,
+                        ProjectPackage.Literals.EDIT_MANAGER__SELECTED_LAYER, true, false, true,
                         null, null, null));
     }
 
@@ -164,7 +160,7 @@ public class EditManagerItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public Object getImage( Object object ) {
+    public Object getImage(Object object) {
         return overlayImage(object, getResourceLocator().getImage("full/obj16/EditManager")); //$NON-NLS-1$
     }
 
@@ -184,7 +180,7 @@ public class EditManagerItemProvider extends ItemProviderAdapter
      * 
      * @generated NOT
      */
-    public String getText( Object object ) {
+    public String getText(Object object) {
         SimpleFeature labelValue = ((EditManager) object).getEditFeature();
         String label = labelValue == null ? null : labelValue.toString();
         return label == null || label.length() == 0 ? "Edit Manager" : label;
@@ -197,10 +193,10 @@ public class EditManagerItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public void notifyChanged( Notification notification ) {
+    public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch( notification.getFeatureID(EditManager.class) ) {
+        switch (notification.getFeatureID(EditManager.class)) {
         case ProjectPackage.EDIT_MANAGER__EDIT_FEATURE:
         case ProjectPackage.EDIT_MANAGER__TRANSACTION_TYPE:
         case ProjectPackage.EDIT_MANAGER__EDIT_LAYER_LOCKED:

@@ -56,6 +56,7 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * @ordered
      */
     protected static final String NAME_EDEFAULT = null;
+
     /**
      * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -65,6 +66,7 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * @ordered
      */
     protected String name = NAME_EDEFAULT;
+
     /**
      * The default value of the '{@link #isShown() <em>Shown</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -74,6 +76,7 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * @ordered
      */
     protected static final boolean SHOWN_EDEFAULT = false;
+
     /**
      * The cached value of the '{@link #isShown() <em>Shown</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -162,7 +165,7 @@ public class FolderImpl extends EObjectImpl implements Folder {
      */
     public MapImpl getMapInternal() {
         InternalEObject container = eContainer;
-        while( container != null && !(container instanceof MapImpl) ) {
+        while (container != null && !(container instanceof MapImpl)) {
             container = container.eInternalContainer();
         }
         return (MapImpl) container;
@@ -173,7 +176,7 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setName( String newName ) {
+    public void setName(String newName) {
         String oldName = name;
         name = newName;
         if (eNotificationRequired())
@@ -195,7 +198,7 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setIcon( ImageDescriptor newIcon ) {
+    public void setIcon(ImageDescriptor newIcon) {
         ImageDescriptor oldIcon = icon;
         icon = newIcon;
         if (eNotificationRequired())
@@ -217,7 +220,7 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setShown( boolean newShown ) {
+    public void setShown(boolean newShown) {
         boolean oldShown = shown;
         shown = newShown;
         if (eNotificationRequired())
@@ -231,11 +234,11 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * @generated
      */
     @Override
-    public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
-            NotificationChain msgs ) {
-        switch( featureID ) {
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+            NotificationChain msgs) {
+        switch (featureID) {
         case ProjectPackage.FOLDER__ITEMS:
-            return ((InternalEList< ? >) getItems()).basicRemove(otherEnd, msgs);
+            return ((InternalEList<?>) getItems()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -246,8 +249,8 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * @generated
      */
     @Override
-    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
-        switch( featureID ) {
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
         case ProjectPackage.FOLDER__NAME:
             return getName();
         case ProjectPackage.FOLDER__SHOWN:
@@ -267,8 +270,8 @@ public class FolderImpl extends EObjectImpl implements Folder {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public void eSet( int featureID, Object newValue ) {
-        switch( featureID ) {
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
         case ProjectPackage.FOLDER__NAME:
             setName((String) newValue);
             return;
@@ -280,7 +283,7 @@ public class FolderImpl extends EObjectImpl implements Folder {
             return;
         case ProjectPackage.FOLDER__ITEMS:
             getItems().clear();
-            getItems().addAll((Collection< ? extends ILegendItem>) newValue);
+            getItems().addAll((Collection<? extends ILegendItem>) newValue);
             return;
         }
         super.eSet(featureID, newValue);
@@ -292,8 +295,8 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * @generated
      */
     @Override
-    public void eUnset( int featureID ) {
-        switch( featureID ) {
+    public void eUnset(int featureID) {
+        switch (featureID) {
         case ProjectPackage.FOLDER__NAME:
             setName(NAME_EDEFAULT);
             return;
@@ -316,8 +319,8 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * @generated
      */
     @Override
-    public boolean eIsSet( int featureID ) {
-        switch( featureID ) {
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
         case ProjectPackage.FOLDER__NAME:
             return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
         case ProjectPackage.FOLDER__SHOWN:
@@ -336,15 +339,15 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * @generated
      */
     @Override
-    public int eBaseStructuralFeatureID( int derivedFeatureID, Class< ? > baseClass ) {
+    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
         if (baseClass == ILegendItem.class) {
-            switch( derivedFeatureID ) {
+            switch (derivedFeatureID) {
             default:
                 return -1;
             }
         }
         if (baseClass == LegendItem.class) {
-            switch( derivedFeatureID ) {
+            switch (derivedFeatureID) {
             case ProjectPackage.FOLDER__NAME:
                 return ProjectPackage.LEGEND_ITEM__NAME;
             case ProjectPackage.FOLDER__SHOWN:
@@ -364,15 +367,15 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * @generated
      */
     @Override
-    public int eDerivedStructuralFeatureID( int baseFeatureID, Class< ? > baseClass ) {
+    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
         if (baseClass == ILegendItem.class) {
-            switch( baseFeatureID ) {
+            switch (baseFeatureID) {
             default:
                 return -1;
             }
         }
         if (baseClass == LegendItem.class) {
-            switch( baseFeatureID ) {
+            switch (baseFeatureID) {
             case ProjectPackage.LEGEND_ITEM__NAME:
                 return ProjectPackage.FOLDER__NAME;
             case ProjectPackage.LEGEND_ITEM__SHOWN:
@@ -393,7 +396,8 @@ public class FolderImpl extends EObjectImpl implements Folder {
      */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+        if (eIsProxy())
+            return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (name: "); //$NON-NLS-1$

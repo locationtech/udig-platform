@@ -828,6 +828,7 @@ public interface RenderPackage extends EPackage {
      * @generated
      */
     EReference getRenderManager_RenderExecutor();
+
     /**
      * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.RenderManager#getMapDisplay <em>Map Display</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->

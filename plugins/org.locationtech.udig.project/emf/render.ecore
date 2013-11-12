@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="render"
-    nsURI="http:///org/locationtech/udig/project/internal/render.ecore" nsPrefix="org.locationtech.udig.project.internal.render">
+    nsURI="http:///net/refractions/udig/project/internal/render.ecore" nsPrefix="org.locationtech.udig.project.internal.render">
   <eClassifiers xsi:type="ecore:EClass" name="IRenderManager" instanceClassName="org.locationtech.udig.project.render.IRenderManager"
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="IViewportModel" instanceClassName="org.locationtech.udig.project.render.IViewportModel"

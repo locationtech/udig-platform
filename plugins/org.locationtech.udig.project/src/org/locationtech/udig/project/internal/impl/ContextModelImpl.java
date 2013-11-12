@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.opengis.filter.Filter;
@@ -51,7 +52,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
         super();
         setLegendItemSynchronizer();
     }
-    
+
     /**
      * This method adds a listener to the layer list that synchronizes the contents of the context
      * model's layers list and the map's legend item's list.
@@ -63,15 +64,16 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
             public void notifyChanged(Notification msg) {
                 super.notifyChanged(msg);
                 if (ProjectPackage.CONTEXT_MODEL__LAYERS == msg.getFeatureID(ContextModel.class)) {
-                    switch( msg.getEventType() ) {
+                    switch (msg.getEventType()) {
                     case Notification.ADD: {
-                        final Object eventNewObj = msg.getNewValue();    
+                        final Object eventNewObj = msg.getNewValue();
                         if (eventNewObj instanceof Layer) {
                             Map map = getMap();
-                            if( map != null ){
+                            if (map != null) {
                                 List<ILegendItem> legend = map.getLegend();
-                                if( legend != null ){
-                                    final LayerLegendItem layerLegendItem = ProjectFactory.eINSTANCE.createLayerLegendItem();
+                                if (legend != null) {
+                                    final LayerLegendItem layerLegendItem = ProjectFactory.eINSTANCE
+                                            .createLayerLegendItem();
                                     layerLegendItem.setLayer((Layer) eventNewObj);
 
                                     legend.add(layerLegendItem);
@@ -81,7 +83,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
                         break;
                     }
                     case Notification.REMOVE: {
-                        final Object eventOldObj = msg.getOldValue();    
+                        final Object eventOldObj = msg.getOldValue();
                         if (eventOldObj instanceof Layer) {
                             final Layer layer = (Layer) eventOldObj;
                             removeLayerLegendItem(layer);
@@ -92,9 +94,9 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
                 }
             }
         });
-        
+
     }
-    
+
     /**
      * Removes the legend item referencing the layer.
      * 
@@ -104,7 +106,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
     private boolean removeLayerLegendItem(Layer layer) {
         LayerLegendItem flaggedLayerItem = null;
         Map map = getMap();
-        if( map == null ){
+        if (map == null) {
             return false; // legend not available
         }
         for (ILegendItem item : map.getLegend()) {
@@ -127,7 +129,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
         }
         return false;
     }
-    
+
     /**
      * Removes the legend item referencing the layer in the folder or in any sub-folder.
      * 
@@ -159,7 +161,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
         }
         return false;
     }
-    
+
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
@@ -193,7 +195,8 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * @generated
      */
     public Map getMap() {
-        if (eContainerFeatureID() != ProjectPackage.CONTEXT_MODEL__MAP) return null;
+        if (eContainerFeatureID() != ProjectPackage.CONTEXT_MODEL__MAP)
+            return null;
         return (Map) eContainer();
     }
 
@@ -202,7 +205,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetMap( Map newMap, NotificationChain msgs ) {
+    public NotificationChain basicSetMap(Map newMap, NotificationChain msgs) {
         msgs = eBasicSetContainer((InternalEObject) newMap, ProjectPackage.CONTEXT_MODEL__MAP, msgs);
         return msgs;
     }
@@ -211,19 +214,21 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public void setMap( Map newMap ) {
+    public void setMap(Map newMap) {
         if (newMap != eInternalContainer()
                 || (eContainerFeatureID() != ProjectPackage.CONTEXT_MODEL__MAP && newMap != null)) {
             if (EcoreUtil.isAncestor(this, newMap))
                 throw new IllegalArgumentException(
                         "Recursive containment not allowed for " + toString()); //$NON-NLS-1$
             NotificationChain msgs = null;
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
             if (newMap != null)
                 msgs = ((InternalEObject) newMap).eInverseAdd(this,
                         ProjectPackage.MAP__CONTEXT_MODEL, Map.class, msgs);
             msgs = basicSetMap(newMap, msgs);
-            if (msgs != null) msgs.dispatch();
+            if (msgs != null)
+                msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.CONTEXT_MODEL__MAP, newMap, newMap));
@@ -236,14 +241,15 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
-            NotificationChain msgs ) {
-        switch( featureID ) {
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID,
+            NotificationChain msgs) {
+        switch (featureID) {
         case ProjectPackage.CONTEXT_MODEL__LAYERS:
-            return ((InternalEList<InternalEObject>) (InternalEList< ? >) getLayers()).basicAdd(
+            return ((InternalEList<InternalEObject>) (InternalEList<?>) getLayers()).basicAdd(
                     otherEnd, msgs);
         case ProjectPackage.CONTEXT_MODEL__MAP:
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
             return basicSetMap((Map) otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -255,11 +261,11 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * @generated
      */
     @Override
-    public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
-            NotificationChain msgs ) {
-        switch( featureID ) {
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+            NotificationChain msgs) {
+        switch (featureID) {
         case ProjectPackage.CONTEXT_MODEL__LAYERS:
-            return ((InternalEList< ? >) getLayers()).basicRemove(otherEnd, msgs);
+            return ((InternalEList<?>) getLayers()).basicRemove(otherEnd, msgs);
         case ProjectPackage.CONTEXT_MODEL__MAP:
             return basicSetMap(null, msgs);
         }
@@ -272,8 +278,8 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * @generated
      */
     @Override
-    public NotificationChain eBasicRemoveFromContainerFeature( NotificationChain msgs ) {
-        switch( eContainerFeatureID() ) {
+    public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+        switch (eContainerFeatureID()) {
         case ProjectPackage.CONTEXT_MODEL__MAP:
             return eInternalContainer().eInverseRemove(this, ProjectPackage.MAP__CONTEXT_MODEL,
                     Map.class, msgs);
@@ -287,8 +293,8 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * @generated
      */
     @Override
-    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
-        switch( featureID ) {
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
         case ProjectPackage.CONTEXT_MODEL__LAYERS:
             return getLayers();
         case ProjectPackage.CONTEXT_MODEL__MAP:
@@ -304,11 +310,11 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public void eSet( int featureID, Object newValue ) {
-        switch( featureID ) {
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
         case ProjectPackage.CONTEXT_MODEL__LAYERS:
             getLayers().clear();
-            getLayers().addAll((Collection< ? extends Layer>) newValue);
+            getLayers().addAll((Collection<? extends Layer>) newValue);
             return;
         case ProjectPackage.CONTEXT_MODEL__MAP:
             setMap((Map) newValue);
@@ -323,8 +329,8 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * @generated
      */
     @Override
-    public void eUnset( int featureID ) {
-        switch( featureID ) {
+    public void eUnset(int featureID) {
+        switch (featureID) {
         case ProjectPackage.CONTEXT_MODEL__LAYERS:
             getLayers().clear();
             return;
@@ -341,8 +347,8 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * @generated
      */
     @Override
-    public boolean eIsSet( int featureID ) {
-        switch( featureID ) {
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
         case ProjectPackage.CONTEXT_MODEL__LAYERS:
             return layers != null && !layers.isEmpty();
         case ProjectPackage.CONTEXT_MODEL__MAP:
@@ -351,11 +357,11 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
         return super.eIsSet(featureID);
     }
 
-    public void addDeepAdapter( Adapter adapter ) {
+    public void addDeepAdapter(Adapter adapter) {
         getMap().addDeepAdapter(adapter);
     }
 
-    public void removeDeepAdapter( Adapter adapter ) {
+    public void removeDeepAdapter(Adapter adapter) {
         getMap().removeDeepAdapter(adapter);
     }
 
@@ -364,7 +370,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * 
      * @generated NOT
      */
-    public void lowerLayer( Layer layer ) {
+    public void lowerLayer(Layer layer) {
         getMap().lowerLayer(layer);
     }
 
@@ -373,7 +379,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * 
      * @generated NOT
      */
-    public void raiseLayer( Layer layer ) {
+    public void raiseLayer(Layer layer) {
         getMap().raiseLayer(layer);
     }
 
@@ -381,8 +387,8 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated NOT
      */
-    public boolean eIsSet( EStructuralFeature eFeature ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    public boolean eIsSet(EStructuralFeature eFeature) {
+        switch (eDerivedStructuralFeatureID(eFeature)) {
         case ProjectPackage.CONTEXT_MODEL__LAYERS:
             return getLayers() != null && !getLayers().isEmpty();
         case ProjectPackage.CONTEXT_MODEL__MAP:
@@ -396,26 +402,26 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * 
      * @param notify true if notifications should be used.
      */
-    public void setNotification( boolean notify ) {
+    public void setNotification(boolean notify) {
         if (notify)
             eFlags = eFlags | (EDELIVER);
         else
             eFlags = eFlags & (~EDELIVER);
     }
 
-    public void select( Envelope boundingBox ) {
+    public void select(Envelope boundingBox) {
         getMap().select(boundingBox);
     }
 
-    public void select( Envelope boundingBox, boolean and ) {
+    public void select(Envelope boundingBox, boolean and) {
         getMap().select(boundingBox, and);
     }
 
-    public void select( Filter filter ) {
+    public void select(Filter filter) {
         getMap().select(filter);
     }
 
-    public void select( Filter filter, boolean and ) {
+    public void select(Filter filter, boolean and) {
         getMap().select(filter, and);
     }
 

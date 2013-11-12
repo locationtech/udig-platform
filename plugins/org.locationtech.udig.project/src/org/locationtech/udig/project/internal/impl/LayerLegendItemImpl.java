@@ -97,7 +97,7 @@ public class LayerLegendItemImpl extends LegendItemImpl implements LayerLegendIt
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setLayer( Layer newLayer ) {
+    public void setLayer(Layer newLayer) {
         Layer oldLayer = layer;
         layer = newLayer;
         if (eNotificationRequired())
@@ -111,10 +111,11 @@ public class LayerLegendItemImpl extends LegendItemImpl implements LayerLegendIt
      * @generated
      */
     @Override
-    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
-        switch( featureID ) {
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
         case ProjectPackage.LAYER_LEGEND_ITEM__LAYER:
-            if (resolve) return getLayer();
+            if (resolve)
+                return getLayer();
             return basicGetLayer();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -126,8 +127,8 @@ public class LayerLegendItemImpl extends LegendItemImpl implements LayerLegendIt
      * @generated
      */
     @Override
-    public void eSet( int featureID, Object newValue ) {
-        switch( featureID ) {
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
         case ProjectPackage.LAYER_LEGEND_ITEM__LAYER:
             setLayer((Layer) newValue);
             return;
@@ -141,8 +142,8 @@ public class LayerLegendItemImpl extends LegendItemImpl implements LayerLegendIt
      * @generated
      */
     @Override
-    public void eUnset( int featureID ) {
-        switch( featureID ) {
+    public void eUnset(int featureID) {
+        switch (featureID) {
         case ProjectPackage.LAYER_LEGEND_ITEM__LAYER:
             setLayer((Layer) null);
             return;
@@ -156,8 +157,8 @@ public class LayerLegendItemImpl extends LegendItemImpl implements LayerLegendIt
      * @generated
      */
     @Override
-    public boolean eIsSet( int featureID ) {
-        switch( featureID ) {
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
         case ProjectPackage.LAYER_LEGEND_ITEM__LAYER:
             return layer != null;
         }

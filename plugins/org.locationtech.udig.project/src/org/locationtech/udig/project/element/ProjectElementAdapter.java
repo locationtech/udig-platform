@@ -40,6 +40,6 @@ public interface ProjectElementAdapter extends ProjectElement {
      * @see #getBackingObject()
      * @generated
      */
-    void setBackingObject( IGenericProjectElement value );
+    void setBackingObject(IGenericProjectElement value);
 
 }

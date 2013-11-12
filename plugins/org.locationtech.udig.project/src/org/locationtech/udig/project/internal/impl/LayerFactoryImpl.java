@@ -64,16 +64,13 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
      * 
      * @generated NOT
      */
-    public static final String copyright = 
-          "uDig - User Friendly Desktop Internet GIS client\n"
-        + "http://udig.refractions.net\n"
-        + "(C) 2004-2012, Refractions Research Inc.\n"
-        + "\n\n"
-        + "All rights reserved. This program and the accompanying materials\n"
-        + "are made available under the terms of the Eclipse Public License v1.0\n"
-        + "(http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD\n"
-        + "License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).\n";
-        
+    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client\n"
+            + "http://udig.refractions.net\n" + "(C) 2004-2012, Refractions Research Inc.\n"
+            + "\n\n" + "All rights reserved. This program and the accompanying materials\n"
+            + "are made available under the terms of the Eclipse Public License v1.0\n"
+            + "(http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD\n"
+            + "License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).\n";
+
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
@@ -96,7 +93,8 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
      * @generated
      */
     public Map getMap() {
-        if (eContainerFeatureID() != ProjectPackage.LAYER_FACTORY__MAP) return null;
+        if (eContainerFeatureID() != ProjectPackage.LAYER_FACTORY__MAP)
+            return null;
         return (Map) eContainer();
     }
 
@@ -105,7 +103,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetMap( Map newMap, NotificationChain msgs ) {
+    public NotificationChain basicSetMap(Map newMap, NotificationChain msgs) {
         msgs = eBasicSetContainer((InternalEObject) newMap, ProjectPackage.LAYER_FACTORY__MAP, msgs);
         return msgs;
     }
@@ -114,19 +112,21 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public void setMap( Map newMap ) {
+    public void setMap(Map newMap) {
         if (newMap != eInternalContainer()
                 || (eContainerFeatureID() != ProjectPackage.LAYER_FACTORY__MAP && newMap != null)) {
             if (EcoreUtil.isAncestor(this, newMap))
                 throw new IllegalArgumentException(
                         "Recursive containment not allowed for " + toString()); //$NON-NLS-1$
             NotificationChain msgs = null;
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
             if (newMap != null)
                 msgs = ((InternalEObject) newMap).eInverseAdd(this,
                         ProjectPackage.MAP__LAYER_FACTORY, Map.class, msgs);
             msgs = basicSetMap(newMap, msgs);
-            if (msgs != null) msgs.dispatch();
+            if (msgs != null)
+                msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.LAYER_FACTORY__MAP, newMap, newMap));
@@ -138,11 +138,12 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
      * @generated
      */
     @Override
-    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
-            NotificationChain msgs ) {
-        switch( featureID ) {
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID,
+            NotificationChain msgs) {
+        switch (featureID) {
         case ProjectPackage.LAYER_FACTORY__MAP:
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
             return basicSetMap((Map) otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -154,9 +155,9 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
      * @generated
      */
     @Override
-    public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
-            NotificationChain msgs ) {
-        switch( featureID ) {
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+            NotificationChain msgs) {
+        switch (featureID) {
         case ProjectPackage.LAYER_FACTORY__MAP:
             return basicSetMap(null, msgs);
         }
@@ -169,8 +170,8 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
      * @generated
      */
     @Override
-    public NotificationChain eBasicRemoveFromContainerFeature( NotificationChain msgs ) {
-        switch( eContainerFeatureID() ) {
+    public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+        switch (eContainerFeatureID()) {
         case ProjectPackage.LAYER_FACTORY__MAP:
             return eInternalContainer().eInverseRemove(this, ProjectPackage.MAP__LAYER_FACTORY,
                     Map.class, msgs);
@@ -184,8 +185,8 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
      * @generated
      */
     @Override
-    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
-        switch( featureID ) {
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
         case ProjectPackage.LAYER_FACTORY__MAP:
             return getMap();
         }
@@ -198,8 +199,8 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
      * @generated
      */
     @Override
-    public void eSet( int featureID, Object newValue ) {
-        switch( featureID ) {
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
         case ProjectPackage.LAYER_FACTORY__MAP:
             setMap((Map) newValue);
             return;
@@ -213,8 +214,8 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
      * @generated
      */
     @Override
-    public void eUnset( int featureID ) {
-        switch( featureID ) {
+    public void eUnset(int featureID) {
+        switch (featureID) {
         case ProjectPackage.LAYER_FACTORY__MAP:
             setMap((Map) null);
             return;
@@ -228,8 +229,8 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
      * @generated
      */
     @Override
-    public boolean eIsSet( int featureID ) {
-        switch( featureID ) {
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
         case ProjectPackage.LAYER_FACTORY__MAP:
             return getMap() != null;
         }
@@ -245,9 +246,9 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
      * @throws IOException
      */
     @SuppressWarnings("unchecked")
-    public List<Layer> getLayers( List selection ) throws IOException {
+    public List<Layer> getLayers(List selection) throws IOException {
         List<Layer> layers = new LinkedList<Layer>();
-        for( Iterator<Object> iter = selection.iterator(); iter.hasNext(); ) {
+        for (Iterator<Object> iter = selection.iterator(); iter.hasNext();) {
             Object obj = iter.next();
             if (obj instanceof IService) {
                 layers.addAll(getLayers((IService) obj));
@@ -255,23 +256,25 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
                 IGeoResource entry = (IGeoResource) obj;
                 Layer ref = createLayer(entry);
 
-                if (ref != null) layers.add(ref);
+                if (ref != null)
+                    layers.add(ref);
             }
         }
         return layers;
     }
 
-    public List<Layer> getLayers( IService service ) throws IOException {
+    public List<Layer> getLayers(IService service) throws IOException {
         Layer ref = null;
         List<Layer> layers = new LinkedList<Layer>();
 
-        Iterator< ? extends IGeoResource> rentryIter = service.resources(null).iterator();
-        while( rentryIter.hasNext() ) {
+        Iterator<? extends IGeoResource> rentryIter = service.resources(null).iterator();
+        while (rentryIter.hasNext()) {
             IGeoResource entry = rentryIter.next();
 
             ref = createLayer(entry);
 
-            if (ref != null) layers.add(ref);
+            if (ref != null)
+                layers.add(ref);
         }
         return layers;
     }
@@ -339,7 +342,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
      * @throws IOException
      */
     @SuppressWarnings("unchecked")
-    public Layer createLayer( IGeoResource resource ) throws IOException {
+    public Layer createLayer(IGeoResource resource) throws IOException {
         IService service = resource.service(ProgressManager.instance().get());
 
         if (service == null) {
@@ -378,7 +381,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
         EList resources = new EDataTypeUniqueEList(IGeoResource.class, this,
                 ProjectPackage.LAYER__GEO_RESOURCES);
         LayerResource preferredResource = null;
-        for( IResolve resolve : resolves ) {
+        for (IResolve resolve : resolves) {
             if (resolve instanceof IGeoResource) {
                 LayerResource layerResource = new LayerResource((LayerImpl) layer,
                         (IGeoResource) resolve);
@@ -415,10 +418,10 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
         return getMap().getColourScheme();
     }
 
-    private void runLayerCreatedInterceptor( Layer layer ) {
+    private void runLayerCreatedInterceptor(Layer layer) {
         List<IConfigurationElement> list = ExtensionPointList
                 .getExtensionPointList(LayerInterceptor.EXTENSION_ID);
-        for( IConfigurationElement element : list ) {
+        for (IConfigurationElement element : list) {
             if (element.getName().equals(LayerInterceptor.CREATED_ID)) {
                 String attribute = element.getAttribute("name"); //$NON-NLS-1$
                 try {

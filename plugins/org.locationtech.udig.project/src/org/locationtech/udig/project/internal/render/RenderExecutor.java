@@ -58,14 +58,14 @@ public interface RenderExecutor extends Renderer {
      * @see #getRenderer()
      * @generated
      */
-    void setRenderer( Renderer value );
+    void setRenderer(Renderer value);
 
     /**
      * Method calls visitor.visit().
      * 
      * @param visitor the visitor object
      */
-    void visit( ExecutorVisitor visitor );
+    void visit(ExecutorVisitor visitor);
 
     /**
      * This method does not use the monitor parameter. It is the same as calling render(bounds);
@@ -73,7 +73,7 @@ public interface RenderExecutor extends Renderer {
      * @see org.locationtech.udig.project.internal.render.Renderer#render(com.vividsolutions.jts.geom.Envelope,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
-    public void render( IProgressMonitor monitor ) throws RenderException;
+    public void render(IProgressMonitor monitor) throws RenderException;
 
     /**
      * @see org.locationtech.udig.project.internal.render.Renderer#render(com.vividsolutions.jts.geom.Envelope,

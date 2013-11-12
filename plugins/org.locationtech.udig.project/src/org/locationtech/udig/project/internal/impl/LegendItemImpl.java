@@ -46,6 +46,7 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * @ordered
      */
     protected static final String NAME_EDEFAULT = null;
+
     /**
      * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -55,6 +56,7 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * @ordered
      */
     protected String name = NAME_EDEFAULT;
+
     /**
      * The default value of the '{@link #isShown() <em>Shown</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -64,6 +66,7 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * @ordered
      */
     protected static final boolean SHOWN_EDEFAULT = false;
+
     /**
      * The cached value of the '{@link #isShown() <em>Shown</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -83,6 +86,7 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * @ordered
      */
     protected static final ImageDescriptor ICON_EDEFAULT = null;
+
     /**
      * The cached value of the '{@link #getIcon() <em>Icon</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -126,7 +130,7 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setName( String newName ) {
+    public void setName(String newName) {
         String oldName = name;
         name = newName;
         if (eNotificationRequired())
@@ -148,7 +152,7 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setIcon( ImageDescriptor newIcon ) {
+    public void setIcon(ImageDescriptor newIcon) {
         ImageDescriptor oldIcon = icon;
         icon = newIcon;
         if (eNotificationRequired())
@@ -170,7 +174,7 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setShown( boolean newShown ) {
+    public void setShown(boolean newShown) {
         boolean oldShown = shown;
         shown = newShown;
         if (eNotificationRequired())
@@ -184,8 +188,8 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * @generated
      */
     @Override
-    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
-        switch( featureID ) {
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
         case ProjectPackage.LEGEND_ITEM__NAME:
             return getName();
         case ProjectPackage.LEGEND_ITEM__SHOWN:
@@ -202,8 +206,8 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * @generated
      */
     @Override
-    public void eSet( int featureID, Object newValue ) {
-        switch( featureID ) {
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
         case ProjectPackage.LEGEND_ITEM__NAME:
             setName((String) newValue);
             return;
@@ -223,8 +227,8 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * @generated
      */
     @Override
-    public void eUnset( int featureID ) {
-        switch( featureID ) {
+    public void eUnset(int featureID) {
+        switch (featureID) {
         case ProjectPackage.LEGEND_ITEM__NAME:
             setName(NAME_EDEFAULT);
             return;
@@ -244,8 +248,8 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * @generated
      */
     @Override
-    public boolean eIsSet( int featureID ) {
-        switch( featureID ) {
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
         case ProjectPackage.LEGEND_ITEM__NAME:
             return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
         case ProjectPackage.LEGEND_ITEM__SHOWN:
@@ -263,7 +267,8 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+        if (eIsProxy())
+            return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (name: "); //$NON-NLS-1$

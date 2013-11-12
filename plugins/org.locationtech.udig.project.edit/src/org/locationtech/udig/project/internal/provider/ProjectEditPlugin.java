@@ -25,6 +25,7 @@ public final class ProjectEditPlugin extends EMFPlugin {
      * @generated NOT
      */
     public static final String ID = "org.locationtech.udig.project.edit"; //$NON-NLS-1$
+
     /**
      * Keep track of the singleton.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -45,7 +46,7 @@ public final class ProjectEditPlugin extends EMFPlugin {
      * @generated
      */
     public ProjectEditPlugin() {
-        super(new ResourceLocator[]{EcoreEditPlugin.INSTANCE,});
+        super(new ResourceLocator[] { EcoreEditPlugin.INSTANCE, });
     }
 
     /**
@@ -90,19 +91,22 @@ public final class ProjectEditPlugin extends EMFPlugin {
             //
             plugin = this;
         }
+
         /*
          * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
          */
-        public void start( BundleContext context ) throws Exception {
+        public void start(BundleContext context) throws Exception {
             super.start(context);
         }
+
         /*
          * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
          */
-        public void stop( BundleContext context ) throws Exception {
+        public void stop(BundleContext context) throws Exception {
             super.stop(context);
         }
     }
+
     /**
      * Logs the Throwable in the plugin's log.
      * <p>
@@ -115,10 +119,11 @@ public final class ProjectEditPlugin extends EMFPlugin {
      * @param message
      * @param t
      */
-    public static void log( String message, Throwable t ) {
+    public static void log(String message, Throwable t) {
         int status = t instanceof Exception || message != null ? IStatus.ERROR : IStatus.WARNING;
         getPlugin().getLog().log(new Status(status, ID, IStatus.OK, message, t));
     }
+
     /**
      * Messages that only engage if getDefault().isDebugging()
      * <p>
@@ -136,12 +141,15 @@ public final class ProjectEditPlugin extends EMFPlugin {
      * @param message
      * @param e
      */
-    public static void trace( String message, Throwable e ) {
+    public static void trace(String message, Throwable e) {
         if (getPlugin().isDebugging()) {
-            if (message != null) System.out.println(message);
-            if (e != null) e.printStackTrace();
+            if (message != null)
+                System.out.println(message);
+            if (e != null)
+                e.printStackTrace();
         }
     }
+
     /**
      * Performs the Platform.getDebugOption true check on the provided trace
      * <p>
@@ -154,7 +162,7 @@ public final class ProjectEditPlugin extends EMFPlugin {
      * @param trace currently only RENDER is defined
      * @return true if -debug is on for this plugin
      */
-    public static boolean isDebugging( final String trace ) {
+    public static boolean isDebugging(final String trace) {
         return getPlugin().isDebugging() && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
     }
 }

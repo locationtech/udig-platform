@@ -55,13 +55,9 @@ import org.geotools.util.Range;
  * <!-- end-user-doc -->
  * @generated
  */
-public class LayerItemProvider extends ItemProviderAdapter
-        implements
-            IEditingDomainItemProvider,
-            IStructuredItemContentProvider,
-            ITreeItemContentProvider,
-            IItemLabelProvider,
-            IItemPropertySource {
+public class LayerItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
+        IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
+        IItemPropertySource {
 
     /** Properties Key used to cache generated name in layer.getProperties() */
     public static final String GENERATED_NAME = "generated title"; //$NON-NLS-1$
@@ -75,7 +71,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    public LayerItemProvider( AdapterFactory adapterFactory ) {
+    public LayerItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -86,7 +82,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * @generated NOT
      */
     @SuppressWarnings("unchecked")
-    public List getPropertyDescriptors( Object object ) {
+    public List getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
@@ -108,7 +104,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * 
      */
     @SuppressWarnings("unchecked")
-    protected void addZorderPropertyDescriptor( Object object ) {
+    protected void addZorderPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -126,7 +122,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addNamePropertyDescriptor( Object object ) {
+    protected void addNamePropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -144,7 +140,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * 
      * @generated
      */
-    protected void addIDPropertyDescriptor( Object object ) {
+    protected void addIDPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -162,7 +158,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addVisiblePropertyDescriptor( Object object ) {
+    protected void addVisiblePropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -180,7 +176,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addGeoResourcePropertyDescriptor( Object object ) {
+    protected void addGeoResourcePropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -198,7 +194,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addGeoResourcesPropertyDescriptor( Object object ) {
+    protected void addGeoResourcesPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -216,7 +212,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addCatalogRefPropertyDescriptor( Object object ) {
+    protected void addCatalogRefPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -234,7 +230,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addFilterPropertyDescriptor( Object object ) {
+    protected void addFilterPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -242,7 +238,7 @@ public class LayerItemProvider extends ItemProviderAdapter
                         getString("_UI_Layer_filter_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_Layer_filter_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__FILTER, false, false, false,
+                        ProjectPackage.Literals.LAYER__FILTER, true, false, false,
                         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
@@ -252,7 +248,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addStatusPropertyDescriptor( Object object ) {
+    protected void addStatusPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -270,7 +266,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addCRSPropertyDescriptor( Object object ) {
+    protected void addCRSPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -288,7 +284,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addPropertiesPropertyDescriptor( Object object ) {
+    protected void addPropertiesPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -306,7 +302,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addColourSchemePropertyDescriptor( Object object ) {
+    protected void addColourSchemePropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -324,7 +320,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addDefaultColorPropertyDescriptor( Object object ) {
+    protected void addDefaultColorPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -342,7 +338,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addFeatureChangesPropertyDescriptor( Object object ) {
+    protected void addFeatureChangesPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -360,7 +356,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addMinScaleDenominatorPropertyDescriptor( Object object ) {
+    protected void addMinScaleDenominatorPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -378,7 +374,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addMaxScaleDenominatorPropertyDescriptor( Object object ) {
+    protected void addMaxScaleDenominatorPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -396,7 +392,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addShownPropertyDescriptor( Object object ) {
+    protected void addShownPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -414,7 +410,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addIconPropertyDescriptor( Object object ) {
+    protected void addIconPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -435,7 +431,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * 
      * @generated NOT
      */
-    public Collection getChildrenFeatures( Object object ) {
+    public Collection getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
         }
@@ -448,7 +444,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    protected EStructuralFeature getChildFeature( Object object, Object child ) {
+    protected EStructuralFeature getChildFeature(Object object, Object child) {
         // Check the type of the specified child object and return the proper feature to use for
         // adding (see {@link AddCommand}) it as a child.
 
@@ -456,14 +452,18 @@ public class LayerItemProvider extends ItemProviderAdapter
     }
 
     private Map<Layer, Data> cache = new HashMap<Layer, Data>();
+
     private static class Data {
         ImageDescriptor desc;
+
         Image image;
-        public Data( ImageDescriptor desc, Image image2 ) {
+
+        public Data(ImageDescriptor desc, Image image2) {
             super();
             this.desc = desc;
             image = image2;
         }
+
         @Override
         public int hashCode() {
             final int PRIME = 31;
@@ -471,26 +471,33 @@ public class LayerItemProvider extends ItemProviderAdapter
             result = PRIME * result + ((desc == null) ? 0 : desc.hashCode());
             return result;
         }
+
         @Override
-        public boolean equals( Object obj ) {
-            if (this == obj) return true;
-            if (obj == null) return false;
-            if (getClass() != obj.getClass()) return false;
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
             final Data other = (Data) obj;
             if (desc == null) {
-                if (other.desc != null) return false;
-            } else if (!desc.equals(other.desc)) return false;
+                if (other.desc != null)
+                    return false;
+            } else if (!desc.equals(other.desc))
+                return false;
             return true;
         }
 
     }
+
     /**
      * This returns Layer.gif. <!-- begin-user-doc --> Returns layers glyph property, requesting WMS
      * Legend Graphic will be handled by a decorator. <!-- end-user-doc -->
      * 
      * @generated NOT
      */
-    public Object getImage( Object object ) {
+    public Object getImage(Object object) {
         Layer layer = (Layer) object;
 
         // Check for generated image - generated by our decorators
@@ -540,9 +547,10 @@ public class LayerItemProvider extends ItemProviderAdapter
     @Override
     public void dispose() {
         Collection<Data> values = cache.values();
-        for( Data data : values ) {
+        for (Data data : values) {
             try {
-                if (data.image != null && !data.image.isDisposed()) data.image.dispose();
+                if (data.image != null && !data.image.isDisposed())
+                    data.image.dispose();
             } catch (Throwable e) {
                 ProjectEditPlugin.log("Error disposing LayerItemProvider", e); //$NON-NLS-1$
             }
@@ -559,14 +567,16 @@ public class LayerItemProvider extends ItemProviderAdapter
      * 
      * @generated NOT
      */
-    public String getText( Object object ) {
+    public String getText(Object object) {
         Layer layer = (Layer) object;
         String label = layer.getName();
 
-        if (label != null && label.length() != 0) return label;
+        if (label != null && label.length() != 0)
+            return label;
 
         String title = (String) layer.getProperties().get("generated title"); //$NON-NLS-1$
-        if (title != null) return title;
+        if (title != null)
+            return title;
 
         // Okay have a default
         //
@@ -581,10 +591,10 @@ public class LayerItemProvider extends ItemProviderAdapter
      * 
      * @generated NOT
      */
-    public void notifyChanged( Notification notification ) {
+    public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch( notification.getFeatureID(Layer.class) ) {
+        switch (notification.getFeatureID(Layer.class)) {
         case ProjectPackage.LAYER__NAME:
         case ProjectPackage.LAYER__ID:
         case ProjectPackage.LAYER__GEO_RESOURCE:
@@ -617,7 +627,7 @@ public class LayerItemProvider extends ItemProviderAdapter
         return ProjectEditPlugin.INSTANCE;
     }
 
-    public Color getBackground( Object element ) {
+    public Color getBackground(Object element) {
         if (element instanceof LayerImpl) {
             ScopedPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
             String highlightPref = store.getString(PreferenceConstants.P_HIGHLIGHT);
@@ -626,7 +636,8 @@ public class LayerItemProvider extends ItemProviderAdapter
             }
             LayerImpl layer = (LayerImpl) element;
             java.awt.Color awtColor = layer.getDefaultColor();
-            if (awtColor == null) return null;
+            if (awtColor == null)
+                return null;
             if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_FOREGROUND)) {
                 return null; //not used yet (flip between black and white?)
             } else if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_BACKGROUND)) {
@@ -637,7 +648,7 @@ public class LayerItemProvider extends ItemProviderAdapter
         return null;
     }
 
-    public Color getForeground( Object element ) {
+    public Color getForeground(Object element) {
         if (element instanceof LayerImpl) {
 
             LayerImpl layer = (LayerImpl) element;
@@ -647,20 +658,23 @@ public class LayerItemProvider extends ItemProviderAdapter
                 return systemColor;
             }
             IMap map = layer.getMap();
-            if (map == null) return null;
+            if (map == null)
+                return null;
             boolean mylarOnAndAffectingLayer = mylarOnAndAffectingLayer(layer, map);
 
             ScopedPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
             String highlightPref = store.getString(PreferenceConstants.P_HIGHLIGHT);
 
             if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_NONE)) {
-                if (mylarOnAndAffectingLayer) return systemColor;
+                if (mylarOnAndAffectingLayer)
+                    return systemColor;
                 return null;
             }
 
             float mylarEffect = 1.0f;
             java.awt.Color awtColor = layer.getDefaultColor();
-            if (awtColor == null) return null;
+            if (awtColor == null)
+                return null;
             if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_FOREGROUND)) {
                 return new Color(PlatformUI.getWorkbench().getDisplay(), (int) mylarEffect
                         * awtColor.getRed(), (int) mylarEffect * awtColor.getGreen(),
@@ -682,13 +696,13 @@ public class LayerItemProvider extends ItemProviderAdapter
         return null;
     }
 
-    private boolean outOfScale( Layer layer ) {
+    private boolean outOfScale(Layer layer) {
         try {
             Set<Range> scales = layer.getScaleRange();
             if (scales.isEmpty()) {
                 return false;
             }
-            for( Range range : scales ) {
+            for (Range range : scales) {
                 if (range.contains(layer.getMap().getViewportModel().getScaleDenominator())) {
                     return false;
                 }
@@ -715,7 +729,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * 
      * @return if mylar is turned on and it is affecting (greying out) the current layer
      */
-    private boolean mylarOnAndAffectingLayer( LayerImpl layer, IMap map ) {
+    private boolean mylarOnAndAffectingLayer(LayerImpl layer, IMap map) {
 
         //look at blackboard for mylar flag
         Object mylar = map.getBlackboard().get("MYLAR"); //$NON-NLS-1$

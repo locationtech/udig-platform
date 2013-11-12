@@ -37,20 +37,16 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * @generated
  */
-public class LegendItemItemProvider extends ItemProviderAdapter
-        implements
-            IEditingDomainItemProvider,
-            IStructuredItemContentProvider,
-            ITreeItemContentProvider,
-            IItemLabelProvider,
-            IItemPropertySource {
+public class LegendItemItemProvider extends ItemProviderAdapter implements
+        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
+        IItemLabelProvider, IItemPropertySource {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public LegendItemItemProvider( AdapterFactory adapterFactory ) {
+    public LegendItemItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -61,7 +57,7 @@ public class LegendItemItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public List<IItemPropertyDescriptor> getPropertyDescriptors( Object object ) {
+    public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
@@ -78,7 +74,7 @@ public class LegendItemItemProvider extends ItemProviderAdapter
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addNamePropertyDescriptor( Object object ) {
+    protected void addNamePropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -96,7 +92,7 @@ public class LegendItemItemProvider extends ItemProviderAdapter
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addShownPropertyDescriptor( Object object ) {
+    protected void addShownPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -114,7 +110,7 @@ public class LegendItemItemProvider extends ItemProviderAdapter
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addIconPropertyDescriptor( Object object ) {
+    protected void addIconPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -133,7 +129,7 @@ public class LegendItemItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public Object getImage( Object object ) {
+    public Object getImage(Object object) {
         return overlayImage(object, getResourceLocator().getImage("full/obj16/LegendItem")); //$NON-NLS-1$
     }
 
@@ -154,7 +150,7 @@ public class LegendItemItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public String getText( Object object ) {
+    public String getText(Object object) {
         String label = ((LegendItem) object).getName();
         return label == null || label.length() == 0 ? getString("_UI_LegendItem_type") : //$NON-NLS-1$
                 getString("_UI_LegendItem_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
@@ -168,10 +164,10 @@ public class LegendItemItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public void notifyChanged( Notification notification ) {
+    public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch( notification.getFeatureID(LegendItem.class) ) {
+        switch (notification.getFeatureID(LegendItem.class)) {
         case ProjectPackage.LEGEND_ITEM__NAME:
         case ProjectPackage.LEGEND_ITEM__SHOWN:
         case ProjectPackage.LEGEND_ITEM__ICON:

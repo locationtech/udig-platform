@@ -101,9 +101,9 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
                     ProjectPackage.PROJECT_REGISTRY__PROJECTS);
         }
 
-        for( Iterator<Project> iter = projects.iterator(); iter.hasNext(); ) {
+        for (Iterator<Project> iter = projects.iterator(); iter.hasNext();) {
             Project project = iter.next();
-            if (project.eResource() == null){
+            if (project.eResource() == null) {
                 iter.remove(); // delete this one its resource is missing
             }
         }
@@ -127,8 +127,10 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
      */
     public Project getCurrentProject() {
         Project p = getCurrentProjectGen();
-        if (p == null && getProjects().size() > 0) p = getProjects().get(0);
-        if (p == null) p = getDefaultProject();
+        if (p == null && getProjects().size() > 0)
+            p = getProjects().get(0);
+        if (p == null)
+            p = getDefaultProject();
         return p;
     }
 
@@ -162,7 +164,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public void setCurrentProject( Project newCurrentProject ) {
+    public void setCurrentProject(Project newCurrentProject) {
         Project oldCurrentProject = currentProject;
         currentProject = newCurrentProject;
         if (eNotificationRequired())
@@ -172,7 +174,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     }
 
     @Override
-    public NotificationChain eSetResource( Internal resource, NotificationChain notifications ) {
+    public NotificationChain eSetResource(Internal resource, NotificationChain notifications) {
         if (resource == null || resource.getResourceSet() != resourceSet || resourceSet == null)
             throw new AssertionError();
         return super.eSetResource(resource, notifications);
@@ -183,7 +185,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
      * 
      * @generated NOT
      */
-    public Project getProject( URI uri ) {
+    public Project getProject(URI uri) {
         // There is a sporatic bug here. Remove this try/catch when it is fixed.
         try {
             if (findProject(uri) != null) {
@@ -229,7 +231,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
             } else {
                 // Go through list of resources
                 EList<EObject> contents = projectResource.getContents();
-                for( EObject eObject : contents ) {
+                for (EObject eObject : contents) {
                     if (eObject instanceof Project) {
                         incomingProject = (Project) eObject;
                         break;
@@ -254,7 +256,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
             }
 
             final Project newProject = incomingProject;
-            PlatformGIS.syncInDisplayThread(new Runnable(){
+            PlatformGIS.syncInDisplayThread(new Runnable() {
                 public void run() {
                     try {
                         setCurrentProject(newProject);
@@ -273,16 +275,18 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
         return null; // remove this too
     }
 
-    private Project findProject( URI uri ) {
+    private Project findProject(URI uri) {
         List<Project> projects = getProjects();
-        for( Project project : projects ) {
-            if (isURIEqual(project.eResource().getURI(), uri)) return project;
+        for (Project project : projects) {
+            if (isURIEqual(project.eResource().getURI(), uri))
+                return project;
         }
         return null;
     }
 
-    public static boolean isURIEqual( URI uri, URI uri2 ) {
-        if (uri.equals(uri2)) return true;
+    public static boolean isURIEqual(URI uri, URI uri2) {
+        if (uri.equals(uri2))
+            return true;
 
         String uriString = uri.toString();
         String uri2String = uri2.toString();
@@ -294,9 +298,9 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
         return uriString.equals(uri2String);
     }
 
-    private static String replaceBackSlashes( String uriString ) {
+    private static String replaceBackSlashes(String uriString) {
         StringBuffer buffer = new StringBuffer(uriString.length());
-        for( int i = 0; i < uriString.length(); i++ ) {
+        for (int i = 0; i < uriString.length(); i++) {
             char charAt = uriString.charAt(i);
             if (charAt == '\\')
                 buffer.append('/');
@@ -308,7 +312,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     }
 
     @SuppressWarnings("unchecked")
-    private Project createProject( URI uri, Resource resource ) {
+    private Project createProject(URI uri, Resource resource) {
         Project tmpProject = ProjectFactory.eINSTANCE.createProject();
         String path = uri.toFileString();
         int start = path.indexOf(File.separator) != -1 ? path.lastIndexOf(File.separator) : 0;
@@ -319,10 +323,11 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
 
         return tmpProject;
     }
+
     /**
      * Convert projectPath into a URI and call getProject( uri ).
      */
-    public Project getProject( String projectPath ) {
+    public Project getProject(String projectPath) {
         URL url;
         if (projectPath.startsWith("file:")) { //$NON-NLS-1$
             try {
@@ -351,10 +356,11 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
      * @generated
      */
     @Override
-    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
-        switch( featureID ) {
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
         case ProjectPackage.PROJECT_REGISTRY__CURRENT_PROJECT:
-            if (resolve) return getCurrentProject();
+            if (resolve)
+                return getCurrentProject();
             return basicGetCurrentProject();
         case ProjectPackage.PROJECT_REGISTRY__PROJECTS:
             return getProjects();
@@ -369,14 +375,14 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
      */
     @SuppressWarnings("unchecked")
     @Override
-    public void eSet( int featureID, Object newValue ) {
-        switch( featureID ) {
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
         case ProjectPackage.PROJECT_REGISTRY__CURRENT_PROJECT:
             setCurrentProject((Project) newValue);
             return;
         case ProjectPackage.PROJECT_REGISTRY__PROJECTS:
             getProjects().clear();
-            getProjects().addAll((Collection< ? extends Project>) newValue);
+            getProjects().addAll((Collection<? extends Project>) newValue);
             return;
         }
         super.eSet(featureID, newValue);
@@ -388,8 +394,8 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
      * @generated
      */
     @Override
-    public void eUnset( int featureID ) {
-        switch( featureID ) {
+    public void eUnset(int featureID) {
+        switch (featureID) {
         case ProjectPackage.PROJECT_REGISTRY__CURRENT_PROJECT:
             setCurrentProject((Project) null);
             return;
@@ -406,8 +412,8 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
      * @generated
      */
     @Override
-    public boolean eIsSet( int featureID ) {
-        switch( featureID ) {
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
         case ProjectPackage.PROJECT_REGISTRY__CURRENT_PROJECT:
             return currentProject != null;
         case ProjectPackage.PROJECT_REGISTRY__PROJECTS:
@@ -433,14 +439,14 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     /**
      * @see org.locationtech.udig.IProjectRegistry#setICurrentProject(org.locationtech.udig.IProject)
      */
-    public void setICurrentProject( IProject value ) {
+    public void setICurrentProject(IProject value) {
         setCurrentProject((Project) value);
     }
 
     /**
      * @see org.locationtech.udig.IProjectRegistry#getIProject(java.lang.String)
      */
-    public IProject getIProject( String projectPath ) {
+    public IProject getIProject(String projectPath) {
         return getProject(projectPath);
     }
 
@@ -500,11 +506,11 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
             ProjectPlugin.log("Error getting project from resource"); //$NON-NLS-1$
         else {
             final ProjectRegistry registry = projectRegistry;
-            projectRegistry.eAdapters().add(new AdapterImpl(){
+            projectRegistry.eAdapters().add(new AdapterImpl() {
                 /**
                  * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
                  */
-                public void notifyChanged( Notification msg ) {
+                public void notifyChanged(Notification msg) {
                     if (msg.getFeatureID(ProjectRegistry.class) == ProjectPackage.PROJECT_REGISTRY__PROJECTS) {
                         registry.eResource().setModified(true);
                     }
@@ -521,8 +527,8 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
      * @param uri
      * @return
      */
-    private static ProjectRegistry backwardsCompatibility( ProjectRegistry projectRegistry,
-            IPath registrypath, URI uri ) {
+    private static ProjectRegistry backwardsCompatibility(ProjectRegistry projectRegistry,
+            IPath registrypath, URI uri) {
         IPath oldregistrypath = ProjectPlugin.getPlugin().getStateLocation()
                 .append("ProjectRegistry"); //$NON-NLS-1$
         URI olduri = URI.createURI("file://" + oldregistrypath.toOSString()); //$NON-NLS-1$
@@ -554,7 +560,8 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
             }
             if (projectRegistry.eResource() == null
                     || projectRegistry.eResource().getResourceSet() != resourceSet
-                    || resourceSet == null) throw new AssertionError();
+                    || resourceSet == null)
+                throw new AssertionError();
         }
         return projectRegistry;
     }

@@ -75,7 +75,7 @@ public interface RenderFactory extends EFactory {
      * @return a new object of class '<em>Executor</em>'.
      * @generated NOT
      */
-    RenderExecutor createRenderExecutor( Renderer renderer );
+    RenderExecutor createRenderExecutor(Renderer renderer);
 
     /**
      * Returns the package supported by this factory.

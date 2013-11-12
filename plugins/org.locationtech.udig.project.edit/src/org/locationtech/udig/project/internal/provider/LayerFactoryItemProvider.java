@@ -25,20 +25,16 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
  * end-user-doc -->
  * @generated
  */
-public class LayerFactoryItemProvider extends ItemProviderAdapter
-        implements
-            IEditingDomainItemProvider,
-            IStructuredItemContentProvider,
-            ITreeItemContentProvider,
-            IItemLabelProvider,
-            IItemPropertySource {
+public class LayerFactoryItemProvider extends ItemProviderAdapter implements
+        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
+        IItemLabelProvider, IItemPropertySource {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @generated
      */
-    public LayerFactoryItemProvider( AdapterFactory adapterFactory ) {
+    public LayerFactoryItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -49,7 +45,7 @@ public class LayerFactoryItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public List<IItemPropertyDescriptor> getPropertyDescriptors( Object object ) {
+    public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
@@ -63,7 +59,7 @@ public class LayerFactoryItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public Object getImage( Object object ) {
+    public Object getImage(Object object) {
         return overlayImage(object, getResourceLocator().getImage("full/obj16/LayerFactory")); //$NON-NLS-1$
     }
 
@@ -83,7 +79,7 @@ public class LayerFactoryItemProvider extends ItemProviderAdapter
      * 
      * @generated NOT
      */
-    public String getText( Object object ) {
+    public String getText(Object object) {
         return "Layer Factory";
     }
 
@@ -94,7 +90,7 @@ public class LayerFactoryItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public void notifyChanged( Notification notification ) {
+    public void notifyChanged(Notification notification) {
         updateChildren(notification);
         super.notifyChanged(notification);
     }

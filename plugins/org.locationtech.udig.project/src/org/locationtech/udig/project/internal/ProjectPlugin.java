@@ -60,7 +60,7 @@ public final class ProjectPlugin extends EMFPlugin {
      * @generated
      */
     public ProjectPlugin() {
-        super(new ResourceLocator[]{});
+        super(new ResourceLocator[] {});
     }
 
     /**
@@ -81,15 +81,15 @@ public final class ProjectPlugin extends EMFPlugin {
      * @param projects projects to save
      * @return Collection of error messages or empty collection
      */
-    public static Collection<String> saveProjects( Collection<Project> projects ) {
+    public static Collection<String> saveProjects(Collection<Project> projects) {
         ArrayList<String> errors = new ArrayList<String>();
-        for( Project project : projects ) {
+        for (Project project : projects) {
             try {
                 Resource eResource = project.eResource();
                 Map<String, String> saveOptions = getPlugin().saveOptions;
                 eResource.save(saveOptions);
                 List<ProjectElement> elementsInternal = project.getElementsInternal();
-                for( ProjectElement projectElement : elementsInternal ) {
+                for (ProjectElement projectElement : elementsInternal) {
                     projectElement.eResource().save(saveOptions);
                 }
             } catch (Exception e) {
@@ -133,13 +133,14 @@ public final class ProjectPlugin extends EMFPlugin {
             //
             plugin = this;
         }
+
         /**
          * Controls whether the warning message of non-undoable commands is shown.
          * @deprecated Use the getter and setter methods.
          */
         public boolean undoableCommandWarning = true;
 
-        public void setUndoableCommandWarning( boolean value ) {
+        public void setUndoableCommandWarning(boolean value) {
             undoableCommandWarning = value;
         }
 
@@ -150,9 +151,9 @@ public final class ProjectPlugin extends EMFPlugin {
         /**
          * @see org.eclipse.core.runtime.Plugin#start(org.osgi.framework.BundleContext)
          */
-        public void start( BundleContext context ) throws Exception {
+        public void start(BundleContext context) throws Exception {
             super.start(context);
-            ShutdownTaskList.instance().addPostShutdownTask(new PostShutdownTask(){
+            ShutdownTaskList.instance().addPostShutdownTask(new PostShutdownTask() {
 
                 public int getProgressMonitorSteps() {
                     List<Resource> resources = getProjectRegistry().eResource().getResourceSet()
@@ -160,20 +161,21 @@ public final class ProjectPlugin extends EMFPlugin {
                     return resources.size();
                 }
 
-                public void handlePostShutdownException( Throwable t ) {
+                public void handlePostShutdownException(Throwable t) {
                     ProjectPlugin.log("", t); //$NON-NLS-1$
                 }
 
-                public void postShutdown( IProgressMonitor monitor, IWorkbench workbench )
+                public void postShutdown(IProgressMonitor monitor, IWorkbench workbench)
                         throws Exception {
                     monitor.beginTask(Messages.ProjectPlugin_saving_task_name, 0);
                     turnOffEvents();
                     List<Resource> resources = getProjectRegistry().eResource().getResourceSet()
                             .getResources();
-                    for( Iterator<Resource> iter = resources.iterator(); iter.hasNext(); ) {
+                    for (Iterator<Resource> iter = resources.iterator(); iter.hasNext();) {
                         Resource resource = (Resource) iter.next();
                         if (resource.getContents().isEmpty()) {
-                            ProjectPlugin.log("Not saving " + resource.getURI()+" empty contents"); //$NON-NLS-1$
+                            ProjectPlugin
+                                    .log("Not saving " + resource.getURI() + " empty contents"); //$NON-NLS-1$
                             continue;
                         }
                         Object next = resource.getAllContents().next();
@@ -210,7 +212,7 @@ public final class ProjectPlugin extends EMFPlugin {
         /**
          * @see org.eclipse.core.runtime.Plugin#stop(org.osgi.framework.BundleContext)
          */
-        public void stop( BundleContext context ) throws Exception {
+        public void stop(BundleContext context) throws Exception {
             super.stop(context);
         }
 
@@ -224,7 +226,7 @@ public final class ProjectPlugin extends EMFPlugin {
 
         public void turnOffEvents() {
             Iterator allIter = getProjectRegistry().eResource().getResourceSet().getAllContents();
-            while( allIter.hasNext() ) {
+            while (allIter.hasNext()) {
                 Object tmp = allIter.next();
                 Notifier obj = (Notifier) tmp;
                 if (obj != null) {
@@ -266,7 +268,7 @@ public final class ProjectPlugin extends EMFPlugin {
      * Writes an info log in the plugin's log.
      * @param message
      */
-    public static void log( String message ) {
+    public static void log(String message) {
         log(message, null);
     }
 
@@ -276,10 +278,11 @@ public final class ProjectPlugin extends EMFPlugin {
      * This should be used for user level messages.
      * </p>
      */
-    public static void log( String message, Throwable e ) {
+    public static void log(String message, Throwable e) {
         getPlugin().getLog()
                 .log(new Status(IStatus.INFO, ID, 0, message == null ? "" : message, e)); //$NON-NLS-1$
     }
+
     /**
      * Messages that only engage if getDefault().isDebugging()
      * <p>
@@ -289,7 +292,7 @@ public final class ProjectPlugin extends EMFPlugin {
      *      System.out.println( "your message here" );
      * 
      */
-    private static void trace( String message, Throwable e ) {
+    private static void trace(String message, Throwable e) {
         if (getPlugin().isDebugging()) {
             if (message != null) {
                 System.out.println(message);
@@ -299,11 +302,12 @@ public final class ProjectPlugin extends EMFPlugin {
             }
         }
     }
+
     /**
      * Messages that only engage if getDefault().isDebugging() and the trace option traceID is true.
      * Available trace options can be found in the Trace class.  (They must also be part of the .options file) 
      */
-    public static void trace( String traceID, Class caller, String message, Throwable e ) {
+    public static void trace(String traceID, Class caller, String message, Throwable e) {
         if (isDebugging(traceID)) {
             trace(caller, message, e);
         }
@@ -316,7 +320,7 @@ public final class ProjectPlugin extends EMFPlugin {
      * @param message tracing message, may be null.
      * @param e exception, may be null.
      */
-    public static void trace( Class caller, String message, Throwable e ) {
+    public static void trace(Class caller, String message, Throwable e) {
         trace(caller.getSimpleName() + ": " + message, e); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
@@ -331,7 +335,7 @@ public final class ProjectPlugin extends EMFPlugin {
      * 
      * @param trace currently only RENDER is defined
      */
-    public static boolean isDebugging( final String trace ) {
+    public static boolean isDebugging(final String trace) {
         return getPlugin().isDebugging() && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
 
     }

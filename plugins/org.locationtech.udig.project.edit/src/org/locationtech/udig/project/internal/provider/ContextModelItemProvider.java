@@ -32,20 +32,16 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * end-user-doc -->
  * @generated
  */
-public class ContextModelItemProvider extends ItemProviderAdapter
-        implements
-            IEditingDomainItemProvider,
-            IStructuredItemContentProvider,
-            ITreeItemContentProvider,
-            IItemLabelProvider,
-            IItemPropertySource {
+public class ContextModelItemProvider extends ItemProviderAdapter implements
+        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
+        IItemLabelProvider, IItemPropertySource {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @generated
      */
-    public ContextModelItemProvider( AdapterFactory adapterFactory ) {
+    public ContextModelItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -55,7 +51,7 @@ public class ContextModelItemProvider extends ItemProviderAdapter
      * 
      * @generated NOT
      */
-    public List getPropertyDescriptors( Object object ) {
+    public List getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
@@ -73,7 +69,7 @@ public class ContextModelItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public Collection< ? extends EStructuralFeature> getChildrenFeatures( Object object ) {
+    public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
             childrenFeatures.add(ProjectPackage.Literals.CONTEXT_MODEL__LAYERS);
@@ -87,7 +83,7 @@ public class ContextModelItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    protected EStructuralFeature getChildFeature( Object object, Object child ) {
+    protected EStructuralFeature getChildFeature(Object object, Object child) {
         // Check the type of the specified child object and return the proper feature to use for
         // adding (see {@link AddCommand}) it as a child.
 
@@ -100,7 +96,7 @@ public class ContextModelItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public Object getImage( Object object ) {
+    public Object getImage(Object object) {
         return overlayImage(object, getResourceLocator().getImage("full/obj16/ContextModel")); //$NON-NLS-1$
     }
 
@@ -120,14 +116,14 @@ public class ContextModelItemProvider extends ItemProviderAdapter
      * 
      * @generated NOT
      */
-    public String getText( Object object ) {
+    public String getText(Object object) {
         return "Context Model";
     }
 
     @Override
-    protected void updateChildren( Notification notification ) {
+    protected void updateChildren(Notification notification) {
         super.updateChildren(notification);
-        switch( notification.getEventType() ) {
+        switch (notification.getEventType()) {
         case Notification.ADD:
         case Notification.ADD_MANY:
         case Notification.REMOVE:
@@ -142,7 +138,7 @@ public class ContextModelItemProvider extends ItemProviderAdapter
                 // we need to tell the map item provider that the layers have changed.
                 ContextModel model = (ContextModel) notifier;
                 EList adapters = model.getMap().eAdapters();
-                for( Object object : adapters ) {
+                for (Object object : adapters) {
                     if (object instanceof MapItemProvider) {
                         MapItemProvider mapItemProvider = ((MapItemProvider) object);
                         //                        mapItemProvider.updateChildList(notification);
@@ -168,10 +164,10 @@ public class ContextModelItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public void notifyChanged( Notification notification ) {
+    public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch( notification.getFeatureID(ContextModel.class) ) {
+        switch (notification.getFeatureID(ContextModel.class)) {
         case ProjectPackage.CONTEXT_MODEL__LAYERS:
             fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
                     true, false));

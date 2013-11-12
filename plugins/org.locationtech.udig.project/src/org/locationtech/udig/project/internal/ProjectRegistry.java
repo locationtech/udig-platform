@@ -50,7 +50,7 @@ public interface ProjectRegistry extends EObject {
      * @see #getCurrentProject()
      * @generated
      */
-    void setCurrentProject( Project value );
+    void setCurrentProject(Project value);
 
     /**
      * Returns the Project that is associated with the filename.
@@ -66,7 +66,7 @@ public interface ProjectRegistry extends EObject {
      * @param uri The file name of the Project
      * @return The Project that maps to the file indicated by name
      */
-    public Project getProject( URI uri );
+    public Project getProject(URI uri);
 
     /**
      * Returns the Project that is associated with the file path.
@@ -82,7 +82,7 @@ public interface ProjectRegistry extends EObject {
      * @param projectPath The file path of the Project
      * @return The Project that maps to the file indicated by name
      */
-    public Project getProject( String projectPath );
+    public Project getProject(String projectPath);
 
     /**
      * @model type="Project" containment="false" resolveProxies="true"

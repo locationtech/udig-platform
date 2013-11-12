@@ -60,7 +60,7 @@ public interface LegendItem extends EObject, ILegendItem {
      * @see #getName()
      * @generated
      */
-    void setName( String value );
+    void setName(String value);
 
     /**
      * Returns the value of the '<em><b>Icon</b></em>' attribute.
@@ -86,7 +86,7 @@ public interface LegendItem extends EObject, ILegendItem {
      * @see #getIcon()
      * @generated
      */
-    void setIcon( ImageDescriptor value );
+    void setIcon(ImageDescriptor value);
 
     /**
      * Returns the value of the '<em><b>Shown</b></em>' attribute.
@@ -112,5 +112,5 @@ public interface LegendItem extends EObject, ILegendItem {
      * @see #isShown()
      * @generated
      */
-    void setShown( boolean value );
+    void setShown(boolean value);
 } // LegendItem

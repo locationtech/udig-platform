@@ -300,13 +300,11 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
 
         // Obtain or create and register interdependencies
         ElementPackageImpl theElementPackage = (ElementPackageImpl) (EPackage.Registry.INSTANCE
-                .getEPackage(ElementPackage.eNS_URI) instanceof ElementPackageImpl
-                ? EPackage.Registry.INSTANCE.getEPackage(ElementPackage.eNS_URI)
-                : ElementPackage.eINSTANCE);
+                .getEPackage(ElementPackage.eNS_URI) instanceof ElementPackageImpl ? EPackage.Registry.INSTANCE
+                .getEPackage(ElementPackage.eNS_URI) : ElementPackage.eINSTANCE);
         ProjectPackageImpl theProjectPackage = (ProjectPackageImpl) (EPackage.Registry.INSTANCE
-                .getEPackage(ProjectPackage.eNS_URI) instanceof ProjectPackageImpl
-                ? EPackage.Registry.INSTANCE.getEPackage(ProjectPackage.eNS_URI)
-                : ProjectPackage.eINSTANCE);
+                .getEPackage(ProjectPackage.eNS_URI) instanceof ProjectPackageImpl ? EPackage.Registry.INSTANCE
+                .getEPackage(ProjectPackage.eNS_URI) : ProjectPackage.eINSTANCE);
 
         // Create package meta-data objects
         theRenderPackage.createPackageContents();
@@ -788,7 +786,8 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * @generated
      */
     public void createPackageContents() {
-        if (isCreated) return;
+        if (isCreated)
+            return;
         isCreated = true;
 
         // Create classes and their features
@@ -875,7 +874,8 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      */
     @SuppressWarnings("unchecked")
     public void initializePackageContents() {
-        if (isInitialized) return;
+        if (isInitialized)
+            return;
         isInitialized = true;
 
         // Initialize package

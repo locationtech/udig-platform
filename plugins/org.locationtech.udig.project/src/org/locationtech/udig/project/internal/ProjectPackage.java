@@ -46,7 +46,8 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    ProjectPackage eINSTANCE = org.locationtech.udig.project.internal.impl.ProjectPackageImpl.init();
+    ProjectPackage eINSTANCE = org.locationtech.udig.project.internal.impl.ProjectPackageImpl
+            .init();
 
     /**
      * The meta object id for the '{@link Comparable <em>Comparable</em>}' class. <!--

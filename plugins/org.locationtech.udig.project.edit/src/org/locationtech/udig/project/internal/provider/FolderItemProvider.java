@@ -39,20 +39,16 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * @generated
  */
-public class FolderItemProvider extends ItemProviderAdapter
-        implements
-            IEditingDomainItemProvider,
-            IStructuredItemContentProvider,
-            ITreeItemContentProvider,
-            IItemLabelProvider,
-            IItemPropertySource {
+public class FolderItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
+        IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
+        IItemPropertySource {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public FolderItemProvider( AdapterFactory adapterFactory ) {
+    public FolderItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -63,7 +59,7 @@ public class FolderItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public List<IItemPropertyDescriptor> getPropertyDescriptors( Object object ) {
+    public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
@@ -80,7 +76,7 @@ public class FolderItemProvider extends ItemProviderAdapter
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addNamePropertyDescriptor( Object object ) {
+    protected void addNamePropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -98,7 +94,7 @@ public class FolderItemProvider extends ItemProviderAdapter
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addShownPropertyDescriptor( Object object ) {
+    protected void addShownPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -116,7 +112,7 @@ public class FolderItemProvider extends ItemProviderAdapter
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addIconPropertyDescriptor( Object object ) {
+    protected void addIconPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -137,7 +133,7 @@ public class FolderItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public Collection< ? extends EStructuralFeature> getChildrenFeatures( Object object ) {
+    public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
             childrenFeatures.add(ProjectPackage.Literals.FOLDER__ITEMS);
@@ -151,7 +147,7 @@ public class FolderItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    protected EStructuralFeature getChildFeature( Object object, Object child ) {
+    protected EStructuralFeature getChildFeature(Object object, Object child) {
         // Check the type of the specified child object and return the proper feature to use for
         // adding (see {@link AddCommand}) it as a child.
 
@@ -165,7 +161,7 @@ public class FolderItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public Object getImage( Object object ) {
+    public Object getImage(Object object) {
         return overlayImage(object, getResourceLocator().getImage("full/obj16/Folder")); //$NON-NLS-1$
     }
 
@@ -188,10 +184,8 @@ public class FolderItemProvider extends ItemProviderAdapter
     @Override
     public String getText(Object object) {
         String label = ((Folder) object).getName();
-        if (label == null || label.length() == 0) {
-            return getString("_UI_Folder_type"); //$NON-NLS-1$
-        }
-        return label;
+        return label == null || label.length() == 0 ? getString("_UI_Folder_type") : //$NON-NLS-1$
+                getString("_UI_Folder_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
@@ -202,10 +196,10 @@ public class FolderItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public void notifyChanged( Notification notification ) {
+    public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch( notification.getFeatureID(Folder.class) ) {
+        switch (notification.getFeatureID(Folder.class)) {
         case ProjectPackage.FOLDER__NAME:
         case ProjectPackage.FOLDER__SHOWN:
         case ProjectPackage.FOLDER__ICON:

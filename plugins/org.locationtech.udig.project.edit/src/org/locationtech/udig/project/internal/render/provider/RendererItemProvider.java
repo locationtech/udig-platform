@@ -33,20 +33,16 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * @generated
  */
-public class RendererItemProvider extends ItemProviderAdapter
-        implements
-            IEditingDomainItemProvider,
-            IStructuredItemContentProvider,
-            ITreeItemContentProvider,
-            IItemLabelProvider,
-            IItemPropertySource {
+public class RendererItemProvider extends ItemProviderAdapter implements
+        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
+        IItemLabelProvider, IItemPropertySource {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @generated
      */
-    public RendererItemProvider( AdapterFactory adapterFactory ) {
+    public RendererItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -57,7 +53,7 @@ public class RendererItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public List<IItemPropertyDescriptor> getPropertyDescriptors( Object object ) {
+    public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
@@ -74,7 +70,7 @@ public class RendererItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addNamePropertyDescriptor( Object object ) {
+    protected void addNamePropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -92,7 +88,7 @@ public class RendererItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addStatePropertyDescriptor( Object object ) {
+    protected void addStatePropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -110,7 +106,7 @@ public class RendererItemProvider extends ItemProviderAdapter
      * end-user-doc -->
      * @generated
      */
-    protected void addContextPropertyDescriptor( Object object ) {
+    protected void addContextPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -120,16 +116,6 @@ public class RendererItemProvider extends ItemProviderAdapter
                                 "_UI_PropertyDescriptor_description", "_UI_Renderer_context_feature", "_UI_Renderer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                         RenderPackage.Literals.RENDERER__CONTEXT, true, false, true, null, null,
                         null));
-    }
-
-    /**
-     * This returns Renderer.gif.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Object getImage( Object object ) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/Renderer")); //$NON-NLS-1$
     }
 
     /**
@@ -148,7 +134,7 @@ public class RendererItemProvider extends ItemProviderAdapter
      * 
      * @generated NOT
      */
-    public String getText( Object object ) {
+    public String getText(Object object) {
         String label = ((Renderer) object).getName();
         return label == null || label.length() == 0 ? "Renderer" : label;
     }
@@ -160,10 +146,10 @@ public class RendererItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public void notifyChanged( Notification notification ) {
+    public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch( notification.getFeatureID(Renderer.class) ) {
+        switch (notification.getFeatureID(Renderer.class)) {
         case RenderPackage.RENDERER__STATE:
         case RenderPackage.RENDERER__NAME:
             fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),

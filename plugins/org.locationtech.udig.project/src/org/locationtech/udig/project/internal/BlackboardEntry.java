@@ -38,7 +38,7 @@ public interface BlackboardEntry extends EObject {
      * @see #getKey()
      * @generated
      */
-    void setKey( String value );
+    void setKey(String value);
 
     /**
      * Contents to persist.
@@ -55,7 +55,7 @@ public interface BlackboardEntry extends EObject {
      * @see #getMemento()
      * @generated
      */
-    void setMemento( String value );
+    void setMemento(String value);
 
     /**
      * Returns the cached type of the object being stored.
@@ -72,7 +72,7 @@ public interface BlackboardEntry extends EObject {
      * @see #getObjectClass()
      * @generated
      */
-    void setObjectClass( Class value );
+    void setObjectClass(Class value);
 
     /**
      * Returns the cached object.
@@ -93,6 +93,6 @@ public interface BlackboardEntry extends EObject {
      * @see #getObject()
      * @generated
      */
-    void setObject( Object value );
+    void setObject(Object value);
 
 }

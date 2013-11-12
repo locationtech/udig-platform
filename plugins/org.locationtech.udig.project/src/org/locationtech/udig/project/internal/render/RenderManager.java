@@ -44,7 +44,7 @@ public interface RenderManager extends EObject, IRenderManager {
      * @see #getMapInternal()
      * @generated
      */
-    void setMapInternal( Map value );
+    void setMapInternal(Map value);
 
     /**
      * Returns the value of the '<em><b>Render Executor</b></em>' reference. <!--
@@ -70,7 +70,7 @@ public interface RenderManager extends EObject, IRenderManager {
      * @see #getRenderExecutor()
      * @generated
      */
-    void setRenderExecutor( RenderExecutor value );
+    void setRenderExecutor(RenderExecutor value);
 
     /**
      * Gets the ViewportPane for the current RenderManager.
@@ -87,7 +87,7 @@ public interface RenderManager extends EObject, IRenderManager {
      * @see #getMapDisplay()
      * @generated
      */
-    void setMapDisplay( IMapDisplay value );
+    void setMapDisplay(IMapDisplay value);
 
     /**
      * Forces the area in all layers to be re-rendered. If bounds is null then the entire layer must
@@ -95,7 +95,7 @@ public interface RenderManager extends EObject, IRenderManager {
      * 
      * @model
      */
-    public void refresh( Envelope bounds );
+    public void refresh(Envelope bounds);
 
     /**
      * Re-composes the image from the associated contexts for the screen area and draws it on the screen.  It does not
@@ -135,7 +135,7 @@ public interface RenderManager extends EObject, IRenderManager {
      * @see #getViewportModelInternal()
      * @generated
      */
-    void setViewportModelInternal( ViewportModel value );
+    void setViewportModelInternal(ViewportModel value);
 
     /**
      * dispose held resources.

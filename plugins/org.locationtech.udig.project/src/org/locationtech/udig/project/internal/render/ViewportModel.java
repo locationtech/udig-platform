@@ -75,7 +75,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @see #getCRS()
      * @generated
      */
-    void setCRS( CoordinateReferenceSystem value );
+    void setCRS(CoordinateReferenceSystem value);
 
     /**
      * List of preferred scale denominators for the map.
@@ -103,7 +103,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @see #getPreferredScaleDenominators()
      * @generated NOTE
      */
-    void setPreferredScaleDenominators( SortedSet<Double> value );
+    void setPreferredScaleDenominators(SortedSet<Double> value);
 
     /**
      * Unsets the value of the '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCRS <em>CRS</em>}' attribute.
@@ -147,7 +147,8 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @see #getBounds()
      * @generated
      */
-    void setBounds( ReferencedEnvelope value );
+    void setBounds(ReferencedEnvelope value);
+
     /**
      * Set the bounds of the viewport model
      * @param value the new desired bounds
@@ -159,7 +160,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * 				This can mean that the scale chosen will not be able to fit the entire bounds.  This is fine
      * 				when zooming but in other cases it is not acceptable
      */
-    void setBounds( ReferencedEnvelope value, boolean forceContainBBoxZoom );
+    void setBounds(ReferencedEnvelope value, boolean forceContainBBoxZoom);
 
     /**
      * Sets the value of the '{@link org.locationtech.udig.project.internal.render.ViewportModel#getBounds <em>Bounds</em>}'
@@ -178,7 +179,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @see #getBounds()
      * @generated NOT
      */
-    void setBounds( Envelope value );
+    void setBounds(Envelope value);
 
     /**
      * Sets the viewport's bounding box. The bounding box will be fit to the window based on the MapDisplay so
@@ -191,7 +192,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @throws IllegalArgumentException If the above criteria are not met this exception is thrown.
      * @model
      */
-    public void setBounds( double minx, double maxx, double miny, double maxy )
+    public void setBounds(double minx, double maxx, double miny, double maxy)
             throws IllegalArgumentException;
 
     /**
@@ -210,7 +211,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @see #getCenter()
      * @generated
      */
-    void setCenter( Coordinate value );
+    void setCenter(Coordinate value);
 
     /**
      * Returns the Viewport's height in world coordinates.
@@ -228,7 +229,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @see #getHeight()
      * @generated
      */
-    void setHeight( double value );
+    void setHeight(double value);
 
     /**
      * Returns the Viewport's width in world coordinates.
@@ -246,7 +247,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @see #getWidth()
      * @generated
      */
-    void setWidth( double value );
+    void setWidth(double value);
 
     /**
      * Returns the aspect ratio of the viewport.
@@ -271,7 +272,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @see #getMapInternal()
      * @generated
      */
-    void setMapInternal( Map value );
+    void setMapInternal(Map value);
 
     /**
      * Returns the value of the '<em><b>Render Manager Internal</b></em>' reference.
@@ -298,7 +299,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @see #getRenderManagerInternal()
      * @generated
      */
-    void setRenderManagerInternal( RenderManager value );
+    void setRenderManagerInternal(RenderManager value);
 
     /**
      * Gets up the affine transform that will transform from the world to screen. A convenience
@@ -316,7 +317,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @return The pixel on the screen that the world coordinate is drawn on.
      * @model
      */
-    public Point worldToPixel( Coordinate coord );
+    public Point worldToPixel(Coordinate coord);
 
     /**
      * Converts a coordinate expressed on the device space back to real world coordinates
@@ -326,7 +327,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @return The correspondent real world coordinate
      * @model
      */
-    public Coordinate pixelToWorld( int x, int y );
+    public Coordinate pixelToWorld(int x, int y);
 
     /**
      * Returns the size of a pixel in world units.
@@ -348,7 +349,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @return this ViewportModel
      * @model
      */
-    public ViewportModel panUsingScreenCoords( int xpixels, int ypixels );
+    public ViewportModel panUsingScreenCoords(int xpixels, int ypixels);
 
     /**
      * Pans the viewport in terms of world units.
@@ -358,7 +359,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @return this ViewportModel
      * @model
      */
-    public ViewportModel panUsingWorldCoords( double x, double y );
+    public ViewportModel panUsingWorldCoords(double x, double y);
 
     /**
      * Increases or decreases the size of the viewport(in world space) by a constant factor, zoom.
@@ -374,7 +375,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @return This ViewportModel, allows for command chaining.
      * @model
      */
-    public ViewportModel zoom( double zoom );
+    public ViewportModel zoom(double zoom);
 
     /**
      * Increases or decreases the size of the viewport(in world space) by a constant factor, zoom.
@@ -393,7 +394,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @return This ViewportModel, allows for command chaining.
      * @model
      */
-    public ViewportModel zoom( double zoom, Coordinate fixedPoint );
+    public ViewportModel zoom(double zoom, Coordinate fixedPoint);
 
     /**
      * sets the Viewport bounding box so that it fully contains the visible map extent
@@ -407,7 +408,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * 
      * @model
      */
-    public void zoomToBox( Envelope box );
+    public void zoomToBox(Envelope box);
 
     /**
      * Return true if it has been initialized with a display. If no display is active then the
@@ -424,7 +425,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @param initialized
      * @uml.property name="initialized"
      */
-    public void setInitialized( boolean initialized );
+    public void setInitialized(boolean initialized);
 
     /**
      * Sets the zoom level of the viewport so that the scale denominator will be equal to
@@ -432,7 +433,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      *
      * @param scaleDenominator desired scale denominator 
      */
-    public void setScale( double scaleDenominator );
+    public void setScale(double scaleDenominator);
 
     /**
      * Sets the zoom level of the viewport so that the scale denominator will be equal to
@@ -440,7 +441,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      *
      * @param scaleDenominator desired scale denominator 
      */
-    public void setScale( double scaleDenominator, int dpi, int displayWidth, int displayHeight );
+    public void setScale(double scaleDenominator, int dpi, int displayWidth, int displayHeight);
 
     /**
      * The attribute indicates that any upcoming changes to the value
@@ -448,7 +449,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      *
      * @param changing
      */
-    public void setIsBoundsChanging( boolean changing );
+    public void setIsBoundsChanging(boolean changing);
 
     /**
      * Returns the available list of timesteps or null, if no time is defined. 
@@ -472,7 +473,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @see #getCurrentTimestep()
      * @generated
      */
-    void setCurrentTimestep( DateTime value );
+    void setCurrentTimestep(DateTime value);
 
     /**
      * Returns the available list of elevations or null if no elevation has been defined. 
@@ -496,5 +497,5 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @see #getCurrentElevation()
      * @generated
      */
-    void setCurrentElevation( Double value );
+    void setCurrentElevation(Double value);
 }

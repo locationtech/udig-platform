@@ -43,7 +43,7 @@ public interface EditManager extends EObject, IEditManager {
      * @see #getMapInternal()
      * @generated
      */
-    void setMapInternal( Map value );
+    void setMapInternal(Map value);
 
     /**
      * Gets the SimpleFeature that that is currently being edited.
@@ -64,7 +64,7 @@ public interface EditManager extends EObject, IEditManager {
      * @see #getEditFeature()
      * @model
      */
-    void setEditFeature( SimpleFeature value, Layer layer ) throws IllegalArgumentException;
+    void setEditFeature(SimpleFeature value, Layer layer) throws IllegalArgumentException;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -122,7 +122,7 @@ public interface EditManager extends EObject, IEditManager {
      * @throws IllegalAttributeException
      * @throws IllegalAttributeException
      */
-    public void addFeature( SimpleFeature feature, Layer layer ) throws IOException;
+    public void addFeature(SimpleFeature feature, Layer layer) throws IOException;
 
     /**
      * Reobtains the edit feature from the datastore to ensure that the currently stored feature
@@ -146,7 +146,7 @@ public interface EditManager extends EObject, IEditManager {
      * @see #getSelectedLayer()
      * @generated
      */
-    void setSelectedLayer( Layer value );
+    void setSelectedLayer(Layer value);
 
     /**
      * Indicates whether the editlayer can be changed.
@@ -163,7 +163,7 @@ public interface EditManager extends EObject, IEditManager {
      * @see #isEditLayerLocked()
      * @generated
      */
-    void setEditLayerLocked( boolean value );
+    void setEditLayerLocked(boolean value);
 
     /**
      * Gets the Map's transaction object.

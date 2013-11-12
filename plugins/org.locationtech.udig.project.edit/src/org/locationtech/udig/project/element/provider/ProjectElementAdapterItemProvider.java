@@ -50,23 +50,22 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
-        implements
-            IEditingDomainItemProvider,
-            IStructuredItemContentProvider,
-            ITreeItemContentProvider,
-            IItemLabelProvider,
-            IItemPropertySource {
+public class ProjectElementAdapterItemProvider extends ItemProviderAdapter implements
+        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
+        IItemLabelProvider, IItemPropertySource {
     private static final String LABEL_PROVIDER_ATT = "labelProvider";
+
     private static final String LABEL_ATT = "label";
+
     private static final String ICON_ATT = "icon";
+
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public ProjectElementAdapterItemProvider( AdapterFactory adapterFactory ) {
+    public ProjectElementAdapterItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -77,11 +76,12 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public List<IItemPropertyDescriptor> getPropertyDescriptors( Object object ) {
+    public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
             addNamePropertyDescriptor(object);
+            addProjectInternalPropertyDescriptor(object);
             addBackingObjectPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
@@ -92,7 +92,7 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
      * 
      * @generated NO MORE
      */
-    protected void addNamePropertyDescriptor( Object object ) {
+    protected void addNamePropertyDescriptor(Object object) {
         //  TODO uncomment when all emf has been regenerated
         //
         //        itemPropertyDescriptors
@@ -107,12 +107,30 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
     }
 
     /**
+     * This adds a property descriptor for the Project Internal feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addProjectInternalPropertyDescriptor(Object object) {
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(
+                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                        getResourceLocator(),
+                        getString("_UI_ProjectElement_projectInternal_feature"), //$NON-NLS-1$
+                        getString(
+                                "_UI_PropertyDescriptor_description", "_UI_ProjectElement_projectInternal_feature", "_UI_ProjectElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        ProjectPackage.Literals.PROJECT_ELEMENT__PROJECT_INTERNAL, true, false,
+                        true, null, null, null));
+    }
+
+    /**
      * This adds a property descriptor for the Backing Object feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addBackingObjectPropertyDescriptor( Object object ) {
+    protected void addBackingObjectPropertyDescriptor(Object object) {
         itemPropertyDescriptors
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -124,10 +142,10 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
                         false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
-    private IConfigurationElement findExtension( String extensionId ) {
+    private IConfigurationElement findExtension(String extensionId) {
         List<IConfigurationElement> list = ExtensionPointList
                 .getExtensionPointList(ProjectElementAdapter.EXT_ID);
-        for( IConfigurationElement configurationElement : list ) {
+        for (IConfigurationElement configurationElement : list) {
             String id = configurationElement.getAttribute("id"); //$NON-NLS-1$
             if (id != null && id.equals(extensionId)) {
                 return configurationElement;
@@ -141,7 +159,7 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
      * IColorProvider interface the foreground color from the provider is
      * returned otherwise null is returned
      */
-    public Color getForeground( Object object ) {
+    public Color getForeground(Object object) {
         ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
         IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
         if (backingObject == null) {
@@ -173,7 +191,7 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
      * IColorProvider interface the background color from the provider is
      * returned otherwise null is returned
      */
-    public Color getBackground( Object object ) {
+    public Color getBackground(Object object) {
         ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
         IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
         if (backingObject == null) {
@@ -205,7 +223,7 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
      * IFontProvider interface the font from the provider is returned otherwise
      * null is returned
      */
-    public Font getFont( Object object ) {
+    public Font getFont(Object object) {
         ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
         IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
         if (backingObject == null) {
@@ -240,7 +258,7 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
      * 
      * @generated NOT
      */
-    public Object getImage( Object object ) {
+    public Object getImage(Object object) {
         ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
         IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
         if (backingObject == null) {
@@ -290,7 +308,7 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
      * 
      * @generated NOT
      */
-    public String getText( Object object ) {
+    public String getText(Object object) {
         ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
         IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
         if (backingObject == null) {
@@ -328,10 +346,10 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
      * @generated
      */
     @Override
-    public void notifyChanged( Notification notification ) {
+    public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch( notification.getFeatureID(ProjectElementAdapter.class) ) {
+        switch (notification.getFeatureID(ProjectElementAdapter.class)) {
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__NAME:
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__BACKING_OBJECT:
             fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),

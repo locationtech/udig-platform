@@ -22,7 +22,8 @@ public interface ProjectFactory extends EFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    ProjectFactory eINSTANCE = org.locationtech.udig.project.internal.impl.ProjectFactoryImpl.init();
+    ProjectFactory eINSTANCE = org.locationtech.udig.project.internal.impl.ProjectFactoryImpl
+            .init();
 
     /**
      * Returns a new object of class '<em>Context Model</em>'.
@@ -56,7 +57,7 @@ public interface ProjectFactory extends EFactory {
      * 
      * @return a new object of class '<em>Map</em>'.
      */
-    Map createMap( Project owner, String name, List layers );
+    Map createMap(Project owner, String name, List layers);
 
     /**
      * Returns a new object of class '<em>Project</em>'.

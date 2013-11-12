@@ -110,7 +110,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public void setKey( String newKey ) {
+    public void setKey(String newKey) {
         String oldKey = key;
         key = newKey;
         if (eNotificationRequired())
@@ -130,7 +130,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public void setMemento( String newMemento ) {
+    public void setMemento(String newMemento) {
         String oldMemento = memento;
         memento = newMemento;
         if (eNotificationRequired())
@@ -154,7 +154,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      * @uml.property name="objectClass"
      * @generated NOT
      */
-    public void setObjectClass( Class newObjectClass ) {
+    public void setObjectClass(Class newObjectClass) {
         objectClass = newObjectClass;
     }
 
@@ -172,7 +172,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      * 
      * @generated NOT
      */
-    public void setObject( Object newObject ) {
+    public void setObject(Object newObject) {
         ref = newObject;
     }
 
@@ -182,8 +182,8 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      * @generated
      */
     @Override
-    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
-        switch( featureID ) {
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
         case ProjectPackage.BLACKBOARD_ENTRY__KEY:
             return getKey();
         case ProjectPackage.BLACKBOARD_ENTRY__MEMENTO:
@@ -202,8 +202,8 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      * @generated
      */
     @Override
-    public void eSet( int featureID, Object newValue ) {
-        switch( featureID ) {
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
         case ProjectPackage.BLACKBOARD_ENTRY__KEY:
             setKey((String) newValue);
             return;
@@ -226,8 +226,8 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      * @generated
      */
     @Override
-    public void eUnset( int featureID ) {
-        switch( featureID ) {
+    public void eUnset(int featureID) {
+        switch (featureID) {
         case ProjectPackage.BLACKBOARD_ENTRY__KEY:
             setKey(KEY_EDEFAULT);
             return;
@@ -250,8 +250,8 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      * @generated
      */
     @Override
-    public boolean eIsSet( int featureID ) {
-        switch( featureID ) {
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
         case ProjectPackage.BLACKBOARD_ENTRY__KEY:
             return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
         case ProjectPackage.BLACKBOARD_ENTRY__MEMENTO:
@@ -271,7 +271,8 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+        if (eIsProxy())
+            return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (key: "); //$NON-NLS-1$
