@@ -94,12 +94,16 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
                 return createPageAdapter();
             }
             @Override
+            public Adapter caseIAdaptable(IAdaptable object) {
+                return createIAdaptableAdapter();
+            }
+            @Override
             public Adapter caseIProjectElement(IProjectElement object) {
                 return createIProjectElementAdapter();
             }
             @Override
-            public Adapter caseIAdaptable(IAdaptable object) {
-                return createIAdaptableAdapter();
+            public Adapter caseProject_IAdaptable(IAdaptable object) {
+                return createProject_IAdaptableAdapter();
             }
             @Override
             public Adapter caseProjectElement(ProjectElement object) {
@@ -196,6 +200,20 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
     }
 
 	/**
+     * Creates a new adapter for an object of class '{@link org.eclipse.core.runtime.IAdaptable <em>IAdaptable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.eclipse.core.runtime.IAdaptable
+     * @generated
+     */
+    public Adapter createProject_IAdaptableAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link org.eclipse.core.runtime.IAdaptable <em>IAdaptable</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;

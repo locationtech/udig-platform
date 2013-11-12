@@ -340,6 +340,25 @@ public interface ModelPackage extends EPackage{
     int PAGE_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 3;
 
 	/**
+     * The meta object id for the '{@link org.eclipse.core.runtime.IAdaptable <em>IAdaptable</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.core.runtime.IAdaptable
+     * @see org.locationtech.udig.printing.model.impl.ModelPackageImpl#getIAdaptable()
+     * @generated
+     */
+    int IADAPTABLE = 4;
+
+    /**
+     * The number of structural features of the '<em>IAdaptable</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IADAPTABLE_FEATURE_COUNT = 0;
+
+    /**
      * The meta object id for the '<em>Graphics2 D</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -347,7 +366,7 @@ public interface ModelPackage extends EPackage{
      * @see org.locationtech.udig.printing.model.impl.ModelPackageImpl#getGraphics2D()
      * @generated
      */
-    int GRAPHICS2_D = 4;
+    int GRAPHICS2_D = 5;
 
 	/**
      * The meta object id for the '<em>Dimension</em>' data type.
@@ -357,7 +376,7 @@ public interface ModelPackage extends EPackage{
      * @see org.locationtech.udig.printing.model.impl.ModelPackageImpl#getDimension()
      * @generated
      */
-    int DIMENSION = 5;
+    int DIMENSION = 6;
 
 	/**
      * The meta object id for the '<em>Point</em>' data type.
@@ -367,7 +386,7 @@ public interface ModelPackage extends EPackage{
      * @see org.locationtech.udig.printing.model.impl.ModelPackageImpl#getPoint()
      * @generated
      */
-    int POINT = 6;
+    int POINT = 7;
 
 
 	/**
@@ -378,7 +397,7 @@ public interface ModelPackage extends EPackage{
      * @see org.locationtech.udig.printing.model.impl.ModelPackageImpl#getIProgressMonitor()
      * @generated
      */
-    int IPROGRESS_MONITOR = 7;
+    int IPROGRESS_MONITOR = 8;
 
 
 	/**
@@ -389,7 +408,7 @@ public interface ModelPackage extends EPackage{
      * @see org.locationtech.udig.printing.model.impl.ModelPackageImpl#getBoxPrinter()
      * @generated
      */
-    int BOX_PRINTER = 8;
+    int BOX_PRINTER = 9;
 
 
 	/**
@@ -562,6 +581,17 @@ public interface ModelPackage extends EPackage{
     EReference getPage_Boxes();
 
 	/**
+     * Returns the meta object for class '{@link org.eclipse.core.runtime.IAdaptable <em>IAdaptable</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>IAdaptable</em>'.
+     * @see org.eclipse.core.runtime.IAdaptable
+     * @model instanceClass="org.eclipse.core.runtime.IAdaptable"
+     * @generated
+     */
+    EClass getIAdaptable();
+
+    /**
      * Returns the meta object for data type '{@link java.awt.Graphics2D <em>Graphics2 D</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -766,6 +796,16 @@ public interface ModelPackage extends EPackage{
          * @generated
          */
         EReference PAGE__BOXES = eINSTANCE.getPage_Boxes();
+
+        /**
+         * The meta object literal for the '{@link org.eclipse.core.runtime.IAdaptable <em>IAdaptable</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.eclipse.core.runtime.IAdaptable
+         * @see org.locationtech.udig.printing.model.impl.ModelPackageImpl#getIAdaptable()
+         * @generated
+         */
+        EClass IADAPTABLE = eINSTANCE.getIAdaptable();
 
         /**
          * The meta object literal for the '<em>Graphics2 D</em>' data type.

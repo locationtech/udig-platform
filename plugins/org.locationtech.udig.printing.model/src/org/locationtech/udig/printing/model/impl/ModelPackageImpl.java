@@ -8,6 +8,7 @@ package org.locationtech.udig.printing.model.impl;
 
 import java.awt.Graphics2D;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.locationtech.udig.printing.model.Box;
 import org.locationtech.udig.printing.model.BoxPrinter;
 import org.locationtech.udig.printing.model.Connection;
@@ -66,6 +67,13 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
     private EClass pageEClass = null;
 
 	/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass iAdaptableEClass = null;
+
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -305,6 +313,15 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getIAdaptable() {
+        return iAdaptableEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EDataType getGraphics2D() {
         return graphics2DEDataType;
     }
@@ -392,6 +409,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
         pageEClass = createEClass(PAGE);
         createEReference(pageEClass, PAGE__BOXES);
 
+        iAdaptableEClass = createEClass(IADAPTABLE);
+
         // Create data types
         graphics2DEDataType = createEDataType(GRAPHICS2_D);
         dimensionEDataType = createEDataType(DIMENSION);
@@ -432,6 +451,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 
         // Add supertypes to classes
         boxEClass.getESuperTypes().add(this.getElement());
+        boxEClass.getESuperTypes().add(this.getIAdaptable());
         connectionEClass.getESuperTypes().add(this.getElement());
         pageEClass.getESuperTypes().add(this.getElement());
         pageEClass.getESuperTypes().add(theProjectPackage.getProjectElement());
@@ -455,6 +475,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 
         initEClass(pageEClass, Page.class, "Page", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getPage_Boxes(), this.getBox(), null, "boxes", null, 0, -1, Page.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(iAdaptableEClass, IAdaptable.class, "IAdaptable", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize data types
         initEDataType(graphics2DEDataType, Graphics2D.class, "Graphics2D", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

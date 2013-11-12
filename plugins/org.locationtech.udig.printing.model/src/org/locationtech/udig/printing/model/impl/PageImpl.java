@@ -118,13 +118,11 @@ public class PageImpl extends ElementImpl implements Page {
      */
     public Project getProjectInternal() {
         if (projectInternal != null && projectInternal.eIsProxy()) {
-            InternalEObject oldProjectInternal = (InternalEObject) projectInternal;
-            projectInternal = (Project) eResolveProxy(oldProjectInternal);
+            InternalEObject oldProjectInternal = (InternalEObject)projectInternal;
+            projectInternal = (Project)eResolveProxy(oldProjectInternal);
             if (projectInternal != oldProjectInternal) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-                            ModelPackage.PAGE__PROJECT_INTERNAL, oldProjectInternal,
-                            projectInternal));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.PAGE__PROJECT_INTERNAL, oldProjectInternal, projectInternal));
             }
         }
         return projectInternal;
@@ -149,12 +147,8 @@ public class PageImpl extends ElementImpl implements Page {
         Project oldProjectInternal = projectInternal;
         projectInternal = newProjectInternal;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-                    ModelPackage.PAGE__PROJECT_INTERNAL, oldProjectInternal, newProjectInternal);
-            if (msgs == null)
-                msgs = notification;
-            else
-                msgs.add(notification);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelPackage.PAGE__PROJECT_INTERNAL, oldProjectInternal, newProjectInternal);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
     }
@@ -168,17 +162,14 @@ public class PageImpl extends ElementImpl implements Page {
         if (newProjectInternal != projectInternal) {
             NotificationChain msgs = null;
             if (projectInternal != null)
-                msgs = ((InternalEObject) projectInternal).eInverseRemove(this,
-                        ProjectPackage.PROJECT__ELEMENTS_INTERNAL, Project.class, msgs);
+                msgs = ((InternalEObject)projectInternal).eInverseRemove(this, ProjectPackage.PROJECT__ELEMENTS_INTERNAL, Project.class, msgs);
             if (newProjectInternal != null)
-                msgs = ((InternalEObject) newProjectInternal).eInverseAdd(this,
-                        ProjectPackage.PROJECT__ELEMENTS_INTERNAL, Project.class, msgs);
+                msgs = ((InternalEObject)newProjectInternal).eInverseAdd(this, ProjectPackage.PROJECT__ELEMENTS_INTERNAL, Project.class, msgs);
             msgs = basicSetProjectInternal(newProjectInternal, msgs);
-            if (msgs != null)
-                msgs.dispatch();
-        } else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET,
-                    ModelPackage.PAGE__PROJECT_INTERNAL, newProjectInternal, newProjectInternal));
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.PAGE__PROJECT_INTERNAL, newProjectInternal, newProjectInternal));
     }
 
     /**
@@ -201,12 +192,11 @@ public class PageImpl extends ElementImpl implements Page {
     @Override
     public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
             NotificationChain msgs ) {
-        switch( featureID ) {
-        case ModelPackage.PAGE__PROJECT_INTERNAL:
-            if (projectInternal != null)
-                msgs = ((InternalEObject) projectInternal).eInverseRemove(this,
-                        ProjectPackage.PROJECT__ELEMENTS_INTERNAL, Project.class, msgs);
-            return basicSetProjectInternal((Project) otherEnd, msgs);
+        switch (featureID) {
+            case ModelPackage.PAGE__PROJECT_INTERNAL:
+                if (projectInternal != null)
+                    msgs = ((InternalEObject)projectInternal).eInverseRemove(this, ProjectPackage.PROJECT__ELEMENTS_INTERNAL, Project.class, msgs);
+                return basicSetProjectInternal((Project)otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
@@ -219,11 +209,11 @@ public class PageImpl extends ElementImpl implements Page {
     @Override
     public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
             NotificationChain msgs ) {
-        switch( featureID ) {
-        case ModelPackage.PAGE__PROJECT_INTERNAL:
-            return basicSetProjectInternal(null, msgs);
-        case ModelPackage.PAGE__BOXES:
-            return ((InternalEList< ? >) getBoxes()).basicRemove(otherEnd, msgs);
+        switch (featureID) {
+            case ModelPackage.PAGE__PROJECT_INTERNAL:
+                return basicSetProjectInternal(null, msgs);
+            case ModelPackage.PAGE__BOXES:
+                return ((InternalEList<?>)getBoxes()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -235,15 +225,14 @@ public class PageImpl extends ElementImpl implements Page {
      */
     @Override
     public Object eGet( int featureID, boolean resolve, boolean coreType ) {
-        switch( featureID ) {
-        case ModelPackage.PAGE__NAME:
-            return getName();
-        case ModelPackage.PAGE__PROJECT_INTERNAL:
-            if (resolve)
-                return getProjectInternal();
-            return basicGetProjectInternal();
-        case ModelPackage.PAGE__BOXES:
-            return getBoxes();
+        switch (featureID) {
+            case ModelPackage.PAGE__NAME:
+                return getName();
+            case ModelPackage.PAGE__PROJECT_INTERNAL:
+                if (resolve) return getProjectInternal();
+                return basicGetProjectInternal();
+            case ModelPackage.PAGE__BOXES:
+                return getBoxes();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -256,17 +245,17 @@ public class PageImpl extends ElementImpl implements Page {
     @SuppressWarnings("unchecked")
     @Override
     public void eSet( int featureID, Object newValue ) {
-        switch( featureID ) {
-        case ModelPackage.PAGE__NAME:
-            setName((String) newValue);
-            return;
-        case ModelPackage.PAGE__PROJECT_INTERNAL:
-            setProjectInternal((Project) newValue);
-            return;
-        case ModelPackage.PAGE__BOXES:
-            getBoxes().clear();
-            getBoxes().addAll((Collection< ? extends Box>) newValue);
-            return;
+        switch (featureID) {
+            case ModelPackage.PAGE__NAME:
+                setName((String)newValue);
+                return;
+            case ModelPackage.PAGE__PROJECT_INTERNAL:
+                setProjectInternal((Project)newValue);
+                return;
+            case ModelPackage.PAGE__BOXES:
+                getBoxes().clear();
+                getBoxes().addAll((Collection<? extends Box>)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -278,16 +267,16 @@ public class PageImpl extends ElementImpl implements Page {
      */
     @Override
     public void eUnset( int featureID ) {
-        switch( featureID ) {
-        case ModelPackage.PAGE__NAME:
-            setName(NAME_EDEFAULT);
-            return;
-        case ModelPackage.PAGE__PROJECT_INTERNAL:
-            setProjectInternal((Project) null);
-            return;
-        case ModelPackage.PAGE__BOXES:
-            getBoxes().clear();
-            return;
+        switch (featureID) {
+            case ModelPackage.PAGE__NAME:
+                setName(NAME_EDEFAULT);
+                return;
+            case ModelPackage.PAGE__PROJECT_INTERNAL:
+                setProjectInternal((Project)null);
+                return;
+            case ModelPackage.PAGE__BOXES:
+                getBoxes().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -299,13 +288,13 @@ public class PageImpl extends ElementImpl implements Page {
      */
     @Override
     public boolean eIsSet( int featureID ) {
-        switch( featureID ) {
-        case ModelPackage.PAGE__NAME:
-            return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-        case ModelPackage.PAGE__PROJECT_INTERNAL:
-            return projectInternal != null;
-        case ModelPackage.PAGE__BOXES:
-            return boxes != null && !boxes.isEmpty();
+        switch (featureID) {
+            case ModelPackage.PAGE__NAME:
+                return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case ModelPackage.PAGE__PROJECT_INTERNAL:
+                return projectInternal != null;
+            case ModelPackage.PAGE__BOXES:
+                return boxes != null && !boxes.isEmpty();
         }
         return super.eIsSet(featureID);
     }
@@ -316,27 +305,22 @@ public class PageImpl extends ElementImpl implements Page {
      * @generated
      */
     @Override
-    public int eBaseStructuralFeatureID( int derivedFeatureID, Class< ? > baseClass ) {
+    public int eBaseStructuralFeatureID( int derivedFeatureID, Class<?> baseClass ) {
         if (baseClass == IProjectElement.class) {
-            switch( derivedFeatureID ) {
-            default:
-                return -1;
+            switch (derivedFeatureID) {
+                default: return -1;
             }
         }
         if (baseClass == IAdaptable.class) {
-            switch( derivedFeatureID ) {
-            default:
-                return -1;
+            switch (derivedFeatureID) {
+                default: return -1;
             }
         }
         if (baseClass == ProjectElement.class) {
-            switch( derivedFeatureID ) {
-            case ModelPackage.PAGE__NAME:
-                return ProjectPackage.PROJECT_ELEMENT__NAME;
-            case ModelPackage.PAGE__PROJECT_INTERNAL:
-                return ProjectPackage.PROJECT_ELEMENT__PROJECT_INTERNAL;
-            default:
-                return -1;
+            switch (derivedFeatureID) {
+                case ModelPackage.PAGE__NAME: return ProjectPackage.PROJECT_ELEMENT__NAME;
+                case ModelPackage.PAGE__PROJECT_INTERNAL: return ProjectPackage.PROJECT_ELEMENT__PROJECT_INTERNAL;
+                default: return -1;
             }
         }
         return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
@@ -348,27 +332,22 @@ public class PageImpl extends ElementImpl implements Page {
      * @generated
      */
     @Override
-    public int eDerivedStructuralFeatureID( int baseFeatureID, Class< ? > baseClass ) {
+    public int eDerivedStructuralFeatureID( int baseFeatureID, Class<?> baseClass ) {
         if (baseClass == IProjectElement.class) {
-            switch( baseFeatureID ) {
-            default:
-                return -1;
+            switch (baseFeatureID) {
+                default: return -1;
             }
         }
         if (baseClass == IAdaptable.class) {
-            switch( baseFeatureID ) {
-            default:
-                return -1;
+            switch (baseFeatureID) {
+                default: return -1;
             }
         }
         if (baseClass == ProjectElement.class) {
-            switch( baseFeatureID ) {
-            case ProjectPackage.PROJECT_ELEMENT__NAME:
-                return ModelPackage.PAGE__NAME;
-            case ProjectPackage.PROJECT_ELEMENT__PROJECT_INTERNAL:
-                return ModelPackage.PAGE__PROJECT_INTERNAL;
-            default:
-                return -1;
+            switch (baseFeatureID) {
+                case ProjectPackage.PROJECT_ELEMENT__NAME: return ModelPackage.PAGE__NAME;
+                case ProjectPackage.PROJECT_ELEMENT__PROJECT_INTERNAL: return ModelPackage.PAGE__PROJECT_INTERNAL;
+                default: return -1;
             }
         }
         return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
@@ -381,8 +360,7 @@ public class PageImpl extends ElementImpl implements Page {
      */
     @Override
     public String toString() {
-        if (eIsProxy())
-            return super.toString();
+        if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (name: ");
@@ -411,8 +389,7 @@ public class PageImpl extends ElementImpl implements Page {
         String oldName = name;
         name = newName;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.PAGE__NAME, oldName,
-                    name));
+            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.PAGE__NAME, oldName, name));
     }
 
     /**
