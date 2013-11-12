@@ -28,11 +28,11 @@
             id=" org.locationtech.udig.jconsole.actionSet1"
             label="JConsole"
             visible="true">
-            <menu
+            <!--menu
                   id="jconsole.menu"
                   label="jconsole"
                   path="jconsolepath">
-            </menu>
+            </menu-->
             <action
                   class="org.locationtech.udig.jconsole.actions.ConsoleEditorActionFromOld"
                   icon="icons/consolefile.gif"
