@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.locationtech.udig</groupId>
         <artifactId>pom-libs.parent</artifactId>
-        <version>0.0.1</version>
+        <version>0.0.2</version>
         <relativePath>../../pom-libs.xml</relativePath>
     </parent>
 
