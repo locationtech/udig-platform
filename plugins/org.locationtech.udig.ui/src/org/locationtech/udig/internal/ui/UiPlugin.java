@@ -494,6 +494,9 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     public static Properties getProxySettings() throws FileNotFoundException, IOException {
         Properties properties = new Properties();
         File iniFile = getIniFile();
+        if (iniFile == null) {
+            return properties;
+        }
         BufferedReader bR = new BufferedReader(new FileReader(iniFile));
         String line = null;
         while( (line = bR.readLine()) != null ) {
