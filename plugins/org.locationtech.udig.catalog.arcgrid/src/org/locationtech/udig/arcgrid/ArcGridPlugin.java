@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.crischan.udig.arcgrid;
+package org.locationtech.udig.arcgrid;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -51,7 +51,7 @@ public class ArcGridPlugin extends AbstractUIPlugin {
 		try {
 			if (this.resourceBundle == null)
 				this.resourceBundle = ResourceBundle.getBundle(
-                        "net.crischan.udig.arcgrid.internal.arcgrid.ArcGridPluginResources"); //$NON-NLS-1$
+                        "org.locationtech.udig.arcgrid.internal.arcgrid.ArcGridPluginResources"); //$NON-NLS-1$
 		} catch (MissingResourceException x) {
 			this.resourceBundle = null;
 		}
