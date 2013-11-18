@@ -302,6 +302,17 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                   <groupId>org.codehaus.mojo</groupId>
+                   <artifactId>build-helper-maven-plugin</artifactId>
+                   <version>1.8</version>
+                </plugin>
+
+                <plugin>
+                   <artifactId>maven-clean-plugin</artifactId>
+                   <version>2.5</version>
+                </plugin>
+
+                <plugin>
                     <groupId>org.eclipse.tycho</groupId>
                     <artifactId>tycho-surefire-plugin</artifactId>
                     <version>${tycho-version}</version>
