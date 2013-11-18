@@ -4,7 +4,7 @@
      <extension
          point="org.locationtech.udig.catalog.ServiceExtension">
       <service
-            class="net.crischan.udig.arcgrid.ArcGridServiceExtension"
+            class="org.locationtech.udig.arcgrid.ArcGridServiceExtension"
             id="ArcGrid"
             name="ArcGrid"/>
    </extension>

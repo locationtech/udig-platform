@@ -8,11 +8,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.crischan.udig.arcgrid;
+package org.locationtech.udig.arcgrid;
 
 import java.io.IOException;
 
-import net.crischan.udig.arcgrid.internal.Messages;
+import org.locationtech.udig.arcgrid.internal.Messages;
 import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResource;
 import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResourceInfo;
 import org.locationtech.udig.catalog.rasterings.AbstractRasterService;

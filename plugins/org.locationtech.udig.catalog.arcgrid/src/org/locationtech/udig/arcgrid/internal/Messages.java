@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.crischan.udig.arcgrid.internal;
+package org.locationtech.udig.arcgrid.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-    private static final String BUNDLE_NAME = "net.crischan.udig.arcgrid.internal.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "org.locationtech.udig.arcgrid.internal.messages"; //$NON-NLS-1$
     public static String ArcGridGeoResourceImplementation_Connecting;
     static {
         // initialize resource bundle

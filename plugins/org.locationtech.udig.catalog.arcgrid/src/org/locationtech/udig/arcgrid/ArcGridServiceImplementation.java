@@ -10,7 +10,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.crischan.udig.arcgrid;
+package org.locationtech.udig.arcgrid;
 
 import java.io.IOException;
 import java.io.Serializable;
