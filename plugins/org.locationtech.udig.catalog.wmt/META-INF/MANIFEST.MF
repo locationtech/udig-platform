@@ -2,21 +2,19 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: org.locationtech.udig.catalog.wmt;singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.0.0.Alpha1-v20131119
 Bundle-Activator: org.locationtech.udig.catalog.internal.wmt.WMTPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
-Export-Package: org.locationtech.udig.catalog.internal.wmt,
- org.locationtech.udig.catalog.internal.wmt.tile,
- org.locationtech.udig.catalog.internal.wmt.ui.preferences,
- org.locationtech.udig.catalog.internal.wmt.ui.properties,
- org.locationtech.udig.catalog.internal.wmt.ui.view,
- org.locationtech.udig.catalog.internal.wmt.ui.wizard,
- org.locationtech.udig.catalog.internal.wmt.ui.wizard.controls,
- org.locationtech.udig.catalog.internal.wmt.wmtsource,
- org.locationtech.udig.catalog.internal.wmt.wmtsource.ww,
- org.locationtech.udig.catalog.internal.wmt.ww,
- org.locationtech.udig.catalog.wmt.internal
+Export-Package: org.locationtech.udig.catalog.internal.wmt,org.locatio
+ ntech.udig.catalog.internal.wmt.tile,org.locationtech.udig.catalog.in
+ ternal.wmt.ui.preferences,org.locationtech.udig.catalog.internal.wmt.
+ ui.properties,org.locationtech.udig.catalog.internal.wmt.ui.view,org.
+ locationtech.udig.catalog.internal.wmt.ui.wizard,org.locationtech.udi
+ g.catalog.internal.wmt.ui.wizard.controls,org.locationtech.udig.catal
+ og.internal.wmt.wmtsource,org.locationtech.udig.catalog.internal.wmt.
+ wmtsource.ww,org.locationtech.udig.catalog.internal.wmt.ww,org.locati
+ ontech.udig.catalog.wmt.internal
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.locationtech.udig.catalog,

@@ -2,16 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: org.locationtech.udig.style.sld; singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.0.0.Alpha1-v20131119
 Bundle-Activator: org.locationtech.udig.style.sld.SLDPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Eclipse-BuddyPolicy: global
-Export-Package: org.locationtech.udig.style.filter,
- org.locationtech.udig.style.sld,
- org.locationtech.udig.style.sld.editor,
- org.locationtech.udig.style.sld.editor.internal,
- org.locationtech.udig.style.sld.simple
+Export-Package: org.locationtech.udig.style.filter,org.locationtech.ud
+ ig.style.sld,org.locationtech.udig.style.sld.editor,org.locationtech.
+ udig.style.sld.editor.internal,org.locationtech.udig.style.sld.simple
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.locationtech.udig.project,

@@ -2,9 +2,9 @@
 <feature
       id="org.locationtech.udig_application-feature"
       label="org.locationtech.udig_application-feature"
-      version="2.0.0.qualifier"
+      version="2.0.0.Alpha1-v20131119"
       provider-name="Refractions Research"
-      plugin="org.locationtech.udig.project">
+      plugin="org.locationtech.udig_base">
 
    <description url="http://udig.refractions.net/confluence/display/DEV/6+Working+with+GIS+Application">
       The uDig &quot;GIS Application&quot; represents is the tier of the uDig architecture where visualization occurs. This feature gathers up the plugins related to visualisation (including the Map, Layer, Viewport model and associated UI concepts such as the MapEditor).

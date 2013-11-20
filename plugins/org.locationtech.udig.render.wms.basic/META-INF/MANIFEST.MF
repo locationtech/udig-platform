@@ -2,15 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: org.locationtech.udig.render.wms.basic; singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.0.0.Alpha1-v20131119
 Bundle-Activator: org.locationtech.udig.render.wms.basic.WMSPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
-Export-Package: org.locationtech.udig.render.internal.wms.basic,
- org.locationtech.udig.render.internal.wmsc.basic,
- org.locationtech.udig.render.wms.basic,
- org.locationtech.udig.render.wms.basic.internal,
- org.locationtech.udig.render.wms.basic.preferences
+Export-Package: org.locationtech.udig.render.internal.wms.basic,org.lo
+ cationtech.udig.render.internal.wmsc.basic,org.locationtech.udig.rend
+ er.wms.basic,org.locationtech.udig.render.wms.basic.internal,org.loca
+ tiontech.udig.render.wms.basic.preferences
 Require-Bundle: org.locationtech.udig.project,
  org.eclipse.core.runtime,
  org.eclipse.ui,

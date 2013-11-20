@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tools Tests
 Bundle-SymbolicName: org.locationtech.udig.tools.tests; singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.0.0.Alpha1-v20131119
 Bundle-Activator: org.locationtech.udig.tools.tests.Activator
 Bundle-Vendor: uDig Community
 Require-Bundle: org.eclipse.ui,
@@ -15,5 +15,5 @@ Import-Package: com.vividsolutions.jts.geom,
  com.vividsolutions.jts.io,
  com.vividsolutions.jts.operation.polygonize,
  org.opengis.feature.simple
-Export-Package: es.udig.tools.geometry.split,
- org.locationtech.udig.tools.tests
+Export-Package: es.udig.tools.geometry.split,org.locationtech.udig.too
+ ls.tests

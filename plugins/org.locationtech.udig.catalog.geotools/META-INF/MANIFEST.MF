@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: GeoTools
 Bundle-SymbolicName: org.locationtech.udig.catalog.geotools;singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.0.0.Alpha1-v20131119
 Bundle-Activator: org.locationtech.udig.catalog.geotools.Activator
 Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.locationtech.udig.catalog.ui
 Bundle-ActivationPolicy: lazy
-Export-Package: org.locationtech.udig.catalog.geotools,
- org.locationtech.udig.catalog.geotools.data
+Export-Package: org.locationtech.udig.catalog.geotools,org.locationtec
+ h.udig.catalog.geotools.data
 Import-Package: net.miginfocom.swt;version="[3.7.0,3.8.0)"

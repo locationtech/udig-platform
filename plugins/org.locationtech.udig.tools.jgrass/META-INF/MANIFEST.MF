@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: JGrass Tools Plug-in
 Bundle-SymbolicName: org.locationtech.udig.tools.jgrass;singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.0.0.Alpha1-v20131119
 Bundle-Activator: org.locationtech.udig.tools.jgrass.JGrassToolsPlugin
 Bundle-Vendor: HydroloGIS S.r.l.
 Bundle-Localization: plugin
@@ -16,7 +16,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xsd;bundle-version="2.7.0"
 Eclipse-LazyStart: true
 Bundle-ClassPath: .
-Export-Package: org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools
+Export-Package: org.locationtech.udig.tools.jgrass.profile.borrowedfro
+ mjgrasstools
 Import-Package: javax.media.jai,
  javax.media.jai.iterator,
  javax.media.jai.operator,

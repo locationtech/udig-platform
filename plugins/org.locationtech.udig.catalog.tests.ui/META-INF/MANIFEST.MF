@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Catalog UI Test Plug-in
 Bundle-SymbolicName: org.locationtech.udig.catalog.tests.ui; singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.0.0.Alpha1-v20131119
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.swt,
@@ -26,6 +26,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.locationtech.udig.ui.tests;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.locationtech.udig.catalog.tests.ui.CatalogTestsUIPlugin
-Export-Package: org.locationtech.udig.catalog.tests.ui,
- org.locationtech.udig.catalog.tests.ui.dnd,
- org.locationtech.udig.catalog.tests.ui.workflow
+Export-Package: org.locationtech.udig.catalog.tests.ui,org.locationtec
+ h.udig.catalog.tests.ui.dnd,org.locationtech.udig.catalog.tests.ui.wo
+ rkflow

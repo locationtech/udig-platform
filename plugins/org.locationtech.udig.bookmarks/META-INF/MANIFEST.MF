@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Bookmarks Plug-in
 Bundle-SymbolicName: org.locationtech.udig.bookmarks; singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.0.0.Alpha1-v20131119
 Bundle-Activator: org.locationtech.udig.bookmarks.BookmarksPlugin
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
@@ -11,9 +11,11 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.project;visibility:=reexport,
  org.locationtech.udig.project.ui;visibility:=reexport
 Bundle-ActivationPolicy: lazy
-Export-Package: org.locationtech.udig.bookmarks,
- org.locationtech.udig.bookmarks.internal;x-friends:="org.locationtech.udig.bookmarks.tests",
- org.locationtech.udig.bookmarks.internal.actions;x-friends:="org.locationtech.udig.bookmarks.tests",
- org.locationtech.udig.bookmarks.internal.command;x-friends:="org.locationtech.udig.bookmarks.tests",
- org.locationtech.udig.bookmarks.internal.ui;x-friends:="org.locationtech.udig.bookmarks.tests"
+Export-Package: org.locationtech.udig.bookmarks,org.locationtech.udig.
+ bookmarks.internal;x-friends:="org.locationtech.udig.bookmarks.tests"
+ ,org.locationtech.udig.bookmarks.internal.actions;x-friends:="org.loc
+ ationtech.udig.bookmarks.tests",org.locationtech.udig.bookmarks.inter
+ nal.command;x-friends:="org.locationtech.udig.bookmarks.tests",org.lo
+ cationtech.udig.bookmarks.internal.ui;x-friends:="org.locationtech.ud
+ ig.bookmarks.tests"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

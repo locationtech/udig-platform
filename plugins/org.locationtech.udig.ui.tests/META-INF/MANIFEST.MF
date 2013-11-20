@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: UI Tests Plug-in
 Bundle-SymbolicName: org.locationtech.udig.ui.tests;singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.0.0.Alpha1-v20131119
 Bundle-Activator: org.locationtech.udig.ui.tests.TestsPlugin
 Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.ui,
@@ -11,9 +11,8 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.libs,
  org.locationtech.udig.ui
 Bundle-ActivationPolicy: lazy
-Export-Package: org.locationtech.udig.ui,
- org.locationtech.udig.ui.tests,
- org.locationtech.udig.ui.tests.support
+Export-Package: org.locationtech.udig.ui,org.locationtech.udig.ui.test
+ s,org.locationtech.udig.ui.tests.support
 Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Eclipse-BundleShape: dir

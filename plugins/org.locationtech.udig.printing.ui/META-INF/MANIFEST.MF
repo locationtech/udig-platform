@@ -2,19 +2,17 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %printing.ui.plugin.name
 Bundle-SymbolicName: org.locationtech.udig.printing.ui; singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.0.0.Alpha1-v20131119
 Bundle-Activator: org.locationtech.udig.printing.ui.internal.PrintingPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
-Export-Package: org.locationtech.udig.printing.ui,
- org.locationtech.udig.printing.ui.actions,
- org.locationtech.udig.printing.ui.internal,
- org.locationtech.udig.printing.ui.internal.editor,
- org.locationtech.udig.printing.ui.internal.editor.commands,
- org.locationtech.udig.printing.ui.internal.editor.figures,
- org.locationtech.udig.printing.ui.internal.editor.parts,
- org.locationtech.udig.printing.ui.internal.editor.policies,
- org.locationtech.udig.printing.ui.internal.template
+Export-Package: org.locationtech.udig.printing.ui,org.locationtech.udi
+ g.printing.ui.actions,org.locationtech.udig.printing.ui.internal,org.
+ locationtech.udig.printing.ui.internal.editor,org.locationtech.udig.p
+ rinting.ui.internal.editor.commands,org.locationtech.udig.printing.ui
+ .internal.editor.figures,org.locationtech.udig.printing.ui.internal.e
+ ditor.parts,org.locationtech.udig.printing.ui.internal.editor.policie
+ s,org.locationtech.udig.printing.ui.internal.template
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.gef;visibility:=reexport,

@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: org.locationtech.udig.render.gridcoverage.basic; singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.0.0.Alpha1-v20131119
 Bundle-Activator: org.locationtech.udig.render.internal.gridcoverage.basic.RendererPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
-Export-Package: org.locationtech.udig.render.gridcoverage.basic.internal,
- org.locationtech.udig.render.internal.gridcoverage.basic
+Export-Package: org.locationtech.udig.render.gridcoverage.basic.intern
+ al,org.locationtech.udig.render.internal.gridcoverage.basic
 Require-Bundle: org.locationtech.udig.project,
  org.eclipse.core.runtime,
  org.locationtech.udig.catalog,

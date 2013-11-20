@@ -2,9 +2,9 @@
 <feature
       id="org.locationtech.udig-feature"
       label="uDig Feature"
-      version="2.0.0.qualifier"
+      version="2.0.0.Alpha1-v20131119"
       provider-name="udig.refractions.net"
-      plugin="org.locationtech.udig">
+      plugin="org.locationtech.udig_base">
 
    <description url="http://udig.refractions.net/">
       uDig example application

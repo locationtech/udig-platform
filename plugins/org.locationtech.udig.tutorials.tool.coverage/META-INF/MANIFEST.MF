@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Coverage Edit Tool Plug-in
 Bundle-SymbolicName: org.locationtech.udig.tutorials.tool.coverage;singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.0.0.Alpha1-v20131119
 Bundle-Activator: org.locationtech.udig.tutorials.tool.coverage.Activator
 Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.ui,

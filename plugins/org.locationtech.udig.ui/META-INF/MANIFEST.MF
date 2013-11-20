@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.locationtech.udig.ui; singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.0.0.Alpha1-v20131119
 Bundle-Activator: org.locationtech.udig.internal.ui.UiPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
@@ -15,21 +15,14 @@ Require-Bundle: org.eclipse.ui;visibility:=reexport,
  org.eclipse.core.expressions;visibility:=reexport,
  org.eclipse.update.ui
 Bundle-ActivationPolicy: lazy
-Export-Package: org.locationtech.udig,
- org.locationtech.udig.aoi,
- org.locationtech.udig.internal.aoi;x-friends:="org.locationtech.udig.ui.tests,org.locationtech.udig.project.tests.ui",
- org.locationtech.udig.internal.ui,
- org.locationtech.udig.internal.ui.operations,
- org.locationtech.udig.ui,
- org.locationtech.udig.ui.action,
- org.locationtech.udig.ui.aoi,
- org.locationtech.udig.ui.export,
- org.locationtech.udig.ui.filter,
- org.locationtech.udig.ui.graphics,
- org.locationtech.udig.ui.internal,
- org.locationtech.udig.ui.operations,
- org.locationtech.udig.ui.palette,
- org.locationtech.udig.ui.preferences,
- org.locationtech.udig.ui.properties
+Export-Package: org.locationtech.udig,org.locationtech.udig.aoi,org.lo
+ cationtech.udig.internal.aoi;x-friends:="org.locationtech.udig.ui.tes
+ ts,org.locationtech.udig.project.tests.ui",org.locationtech.udig.inte
+ rnal.ui,org.locationtech.udig.internal.ui.operations,org.locationtech
+ .udig.ui,org.locationtech.udig.ui.action,org.locationtech.udig.ui.aoi
+ ,org.locationtech.udig.ui.export,org.locationtech.udig.ui.filter,org.
+ locationtech.udig.ui.graphics,org.locationtech.udig.ui.internal,org.l
+ ocationtech.udig.ui.operations,org.locationtech.udig.ui.palette,org.l
+ ocationtech.udig.ui.preferences,org.locationtech.udig.ui.properties
 Import-Package: com.google.common.base;version="[12.0.0,13.0.0)",
  net.miginfocom.swt;version="[3.7.0,3.8.0)"

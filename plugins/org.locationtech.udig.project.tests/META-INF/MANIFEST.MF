@@ -2,16 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Project Tests Plug-in
 Bundle-SymbolicName: org.locationtech.udig.project.tests; singleton:=true
-Bundle-Version: 2.0.0.qualifier
-Export-Package: org.locationtech.udig.project.command,
- org.locationtech.udig.project.internal,
- org.locationtech.udig.project.internal.commands.edit,
- org.locationtech.udig.project.internal.impl,
- org.locationtech.udig.project.internal.render,
- org.locationtech.udig.project.internal.render.impl,
- org.locationtech.udig.project.render,
- org.locationtech.udig.project.tests.internal.commands,
- org.locationtech.udig.project.tests.support
+Bundle-Version: 2.0.0.Alpha1-v20131119
+Export-Package: org.locationtech.udig.project.command,org.locationtech
+ .udig.project.internal,org.locationtech.udig.project.internal.command
+ s.edit,org.locationtech.udig.project.internal.impl,org.locationtech.u
+ dig.project.internal.render,org.locationtech.udig.project.internal.re
+ nder.impl,org.locationtech.udig.project.render,org.locationtech.udig.
+ project.tests.internal.commands,org.locationtech.udig.project.tests.s
+ upport
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
  org.locationtech.udig.project,
  org.eclipse.ui,

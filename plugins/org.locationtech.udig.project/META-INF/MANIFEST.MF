@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.locationtech.udig.project; singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.0.0.Alpha1-v20131119
 Bundle-Activator: org.locationtech.udig.project.internal.ProjectPlugin$Implementation
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
@@ -17,31 +17,24 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore.xmi,
  org.locationtech.udig.ui
 Bundle-ActivationPolicy: lazy
-Export-Package: org.locationtech.udig.project,
- org.locationtech.udig.project.command,
- org.locationtech.udig.project.command.factory,
- org.locationtech.udig.project.command.map,
- org.locationtech.udig.project.command.provider,
- org.locationtech.udig.project.element,
- org.locationtech.udig.project.element.impl,
- org.locationtech.udig.project.element.util,
- org.locationtech.udig.project.geoselection,
- org.locationtech.udig.project.interceptor,
- org.locationtech.udig.project.internal,
- org.locationtech.udig.project.internal.command.navigation,
- org.locationtech.udig.project.internal.commands,
- org.locationtech.udig.project.internal.commands.edit,
- org.locationtech.udig.project.internal.commands.selection,
- org.locationtech.udig.project.internal.impl,
- org.locationtech.udig.project.internal.interceptor;x-friends:="org.locationtech.udig.project.tests",
- org.locationtech.udig.project.internal.render,
- org.locationtech.udig.project.internal.render.impl,
- org.locationtech.udig.project.internal.render.util,
- org.locationtech.udig.project.internal.util,
- org.locationtech.udig.project.memento,
- org.locationtech.udig.project.preferences,
- org.locationtech.udig.project.render,
- org.locationtech.udig.project.render.displayAdapter
+Export-Package: org.locationtech.udig.project,org.locationtech.udig.pr
+ oject.command,org.locationtech.udig.project.command.factory,org.locat
+ iontech.udig.project.command.map,org.locationtech.udig.project.comman
+ d.provider,org.locationtech.udig.project.element,org.locationtech.udi
+ g.project.element.impl,org.locationtech.udig.project.element.util,org
+ .locationtech.udig.project.geoselection,org.locationtech.udig.project
+ .interceptor,org.locationtech.udig.project.internal,org.locationtech.
+ udig.project.internal.command.navigation,org.locationtech.udig.projec
+ t.internal.commands,org.locationtech.udig.project.internal.commands.e
+ dit,org.locationtech.udig.project.internal.commands.selection,org.loc
+ ationtech.udig.project.internal.impl,org.locationtech.udig.project.in
+ ternal.interceptor;x-friends:="org.locationtech.udig.project.tests",o
+ rg.locationtech.udig.project.internal.render,org.locationtech.udig.pr
+ oject.internal.render.impl,org.locationtech.udig.project.internal.ren
+ der.util,org.locationtech.udig.project.internal.util,org.locationtech
+ .udig.project.memento,org.locationtech.udig.project.preferences,org.l
+ ocationtech.udig.project.render,org.locationtech.udig.project.render.
+ displayAdapter
 Import-Package: javax.media.jai,
  javax.media.jai.iterator,
  javax.media.jai.operator,
