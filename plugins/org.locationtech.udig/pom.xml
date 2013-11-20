@@ -6,7 +6,7 @@
   <parent>
     <artifactId>plugins</artifactId>
     <groupId>org.locationtech</groupId>
-    <version>2.0.0.Alpha1-v20131119</version>
+    <version>2.0.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>org.locationtech.udig</artifactId>
@@ -31,6 +31,25 @@
                              <replace file="about.mappings">
                                  <replacefilter token="_VERSION_" value="${unqualifiedVersion}.${buildQualifier}" />
                                  <replacefilter token="_DATE_" value="${current.time}" />
+                             </replace>
+                         </target>
+                     </configuration>
+                     <goals>
+                         <goal>run</goal>
+                     </goals>
+                 </execution>
+                 <execution>
+                     <id>verify</id>
+                     <phase>verify</phase>
+                     <configuration>
+                         <target>
+                             <tstamp> 
+                               <format property="current.time" pattern="yyyy-MM-dd"/> 
+                             </tstamp>
+
+                             <replace file="about.mappings">
+                                 <replacefilter token="${unqualifiedVersion}.${buildQualifier}" value="_VERSION_" />
+                                 <replacefilter token="${current.time}" value="_DATE_" />
                              </replace>
                          </target>
                      </configuration>

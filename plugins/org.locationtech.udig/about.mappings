@@ -7,5 +7,5 @@
 # 0=@date@
 # 1=@version@-@timestamp@
 
-0=2013-11-19
-1=2.0.0.Alpha1-v20131119
+0=_DATE_
+1=_VERSION_

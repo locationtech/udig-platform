@@ -2,7 +2,7 @@
 <feature
       id="org.locationtech.udig_language-feature"
       label="org.locationtech.udig_language-feature"
-      version="2.0.0.Alpha1-v20131119"
+      version="2.0.0.qualifier"
       provider-name="udig.refractions.net">
 
    <description url="http://babel.eclipse.org/babel/">

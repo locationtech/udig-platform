@@ -2,7 +2,7 @@
 <feature
       id="org.locationtech.udig-feature"
       label="uDig Feature"
-      version="2.0.0.Alpha1-v20131119"
+      version="2.0.0.qualifier"
       provider-name="udig.refractions.net"
       plugin="org.locationtech.udig_base">
 

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Test CSV Catalog Plug-in
 Bundle-SymbolicName: org.locationtech.udig.tutorials.catalog.tests.csv
-Bundle-Version: 2.0.0.Alpha1-v20131119
+Bundle-Version: 2.0.0.qualifier
 Require-Bundle: org.locationtech.udig.tutorials.catalog.csv,
  org.locationtech.udig.catalog,
  org.eclipse.core.runtime,
