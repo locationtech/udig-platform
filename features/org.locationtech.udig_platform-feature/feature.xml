@@ -4,7 +4,7 @@
       label="org.locationtech.udig_platform-feature"
       version="2.0.0.qualifier"
       provider-name="Refractions Research"
-      plugin="org.locationtech.udig_base">
+      plugin="org.locationtech.udig.catalog">
 
    <description url="http://udig.refractions.net/confluence/display/DEV/1+GIS+Platform">
       The &quot;GIS Platform&quot; serves as the foundation of the uDig application, allowing the management of and access to spatial data.

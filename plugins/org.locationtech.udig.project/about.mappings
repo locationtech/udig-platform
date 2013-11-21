@@ -3,5 +3,5 @@
 # java.io.Properties file (ISO 8859-1 with "\" escapes)
 # This file does not need to be translated.
 
-0=2013-11-19
-1=2.0.0-SNAPSHOT
+0=_DATE_
+1=_VERSION_

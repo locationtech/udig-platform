@@ -10,4 +10,54 @@
   <artifactId>org.locationtech.udig.project</artifactId>
   <packaging>eclipse-plugin</packaging>
 
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <id>prepare-package</id>
+            <phase>prepare-package</phase>
+            <configuration>
+              <target>
+                <tstamp>
+                  <format property="current.time" pattern="yyyy" />
+                </tstamp>
+
+                <replace file="about.mappings">
+                  <replacefilter token="_DATE_" value="${current.time}" />
+                </replace>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>verify</id>
+            <phase>verify</phase>
+            <configuration>
+              <target>
+                <tstamp>
+                  <format property="current.time" pattern="yyyy" />
+                </tstamp>
+
+                <replace file="about.mappings">
+                  <replacefilter token="${current.time}"
+                    value="_DATE_" />
+                </replace>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>

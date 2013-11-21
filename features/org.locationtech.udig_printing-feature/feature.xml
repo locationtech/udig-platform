@@ -4,7 +4,7 @@
       label="org.locationtech.udig_printing-feature"
       version="2.0.0.qualifier"
       provider-name="Refractions Research"
-      plugin="org.locationtech.udig_base">
+      plugin="org.locationtech.udig.printing.ui">
 
    <description url="http://udig.refractions.net/confluence/display/DEV/7+Printing">
       Printing adding a Page project element allowing the definition of a printed page.
