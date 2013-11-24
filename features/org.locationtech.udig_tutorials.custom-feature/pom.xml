@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>plugins</artifactId>
+    <artifactId>features</artifactId>
     <groupId>org.locationtech</groupId>
     <version>2.0.0-SNAPSHOT</version>
   </parent>
