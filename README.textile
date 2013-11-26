@@ -111,7 +111,7 @@ From the Eclipse **Preferences** screen:
 
 1. * **Java --> Code Style --> Coding Template**
      
-   Use the :guilabel:`Import` button and select the file :file:`extras/org.locationtech.udig.dev/codetemplates.xml`
+   Use the **Import** button and select the file `extras/org.locationtech.udig.dev/codetemplates.xml`
      
    Confirm the uDig header is available for **New Java Files** as shown::
 <pre><code>/* uDig - User Friendly Desktop Internet GIS client
@@ -126,17 +126,17 @@ From the Eclipse **Preferences** screen:
 
 2. **Java --> Code Style --> Code Formatter**
      
-   Use the :guilabel:`Import` button and select the file :file:`extras/org.locationtech.udig.dev/codeformatter.xml`
+   Use the **Import** button and select the file `extras/org.locationtech.udig.dev/codeformatter.xml`
  
 3. **Java --> Compiler --> Errors/Warnings**
       
-   Open the **Code Style** category and change **Non-externalized strings** to **Warning**.
+   Open the **Code Style** category and change **Non-externalized strings** to 'Warning'.
      
 4. **Plug-in Development --> API Baselines**
      
-    Change the **Missing API baseline** to **Warning**.
+    Change the **Missing API baseline** to 'Warning'.
      
-h3. Target Platform
+h3. Target Platform and Running uDig
 
 uDig makes use of a target platform, in order to download and reference bundles from:
 
