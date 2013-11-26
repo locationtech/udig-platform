@@ -90,13 +90,13 @@ h2. Option - Command Line Build
       ..snip..
       Releasing linux64
       Creating ./build/linux64/udig
-      Building ./build/udig-1.5-SNAPSHOT.linux.gtk.x86_64.zip ...
-      Extracting ./../features/net.refractions.udig-product/target/products/net.refractions.udig-product-linux.gtk.x86_64.zip
+      Building ./build/udig-2.0.0-SNAPSHOT.linux.gtk.x86_64.zip ...
+      Extracting ./../features/org.locationtech.udig-product/target/products/org.locationtech.udig-product-linux.gtk.x86_64.zip
       Preparing ./build/linux64 with ./jre/jre1.6.0_25.lin64_gdal_ecw
       Looking for ./jre/jre1.6.0_25.lin64_gdal_ecw.tar.gz
       Extracting ./jre/jre1.6.0_25.lin64_gdal_ecw.tar.gz
       Preparing ./build/linux64 with start up scripts and html files
-      Assemble ./build/udig-1.5-SNAPSHOT.linux.gtk.x86_64.zip
+      Assemble ./build/udig-2.0.0-SNAPSHOT.linux.gtk.x86_64.zip
    </code></pre>
 
 3. Upload to website
@@ -146,7 +146,7 @@ uDig makes use of a target platform, in order to download and reference bundles 
 
 Here is how to set that up:
 
-1. Import the targets/indigo/eu.udig.targets.indgo project.
+1. Import the targets/indigo/ project into workspace.
 
 2. Open up udig-indigo-target.target and click on Set as Target Platform
 
