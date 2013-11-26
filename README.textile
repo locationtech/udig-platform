@@ -109,7 +109,7 @@ h3. Preferences
 
 From the Eclipse **Preferences** screen:
 
-1. * **Java --> Code Style --> Coding Template**
+1. **Java --> Code Style --> Coding Template**
      
    Use the **Import** button and select the file `extras/org.locationtech.udig.dev/codetemplates.xml`
      
@@ -164,8 +164,8 @@ h3. Find Bugs
 
 We use **FindBugs** to catch many small issues as part of our review process:
 
-1. Select :menuselection:`Help --> Eclipse marketplace` from the menu bar
-2. Search for "FindBugs" and Insatll
-3. You will be asked to "Restart Eclipse"
+1. Select **Help --> Eclipse marketplace** from the menu bar
+2. Search for **FindBugs** and Install
+3. You will be asked to restart eclipse
 
 Take a moment to run **FindBugs** before submitting a pull request.
