@@ -24,7 +24,7 @@ Source code:
    view)
 -  plugin:
 
-   * `eu.udig.tutorials.tool-view <https://github.com/uDig/udig-platform/tree/master/tutorials/eu.udig.tutorials.tool-view>`_
+   * `org.locationtech.udig.tutorials.tool-view <https://github.com/uDig/udig-platform/tree/master/plugins/org.locationtech.udig.tutorials.tool-view>`_
 
 Introduction
 ------------

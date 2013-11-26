@@ -99,7 +99,7 @@ This is the subject of a couple of the commercial training tutorials.
 The source code for this tutorial is available in the SDK:
 
 -  "org.locationtech.udig.tutorials.rcp" and "org.locationtech.udig.tutorials.rcp-feature"
--  "eu.udig.tutorials.tool-view" (also shows how to remove tools from the toolbar)
+-  "org.locationtech.udig.tutorials.tool-view" (also shows how to remove tools from the toolbar)
 
 For details on how to review source code:
 

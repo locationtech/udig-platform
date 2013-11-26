@@ -45,7 +45,7 @@ the application will maintain the arrangement as the user left them.
 
   .. code-block:: java
 
-     private static final String BOOKMARKS = "org.tcat.citd.sim.udig.bookmarks.internal.ui.BookmarksView";
+     private static final String BOOKMARKS = "org.locationtech.udig.bookmarks.internal.ui.BookmarksView";
 
      private static final String PROJECTS = "org.locationtech.udig.project.ui.projectExplorer";
 

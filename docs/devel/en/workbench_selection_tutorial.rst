@@ -25,7 +25,7 @@ Source code:
 
 -  Available in your uDig SDK (import the :doc:`source code <code_examples>` from the plugins view)
 -  plugin:
-   `org.locationtech.udig.tutorials.workbench <https://github.com/uDig/udig-platform/tree/master/tutorials/org.locationtech.udig.tutorials.workbench>`_ (github)
+   `org.locationtech.udig.tutorials.workbench <https://github.com/uDig/udig-platform/tree/master/plugins/org.locationtech.udig.tutorials.workbench>`_ (github)
 
 Introduction
 ------------

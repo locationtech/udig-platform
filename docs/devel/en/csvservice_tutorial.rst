@@ -1,3 +1,5 @@
+.. TODO:: update this turorial because of missing com.csvreader
+
 CSV Service Tutorial
 ====================
 
@@ -18,9 +20,10 @@ Source code:
    view)
 -  plugin:
 
-   * `com.csvreader <https://github.com/uDig/udig-platform/tree/master/tutorials/com.csvreader>`_
+
+   * `net.sf.opencsv <https://github.com/uDig/udig-platform/tree/master/plugins/net.sf.opencsv>`_
       (github)
-   * `org.locationtech.udig.tutorials.catalog.csv <https://github.com/uDig/udig-platform/tree/master/tutorials/org.locationtech.udig.tutorials.catalog.csv>`_
+   * `org.locationtech.udig.tutorials.catalog.csv <https://github.com/uDig/udig-platform/tree/master/plugins/org.locationtech.udig.tutorials.catalog.csv>`_
       (github)
 
 Introduction
