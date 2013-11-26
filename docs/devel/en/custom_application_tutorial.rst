@@ -29,9 +29,9 @@ Source code:
 
 -  Available in your uDig SDK (import the :doc:`source code <code_examples>` from the plugins
    view)
--  plugin: `org.locationtech.udig.tutorials.customapp <https://github.com/uDig/udig-platform/tree/master/tutorials/org.locationtech.udig.tutorials.customapp>`_ (github)
+-  plugin: `org.locationtech.udig.tutorials.customapp <https://github.com/uDig/udig-platform/tree/master/plugins/org.locationtech.udig.tutorials.customapp>`_ (github)
 -  feature:
-   `org.locationtech.udig\_tutorials.custom-feature <https://github.com/uDig/udig-platform/tree/master/tutorials/org.locationtech.udig_tutorials.custom-feature>`_ (github)
+   `org.locationtech.udig_tutorials.custom-feature <https://github.com/uDig/udig-platform/tree/master/plugins/org.locationtech.udig_tutorials.custom-feature>`_ (github)
 
 Introduction
 ------------

@@ -17,7 +17,7 @@ Source code:
 -  Available in your uDig SDK (import the :doc:`source code <code_examples>` from the plugins
    view)
 -  plugin:
-   `org.locationtech.udig.tutorials.style.color <https://github.com/uDig/udig-platform/tree/master/tutorials/org.locationtech.udig.tutorials.style.color>`_
+   `org.locationtech.udig.tutorials.style.color <https://github.com/uDig/udig-platform/tree/master/plugins/org.locationtech.udig.tutorials.style.color>`_
    (github)
 
 Introduction

@@ -19,7 +19,7 @@ Source code:
    view)
 -  plugin:
 
-   * `eu.udig.tutorials.preferredzoomlevels <https://github.com/uDig/udig-platform/tree/master/tutorials/eu.udig.tutorials.preferredzoomlevels>`_
+   * `org.locationtech.udig.tutorials.preferredzoomlevels <https://github.com/uDig/udig-platform/tree/master/plugins/org.locationtech.udig.tutorials.preferredzoomlevels>`_
 
 Introduction
 ------------
