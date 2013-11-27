@@ -165,7 +165,7 @@ Choose a destination folder to store features and bundles as a local P2 reposito
 
 !extras/images/export-target-platform-02.png!
 
-Later if there is a need to work offline you can easily create a new target platform definion, for details consult [eclipse online help](http://help.eclipse.org/indigo/index.jsp?topic=%2Forg.eclipse.pde.doc.user%2Fguide%2Ftools%2Fpreference_pages%2Ftarget_platform.htm).
+Later if there is a need to work offline you can easily create a new target platform definion, for details consult "eclipse online help":http://help.eclipse.org/indigo/index.jsp?topic=%2Forg.eclipse.pde.doc.user%2Fguide%2Ftools%2Fpreference_pages%2Ftarget_platform.htm.
 
 4. Once the target platform is finished you can import the remaining uDig projects.
 
