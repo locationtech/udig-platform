@@ -159,7 +159,7 @@ Here is how to set that up:
    Since the target definition uses online resources it's a good idea to export it for offline development porposes.
    To do so, click on the export action top right in the target platform editor.
   
-   !extras/images/export-target-platform-01.png
+   !extras/images/export-target-platform-01.png!
 
    Choose a destination folder to store features and bundles as a local P2 repository resolved via the target defintion file.
 
