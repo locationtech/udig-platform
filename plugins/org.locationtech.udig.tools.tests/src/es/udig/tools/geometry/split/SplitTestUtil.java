@@ -1,14 +1,18 @@
-/* uDig - User Friendly Desktop Internet GIS client
- * http://udig.refractions.net
- * (C) 2012, Refractions Research Inc.
- * (C) 2006, Axios Engineering S.L. (Axios)
- * (C) 2006, County Council of Gipuzkoa, Department of Environment and Planning
- * 
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
- * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
- */
+/*******************************************************************************
+ * Copyright (c) 2006,2012,2013 County Council of Gipuzkoa, Department of Environment
+ *                              and Planning and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 and Eclipse Distribution License v. 1.0
+ * which accompanies this distribution.
+ * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
+ * and the Eclipse Distribution License is available at
+ * http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ * Contributors:
+ *    Aritz Davila (Axios) - initial API, implementation, and documentation
+ *    Mauricio Pazos (Axios) - initial API, implementation, and documentation
+ *******************************************************************************/
 package es.udig.tools.geometry.split;
 
 import static org.junit.Assert.assertEquals;
