@@ -15,5 +15,3 @@ Import-Package: com.vividsolutions.jts.geom,
  com.vividsolutions.jts.io,
  com.vividsolutions.jts.operation.polygonize,
  org.opengis.feature.simple
-Export-Package: es.udig.tools.geometry.split,org.locationtech.udig.too
- ls.tests

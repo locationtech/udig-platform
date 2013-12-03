@@ -12,7 +12,7 @@
  *    Aritz Davila (Axios) - initial implementation and documentation                  
  *    Mauricio Pazos (Axios) - initial implementation and documentation
  *******************************************************************************/
-package es.udig.tools.geometry.split;
+package org.locationtech.udig.tools.geometry.split;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -27,8 +27,6 @@ import org.junit.Test;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Polygon;
-
-import org.locationtech.udig.tools.geometry.split.SplitUtil;
 
 /**
  * Test the SplitStrategy class

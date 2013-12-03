@@ -12,7 +12,7 @@
  *    Aritz Davila (Axios) - initial implementation and documentation                  
  *    Mauricio Pazos (Axios) - initial implementation and documentation
  *******************************************************************************/
-package es.udig.tools.geometry.split;
+package org.locationtech.udig.tools.geometry.split;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -12,15 +12,18 @@
  *    Aritz Davila (Axios) - initial implementation and documentation                  
  *    Mauricio Pazos (Axios) - initial implementation and documentation
  *******************************************************************************/
-package es.udig.tools.geometry.split;
+package org.locationtech.udig.tools.geometry.split;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.junit.Test;
+import org.locationtech.udig.tools.geometry.split.RingExtractor.ResultRingExtractor;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
@@ -28,9 +31,6 @@ import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.operation.polygonize.Polygonizer;
-
-import org.locationtech.udig.tools.geometry.split.RingExtractor;
-import org.locationtech.udig.tools.geometry.split.RingExtractor.ResultRingExtractor;
 
 /**
  * @author Mauricio Pazos (www.axios.es)

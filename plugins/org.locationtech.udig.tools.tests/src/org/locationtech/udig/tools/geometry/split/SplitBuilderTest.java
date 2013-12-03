@@ -12,9 +12,10 @@
  *    Aritz Davila (Axios) - initial implementation and documentation                  
  *    Mauricio Pazos (Axios) - initial implementation and documentation
  *******************************************************************************/
-package es.udig.tools.geometry.split;
+package org.locationtech.udig.tools.geometry.split;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +24,6 @@ import org.junit.Test;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
-
-import org.locationtech.udig.tools.geometry.split.SplitBuilder;
 
 /**
  * @author Aritz Davila (www.axios.es)

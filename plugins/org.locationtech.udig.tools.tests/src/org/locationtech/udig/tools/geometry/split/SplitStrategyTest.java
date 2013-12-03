@@ -13,7 +13,7 @@
  *    Aritz Davila (Axios) - initial API, implementation, and documentation
  *    Mauricio Pazos (Axios) - initial API, implementation, and documentation
  *******************************************************************************/
-package es.udig.tools.geometry.split;
+package org.locationtech.udig.tools.geometry.split;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -28,8 +28,6 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
-
-import org.locationtech.udig.tools.geometry.split.SplitStrategy;
 
 /**
  * @author Mauricio Pazos (www.axios.es)
