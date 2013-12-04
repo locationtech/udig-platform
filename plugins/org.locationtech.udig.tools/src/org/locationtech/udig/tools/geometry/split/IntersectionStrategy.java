@@ -38,37 +38,39 @@ final class IntersectionStrategy {
      * @author Aritz Davila (www.axios.es)
      * @since 1.3.2
      */
-    private static class IntersectMemento{
-        
+    private static class IntersectMemento {
+
         private Coordinate intersectionPoint = null;
-        private int intersectionPosition = -1; 
+
+        private int intersectionPosition = -1;
 
         public IntersectMemento() {
-            
+
         }
-        public void setIntersection(final int position, final Geometry point){
-            
+
+        public void setIntersection(final int position, final Geometry point) {
+
             assert position >= 0 && point != null : "illegal intersection state"; //$NON-NLS-1$
-            
+
             this.intersectionPoint = point.getCoordinate();
             this.intersectionPosition = position;
         }
 
         public Coordinate getIntersection() {
-            
+
             return this.intersectionPoint;
         }
-        
+
         public int getIntersectionPosition() {
             return this.intersectionPosition;
         }
-        
-        public boolean intersects(){
+
+        public boolean intersects() {
             return this.intersectionPosition != -1;
         }
     }
-    
-    private IntersectMemento intersectState = null; 
+
+    private IntersectMemento intersectState = null;
 
     /**
      * @return the intersection coordinate found in the last find intersection operation
@@ -76,16 +78,18 @@ final class IntersectionStrategy {
     public Coordinate getIntersection() {
         return this.intersectState.getIntersection();
     }
+
     /**
      * @return the intersection position found in the last find intersection operation
      */
     public int getIntersectionPosition() {
         return this.intersectState.getIntersectionPosition();
     }
+
     /**
      * @return true if the last operation has found an intersection
      */
-    public boolean foundIntersection(){
+    public boolean foundIntersection() {
         return this.intersectState.intersects();
     }
 
@@ -102,18 +106,18 @@ final class IntersectionStrategy {
      * @param boundary Boundary to intersect with.
      * @return The coordinate where the split line intersects with the given boundary.
      */
-    public void findFirstIntersection( Coordinate[] lineCoords, Geometry boundary ) {
+    public void findFirstIntersection(Coordinate[] lineCoords, Geometry boundary) {
 
         assert boundary instanceof LinearRing || boundary instanceof LineString
                 || boundary instanceof MultiLineString : "Boundary must be the linear ring."; //$NON-NLS-1$
-        
+
         this.intersectState = new IntersectMemento();
-    
+
         int numGeometries = 0;
         Geometry intersection = null;
-        int i; 
-        
-        for( i = 0; i < lineCoords.length - 1; i++ ) {
+        int i;
+
+        for (i = 0; i < lineCoords.length - 1; i++) {
 
             intersection = SplitUtil.intersection(lineCoords, i, boundary, false);
 
@@ -122,7 +126,7 @@ final class IntersectionStrategy {
 
                 break;// found intersection
             }
-        } 
+        }
 
         // if the intersection is found, return;
         if (numGeometries == 1) {
@@ -137,12 +141,12 @@ final class IntersectionStrategy {
             double minDistance = Double.MAX_VALUE;
             double distance;
             // find the closest one to coordinate[i]
-            for( int j = 0; j < intersection.getNumGeometries(); j++ ) {
+            for (int j = 0; j < intersection.getNumGeometries(); j++) {
 
                 Geometry pointToTest = intersection.getGeometryN(j);
 
-                distance = SplitUtil.calculateDistanceFromFirst(pointToTest.getCoordinate(), firstLineCoord,
-                        secondLineCoord);
+                distance = SplitUtil.calculateDistanceFromFirst(pointToTest.getCoordinate(),
+                        firstLineCoord, secondLineCoord);
 
                 if (Math.abs(distance) < minDistance) {
                     this.intersectState.setIntersection(i, pointToTest);
@@ -151,6 +155,7 @@ final class IntersectionStrategy {
             }
         }
     }
+
     /**
      * <pre>
      * 
@@ -164,12 +169,13 @@ final class IntersectionStrategy {
      * @param boundary A linear ring which will be the boundary of the polygon.
      * @return The coordinate where the split line intersects with the given boundary.
      */
-    public void findLastIntersection( final Coordinate[] coordinates, final Geometry boundary ) {
+    public void findLastIntersection(final Coordinate[] coordinates, final Geometry boundary) {
 
-        assert boundary instanceof LinearRing || boundary instanceof LineString || boundary instanceof MultiLineString : "Boundary must be the linear ring."; //$NON-NLS-1$
+        assert boundary instanceof LinearRing || boundary instanceof LineString
+                || boundary instanceof MultiLineString : "Boundary must be the linear ring."; //$NON-NLS-1$
 
         this.intersectState = new IntersectMemento();
-        for( int i = coordinates.length - 1; 0 <= i; i-- ) {
+        for (int i = coordinates.length - 1; 0 <= i; i--) {
 
             Geometry intersection = SplitUtil.intersection(coordinates, i, boundary, true);
 
@@ -190,7 +196,7 @@ final class IntersectionStrategy {
                 double minDistance = Double.MAX_VALUE;
                 double distance;
 
-                for( int j = 0; j < intersection.getNumGeometries(); j++ ) {
+                for (int j = 0; j < intersection.getNumGeometries(); j++) {
 
                     Geometry pointToTest = intersection.getGeometryN(j);
 
@@ -216,14 +222,14 @@ final class IntersectionStrategy {
      * @param boundary
      * @return -1 if not found or the position of last coordinate that intersects with the boundary
      */
-    public void findLastIntersectionPosition( final Coordinate[] coordinates, final Geometry boundary ) {
+    public void findLastIntersectionPosition(final Coordinate[] coordinates, final Geometry boundary) {
 
         assert boundary instanceof LinearRing || boundary instanceof LineString
                 || boundary instanceof MultiLineString : "Boundary must be the linear ring."; //$NON-NLS-1$
 
         this.intersectState = new IntersectMemento();
-        
-        for( int i = coordinates.length - 1; 0 <= i; i-- ) {
+
+        for (int i = coordinates.length - 1; 0 <= i; i--) {
 
             Geometry intersection = SplitUtil.intersection(coordinates, i, boundary, true);
 
@@ -239,9 +245,5 @@ final class IntersectionStrategy {
         }
 
     }
-    
-   
 
-    
-    
 }

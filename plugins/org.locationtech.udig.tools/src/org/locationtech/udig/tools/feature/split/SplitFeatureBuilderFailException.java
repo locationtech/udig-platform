@@ -14,10 +14,9 @@
  *******************************************************************************/
 package org.locationtech.udig.tools.feature.split;
 
-
 /**
- * Custom exception used on {@link SplitFeatureBuilder}.
- * This exception is thrown if the split build fail.
+ * Custom exception used on {@link SplitFeatureBuilder}. This exception is thrown if the split build
+ * fail.
  * 
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
@@ -25,17 +24,16 @@ package org.locationtech.udig.tools.feature.split;
  */
 public class SplitFeatureBuilderFailException extends SplitFeatureBuilderException {
 
-	/* UID */
-	private static final long	serialVersionUID	= 2977282794220494837L;
+    /* UID */
+    private static final long serialVersionUID = 2977282794220494837L;
 
-	/**
-	 * Default constructor.
-	 * 
-	 * @param ex
-	 *            Exception.
-	 */
-	public SplitFeatureBuilderFailException(String ex) {
-		super(ex);
-	}
+    /**
+     * Default constructor.
+     * 
+     * @param ex Exception.
+     */
+    public SplitFeatureBuilderFailException(String ex) {
+        super(ex);
+    }
 
 }

@@ -17,45 +17,44 @@ package org.locationtech.udig.tools.parallel.internal;
 
 /**
  * 
- * Store the state of the Precision tool. Depending on its
- * Mode, the tool will do different actions.
- *
+ * Store the state of the Precision tool. Depending on its Mode, the tool will do different actions.
+ * 
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
- *
+ * 
  */
 public enum PrecisionToolsMode {
-	/**
-	 * Waiting for set all the parameters.
-	 */
-	WAITING,
-	/**
-	 * When the tool is ready to draw the preview.
-	 */
-	READY,
-	/**
-	 * Its busy, so wont draw the preview until it finished.
-	 */
-	BUSY,
-	/**
-	 * Editing its data manually.
-	 */
-	EDITING,
-	/**
-	 * Will start doing DnD.
-	 */
-	PRE_DRAG,
-	/**
-	 * It's doing DnD operation.
-	 */
-	DRAG,
-	/**
-	 * Finished doing DnD.
-	 */
-	POST_DRAG,
-	/**
-	 * There is an error and won't do anything.
-	 */
-	ERROR,	
+    /**
+     * Waiting for set all the parameters.
+     */
+    WAITING,
+    /**
+     * When the tool is ready to draw the preview.
+     */
+    READY,
+    /**
+     * Its busy, so wont draw the preview until it finished.
+     */
+    BUSY,
+    /**
+     * Editing its data manually.
+     */
+    EDITING,
+    /**
+     * Will start doing DnD.
+     */
+    PRE_DRAG,
+    /**
+     * It's doing DnD operation.
+     */
+    DRAG,
+    /**
+     * Finished doing DnD.
+     */
+    POST_DRAG,
+    /**
+     * There is an error and won't do anything.
+     */
+    ERROR,
 
 }

@@ -18,11 +18,10 @@ package org.locationtech.udig.tools.parallel.internal;
 import com.vividsolutions.jts.geom.Coordinate;
 
 /**
- * Stores information about segments that intersects with others segments. It
- * only needs to store the start index of the related segment, his intersection
- * coordinate and if it intersects with a previous or next segment, this will be
- * the direction, isForward true for ahead segments and false for behind
- * segments.
+ * Stores information about segments that intersects with others segments. It only needs to store
+ * the start index of the related segment, his intersection coordinate and if it intersects with a
+ * previous or next segment, this will be the direction, isForward true for ahead segments and false
+ * for behind segments.
  * 
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
@@ -30,31 +29,33 @@ import com.vividsolutions.jts.geom.Coordinate;
  */
 final class DataSegmentIntersection {
 
-	private int			startSegmentIndex;
-	private Coordinate	intersectionCoord;
-	private boolean		isForward;
+    private int startSegmentIndex;
 
-	public DataSegmentIntersection(int startIndex, Coordinate intersectionCoord, boolean isForward) {
+    private Coordinate intersectionCoord;
 
-		assert intersectionCoord != null : "The coordinate can't be null"; //$NON-NLS-1$
+    private boolean isForward;
 
-		this.startSegmentIndex = startIndex;
-		this.intersectionCoord = intersectionCoord;
-		this.isForward = isForward;
-	}
+    public DataSegmentIntersection(int startIndex, Coordinate intersectionCoord, boolean isForward) {
 
-	public int getStartSegmentIndex() {
+        assert intersectionCoord != null : "The coordinate can't be null"; //$NON-NLS-1$
 
-		return startSegmentIndex;
-	}
+        this.startSegmentIndex = startIndex;
+        this.intersectionCoord = intersectionCoord;
+        this.isForward = isForward;
+    }
 
-	public Coordinate getIntersectionCoordinate() {
+    public int getStartSegmentIndex() {
 
-		return intersectionCoord;
-	}
+        return startSegmentIndex;
+    }
 
-	public boolean getIsForward() {
+    public Coordinate getIntersectionCoordinate() {
 
-		return isForward;
-	}
+        return intersectionCoord;
+    }
+
+    public boolean getIsForward() {
+
+        return isForward;
+    }
 }

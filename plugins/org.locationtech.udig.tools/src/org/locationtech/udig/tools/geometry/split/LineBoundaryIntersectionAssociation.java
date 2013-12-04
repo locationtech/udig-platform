@@ -66,11 +66,13 @@ final class LineBoundaryIntersectionAssociation {
     private class IntersectionLink {
 
         private final LineString splitLineSegment;
+
         private final LineString ringSegment;
+
         private final Point intersection;
 
-        public IntersectionLink( final LineString splitSegment, final LineString ringSegment,
-                final Point intersection ) {
+        public IntersectionLink(final LineString splitSegment, final LineString ringSegment,
+                final Point intersection) {
 
             assert splitSegment != null && ringSegment != null && intersection != null;
 
@@ -101,46 +103,49 @@ final class LineBoundaryIntersectionAssociation {
      * @author Aritz Davila (www.axios.es)
      * @since 1.3.2
      */
-    public static class IntersectCursor implements Cloneable{
+    public static class IntersectCursor implements Cloneable {
 
         private Point intersectionPoint = null;
-        private int segmentPosition = -1;
-        private LineString ringSegment = null;
-        private int visitedIntersection = 0;
 
+        private int segmentPosition = -1;
+
+        private LineString ringSegment = null;
+
+        private int visitedIntersection = 0;
 
         public static IntersectCursor NULL = new IntersectCursor();
 
         public IntersectCursor() {
         }
 
-        public void setCurrentIntersection( final int i, final Point intersectionPoint,
-                final LineString ringSegment ) {
+        public void setCurrentIntersection(final int i, final Point intersectionPoint,
+                final LineString ringSegment) {
 
             setState(i, intersectionPoint, ringSegment);
         }
-        public Object clone(){
-            IntersectCursor duplicated = null; 
+
+        public Object clone() {
+            IntersectCursor duplicated = null;
             try {
-                
-                duplicated = (IntersectCursor)super.clone();
+
+                duplicated = (IntersectCursor) super.clone();
                 duplicated.intersectionPoint = (Point) this.intersectionPoint.clone();
                 duplicated.ringSegment = (LineString) this.ringSegment.clone();
                 duplicated.segmentPosition = this.segmentPosition;
                 duplicated.visitedIntersection = this.visitedIntersection;
-                
+
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
             return duplicated;
         }
-        
+
         public int getVisitedIntersection() {
             return this.visitedIntersection;
         }
 
         @Override
-        public boolean equals( Object obj ) {
+        public boolean equals(Object obj) {
             if (this == obj)
                 return true;
             if (obj == null)
@@ -164,22 +169,18 @@ final class LineBoundaryIntersectionAssociation {
         }
 
         @Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime
-					* result
-					+ ((intersectionPoint == null) ? 0 : intersectionPoint
-							.hashCode());
-			result = prime * result
-					+ ((ringSegment == null) ? 0 : ringSegment.hashCode());
-			result = prime * result + segmentPosition;
-			result = prime * result + visitedIntersection;
-			return result;
-		}
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result
+                    + ((intersectionPoint == null) ? 0 : intersectionPoint.hashCode());
+            result = prime * result + ((ringSegment == null) ? 0 : ringSegment.hashCode());
+            result = prime * result + segmentPosition;
+            result = prime * result + visitedIntersection;
+            return result;
+        }
 
-
-		/**
+        /**
          * @return the visited intersection point
          */
         public Point getIntersectionPoint() {
@@ -201,15 +202,15 @@ final class LineBoundaryIntersectionAssociation {
             return this.ringSegment;
         }
 
-        private void setState( final int segmentPosition, final Point intersectionPoint,
-                final LineString intersectedRingSegment ) {
+        private void setState(final int segmentPosition, final Point intersectionPoint,
+                final LineString intersectedRingSegment) {
             assert segmentPosition >= 0 && intersectionPoint != null
                     && intersectedRingSegment != null;
 
             this.segmentPosition = segmentPosition;
             this.intersectionPoint = intersectionPoint;
             this.ringSegment = intersectedRingSegment;
-            
+
             this.visitedIntersection++;
         }
 
@@ -238,8 +239,8 @@ final class LineBoundaryIntersectionAssociation {
          * @param segment
          * @param intersectionList
          */
-        public SplitLineSegmentIntersectionNode( final LineString segment,
-                List<Point> intersectionList ) {
+        public SplitLineSegmentIntersectionNode(final LineString segment,
+                List<Point> intersectionList) {
 
             this.geometryFactory = segment.getFactory();
             this.segment = segment;
@@ -251,7 +252,7 @@ final class LineBoundaryIntersectionAssociation {
             StringBuilder str = new StringBuilder(this.segment.toText());
             str.append(" ["); //$NON-NLS-1$
 
-            for( Point point : this.intersectionList ) {
+            for (Point point : this.intersectionList) {
                 str.append(point.toText());
                 str.append(" "); //$NON-NLS-1$
             }
@@ -275,7 +276,7 @@ final class LineBoundaryIntersectionAssociation {
          * 
          * @return a sorted list
          */
-        private List<Point> sortIntersectionByDistance( final List<Point> unSortedList ) {
+        private List<Point> sortIntersectionByDistance(final List<Point> unSortedList) {
 
             if (unSortedList.size() <= 1) {
                 return unSortedList;
@@ -288,14 +289,14 @@ final class LineBoundaryIntersectionAssociation {
             final Point firstVertex = this.geometryFactory.createPoint(this.segment
                     .getCoordinateN(0));
 
-            for( int i = 1; i < unSortedList.size(); i++ ) {
+            for (int i = 1; i < unSortedList.size(); i++) {
 
                 Point curPoint = unSortedList.get(i);
                 double newDistance = DistanceOp.distance(firstVertex, curPoint);
                 assert newDistance >= 0;
 
                 boolean wasInserted = false;
-                for( int j = 0; j < sortedList.size(); j++ ) {
+                for (int j = 0; j < sortedList.size(); j++) {
 
                     Point sortedPoint = sortedList.get(j);
                     double sortedDistance = DistanceOp.distance(firstVertex, sortedPoint);
@@ -309,7 +310,7 @@ final class LineBoundaryIntersectionAssociation {
                 }
                 if (!wasInserted) {
                     // the distance is the bigger, so add it as last element
-                    if( !sortedList.contains(curPoint) ){
+                    if (!sortedList.contains(curPoint)) {
                         sortedList.add(curPoint);
                     }
                 }
@@ -327,8 +328,8 @@ final class LineBoundaryIntersectionAssociation {
          * @param intersectionPoint
          * @return The list with the new point (it it is not present in the list)
          */
-        private List<Point> addPointInListFilterEquals( final List<Point> intersectionList,
-                final int insertPosition, final Point intersectionPoint ) {
+        private List<Point> addPointInListFilterEquals(final List<Point> intersectionList,
+                final int insertPosition, final Point intersectionPoint) {
 
             if (intersectionList.contains(intersectionPoint)) {
                 return intersectionList;
@@ -352,11 +353,11 @@ final class LineBoundaryIntersectionAssociation {
          * @param referencePoint
          * @return the next nearest intersection point
          */
-        private Point searchNearestIntersectionFrom( final Point referencePoint ) {
+        private Point searchNearestIntersectionFrom(final Point referencePoint) {
 
             // found the position of reference point
             int positionOfReferencePoint = -1;
-            for( int i = 0; i < this.intersectionList.size(); i++ ) {
+            for (int i = 0; i < this.intersectionList.size(); i++) {
 
                 Point point = this.intersectionList.get(i);
                 Coordinate pointCoordinate = point.getCoordinate();
@@ -381,21 +382,20 @@ final class LineBoundaryIntersectionAssociation {
     } // end class SegmentNode
 
     /** maintains the segment position of intersection */
-    private IntersectCursor                         cursor = IntersectCursor.NULL;
+    private IntersectCursor cursor = IntersectCursor.NULL;
 
     /** maintains the list of split line segments an its intersection points with the ring */
-    private List<SplitLineSegmentIntersectionNode>  splitLineSegmentWithIntersectionList = new LinkedList<SplitLineSegmentIntersectionNode>();
+    private List<SplitLineSegmentIntersectionNode> splitLineSegmentWithIntersectionList = new LinkedList<SplitLineSegmentIntersectionNode>();
 
     /**
      * maintains the links between the an intersection point and the segment line and segment ring
      * which have an intersection relation
      */
-    private Map<Point, IntersectionLink>            intersectionLinks = new LinkedHashMap<Point, IntersectionLink>();
+    private Map<Point, IntersectionLink> intersectionLinks = new LinkedHashMap<Point, IntersectionLink>();
 
-    private GeometryFactory                         geomFactory;
+    private GeometryFactory geomFactory;
 
-    private IntersectCursor                         backCursor;
-    
+    private IntersectCursor backCursor;
 
     /**
      * A new instance of {@link LineBoundaryIntersectionAssociation}
@@ -403,7 +403,7 @@ final class LineBoundaryIntersectionAssociation {
      * @param lineCoords line's coordinates
      * @param ring exterior ring or an interior ring (hole) of polygon
      */
-    public LineBoundaryIntersectionAssociation( final Coordinate[] lineCoords, final LinearRing ring ) {
+    public LineBoundaryIntersectionAssociation(final Coordinate[] lineCoords, final LinearRing ring) {
 
         this.geomFactory = ring.getFactory();
         this.splitLineSegmentWithIntersectionList = makeIntersectionSegmentList(lineCoords, ring);
@@ -417,19 +417,19 @@ final class LineBoundaryIntersectionAssociation {
      * @return List of segment and intersection points
      */
     private List<SplitLineSegmentIntersectionNode> makeIntersectionSegmentList(
-            final Coordinate[] splitLine, final LinearRing ring ) {
+            final Coordinate[] splitLine, final LinearRing ring) {
 
         this.splitLineSegmentWithIntersectionList = new ArrayList<SplitLineSegmentIntersectionNode>();
-        for( int i = 0; i < (splitLine.length - 1); i++ ) {
+        for (int i = 0; i < (splitLine.length - 1); i++) {
 
-            LineString lineSegment = this.geomFactory.createLineString(
-                    new Coordinate[]{splitLine[i], splitLine[i + 1]});
+            LineString lineSegment = this.geomFactory.createLineString(new Coordinate[] {
+                    splitLine[i], splitLine[i + 1] });
 
             List<Point> segmentIntersectionList = new GeometryList<Point>();
             // make the intersection between the line segment and each boundary segment in order to
             // create the intersection link
             List<LineString> ringSegmentList = ringToSegmentList(ring);
-            for( LineString ringSegment : ringSegmentList ) {
+            for (LineString ringSegment : ringSegmentList) {
 
                 Geometry intersectionGeom = lineSegment.intersection(ringSegment);
 
@@ -454,15 +454,15 @@ final class LineBoundaryIntersectionAssociation {
         return this.splitLineSegmentWithIntersectionList;
     }
 
-    private List<LineString> ringToSegmentList( LinearRing ring ) {
+    private List<LineString> ringToSegmentList(LinearRing ring) {
 
         List<LineString> segmentList = new GeometryList<LineString>();
 
         Coordinate[] ringCoords = ring.getCoordinates();
-        for( int i = 0; i < ringCoords.length - 1; i++ ) {
+        for (int i = 0; i < ringCoords.length - 1; i++) {
 
-            LineString segment = this.geomFactory.createLineString(new Coordinate[]{ringCoords[i],
-                    ringCoords[i + 1]});
+            LineString segment = this.geomFactory.createLineString(new Coordinate[] {
+                    ringCoords[i], ringCoords[i + 1] });
             segmentList.add(segment);
         }
 
@@ -477,7 +477,8 @@ final class LineBoundaryIntersectionAssociation {
         this.cursor = IntersectCursor.NULL;
         this.backCursor = this.cursor;
 
-        for( int segmentPosition = 0; segmentPosition < this.splitLineSegmentWithIntersectionList.size(); segmentPosition++ ) {
+        for (int segmentPosition = 0; segmentPosition < this.splitLineSegmentWithIntersectionList
+                .size(); segmentPosition++) {
 
             SplitLineSegmentIntersectionNode segmentNode = this.splitLineSegmentWithIntersectionList
                     .get(segmentPosition);
@@ -512,12 +513,12 @@ final class LineBoundaryIntersectionAssociation {
             this.cursor = IntersectCursor.NULL; // there is not next
             return;
         }
-        if(this.cursor == IntersectCursor.NULL){
+        if (this.cursor == IntersectCursor.NULL) {
             moveFirstIntersection();
             return;
         }
         this.backCursor = (IntersectCursor) this.cursor.clone();
-        
+
         // the next intersection could be in the same segment or in the next segments.
         // thus the search must begin in the last visited segment.
         final int lastVisitedSegment = this.cursor.getSegmentPosition();
@@ -539,11 +540,11 @@ final class LineBoundaryIntersectionAssociation {
         }
 
         // search an intersection in the rest of segments
-        for( int i = lastVisitedSegment + 1; i < this.splitLineSegmentWithIntersectionList.size(); i++ ) {
+        for (int i = lastVisitedSegment + 1; i < this.splitLineSegmentWithIntersectionList.size(); i++) {
 
             node = this.splitLineSegmentWithIntersectionList.get(i);
 
-            for( Point currentIntersection : node.getIntersectionList() ) {
+            for (Point currentIntersection : node.getIntersectionList()) {
 
                 if ((currentIntersection != null)
                         && (!lastVistedIntersection.equals(currentIntersection))) {
@@ -559,18 +560,17 @@ final class LineBoundaryIntersectionAssociation {
         // it did not find an intersection, so reset the cursor
         this.cursor = IntersectCursor.NULL;
     }
-    
+
     /**
-     * Move the cursor to the back position.
-     * Only one step backward is possible.    
+     * Move the cursor to the back position. Only one step backward is possible.
      * 
      */
-    public void moveBackIntersection(){
-       
-        assert this.backCursor != IntersectCursor.NULL: "illegal state!. It could occurs if the client call this method without a previous calling to the moveNextIntersection() method ";  //$NON-NLS-1$
-       
-       this.cursor = this.backCursor;
-       this.backCursor = IntersectCursor.NULL;
+    public void moveBackIntersection() {
+
+        assert this.backCursor != IntersectCursor.NULL : "illegal state!. It could occurs if the client call this method without a previous calling to the moveNextIntersection() method "; //$NON-NLS-1$
+
+        this.cursor = this.backCursor;
+        this.backCursor = IntersectCursor.NULL;
     }
 
     public LineString getRingSegment() {
@@ -597,9 +597,9 @@ final class LineBoundaryIntersectionAssociation {
     public int countIntersections() {
 
         List<Point> intersectionList = new GeometryList<Point>();
-        for( SplitLineSegmentIntersectionNode lineIntersection : this.splitLineSegmentWithIntersectionList ) {
+        for (SplitLineSegmentIntersectionNode lineIntersection : this.splitLineSegmentWithIntersectionList) {
 
-            for( Point point : lineIntersection.getIntersectionList() ) {
+            for (Point point : lineIntersection.getIntersectionList()) {
 
                 if (!intersectionList.contains(point)) {
                     intersectionList.add(point);
@@ -608,8 +608,8 @@ final class LineBoundaryIntersectionAssociation {
         }
         return intersectionList.size();
     }
-    
-    public int getVisitedIntersection(){
+
+    public int getVisitedIntersection() {
         return this.cursor.getVisitedIntersection();
     }
 
@@ -623,11 +623,9 @@ final class LineBoundaryIntersectionAssociation {
      * @param secondRingSegment
      * @return a LineString
      */
-    public LineString buildLineBetweenIntersection( 
-            final int firstSegmentPosition,
-            final Coordinate firstIntersection, 
-            final int lastSegmentPosition,
-            final Coordinate secondIntersection ) {
+    public LineString buildLineBetweenIntersection(final int firstSegmentPosition,
+            final Coordinate firstIntersection, final int lastSegmentPosition,
+            final Coordinate secondIntersection) {
 
         List<Coordinate> coordinates = new ArrayList<Coordinate>();
 
@@ -638,16 +636,17 @@ final class LineBoundaryIntersectionAssociation {
         SplitLineSegmentIntersectionNode node = this.splitLineSegmentWithIntersectionList
                 .get(firstSegmentPosition);
         assert lastSegmentPosition < this.splitLineSegmentWithIntersectionList.size();
-        
-        for( int i = firstSegmentPosition; i <= lastSegmentPosition; i++ ) {
+
+        for (int i = firstSegmentPosition; i <= lastSegmentPosition; i++) {
 
             node = this.splitLineSegmentWithIntersectionList.get(i);
-            
+
             Coordinate[] vertexList = node.getSegment().getCoordinates();
-            for( int j = 0; j < vertexList.length; j++ ) {
+            for (int j = 0; j < vertexList.length; j++) {
 
                 Coordinate curVertex = vertexList[j];
-                if( coordinates.get(0).distance(curVertex)  < coordinates.get(0).distance(secondIntersection)) {  
+                if (coordinates.get(0).distance(curVertex) < coordinates.get(0).distance(
+                        secondIntersection)) {
                     // the distance of the current vertex is contained in the segment length
                     if (!coordinates.contains(curVertex)) {
                         coordinates.add(curVertex);
@@ -657,7 +656,7 @@ final class LineBoundaryIntersectionAssociation {
         }
         // add the intersection associated to the last segment has last vertex
         if (!coordinates.contains(secondIntersection)) {
-            coordinates.add(secondIntersection );
+            coordinates.add(secondIntersection);
         }
 
         // build the line string
@@ -666,7 +665,7 @@ final class LineBoundaryIntersectionAssociation {
 
         return newLine;
     }
-    
+
     /**
      * Builds a split line fragment using the position of specified segments.
      * 
@@ -674,21 +673,22 @@ final class LineBoundaryIntersectionAssociation {
      * @param lastSegmentPosition
      * @return an split line fragment between the first and last segment (both included)
      */
-    public LineString buildLineBetweenIntersectionSegments( 
-            final int firstSegmentPosition,
-            final int lastSegmentPosition ) {
-        
+    public LineString buildLineBetweenIntersectionSegments(final int firstSegmentPosition,
+            final int lastSegmentPosition) {
+
         List<Coordinate> coordinatList = new LinkedList<Coordinate>();
 
         // extract the interior vertex from the interior segments (it uses the first vertex)
-        assert (firstSegmentPosition <= lastSegmentPosition) && (lastSegmentPosition < this.splitLineSegmentWithIntersectionList.size());
-        
-        for( int i = firstSegmentPosition; i <= lastSegmentPosition; i++ ) {
+        assert (firstSegmentPosition <= lastSegmentPosition)
+                && (lastSegmentPosition < this.splitLineSegmentWithIntersectionList.size());
 
-            SplitLineSegmentIntersectionNode node = this.splitLineSegmentWithIntersectionList.get(i);
-            
+        for (int i = firstSegmentPosition; i <= lastSegmentPosition; i++) {
+
+            SplitLineSegmentIntersectionNode node = this.splitLineSegmentWithIntersectionList
+                    .get(i);
+
             Coordinate[] vertexList = node.getSegment().getCoordinates();
-            for( int j = 0; j < vertexList.length; j++ ) {
+            for (int j = 0; j < vertexList.length; j++) {
                 if (!coordinatList.contains(vertexList[j])) {
                     coordinatList.add(vertexList[j]);
                 }
@@ -701,82 +701,88 @@ final class LineBoundaryIntersectionAssociation {
         return splitLineFragment;
     }
 
-    public LineString buildLineBetweenIntersectionPoints( 
-            final int firstSegmentPosition, final Coordinate firstIntersection,
-            final int lastSegmentPosition, final Coordinate lastIntersection ) {
-        
-        assert (firstSegmentPosition <= lastSegmentPosition) && (lastSegmentPosition < this.splitLineSegmentWithIntersectionList.size());
-        
+    public LineString buildLineBetweenIntersectionPoints(final int firstSegmentPosition,
+            final Coordinate firstIntersection, final int lastSegmentPosition,
+            final Coordinate lastIntersection) {
+
+        assert (firstSegmentPosition <= lastSegmentPosition)
+                && (lastSegmentPosition < this.splitLineSegmentWithIntersectionList.size());
+
         List<Coordinate> coordinatList = new LinkedList<Coordinate>();
 
-        if(firstSegmentPosition == lastSegmentPosition ){
-            // both intersections belong to the same line segment, then truncate the segment between the intersections point
-      
-            List<Coordinate> lineFragment = truncateSegmentBetween(firstSegmentPosition, firstIntersection, lastIntersection);
+        if (firstSegmentPosition == lastSegmentPosition) {
+            // both intersections belong to the same line segment, then truncate the segment between
+            // the intersections point
+
+            List<Coordinate> lineFragment = truncateSegmentBetween(firstSegmentPosition,
+                    firstIntersection, lastIntersection);
             coordinatList.addAll(lineFragment);
-            
+
         } else {
             // Truncates the header of first segment using the first intersection has first vertex,
             // Insert the coordinates of intermediate line fragment
             // The last segment is truncated from the last intersection vertex
-            List<Coordinate> firstLineFragment = trunkateHeaderSegment(firstSegmentPosition, firstIntersection);
+            List<Coordinate> firstLineFragment = trunkateHeaderSegment(firstSegmentPosition,
+                    firstIntersection);
             coordinatList.addAll(firstLineFragment);
-            
-            for( int i = firstSegmentPosition + 1; i < lastSegmentPosition; i++ ) {
-    
-                SplitLineSegmentIntersectionNode node = this.splitLineSegmentWithIntersectionList.get(i);
-                
+
+            for (int i = firstSegmentPosition + 1; i < lastSegmentPosition; i++) {
+
+                SplitLineSegmentIntersectionNode node = this.splitLineSegmentWithIntersectionList
+                        .get(i);
+
                 Coordinate[] vertexList = node.getSegment().getCoordinates();
-                for( int j = 0; j < vertexList.length; j++ ) {
+                for (int j = 0; j < vertexList.length; j++) {
                     if (!coordinatList.contains(vertexList[j])) {
                         coordinatList.add(vertexList[j]);
                     }
                 }
             }
             // adds the coordinates of last segment
-            List<Coordinate> lastLineFragment = trunkateTailSegment(lastSegmentPosition, lastIntersection);
-            for( Coordinate coordinate : lastLineFragment ) {
+            List<Coordinate> lastLineFragment = trunkateTailSegment(lastSegmentPosition,
+                    lastIntersection);
+            for (Coordinate coordinate : lastLineFragment) {
                 if (!coordinatList.contains(coordinate)) {
                     coordinatList.add(coordinate);
                 }
             }
         }
-        
+
         // build the line string
         Coordinate[] coordinates = coordinatList.toArray(new Coordinate[coordinatList.size()]);
         LineString splitLineFragment = this.geomFactory.createLineString(coordinates);
 
         return splitLineFragment;
     }
-    
 
     /**
      * Removes the coordinates before the first intersection and after the last intersection.
+     * 
      * @param firstSegmentPosition Segment to truncate
      * @param firstIntersection
      * @param lastIntersection
      * @return a truncated line fragment based in the indeed segment
      */
-    private List<Coordinate> truncateSegmentBetween( 
-            final int           firstSegmentPosition,
-            final Coordinate    firstIntersection, 
-            final Coordinate    lastIntersection ) {
+    private List<Coordinate> truncateSegmentBetween(final int firstSegmentPosition,
+            final Coordinate firstIntersection, final Coordinate lastIntersection) {
 
         List<Coordinate> newLine = new LinkedList<Coordinate>();
-        
-        SplitLineSegmentIntersectionNode node = this.splitLineSegmentWithIntersectionList.get(firstSegmentPosition);
-        
+
+        SplitLineSegmentIntersectionNode node = this.splitLineSegmentWithIntersectionList
+                .get(firstSegmentPosition);
+
         Coordinate[] lineFragment = node.getSegment().getCoordinates();
 
         final double firstIntersectDistance = lineFragment[0].distance(firstIntersection);
         final double lastIntersectDistance = lineFragment[0].distance(lastIntersection);
-        
+
         newLine.add(firstIntersection);
-        for( int i = 0; i < lineFragment.length; i++ ) {
-            
+        for (int i = 0; i < lineFragment.length; i++) {
+
             // searches the position of new coordinate
             double currentDistance = lineFragment[0].distance(lineFragment[i]);
-            if((firstIntersectDistance < currentDistance) && (currentDistance < lastIntersectDistance) ){
+            if ((firstIntersectDistance < currentDistance)
+                    && (currentDistance < lastIntersectDistance)) {
                 newLine.add(lineFragment[i]);
             }
         }
@@ -792,32 +798,34 @@ final class LineBoundaryIntersectionAssociation {
      * @param firstIntersection
      * @return a new line fragment that have the intersection coordinate has first vertex
      */
-    private List<Coordinate> trunkateHeaderSegment( final int firstSegmentPosition, final Coordinate firstIntersection ) {
+    private List<Coordinate> trunkateHeaderSegment(final int firstSegmentPosition,
+            final Coordinate firstIntersection) {
 
         List<Coordinate> newLine = new LinkedList<Coordinate>();
-        
-        SplitLineSegmentIntersectionNode node = this.splitLineSegmentWithIntersectionList.get(firstSegmentPosition);
-        
+
+        SplitLineSegmentIntersectionNode node = this.splitLineSegmentWithIntersectionList
+                .get(firstSegmentPosition);
+
         Coordinate[] lineFragment = node.getSegment().getCoordinates();
         final double vertexDistance = lineFragment[0].distance(firstIntersection);
-        
+
         int found = -1;
-        for( int i = 0; i < lineFragment.length; i++ ) {
-            
+        for (int i = 0; i < lineFragment.length; i++) {
+
             // searches the position of new coordinate
             double currentDistance = lineFragment[0].distance(lineFragment[i]);
-            if(currentDistance > vertexDistance ){
+            if (currentDistance > vertexDistance) {
                 found = i;
                 break;
             }
         }
-        if(found != -1){
+        if (found != -1) {
             // add the vertex and the rest of coordinates in the new segment
             newLine.add(firstIntersection);
-            for(int i = found; i < lineFragment.length; i++ ){
+            for (int i = found; i < lineFragment.length; i++) {
                 newLine.add(lineFragment[i]);
             }
-            
+
         } else {
             // vertex is the last coordinate
             newLine.add(firstIntersection);
@@ -825,56 +833,57 @@ final class LineBoundaryIntersectionAssociation {
         return newLine;
     }
 
-
     /**
-     * Makes a new line that is cut from the last intersection 
+     * Makes a new line that is cut from the last intersection
      * 
      * @param lastSegmentPosition
      * @param lastIntersection
      * @return a new line as a list of coordinate
      */
-    private List<Coordinate> trunkateTailSegment( 
-            final int lastSegmentPosition,
-            final Coordinate lastIntersection ) {
-        
+    private List<Coordinate> trunkateTailSegment(final int lastSegmentPosition,
+            final Coordinate lastIntersection) {
+
         List<Coordinate> newLine = new LinkedList<Coordinate>();
-        
-        SplitLineSegmentIntersectionNode node = this.splitLineSegmentWithIntersectionList.get(lastSegmentPosition);
-        
+
+        SplitLineSegmentIntersectionNode node = this.splitLineSegmentWithIntersectionList
+                .get(lastSegmentPosition);
+
         Coordinate[] lineFragment = node.getSegment().getCoordinates();
         final double vertexDistance = lineFragment[0].distance(lastIntersection);
-        
+
         int found = -1;
-        for( int i = 0; i < lineFragment.length; i++ ) {
-            
+        for (int i = 0; i < lineFragment.length; i++) {
+
             // searches the position of new coordinate
             double currentDistance = lineFragment[0].distance(lineFragment[i]);
-            if(currentDistance < vertexDistance ){
+            if (currentDistance < vertexDistance) {
                 newLine.add(lineFragment[i]);
             } else {
                 found = i;
                 break;
             }
         }
-        if(found != -1){
+        if (found != -1) {
             // add the vertex and the rest of coordinates in the new segment
             newLine.add(lastIntersection);
-            
+
         } else {
             // vertex is the last coordinate
             newLine.add(lastIntersection);
         }
         return newLine;
     }
+
     /**
      * Returns the segment in the specified position.
      * 
      * @param position
      * @return the segment of split line correspondent to the position
      */
-    public LineString getSplitLineSegment( final int segmentPosition ) {
+    public LineString getSplitLineSegment(final int segmentPosition) {
 
-        SplitLineSegmentIntersectionNode segmentNode =this.splitLineSegmentWithIntersectionList.get(segmentPosition);
+        SplitLineSegmentIntersectionNode segmentNode = this.splitLineSegmentWithIntersectionList
+                .get(segmentPosition);
         return segmentNode.getSegment();
     }
 
@@ -883,9 +892,8 @@ final class LineBoundaryIntersectionAssociation {
      * @return the count of segments of split line
      */
     public int size() {
-        
+
         return this.splitLineSegmentWithIntersectionList.size();
     }
-
 
 }

@@ -348,7 +348,7 @@ class MergeComposite extends Composite {
                     // such behaviour is not compatible with MERGEMODE_OPERATION due to filterChange
                     // listeners in place when in that mode, so the function call is allowed just
                     // when in TOOL mode
-                handleTreeEventClick(e);
+                    handleTreeEventClick(e);
                 }
             }
         });
@@ -602,13 +602,13 @@ class MergeComposite extends Composite {
         final boolean isFeatureItem = isFeatureItem(item);
         if (isFeatureItem) {
             Object obj = item.getData();
-            
+
             if (obj instanceof Integer) {
                 ILayer layer = mergeBuilder.getLayer();
                 Filter filter = getSelectedFeatureFilter((Integer) obj);
                 LayerUtil.presentSelection(layer, filter);
             }
-            
+
         }
     }
 

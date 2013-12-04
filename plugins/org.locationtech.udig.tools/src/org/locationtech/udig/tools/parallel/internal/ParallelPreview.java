@@ -51,119 +51,123 @@ import org.locationtech.udig.tools.parallel.internal.command.AddCustomVertexComm
  */
 public class ParallelPreview implements Observer {
 
-	private ParallelContext					parallelContext	= null;
-	private IToolContext					context			= null;
-	private EditToolHandler					handler			= null;
+    private ParallelContext parallelContext = null;
 
-	private final static ParallelPreview	THIS			= new ParallelPreview();
+    private IToolContext context = null;
 
-	/**
-	 * use {@link #getInstance()}
-	 */
-	private ParallelPreview() {
-		// singleton
-	}
+    private EditToolHandler handler = null;
 
-	/**
-	 * 
-	 * @return The instance of this class.
-	 */
-	public static ParallelPreview getInstance() {
-		return THIS;
-	}
+    private final static ParallelPreview THIS = new ParallelPreview();
 
-	/**
-	 * Set the parameters needed for working with class.
-	 * 
-	 * @param toolContext
-	 * @param editToolHandler
-	 * @param parallelContext
-	 */
-	public void setParameters(IToolContext toolContext, EditToolHandler editToolHandler, ParallelContext parallelContext) {
+    /**
+     * use {@link #getInstance()}
+     */
+    private ParallelPreview() {
+        // singleton
+    }
 
-		this.context = toolContext;
-		this.handler = editToolHandler;
-		this.parallelContext = parallelContext;
-	}
+    /**
+     * 
+     * @return The instance of this class.
+     */
+    public static ParallelPreview getInstance() {
+        return THIS;
+    }
 
-	public void update(Observable o, Object arg) {
+    /**
+     * Set the parameters needed for working with class.
+     * 
+     * @param toolContext
+     * @param editToolHandler
+     * @param parallelContext
+     */
+    public void setParameters(IToolContext toolContext, EditToolHandler editToolHandler,
+            ParallelContext parallelContext) {
 
-		if (PrecisionToolsContext.UPDATE_LAYER.equals(arg) || PrecisionToolsContext.UPDATE_ERROR.equals(arg)) {
+        this.context = toolContext;
+        this.handler = editToolHandler;
+        this.parallelContext = parallelContext;
+    }
 
-			redraw();
-		}
-	}
+    public void update(Observable o, Object arg) {
 
-	/**
-	 * Deletes the previous parallel preview and draws a new one.
-	 */
-	private void redraw() {
+        if (PrecisionToolsContext.UPDATE_LAYER.equals(arg)
+                || PrecisionToolsContext.UPDATE_ERROR.equals(arg)) {
 
-		UndoableComposite composite = new UndoableComposite();
+            redraw();
+        }
+    }
 
-		delete(composite);
-		draw(composite);
+    /**
+     * Deletes the previous parallel preview and draws a new one.
+     */
+    private void redraw() {
 
-		composite.setMap(handler.getContext().getMap());
-		context.sendASyncCommand(composite);
+        UndoableComposite composite = new UndoableComposite();
 
-		handler.getContext().getViewportPane().repaint();
-	}
+        delete(composite);
+        draw(composite);
 
-	/**
-	 * Deletes the parallel preview or any selected feature.
-	 * 
-	 * @param composite
-	 */
-	private void delete(UndoableComposite composite) {
+        composite.setMap(handler.getContext().getMap());
+        context.sendASyncCommand(composite);
 
-		List<EditGeom> list = new LinkedList<EditGeom>();
-		EditBlackboard bb = handler.getCurrentEditBlackboard();
-		list.addAll(bb.getGeoms());
+        handler.getContext().getViewportPane().repaint();
+    }
 
-		// Deselects the selected painted geometry
-		composite.addCommand(new DeselectEditGeomCommand(handler, list));
-	}
+    /**
+     * Deletes the parallel preview or any selected feature.
+     * 
+     * @param composite
+     */
+    private void delete(UndoableComposite composite) {
 
-	/**
-	 * Draw the parallel preview. The context have a state which is used to know
-	 * when the parallel tool is ready for drawing the preview.
-	 * 
-	 * @param composite
-	 * 
-	 */
-	public void draw(UndoableComposite composite) {
+        List<EditGeom> list = new LinkedList<EditGeom>();
+        EditBlackboard bb = handler.getCurrentEditBlackboard();
+        list.addAll(bb.getGeoms());
 
-		// check if it's ready.
-		if (!(parallelContext.mode == PrecisionToolsMode.READY)) {
-			return;
-		}
+        // Deselects the selected painted geometry
+        composite.addCommand(new DeselectEditGeomCommand(handler, list));
+    }
 
-		EditBlackboard bb = handler.getEditBlackboard(handler.getEditLayer());
+    /**
+     * Draw the parallel preview. The context have a state which is used to know when the parallel
+     * tool is ready for drawing the preview.
+     * 
+     * @param composite
+     * 
+     */
+    public void draw(UndoableComposite composite) {
 
-		List<Geometry> resultList = parallelContext.getOutputCoordinates();
-		for (Geometry result : resultList) {
+        // check if it's ready.
+        if (!(parallelContext.mode == PrecisionToolsMode.READY)) {
+            return;
+        }
 
-			Coordinate[] coordinates = result.getCoordinates();
-			List<Coordinate> array = new ArrayList<Coordinate>();
-			for (Coordinate coord : coordinates) {
-				array.add(coord);
-			}
-			Iterator<Coordinate> coorIt = array.iterator();
+        EditBlackboard bb = handler.getEditBlackboard(handler.getEditLayer());
 
-			EditGeom newEditGeom = bb.newGeom("", ShapeType.LINE); //$NON-NLS-1$
-			PrimitiveShape shape = newEditGeom.getShell();
-			handler.setCurrentShape(shape);
-			handler.setCurrentState(EditState.MODIFYING);
+        List<Geometry> resultList = parallelContext.getOutputCoordinates();
+        for (Geometry result : resultList) {
 
-			Coordinate coor = null;
-			while (coorIt.hasNext()) {
+            Coordinate[] coordinates = result.getCoordinates();
+            List<Coordinate> array = new ArrayList<Coordinate>();
+            for (Coordinate coord : coordinates) {
+                array.add(coord);
+            }
+            Iterator<Coordinate> coorIt = array.iterator();
 
-				coor = coorIt.next();
-				composite.addFinalizerCommand(new AddCustomVertexCommand(handler, bb,
-							new EditUtils.EditToolHandlerShapeProvider(handler), coor, shape));
-			}
-		}
-	}
+            EditGeom newEditGeom = bb.newGeom("", ShapeType.LINE); //$NON-NLS-1$
+            PrimitiveShape shape = newEditGeom.getShell();
+            handler.setCurrentShape(shape);
+            handler.setCurrentState(EditState.MODIFYING);
+
+            Coordinate coor = null;
+            while (coorIt.hasNext()) {
+
+                coor = coorIt.next();
+                composite.addFinalizerCommand(new AddCustomVertexCommand(handler, bb,
+                        new EditUtils.EditToolHandlerShapeProvider(handler), coor, shape));
+            }
+        }
+    }
 
 }

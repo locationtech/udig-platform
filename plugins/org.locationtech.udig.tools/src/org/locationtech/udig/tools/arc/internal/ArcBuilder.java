@@ -45,12 +45,14 @@ import com.vividsolutions.jts.geom.Triangle;
  * Sample usage to create an arc centered at <code>0,0</code>, which starts at <code>-10,0</code>,
  * passes through <code>0,10</code> and ends at <code>10,0</code>:
  * 
- * <pre><code>
+ * <pre>
+ * <code>
  * ArcBuilder builder = new ArcBuilder();
  * builder.setPoints(-10, 0, 0, 10, 10, 0);
  * Arc2D arc = builder.getArc();
  * LineString approxLineStr = builder.getGeometry(15); //15 segments per quadrant
- * </code></pre>
+ * </code>
+ * </pre>
  * 
  * </p>
  * 
@@ -81,7 +83,7 @@ public class ArcBuilder {
      * fact that point1, point2 and point3 are final and their internal coordinates change
      * dynamically
      */
-    private Coordinate[]     ring   = {point1, point2, point3, point1};
+    private Coordinate[] ring = { point1, point2, point3, point1 };
 
     /**
      * Builds and returns an arc of circumference defined by two consecutive chords set by
@@ -127,7 +129,7 @@ public class ArcBuilder {
      *        using line segments
      * @return
      */
-    public LineString getGeometry( final int pointsPerQuadrant ) {
+    public LineString getGeometry(final int pointsPerQuadrant) {
         assert pointsPerQuadrant > 0;
 
         GeometryFactory gf = new GeometryFactory();
@@ -142,11 +144,11 @@ public class ArcBuilder {
 
         double[] coordsHolder = new double[6];
 
-        while( !pathIterator.isDone() ) {
+        while (!pathIterator.isDone()) {
             int pathSegType = pathIterator.currentSegment(coordsHolder);
             double x = coordsHolder[0];
             double y = coordsHolder[1];
-            switch( pathSegType ) {
+            switch (pathSegType) {
             case PathIterator.SEG_MOVETO:
                 assert coords.size() == 0;
                 break;
@@ -173,7 +175,7 @@ public class ArcBuilder {
      * @param arc
      * @return
      */
-    private double calculateMaxDistanceToCurve( final Arc2D arc, final int pointsPerQuadrant ) {
+    private double calculateMaxDistanceToCurve(final Arc2D arc, final int pointsPerQuadrant) {
         double centerX = arc.getCenterX();
         double centerY = arc.getCenterY();
 
@@ -221,7 +223,7 @@ public class ArcBuilder {
      * @param segment
      * @return
      */
-    public LineSegment getMidpointNormal( final LineSegment segment, final double lenght ) {
+    public LineSegment getMidpointNormal(final LineSegment segment, final double lenght) {
         Coordinate midPoint = segment.midPoint();
 
         // the angle (in radians) of the segment respect to the X axis
@@ -256,7 +258,7 @@ public class ArcBuilder {
      * @param x3 X ordinate of the arc's end point
      * @param y3 Y ordinate of the arc's end point
      */
-    public void setPoints( double x1, double y1, double x2, double y2, double x3, double y3 ) {
+    public void setPoints(double x1, double y1, double x2, double y2, double x3, double y3) {
         this.point1.x = x1;
         this.point1.y = y1;
         this.point2.x = x2;

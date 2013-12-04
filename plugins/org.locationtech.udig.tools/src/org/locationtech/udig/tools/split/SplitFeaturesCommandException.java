@@ -16,17 +16,17 @@
 package org.locationtech.udig.tools.split;
 
 /**
- * Exception used when doing the split process, something goes wrong (i.e.
- * illegalArgument, transformException, etc. ), this exception is thrown.
+ * Exception used when doing the split process, something goes wrong (i.e. illegalArgument,
+ * transformException, etc. ), this exception is thrown.
  * 
  * @author Mauricio Pazos (www.axios.es)
  * @author Aritz Davila (www.axios.es)
  */
 final class SplitFeaturesCommandException extends Exception {
 
-	private static final long	serialVersionUID	= -2661168727803487052L;
+    private static final long serialVersionUID = -2661168727803487052L;
 
-	public SplitFeaturesCommandException(String message) {
-		super(message);
-	}
+    public SplitFeaturesCommandException(String message) {
+        super(message);
+    }
 }

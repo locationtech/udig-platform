@@ -47,9 +47,8 @@ import org.locationtech.udig.tools.edit.support.PrimitiveShape;
  * @author Mauricio Pazos (www.axios.es)
  * @since 1.1.0
  */
-public class NumOfPointsRunAcceptBehaviour extends AcceptOnDoubleClickBehaviour
-        implements
-            EventBehaviour {
+public class NumOfPointsRunAcceptBehaviour extends AcceptOnDoubleClickBehaviour implements
+        EventBehaviour {
 
     private int numOfPointsToAccept;
 
@@ -57,14 +56,14 @@ public class NumOfPointsRunAcceptBehaviour extends AcceptOnDoubleClickBehaviour
      * @param numOfPointsToAccept number of points, counting the currently being added one, that
      *        must exist in the edit blackboard to accept
      */
-    public NumOfPointsRunAcceptBehaviour( int numOfPointsToAccept ) {
+    public NumOfPointsRunAcceptBehaviour(int numOfPointsToAccept) {
         super();
         assert numOfPointsToAccept > 0;
         this.numOfPointsToAccept = numOfPointsToAccept;
     }
 
     @Override
-    public boolean isValid( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
+    public boolean isValid(EditToolHandler handler, MapMouseEvent e, EventType eventType) {
         boolean goodState = handler.getCurrentState() != EditState.NONE;
         boolean releasedEvent = eventType == EventType.RELEASED;
         boolean noModifiers = !(e.modifiersDown());

@@ -35,14 +35,14 @@ import org.locationtech.udig.tools.internal.ui.util.DialogUtil;
  * <ul>
  * <li>Split one or more Simple Features using a line
  * <li>Split one polygon feature by creating a hole
- * </ul> 
+ * </ul>
+ * 
  * @see SplitFeaturesCommand
  * @author Mauricio Pazos (www.axios.es)
  * @author Aritz Davila (www.axios.es)
  * @since 1.3.0
  */
 class SplitGeometryBehaviour implements Behaviour {
-
 
     public SplitGeometryBehaviour() {
     }
@@ -51,7 +51,7 @@ class SplitGeometryBehaviour implements Behaviour {
      * Returns <code>true</code> if there's a linestring in the {@link EditBlackboard}'s
      * {@link EditToolHandler} to use as splitting line
      */
-    public boolean isValid( EditToolHandler handler ) {
+    public boolean isValid(EditToolHandler handler) {
         PrimitiveShape currentShape = handler.getCurrentShape();
         if (currentShape == null) {
             return false;
@@ -61,9 +61,9 @@ class SplitGeometryBehaviour implements Behaviour {
     }
 
     /**
-     * Returns an {@link UndoableMapCommand} that's responsible of using the
-     * {@link EditToolHandler handler}'s current shape (as a LineString) to split the features of
-     * the current layer that intersects the splitting line.
+     * Returns an {@link UndoableMapCommand} that's responsible of using the {@link EditToolHandler
+     * handler}'s current shape (as a LineString) to split the features of the current layer that
+     * intersects the splitting line.
      * <p>
      * When a feature's geometry is split, the original Feature will be deleted and as many new
      * Features as geometries result from the split will be created, with the same attributes than
@@ -73,34 +73,35 @@ class SplitGeometryBehaviour implements Behaviour {
      * @return the command that splits the geometries under the handler's current shape
      * @see SplitFeaturesCommand
      */
-    public UndoableMapCommand getCommand( EditToolHandler handler ) {
+    public UndoableMapCommand getCommand(EditToolHandler handler) {
         assert handler != null;
-        
+
         UndoableComposite commands = new UndoableComposite();
-        
-        commands.addCommand(new SetEditStateCommand(handler, EditState.BUSY ));
-        commands.addCommand( new SplitFeaturesCommand(handler) );
-        commands.addCommand( new SetEditStateCommand(handler, EditState.NONE ));
-        
+
+        commands.addCommand(new SetEditStateCommand(handler, EditState.BUSY));
+        commands.addCommand(new SplitFeaturesCommand(handler));
+        commands.addCommand(new SetEditStateCommand(handler, EditState.NONE));
+
         return commands;
     }
 
     /**
      * Shows up the message to user and reinitialize the handler
+     * 
      * @param handler
      * @param error
      * 
      */
-    public void handleError( EditToolHandler handler, Throwable error, UndoableMapCommand command ) {
+    public void handleError(EditToolHandler handler, Throwable error, UndoableMapCommand command) {
         assert error != null;
 
         String message = error.getMessage();
         DialogUtil.openError(Messages.SplitGeometryBehaviour_transaction_failed, message);
-        
-        //re-initializes the handler
-        handler.setCurrentState( EditState.NONE ); // start again
-        handler.setCurrentShape( null ); // stop drawing this line
-        handler.getEditBlackboard( handler.getEditLayer() ).clear();
+
+        // re-initializes the handler
+        handler.setCurrentState(EditState.NONE); // start again
+        handler.setCurrentShape(null); // stop drawing this line
+        handler.getEditBlackboard(handler.getEditLayer()).clear();
     }
 
 }

@@ -69,67 +69,70 @@ import org.locationtech.udig.tools.edit.support.Point;
  */
 public class SetReferenceFeatureCommand extends AbstractCommand implements UndoableMapCommand {
 
-	private ParallelContext	parallelContext	= null;
-	private EditToolHandler	handler			= null;
-	private MapMouseEvent	event			= null;
+    private ParallelContext parallelContext = null;
 
-	public SetReferenceFeatureCommand(ParallelContext paralleContext, EditToolHandler handler, MapMouseEvent event) {
+    private EditToolHandler handler = null;
 
-		this.parallelContext = paralleContext;
-		this.handler = handler;
-		this.event = event;
-	}
+    private MapMouseEvent event = null;
 
-	public String getName() {
+    public SetReferenceFeatureCommand(ParallelContext paralleContext, EditToolHandler handler,
+            MapMouseEvent event) {
 
-		return Messages.PrecisionParallelReferenceFeature;
-	}
+        this.parallelContext = paralleContext;
+        this.handler = handler;
+        this.event = event;
+    }
 
-	public void run(IProgressMonitor monitor) throws Exception {
+    public String getName() {
 
-		SimpleFeature feature = PrecisionToolsUtil.getFeatureUnderCursor(handler, event);
-		// at this time, before running this commands it has checked there is a
-		// feature under the cursor, so
-		// this will return a feature.
-		assert feature != null;
+        return Messages.PrecisionParallelReferenceFeature;
+    }
 
-		// set map units.
-		IMap map = handler.getContext().getMap();
-		assert map != null;
+    public void run(IProgressMonitor monitor) throws Exception {
 
-		CoordinateReferenceSystem crs = MapUtil.getCRS(map);
-		Unit<?> mapUnits = GeoToolsUtils.getDefaultCRSUnit(crs);
+        SimpleFeature feature = PrecisionToolsUtil.getFeatureUnderCursor(handler, event);
+        // at this time, before running this commands it has checked there is a
+        // feature under the cursor, so
+        // this will return a feature.
+        assert feature != null;
 
-		parallelContext.setUnits(mapUnits);
+        // set map units.
+        IMap map = handler.getContext().getMap();
+        assert map != null;
 
-		EditBlackboard bb = handler.getEditBlackboard(handler.getEditLayer());
-		Point currPoint = Point.valueOf(event.x, event.y);
-		Coordinate coor = bb.toCoord(currPoint);
+        CoordinateReferenceSystem crs = MapUtil.getCRS(map);
+        Unit<?> mapUnits = GeoToolsUtils.getDefaultCRSUnit(crs);
 
-		// previous line exist, if we change the reference line also need to
-		// reset the initial point.
-		// needs to store the line before setting the initial point.
-		if (this.parallelContext.getReferenceFeature() != null) {
+        parallelContext.setUnits(mapUnits);
 
-			this.parallelContext.setMode(PrecisionToolsMode.BUSY);
-			this.parallelContext.setReferenceFeature(feature, coor);
-			this.parallelContext.setInitialCoordinate(null);
-		} else {
-			this.parallelContext.setReferenceFeature(feature, coor);
-		}
+        EditBlackboard bb = handler.getEditBlackboard(handler.getEditLayer());
+        Point currPoint = Point.valueOf(event.x, event.y);
+        Coordinate coor = bb.toCoord(currPoint);
 
-		this.parallelContext.setMode(PrecisionToolsMode.WAITING);
+        // previous line exist, if we change the reference line also need to
+        // reset the initial point.
+        // needs to store the line before setting the initial point.
+        if (this.parallelContext.getReferenceFeature() != null) {
 
-		List<IDrawCommand> commands = new ArrayList<IDrawCommand>();
-		DrawFeatureCommand drawCmd = new DrawFeatureCommand(feature);
-		commands.add(drawCmd);
-		FeatureHighLight animation = new FeatureHighLight(commands, new Rectangle());
-		AnimationUpdater.runTimer(handler.getContext().getMapDisplay(), animation);
-	}
+            this.parallelContext.setMode(PrecisionToolsMode.BUSY);
+            this.parallelContext.setReferenceFeature(feature, coor);
+            this.parallelContext.setInitialCoordinate(null);
+        } else {
+            this.parallelContext.setReferenceFeature(feature, coor);
+        }
 
-	public void rollback(IProgressMonitor monitor) throws Exception {
-		// TODO Auto-generated method stub
+        this.parallelContext.setMode(PrecisionToolsMode.WAITING);
 
-	}
+        List<IDrawCommand> commands = new ArrayList<IDrawCommand>();
+        DrawFeatureCommand drawCmd = new DrawFeatureCommand(feature);
+        commands.add(drawCmd);
+        FeatureHighLight animation = new FeatureHighLight(commands, new Rectangle());
+        AnimationUpdater.runTimer(handler.getContext().getMapDisplay(), animation);
+    }
+
+    public void rollback(IProgressMonitor monitor) throws Exception {
+        // TODO Auto-generated method stub
+
+    }
 
 }

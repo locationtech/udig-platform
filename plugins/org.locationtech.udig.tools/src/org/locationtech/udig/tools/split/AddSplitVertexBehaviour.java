@@ -20,7 +20,7 @@ import org.locationtech.udig.tools.edit.behaviour.AddVertexWhileCreatingBehaviou
 import org.locationtech.udig.tools.edit.support.Point;
 
 /**
- * Inherit in order to redefines the {{@link #isNotDuplicated(EditToolHandler, Point)} 
+ * Inherit in order to redefines the {{@link #isNotDuplicated(EditToolHandler, Point)}
  * 
  * <p>
  * Requirements:
@@ -41,14 +41,15 @@ import org.locationtech.udig.tools.edit.support.Point;
  */
 class AddSplitVertexBehaviour extends AddVertexWhileCreatingBehaviour {
 
-	/**
-	 * This split tool allows duplicate vertex. Thus this method is override to return true.
-	 * @param handler
-	 * @param e
-	 * @return true If this point is allowed
-	 */
-	@Override
-	protected boolean isNotDuplicated(EditToolHandler handler, Point point) {
-	    return true; 
-	}
+    /**
+     * This split tool allows duplicate vertex. Thus this method is override to return true.
+     * 
+     * @param handler
+     * @param e
+     * @return true If this point is allowed
+     */
+    @Override
+    protected boolean isNotDuplicated(EditToolHandler handler, Point point) {
+        return true;
+    }
 }

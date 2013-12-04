@@ -38,30 +38,31 @@ import org.locationtech.udig.tools.parallel.internal.PrecisionToolsMode;
  */
 public class SetInitialPointCommand extends AbstractCommand implements UndoableMapCommand {
 
-	private PrecisionToolsContext	toolContext	= null;
-	private Coordinate				coordinate	= null;
+    private PrecisionToolsContext toolContext = null;
 
-	public SetInitialPointCommand(PrecisionToolsContext toolContext, Coordinate coor) {
+    private Coordinate coordinate = null;
 
-		this.toolContext = toolContext;
-		this.coordinate = coor;
-	}
+    public SetInitialPointCommand(PrecisionToolsContext toolContext, Coordinate coor) {
 
-	public String getName() {
+        this.toolContext = toolContext;
+        this.coordinate = coor;
+    }
 
-		return Messages.SetInitialPointCommand;
-	}
+    public String getName() {
 
-	public void run(IProgressMonitor monitor) throws Exception {
+        return Messages.SetInitialPointCommand;
+    }
 
-		// set the state before setting the initial point because, when point is
-		// set it will automatically update.
-		this.toolContext.setMode(PrecisionToolsMode.READY);
-		this.toolContext.setInitialCoordinate(this.coordinate);
-	}
+    public void run(IProgressMonitor monitor) throws Exception {
 
-	public void rollback(IProgressMonitor monitor) throws Exception {
-		//TODO
-	}
+        // set the state before setting the initial point because, when point is
+        // set it will automatically update.
+        this.toolContext.setMode(PrecisionToolsMode.READY);
+        this.toolContext.setInitialCoordinate(this.coordinate);
+    }
+
+    public void rollback(IProgressMonitor monitor) throws Exception {
+        // TODO
+    }
 
 }

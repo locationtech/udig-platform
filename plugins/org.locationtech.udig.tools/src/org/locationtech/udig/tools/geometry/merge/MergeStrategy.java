@@ -50,101 +50,95 @@ import com.vividsolutions.jts.operation.linemerge.LineMerger;
  */
 public class MergeStrategy {
 
-	/* One of the geometries to merge. */
-	private Geometry	mergeGeometry	= null;
+    /* One of the geometries to merge. */
+    private Geometry mergeGeometry = null;
 
-	/**
-	 * Default constructor.
-	 * 
-	 * Stores one of the geometries you want to merge.
-	 * 
-	 * @param mergeGeometry
-	 *            One of the geometries to merge.
-	 */
-	public MergeStrategy(Geometry mergeGeometry) {
+    /**
+     * Default constructor.
+     * 
+     * Stores one of the geometries you want to merge.
+     * 
+     * @param mergeGeometry One of the geometries to merge.
+     */
+    public MergeStrategy(Geometry mergeGeometry) {
 
-		if (mergeGeometry == null) {
-			throw new NullPointerException();
-		}
+        if (mergeGeometry == null) {
+            throw new NullPointerException();
+        }
 
-		this.mergeGeometry = mergeGeometry;
-	}
+        this.mergeGeometry = mergeGeometry;
+    }
 
-	/**
-	 * Realize merge operation between the given geometries.
-	 * 
-	 * @param mergeGeometry
-	 *            The first geometry to merge.
-	 * @param withGeometry
-	 *            The second geometry to merge.
-	 * @return The merged geometry.
-	 */
-	public static Geometry mergeOp(Geometry mergeGeometry, Geometry withGeometry) {
+    /**
+     * Realize merge operation between the given geometries.
+     * 
+     * @param mergeGeometry The first geometry to merge.
+     * @param withGeometry The second geometry to merge.
+     * @return The merged geometry.
+     */
+    public static Geometry mergeOp(Geometry mergeGeometry, Geometry withGeometry) {
 
-		MergeStrategy strategy = new MergeStrategy(mergeGeometry);
+        MergeStrategy strategy = new MergeStrategy(mergeGeometry);
 
-		Geometry merged = strategy.merge(withGeometry);
-		return merged;
-	}
+        Geometry merged = strategy.merge(withGeometry);
+        return merged;
+    }
 
-	/**
-	 * Realize the merge between the mergeGeometry (given on the constructor)
-	 * and this geometry.
-	 * 
-	 * @param withGeometry
-	 *            Geometry to merge with.
-	 * @return The merged geometry.
-	 */
-	public Geometry merge(Geometry withGeometry) {
+    /**
+     * Realize the merge between the mergeGeometry (given on the constructor) and this geometry.
+     * 
+     * @param withGeometry Geometry to merge with.
+     * @return The merged geometry.
+     */
+    public Geometry merge(Geometry withGeometry) {
 
-		if (withGeometry == null) {
-			throw new NullPointerException();
-		}
+        if (withGeometry == null) {
+            throw new NullPointerException();
+        }
 
-		Geometry mergeResult = null;
+        Geometry mergeResult = null;
 
-		if (mergeGeometry.getClass().equals(MultiLineString.class) || mergeGeometry.getClass().equals(LineString.class)) {
+        if (mergeGeometry.getClass().equals(MultiLineString.class)
+                || mergeGeometry.getClass().equals(LineString.class)) {
 
-			mergeResult = unionLines(withGeometry);
-		} else {
+            mergeResult = unionLines(withGeometry);
+        } else {
 
-			mergeResult = mergeGeometry.union(withGeometry);
-		}
+            mergeResult = mergeGeometry.union(withGeometry);
+        }
 
-		return mergeResult;
-	}
+        return mergeResult;
+    }
 
-	/**
-	 * Function used to merge lineStrings. With the aid of lineMerger, merge
-	 * lineStrings and MultiLineStrings.
-	 * 
-	 * @param withGeometry
-	 *            Geometry to merge with, it'll be a lineString or a
-	 *            MultiLineString.
-	 * @return The merged geometry.
-	 */
-	private Geometry unionLines(Geometry withGeometry) {
+    /**
+     * Function used to merge lineStrings. With the aid of lineMerger, merge lineStrings and
+     * MultiLineStrings.
+     * 
+     * @param withGeometry Geometry to merge with, it'll be a lineString or a MultiLineString.
+     * @return The merged geometry.
+     */
+    private Geometry unionLines(Geometry withGeometry) {
 
-		Geometry result = null;
+        Geometry result = null;
 
-		LineMerger merger = new LineMerger();
+        LineMerger merger = new LineMerger();
 
-		merger.add(mergeGeometry);
-		merger.add(withGeometry);
+        merger.add(mergeGeometry);
+        merger.add(withGeometry);
 
-		Collection<? extends LineString> mergedLineStrings = merger.getMergedLineStrings();
+        Collection<? extends LineString> mergedLineStrings = merger.getMergedLineStrings();
 
-		Iterator<? extends LineString> it = mergedLineStrings.iterator();
+        Iterator<? extends LineString> it = mergedLineStrings.iterator();
 
-		if (mergedLineStrings.size() == 1) {
-			result = it.next();
-		} else {
-			GeometryFactory gf = mergeGeometry.getFactory();
-			ArrayList<LineString> lineList = new ArrayList<LineString>(mergedLineStrings);
-			LineString[] lineStrings = lineList.toArray(new LineString[mergedLineStrings.size()]);
-			result = gf.createMultiLineString(lineStrings);
-		}
+        if (mergedLineStrings.size() == 1) {
+            result = it.next();
+        } else {
+            GeometryFactory gf = mergeGeometry.getFactory();
+            ArrayList<LineString> lineList = new ArrayList<LineString>(mergedLineStrings);
+            LineString[] lineStrings = lineList.toArray(new LineString[mergedLineStrings.size()]);
+            result = gf.createMultiLineString(lineStrings);
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

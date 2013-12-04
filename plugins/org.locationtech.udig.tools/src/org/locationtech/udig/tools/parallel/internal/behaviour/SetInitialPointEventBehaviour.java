@@ -52,49 +52,54 @@ import org.locationtech.udig.tools.parallel.internal.command.SetInitialPointComm
  */
 public class SetInitialPointEventBehaviour implements EventBehaviour {
 
-	private ParallelContext	parallelContext	= null;
+    private ParallelContext parallelContext = null;
 
-	public SetInitialPointEventBehaviour(ParallelContext parallelContext) {
+    public SetInitialPointEventBehaviour(ParallelContext parallelContext) {
 
-		this.parallelContext = parallelContext;
-	}
+        this.parallelContext = parallelContext;
+    }
 
-	public boolean isValid(EditToolHandler handler, MapMouseEvent e, EventType eventType) {
+    public boolean isValid(EditToolHandler handler, MapMouseEvent e, EventType eventType) {
 
-		boolean legalState = handler.getCurrentState() == EditState.NONE
-					|| handler.getCurrentState() == EditState.MODIFYING;
-		boolean legalButton = e.button == MapMouseEvent.BUTTON1;
-		boolean releasedEvent = eventType == EventType.RELEASED;
+        boolean legalState = handler.getCurrentState() == EditState.NONE
+                || handler.getCurrentState() == EditState.MODIFYING;
+        boolean legalButton = e.button == MapMouseEvent.BUTTON1;
+        boolean releasedEvent = eventType == EventType.RELEASED;
 
-		if (!legalState || !legalButton || !releasedEvent) {
-			return false;
-		}
-		//XXXX
-//		if (parallelContext.getReferenceLine() != null ){// && !(PrecisionToolsUtil.isFeatureUnderCursor(handler, e))) {
-//			return true;
-//		}
-		
-		if (parallelContext.getReferenceFeature() != null ){// && !(PrecisionToolsUtil.isFeatureUnderCursor(handler, e))) {
-			return true;
-		}
-		return false;
-	}
+        if (!legalState || !legalButton || !releasedEvent) {
+            return false;
+        }
+        // XXXX
+        // if (parallelContext.getReferenceLine() != null ){// &&
+        // !(PrecisionToolsUtil.isFeatureUnderCursor(handler, e))) {
+        // return true;
+        // }
 
-	public UndoableMapCommand getCommand(EditToolHandler handler, MapMouseEvent e, EventType eventType) {
+        if (parallelContext.getReferenceFeature() != null) {// &&
+                                                            // !(PrecisionToolsUtil.isFeatureUnderCursor(handler,
+                                                            // e))) {
+            return true;
+        }
+        return false;
+    }
 
-		if (!isValid(handler, e, eventType)) {
-			throw new IllegalArgumentException("Behaviour is not valid for the current state"); //$NON-NLS-1$
-		}
-		EditBlackboard bb = handler.getEditBlackboard(handler.getEditLayer());
-		Point currPoint = Point.valueOf(e.x, e.y);
-		Coordinate coor = bb.toCoord(currPoint);
+    public UndoableMapCommand getCommand(EditToolHandler handler, MapMouseEvent e,
+            EventType eventType) {
 
-		SetInitialPointCommand setInitialPointCommand = new SetInitialPointCommand(this.parallelContext, coor);
-		return setInitialPointCommand;
-	}
+        if (!isValid(handler, e, eventType)) {
+            throw new IllegalArgumentException("Behaviour is not valid for the current state"); //$NON-NLS-1$
+        }
+        EditBlackboard bb = handler.getEditBlackboard(handler.getEditLayer());
+        Point currPoint = Point.valueOf(e.x, e.y);
+        Coordinate coor = bb.toCoord(currPoint);
 
-	public void handleError(EditToolHandler handler, Throwable error, UndoableMapCommand command) {
-		EditPlugin.log("", error); //$NON-NLS-1$
-	}
+        SetInitialPointCommand setInitialPointCommand = new SetInitialPointCommand(
+                this.parallelContext, coor);
+        return setInitialPointCommand;
+    }
+
+    public void handleError(EditToolHandler handler, Throwable error, UndoableMapCommand command) {
+        EditPlugin.log("", error); //$NON-NLS-1$
+    }
 
 }

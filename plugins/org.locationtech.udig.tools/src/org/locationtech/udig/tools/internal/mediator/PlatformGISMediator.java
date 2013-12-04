@@ -37,27 +37,24 @@ import org.eclipse.swt.widgets.Display;
  * @since 1.1.0
  */
 public final class PlatformGISMediator {
-    
 
-    
-    public static void syncInDisplayThread(Runnable runnable){
-        
+    public static void syncInDisplayThread(Runnable runnable) {
+
         PlatformGIS.syncInDisplayThread(runnable);
     }
 
-    public static void asyncInDisplayThread(Runnable runnable, final boolean executeIfInDisplay){
-        
+    public static void asyncInDisplayThread(Runnable runnable, final boolean executeIfInDisplay) {
+
         PlatformGIS.asyncInDisplayThread(runnable, false);
     }
-    
-    public static void runBlockingOperation( final IRunnableWithProgress runnable,
-                                            final IProgressMonitor monitor ) 
-            throws InvocationTargetException, InterruptedException {
+
+    public static void runBlockingOperation(final IRunnableWithProgress runnable,
+            final IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 
         PlatformGIS.runBlockingOperation(runnable, monitor);
     }
-    
-    public static void runInDisplayThread( Runnable runnable ) {
+
+    public static void runInDisplayThread(Runnable runnable) {
 
         Display display = Display.getCurrent();
         if (display == null) {
@@ -65,8 +62,6 @@ public final class PlatformGISMediator {
         }
         display.asyncExec(runnable);
 
-    }    
-    
-    
+    }
 
 }

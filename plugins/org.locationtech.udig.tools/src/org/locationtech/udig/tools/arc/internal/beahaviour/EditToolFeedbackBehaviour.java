@@ -35,17 +35,16 @@ public class EditToolFeedbackBehaviour implements EventBehaviour {
 
     private EditToolFeedbackManager feedbackManager;
 
-    
-    public EditToolFeedbackBehaviour(EditToolFeedbackManager feedbackManager){
+    public EditToolFeedbackBehaviour(EditToolFeedbackManager feedbackManager) {
         assert feedbackManager != null;
         this.feedbackManager = feedbackManager;
     }
-    
+
     /**
      * Valid if event type is mouse moved, <code>handler<code>'s current state is
      * {@link EditState#CREATING}, and current editting shape has at leasr 1 point.
      */
-    public boolean isValid( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
+    public boolean isValid(EditToolHandler handler, MapMouseEvent e, EventType eventType) {
         return feedbackManager.isValid(handler, e, eventType);
     }
 
@@ -54,14 +53,14 @@ public class EditToolFeedbackBehaviour implements EventBehaviour {
      * 
      * @return <code>null</code>, as no undoable map command is needed
      */
-    public UndoableMapCommand getCommand( EditToolHandler handler, MapMouseEvent e,
-                                          EventType eventType ) {
+    public UndoableMapCommand getCommand(EditToolHandler handler, MapMouseEvent e,
+            EventType eventType) {
 
         return feedbackManager.getFeedbackCommand(handler, e, eventType);
 
     }
 
-    public void handleError( EditToolHandler handler, Throwable error, UndoableMapCommand command ) {
+    public void handleError(EditToolHandler handler, Throwable error, UndoableMapCommand command) {
         // TODO Auto-generated method stub
         error.printStackTrace();
     }

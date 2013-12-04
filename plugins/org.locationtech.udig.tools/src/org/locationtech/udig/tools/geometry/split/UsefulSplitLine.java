@@ -20,33 +20,32 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * Maintains the result of {@link UsefulSplitLineBuilder} process. 
+ * Maintains the result of {@link UsefulSplitLineBuilder} process.
  * <p>
  * The sub product of useful split line process is:
  * <ul>
- * <li>a collection of useful split line fragments</li> 
- * <li>remaining split line</li> 
+ * <li>a collection of useful split line fragments</li>
+ * <li>remaining split line</li>
  * </ul>
  * </p>
+ * 
  * @author Mauricio Pazos (www.axios.es)
  * @author Aritz Davila (www.axios.es)
  * @since 1.3.0
  */
 final class UsefulSplitLine {
 
-
-    /** fragment of split line that intersect with the polygon to split*/
+    /** fragment of split line that intersect with the polygon to split */
     private List<Geometry> usefulSplitLineFragments;
-    
-    /** split line which was not processed */ 
-    private Coordinate[] remaininSplitLine; 
 
+    /** split line which was not processed */
+    private Coordinate[] remaininSplitLine;
 
     public List<Geometry> getUsefulSplitLineFragments() {
         return usefulSplitLineFragments;
     }
 
-    public void setUsefulSplitLineFragments( List<Geometry> usefulSplitLineFragments ) {
+    public void setUsefulSplitLineFragments(List<Geometry> usefulSplitLineFragments) {
         this.usefulSplitLineFragments = usefulSplitLineFragments;
     }
 
@@ -54,13 +53,13 @@ final class UsefulSplitLine {
         return remaininSplitLine;
     }
 
-    public void setRemaininSplitLine( Coordinate[] remaininSplitLine ) {
+    public void setRemaininSplitLine(Coordinate[] remaininSplitLine) {
         this.remaininSplitLine = remaininSplitLine;
     }
-    
-    public UsefulSplitLine( List<Geometry> usefulSplitLineSegments,
-            Coordinate[] splitLineCoordsInPolygon ) {
-        
+
+    public UsefulSplitLine(List<Geometry> usefulSplitLineSegments,
+            Coordinate[] splitLineCoordsInPolygon) {
+
         this.usefulSplitLineFragments = usefulSplitLineSegments;
         this.remaininSplitLine = splitLineCoordsInPolygon;
     }

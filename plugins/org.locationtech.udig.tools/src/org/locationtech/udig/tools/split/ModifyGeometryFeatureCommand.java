@@ -37,6 +37,7 @@ import org.opengis.filter.identity.FeatureId;
 import com.vividsolutions.jts.geom.Geometry;
 
 import org.locationtech.udig.tools.geometry.internal.util.GeometryUtil;
+
 /**
  * Modify the geomety of feature
  * 
@@ -44,49 +45,43 @@ import org.locationtech.udig.tools.geometry.internal.util.GeometryUtil;
  * @author Aritz Davila (www.axios.es)
  */
 
-final class ModifyGeometryFeatureCommand extends AbstractEditCommand
-        implements
-            UndoableMapCommand {
+final class ModifyGeometryFeatureCommand extends AbstractEditCommand implements UndoableMapCommand {
 
     private final String fid;
+
     private final Geometry newGeometry;
+
     private final Geometry oldGeometry;
+
     private final ILayer layer;
-
-
 
     /**
      * New instance of ModifyGeometryFeatureCommand
      * 
-     * @param fid	feature id
+     * @param fid feature id
      * @param newGeometry the new geometry
      * @param oldGeometry the old geometry
-     * @param layer			the layer that contains the feature that will be update
+     * @param layer the layer that contains the feature that will be update
      */
-    public ModifyGeometryFeatureCommand( 
-    		final String fid,
-            final Geometry newGeometry, 
-            final Geometry oldGeometry,
-            final ILayer layer ) {
-        
+    public ModifyGeometryFeatureCommand(final String fid, final Geometry newGeometry,
+            final Geometry oldGeometry, final ILayer layer) {
+
         this.fid = fid;
         this.newGeometry = newGeometry;
         this.oldGeometry = oldGeometry;
         this.layer = layer;
     }
 
-
     public String getName() {
         return ModifyGeometryFeatureCommand.class.getName();
     }
 
-
     /**
      * 
      */
-    public void run( IProgressMonitor monitor ) throws Exception {
+    public void run(IProgressMonitor monitor) throws Exception {
         execute(monitor);
-        
+
     }
 
     /**
@@ -95,53 +90,42 @@ final class ModifyGeometryFeatureCommand extends AbstractEditCommand
      * @return true to be added in the undo stack
      * @throws Exception
      */
-    public boolean execute( IProgressMonitor monitor ) throws Exception {
-
+    public boolean execute(IProgressMonitor monitor) throws Exception {
 
         // modify the feature
-        modifyFeatureInStore(
-        		this.fid,
-                (Geometry) this.newGeometry, 
-                this.layer);
+        modifyFeatureInStore(this.fid, (Geometry) this.newGeometry, this.layer);
 
-        ProjectPlugin
-        .log(ModifyGeometryFeatureCommand.class.getName()
-                + " - Feature Modified: fid - "+ this.fid +" - "+  this.newGeometry.toText()); //$NON-NLS-1$ //$NON-NLS-2$
-        
-        return true; 
+        ProjectPlugin.log(ModifyGeometryFeatureCommand.class.getName()
+                + " - Feature Modified: fid - " + this.fid + " - " + this.newGeometry.toText()); //$NON-NLS-1$ //$NON-NLS-2$
+
+        return true;
     }
-    
+
     /**
      * back to the old geometry
      */
-    public void rollback( IProgressMonitor monitor ) throws Exception {
+    public void rollback(IProgressMonitor monitor) throws Exception {
 
-    	
-    	modifyFeatureInStore(this.fid, this.oldGeometry, this.layer);    
-    	
+        modifyFeatureInStore(this.fid, this.oldGeometry, this.layer);
+
     }
 
     /**
      * Find the feature on the store, and update its geometry.
      * 
-     * @param fidToUpdate
-     *            FID of the feature to be updated.
-     * @param geometry
-     *            The new geometry
-     * @param store
-     *            The feature store.
+     * @param fidToUpdate FID of the feature to be updated.
+     * @param geometry The new geometry
+     * @param store The feature store.
      * @throws SplitFeaturesCommandException if the feature cannot be modify
      */
-    private void modifyFeatureInStore(  final String fidToUpdate,
-                                        final Geometry geometry,
-                                        final ILayer layer) 
-                throws IOException {
+    private void modifyFeatureInStore(final String fidToUpdate, final Geometry geometry,
+            final ILayer layer) throws IOException {
 
         FeatureStore<SimpleFeatureType, SimpleFeature> store = layer.getResource(
                 FeatureStore.class, new NullProgressMonitor());
 
         GeometryDescriptor geomAttr = store.getSchema().getGeometryDescriptor();
-        Class< ? extends Geometry> expectedClass = (Class< ? extends Geometry>) geomAttr.getType()
+        Class<? extends Geometry> expectedClass = (Class<? extends Geometry>) geomAttr.getType()
                 .getBinding();
 
         Geometry adaptedGeom = GeometryUtil.adapt(newGeometry, expectedClass);
@@ -154,7 +138,5 @@ final class ModifyGeometryFeatureCommand extends AbstractEditCommand
 
         store.modifyFeatures(geomAttr, adaptedGeom, filter);
     }
-
-    
 
 }

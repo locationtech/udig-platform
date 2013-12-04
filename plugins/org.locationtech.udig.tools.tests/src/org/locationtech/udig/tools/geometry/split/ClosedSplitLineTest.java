@@ -35,24 +35,23 @@ public class ClosedSplitLineTest {
     @Test
     public void testClosedLines() throws Exception {
 
-	Geometry inputGeometry = (Geometry) SplitTestUtil
-		.read("POLYGON ((20 25, 30 15, 30 5, 20 -5, 10 5, 10 15, 20 25),  (15 15, 15 5, 25 5, 25 15, 15 15))"); //$NON-NLS-1$
+        Geometry inputGeometry = (Geometry) SplitTestUtil
+                .read("POLYGON ((20 25, 30 15, 30 5, 20 -5, 10 5, 10 15, 20 25),  (15 15, 15 5, 25 5, 25 15, 15 15))"); //$NON-NLS-1$
 
-	LineString line = (LineString) SplitTestUtil
-		.read("LINESTRING (15 15, 20 25, 25 15, 15 15)"); //$NON-NLS-1$
-	Assert.assertTrue(line.isClosed());
+        LineString line = (LineString) SplitTestUtil
+                .read("LINESTRING (15 15, 20 25, 25 15, 15 15)"); //$NON-NLS-1$
+        Assert.assertTrue(line.isClosed());
 
-	Geometry partA = SplitTestUtil
-		.read("POLYGON ((20 25, 30 15, 30 5, 20 -5, 10 5, 10 15, 20 25),  (20 25, 15 15, 15 5, 25 5, 25 15, 20 25))"); //$NON-NLS-1$
+        Geometry partA = SplitTestUtil
+                .read("POLYGON ((20 25, 30 15, 30 5, 20 -5, 10 5, 10 15, 20 25),  (20 25, 15 15, 15 5, 25 5, 25 15, 20 25))"); //$NON-NLS-1$
 
-	Geometry partB = SplitTestUtil
-		.read("POLYGON ((15 15, 20 25, 25 15, 15 15))"); //$NON-NLS-1$
+        Geometry partB = SplitTestUtil.read("POLYGON ((15 15, 20 25, 25 15, 15 15))"); //$NON-NLS-1$
 
-	List<Geometry> expectedParts = new ArrayList<Geometry>();
-	expectedParts.add(partA);
-	expectedParts.add(partB);
+        List<Geometry> expectedParts = new ArrayList<Geometry>();
+        expectedParts.add(partA);
+        expectedParts.add(partB);
 
-	SplitTestUtil.testSplitStrategy(inputGeometry, line, expectedParts);
+        SplitTestUtil.testSplitStrategy(inputGeometry, line, expectedParts);
 
     }
 }

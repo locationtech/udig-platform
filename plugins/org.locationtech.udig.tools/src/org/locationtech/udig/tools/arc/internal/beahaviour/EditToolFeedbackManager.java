@@ -26,16 +26,15 @@ import org.locationtech.udig.tools.edit.EventType;
  * Allows to control the user interface related feedback actions that take action while an EditTool
  * is being used.
  * <p>
- * This is needed as most of the time, feedback actions require to set up some
- * {@link IDrawCommand draw command} on the {@link ViewportPane}, and thus the life cycle of the
- * command is suck to the life cycle of the tool in use, so it is needed a shared access to the draw
- * command at the different tool actions, like accept, cancel, or other events.
+ * This is needed as most of the time, feedback actions require to set up some {@link IDrawCommand
+ * draw command} on the {@link ViewportPane}, and thus the life cycle of the command is suck to the
+ * life cycle of the tool in use, so it is needed a shared access to the draw command at the
+ * different tool actions, like accept, cancel, or other events.
  * </p>
  * <p>
  * Thus, implementations of this interface allows a single access point to an specific tool set of
- * feedback actions by setting up {@link EditToolFeedbackBehaviour}s,
- * {@link CancelFeedbakBehaviour}s and {@link AcceptFeedbackBehaviour}s sharing a common
- * EditToolFeedbackManager.
+ * feedback actions by setting up {@link EditToolFeedbackBehaviour}s, {@link CancelFeedbakBehaviour}
+ * s and {@link AcceptFeedbackBehaviour}s sharing a common EditToolFeedbackManager.
  * </p>
  * 
  * @author Aritz Davila (www.axios.es)
@@ -58,7 +57,7 @@ public interface EditToolFeedbackManager {
      *         {@link #getFeedbackCommand(EditToolHandler, MapMouseEvent, EventType)} method,
      *         <code>false</code> otherwise.
      */
-    public boolean isValid( EditToolHandler handler, MapMouseEvent event, EventType eventType );
+    public boolean isValid(EditToolHandler handler, MapMouseEvent event, EventType eventType);
 
     /**
      * Runs a specific feedback action (for example, drawing a shape) and returns an undoable map
@@ -75,8 +74,8 @@ public interface EditToolFeedbackManager {
      * @param eventType the type of mouse event being treated
      * @return and UndoableMapCommand if needed, <code>null</code> otherwise.
      */
-    public UndoableMapCommand getFeedbackCommand( EditToolHandler handler, MapMouseEvent event,
-                                                  EventType eventType );
+    public UndoableMapCommand getFeedbackCommand(EditToolHandler handler, MapMouseEvent event,
+            EventType eventType);
 
     /**
      * Executes the feedback action to be ran when the edit tool in course has been cancelled.
@@ -88,7 +87,7 @@ public interface EditToolFeedbackManager {
      * @param handler
      * @return
      */
-    public UndoableMapCommand getCancelCommand( EditToolHandler handler );
+    public UndoableMapCommand getCancelCommand(EditToolHandler handler);
 
     /**
      * Executes the feedback action to be ran when the edit tool in course has been cancelled.
@@ -96,5 +95,5 @@ public interface EditToolFeedbackManager {
      * @param handler
      * @return
      */
-    public UndoableMapCommand getAcceptCommand( EditToolHandler handler );
+    public UndoableMapCommand getAcceptCommand(EditToolHandler handler);
 }

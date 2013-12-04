@@ -45,44 +45,46 @@ import org.locationtech.udig.tools.edit.EventType;
  */
 public class SetReferenceFeatureBehaviour implements EventBehaviour {
 
-	ParallelContext	parallelContext	= null;
+    ParallelContext parallelContext = null;
 
-	public SetReferenceFeatureBehaviour(ParallelContext parallelContext) {
+    public SetReferenceFeatureBehaviour(ParallelContext parallelContext) {
 
-		this.parallelContext = parallelContext;
-	}
+        this.parallelContext = parallelContext;
+    }
 
-	public UndoableMapCommand getCommand(EditToolHandler handler, MapMouseEvent e, EventType eventType) {
+    public UndoableMapCommand getCommand(EditToolHandler handler, MapMouseEvent e,
+            EventType eventType) {
 
-		if (!isValid(handler, e, eventType)) {
-			throw new IllegalArgumentException("Behaviour is not valid for the current state"); //$NON-NLS-1$
-		}
+        if (!isValid(handler, e, eventType)) {
+            throw new IllegalArgumentException("Behaviour is not valid for the current state"); //$NON-NLS-1$
+        }
 
-		SetReferenceFeatureCommand cmd = new SetReferenceFeatureCommand(parallelContext, handler, e);
-		return cmd;
-	}
+        SetReferenceFeatureCommand cmd = new SetReferenceFeatureCommand(parallelContext, handler, e);
+        return cmd;
+    }
 
-	public void handleError(EditToolHandler handler, Throwable error, UndoableMapCommand command) {
+    public void handleError(EditToolHandler handler, Throwable error, UndoableMapCommand command) {
 
-		EditPlugin.log("", error); //$NON-NLS-1$
-	}
+        EditPlugin.log("", error); //$NON-NLS-1$
+    }
 
-	public boolean isValid(EditToolHandler handler, MapMouseEvent e, EventType eventType) {
+    public boolean isValid(EditToolHandler handler, MapMouseEvent e, EventType eventType) {
 
-		boolean legalState = handler.getCurrentState() == EditState.NONE
-					|| handler.getCurrentState() == EditState.MODIFYING;
-		boolean releaseButtonState = eventType == EventType.RELEASED;
-		boolean legalButton = e.button == MapMouseEvent.BUTTON1;
+        boolean legalState = handler.getCurrentState() == EditState.NONE
+                || handler.getCurrentState() == EditState.MODIFYING;
+        boolean releaseButtonState = eventType == EventType.RELEASED;
+        boolean legalButton = e.button == MapMouseEvent.BUTTON1;
 
-		if (!(legalState && releaseButtonState && legalButton)) {
-			return false;
-		}
+        if (!(legalState && releaseButtonState && legalButton)) {
+            return false;
+        }
 
-		if (PrecisionToolsUtil.isFeatureUnderCursor(handler, e) && parallelContext.getReferenceFeature() == null) {
-			return true;
-		}
+        if (PrecisionToolsUtil.isFeatureUnderCursor(handler, e)
+                && parallelContext.getReferenceFeature() == null) {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
 }

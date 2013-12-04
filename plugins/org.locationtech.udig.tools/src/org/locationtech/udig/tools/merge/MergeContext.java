@@ -46,12 +46,13 @@ public class MergeContext {
     private static final MergeContext THIS = new MergeContext();
 
     /**
-     * maintains the interaction selected by the user for merging features 	
+     * maintains the interaction selected by the user for merging features
      */
-	public static final int MERGEMODE_TOOL = 1;
-    public static final int MERGEMODE_OPERATION = 2;
-    private int mergeMode; 
+    public static final int MERGEMODE_TOOL = 1;
 
+    public static final int MERGEMODE_OPERATION = 2;
+
+    private int mergeMode;
 
     private Point bboxStartPoint = null;
 
@@ -64,6 +65,7 @@ public class MergeContext {
     private IToolContext toolContext = null;
 
     private List<SimpleFeature> preSelectedFeatures = Collections.emptyList();
+
     private ILayer preSelectedLayer = null;
 
     /**
@@ -217,7 +219,7 @@ public class MergeContext {
      * 
      * @return
      */
-    public  int getMergeMode() {
+    public int getMergeMode() {
         return mergeMode;
     }
 
@@ -228,7 +230,8 @@ public class MergeContext {
      * 
      * @param preSelectedFeatures
      */
-    public void addPreselectedFeatures(List<SimpleFeature> preSelectedFeatures, ILayer preSelectedLayer) {
+    public void addPreselectedFeatures(List<SimpleFeature> preSelectedFeatures,
+            ILayer preSelectedLayer) {
         this.preSelectedFeatures = preSelectedFeatures;
         this.preSelectedLayer = preSelectedLayer;
     }
@@ -243,7 +246,7 @@ public class MergeContext {
     public List<SimpleFeature> getPreselectedFeatures() {
         return preSelectedFeatures;
     }
-    
+
     public ILayer getPreSelectedLayer() {
         return preSelectedLayer;
     }

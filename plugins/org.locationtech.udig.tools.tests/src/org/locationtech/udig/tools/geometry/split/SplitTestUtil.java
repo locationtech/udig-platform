@@ -35,97 +35,94 @@ import com.vividsolutions.jts.io.WKTReader;
  */
 public class SplitTestUtil {
 
-    
-    private SplitTestUtil(){
+    private SplitTestUtil() {
         // utility class
     }
-    
-	public static Geometry read(final String wkt) throws ParseException, IllegalStateException {
 
-		WKTReader reader = new WKTReader();
-		Geometry geometry;
+    public static Geometry read(final String wkt) throws ParseException, IllegalStateException {
 
-		geometry = reader.read(wkt);
-		
-		if(!geometry.isValid()){
-		    throw new IllegalStateException("the geometry is not valid: " + geometry.toText() ); //$NON-NLS-1$
-		}
+        WKTReader reader = new WKTReader();
+        Geometry geometry;
 
-		return geometry;
-	}
+        geometry = reader.read(wkt);
 
-
-	/**
-	 * Execute the split strategy and evaluate its result
-	 * 
-	 * @param geomToSplit
-	 * @param splitLine
-	 * @param expectedParts
-	 * 
-	 * @return the split result
-	 */
-        public static List<Geometry> testSplitStrategy(
-        	final Geometry geomToSplit,
-    	    	final LineString splitLine, 
-    	    	final List<Geometry> expectedParts) {
-    
-        	final List<Geometry> splitResult = executeSplitStrategy(geomToSplit,splitLine);
-        
-        	assertEquals(expectedParts.size(), splitResult.size());
-        
-        	for (int i = 0; i < expectedParts.size(); i++) {
-        	    Geometry expectedPart = expectedParts.get(i);
-        	    expectedPart.normalize();
-        
-        	    boolean found = false;
-        	    for (int j = 0; j < splitResult.size(); j++) {
-        		Geometry fragment = splitResult.get(j);
-        		fragment.normalize();
-        		if (expectedPart.equals(fragment)) {
-        		    found = true;
-        		    assertTrue(fragment.isValid());
-        		    break;
-        		}
-        	    }
-        	    if (!found) {
-        		fail(expectedPart + " not found in " + splitResult); //$NON-NLS-1$
-        	    }
-        	}
-        
-        	return splitResult;
+        if (!geometry.isValid()) {
+            throw new IllegalStateException("the geometry is not valid: " + geometry.toText()); //$NON-NLS-1$
         }
 
-	public static List<Geometry> executeSplitStrategy(final Geometry geomTosplit, final LineString splitLine) {
-
-		final SplitStrategy splitOp = new SplitStrategy(splitLine);
-		List<Geometry> splitResult = new ArrayList<Geometry>();
-
-		if (splitOp.canSplit(geomTosplit)) {
-
-			splitResult = splitOp.split(geomTosplit);
-		}
-		return splitResult;
-	}
-
+        return geometry;
+    }
 
     /**
-     * Prints the features'attribute of the feature list 
+     * Execute the split strategy and evaluate its result
+     * 
+     * @param geomToSplit
+     * @param splitLine
+     * @param expectedParts
+     * 
+     * @return the split result
+     */
+    public static List<Geometry> testSplitStrategy(final Geometry geomToSplit,
+            final LineString splitLine, final List<Geometry> expectedParts) {
+
+        final List<Geometry> splitResult = executeSplitStrategy(geomToSplit, splitLine);
+
+        assertEquals(expectedParts.size(), splitResult.size());
+
+        for (int i = 0; i < expectedParts.size(); i++) {
+            Geometry expectedPart = expectedParts.get(i);
+            expectedPart.normalize();
+
+            boolean found = false;
+            for (int j = 0; j < splitResult.size(); j++) {
+                Geometry fragment = splitResult.get(j);
+                fragment.normalize();
+                if (expectedPart.equals(fragment)) {
+                    found = true;
+                    assertTrue(fragment.isValid());
+                    break;
+                }
+            }
+            if (!found) {
+                fail(expectedPart + " not found in " + splitResult); //$NON-NLS-1$
+            }
+        }
+
+        return splitResult;
+    }
+
+    public static List<Geometry> executeSplitStrategy(final Geometry geomTosplit,
+            final LineString splitLine) {
+
+        final SplitStrategy splitOp = new SplitStrategy(splitLine);
+        List<Geometry> splitResult = new ArrayList<Geometry>();
+
+        if (splitOp.canSplit(geomTosplit)) {
+
+            splitResult = splitOp.split(geomTosplit);
+        }
+        return splitResult;
+    }
+
+    /**
+     * Prints the features'attribute of the feature list
+     * 
      * @param featureList
      * @return the list of features ready to pring
      */
-    public static String prettyPrint( List<SimpleFeature> featureList ) {
+    public static String prettyPrint(List<SimpleFeature> featureList) {
 
         StringBuilder strBuilder = new StringBuilder("\n"); //$NON-NLS-1$
-        for( SimpleFeature f : featureList ) {
+        for (SimpleFeature f : featureList) {
             strBuilder.append("Feature Id -- Geometry: ").append(f.getID()) //$NON-NLS-1$
                     .append(" -- ").append(f.getDefaultGeometry()).append("\n"); //$NON-NLS-1$ //$NON-NLS-2$
         }
         return strBuilder.toString();
     }
-	
-	public static double convert(double degree) {
 
-		double radiant = (degree * Math.PI) / 180;
-		return radiant;
-	}
+    public static double convert(double degree) {
+
+        double radiant = (degree * Math.PI) / 180;
+        return radiant;
+    }
 }

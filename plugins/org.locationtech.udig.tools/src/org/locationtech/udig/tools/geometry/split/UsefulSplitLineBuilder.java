@@ -38,15 +38,15 @@ import org.locationtech.udig.tools.geometry.internal.util.GeometrySet;
 
 /**
  * <p>
- * Builds the useful split line. The useful split line is composed of split line fragments that intersect with the
- * polygon to split. Thus, the result of build will be presented as a {@link MultiLineString}, where each line intersect with
- * the polygon.
+ * Builds the useful split line. The useful split line is composed of split line fragments that
+ * intersect with the polygon to split. Thus, the result of build will be presented as a
+ * {@link MultiLineString}, where each line intersect with the polygon.
  * </p>
  * <p>
- * As subproduct, the build process provides the set of "Non Split Rings" and the {@link AdaptedPolygon}.
- * Non split rings are that rings which are not affected by the split line. The {@link AdaptedPolygon}
- * contains those additional vertexes resultant of the intersection of the polygon's boundaries with 
- * the split line. 
+ * As subproduct, the build process provides the set of "Non Split Rings" and the
+ * {@link AdaptedPolygon}. Non split rings are that rings which are not affected by the split line.
+ * The {@link AdaptedPolygon} contains those additional vertexes resultant of the intersection of
+ * the polygon's boundaries with the split line.
  * </p>
  * 
  * @author Mauricio Pazos (www.axios.es)
@@ -54,36 +54,35 @@ import org.locationtech.udig.tools.geometry.internal.util.GeometrySet;
  * @since 1.3.0
  */
 class UsefulSplitLineBuilder {
-    
-    
+
     /** Lines with less length than this, will be depreciated. */
-    public static final double         DEPRECIATE_VALUE    = 1.0E-4;
-    
+    public static final double DEPRECIATE_VALUE = 1.0E-4;
+
     /** The position of the initial point respect the polygon. */
-    private static final int            OUTSIDE             = 1;
-    private static final int            INSIDE              = -1;
-    private static final int            NONE                = 0;
+    private static final int OUTSIDE = 1;
+
+    private static final int INSIDE = -1;
+
+    private static final int NONE = 0;
 
     /** preserves the original split line */
     private final LineString originalSplitLine;
-    
+
     /** Store the lineStrings that fully intersect with the polygons and will form new features. */
-    private List<Geometry>              usefulSplitLineSegments        = new GeometryList<Geometry>();
-    
+    private List<Geometry> usefulSplitLineSegments = new GeometryList<Geometry>();
 
     /** The polygon with the start intersection coordinates added on it. */
-    private AdaptedPolygon                      adaptedPolygon = null;
+    private AdaptedPolygon adaptedPolygon = null;
 
-    private final GeometryFactory       geomFactory;
-    
+    private final GeometryFactory geomFactory;
+
     /**
      * Will store the rings that won't be modified by the split operation.
      */
-    private Set<LinearRing>             nonSplitRings       = new GeometrySet<LinearRing>();
+    private Set<LinearRing> nonSplitRings = new GeometrySet<LinearRing>();
 
-    /** Maintin the final result, this is the useful split line. */ 
-    private Geometry                    resultSplitLine = null;
-
+    /** Maintin the final result, this is the useful split line. */
+    private Geometry resultSplitLine = null;
 
     /**
      * @return rings that won't be modified by the split operation.
@@ -109,14 +108,11 @@ class UsefulSplitLineBuilder {
     /**
      * Assure the first coordinate lies outside the polygon.
      * 
-     * @param modifiedCoords
-     *            The split line coordinates.
-     * @param extBoundary
-     *            The exterior of the polygon.
-     * @return An array of coordinates which first coordinate start inside the
-     *         ring.
+     * @param modifiedCoords The split line coordinates.
+     * @param extBoundary The exterior of the polygon.
+     * @return An array of coordinates which first coordinate start inside the ring.
      */
-    private Coordinate[] beginOutside(Coordinate[] modifiedCoords,  Geometry extBoundary) {
+    private Coordinate[] beginOutside(Coordinate[] modifiedCoords, Geometry extBoundary) {
 
         // get the first position inside the are of the ring.
         Geometry polygonArea = this.geomFactory.createPolygon((LinearRing) extBoundary, null);
@@ -144,7 +140,7 @@ class UsefulSplitLineBuilder {
 
         // if there isn't any coordinate outside, and there isn't any
         // intersection with the exterior boundary, return.
-        if (outsidePos == -1 && ! interStrategy.foundIntersection()) {
+        if (outsidePos == -1 && !interStrategy.foundIntersection()) {
             return modifiedCoords;
         }
         int posFirstCoord;
@@ -157,47 +153,47 @@ class UsefulSplitLineBuilder {
             posFirstCoord = outsidePos;
         }
 
-        modifiedCoords = SplitUtil.createCoordinateArrayWithoutDuplicated(posFirstCoord, modifiedCoords.length - 1, modifiedCoords);
+        modifiedCoords = SplitUtil.createCoordinateArrayWithoutDuplicated(posFirstCoord,
+                modifiedCoords.length - 1, modifiedCoords);
 
         return modifiedCoords;
     }
-    
+
     /**
      * @see {{@link #newInstance()}
      */
-    private UsefulSplitLineBuilder(final LineString splitLine){
+    private UsefulSplitLineBuilder(final LineString splitLine) {
         this.originalSplitLine = splitLine;
         this.geomFactory = splitLine.getFactory();
     }
-    
+
     /**
      * 
      * @return New instance of {@link UsefulSplitLineBuilder}
      */
-    public static final UsefulSplitLineBuilder newInstance(final LineString splitLine){
-        
+    public static final UsefulSplitLineBuilder newInstance(final LineString splitLine) {
+
         UsefulSplitLineBuilder splitWrapper = new UsefulSplitLineBuilder(splitLine);
-        
+
         return splitWrapper;
     }
-    
 
     /**
-     * This method will create a new lineString. This lineString will be the
-     * useful part to be used when creating the graph.
+     * This method will create a new lineString. This lineString will be the useful part to be used
+     * when creating the graph.
      * 
      * @param polygon
-     * @return The useful part of the lineString, that means, the part of the
-     *         line that intersects with the feature and its interior. Null if there
-     *         is not intersection.
+     * @return The useful part of the lineString, that means, the part of the line that intersects
+     *         with the feature and its interior. Null if there is not intersection.
      */
     public void build(final Polygon polygon) {
 
         this.adaptedPolygon = new AdaptedPolygon(polygon);
-        Geometry usefulSplitLines = createUsefulSplitLine(this.originalSplitLine, this.adaptedPolygon);
-        assert usefulSplitLines != null:  "must be at least one split line."; //$NON-NLS-1$
+        Geometry usefulSplitLines = createUsefulSplitLine(this.originalSplitLine,
+                this.adaptedPolygon);
+        assert usefulSplitLines != null : "must be at least one split line."; //$NON-NLS-1$
 
-        this.resultSplitLine  = null;
+        this.resultSplitLine = null;
         if (usefulSplitLines instanceof LineString) {
 
             List<Geometry> ccwLines = new ArrayList<Geometry>();
@@ -237,10 +233,8 @@ class UsefulSplitLineBuilder {
     /**
      * Reverse the given coordinates, and return the resultant lineString.
      * 
-     * @param intersectionCoordinates
-     *            Coordinates from a lineString.
-     * @param geomFactory
-     *            Geometry factory.
+     * @param intersectionCoordinates Coordinates from a lineString.
+     * @param geomFactory Geometry factory.
      * @return The geometry built.
      */
     private Geometry reverseLineString(Coordinate[] intersectionCoordinates) {
@@ -250,7 +244,6 @@ class UsefulSplitLineBuilder {
 
         return geomFactory.createLineString(intersectionCoordinates);
     }
-    
 
     /**
      * <pre>
@@ -282,36 +275,41 @@ class UsefulSplitLineBuilder {
      * @param splitLine The lineString that would be checked.
      * @param adaptedPolygon (i/o) The polygon for checking.
      * 
-     * @return The collection of pieces of split line. Null if there is not an useful split line part
+     * @return The collection of pieces of split line. Null if there is not an useful split line
+     *         part
      */
-    public Geometry createUsefulSplitLine( final LineString splitLine, final AdaptedPolygon adaptedPolygon) {
-   
+    public Geometry createUsefulSplitLine(final LineString splitLine,
+            final AdaptedPolygon adaptedPolygon) {
+
         // does a defensive copy of coordinate
         final Coordinate[] clonedSplitLineCoord = cloneCoordinate(splitLine.getCoordinates());
 
         // The line is reduced, discarding the points that won't split the polygon.
-        Coordinate[] adaptedSplitLine = discardSplitLineSegmentAdaptingPolygon(clonedSplitLineCoord, splitLine , adaptedPolygon);
-        
+        Coordinate[] adaptedSplitLine = discardSplitLineSegmentAdaptingPolygon(
+                clonedSplitLineCoord, splitLine, adaptedPolygon);
+
         UsefulSplitLine useful = new UsefulSplitLine(this.usefulSplitLineSegments, adaptedSplitLine);
 
         // finds where the first coordinate lies. It could be outside the
-        // feature, or if it has rings, it could lie inside a ring. 
+        // feature, or if it has rings, it could lie inside a ring.
         int location = whereIsFirstSplitLineCoord(adaptedSplitLine, adaptedPolygon);
 
         if (location == OUTSIDE) {
             // start from the outside of the polygon and go through the line.
             useful = makeUsefulSplitLineFromOutsidePolygon(adaptedPolygon, useful);
-            
+
             // once it done, if still are coordinates for going through
             // them, check if there are some holes intersection.
-            if (useful.getRemaininSplitLine().length > 0 && adaptedPolygon.asPolygon().getNumInteriorRing() > 0) {
+            if (useful.getRemaininSplitLine().length > 0
+                    && adaptedPolygon.asPolygon().getNumInteriorRing() > 0) {
 
-                useful =makeUsefulSplitLineFromInsidePolygon(adaptedPolygon, useful);
+                useful = makeUsefulSplitLineFromInsidePolygon(adaptedPolygon, useful);
             }
             this.usefulSplitLineSegments = useful.getUsefulSplitLineFragments();
-            
-            this.nonSplitRings = extractNonSplitHolesFromPolygon(adaptedPolygon, this.usefulSplitLineSegments, this.nonSplitRings );
-            
+
+            this.nonSplitRings = extractNonSplitHolesFromPolygon(adaptedPolygon,
+                    this.usefulSplitLineSegments, this.nonSplitRings);
+
         } else {
 
             // start from the inside of one of the rings.
@@ -323,28 +321,23 @@ class UsefulSplitLineBuilder {
                 this.usefulSplitLineSegments = useful.getUsefulSplitLineFragments();
             }
         }
-        if( this.usefulSplitLineSegments.size() > 0 ){
+        if (this.usefulSplitLineSegments.size() > 0) {
             return geomFactory.buildGeometry(this.usefulSplitLineSegments);
         } else {
             return null;
         }
     }
 
-
     /**
-     * Will get a ring, and check if that ring is intersected with any of the
-     * lines. If it doesn't intersect, this ring will be a non-split ring.
+     * Will get a ring, and check if that ring is intersected with any of the lines. If it doesn't
+     * intersect, this ring will be a non-split ring.
      * 
-     * @param adapted
-     *            The original polygon.
-     * @param splitLineSegments
-     *            Geometry factory.
-     * @param nonSplitRings 
+     * @param adapted The original polygon.
+     * @param splitLineSegments Geometry factory.
+     * @param nonSplitRings
      */
-    private Set<LinearRing> extractNonSplitHolesFromPolygon(
-            final AdaptedPolygon adapted, 
-            final List<Geometry> splitLineSegments, 
-            Set<LinearRing> nonSplitRings) {
+    private Set<LinearRing> extractNonSplitHolesFromPolygon(final AdaptedPolygon adapted,
+            final List<Geometry> splitLineSegments, Set<LinearRing> nonSplitRings) {
 
         Polygon polygon = adapted.asPolygon();
         // get the hole rings, and check if any ring is never intersected by those
@@ -364,8 +357,8 @@ class UsefulSplitLineBuilder {
                 // must be a point or multiPoint, and not a LineString
                 Geometry intersection = eachLine.intersection(holeRing);
                 if (eachLine.intersects(holeRing)
-                            && !(intersection instanceof LineString || intersection instanceof MultiLineString)
-                            && !eachLine.touches(polygonRing)) {
+                        && !(intersection instanceof LineString || intersection instanceof MultiLineString)
+                        && !eachLine.touches(polygonRing)) {
 
                     intersects = true;
                     break;
@@ -380,7 +373,6 @@ class UsefulSplitLineBuilder {
         return nonSplitRings;
     }
 
-    
     /**
      * <pre>
      * 
@@ -399,14 +391,13 @@ class UsefulSplitLineBuilder {
      * 
      * </pre>
      * 
-     * @param adapt
-     *            (i/o) The polygon feature.
-     * @param usefulSplitLine
-     *            (i/o) useful Split line.
+     * @param adapt (i/o) The polygon feature.
+     * @param usefulSplitLine (i/o) useful Split line.
      * @return The list of useful split line.
      */
-    private UsefulSplitLine makeUsefulSplitLineFromInsidePolygon(AdaptedPolygon adapt, UsefulSplitLine usefulSplitLine) {
-        
+    private UsefulSplitLine makeUsefulSplitLineFromInsidePolygon(AdaptedPolygon adapt,
+            UsefulSplitLine usefulSplitLine) {
+
         // go through the line finding intersections with rings and sorting
         Polygon polygon = adapt.asPolygon();
         Coordinate[] splitLineCoords = usefulSplitLine.getRemaininSplitLine();
@@ -420,17 +411,18 @@ class UsefulSplitLineBuilder {
 
             if (splitLineCoords.length > 1) {
                 // the coordinates will begin inside the ring.
-                splitLineCoords = beginInsideRing(splitLineCoords,  hole);
+                splitLineCoords = beginInsideRing(splitLineCoords, hole);
                 // a valid hole must be intersected by the line twice.
                 // find interior intersections.
 
-                int numIntIntersection = SplitUtil.countIntersectionsFromPosition(0, splitLineCoords, hole);
+                int numIntIntersection = SplitUtil.countIntersectionsFromPosition(0,
+                        splitLineCoords, hole);
 
                 if (numIntIntersection >= 2) {
 
                     usefulSplitLine = extractUsefulSplitLine(hole, usefulSplitLine, adapt);
                     splitLineCoords = usefulSplitLine.getRemaininSplitLine();
-                    
+
                 } else {
                     // not valid ring. Add to the list.
                     this.nonSplitRings.add(hole);
@@ -439,7 +431,7 @@ class UsefulSplitLineBuilder {
                 this.nonSplitRings.add(hole);
             }
         }
-        
+
         // There are some rings that had been added to nonSplitRings
         // because the line was entirely covered, but those rings, intersect
         // with the line and the haven't got a chance of been tested.
@@ -458,15 +450,14 @@ class UsefulSplitLineBuilder {
                 }
             }
         }
-        this.nonSplitRings.removeAll((Collection< ? >) correctSplitRings);
-        
+        this.nonSplitRings.removeAll((Collection<?>) correctSplitRings);
+
         usefulSplitLine.setRemaininSplitLine(splitLineCoords);
-        
+
         usefulSplitLine.setUsefulSplitLineFragments(usefulSplitLineSegments);
-        
+
         return usefulSplitLine;
     }
-
 
     /**
      * <pre>
@@ -481,7 +472,7 @@ class UsefulSplitLineBuilder {
      * @param polygon
      * @return The interior rings sorted.
      */
-    private Set<LinearRing> sortRing(Coordinate[] shortCoords,  Polygon polygon) {
+    private Set<LinearRing> sortRing(Coordinate[] shortCoords, Polygon polygon) {
 
         Set<LinearRing> sortedRings = new LinkedHashSet<LinearRing>();
 
@@ -499,7 +490,8 @@ class UsefulSplitLineBuilder {
             // go through the rings, and for each one, get the intersection, and
             // calculate which one is the nearest respect the beginning of the
             // segment.
-            Map<LinearRing, Double> ringsDistance = RingUtil.setRingWithClosestIntersectionDistance(rings, segment, lineSegment);
+            Map<LinearRing, Double> ringsDistance = RingUtil
+                    .setRingWithClosestIntersectionDistance(rings, segment, lineSegment);
 
             sortedRings = addClosestRings(sortedRings, ringsDistance);
 
@@ -507,7 +499,7 @@ class UsefulSplitLineBuilder {
 
         return sortedRings;
     }
-    
+
     /**
      * <pre>
      * Recursive function.
@@ -518,13 +510,12 @@ class UsefulSplitLineBuilder {
      * 
      * </pre>
      * 
-     * @param sortedRings
-     *            Set of ring sorted.
-     * @param ringsDistance
-     *            Map with rings linked with closest distance.
+     * @param sortedRings Set of ring sorted.
+     * @param ringsDistance Map with rings linked with closest distance.
      * @return Set of rings, ordered depending the given distance.
      */
-    private Set<LinearRing> addClosestRings(Set<LinearRing> sortedRings, Map<LinearRing, Double> ringsDistance) {
+    private Set<LinearRing> addClosestRings(Set<LinearRing> sortedRings,
+            Map<LinearRing, Double> ringsDistance) {
 
         if (ringsDistance.size() > 0) {
             // calculate which one has the closest distance
@@ -544,7 +535,7 @@ class UsefulSplitLineBuilder {
                     candidateRing = eachEntry.getKey();
                 }
             }
-            sortedRings.add( candidateRing);
+            sortedRings.add(candidateRing);
             ringsDistance.remove(candidateRing);
 
             sortedRings = addClosestRings(sortedRings, ringsDistance);
@@ -552,20 +543,16 @@ class UsefulSplitLineBuilder {
 
         return sortedRings;
     }
-        
+
     /**
      * Assures the first coordinate lies inside any of the polygon rings.
      * 
-     * @param modifiedCoords
-     *            The split line coordinates.
-     * @param gf
-     *            Geometry factory.
-     * @param ring
-     *            An interior ring.
-     * @return An array of coordinates which first coordinate start inside the
-     *         ring.
+     * @param modifiedCoords The split line coordinates.
+     * @param gf Geometry factory.
+     * @param ring An interior ring.
+     * @return An array of coordinates which first coordinate start inside the ring.
      */
-    private Coordinate[] beginInsideRing(Coordinate[] modifiedCoords,  Geometry ring) {
+    private Coordinate[] beginInsideRing(Coordinate[] modifiedCoords, Geometry ring) {
 
         // get the first position inside the are of the ring.
         Polygon ringArea = this.geomFactory.createPolygon((LinearRing) ring, null);
@@ -575,7 +562,8 @@ class UsefulSplitLineBuilder {
 
             Coordinate point = modifiedCoords[a];
 
-            if (ringArea.contains(this.geomFactory.createPoint(point)) || ringArea.getExteriorRing().contains(geomFactory.createPoint(point))) {
+            if (ringArea.contains(this.geomFactory.createPoint(point))
+                    || ringArea.getExteriorRing().contains(geomFactory.createPoint(point))) {
                 // thats the first point.
                 // from that coordinate seek if there are 2
                 // intersections with the interior boundary.
@@ -588,7 +576,7 @@ class UsefulSplitLineBuilder {
         interStrategy.findFirstIntersection(modifiedCoords, ring);
         Coordinate firstIntersectionCoord = interStrategy.getIntersection();
         int firstIntersectionPosition = interStrategy.getIntersectionPosition();
-        
+
         // if there isn't any coordinate inside, and there isn't any
         // intersection with this interior ring, return.
         if (outsidePos == -1 && !interStrategy.foundIntersection()) {
@@ -605,12 +593,10 @@ class UsefulSplitLineBuilder {
             posFirstCoord = outsidePos;
         }
 
-        modifiedCoords = SplitUtil.createCoordinateArrayWithoutDuplicated(posFirstCoord, modifiedCoords.length - 1, modifiedCoords);
+        modifiedCoords = SplitUtil.createCoordinateArrayWithoutDuplicated(posFirstCoord,
+                modifiedCoords.length - 1, modifiedCoords);
         return modifiedCoords;
     }
-    
-        
-
 
     /**
      * <pre>
@@ -623,24 +609,22 @@ class UsefulSplitLineBuilder {
      * 
      * </pre>
      * 
-     * @param adapted
-     *             (i/o)The polygon feature.
-     * @param remainingCoords
-     *            (i/o) The split line coordinates.
-     *            
+     * @param adapted (i/o)The polygon feature.
+     * @param remainingCoords (i/o) The split line coordinates.
+     * 
      * @return The remaining coordinates of the split line.
      */
-    private UsefulSplitLine makeUsefulSplitLineFromOutsidePolygon( 
-            AdaptedPolygon  adapted,
+    private UsefulSplitLine makeUsefulSplitLineFromOutsidePolygon(AdaptedPolygon adapted,
             UsefulSplitLine useful) {
 
         Coordinate[] remainingCoords = useful.getRemaininSplitLine();
-        
+
         Polygon polygon = adapted.asPolygon();
         LineString extBoundary = polygon.getExteriorRing();
         // start from the outside of the geometry.
-        remainingCoords = beginOutside(remainingCoords,  extBoundary);
-        int numIntIntersection = SplitUtil.countIntersectionsFromPosition(0, remainingCoords,  extBoundary);
+        remainingCoords = beginOutside(remainingCoords, extBoundary);
+        int numIntIntersection = SplitUtil.countIntersectionsFromPosition(0, remainingCoords,
+                extBoundary);
         if (numIntIntersection >= 2) {
             useful.setRemaininSplitLine(remainingCoords);
             useful = extractUsefulSplitLine((LinearRing) extBoundary, useful, adapted);
@@ -648,39 +632,39 @@ class UsefulSplitLineBuilder {
 
         return useful;
     }
-       
-    
+
     /**
      * Discards those segments of the line which won't affect the polygon.
      * 
-     * @param pieceOfBoundary           Boundary of the polygon. It could be the exterior ring or internal ring
-     * @param usefulSplitLine             
-     * @param adaptedPolygon            (i/o) additional vertex are added as result of this method. 
+     * @param pieceOfBoundary Boundary of the polygon. It could be the exterior ring or internal
+     *        ring
+     * @param usefulSplitLine
+     * @param adaptedPolygon (i/o) additional vertex are added as result of this method.
      * 
      * 
      * @return The list of useful split line.
      */
-    private UsefulSplitLine  extractUsefulSplitLine( 
-            final LinearRing pieceOfBoundary,
-            final UsefulSplitLine usefulSplitLine,
-            AdaptedPolygon adaptedPolygon) {
+    private UsefulSplitLine extractUsefulSplitLine(final LinearRing pieceOfBoundary,
+            final UsefulSplitLine usefulSplitLine, AdaptedPolygon adaptedPolygon) {
 
         Coordinate[] remainingSplitLine = usefulSplitLine.getRemaininSplitLine();
         List<Geometry> usefulSplitLineFragmentList = usefulSplitLine.getUsefulSplitLineFragments();
-        
-        // does a defensive copy of adapted polygon. The adapted polygon will be modified only if 
-        // the piece of boundary intersect with a fragment of useful split line (that intersect with the polygon).
-        AdaptedPolygon  clonedPolygon = (AdaptedPolygon) adaptedPolygon.clone();
+
+        // does a defensive copy of adapted polygon. The adapted polygon will be modified only if
+        // the piece of boundary intersect with a fragment of useful split line (that intersect with
+        // the polygon).
+        AdaptedPolygon clonedPolygon = (AdaptedPolygon) adaptedPolygon.clone();
         Polygon polygon = clonedPolygon.asPolygon();
-        
+
         // Search the pieces of split line that are between the first and second intersection.
         // If that piece of split line intersect with the polygon it is an useful line part.
-        int secondSegmentPosition = 0; 
-        Coordinate secondIntersection= null;
+        int secondSegmentPosition = 0;
+        Coordinate secondIntersection = null;
 
-        LineBoundaryIntersectionAssociation interSegmentList = new LineBoundaryIntersectionAssociation(remainingSplitLine.clone(), pieceOfBoundary);
-        while(  ((interSegmentList.countIntersections() - interSegmentList.getVisitedIntersection() ) >= 2) ){
-            
+        LineBoundaryIntersectionAssociation interSegmentList = new LineBoundaryIntersectionAssociation(
+                remainingSplitLine.clone(), pieceOfBoundary);
+        while (((interSegmentList.countIntersections() - interSegmentList.getVisitedIntersection()) >= 2)) {
+
             // search the next two intersections.
             interSegmentList.moveNextIntersection();
             int firstSegmentPosition = interSegmentList.getIntersectionSegmentPosition();
@@ -688,37 +672,42 @@ class UsefulSplitLineBuilder {
             final LineString firstRingSegment = interSegmentList.getRingSegment();
 
             interSegmentList.moveNextIntersection();
-            secondSegmentPosition =  interSegmentList.getIntersectionSegmentPosition(); 
+            secondSegmentPosition = interSegmentList.getIntersectionSegmentPosition();
             secondIntersection = interSegmentList.getIntersection();
             final LineString secondRingSegment = interSegmentList.getRingSegment();
 
             // adapt the polygon inserting the intersection points
-            clonedPolygon.insertVertex(pieceOfBoundary, firstRingSegment, firstIntersection );
-            clonedPolygon.insertVertex(pieceOfBoundary, secondRingSegment, secondIntersection );
+            clonedPolygon.insertVertex(pieceOfBoundary, firstRingSegment, firstIntersection);
+            clonedPolygon.insertVertex(pieceOfBoundary, secondRingSegment, secondIntersection);
             polygon = clonedPolygon.asPolygon();
 
             // build the candidate split line fragment
-            LineString candidateSplitLineFragment = interSegmentList.buildLineBetweenIntersectionPoints(firstSegmentPosition, firstIntersection, secondSegmentPosition, secondIntersection);
+            LineString candidateSplitLineFragment = interSegmentList
+                    .buildLineBetweenIntersectionPoints(firstSegmentPosition, firstIntersection,
+                            secondSegmentPosition, secondIntersection);
 
-            // if the pieceCoords intersects with the polygon, then add in the extractedSegmentLines list
-            if( segmentsIntersectsPolygon(candidateSplitLineFragment, polygon) ){ 
-                    
+            // if the pieceCoords intersects with the polygon, then add in the extractedSegmentLines
+            // list
+            if (segmentsIntersectsPolygon(candidateSplitLineFragment, polygon)) {
+
                 usefulSplitLineFragmentList.add(candidateSplitLineFragment);
-                
-                // update the resultant adapted polygon with those intersection point that below to the useful segment
-                adaptedPolygon.insertVertex(pieceOfBoundary, firstRingSegment, firstIntersection );
-                adaptedPolygon.insertVertex(pieceOfBoundary, secondRingSegment, secondIntersection );
+
+                // update the resultant adapted polygon with those intersection point that below to
+                // the useful segment
+                adaptedPolygon.insertVertex(pieceOfBoundary, firstRingSegment, firstIntersection);
+                adaptedPolygon.insertVertex(pieceOfBoundary, secondRingSegment, secondIntersection);
             }
             // move to previous intersection in order to analyze the next
-            interSegmentList.moveBackIntersection(); 
+            interSegmentList.moveBackIntersection();
         } // end while
-        // remove the processed split line fragment from remaining split line
-        remainingSplitLine = removeProcessedSegment(interSegmentList, secondSegmentPosition, secondIntersection, remainingSplitLine);
-        
+          // remove the processed split line fragment from remaining split line
+        remainingSplitLine = removeProcessedSegment(interSegmentList, secondSegmentPosition,
+                secondIntersection, remainingSplitLine);
+
         // set the resultant split line fragments and the rest of line
         usefulSplitLine.setUsefulSplitLineFragments(usefulSplitLineFragmentList);
         usefulSplitLine.setRemaininSplitLine(remainingSplitLine);
-        
+
         return usefulSplitLine;
     }
 
@@ -731,20 +720,23 @@ class UsefulSplitLineBuilder {
      * @param remainingSplitLineCoords
      * @return the remaining split line
      */
-    private Coordinate[] removeProcessedSegment( 
-            final LineBoundaryIntersectionAssociation   interSegmentList,
-            final int                                   segmentPosition, 
-            final Coordinate                            intersection, 
-            Coordinate[]                                remainingSplitLineCoords ) {
+    private Coordinate[] removeProcessedSegment(
+            final LineBoundaryIntersectionAssociation interSegmentList, final int segmentPosition,
+            final Coordinate intersection, Coordinate[] remainingSplitLineCoords) {
 
-        // remove the headers coordinates until the current segment (included) from the remaining split line
-        LineString splitLineFragment = interSegmentList.getSplitLineSegment( segmentPosition );
-        remainingSplitLineCoords = cutRemaininigSplitLine(splitLineFragment , remainingSplitLineCoords);
-        if( remainingSplitLineCoords.length > 0 ){
-            // the segment is reduced using the second intersection point 
-            Coordinate[] reducedSplitLineFragment =  SplitUtil.replaceCoordinate(0, intersection, splitLineFragment.getCoordinates());
-            reducedSplitLineFragment = SplitUtil.createCoordinateArrayWithoutDuplicated(0, reducedSplitLineFragment.length - 1 , reducedSplitLineFragment);
-            remainingSplitLineCoords = SplitUtil.mergeCoordinate( reducedSplitLineFragment, remainingSplitLineCoords);
+        // remove the headers coordinates until the current segment (included) from the remaining
+        // split line
+        LineString splitLineFragment = interSegmentList.getSplitLineSegment(segmentPosition);
+        remainingSplitLineCoords = cutRemaininigSplitLine(splitLineFragment,
+                remainingSplitLineCoords);
+        if (remainingSplitLineCoords.length > 0) {
+            // the segment is reduced using the second intersection point
+            Coordinate[] reducedSplitLineFragment = SplitUtil.replaceCoordinate(0, intersection,
+                    splitLineFragment.getCoordinates());
+            reducedSplitLineFragment = SplitUtil.createCoordinateArrayWithoutDuplicated(0,
+                    reducedSplitLineFragment.length - 1, reducedSplitLineFragment);
+            remainingSplitLineCoords = SplitUtil.mergeCoordinate(reducedSplitLineFragment,
+                    remainingSplitLineCoords);
         }
         return remainingSplitLineCoords;
     }
@@ -755,52 +747,54 @@ class UsefulSplitLineBuilder {
      * @param splitLineFragment
      * @param remainingSplitLine
      * 
-     * @return a new coordinate array 
+     * @return a new coordinate array
      */
-    private Coordinate[] cutRemaininigSplitLine( 
-            final LineString splitLineFragment,
-            final Coordinate[] remainingSplitLine ) {
-        
+    private Coordinate[] cutRemaininigSplitLine(final LineString splitLineFragment,
+            final Coordinate[] remainingSplitLine) {
+
         // search the coordinates of the segment in the position indeed
-        int lastCoord = splitLineFragment.getNumPoints()-1;
-        int lastCoordPosition =  CoordinateArrays.indexOf(splitLineFragment.getCoordinateN(lastCoord), remainingSplitLine);
+        int lastCoord = splitLineFragment.getNumPoints() - 1;
+        int lastCoordPosition = CoordinateArrays.indexOf(
+                splitLineFragment.getCoordinateN(lastCoord), remainingSplitLine);
 
         // copy the coordinates which follow the last coordinate of split line fragment
-        Coordinate[] newRemainingSplitLine; 
-        
-        if(lastCoordPosition < (remainingSplitLine.length - 1) ){
+        Coordinate[] newRemainingSplitLine;
+
+        if (lastCoordPosition < (remainingSplitLine.length - 1)) {
             // copy the rest of coordinates from the first coordinate of referenced segment.
-            newRemainingSplitLine = SplitUtil.createCoordinateArrayWithoutDuplicated(lastCoordPosition, remainingSplitLine.length -1 , remainingSplitLine);
+            newRemainingSplitLine = SplitUtil.createCoordinateArrayWithoutDuplicated(
+                    lastCoordPosition, remainingSplitLine.length - 1, remainingSplitLine);
         } else {
             newRemainingSplitLine = new Coordinate[0];
         }
         return newRemainingSplitLine;
     }
-    private boolean segmentsIntersectsPolygon(final  LineString usefulSegment, final Polygon polygon ) {
-        
+
+    private boolean segmentsIntersectsPolygon(final LineString usefulSegment, final Polygon polygon) {
+
         Geometry intersection = polygon.intersection(usefulSegment);
 
         return SplitUtil.containsLineString(intersection);
     }
 
-
     /**
-     * Checks where lies the first coordinate, it could be outside the polygon or
-     * inside any of the ring. If the first doesn't lie in any of the described
-     * places, check the next coordinate.
+     * Checks where lies the first coordinate, it could be outside the polygon or inside any of the
+     * ring. If the first doesn't lie in any of the described places, check the next coordinate.
      * 
      * TODO refactoring: improve the legibility structuring this method.
-     *  
+     * 
      * @param shortCoords
      * @param adaptedPolygon
      * 
      * @return Where it lies, it could be, outside, inside, of none of them.
      */
-    private int whereIsFirstSplitLineCoord(final Coordinate[] shortCoords, final AdaptedPolygon adaptedPolygon) {
+    private int whereIsFirstSplitLineCoord(final Coordinate[] shortCoords,
+            final AdaptedPolygon adaptedPolygon) {
 
         Polygon polygon = adaptedPolygon.asPolygon();
-        
-        Geometry polygonArea = this.geomFactory.createPolygon((LinearRing) polygon.getExteriorRing(), null);
+
+        Geometry polygonArea = this.geomFactory.createPolygon(
+                (LinearRing) polygon.getExteriorRing(), null);
 
         for (int i = 0; i < shortCoords.length - 2; i++) {
 
@@ -813,7 +807,8 @@ class UsefulSplitLineBuilder {
             // check it lies inside any holes.
             for (int j = 0; j < polygon.getNumInteriorRing(); j++) {
 
-                Geometry ringArea = this.geomFactory.createPolygon((LinearRing) polygon.getInteriorRingN(j), null);
+                Geometry ringArea = this.geomFactory.createPolygon(
+                        (LinearRing) polygon.getInteriorRingN(j), null);
                 if (ringArea.contains(this.geomFactory.createPoint(shortCoords[i]))) {
 
                     // lies inside a ring.
@@ -834,7 +829,8 @@ class UsefulSplitLineBuilder {
 
                 Coordinate pointToTest = intersection.getGeometryN(j).getCoordinate();
 
-                distance = SplitUtil.calculateDistanceFromFirst(pointToTest, segCoords[0], segCoords[1]);
+                distance = SplitUtil.calculateDistanceFromFirst(pointToTest, segCoords[0],
+                        segCoords[1]);
 
                 if (Math.abs(distance) < minExtDistance) {
                     minExtDistance = Math.abs(distance);
@@ -853,7 +849,8 @@ class UsefulSplitLineBuilder {
 
                     Coordinate pointToTest = intersection.getGeometryN(h).getCoordinate();
 
-                    distance = SplitUtil.calculateDistanceFromFirst(pointToTest, segCoords[0], segCoords[1]);
+                    distance = SplitUtil.calculateDistanceFromFirst(pointToTest, segCoords[0],
+                            segCoords[1]);
 
                     if (Math.abs(distance) < minRingDistance) {
                         minRingDistance = Math.abs(distance);
@@ -869,7 +866,8 @@ class UsefulSplitLineBuilder {
         }
 
         // calculate the last coordinate where it lies.
-        if (!polygonArea.contains(this.geomFactory.createPoint(shortCoords[shortCoords.length - 1]))) {
+        if (!polygonArea
+                .contains(this.geomFactory.createPoint(shortCoords[shortCoords.length - 1]))) {
 
             // It lies outside the polygon.
             // Start with the exterior of the polygon.
@@ -878,8 +876,10 @@ class UsefulSplitLineBuilder {
         // check it lies inside any holes.
         for (int j = 0; j < polygon.getNumInteriorRing(); j++) {
 
-            Geometry ringArea = this.geomFactory.createPolygon((LinearRing) polygon.getInteriorRingN(j), null);
-            if (ringArea.contains(this.geomFactory.createPoint(shortCoords[shortCoords.length - 1]))) {
+            Geometry ringArea = this.geomFactory.createPolygon(
+                    (LinearRing) polygon.getInteriorRingN(j), null);
+            if (ringArea
+                    .contains(this.geomFactory.createPoint(shortCoords[shortCoords.length - 1]))) {
 
                 // lies inside a ring.
                 return INSIDE;
@@ -887,9 +887,6 @@ class UsefulSplitLineBuilder {
         }
         return NONE;
     }
-
-    
-
 
     /**
      * Make a copy of the coordinates.
@@ -905,7 +902,6 @@ class UsefulSplitLineBuilder {
         }
         return cloneCoordinates;
     }
-    
 
     /**
      * <pre>
@@ -922,23 +918,24 @@ class UsefulSplitLineBuilder {
      * @param lineCoords
      * @param splitLine
      * @param adaptedPolygon (i/o)
-     * @return The piece of lineString that starts and ends outside the
-     *         boundary.
+     * @return The piece of lineString that starts and ends outside the boundary.
      */
-    private Coordinate[] discardSplitLineSegmentAdaptingPolygon(Coordinate[] lineCoords, LineString splitLine, AdaptedPolygon adaptedPolygon) {
+    private Coordinate[] discardSplitLineSegmentAdaptingPolygon(Coordinate[] lineCoords,
+            LineString splitLine, AdaptedPolygon adaptedPolygon) {
 
         Polygon polygon = adaptedPolygon.asPolygon();
-        
+
         int posFirstCoord = 0;
         int posLastCoord = lineCoords.length - 1;
-        
+
         Geometry boundary = polygon.getBoundary();
 
-        int firstOutsidePosition = SplitUtil.findPositionOfFirstCoordinateOutside(splitLine, polygon);
+        int firstOutsidePosition = SplitUtil.findPositionOfFirstCoordinateOutside(splitLine,
+                polygon);
 
         // get the first intersection.
         IntersectionStrategy interStrategy = new IntersectionStrategy();
-        interStrategy.findFirstIntersection(lineCoords,  boundary);
+        interStrategy.findFirstIntersection(lineCoords, boundary);
         final Coordinate firstIntersectionCoord = interStrategy.getIntersection();
         final int firstIntersectionPosition = interStrategy.getIntersectionPosition();
 
@@ -948,7 +945,8 @@ class UsefulSplitLineBuilder {
             lineCoords[firstIntersectionPosition] = firstIntersectionCoord;
             posFirstCoord = firstIntersectionPosition;
             // insert the intersection coordinate into the polygon.
-            adaptedPolygon = insertCoordinateIntoPolygon(firstIntersectionCoord, adaptedPolygon, splitLine);
+            adaptedPolygon = insertCoordinateIntoPolygon(firstIntersectionCoord, adaptedPolygon,
+                    splitLine);
         } else {
             posFirstCoord = firstOutsidePosition;
         }
@@ -974,123 +972,124 @@ class UsefulSplitLineBuilder {
         // the line and the polygon to the last intersection between the line
         // and the polygon, with this, we assure all the useful part of the
         // line, the one that intersects with the polygon is being used.
-        Coordinate[] newCoords = SplitUtil.createCoordinateArrayWithoutDuplicated(posFirstCoord, posLastCoord, lineCoords);
+        Coordinate[] newCoords = SplitUtil.createCoordinateArrayWithoutDuplicated(posFirstCoord,
+                posLastCoord, lineCoords);
         return newCoords;
     }
 
-   /**
-    * A coordinate will be inserted in the adaptedPolygon. The coordinate is
-    * the result of doing an intersection operation between a line and this
-    * polygon, so this methods know that the coordinate belong to the polygon.
-    * 
-    * Find the segment where the coordinate will lie. Find using the tangent
-    * operation.
-    * 
-    * TODO refactory: this method could be simplified using the AdaptedPolygon object
-    * 
-    * @param coorToInsert
-    *            Coordinate to insert into polygon.
-    * @param adaptedPolygon
-    *            Receiver polygon.
-    * @return The adaptedPolygon, which will have the coordinate inserted on
-    *         it.
-    */
-   private AdaptedPolygon insertCoordinateIntoPolygon(final Coordinate coorToInsert, final AdaptedPolygon adaptedPolygon1, LineString splitLine) {
+    /**
+     * A coordinate will be inserted in the adaptedPolygon. The coordinate is the result of doing an
+     * intersection operation between a line and this polygon, so this methods know that the
+     * coordinate belong to the polygon.
+     * 
+     * Find the segment where the coordinate will lie. Find using the tangent operation.
+     * 
+     * TODO refactory: this method could be simplified using the AdaptedPolygon object
+     * 
+     * @param coorToInsert Coordinate to insert into polygon.
+     * @param adaptedPolygon Receiver polygon.
+     * @return The adaptedPolygon, which will have the coordinate inserted on it.
+     */
+    private AdaptedPolygon insertCoordinateIntoPolygon(final Coordinate coorToInsert,
+            final AdaptedPolygon adaptedPolygon1, LineString splitLine) {
 
-       // get each coordinate, and calculate the tangent with coord(X) -
-       // coorToInsert - coord(X+1). A coordiante will be added on the segment
-       // which scores the lowest value.
+        // get each coordinate, and calculate the tangent with coord(X) -
+        // coorToInsert - coord(X+1). A coordiante will be added on the segment
+        // which scores the lowest value.
 
-       Polygon adaptedPolygon = adaptedPolygon1.asPolygon();
-       Coordinate[] boundaryCoord = adaptedPolygon.getExteriorRing().getCoordinates();
-       int positionToInsert = -1;
-       int positionToInsertOnRing = -1;
-       int nRing = -1;
-       // check if the coordinate belongs to the exterior
-       for (int i = 0; i < boundaryCoord.length - 1; i++) {
+        Polygon adaptedPolygon = adaptedPolygon1.asPolygon();
+        Coordinate[] boundaryCoord = adaptedPolygon.getExteriorRing().getCoordinates();
+        int positionToInsert = -1;
+        int positionToInsertOnRing = -1;
+        int nRing = -1;
+        // check if the coordinate belongs to the exterior
+        for (int i = 0; i < boundaryCoord.length - 1; i++) {
 
-           Coordinate start = boundaryCoord[i];
-           Coordinate end = boundaryCoord[i + 1];
-           // calculate tangent between start - coorToInsert - end
-           if (isSameTangent(start, coorToInsert, end) && isPointContainedInSegment(start, coorToInsert, end)) {
+            Coordinate start = boundaryCoord[i];
+            Coordinate end = boundaryCoord[i + 1];
+            // calculate tangent between start - coorToInsert - end
+            if (isSameTangent(start, coorToInsert, end)
+                    && isPointContainedInSegment(start, coorToInsert, end)) {
 
-               assert positionToInsert == -1 : "position to insert modified twice."; //$NON-NLS-1$
-               positionToInsert = i;
-               break;
-           }
-       }
-       List<Coordinate> updatedShell = new ArrayList<Coordinate>();
-       Coordinate[] shellCoords;
-       if (positionToInsert != -1) {
-           for (int i = 0; i < boundaryCoord.length; i++) {
+                assert positionToInsert == -1 : "position to insert modified twice."; //$NON-NLS-1$
+                positionToInsert = i;
+                break;
+            }
+        }
+        List<Coordinate> updatedShell = new ArrayList<Coordinate>();
+        Coordinate[] shellCoords;
+        if (positionToInsert != -1) {
+            for (int i = 0; i < boundaryCoord.length; i++) {
 
-               updatedShell.add(boundaryCoord[i]);
-               if (i == positionToInsert) {
-                   updatedShell.add(coorToInsert);
-               }
-           }
-           shellCoords = updatedShell.toArray(new Coordinate[updatedShell.size()]);
-       } else {
-           shellCoords = boundaryCoord;
-       }
-       GeometryFactory gf = adaptedPolygon.getFactory();
-       LinearRing[] rings = null;
-       // check if the coordinate belong to any of the interior rings in case
-       // that there are rings.
-       if (adaptedPolygon.getNumInteriorRing() != 0) {
+                updatedShell.add(boundaryCoord[i]);
+                if (i == positionToInsert) {
+                    updatedShell.add(coorToInsert);
+                }
+            }
+            shellCoords = updatedShell.toArray(new Coordinate[updatedShell.size()]);
+        } else {
+            shellCoords = boundaryCoord;
+        }
+        GeometryFactory gf = adaptedPolygon.getFactory();
+        LinearRing[] rings = null;
+        // check if the coordinate belong to any of the interior rings in case
+        // that there are rings.
+        if (adaptedPolygon.getNumInteriorRing() != 0) {
 
-           rings = new LinearRing[adaptedPolygon.getNumInteriorRing()];
-           for (int rIndex = 0; rIndex < adaptedPolygon.getNumInteriorRing(); rIndex++) {
+            rings = new LinearRing[adaptedPolygon.getNumInteriorRing()];
+            for (int rIndex = 0; rIndex < adaptedPolygon.getNumInteriorRing(); rIndex++) {
 
-               // add the rings without modify them.
-               rings[rIndex] = (LinearRing) adaptedPolygon.getInteriorRingN(rIndex);
-               // for each ring
-               Coordinate[] ringCoords = rings[rIndex].getCoordinates();
-               for (int i = 0; i < ringCoords.length - 1 && positionToInsertOnRing == -1; i++) {
+                // add the rings without modify them.
+                rings[rIndex] = (LinearRing) adaptedPolygon.getInteriorRingN(rIndex);
+                // for each ring
+                Coordinate[] ringCoords = rings[rIndex].getCoordinates();
+                for (int i = 0; i < ringCoords.length - 1 && positionToInsertOnRing == -1; i++) {
 
-                   Coordinate start = ringCoords[i];
-                   Coordinate end = ringCoords[i + 1];
-                   // calculate tangent between start - coorToInsert - end
-                   if (isSameTangent(start, coorToInsert, end) && isPointContainedInSegment(start, coorToInsert, end)) {
+                    Coordinate start = ringCoords[i];
+                    Coordinate end = ringCoords[i + 1];
+                    // calculate tangent between start - coorToInsert - end
+                    if (isSameTangent(start, coorToInsert, end)
+                            && isPointContainedInSegment(start, coorToInsert, end)) {
 
-                       assert positionToInsertOnRing == -1 : "position to insert modified twice."; //$NON-NLS-1$
-                       positionToInsertOnRing = i;
-                       nRing = rIndex;
-                       break;
-                   }
-               }
-           }
-           if (positionToInsertOnRing != -1) {
-               // ring to be modified.
-               assert nRing != -1 : "there should be a ring index."; //$NON-NLS-1$
-               // Get the ring which need to be modified, insert the
-               // coordinate and at the end, build the polygon.
+                        assert positionToInsertOnRing == -1 : "position to insert modified twice."; //$NON-NLS-1$
+                        positionToInsertOnRing = i;
+                        nRing = rIndex;
+                        break;
+                    }
+                }
+            }
+            if (positionToInsertOnRing != -1) {
+                // ring to be modified.
+                assert nRing != -1 : "there should be a ring index."; //$NON-NLS-1$
+                // Get the ring which need to be modified, insert the
+                // coordinate and at the end, build the polygon.
 
-               Coordinate[] originalRing = rings[nRing].getCoordinates();
-               List<Coordinate> updatedHole = new ArrayList<Coordinate>();
-               for (int i = 0; i < originalRing.length; i++) {
+                Coordinate[] originalRing = rings[nRing].getCoordinates();
+                List<Coordinate> updatedHole = new ArrayList<Coordinate>();
+                for (int i = 0; i < originalRing.length; i++) {
 
-                   updatedHole.add(originalRing[i]);
-                   if (i == positionToInsertOnRing) {
-                       updatedHole.add(coorToInsert);
-                   }
-               }
-               Coordinate[] modifiedRingCoords = updatedHole.toArray(new Coordinate[updatedHole.size()]);
-               LinearRing modifiedRing = gf.createLinearRing(modifiedRingCoords);
-               rings[nRing] = modifiedRing;
-           }
-       }
+                    updatedHole.add(originalRing[i]);
+                    if (i == positionToInsertOnRing) {
+                        updatedHole.add(coorToInsert);
+                    }
+                }
+                Coordinate[] modifiedRingCoords = updatedHole.toArray(new Coordinate[updatedHole
+                        .size()]);
+                LinearRing modifiedRing = gf.createLinearRing(modifiedRingCoords);
+                rings[nRing] = modifiedRing;
+            }
+        }
 
-       // create the polygon.
-       assert shellCoords != null : "there should be at least shell coordinates to build a polygon."; //$NON-NLS-1$
-       LinearRing shellRing = gf.createLinearRing(shellCoords);
-       Polygon newPolygon = gf.createPolygon(shellRing, rings);
-       
-       AdaptedPolygon rebuildedPolygon = new AdaptedPolygon(newPolygon);
+        // create the polygon.
+        assert shellCoords != null : "there should be at least shell coordinates to build a polygon."; //$NON-NLS-1$
+        LinearRing shellRing = gf.createLinearRing(shellCoords);
+        Polygon newPolygon = gf.createPolygon(shellRing, rings);
 
-       return rebuildedPolygon;
-   }
-        
+        AdaptedPolygon rebuildedPolygon = new AdaptedPolygon(newPolygon);
+
+        return rebuildedPolygon;
+    }
+
     /**
      * Check if the provided point is contained in the range of that segment.
      * 
@@ -1099,7 +1098,7 @@ class UsefulSplitLineBuilder {
      * @param end Coordinate where the segment ends.
      * @return True if the point is between the start and end coordinate.
      */
-    private boolean isPointContainedInSegment( Coordinate start, Coordinate point, Coordinate end ) {
+    private boolean isPointContainedInSegment(Coordinate start, Coordinate point, Coordinate end) {
 
         // check if the points is contained in that line segment formed by the
         // start coordinate and the end coordinate.
@@ -1139,7 +1138,7 @@ class UsefulSplitLineBuilder {
      * @param end Coordinate where the segment ends.
      * @return True if the have the same tangent.
      */
-    private boolean isSameTangent( Coordinate start, Coordinate coordToTest, Coordinate end ) {
+    private boolean isSameTangent(Coordinate start, Coordinate coordToTest, Coordinate end) {
 
         // check if the X or the Y have the same value.
 
@@ -1179,11 +1178,11 @@ class UsefulSplitLineBuilder {
         return (diff < DEPRECIATE_VALUE) ? true : false;
     }
 
-    /** 
-     * The adapted polygon is the result of modifying the original polygon with the intersection vertex 
-     * with the split line.
+    /**
+     * The adapted polygon is the result of modifying the original polygon with the intersection
+     * vertex with the split line.
      * 
-     * @return the polygon adapted to the split line 
+     * @return the polygon adapted to the split line
      */
     public AdaptedPolygon getAdaptedPolygon() {
         return this.adaptedPolygon;

@@ -38,8 +38,8 @@ public final class StatusBar {
         // do nothing
     }
 
-    public static void setStatusBarMessage( final IToolContext context, final String message ) {
-        context.updateUI(new Runnable(){
+    public static void setStatusBarMessage(final IToolContext context, final String message) {
+        context.updateUI(new Runnable() {
             public void run() {
                 if (context.getActionBars() == null)
                     return;
@@ -52,8 +52,8 @@ public final class StatusBar {
         });
     }
 
-    public static void setStatusErrorBarMessage( final IToolContext context, final String message ) {
-        context.updateUI(new Runnable(){
+    public static void setStatusErrorBarMessage(final IToolContext context, final String message) {
+        context.updateUI(new Runnable() {
             public void run() {
                 if (context.getActionBars() == null)
                     return;

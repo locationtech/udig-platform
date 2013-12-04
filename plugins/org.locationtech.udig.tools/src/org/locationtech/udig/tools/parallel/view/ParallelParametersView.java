@@ -38,152 +38,155 @@ import org.locationtech.udig.tools.parallel.ParallelTool;
 import org.locationtech.udig.tools.parallel.internal.ParallelContext;
 import org.locationtech.udig.tools.parallel.internal.PrecisionToolsMode;
 
-
-
 /**
  * The view of the {@link ParallelTool}.
  * 
- * While the user is working with the tool, its data, like reference line,
- * initial coordinate,etc... is showed on this view. Purpose of this view, is to
- * show the data, and also, if the user changes the data showed here, those
- * changes will be reflected on the map.
+ * While the user is working with the tool, its data, like reference line, initial coordinate,etc...
+ * is showed on this view. Purpose of this view, is to show the data, and also, if the user changes
+ * the data showed here, those changes will be reflected on the map.
  * 
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
  */
 public class ParallelParametersView extends ViewPart implements IUDIGView, Observer {
 
-	private ParallelContext				parallelContext		= null;
-	private ParallelParametersComposite	parametersComposite	= null;
-	private IToolContext				context				= null;
-	public static final String			id					= "org.locationtech.udig.tools.parallel.view.ParallelParametersView";	//$NON-NLS-1$
+    private ParallelContext parallelContext = null;
 
-	private cancelButtonAction			cancelButton		= null;
-	private acceptButtonAction			acceptButton		= null;
+    private ParallelParametersComposite parametersComposite = null;
 
-	/**
-	 * Set the parallel context after creating it. Also set parameters view
-	 * context that will set the context and add itself as observer.
-	 * 
-	 * @param context
-	 */
-	public void setParallelContext(ParallelContext context) {
+    private IToolContext context = null;
 
-		assert context != null;
+    public static final String id = "org.locationtech.udig.tools.parallel.view.ParallelParametersView"; //$NON-NLS-1$
 
-		this.parallelContext = context;
-		this.parametersComposite.setToolContext(this.parallelContext);
-		this.parallelContext.addObserver(this);
-	}
+    private cancelButtonAction cancelButton = null;
 
-	@Override
-	public void createPartControl(Composite parent) {
+    private acceptButtonAction acceptButton = null;
 
-		parametersComposite = new ParallelParametersComposite(parent, SWT.NONE);
+    /**
+     * Set the parallel context after creating it. Also set parameters view context that will set
+     * the context and add itself as observer.
+     * 
+     * @param context
+     */
+    public void setParallelContext(ParallelContext context) {
 
-		createActions();
-		createToolbar();
-	}
+        assert context != null;
 
-	private void createToolbar() {
+        this.parallelContext = context;
+        this.parametersComposite.setToolContext(this.parallelContext);
+        this.parallelContext.addObserver(this);
+    }
 
-		IToolBarManager toolbar = getViewSite().getActionBars().getToolBarManager();
-		toolbar.add(acceptButton);
-		toolbar.add(cancelButton);
+    @Override
+    public void createPartControl(Composite parent) {
 
-	}
+        parametersComposite = new ParallelParametersComposite(parent, SWT.NONE);
 
-	private void createActions() {
+        createActions();
+        createToolbar();
+    }
 
-		this.acceptButton = new acceptButtonAction();
-		this.cancelButton = new cancelButtonAction();
-		enableAcceptButton(false);
-	}
+    private void createToolbar() {
 
-	@Override
-	public void setFocus() {
+        IToolBarManager toolbar = getViewSite().getActionBars().getToolBarManager();
+        toolbar.add(acceptButton);
+        toolbar.add(cancelButton);
 
-	}
+    }
 
-	public void editFeatureChanged(SimpleFeature feature) {
+    private void createActions() {
 
-	}
+        this.acceptButton = new acceptButtonAction();
+        this.cancelButton = new cancelButtonAction();
+        enableAcceptButton(false);
+    }
 
-	public IToolContext getContext() {
+    @Override
+    public void setFocus() {
 
-		return this.context;
-	}
+    }
 
-	public void setContext(IToolContext newContext) {
+    public void editFeatureChanged(SimpleFeature feature) {
 
-		this.context = newContext;
-		this.parametersComposite.setContext(newContext);
-	}
+    }
 
-	/**
-	 * Create the cancelButtonAction
-	 * 
-	 */
-	private class cancelButtonAction extends Action {
+    public IToolContext getContext() {
 
-		public cancelButtonAction() {
+        return this.context;
+    }
 
-			setToolTipText(Messages.PrecisionTool_cancel_tooltip_text);
-			String imgFile = "images/reset_co.gif"; //$NON-NLS-1$
-			setImageDescriptor(ImageDescriptor.createFromFile(ParallelParametersView.class, imgFile));
+    public void setContext(IToolContext newContext) {
 
-		}
+        this.context = newContext;
+        this.parametersComposite.setContext(newContext);
+    }
 
-		@Override
-		public void run() {
-			parametersComposite.discardChanges();
-		}
+    /**
+     * Create the cancelButtonAction
+     * 
+     */
+    private class cancelButtonAction extends Action {
 
-	}
+        public cancelButtonAction() {
 
-	/**
-	 * Creates the acceptButtonAction
-	 * 
-	 */
-	private class acceptButtonAction extends Action {
+            setToolTipText(Messages.PrecisionTool_cancel_tooltip_text);
+            String imgFile = "images/reset_co.gif"; //$NON-NLS-1$
+            setImageDescriptor(ImageDescriptor
+                    .createFromFile(ParallelParametersView.class, imgFile));
 
-		public acceptButtonAction() {
+        }
 
-			setToolTipText(Messages.PrecisionTool_ok_tooltip_text);
-			String imgFile = "images/apply_co.gif"; //$NON-NLS-1$
-			setImageDescriptor(ImageDescriptor.createFromFile(ParallelParametersView.class, imgFile));
+        @Override
+        public void run() {
+            parametersComposite.discardChanges();
+        }
 
-		}
+    }
 
-		@Override
-		public void run() {
-			parametersComposite.acceptChanges();
-		}
-	}
+    /**
+     * Creates the acceptButtonAction
+     * 
+     */
+    private class acceptButtonAction extends Action {
 
-	/**
-	 * Enable the runButton
-	 * 
-	 * @param enable
-	 */
-	public void enableAcceptButton(boolean enable) {
+        public acceptButtonAction() {
 
-		if (this.acceptButton != null) {
-			this.acceptButton.setEnabled(enable);
-		}
-	}
+            setToolTipText(Messages.PrecisionTool_ok_tooltip_text);
+            String imgFile = "images/apply_co.gif"; //$NON-NLS-1$
+            setImageDescriptor(ImageDescriptor
+                    .createFromFile(ParallelParametersView.class, imgFile));
 
-	public void update(Observable o, Object arg) {
+        }
 
-		boolean enable;
+        @Override
+        public void run() {
+            parametersComposite.acceptChanges();
+        }
+    }
 
-		if (parallelContext.getMode() == PrecisionToolsMode.READY) {
-			enable = true;
-		} else {
-			enable = false;
-		}
-		enableAcceptButton(enable);
+    /**
+     * Enable the runButton
+     * 
+     * @param enable
+     */
+    public void enableAcceptButton(boolean enable) {
 
-	}
+        if (this.acceptButton != null) {
+            this.acceptButton.setEnabled(enable);
+        }
+    }
+
+    public void update(Observable o, Object arg) {
+
+        boolean enable;
+
+        if (parallelContext.getMode() == PrecisionToolsMode.READY) {
+            enable = true;
+        } else {
+            enable = false;
+        }
+        enableAcceptButton(enable);
+
+    }
 
 }

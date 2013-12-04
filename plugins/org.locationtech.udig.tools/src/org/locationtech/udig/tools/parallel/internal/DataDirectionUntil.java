@@ -17,8 +17,7 @@ package org.locationtech.udig.tools.parallel.internal;
 
 /**
  * 
- * Store the direction (forward, backward) and the "until position", that will
- * be a number.
+ * Store the direction (forward, backward) and the "until position", that will be a number.
  * 
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
@@ -26,24 +25,25 @@ package org.locationtech.udig.tools.parallel.internal;
  */
 final class DataDirectionUntil {
 
-	private boolean	isForwardDirection;
-	private int		untilPosition;
+    private boolean isForwardDirection;
 
-	public DataDirectionUntil(boolean isForwardDirection, int untilPosition) {
+    private int untilPosition;
 
-		assert isForwardDirection == true || isForwardDirection == false : "Must have a value"; //$NON-NLS-1$
+    public DataDirectionUntil(boolean isForwardDirection, int untilPosition) {
 
-		this.isForwardDirection = isForwardDirection;
-		this.untilPosition = untilPosition;
-	}
+        assert isForwardDirection == true || isForwardDirection == false : "Must have a value"; //$NON-NLS-1$
 
-	public boolean getIsForwardDirection() {
+        this.isForwardDirection = isForwardDirection;
+        this.untilPosition = untilPosition;
+    }
 
-		return isForwardDirection;
-	}
+    public boolean getIsForwardDirection() {
 
-	public int getUntilPosition() {
+        return isForwardDirection;
+    }
 
-		return untilPosition;
-	}
+    public int getUntilPosition() {
+
+        return untilPosition;
+    }
 }

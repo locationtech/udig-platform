@@ -51,9 +51,9 @@ public class ArcFeedbackManager implements EditToolFeedbackManager {
      * edit shape or the three coordinates (the two in the edit shape plus the one of the mouse
      * event) are collinear. This is just an optimization to avoid creating thousands of lines
      */
-    private Line2D              linearArc = new Line2D.Double();
+    private Line2D linearArc = new Line2D.Double();
 
-    public boolean isValid( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
+    public boolean isValid(EditToolHandler handler, MapMouseEvent e, EventType eventType) {
         if (EventType.MOVED != eventType) {
             return false;
         }
@@ -63,7 +63,7 @@ public class ArcFeedbackManager implements EditToolFeedbackManager {
         int nPoints = currentShape == null ? 0 : currentShape.getNumPoints();
 
         boolean isValid = editting && nPoints <= 2;
-        if(!isValid){
+        if (!isValid) {
             clearFeedback();
         }
         return isValid;
@@ -74,8 +74,8 @@ public class ArcFeedbackManager implements EditToolFeedbackManager {
      * 
      * @return <code>null</code>, as no undoable map command is needed
      */
-    public UndoableMapCommand getFeedbackCommand( EditToolHandler handler, MapMouseEvent e,
-                                                  EventType eventType ) {
+    public UndoableMapCommand getFeedbackCommand(EditToolHandler handler, MapMouseEvent e,
+            EventType eventType) {
         final PrimitiveShape currentShape = handler.getCurrentShape();
         if (currentShape == null) {
             return getCancelCommand(handler);
@@ -119,19 +119,19 @@ public class ArcFeedbackManager implements EditToolFeedbackManager {
             drawShapeCommand.setShape(shape);
         }
         handler.repaint();
-        
-//        if(undoFeedback == null){
-//            undoFeedback = new UndoFeedbackCommand();
-//            System.out.println("returning undo fdbk");
-//            return undoFeedback;
-//        }
+
+        // if(undoFeedback == null){
+        // undoFeedback = new UndoFeedbackCommand();
+        // System.out.println("returning undo fdbk");
+        // return undoFeedback;
+        // }
         return null;
     }
 
     /**
      * @see EditToolFeedbackManager#getCancelCommand(EditToolHandler)
      */
-    public UndoableMapCommand getCancelCommand( EditToolHandler handler ) {
+    public UndoableMapCommand getCancelCommand(EditToolHandler handler) {
         clearFeedback();
         return null;
     }
@@ -139,7 +139,7 @@ public class ArcFeedbackManager implements EditToolFeedbackManager {
     /**
      * @see EditToolFeedbackManager#getAcceptCommand(EditToolHandler)
      */
-    public UndoableMapCommand getAcceptCommand( EditToolHandler handler ) {
+    public UndoableMapCommand getAcceptCommand(EditToolHandler handler) {
         clearFeedback();
         return null;
     }

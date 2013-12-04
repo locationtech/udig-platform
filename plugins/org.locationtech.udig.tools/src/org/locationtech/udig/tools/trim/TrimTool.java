@@ -56,10 +56,9 @@ import org.locationtech.udig.tools.internal.ui.util.StatusBar;
  * @since 1.1.0
  */
 public class TrimTool extends AbstractEditTool {
-    
 
     @Override
-    public void setActive( final boolean active ) {
+    public void setActive(final boolean active) {
         super.setActive(active);
         IToolContext context = getContext();
         if (active && context.getMapLayers().size() > 0) {
@@ -76,7 +75,7 @@ public class TrimTool extends AbstractEditTool {
      * @param activators an empty list.
      */
     @Override
-    protected void initActivators( Set<Activator> activators ) {
+    protected void initActivators(Set<Activator> activators) {
         activators.add(new EditStateListenerActivator());
         activators.add(new DrawGeomsActivator(DrawGeomsActivator.DrawType.LINE));
         activators.add(new DrawCurrentGeomVerticesActivator());
@@ -91,7 +90,7 @@ public class TrimTool extends AbstractEditTool {
      * @param acceptBehaviours an empty list
      */
     @Override
-    protected void initAcceptBehaviours( List<Behaviour> acceptBehaviours ) {
+    protected void initAcceptBehaviours(List<Behaviour> acceptBehaviours) {
 
         acceptBehaviours.add(new TrimGeometryBehaviour());
     }
@@ -102,7 +101,7 @@ public class TrimTool extends AbstractEditTool {
      * @param cancelBehaviours an empty list
      */
     @Override
-    protected void initCancelBehaviours( List<Behaviour> cancelBehaviours ) {
+    protected void initCancelBehaviours(List<Behaviour> cancelBehaviours) {
         cancelBehaviours.add(new DefaultCancelBehaviour());
     }
 
@@ -114,7 +113,7 @@ public class TrimTool extends AbstractEditTool {
      * @param helper a helper for constructing the complicated structure of EventBehaviours.
      */
     @Override
-    protected void initEventBehaviours( EditToolConfigurationHelper helper ) {
+    protected void initEventBehaviours(EditToolConfigurationHelper helper) {
         helper.add(new DrawCreateVertexSnapAreaBehaviour());
         helper.startMutualExclusiveList();
         helper.add(new AddVertexWhileCreatingBehaviour());
@@ -123,26 +122,26 @@ public class TrimTool extends AbstractEditTool {
         helper.add(new StartEditingBehaviour(ShapeType.LINE));
         helper.stopMutualExclusiveList();
 
-		helper.add(new SetSnapSizeBehaviour());
+        helper.add(new SetSnapSizeBehaviour());
         helper.add(new AcceptOnDoubleClickBehaviour());
         helper.done();
     }
 
     /**
-     * Initializes the list of {@link EnablementBehaviour}s that are ran to determine if the tool
-     * is enabled given an event. For example if the mouse cursor is outside the valid bounds of a
-     * CRS for a layer an EnablementBehaviour might signal that editing is illegal and provide a
-     * message for the user indicating why.
+     * Initializes the list of {@link EnablementBehaviour}s that are ran to determine if the tool is
+     * enabled given an event. For example if the mouse cursor is outside the valid bounds of a CRS
+     * for a layer an EnablementBehaviour might signal that editing is illegal and provide a message
+     * for the user indicating why.
      * 
      * @param enablementBehaviours an empty list
      */
     @Override
-    protected void initEnablementBehaviours( List<EnablementBehaviour> enablementBehaviours ) {
+    protected void initEnablementBehaviours(List<EnablementBehaviour> enablementBehaviours) {
         /*
          * enablementBehaviours.add(new WithinLegalLayerBoundsBehaviour());
          */
-        enablementBehaviours.add(new ValidToolDetectionActivator(new Class[]{Geometry.class,
-                LineString.class, MultiLineString.class}));
+        enablementBehaviours.add(new ValidToolDetectionActivator(new Class[] { Geometry.class,
+                LineString.class, MultiLineString.class }));
     }
 
 }

@@ -60,8 +60,8 @@ import org.locationtech.udig.tools.parallel.view.ParallelParametersView;
 /**
  * Creates a precision parallel line.
  * 
- * With a reference line and an initial point, create a parallel line which
- * could change the distance between the reference line.
+ * With a reference line and an initial point, create a parallel line which could change the
+ * distance between the reference line.
  * 
  * FIXME If it doesn't use the snap, the map doesn't repaint correctly.
  * 
@@ -73,101 +73,102 @@ import org.locationtech.udig.tools.parallel.view.ParallelParametersView;
  */
 public class ParallelTool extends AbstractEditTool {
 
-	private ParallelContext			parallelContext	= new ParallelContext();
-	private ParallelPreview			parallelPreview	= null;
-	private ParallelParametersView	view			= null;
+    private ParallelContext parallelContext = new ParallelContext();
 
-	@Override
-	public void setActive(boolean active) {
-		super.setActive(active);
+    private ParallelPreview parallelPreview = null;
 
-		if (active) {
+    private ParallelParametersView view = null;
 
-			parallelContext.setHandler(getHandler());
-			parallelContext.initContext();
-			parallelContext.setEditBlackBoard(getHandler().getEditBlackboard(getHandler().getEditLayer()));
-			parallelContext.deleteObservers();
+    @Override
+    public void setActive(boolean active) {
+        super.setActive(active);
 
-			parallelPreview = ParallelPreview.getInstance();
-			parallelPreview.setParameters(getContext(), getHandler(), parallelContext);
-			parallelContext.addObserver(parallelPreview);
+        if (active) {
 
-			Display.getCurrent().asyncExec(new Runnable() {
-				public void run() {
-					// run the view, set the parallelcontext and add the
-					// parameters view as observer.
-					ApplicationGIS.getView(true, ParallelParametersView.id);
-					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-					IViewPart viewPart = page.findView(ParallelParametersView.id);
-					view = (ParallelParametersView) viewPart;
-					assert view != null : "view is null"; //$NON-NLS-1$
-					view.setParallelContext(parallelContext);
+            parallelContext.setHandler(getHandler());
+            parallelContext.initContext();
+            parallelContext.setEditBlackBoard(getHandler().getEditBlackboard(
+                    getHandler().getEditLayer()));
+            parallelContext.deleteObservers();
 
-				}
+            parallelPreview = ParallelPreview.getInstance();
+            parallelPreview.setParameters(getContext(), getHandler(), parallelContext);
+            parallelContext.addObserver(parallelPreview);
 
-			});
-		} else {
-			Display.getCurrent().asyncExec(new Runnable() {
-				public void run() {
-					// When the tool is deactivated, hide the view.
-					ApplicationGIS.getView(false, ParallelParametersView.id);
-					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-					IViewPart viewPart = page.findView(ParallelParametersView.id);
-					page.hideView(viewPart);
-				}
-			});
-		}
-	}
+            Display.getCurrent().asyncExec(new Runnable() {
+                public void run() {
+                    // run the view, set the parallelcontext and add the
+                    // parameters view as observer.
+                    ApplicationGIS.getView(true, ParallelParametersView.id);
+                    IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                            .getActivePage();
+                    IViewPart viewPart = page.findView(ParallelParametersView.id);
+                    view = (ParallelParametersView) viewPart;
+                    assert view != null : "view is null"; //$NON-NLS-1$
+                    view.setParallelContext(parallelContext);
 
-	@Override
-	protected void initActivators(Set<Activator> activators) {
-		activators.add(new EditStateListenerActivator());
-		activators.add(new DrawGeomsActivator(DrawGeomsActivator.DrawType.LINE));
-		activators.add(new SetSnapBehaviourCommandHandlerActivator());
-		activators.add(new DrawCurrentGeomVerticesActivator());
-		// activators.add(new DrawOrthoAxesActivator());
-		activators.add(new ResetAllStateActivator());
-		activators.add(new SetRenderingFilter());
-		activators.add(new GridActivator());
-	}
+                }
 
-	@Override
-	protected void initAcceptBehaviours(List<Behaviour> acceptBehaviours) {
-		acceptBehaviours.add(new AcceptChangesBehaviour(LineString.class, false));
-		acceptBehaviours.add(new PrecisionToolAcceptBehaviour(parallelContext));
-		// acceptBehaviours.add(new DeselectEditShapeAcceptBehaviour());
-	}
+            });
+        } else {
+            Display.getCurrent().asyncExec(new Runnable() {
+                public void run() {
+                    // When the tool is deactivated, hide the view.
+                    ApplicationGIS.getView(false, ParallelParametersView.id);
+                    IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                            .getActivePage();
+                    IViewPart viewPart = page.findView(ParallelParametersView.id);
+                    page.hideView(viewPart);
+                }
+            });
+        }
+    }
 
-	@Override
-	protected void initCancelBehaviours(List<Behaviour> cancelBehaviours) {
-		cancelBehaviours.add(new DefaultCancelBehaviour());
-	}
+    @Override
+    protected void initActivators(Set<Activator> activators) {
+        activators.add(new EditStateListenerActivator());
+        activators.add(new DrawGeomsActivator(DrawGeomsActivator.DrawType.LINE));
+        activators.add(new SetSnapBehaviourCommandHandlerActivator());
+        activators.add(new DrawCurrentGeomVerticesActivator());
+        // activators.add(new DrawOrthoAxesActivator());
+        activators.add(new ResetAllStateActivator());
+        activators.add(new SetRenderingFilter());
+        activators.add(new GridActivator());
+    }
 
-	@Override
-	protected void initEventBehaviours(EditToolConfigurationHelper helper) {
+    @Override
+    protected void initAcceptBehaviours(List<Behaviour> acceptBehaviours) {
+        acceptBehaviours.add(new AcceptChangesBehaviour(LineString.class, false));
+        acceptBehaviours.add(new PrecisionToolAcceptBehaviour(parallelContext));
+        // acceptBehaviours.add(new DeselectEditShapeAcceptBehaviour());
+    }
 
-		helper.add(new DrawCreateVertexSnapAreaBehaviour());
-		// helper.add(new DrawSnapAreaBehaviour());
+    @Override
+    protected void initCancelBehaviours(List<Behaviour> cancelBehaviours) {
+        cancelBehaviours.add(new DefaultCancelBehaviour());
+    }
 
-		helper.add(new SetReferenceFeatureBehaviour(parallelContext));
+    @Override
+    protected void initEventBehaviours(EditToolConfigurationHelper helper) {
 
-		helper.add(new SetInitialPointEventBehaviour(parallelContext));
+        helper.add(new DrawCreateVertexSnapAreaBehaviour());
+        // helper.add(new DrawSnapAreaBehaviour());
 
-		helper.add(new SetSnapSizeBehaviour());
-		helper.add(new AcceptOnDoubleClickBehaviour());
-		helper.done();
+        helper.add(new SetReferenceFeatureBehaviour(parallelContext));
 
-	}
+        helper.add(new SetInitialPointEventBehaviour(parallelContext));
 
-	@Override
-	protected void initEnablementBehaviours(List<EnablementBehaviour> enablementBehaviours) {
-		enablementBehaviours.add(new WithinLegalLayerBoundsBehaviour());
-		enablementBehaviours.add(new ValidToolDetectionActivator(new Class[] {
-				Geometry.class,
-				Polygon.class,
-				MultiPolygon.class,
-				LineString.class,
-				MultiLineString.class }));
+        helper.add(new SetSnapSizeBehaviour());
+        helper.add(new AcceptOnDoubleClickBehaviour());
+        helper.done();
 
-	}
+    }
+
+    @Override
+    protected void initEnablementBehaviours(List<EnablementBehaviour> enablementBehaviours) {
+        enablementBehaviours.add(new WithinLegalLayerBoundsBehaviour());
+        enablementBehaviours.add(new ValidToolDetectionActivator(new Class[] { Geometry.class,
+                Polygon.class, MultiPolygon.class, LineString.class, MultiLineString.class }));
+
+    }
 }

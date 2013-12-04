@@ -34,113 +34,111 @@ import org.locationtech.udig.tools.geometry.split.RingExtractor.ResultRingExtrac
  */
 final class SplitClosedLines {
 
-	/** The remaining line (Original line less the extracted rings). */
-	Geometry		remainingLine	= null;
+    /** The remaining line (Original line less the extracted rings). */
+    Geometry remainingLine = null;
 
-	/** The extracted rings from the original line. */
-	List<Geometry>	rings			= null;
+    /** The extracted rings from the original line. */
+    List<Geometry> rings = null;
 
-	/** Stores the resultant geometries from this operation. */
-	List<Geometry>	piecesFrom		= null;
+    /** Stores the resultant geometries from this operation. */
+    List<Geometry> piecesFrom = null;
 
-	/**
-	 * Constructor that requires the output of the {@link RingExtractor}.
-	 * 
-	 * @param inputData
-	 */
-	public SplitClosedLines(ResultRingExtractor inputData) {
+    /**
+     * Constructor that requires the output of the {@link RingExtractor}.
+     * 
+     * @param inputData
+     */
+    public SplitClosedLines(ResultRingExtractor inputData) {
 
-		this.remainingLine = inputData.getRemainingLine();
-		this.rings = inputData.getRings();
-	}
+        this.remainingLine = inputData.getRemainingLine();
+        this.rings = inputData.getRings();
+    }
 
-	/**
-	 * Executes the closed line operation.
-	 * 
-	 * @param polygon
-	 * @return The resultant geometries.
-	 */
-	public List<Geometry> runClosedLineSplit(Geometry polygon) {
+    /**
+     * Executes the closed line operation.
+     * 
+     * @param polygon
+     * @return The resultant geometries.
+     */
+    public List<Geometry> runClosedLineSplit(Geometry polygon) {
 
-		piecesFrom = new ArrayList<Geometry>();
+        piecesFrom = new ArrayList<Geometry>();
 
-		Geometry result = processClosedLines(polygon);
+        Geometry result = processClosedLines(polygon);
 
-		piecesFrom.addAll(processRemainingLine(result));
+        piecesFrom.addAll(processRemainingLine(result));
 
-		return piecesFrom;
-	}
+        return piecesFrom;
+    }
 
-	/**
-	 * Realize the closed line operation for the given polygon.
-	 * 
-	 * It stores the resultant geometries in the piecesFrom list, and return the
-	 * remaining of the input polygon.
-	 * 
-	 * @param polygon
-	 *            Polygon which will suffer the closed line operation.
-	 * @return The remaining of the input polygon. The resultant geometries are
-	 *         stored on piecesFrom list.
-	 */
-	private Geometry processClosedLines(Geometry polygon) {
+    /**
+     * Realize the closed line operation for the given polygon.
+     * 
+     * It stores the resultant geometries in the piecesFrom list, and return the remaining of the
+     * input polygon.
+     * 
+     * @param polygon Polygon which will suffer the closed line operation.
+     * @return The remaining of the input polygon. The resultant geometries are stored on piecesFrom
+     *         list.
+     */
+    private Geometry processClosedLines(Geometry polygon) {
 
-		Geometry result = polygon;
-		GeometryFactory gf = polygon.getFactory();
-		for (Geometry ring : rings) {
+        Geometry result = polygon;
+        GeometryFactory gf = polygon.getFactory();
+        for (Geometry ring : rings) {
 
-			// the original feature + apply all the differences with a ring =
-			// result feature
+            // the original feature + apply all the differences with a ring =
+            // result feature
 
-			// each ring, if it lays entirely inside the polygon = one new piece
-			Polygon polygonArea = gf.createPolygon((LinearRing) ring, null);
-			result = result.difference(polygonArea);
-			Geometry areaIntersection = polygonArea.intersection(polygon);
-			for (int i = 0; i < areaIntersection.getNumGeometries(); i++) {
-				piecesFrom.add(areaIntersection.getGeometryN(i));
-			}
-		}
-		return result;
-	}
+            // each ring, if it lays entirely inside the polygon = one new piece
+            Polygon polygonArea = gf.createPolygon((LinearRing) ring, null);
+            result = result.difference(polygonArea);
+            Geometry areaIntersection = polygonArea.intersection(polygon);
+            for (int i = 0; i < areaIntersection.getNumGeometries(); i++) {
+                piecesFrom.add(areaIntersection.getGeometryN(i));
+            }
+        }
+        return result;
+    }
 
-	/**
-	 * Pick the remaining line and the resultant polygon from the previous
-	 * operations and perform an split operation.
-	 * 
-	 * @param geomToSplit
-	 *            The resultant geometry from the previous step.
-	 * @return List with the split geometries.
-	 */
-	private List<Geometry> processRemainingLine(Geometry geomToSplit) {
+    /**
+     * Pick the remaining line and the resultant polygon from the previous operations and perform an
+     * split operation.
+     * 
+     * @param geomToSplit The resultant geometry from the previous step.
+     * @return List with the split geometries.
+     */
+    private List<Geometry> processRemainingLine(Geometry geomToSplit) {
 
-		List<Geometry> splitResult = new ArrayList<Geometry>();
-		List<Geometry> inputGeometries = new ArrayList<Geometry>();
-		Geometry line = remainingLine;
+        List<Geometry> splitResult = new ArrayList<Geometry>();
+        List<Geometry> inputGeometries = new ArrayList<Geometry>();
+        Geometry line = remainingLine;
 
-		for (int j = 0; j < geomToSplit.getNumGeometries(); j++) {
+        for (int j = 0; j < geomToSplit.getNumGeometries(); j++) {
 
-			inputGeometries.add(geomToSplit.getGeometryN(j));
-		}
-		for (int i = 0; i < line.getNumGeometries(); i++) {
+            inputGeometries.add(geomToSplit.getGeometryN(j));
+        }
+        for (int i = 0; i < line.getNumGeometries(); i++) {
 
-			splitResult.clear();
-			SplitStrategy strategy = new SplitStrategy((LineString) line.getGeometryN(i));
+            splitResult.clear();
+            SplitStrategy strategy = new SplitStrategy((LineString) line.getGeometryN(i));
 
-			for (Geometry inputGeom : inputGeometries) {
+            for (Geometry inputGeom : inputGeometries) {
 
-				if (strategy.canSplit(inputGeom)) {
+                if (strategy.canSplit(inputGeom)) {
 
-					splitResult.addAll(strategy.split(inputGeom));
-				} else {
-					splitResult.add(inputGeom);
-				}
-			}
+                    splitResult.addAll(strategy.split(inputGeom));
+                } else {
+                    splitResult.add(inputGeom);
+                }
+            }
 
-			inputGeometries.clear();
-			inputGeometries.addAll(splitResult);
+            inputGeometries.clear();
+            inputGeometries.addAll(splitResult);
 
-		}
+        }
 
-		return inputGeometries;
-	}
+        return inputGeometries;
+    }
 
 }

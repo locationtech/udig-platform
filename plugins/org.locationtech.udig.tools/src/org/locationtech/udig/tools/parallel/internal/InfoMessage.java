@@ -23,8 +23,7 @@ import org.eclipse.swt.graphics.Image;
 /**
  * Human Message
  * <p>
- * This class maintain the user text attributes, used by widgets to show
- * information to user
+ * This class maintain the user text attributes, used by widgets to show information to user
  * </p>
  * 
  * @author Aritz Davila (www.axios.es)
@@ -33,175 +32,174 @@ import org.eclipse.swt.graphics.Image;
  */
 public final class InfoMessage {
 
-	/**
-	 * Type of Message
-	 * <p>
-	 * The following sentences define a criteria to use this type:
-	 * <ul>
-	 * <li>INFORMATION, IMPORTANT_INFO : Message to give an indications to user</li>
-	 * <li>WARNING: The value of parameter could produce a no desired result,
-	 * but the operation can be executed</li>
-	 * <li>ERROR: The introduced value is not valid for this operation.</li>
-	 * <li>FAIL The operation can not be executed correctly (typically an
-	 * exceptions occurred).</li>
-	 * <li>NULL: internal use</li>
-	 * </ul>
-	 * </p>
-	 */
-	public enum Type {
-		/** Message to give an indications to user */
-		INFORMATION,
-		/** Message to give an indications to user */
-		IMPORTANT_INFO,
-		/**
-		 * The value of parameter could produce a no desired result, but the
-		 * operation can be executed
-		 */
-		WARNING,
-		/** The introduced value is not valid for this operation */
-		ERROR,
-		/**
-		 * The operation can not be executed correctly (typically an exceptions
-		 * occurred).
-		 */
-		FAIL,
-		/** internal use */
-		NULL
-	};
+    /**
+     * Type of Message
+     * <p>
+     * The following sentences define a criteria to use this type:
+     * <ul>
+     * <li>INFORMATION, IMPORTANT_INFO : Message to give an indications to user</li>
+     * <li>WARNING: The value of parameter could produce a no desired result, but the operation can
+     * be executed</li>
+     * <li>ERROR: The introduced value is not valid for this operation.</li>
+     * <li>FAIL The operation can not be executed correctly (typically an exceptions occurred).</li>
+     * <li>NULL: internal use</li>
+     * </ul>
+     * </p>
+     */
+    public enum Type {
+        /** Message to give an indications to user */
+        INFORMATION,
+        /** Message to give an indications to user */
+        IMPORTANT_INFO,
+        /**
+         * The value of parameter could produce a no desired result, but the operation can be
+         * executed
+         */
+        WARNING,
+        /** The introduced value is not valid for this operation */
+        ERROR,
+        /**
+         * The operation can not be executed correctly (typically an exceptions occurred).
+         */
+        FAIL,
+        /** internal use */
+        NULL
+    };
 
-	public static final InfoMessage	NULL	= new InfoMessage("", Type.NULL);	//$NON-NLS-1$
+    public static final InfoMessage NULL = new InfoMessage("", Type.NULL); //$NON-NLS-1$
 
-	private String					text;
-	private Type					type;
+    private String text;
 
-	public InfoMessage() {
+    private Type type;
 
-	}
+    public InfoMessage() {
 
-	public InfoMessage(final String text, final Type type) {
-		assert text != null;
-		assert type != null;
+    }
 
-		this.text = text;
-		this.type = type;
-	}
+    public InfoMessage(final String text, final Type type) {
+        assert text != null;
+        assert type != null;
 
-	public InfoMessage(final String text, final int type) {
+        this.text = text;
+        this.type = type;
+    }
 
-		assert text != null;
+    public InfoMessage(final String text, final int type) {
 
-		this.text = text;
+        assert text != null;
 
-		switch (type) {
-		case IMessageProvider.INFORMATION:
-			this.type = Type.INFORMATION;
-			break;
-		case IMessageProvider.ERROR:
-			this.type = Type.ERROR;
-			break;
-		case IMessageProvider.NONE:
-			this.type = Type.NULL;
-			break;
-		case IMessageProvider.WARNING:
-			this.type = Type.WARNING;
-			break;
-		}
+        this.text = text;
 
-	}
+        switch (type) {
+        case IMessageProvider.INFORMATION:
+            this.type = Type.INFORMATION;
+            break;
+        case IMessageProvider.ERROR:
+            this.type = Type.ERROR;
+            break;
+        case IMessageProvider.NONE:
+            this.type = Type.NULL;
+            break;
+        case IMessageProvider.WARNING:
+            this.type = Type.WARNING;
+            break;
+        }
 
-	public void setText(final String text) {
-		assert text != null;
+    }
 
-		this.text = text;
-	}
+    public void setText(final String text) {
+        assert text != null;
 
-	public void setType(final Type type) {
-		assert type != null;
+        this.text = text;
+    }
 
-		this.type = type;
-	}
+    public void setType(final Type type) {
+        assert type != null;
 
-	@Override
-	public String toString() {
-		return this.text;
-	}
+        this.type = type;
+    }
 
-	@Override
-	public int hashCode() {
-		final int PRIME = 31;
-		int result = 1;
-		result = PRIME * result + ((this.text == null) ? 0 : this.text.hashCode());
-		return result;
-	}
+    @Override
+    public String toString() {
+        return this.text;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		final InfoMessage other = (InfoMessage) obj;
-		if (this.text == null) {
-			if (other.text != null)
-				return false;
-		} else if (!this.text.equals(other.text))
-			return false;
-		if (this.type == null) {
-			if (other.type != null)
-				return false;
-		} else if (this.type != other.type)
-			return false;
-		return true;
-	}
+    @Override
+    public int hashCode() {
+        final int PRIME = 31;
+        int result = 1;
+        result = PRIME * result + ((this.text == null) ? 0 : this.text.hashCode());
+        return result;
+    }
 
-	/**
-	 * @return Returns the text.
-	 */
-	public final String getText() {
-		return this.text;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        final InfoMessage other = (InfoMessage) obj;
+        if (this.text == null) {
+            if (other.text != null)
+                return false;
+        } else if (!this.text.equals(other.text))
+            return false;
+        if (this.type == null) {
+            if (other.type != null)
+                return false;
+        } else if (this.type != other.type)
+            return false;
+        return true;
+    }
 
-	/**
-	 * @return Returns the type.
-	 */
-	public final Type getType() {
-		return this.type;
-	}
+    /**
+     * @return Returns the text.
+     */
+    public final String getText() {
+        return this.text;
+    }
 
-	/**
-	 * @return Returns the image
-	 */
-	public final Image getImage() {
+    /**
+     * @return Returns the type.
+     */
+    public final Type getType() {
+        return this.type;
+    }
 
-		Image image = null;
+    /**
+     * @return Returns the image
+     */
+    public final Image getImage() {
 
-		switch (type) {
-		case FAIL:
-			image = JFaceResources.getImage(Dialog.DLG_IMG_MESSAGE_ERROR);
-			break;
-		case INFORMATION:
-		case IMPORTANT_INFO:
-			image = JFaceResources.getImage(Dialog.DLG_IMG_MESSAGE_INFO);
-			break;
-		case WARNING:
-			image = JFaceResources.getImage(Dialog.DLG_IMG_MESSAGE_WARNING);
-			break;
-		case ERROR:
-			image = JFaceResources.getImage(Dialog.DLG_IMG_MESSAGE_ERROR);
-			break;
+        Image image = null;
 
-		case NULL:
-			image = null;
-			break;
+        switch (type) {
+        case FAIL:
+            image = JFaceResources.getImage(Dialog.DLG_IMG_MESSAGE_ERROR);
+            break;
+        case INFORMATION:
+        case IMPORTANT_INFO:
+            image = JFaceResources.getImage(Dialog.DLG_IMG_MESSAGE_INFO);
+            break;
+        case WARNING:
+            image = JFaceResources.getImage(Dialog.DLG_IMG_MESSAGE_WARNING);
+            break;
+        case ERROR:
+            image = JFaceResources.getImage(Dialog.DLG_IMG_MESSAGE_ERROR);
+            break;
 
-		default:
-			assert false; // impossible!
-			break;
-		}
+        case NULL:
+            image = null;
+            break;
 
-		return image;
-	}
+        default:
+            assert false; // impossible!
+            break;
+        }
+
+        return image;
+    }
 
 }

@@ -35,9 +35,8 @@ import org.opengis.feature.simple.SimpleFeatureType;
 /**
  * Merge Command Factory
  * <p>
- * This is a wrapper over UndoableComposite which is responsible to construct
- * the command list required to delete the source features and create the new
- * merged feature.
+ * This is a wrapper over UndoableComposite which is responsible to construct the command list
+ * required to delete the source features and create the new merged feature.
  * </p>
  * 
  * @author Mauricio Pazos (www.axios.es)
@@ -46,84 +45,84 @@ import org.opengis.feature.simple.SimpleFeatureType;
  */
 final class MergeFeaturesCommand implements UndoableMapCommand {
 
-	private UndoableComposite	compositeCmd		= null;
+    private UndoableComposite compositeCmd = null;
 
-	public static MergeFeaturesCommand getInstance(	ILayer layer,
-													FeatureCollection<SimpleFeatureType, SimpleFeature> sourceFeatures,
-													SimpleFeature mergedFeature) {
+    public static MergeFeaturesCommand getInstance(ILayer layer,
+            FeatureCollection<SimpleFeatureType, SimpleFeature> sourceFeatures,
+            SimpleFeature mergedFeature) {
 
-		return new MergeFeaturesCommand(layer, sourceFeatures, mergedFeature);
-	}
+        return new MergeFeaturesCommand(layer, sourceFeatures, mergedFeature);
+    }
 
-	/**
-	 * Creates the set of commands required to delete the selected features 
-	 * and add a new the new feature (merge feature).
-	 *   
-	 * @param layer
-	 * @param sourceFeatures selected features
-	 * @param mergedFeature	 the new feature
-	 */
-	private MergeFeaturesCommand(	final ILayer layer,
-									final FeatureCollection<SimpleFeatureType, SimpleFeature> sourceFeatures,
-									final SimpleFeature mergedFeature) {
+    /**
+     * Creates the set of commands required to delete the selected features and add a new the new
+     * feature (merge feature).
+     * 
+     * @param layer
+     * @param sourceFeatures selected features
+     * @param mergedFeature the new feature
+     */
+    private MergeFeaturesCommand(final ILayer layer,
+            final FeatureCollection<SimpleFeatureType, SimpleFeature> sourceFeatures,
+            final SimpleFeature mergedFeature) {
 
-		assert layer != null;
-		assert sourceFeatures != null;
-		assert mergedFeature != null;
+        assert layer != null;
+        assert sourceFeatures != null;
+        assert mergedFeature != null;
 
-		// creates the command to delete selected features
+        // creates the command to delete selected features
 
-		final EditCommandFactory cmdFactory = EditCommandFactory.getInstance();
-		final IMap map = layer.getMap();
+        final EditCommandFactory cmdFactory = EditCommandFactory.getInstance();
+        final IMap map = layer.getMap();
 
-		List<UndoableMapCommand> cmdList = new LinkedList<UndoableMapCommand>();
+        List<UndoableMapCommand> cmdList = new LinkedList<UndoableMapCommand>();
 
-		final FeatureIterator<SimpleFeature> iter = sourceFeatures.features();
-		while (iter.hasNext()) {
-			SimpleFeature feature = iter.next();
+        final FeatureIterator<SimpleFeature> iter = sourceFeatures.features();
+        while (iter.hasNext()) {
+            SimpleFeature feature = iter.next();
 
-			UndoableMapCommand deleteCmd = cmdFactory.createDeleteFeature(feature, layer);
-			deleteCmd.setMap(map);
-			
-			cmdList.add(deleteCmd);
-		}
-		iter.close();
+            UndoableMapCommand deleteCmd = cmdFactory.createDeleteFeature(feature, layer);
+            deleteCmd.setMap(map);
 
-		// adds the merge feature to new layer
-		UndoableMapCommand addCmd = cmdFactory.createAddFeatureCommand(mergedFeature, layer);
-		addCmd.setMap(map);
-		
-		cmdList.add(addCmd);
+            cmdList.add(deleteCmd);
+        }
+        iter.close();
 
-		assert cmdList.size() >= 3; // Almost two delete and one add command
+        // adds the merge feature to new layer
+        UndoableMapCommand addCmd = cmdFactory.createAddFeatureCommand(mergedFeature, layer);
+        addCmd.setMap(map);
 
-		this.compositeCmd = new UndoableComposite(cmdList);
+        cmdList.add(addCmd);
 
-	}
+        assert cmdList.size() >= 3; // Almost two delete and one add command
 
-	public void rollback(IProgressMonitor monitor) throws Exception {
+        this.compositeCmd = new UndoableComposite(cmdList);
 
-		this.compositeCmd.rollback(monitor);
-	}
+    }
 
-	public MapCommand copy() {
-		return this.compositeCmd.copy();
-	}
+    public void rollback(IProgressMonitor monitor) throws Exception {
 
-	public String getName() {
-		return "Merge Features Command"; //$NON-NLS-1$
-	}
+        this.compositeCmd.rollback(monitor);
+    }
 
-	public void setMap(final IMap map) {
-		this.compositeCmd.setMap(map);
-	}
+    public MapCommand copy() {
+        return this.compositeCmd.copy();
+    }
 
-	public Map getMap() {
-		return this.compositeCmd.getMap();
-	}
+    public String getName() {
+        return "Merge Features Command"; //$NON-NLS-1$
+    }
 
-	public void run(IProgressMonitor monitor) throws Exception {
-		this.compositeCmd.run(monitor);
-	}
+    public void setMap(final IMap map) {
+        this.compositeCmd.setMap(map);
+    }
+
+    public Map getMap() {
+        return this.compositeCmd.getMap();
+    }
+
+    public void run(IProgressMonitor monitor) throws Exception {
+        this.compositeCmd.run(monitor);
+    }
 
 }

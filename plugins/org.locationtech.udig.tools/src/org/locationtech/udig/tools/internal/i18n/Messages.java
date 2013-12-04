@@ -211,9 +211,7 @@ public class Messages extends NLS {
     public static String TrimFeaturesCommand_unvalid_intersection;
 
     public static String PrecisionParallel_deformed_result;
-    
-    
-    
+
     public static String DialogUtil_title;
 
     public static String DialogUtil_message;
@@ -222,7 +220,7 @@ public class Messages extends NLS {
 
     public static String GeometryUtil_CannotGetDimension;
 
-    //public static String GeometryUtil_DonotKnowHowAdapt;
+    // public static String GeometryUtil_DonotKnowHowAdapt;
 
     public static String GeometryUtil_ExpectedSimpleGeometry;
 
@@ -261,8 +259,6 @@ public class Messages extends NLS {
     public static String TrimGeometryStrategy_point_not_on_line;
 
     public static String TrimGeometryStrategy_trimming_line_intersect_one_point;
-    
-    
 
     static {
         // initialize resource bundle

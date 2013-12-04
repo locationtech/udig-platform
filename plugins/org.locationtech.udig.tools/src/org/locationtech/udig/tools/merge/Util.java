@@ -36,73 +36,76 @@ import org.locationtech.udig.tools.internal.ui.util.LayerUtil;
 
 /**
  * @author Mauricio Pazos
- *
+ * 
  */
 public final class Util {
-	
-	private Util(){}
 
-	public static List<SimpleFeature> retrieveFeatures(Filter filter, ILayer layer) throws IOException {
+    private Util() {
+    }
 
-		FeatureCollection<SimpleFeatureType, SimpleFeature> features = LayerUtil.getSelectedFeatures(layer, filter);
-		
-		List<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
-		FeatureIterator<SimpleFeature> iter = null;
-		try {
-			iter = features.features();
-			while (iter.hasNext()) {
-				SimpleFeature f = iter.next();
-				featureList.add(f);
-			}
-		} finally {
-			if (iter != null) {
-				iter.close();
-			}
-		}
-		return featureList;
-	}
-	
-	
-	
-	public static List<SimpleFeature> retrieveFeaturesInBBox(List<Envelope> bbox, IToolContext context) throws IOException {
+    public static List<SimpleFeature> retrieveFeatures(Filter filter, ILayer layer)
+            throws IOException {
 
-		ILayer selectedLayer = context.getSelectedLayer();
+        FeatureCollection<SimpleFeatureType, SimpleFeature> features = LayerUtil
+                .getSelectedFeatures(layer, filter);
 
-		FeatureSource<SimpleFeatureType, SimpleFeature> source = selectedLayer.getResource(FeatureSource.class, null);
+        List<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
+        FeatureIterator<SimpleFeature> iter = null;
+        try {
+            iter = features.features();
+            while (iter.hasNext()) {
+                SimpleFeature f = iter.next();
+                featureList.add(f);
+            }
+        } finally {
+            if (iter != null) {
+                iter.close();
+            }
+        }
+        return featureList;
+    }
 
-		String typename = source.getSchema().getName().toString();
+    public static List<SimpleFeature> retrieveFeaturesInBBox(List<Envelope> bbox,
+            IToolContext context) throws IOException {
 
-		// creates the query with a bbox filter
-		FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2(null);
+        ILayer selectedLayer = context.getSelectedLayer();
 
-		Filter filter = selectedLayer.createBBoxFilter(bbox.get(0), null);
-		Filter mergedFilter;
-		Or filterOR = null;
-		for (int index = 0; index < bbox.size(); index++) {
+        FeatureSource<SimpleFeatureType, SimpleFeature> source = selectedLayer.getResource(
+                FeatureSource.class, null);
 
-			mergedFilter = selectedLayer.createBBoxFilter(bbox.get(index), null);
-			filterOR = ff.or(filter, mergedFilter);
-		}
+        String typename = source.getSchema().getName().toString();
 
-		Query query = new Query(typename, filterOR);
+        // creates the query with a bbox filter
+        FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2(null);
 
-		// retrieves the feature in the bbox
-		FeatureCollection<SimpleFeatureType, SimpleFeature> features = source.getFeatures(query);
+        Filter filter = selectedLayer.createBBoxFilter(bbox.get(0), null);
+        Filter mergedFilter;
+        Or filterOR = null;
+        for (int index = 0; index < bbox.size(); index++) {
 
-		List<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
-		FeatureIterator<SimpleFeature> iter = null;
-		try {
-			iter = features.features();
-			while (iter.hasNext()) {
-				SimpleFeature f = iter.next();
-				featureList.add(f);
-			}
-		} finally {
-			if (iter != null) {
-				iter.close();
-			}
-		}
-		return featureList;
-	}
-	
+            mergedFilter = selectedLayer.createBBoxFilter(bbox.get(index), null);
+            filterOR = ff.or(filter, mergedFilter);
+        }
+
+        Query query = new Query(typename, filterOR);
+
+        // retrieves the feature in the bbox
+        FeatureCollection<SimpleFeatureType, SimpleFeature> features = source.getFeatures(query);
+
+        List<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
+        FeatureIterator<SimpleFeature> iter = null;
+        try {
+            iter = features.features();
+            while (iter.hasNext()) {
+                SimpleFeature f = iter.next();
+                featureList.add(f);
+            }
+        } finally {
+            if (iter != null) {
+                iter.close();
+            }
+        }
+        return featureList;
+    }
+
 }

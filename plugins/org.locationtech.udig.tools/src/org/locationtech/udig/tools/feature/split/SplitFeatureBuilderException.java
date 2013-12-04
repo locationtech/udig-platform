@@ -14,7 +14,6 @@
  *******************************************************************************/
 package org.locationtech.udig.tools.feature.split;
 
-
 /**
  * Custom exception used on {@link SplitFeatureBuilder}.
  * 
@@ -24,11 +23,10 @@ package org.locationtech.udig.tools.feature.split;
  */
 public class SplitFeatureBuilderException extends Exception {
 
-	private static final long serialVersionUID = -2181033592719741890L;
+    private static final long serialVersionUID = -2181033592719741890L;
 
-	public SplitFeatureBuilderException(String ex) {
-		super(ex);
-	}
+    public SplitFeatureBuilderException(String ex) {
+        super(ex);
+    }
 
-	
 }

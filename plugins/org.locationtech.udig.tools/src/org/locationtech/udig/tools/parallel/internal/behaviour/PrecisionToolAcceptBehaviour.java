@@ -28,9 +28,9 @@ import org.locationtech.udig.tools.edit.support.EditGeom;
 import org.locationtech.udig.tools.parallel.internal.PrecisionToolsContext;
 
 /**
- * Behaviour executed after committing a feature or adding to the blackboard.
- * When the new feature is created, clear the blackboard(no geometries
- * selected), and initializes the precision tool context.
+ * Behaviour executed after committing a feature or adding to the blackboard. When the new feature
+ * is created, clear the blackboard(no geometries selected), and initializes the precision tool
+ * context.
  * 
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
@@ -38,39 +38,39 @@ import org.locationtech.udig.tools.parallel.internal.PrecisionToolsContext;
  */
 public class PrecisionToolAcceptBehaviour implements Behaviour {
 
-	private PrecisionToolsContext	toolContext	= null;
+    private PrecisionToolsContext toolContext = null;
 
-	public PrecisionToolAcceptBehaviour(PrecisionToolsContext context) {
+    public PrecisionToolAcceptBehaviour(PrecisionToolsContext context) {
 
-		this.toolContext = context;
-	}
+        this.toolContext = context;
+    }
 
-	public UndoableMapCommand getCommand(EditToolHandler handler) {
+    public UndoableMapCommand getCommand(EditToolHandler handler) {
 
-		if (!isValid(handler)) {
-			throw new IllegalArgumentException("Behaviour is not valid for the current state"); //$NON-NLS-1$
-		}
-		UndoableComposite composite = new UndoableComposite();
-		List<EditGeom> list = new LinkedList<EditGeom>();
-		list.add(handler.getCurrentGeom());
-		// composite.getCommands().add(new
-		// DeselectEditGeomCommand(handler,list));
-		// composite.getCommands().add(new SetEditStateCommand(handler,
-		// EditState.NONE));
-		toolContext.initContext();
-		handler.getContext().getViewportPane().repaint();
-		return composite;
-	}
+        if (!isValid(handler)) {
+            throw new IllegalArgumentException("Behaviour is not valid for the current state"); //$NON-NLS-1$
+        }
+        UndoableComposite composite = new UndoableComposite();
+        List<EditGeom> list = new LinkedList<EditGeom>();
+        list.add(handler.getCurrentGeom());
+        // composite.getCommands().add(new
+        // DeselectEditGeomCommand(handler,list));
+        // composite.getCommands().add(new SetEditStateCommand(handler,
+        // EditState.NONE));
+        toolContext.initContext();
+        handler.getContext().getViewportPane().repaint();
+        return composite;
+    }
 
-	public void handleError(EditToolHandler handler, Throwable error, UndoableMapCommand command) {
-		EditPlugin.log("", error); //$NON-NLS-1$
-	}
+    public void handleError(EditToolHandler handler, Throwable error, UndoableMapCommand command) {
+        EditPlugin.log("", error); //$NON-NLS-1$
+    }
 
-	public boolean isValid(EditToolHandler handler) {
-		EditGeom currentGeom = handler.getCurrentGeom();
+    public boolean isValid(EditToolHandler handler) {
+        EditGeom currentGeom = handler.getCurrentGeom();
 
-		boolean currentGeomNotNull = currentGeom != null;
-		return currentGeomNotNull;
-	}
+        boolean currentGeomNotNull = currentGeom != null;
+        return currentGeomNotNull;
+    }
 
 }

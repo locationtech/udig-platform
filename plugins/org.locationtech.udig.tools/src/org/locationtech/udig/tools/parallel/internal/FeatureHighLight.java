@@ -34,49 +34,51 @@ import org.locationtech.udig.project.ui.commands.IDrawCommand;
  */
 public class FeatureHighLight extends AbstractDrawCommand implements IAnimation {
 
-	private int									runs	= 0;
-	private final List<? extends IDrawCommand>	commands;
-	private final Rectangle						validArea;
+    private int runs = 0;
 
-	public FeatureHighLight(List<? extends IDrawCommand> commands, Rectangle validArea) {
+    private final List<? extends IDrawCommand> commands;
 
-		super();
-		this.commands = commands;
-		this.validArea = validArea;
-	}
+    private final Rectangle validArea;
 
-	public short getFrameInterval() {
-		return 300;
-	}
+    public FeatureHighLight(List<? extends IDrawCommand> commands, Rectangle validArea) {
 
-	public void nextFrame() {
-		runs++;
-	}
+        super();
+        this.commands = commands;
+        this.validArea = validArea;
+    }
 
-	public boolean hasNext() {
-		return runs < 8;
-	}
+    public short getFrameInterval() {
+        return 300;
+    }
 
-	public void run(IProgressMonitor monitor) throws Exception {
-		if (runs % 2 == 0) {
-			for (IDrawCommand command : commands) {
-				command.setGraphics(graphics, display);
-				command.setMap(getMap());
-				command.run(monitor);
-			}
-		}
-	}
+    public void nextFrame() {
+        runs++;
+    }
 
-	public Rectangle getValidArea() {
-		return validArea;
-	}
+    public boolean hasNext() {
+        return runs < 8;
+    }
 
-	@Override
-	public void setValid(boolean valid) {
-		super.setValid(valid);
-		for (IDrawCommand command : commands) {
-			command.setValid(valid);
-		}
-	}
+    public void run(IProgressMonitor monitor) throws Exception {
+        if (runs % 2 == 0) {
+            for (IDrawCommand command : commands) {
+                command.setGraphics(graphics, display);
+                command.setMap(getMap());
+                command.run(monitor);
+            }
+        }
+    }
+
+    public Rectangle getValidArea() {
+        return validArea;
+    }
+
+    @Override
+    public void setValid(boolean valid) {
+        super.setValid(valid);
+        for (IDrawCommand command : commands) {
+            command.setValid(valid);
+        }
+    }
 
 }

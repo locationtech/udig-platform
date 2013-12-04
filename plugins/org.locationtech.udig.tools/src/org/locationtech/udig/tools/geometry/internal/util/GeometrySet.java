@@ -29,38 +29,39 @@ import com.vividsolutions.jts.geom.Geometry;
  * <li></li>
  * </ul>
  * </p>
+ * 
  * @author Mauricio Pazos (www.axios.es)
  * @author Aritz Davila (www.axios.es)
  * @since 1.3.0
  */
-public class GeometrySet<T extends Geometry> extends LinkedHashSet< T > implements Set<T> , Cloneable, Serializable{
+public class GeometrySet<T extends Geometry> extends LinkedHashSet<T> implements Set<T>, Cloneable,
+        Serializable {
 
     private static final long serialVersionUID = 3635060680946966450L;
-
 
     public GeometrySet() {
         super();
     }
-    
-    public GeometrySet( Collection<T> values ) {
+
+    public GeometrySet(Collection<T> values) {
         super(values);
     }
 
     /**
-     *  Compares the geometries using {@link Geometry#equalsExact(Geometry)}
+     * Compares the geometries using {@link Geometry#equalsExact(Geometry)}
      */
     @Override
     public boolean contains(Object o) {
-        
+
         T requested = (T) o;
-        for( T g: this ) {
-            
-            T p = (T)g;
-            if(p.equalsExact(requested)){ 
+        for (T g : this) {
+
+            T p = (T) g;
+            if (p.equalsExact(requested)) {
                 return true;
             }
         }
         return false;
-    }    
-    
+    }
+
 }

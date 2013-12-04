@@ -47,9 +47,9 @@ import com.vividsolutions.jts.geom.Polygon;
 import org.locationtech.udig.tools.arc.internal.ArcFeedbackManager;
 import org.locationtech.udig.tools.arc.internal.CreateArcBehaviour;
 /*
-import es.axios.udig.ui.editingtools.arc.internal.ArcFeedbackManager;
-import es.axios.udig.ui.editingtools.arc.internal.CreateArcBehaviour;
-*/
+ import es.axios.udig.ui.editingtools.arc.internal.ArcFeedbackManager;
+ import es.axios.udig.ui.editingtools.arc.internal.CreateArcBehaviour;
+ */
 
 import org.locationtech.udig.tools.arc.internal.beahaviour.AcceptFeedbackBehaviour;
 import org.locationtech.udig.tools.arc.internal.beahaviour.CancelFeedbakBehaviour;
@@ -57,12 +57,12 @@ import org.locationtech.udig.tools.arc.internal.beahaviour.EditToolFeedbackBehav
 import org.locationtech.udig.tools.arc.internal.beahaviour.EditToolFeedbackManager;
 import org.locationtech.udig.tools.arc.internal.beahaviour.NumOfPointsRunAcceptBehaviour;
 /*
-import es.axios.udig.ui.editingtools.internal.commons.behaviour.AcceptFeedbackBehaviour;
-import es.axios.udig.ui.editingtools.internal.commons.behaviour.CancelFeedbakBehaviour;
-import es.axios.udig.ui.editingtools.internal.commons.behaviour.EditToolFeedbackBehaviour;
-import es.axios.udig.ui.editingtools.internal.commons.behaviour.EditToolFeedbackManager;
-import es.axios.udig.ui.editingtools.internal.commons.behaviour.NumOfPointsRunAcceptBehaviour;
-*/
+ import es.axios.udig.ui.editingtools.internal.commons.behaviour.AcceptFeedbackBehaviour;
+ import es.axios.udig.ui.editingtools.internal.commons.behaviour.CancelFeedbakBehaviour;
+ import es.axios.udig.ui.editingtools.internal.commons.behaviour.EditToolFeedbackBehaviour;
+ import es.axios.udig.ui.editingtools.internal.commons.behaviour.EditToolFeedbackManager;
+ import es.axios.udig.ui.editingtools.internal.commons.behaviour.NumOfPointsRunAcceptBehaviour;
+ */
 import org.locationtech.udig.tools.arc.internal.presentation.StatusBar;
 
 /**
@@ -78,7 +78,7 @@ import org.locationtech.udig.tools.arc.internal.presentation.StatusBar;
  */
 public class ArcTool extends AbstractEditTool {
 
-    private static final String     EXTENSION_ID = "es.axios.udig.ui.editingtools.arc.ArcTool"; //$NON-NLS-1$
+    private static final String EXTENSION_ID = "es.axios.udig.ui.editingtools.arc.ArcTool"; //$NON-NLS-1$
 
     private EditToolFeedbackManager arcFeedbackManager;
 
@@ -96,9 +96,8 @@ public class ArcTool extends AbstractEditTool {
         return arcFeedbackManager;
     }
 
-
     @Override
-    public void setActive( final boolean active ) {
+    public void setActive(final boolean active) {
         super.setActive(active);
         IToolContext context = getContext();
         if (active && context.getMapLayers().size() > 0) {
@@ -115,7 +114,7 @@ public class ArcTool extends AbstractEditTool {
      * @param activators an empty list.
      */
     @Override
-    protected void initActivators( Set<Activator> activators ) {
+    protected void initActivators(Set<Activator> activators) {
         activators.add(new EditStateListenerActivator());
         activators.add(new DrawCurrentGeomVerticesActivator());
         activators.add(new ResetAllStateActivator());
@@ -129,7 +128,7 @@ public class ArcTool extends AbstractEditTool {
      * @param acceptBehaviours an empty list
      */
     @Override
-    protected void initAcceptBehaviours( List<Behaviour> acceptBehaviours ) {
+    protected void initAcceptBehaviours(List<Behaviour> acceptBehaviours) {
         acceptBehaviours.add(new CreateArcBehaviour());
         acceptBehaviours.add(new AcceptFeedbackBehaviour(getFeedbackManager()));
     }
@@ -140,7 +139,7 @@ public class ArcTool extends AbstractEditTool {
      * @param cancelBehaviours an empty list
      */
     @Override
-    protected void initCancelBehaviours( List<Behaviour> cancelBehaviours ) {
+    protected void initCancelBehaviours(List<Behaviour> cancelBehaviours) {
         cancelBehaviours.add(new CancelFeedbakBehaviour(getFeedbackManager()));
         cancelBehaviours.add(new DefaultCancelBehaviour());
     }
@@ -153,11 +152,11 @@ public class ArcTool extends AbstractEditTool {
      * @param helper a helper for constructing the complicated structure of EventBehaviours.
      */
     @Override
-    protected void initEventBehaviours( EditToolConfigurationHelper helper ) {
-        //show the snap area
+    protected void initEventBehaviours(EditToolConfigurationHelper helper) {
+        // show the snap area
         helper.add(new DrawCreateVertexSnapAreaBehaviour());
-        
-        //run only the first valid behaviour
+
+        // run only the first valid behaviour
         helper.startMutualExclusiveList();
         helper.add(new AddVertexWhileCreatingBehaviour());
         // override so that editing will not be started if there are no geometries on the
@@ -169,31 +168,26 @@ public class ArcTool extends AbstractEditTool {
         NumOfPointsRunAcceptBehaviour acceptBehaviour = new NumOfPointsRunAcceptBehaviour(3);
         // acceptBehaviour.setAddPoint(true); FIXME it is not present in rc15
 
-        
         helper.add(acceptBehaviour);
-		helper.add(new SetSnapSizeBehaviour());
+        helper.add(new SetSnapSizeBehaviour());
         helper.add(new EditToolFeedbackBehaviour(getFeedbackManager()));
-		helper.add(new AcceptOnDoubleClickBehaviour());
+        helper.add(new AcceptOnDoubleClickBehaviour());
         helper.done();
     }
 
     /**
-     * Initializes the list of {@link EnablementBehaviour}s that are ran to determine if the tool
-     * is enabled given an event. For example if the mouse cursor is outside the valid bounds of a
-     * CRS for a layer an EnablementBehaviour might signal that editing is illegal and provide a
-     * message for the user indicating why.
+     * Initializes the list of {@link EnablementBehaviour}s that are ran to determine if the tool is
+     * enabled given an event. For example if the mouse cursor is outside the valid bounds of a CRS
+     * for a layer an EnablementBehaviour might signal that editing is illegal and provide a message
+     * for the user indicating why.
      * 
      * @param enablementBehaviours an empty list
      */
     @Override
-    protected void initEnablementBehaviours( List<EnablementBehaviour> enablementBehaviours ) {
-		enablementBehaviours.add(new WithinLegalLayerBoundsBehaviour());
-		enablementBehaviours.add(new ValidToolDetectionActivator(new Class[] {
-				Geometry.class,
-				Polygon.class,
-				MultiPolygon.class,
-				LineString.class,
-				MultiLineString.class }));
+    protected void initEnablementBehaviours(List<EnablementBehaviour> enablementBehaviours) {
+        enablementBehaviours.add(new WithinLegalLayerBoundsBehaviour());
+        enablementBehaviours.add(new ValidToolDetectionActivator(new Class[] { Geometry.class,
+                Polygon.class, MultiPolygon.class, LineString.class, MultiLineString.class }));
     }
 
 }

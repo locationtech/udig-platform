@@ -32,207 +32,216 @@ import com.vividsolutions.jts.geom.Coordinate;
  */
 public abstract class PrecisionToolsContext extends Observable {
 
-	public static final String	UPDATE_LAYER		= "UPDATE_LAYER";				//$NON-NLS-1$
-	public static final String	UPDATE_VIEW			= "UPDATE_VIEW";				//$NON-NLS-1$
-	public static final String	UPDATE_ERROR		= "UPDATE_ERROR";				//$NON-NLS-1$
+    public static final String UPDATE_LAYER = "UPDATE_LAYER"; //$NON-NLS-1$
 
-	public PrecisionToolsMode	mode				= null;
-	public PrecisionToolsMode	previousMode		= PrecisionToolsMode.WAITING;
-	protected Coordinate		initialCoordinate	= null;
+    public static final String UPDATE_VIEW = "UPDATE_VIEW"; //$NON-NLS-1$
 
-	protected Unit<?>			units				= null;
-	protected Double			length				= null;
-	protected EditBlackboard	bb					= null;
-	protected double			distanceCoorX		= 0;
-	protected double			distanceCoorY		= 0;
-	protected Coordinate		referenceCoor		= null;
-	protected boolean			reverse				= false;
+    public static final String UPDATE_ERROR = "UPDATE_ERROR"; //$NON-NLS-1$
 
-	protected EditToolHandler	handler				= null;
+    public PrecisionToolsMode mode = null;
 
-	/**
-	 * Set the edit tool handler used by the tool.
-	 * 
-	 * @param handler
-	 */
-	public void setHandler(EditToolHandler handler) {
+    public PrecisionToolsMode previousMode = PrecisionToolsMode.WAITING;
 
-		this.handler = handler;
-	}
+    protected Coordinate initialCoordinate = null;
 
-	public abstract void initContext();
+    protected Unit<?> units = null;
 
-	/**
-	 * When context is changed, call its observer for updating.
-	 * 
-	 * @param update
-	 */
-	public void update(String update) {
+    protected Double length = null;
 
-		setChanged();
-		notifyObservers(update);
-	}
+    protected EditBlackboard bb = null;
 
-	/**
-	 * Set the mode and the previous mode of the tool.
-	 * 
-	 * @param mode
-	 */
-	public void setMode(PrecisionToolsMode mode) {
+    protected double distanceCoorX = 0;
 
-		assert mode != null;
+    protected double distanceCoorY = 0;
 
-		this.previousMode = this.mode;
-		this.mode = mode;
-	}
+    protected Coordinate referenceCoor = null;
 
-	/**
-	 * Get the map units.
-	 * 
-	 * @return
-	 */
-	public synchronized Unit<?> getUnits() {
+    protected boolean reverse = false;
 
-		return units;
-	}
+    protected EditToolHandler handler = null;
 
-	/**
-	 * Set the map units.
-	 * 
-	 * @param units
-	 */
-	public synchronized void setUnits(Unit<?> units) {
+    /**
+     * Set the edit tool handler used by the tool.
+     * 
+     * @param handler
+     */
+    public void setHandler(EditToolHandler handler) {
 
-		this.units = units;
-	}
+        this.handler = handler;
+    }
 
-	/**
-	 * Get the length of the new parallel line.
-	 * 
-	 * @return
-	 */
-	public synchronized Double getLength() {
+    public abstract void initContext();
 
-		return length;
-	}
+    /**
+     * When context is changed, call its observer for updating.
+     * 
+     * @param update
+     */
+    public void update(String update) {
 
-	/**
-	 * Set the length of the new parallel line.
-	 * 
-	 * @param length
-	 */
-	public synchronized void setLength(Double length) {
+        setChanged();
+        notifyObservers(update);
+    }
 
-		this.length = length;
-	}
+    /**
+     * Set the mode and the previous mode of the tool.
+     * 
+     * @param mode
+     */
+    public void setMode(PrecisionToolsMode mode) {
 
-	/**
-	 * Set the initial coordinate.
-	 * 
-	 * @param coordinate
-	 */
-	public synchronized void setInitialCoordinate(Coordinate coordinate) {
+        assert mode != null;
 
-		this.initialCoordinate = coordinate;
-		update(UPDATE_LAYER);
-	}
+        this.previousMode = this.mode;
+        this.mode = mode;
+    }
 
-	/**
-	 * Get the initial coordinate.
-	 */
-	public synchronized Coordinate getInitialCoordinate() {
+    /**
+     * Get the map units.
+     * 
+     * @return
+     */
+    public synchronized Unit<?> getUnits() {
 
-		return this.initialCoordinate;
-	}
+        return units;
+    }
 
-	/**
-	 * Set the edit blackboard. Is needed for transforming points to
-	 * coordinates.
-	 * 
-	 * @param editBlackboard
-	 */
-	public synchronized void setEditBlackBoard(EditBlackboard editBlackboard) {
+    /**
+     * Set the map units.
+     * 
+     * @param units
+     */
+    public synchronized void setUnits(Unit<?> units) {
 
-		this.bb = editBlackboard;
-	}
+        this.units = units;
+    }
 
-	/**
-	 * Get the distance for the coordinate X
-	 * 
-	 * @return
-	 */
-	public synchronized double getDistanceCoorX() {
+    /**
+     * Get the length of the new parallel line.
+     * 
+     * @return
+     */
+    public synchronized Double getLength() {
 
-		return distanceCoorX;
-	}
+        return length;
+    }
 
-	/**
-	 * Set the distance for the coordinate X
-	 * 
-	 * @param dist
-	 */
-	public synchronized void setDistanceCoorX(double dist) {
+    /**
+     * Set the length of the new parallel line.
+     * 
+     * @param length
+     */
+    public synchronized void setLength(Double length) {
 
-		this.distanceCoorX = dist;
-	}
+        this.length = length;
+    }
 
-	/**
-	 * Set the distance for the coordinate Y
-	 * 
-	 * @param dist
-	 */
-	public synchronized void setDistanceCoorY(double dist) {
+    /**
+     * Set the initial coordinate.
+     * 
+     * @param coordinate
+     */
+    public synchronized void setInitialCoordinate(Coordinate coordinate) {
 
-		this.distanceCoorY = dist;
-	}
+        this.initialCoordinate = coordinate;
+        update(UPDATE_LAYER);
+    }
 
-	/**
-	 * Get the distance for the coordinate Y
-	 * 
-	 * @return
-	 */
-	public synchronized double getDistanceCoorY() {
+    /**
+     * Get the initial coordinate.
+     */
+    public synchronized Coordinate getInitialCoordinate() {
 
-		return distanceCoorY;
-	}
+        return this.initialCoordinate;
+    }
 
-	/**
-	 * Get the reference coordinate.
-	 * 
-	 * @return
-	 */
-	public Coordinate getReferenceCoordinate() {
+    /**
+     * Set the edit blackboard. Is needed for transforming points to coordinates.
+     * 
+     * @param editBlackboard
+     */
+    public synchronized void setEditBlackBoard(EditBlackboard editBlackboard) {
 
-		return this.referenceCoor;
-	}
+        this.bb = editBlackboard;
+    }
 
-	/**
-	 * Get the actual mode.
-	 * 
-	 * @return
-	 */
-	public PrecisionToolsMode getMode() {
+    /**
+     * Get the distance for the coordinate X
+     * 
+     * @return
+     */
+    public synchronized double getDistanceCoorX() {
 
-		return this.mode;
-	}
+        return distanceCoorX;
+    }
 
-	/**
-	 * Get the previous mode.
-	 * 
-	 * @return
-	 */
-	public PrecisionToolsMode getPreviousMode() {
+    /**
+     * Set the distance for the coordinate X
+     * 
+     * @param dist
+     */
+    public synchronized void setDistanceCoorX(double dist) {
 
-		return this.previousMode;
-	}
+        this.distanceCoorX = dist;
+    }
 
-	/**
-	 * Get the edit tool handler.
-	 * 
-	 * @return
-	 */
-	public EditToolHandler getHandler() {
+    /**
+     * Set the distance for the coordinate Y
+     * 
+     * @param dist
+     */
+    public synchronized void setDistanceCoorY(double dist) {
 
-		return handler;
-	}
+        this.distanceCoorY = dist;
+    }
+
+    /**
+     * Get the distance for the coordinate Y
+     * 
+     * @return
+     */
+    public synchronized double getDistanceCoorY() {
+
+        return distanceCoorY;
+    }
+
+    /**
+     * Get the reference coordinate.
+     * 
+     * @return
+     */
+    public Coordinate getReferenceCoordinate() {
+
+        return this.referenceCoor;
+    }
+
+    /**
+     * Get the actual mode.
+     * 
+     * @return
+     */
+    public PrecisionToolsMode getMode() {
+
+        return this.mode;
+    }
+
+    /**
+     * Get the previous mode.
+     * 
+     * @return
+     */
+    public PrecisionToolsMode getPreviousMode() {
+
+        return this.previousMode;
+    }
+
+    /**
+     * Get the edit tool handler.
+     * 
+     * @return
+     */
+    public EditToolHandler getHandler() {
+
+        return handler;
+    }
 }

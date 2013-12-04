@@ -41,17 +41,16 @@ public class AcceptFeedbackBehaviour implements Behaviour {
      * @param feedbackManager the feedback manager to rely on when
      *        {@link #getCommand(EditToolHandler)} is called
      */
-    public AcceptFeedbackBehaviour( EditToolFeedbackManager feedbackManager ) {
+    public AcceptFeedbackBehaviour(EditToolFeedbackManager feedbackManager) {
         assert feedbackManager != null;
         this.feedbackManager = feedbackManager;
     }
 
     /**
-     * @return always <code>true</code> as it is not this behaviour responsibility to decide when
-     *         to be executed, but its expected to be called once the associated tool has been
-     *         accepted
+     * @return always <code>true</code> as it is not this behaviour responsibility to decide when to
+     *         be executed, but its expected to be called once the associated tool has been accepted
      */
-    public boolean isValid( EditToolHandler handler ) {
+    public boolean isValid(EditToolHandler handler) {
         return true;
     }
 
@@ -60,11 +59,11 @@ public class AcceptFeedbackBehaviour implements Behaviour {
      *         {@link EditToolFeedbackManager#getAcceptCommand(EditToolHandler) getAcceptCommand}
      *         method.
      */
-    public UndoableMapCommand getCommand( EditToolHandler handler ) {
+    public UndoableMapCommand getCommand(EditToolHandler handler) {
         return feedbackManager.getAcceptCommand(handler);
     }
 
-    public void handleError( EditToolHandler handler, Throwable error, UndoableMapCommand command ) {
+    public void handleError(EditToolHandler handler, Throwable error, UndoableMapCommand command) {
         // TODO Auto-generated method stub
     }
 

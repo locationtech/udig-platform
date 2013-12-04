@@ -16,8 +16,8 @@
 package org.locationtech.udig.tools.parallel.internal;
 
 /**
- * Manage the distance exception, it will be throw when the calculated distance
- * doesn't feet with the established one.
+ * Manage the distance exception, it will be throw when the calculated distance doesn't feet with
+ * the established one.
  * 
  * @author Mauricio Pazos (www.axios.es)
  * @author Aritz Davila (www.axios.es)
@@ -25,9 +25,9 @@ package org.locationtech.udig.tools.parallel.internal;
  */
 class InvalidDistanceException extends Exception {
 
-	private static final long	serialVersionUID	= 4448248719766755145L;
+    private static final long serialVersionUID = 4448248719766755145L;
 
-	public InvalidDistanceException(String message) {
-		super(message);
-	}
+    public InvalidDistanceException(String message) {
+        super(message);
+    }
 }

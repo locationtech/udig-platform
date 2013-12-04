@@ -30,61 +30,52 @@ import com.vividsolutions.jts.geomgraph.PlanarGraph;
  * <li></li>
  * </ul>
  * </p>
+ * 
  * @author Mauricio Pazos (www.axios.es)
  * @author Aritz Davila (www.axios.es)
  * @since 1.3.0
  */
-final class Graph extends PlanarGraph{
-    
-    /* Factory used for nodding edges. Required by the superclass. */
-    private static final NodeFactory    NODE_FACTORY        = new SplitGraphNodeFactory();
+final class Graph extends PlanarGraph {
 
-    
+    /* Factory used for nodding edges. Required by the superclass. */
+    private static final NodeFactory NODE_FACTORY = new SplitGraphNodeFactory();
+
     /**
      * a new instance of Graph
      */
-    public Graph(){
-        
+    public Graph() {
+
         super(NODE_FACTORY);
-        
+
     }
-    
 
     /**
      * Adds the edges for the given hole list.
      * 
-     * @param nodedHolesList
-     *            List of hole rings.
-     * @param boundary
-     *            position for ON.
-     * @param interior
-     *            position for LEFT.
-     * @param exterior
-     *            position for RIGHT.
+     * @param nodedHolesList List of hole rings.
+     * @param boundary position for ON.
+     * @param interior position for LEFT.
+     * @param exterior position for RIGHT.
      */
-    public void addEdges(final List<Geometry> nodedHolesList,final  int boundary, final int interior, final int exterior) {
+    public void addEdges(final List<Geometry> nodedHolesList, final int boundary,
+            final int interior, final int exterior) {
 
         for (Geometry geom : nodedHolesList) {
 
             addEdges(geom, boundary, interior, exterior);
         }
     }
-    
-
 
     /**
      * Add edges for the provided geometry.
      * 
-     * @param linearGeom
-     *            The geometry which edges will be based on.
-     * @param onLoc
-     *            position for ON.
-     * @param leftLoc
-     *            position for LEFT.
-     * @param rightLoc
-     *            position for RIGHT.
+     * @param linearGeom The geometry which edges will be based on.
+     * @param onLoc position for ON.
+     * @param leftLoc position for LEFT.
+     * @param rightLoc position for RIGHT.
      */
-    private void addEdges(final Geometry linearGeom, final int onLoc,final  int leftLoc,final  int rightLoc) {
+    private void addEdges(final Geometry linearGeom, final int onLoc, final int leftLoc,
+            final int rightLoc) {
 
         final int nParts = linearGeom.getNumGeometries();
         List<SplitEdge> edges = new ArrayList<SplitEdge>();
@@ -98,7 +89,7 @@ final class Graph extends PlanarGraph{
         // the given edge and other the opposite
         super.addEdges(edges);
     }
-    
+
     /**
      * Create and edge with the bases geometry and the the given location.
      * 
@@ -109,28 +100,23 @@ final class Graph extends PlanarGraph{
      * @param rightLoc
      * @return An split edge.
      */
-    private SplitEdge createEdge(final Geometry linearGeom,final  int i,final  int onLoc,final  int leftLoc, final int rightLoc) {
+    private SplitEdge createEdge(final Geometry linearGeom, final int i, final int onLoc,
+            final int leftLoc, final int rightLoc) {
 
         Geometry currGeom = linearGeom.getGeometryN(i);
         Coordinate[] coords = currGeom.getCoordinates();
-        
+
         final SplitEdge edge = SplitEdge.newInstance(coords, onLoc, leftLoc, rightLoc);
-        
+
         return edge;
     }
 
+    public void addEdge(final SplitEdge edge) {
 
-    public void addEdge( final SplitEdge edge ) {
-        
         List<Edge> edges = new ArrayList<Edge>();
         edges.add(edge);
-        
-        super.addEdges(edges);        
+
+        super.addEdges(edges);
     }
-
-
-    
-
-    
 
 }

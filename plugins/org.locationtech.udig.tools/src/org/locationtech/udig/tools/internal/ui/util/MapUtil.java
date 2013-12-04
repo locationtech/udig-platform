@@ -32,58 +32,62 @@ import org.locationtech.udig.tools.internal.mediator.AppGISAdapter;
  * <p>
  * Utility functions for Map object
  * </p>
+ * 
  * @author Mauricio Pazos (www.axios.es)
  * @author Aritz Davila (www.axios.es)
  * @since 1.1.0
  */
 public final class MapUtil {
-    
 
-    private MapUtil(){
+    private MapUtil() {
         // util class
     }
+
     /**
      * @param map
      * @return the Coordinate Reference System of map
      */
-    public static CoordinateReferenceSystem getCRS( IMap map ) {
+    public static CoordinateReferenceSystem getCRS(IMap map) {
         assert map != null;
-        
+
         IViewportModel viewportModel = map.getViewportModel();
         CoordinateReferenceSystem mapCrs = viewportModel.getCRS();
         return mapCrs;
     }
-    
-	/**
-	 * Adds a new layer to map using the georesource of the feature store
-	 * 
-	 * @param map
-	 * @param geoResource
-	 * 
-	 * @return the new layer
-	 */
-	public static ILayer addLayerToMap(IMap map, IGeoResource geoResource) {
 
-		int index = map.getMapLayers().size();
-		List<? extends ILayer> listLayer = AppGISAdapter.addLayersToMap(map, Collections.singletonList(geoResource),
-					index);
+    /**
+     * Adds a new layer to map using the georesource of the feature store
+     * 
+     * @param map
+     * @param geoResource
+     * 
+     * @return the new layer
+     */
+    public static ILayer addLayerToMap(IMap map, IGeoResource geoResource) {
 
-		assert listLayer.size() == 1; // creates only one layer
+        int index = map.getMapLayers().size();
+        List<? extends ILayer> listLayer = AppGISAdapter.addLayersToMap(map,
+                Collections.singletonList(geoResource), index);
 
-		ILayer layer = listLayer.get(0);
+        assert listLayer.size() == 1; // creates only one layer
 
-		return layer;
-	}
-	/**
-	 * Returns the selected layer of Map
-	 * @param map
-	 * @return the selected layer 
-	 */
-	public static ILayer getSelectedLayer(IMap map) {
-		
-		if(map == null) return null;
-		
-		ILayer layer = map.getEditManager().getSelectedLayer();
-		return layer;
-	}
+        ILayer layer = listLayer.get(0);
+
+        return layer;
+    }
+
+    /**
+     * Returns the selected layer of Map
+     * 
+     * @param map
+     * @return the selected layer
+     */
+    public static ILayer getSelectedLayer(IMap map) {
+
+        if (map == null)
+            return null;
+
+        ILayer layer = map.getEditManager().getSelectedLayer();
+        return layer;
+    }
 }
