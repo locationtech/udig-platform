@@ -146,7 +146,9 @@ uDig makes use of a target platform, in order to download and reference bundles 
 
 Here is how to set that up:
 
-1. Import the targets/indigo project into workspace.
+1. Use the **Import Existing Projects** wizard to import the targets/indigo project into workspace.
+
+!extras/images/import_projects_targets.png!
 
 2. Open up udig-indigo-target.target and click on Set as Target Platform
 

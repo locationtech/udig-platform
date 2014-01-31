@@ -45,7 +45,7 @@ Require-Bundle: org.locationtech.udig.style.sld,
  org.locationtech.udig.project.edit,
  org.eclipse.ui.cheatsheets,
  org.eclipse.core.expressions,
- com.lowagie.text;bundle-version="[2.1.7,2.2.0)"
+ com.lowagie.text
 Bundle-ActivationPolicy: lazy
 Import-Package: javax.media.jai,
  javax.media.jai.iterator,
@@ -55,4 +55,4 @@ Import-Package: javax.media.jai,
  javax.media.jai.tilecodec,
  javax.media.jai.util,
  javax.media.jai.widget,
- net.miginfocom.swt;version="[3.7.0,3.8.0)"
+ net.miginfocom.swt
