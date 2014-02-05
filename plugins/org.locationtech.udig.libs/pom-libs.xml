@@ -52,8 +52,8 @@
     <packaging>pom</packaging>
 
     <properties>
-        <geotools.version>9.0-M0</geotools.version>
-        <imageio-ext.version>1.1.5</imageio-ext.version>
+        <geotools.version>11-SNAPSHOT</geotools.version>
+        <imageio-ext.version>1.1.7</imageio-ext.version>
         <jfreechart.version>1.0.13</jfreechart.version>
         <jt.version>1.3.0</jt.version>
         <lib.dir>${basedir}/lib</lib.dir>
@@ -112,11 +112,16 @@
             <artifactId>gt-brewer</artifactId>
             <version>${geotools.version}</version>
         </dependency>
+	
+	<!-- gt-11 no longer under development.
+	
         <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-shapefile-renderer</artifactId>
             <version>${geotools.version}</version>
         </dependency>
+	-->
+	
         <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-validation</artifactId>
@@ -194,11 +199,15 @@
             <artifactId>gt-shapefile</artifactId>
             <version>${geotools.version}</version>
         </dependency>
+	
+	<!-- gt-11: shapefile-ng was merged in shapefile
         <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-shapefile-ng</artifactId>
             <version>${geotools.version}</version>
         </dependency>
+	-->
+	
         <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-wfs</artifactId>
