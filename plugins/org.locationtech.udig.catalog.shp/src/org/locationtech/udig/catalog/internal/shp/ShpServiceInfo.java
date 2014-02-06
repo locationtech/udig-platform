@@ -3,6 +3,7 @@
  */
 package org.locationtech.udig.catalog.internal.shp;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -18,8 +19,12 @@ class ShpServiceInfo extends IServiceInfo {
 	ShpServiceInfo(ShpServiceImpl shpServiceImpl) {
 		super();
 		service = shpServiceImpl;
-		keywords = new String[] { ".shp", "Shapefile", //$NON-NLS-1$ //$NON-NLS-2$
-				service.ds.getTypeNames()[0] };
+                try {
+                    keywords = new String[] { ".shp", "Shapefile", //$NON-NLS-1$ //$NON-NLS-2$
+                                              service.ds.getTypeNames()[0] };
+                } catch (IOException e) {
+                    ShpPlugin.log(null, e);                
+                }
 
 		try {
 			schema = new URI("shp://www.opengis.net/gml"); //$NON-NLS-1$

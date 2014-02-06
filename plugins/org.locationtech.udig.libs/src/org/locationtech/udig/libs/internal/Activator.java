@@ -93,11 +93,10 @@ public class Activator implements BundleActivator {
         if (Platform.getOS().equals(Platform.OS_WIN32)) {
             try {
                 // PNG native support is not very good .. this turns it off
-                ImageUtilities.allowNativeCodec("png", ImageReaderSpi.class, false); //$NON-NLS-1$
+//FIXME mauro                ImageUtilities.allowNativeCodec("png", ImageReaderSpi.class, false); //$NON-NLS-1$
             } catch (Throwable t) {
                 // we should not die if JAI is missing; we have a warning for that...
-                System.out
-                        .println("Difficulty turnning windows native PNG support (which will result in scrambled images from WMS servers)"); //$NON-NLS-1$
+                System.out.println("Difficulty turnning windows native PNG support (which will result in scrambled images from WMS servers)"); //$NON-NLS-1$
                 t.printStackTrace();
             }
         }

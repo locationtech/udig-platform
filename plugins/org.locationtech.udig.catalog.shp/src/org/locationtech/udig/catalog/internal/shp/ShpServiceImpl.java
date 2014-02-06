@@ -14,42 +14,30 @@ package org.locationtech.udig.catalog.internal.shp;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.ICatalog;
-import org.locationtech.udig.catalog.ID;
-import org.locationtech.udig.catalog.IResolve;
-import org.locationtech.udig.catalog.IResolveChangeEvent;
-import org.locationtech.udig.catalog.IResolveDelta;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.IServiceInfo;
-import org.locationtech.udig.catalog.URLUtils;
-import org.locationtech.udig.catalog.IResolve.Status;
-import org.locationtech.udig.catalog.internal.CatalogImpl;
-import org.locationtech.udig.catalog.internal.ResolveChangeEvent;
-import org.locationtech.udig.catalog.internal.ResolveDelta;
-import org.locationtech.udig.catalog.shp.internal.Messages;
-import org.locationtech.udig.ui.ErrorManager;
-import org.locationtech.udig.ui.PlatformGIS;
-import org.locationtech.udig.ui.UDIGDisplaySafeLock;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.ui.PlatformUI;
 import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureReader;
 import org.geotools.data.Transaction;
 import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
-import org.geotools.data.shapefile.indexed.IndexedShapefileDataStore;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IResolveChangeEvent;
+import org.locationtech.udig.catalog.IResolveDelta;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.internal.CatalogImpl;
+import org.locationtech.udig.catalog.internal.ResolveChangeEvent;
+import org.locationtech.udig.catalog.internal.ResolveDelta;
+import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -219,7 +207,7 @@ public class ShpServiceImpl extends IService {
 
                         try {
                             ds = (ShapefileDataStore) dsf.createDataStore(params);
-                            openIndexGenerationDialog(ds);
+                            // openIndexGenerationDialog(ds);
                             // hit it lightly to make sure it exists.
                             ds.getFeatureSource();
 
@@ -255,44 +243,44 @@ public class ShpServiceImpl extends IService {
         }
     }
 
-    private void openIndexGenerationDialog( final ShapefileDataStore ds ) {
-        rLock.lock();
-        try {
-            if (ds instanceof IndexedShapefileDataStore) {
-                IndexedShapefileDataStore ids = (IndexedShapefileDataStore) ds;
-                if (ids.isIndexed())
-                    return;
-                String name = getIdentifier().getFile();
-                int lastIndexOf = name.lastIndexOf(File.separator);
-                if (lastIndexOf > 0)
-                    name = name.substring(lastIndexOf + 1);
-                final String finalName = name;
-                IRunnableWithProgress runnable = new IRunnableWithProgress(){
-
-                    public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
-                        monitor.beginTask(Messages.ShpPreferencePage_createindex + " " + finalName, IProgressMonitor.UNKNOWN); //$NON-NLS-1$
-                        index(ds, ds.getTypeNames()[0]);
-                        monitor.done();
-                    }
-
-                };
-                if (PlatformUI.getWorkbench().isClosing() && false) {
-                    try {
-                        runnable.run(new NullProgressMonitor());
-                    } catch (InvocationTargetException e) {
-                        ShpPlugin.log("", e); //$NON-NLS-1$
-                    } catch (InterruptedException e) {
-                        ShpPlugin.log("", e); //$NON-NLS-1$
-                    }
-                } else {
-                    PlatformGIS.runInProgressDialog(Messages.ShpServiceImpl_indexing + " " + finalName, true, runnable, false); //$NON-NLS-1$
-                }
-            }
-        } finally {
-            rLock.unlock();
-        }
-
-    }
+//    private void openIndexGenerationDialog( final ShapefileDataStore ds ) {
+//        rLock.lock();
+//        try {
+//            if (ds instanceof IndexedShapefileDataStore) {
+//                IndexedShapefileDataStore ids = (IndexedShapefileDataStore) ds;
+//                if (ids.isIndexed())
+//                    return;
+//                String name = getIdentifier().getFile();
+//                int lastIndexOf = name.lastIndexOf(File.separator);
+//                if (lastIndexOf > 0)
+//                    name = name.substring(lastIndexOf + 1);
+//                final String finalName = name;
+//                IRunnableWithProgress runnable = new IRunnableWithProgress(){
+//
+//                    public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
+//                        monitor.beginTask(Messages.ShpPreferencePage_createindex + " " + finalName, IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+//                        index(ds, ds.getTypeNames()[0]);
+//                        monitor.done();
+//                    }
+//
+//                };
+//                if (PlatformUI.getWorkbench().isClosing() && false) {
+//                    try {
+//                        runnable.run(new NullProgressMonitor());
+//                    } catch (InvocationTargetException e) {
+//                        ShpPlugin.log("", e); //$NON-NLS-1$
+//                    } catch (InterruptedException e) {
+//                        ShpPlugin.log("", e); //$NON-NLS-1$
+//                    }
+//                } else {
+//                    PlatformGIS.runInProgressDialog(Messages.ShpServiceImpl_indexing + " " + finalName, true, runnable, false); //$NON-NLS-1$
+//                }
+//            }
+//        } finally {
+//            rLock.unlock();
+//        }
+//
+//    }
 
     private void index( final ShapefileDataStore ds, final String typename ) {
         FeatureReader<SimpleFeatureType, SimpleFeature> reader = null;

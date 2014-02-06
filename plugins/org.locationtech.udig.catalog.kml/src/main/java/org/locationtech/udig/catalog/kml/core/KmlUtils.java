@@ -18,8 +18,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
@@ -30,14 +30,13 @@ import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.xml.Encoder;
 import org.geotools.xml.StreamingParser;
+import org.locationtech.udig.catalog.kml.internal.Messages;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 
 import com.vividsolutions.jts.geom.Geometry;
-
-import org.locationtech.udig.catalog.kml.internal.Messages;
 
 /**
  * Utilities to convert kml to features and back (taken from geotools testcases).
@@ -84,7 +83,8 @@ public class KmlUtils {
         
         StreamingParser parser = new StreamingParser(new KMLConfiguration(), inputStream, KML.Placemark);
 
-        FeatureCollection<SimpleFeatureType, SimpleFeature> newCollection = FeatureCollections.newCollection();
+        DefaultFeatureCollection newCollection = new DefaultFeatureCollection();
+        
         int index = 0;
         SimpleFeature f;
         DefaultGeographicCRS crs = DefaultGeographicCRS.WGS84;
@@ -124,7 +124,7 @@ public class KmlUtils {
         CoordinateReferenceSystem crs = featureCollection.getSchema().getCoordinateReferenceSystem();
         MathTransform mtrans = CRS.findMathTransform(crs, epsg4326, true);
 
-        FeatureCollection<SimpleFeatureType, SimpleFeature> newCollection = FeatureCollections.newCollection();
+        DefaultFeatureCollection newCollection = new DefaultFeatureCollection(); 
         FeatureIterator<SimpleFeature> featuresIterator = featureCollection.features();
         while( featuresIterator.hasNext() ) {
             SimpleFeature f = featuresIterator.next();
@@ -153,6 +153,7 @@ public class KmlUtils {
             encoder.setIndenting(true);
     
             encoder.encode(newCollection, KML.kml, fos);
+            
         } finally {
             if (fos != null) {
                 fos.close();
