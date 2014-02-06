@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
+import org.geotools.util.logging.Logging;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -53,7 +54,9 @@ public class ShpPlugin extends AbstractUIPlugin {
      */
     public void start( BundleContext context ) throws Exception {
         super.start(context);
-        Logger logger = ShapefileDataStoreFactory.LOGGER;
+        Logger logger = Logging.getLogger("org.geotools.data.shapefile");
+        //Logger logger = ShapefileDataStoreFactory.LOGGER; gt-11 it is not visible
+        
         if (ShpPlugin.isDebugging(SHP_TRACE_FINEST) || ShpPlugin.isDebugging(SHP_TRACE_FINE)) {
             if( ShpPlugin.isDebugging(SHP_TRACE_FINE)){
                 logger.setLevel(Level.FINE);
