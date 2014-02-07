@@ -545,7 +545,7 @@ public class CopyFeaturesCommandTest {
         
         action.rollback(new NullProgressMonitor());
         
-        assertFalse( featureSource.getFeatures(filter).iterator().hasNext() );
+        assertFalse( featureSource.getFeatures(filter).features().hasNext() );
         assertEquals(Filter.EXCLUDE, layer.getFilter());
         
     }

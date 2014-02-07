@@ -9,8 +9,9 @@
  */
 package org.locationtech.udig.catalog.tests;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -20,21 +21,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.ICatalog;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.IServiceFactory;
-import org.locationtech.udig.catalog.geotools.data.DataStoreService;
-import org.locationtech.udig.catalog.internal.shp.ShpServiceImpl;
-
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
 import org.geotools.data.FileDataStore;
 import org.geotools.data.FileDataStoreFinder;
-import org.geotools.data.shapefile.indexed.IndexedShapefileDataStore;
-import org.geotools.data.shapefile.ng.ShapefileDataStore;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceFactory;
+import org.locationtech.udig.catalog.geotools.data.DataStoreService;
+import org.locationtech.udig.catalog.internal.shp.ShpServiceImpl;
 
 /**
  * Confirm shapefile handling (particulary shape-ng).
@@ -53,7 +49,6 @@ public class ShapeCatalogTest {
         FileDataStore raw = FileDataStoreFinder.getDataStore( file );
         assertNotNull( raw );
         assertTrue( "shapefile implementation", raw instanceof org.geotools.data.shapefile.ShapefileDataStore );
-        assertFalse( "shapefile next generation", raw instanceof org.geotools.data.shapefile.ng.ShapefileDataStore );
     }
    
     @Test
@@ -67,15 +62,16 @@ public class ShapeCatalogTest {
         
         boolean test = false;
         
-        if(dataStore instanceof org.geotools.data.shapefile.ng.ShapefileDataStore){
+        if(dataStore instanceof org.geotools.data.shapefile.ShapefileDataStore){
             test  = true;
         }
         assertTrue( "Check Next Generation ShapefileDataStore", test );
-        assertEquals("package",dataStore.getClass().getPackage(), ShapefileDataStore.class.getPackage());
+        assertEquals("package",dataStore.getClass().getPackage(), org.geotools.data.shapefile.ShapefileDataStore.class.getPackage());
     }
     
     @Test
     public void testCreateShape() throws IOException {
+        
         File file = new File("data/point.shp");
         Map<String, Serializable> map = new HashMap<String, Serializable>();
         map.put( "url", file.toURI().toURL() );
@@ -85,13 +81,13 @@ public class ShapeCatalogTest {
         String packageName = dataStore.getClass().getPackage().getName();
         System.out.println(packageName);
         
-        boolean test = false;
-        if(dataStore instanceof IndexedShapefileDataStore){
-            test  = true;
-        }
-        
-        assertTrue( "Check is IndexedShapefileDataStore", test );
-        assertEquals(dataStore.getClass().getPackage(), IndexedShapefileDataStore.class.getPackage());
+//        boolean test = false;
+//        if(dataStore instanceof IndexedShapefileDataStore){
+//            test  = true;
+//        }
+//        
+//        assertTrue( "Check is IndexedShapefileDataStore", test );
+//        assertEquals(dataStore.getClass().getPackage(), IndexedShapefileDataStore.class.getPackage());
     }
     
     @Test

@@ -38,6 +38,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureStore;
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
@@ -188,7 +189,7 @@ public class CsvImportWizard extends Wizard implements INewWizard {
         }
         SimpleFeatureType featureType = b.buildFeatureType();
 
-        SimpleFeatureCollection newCollection = FeatureCollections.newCollection();
+        DefaultFeatureCollection newCollection = new DefaultFeatureCollection(); 
         Collection<Integer> orderedTypeIndexes = fieldsAndTypesIndex.values();
         Integer[] orderedTypeIndexesArray = (Integer[]) orderedTypeIndexes.toArray(new Integer[orderedTypeIndexes.size()]);
 

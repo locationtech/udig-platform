@@ -12,23 +12,21 @@ package org.locationtech.udig.tool.select;
 import java.awt.Point;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Iterator;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.feature.FeatureIterator;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.project.ui.tool.AbstractModalTool;
 import org.locationtech.udig.project.ui.tool.ModalTool;
 import org.locationtech.udig.tool.select.internal.Messages;
 import org.locationtech.udig.ui.PlatformGIS;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.geotools.data.FeatureSource;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * Selects and drags single features.
@@ -53,42 +51,52 @@ public class ArrowSelection extends AbstractModalTool implements ModalTool {
     
     @Override
     public void mouseReleased( final MapMouseEvent e ) {
-        if( e.x==x && e.y==y ){
-            PlatformGIS.run(new IRunnableWithProgress(){
+        if (e.x == x && e.y == y) {
+            PlatformGIS.run(new IRunnableWithProgress() {
 
                 @SuppressWarnings("unchecked")
-                public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
+                public void run(IProgressMonitor monitor) throws InvocationTargetException,
+                        InterruptedException {
                     monitor.beginTask(Messages.ArrowSelection_0, 5);
-                    ReferencedEnvelope bbox = getContext().getBoundingBox(new Point(x,y),5);
-                    FeatureCollection<SimpleFeatureType, SimpleFeature> collection=null;
-                    Iterator<SimpleFeature> iter=null;
+                    ReferencedEnvelope bbox = getContext().getBoundingBox(new Point(x, y), 5);
+                    SimpleFeatureCollection collection = null;
+                    FeatureIterator<SimpleFeature> iter = null;
                     try {
                         ILayer selectedLayer = getContext().getSelectedLayer();
-                        FeatureSource<SimpleFeatureType, SimpleFeature> source =selectedLayer.getResource(FeatureSource.class, new SubProgressMonitor(monitor, 1));
-                        if( source==null )
+                        SimpleFeatureSource source = selectedLayer.getResource(
+                                SimpleFeatureSource.class, new SubProgressMonitor(monitor, 1));
+                        if (source == null)
                             return;
-                        collection=source.getFeatures(selectedLayer.createBBoxFilter(bbox, new SubProgressMonitor(monitor, 1)));
-                        iter=collection.iterator();
-                        if( !iter.hasNext() ){
-                            if( !e.buttonsDown() ){
-                                getContext().sendASyncCommand(getContext().getEditFactory().createNullEditFeatureCommand());
+                        collection = source.getFeatures(selectedLayer.createBBoxFilter(bbox,
+                                new SubProgressMonitor(monitor, 1)));
+                        iter = collection.features();
+                        if (!iter.hasNext()) {
+                            if (!e.buttonsDown()) {
+                                getContext().sendASyncCommand(
+                                        getContext().getEditFactory()
+                                                .createNullEditFeatureCommand());
                             }
-                            getContext().sendASyncCommand(getContext().getSelectionFactory().createNoSelectCommand());                            
+                            getContext().sendASyncCommand(
+                                    getContext().getSelectionFactory().createNoSelectCommand());
                             return;
                         }
-                        SimpleFeature feature=iter.next();
-                        getContext().sendASyncCommand(getContext().getEditFactory().createSetEditFeatureCommand(feature, selectedLayer));
-                        getContext().sendASyncCommand(getContext().getSelectionFactory().createFIDSelectCommand(selectedLayer, feature));
+                        SimpleFeature feature = iter.next();
+                        getContext().sendASyncCommand(
+                                getContext().getEditFactory().createSetEditFeatureCommand(feature,
+                                        selectedLayer));
+                        getContext().sendASyncCommand(
+                                getContext().getSelectionFactory().createFIDSelectCommand(
+                                        selectedLayer, feature));
                     } catch (IOException e) {
-                        
-                     // return;
-                    }finally{
+
+                        // return;
+                    } finally {
                         monitor.done();
-                        if( collection !=null && iter!=null )
-                            collection.close(iter);
+                        if (iter != null)
+                            iter.close();
                     }
                 }
-                
+
             });
         }
     }

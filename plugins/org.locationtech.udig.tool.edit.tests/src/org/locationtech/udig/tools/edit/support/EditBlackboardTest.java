@@ -35,6 +35,7 @@ import org.locationtech.udig.tools.edit.preferences.PreferenceUtil;
 import org.locationtech.udig.tools.edit.support.EditBlackboardEvent.EventType;
 
 import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollections;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -692,7 +693,7 @@ public class EditBlackboardTest {
         InputStreamReader filereader=new InputStreamReader(in);
         
         InputSource input = new InputSource(filereader);
-        SimpleFeatureCollection collection = FeatureCollections.newCollection();
+        DefaultFeatureCollection collection = new DefaultFeatureCollection();
         GMLReceiver receiver=new GMLReceiver(collection);
         GMLFilterFeature filterFeature = new GMLFilterFeature(receiver);
         GMLFilterGeometry filterGeometry = new GMLFilterGeometry(filterFeature);

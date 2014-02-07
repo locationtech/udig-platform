@@ -20,11 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.locationtech.udig.core.StaticProvider;
-import org.locationtech.udig.core.internal.FeatureUtils;
-import org.locationtech.udig.internal.ui.UiPlugin;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -45,13 +40,16 @@ import org.eclipse.ui.part.PageBook;
 import org.geotools.data.DataUtilities;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureCollections;
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.core.StaticProvider;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
@@ -67,7 +65,7 @@ public class FeatureTableControlTest {
     private SimpleFeature feature2;
     private SimpleFeature feature3;
     private SimpleFeature feature4;
-    private FeatureCollection<SimpleFeatureType, SimpleFeature>  features;
+    private DefaultFeatureCollection features;
 
     @Before
     public void setUp() throws Exception {
@@ -81,7 +79,7 @@ public class FeatureTableControlTest {
         feature3 = SimpleFeatureBuilder.build(ft, new Object[]{"feature3", 3}, "feature3");
         feature4 = SimpleFeatureBuilder.build(ft, new Object[]{"feature4", 4}, "feature4");
 
-        features = FeatureCollections.newCollection();
+        features = new DefaultFeatureCollection();
 
         features.add(feature1);
         features.add(feature2);
@@ -141,7 +139,7 @@ public class FeatureTableControlTest {
         SimpleFeature f1 = SimpleFeatureBuilder.build(ft, new Object[]{"feature1", 10}, "feature1"); //$NON-NLS-1$ //$NON-NLS-2$
         SimpleFeature f2 = SimpleFeatureBuilder.build(ft, new Object[]{"feature5", 5}, "feature5"); //$NON-NLS-1$ //$NON-NLS-2$
 
-        FeatureCollection<SimpleFeatureType, SimpleFeature> newFeatures = FeatureCollections.newCollection();
+        DefaultFeatureCollection newFeatures = new DefaultFeatureCollection();
 
         newFeatures.add(f1);
         newFeatures.add(f2);
@@ -190,7 +188,7 @@ public class FeatureTableControlTest {
     @Ignore
     @Test
     public void testSetFeatures() {
-    	FeatureCollection<SimpleFeatureType, SimpleFeature> newFeatures = FeatureCollections.newCollection();
+        DefaultFeatureCollection newFeatures = new DefaultFeatureCollection();
         newFeatures.add(feature1);
         table.setFeatures(newFeatures);
         while( Display.getCurrent().readAndDispatch() );
