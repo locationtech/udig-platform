@@ -25,6 +25,7 @@ import org.geotools.renderer.shape.ShapefileRenderer;
  * @version $Revision: 1.9 $
  */
 public class ShapefileFeatureRenderer extends BasicFeatureRenderer {
+    
     ShapefileRenderer renderer;
 
     public ShapefileFeatureRenderer() {

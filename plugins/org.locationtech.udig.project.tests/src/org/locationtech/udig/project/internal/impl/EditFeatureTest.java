@@ -14,17 +14,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.awt.Dimension;
 
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.tests.CatalogTests;
-import org.locationtech.udig.core.internal.FeatureUtils;
-import org.locationtech.udig.project.command.factory.EditCommandFactory;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.memory.MemoryDataStore;
@@ -36,6 +25,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.tests.CatalogTests;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.project.command.factory.EditCommandFactory;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
@@ -76,7 +75,7 @@ public class EditFeatureTest extends AbstractProjectTestCase {
         FeatureCollection<SimpleFeatureType, SimpleFeature> collection=store.getFeatures(fac.id(FeatureUtils.stringToId(fac, features[1].getID())));
         FeatureIterator<SimpleFeature> iter = collection.features();
         assertEquals(ORIGINAL_VALUE, iter.next().getAttribute(1));
-        collection.close(iter);
+        iter.close();
         store.modifyFeatures(store.getSchema().getDescriptor(1), MODIFIED_VALUE, fac.id(FeatureUtils.stringToId(fac, features[1].getID()) )); 
 
         //not committed so other featurestores should not get modified value
@@ -85,13 +84,13 @@ public class EditFeatureTest extends AbstractProjectTestCase {
         
         iter = collection.features();
         assertEquals(ORIGINAL_VALUE, iter.next().getAttribute(1));
-        collection.close(iter);
+        iter.close();
         
         //layer featureStore has transactions so should have new value
         collection=store.getFeatures(fac.id(FeatureUtils.stringToId(fac, features[1].getID()))); 
         iter = collection.features();
         assertEquals(MODIFIED_VALUE, iter.next().getAttribute(1));
-        collection.close(iter);
+        iter.close();
 
         //Create and send a commit command 
         map.sendCommandSync(EditCommandFactory.getInstance().createCommitCommand());
@@ -100,7 +99,7 @@ public class EditFeatureTest extends AbstractProjectTestCase {
         collection=dsSource.getFeatures(fac.id(FeatureUtils.stringToId(fac, features[1].getID())));
         iter = collection.features();
         assertEquals(MODIFIED_VALUE, iter.next().getAttribute(1));
-        collection.close(iter);   
+        iter.close();
     }
     
     @Ignore
@@ -112,7 +111,7 @@ public class EditFeatureTest extends AbstractProjectTestCase {
         FeatureCollection<SimpleFeatureType, SimpleFeature> collection=store.getFeatures(fac.id(FeatureUtils.stringToId(fac, id)));
         FeatureIterator<SimpleFeature> iter = collection.features();
         assertEquals(ORIGINAL_VALUE, iter.next().getAttribute(1));
-        collection.close(iter);
+        iter.close();
         store.modifyFeatures(store.getSchema().getDescriptor(1), MODIFIED_VALUE, fac.id(FeatureUtils.stringToId(fac, id)) ); 
 
         //not committed so other featurestores should not get modified value
@@ -120,13 +119,13 @@ public class EditFeatureTest extends AbstractProjectTestCase {
         collection=dsSource.getFeatures(fac.id(FeatureUtils.stringToId(fac, id))); 
         iter = collection.features();
         assertEquals(ORIGINAL_VALUE, iter.next().getAttribute(1));
-        collection.close(iter);
+        iter.close();
         
         //layer featureStore has transactions so should have new value
         collection=store.getFeatures(fac.id(FeatureUtils.stringToId(fac, id))); 
         iter = collection.features();
         assertEquals(MODIFIED_VALUE, iter.next().getAttribute(1));
-        collection.close(iter);
+        iter.close();
 
         //Create and send a commit command 
         map.sendCommandSync(EditCommandFactory.getInstance().createRollbackCommand());
@@ -135,7 +134,7 @@ public class EditFeatureTest extends AbstractProjectTestCase {
         collection=store.getFeatures(fac.id(FeatureUtils.stringToId(fac, id))); 
         iter = collection.features();
         assertEquals(ORIGINAL_VALUE, iter.next().getAttribute(1));
-        collection.close(iter);   
+        iter.close();
     }
 
 }

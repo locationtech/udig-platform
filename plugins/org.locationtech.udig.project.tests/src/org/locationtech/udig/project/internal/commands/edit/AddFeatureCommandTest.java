@@ -22,7 +22,9 @@ import org.locationtech.udig.project.tests.support.MapTests;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
+import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
@@ -44,13 +46,13 @@ public class AddFeatureCommandTest {
         
         command.setMap(map);
         command.run(new NullProgressMonitor());
-        FeatureSource<SimpleFeatureType, SimpleFeature> source = layer.getResource(FeatureSource.class, new NullProgressMonitor());
+        SimpleFeatureSource source = layer.getResource(SimpleFeatureSource.class, new NullProgressMonitor());
         assertEquals(3, source.getCount(Query.ALL));
         
         command.rollback(new NullProgressMonitor());
         FeatureCollection<SimpleFeatureType, SimpleFeature> collection = source.getFeatures();
         int i=0;
-        for( Iterator iter = collection.iterator(); iter.hasNext(); ) {
+        for( FeatureIterator<SimpleFeature> iter = collection.features(); iter.hasNext(); ) {
             iter.next();
             i++;
         }

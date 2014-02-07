@@ -42,8 +42,8 @@ import org.locationtech.udig.tools.internal.ui.util.DialogUtil;
 import org.locationtech.udig.tools.internal.i18n.Messages;
 
 /**
- * Command that adjust the longitude of a line starting over the intersection
- * between that line and the trimming line.
+ * Command that adjust the longitude of a line starting over the intersection between that line and
+ * the trimming line.
  * 
  * @author Mauricio Pazos (www.axios.es)
  * @author Aritz Davila (www.axios.es)
@@ -51,139 +51,136 @@ import org.locationtech.udig.tools.internal.i18n.Messages;
  */
 final class TrimFeaturesCommand extends AbstractCommand implements UndoableMapCommand {
 
-	private EditToolHandler										handler;
-	private ILayer												selectedLayer;
-	private LineString											trimmingLine;
+    private EditToolHandler handler;
 
-	/** current shape to be restored on undo */
-	private PrimitiveShape										currentShape;
+    private ILayer selectedLayer;
 
-	private FeatureCollection<SimpleFeatureType, SimpleFeature>	featuresToTrim;
+    private LineString trimmingLine;
 
-	private UndoableComposite									composite;
+    /** current shape to be restored on undo */
+    private PrimitiveShape currentShape;
 
-	/**
-	 * @param selectedLayer
-	 * @param selectionFilter
-	 * @param trimmingLine
-	 *            required to hold its CRS on {@link Geometry#getUserData()}
-	 */
-	public TrimFeaturesCommand(	EditToolHandler handler,
-								ILayer selectedLayer,
-								FeatureCollection<SimpleFeatureType, SimpleFeature> featuresToTrim,
-								LineString trimmingLine) {
+    private FeatureCollection<SimpleFeatureType, SimpleFeature> featuresToTrim;
 
-		assert selectedLayer.hasResource(FeatureStore.class) : "Layer hasn't feature store."; //$NON-NLS-1$
+    private UndoableComposite composite;
 
-		this.handler = handler;
-		this.selectedLayer = selectedLayer;
-		this.featuresToTrim = featuresToTrim;
-		this.trimmingLine = trimmingLine;
-	}
+    /**
+     * @param selectedLayer
+     * @param selectionFilter
+     * @param trimmingLine required to hold its CRS on {@link Geometry#getUserData()}
+     */
+    public TrimFeaturesCommand(EditToolHandler handler, ILayer selectedLayer,
+            FeatureCollection<SimpleFeatureType, SimpleFeature> featuresToTrim,
+            LineString trimmingLine) {
 
-	/**
-	 * Opens an question dialog in a standardized way TODO this commons dialog
-	 * should not be part of mediator
-	 * 
-	 * @param title
-	 *            message dialog title
-	 * @param message
-	 *            message dialog content
-	 * @return wether the question was accepted or not
-	 */
-	public static boolean openQuestion(final String title, final String message) {
-		final boolean[] confirm = { false };
-		PlatformGISMediator.syncInDisplayThread(new Runnable() {
-			public void run() {
-				confirm[0] = MessageDialog.openQuestion(null, title, message);
-			}
-		});
-		return confirm[0];
-	}
+        assert selectedLayer.hasResource(FeatureStore.class) : "Layer hasn't feature store."; //$NON-NLS-1$
 
-	public String getName() {
-		return "Trim Features Command"; //$NON-NLS-1$
-	}
+        this.handler = handler;
+        this.selectedLayer = selectedLayer;
+        this.featuresToTrim = featuresToTrim;
+        this.trimmingLine = trimmingLine;
+    }
 
-	public void run(final IProgressMonitor monitor) throws Exception {
+    /**
+     * Opens an question dialog in a standardized way 
+     * 
+     * TODO this commons dialog should not be part of mediator
+     * 
+     * @param title message dialog title
+     * @param message message dialog content
+     * @return wether the question was accepted or not
+     */
+    public static boolean openQuestion(final String title, final String message) {
+        final boolean[] confirm = { false };
+        PlatformGISMediator.syncInDisplayThread(new Runnable() {
+            public void run() {
+                confirm[0] = MessageDialog.openQuestion(null, title, message);
+            }
+        });
+        return confirm[0];
+    }
 
-		// this may take a while so run it with a busy indicator
-		Runnable runnable = new Runnable() {
-			public void run() {
-				final EditCommandFactory editCommandFactory;
-				editCommandFactory = AppGISAdapter.getEditCommandFactory();
+    public String getName() {
+        return "Trim Features Command"; //$NON-NLS-1$
+    }
 
-				final FeatureIterator<SimpleFeature> iterator = featuresToTrim.features();
-				final List<UndoableMapCommand> undoableCommands = new ArrayList<UndoableMapCommand>();
-				final TrimGeometryStrategy trimOp = new TrimGeometryStrategy(trimmingLine);
-				String fidNotTrimmed = ""; //$NON-NLS-1$
-				try {
-					SimpleFeature feature;
-					Geometry original;
-					Geometry trimmed;
-					UndoableMapCommand command;
-					while (iterator.hasNext()) {
-						feature = iterator.next();
-						original = (Geometry) feature.getDefaultGeometry();
+    public void run(final IProgressMonitor monitor) throws Exception {
 
-						if (checkTrimPossible(original)) {
+        // this may take a while so run it with a busy indicator
+        Runnable runnable = new Runnable() {
+            public void run() {
+                final EditCommandFactory editCommandFactory;
+                editCommandFactory = AppGISAdapter.getEditCommandFactory();
 
-							trimmed = trimOp.trim(original);
-							command = editCommandFactory.createSetGeomteryCommand(feature, selectedLayer, trimmed);
-							undoableCommands.add(command);
-						} else {
-							fidNotTrimmed += feature.getID() + " "; //$NON-NLS-1$
-						}
-					}
-				} finally {
-					featuresToTrim.close(iterator);
-				}
+                final FeatureIterator<SimpleFeature> iterator = featuresToTrim.features();
+                final List<UndoableMapCommand> undoableCommands = new ArrayList<UndoableMapCommand>();
+                final TrimGeometryStrategy trimOp = new TrimGeometryStrategy(trimmingLine);
+                String fidNotTrimmed = ""; //$NON-NLS-1$
+                try {
+                    SimpleFeature feature;
+                    Geometry original;
+                    Geometry trimmed;
+                    UndoableMapCommand command;
+                    while (iterator.hasNext()) {
+                        feature = iterator.next();
+                        original = (Geometry) feature.getDefaultGeometry();
 
-				if (!fidNotTrimmed.equals("")) { //$NON-NLS-1$
+                        if (checkTrimPossible(original)) {
 
-					DialogUtil.openInformation(Messages.TrimFeaturesCommand_no_features_modified,
-								Messages.TrimFeaturesCommand_unvalid_intersection + fidNotTrimmed);
-				} else {
-					composite = new UndoableComposite(undoableCommands);
-					try {
-						composite.run(monitor);
-					} catch (Exception e) {
-						throw new IllegalStateException(e.getMessage(), e);
-					}
-					currentShape = handler.getCurrentShape();
-					handler.setCurrentShape(null);
-					handler.setCurrentState(EditState.NONE);
-				}
+                            trimmed = trimOp.trim(original);
+                            command = editCommandFactory.createSetGeomteryCommand(feature,selectedLayer, trimmed);
+                            undoableCommands.add(command);
+                        } else {
+                            fidNotTrimmed += feature.getID() + " "; //$NON-NLS-1$
+                        }
+                    }
+                } finally {
+                    iterator.close();
+                }
 
-			}
+                if (!fidNotTrimmed.equals("")) { //$NON-NLS-1$
 
-		};
+                    DialogUtil.openInformation(Messages.TrimFeaturesCommand_no_features_modified,
+                            Messages.TrimFeaturesCommand_unvalid_intersection + fidNotTrimmed);
+                } else {
+                    composite = new UndoableComposite(undoableCommands);
+                    try {
+                        composite.run(monitor);
+                    } catch (Exception e) {
+                        throw new IllegalStateException(e.getMessage(), e);
+                    }
+                    currentShape = handler.getCurrentShape();
+                    handler.setCurrentShape(null);
+                    handler.setCurrentState(EditState.NONE);
+                }
+            }
+        };
 
-		ViewportPane pane = handler.getContext().getViewportPane();
-		AppGISAdapter.showWhile(pane, runnable);
-	}
+        ViewportPane pane = handler.getContext().getViewportPane();
+        AppGISAdapter.showWhile(pane, runnable);
+    }
 
-	/**
-	 * Check if the trim line intersect the original line and only in one point.
-	 * 
-	 * @param original
-	 * @return
-	 */
-	private boolean checkTrimPossible(Geometry original) {
+    /**
+     * Check if the trim line intersect the original line and only in one point.
+     * 
+     * @param original
+     * @return
+     */
+    private boolean checkTrimPossible(Geometry original) {
 
-		if (trimmingLine.intersects(original) && (trimmingLine.intersection(original).getNumGeometries() == 1)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+        if (trimmingLine.intersects(original) && (trimmingLine.intersection(original).getNumGeometries() == 1)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-	public void rollback(IProgressMonitor monitor) throws Exception {
-		if (composite != null) {
-			handler.setCurrentState(EditState.CREATING);
-			handler.setCurrentShape(currentShape);
-			composite.rollback(monitor);
-		}
-	}
+    public void rollback(IProgressMonitor monitor) throws Exception {
+        if (composite != null) {
+            handler.setCurrentState(EditState.CREATING);
+            handler.setCurrentShape(currentShape);
+            composite.rollback(monitor);
+        }
+    }
 
 }
