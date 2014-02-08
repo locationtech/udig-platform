@@ -29,7 +29,6 @@ import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridCoverageFactory;
 import org.geotools.coverage.grid.ViewType;
 import org.geotools.coverage.processing.CoverageProcessor;
-import org.geotools.coverage.processing.DefaultProcessor;
 import org.geotools.factory.Hints;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;

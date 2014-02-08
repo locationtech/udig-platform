@@ -10,18 +10,15 @@
  */
 package org.locationtech.udig.tutorials.shpexport;
 
-import java.util.Iterator;
-
-import org.locationtech.udig.ui.operations.IOp;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.geotools.data.FeatureSource;
-import org.geotools.feature.FeatureCollection;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.feature.FeatureIterator;
+import org.locationtech.udig.ui.operations.IOp;
 import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.Name;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -30,13 +27,12 @@ public class CalculateLengthOp implements IOp {
 
 	public void op(final Display display, Object target,
 			IProgressMonitor monitor) throws Exception {		
-		FeatureSource<SimpleFeatureType, SimpleFeature> source = (FeatureSource<SimpleFeatureType, SimpleFeature>) target;
+		SimpleFeatureSource source = (SimpleFeatureSource) target;
 
-		FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection = source
-				.getFeatures();
+		SimpleFeatureCollection featureCollection = source.getFeatures();
 
 		double length = 0.0;
-		Iterator<SimpleFeature> iterator = featureCollection.iterator();
+		FeatureIterator<SimpleFeature> iterator = featureCollection.features();
 		try {
 			while (iterator.hasNext()) {
 				SimpleFeature feature = iterator.next();
@@ -45,7 +41,7 @@ public class CalculateLengthOp implements IOp {
 				length = length + geometry.getLength();
 			}
 		} finally {
-			featureCollection.close(iterator);
+			iterator.close();
 		}
 		final Name name = source.getName();
 		final double answer = length;
