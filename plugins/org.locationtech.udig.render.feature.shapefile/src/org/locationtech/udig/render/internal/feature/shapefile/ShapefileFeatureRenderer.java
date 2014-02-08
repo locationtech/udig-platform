@@ -24,7 +24,7 @@ import org.locationtech.udig.render.internal.feature.basic.BasicFeatureRenderer;
  */
 public class ShapefileFeatureRenderer extends BasicFeatureRenderer {
     
-    //ShapefileRenderer renderer;
+    //ShapefileRenderer renderer; it is not available in gt-11 
     StreamingRenderer renderer;
     
     public ShapefileFeatureRenderer() {
