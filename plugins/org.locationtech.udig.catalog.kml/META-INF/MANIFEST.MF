@@ -22,5 +22,4 @@ Export-Package: org.locationtech.udig.catalog.kml.core;
    org.eclipse.ui,
    org.eclipse.jface.viewers,
    org.eclipse.swt.widgets"
-Require-Bundle: org.locationtech.udig.project.ui;bundle-version="2.0.0",
- org.locationtech.udig.libs
+Require-Bundle: org.locationtech.udig.project.ui;bundle-version="2.0.0"

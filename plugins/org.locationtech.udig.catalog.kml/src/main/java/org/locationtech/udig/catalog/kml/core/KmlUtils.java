@@ -29,6 +29,7 @@ import org.geotools.kml.KMLConfiguration;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.xml.Encoder;
+import org.geotools.xml.PullParser;
 import org.geotools.xml.StreamingParser;
 import org.locationtech.udig.catalog.kml.internal.Messages;
 import org.opengis.feature.simple.SimpleFeature;
@@ -81,7 +82,7 @@ public class KmlUtils {
             inputStream = new FileInputStream(kml);
         }
         
-        StreamingParser parser = new StreamingParser(new KMLConfiguration(), inputStream, KML.Placemark);
+        PullParser parser = new PullParser(new KMLConfiguration(), inputStream, KML.Placemark);
 
         DefaultFeatureCollection newCollection = new DefaultFeatureCollection();
         
@@ -153,7 +154,7 @@ public class KmlUtils {
             Encoder encoder = new Encoder(new KMLConfiguration());
             encoder.setIndenting(true);
     
-            encoder.encode(newCollection, KML.kml, fos);
+            encoder.encode(newCollection, KML.kml, fos); 
             
         } finally {
             if (fos != null) {
