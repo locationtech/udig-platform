@@ -45,7 +45,7 @@ import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.referencing.factory.PropertyAuthorityFactory;
 import org.geotools.referencing.factory.ReferencingFactoryContainer;
 import org.geotools.referencing.factory.epsg.ThreadedHsqlEpsgFactory;
-import org.geotools.resources.image.ImageUtilities;
+import org.geotools.image.io.ImageIOExt;
 import org.geotools.util.logging.LoggerFactory;
 import org.geotools.util.logging.Logging;
 import org.opengis.geometry.DirectPosition;
@@ -85,11 +85,11 @@ public class Activator implements BundleActivator {
     private static final String EPSG_DATABASEFOLDER_PREFIX = "epsg_v";
 
     @SuppressWarnings("deprecation")
-	public void start( final BundleContext context ) throws Exception {
+    public void start( final BundleContext context ) throws Exception {
         if (Platform.getOS().equals(Platform.OS_WIN32)) {
             try {
                 // PNG native support is not very good .. this turns it off
-//FIXME mauro                ImageUtilities.allowNativeCodec("png", ImageReaderSpi.class, false); //$NON-NLS-1$
+                ImageIOExt.allowNativeCodec("png", ImageReaderSpi.class, false); //$NON-NLS-1$
             } catch (Throwable t) {
                 // we should not die if JAI is missing; we have a warning for that...
                 System.out.println("Difficulty turnning windows native PNG support (which will result in scrambled images from WMS servers)"); //$NON-NLS-1$
