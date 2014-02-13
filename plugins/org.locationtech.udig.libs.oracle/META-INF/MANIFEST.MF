@@ -4,7 +4,7 @@ Bundle-Name: Oracle Libs Plug-in
 Bundle-SymbolicName: org.locationtech.udig.libs.oracle
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: udig.refractions.net
-Bundle-ClassPath: libs/oracle-driver.jar,
+Bundle-ClassPath: .,libs/oracle-driver.jar,
  libs/oracle-classes.jar
 Eclipse-RegisterBuddy: org.locationtech.udig.libs, 
  org.locationtech.udig.catalog.oracle
