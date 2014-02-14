@@ -234,7 +234,7 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
                 }
             }
             features.clear();
-//FIXME it is necessary to analyze this code 
+//FIXME it is necessary to found a new solution to set the listener
 //            if (oldInput != null) {
 //                CollectionFeatureSource old = (CollectionFeatureSource) oldInput;
 //                old.removeFeatureListener(listener);
