@@ -33,12 +33,10 @@ import org.eclipse.ui.PlatformUI;
 import org.geotools.data.FeatureEvent;
 import org.geotools.data.FeatureListener;
 import org.geotools.data.Query;
+import org.geotools.data.collection.CollectionFeatureSource;
 import org.geotools.data.simple.SimpleFeatureCollection;
-import org.geotools.feature.CollectionEvent;
-import org.geotools.feature.CollectionListener;
 import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.FeatureIterator;
 import org.locationtech.udig.core.IProvider;
 import org.locationtech.udig.internal.ui.Trace;
@@ -46,8 +44,6 @@ import org.locationtech.udig.internal.ui.UiPlugin;
 import org.locationtech.udig.ui.internal.Messages;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
-
-import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Type;
 
 class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Collection<SimpleFeature>> {
 
@@ -238,15 +234,15 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
                 }
             }
             features.clear();
-
-            if (oldInput != null) {
-            	SimpleFeatureCollection old = (SimpleFeatureCollection) oldInput;
-                //old.removeListener(listener);
-            }
-            if (newInput != null) {
-            	SimpleFeatureCollection input = (SimpleFeatureCollection) newInput;
-                //input.addListener(listener);
-            }
+//FIXME it is necessary to analyze this code 
+//            if (oldInput != null) {
+//                CollectionFeatureSource old = (CollectionFeatureSource) oldInput;
+//                old.removeFeatureListener(listener);
+//            }
+//            if (newInput != null) {
+//                CollectionFeatureSource input = (CollectionFeatureSource) newInput;
+//                input.addFeatureListener(listener);
+//            }
 
             if (newInput == null)
                 return;
