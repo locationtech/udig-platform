@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="lib/antlr-2.7.7.jar"/>
@@ -22,13 +22,13 @@
 	<classpathentry exported="true" kind="lib" path="lib/geodb-0.7-RC2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/geoscript-groovy-1.1-M0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/groovy-1.8.8.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-api-11-SNAPSHOT.jar" sourcepath="/home/mauro/devel-box/projects/udig/mpazos-udig-platform/plugins/org.locationtech.udig.libs/lib-src/gt-api-11-SNAPSHOT-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-api-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-arcgrid-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-common-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-brewer-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-charts-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-coverage-11-SNAPSHOT.jar" sourcepath="/home/mauro/devel-box/projects/udig/mpazos-udig-platform/plugins/org.locationtech.udig.libs/lib-src/gt-coverage-11-SNAPSHOT-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-coverage-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-cql-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-data-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-hsql-11-SNAPSHOT.jar"/>
@@ -60,7 +60,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-property-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-referencing-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-render-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-11-SNAPSHOT.jar" sourcepath="/home/mauro/devel-box/projects/udig/mpazos-udig-platform/plugins/org.locationtech.udig.libs/lib-src/gt-shapefile-11-SNAPSHOT-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-svg-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-swing-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-transform-11-SNAPSHOT.jar"/>
@@ -69,12 +69,12 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-wms-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-wps-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-xml-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-core-11-SNAPSHOT.jar" sourcepath="/home/mauro/devel-box/projects/udig/mpazos-udig-platform/plugins/org.locationtech.udig.libs/lib-src/gt-xsd-core-11-SNAPSHOT-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-core-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-fes-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-filter-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-gml2-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-gml3-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-kml-11-SNAPSHOT.jar" sourcepath="/home/mauro/devel-box/projects/udig/mpazos-udig-platform/plugins/org.locationtech.udig.libs/lib-src/gt-xsd-kml-11-SNAPSHOT-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-kml-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-ows-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-sld-11-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wfs-11-SNAPSHOT.jar"/>
@@ -98,13 +98,13 @@
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalmrsidjp2-1.1.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalnitf-1.1.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalrpftoc-1.1.8.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-geocore-1.1.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-geocore-1.1.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-imagereadmt-1.1.8.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-netcdf-1.1.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-netcdf-core-1.1.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-streams-1.1.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-netcdf-1.1.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-netcdf-core-1.1.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-streams-1.1.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-tiff-1.1.8.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-utilities-1.1.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-utilities-1.1.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/janino-2.5.16.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jansi-1.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/javassist-3.8.0.GA.jar"/>
@@ -149,21 +149,9 @@
 	<classpathentry exported="true" kind="lib" path="lib/stringtemplate-3.2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/vecmath-1.3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/ws-commons-util-1.0.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/xml-apis-1.3.04.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/xml-apis-xerces-2.7.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xml-commons-resolver-1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-client-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-common-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xpp3_min-1.1.4c.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/batik-anim-1.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/batik-awt-util-1.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/batik-css-1.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/batik-dom-1.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/batik-ext-1.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/batik-parser-1.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/batik-svg-dom-1.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/batik-xml-1.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/xalan-2.6.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/xml-apis-ext-1.3.04.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
