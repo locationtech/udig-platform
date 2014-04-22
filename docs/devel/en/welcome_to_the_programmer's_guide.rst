@@ -31,7 +31,7 @@ Edit these Docs
 This document is incomplete; while we do package up and include the latest with each major release -
 you will find the best source of information is the **live** document on the web:
 
-* `http://udig.refractions.net/confluence/display/DEV <http://udig.refractions.net/confluence/display/DEV>`_
+* `https://github.com/uDig/udig-platform/tree/master/docs <https://github.com/uDig/udig-platform/tree/master/docs>`_
 
 As a member of our community you are encouraged to correct any mistakes you find and contribute new
 content as you learn.
@@ -42,7 +42,7 @@ who created uDig have chosen to focus first on the code.
 Using the Mailing List
 ~~~~~~~~~~~~~~~~~~~~~~
 
-If you need help on a particular topic, please ask on the uDig mailing list.
+If you need help on a particular topic, please ask on the `uDig mailing list <https://www.locationtech.org/mailman/listinfo/udig-dev>`_.
 
 The programmers of uDig itself may be able to compose a specific answer to your question and add it
 to this guide right after you ask. So please ask; hopefully someone knowledgeable will compose a
