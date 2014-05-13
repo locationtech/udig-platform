@@ -674,7 +674,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
                     if (error[0] != null) {
                         e = error[0];
                     }
-                    log(message.toString(), e);
+                    trace(message.toString(), e);
                 }
             } catch (Exception e) {
                 log(MessageFormat.format(Messages.UDIGWorkbenchWindowAdvisor_classNotFound, new Object[]{configurationID},

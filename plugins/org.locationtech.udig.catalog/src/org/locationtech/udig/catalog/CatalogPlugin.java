@@ -129,7 +129,7 @@ public class CatalogPlugin extends Plugin {
 
         try {
             if (Display.getCurrent() != null) {
-                CatalogPlugin.log("Restoring Local Catalog", null);
+                CatalogPlugin.trace("Restoring Local Catalog", null);
             }
             plugin.restoreFromPreferences();
         } catch (Throwable e) {
