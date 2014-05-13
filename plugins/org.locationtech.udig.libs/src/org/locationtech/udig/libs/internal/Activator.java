@@ -18,10 +18,14 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.ConsoleHandler;
+import java.util.logging.Filter;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import javax.imageio.spi.ImageReaderSpi;
+import javax.media.jai.JAI;
+import javax.media.jai.util.ImagingListener;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -113,6 +117,20 @@ public class Activator implements BundleActivator {
         GeoTools.init(global);
         Logging.GEOTOOLS.setLoggerFactory((LoggerFactory<?>)null);
         
+        // Suppress JAI warnings when native support unavailable 
+        JAI.getDefaultInstance().setImagingListener(new ImagingListener() {
+            final Logger LOGGER = Logging.getLogger("javax.media.jai");
+            public boolean errorOccurred(String message, Throwable thrown, Object where,
+                    boolean isRetryable) throws RuntimeException {
+                if (message.contains("Continuing in pure Java mode")) {
+                    LOGGER.log(Level.FINE, message, thrown);
+                } else {
+                    LOGGER.log(Level.INFO, message, thrown);
+                }
+                return false; // we are not trying to recover
+            }
+        });
+        
 //        ClassLoader cl = Thread.currentThread().getContextClassLoader();
 //        Thread.currentThread().setContextClassLoader(GeoTools.class.getClassLoader());
 //        try {
@@ -185,35 +203,42 @@ public class Activator implements BundleActivator {
 
         monitor.beginTask(Messages.Activator_EPSG_DATABASE, 100);
         
-        unpackEPSGDatabase();
-        
-        searchEPSGProperties(bundle, new SubProgressMonitor(monitor, 20));
-
-        loadEPSG(bundle, new SubProgressMonitor(monitor, 60));
-
-        monitor.subTask(Messages.OPERATIONS_DEFINITIONS);
-        load(ReferencingFactoryFinder.getCoordinateOperationAuthorityFactories(null));
-        monitor.worked(2);
-
-        monitor.subTask(Messages.COORDINATE_REFERENCE_SYSTSMS);
-        load(ReferencingFactoryFinder.getCRSFactories(null));
-        monitor.worked(8);
-
-        monitor.subTask(Messages.COORDINATE_SYSTEMS);
-        load(ReferencingFactoryFinder.getCSFactories(null));
-        monitor.worked(2);
-
-        monitor.subTask(Messages.DATUM_DEFINITIONS);
-        load(ReferencingFactoryFinder.getDatumAuthorityFactories(null));
-        monitor.worked(2);
-
-        monitor.subTask(Messages.DATUMS);
-        load(ReferencingFactoryFinder.getDatumFactories(null));
-        monitor.worked(2);
-
-        monitor.subTask(Messages.MATH_TRANSFORMS);
-        load(ReferencingFactoryFinder.getMathTransformFactories(null));
-        monitor.worked(4);
+        Logger epsgLogger = Logging.getLogger("org.geotools.referencing.factory");
+        try {
+            epsgLogger.setLevel(Level.SEVERE);
+    
+            unpackEPSGDatabase();
+            
+            searchEPSGProperties(bundle, new SubProgressMonitor(monitor, 20));
+    
+            loadEPSG(bundle, new SubProgressMonitor(monitor, 60));
+    
+            monitor.subTask(Messages.OPERATIONS_DEFINITIONS);
+            load(ReferencingFactoryFinder.getCoordinateOperationAuthorityFactories(null));
+            monitor.worked(2);
+    
+            monitor.subTask(Messages.COORDINATE_REFERENCE_SYSTSMS);
+            load(ReferencingFactoryFinder.getCRSFactories(null));
+            monitor.worked(8);
+    
+            monitor.subTask(Messages.COORDINATE_SYSTEMS);
+            load(ReferencingFactoryFinder.getCSFactories(null));
+            monitor.worked(2);
+    
+            monitor.subTask(Messages.DATUM_DEFINITIONS);
+            load(ReferencingFactoryFinder.getDatumAuthorityFactories(null));
+            monitor.worked(2);
+    
+            monitor.subTask(Messages.DATUMS);
+            load(ReferencingFactoryFinder.getDatumFactories(null));
+            monitor.worked(2);
+    
+            monitor.subTask(Messages.MATH_TRANSFORMS);
+            load(ReferencingFactoryFinder.getMathTransformFactories(null));
+            monitor.worked(4);
+        } finally {
+            epsgLogger.setLevel(Level.INFO);
+        }
     }
 
     static private void load( Set<?> coordinateOperationAuthorityFactories ) {
