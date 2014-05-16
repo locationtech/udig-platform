@@ -18,9 +18,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.ConsoleHandler;
-import java.util.logging.Filter;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import javax.imageio.spi.ImageReaderSpi;
@@ -88,7 +86,6 @@ public class Activator implements BundleActivator {
     private static final String DATABASES_FOLDER_NAME = "databases";
     private static final String EPSG_DATABASEFOLDER_PREFIX = "epsg_v";
 
-    @SuppressWarnings("deprecation")
     public void start( final BundleContext context ) throws Exception {
         if (Platform.getOS().equals(Platform.OS_WIN32)) {
             try {

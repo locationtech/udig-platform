@@ -2078,7 +2078,7 @@ public class ToolManager implements IToolManager {
                     return;
                 
                 Filter layerFilter = selectedLayer.getFilter();
-                if ( layerFilter==Filter.INCLUDE || layerFilter == org.geotools.filter.Filter.ALL ){
+                if ( layerFilter==Filter.INCLUDE || layerFilter == Filter.EXCLUDE ){
                     return;
                 }
                 AdaptingFilter filter = null;

@@ -22,9 +22,9 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.data.Query;
 import org.geotools.data.ows.Layer;
 import org.geotools.data.wms.WebMapServer;
-import org.geotools.filter.Filter;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.filter.Filter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 
@@ -131,11 +131,11 @@ public class WMSLayer implements ILayer {;
 
 	public <E> E getResource(Class<E> resourceType, IProgressMonitor monitor) throws IOException {
 		if (resourceType == Layer.class) {
-			return (E) this.wmslayer;
+			return resourceType.cast( this.wmslayer );
 		}
 		
 		if (resourceType == WebMapServer.class) {
-			return (E) this.wms;
+			return resourceType.cast( this.wms );
 		}
 		return null;
 	}

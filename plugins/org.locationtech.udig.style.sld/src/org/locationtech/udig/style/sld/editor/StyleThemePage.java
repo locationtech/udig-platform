@@ -118,7 +118,6 @@ import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Divide;
 import org.opengis.filter.expression.Expression;
-import org.opengis.filter.expression.Literal;
 import org.opengis.util.ProgressListener;
 
 import com.vividsolutions.jts.geom.LineString;
@@ -1294,7 +1293,7 @@ public class StyleThemePage extends StyleEditorPage {
                         classifierModified = true;
                     else if ((getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_uniques)) && !(function instanceof UniqueIntervalFunction)) 
                         classifierModified = true;
-                    else if (!function.getExpression().equals(expr))
+                    else if (!function.getParameters().get(0).equals(expr))
                         classifierModified = true;
                 }
                 

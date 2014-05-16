@@ -22,63 +22,63 @@
 	<classpathentry exported="true" kind="lib" path="lib/geodb-0.7-RC2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/geoscript-groovy-1.1-M0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/groovy-1.8.8.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-api-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-arcgrid-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-common-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-brewer-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-charts-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-coverage-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-cql-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-data-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-hsql-11-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-api-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-arcgrid-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-common-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-brewer-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-charts-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-coverage-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-cql-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-data-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-hsql-12-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-geojson-9.0-M0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-geotiff-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-graph-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-grassraster-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-grid-11-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-geotiff-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-graph-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-grassraster-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-grid-12-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-gtopo30-9.0-M0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-image-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-imageio-ext-gdal-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-imagemosaic-11-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-image-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-imageio-ext-gdal-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-imagemosaic-12-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-imagepyramid-9.0-M0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-db2-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-h2-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-mysql-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-oracle-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-postgis-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-sqlserver-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-teradata-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-main-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-metadata-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-opengis-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-process-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-process-feature-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-process-geometry-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-process-raster-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-property-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-referencing-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-render-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-svg-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-swing-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-transform-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-validation-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-wfs-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-wms-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-wps-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xml-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-core-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-fes-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-filter-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-gml2-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-gml3-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-kml-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-ows-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-sld-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wfs-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wps-11-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-db2-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-h2-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-mysql-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-oracle-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-postgis-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-sqlserver-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-teradata-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-main-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-metadata-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-opengis-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-process-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-process-feature-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-process-geometry-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-process-raster-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-property-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-referencing-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-render-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-svg-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-swing-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-transform-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-validation-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-wfs-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-wms-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-wps-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xml-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-core-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-fes-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-filter-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-gml2-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-gml3-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-kml-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-ows-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-sld-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wfs-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wps-12-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/h2-1.1.119.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hatbox-1.0.b7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hsqldb-2.2.8.jar"/>
@@ -133,13 +133,13 @@
 	<classpathentry exported="true" kind="lib" path="lib/jts-1.13.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/miglayout-3.7-swing.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/mysql-connector-java-5.1.17.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/net.opengis.fes-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/net.opengis.ows-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wfs-11-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wps-11-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/net.opengis.fes-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/net.opengis.ows-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wfs-12-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wps-12-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/netcdf-java-4.0.41.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/opendap-2.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/org.w3.xlink-11-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.w3.xlink-12-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/picocontainer-1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/postgresql-8.4-701.jdbc3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/scannotation-1.0.2.jar"/>

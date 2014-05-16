@@ -10,11 +10,7 @@
  */
 package org.locationtech.udig.style.sld.editor;
 
-import org.locationtech.udig.filter.ComboExpressionViewer;
-import org.locationtech.udig.filter.ExpressionViewer;
-
 import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -23,9 +19,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
-import org.eclipse.ui.forms.widgets.Twistie;
 import org.eclipse.ui.part.Page;
 import org.geotools.filter.FilterFactoryImpl;
+import org.locationtech.udig.filter.ComboExpressionViewer;
 import org.opengis.filter.expression.Expression;
 
 /**
@@ -40,12 +36,12 @@ import org.opengis.filter.expression.Expression;
 public class MarkEditorPage extends Page {
     private static FilterFactoryImpl factory = new FilterFactoryImpl();
     private static Expression[] WELL_KNOWN_NAMES = {
-            factory.createLiteralExpression("square"), //$NON-NLS-1$
-            factory.createLiteralExpression("circle"), //$NON-NLS-1$
-            factory.createLiteralExpression("triangle"), //$NON-NLS-1$
-            factory.createLiteralExpression("star"), //$NON-NLS-1$
-            factory.createLiteralExpression("cross"), //$NON-NLS-1$
-            factory.createLiteralExpression("X") }; //$NON-NLS-1$
+            factory.literal("square"), //$NON-NLS-1$
+            factory.literal("circle"), //$NON-NLS-1$
+            factory.literal("triangle"), //$NON-NLS-1$
+            factory.literal("star"), //$NON-NLS-1$
+            factory.literal("cross"), //$NON-NLS-1$
+            factory.literal("X") }; //$NON-NLS-1$
     
     Composite markComposite;
     private Label titleLabel;
