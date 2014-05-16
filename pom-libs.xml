@@ -37,6 +37,7 @@
 
     <modules>
        <module>plugins/org.locationtech.udig.catalog.arcsde/pom-libs.xml</module>
+       <module>plugins/org.locationtech.udig.help/pom-libs.xml</module>
        <module>plugins/org.locationtech.udig.libs/pom-libs.xml</module>
        <module>plugins/org.locationtech.udig.libs.db2/pom-libs.xml</module>
        <module>plugins/org.locationtech.udig.libs.oracle/pom-libs.xml</module>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <parent>
+        <groupId>org.locationtech.udig</groupId>
+        <artifactId>pom-libs.parent</artifactId>
+        <version>0.0.2</version>
+        <relativePath>../../pom-libs.xml</relativePath>
+    </parent>
+
+    <!-- 
+    
+    The files icu4j-3.2+.jar,jpe_sdk-9.2+.jar and jsde_sdk-9.2+.jar genearted here
+    are fake ones. They're empty jar files in order for eclipse not to complain
+    about the plugin missing required jars. When running udig, since the 
+    geotools arcsde plugin won't find the required ESRI Java API classes, it
+    will ask for the location of the actual jars.
+    
+    So, if running udig from within eclipse to connect to ArcSDE, make sure not
+    to accidentally commit the actual jars, that udig will replaces these fake ones with.
+
+    You will need to generate the dummy jars using:
+            
+            mvn package -f pom-libs.xml 
+        
+     -->
+
+    <developers>
+        <developer>
+            <id>jodygarnett</id>
+            <name>Jody Garnett</name>
+            <email>jody.garnett@gmail.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+10</timezone>
+        </developer>
+        <developer>
+            <id>fgdrf</id>
+            <name>Frank Gasdorf</name>
+            <email>fgdrf@users.sourceforge.net</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>net.refractions.catalog.help</groupId>
+    <artifactId>download</artifactId>
+    <version>0.0.2</version>
+    <name>Help Dummy EN Creation</name>
+    
+    <packaging>pom</packaging>
+
+    <properties>
+        <en.dir>${basedir}/EN</en.dir>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <!-- EN/index.html placeholder -->
+                    <execution>
+                        <id>create_index</id>
+                        <phase>compile</phase>
+                        <configuration>
+                           <target>
+                             <mkdir dir="${en.dir}"/>
+                           </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+         </plugins>
+    </build>
+    
+</project>
