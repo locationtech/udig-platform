@@ -210,7 +210,7 @@
 	
         <dependency>
             <groupId>org.geotools</groupId>
-            <artifactId>gt-wfs</artifactId>
+            <artifactId>gt-wfs-ng</artifactId>
             <version>${geotools.version}</version>
         </dependency>
         <dependency>
@@ -295,33 +295,23 @@
         <!-- geotools unsupported modules (ie legacy) -->
         
         <!-- stuff for jgrass contributions -->
-        <dependency>
+        <!--dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy</artifactId>
             <version>1.8.8</version>
-        </dependency>
+        </dependency-->
         <dependency>
             <groupId>org.geoscript</groupId>
             <artifactId>geoscript-groovy</artifactId>
-            <version>1.1-M0</version>
+            <version>1.4-SNAPSHOT</version>
             <exclusions>
-		        <!--
-		        <exclusion>
-		          <groupId>org.geotools</groupId>
-		          <artifactId>gt-geojson</artifactId>
-		        </exclusion>
-		        -->
-              <exclusion>
+              <!--exclusion>
 		          <groupId>org.codehaus.groovy</groupId>
 		          <artifactId>groovy</artifactId>
-		        </exclusion>
+		        </exclusion-->
 		        <exclusion>
 		          <groupId>org.geoscript</groupId>
 		          <artifactId>geocss_2.9.1</artifactId>
-		        </exclusion>
-		        <exclusion>
-                  <groupId>org.geotools.jdbc</groupId>
-                  <artifactId>gt-jdbc-spatialite</artifactId>                
 		        </exclusion>
 		        <exclusion>
 		          <groupId>net.sf.opencsv</groupId>
@@ -350,6 +340,45 @@
 		        <exclusion>
 		          <groupId>com.lowagie</groupId>
 		          <artifactId>itext</artifactId>
+		        </exclusion>
+		        <!-- ignore additional geotools formats -->
+		        <exclusion>
+		          <groupId>org.geotools</groupId>
+		          <artifactId>gt-wfs</artifactId>
+		        </exclusion>
+		        <exclusion>
+		          <groupId>org.geotools</groupId>
+		          <artifactId>gt-wfs</artifactId>
+		        </exclusion>
+		        <!--
+		        <exclusion>
+		          <groupId>org.geotools</groupId>
+		          <artifactId>gt-geojson</artifactId>
+		        </exclusion>
+		        -->
+		        <exclusion>
+                  <groupId>org.geotools.jdbc</groupId>
+                  <artifactId>gt-jdbc-spatialite</artifactId>                
+		        </exclusion>
+		        <exclusion>
+                  <groupId>org.geotools</groupId>
+                  <artifactId>gt-gtopo30</artifactId>                
+		        </exclusion>
+		        <exclusion>
+                  <groupId>org.geotools</groupId>
+                  <artifactId>gt-imagepyramid</artifactId>                
+		        </exclusion>
+		        <exclusion>
+                  <groupId>org.geotools</groupId>
+                  <artifactId>gt-netcdf</artifactId>                
+		        </exclusion>
+		        <exclusion>
+                  <groupId>org.geotools</groupId>
+                  <artifactId>gt-mbtiles</artifactId>                
+		        </exclusion>
+		        <exclusion>
+                  <groupId>org.geotools</groupId>
+                  <artifactId></artifactId>                
 		        </exclusion>
 	      	</exclusions>
         </dependency>
