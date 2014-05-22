@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.data.simple.SimpleFeatureStore;
-import org.geotools.data.wfs.WFSDataStore;
+import org.geotools.data.wfs.impl.WFSContentDataStore;
 
 /**
  * Access a feature type in a wfs.
@@ -82,7 +82,7 @@ public class WFSGeoResourceImpl extends IGeoResource {
         if (adaptee == null){
             return null;
         }
-        if (adaptee.isAssignableFrom(WFSDataStore.class)){
+        if (adaptee.isAssignableFrom(WFSContentDataStore.class)){
             return parent.resolve(adaptee, monitor);
         }
         if (adaptee.isAssignableFrom(IGeoResource.class)){
@@ -92,12 +92,12 @@ public class WFSGeoResourceImpl extends IGeoResource {
             return adaptee.cast(createInfo(monitor));
         }
         if (adaptee.isAssignableFrom(SimpleFeatureSource.class)) {
-            WFSDataStore wfs = parent.getDS(monitor);
+            WFSContentDataStore wfs = parent.getDS(monitor);
             SimpleFeatureSource featureSource = wfs.getFeatureSource(typename);
             return adaptee.cast(featureSource);            
         }
         if (adaptee.isAssignableFrom(FeatureStore.class)) {
-            WFSDataStore wfs = parent.getDS(monitor);
+            WFSContentDataStore wfs = parent.getDS(monitor);
             SimpleFeatureSource featureSource = wfs.getFeatureSource(typename);
             if( featureSource instanceof FeatureStore){
                 return adaptee.cast(featureSource);
@@ -132,7 +132,7 @@ public class WFSGeoResourceImpl extends IGeoResource {
             }
         }
         return (adaptee.isAssignableFrom(IGeoResourceInfo.class)
-                || adaptee.isAssignableFrom(WFSDataStore.class) || adaptee
+                || adaptee.isAssignableFrom(WFSContentDataStore.class) || adaptee
                 .isAssignableFrom(IService.class))
                 || super.canResolve(adaptee);
     }

@@ -52,7 +52,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.geotools.data.DataStoreFactorySpi;
-import org.geotools.data.wfs.WFSDataStoreFactory;
+import org.geotools.data.wfs.impl.WFSDataStoreFactory;
 
 /**
  * Data page responsible for acquiring WFS services.

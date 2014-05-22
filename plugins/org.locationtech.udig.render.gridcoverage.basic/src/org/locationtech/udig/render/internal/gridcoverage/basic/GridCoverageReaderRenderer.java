@@ -333,17 +333,14 @@ public class GridCoverageReaderRenderer extends RendererImpl {
             rasterSymbolizer = factory.createRasterSymbolizer();
 
             renderer.paint(graphics, (GridCoverage2D) coverage, rasterSymbolizer);
-        } catch (IOException e) {
-            // TODO Handle IOException
-            throw (RuntimeException) new RuntimeException().initCause(e);
-        } catch (FactoryException e) {
-            throw (RuntimeException) new RuntimeException().initCause(e);
-        } catch (TransformException e) {
-            throw (RuntimeException) new RuntimeException().initCause(e);
-        } catch (NoninvertibleTransformException e) {
-            throw (RuntimeException) new RuntimeException().initCause(e);
+        } catch (Exception e) {
+            if( e instanceof RuntimeException){
+                throw (RuntimeException) e;
+            }
+            else {
+                throw (RuntimeException) new RuntimeException().initCause(e);
+            }
         }
-
         // reset previous configuration
         graphics.setComposite(oldComposite);
         graphics.setTransform(tempTransform);

@@ -250,6 +250,7 @@ public class EndConnectionState extends State {
         } 
         
         if( params!=null && !params.isEmpty()){
+            try {
             Set<IService> results = new HashSet<IService>(sFactory.createService(params));            
             for( IService service : results ) {
                 Collection<IService> searchResult = searchLocalCatalog(service.getIdentifier(), monitor);
@@ -258,6 +259,9 @@ public class EndConnectionState extends State {
                 } else {
                     services.addAll(searchResult);
                 }
+            }
+            }catch(Throwable t){
+                t.printStackTrace();
             }
         }        
         return services;

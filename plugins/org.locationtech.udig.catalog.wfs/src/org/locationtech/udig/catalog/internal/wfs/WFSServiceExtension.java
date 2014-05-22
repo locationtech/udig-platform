@@ -11,6 +11,7 @@
  */
 package org.locationtech.udig.catalog.internal.wfs;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.HashMap;
@@ -22,7 +23,12 @@ import org.locationtech.udig.catalog.ServiceExtension;
 import org.locationtech.udig.catalog.wfs.internal.Messages;
 
 import org.geotools.data.DataStoreFactorySpi;
-import org.geotools.data.wfs.WFSDataStoreFactory;
+import org.geotools.data.ows.HTTPClient;
+import org.geotools.data.ows.SimpleHttpClient;
+import org.geotools.data.wfs.impl.WFSDataStoreFactory;
+import org.geotools.data.wfs.internal.WFSClient;
+import org.geotools.data.wfs.internal.WFSConfig;
+import org.geotools.ows.ServiceException;
 
 /**
  * Service extension for WFS Services
@@ -57,7 +63,12 @@ public class WFSServiceExtension extends AbstractDataStoreServiceExtension
 			if (base == null) {
 				return null;
 			}
-			id = WFSDataStoreFactory.createGetCapabilitiesRequest(base);
+			id = base;
+			// TODO: Figure out a repalcement for version negotiation that
+			// that does not require full creation of a WFSDataStore
+		}
+		if( id == null ){
+		    return null; // unable determine location of WFS
 		}
 		return new WFSServiceImpl(id, params);
 	}

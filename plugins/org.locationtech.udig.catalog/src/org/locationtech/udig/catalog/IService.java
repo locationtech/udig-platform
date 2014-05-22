@@ -13,6 +13,7 @@ package org.locationtech.udig.catalog;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -365,7 +366,11 @@ public abstract class IService implements IResolve {
     }
 
     public ID getID() {
-        return new ID(getIdentifier());
+        URL url = getIdentifier();
+        if( url == null ){
+            throw new IllegalStateException("Unable to identify IService using URL or ID");
+        }
+        return new ID(url);
     }
 
     /**

@@ -24,7 +24,7 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.QueryCapabilities;
 import org.geotools.data.ResourceInfo;
-import org.geotools.data.wfs.WFSDataStore;
+import org.geotools.data.wfs.impl.WFSContentDataStore;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -40,7 +40,7 @@ class WFSGeoResourceInfo extends IGeoResourceInfo {
     
     WFSGeoResourceInfo(WFSGeoResourceImpl wfsGeoResourceImpl) throws IOException {
         wfsResource = wfsGeoResourceImpl;
-        WFSDataStore ds = wfsResource.parent.getDS(null);
+        WFSContentDataStore ds = wfsResource.parent.getDS(null);
         
         FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = ds
                 .getFeatureSource(wfsResource.typename);

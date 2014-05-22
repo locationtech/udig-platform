@@ -23,8 +23,8 @@ import java.util.concurrent.locks.Lock;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.DataStore;
-import org.geotools.data.wfs.WFSDataStore;
-import org.geotools.data.wfs.WFSDataStoreFactory;
+import org.geotools.data.wfs.impl.WFSContentDataStore;
+import org.geotools.data.wfs.impl.WFSDataStoreFactory;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.IResolveChangeEvent;
 import org.locationtech.udig.catalog.IResolveDelta;
@@ -51,10 +51,13 @@ public class WFSServiceImpl extends IService {
 
     private Throwable msg = null;
     private volatile WFSDataStoreFactory dsf;
-    private volatile WFSDataStore ds = null;
+    private volatile WFSContentDataStore ds = null;
     private static final Lock dsLock = new UDIGDisplaySafeLock();
 
     public WFSServiceImpl( URL identifier, Map<String, Serializable> dsParams ) {
+        if( identifier == null ) {
+            throw new NullPointerException("WFS Service url required for identification");
+        }
         this.identifier = identifier;
         this.params = dsParams;
     }
@@ -67,7 +70,7 @@ public class WFSServiceImpl extends IService {
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
         if (adaptee == null)
             return null;
-        if (adaptee.isAssignableFrom(WFSDataStore.class)) {
+        if (adaptee.isAssignableFrom(WFSContentDataStore.class)) {
             return adaptee.cast(getDS(monitor));
         }
         return super.resolve(adaptee, monitor);
@@ -79,7 +82,7 @@ public class WFSServiceImpl extends IService {
     public <T> boolean canResolve( Class<T> adaptee ) {
         if (adaptee == null)
             return false;
-        return adaptee.isAssignableFrom(WFSDataStore.class) || super.canResolve(adaptee);
+        return adaptee.isAssignableFrom(WFSContentDataStore.class) || super.canResolve(adaptee);
     }
 
     public void dispose( IProgressMonitor monitor ) {
@@ -148,7 +151,7 @@ public class WFSServiceImpl extends IService {
         return params;
     }
 
-    WFSDataStore getDS( IProgressMonitor monitor ) throws IOException {
+    WFSContentDataStore getDS( IProgressMonitor monitor ) throws IOException {
         if (ds == null) {
             if (monitor == null)
                 monitor = new NullProgressMonitor();
@@ -166,10 +169,10 @@ public class WFSServiceImpl extends IService {
                         try {
                             // TODO Review : explicitly ask for WFS 1.0
                             URL url = (URL) params.get(WFSDataStoreFactory.URL.key);
-                            url = WFSDataStoreFactory.createGetCapabilitiesRequest(url);
+                            //url = WFSDataStoreFactory.createGetCapabilitiesRequest(url);
                             params = new HashMap<String, Serializable>(params);
                             params.put(WFSDataStoreFactory.URL.key, url);
-                            ds = (WFSDataStore) dsf.createDataStore(params);
+                            ds = (WFSContentDataStore) dsf.createDataStore(params);
                             monitor.worked(1);
                         } catch (IOException e) {
                             msg = e;

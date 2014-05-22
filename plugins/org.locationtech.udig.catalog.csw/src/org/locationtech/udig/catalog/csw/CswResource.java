@@ -14,11 +14,13 @@ package org.locationtech.udig.catalog.csw;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IGeoResourceInfo;
 import org.locationtech.udig.catalog.IResolveChangeEvent;
@@ -30,10 +32,9 @@ import org.locationtech.udig.catalog.internal.ResolveDelta;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.geotools.data.wfs.WFSDataStore;
+import org.geotools.data.wfs.impl.WFSContentDataStore;
 import org.geotools.data.wms.WebMapServer;
 import org.geotools.data.wms.xml.WMSSchema;
-import org.geotools.data.wfs.v1_0_0.xml.WFSSchema;
 
 import com.vividsolutions.jts.geom.Envelope;
 
@@ -244,9 +245,12 @@ static class CswWFSResource extends CswResource{
      * @see org.locationtech.udig.catalog.Csw.CswResource#getSchema()
      */
     protected URI getSchema() {
-        return WFSSchema.NAMESPACE;
+        return getID().toURI();
     }
-
+    @Override
+    public ID getID() {
+        return new ID("http://www.opengis.net/wfs",null);
+    }
     /*
      * @see org.locationtech.udig.catalog.Csw.CswResource#getIcon()
      */
@@ -272,7 +276,7 @@ static class CswWFSResource extends CswResource{
         	Iterator<IService> srv = services.iterator();
         	while(srv.hasNext()){
         		IService s = srv.next();
-        		if(s.canResolve(WFSDataStore.class)){
+        		if(s.canResolve(WFSContentDataStore.class)){
         			service = s;
         		}
         	}

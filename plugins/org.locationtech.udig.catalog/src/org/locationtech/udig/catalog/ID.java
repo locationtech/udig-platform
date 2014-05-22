@@ -112,6 +112,9 @@ public class ID implements Serializable {
      * @param qualifier Often used to indicate protocol like "wms", or "wfs"
      */
     public ID( URL url, String qualifier ) {
+        if( url == null ){
+            throw new NullPointerException("URL required for ID");
+        }
         this.typeQualifier = qualifier;
         this.url = url;
         try {

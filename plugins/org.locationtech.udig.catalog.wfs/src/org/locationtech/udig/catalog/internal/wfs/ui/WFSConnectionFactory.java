@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.geotools.data.wfs.impl.WFSContentDataStore;
+import org.geotools.data.wfs.impl.WFSDataStoreFactory;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.IResolve;
@@ -28,15 +30,12 @@ import org.locationtech.udig.catalog.internal.wfs.WFSServiceExtension;
 import org.locationtech.udig.catalog.internal.wfs.WFSServiceImpl;
 import org.locationtech.udig.catalog.ui.UDIGConnectionFactory;
 
-import org.geotools.data.wfs.WFSDataStore;
-import org.geotools.data.wfs.WFSDataStoreFactory;
-
 public class WFSConnectionFactory extends UDIGConnectionFactory {
 
 	public boolean canProcess( Object data ) {        
         if( data instanceof IResolve ){
             IResolve resolve = (IResolve) data;
-            return resolve.canResolve( WFSDataStore.class );
+            return resolve.canResolve( WFSContentDataStore.class );
         }
         return toCapabilitiesURL(data) != null;
     }

@@ -20,7 +20,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.geotools.data.wfs.WFSDataStore;
 import org.geotools.xml.gml.GMLSchema;
 import org.osgi.framework.BundleContext;
 

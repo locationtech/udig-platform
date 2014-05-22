@@ -10,6 +10,7 @@
 package org.locationtech.udig.catalog.geotools.data;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ import org.geotools.data.DataAccessFactory;
 import org.geotools.data.DataAccessFactory.Param;
 import org.geotools.data.FileDataStoreFactorySpi;
 import org.geotools.data.property.PropertyDataStoreFactory;
-import org.geotools.data.wfs.WFSDataStoreFactory;
+import org.geotools.data.wfs.impl.WFSDataStoreFactory;
 import org.geotools.jdbc.JDBCDataStoreFactory;
 
 /**
@@ -174,7 +175,12 @@ enum GTFormat {
 
         @Override
         public ID toID( DataAccessFactory factory, Map<String, ? > params ) {
-            return null;
+            try {
+                URL url = WFSDataStoreFactory.URL.lookUp( params );
+                return new ID(url,"wfs");
+            } catch (IOException e) {
+                return null;
+            }
         }
         @Override
         public ImageDescriptor getIcon() {
