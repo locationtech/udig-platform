@@ -86,7 +86,12 @@ class WFSGeoResourceInfo extends IGeoResourceInfo {
             WfsPlugin.trace("CRS not provided for "+name,null);
         }
         // Looking up appropriate schema namespace
-        schema = resourceInfo.getSchema();
+        try {
+            schema = resourceInfo.getSchema();
+        }
+        catch( Throwable crippled){
+            WfsPlugin.trace("Umable to obtain "+name+" FeatureType from DescribeFeatuerType:"+crippled, crippled);
+        }
         if (schema == null && ft != null) {
             Name featureTypeName = ft.getName();
             if (featureTypeName != null && featureTypeName.getNamespaceURI() != null) {
