@@ -22,11 +22,11 @@ import org.locationtech.udig.ui.graphics.Glyph;
 
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
-import org.geotools.data.QueryCapabilities;
 import org.geotools.data.ResourceInfo;
 import org.geotools.data.wfs.impl.WFSContentDataStore;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.Name;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 class WFSGeoResourceInfo extends IGeoResourceInfo {
@@ -40,6 +40,14 @@ class WFSGeoResourceInfo extends IGeoResourceInfo {
     
     WFSGeoResourceInfo(WFSGeoResourceImpl wfsGeoResourceImpl) throws IOException {
         wfsResource = wfsGeoResourceImpl;
+        
+        // extract Type Name first for use in logs
+        name = wfsResource.typename;
+        if( name == null ){
+            // consider illegal state exception?
+            WfsPlugin.trace("typename not provided",null);
+        }
+        
         WFSContentDataStore ds = wfsResource.parent.getDS(null);
         
         FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = ds
@@ -52,37 +60,48 @@ class WFSGeoResourceInfo extends IGeoResourceInfo {
         try {
             ft = ds.getSchema(wfsResource.typename);
         } catch (Exception crippled) {
-            // unable to handle the describe feature type response for this
-            // typeName
-            if (WfsPlugin.getDefault().isDebugging()) {
-                crippled.printStackTrace();
-            }
+            // unable to handle the describe feature type response for this typename
+            WfsPlugin.log("Unable to handle DescribeFeatureType for "+name+":"+crippled, crippled);
         }
         bounds = resourceInfo.getBounds();
-        
         // relax bounds for wfs ...
         // bounds = ReferencedEnvelopeCache.getReferencedEnvelope( crs );
-        
+        if( bounds == null){
+            WfsPlugin.trace("Bounds not provided for "+name,null);
+        }
+        // Metadata
         description = resourceInfo.getDescription();
         title = resourceInfo.getTitle();
 
         crs = resourceInfo.getCRS();
         if (crs == null && ft != null) {
+            WfsPlugin.trace("CRS not provided for "+name+" ... trying feature type",null);
             crs = ft.getCoordinateReferenceSystem();
         }
-        
-        name = wfsResource.typename;
+        if (crs == null && bounds != null) {
+            WfsPlugin.trace("CRS not provided for "+name+" ... trying bounds",null);
+            crs = bounds.getCoordinateReferenceSystem();
+        }
+        if( crs == null ){
+            WfsPlugin.trace("CRS not provided for "+name,null);
+        }
+        // Looking up appropriate schema namespace
         schema = resourceInfo.getSchema();
-        if (schema == null) {
-            try {
-                if (ft != null) {
-                    schema = new URI(ft.getName().getNamespaceURI());
-                } else {
-                    schema = wfsResource.parent.getID().toURI();
+        if (schema == null && ft != null) {
+            Name featureTypeName = ft.getName();
+            if (featureTypeName != null && featureTypeName.getNamespaceURI() != null) {
+                String namespaceURI = featureTypeName.getNamespaceURI();
+                try {
+                    schema = namespaceURI != null ? new URI(namespaceURI) : null;
+                } catch (URISyntaxException e) {
+                    WfsPlugin.trace("namespaceURI for "+name+" not valid" + e, e);
                 }
-            } catch (URISyntaxException e) {
-                schema = null;
             }
+        }
+        if (schema == null) {
+            // assume parent schema
+            WfsPlugin.trace("Assuming namespace from WFS service endpoint. Assumption may produce invalid GML.",null);
+            schema = wfsResource.parent.getID().toURI();
         }
         Set<String> tags = new TreeSet<String>();
         try {
@@ -93,6 +112,8 @@ class WFSGeoResourceInfo extends IGeoResourceInfo {
         }
         tags.addAll(Arrays.asList(new String[]{"wfs", wfsResource.typename})); //$NON-NLS-1$
         keywords = tags.toArray(new String[0]);
+        
+        // generate default icon
         icon = Glyph.icon(ft);
     }
 
