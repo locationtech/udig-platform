@@ -9,18 +9,13 @@
  */
 package org.locationtech.udig.mapgraphic.style;
 
+import java.awt.Color;
 import java.awt.Font;
-
-import org.locationtech.udig.mapgraphic.MapGraphic;
-import org.locationtech.udig.mapgraphic.internal.Messages;
-import org.locationtech.udig.project.IBlackboard;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.style.IStyleConfigurator;
-import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -29,6 +24,12 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FontDialog;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.internal.Messages;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.IStyleConfigurator;
+import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 
 /**
  * A font chooser for the FontStyle
@@ -40,6 +41,7 @@ public class FontStyleConfigurator extends IStyleConfigurator {
 
     private Text label;
     private org.eclipse.swt.graphics.Font swtFont;
+    private RGB color;
 
     @Override
     public boolean canStyle( Layer layer ) {
@@ -75,7 +77,7 @@ public class FontStyleConfigurator extends IStyleConfigurator {
             public void handleEvent( Event event ) {
 
                 final FontDialog dialog = new FontDialog(button.getShell());
-
+                dialog.setRGB(color);
                 // setup default font
                 IBlackboard blackboard = getStyleBlackboard();
                 FontStyle fontStyle = (FontStyle) blackboard.get(FontStyleContent.ID);
@@ -87,31 +89,55 @@ public class FontStyleConfigurator extends IStyleConfigurator {
                 // show dialog and get results
                 FontData result = dialog.open();
                 if (result != null) {
+                	color = dialog.getRGB();
+                	
                     Font awtfont = AWTSWTImageUtils.swtFontToAwt(result);
                     fontStyle.setFont(awtfont);
-
-                    swtFont = AWTSWTImageUtils.awtFontToSwt(awtfont, JFaceResources
-                            .getFontRegistry());
+                    fontStyle.setColor(new Color(color.red, color.green, color.blue));
+                    
+                    swtFont = AWTSWTImageUtils.awtFontToSwt(awtfont, JFaceResources.getFontRegistry());
                     label.setFont(swtFont);
-                    label.setText(label.getText());
+                    
+                    label.setForeground(toSwtColor(color));
                 }
-
             }
 
         });
     }
-
+    
+	@Override
+	public void preApply() {
+	}
+	
+	
     @Override
     protected void refresh() {
         FontStyle fontStyle = (FontStyle) getStyleBlackboard().get(FontStyleContent.ID);
-
+        
+        if (fontStyle.getColor() != null){
+        	color = new RGB(fontStyle.getColor().getRed(), fontStyle.getColor().getGreen(), fontStyle.getColor().getBlue());
+        }else{
+        	color = new RGB(0,0,0);
+        }
+        
         if (fontStyle.getFont() != null) {
             swtFont = AWTSWTImageUtils.awtFontToSwt(fontStyle.getFont(), JFaceResources
                     .getFontRegistry());
             if (label != null) {
+            	label.setForeground(toSwtColor(color));
                 label.setFont(swtFont);
             }
         }
+    }
+    
+    private  org.eclipse.swt.graphics.Color toSwtColor(RGB rgb){
+    	 String colorKey = rgb.red + "_" + rgb.green + "_"+ rgb.blue; //$NON-NLS-1$ //$NON-NLS-2$
+         org.eclipse.swt.graphics.Color swtColor = JFaceResources.getColorRegistry().get(colorKey);
+         if (swtColor == null){
+         	swtColor = new org.eclipse.swt.graphics.Color(label.getDisplay(), color);
+         	JFaceResources.getColorRegistry().put(colorKey, color);
+         }
+         return swtColor;
     }
 
 }

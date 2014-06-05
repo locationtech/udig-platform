@@ -57,7 +57,7 @@ public class LegendGraphic implements MapGraphic {
 	private int horizontalMargin; // distance between border and icons/text
 	private int verticalSpacing; // distance between layers
 	private int horizontalSpacing; // space between image and text
-	private Color foregroundColour;
+	
 	private Color backgroundColour;
 	private int indentSize;
 
@@ -88,7 +88,6 @@ public class LegendGraphic implements MapGraphic {
 		}
 
 		this.backgroundColour = legendStyle.backgroundColour;
-		this.foregroundColour = legendStyle.foregroundColour;
 		this.horizontalMargin = legendStyle.horizontalMargin;
 		this.verticalMargin = legendStyle.verticalMargin;
 		this.horizontalSpacing = legendStyle.horizontalSpacing;
@@ -264,7 +263,7 @@ public class LegendGraphic implements MapGraphic {
 		/*
 		 * Draw the box containing the layers/icons
 		 */
-		drawOutline(graphics, context, locationStyle);
+		drawOutline(graphics, context, locationStyle, fontStyle);
 
 		/*
 		 * Draw the layer names/icons
@@ -445,7 +444,7 @@ public class LegendGraphic implements MapGraphic {
 	}
 
 	private void drawOutline(ViewportGraphics graphics,
-			MapGraphicContext context, Rectangle locationStyle) {
+			MapGraphicContext context, Rectangle locationStyle, FontStyle fs) {
 		Rectangle outline = new Rectangle(locationStyle.x, locationStyle.y,
 				locationStyle.width, locationStyle.height);
 
@@ -455,7 +454,7 @@ public class LegendGraphic implements MapGraphic {
 		graphics.setColor(backgroundColour);
 		graphics.fill(outline);
 
-		graphics.setColor(foregroundColour);
+		graphics.setColor(fs.getColor());
 		graphics.setBackground(backgroundColour);
 		graphics.draw(outline);
 	}

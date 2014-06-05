@@ -70,7 +70,6 @@ public class LegendStyleContent extends StyleContent {
         style.imageHeight = 16;
         style.imageWidth = 16;
                
-        style.foregroundColour = Color.BLACK;
         style.backgroundColour = Color.WHITE;
                 
         return style;

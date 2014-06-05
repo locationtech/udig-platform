@@ -20,16 +20,19 @@ import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.StyleBlackboard;
 import org.locationtech.udig.project.internal.impl.UDIGFeatureStore;
-import org.locationtech.udig.project.ui.internal.dialogs.ColorEditor;
 import org.locationtech.udig.style.IStyleConfigurator;
-
+import org.locationtech.udig.ui.ColorEditor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
@@ -94,88 +97,70 @@ public class ProcessingRegionGraphicStyleConfigurator extends IStyleConfigurator
         c.setLayout(new GridLayout());
         c.setLayoutData(new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL));
 
+        FontData fd = c.getFont().getFontData()[0];
+        fd.setStyle(SWT.BOLD);
+        final Font boldFont = new Font(c.getDisplay(), fd);
+        c.addDisposeListener(new DisposeListener() {
+			@Override
+			public void widgetDisposed(DisposeEvent e) {
+				boldFont.dispose();
+			}
+		});
         // the group for the region
-        Group regionGroup = new Group(c, SWT.BORDER);
-        GridLayout layout2 = new GridLayout(2, true);
+        Group regionGroup = new Group(c, SWT.NONE);
+        regionGroup.setFont(boldFont);
+        GridLayout layout2 = new GridLayout(2, false);
         regionGroup.setLayout(layout2);
-        regionGroup.setText("Region settings");
+        regionGroup.setText("Region Settings");
         regionGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
 
         northLabel = new Label(regionGroup, SWT.NONE);
         northLabel.setText("north");
-        northLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+//        northLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         northText = new Text(regionGroup, SWT.BORDER);
         northText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         southLabel = new Label(regionGroup, SWT.NONE);
         southLabel.setText("south");
-        southLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+//        southLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         southText = new Text(regionGroup, SWT.BORDER);
         southText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         westLabel = new Label(regionGroup, SWT.NONE);
         westLabel.setText("west");
-        westLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+//        westLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         westText = new Text(regionGroup, SWT.BORDER);
         westText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         eastLabel = new Label(regionGroup, SWT.NONE);
         eastLabel.setText("east");
-        eastLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+//        eastLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         eastText = new Text(regionGroup, SWT.BORDER);
         eastText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         rowsLabel = new Label(regionGroup, SWT.NONE);
         rowsLabel.setText("rows");
-        rowsLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+//        rowsLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         rowsText = new Text(regionGroup, SWT.BORDER);
         rowsText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         colsLabel = new Label(regionGroup, SWT.NONE);
         colsLabel.setText("cols");
-        colsLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+//        colsLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         colsText = new Text(regionGroup, SWT.BORDER);
         colsText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         xresLabel = new Label(regionGroup, SWT.NONE);
         xresLabel.setText("xres");
-        xresLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+//        xresLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         xresText = new Text(regionGroup, SWT.BORDER);
         xresText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         yresLabel = new Label(regionGroup, SWT.NONE);
         yresLabel.setText("yres");
-        yresLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+//        yresLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         yresText = new Text(regionGroup, SWT.BORDER);
         yresText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
 
-        // the group for the style
-        Group styleGroup = new Group(c, SWT.BORDER);
-        GridLayout layout3 = new GridLayout(2, true);
-        styleGroup.setLayout(layout3);
-        styleGroup.setText("Style properties");
-        styleGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
-
-        Label backgroundColourLabel = new Label(styleGroup, SWT.NONE);
-        backgroundColourLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
-        backgroundColourLabel.setText("background color");
-        backgroundColour = new ColorEditor(styleGroup);
-        backgroundColour.getButton().setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
-        Label backgroundAlphaLabel = new Label(styleGroup, SWT.NONE);
-        backgroundAlphaLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
-        backgroundAlphaLabel.setText("background alpha (0-1)");
-        backgroundAlphaText = new Text(styleGroup, SWT.BORDER);
-        backgroundAlphaText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
-        Label foregroundColourLabel = new Label(styleGroup, SWT.NONE);
-        foregroundColourLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
-        foregroundColourLabel.setText("foreground color");
-        foregroundColor = new ColorEditor(styleGroup);
-        foregroundColor.getButton().setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
-        Label forgroundAlphaLabel = new Label(styleGroup, SWT.NONE);
-        forgroundAlphaLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
-        forgroundAlphaLabel.setText("foreground alpha (0-1)");
-        forgroundAlphaText = new Text(styleGroup, SWT.BORDER);
-        forgroundAlphaText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
-
         // the group for the set region to map
-        final Group settoGroup = new Group(c, SWT.BORDER);
+        final Group settoGroup = new Group(regionGroup, SWT.NONE);
         GridLayout layout4 = new GridLayout(1, true);
         settoGroup.setLayout(layout4);
         settoGroup.setText("Set region to...");
-        settoGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        settoGroup.setLayoutData(new GridData( SWT.FILL, SWT.FILL, true, false, 2, 1));
 
         rasterMapSetButton = new Button(settoGroup, SWT.NONE);
         rasterMapSetButton.setText("set region to raster map");
@@ -199,6 +184,37 @@ public class ProcessingRegionGraphicStyleConfigurator extends IStyleConfigurator
                 update(tree.getSelectedResources());
             }
         });
+        
+        // the group for the style
+        Group styleGroup = new Group(c, SWT.NONE);
+        styleGroup.setFont(boldFont);
+        GridLayout layout3 = new GridLayout(2, false);
+        styleGroup.setLayout(layout3);
+        styleGroup.setText("Style Properties");
+        styleGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+
+        Label backgroundColourLabel = new Label(styleGroup, SWT.NONE);
+//        backgroundColourLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        backgroundColourLabel.setText("background color");
+        backgroundColour = new ColorEditor(styleGroup);
+        backgroundColour.getButton().setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        Label backgroundAlphaLabel = new Label(styleGroup, SWT.NONE);
+//        backgroundAlphaLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        backgroundAlphaLabel.setText("background alpha (0-1)");
+        backgroundAlphaText = new Text(styleGroup, SWT.BORDER);
+        backgroundAlphaText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        Label foregroundColourLabel = new Label(styleGroup, SWT.NONE);
+//        foregroundColourLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        foregroundColourLabel.setText("foreground color");
+        foregroundColor = new ColorEditor(styleGroup);
+        foregroundColor.getButton().setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        Label forgroundAlphaLabel = new Label(styleGroup, SWT.NONE);
+//        forgroundAlphaLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        forgroundAlphaLabel.setText("foreground alpha (0-1)");
+        forgroundAlphaText = new Text(styleGroup, SWT.BORDER);
+        forgroundAlphaText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+
+      
 
         northText.addModifyListener(new org.eclipse.swt.events.ModifyListener(){
             public void modifyText( org.eclipse.swt.events.ModifyEvent e ) {
@@ -256,8 +272,8 @@ public class ProcessingRegionGraphicStyleConfigurator extends IStyleConfigurator
                 textModified(res_type);
             }
         });
-        foregroundColor.addSelectionListener(this);
-        backgroundColour.addSelectionListener(this);
+        foregroundColor.getButton().addSelectionListener(this);
+        backgroundColour.getButton().addSelectionListener(this);
 
         /*
          * layout

@@ -500,9 +500,9 @@ public final class AWTSWTImageUtils {
      * @return the equivalent SWT Font
      */
     public static org.eclipse.swt.graphics.Font awtFontToSwt( java.awt.Font font, FontRegistry fontRegistry ) {
-        String fontName = font.getFontName();
-        if (fontRegistry.hasValueFor(fontName)) {
-            return fontRegistry.get(fontName);
+    	String fontKey = font.toString();
+        if (fontRegistry.hasValueFor(fontKey)) {
+            return fontRegistry.get(fontKey);
         }
     
         int style = 0;
@@ -512,9 +512,9 @@ public final class AWTSWTImageUtils {
         if ((font.getStyle() & java.awt.Font.ITALIC) == java.awt.Font.ITALIC) {
             style |= SWT.ITALIC;
         }
-        FontData data = new FontData(fontName, font.getSize(), style);
-        fontRegistry.put(fontName, new FontData[]{data});
-        return fontRegistry.get(fontName);
+        FontData data = new FontData(font.getName(), font.getSize(), style);
+        fontRegistry.put(fontKey, new FontData[]{data});
+        return fontRegistry.get(fontKey);
     }
 
     /**

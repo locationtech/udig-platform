@@ -9,30 +9,23 @@
  */
 package org.locationtech.udig.mapgraphic.grid;
 
-import java.awt.Color;
-
-import org.locationtech.udig.mapgraphic.grid.GridStyle.Type;
-import org.locationtech.udig.mapgraphic.internal.Messages;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.style.IStyleConfigurator;
-import org.locationtech.udig.ui.graphics.ViewportGraphics;
-
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Spinner;
+import org.locationtech.udig.mapgraphic.grid.GridStyle.Type;
+import org.locationtech.udig.mapgraphic.internal.Messages;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.IStyleConfigurator;
+import org.locationtech.udig.ui.ColorEditor;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 /**
  * Edit GridStyle objects
@@ -47,17 +40,18 @@ public class GridStyleConfigurator extends IStyleConfigurator implements Listene
     private static final String LINE_DASHDOTDOT = "dash-dot-dot"; //$NON-NLS-1$
     private static final String LINE_DOT = "dot"; //$NON-NLS-1$
     private static final String LINE_SOLID = "solid"; //$NON-NLS-1$
-    private static final String[] LINE_STYLES = new String[]{LINE_SOLID, LINE_DASH, LINE_DOT,
-            LINE_DASHDOT, LINE_DASHDOTDOT};
+	private static final String[] LINE_STYLES = new String[] { LINE_SOLID,
+			LINE_DASH, LINE_DOT, LINE_DASHDOT, LINE_DASHDOTDOT };
 
     SpacerController xSpacer, ySpacer;
     Combo lineStyle;
     Spinner lineWidth;
-    Button color;
-    Label xlabel, ylabel, message, colorLabel, colorDisplay, lineStyleLabel, lineWidthLabel;
+    Label xlabel, ylabel, message, colorLabel, lineStyleLabel, lineWidthLabel;
+    private ColorEditor lineColor;
+    
     private GridStyle style;
     private UnitListener xUnitListener, yUnitListener;
-    private ColorListener colorListener;
+    
     private Composite comp;
 
     @Override
@@ -80,37 +74,36 @@ public class GridStyleConfigurator extends IStyleConfigurator implements Listene
 
         GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
 
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         xlabel.setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         xSpacer.getSpinner().setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        layoutData = new GridData(SWT.LEFT, SWT.FILL, true, false, 1, 1);
         xSpacer.getUnit().setLayoutData(layoutData);
 
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         ylabel.setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         ySpacer.getSpinner().setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        layoutData = new GridData(SWT.LEFT, SWT.FILL, true, false, 1, 1);
         ySpacer.getUnit().setLayoutData(layoutData);
 
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
+        layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         lineStyleLabel.setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        layoutData = new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1);
         lineStyle.setLayoutData(layoutData);
 
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
+        layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         lineWidthLabel.setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        layoutData = new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1);
         lineWidth.setLayoutData(layoutData);
 
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         colorLabel.setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-        colorDisplay.setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        color.setLayoutData(layoutData);
-
+       
+        layoutData = new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1);
+        lineColor.getButton().setLayoutData(layoutData);
+        
         layoutData = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
         message.setLayoutData(layoutData);
 
@@ -125,9 +118,7 @@ public class GridStyleConfigurator extends IStyleConfigurator implements Listene
         xSpacer.addListeners(xUnitListener, this);
         ySpacer.addListeners(yUnitListener, this);
 
-        colorListener = new ColorListener(this);
-        color.addSelectionListener(colorListener);
-
+        lineColor.getButton().addListener(SWT.Selection, this);
         lineStyle.addListener(SWT.Modify, this);
         lineStyle.addListener(SWT.KeyUp, this);
         lineWidth.addListener(SWT.Modify, this);
@@ -138,8 +129,7 @@ public class GridStyleConfigurator extends IStyleConfigurator implements Listene
         xSpacer.removeListeners(xUnitListener, this);
         ySpacer.removeListeners(yUnitListener, this);
 
-        color.removeSelectionListener(colorListener);
-
+        lineColor.getButton().removeListener(SWT.Selection, this);
         lineStyle.removeListener(SWT.Modify, this);
         lineWidth.removeListener(SWT.Modify, this);
         lineStyle.removeListener(SWT.KeyUp, this);
@@ -151,14 +141,14 @@ public class GridStyleConfigurator extends IStyleConfigurator implements Listene
 
         xlabel = new Label(comp, SWT.NONE);
         xlabel.setText(Messages.GridStyleConfigurator_HSpacing);
-        Spinner x = new Spinner(comp, SWT.NONE);
+        Spinner x = new Spinner(comp, SWT.BORDER);
         Combo xUnit = new Combo(comp, SWT.READ_ONLY);
 
         xSpacer = new SpacerController(x, xUnit);
 
         ylabel = new Label(comp, SWT.NONE);
         ylabel.setText(Messages.GridStyleConfigurator_VSpacing);
-        Spinner y = new Spinner(comp, SWT.NONE);
+        Spinner y = new Spinner(comp, SWT.BORDER);
         Combo yUnit = new Combo(comp, SWT.READ_ONLY);
 
         ySpacer = new SpacerController(y, yUnit);
@@ -166,26 +156,17 @@ public class GridStyleConfigurator extends IStyleConfigurator implements Listene
         colorLabel = new Label(comp, SWT.NONE);
         colorLabel.setText(Messages.GridStyleConfigurator_LineColor);
 
-        colorDisplay = new Label(comp, SWT.NONE);
-        colorDisplay.addListener(SWT.Resize, new Listener(){
-            
-            public void handleEvent( Event event ) {
-                updateColorButton();
-            }
-            
-        });
-        color = new Button(comp, SWT.PUSH);
-        color.setText(Messages.GridStyleConfigurator_ChangeColor);
-
+        lineColor = new ColorEditor(comp);
+        
         lineStyleLabel = new Label(comp, SWT.NONE);
         lineStyleLabel.setText(Messages.GridStyleConfigurator_LineStyle);
-        lineStyle = new Combo(comp, SWT.NONE);
+        lineStyle = new Combo(comp, SWT.READ_ONLY);
         lineStyle.setItems(LINE_STYLES);
         lineStyle.select(0);
 
         lineWidthLabel = new Label(comp, SWT.NONE);
         lineWidthLabel.setText(Messages.GridStyleConfigurator_LineWidth);
-        lineWidth = new Spinner(comp, SWT.NONE);
+        lineWidth = new Spinner(comp, SWT.BORDER);
         lineWidth.setIncrement(1);
         lineWidth.setDigits(0);
         lineWidth.setMinimum(1);
@@ -210,9 +191,7 @@ public class GridStyleConfigurator extends IStyleConfigurator implements Listene
             message.setText(""); //$NON-NLS-1$
             lineWidth.setSelection(style.getLineWidth());
             setLineStyle(style);
-            Color color2 = style.getColor();
-            color.setData(color2);
-            updateColorButton();
+            lineColor.setColor(style.getColor());
 
             switch( style.getType() ) {
             case SCREEN:
@@ -258,44 +237,6 @@ public class GridStyleConfigurator extends IStyleConfigurator implements Listene
         }
     }
 
-    void updateColorButton() {
-        Image oldImage = colorDisplay.getImage();
-
-        Rectangle bounds = colorDisplay.getBounds();
-        if (bounds.width == 0 || bounds.height == 0)
-            return;
-
-        Display display = colorDisplay.getDisplay();
-        Image newImage = new Image(display, bounds.width, bounds.width);
-
-        Color awtColor = (Color) color.getData();
-        int red = awtColor.getRed();
-        int green = awtColor.getGreen();
-        int blue = awtColor.getBlue();
-        org.eclipse.swt.graphics.Color color2 = new org.eclipse.swt.graphics.Color(display, red,
-                green, blue);
-
-        GC gc = new GC(newImage);
-        try {
-            gc.setForeground(display.getSystemColor(SWT.COLOR_BLACK));
-            gc.drawRectangle(0, 0, bounds.width - 1, bounds.height - 1);
-            int alpha = awtColor.getAlpha();
-            gc.setAlpha(alpha);
-            gc.setBackground(color2);
-            gc.fillRectangle(1, 1, bounds.width - 2, bounds.height - 2);
-        } finally {
-            gc.dispose();
-            color2.dispose();
-        }
-
-        colorDisplay.setImage(newImage);
-        if (oldImage != null)
-            oldImage.dispose();
-        colorLabel.redraw();
-
-
-    }
-
     @Override
     public void preApply() {
         if( xSpacer.getSpinner().isFocusControl() ){
@@ -335,7 +276,7 @@ public class GridStyleConfigurator extends IStyleConfigurator implements Listene
             }
             // parses all the values and updates the style on the Style blackboard
 
-            style.setColor((Color) color.getData());
+            style.setColor(lineColor.getColor());
             style.setLineStyle(parseLineStyle());
             style.setLineWidth(lineWidth.getSelection());
 
@@ -361,7 +302,7 @@ public class GridStyleConfigurator extends IStyleConfigurator implements Listene
             return true;
         }
 
-        if (!style.getColor().equals(color.getData())) {
+        if (!style.getColor().equals(lineColor.getColor())) {
             return true;
         }
 
