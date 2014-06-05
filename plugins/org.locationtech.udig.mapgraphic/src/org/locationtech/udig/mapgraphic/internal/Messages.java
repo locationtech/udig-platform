@@ -59,6 +59,7 @@ public class Messages extends NLS {
     public static String ScalebarStyleConfigurator_bottom;
     public static String ScalebarStyleConfigurator_middle;
     public static String ScalebarStyleConfigurator_top;
+	public static String ScaleDenomStyleConfigurator_DrawBackground;
     public static String Font_ExampleText;
     public static String GridMapGraphic_grids_too_close;
     public static String UnitListener_MixedUnits;

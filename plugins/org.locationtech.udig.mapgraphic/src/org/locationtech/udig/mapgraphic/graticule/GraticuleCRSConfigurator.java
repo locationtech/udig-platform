@@ -70,7 +70,7 @@ public class GraticuleCRSConfigurator extends IStyleConfigurator {
         crsText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         crsText.setEditable(false);
 
-        final Button crsButton = new Button(composite, SWT.BORDER);
+        final Button crsButton = new Button(composite, SWT.PUSH);
         crsButton.setText(Messages.GraticuleCRSConfigurator_Select); 
         crsButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {

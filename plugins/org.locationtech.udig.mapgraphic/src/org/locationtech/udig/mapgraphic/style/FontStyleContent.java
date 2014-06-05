@@ -29,9 +29,11 @@ import org.eclipse.ui.IMemento;
 public class FontStyleContent extends StyleContent {
     /** extension id */
     public static final String ID = "org.locationtech.udig.mapgraphic.style.font"; //$NON-NLS-1$
+
     private static final String FONT_NAME = "FONT_NAME"; //$NON-NLS-1$
     private static final String STYLE = "STYLE"; //$NON-NLS-1$
     private static final String SIZE = "SIZE"; //$NON-NLS-1$
+    private static final String COLOR = "COLOR"; //$NON-NLS-1$
 
     public FontStyleContent( ) {
         super(ID);
@@ -56,7 +58,13 @@ public class FontStyleContent extends StyleContent {
                 Integer style = memento.getInteger(STYLE);
                 Integer size = memento.getInteger(SIZE);
                 Font font = new Font(name, style, size);
-                return new FontStyle(font);
+                Integer color = memento.getInteger(COLOR);
+                
+                if (color != null){
+                	return new FontStyle(font, new Color(color));	
+                }else{
+                	return new FontStyle(font);
+                }
             }
         } catch (Throwable e) {
             MapGraphicPlugin.log("Error decoding the stored font", e); //$NON-NLS-1$
@@ -76,7 +84,9 @@ public class FontStyleContent extends StyleContent {
             memento.putString(FONT_NAME, style.getFont().getFamily());
             memento.putInteger(STYLE, style.getFont().getStyle());
             memento.putInteger(SIZE, style.getFont().getSize());
+            memento.putInteger(COLOR, style.getColor().getRGB());
         }
+        
     }
 
 }

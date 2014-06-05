@@ -18,7 +18,6 @@ public class LegendStyle {
     public  int horizontalMargin; //distance between border and icons/text
     public  int verticalSpacing; //distance between layers
     public  int horizontalSpacing; //space between image and text
-    public  Color foregroundColour;
     public  Color backgroundColour;
     public  int indentSize;
     public int imageWidth;
@@ -43,7 +42,6 @@ public class LegendStyle {
 		this.horizontalMargin = oldStyle.horizontalMargin;
 		this.verticalSpacing = oldStyle.verticalSpacing;
 		this.horizontalSpacing = oldStyle.horizontalSpacing;
-		this.foregroundColour = oldStyle.foregroundColour;
 		this.backgroundColour = oldStyle.backgroundColour;
 		this.indentSize = oldStyle.indentSize;
 		this.imageWidth = oldStyle.imageWidth;

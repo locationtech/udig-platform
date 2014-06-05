@@ -9,6 +9,7 @@
  */
 package org.locationtech.udig.mapgraphic.style;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import org.locationtech.udig.project.internal.StyleBlackboard;
@@ -24,13 +25,14 @@ import org.locationtech.udig.project.internal.StyleBlackboard;
  */
 public class FontStyle {
     private Font font;
-
+    private Color color;
     /**
      * Create a new "empty"/"default" style
      */
     public FontStyle() {
         this.font = Font.decode(null);
         this.font = font.deriveFont(8.0f);
+        this.color = Color.BLACK;
     }
     
     /**
@@ -39,8 +41,18 @@ public class FontStyle {
      */
     public FontStyle( Font font2 ) {
         this.font = font2;
+        this.color = Color.BLACK;
     }
 
+    /**
+     * Create new Style with the provided font
+     * @param font2
+     */
+    public FontStyle( Font font2, Color color ) {
+        this(font2);
+        this.color = color;
+    }
+    
     /**
      * Returns the font.  Maybe null if the default is intended to be used.
      *
@@ -57,5 +69,21 @@ public class FontStyle {
      */
     public void setFont( Font font ) {
         this.font = font;
+    }
+    
+    /**
+     * 
+     * @return the font color
+     */
+    public Color getColor(){
+    	return color;
+    }
+    
+    /**
+     * Sets the font color
+     * @param color
+     */
+    public void setColor(Color color){
+    	this.color = color;
     }
 }

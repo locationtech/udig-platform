@@ -14,22 +14,20 @@ import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
 
-import org.locationtech.udig.mapgraphic.MapGraphic;
-import org.locationtech.udig.mapgraphic.MapGraphicContext;
-import org.locationtech.udig.project.IBlackboard;
-import org.locationtech.udig.project.render.IViewportModel;
-import org.locationtech.udig.ui.graphics.ViewportGraphics;
-
 import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.mapgraphic.style.PositionStyleContent;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * 
@@ -50,48 +48,38 @@ public final class NorthArrowMapGraphic implements MapGraphic{
 	public NorthArrowMapGraphic() {
 	}
 
-	private Point start; // where we drew last time
-	private Envelope look; // where we were looking last time
-	
-	private Point end;
-	private double theta;
-	
 	public void draw(MapGraphicContext context) {
-		IViewportModel viewport = context.getViewportModel();
+		Point end = null;
+		Point start = start( context );
+		if ( start == null ) return; // bye!
 
-		Point here = start( context );
-		if( here== null ) return; // bye!
-		
-		Envelope bounds = viewport.getBounds();
-		if( !here.equals( start ) || !bounds.equals( look )){
-			start = here;
-			look = bounds;
-			end = null;
-			
-			Coordinate worldStart = context.pixelToWorld( here.x, here.y );
-					
-			Coordinate groundStart = toGround( context, worldStart );
-			if( groundStart == null) return;
-			
-			Coordinate groundNorth = moveNorth( groundStart ); // move a "little" way north
-			Coordinate worldNorth = fromGround( context, groundNorth );
-			
-			
-			theta = theta( worldStart, worldNorth );
-			double distance = context.getViewportModel().getPixelSize().y * 20.0;
-
-			Coordinate destination = walk( worldStart, theta, distance );
-			
-			//Coordinate destination = worldNorth;
-			
-			end = context.worldToPixel( destination );
+		Point displayPosition = new Point(start);
+		if (displayPosition.x < 0){
+			displayPosition.x = (int)context.getMapDisplay().getWidth() + displayPosition.x;
 		}
+		if (displayPosition.y < 0){
+			displayPosition.y = (int)context.getMapDisplay().getHeight() + displayPosition.y;
+		}
+		Coordinate worldStart = context.pixelToWorld( displayPosition.x, displayPosition.y );
+		Coordinate groundStart = toGround( context, worldStart );
+		if( groundStart == null) return;
+			
+		Coordinate groundNorth = moveNorth( groundStart ); // move a "little" way north
+		Coordinate worldNorth = fromGround( context, groundNorth );
+			
+		double theta = theta( worldStart, worldNorth );
+		double distance = context.getViewportModel().getPixelSize().y * 20.0;
+
+		Coordinate destination = walk( worldStart, theta, distance );
+		//Coordinate destination = worldNorth;
+		end = context.worldToPixel( destination );
+		
 		if( start != null && end != null ){			
-			drawArrow( context, here );
+			drawArrow( context, start, theta );
 		}
 	}
 
-	private void drawArrow( MapGraphicContext context, Point here ) {
+	private void drawArrow( MapGraphicContext context, Point here, double theta ) {
 		ViewportGraphics g = context.getGraphics();
 		AffineTransform t = g.getTransform();
 		
@@ -101,9 +89,21 @@ public final class NorthArrowMapGraphic implements MapGraphic{
 			int totalHeight = ARROW_HEIGHT + SPACE_ABOVE_N + g.getFontAscent();
 
             AffineTransform t1 = g.getTransform();
-            AffineTransform t2 = g.getTransform();
-            t1.translate( here.x + ARROW_WIDTH, here.y + totalHeight );            
-            t2.translate( here.x + ARROW_WIDTH, here.y + totalHeight );
+            int x = here.x;
+            if (x < 0){
+            	x = context.getMapDisplay().getWidth() + x - ARROW_WIDTH;
+            }else{
+            	x = here.x + ARROW_WIDTH;
+            }
+            
+            int y = here.y;
+            if (y < 0){
+            	y = context.getMapDisplay().getHeight() + y;
+            }else{
+            	y = here.y + totalHeight;
+            }
+            
+            t1.translate( x, y);
             
             t1.scale( -1.0, -1.0 );
             t1.rotate( Math.PI / 2 );
@@ -147,16 +147,9 @@ public final class NorthArrowMapGraphic implements MapGraphic{
 		
     }
 
-	@SuppressWarnings("unused")
-	private void drawSimpleLine( MapGraphicContext context ) {
-	    context.getGraphics().setColor( new Color(255,0,0));
-	    context.getGraphics().drawLine(start.x, start.y, end.x, end.y );
-    }
-
 	private Coordinate walk(Coordinate ground, double theta, double d ) {
 		double dx = Math.cos(theta)*d;
 		double dy = Math.sin(theta)*d;
-		
 		return new Coordinate( ground.x+dx, ground.y+dy);  
 	}
 
@@ -230,7 +223,8 @@ public final class NorthArrowMapGraphic implements MapGraphic{
 		Point point = null;		
 		IBlackboard style = context.getLayer().getStyleBlackboard();
 		try {
-			point = (Point) style.get( NorthArrowTool.STYLE_BLACKBOARD_KEY );
+			point = (Point) style.get(PositionStyleContent.ID);
+
 		}
 		catch( Exception evil ){
 			evil.printStackTrace();

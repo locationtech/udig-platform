@@ -11,16 +11,10 @@ package org.locationtech.udig.mapgraphic.graticule;
 
 import java.awt.Color;
 
-import org.locationtech.udig.mapgraphic.internal.Messages;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.ui.internal.dialogs.ColorEditor;
-import org.locationtech.udig.style.IStyleConfigurator;
-import org.locationtech.udig.ui.graphics.ViewportGraphics;
-
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -32,6 +26,13 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Spinner;
+import org.locationtech.udig.mapgraphic.internal.Messages;
+import org.locationtech.udig.mapgraphic.style.FontStyle;
+import org.locationtech.udig.mapgraphic.style.FontStyleContent;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.IStyleConfigurator;
+import org.locationtech.udig.ui.ColorEditor;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 /**
  * Edit GraticuleStyle objects
@@ -82,6 +83,8 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
     Label opacityLabel;
 
     private GraticuleStyle style;
+    
+    private FontStyle fontStyle;
 
     private ColorListener colorListener;
 
@@ -95,11 +98,22 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
 
     @Override
     public void createControl(Composite parent) {
-        parent.setLayout(new FillLayout());
+    	parent.setLayout(new GridLayout());
+		
+    	ScrolledComposite scrollComposite = new ScrolledComposite(parent, SWT.V_SCROLL | SWT.H_SCROLL);
+		scrollComposite.setLayoutData(new GridData(GridData.FILL_BOTH
+				| GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL));
+		scrollComposite.setExpandHorizontal(true);
+		scrollComposite.setExpandVertical(true);
 
-        Composite widgets = createWidgets(parent);
-        addListeners();
+        Composite widgets = createWidgets(scrollComposite);
         layoutWidgets(widgets);
+        
+        scrollComposite.setContent(widgets);
+        scrollComposite.setMinSize(widgets.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        
+        addListeners();
+        
     }
 
     protected GraticuleStyle getStyle() {
@@ -110,12 +124,12 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
 
         comp.setLayout(new GridLayout(4, false));
 
-        GridData layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         fontColorLabel.setLayoutData(layoutData);
         layoutData = new GridData(SWT.NONE, SWT.FILL, true, false, 3, 1);
         fontColor.getButton().setLayoutData(layoutData);
 
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         lineColorLabel.setLayoutData(layoutData);
         layoutData = new GridData(SWT.NONE, SWT.FILL, true, false, 3, 1);
         lineColor.getButton().setLayoutData(layoutData);
@@ -127,17 +141,17 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
         layoutData.heightHint = 20;
         opacity.setLayoutData(layoutData);
 
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         lineStyleLabel.setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
+        layoutData = new GridData(SWT.LEFT, SWT.FILL, true, false, 3, 1);
         lineStyle.setLayoutData(layoutData);
 
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         lineWidthLabel.setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
+        layoutData = new GridData(SWT.LEFT, SWT.FILL, false, false, 3, 1);
         lineWidth.setLayoutData(layoutData);
 
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         showLabelsLabel.setLayoutData(layoutData);
         layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
         showLabels.setLayoutData(layoutData);
@@ -149,8 +163,8 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
 
     private void addListeners() {
         colorListener = new ColorListener(this);
-        fontColor.addSelectionListener(colorListener);
-        lineColor.addSelectionListener(colorListener);
+        fontColor.getButton().addSelectionListener(colorListener);
+        lineColor.getButton().addSelectionListener(colorListener);
         lineStyle.addListener(SWT.Modify, this);
         lineStyle.addListener(SWT.KeyUp, this);
         lineWidth.addListener(SWT.Modify, this);
@@ -161,8 +175,8 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
 
     private void removeListeners() {
 
-        fontColor.removeSelectionListener(colorListener);
-        lineColor.removeSelectionListener(colorListener);
+        fontColor.getButton().removeSelectionListener(colorListener);
+        lineColor.getButton().removeSelectionListener(colorListener);
         lineStyle.removeListener(SWT.Modify, this);
         lineWidth.removeListener(SWT.Modify, this);
         lineStyle.removeListener(SWT.KeyUp, this);
@@ -184,14 +198,14 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
 
         opacityLabel = new Label(container, SWT.NONE);
         opacityLabel.setText(Messages.GraticuleStyleConfigurator_Opacity);
-        opacity = new Scale(container, SWT.BORDER);
+        opacity = new Scale(container, SWT.NONE);
         opacity.setMaximum(255);
         opacity.setPageIncrement(5);
         opacity.setSelection(100);
 
         lineStyleLabel = new Label(container, SWT.NONE);
         lineStyleLabel.setText(Messages.GridStyleConfigurator_LineStyle);
-        lineStyle = new Combo(container, SWT.NONE);
+        lineStyle = new Combo(container, SWT.READ_ONLY);
         lineStyle.setItems(LINE_STYLES);
         lineStyle.select(0);
 
@@ -221,13 +235,18 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
             if (oldStyle == null) {
                 oldStyle = GraticuleStyle.DEFAULT;
             }
+            
+            fontStyle = (FontStyle)getStyleBlackboard().get(FontStyleContent.ID);
+            if (fontStyle == null){
+            	fontStyle = new FontStyle();
+            }
 
             this.style = new GraticuleStyle(oldStyle);
 
             messageLabel.setText(""); //$NON-NLS-1$
             lineWidth.setSelection(style.getLineWidth());
             setLineStyle(style);
-            Color color = style.getFontColor();
+            Color color = fontStyle.getColor();
             fontColor.setColorValue(new RGB(color.getRed(), color.getGreen(), color.getBlue()));
             color = style.getLineColor();
             lineColor.setColorValue(new RGB(color.getRed(), color.getGreen(), color.getBlue()));
@@ -299,7 +318,6 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
             getApplyAction().setEnabled(true);
 
             // parses all the values and updates the style on the Style blackboard
-            style.setFontColor(toColor(fontColor.getColorValue()));
             style.setLineColor(toColor(lineColor.getColorValue()));
             style.setLineStyle(parseLineStyle());
             style.setLineWidth(lineWidth.getSelection());
@@ -307,13 +325,17 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
             style.setOpacity(opacity.getSelection());
 
             getStyleBlackboard().put(GraticuleStyle.ID, style);
+            
+            //update font style color
+            fontStyle.setColor(toColor(fontColor.getColorValue()));
+            getStyleBlackboard().put(FontStyleContent.ID, fontStyle);
         }
 
     }
 
     private boolean isChanged(Event e) {
 
-        if (!style.getFontColor().equals(toColor(fontColor.getColorValue()))) {
+        if (!fontStyle.getColor().equals(toColor(fontColor.getColorValue()))) {
             return true;
         }
         
