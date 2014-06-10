@@ -15,10 +15,12 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+import org.geotools.filter.text.ecql.ECQL;
 import org.opengis.filter.Filter;
-
 import org.locationtech.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import org.locationtech.udig.style.advanced.internal.Messages;
@@ -76,11 +78,18 @@ public class FiltersComposite extends ParameterComposite {
             e.printStackTrace();
         }
         filterText.addFocusListener(this);
-
+        filterText.addListener(SWT.Modify, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				filterApplyButton.setEnabled(true);
+			}
+		});
         filterApplyButton = new Button(mainComposite, SWT.PUSH);
         filterApplyButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
         filterApplyButton.setText(Messages.FiltersComposite_3);
         filterApplyButton.addSelectionListener(this);
+        filterApplyButton.setEnabled(false);
 
     }
 
@@ -93,7 +102,7 @@ public class FiltersComposite extends ParameterComposite {
         try {
             Filter filter = ruleWrapper.getRule().getFilter();
             if (filter != null) {
-                filterText.setText(filter.toString());
+                filterText.setText(ECQL.toCQL(filter));
             } else {
                 filterText.setText(""); //$NON-NLS-1$
             }
@@ -101,7 +110,7 @@ public class FiltersComposite extends ParameterComposite {
             filterText.setText(""); //$NON-NLS-1$
             e.printStackTrace();
         }
-
+        filterApplyButton.setEnabled(false);
     }
 
     public void widgetSelected( SelectionEvent e ) {
@@ -109,6 +118,7 @@ public class FiltersComposite extends ParameterComposite {
         if (source.equals(filterApplyButton)) {
             String filterTextStr = filterText.getText();
             notifyListeners(filterTextStr, false, STYLEEVENTTYPE.FILTER);
+            filterApplyButton.setEnabled(false);
         }
     }
 

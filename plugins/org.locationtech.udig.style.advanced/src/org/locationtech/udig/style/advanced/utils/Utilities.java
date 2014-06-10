@@ -228,6 +228,18 @@ public class Utilities {
     };
 
     /**
+     * A map of user friendly names to the SLD names of line 
+     * end styles.
+     */    
+    public static final BiMap<String, String> lineEndStyles = HashBiMap.create();
+    static {
+    	lineEndStyles.put("arrow - open", "shape://oarrow");
+    	lineEndStyles.put("arrow - closed", "shape://carrow");
+    	lineEndStyles.put("circle", "circle");
+    	lineEndStyles.put("square", "square");
+    }
+    
+    /**
      * The default {@link StyleFactory} to use.
      */
     public static StyleFactory sf = CommonFactoryFinder.getStyleFactory(GeoTools.getDefaultHints());
@@ -638,8 +650,8 @@ public class Utilities {
     public static Rule createDefaultPointRule() {
         Graphic graphic = sf.createDefaultGraphic();
         Mark circleMark = sf.getCircleMark();
-        circleMark.setFill(sf.createFill(ff.literal(Color.red)));
-        circleMark.setStroke(sf.createStroke(ff.literal(Color.BLACK), ff.literal(DEFAULT_WIDTH)));
+        circleMark.setFill(sf.createFill(ff.literal("#" + Integer.toHexString(Color.RED.getRGB() & 0xffffff))));
+        circleMark.setStroke(sf.createStroke(ff.literal("#" + Integer.toHexString(Color.BLACK.getRGB() & 0xffffff)), ff.literal(DEFAULT_WIDTH)));
         graphic.graphicalSymbols().clear();
         graphic.graphicalSymbols().add(circleMark);
         graphic.setSize(ff.literal(DEFAULT_SIZE));
@@ -675,8 +687,9 @@ public class Utilities {
      */
     public static Rule createDefaultPolygonRule() {
         PolygonSymbolizer polygonSymbolizer = sf.createPolygonSymbolizer();
-        polygonSymbolizer.setFill(sf.createFill(ff.literal(Color.red)));
-        polygonSymbolizer.setStroke(sf.createStroke(ff.literal(Color.BLACK), ff.literal(DEFAULT_WIDTH)));
+        polygonSymbolizer.setFill(sf.createFill(ff.literal("#" + Integer.toHexString(Color.RED.getRGB() & 0xffffff))));
+        polygonSymbolizer.getFill().setOpacity(ff.literal(0.50));
+        polygonSymbolizer.setStroke(sf.createStroke(ff.literal("#" + Integer.toHexString(Color.BLACK.getRGB() & 0xffffff)), ff.literal(DEFAULT_WIDTH)));
 
         Rule rule = sf.createRule();
         rule.setName("New rule");
@@ -707,7 +720,7 @@ public class Utilities {
      */
     public static Rule createDefaultLineRule() {
         LineSymbolizer lineSymbolizer = sf.createLineSymbolizer();
-        lineSymbolizer.setStroke(sf.createStroke(ff.literal(Color.BLACK), ff.literal(1)));
+        lineSymbolizer.setStroke(sf.createStroke(ff.literal("#" + Integer.toHexString(Color.BLACK.getRGB() & 0xffffff)), ff.literal(1)));
 
         Rule rule = sf.createRule();
         rule.setName("New rule");

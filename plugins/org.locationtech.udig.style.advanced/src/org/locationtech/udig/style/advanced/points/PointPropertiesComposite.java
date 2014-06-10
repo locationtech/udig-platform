@@ -55,7 +55,6 @@ import org.locationtech.udig.style.advanced.points.widgets.PointLabelsParameters
 import org.locationtech.udig.style.advanced.utils.Utilities;
 import static org.locationtech.udig.style.advanced.utils.Utilities.*;
 
-@SuppressWarnings("nls")
 public class PointPropertiesComposite extends SelectionAdapter implements ModifyListener, IStyleChangesListener {
 
     private static final String[] POINT_STYLE_TYPES = {Messages.PointPropertiesComposite_0, Messages.PointPropertiesComposite_1, Messages.PointPropertiesComposite_2};
@@ -312,7 +311,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         propertiesGroup.setLayout(new GridLayout(1, false));
         propertiesGroup.setText(Messages.PointPropertiesComposite_8);
 
-        TabFolder tabFolder = new TabFolder(propertiesGroup, SWT.BORDER);
+        TabFolder tabFolder = new TabFolder(propertiesGroup, SWT.NONE);
         tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         generalParametersCompositeSIMPLE = new PointGeneralParametersComposite(tabFolder, numericAttributesArrays);
@@ -433,7 +432,7 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         propertiesGroup.setLayout(new GridLayout(1, false));
         propertiesGroup.setText(Messages.PointPropertiesComposite_19);
 
-        TabFolder tabFolder = new TabFolder(propertiesGroup, SWT.BORDER);
+        TabFolder tabFolder = new TabFolder(propertiesGroup, SWT.NONE);
         tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 
         //TODO PointCharacterChooserComposite is loading in the ui this is holding up the dialog desplay

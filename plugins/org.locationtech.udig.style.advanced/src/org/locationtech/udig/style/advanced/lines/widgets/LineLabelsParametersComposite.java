@@ -14,7 +14,6 @@ import static org.locationtech.udig.style.advanced.utils.Utilities.ff;
 import java.awt.Color;
 
 import org.locationtech.udig.style.sld.SLD;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.SelectionEvent;
@@ -30,16 +29,15 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.expression.Expression;
-
 import org.locationtech.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
 import org.locationtech.udig.style.advanced.common.ParameterComposite;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
 import org.locationtech.udig.style.advanced.internal.Messages;
 import org.locationtech.udig.style.advanced.utils.FontEditor;
-import org.locationtech.udig.style.advanced.utils.StolenColorEditor;
 import org.locationtech.udig.style.advanced.utils.Utilities;
 import org.locationtech.udig.style.advanced.utils.VendorOptions;
+import org.locationtech.udig.ui.ColorEditor;
 
 /**
  * A composite that holds widgets for labels parameter setting.
@@ -56,7 +54,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
     private Spinner labelOpacitySpinner;
     private Combo labelOpacityAttributecombo;
     private Button haloColorButton;
-    private StolenColorEditor haloColorEditor;
+    private ColorEditor haloColorEditor;
     private Spinner haloRadiusSpinner;
     private Text initialGapText;
     private Text maxDisplacementText;
@@ -65,7 +63,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
     private Text spaceAroundText;
     private FontEditor fontEditor;
     private Button fontButton;
-    private StolenColorEditor fontColorEditor;
+    private ColorEditor fontColorEditor;
     private Button fontColorButton;
     private Text perpendicularOffsetText;
     private Text followLineText;
@@ -200,8 +198,9 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         fontColorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         fontColorLabel.setText(Messages.LineLabelsParametersComposite_7);
 
-        fontColorEditor = new StolenColorEditor(mainComposite, this);
+        fontColorEditor = new ColorEditor(mainComposite);
         fontColorButton = fontColorEditor.getButton();
+        fontColorButton.addSelectionListener(this);
         GridData fontColorButtonGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         fontColorButtonGD.horizontalSpan = 2;
         fontColorButton.setLayoutData(fontColorButtonGD);
@@ -218,8 +217,9 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         haloLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         haloLabel.setText(Messages.LineLabelsParametersComposite_8);
 
-        haloColorEditor = new StolenColorEditor(mainComposite, this);
+        haloColorEditor = new ColorEditor(mainComposite);
         haloColorButton = haloColorEditor.getButton();
+        haloColorButton.addSelectionListener(this);
         GridData haloColorButtonGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         haloColorButton.setLayoutData(haloColorButtonGD);
         tmpColor = null;;
@@ -387,6 +387,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         TextSymbolizerWrapper textSymbolizerWrapper = ruleWrapper.getTextSymbolizersWrapper();
         if (textSymbolizerWrapper == null) {
             labelEnableButton.setSelection(false);
+            checkEnablements();
             return;
         } else {
             labelEnableButton.setSelection(true);
@@ -517,6 +518,7 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         if (!selected) {
             setEnabled(false);
         } else {
+        	setEnabled(true);
             labelNameText.setEnabled(comboIsNone);
             comboIsNone = comboIsNone(labelOpacityAttributecombo);
             labelOpacitySpinner.setEnabled(comboIsNone);
@@ -551,19 +553,30 @@ public class LineLabelsParametersComposite extends ParameterComposite {
                 String fontColor = colorExpr.evaluate(null, String.class);
 
                 notifyListeners(new String[]{name, style, height, fontColor}, false, STYLEEVENTTYPE.LABELFONT);
+                fontColorEditor.setColor(color);
+                notifyListeners(fontColor, false, STYLEEVENTTYPE.LABELCOLOR);
             }
         } else if (source.equals(fontColorButton)) {
             Color color = fontColorEditor.getColor();
             Expression colorExpr = ff.literal(color);
             String fontColor = colorExpr.evaluate(null, String.class);
-
+            fontEditor.setColorValue(color);
             notifyListeners(fontColor, false, STYLEEVENTTYPE.LABELCOLOR);
         } else if (source.equals(haloColorButton)) {
             Color color = haloColorEditor.getColor();
             Expression colorExpr = ff.literal(color);
             String haloColor = colorExpr.evaluate(null, String.class);
-
             notifyListeners(haloColor, false, STYLEEVENTTYPE.LABELHALOCOLOR);
+
+            //keeps the halo radius the same;  
+            int radius = haloRadiusSpinner.getSelection();
+            if (radius == 0){
+            	//if we change the color chances are we want at least some halo
+            	//this also keeps the radius insync with the style symbolizer;
+            	radius = 1;
+            	haloRadiusSpinner.setSelection(radius);
+            }
+            notifyListeners(String.valueOf(radius), false, STYLEEVENTTYPE.LABELHALORADIUS);
         } else if (source.equals(haloRadiusSpinner)) {
             int radius = haloRadiusSpinner.getSelection();
 

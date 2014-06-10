@@ -12,16 +12,6 @@ package org.locationtech.udig.style.advanced.editorpages;
 import java.util.ArrayList;
 import java.util.MissingResourceException;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.StyleBlackboard;
-import org.locationtech.udig.style.internal.StyleLayer;
-import org.locationtech.udig.style.sld.SLDContent;
-import org.locationtech.udig.style.sld.SLDContentManager;
-import org.locationtech.udig.style.sld.editor.StyleEditorPage;
-import org.locationtech.udig.ui.ExceptionDetailsDialog;
-import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -33,6 +23,7 @@ import org.eclipse.swt.widgets.Label;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
+import org.geotools.feature.NameImpl;
 import org.geotools.renderer.i18n.ErrorKeys;
 import org.geotools.renderer.i18n.Errors;
 import org.geotools.styling.ColorMap;
@@ -44,14 +35,22 @@ import org.geotools.styling.SLD;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.StyleFactory;
-import org.geotools.styling.Symbolizer;
-import org.opengis.coverage.grid.GridCoverage;
-import org.opengis.filter.expression.Expression;
-
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.StyleBlackboard;
 import org.locationtech.udig.style.advanced.StylePlugin;
 import org.locationtech.udig.style.advanced.internal.Messages;
 import org.locationtech.udig.style.advanced.raster.CoverageColorEditor;
 import org.locationtech.udig.style.advanced.raster.CoverageRule;
+import org.locationtech.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.sld.SLDContent;
+import org.locationtech.udig.style.sld.SLDContentManager;
+import org.locationtech.udig.style.sld.editor.StyleEditorPage;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.graphics.SLDs;
+import org.opengis.coverage.grid.GridCoverage;
+import org.opengis.filter.expression.Expression;
+import org.opengis.style.SemanticType;
 
 /**
  * The style editor for single banded {@link GridCoverage2D coverages};
@@ -264,7 +263,7 @@ public class CoverageStyleEditorPage extends StyleEditorPage {
 
         RasterSymbolizer rasterSymbolizer = styleFactory.createRasterSymbolizer();
         Rule rule = styleFactory.createRule();
-        rule.setSymbolizers(new Symbolizer[]{rasterSymbolizer});
+        rule.symbolizers().add(rasterSymbolizer);
 
         Style style = styleBuilder.createStyle();
         SLDContentManager sldContentManager = new SLDContentManager(styleBuilder, style);
@@ -272,12 +271,13 @@ public class CoverageStyleEditorPage extends StyleEditorPage {
 
         // set the feature type name
         FeatureTypeStyle fts = sldContentManager.getDefaultFeatureTypeStyle();
-        fts.setFeatureTypeName(SLDs.GENERIC_FEATURE_TYPENAME);
+        fts.featureTypeNames().add(new NameImpl(SLDs.GENERIC_FEATURE_TYPENAME));
         fts.setName("simple"); //$NON-NLS-1$
-        fts.setSemanticTypeIdentifiers(new String[]{"generic:geometry", "simple"}); //$NON-NLS-1$ //$NON-NLS-2$
-
-        fts.addRule(rule);
-        style.addFeatureTypeStyle(fts);
+        fts.semanticTypeIdentifiers().add(SemanticType.valueOf("generic:geometry")); //$NON-NLS-1$
+        fts.semanticTypeIdentifiers().add(SemanticType.valueOf("simple")); //$NON-NLS-1$
+        fts.rules().add(rule);
+        style.featureTypeStyles().add(fts);
+        
         style.setName("simpleStyle"); //$NON-NLS-1$
 
         return style;

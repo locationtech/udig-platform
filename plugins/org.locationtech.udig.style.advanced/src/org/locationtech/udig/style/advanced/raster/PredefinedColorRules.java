@@ -32,7 +32,6 @@ import org.locationtech.udig.style.advanced.StylePlugin;
  * @author Andrea Antonello (www.hydrologis.com)
  *
  */
-@SuppressWarnings("nls")
 public class PredefinedColorRules {
 
     /**

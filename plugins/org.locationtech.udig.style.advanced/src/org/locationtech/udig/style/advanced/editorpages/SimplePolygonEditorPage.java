@@ -144,7 +144,7 @@ public class SimplePolygonEditorPage extends StyleEditorPage {
 
     private void applyStyle() {
        StyleLayer layer = getSelectedLayer();
-        
+        if (propertiesEditor == null) return;
         Style newStyle = propertiesEditor.getStyle();
         List<FeatureTypeStyle> featureTypeStyles = newStyle.featureTypeStyles();
         int ftsNum = featureTypeStyles.size();

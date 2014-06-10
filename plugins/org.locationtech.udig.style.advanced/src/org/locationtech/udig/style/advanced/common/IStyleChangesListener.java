@@ -49,6 +49,8 @@ public interface IStyleChangesListener {
         DASHOFFSET,
         LINECAP,
         LINEJOIN,
+        LINEEND,
+        LINESTART,
         // text
         LABELENABLE,
         LABEL,

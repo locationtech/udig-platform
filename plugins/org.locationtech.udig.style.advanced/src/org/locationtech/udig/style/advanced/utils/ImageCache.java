@@ -24,7 +24,6 @@ import org.locationtech.udig.style.advanced.StylePlugin;
  * 
  * @author Andrea Antonello (www.hydrologis.com)
  */
-@SuppressWarnings("nls")
 public class ImageCache {
 
     public static final String ADD = "icons/add.gif"; //$NON-NLS-1$

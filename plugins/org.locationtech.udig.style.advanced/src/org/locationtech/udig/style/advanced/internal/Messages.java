@@ -23,11 +23,15 @@ public class Messages extends NLS {
 	public static String BoderParametersComposite_1;
 	public static String BoderParametersComposite_10;
 	public static String BoderParametersComposite_11;
+	public static String BoderParametersComposite_12;
+	public static String BoderParametersComposite_13;
+	public static String BoderParametersComposite_14;
 	public static String BoderParametersComposite_2;
 	public static String BoderParametersComposite_3;
 	public static String BoderParametersComposite_4;
 	public static String BoderParametersComposite_5;
 	public static String BoderParametersComposite_6;
+	public static String BoderParametersComposite_7;
 	public static String BoderParametersComposite_8;
 	public static String BoderParametersComposite_9;
 	public static String CoverageColorEditor_10;

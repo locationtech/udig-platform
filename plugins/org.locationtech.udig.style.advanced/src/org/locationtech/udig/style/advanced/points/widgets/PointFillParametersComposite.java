@@ -20,16 +20,16 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
-import org.opengis.filter.expression.Expression;
-
-import org.locationtech.udig.style.advanced.common.ParameterComposite;
 import org.locationtech.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
+import org.locationtech.udig.style.advanced.common.ParameterComposite;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.PointSymbolizerWrapper;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import org.locationtech.udig.style.advanced.internal.Messages;
-import org.locationtech.udig.style.advanced.utils.StolenColorEditor;
+import org.locationtech.udig.ui.ColorEditor;
+import org.opengis.filter.expression.Expression;
 
 /**
  * A composite that holds widgets for fill parameter setting.
@@ -44,7 +44,7 @@ public class PointFillParametersComposite extends ParameterComposite {
 
     private Composite mainComposite;
     private Button fillEnableButton;
-    private StolenColorEditor fillColorEditor;
+    private ColorEditor fillColorEditor;
     private Button fillColorButton;
     private Spinner fillOpacitySpinner;
     private Combo fillOpacityAttributecombo;
@@ -129,9 +129,10 @@ public class PointFillParametersComposite extends ParameterComposite {
         } catch (Exception e) {
             tmpColor = Color.gray;
         }
-        fillColorEditor = new StolenColorEditor(mainComposite, this);
+        fillColorEditor = new ColorEditor(mainComposite);
         fillColorEditor.setColor(tmpColor);
         fillColorButton = fillColorEditor.getButton();
+        fillColorButton.addSelectionListener(this);
         GridData fillColorButtonGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         fillColorButtonGD.horizontalSpan = 2;
         fillColorButton.setLayoutData(fillColorButtonGD);
@@ -178,6 +179,15 @@ public class PointFillParametersComposite extends ParameterComposite {
     }
 
     private void checkEnablements() {
+    	for (Control kid : mainComposite.getChildren()){
+    		if (kid != fillEnableButton){
+    			kid.setEnabled(fillEnableButton.getSelection());
+    		}
+    	}
+    	if (!fillEnableButton.getSelection()){
+    		return;
+    	}
+    	
         boolean comboIsNone = comboIsNone(fillOpacityAttributecombo);
         fillOpacitySpinner.setEnabled(comboIsNone);
     }

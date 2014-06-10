@@ -143,9 +143,9 @@ public class SimpleLineEditorPage extends StyleEditorPage {
 
     private void applyStyle() {
         StyleLayer layer = getSelectedLayer();
+        if (linesEditor == null) return;
         
         Style newStyle = linesEditor.getStyle();
-        
         List<FeatureTypeStyle> featureTypeStyles = newStyle.featureTypeStyles();
         int ftsNum = featureTypeStyles.size();
         if (ftsNum < 1) {

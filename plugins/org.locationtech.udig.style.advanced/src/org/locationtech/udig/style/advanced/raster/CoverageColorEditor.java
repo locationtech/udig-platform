@@ -63,7 +63,6 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
     private Group alphaGroup = null;
     private Scale alphaScale = null;
     private ScrolledComposite scrolledRulesComposite = null;
-    private Layer layer;
     private Label alphaLabel = null;
     private Combo predefinedRulesCombo;
     private Button resetColormapButton;
@@ -452,7 +451,6 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
      * @param layer
      */
     public void setLayer( Layer layer ) {
-        this.layer = layer;
         IGeoResource resource = layer.getGeoResource();
         try {
             gridCoverage = resource.resolve(GridCoverage2D.class, new NullProgressMonitor());

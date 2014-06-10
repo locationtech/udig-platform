@@ -13,14 +13,8 @@ import static org.locationtech.udig.style.advanced.utils.Utilities.DEFAULT_MAXSC
 import static org.locationtech.udig.style.advanced.utils.Utilities.DEFAULT_MINSCALE;
 import static org.locationtech.udig.style.advanced.utils.Utilities.sf;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.locationtech.udig.style.sld.SLD;
 
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.PointSymbolizer;
@@ -29,12 +23,8 @@ import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
-import org.geotools.xml.Configuration;
-import org.geotools.xml.Encoder;
-import org.geotools.xml.Parser;
-import org.opengis.filter.Filter;
-
 import org.locationtech.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.style.sld.SLD;
 
 /**
  * A wrapper for the {@link Rule} object to ease gui use.

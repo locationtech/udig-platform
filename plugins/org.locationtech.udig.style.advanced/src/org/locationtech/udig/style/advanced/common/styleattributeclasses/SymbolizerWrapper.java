@@ -18,15 +18,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.locationtech.udig.catalog.URLUtils;
-
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.factory.GeoTools;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.ExternalGraphic;
 import org.geotools.styling.Graphic;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
+import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.PropertyName;
-
 import org.locationtech.udig.style.advanced.utils.Utilities;
 
 /**
@@ -86,7 +87,7 @@ public abstract class SymbolizerWrapper {
         return parent;
     }
 
-    protected Symbolizer getSymbolizer() {
+    public Symbolizer getSymbolizer() {
         return symbolizer;
     }
 
@@ -150,7 +151,6 @@ public abstract class SymbolizerWrapper {
      * @return the graphic's path.
      * @throws MalformedURLException
      */
-    @SuppressWarnings("nls")
     public String getExternalGraphicPath() throws MalformedURLException {
         return getExternalGraphicPath(externalGraphic);
     }
@@ -165,7 +165,6 @@ public abstract class SymbolizerWrapper {
      * @return the graphic's path.
      * @throws MalformedURLException
      */
-    @SuppressWarnings("nls")
     public String getStrokeExternalGraphicStrokePath() throws MalformedURLException {
         return getExternalGraphicPath(strokeExternalGraphicStroke);
     }
@@ -180,7 +179,6 @@ public abstract class SymbolizerWrapper {
      * @return the graphic's path.
      * @throws MalformedURLException
      */
-    @SuppressWarnings("nls")
     public String getFillExternalGraphicFillPath() throws MalformedURLException {
         return getExternalGraphicPath(fillExternalGraphicFill);
     }
@@ -283,7 +281,7 @@ public abstract class SymbolizerWrapper {
      * @param externalGraphicPath the path to set.
      * @throws MalformedURLException
      */
-    public void setFillExternalGraphicFillPath( String externalGraphicPath ) throws MalformedURLException {
+    public void setFillExternalGraphicFillPath( String externalGraphicPath, double size ) throws MalformedURLException {
         Graphic graphic = null;
         PolygonSymbolizerWrapper polygonSymbolizerWrapper = adapt(PolygonSymbolizerWrapper.class);
         if (polygonSymbolizerWrapper != null) {
@@ -306,9 +304,11 @@ public abstract class SymbolizerWrapper {
             setExternalGraphicPath(externalGraphicPath, fillExternalGraphicFill);
         }
         graphic.graphicalSymbols().add(fillExternalGraphicFill);
+        
+        FilterFactory ff = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
+        graphic.setSize(ff.literal(size));
     }
 
-    @SuppressWarnings("nls")
     private void setExternalGraphicPath( String externalGraphicPath, ExternalGraphic extGraphic ) throws MalformedURLException {
         URL url = null;
         File f = new File(externalGraphicPath);
@@ -329,6 +329,9 @@ public abstract class SymbolizerWrapper {
     }
 
     protected String expressionToString( Expression expression ) {
+    	if (expression == null){
+    		return null;
+    	}
         if (expression instanceof PropertyName) {
             PropertyName pName = (PropertyName) expression;
             return pName.getPropertyName();

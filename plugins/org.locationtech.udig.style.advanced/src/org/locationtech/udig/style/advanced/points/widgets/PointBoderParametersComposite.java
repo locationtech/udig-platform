@@ -20,16 +20,16 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
-import org.opengis.filter.expression.Expression;
-
-import org.locationtech.udig.style.advanced.common.ParameterComposite;
 import org.locationtech.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
+import org.locationtech.udig.style.advanced.common.ParameterComposite;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.PointSymbolizerWrapper;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import org.locationtech.udig.style.advanced.internal.Messages;
-import org.locationtech.udig.style.advanced.utils.StolenColorEditor;
+import org.locationtech.udig.ui.ColorEditor;
+import org.opengis.filter.expression.Expression;
 
 /**
  * A composite that holds widgets for border parameter setting.
@@ -46,7 +46,7 @@ public class PointBoderParametersComposite extends ParameterComposite {
     private Button borderEnableButton;
     private Spinner borderWidthSpinner;
     private Combo borderWidthAttributecombo;
-    private StolenColorEditor borderColorEditor;
+    private ColorEditor borderColorEditor;
     private Spinner borderOpacitySpinner;
     private Combo borderOpacityAttributecombo;
     private Button borderColorButton;
@@ -163,9 +163,10 @@ public class PointBoderParametersComposite extends ParameterComposite {
         } catch (Exception e) {
             tmpColor = Color.gray;
         }
-        borderColorEditor = new StolenColorEditor(mainComposite, this);
+        borderColorEditor = new ColorEditor(mainComposite);
         borderColorEditor.setColor(tmpColor);
         borderColorButton = borderColorEditor.getButton();
+        borderColorButton.addSelectionListener(this);
         GridData borderColorButtonSIMPLEGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         borderColorButtonSIMPLEGD.horizontalSpan = 2;
         borderColorButton.setLayoutData(borderColorButtonSIMPLEGD);
@@ -273,6 +274,14 @@ public class PointBoderParametersComposite extends ParameterComposite {
     }
 
     private void checkEnablements() {
+    	for (Control kid : mainComposite.getChildren()){
+    		if (kid != borderEnableButton){
+    			kid.setEnabled(borderEnableButton.getSelection());
+    		}
+    	}
+    	if (!borderEnableButton.getSelection()){
+    		return;
+    	}
         boolean comboIsNone = comboIsNone(borderWidthAttributecombo);
         borderWidthSpinner.setEnabled(comboIsNone);
         comboIsNone = comboIsNone(borderOpacityAttributecombo);
