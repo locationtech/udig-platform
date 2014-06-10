@@ -9,12 +9,9 @@
  */
 package org.locationtech.udig.style.advanced.points.widgets;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
-
-import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -37,16 +34,9 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.geotools.data.Query;
-import org.geotools.feature.FeatureCollection;
 import org.geotools.renderer.style.FontCache;
-import org.opengis.feature.Feature;
-import org.opengis.feature.FeatureVisitor;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-
-import org.locationtech.udig.style.advanced.common.ParameterComposite;
 import org.locationtech.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
+import org.locationtech.udig.style.advanced.common.ParameterComposite;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.PointSymbolizerWrapper;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import org.locationtech.udig.style.advanced.internal.Messages;
@@ -250,7 +240,7 @@ public class PointCharacterChooserComposite extends ParameterComposite implement
         } else if (source.equals(tableCursor)) {
             TableItem[] tableItem = new TableItem[]{tableCursor.getRow()};
             table.setSelection(tableItem);
-            int index = (table.getSelectionIndex() + 4) * COLUMNS + tableCursor.getColumn();
+            int index = (table.getSelectionIndex() + 4) * COLUMNS + tableCursor.getColumn() + 1;
             table.deselect(table.getSelectionIndex());
             if (index >= FIRST_CHAR) {
                 characterCode = Integer.toHexString(index);

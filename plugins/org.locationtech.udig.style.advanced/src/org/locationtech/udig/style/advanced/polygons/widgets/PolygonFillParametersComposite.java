@@ -24,19 +24,19 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
-import org.opengis.filter.expression.Expression;
-
-import org.locationtech.udig.style.advanced.common.ParameterComposite;
 import org.locationtech.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
+import org.locationtech.udig.style.advanced.common.ParameterComposite;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.PolygonSymbolizerWrapper;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import org.locationtech.udig.style.advanced.internal.Messages;
-import org.locationtech.udig.style.advanced.utils.StolenColorEditor;
 import org.locationtech.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.ui.ColorEditor;
+import org.opengis.filter.expression.Expression;
 
 /**
  * A composite that holds widgets for polygon fill parameter setting.
@@ -51,19 +51,25 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
 
     private Composite mainComposite;
     private Button fillEnableButton;
-    private StolenColorEditor fillColorEditor;
+    private ColorEditor fillColorEditor;
     private Button fillColorButton;
     private Spinner fillOpacitySpinner;
     private Combo fillOpacityAttributecombo;
     private Combo wkmarkNameCombo;
     private Spinner wkmWidthSpinner;
-    private StolenColorEditor wkmColorEditor;
+    private ColorEditor wkmColorEditor;
     private Text graphicsPathText;
+    private Button graphicsPathButton;
     private Button wkmColorButton;
     private Spinner wkmSizeSpinner;
+    private Spinner graphicssizeSpinner;
     private final String[] stringAttributesArrays;
     private Combo fillColorAttributecombo;
 
+    private Button colorLabel;
+    private Button graphicsFillLabel;
+    private Button wkmLabel; 
+    
     public PolygonFillParametersComposite( Composite parent, String[] numericAttributesArrays, String[] stringAttributesArrays ) {
         this.parent = parent;
         this.numericAttributesArrays = numericAttributesArrays;
@@ -80,61 +86,47 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
      * @param ruleWrapper the {@link RuleWrapper}.
      */
     public void init( RuleWrapper ruleWrapper ) {
-        PolygonSymbolizerWrapper polygonSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
-                PolygonSymbolizerWrapper.class);
-
         mainComposite = new Composite(parent, SWT.NONE);
         mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         mainComposite.setLayout(new GridLayout(3, true));
-
-        boolean widgetEnabled = polygonSymbolizerWrapper.hasFill();
 
         fillEnableButton = new Button(mainComposite, SWT.CHECK);
         GridData fillEnableButtonGD = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
         fillEnableButtonGD.horizontalSpan = 3;
         fillEnableButton.setLayoutData(fillEnableButtonGD);
         fillEnableButton.setText(Messages.PolygonFillParametersComposite_0);
-        fillEnableButton.setSelection(widgetEnabled);
         fillEnableButton.addSelectionListener(this);
 
         /*
          * radio panel for fill choice
          */
         // fill color
-        Label colorLabel = new Label(mainComposite, SWT.RADIO);
+        colorLabel = new Button(mainComposite, SWT.RADIO);
         colorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         colorLabel.setText(Messages.PolygonFillParametersComposite_1);
-
-        String color = polygonSymbolizerWrapper.getFillColor();
-        Color tmpColor = null;
-        try {
-            tmpColor = Color.decode(color);
-        } catch (Exception e) {
-            tmpColor = Color.gray;
-        }
-        fillColorEditor = new StolenColorEditor(mainComposite, this);
-        fillColorEditor.setColor(tmpColor);
+        colorLabel.addSelectionListener(this);
+        
+        fillColorEditor = new ColorEditor(mainComposite);
+        
         fillColorButton = fillColorEditor.getButton();
         GridData fillColorButtonGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         fillColorButton.setLayoutData(fillColorButtonGD);
-
+        fillColorButton.addSelectionListener(this);
+        
         fillColorAttributecombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         fillColorAttributecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         fillColorAttributecombo.setItems(stringAttributesArrays);
         fillColorAttributecombo.addSelectionListener(this);
         fillColorAttributecombo.select(0);
-        if (tmpColor == null) {
-            int index = getAttributeIndex(color, stringAttributesArrays);
-            if (index != -1) {
-                fillColorAttributecombo.select(index);
-            }
-        }
+
+       
 
         // graphics fill
-        Label graphicsFillLabel = new Label(mainComposite, SWT.RADIO);
+        graphicsFillLabel = new Button(mainComposite, SWT.RADIO);
         graphicsFillLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         graphicsFillLabel.setText(Messages.PolygonFillParametersComposite_2);
-
+        graphicsFillLabel.addSelectionListener(this);
+        
         Composite pathComposite = new Composite(mainComposite, SWT.NONE);
         GridData pathCompositeGD = new GridData(SWT.FILL, SWT.FILL, true, false);
         pathCompositeGD.horizontalSpan = 2;
@@ -145,16 +137,13 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         pathComposite.setLayout(pathLayout);
         graphicsPathText = new Text(pathComposite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         graphicsPathText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        try {
-            graphicsPathText.setText(polygonSymbolizerWrapper.getFillExternalGraphicFillPath());
-        } catch (Exception e) {
-            graphicsPathText.setText(""); //$NON-NLS-1$
-        }
+        graphicsPathText.setText(""); //$NON-NLS-1$
+        
         graphicsPathText.addModifyListener(this);
-        Button pathButton = new Button(pathComposite, SWT.PUSH);
-        pathButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        pathButton.setText("..."); //$NON-NLS-1$
-        pathButton.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter(){
+        graphicsPathButton = new Button(pathComposite, SWT.PUSH);
+        graphicsPathButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        graphicsPathButton.setText("..."); //$NON-NLS-1$
+        graphicsPathButton.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter(){
             public void widgetSelected( org.eclipse.swt.events.SelectionEvent e ) {
                 FileDialog fileDialog = new FileDialog(graphicsPathText.getShell(), SWT.OPEN);
                 String path = fileDialog.open();
@@ -165,24 +154,32 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
                 }
             }
         });
+        
+        new Label(mainComposite, SWT.NONE);
+        // mark size
+        graphicssizeSpinner = new Spinner(mainComposite, SWT.BORDER);
+        graphicssizeSpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        graphicssizeSpinner.setMaximum(1000);
+        graphicssizeSpinner.setMinimum(0);
+        graphicssizeSpinner.setIncrement(1);
+        graphicssizeSpinner.setToolTipText(Messages.PolygonFillParametersComposite_5);
+        graphicssizeSpinner.setDigits(1);
+        graphicssizeSpinner.addSelectionListener(this);
+        new Label(mainComposite, SWT.NONE);
+        
 
         // well known marks
-        Label wkmLabel = new Label(mainComposite, SWT.RADIO);
+        wkmLabel = new Button(mainComposite, SWT.RADIO);
         wkmLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         wkmLabel.setText(Messages.PolygonFillParametersComposite_3);
-
+        wkmLabel.addSelectionListener(this);
+        
         wkmarkNameCombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         GridData wkmarkNameComboGD = new GridData(SWT.FILL, SWT.FILL, false, false);
         wkmarkNameComboGD.horizontalSpan = 2;
         wkmarkNameCombo.setLayoutData(wkmarkNameComboGD);
         wkmarkNameCombo.setItems(Utilities.getAllMarksArray());
         wkmarkNameCombo.addSelectionListener(this);
-
-        String wkMarkNameFill = polygonSymbolizerWrapper.getWkMarkNameFill();
-        int attributeIndex = getAttributeIndex(wkMarkNameFill, Utilities.getAllMarksArray());
-        if (attributeIndex != -1) {
-            wkmarkNameCombo.select(attributeIndex);
-        }
 
         new Label(mainComposite, SWT.NONE);
 
@@ -202,14 +199,6 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         wkmWidthSpinner.setMinimum(0);
         wkmWidthSpinner.setIncrement(1);
         wkmWidthSpinner.setToolTipText(Messages.PolygonFillParametersComposite_4);
-
-        String wkMarkWidth = polygonSymbolizerWrapper.getWkMarkWidthFill();
-        Double tmpWidth = isDouble(wkMarkWidth);
-        int tmpWidthInt = 1;
-        if (tmpWidth != null) {
-            tmpWidthInt = tmpWidth.intValue();
-        }
-        wkmWidthSpinner.setSelection(tmpWidthInt * 10);
         wkmWidthSpinner.setDigits(1);
         wkmWidthSpinner.addSelectionListener(this);
 
@@ -220,28 +209,12 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         wkmSizeSpinner.setMinimum(0);
         wkmSizeSpinner.setIncrement(1);
         wkmSizeSpinner.setToolTipText(Messages.PolygonFillParametersComposite_5);
-
-        String wkMarkSize = polygonSymbolizerWrapper.getWkMarkSizeFill();
-        Double tmpSize = isDouble(wkMarkSize);
-        int tmpSizeInt = 5;
-        if (tmpSize != null) {
-            tmpSizeInt = tmpSize.intValue();
-        }
-        wkmSizeSpinner.setSelection(tmpSizeInt * 10);
         wkmSizeSpinner.setDigits(1);
         wkmSizeSpinner.addSelectionListener(this);
 
-        // mark color
-        String wkMarkColor = polygonSymbolizerWrapper.getWkMarkColorFill();
-        Color tmpWkmColor;
-        try {
-            tmpWkmColor = Color.decode(wkMarkColor);
-        } catch (Exception e) {
-            tmpWkmColor = Color.gray;
-        }
-        wkmColorEditor = new StolenColorEditor(wkmarkComposite, this);
-        wkmColorEditor.setColor(tmpWkmColor);
+        wkmColorEditor = new ColorEditor(wkmarkComposite);
         wkmColorButton = wkmColorEditor.getButton();
+        wkmColorButton.addSelectionListener(this);
         GridData wkmColorButtonGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         wkmColorButton.setLayoutData(wkmColorButtonGD);
 
@@ -264,25 +237,12 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         fillOpacitySpinner.setMinimum(0);
         fillOpacitySpinner.setIncrement(10);
 
-        String opacity = polygonSymbolizerWrapper.getFillOpacity();
-        Double tmpOpacity = isDouble(opacity);
-        int tmp = 100;
-        if (tmpOpacity != null) {
-            tmp = (int) (tmpOpacity.doubleValue() * 100);
-        }
-        fillOpacitySpinner.setSelection(tmp);
         fillOpacitySpinner.addSelectionListener(this);
         fillOpacityAttributecombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         fillOpacityAttributecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         fillOpacityAttributecombo.setItems(numericAttributesArrays);
         fillOpacityAttributecombo.addSelectionListener(this);
         fillOpacityAttributecombo.select(0);
-        if (tmpOpacity == null) {
-            int index = getAttributeIndex(opacity, numericAttributesArrays);
-            if (index != -1) {
-                fillOpacityAttributecombo.select(index);
-            }
-        }
 
         checkEnablements();
     }
@@ -295,9 +255,14 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
     public void update( RuleWrapper ruleWrapper ) {
         PolygonSymbolizerWrapper polygonSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
                 PolygonSymbolizerWrapper.class);
+      
         boolean widgetEnabled = polygonSymbolizerWrapper.hasFill();
         fillEnableButton.setSelection(widgetEnabled);
 
+        colorLabel.setSelection(true);
+        wkmLabel.setSelection(false);
+        graphicsFillLabel.setSelection(false);
+        
         String color = polygonSymbolizerWrapper.getFillColor();
         Color tmpColor = null;
         try {
@@ -306,17 +271,44 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
             // ignore and try for field
         }
         if (tmpColor != null) {
+        	colorLabel.setSelection(true);
             fillColorEditor.setColor(tmpColor);
         } else {
             int index = getAttributeIndex(color, stringAttributesArrays);
             if (index != -1) {
+            	colorLabel.setSelection(true);
                 fillColorAttributecombo.select(index);
             }
         }
 
         // graphics path
         try {
-            graphicsPathText.setText(polygonSymbolizerWrapper.getFillExternalGraphicFillPath());
+        	String text = polygonSymbolizerWrapper.getFillExternalGraphicFillPath();
+        	
+        	Double tmpsize = null;
+        	if (polygonSymbolizerWrapper.getFillGraphicFill() != null &&
+        			polygonSymbolizerWrapper.getFillGraphicFill().getSize() != null){
+        		try{
+        			tmpsize = (Double) polygonSymbolizerWrapper.getFillGraphicFill().getSize().evaluate(null, Double.class);
+        		}catch (Exception ex){
+        			ex.printStackTrace();
+        		}
+        		
+        	}
+        	
+        	if (text != null && text.length() > 0){
+        		graphicsPathText.setText(text);
+        		graphicsFillLabel.setSelection(true);
+        		colorLabel.setSelection(false);
+        		wkmLabel.setSelection(false);
+        	}
+        	int size = 16;
+            if (tmpsize != null) {
+            	 size = tmpsize.intValue();
+            }
+            graphicssizeSpinner.setSelection(size * 10);
+             
+             
         } catch (MalformedURLException e1) {
             graphicsPathText.setText(""); //$NON-NLS-1$
         }
@@ -326,6 +318,9 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         int attributeIndex = getAttributeIndex(mName, Utilities.getAllMarksArray());
         if (attributeIndex != -1) {
             wkmarkNameCombo.select(attributeIndex);
+            wkmLabel.setSelection(true);
+            colorLabel.setSelection(false);
+            graphicsFillLabel.setSelection(false);
         } else {
             wkmarkNameCombo.select(0);
         }
@@ -338,7 +333,7 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         wkmWidthSpinner.setSelection(tmpWkm * 10);
 
         Double tmpWkmSize = isDouble(polygonSymbolizerWrapper.getWkMarkSizeFill());
-        int tmpWkmSizeInt = 3;
+        int tmpWkmSizeInt = 10;
         if (tmpWkmSize != null) {
             tmpWkmSizeInt = tmpWkmSize.intValue();
         }
@@ -372,10 +367,54 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
     }
 
     private void checkEnablements() {
+    	boolean enabled = fillEnableButton.getSelection();
+    	for (Control c : mainComposite.getChildren()){
+         	if (c != fillEnableButton){
+         		c.setEnabled(enabled);
+         	}
+         }
+    	if (!fillEnableButton.getSelection()){
+    		 return;    		
+    	}
+    	
+        if (colorLabel.getSelection()){
+        	fillColorEditor.setEnabled(comboIsNone(fillColorAttributecombo));
+        	fillColorAttributecombo.setEnabled(true);
+        	graphicsPathText.setEnabled(false);
+        	graphicsPathButton.setEnabled(false);
+        	graphicssizeSpinner.setEnabled(false);
+         	wkmarkNameCombo.setEnabled(false);
+        	wkmColorButton.setEnabled(false);
+        	wkmSizeSpinner.setEnabled(false);
+        	wkmWidthSpinner.setEnabled(false);
+        	
+        	boolean comboIsNone = comboIsNone(fillColorAttributecombo);
+        	fillColorEditor.setEnabled(comboIsNone);
+        	
+        }else if (graphicsFillLabel.getSelection()){
+        	fillColorEditor.setEnabled(false);
+        	fillColorAttributecombo.setEnabled(false);
+        	graphicsPathText.setEnabled(true);
+        	graphicsPathButton.setEnabled(true);
+        	graphicssizeSpinner.setEnabled(true);
+        	wkmarkNameCombo.setEnabled(false);
+        	wkmColorButton.setEnabled(false);
+        	wkmSizeSpinner.setEnabled(false);
+        	wkmWidthSpinner.setEnabled(false);
+        }else if (wkmLabel.getSelection()){
+        	fillColorEditor.setEnabled(false);
+        	fillColorAttributecombo.setEnabled(false);
+        	graphicsPathText.setEnabled(false);
+        	graphicsPathButton.setEnabled(false);
+        	graphicssizeSpinner.setEnabled(false);
+        	wkmarkNameCombo.setEnabled(true);
+        	wkmColorButton.setEnabled(true);
+        	wkmSizeSpinner.setEnabled(true);
+        	wkmWidthSpinner.setEnabled(true);
+        }
+                	
         boolean comboIsNone = comboIsNone(fillOpacityAttributecombo);
         fillOpacitySpinner.setEnabled(comboIsNone);
-        comboIsNone = comboIsNone(fillColorAttributecombo);
-        fillColorEditor.setEnabled(comboIsNone);
     }
 
     public void widgetSelected( SelectionEvent e ) {
@@ -383,7 +422,24 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
         if (source.equals(fillEnableButton)) {
             boolean selected = fillEnableButton.getSelection();
             notifyListeners(String.valueOf(selected), false, STYLEEVENTTYPE.FILLENABLE);
-        } else if (source.equals(fillColorButton) || source.equals(fillColorAttributecombo)) {
+            
+            //set enabled state of children
+            for (Control c : mainComposite.getChildren()){
+            	if (c != fillEnableButton){
+            		c.setEnabled(selected);
+            	}
+            }
+            if (colorLabel.getSelection()){
+
+            	colorLabel.setSelection(true);
+            }else if (wkmLabel.getSelection()){
+            	wkmLabel.setSelection(true);
+            }else if (graphicsFillLabel.getSelection()){
+            	graphicsFillLabel.setSelection(true);
+            }
+            checkEnablements();
+            
+        } else if (source.equals(fillColorButton) || source.equals(fillColorAttributecombo) || ( source.equals(colorLabel) && colorLabel.getSelection() ) ) {
             boolean comboIsNone = comboIsNone(fillColorAttributecombo);
             if (comboIsNone) {
                 Color color = fillColorEditor.getColor();
@@ -398,7 +454,7 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
                 }
                 notifyListeners(field, true, STYLEEVENTTYPE.FILLCOLOR);
             }
-        } else if (source.equals(fillOpacitySpinner) || source.equals(fillOpacityAttributecombo)) {
+        } else if (source.equals(fillOpacitySpinner) || source.equals(fillOpacityAttributecombo) ) {
             boolean comboIsNone = comboIsNone(fillOpacityAttributecombo);
             if (comboIsNone) {
                 int opacity = fillOpacitySpinner.getSelection();
@@ -414,12 +470,33 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
                 notifyListeners(field, true, STYLEEVENTTYPE.FILLOPACITY);
             }
         } else if (source.equals(wkmarkNameCombo) || source.equals(wkmColorButton) || source.equals(wkmWidthSpinner)
-                || source.equals(wkmSizeSpinner)) {
+                || source.equals(wkmSizeSpinner) || (source.equals(wkmLabel) && wkmLabel.getSelection())) {
             doWkmGraphics();
+        }else if ((source.equals(graphicsFillLabel) && graphicsFillLabel.getSelection()) || source.equals(graphicssizeSpinner)){
+        	String text = graphicsPathText.getText();
+            File graphicsFile = new File(text);
+            try {
+            	if (graphicsFile.exists() || text.toLowerCase().startsWith("http")) { //$NON-NLS-1$
+            		text = graphicsFile.toURI().toURL().toExternalForm();
+            	}
+            }catch (Exception ex){
+            	ex.printStackTrace();
+            }
+            notifyListeners(new String[]{text, getGraphicsSize()}, false, STYLEEVENTTYPE.GRAPHICSPATHFILL);
         }
+        	
 
         checkEnablements();
     }
+    
+    private String getGraphicsSize(){
+        int selection = graphicssizeSpinner.getSelection();
+        int digits = graphicssizeSpinner.getDigits();
+        double value = selection / Math.pow(10, digits);
+        String size = String.valueOf(value);
+        return size;
+    }
+    
     public void modifyText( ModifyEvent e ) {
         Object source = e.getSource();
         if (source.equals(graphicsPathText)) {
@@ -428,7 +505,7 @@ public class PolygonFillParametersComposite extends ParameterComposite implement
                 File graphicsFile = new File(text);
                 if (graphicsFile.exists() || text.toLowerCase().startsWith("http")) { //$NON-NLS-1$
                     text = graphicsFile.toURI().toURL().toExternalForm();
-                    notifyListeners(text, false, STYLEEVENTTYPE.GRAPHICSPATHFILL);
+                    notifyListeners(new String[]{text, getGraphicsSize()}  , false, STYLEEVENTTYPE.GRAPHICSPATHFILL);
                 }
             } catch (MalformedURLException e1) {
                 e1.printStackTrace();

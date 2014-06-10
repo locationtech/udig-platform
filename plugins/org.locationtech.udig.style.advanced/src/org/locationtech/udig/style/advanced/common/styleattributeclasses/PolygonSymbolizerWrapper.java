@@ -27,10 +27,9 @@ import org.geotools.styling.Mark;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.Symbolizer;
+import org.locationtech.udig.style.advanced.utils.Utilities;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.GraphicalSymbol;
-
-import org.locationtech.udig.style.advanced.utils.Utilities;
 
 /**
  * A wrapper for a {@link PolygonSymbolizer} to ease interaction with gui.
@@ -180,6 +179,7 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
     public Graphic getFillGraphicFill() {
         return fillGraphicFill;
     }
+    
 
     public void setFillGraphicFill( Graphic fillGraphicFill ) {
         this.fillGraphicFill = fillGraphicFill;
@@ -230,6 +230,7 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
         this.fillColor = fillColor;
         checkFillExists();
         fill.setGraphicFill(null);
+        fillGraphicFill = null;
         if (isProperty) {
             fill.setColor(ff.property(fillColor));
         } else {
@@ -252,6 +253,19 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
         }
     }
 
+    public void clearGraphics(){
+    	this.wkMarkColorFill = null;
+    	this.wkMarkNameFill = null;
+    	this.wkMarkSizeFill = null;
+    	this.wkMarkWidthFill = null;
+    	
+    	if (fillGraphicFill != null){
+    		fillGraphicFill.graphicalSymbols().clear();
+    	}
+//    	fillGraphicFill = null;
+    	mark= null;
+    }
+    
     public void setWkMarkNameFill( String wkMarkNameFill ) {
         this.wkMarkNameFill = wkMarkNameFill;
         checkMarkExists();
@@ -283,7 +297,7 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
         checkFillExists();
         fillGraphicFill.setSize(ff.literal(wkMarkSizeFill));
     }
-
+    
     // getters
     public boolean hasFill() {
         return hasFill;

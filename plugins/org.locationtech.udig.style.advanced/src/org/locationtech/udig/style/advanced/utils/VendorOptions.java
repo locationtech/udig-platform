@@ -16,7 +16,6 @@ import org.locationtech.udig.style.advanced.internal.Messages;
  * 
  * @author Andrea Antonello (www.hydrologis.com)
  */
-@SuppressWarnings("nls")
 public enum VendorOptions {
     VENDOROPTION_MAXDISPLACEMENT("maxDisplacement", Messages.VendorOptions_1), // //$NON-NLS-1$
     VENDOROPTION_AUTOWRAP("autoWrap", Messages.VendorOptions_3), // //$NON-NLS-1$

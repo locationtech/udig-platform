@@ -19,7 +19,6 @@ import org.locationtech.udig.style.sld.SLDContent;
 import org.locationtech.udig.style.sld.editor.StyleEditorDialog;
 import org.locationtech.udig.style.sld.editor.StyleEditorPage;
 import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -29,11 +28,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.geotools.data.FeatureSource;
 import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.PointSymbolizer;
+import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.Style;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.visitor.DuplicatingStyleVisitor;
-
 import org.locationtech.udig.style.advanced.internal.Messages;
 import org.locationtech.udig.style.advanced.points.PointPropertiesEditor;
 import org.locationtech.udig.style.advanced.utils.Utilities;
@@ -99,12 +99,18 @@ public class SimplePointEditorPage extends StyleEditorPage {
 
     private boolean isPointStyle( Style style ) {
         Symbolizer[] symbolizers = SLDs.symbolizers(style);
+        boolean pnt = false;
+        boolean other = false;
         for( Symbolizer symbolizer : symbolizers ) {
             if (symbolizer instanceof PointSymbolizer) {
-                return true;
+                pnt = true;
+            }else if (symbolizer instanceof PolygonSymbolizer || 
+            		symbolizer instanceof LineSymbolizer){
+            	//we don't want to use this style in these cases
+            	other = true;
             }
         }
-        return false;
+        return pnt && !other;	//can only style if only point symbolizer
     }
 
     @Override
@@ -144,7 +150,7 @@ public class SimplePointEditorPage extends StyleEditorPage {
 
     private void applyStyle() {
         StyleLayer layer = getSelectedLayer();
-
+        if (propertiesEditor == null) return;
         Style newStyle = propertiesEditor.getStyle();
         List<FeatureTypeStyle> featureTypeStyles = newStyle.featureTypeStyles();
         int ftsNum = featureTypeStyles.size();

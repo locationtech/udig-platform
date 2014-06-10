@@ -13,11 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.locationtech.udig.catalog.ID;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.style.internal.StyleLayer;
-import org.locationtech.udig.style.sld.SLD;
-
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -45,7 +40,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Style;
-
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.style.advanced.common.GroupRulesTreeContentProvider;
 import org.locationtech.udig.style.advanced.common.GroupRulesTreeLabelProvider;
 import org.locationtech.udig.style.advanced.common.PropertiesEditor;
@@ -56,13 +52,14 @@ import org.locationtech.udig.style.advanced.common.styleattributeclasses.StyleWr
 import org.locationtech.udig.style.advanced.internal.Messages;
 import org.locationtech.udig.style.advanced.utils.ImageCache;
 import org.locationtech.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.sld.SLD;
 
 /**
  * An editor for point styles.
  * 
  * @author Andrea Antonello (www.hydrologis.com)
  */
-@SuppressWarnings("nls")
 public class PointPropertiesEditor extends PropertiesEditor {
 
     private Composite propertiesComposite;
@@ -275,6 +272,8 @@ public class PointPropertiesEditor extends PropertiesEditor {
         addButton.setToolTipText(Messages.PointPropertiesEditor_6);
         addButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
+            	Object[] parent = groupRulesTreeViewer.getExpandedElements();
+            	
                 FeatureTypeStyleWrapper selectedFtsw = getSelectedFtsw();
                 if (selectedFtsw == null) {
                     RuleWrapper selectedRule = getSelectedRule();
@@ -294,6 +293,10 @@ public class PointPropertiesEditor extends PropertiesEditor {
 
                 reloadGroupsAndRules();
                 refreshPreviewCanvasOnStyle();
+                
+            	//maintain expanded states                
+                groupRulesTreeViewer.setExpandedElements(parent);
+                
                 setRuleToSelected(addedRuleWrapper);
             }
         });
@@ -304,7 +307,9 @@ public class PointPropertiesEditor extends PropertiesEditor {
         deleteButton.setToolTipText(Messages.PointPropertiesEditor_10);
         deleteButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
-                FeatureTypeStyleWrapper selectedFtsw = getSelectedFtsw();
+            	Object[] parent = groupRulesTreeViewer.getExpandedElements();
+
+            	FeatureTypeStyleWrapper selectedFtsw = getSelectedFtsw();
                 RuleWrapper selectedRule = getSelectedRule();
                 if (selectedFtsw != null) {
                     styleWrapper.removeFeatureTypeStyle(selectedFtsw);
@@ -317,6 +322,8 @@ public class PointPropertiesEditor extends PropertiesEditor {
 
                 reloadGroupsAndRules();
                 refreshPreviewCanvasOnStyle();
+            	//maintain expanded states                
+                groupRulesTreeViewer.setExpandedElements(parent);
             }
         });
 

@@ -27,20 +27,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.locationtech.udig.ui.graphics.AWTGraphics;
-import org.locationtech.udig.ui.graphics.NonAdvancedSWTGraphics;
-import org.locationtech.udig.ui.graphics.SLDs;
-import org.locationtech.udig.ui.graphics.SWTGraphics;
-import org.locationtech.udig.ui.graphics.ViewportGraphics;
-
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.geotools.data.DataUtilities;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.geotools.feature.IllegalAttributeException;
 import org.geotools.feature.SchemaException;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.geometry.jts.JTS;
@@ -63,10 +54,15 @@ import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.util.NumberRange;
+import org.locationtech.udig.ui.graphics.AWTGraphics;
+import org.locationtech.udig.ui.graphics.NonAdvancedSWTGraphics;
+import org.locationtech.udig.ui.graphics.SLDs;
+import org.locationtech.udig.ui.graphics.SWTGraphics;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
+import org.opengis.feature.IllegalAttributeException;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
-import org.opengis.filter.expression.Expression;
 import org.opengis.geometry.BoundingBox;
 import org.opengis.referencing.operation.MathTransform;
 
@@ -80,8 +76,6 @@ import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
-
-import org.locationtech.udig.style.advanced.common.styleattributeclasses.PointSymbolizerWrapper;
 
 /**
  * Drawing utility package - make your own previews and glyphs!
@@ -209,12 +203,9 @@ public final class Drawing {
 
     Symbolizer[] getSymbolizers( Style style ) {
         List<Symbolizer> symbs = new ArrayList<Symbolizer>();
-        FeatureTypeStyle[] styles = style.getFeatureTypeStyles();
-        for( int i = 0; i < styles.length; i++ ) {
-            FeatureTypeStyle fstyle = styles[i];
-            Rule[] rules = fstyle.getRules();
-            for( int j = 0; j < rules.length; j++ ) {
-                Rule rule = rules[j];
+        List<FeatureTypeStyle> styles = style.featureTypeStyles();
+        for (FeatureTypeStyle fstyle: styles){
+            for (Rule rule : fstyle.rules()){
                 symbs.addAll(Arrays.asList(rule.getSymbolizers()));
             }
         }
@@ -356,8 +347,6 @@ public final class Drawing {
         if (symb instanceof PointSymbolizer) {
             PointSymbolizer pointSymbolizer = (PointSymbolizer) symb;
 
-            AffineTransform transform = g.getTransform();
-
             // offset
             Point2D offset = Utilities.getOffset(pointSymbolizer);
             if (offset != null) {
@@ -386,11 +375,10 @@ public final class Drawing {
             SLDStyleFactory styleFactory = new SLDStyleFactory();
             Style2D tmp = null;
             try {
-                tmp = styleFactory.createStyle(feature, pointSymbolizer, new NumberRange(Double.class, Double.NEGATIVE_INFINITY,
+                tmp = styleFactory.createStyle(feature, pointSymbolizer, new NumberRange<Double>(Double.class, Double.NEGATIVE_INFINITY,
                         Double.POSITIVE_INFINITY));
             } catch (Exception e) {
-                PointSymbolizerWrapper tmpPs = new PointSymbolizerWrapper(pointSymbolizer, null);
-                tmp = styleFactory.createStyle(feature, pointSymbolizer, new NumberRange(Double.class, Double.NEGATIVE_INFINITY,
+                tmp = styleFactory.createStyle(feature, pointSymbolizer, new NumberRange<Double>(Double.class, Double.NEGATIVE_INFINITY,
                         Double.POSITIVE_INFINITY));
             }
             if (tmp instanceof MarkStyle2D) {
@@ -429,7 +417,8 @@ public final class Drawing {
             }
         }
     }
-    public static Symbolizer[] getSymbolizers( SimpleFeature feature ) {
+    @SuppressWarnings("unchecked")
+	public static Symbolizer[] getSymbolizers( SimpleFeature feature ) {
         return getSymbolizers((Class< ? extends Geometry>) feature.getDefaultGeometry().getClass(), Color.RED);
     }
 

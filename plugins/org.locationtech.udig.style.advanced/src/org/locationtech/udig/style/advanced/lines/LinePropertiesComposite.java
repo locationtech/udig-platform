@@ -47,7 +47,6 @@ import org.locationtech.udig.style.advanced.utils.Utilities;
  * 
  * @author Andrea Antonello (www.hydrologis.com)
  */
-@SuppressWarnings("nls")
 public class LinePropertiesComposite implements ModifyListener, IStyleChangesListener {
 
     private RuleWrapper ruleWrapper;
@@ -60,6 +59,7 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
     private String[] numericAttributesArrays;
     private String[] allAttributesArrays;
     private String[] stringattributesArrays;
+    private String geometryProperty;
 
     private Composite parentComposite;
 
@@ -109,6 +109,8 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
         allAttributesArrays = allAttributeNames.toArray(new String[0]);
         List<String> stringAttributeNames = linePropertiesEditor.getStringAttributeNames();
         stringattributesArrays = stringAttributeNames.toArray(new String[0]);
+        
+        geometryProperty = linePropertiesEditor.getGeometryPropertyName().getLocalPart();
 
         parentComposite = new Composite(parent, SWT.NONE);
         parentComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -147,10 +149,10 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
         propertiesGroup.setLayout(new GridLayout(1, false));
         propertiesGroup.setText(Messages.LinePropertiesComposite_1);
 
-        TabFolder tabFolder = new TabFolder(propertiesGroup, SWT.BORDER);
+        TabFolder tabFolder = new TabFolder(propertiesGroup, SWT.NONE);
         tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-        generalParametersComposite = new LineGeneralParametersComposite(tabFolder, numericAttributesArrays);
+        generalParametersComposite = new LineGeneralParametersComposite(tabFolder);
         generalParametersComposite.init(ruleWrapper);
         generalParametersComposite.addListener(this);
         Composite generalParametersInternalComposite = generalParametersComposite.getComposite();
@@ -160,7 +162,7 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
         tabItem1.setControl(generalParametersInternalComposite);
 
         // BORDER GROUP
-        borderParametersComposite = new BoderParametersComposite(tabFolder, numericAttributesArrays, stringattributesArrays);
+        borderParametersComposite = new BoderParametersComposite(tabFolder, numericAttributesArrays, stringattributesArrays, geometryProperty);
         borderParametersComposite.init(ruleWrapper);
         borderParametersComposite.addListener(this);
         Composite borderParametersInternalComposite = borderParametersComposite.getComposite();
@@ -252,10 +254,15 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
             String size = values[2];
 
             try {
-                lineSymbolizerWrapper.setStrokeExternalGraphicStrokePath(url);
-                Graphic graphicStroke = lineSymbolizerWrapper.getStrokeGraphicStroke();
-                graphicStroke.setSize(Utilities.ff.literal(size));
-                graphicStroke.setGap(Utilities.ff.literal(width));
+            	if (url.length() == 0){
+            		//clear the graphics
+            		lineSymbolizerWrapper.clearGraphicStroke();
+            	}else{
+            		lineSymbolizerWrapper.setStrokeExternalGraphicStrokePath(url);
+            		Graphic graphicStroke = lineSymbolizerWrapper.getStrokeGraphicStroke();
+            		graphicStroke.setSize(Utilities.ff.literal(size));
+            		graphicStroke.setGap(Utilities.ff.literal(width));
+            	}
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -276,6 +283,14 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
         case LINEJOIN: {
             lineSymbolizerWrapper.setLineJoin(value);
             break;
+        }
+        case LINEEND: {
+        	lineSymbolizerWrapper.setEndPointStyle(values[0], values[1], values[2], values[3]);
+        	break;
+        }
+        case LINESTART: {
+        	lineSymbolizerWrapper.setStartPointStyle(values[0], values[1], values[2], values[3]);
+        	break;
         }
             // LABEL PARAMETERS
         case LABELENABLE: {

@@ -21,16 +21,19 @@ import static org.locationtech.udig.style.advanced.utils.Utilities.sf;
 import java.awt.geom.Point2D;
 import java.util.List;
 
+import org.geotools.filter.function.FilterFunction_endPoint;
+import org.geotools.filter.function.FilterFunction_startPoint;
 import org.geotools.styling.ExternalGraphic;
 import org.geotools.styling.Graphic;
 import org.geotools.styling.LineSymbolizer;
+import org.geotools.styling.Mark;
+import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.Symbolizer;
+import org.locationtech.udig.style.advanced.utils.Utilities;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.GraphicalSymbol;
-
-import org.locationtech.udig.style.advanced.utils.Utilities;
 
 /**
  * A wrapper for a {@link LineSymbolizer} to ease interaction with gui.
@@ -50,13 +53,20 @@ public class LineSymbolizerWrapper extends SymbolizerWrapper {
     protected String lineCap;
     protected String lineJoin;
 
+    
+    protected PointSymbolizerWrapper endPointStyle;
+    protected PointSymbolizerWrapper startPointStyle;
+    
     public LineSymbolizerWrapper( PolygonSymbolizer polygonSymbolizer, RuleWrapper parent ) {
         super(polygonSymbolizer, parent);
+        initEndPointSymbolizers();
     }
 
     public LineSymbolizerWrapper( Symbolizer symbolizer, RuleWrapper parent ) {
         super(symbolizer, parent);
 
+        initEndPointSymbolizers();
+        
         LineSymbolizer lineSymbolizer = (LineSymbolizer) symbolizer;
 
         // offset
@@ -122,7 +132,81 @@ public class LineSymbolizerWrapper extends SymbolizerWrapper {
         }
 
     }
+    
+    private void initEndPointSymbolizers(){
+    	for (Symbolizer x : super.getParent().getRule().getSymbolizers()){
+        	if (x instanceof PointSymbolizer){
+        		PointSymbolizer pnt = (PointSymbolizer) x;
+        		Expression ex = pnt.getGeometry();
+        		boolean endpnt = ex instanceof FilterFunction_endPoint;
+        		boolean startpnt = ex instanceof FilterFunction_startPoint;
+        		if (endpnt || startpnt){
+        			GraphicalSymbol gs = pnt.getGraphic().graphicalSymbols().get(0);
+        			if (gs instanceof Mark){
+        				String name = ((Mark) gs).getWellKnownName().evaluate(null, String.class);
+        				if (Utilities.lineEndStyles.values().contains(name)){
+        					if (endpnt){
+        						endPointStyle = new PointSymbolizerWrapper(pnt, super.getParent());
+        					}else if (startpnt){
+        						startPointStyle = new PointSymbolizerWrapper(pnt, super.getParent());
+        					}
+        				}
+        			}
+        		}
+        	}
+        }
+    }
+    
+    public PointSymbolizerWrapper getEndPointStyle(){
+    	return endPointStyle;
+    }
+    
+    public PointSymbolizerWrapper getStartPointStyle(){
+    	return startPointStyle;
+    }
+    
+    public void setEndPointStyle(String geomName, String wkgName, String size, String color){
+    	endPointStyle = updateEndpointStyle(geomName, endPointStyle, wkgName, size, color, false);
+    }
+    
+    public void setStartPointStyle(String geomName, String wkgName, String size, String color){
+    	startPointStyle = updateEndpointStyle(geomName, startPointStyle, wkgName, size, color, true);
+    }
+    
+    private PointSymbolizerWrapper updateEndpointStyle(String geomName, PointSymbolizerWrapper wrapper, String wkgName, String size, String color, boolean isStart){
+    	if (wkgName == null || wkgName.length() == 0){
+    		if (wrapper != null){
+    			getParent().getRule().symbolizers().remove(wrapper.getSymbolizer());
+    			return null;
+    		}
+    	}
+    	if (wrapper == null){
+    		PointSymbolizer p = sf.createPointSymbolizer();
+    		if (isStart){
+    			p.setGeometry(ff.function("startPoint", ff.property(geomName))); //$NON-NLS-1$
+    			p.getGraphic().setRotation(ff.add(ff.function("startAngle", ff.property(geomName)), ff.literal(-180)));	//rotate start 180 degrees //$NON-NLS-1$
+    		}else{
+    			p.setGeometry(ff.function("endPoint", ff.property(geomName))); //$NON-NLS-1$
+    			p.getGraphic().setRotation(ff.function("endAngle", ff.property(geomName)));	//$NON-NLS-1$
+    		}
+    		wrapper = new PointSymbolizerWrapper(p, getParent());
+    		
+    		getParent().getRule().symbolizers().add(wrapper.getSymbolizer());
+    	}
+    	wrapper.setMarkName(wkgName);
+    	wrapper.setStrokeColor(color);
+    	wrapper.setFillColor(color);
+    	wrapper.setSize(size, false);
+    	return wrapper;
+    }
+    
+    
 
+    public void clearGraphicStroke(){
+   		stroke.setGraphicStroke(null);
+   		strokeGraphicStroke = null;
+    }
+    
     public Graphic getStrokeGraphicStroke() {
         return strokeGraphicStroke;
     }
@@ -190,6 +274,16 @@ public class LineSymbolizerWrapper extends SymbolizerWrapper {
             stroke.setOpacity(ff.property(strokeOpacity));
         } else {
             stroke.setOpacity(ff.literal(strokeOpacity));
+        }
+        
+        //update end point styles if applicable
+        if (endPointStyle != null){
+       		endPointStyle.setStrokeOpacity(strokeOpacity, isProperty);
+       		endPointStyle.setFillOpacity(strokeOpacity, isProperty);
+        }
+        if (startPointStyle != null){
+        	startPointStyle.setStrokeOpacity(strokeOpacity, isProperty);
+        	startPointStyle.setFillOpacity(strokeOpacity, isProperty);
         }
     }
 

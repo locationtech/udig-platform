@@ -35,7 +35,6 @@ import org.locationtech.udig.style.advanced.utils.Utilities;
 public class LineGeneralParametersComposite extends ParameterComposite {
 
     private final Composite parent;
-    private final String[] numericAttributesArrays;
 
     private Text nameText;
     private Spinner xOffsetSpinner;
@@ -45,9 +44,8 @@ public class LineGeneralParametersComposite extends ParameterComposite {
 
     private Composite mainComposite;
 
-    public LineGeneralParametersComposite( Composite parent, String[] numericAttributesArrays ) {
+    public LineGeneralParametersComposite( Composite parent ) {
         this.parent = parent;
-        this.numericAttributesArrays = numericAttributesArrays;
     }
 
     public Composite getComposite() {

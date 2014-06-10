@@ -48,7 +48,6 @@ import org.locationtech.udig.style.advanced.utils.Utilities;
  * 
  * @author Andrea Antonello (www.hydrologis.com)
  */
-@SuppressWarnings("nls")
 public class PolygonPropertiesComposite implements ModifyListener, IStyleChangesListener {
 
     private RuleWrapper ruleWrapper;
@@ -59,7 +58,8 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
     private StackLayout mainStackLayout;
 
     private String[] numericAttributesArrays;
-
+    private String geometryProperty;
+    
     private Composite parentComposite;
 
     private final Composite parent;
@@ -117,7 +117,8 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         allAttributesArrays = (String[]) allAttributeNames.toArray(new String[allAttributeNames.size()]);
         List<String> stringAttributeNames = polygonPropertiesEditor.getStringAttributeNames();
         stringattributesArrays = stringAttributeNames.toArray(new String[0]);
-
+        this.geometryProperty = polygonPropertiesEditor.getGeometryPropertyName().getLocalPart();
+        
         parentComposite = new Composite(parent, SWT.NONE);
         parentComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         parentComposite.setLayout(new GridLayout(1, false));
@@ -142,12 +143,14 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
     private void createSimpleComposite() {
         simplePolygonComposite = new Composite(mainComposite, SWT.None);
         simplePolygonComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        simplePolygonComposite.setLayout(new GridLayout(1, false));
+        GridLayout gl = new GridLayout(1, false);
+        gl.marginHeight = gl.marginWidth = 0;
+        simplePolygonComposite.setLayout(gl);
 
         // rule name
-        Composite nameComposite = new Composite(simplePolygonComposite, SWT.NONE);
-        nameComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        nameComposite.setLayout(new GridLayout(2, true));
+//        Composite nameComposite = new Composite(simplePolygonComposite, SWT.NONE);
+//        nameComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+//        nameComposite.setLayout(new GridLayout(2, true));
 
         // use an expandbar for the properties
         Group propertiesGroup = new Group(simplePolygonComposite, SWT.SHADOW_ETCHED_IN);
@@ -155,7 +158,7 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         propertiesGroup.setLayout(new GridLayout(1, false));
         propertiesGroup.setText(Messages.PolygonPropertiesComposite_1);
 
-        TabFolder tabFolder = new TabFolder(propertiesGroup, SWT.BORDER);
+        TabFolder tabFolder = new TabFolder(propertiesGroup, SWT.NONE);
         tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         generalParametersComposite = new PolygonGeneralParametersComposite(tabFolder, numericAttributesArrays);
@@ -168,7 +171,7 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         tabItem1.setControl(generalParametersInternalComposite);
 
         // BORDER GROUP
-        borderParametersComposite = new BoderParametersComposite(tabFolder, numericAttributesArrays, stringattributesArrays);
+        borderParametersComposite = new BoderParametersComposite(tabFolder, numericAttributesArrays, stringattributesArrays, geometryProperty);
         borderParametersComposite.init(ruleWrapper);
         borderParametersComposite.addListener(this);
         Composite borderParametersInternalComposite = borderParametersComposite.getComposite();
@@ -271,10 +274,14 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
             String size = values[2];
 
             try {
-                polygonSymbolizerWrapper.setStrokeExternalGraphicStrokePath(url);
-                Graphic graphicStroke = polygonSymbolizerWrapper.getStrokeGraphicStroke();
-                graphicStroke.setSize(Utilities.ff.literal(size));
-                graphicStroke.setGap(Utilities.ff.literal(width));
+            	if (url.equals("")){ //$NON-NLS-1$
+            		polygonSymbolizerWrapper.clearGraphicStroke();
+            	}else{
+            		polygonSymbolizerWrapper.setStrokeExternalGraphicStrokePath(url);
+            		Graphic graphicStroke = polygonSymbolizerWrapper.getStrokeGraphicStroke();
+            		graphicStroke.setSize(Utilities.ff.literal(size));
+            		graphicStroke.setGap(Utilities.ff.literal(width));
+            	}
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -296,6 +303,14 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
             polygonSymbolizerWrapper.setLineJoin(value);
             break;
         }
+        case LINEEND: {
+        	polygonSymbolizerWrapper.setEndPointStyle(values[0], values[1], values[2], values[3]);
+        	break;
+        }
+        case LINESTART: {
+        	polygonSymbolizerWrapper.setStartPointStyle(values[0], values[1], values[2], values[3]);
+        	break;
+        }
             // FILL PARAMETERS
         case FILLENABLE: {
             boolean enabled = Boolean.parseBoolean(value);
@@ -311,6 +326,8 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
             break;
         }
         case WKMGRAPHICSFILL: {
+        	polygonSymbolizerWrapper.clearGraphics();
+            
             String wkmname = values[0];
             String wkmwidth = values[1];
             String wkmcolor = values[2];
@@ -323,7 +340,7 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         }
         case GRAPHICSPATHFILL: {
             try {
-                polygonSymbolizerWrapper.setFillExternalGraphicFillPath(value);
+                polygonSymbolizerWrapper.setFillExternalGraphicFillPath((String)values[0], Double.valueOf(values[1]));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
