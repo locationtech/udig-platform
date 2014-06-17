@@ -12,8 +12,7 @@ Require-Bundle: org.eclipse.ui;visibility:=reexport,
  org.eclipse.core.runtime,
  org.locationtech.udig.libs;visibility:=reexport,
  org.locationtech.udig.core;visibility:=reexport,
- org.eclipse.core.expressions;visibility:=reexport,
- org.eclipse.update.ui
+ org.eclipse.core.expressions;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Export-Package: org.locationtech.udig,org.locationtech.udig.aoi,org.lo
  cationtech.udig.internal.aoi;x-friends:="org.locationtech.udig.ui.tes
