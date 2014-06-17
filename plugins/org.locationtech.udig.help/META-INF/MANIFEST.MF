@@ -6,7 +6,6 @@ Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Require-Bundle: org.apache.ant,
- org.apache.lucene,
  org.eclipse.help.base,
  org.eclipse.help.ui,
  org.eclipse.help.webapp,
