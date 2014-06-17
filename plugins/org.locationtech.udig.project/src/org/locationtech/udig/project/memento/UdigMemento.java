@@ -68,6 +68,10 @@ public class UdigMemento implements IMemento {
         }
         return found;
     }
+    
+    public IMemento[] getChildren() {
+    	return new IMemento[0];
+    }
 
     public IMemento findChild( String type, String id ) {
         IMemento[] children = getChildren(type);
