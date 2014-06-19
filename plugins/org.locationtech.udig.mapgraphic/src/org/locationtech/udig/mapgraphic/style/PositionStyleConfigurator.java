@@ -11,7 +11,7 @@
  */
 package org.locationtech.udig.mapgraphic.style;
 
-import java.awt.Point;
+import java.awt.Rectangle;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -46,7 +46,9 @@ public final class PositionStyleConfigurator extends IStyleConfigurator implemen
     /** horizontal alignment constants * */
     private static final String LEFT = Messages.ScalebarStyleConfigurator_left; 
     private static final String CENTER = Messages.ScalebarStyleConfigurator_center; 
-    private static final String RIGHT = Messages.ScalebarStyleConfigurator_right; 
+    private static final String RIGHT = Messages.ScalebarStyleConfigurator_right;
+    
+    private static final String CUSTOM = Messages.PositionStyleConfigurator_CustomPositionLabel;
 
     /** ui widgets * */
     private Combo xCombo;
@@ -86,15 +88,15 @@ public final class PositionStyleConfigurator extends IStyleConfigurator implemen
 
 	public void refresh() {
 	    IBlackboard blackboard = getStyleBlackboard();
-        Point point = (Point) blackboard.get(PositionStyleContent.ID);
+        Rectangle point = (Rectangle) blackboard.get(LocationStyleContent.ID);
 
         if (point == null) {
-            point = PositionStyleContent.createDefaultStyle();
+            point = LocationStyleContent.createDefaultStyle();
             setLeft(point);
             setTop(point);
 
-            blackboard.put(PositionStyleContent.ID, point);
-            ((StyleBlackboard) blackboard).setSelected(new String[]{PositionStyleContent.ID});
+            blackboard.put(LocationStyleContent.ID, point);
+            ((StyleBlackboard) blackboard).setSelected(new String[]{LocationStyleContent.ID});
         }
 
         if (isLeft(point))
@@ -103,6 +105,12 @@ public final class PositionStyleConfigurator extends IStyleConfigurator implemen
             xCombo.select(1);
         else if (isRight(point))
             xCombo.select(2);
+        else{
+        	if (xCombo.getItemCount() == 3){
+        		xCombo.add(CUSTOM);
+        	}
+        	xCombo.select(3);
+        }
         
         if (isTop(point)) 
             yCombo.select(0);
@@ -110,7 +118,12 @@ public final class PositionStyleConfigurator extends IStyleConfigurator implemen
             yCombo.select(1);
         else if (isBottom(point)) 
             yCombo.select(2);
-        
+        else{
+        	if (yCombo.getItemCount() == 3){
+        		yCombo.add(CUSTOM);
+        	}
+        	yCombo.select(3);
+        }
     }
 
 	@Override
@@ -127,15 +140,15 @@ public final class PositionStyleConfigurator extends IStyleConfigurator implemen
      */
     public void widgetSelected( SelectionEvent e ) {
         IBlackboard blackboard = getStyleBlackboard();
-        Point point = (Point) blackboard.get(PositionStyleContent.ID);
+        Rectangle point = (Rectangle) blackboard.get(LocationStyleContent.ID);
 
         if (point == null) {
-            point = PositionStyleContent.createDefaultStyle();
+            point = LocationStyleContent.createDefaultStyle();
             setLeft(point);
             setTop(point);
 
-            blackboard.put(PositionStyleContent.ID, point);
-            ((StyleBlackboard) getStyleBlackboard()).setSelected(new String[]{PositionStyleContent.ID});
+            blackboard.put(LocationStyleContent.ID, point);
+            ((StyleBlackboard) getStyleBlackboard()).setSelected(new String[]{LocationStyleContent.ID});
         }
         
         //read object state from ui widgets
@@ -171,62 +184,62 @@ public final class PositionStyleConfigurator extends IStyleConfigurator implemen
     }
 
     
-    protected boolean isLeft( Point point ) {
+    protected boolean isLeft( Rectangle point ) {
         return point.x == LocationStyleContent.XPAD_LEFT;
     }
 
-    protected void setLeft( Point point ) {
+    protected void setLeft( Rectangle point ) {
         point.x = LocationStyleContent.XPAD_LEFT;
     }
 
-    protected boolean isCenter( Point point ) {
+    protected boolean isCenter( Rectangle point ) {
         IMapDisplay display = getMapDisplay();
 
         int x = display.getWidth() / 2;
         return point.x == x;
     }
 
-    protected void setCenter( Point point ) {
+    protected void setCenter( Rectangle point ) {
         IMapDisplay display = getMapDisplay();
         int x = display.getWidth() / 2;
         point.x = x;
     }
 
-    protected boolean isRight( Point point ) {
+    protected boolean isRight( Rectangle point ) {
         return point.x == -LocationStyleContent.XPAD_RIGHT;
     }
 
-    protected void setRight( Point point ) {
+    protected void setRight( Rectangle point ) {
     	point.x = -LocationStyleContent.XPAD_RIGHT;
     }
 
-    protected boolean isTop( Point point ) {
+    protected boolean isTop( Rectangle point ) {
         return point.y == LocationStyleContent.YPAD_TOP; //+ rect.height;
     }
 
-    protected void setTop( Point point ) {
+    protected void setTop( Rectangle point ) {
     	point.y = LocationStyleContent.YPAD_TOP; //+ rect.height;
     }
 
-    protected boolean isMiddle( Point point ) {
+    protected boolean isMiddle( Rectangle point ) {
         IMapDisplay display = getMapDisplay();
 
         int y = display.getHeight() / 2;
         return point.y == y;
     }
 
-    protected void setMiddle( Point point ) {
+    protected void setMiddle( Rectangle point ) {
         IMapDisplay display = getMapDisplay();
 
         int y = display.getHeight() / 2;
         point.y = y;
     }
 
-    protected boolean isBottom( Point point ) {
+    protected boolean isBottom( Rectangle point ) {
         return point.y == -LocationStyleContent.YPAD_BOTTOM;
     }
 
-    protected void setBottom( Point point ) {
+    protected void setBottom( Rectangle point ) {
     	point.y = -LocationStyleContent.YPAD_BOTTOM;
     }
     

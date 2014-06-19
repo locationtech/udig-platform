@@ -11,6 +11,7 @@
 package org.locationtech.udig.mapgraphic.scale;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.text.NumberFormat;
 
@@ -18,7 +19,7 @@ import org.locationtech.udig.mapgraphic.MapGraphic;
 import org.locationtech.udig.mapgraphic.MapGraphicContext;
 import org.locationtech.udig.mapgraphic.style.FontStyle;
 import org.locationtech.udig.mapgraphic.style.FontStyleContent;
-import org.locationtech.udig.mapgraphic.style.PositionStyleContent;
+import org.locationtech.udig.mapgraphic.style.LocationStyleContent;
 import org.locationtech.udig.project.IBlackboard;
 import org.locationtech.udig.project.IStyleBlackboard;
 import org.locationtech.udig.ui.graphics.ViewportGraphics;
@@ -103,11 +104,12 @@ public class ScaleDenomMapGraphic implements MapGraphic {
 	private Point getGraphicLocation(MapGraphicContext context) {
 		IStyleBlackboard styleBlackboard = context.getLayer()
 				.getStyleBlackboard();
-		Point point = (Point) styleBlackboard.get(PositionStyleContent.ID);
-		if (point == null) {
-			point = PositionStyleContent.createDefaultStyle();
-			styleBlackboard.put(PositionStyleContent.ID, point);
+		
+		Rectangle r = (Rectangle)styleBlackboard.get(LocationStyleContent.ID);
+		if (r == null){
+			r = LocationStyleContent.createDefaultStyle();
 		}
+		Point point = new Point(r.x,r.y);
 		return point;
 	}
 

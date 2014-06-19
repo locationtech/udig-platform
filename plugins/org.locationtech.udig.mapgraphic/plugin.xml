@@ -106,11 +106,6 @@
           name="BarType Style">
     </style>
     <style
-          class="org.locationtech.udig.mapgraphic.style.PositionStyleContent"
-          id="org.locationtech.udig.printing.ui.positionStyle"
-          name="Position Style">
-    </style>
-    <style
           class="org.locationtech.udig.mapgraphic.scale.ScaleDenomStyleContent"
           id="org.locationtech.udig.mapgraphic.scaledenom.style"
           name="Map Scale">
@@ -177,7 +172,7 @@
           id="position"
           label="%printing.ui.location.config.label"
           requires="org.locationtech.udig.mapgraphic.scale.ScaleDenomMapGraphic"
-          styleId="org.locationtech.udig.printing.ui.positionStyle">
+          styleId="org.locationtech.udig.printing.ui.locationStyle">
     </styleConfigurator>
     <styleConfigurator
           class="org.locationtech.udig.mapgraphic.scale.ScaleDenomStyleConfigurator"
@@ -191,7 +186,7 @@
           id="northarrowposition"
           label="%printing.ui.location.config.label"
           requires="org.locationtech.udig.mapgraphic.northarrow.NorthArrowMapGraphic"
-          styleId="org.locationtech.udig.printing.ui.positionStyle">
+          styleId="org.locationtech.udig.printing.ui.locationStyle">
     </styleConfigurator>
    </extension>
    <extension
