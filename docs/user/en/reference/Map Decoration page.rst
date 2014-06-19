@@ -20,6 +20,7 @@ Several options are available:
    Legend Decoration
    North Arrow Decoration
    Scalebar Decoration
+   Mapscale Decoration
    The Processing Region
    Graticule Decoration
 
