@@ -12,6 +12,7 @@ package org.locationtech.udig.mapgraphic.northarrow;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 
 import org.geotools.geometry.jts.JTS;
@@ -19,7 +20,7 @@ import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.locationtech.udig.mapgraphic.MapGraphic;
 import org.locationtech.udig.mapgraphic.MapGraphicContext;
-import org.locationtech.udig.mapgraphic.style.PositionStyleContent;
+import org.locationtech.udig.mapgraphic.style.LocationStyleContent;
 import org.locationtech.udig.project.IBlackboard;
 import org.locationtech.udig.ui.graphics.ViewportGraphics;
 import org.opengis.referencing.FactoryException;
@@ -222,13 +223,18 @@ public final class NorthArrowMapGraphic implements MapGraphic{
 	private Point start(MapGraphicContext context) {
 		Point point = null;		
 		IBlackboard style = context.getLayer().getStyleBlackboard();
-		try {
-			point = (Point) style.get(PositionStyleContent.ID);
-
-		}
-		catch( Exception evil ){
+		
+		//lets see if there is a location style; this is set when the move mapgraphic
+		//tool is used
+		try{
+			Rectangle r = (Rectangle)style.get(LocationStyleContent.ID);
+			if (r != null){
+				point = new Point(r.x, r.y);
+			}
+		}catch( Exception evil ){
 			evil.printStackTrace();
 		}
+		
 		if( point == null ){ // default!
 			point = new Point( 25,25 );
 			style.put(NorthArrowTool.STYLE_BLACKBOARD_KEY, point );

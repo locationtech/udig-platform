@@ -72,6 +72,7 @@ public class Messages extends NLS {
     public static String GraticuleStyleConfigurator_Font_Color;
     public static String GraticuleStyleConfigurator_Show_Labels;
     public static String GraticuleStyleConfigurator_Opacity;
+	public static String PositionStyleConfigurator_CustomPositionLabel;
 
 	static {
 		// initialize resource bundle
