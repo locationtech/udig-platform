@@ -73,6 +73,7 @@ Content and such source code may be obtained at http://github.com/udig .
       <feature id="org.eclipse.help"/>
       <feature id="org.eclipse.emf.common"/>
       <feature id="org.eclipse.emf.ecore"/>
+      <feature id="org.eclipse.equinox.p2.user.ui" version="2.2.0.v20140523-0116"/>
    </features>
 
    <configurations>
