@@ -20,16 +20,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Pattern;
 
-import org.locationtech.udig.browser.BrowserPlugin;
-import org.locationtech.udig.browser.internal.Messages;
-import org.locationtech.udig.catalog.ui.FileConnectionFactory;
-import org.locationtech.udig.internal.ui.UDIGDropHandler;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
-import org.locationtech.udig.project.ui.internal.MapEditor;
-import org.locationtech.udig.project.ui.internal.MapEditorPart;
-import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -63,13 +53,17 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewSite;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.locationtech.udig.browser.BrowserPlugin;
+import org.locationtech.udig.browser.internal.Messages;
+import org.locationtech.udig.catalog.ui.FileConnectionFactory;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
+import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
 
 /**
  * Provides a tabbed browser view using the native web browser. 
@@ -83,6 +77,10 @@ public class BrowserContainerView extends ViewPart {
     /** BrowserContainerView ID field */
     public final static String VIEW_ID = 
             "org.locationtech.udig.browser.ui.browserContainerView"; //$NON-NLS-1$
+    
+    private final static String BROWSER_INITIAL_URL_PROPERTY = 
+            "org.locationtech.udig.browser.initialURL"; //$NON-NLS-1$
+    
     private static String BROWSER_TYPE = "org.locationtech.udig.browser.TYPE"; //$NON-NLS-1$
     private static String BROWSER_NAME = "BROWSER_NAME"; //$NON-NLS-1$
     private static String BROWSER_URL = "BROWSER_URL"; //$NON-NLS-1$
@@ -272,7 +270,8 @@ public class BrowserContainerView extends ViewPart {
             }
             this.browserData = null;
         }else{
-            addTab(Messages.BrowserContainerView_tabTitle, "http://udig.refractions.net/confluence/display/DATA",  (Image)null, getListener());   //$NON-NLS-1$
+            String initialBrowserURL = System.getProperty(BROWSER_INITIAL_URL_PROPERTY, "http://udig.refractions.net/confluence/display/DATA");
+            addTab(Messages.BrowserContainerView_tabTitle, initialBrowserURL,  (Image)null, getListener());   //$NON-NLS-1$
         }
     }
 
