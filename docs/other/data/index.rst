@@ -1,4 +1,4 @@
-Index
+DATA
 #####
 
 The WMS and WFS links links server "Capabilities Documents" you can drag into uDig directly:
@@ -41,8 +41,8 @@ Catalog: http://geodata.govt.nz/
 * http://openmaps.gov.bc.ca/
 * `GeoServer List <http://geoserver.org/display/GEOS/Available+WMS+and+WFS+servers>`_
 * `National Resource Canada <http://atlas.nrcan.gc.ca/sites/english/dataservices/web_map_service.html#requests>`_
-`Mapping Hacks Data <http://www.mappinghacks.com/data/>`_
-`NYSDOP orthoimagery for New York State <http://www.nysgis.state.ny.us/gateway/mg/webserv/>`_
+* `Mapping Hacks Data <http://www.mappinghacks.com/data/>`_
+* `NYSDOP orthoimagery for New York State <http://www.nysgis.state.ny.us/gateway/mg/webserv/>`_
 * http://sigma.openplans.org
 
 Search
