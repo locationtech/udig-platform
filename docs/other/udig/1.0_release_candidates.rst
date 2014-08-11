@@ -1,0 +1,495 @@
+1.0 Release Candidates
+######################
+
++------------+------------+------------+------------+------------+------------+------------+------------+------------+------------+
+| uDig : 1.0 |
+| Release    |
+| Candidates |
+| This page  |
+| last       |
+| changed on |
+| Mar 14,    |
+| 2008 by    |
+| jgarnett.  |
+| A release  |
+| candidate  |
+| for        |
+| 0.9.RC4 is |
+| available: |
+|            |
+| -  `udig0. |
+| 9.RC3.exe  |
+| <http://ud |
+| ig.refract |
+| ions.net/d |
+| ownloads/u |
+| dig0.9.RC4 |
+| .exe>`__   |
+| -  `udig0. |
+| 9.RC3.zip  |
+| <http://ud |
+| ig.refract |
+| ions.net/d |
+| ownloads/u |
+| dig0.9.RC4 |
+| .zip>`__   |
+|            |
+| This       |
+| release    |
+| candidate  |
+| contains   |
+| fixes for  |
+| rendering  |
+| and        |
+| stability  |
+| (thanks    |
+| [~jeichar@ |
+| refraction |
+| s.net]).   |
+| We have    |
+| one        |
+| remaining  |
+| capablilty |
+| - text     |
+| lables     |
+| before     |
+| 0.9.0 goes |
+| out the    |
+| door. The  |
+| 0.9        |
+| release    |
+| will be    |
+| the first  |
+| release    |
+| with       |
+| usability  |
+| improvemen |
+| ts.        |
+| See the    |
+| `GeoConnec |
+| tions      |
+| Project    |
+| Schedule < |
+| GeoConnect |
+| ions%20Pro |
+| ject%20Sch |
+| edule.html |
+| >`__       |
+| more       |
+| informatio |
+| n          |
+| on future  |
+| releases.  |
+|            |
+| Recent     |
+| developmen |
+| t          |
+| has        |
+| focused on |
+| (click     |
+| link to    |
+| view       |
+| issues):   |
+|            |
+| -  wms     |
+|    `report |
+|    any     |
+|    problem |
+| s          |
+|    here <h |
+| ttp://jira |
+| .codehaus. |
+| org/secure |
+| /IssueNavi |
+| gator.jspa |
+| ?reset=tru |
+| e&mode=hid |
+| e&pid=1060 |
+| 0&sorter/o |
+| rder=DESC& |
+| sorter/fie |
+| ld=priorit |
+| y&resoluti |
+| onIds=-1&c |
+| omponent=1 |
+| 1372>`__   |
+| -  wfs     |
+|    `report |
+|    any     |
+|    problem |
+| s          |
+|    here <h |
+| ttp://jira |
+| .codehaus. |
+| org/secure |
+| /IssueNavi |
+| gator.jspa |
+| ?reset=tru |
+| e&mode=hid |
+| e&pid=1060 |
+| 0&sorter/o |
+| rder=DESC& |
+| sorter/fie |
+| ld=priorit |
+| y&resoluti |
+| onIds=-1&c |
+| omponent=1 |
+| 0811>`__   |
+| -  user    |
+|    interfa |
+| ce         |
+|    freezes |
+|    (while  |
+|    talking |
+|    to      |
+|    servers |
+| )          |
+|    -       |
+|    please  |
+|    use the |
+|    `Email  |
+|    List <h |
+| ttp://list |
+| s.refracti |
+| ons.net/ma |
+| ilman/list |
+| info/udig- |
+| devel>`__  |
+|            |
+| Feedback   |
+| is         |
+| requested  |
+| (testers   |
+| are        |
+| co-develop |
+| ers!):     |
+|            |
+| -  `Issue  |
+|    Tracker |
+|  <http://j |
+| ira.codeha |
+| us.org/bro |
+| wse/UDIG>` |
+| __         |
+| -  `Email  |
+|    List <h |
+| ttp://list |
+| s.refracti |
+| ons.net/ma |
+| ilman/list |
+| info/udig- |
+| devel>`__  |
+|            |
+| +--------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| +          |
+| | |image3| |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+| |          |
+| | When per |
+| forming a  |
+| manual ins |
+| tall of `u |
+| dig0.9.RC3 |
+| .zip <http |
+| ://udig.re |
+| fractions. |
+| net/downlo |
+| ads/udig0. |
+| 9.RC4.zip> |
+| `__, you w |
+| ill need t |
+| he `S-3.1M |
+| 4 RCP <htt |
+| p://downlo |
+| ad.eclipse |
+| .org/eclip |
+| se/downloa |
+| ds/drops/S |
+| -3.1M4-200 |
+| 412162000/ |
+| index.php> |
+| `__ from ` |
+| eclipse or |
+| g <http:// |
+| eclipse.or |
+| g/download |
+| s>`__. For |
+|  a manual  |
+| install yo |
+| ur JRE wil |
+| l need to  |
+| be xtended |
+|  with `JAI |
+|  <http://j |
+| avashoplm. |
+| sun.com/EC |
+| om/docs/We |
+| lcome.jsp? |
+| StoreId=22 |
+| &PartDetai |
+| lId=7341-J |
+| AI-1.1.2-o |
+| th-JPR&Sit |
+| eId=JSC&Tr |
+| ansactionI |
+| d=noreg>`_ |
+| _, `ImageI |
+| O <http:// |
+| javashoplm |
+| .sun.com/E |
+| Com/docs/W |
+| elcome.jsp |
+| ?StoreId=2 |
+| 2&PartDeta |
+| ilId=jaiio |
+| -1.0_01-ot |
+| h-JPR&Site |
+| Id=JSC&Tra |
+| nsactionId |
+| =noreg>`__ |
+|  and `Soap |
+|  <http://u |
+| dig.refrac |
+| tions.net/ |
+| downloads/ |
+| soap_ext.z |
+| ip>`__ (th |
+| ese extent |
+| ions modif |
+| y your JRE |
+| /libs dire |
+| ctory).    |
+| |          |
+| +--------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| ---------- |
+| +          |
+            
++------------+------------+------------+------------+------------+------------+------------+------------+------------+------------+
+
++------------+----------------------------------------------------------+
+| |image5|   | Document generated by Confluence on Aug 11, 2014 12:31   |
++------------+----------------------------------------------------------+
+
+.. |image0| image:: images/icons/emoticons/information.gif
+.. |image1| image:: images/icons/emoticons/information.gif
+.. |image2| image:: images/icons/emoticons/information.gif
+.. |image3| image:: images/icons/emoticons/information.gif
+.. |image4| image:: images/border/spacer.gif
+.. |image5| image:: images/border/spacer.gif

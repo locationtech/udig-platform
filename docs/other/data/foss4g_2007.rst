@@ -1,0 +1,265 @@
+Foss4g 2007
+###########
+
++---------------------------+---------------------------+---------------------------+---------------------------+
+| Data : FOSS4G 2007        |
+| This page last changed on |
+| Aug 20, 2009 by jgarnett. |
+| +------------------+----- |
+| -------------+----------- |
+| -------+----------------- |
+| -+------------------+---- |
+| --------------+           |
+| | British Columbia |      |
+| | ---------------- |      |
+| |                  |      |
+| | | WMS:\ `bc air  |      |
+| | photos <http://o |      |
+| | penmaps.gov.bc.c |      |
+| | a/mapserver/aps? |      |
+| | service=wms&requ |      |
+| | est=getcapabilit |      |
+| | ies&version=1.1. |      |
+| | 1>`__            |      |
+| | `bc              |      |
+| | base <http://ope |      |
+| | nmaps.gov.bc.ca/ |      |
+| | mapserver/base2? |      |
+| | service=wms&requ |      |
+| | est=getcapabilit |      |
+| | ies&version=1.1. |      |
+| | 1>`__            |      |
+| | `bc              |      |
+| | cadastre <http:/ |      |
+| | /openmaps.gov.bc |      |
+| | .ca/mapserver/ca |      |
+| | dastre?service=w |      |
+| | ms&request=getca |      |
+| | pabilities&versi |      |
+| | on=1.1.1>`__     |      |
+| | `bc              |      |
+| | forestvegetation |      |
+| |  <http://openmap |      |
+| | s.gov.bc.ca/maps |      |
+| | erver/forestvege |      |
+| | tation?service=w |      |
+| | ms&request=getca |      |
+| | pabilities&versi |      |
+| | on=1.1.1>`__     |      |
+| | `images <http:// |      |
+| | openmaps.gov.bc. |      |
+| | ca/images/base.x |      |
+| | ml?service=wms&r |      |
+| | equest=getcapabi |      |
+| | lities&version=1 |      |
+| | .1.1>`__         |      |
+| | `bc terrestrial  |      |
+| | ecology <http:// |      |
+| | openmaps.gov.bc. |      |
+| | ca/mapserver/ter |      |
+| | restrial_ecology |      |
+| | ?service=wms&req |      |
+| | uest=getcapabili |      |
+| | ties&version=1.1 |      |
+| | .1>`__           |      |
+| | `bc water        |      |
+| | management <http |      |
+| | ://openmaps.gov. |      |
+| | bc.ca/mapserver/ |      |
+| | watermanagement? |      |
+| | service=wms&requ |      |
+| | est=getcapabilit |      |
+| | ies&version=1.1. |      |
+| | 1>`__            |      |
+| | `bc wild         |      |
+| | lifemanagement < |      |
+| | http://openmaps. |      |
+| | gov.bc.ca/mapser |      |
+| | ver/wildlifemana |      |
+| | gement?service=w |      |
+| | ms&request=getca |      |
+| | pabilities&versi |      |
+| | on=1.1.1>`__     |      |
+| | |                |      |
+| | WMS:\ `libcwms.g |      |
+| | ov.bc.ca <http:/ |      |
+| | /libcwms.gov.bc. |      |
+| | ca/wmsconnector/ |      |
+| | com.esri.wsit.WM |      |
+| | SServlet/ogc_lay |      |
+| | er_service?REQUE |      |
+| | ST=GetCapabiliti |      |
+| | es&Service=WMS>` |      |
+| | __               |      |
+| |                  |      |
+| | Canada           |      |
+| | ------           |      |
+| |                  |      |
+| | | WMS:\ `dm      |      |
+| | solutions <http: |      |
+| | //www2.dmsolutio |      |
+| | ns.ca/cgi-bin/ms |      |
+| | wms_gmap?Service |      |
+| | =WMS&VERSION=1.1 |      |
+| | .0&REQUEST=GetCa |      |
+| | pabilities>`__   |      |
+| | WFS:\ `dm        |      |
+| | solutions <http: |      |
+| | //www2.dmsolutio |      |
+| | ns.ca/cgi-bin/ms |      |
+| | wfs_gmap?version |      |
+| | =1.0.0&request=g |      |
+| | etcapabilities&s |      |
+| | ervice=wfs>`__   |      |
+| | |  WMS:\ `Atlas  |      |
+| | of               |      |
+| | Canada <http://a |      |
+| | tlas.gc.ca/cgi-b |      |
+| | in/atlaswms_en?V |      |
+| | ERSION=1.1.1&Req |      |
+| | uest=GetCapabili |      |
+| | ties&Service=WMS |      |
+| | >`__             |      |
+| | |                |      |
+| | WMS:\ `wms.cits. |      |
+| | rncan.gc.ca <htt |      |
+| | p://wms.cits.rnc |      |
+| | an.gc.ca/cgi-bin |      |
+| | /cubeserv.cgi?VE |      |
+| | RSION=1.1.0&REQU |      |
+| | EST=GetCapabilit |      |
+| | ies>`__          |      |
+| | |  WFS:\ `env    |      |
+| | dat <http://map. |      |
+| | ns.ec.gc.ca/MapS |      |
+| | erver/mapserv.ex |      |
+| | e?map=/mapserver |      |
+| | /services/envdat |      |
+| | /config.map&serv |      |
+| | ice=WFS&version= |      |
+| | 1.0.0&request=Ge |      |
+| | tCapabilities>`_ |      |
+| | _                |      |
+| | |                |      |
+| | WFS:\ `emandev.c |      |
+| | ciw.ca <http://e |      |
+| | mandev.cciw.ca/c |      |
+| | gi-bin/mapserver |      |
+| | /mapserv.exe?map |      |
+| | =/inetpub/wwwroo |      |
+| | t/emanco/cgi-bin |      |
+| | /mapserver/natur |      |
+| | ewatch.map&versi |      |
+| | on=1.0.0&service |      |
+| | =WFS&request=Get |      |
+| | Capabilities>`__ |      |
+| |                  |      |
+| | World            |      |
+| | -----            |      |
+| |                  |      |
+| | | WMS: `jpl      |      |
+| | nasa <http://wms |      |
+| | .jpl.nasa.gov/wm |      |
+| | s.cgi?Service=WM |      |
+| | S&Version=1.1.1& |      |
+| | Request=GetCapab |      |
+| | ilities>`__      |      |
+| | |                |      |
+| | WMS:\ `maps.cust |      |
+| | omweather.com <h |      |
+| | ttp://maps.custo |      |
+| | mweather.com/ima |      |
+| | ge?REQUEST=GetCa |      |
+| | pabilities&servi |      |
+| | ce=WMS>`__       |      |
+| | |                |      |
+| | WMS:\ `mapserv2. |      |
+| | esrin.esa.it <ht |      |
+| | tp://mapserv2.es |      |
+| | rin.esa.it/cubes |      |
+| | tor/cubeserv/cub |      |
+| | eserv.cgi?VERSIO |      |
+| | N=1.1.1&REQUEST= |      |
+| | GetCapabilities& |      |
+| | SERVICE=WMS>`__  |      |
+| | |                |      |
+| | WFS:\ `galdos <h |      |
+| | ttp://wfs.galdos |      |
+| | inc.com:8880/wfs |      |
+| | /http?Request=Ge |      |
+| | tCapabilities&se |      |
+| | rvice=WFS>`__    |      |
+| | |  WMS:\ `Demo   |      |
+| | Cubwerx <http:// |      |
+| | demo.cubewerx.co |      |
+| | m/demo/cubeserv/ |      |
+| | cubeserv.cgi?CON |      |
+| | FIG=main&SERVICE |      |
+| | =WMS&?VERSION=1. |      |
+| | 1.1&REQUEST=GetC |      |
+| | apabilities>`__  |      |
+| +------------------+----- |
+| -------------+----------- |
+| -------+----------------- |
+| -+------------------+---- |
+| --------------+           |
+|                           |
+| +------------------------ |
+| -----------+------------- |
+| ----------------------+-- |
+| ------------------------- |
+| --------+                 |
+| | Localhost               |
+|            |              |
+| | ---------               |
+|            |              |
+| |                         |
+|            |              |
+| | | Files:                |
+|            |              |
+| | `C:\\data <file:///C:/d |
+| ata>`__    |              |
+| | |  WMS: `GeoServer      |
+|            |              |
+| | WMS <http://localhost:8 |
+| 080/geoser |              |
+| | ver/wms?service=WMS&req |
+| uest=GetCa |              |
+| | pabilities>`__          |
+|            |              |
+| | |  WFS: `GeoServer      |
+|            |              |
+| | WFS <http://localhost:8 |
+| 080/geoser |              |
+| | ver/wfs?service=WFS&req |
+| uest=GetCa |              |
+| | pabilities>`__          |
+|            |              |
+| | |  Web: `GeoServer      |
+|            |              |
+| | Demo <http://localhost: |
+| 8080/geose |              |
+| | rver/demo.do>`__        |
+|            |              |
+| |                         |
+|            |              |
+| | FOSS4G Show Case        |
+|            |              |
+| | ----------------        |
+|            |              |
+|                           |
+|                           |
+| +------------------------ |
+| -----------+------------- |
+| ----------------------+-- |
+| ------------------------- |
+| --------+                 |
+                           
++---------------------------+---------------------------+---------------------------+---------------------------+
+
++------------+----------------------------------------------------------+
+| |image1|   | Document generated by Confluence on Aug 11, 2014 12:26   |
++------------+----------------------------------------------------------+
+
+.. |image0| image:: images/border/spacer.gif
+.. |image1| image:: images/border/spacer.gif

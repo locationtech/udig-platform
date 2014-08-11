@@ -1,0 +1,29 @@
+6.5 Bearbeiten
+==============
+
+Bearbeiten
+~~~~~~~~~~
+
+Zum Bearbeiten eines Features muß eine Karte offen und ausgewählt sein.
+
+#. Falls noch nicht vorhanden, erzeugen Sie eine Karte, beispielsweise mit dem Shapefile der Sümpfe.
+#. Zoomen Sie in einen kleinen Bereich der Karte.
+#. Wechseln Sie zum Werkzeug "Bearbeiten".
+    |image0|
+#. Klicken Sie bei gedrückter "Strg"-Taste auf einen der Sümpfe.
+#. Sie können nun das Bearbeitungswerkzeug zum Verschieben von Punkten verwenden. Bewegen Sie dazu
+   die Maus über einen Stützpunkt. Der Cursor wird das Verschieben-Symbol anzeigen. Klicken Sie auf
+   den Stützpunkt und verschieben Sie ihn. Beim Loslassen wird er neu gezeichnet.
+#. Mit dem Bearbeitungswerkzeug lassen sich auch Punkte hinzufügen. Klicken Sie auf eine gerade
+   Linke eines Sumpfes (wo kein Stützpunkt ist). Es wird dort ein neuer Stützpunkt eingefügt. Ein
+   Klick igendwo auf die Karte erzeugt dort ebenfalls einen Stützpunkt.
+
+Der Featureeditor erlaubt es zudem, Attributdaten zu ändern. Features lassen sich auch mit dem
+`Löschwerkzeug <6.8%20Objektbearbeitungswerkzeuge.html#6.8Objektbearbeitungswerkzeuge-Featurel%C3%B6schen>`__
+wieder entfernen.
+
+Weiter im Tutorial: `Fenster und Editoren anordnen <7%20Fenster%20und%20Editoren%20anordnen.html>`__
+
+(c) Copyright (c) 2004-2008 Refractions Research Inc. and others.
+
+.. |image0| image:: download/attachments/3791/Geometrien%20bearbeiten.png

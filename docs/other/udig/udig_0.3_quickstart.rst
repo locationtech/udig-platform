@@ -1,0 +1,202 @@
+Udig 0.3 Quickstart
+###################
+
++----------------------+----------------------+----------------------+----------------------+----------------------+
+| uDig : UDIG 0.3      |
+| Quickstart           |
+| This page last       |
+| changed on Oct 12,   |
+| 2004 by              |
+| jeichar@refractions. |
+| net.                 |
+| **`UDIG 0.3          |
+| Quickstart <>`__**   |
+|                      |
+| #. Download a Java   |
+|    Runtime and       |
+|    required          |
+|    extentions        |
+|    (download         |
+|    versions with a   |
+|    installer, not a  |
+|    .zip)             |
+|    +---------------- |
+| -------------------- |
+| ----------------+--- |
+| -------------------- |
+| -------------------- |
+| ---------+           |
+|    | Cannot resolve  |
+| external resource in |
+| to attachment.  | Ca |
+| nnot resolve externa |
+| l resource into atta |
+| chment.  |           |
+|    | `J2SE v 5.0     |
+|                      |
+|                 | `J |
+| 2SE v 5.0            |
+|                      |
+|          |           |
+|    | JRE <http://jav |
+| ashoplm.sun.com/ECom |
+| /docs/Welcome.j | JR |
+| E <http://javashoplm |
+| .sun.com/ECom/docs/W |
+| elcome.j |           |
+|    | sp?StoreId=22&P |
+| artDetailId=jre-1.5. |
+| 0-oth-JPR&SiteI | sp |
+| ?StoreId=22&PartDeta |
+| ilId=jre-1.5.0-oth-J |
+| PR&SiteI |           |
+|    | d=JSC&Transacti |
+| onId=noreg>`__,      |
+|                 | d= |
+| JSC&TransactionId=no |
+| reg>`__,             |
+|          |           |
+|    | `Advanced Imagi |
+| ng v                 |
+|                 | `A |
+| dvanced Imaging v    |
+|                      |
+|          |           |
+|    | 1.1.2 <http://j |
+| avashoplm.sun.com/EC |
+| om/docs/Welcome | 1. |
+| 1.2 <http://javashop |
+| lm.sun.com/ECom/docs |
+| /Welcome |           |
+|    | .jsp?StoreId=22 |
+| &PartDetailId=7341-J |
+| AI-1.1.2-oth-JP | .j |
+| sp?StoreId=22&PartDe |
+| tailId=7341-JAI-1.1. |
+| 2-oth-JP |           |
+|    | R&SiteId=JSC&Tr |
+| ansactionId=noreg>`_ |
+| _               | R& |
+| SiteId=JSC&Transacti |
+| onId=noreg>`__       |
+|          |           |
+|    | & `Imaging IO v |
+|  1.0\_01             |
+|                 | &  |
+| `Imaging IO v 1.0.01 |
+|                      |
+|          |           |
+|    | RC <http://java |
+| shoplm.sun.com/ECom/ |
+| docs/Welcome.js | RC |
+|  <http://javashoplm. |
+| sun.com/ECom/docs/We |
+| lcome.js |           |
+|    | p?StoreId=22&Pa |
+| rtDetailId=JAIIO-1.0 |
+| _01-rc-oth-JPR& | p? |
+| StoreId=22&PartDetai |
+| lId=JAIIO-1.0_01-rc- |
+| oth-JPR& |           |
+|    | SiteId=JSC&Tran |
+| sactionId=noreg>`__  |
+|                 | Si |
+| teId=JSC&Transaction |
+| Id=noreg>`__         |
+|          |           |
+|    +---------------- |
+| -------------------- |
+| ----------------+--- |
+| -------------------- |
+| -------------------- |
+| ---------+           |
+|                      |
+| #. Download the 3.1  |
+|    M2 "RCP Runtime   |
+|    Binary" suitable  |
+|    for your platform |
+|     |image3|         |
+|    `Windows          |
+|    98/ME/2000/XP <ht |
+| tp://download2.eclip |
+| se.org/downloads/dro |
+| ps/S-3.1M2-200409240 |
+| 800/download.php?dro |
+| pFile=eclipse-RCP-3. |
+| 1M2-win32.zip>`__    |
+|     |image4| `Linux  |
+|    (x86/GTK          |
+|    2) <http://downlo |
+| ad2.eclipse.org/down |
+| loads/drops/S-3.1M2- |
+| 200409240800/downloa |
+| d.php?dropFile=eclip |
+| se-RCP-3.1M2-linux-g |
+| tk.zip>`__           |
+|     |image5| `Max    |
+|    OSX               |
+|    (Max/Carbon) <htt |
+| p://download2.eclips |
+| e.org/downloads/drop |
+| s/S-3.1M2-2004092408 |
+| 00/download.php?drop |
+| File=eclipse-RCP-3.1 |
+| M2-macosx-carbon.tar |
+| .gz>`__              |
+|    - *not well       |
+|    tested with UDIG* |
+| #. Unzip the RCP     |
+|    Runtime Binary    |
+|    where you would   |
+|    like to install   |
+|    UDIG 0.3.         |
+|     **Note:**        |
+|    Currently no      |
+|    spaces should be  |
+|    in the directory  |
+|    path:             |
+|    "c:\\Program      |
+|    Files" is not     |
+|    legal. It is      |
+|    recommended to    |
+|    unzip eclipse RCP |
+|    in c:\\           |
+| #. Download `UDIG    |
+|    0.3 <http://udig. |
+| refractions.net/down |
+| loads/udig0.3.zip>`_ |
+| _                    |
+|    is and unzip it   |
+|    into your RCP     |
+|    Runtime Binary    |
+|    folder.           |
+|     *If eclipse RCP  |
+|    was unzipped in   |
+|    c:\\ then UDIG    |
+|    should be         |
+|    unzipped in       |
+|    c:\\eclipse.      |
+|    Choose accept/ok  |
+|    when prompted to  |
+|    replace files.*   |
+| #. Run eclipse       |
+|    executable and    |
+|    enjoy             |
+|                      |
+| :sub:``more... <UDIG |
+| %200.3%20Installatio |
+| n.html>`__`          |
++----------------------+----------------------+----------------------+----------------------+----------------------+
+
++------------+----------------------------------------------------------+
+| |image7|   | Document generated by Confluence on Aug 11, 2014 12:31   |
++------------+----------------------------------------------------------+
+
+.. |image0| image:: images/icons/emoticons/check.gif
+.. |image1| image:: images/icons/emoticons/check.gif
+.. |image2| image:: images/icons/emoticons/warning.gif
+.. |image3| image:: images/icons/emoticons/check.gif
+.. |image4| image:: images/icons/emoticons/check.gif
+.. |image5| image:: images/icons/emoticons/warning.gif
+.. |image6| image:: images/border/spacer.gif
+.. |image7| image:: images/border/spacer.gif

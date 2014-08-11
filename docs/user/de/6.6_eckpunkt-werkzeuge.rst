@@ -1,0 +1,26 @@
+6.6 Eckpunkt-Werkzeuge
+======================
+
+Eckpunkt-Werkzeuge
+~~~~~~~~~~~~~~~~~~
+
+Hierbei handelt es sich um Werkzeuge, welche das Aussehen existierender Geometrien durch das
+Hinzufügen, Verschieben oder Entfernen von Eckpunkten hinzufügt. Die einzige Ausnahme hier ist das
+Lochwerkzeug, welches Löcher in Polygone schneidet oder diese Löcher bearbeitet.
+
+Folgende Eckpunkt-Werkzeuge stehen zur Verfügung:
+
+-  `Geometriebearbeitung <Geometriebearbeitung.html>`__
+-  `Eckpunkt hinzufügen <8957.html>`__
+-  `Eckpunkt entfernen <Eckpunkt%20entfernen.html>`__
+-  `Lochwerkzeug <Lochwerkzeug.html>`__
+
+|image0|
+
+-  Erweiterte Bearbeitungsfunktionen
+-  `Geometrieerstellungswerkzeuge <6.7%20Geometrieerstellungswerkzeuge.html>`__
+-  `Objektbearbeitungswerkzeuge <6.8%20Objektbearbeitungswerkzeuge.html>`__
+
+(c) Copyright (c) 2004-2008 Refractions Research Inc. and others.
+
+.. |image0| image:: http://udig.refractions.net/image/DE/ngrelr.gif

@@ -1,0 +1,289 @@
+Styles
+######
+
++-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+| uDig :      |
+| Styles      |
+| This page   |
+| last        |
+| changed on  |
+| Mar 12,     |
+| 2010 by     |
+| jgarnett.   |
+| UDIG Styles |
+|  and Stylin |
+| g           |
+| ----------- |
+| ----------- |
+| -           |
+|             |
+| Styling in  |
+| UDIG is     |
+| designed to |
+| be flexible |
+| because     |
+| different   |
+| renderers   |
+| require     |
+| styles. For |
+| example, a  |
+| renderer    |
+| based on    |
+| Geotools    |
+| requires    |
+| Geotool's   |
+| SLD         |
+| objects.    |
+| Since SLD   |
+| is the      |
+| standard    |
+| style it is |
+| tempting to |
+| only        |
+| support SLD |
+| styles.     |
+| However,    |
+| doing so    |
+| requires    |
+| all         |
+| renderers   |
+| to support  |
+| SLD styles, |
+| which would |
+| require     |
+| extreme     |
+| refactoring |
+| for some    |
+| rendering.  |
+|             |
+| One of the  |
+| goals of    |
+| UDIG is to  |
+| be flexible |
+| and provide |
+| many        |
+| options for |
+| extension.  |
+| Therefore,  |
+| style       |
+| objects are |
+| unknown to  |
+| UDIG. The   |
+| only        |
+| requirement |
+| is a style  |
+| much        |
+| implement   |
+| the         |
+| ``net.refra |
+| ctions.udig |
+| .project.re |
+| nder.Style` |
+| `           |
+| interface.  |
+| The Style   |
+| interface   |
+| has only    |
+| one method, |
+| ``createMem |
+| ento()``,   |
+| which       |
+| creates a   |
+| ``net.refra |
+| ctions.udig |
+| .project.re |
+| nder.StyleM |
+| emento``    |
+| object.     |
+| ``StyleMeme |
+| nto``       |
+| objects are |
+| the only    |
+| style       |
+| objects     |
+| that UDIG   |
+| is          |
+| concerned   |
+| with.       |
+| ``StyleMeme |
+| nto``       |
+| is an       |
+| implementat |
+| ion         |
+| of the      |
+| Eclipse     |
+| ``IMemento` |
+| `           |
+| interface   |
+| and is used |
+| to persist  |
+| the style   |
+| information |
+| .           |
+| When a      |
+| renderer is |
+| created it  |
+| is passed   |
+| the         |
+| ``StyleMeme |
+| nto``       |
+| interface   |
+| and is      |
+| evaluated   |
+| to          |
+| determine   |
+| whether the |
+| renderer    |
+| can use the |
+| memento.    |
+|             |
+| Style Exten |
+| sion Point  |
+| ~~~~~~~~~~~ |
+| ~~~~~~~~~~  |
+|             |
+| A plugin    |
+| that        |
+| defines a   |
+| style       |
+| (Note: a    |
+| single      |
+| plugin      |
+| could       |
+| define a    |
+| style and a |
+| renderer)   |
+| must        |
+| implement a |
+| ``net.refra |
+| ctions.udig |
+| .project.re |
+| nder.StyleE |
+| ditor``     |
+| and a class |
+| that        |
+| implements  |
+| the Style   |
+| interface.  |
+| The         |
+| ``StyleEdit |
+| or``        |
+| interface   |
+| extends     |
+| eclipse's   |
+| ``IDialogPa |
+| ge``        |
+| interface   |
+| and         |
+| contains an |
+| additional  |
+| ``init()``  |
+| method that |
+| accepts a   |
+| ``StyleMeme |
+| nto``       |
+| object as a |
+| parameter.  |
+| The         |
+| ``StyleMeme |
+| nto``       |
+| contains    |
+| the style   |
+| information |
+| that the    |
+| editor can  |
+| edit. The   |
+| other       |
+| method is   |
+| ``getMement |
+| o``         |
+| which       |
+| returns a   |
+| ``StyleMeme |
+| nto``       |
+| object.     |
+|             |
+| Style Examp |
+| les include |
+| d in UDIG   |
+| ~~~~~~~~~~~ |
+| ~~~~~~~~~~~ |
+| ~~~~~~~~~   |
+|             |
+| | ``SLDStyl |
+| e``         |
+| is the      |
+| Style       |
+| included    |
+| with uDig.  |
+| It is       |
+| essentially |
+| a adapter   |
+| for         |
+| Geotool's   |
+| Style       |
+| objects.    |
+| The         |
+| ``StyleMeme |
+| nto``       |
+| created by  |
+| ``SLDStyle` |
+| `           |
+| contains    |
+| two         |
+| properties: |
+| a ?type?    |
+| property    |
+| which is    |
+| set to      |
+| ?SLDStyle?  |
+| and a       |
+| ?version?   |
+| property    |
+| which at    |
+| the time of |
+| the UDIG    |
+| version 1.0 |
+| release is  |
+| set to      |
+| ?1.0?. The  |
+| ``StyleMeme |
+| nto``       |
+| contains an |
+| SLD         |
+| document    |
+| formatted   |
+| string in   |
+| its         |
+| ``text``    |
+| field. The  |
+| SLD         |
+| document    |
+| can be      |
+| retrieved   |
+| using the   |
+| ``getTextDa |
+| ta()``      |
+| method      |
+| call.       |
+| |           |
+| ``SLDEditor |
+| ``          |
+| is the      |
+| default     |
+| Style       |
+| Editor      |
+| class has   |
+| been        |
+| included    |
+| since the   |
+| 0.5         |
+| release.    |
++-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
++------------+----------------------------------------------------------+
+| |image1|   | Document generated by Confluence on Aug 11, 2014 12:31   |
++------------+----------------------------------------------------------+
+
+.. |image0| image:: images/border/spacer.gif
+.. |image1| image:: images/border/spacer.gif

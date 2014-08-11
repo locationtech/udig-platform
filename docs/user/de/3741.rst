@@ -1,0 +1,35 @@
+3741
+####
+
+Anfängertutorial
+================
+
+Dieses Tutorial führt Sie Schritt für Schritt durch den uDig-Arbeitsplatz.
+
+-  `1 Der Arbeitsplatz <1%20Der%20Arbeitsplatz.html>`__
+-  `2 Editoren und weitere Fenster <2%20Editoren%20und%20weitere%20Fenster.html>`__
+-  `3 Ein einfaches Projekt <3%20Ein%20einfaches%20Projekt.html>`__
+-  `4 Projekte und Ressourcen <4%20Projekte%20und%20Ressourcen.html>`__
+-  `5 Daten importieren <5%20Daten%20importieren.html>`__
+-  `6 Werkzeuge <6%20Werkzeuge.html>`__
+
+   -  `6.1 Zoomen <6.1%20Zoomen.html>`__
+   -  `6.2 Ausschnitt verschieben <6.2%20Ausschnitt%20verschieben.html>`__
+   -  `6.5 Bearbeiten <6.5%20Bearbeiten.html>`__
+   -  `6.6 Eckpunkt-Werkzeuge <6.6%20Eckpunkt-Werkzeuge.html>`__
+
+      -  `Geometriebearbeitung <Geometriebearbeitung.html>`__
+      -  `Eckpunkt hinzufügen <8957.html>`__
+      -  `Eckpunkt entfernen <Eckpunkt%20entfernen.html>`__
+      -  `Lochwerkzeug <Lochwerkzeug.html>`__
+
+   -  `6.7 Geometrieerstellungswerkzeuge <6.7%20Geometrieerstellungswerkzeuge.html>`__
+      (Linien, Polygone, Punkte, Rechtecke und Ellipsen sowie Freitextlinien erzeugen)
+   -  `6.8 Objektbearbeitungswerkzeuge <6.8%20Objektbearbeitungswerkzeuge.html>`__
+      (Füllwerkzeug, Features teilen und löschen)
+
+-  `7 Fenster und Editoren anordnen <7%20Fenster%20und%20Editoren%20anordnen.html>`__
+-  `8 Mit Schnellsichten arbeiten <8%20Mit%20Schnellsichten%20arbeiten.html>`__
+-  `9 Den Arbeitsplatz verlassen <9%20Den%20Arbeitsplatz%20verlassen.html>`__
+
+(c) Copyright (c) 2004-2008 Refractions Research Inc. and others.

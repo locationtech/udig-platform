@@ -1,0 +1,1200 @@
+Ui Recommendations
+##################
+
++------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+
+| uDig |
+| : UI |
+| Reco |
+| mmen |
+| dati |
+| ons  |
+| This |
+| page |
+| last |
+| chan |
+| ged  |
+| on   |
+| Oct  |
+| 06,  |
+| 2004 |
+| by   |
+| jeic |
+| har@ |
+| refr |
+| acti |
+| ons. |
+| net. |
+| drag |
+| and  |
+| drop |
+|      |
+| -  t |
+| arge |
+| ts:  |
+|      |
+|    - |
+|   Ma |
+| p    |
+|    - |
+|   Lo |
+| cal  |
+|      |
+|   re |
+| gist |
+| ry   |
+|    - |
+|   La |
+| yer  |
+|      |
+|   Vi |
+| ew   |
+|      |
+| -  i |
+| tems |
+|      |
+|    - |
+|   UR |
+| Ls   |
+|    - |
+|   fi |
+| les  |
+|    - |
+|   lo |
+| cal  |
+|      |
+|   re |
+| gist |
+| ry   |
+|      |
+|   en |
+| try  |
+|    - |
+|   Ma |
+| p    |
+|      |
+| Edit |
+| ing  |
+|      |
+| -  S |
+| elec |
+| ting |
+|    e |
+| dita |
+| ble  |
+|    f |
+| eatu |
+| re   |
+|    a |
+| nd   |
+|    e |
+| ditt |
+| ing  |
+|    s |
+| houl |
+| d    |
+|    b |
+| e    |
+|    1 |
+|    s |
+| tep. |
+|    E |
+| dit  |
+|    t |
+| ool. |
+|    c |
+| lick |
+| ...f |
+| eatu |
+| re   |
+|    s |
+| elec |
+| ted. |
+| ..cl |
+| ick  |
+|    e |
+| dit. |
+|    N |
+| ot   |
+|    s |
+| elec |
+| t    |
+|    t |
+| ool, |
+|    c |
+| lick |
+| ,    |
+|    f |
+| eatu |
+| re   |
+|    s |
+| elec |
+| ted, |
+|    e |
+| dit  |
+|    t |
+| ool, |
+|    c |
+| lick |
+|    e |
+| dti. |
+| -  z |
+| oom  |
+|    t |
+| o    |
+|    s |
+| elec |
+| tion |
+|    t |
+| ool  |
+| -  g |
+| eoms |
+|    s |
+| houl |
+| d    |
+|    b |
+| e    |
+|    v |
+| alid |
+| ated |
+|    d |
+| urin |
+| g    |
+|    e |
+| ditt |
+| ing  |
+| -  m |
+| easu |
+| reme |
+| nt   |
+|    t |
+| ool  |
+|      |
+|    - |
+|   la |
+| t-lo |
+| ng   |
+|      |
+|   sh |
+| ould |
+|      |
+|   sh |
+| ow   |
+|      |
+|   gr |
+| ound |
+|      |
+|   un |
+| its  |
+|      |
+| -  M |
+| easu |
+| reme |
+| nt   |
+|    p |
+| rope |
+| rtie |
+| s    |
+|    a |
+| llow |
+|    u |
+| ser  |
+|    t |
+| o    |
+|    s |
+| peci |
+| fy   |
+|    w |
+| hich |
+|    u |
+| nits |
+|    m |
+| easu |
+| reme |
+| nts  |
+|    a |
+| re   |
+|    d |
+| one  |
+|    i |
+| n.   |
+|      |
+| Menu |
+| s    |
+|      |
+| -  M |
+| ap   |
+|    M |
+| enu  |
+|    - |
+|    a |
+| dd   |
+|    l |
+| ayer |
+|      |
+|    - |
+|   pr |
+| oper |
+| ties |
+|    - |
+|   st |
+| art/ |
+| stop |
+|      |
+|   ed |
+| it   |
+|    - |
+|   ne |
+| w    |
+|    - |
+|   cl |
+| ear  |
+|      |
+|   se |
+| lect |
+| ed   |
+|      |
+|   fe |
+| atur |
+| es?  |
+|      |
+| -  c |
+| opy  |
+|    f |
+| eatu |
+| res  |
+| -  v |
+| erte |
+| x    |
+|    t |
+| ool  |
+|    c |
+| lick |
+| ing  |
+|    s |
+| houl |
+| d    |
+|    c |
+| reat |
+| e    |
+|    a |
+|    f |
+| eatu |
+| re   |
+| -  L |
+| ayer |
+|    M |
+| enu  |
+|      |
+|    - |
+|   cl |
+| ear  |
+|      |
+|   se |
+| lect |
+| ed   |
+|      |
+|   fe |
+| atur |
+| e    |
+|      |
+| -  P |
+| roje |
+| ct/m |
+| ap/l |
+| ayer |
+|    m |
+| enus |
+|      |
+| -  Z |
+| oom  |
+|    b |
+| ox   |
+|    s |
+| houl |
+| d    |
+|    r |
+| emai |
+| n    |
+|    c |
+| lose |
+|    t |
+| o    |
+|    t |
+| he   |
+|    m |
+| ouse |
+|    p |
+| oint |
+| er   |
+| -  W |
+| MS   |
+|    W |
+| izar |
+| d    |
+|    - |
+|    N |
+| eeds |
+|    h |
+| isto |
+| ry,  |
+|    l |
+| acki |
+| ng   |
+|    t |
+| itle |
+|    a |
+| nd   |
+|    b |
+| anne |
+| r    |
+|      |
+|    - |
+|   Th |
+| read |
+| ing  |
+|      |
+|   in |
+|      |
+|   WM |
+| S    |
+|      |
+|   wi |
+| zard |
+|      |
+|   is |
+|      |
+|   ba |
+| d    |
+|      |
+| -  T |
+| ool  |
+|    b |
+| utto |
+| ns   |
+|    s |
+| houl |
+| d    |
+|    b |
+| e    |
+|    e |
+| nabl |
+| ed   |
+|    e |
+| ven  |
+|    w |
+| hen  |
+|    t |
+| he   |
+|    m |
+| ap   |
+|    i |
+| s    |
+|    n |
+| ot   |
+|    s |
+| elec |
+| ted  |
+| -  T |
+| ools |
+|    s |
+| houl |
+| d    |
+|    b |
+| e    |
+|    s |
+| elec |
+| tabl |
+| e    |
+|    e |
+| vent |
+|    w |
+| hen  |
+|    m |
+| ap   |
+|    e |
+| dito |
+| r    |
+|    i |
+| s    |
+|    n |
+| ot   |
+|    a |
+| ctiv |
+| e.   |
+|      |
+| Obje |
+| cts  |
+|      |
+| -  L |
+| ayer |
+| s    |
+|    i |
+| n    |
+|    L |
+| ayer |
+|    V |
+| iew  |
+|    s |
+| houl |
+| d    |
+|    h |
+| ave  |
+|    a |
+| n    |
+|    i |
+| con  |
+|    w |
+| hich |
+|    p |
+| rovi |
+| des  |
+|    u |
+| sefu |
+| l    |
+|    i |
+| nfor |
+| mati |
+| on   |
+|    a |
+| bout |
+|    t |
+| he   |
+|    s |
+| tate |
+|    o |
+| f    |
+|    t |
+| he   |
+|    l |
+| ayer |
+| s    |
+| -  s |
+| houl |
+| d    |
+|    b |
+| e    |
+|    a |
+| ble  |
+|    t |
+| o    |
+|    d |
+| elet |
+| e    |
+|    l |
+| ayer |
+| s    |
+|    f |
+| rom  |
+|    m |
+| aps  |
+| -  A |
+| ll   |
+|    p |
+| rima |
+| ry   |
+|    o |
+| bjec |
+| ts   |
+|    s |
+| houl |
+| d    |
+|    h |
+| ave  |
+|    a |
+|    p |
+| rope |
+| rtie |
+| s    |
+|    p |
+| age  |
+| -  W |
+| hen  |
+|    m |
+| akin |
+| g    |
+|    a |
+|    m |
+| ap,  |
+|    a |
+|    d |
+| efau |
+| lt   |
+|    n |
+| ame  |
+|    s |
+| houl |
+| d    |
+|    b |
+| e    |
+|    u |
+| sed  |
+|    w |
+| hich |
+|    c |
+| an   |
+|    l |
+| ater |
+|    b |
+| e    |
+|    c |
+| hang |
+| ed.  |
+| -  S |
+| houd |
+| l    |
+|    b |
+| e    |
+|    a |
+| ble  |
+|    t |
+| o    |
+|    a |
+| dd   |
+|    i |
+| ndiv |
+| idua |
+| l    |
+|    W |
+| MS   |
+|    l |
+| ayer |
+| s    |
+|    t |
+| o    |
+|    t |
+| he   |
+|    m |
+| ap,  |
+|    r |
+| athe |
+| r    |
+|    t |
+| han  |
+|    t |
+| he   |
+|    w |
+| hole |
+|    s |
+| erve |
+| r.   |
+| -  " |
+| new  |
+|    m |
+| ap"  |
+|    - |
+|    a |
+|    s |
+| peci |
+| al   |
+|    e |
+| ntry |
+|    i |
+| n    |
+|    t |
+| eh   |
+|    a |
+|    p |
+| roje |
+| ct   |
+|    w |
+| hich |
+| ,    |
+|    w |
+| hen  |
+|    c |
+| lick |
+| ed,  |
+|    w |
+| ill  |
+|    b |
+| ring |
+|    u |
+| p    |
+|    t |
+| he   |
+|    n |
+| ew   |
+|    m |
+| ap   |
+|    w |
+| izar |
+| d    |
+| -  c |
+| opy  |
+|    m |
+| aps  |
+| -  c |
+| opy  |
+|    p |
+| ages |
+| -  C |
+| hang |
+| e    |
+|    n |
+| ame  |
+|    o |
+| f    |
+|    L |
+| ocal |
+|    R |
+| egis |
+| try  |
+|    t |
+| o    |
+|    C |
+| atal |
+| og   |
+|    ( |
+| Less |
+|    p |
+| rogr |
+| amme |
+| r    |
+|    o |
+| rien |
+| ted) |
+| -  R |
+| egis |
+| try  |
+|    s |
+| houl |
+| dn't |
+|    b |
+| e    |
+|    a |
+| llow |
+| ed   |
+|    d |
+| upli |
+| cate |
+|    e |
+| ntri |
+| es   |
+| -  S |
+| houl |
+| d    |
+|    b |
+| e    |
+|    a |
+| ble  |
+|    t |
+| o    |
+|    r |
+| enam |
+| e    |
+|    t |
+| hing |
+| s    |
+|    i |
+| n    |
+|    t |
+| he   |
+|    r |
+| egis |
+| try  |
+| -  E |
+| ach  |
+|    W |
+| MS   |
+|    L |
+| ayer |
+|    s |
+| houl |
+| d    |
+|    h |
+| ave  |
+|    t |
+| he   |
+|    i |
+| con  |
+|    s |
+| peci |
+| fied |
+|    b |
+| y    |
+|    c |
+| onte |
+| xt   |
+|    d |
+| oc   |
+|      |
+| User |
+| Work |
+| flow |
+|      |
+| Firs |
+| t    |
+| time |
+| user |
+| s    |
+|      |
+| -  s |
+| tart |
+|    w |
+| ith  |
+|    d |
+| efau |
+| lt   |
+|    p |
+| roje |
+| ct   |
+|    a |
+| nd   |
+|    e |
+| mpty |
+|    m |
+| ap.  |
+| -  W |
+| elco |
+| me   |
+|    s |
+| cree |
+| n    |
+|    s |
+| ee   |
+|    e |
+| clip |
+| se's |
+|    w |
+| elco |
+| me   |
+|    p |
+| age  |
+|      |
+| Typi |
+| cal  |
+| Work |
+| flow |
+|      |
+| -  L |
+| ayer |
+| s    |
+|    i |
+| n    |
+|    l |
+| ayer |
+|    v |
+| iew  |
+|    s |
+| houl |
+| d    |
+|    b |
+| e    |
+|    d |
+| ragg |
+| ed   |
+|    t |
+| o    |
+|    c |
+| hang |
+| e    |
+|    l |
+| ayer |
+|    z |
+| orde |
+| r    |
+| -  A |
+| lway |
+| s    |
+|    p |
+| rovi |
+| de   |
+|    i |
+| nsta |
+| nt   |
+|    f |
+| eedb |
+| ack. |
+|    A |
+| t    |
+|    l |
+| east |
+|    m |
+| ouse |
+|    c |
+| urso |
+| r    |
+|    c |
+| hang |
+| e.   |
+|    I |
+| nclu |
+| ding |
+|    f |
+| or   |
+|    w |
+| izar |
+| ds.  |
+|    I |
+| E    |
+|    W |
+| MS   |
+|    w |
+| izar |
+| d    |
+| -  d |
+| efau |
+| lt   |
+|    p |
+| roje |
+| ct   |
+|    s |
+| houl |
+| d    |
+|    n |
+| ot   |
+|    b |
+| e    |
+|    s |
+| hown |
+| -  I |
+| tems |
+|    w |
+| ith  |
+|    o |
+| nly  |
+|    o |
+| ne   |
+|    s |
+| ubit |
+| em   |
+|    s |
+| houl |
+| d    |
+|    n |
+| ot   |
+|    b |
+| e    |
+|    c |
+| olla |
+| psib |
+| le   |
+|    a |
+| nd   |
+|    s |
+| houl |
+| dn't |
+|    s |
+| how  |
+|    u |
+| p.   |
+| -  i |
+| mpor |
+| t    |
+|    s |
+| hape |
+| file |
+|    w |
+| izar |
+| d    |
+|    s |
+| houl |
+| d    |
+|    p |
+| rovi |
+| de   |
+|    a |
+|    f |
+| ile  |
+|    b |
+| rows |
+| er   |
+|    a |
+| s    |
+|    p |
+| art  |
+|    o |
+| f    |
+|    i |
+| ts   |
+|    f |
+| irst |
+|    p |
+| age. |
+| -  b |
+| rows |
+| ers  |
+|    a |
+| nd   |
+|    w |
+| izar |
+| d    |
+|    s |
+| houl |
+| d    |
+|    r |
+| emem |
+| ber  |
+|    l |
+| ast  |
+|    s |
+| etti |
+| ngs  |
+| -  A |
+|    h |
+| isto |
+| ry   |
+|    f |
+| or   |
+|    w |
+| izar |
+| ds   |
+|    s |
+| houl |
+| d    |
+|    b |
+| e    |
+|    p |
+| rovi |
+| ded  |
+|    ( |
+| rece |
+| nt   |
+|    f |
+| iles |
+|    l |
+| ike  |
+|    i |
+| n    |
+|    m |
+| s    |
+|    w |
+| ord) |
+| -  A |
+| dd   |
+|    n |
+| ew   |
+|    M |
+| ap/L |
+| ayer |
+| s    |
+|    w |
+| izar |
+| ds   |
+|    s |
+| houl |
+| d    |
+|    h |
+| ave  |
+|    a |
+|    a |
+| dd/f |
+| ind  |
+|    l |
+| ayer |
+|    w |
+| hich |
+|    c |
+| an   |
+|    a |
+| dd   |
+|    a |
+|    n |
+| ew   |
+|    e |
+| ntry |
+|    t |
+| o    |
+|    t |
+| he   |
+|    r |
+| egis |
+| try  |
+| -  M |
+| ake  |
+|    a |
+| ll   |
+|    t |
+| he   |
+|    t |
+| ool  |
+|    t |
+| ip   |
+|    t |
+| ense |
+| s    |
+|    t |
+| he   |
+|    s |
+| ame, |
+|    p |
+| refe |
+| rabl |
+| y    |
+|    a |
+| ctiv |
+| e    |
+|    t |
+| ense |
+| s    |
+| -  S |
+| hape |
+| file |
+|    w |
+| izar |
+| d    |
+|    h |
+| as   |
+|    b |
+| ad   |
+|    t |
+| itle |
+| -  I |
+| mpor |
+| t    |
+|    w |
+| izar |
+| ds   |
+|    s |
+| houl |
+| d    |
+|    b |
+| e    |
+|    b |
+| ased |
+|    o |
+| n    |
+|    F |
+| ile  |
+|    o |
+| r    |
+|    U |
+| RL   |
+|    r |
+| athe |
+| r    |
+|    t |
+| han  |
+|    S |
+| hape |
+| file |
+| ,    |
+|    W |
+| FS   |
+|    o |
+| r    |
+|    W |
+| MS.  |
+|      |
+|    - |
+|   Th |
+| e    |
+|      |
+|   Fi |
+| le   |
+|      |
+|   im |
+| port |
+|      |
+|   sh |
+| ould |
+|      |
+|   go |
+|      |
+|   st |
+| raig |
+| ht   |
+|      |
+|   to |
+|      |
+|   a  |
+|      |
+|   fi |
+| le   |
+|      |
+|   br |
+| owse |
+| r    |
+|      |
+| -  S |
+| hape |
+| file |
+|    c |
+| usto |
+| m    |
+|    p |
+| rope |
+| rtie |
+| s    |
+|    - |
+|    c |
+| onta |
+| ins  |
+|    a |
+|    c |
+| heck |
+| box  |
+|    w |
+| hich |
+| ,    |
+|    i |
+| f    |
+|    s |
+| et,  |
+|    g |
+| oes  |
+|    t |
+| o    |
+|    a |
+|    c |
+| usto |
+| m    |
+|    p |
+| rope |
+| rtie |
+| s    |
+|    p |
+| age  |
+|      |
+| Othe |
+| r    |
+| UI   |
+| issu |
+| es   |
+|      |
+| -  P |
+| roje |
+| ct   |
+|    E |
+| xplo |
+| rer  |
+|    - |
+|      |
+|    p |
+| roje |
+| ct   |
+|      |
+| map  |
+|      |
+| map  |
+|      |
+|    < |
+| new  |
+|    m |
+| ap   |
+|    . |
+| ..   |
+|    > |
+|      |
+|    p |
+| age  |
+|      |
+|    p |
+| age  |
+|      |
+|    < |
+| new  |
+|    p |
+| age  |
+|    . |
+| ..   |
+|    > |
+      
++------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+
+
++------------+----------------------------------------------------------+
+| |image1|   | Document generated by Confluence on Aug 11, 2014 12:31   |
++------------+----------------------------------------------------------+
+
+.. |image0| image:: images/border/spacer.gif
+.. |image1| image:: images/border/spacer.gif
