@@ -1,0 +1,23 @@
+6.2 Ausschnitt verschieben
+==========================
+
+Ausschnitt verschieben
+~~~~~~~~~~~~~~~~~~~~~~
+
+Um den Kartenausschnitt verschieben zu können, muß logischerweise eine Karte geöffnet und ausgewählt
+sein.
+
+#. Öffnen Sie die Karte mit den Sümpfen und wählen Sie das Werkzeug **Verschieben** |image0| aus.
+#. Klicken Sie auf die Karte, ohne die Maustaste loszulassen.
+    |image1|
+#. Ziehen Sie mit gedrückter Maustaste die Karte in eine beliebige Richtung.
+#. Lassen Sie die Maustaste los.
+
+Sie können übrigens auch die Pfeiltasten verwenden.
+
+Weiter im Tutorial: `6.6 Eckpunkt-Werkzeuge <6.6%20Eckpunkt-Werkzeuge.html>`__
+
+(c) Copyright (c) 2004-2008 Refractions Research Inc. and others.
+
+.. |image0| image:: download/attachments/3793/Werkzeug%20verschieben.png
+.. |image1| image:: download/attachments/3793/Kartenausschnitt%20verschieben.png

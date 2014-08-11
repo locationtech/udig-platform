@@ -1,0 +1,395 @@
+Adding A Shapefile Form Editor
+##############################
+
++--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+
+| uDig : |
+| Adding |
+| a      |
+| Shapef |
+| ile    |
+| Form   |
+| Editor |
+| This   |
+| page   |
+| last   |
+| change |
+| d      |
+| on Jun |
+| 23,    |
+| 2010   |
+| by     |
+| jgarne |
+| tt.    |
+| Suppor |
+| t for  |
+| precom |
+| piled  |
+| form c |
+| ontent |
+| ------ |
+| ------ |
+| ------ |
+| ------ |
+| ------ |
+| ------ |
+|        |
+| | Imag |
+| ine    |
+| an     |
+| admini |
+| strati |
+| on     |
+| has to |
+| collec |
+| t      |
+| inform |
+| ations |
+| about  |
+| tree   |
+| types  |
+| and    |
+| they   |
+| have   |
+| partic |
+| ular   |
+| codes  |
+| for    |
+| those  |
+| trees  |
+| in     |
+| their  |
+| databa |
+| se.    |
+| |  For |
+| exampl |
+| e      |
+| we     |
+| might  |
+| have:  |
+|        |
+| -  Xma |
+| s      |
+|    tre |
+| e      |
+|    =   |
+|    COD |
+| E001   |
+| -  Nee |
+| dle    |
+|    tre |
+| e      |
+|    =   |
+|    COD |
+| E002   |
+| -  Lea |
+| f      |
+|    tre |
+| e      |
+|    =   |
+|    COD |
+| E003   |
+|        |
+| They   |
+| also   |
+| want   |
+| to     |
+| make   |
+| sure   |
+| that a |
+| user   |
+| is not |
+| able   |
+| to     |
+| insert |
+| any    |
+| differ |
+| ent    |
+| tree.  |
+| In     |
+| that   |
+| case   |
+| we     |
+| would  |
+| need   |
+| the    |
+| possib |
+| ility  |
+| to     |
+| have a |
+| combo  |
+| box    |
+| with   |
+| those  |
+| info   |
+| in it  |
+| and    |
+| the    |
+| user   |
+| would  |
+| be     |
+| able   |
+| to     |
+| choose |
+| only   |
+| betwee |
+| n      |
+| those. |
+|        |
+| The fo |
+| rm edi |
+| tor    |
+| ~~~~~~ |
+| ~~~~~~ |
+| ~~~    |
+|        |
+| | Sinc |
+| e      |
+| the    |
+| user   |
+| might  |
+| be     |
+| provid |
+| ed     |
+| with   |
+| code   |
+| tables |
+| for    |
+| differ |
+| ent    |
+| inform |
+| ation, |
+| there  |
+| is a   |
+| need   |
+| to be  |
+| able   |
+| to     |
+| "const |
+| ruct"  |
+| the    |
+| form   |
+| that   |
+| will   |
+| be     |
+| used.  |
+| |      |
+| This   |
+| should |
+| happen |
+| kinda  |
+| like   |
+| it is  |
+| done   |
+| in the |
+| Print  |
+| Compos |
+| er     |
+| of     |
+| uDig   |
+| or in  |
+| the    |
+| better |
+| known  |
+| `Visua |
+| l      |
+| Editor |
+|  <http |
+| ://www |
+| .eclip |
+| se.org |
+| /vep/> |
+| `__.   |
+|        |
+| This   |
+| could  |
+| for    |
+| exampl |
+| e      |
+| look   |
+| like   |
+| the    |
+| follow |
+| ing    |
+| image: |
+|        |
+| |image |
+| 3|     |
+|        |
+| Where  |
+| the    |
+| right  |
+| panel  |
+| should |
+| be     |
+| able   |
+| to     |
+| load   |
+| and/or |
+| store  |
+| user   |
+| tables |
+| to     |
+| supply |
+| as     |
+| combob |
+| oxes   |
+| or     |
+| whatev |
+| er     |
+| needed |
+| .      |
+|        |
+| Once   |
+| the    |
+| panel  |
+| has    |
+| been   |
+| create |
+| d      |
+| by the |
+| user,  |
+| the    |
+| user   |
+| should |
+| be     |
+| able   |
+| to     |
+| save   |
+| it to  |
+| disk   |
+| in     |
+| some   |
+| xml    |
+| format |
+| ,      |
+| in     |
+| order  |
+| to be  |
+| able   |
+| also   |
+| to     |
+| change |
+| it     |
+| manual |
+| ly,    |
+| if     |
+| needed |
+| .      |
+|        |
+| My     |
+| idea   |
+| in     |
+| this   |
+| was to |
+| add a  |
+| **shap |
+| efile\ |
+| _name. |
+| form** |
+| file   |
+| to a   |
+| shapef |
+| ile,   |
+| so     |
+| that   |
+| if the |
+| shapef |
+| ile    |
+| that   |
+| is     |
+| loaded |
+| into   |
+| the    |
+| udig   |
+| map    |
+| has    |
+| the    |
+| form   |
+| file,  |
+| the    |
+| abilit |
+| y      |
+| of     |
+| editin |
+| g      |
+| throug |
+| h      |
+| forms  |
+| would  |
+| be     |
+| activa |
+| ted.   |
+| Sure   |
+| that   |
+| would  |
+| not    |
+| work   |
+| for    |
+| remote |
+| layers |
+| ,      |
+| but in |
+| that   |
+| case   |
+| the    |
+| form   |
+| abilit |
+| y      |
+| might  |
+| be     |
+| activa |
+| ted    |
+| manual |
+| ly.    |
+|        |
+| Attach |
+| ments: |
+| |image |
+| 4|     |
+| `featu |
+| re\_ed |
+| .png < |
+| downlo |
+| ad/att |
+| achmen |
+| ts/121 |
+| 24544/ |
+| featur |
+| e_ed.p |
+| ng>`__ |
+| (image |
+| /png)  |
+|        |
+| |image |
+| 5|     |
+| `form\ |
+| _edito |
+| r\_pro |
+| posal. |
+| png <d |
+| ownloa |
+| d/atta |
+| chment |
+| s/1212 |
+| 4544/f |
+| orm_ed |
+| itor_p |
+| roposa |
+| l.png> |
+| `__    |
+| (image |
+| /png)  |
++--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+
+
++------------+----------------------------------------------------------+
+| |image7|   | Document generated by Confluence on Aug 11, 2014 12:31   |
++------------+----------------------------------------------------------+
+
+.. |image0| image:: /images/adding_a_shapefile_form_editor/form_editor_proposal.png
+.. |image1| image:: images/icons/bullet_blue.gif
+.. |image2| image:: images/icons/bullet_blue.gif
+.. |image3| image:: /images/adding_a_shapefile_form_editor/form_editor_proposal.png
+.. |image4| image:: images/icons/bullet_blue.gif
+.. |image5| image:: images/icons/bullet_blue.gif
+.. |image6| image:: images/border/spacer.gif
+.. |image7| image:: images/border/spacer.gif

@@ -1,0 +1,36 @@
+6.1 Zoomen
+==========
+
+Zoomen
+~~~~~~
+
+Zum Zoomen muß eine Karte geöffnet und ausgewählt sein.
+
+#. Öffnen Sie die Karte mit den Sümpfen und wählen Sie das Zoomwerkzeug.
+    Klicken Sie auf die Karte, ohne die Maustaste loszulassen.
+#. Ziehen Sie die Maus mit gedrückter Taste über die Karte. Es wird ein Rechteck gezeichnet, das mit
+   wachsender Distanz mitwächst.
+    |image0|
+    Lassen Sie die Maustaste los. Die in dem Reckteck befindliche Fläche wird nun im Karteneditor
+   vergrößert angezeigt.
+#. Zum Verkleinern der Karte (Zoom out), machen Sie das gleiche mit der rechten Maustaste.
+
+Sie können den Kartenmaßstab auch mit dem Schaltflächen "Vergrößern" und "Verkleinern" ändern oder
+das Mausrad verwenden. Falls Sie kein Mausrad verwenden können, geht alternativ auch das Ziehen der
+Maus nach links/rechts bei gedrückter "Alt"-Taste.
+
+| Weitere Navigationswerkzeuge z.B. zum Anzeigen des Layers oder des gesamten Karteninhalts sind
+ebenfalls in der Symbolleiste oder im Layerfester verfügbar.
+|  |image1|
+
+Alle Naviationswerzeuge sind auch im entsprechenden Menü zu finden. Navigationsvorgänge werden
+aufgezeichnet, so daß es möglich ist, zu füheren Ansichten zurückzukehren oder spätere wieder
+aufzurufen.
+
+Weiter im Tutorial: `Ausschnitt
+verschieben <6.2%20Ausschnitt%20verschieben.html>`__!Zoomfenster.png!
+
+(c) Copyright (c) 2004-2008 Refractions Research Inc. and others.
+
+.. |image0| image:: /images/6.1_zoomen/Zoomfenster.png
+.. |image1| image:: /images/6.1_zoomen/toolnavigation.gif

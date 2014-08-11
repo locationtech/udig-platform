@@ -1,0 +1,553 @@
+Foss4g 2009
+###########
+
++---------------------------+---------------------------+---------------------------+---------------------------+
+| Data : FOSS4G 2009        |
+| This page last changed on |
+| Oct 08, 2009 by jgarnett. |
+| +----------+----------+-- |
+| --------+----------+----- |
+| -----+----------+-------- |
+| --+----------+----------+ |
+| ----------+----------+--- |
+| -------+                  |
+| | Australi |              |
+| | a        |              |
+| | -------- |              |
+| | -        |              |
+| |          |              |
+| | | Geosci |              |
+| | ence     |              |
+| | Australi |              |
+| | a:       |              |
+| | |        |              |
+| | |image24 |              |
+| | |        |              |
+| | `www.ga. |              |
+| | gov.au   |              |
+| | WMS <htt |              |
+| | p://www. |              |
+| | ga.gov.a |              |
+| | u/wms/ge |              |
+| | tmap?dat |              |
+| | aset=nat |              |
+| | ional&re |              |
+| | quest=ca |              |
+| | pabiliti |              |
+| | es&Servi |              |
+| | ce=WMS>` |              |
+| | __       |              |
+| | |        |              |
+| | |image25 |              |
+| | |        |              |
+| | `map     |              |
+| | connect  |              |
+| | WMS <htt |              |
+| | p://mapc |              |
+| | onnect.g |              |
+| | a.gov.au |              |
+| | /wmsconn |              |
+| | ector/co |              |
+| | m.esri.w |              |
+| | ms.Esrim |              |
+| | ap?Versi |              |
+| | on=1.1.1 |              |
+| | &Request |              |
+| | =getcapa |              |
+| | bilities |              |
+| | &Service |              |
+| | =WMS&Ser |              |
+| | vicename |              |
+| | =GDA94_M |              |
+| | apConnec |              |
+| | t_SDE_25 |              |
+| | 0kmap_WM |              |
+| | S>`__    |              |
+| |          |              |
+| | | SLIP:  |              |
+| | login    |              |
+| | for      |              |
+| | addition |              |
+| | al       |              |
+| | `service |              |
+| | s <SLIP. |              |
+| | html>`__ |              |
+| | |        |              |
+| | |image26 |              |
+| | |        |              |
+| | `beta.la |              |
+| | ndgate   |              |
+| | tilecach |              |
+| | e <http: |              |
+| | //beta.l |              |
+| | andgate. |              |
+| | wa.gov.a |              |
+| | u/tileca |              |
+| | che/?REQ |              |
+| | UEST=Get |              |
+| | Capabili |              |
+| | ties&SER |              |
+| | VICE=WMS |              |
+| | &tiled=t |              |
+| | rue>`__  |              |
+| |          |              |
+| | | terrap |              |
+| | ages.net |              |
+| | :        |              |
+| | |        |              |
+| | |image27 |              |
+| | |        |              |
+| | `TileCac |              |
+| | he       |              |
+| | 1 <http: |              |
+| | //wmsc1. |              |
+| | terrapag |              |
+| | es.net/g |              |
+| | etmap?re |              |
+| | quest=ge |              |
+| | tcapabil |              |
+| | ities&se |              |
+| | rvice=wm |              |
+| | s&tiled= |              |
+| | true>`__ |              |
+| | `2 <http |              |
+| | ://wmsc2 |              |
+| | .terrapa |              |
+| | ges.net/ |              |
+| | getmap?r |              |
+| | equest=g |              |
+| | etcapabi |              |
+| | lities&s |              |
+| | ervice=w |              |
+| | ms&tiled |              |
+| | =true>`_ |              |
+| | _        |              |
+| | `3 <http |              |
+| | ://wmsc3 |              |
+| | .terrapa |              |
+| | ges.net/ |              |
+| | getmap?r |              |
+| | equest=g |              |
+| | etcapabi |              |
+| | lities&s |              |
+| | ervice=w |              |
+| | ms&tiled |              |
+| | =true>`_ |              |
+| | _        |              |
+| | `4 <http |              |
+| | ://wmsc4 |              |
+| | .terrapa |              |
+| | ges.net/ |              |
+| | getmap?r |              |
+| | equest=g |              |
+| | etcapabi |              |
+| | lities&s |              |
+| | ervice=w |              |
+| | ms&tiled |              |
+| | =true>`_ |              |
+| | _        |              |
+| | `5 <http |              |
+| | ://wmsc5 |              |
+| | .terrapa |              |
+| | ges.net/ |              |
+| | getmap?r |              |
+| | equest=g |              |
+| | etcapabi |              |
+| | lities&s |              |
+| | ervice=w |              |
+| | ms&tiled |              |
+| | =true>`_ |              |
+| | _        |              |
+| | `6 <http |              |
+| | ://wmsc6 |              |
+| | .terrapa |              |
+| | ges.net/ |              |
+| | getmap?r |              |
+| | equest=g |              |
+| | etcapabi |              |
+| | lities&s |              |
+| | ervice=w |              |
+| | ms&tiled |              |
+| | =true>`_ |              |
+| | _        |              |
+| | `7 <http |              |
+| | ://wmsc7 |              |
+| | .terrapa |              |
+| | ges.net/ |              |
+| | getmap?r |              |
+| | equest=g |              |
+| | etcapabi |              |
+| | lities&s |              |
+| | ervice=w |              |
+| | ms&tiled |              |
+| | =true>`_ |              |
+| | _        |              |
+| | `8 <http |              |
+| | ://wmsc8 |              |
+| | .terrapa |              |
+| | ges.net/ |              |
+| | getmap?r |              |
+| | equest=g |              |
+| | etcapabi |              |
+| | lities&s |              |
+| | ervice=w |              |
+| | ms&tiled |              |
+| | =true>`_ |              |
+| | _        |              |
+| | |        |              |
+| | |image28 |              |
+| | |        |              |
+| | `UMN     |              |
+| | Mapserve |              |
+| | r <http: |              |
+| | //wms-sy |              |
+| | d.terrap |              |
+| | ages.com |              |
+| | /cgi-bin |              |
+| | /mapserv |              |
+| | ?Request |              |
+| | =GetCapa |              |
+| | bilities |              |
+| | &Service |              |
+| | =WMS>`__ |              |
+| | |        |              |
+| | |image29 |              |
+| | |        |              |
+| | `GeoServ |              |
+| | er       |              |
+| | WMS <htt |              |
+| | p://wms- |              |
+| | syd.terr |              |
+| | apages.c |              |
+| | om/geose |              |
+| | rver/wms |              |
+| | ?service |              |
+| | =WMS&req |              |
+| | uest=Get |              |
+| | Capabili |              |
+| | ties>`__ |              |
+| | |        |              |
+| | |image30 |              |
+| | |        |              |
+| | `GeoServ |              |
+| | er       |              |
+| | WFS <htt |              |
+| | p://wms- |              |
+| | syd.terr |              |
+| | apages.c |              |
+| | om/geose |              |
+| | rver/wms |              |
+| | ?service |              |
+| | =WFS&req |              |
+| | uest=Get |              |
+| | Capabili |              |
+| | ties>`__ |              |
+| |          |              |
+| | Localhos |              |
+| | t        |              |
+| | -------- |              |
+| | -        |              |
+| |          |              |
+| | | Files: |              |
+| | `C:\\dat |              |
+| | a <file: |              |
+| | ///C:/da |              |
+| | ta>`__   |              |
+| | |  WMS:  |              |
+| | `GeoServ |              |
+| | er       |              |
+| | WMS <htt |              |
+| | p://loca |              |
+| | lhost:80 |              |
+| | 80/geose |              |
+| | rver/wms |              |
+| | ?service |              |
+| | =WMS&req |              |
+| | uest=Get |              |
+| | Capabili |              |
+| | ties>`__ |              |
+| | |  WFS:  |              |
+| | `GeoServ |              |
+| | er       |              |
+| | WFS <htt |              |
+| | p://loca |              |
+| | lhost:80 |              |
+| | 80/geose |              |
+| | rver/wfs |              |
+| | ?service |              |
+| | =WFS&req |              |
+| | uest=Get |              |
+| | Capabili |              |
+| | ties>`__ |              |
+| | |  Web:  |              |
+| | `GeoServ |              |
+| | er       |              |
+| | Demo <ht |              |
+| | tp://loc |              |
+| | alhost:8 |              |
+| | 080/geos |              |
+| | erver/de |              |
+| | mo.do>`_ |              |
+| | _        |              |
+| |          |              |
+| | World    |              |
+| | -----    |              |
+| |          |              |
+| | | WMS:   |              |
+| | `jpl     |              |
+| | nasa <ht |              |
+| | tp://wms |              |
+| | .jpl.nas |              |
+| | a.gov/wm |              |
+| | s.cgi?Se |              |
+| | rvice=WM |              |
+| | S&Versio |              |
+| | n=1.1.1& |              |
+| | Request= |              |
+| | GetCapab |              |
+| | ilities> |              |
+| | `__      |              |
+| | |        |              |
+| | WMS:\ `m |              |
+| | aps.cust |              |
+| | omweathe |              |
+| | r.com <h |              |
+| | ttp://ma |              |
+| | ps.custo |              |
+| | mweather |              |
+| | .com/ima |              |
+| | ge?REQUE |              |
+| | ST=GetCa |              |
+| | pabiliti |              |
+| | es&servi |              |
+| | ce=WMS>` |              |
+| | __       |              |
+| | |        |              |
+| | WMS:\ `m |              |
+| | apserv2. |              |
+| | esrin.es |              |
+| | a.it <ht |              |
+| | tp://map |              |
+| | serv2.es |              |
+| | rin.esa. |              |
+| | it/cubes |              |
+| | tor/cube |              |
+| | serv/cub |              |
+| | eserv.cg |              |
+| | i?VERSIO |              |
+| | N=1.1.1& |              |
+| | REQUEST= |              |
+| | GetCapab |              |
+| | ilities& |              |
+| | SERVICE= |              |
+| | WMS>`__  |              |
+| | |        |              |
+| | WFS:\ `g |              |
+| | aldos <h |              |
+| | ttp://wf |              |
+| | s.galdos |              |
+| | inc.com: |              |
+| | 8880/wfs |              |
+| | /http?Re |              |
+| | quest=Ge |              |
+| | tCapabil |              |
+| | ities&se |              |
+| | rvice=WF |              |
+| | S>`__    |              |
+| | |        |              |
+| | WMS:\ `D |              |
+| | emo      |              |
+| | Cubwerx  |              |
+| | <http:// |              |
+| | demo.cub |              |
+| | ewerx.co |              |
+| | m/demo/c |              |
+| | ubeserv/ |              |
+| | cubeserv |              |
+| | .cgi?CON |              |
+| | FIG=main |              |
+| | &SERVICE |              |
+| | =WMS&?VE |              |
+| | RSION=1. |              |
+| | 1.1&REQU |              |
+| | EST=GetC |              |
+| | apabilit |              |
+| | ies>`__  |              |
+| | |        |              |
+| | WMS:\ `d |              |
+| | m        |              |
+| | solution |              |
+| | s <http: |              |
+| | //www2.d |              |
+| | msolutio |              |
+| | ns.ca/cg |              |
+| | i-bin/ms |              |
+| | wms_gmap |              |
+| | ?Service |              |
+| | =WMS&VER |              |
+| | SION=1.1 |              |
+| | .0&REQUE |              |
+| | ST=GetCa |              |
+| | pabiliti |              |
+| | es>`__   |              |
+| | WFS:\ `d |              |
+| | m        |              |
+| | solution |              |
+| | s <http: |              |
+| | //www2.d |              |
+| | msolutio |              |
+| | ns.ca/cg |              |
+| | i-bin/ms |              |
+| | wfs_gmap |              |
+| | ?version |              |
+| | =1.0.0&r |              |
+| | equest=g |              |
+| | etcapabi |              |
+| | lities&s |              |
+| | ervice=w |              |
+| | fs>`__   |              |
+| |          |              |
+| | CCIP     |              |
+| | ----     |              |
+| |          |              |
+| | | http:/ |              |
+| | /ccip.li |              |
+| | sasoft.c |              |
+| | om/      |              |
+| | |        |              |
+| | http://n |              |
+| | dg3beta. |              |
+| | badc.rl. |              |
+| | ac.uk/cc |              |
+| | ip/      |              |
+| | |        |              |
+| | http://c |              |
+| | cip.lat- |              |
+| | lon.de/  |              |
+| |          |              |
+| | CSIRO    |              |
+| | -----    |              |
+| |          |              |
+| | | `www.m |              |
+| | arine.cs |              |
+| | iro.au   |              |
+| | cmar\_te |              |
+| | st <http |              |
+| | ://www.m |              |
+| | arine.cs |              |
+| | iro.au/m |              |
+| | apserver |              |
+| | /cgi-bin |              |
+| | /mapserv |              |
+| | ?map=/sr |              |
+| | v/www/ht |              |
+| | docs/sst |              |
+| | /cmar_te |              |
+| | st.map&s |              |
+| | ervice=w |              |
+| | ms&reque |              |
+| | st=getca |              |
+| | pabiliti |              |
+| | es&versi |              |
+| | on=1.1.1 |              |
+| | >`__     |              |
+| | |        |              |
+| | `www.mar |              |
+| | ine.csir |              |
+| | o.au     |              |
+| | bioreg < |              |
+| | http://w |              |
+| | ww.marin |              |
+| | e.csiro. |              |
+| | au/mapse |              |
+| | rver/cgi |              |
+| | -bin/map |              |
+| | serv?map |              |
+| | =/srv/ww |              |
+| | w/htdocs |              |
+| | /bioreg/ |              |
+| | bioreg.m |              |
+| | ap&servi |              |
+| | ce=wms&r |              |
+| | equest=g |              |
+| | etcapabi |              |
+| | lities&v |              |
+| | ersion=1 |              |
+| | .1.1>`__ |              |
+| | |        |              |
+| | `www.mar |              |
+| | ine.csir |              |
+| | o.au     |              |
+| | cmar <ht |              |
+| | tp://www |              |
+| | .marine. |              |
+| | csiro.au |              |
+| | /mapserv |              |
+| | er/cgi-b |              |
+| | in/mapse |              |
+| | rv?map=/ |              |
+| | srv/www/ |              |
+| | htdocs/C |              |
+| | MAR_Ware |              |
+| | house_Da |              |
+| | ta_WMS.m |              |
+| | ap&SERVI |              |
+| | CE=WMS&V |              |
+| | ERSION=1 |              |
+| | .1.1&REQ |              |
+| | UEST=Get |              |
+| | Capabili |              |
+| | ties>`__ |              |
+| +----------+----------+-- |
+| --------+----------+----- |
+| -----+----------+-------- |
+| --+----------+----------+ |
+| ----------+----------+--- |
+| -------+                  |
+|                           |
+| |image31| recommended     |
+| |image32| slow or         |
+| incomplete |image33|      |
+| broken                    |
++---------------------------+---------------------------+---------------------------+---------------------------+
+
++-------------+----------------------------------------------------------+
+| |image35|   | Document generated by Confluence on Aug 11, 2014 12:26   |
++-------------+----------------------------------------------------------+
+
+.. |image0| image:: images/icons/emoticons/warning.gif
+.. |image1| image:: images/icons/emoticons/check.gif
+.. |image2| image:: images/icons/emoticons/warning.gif
+.. |image3| image:: images/icons/emoticons/warning.gif
+.. |image4| image:: images/icons/emoticons/error.gif
+.. |image5| image:: images/icons/emoticons/error.gif
+.. |image6| image:: images/icons/emoticons/check.gif
+.. |image7| image:: images/icons/emoticons/warning.gif
+.. |image8| image:: images/icons/emoticons/check.gif
+.. |image9| image:: images/icons/emoticons/warning.gif
+.. |image10| image:: images/icons/emoticons/warning.gif
+.. |image11| image:: images/icons/emoticons/error.gif
+.. |image12| image:: images/icons/emoticons/error.gif
+.. |image13| image:: images/icons/emoticons/check.gif
+.. |image14| image:: images/icons/emoticons/check.gif
+.. |image15| image:: images/icons/emoticons/warning.gif
+.. |image16| image:: images/icons/emoticons/error.gif
+.. |image17| image:: images/icons/emoticons/warning.gif
+.. |image18| image:: images/icons/emoticons/check.gif
+.. |image19| image:: images/icons/emoticons/warning.gif
+.. |image20| image:: images/icons/emoticons/warning.gif
+.. |image21| image:: images/icons/emoticons/error.gif
+.. |image22| image:: images/icons/emoticons/error.gif
+.. |image23| image:: images/icons/emoticons/check.gif
+.. |image24| image:: images/icons/emoticons/warning.gif
+.. |image25| image:: images/icons/emoticons/check.gif
+.. |image26| image:: images/icons/emoticons/warning.gif
+.. |image27| image:: images/icons/emoticons/warning.gif
+.. |image28| image:: images/icons/emoticons/error.gif
+.. |image29| image:: images/icons/emoticons/error.gif
+.. |image30| image:: images/icons/emoticons/check.gif
+.. |image31| image:: images/icons/emoticons/check.gif
+.. |image32| image:: images/icons/emoticons/warning.gif
+.. |image33| image:: images/icons/emoticons/error.gif
+.. |image34| image:: images/border/spacer.gif
+.. |image35| image:: images/border/spacer.gif

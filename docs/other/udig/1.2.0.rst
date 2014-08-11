@@ -1,0 +1,354 @@
+1.2.0
+#####
+
+uDig : 1.2.0
+
+This page last changed on Jul 12, 2012 by jgarnett.
+
+Tag and bag 1.2.x.
+
+`Release Notes <#1.2.0-ReleaseNotes>`__
+
+`Release Checklist <#1.2.0-ReleaseChecklist>`__
+
+-  `July 28th 1.2-SNAPSHOT <#1.2.0-July28th1.2SNAPSHOT>`__
+-  `June 11th 1.2-SNAPSHOT <#1.2.0-June11th1.2SNAPSHOT>`__
+
+`Available Volunteers <#1.2.0-AvailableVolunteers>`__
+
+-  `Jody Garnett <#1.2.0-jgarnett>`__
+-  `Mauricio Pazos <#1.2.0-mauricio.pazos>`__
+-  `Andrea Antonello <#1.2.0-moovida>`__
+-  `Artiz Davila <#1.2.0-ArtizDavila>`__
+-  `Tawan Banchuen <#1.2.0-TawanBanchuen>`__
+-  `Cliff Broadbent <#1.2.0-CliffBroadbent>`__
+
+Items marked as |image0| interested, |image1| are done, |image2| blocked or |image3| failed. Add to
+this page if you would like to work on something.
+
+Release Notes
+=============
+
+The following are high priority issues:
+
+#. Sort out update site
+
+   -  |image4| Rollback the update Update site from P2 to the prior engine.
+   -  |image5| Write the documentation for walkthrough 1
+
+#. Create the announcement and new feature page for the release
+
+   -  |image6| `What is new <http://udig.refractions.net/confluence//display/EN/What+is+new>`__
+
+| The following new feature has been added:
+|  |image7| `UDIG-1710 <http://jira.codehaus.org/browse/UDIG-1710>`__ ArcSDE Rasters
+
+| The following issues have been worked on during this release:
+|  |image8| `UDIG-1717 <https://jira.codehaus.org/browse/UDIG-1717>`__ User Control of RasterCaching
+|  |image9| `UDIG-1714 <http://jira.codehaus.org/browse/UDIG-1714>`__ Provide a feedback for Wfs1.1
+no supported
+|  |image10| `UDIG-1715 <http://jira.codehaus.org/browse/UDIG-1715>`__ Glyph NPE when fill defined
+by function
+|  |image11| `UDIG-1705 <http://jira.codehaus.org/browse/UDIG-1705>`__ uDIG does not open
+geowebcache- wms-c urls
+|  |image12| `UDIG-1699 <http://jira.codehaus.org/browse/UDIG-1699>`__ Modal tool Icons disappear
+from toolbar
+|  |image13| Mac Installer or DMG
+|  |image14| `UDIG-1672 <https://jira.codehaus.org/browse/UDIG-1672>`__ WMS Filter issue reported on
+email
+|  |image15| `UDIG-1686 <http://jira.codehaus.org/browse/UDIG-1686>`__ Tools are deactivated.
+|  |image16| `UDIG-1684 <http://jira.codehaus.org/browse/UDIG-1684>`__ Automatically change JVM
+memory size
+
+| The following are known issues:
+|  `UDIG-1712 <http://jira.codehaus.org/browse/UDIG-1712>`__ The create tool is adding twice the
+created feature
+
+-  this is only occurring with PostGIS (and is also present when GeoServer uses PostGIS)
+-  also reported against Oracle
+-  initial testing with debugger show insertSQL being called once when the feature is created; and
+   again during commit
+
+`UDIG-1703 <https://jira.codehaus.org/browse/UDIG-1703>`__ SDK Source code for GeoTools not picked
+up in Eclipse
+
+-  Jesse indicates the directory structure has to exactly match net.refractions.udig.libs
+
+| The following issues lacked volunteers:
+|  |image17| `UDIG-1683 <https://jira.codehaus.org/browse/UDIG-1683>`__ PostGIS Connection Missing
+|  |image18| `UDIG-1673 <https://jira.codehaus.org/browse/UDIG-1673>`__ Generated WFS-T requests
+seriously broken
+|  |image19| `UDIG-1678 <http://jira.codehaus.org/browse/UDIG-1678>`__ export function seems to
+always export absolute paths
+|  |image20| Write update-site documentation for the online help
+|  |image21| Update online help
+`Reference <http://udig.refractions.net/confluence//display/EN/Reference>`__ screen snaps
+|  |image22| Ping contributors to prep press release(s)
+
+Release Checklist
+=================
+
+We will try for a "snapshot" release every couple of days; asking the email list for testing.
+
+Release
+
+-  next?
+-  July 28th - 1.2-SNAPSHOT
+-  July 11th - 1.2-SNAPSHOT
+-  June 28th - 1.2-RC4 mac installer
+-  June 27th - 1.2-RC4
+
+| Application Test Plan:
+|  |image23| `Export uDig
+Procedure <http://udig.refractions.net/confluence//display/ADMIN/Export+uDig+Procedure>`__
+|  `Quickstart <http://udig.refractions.net/confluence//display/EN/Quickstart>`__
+|  |image24| `Walkthrough 1 <http://udig.refractions.net/confluence//display/EN/Walkthrough+1>`__
+|  |image25| `Walkthrough 2 <http://udig.refractions.net/confluence//display/EN/Walkthrough+2>`__
+
+| SDK Test Plan:
+|  |image26| `Export uDig SDK
+Procedure <http://udig.refractions.net/confluence//display/ADMIN/Export+uDig+SDK+Procedure>`__
+|  |image27| `SDK Quickstart <http://udig.refractions.net/confluence//display/DEV/SDK+Quickstart>`__
+|  `Tool Plugin
+Tutorial <http://udig.refractions.net/confluence//display/DEV/Tool+Plugin+Tutorial>`__
+|  |image28| `Custom Application
+Tutorial <http://udig.refractions.net/confluence//display/DEV/Custom+Application+Tutorial>`__
+
+Final Release:
+
+-  `Making a Release <http://udig.refractions.net/confluence//display/ADMIN/Making+a+Release>`__
+-  Tag/Release GeoTools
+
+July 28th 1.2-SNAPSHOT
+----------------------
+
+Walkthrough 1 and 2 were tested prior to release; however we will still need to verify as the
+release process sometimes messes things up.
+
+-  (fixed) SDK was missing SWT Jars
+-  
+
+June 11th 1.2-SNAPSHOT
+----------------------
+
+Testing reported the following issues for discussion.
+
+Quickstart:
+
+-  about date is wrong (doh!)
+-  (fixed) zip archive contains "build" directory structure
+-  File > New > Map creates a zero extent map; hitting zoom extent fixes
+-  screen snap shows wrong wms layer order
+
+Walkthrough 1:
+
+#. (fixed) jre inside the install zip are not properly named. The name has to be **jre** to be
+   picked by udig
+#. (fixed) the community update sites work fine now. Axios installs. Tried a buffer operation and it
+   didn't work the first time. Silvia suggested me to restart (even if I already did ater install).
+   In fact after that it worked.
+#. (fixed) bug "http://jira.codehaus.org/browse/UDIG-1699 Modal Tool Icons disappear from toolbar"
+   is a showstopper.
+#. |image29| the theme style editor is buggy. It doesn't pick the shape and its properties form the
+   current style (i.e. size, border, etc. It just uses a default square mark). I will be working on
+   this in short, but it will not make it into 1.2. I would suggest to take this for a 1.2.1.
+#. (removed) the last added wps actions service shows up as: **null (geotools)**. I guess **null**
+   should be something different. Anyways what is the service good for? Is a default user able to
+   use that?
+#. |image30| the cities shp layer was not editable for me. Created a buffer layer from cities. The
+   generated polygon layer was editable. Once I saved it it got locked to non editable. Anyways I am
+   not able to reproduce the problem the same way every time.
+
+Available Volunteers
+====================
+
+Week
+
+Available
+
+Away
+
+July 12 - July 18
+
+jody, moovida, mauro
+
+jeichar
+
+July 19 - July 25
+
+jody, mauro
+
+moovida, jeichar
+
+July 26 - August 1st
+
+jody
+
+moovida, mauro, jeichar
+
+August 2 - August 8
+
+jody, moovida, jeichar, mauro
+
+ 
+
+`Jody Garnett <http://udig.refractions.net/confluence//display/~jgarnett>`__
+----------------------------------------------------------------------------
+
+-  |image31| Took a first cut at `What is
+   new <http://udig.refractions.net/confluence//display/EN/What+is+new>`__ - could really use some
+   pictures as we will reference this from any press release.
+-  |image32| Update the code base to Eclipse 3.6, it went smoothly - but we needed to move xerces
+   back into the net.refractions.udig.libs plugin as it is no longer available as an OSGi plugin.
+-  |image33| `UDIG-1672 <https://jira.codehaus.org/browse/UDIG-1672>`__ WMS Filter issue reported on
+   email
+-  |image34| Updated dropins-3.6.zip with new translations from the babel project
+-  |image35| Updated udig\_language plugin to use above translations
+-  |image36| Produced a 1.2-SNAPSHOT on July 10th
+-  `UDIG-1696 <https://jira.codehaus.org/browse/UDIG-1696>`__ working on win32.sh, lin32.sh,
+   mac32.sh, mac64.sh sdk.sh scripts to make packaging easier (win64.sh waiting on a jre)
+-  |image37| http://jira.codehaus.org/browse/UDIG-1699 Modal Tool Icons disappear from toolbar
+-  |image38| Released a 1.2-SNAPSHOT on July 28th, with an SDK
+-  |image39| GridCoverageLoader only used by default for JPEG, restore JAI processing chain for
+   GeoTIFF, ECW etc..
+-  |image40| Remade the SDK several times while correcting the packaging scripts in trunk/deploy
+-  live dvd testing
+-  
+
+`Mauricio Pazos <http://udig.refractions.net/confluence//display/~mauricio.pazos>`__
+------------------------------------------------------------------------------------
+
+-  |image41| Updated walkthrough 1 instructions to reflect the installation of axios tool
+-  |image42| testing udig\_1.2.0.201007101834. Walkthrough 2 is OK.
+-  |image43| http://jira.codehaus.org/browse/UDIG-1686 Tools are deactivated.
+-  |image44| Testing - trunk revision 31897- walkthrough 1 and 2 are OK.
+-  |image45| Testing shp, postgis, wfs, oracle, ...
+    Workflow
+    1 - Load Multipolygon layer
+    2- Add new feature 1, commit
+    3- edit feature 1, commit
+    4- delete feature 1, commit.
+
+| **Testing shp, postgis, wfs. Detail Result:**
+|  **shp:** ok
+|  **postgis:**
+
+-  the create tool creates duplicated feature (step 2).
+    http://jira.codehaus.org/browse/UDIG-1712 The create tool is adding twice the created feature
+-  edit: ok
+-  delete: ok
+
+**wfs1.0-shp:** OK
+
+**wfs1.0-postgis:** it is similar to postgis test.
+
+-  create tool creates duplicated feature (step 2).
+-  edit: ok
+-  delete: ok
+
+**wfs1.1-shp:** it is not supported. Could we add a warning message or disable the editing
+tools.\ http://jira.codehaus.org/browse/UDIG-1714
+
+**wfs1.1-postgis:** all transactions are failed.
+
+**oracle:** pending (installing oracle).
+
+`Andrea Antonello <http://udig.refractions.net/confluence//display/~moovida>`__
+-------------------------------------------------------------------------------
+
+Has looked into project export and import; initial code review shows this working on mac; however
+the string manipulations involved looked to have the possibility for error when running on win32.
+
+Testing the SDK release.
+
+Opened the following issues:
+
+-  http://jira.codehaus.org/browse/UDIG-1678 export function seems to always export absolute paths
+-  |image46| http://jira.codehaus.org/browse/UDIG-1684 Automatically change JVM memory size
+-  |image47| PointSymbolizer not showing color
+
+Artiz Davila
+------------
+
+Opened the following issues:
+
+-  http://jira.codehaus.org/browse/UDIG-1686 Tools are deactivated after restarting udig
+-  http://jira.codehaus.org/browse/UDIG-1685 Automatically change JVM memory size infinity loop
+-  http://jira.codehaus.org/browse/UDIG-1684 Automatically change JVM memory size
+
+Tawan Banchuen
+--------------
+
+Has produced a gdal.zip for mac:
+
+-  `gdal.zip <https://webdropoff.auckland.ac.nz/cgi-bin/pickup/6e6191a0c9c0b514bcf7743c29da82b4/439127>`__
+
+Cliff Broadbent
+---------------
+
+Has produced a mac osx dmg:
+
+-  http://udig.refractions.net/files/downloads/branches/udig-1.2-RC4.macosx.cocoa.x86.dmg
+
+Has reported the following issues:
+
+-  |image48| http://jira.codehaus.org/browse/UDIG-1681 Spelling Mistake in Tooltip
+-  http://jira.codehaus.org/browse/UDIG-1680 Web view doesn't display any data until user clicks
+   "Show All Data" button, Walkthrough 1, Step 12.3
+-  http://jira.codehaus.org/browse/UDIG-1679 Toolbar breaks
+
++-------------+----------------------------------------------------------+
+| |image50|   | Document generated by Confluence on Aug 11, 2014 12:31   |
++-------------+----------------------------------------------------------+
+
+.. |image0| image:: images/icons/emoticons/star_yellow.gif
+.. |image1| image:: images/icons/emoticons/check.gif
+.. |image2| image:: images/icons/emoticons/warning.gif
+.. |image3| image:: images/icons/emoticons/error.gif
+.. |image4| image:: images/icons/emoticons/check.gif
+.. |image5| image:: images/icons/emoticons/check.gif
+.. |image6| image:: images/icons/emoticons/check.gif
+.. |image7| image:: images/icons/emoticons/check.gif
+.. |image8| image:: images/icons/emoticons/check.gif
+.. |image9| image:: images/icons/emoticons/check.gif
+.. |image10| image:: images/icons/emoticons/check.gif
+.. |image11| image:: images/icons/emoticons/check.gif
+.. |image12| image:: images/icons/emoticons/check.gif
+.. |image13| image:: images/icons/emoticons/check.gif
+.. |image14| image:: images/icons/emoticons/check.gif
+.. |image15| image:: images/icons/emoticons/check.gif
+.. |image16| image:: images/icons/emoticons/check.gif
+.. |image17| image:: images/icons/emoticons/warning.gif
+.. |image18| image:: images/icons/emoticons/warning.gif
+.. |image19| image:: images/icons/emoticons/warning.gif
+.. |image20| image:: images/icons/emoticons/warning.gif
+.. |image21| image:: images/icons/emoticons/warning.gif
+.. |image22| image:: images/icons/emoticons/warning.gif
+.. |image23| image:: images/icons/emoticons/check.gif
+.. |image24| image:: images/icons/emoticons/check.gif
+.. |image25| image:: images/icons/emoticons/check.gif
+.. |image26| image:: images/icons/emoticons/check.gif
+.. |image27| image:: images/icons/emoticons/check.gif
+.. |image28| image:: images/icons/emoticons/check.gif
+.. |image29| image:: images/icons/emoticons/warning.gif
+.. |image30| image:: images/icons/emoticons/warning.gif
+.. |image31| image:: images/icons/emoticons/check.gif
+.. |image32| image:: images/icons/emoticons/check.gif
+.. |image33| image:: images/icons/emoticons/check.gif
+.. |image34| image:: images/icons/emoticons/check.gif
+.. |image35| image:: images/icons/emoticons/check.gif
+.. |image36| image:: images/icons/emoticons/check.gif
+.. |image37| image:: images/icons/emoticons/check.gif
+.. |image38| image:: images/icons/emoticons/check.gif
+.. |image39| image:: images/icons/emoticons/check.gif
+.. |image40| image:: images/icons/emoticons/check.gif
+.. |image41| image:: images/icons/emoticons/check.gif
+.. |image42| image:: images/icons/emoticons/check.gif
+.. |image43| image:: images/icons/emoticons/check.gif
+.. |image44| image:: images/icons/emoticons/check.gif
+.. |image45| image:: images/icons/emoticons/check.gif
+.. |image46| image:: images/icons/emoticons/check.gif
+.. |image47| image:: images/icons/emoticons/check.gif
+.. |image48| image:: images/icons/emoticons/check.gif
+.. |image49| image:: images/border/spacer.gif
+.. |image50| image:: images/border/spacer.gif

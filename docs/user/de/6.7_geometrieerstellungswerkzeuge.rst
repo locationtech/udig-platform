@@ -1,0 +1,216 @@
+6.7 Geometrieerstellungswerkzeuge
+=================================
+
+Geometrieerstellungswerkzeuge
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Diese Werkzeuge dienen dem Anlegen neuer Features. Viele von ihnen können auch zum Bearbeiten
+bestehender Geometrien genutzt werden, wenn die erweiterten Bearbeitungsfunktionen aktiviert sind.
+So läßt sich eine komplexe Bearbeitung komfortabler durchführen, da seltener zwischen verschiedenen
+Werkzeugen umgeschaltet werden muß.
+
+Zu Kategorie dieser Werkzeuge gehören:
+
+-  `Polygonerstellung <#6.7Geometrieerstellungswerkzeuge-Polygonerstellung>`__
+-  `Linienerstellung <#6.7Geometrieerstellungswerkzeuge-Linienerstellung>`__
+-  `Punkterstellung <#6.7Geometrieerstellungswerkzeuge-Punkterstellung>`__
+-  `Geometrie zeichnen <#6.7Geometrieerstellungswerkzeuge-Geometriezeichnen>`__
+-  `Rechteckerstellung <#6.7Geometrieerstellungswerkzeuge-Rechteckerstellung>`__
+-  `Ellipsenerstellung <#6.7Geometrieerstellungswerkzeuge-Ellipsenerstellung>`__
+
+Polygonerstellung - |image0|
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+| Diese Werkzeug erlaubt es, neue Polygone anzulegen. Wählen Sie dazu einen Polygonkartenlayer im
+Legendenfenster und klicken Sie auf den Ort für den ersten Eckpunkt. Durch weitere Klicks fügen Sie
+weitere Eckpunkte hinzu.
+|  **Hinweis:** Derart erstellte Polygone werden nur ausgefüllt, wenn dies durch die Voreinstellung
+"Ausgewälte Polygone füllen" in den Leistungsparemetern für Bearbeitungswerkzeuge so festgelegt
+wurde.
+|  |image1|
+
+Einrasten der Eckpunkte
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Normalerweise ist das Einrasten ausgeschaltet. Es kann jedoch auf Wunsch bei der Polygonerstellung
+genutzt werden.
+
+| Polygonerstellung mit Einrasten im aktuellen Kartenlayer: Beachten Sie, daß der Eckpunkt nicht zum
+Krankenhauspunkt eingerastet ist (rot hervorgehoben), da sich dieser auf einem anderen Kartenlayer
+befindet.
+|  |image2|
+
+| Polygonerzeugung mit Einrasten auf alle Kartenlayer: Mit dieser Option passierte ein Einrasten auf
+ein Krankenhaus im anderen Kartenlayer.
+|  |image3|
+
+| Polygonerzeugung mit Einrasten auf ein Gitter: Das Gitter wird nur angezeigt, wenn der
+Gitterkartenlayer zur Karte hinzugefügt wurde: Dies geschieht im Menü über "Layer > Netz".
+|  |image4|
+
+Erweiterte Bearbeitungsfunktionen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Im erweiterte Bearbeitungsmodus verfügen Sie bei Auswahl des Polygonerzeugungswerkzeugs über fast
+alle Funktionen wie beim
+`Geometriebearbeitungswerkzeug <6.6%20Eckpunkt-Werkzeuge.html#6.6Eckpunkt-Werkzeuge-Geometriebearbeitungswerkzeug>`__,
+mit der Ausnahme, daß **nur Polygone** bearbeitet werden können. Folgende Funktionalität wird
+bereitgestellt:
+
+-  Klicken auf ein existierendes Polygon wählt es aus.
+-  Eckpunkte ausgewälter Polygone können hinzugefügt, verschoben und gelöscht werden.
+-  Diese Bearbeitungsfunktionen werden auf mehrere Eckpunkte gleichzeitig angewendet, wenn mehrere
+   Eckpunkte ausgewält sind.
+-  Mit Hilfe von **Strg+Shift** kann die gesamte Geometrie verschobenen werden.
+
+Linienerstellung - |image5|
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+|image6|
+
+-  [Erweiterte Bearbeitungsfunktionen\|Advanced Mit dem Linienerstellungswerkzeug legen Sie neue
+   Linienfeatures an. Wählen Sie dazu den zu bearbeitenden Kartenlayer und klicken Sie ganz einfach
+   in die Karte, um an dieser Stelle eine neue Linie zu beginnen. Durch weitere Klicke verlängern
+   Sie die Linie. Mit der Taste "Entf" löschen Sie den zuletzt angelegten Eckpunkt. Durch
+   Doppelklick beenden Sie die Linie.
+    |image7|
+
+Einrasten der Eckpunkte
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Normalerweise ist das Einrasten ausgeschaltet. Es kann jedoch auf Wunsch bei der Geometrieerstellung
+genutzt werden.
+
+| Linienerzeugung mit Einrasten im aktuellen Kartenlayer: Beachten Sie, daß der Eckpunkt nicht zur
+Gemeinde eingerastet ist (rot hervorgehoben), da sich diese auf einem anderen Kartenlayer befindet.
+|  |image8|
+
+| Linienerzeugung mit Einrasten auf alle Kartenlayer: Mit dieser Option passierte ein Einrasten auch
+auf Features in anderen Kartenlayern.
+|  |image9|
+
+| Linienerzeugung mit Einrasten auf ein Gitter: Das Gitter wird nur angezeigt, wenn der
+Gitterkartenlayer zur Karte hinzugefügt wurde: Dies geschieht im Menü über "Layer > Netz".
+|  |image10|
+
+Erweiterte Bearbeitungsfunktionen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Auch das Linienbearbeitungswerkzeug besitzt erweiterte Bearbeitungsfunktionen, welche alle
+Funktionen wie beim Geometriebearbeitungswerkzeug bereitstellen, mit der Ausnahme, daß nur
+**Linien** bearbeitet werden können. Folgende Funktionalität wird bereitgestellt:
+
+-  Klicken auf ein existierendes Polygon wählt es aus.
+-  Eine bestehende Linie kann verlängert werden, indem man sie auswählt und auf einen ihrer
+   Endpunkte klickt. Dann können weitere Punkte gesetzt werden.
+    |image11| |image12|
+-  Eckpunkte ausgewälter Linien können hinzugefügt, verschoben und gelöscht werden.
+-  Diese Bearbeitungsfunktionen werden auf mehrere Eckpunkte gleichzeitig angewendet, wenn mehrere
+   Eckpunkte ausgewält sind.
+-  Mit Hilfe von Strg+Shift kann die gesamte Geometrie verschobenen werden.
+
+Punkterstellung - |image13|
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Dieses Werkzeug erlaubt das Setzen neuer Punktfeatures. Wählen Sie dazu den entsprechenden
+Kartenlayer aus und klicken Sie an die Stelle, an die der neue Punkt gesetzt werden soll.
+
+Einrasten von Punkten
+^^^^^^^^^^^^^^^^^^^^^
+
+Normalerweise ist das Einrasten ausgeschaltet. Es kann jedoch auf Wunsch bei der Punkterstellung
+genutzt werden. Einrasten geschieht je nach Voreinstellung entweder auf Objekte des aktuellen
+Kartenlayers, auf Objekte beliebiger Layer oder auf ein Raster. Das Gitter wird nur angezeigt, wenn
+der Gitterkartenlayer zur Karte hinzugefügt wurde: Dies geschieht im Menü über "Layer > Netz".
+
+Erweiterte Bearbeitungsfunktionen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Auch das Linienbearbeitungswerkzeug besitzt erweiterte Bearbeitungsfunktionen, welche alle
+Funktionen wie beim Geometriebearbeitungswerkzeug bereitstellen, mit der Ausnahme, daß nur Punkte
+bearbeitet werden können. Folgende Funktionalität kann genutzt werden:
+
+-  Das Anklicken eines Punkts wählt ihn aus.
+-  Ausgewählte Punkte können verschoben werden.
+
+Geometrie zeichnen - |image14|
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+| Das Geometriezeichenwerkzeug erlaubt es, Linien, Polyone und Löcher im Freihand-Zeichenstil
+anzulegen. Das Werkzeugt versucht selbstständig herauszufinden, welche Art Geometrie erzeugt wird,
+indem es den Featuretyp des Kartenlayers untersucht. In Polygon- und Linienlayern werden Polygone
+bzw. Linien erzeugt. Ist der Featuretyp "Geometrie" (und kann also Polygone und Linien enthalten),
+so zeichnet dieses Werkzeug Linien, es sei denn, Anfangs- und Endpunkt sind identisch und die
+Geometrie damit geschlossen; in diesem Fall wird ein Polygon erzeugt.
+|  |image15|
+
+| Das Werkzeug kann auch Löcher in bestehenden Polygonen erzeugen. Gehen Sie dazu wie folgt vor:
+|  1. Wählen Sie die zu bearbeitende Geometrie. Dazu müssen die erweiterten Bearbeitungsfunktionen
+aktiv sein.
+|  2. Zeichnen Sie nun das Loch in das Polygon.
+
+| Wie auch bei der `Linienerstellung <#6.7Geometrieerstellungswerkzeuge-Linienerstellung>`__, so
+kann auch dieses Werkzeug bestehende Linien verlängern:
+|  1. Wählen Sie die zu bearbeitende Geometrie. Dazu müssen die erweiterten Bearbeitungsfunktionen
+aktiv sein.
+|  2. Klicken Sie auf einen der Endpunkte.
+|  3. Zeichnen Sie von dort wie gewohnt eine Linie.
+|  **Achtung:** Die Erweiterung muß an der existierenden Linie *beginnen*. Eine Linie, die lediglich
+an einer bestehenden Linie endet, wird als neue Linie angelegt und nicht als Verlängerung der
+bestehenden.
+
+Rechteckerstellung - |image16|
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Das Rechteckwerkzeug ist eines der einfachsten Werkzeuge. Man zeichnet damit einfach ein Rechteck,
+indem man es mit der Maus aufzieht. Hat dieses die gewünschte Größe, wird die Maustaste losgelassen.
+Dies erzeugt ein Feature, dessen Geometrie ein Rechteck mit den Seiten parallel zu den
+Koordinatenachsen ist.
+
+| **Hinweis 1:** Rechtecke können entweder Polygone oder Linien sein.
+|  **Hinweis 2:** Dieses Werkzeug hat keine erweiterten Funktionen.
+
+Ellipsenerstellung - |image17|
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Das Ellipsenwerkzeug ist eines der einfachsten Werkzeuge. Ziehen Sie einfach mit der Maus eine
+Ellipse auf und lassen Sie die Maustaste los, wenn diese die gewünschte Größe besitzt. Es wird dann
+ein Feature mit der Ellipse als Geometrie erzeugt.
+
+| **Hinweis 1:** Ellipsen können entweder Polygone oder Linien sein.
+|  **Hinweis 2:** Für das Ellipsenwerkzeug existieren keine erweiterten Funktionen.
+
+Edit Mode]
+
+-  `Eckpunkt-Werkzeuge <6.6%20Eckpunkt-Werkzeuge.html>`__
+-  `Objektbearbeitungswerkzeuge <6.8%20Objektbearbeitungswerkzeuge.html>`__
+-  `EditBlackboard <EditBlackboard.html>`__
+-  Einrasten
+-  Erweiterte Bearbeitungsfunktionen
+
+(c) Copyright (c) 2004-2008 Refractions Research Inc. and others.
+
+.. |image0| image:: /images/6.7_geometrieerstellungswerkzeuge/new_polygon_mode.gif
+.. |image1| image:: /images/6.7_geometrieerstellungswerkzeuge/createpolygon.png
+.. |image2| image:: download/thumbnails/8966/currentlayersnapping.png
+   :target: http://udig.refractions.net/confluence//download/attachments/8966/currentlayersnapping.png
+.. |image3| image:: download/thumbnails/8966/alllayersnapping.png
+   :target: http://udig.refractions.net/confluence//download/attachments/8966/alllayersnapping.png
+.. |image4| image:: download/thumbnails/8966/gridsnapping.png
+   :target: http://udig.refractions.net/confluence//download/attachments/8966/gridsnapping.png
+.. |image5| image:: /images/6.7_geometrieerstellungswerkzeuge/new_line_mode.gif
+.. |image6| image:: http://udig.refractions.net/image/DE/ngrelr.gif
+.. |image7| image:: /images/6.7_geometrieerstellungswerkzeuge/createline.png
+.. |image8| image:: download/thumbnails/8966/currentlayersnapping2.png
+   :target: http://udig.refractions.net/confluence//download/attachments/8966/currentlayersnapping2.png
+.. |image9| image:: download/thumbnails/8966/alllayersnapping2.png
+   :target: http://udig.refractions.net/confluence//download/attachments/8966/alllayersnapping2.png
+.. |image10| image:: download/thumbnails/8966/gridsnapping2.png
+   :target: http://udig.refractions.net/confluence//download/attachments/8966/gridsnapping2.png
+.. |image11| image:: /images/6.7_geometrieerstellungswerkzeuge/selectline.png
+.. |image12| image:: /images/6.7_geometrieerstellungswerkzeuge/extendline.png
+.. |image13| image:: /images/6.7_geometrieerstellungswerkzeuge/new_point_mode.gif
+.. |image14| image:: /images/6.7_geometrieerstellungswerkzeuge/new_freehand_mode.gif
+.. |image15| image:: /images/6.7_geometrieerstellungswerkzeuge/drawGeom.png
+.. |image16| image:: /images/6.7_geometrieerstellungswerkzeuge/new_rectangle_mode.gif
+.. |image17| image:: /images/6.7_geometrieerstellungswerkzeuge/new_circle_mode.gif
