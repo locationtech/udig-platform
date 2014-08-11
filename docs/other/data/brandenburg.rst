@@ -1,153 +1,96 @@
 Brandenburg
 ###########
 
-+----------------+----------------+----------------+----------------+----------------+----------------+----------------+
-| Data :         |
-| Brandenburg    |
-| This page last |
-| changed on Sep |
-| 21, 2007 by    |
-| jgarnett.      |
-| I have a       |
-| couple of      |
-| German Web Map |
-| Servers.       |
-|                |
-| | State of     |
-| Brandenburg    |
-| DOPs:          |
-| |              |
-| http://isk.geo |
-| basis-bb.de/ow |
-| s/dnm.php?SERV |
-| ICE=WMS&REQUES |
-| T=GetCapabilit |
-| ies&VERSION=1. |
-| 2.0            |
-| |              |
-| Administrative |
-| boundaries for |
-| Brandenburg:   |
-| |              |
-| http://isk.geo |
-| basis-bb.de/ow |
-| s/dnmvg.php?SE |
-| RVICE=WMS&REQU |
-| EST=GetCapabil |
-| ities&VERSION= |
-| 1.2.0          |
-| |  Digital     |
-| Navigation     |
-| Model, Scale   |
-| 1:10000:       |
-| |              |
-| http://isk.geo |
-| basis-bb.de/ow |
-| s/dnm010.php?S |
-| ERVICE=WMS&REQ |
-| UEST=GetCapabi |
-| lities&VERSION |
-| =1.2.0         |
-| |  Digital     |
-| Navigation     |
-| Model, Scale   |
-| 1:25000:       |
-| |              |
-| http://isk.geo |
-| basis-bb.de/ow |
-| s/dnm025.php?S |
-| ERVICE=WMS&REQ |
-| UEST=GetCapabi |
-| lities&VERSION |
-| =1.2.0         |
-| |  Digital     |
-| Navigation     |
-| Model, Scale   |
-| 1:100000:      |
-| |              |
-| http://isk.geo |
-| basis-bb.de/ow |
-| s/dnm100.php?S |
-| ERVICE=WMS&REQ |
-| UEST=GetCapabi |
-| lities&VERSION |
-| =1.2.0         |
-| |  Digital     |
-| Navigation     |
-| Model, Scale   |
-| 1:250000:      |
-| |              |
-| http://isk.geo |
-| basis-bb.de/ow |
-| s/dnm250.php?S |
-| ERVICE=WMS&REQ |
-| UEST=GetCapabi |
-| lities&VERSION |
-| =1.2.0         |
-|                |
-| | They use an  |
-| inofficial     |
-| EPSG-Code      |
-| 325833 which   |
-| is EPSG:25833  |
-| with an        |
-| additional     |
-| |  false       |
-| easting of     |
-| 3000 km (which |
-| is the         |
-| official CRS   |
-| for            |
-| Brandenburg,   |
-| ETRS89         |
-| |  with 7      |
-| digit          |
-| rightings).    |
-| More about     |
-| these servers  |
-| can be found   |
-| here:          |
-| |              |
-| http://isk.geo |
-| basis-bb.de/in |
-| dex.php?cms=11 |
-| 01             |
-| (German only)  |
-| |  These       |
-| servers have   |
-| just been      |
-| moved to a new |
-| system two     |
-| weeks ago.     |
-|                |
-| | I also have  |
-| WMSs for       |
-| Saxony,        |
-| including DOPs |
-| from the great |
-| flood in 2003, |
-| but            |
-| |  right now I |
-| get 502 Proxy  |
-| Errors for the |
-| whole website  |
-| of the         |
-| department of  |
-| |  geography   |
-| of Saxony.     |
-| |  The         |
-| saxonian       |
-| servers have   |
-| been used by   |
-| me in uDig. I  |
-| might add them |
-| later on       |
-| |  if anyone   |
-| wishes them to |
-| be included.   |
-|                |
-| Crischan       |
-+----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+.. raw:: html
+
+   <table>
+
+.. raw:: html
+
+   <col width="14%" />
+
+.. raw:: html
+
+   <col width="14%" />
+
+.. raw:: html
+
+   <col width="14%" />
+
+.. raw:: html
+
+   <col width="14%" />
+
+.. raw:: html
+
+   <col width="14%" />
+
+.. raw:: html
+
+   <col width="14%" />
+
+.. raw:: html
+
+   <col width="14%" />
+
+.. raw:: html
+
+   <tbody>
+
+.. raw:: html
+
+   <tr class="odd">
+
+.. raw:: html
+
+   <td align="left">
+
+| Data : Brandenburg
+| This page last changed on Sep 21, 2007 by jgarnett.
+| I have a couple of German Web Map Servers.
+
+| State of Brandenburg DOPs:
+|  http://isk.geobasis-bb.de/ows/dnm.php?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.2.0
+|  Administrative boundaries for Brandenburg:
+|  http://isk.geobasis-bb.de/ows/dnmvg.php?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.2.0
+|  Digital Navigation Model, Scale 1:10000:
+|  http://isk.geobasis-bb.de/ows/dnm010.php?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.2.0
+|  Digital Navigation Model, Scale 1:25000:
+|  http://isk.geobasis-bb.de/ows/dnm025.php?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.2.0
+|  Digital Navigation Model, Scale 1:100000:
+|  http://isk.geobasis-bb.de/ows/dnm100.php?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.2.0
+|  Digital Navigation Model, Scale 1:250000:
+|  http://isk.geobasis-bb.de/ows/dnm250.php?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.2.0
+
+| They use an inofficial EPSG-Code 325833 which is EPSG:25833 with an additional
+|  false easting of 3000 km (which is the official CRS for Brandenburg, ETRS89
+|  with 7 digit rightings). More about these servers can be found here:
+|  http://isk.geobasis-bb.de/index.php?cms=1101 (German only)
+|  These servers have just been moved to a new system two weeks ago.
+
+| I also have WMSs for Saxony, including DOPs from the great flood in 2003, but
+|  right now I get 502 Proxy Errors for the whole website of the department of
+|  geography of Saxony.
+|  The saxonian servers have been used by me in uDig. I might add them later on
+|  if anyone wishes them to be included.
+
+Crischan
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   </tbody>
+
+.. raw:: html
+
+   </table>
 
 +------------+----------------------------------------------------------+
 | |image1|   | Document generated by Confluence on Aug 11, 2014 12:26   |
