@@ -1,862 +1,208 @@
 Demo Servers
 ############
 
-+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+
-| Data |
-| :    |
-| Demo |
-| Serv |
-| ers  |
-| This |
-| page |
-| last |
-| chan |
-| ged  |
-| on   |
-| Nov  |
-| 10,  |
-| 2008 |
-| by   |
-| jgar |
-| nett |
-| .    |
-| Ther |
-| e    |
-| are  |
-| seve |
-| ral  |
-| Demo |
-| Serv |
-| ers  |
-| avai |
-| labl |
-| e    |
-| arou |
-| nd   |
-| the  |
-| Inte |
-| rnet |
-| ,    |
-| this |
-| page |
-| list |
-| s    |
-| the  |
-| ones |
-| we   |
-| know |
-| are  |
-| up   |
-| and  |
-| work |
-| ing. |
-|      |
-| -  ` |
-| Cube |
-| serv |
-|  <#D |
-| emoS |
-| erve |
-| rs-C |
-| ubes |
-| erv> |
-| `__  |
-| -  ` |
-| GeoS |
-| erve |
-| r <# |
-| Demo |
-| Serv |
-| ers- |
-| GeoS |
-| erve |
-| r>`_ |
-| _    |
-| -  ` |
-| Ioni |
-| c <# |
-| Demo |
-| Serv |
-| ers- |
-| Ioni |
-| c>`_ |
-| _    |
-| -  ` |
-| MapG |
-| uide |
-|  <#D |
-| emoS |
-| erve |
-| rs-M |
-| apGu |
-| ide> |
-| `__  |
-| -  ` |
-| MapS |
-| erve |
-| r <# |
-| Demo |
-| Serv |
-| ers- |
-| MapS |
-| erve |
-| r>`_ |
-| _    |
-| -  ` |
-| MapX |
-| trem |
-| e <# |
-| Demo |
-| Serv |
-| ers- |
-| MapX |
-| trem |
-| e>`_ |
-| _    |
-| -  ` |
-| Weat |
-| her. |
-| gov  |
-| <#De |
-| moSe |
-| rver |
-| s-We |
-| athe |
-| r.go |
-| v>`_ |
-| _    |
-|      |
-| In   |
-| case |
-| s    |
-| wher |
-| e    |
-| WFS  |
-| 1.1  |
-| is   |
-| list |
-| ed   |
-| plea |
-| se   |
-| be   |
-| advi |
-| sed  |
-| that |
-| UDig |
-| does |
-| not  |
-| yet  |
-| supp |
-| ort  |
-| thes |
-| e    |
-| serv |
-| ers  |
-| (so  |
-| save |
-| thes |
-| e    |
-| link |
-| s    |
-| for  |
-| a    |
-| rain |
-| y    |
-| day) |
-| .    |
-|      |
-| Cube |
-| serv |
-| ==== |
-| ==== |
-|      |
-| | WF |
-| S    |
-| 1.0: |
-| http |
-| ://c |
-| gns. |
-| nrca |
-| n.gc |
-| .ca/ |
-| wfs/ |
-| cube |
-| serv |
-| .cgi |
-| ?dat |
-| asto |
-| re=c |
-| gns& |
-| serv |
-| ice= |
-| WFS& |
-| vers |
-| ion= |
-| 1.0. |
-| 0&re |
-| ques |
-| t=Ge |
-| tCap |
-| abil |
-| itie |
-| s    |
-| |    |
-| GetF |
-| eatu |
-| res: |
-| http |
-| ://c |
-| gns. |
-| nrca |
-| n.gc |
-| .ca/ |
-| wfs/ |
-| cube |
-| serv |
-| .cgi |
-| ?dat |
-| asto |
-| re=c |
-| gns& |
-| serv |
-| ice= |
-| WFS& |
-| vers |
-| ion= |
-| 1.0. |
-| 0&re |
-| ques |
-| t=Ge |
-| tFea |
-| ture |
-| &typ |
-| enam |
-| e=cw |
-| :GEO |
-| NAME |
-| S_PO |
-| INTS |
-| &max |
-| feat |
-| ures |
-| =10  |
-|      |
-| | WF |
-| S    |
-| 1.1: |
-| http |
-| ://d |
-| emo. |
-| cube |
-| werx |
-| .com |
-| /dem |
-| o/cu |
-| bese |
-| rv/c |
-| ubes |
-| erv. |
-| cgi? |
-| data |
-| stor |
-| e=Fo |
-| unda |
-| tion |
-| &ser |
-| vice |
-| =WFS |
-| &ver |
-| sion |
-| =1.1 |
-| .0&r |
-| eque |
-| st=G |
-| etCa |
-| pabi |
-| liti |
-| es   |
-| |    |
-| GetF |
-| eatu |
-| res: |
-| http |
-| ://d |
-| emo. |
-| cube |
-| werx |
-| .com |
-| /dem |
-| o/cu |
-| bese |
-| rv/c |
-| ubes |
-| erv. |
-| cgi? |
-| data |
-| stor |
-| e=Fo |
-| unda |
-| tion |
-| &ser |
-| vice |
-| =WFS |
-| &ver |
-| sion |
-| =1.1 |
-| .0&r |
-| eque |
-| st=G |
-| etFe |
-| atur |
-| e&ty |
-| pena |
-| me=c |
-| w:AE |
-| ROFA |
-| CP_1 |
-| M&ma |
-| xfea |
-| ture |
-| s=10 |
-|      |
-| GeoS |
-| erve |
-| r    |
-| ==== |
-| ==== |
-| =    |
-|      |
-| WMS: |
-| http |
-| ://g |
-| iswe |
-| bser |
-| vice |
-| s.ma |
-| ssgi |
-| s.st |
-| ate. |
-| ma.u |
-| s/ge |
-| oser |
-| ver/ |
-| wms? |
-| serv |
-| ice= |
-| WMS& |
-| requ |
-| est= |
-| GetC |
-| apab |
-| ilit |
-| ies  |
-|      |
-| Ioni |
-| c    |
-| ==== |
-| =    |
-|      |
-| WFS  |
-| 1.1: |
-| http |
-| ://w |
-| ebse |
-| rvic |
-| es.i |
-| onic |
-| soft |
-| .com |
-| :808 |
-| 0/un |
-| Data |
-| /wfs |
-| /UN? |
-| serv |
-| ice= |
-| WFS& |
-| vers |
-| ion= |
-| 1.1. |
-| 0&re |
-| ques |
-| t=Ge |
-| tCap |
-| abil |
-| itie |
-| s    |
-| (ret |
-| urns |
-| 1.0  |
-| capa |
-| bili |
-| ties |
-| )    |
-|      |
-| MapG |
-| uide |
-| ==== |
-| ==== |
-|      |
-| | WM |
-| S    |
-| 1.1. |
-| 1:   |
-| `ent |
-| erpr |
-| ise. |
-| mapg |
-| uide |
-| .com |
-|  <ht |
-| tp:/ |
-| /ent |
-| erpr |
-| ise. |
-| mapg |
-| uide |
-| .com |
-| /map |
-| guid |
-| e200 |
-| 9/ma |
-| page |
-| nt/m |
-| apag |
-| ent. |
-| fcgi |
-| ?ser |
-| vice |
-| =WMS |
-| &REQ |
-| UEST |
-| =Get |
-| Capa |
-| bili |
-| ties |
-| &VER |
-| SION |
-| =1.1 |
-| .1>` |
-| __   |
-| |    |
-| (Fro |
-| m    |
-| http |
-| ://e |
-| nter |
-| pris |
-| e.ma |
-| pgui |
-| de.c |
-| om/g |
-| oogl |
-| emap |
-| sdem |
-| o/   |
-| )    |
-|      |
-| MapS |
-| erve |
-| r    |
-| ==== |
-| ==== |
-| =    |
-|      |
-| | WF |
-| S    |
-| 1.0: |
-| `www |
-| .bsc |
-| -eoc |
-| .org |
-|  <ht |
-| tp:/ |
-| /www |
-| .bsc |
-| -eoc |
-| .org |
-| /cgi |
-| -bin |
-| /bsc |
-| _ows |
-| .asp |
-| ?ser |
-| vice |
-| =WFS |
-| &ver |
-| sion |
-| =1.0 |
-| .0&r |
-| eque |
-| st=G |
-| etCa |
-| pabi |
-| liti |
-| es>` |
-| __   |
-| |    |
-| WFS  |
-| 1.0: |
-| `exc |
-| ise. |
-| pyr. |
-| ec.g |
-| c.ca |
-|  <ht |
-| tp:/ |
-| /exc |
-| ise. |
-| pyr. |
-| ec.g |
-| c.ca |
-| /cgi |
-| -bin |
-| /map |
-| serv |
-| .exe |
-| ?map |
-| =/Lo |
-| calA |
-| pps/ |
-| Maps |
-| urfe |
-| r/PY |
-| RWQM |
-| P.ma |
-| p&se |
-| rvic |
-| e=WF |
-| S&ve |
-| rsio |
-| n=1. |
-| 0.0& |
-| requ |
-| est= |
-| GetC |
-| apab |
-| ilit |
-| ies> |
-| `__  |
-|      |
-| | WF |
-| S    |
-| 1.1: |
-| `www |
-| .bsc |
-| -eoc |
-| .org |
-|  <ht |
-| tp:/ |
-| /www |
-| .bsc |
-| -eoc |
-| .org |
-| /cgi |
-| -bin |
-| /bsc |
-| _ows |
-| .asp |
-| ?ser |
-| vice |
-| =WFS |
-| &ver |
-| sion |
-| =1.1 |
-| .0&r |
-| eque |
-| st=G |
-| etCa |
-| pabi |
-| liti |
-| es>` |
-| __   |
-| |    |
-| WFS  |
-| 1.1: |
-| `exc |
-| ise. |
-| pyr. |
-| ec.g |
-| c.ca |
-|  <ht |
-| tp:/ |
-| /exc |
-| ise. |
-| pyr. |
-| ec.g |
-| c.ca |
-| /cgi |
-| -bin |
-| /map |
-| serv |
-| .exe |
-| ?map |
-| =/Lo |
-| calA |
-| pps/ |
-| Maps |
-| urfe |
-| r/PY |
-| RWQM |
-| P.ma |
-| p&se |
-| rvic |
-| e=WF |
-| S&ve |
-| rsio |
-| n=1. |
-| 1.0& |
-| requ |
-| est= |
-| GetC |
-| apab |
-| ilit |
-| ies> |
-| `__  |
-|      |
-| MapX |
-| trem |
-| e    |
-| ==== |
-| ==== |
-| =    |
-|      |
-| | WF |
-| S    |
-| 1.0: |
-| http |
-| ://1 |
-| 99.2 |
-| 9.1. |
-| 81:8 |
-| 181/ |
-| miwf |
-| s/Ge |
-| tFea |
-| ture |
-| .ash |
-| x?se |
-| rvic |
-| e=WF |
-| S&ve |
-| rsio |
-| n=1. |
-| 0.0& |
-| requ |
-| est= |
-| GetC |
-| apab |
-| ilit |
-| ies  |
-| |    |
-| GetF |
-| eatu |
-| res: |
-| [htt |
-| p:// |
-| 199. |
-| 29.1 |
-| .81: |
-| 8181 |
-| /miw |
-| fs/G |
-| etFe |
-| atur |
-| e.as |
-| hx?s |
-| ervi |
-| ce=W |
-| FS&v |
-| ersi |
-| on=1 |
-| .0.0 |
-| &    |
-| |    |
-| requ |
-| est= |
-| GetF |
-| eatu |
-| re&t |
-| ypen |
-| ame= |
-| miwf |
-| s:Wo |
-| rld& |
-| maxf |
-| eatu |
-| res= |
-| 10]  |
-|      |
-| Weat |
-| her. |
-| gov  |
-| ==== |
-| ==== |
-| ===  |
-|      |
-| | Ex |
-| peri |
-| ment |
-| al   |
-| WFS  |
-| serv |
-| er:  |
-| |    |
-| WFS  |
-| 1.0: |
-| http |
-| ://w |
-| ww.w |
-| eath |
-| er.g |
-| ov/f |
-| orec |
-| asts |
-| /xml |
-| /OGC |
-| _ser |
-| vice |
-| s/nd |
-| fdOW |
-| Sser |
-| ver. |
-| php? |
-| SERV |
-| ICE= |
-| WFS& |
-| vers |
-| ion= |
-| 1.0. |
-| 0&Re |
-| ques |
-| t=Ge |
-| tCap |
-| abil |
-| itie |
-| s    |
-| |    |
-| GetF |
-| eatu |
-| re:  |
-| http |
-| ://w |
-| ww.w |
-| eath |
-| er.g |
-| ov/f |
-| orec |
-| asts |
-| /xml |
-| /OGC |
-| _ser |
-| vice |
-| s/nd |
-| fdOW |
-| Sser |
-| ver. |
-| php? |
-| SERV |
-| ICE= |
-| WFS& |
-| vers |
-| ion= |
-| 1.0. |
-| 0&Re |
-| ques |
-| t=Ge |
-| tFea |
-| ture |
-| &typ |
-| enam |
-| e=nd |
-| fd:F |
-| orec |
-| ast_ |
-| Gml2 |
-| Poin |
-| t&ma |
-| xfea |
-| ture |
-| s=10 |
-|      |
-| | WF |
-| S    |
-| 1.1: |
-| http |
-| ://w |
-| ww.w |
-| eath |
-| er.g |
-| ov/f |
-| orec |
-| asts |
-| /xml |
-| /OGC |
-| _ser |
-| vice |
-| s/nd |
-| fdOW |
-| Sser |
-| ver. |
-| php? |
-| SERV |
-| ICE= |
-| WFS& |
-| vers |
-| ion= |
-| 1.1. |
-| 0&Re |
-| ques |
-| t=Ge |
-| tCap |
-| abil |
-| itie |
-| s    |
-| |    |
-| GetF |
-| etau |
-| re:  |
-| http |
-| ://w |
-| ww.w |
-| eath |
-| er.g |
-| ov/f |
-| orec |
-| asts |
-| /xml |
-| /OGC |
-| _ser |
-| vice |
-| s/nd |
-| fdOW |
-| Sser |
-| ver. |
-| php? |
-| SERV |
-| ICE= |
-| WFS& |
-| vers |
-| ion= |
-| 1.1. |
-| 0&Re |
-| ques |
-| t=Ge |
-| tFea |
-| ture |
-| &typ |
-| enam |
-| e=ap |
-| p:Fo |
-| reca |
-| st_G |
-| mlsf |
-| Poin |
-| t&ma |
-| xfea |
-| ture |
-| s=10 |
-+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+
+.. raw:: html
+
+   <table>
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <col width="4%" />
+
+.. raw:: html
+
+   <tbody>
+
+.. raw:: html
+
+   <tr class="odd">
+
+.. raw:: html
+
+   <td align="left">
+
+| Data : Demo Servers
+| This page last changed on Nov 10, 2008 by jgarnett.
+| There are several Demo Servers available around the Internet, this page lists the ones we know are
+up and working.
+
+-  `Cubeserv <#DemoServers-Cubeserv>`__
+-  `GeoServer <#DemoServers-GeoServer>`__
+-  `Ionic <#DemoServers-Ionic>`__
+-  `MapGuide <#DemoServers-MapGuide>`__
+-  `MapServer <#DemoServers-MapServer>`__
+-  `MapXtreme <#DemoServers-MapXtreme>`__
+-  `Weather.gov <#DemoServers-Weather.gov>`__
+
+In cases where WFS 1.1 is listed please be advised that UDig does not yet support these servers (so
+save these links for a rainy day).
+
+Cubeserv
+========
+
+| WFS 1.0:
+http://cgns.nrcan.gc.ca/wfs/cubeserv.cgi?datastore=cgns&service=WFS&version=1.0.0&request=GetCapabilities
+|  GetFeatures:
+http://cgns.nrcan.gc.ca/wfs/cubeserv.cgi?datastore=cgns&service=WFS&version=1.0.0&request=GetFeature&typename=cw:GEONAMES_POINTS&maxfeatures=10
+
+| WFS 1.1:
+http://demo.cubewerx.com/demo/cubeserv/cubeserv.cgi?datastore=Foundation&service=WFS&version=1.1.0&request=GetCapabilities
+|  GetFeatures:
+http://demo.cubewerx.com/demo/cubeserv/cubeserv.cgi?datastore=Foundation&service=WFS&version=1.1.0&request=GetFeature&typename=cw:AEROFACP_1M&maxfeatures=10
+
+GeoServer
+=========
+
+WMS: http://giswebservices.massgis.state.ma.us/geoserver/wms?service=WMS&request=GetCapabilities
+
+Ionic
+=====
+
+WFS 1.1:
+http://webservices.ionicsoft.com:8080/unData/wfs/UN?service=WFS&version=1.1.0&request=GetCapabilities
+(returns 1.0 capabilities)
+
+MapGuide
+========
+
+| WMS 1.1.1:
+`enterprise.mapguide.com <http://enterprise.mapguide.com/mapguide2009/mapagent/mapagent.fcgi?service=WMS&REQUEST=GetCapabilities&VERSION=1.1.1>`__
+|  (From http://enterprise.mapguide.com/googlemapsdemo/ )
+
+MapServer
+=========
+
+| WFS 1.0:
+`www.bsc-eoc.org <http://www.bsc-eoc.org/cgi-bin/bsc_ows.asp?service=WFS&version=1.0.0&request=GetCapabilities>`__
+|  WFS 1.0:
+`excise.pyr.ec.gc.ca <http://excise.pyr.ec.gc.ca/cgi-bin/mapserv.exe?map=/LocalApps/Mapsurfer/PYRWQMP.map&service=WFS&version=1.0.0&request=GetCapabilities>`__
+
+| WFS 1.1:
+`www.bsc-eoc.org <http://www.bsc-eoc.org/cgi-bin/bsc_ows.asp?service=WFS&version=1.1.0&request=GetCapabilities>`__
+|  WFS 1.1:
+`excise.pyr.ec.gc.ca <http://excise.pyr.ec.gc.ca/cgi-bin/mapserv.exe?map=/LocalApps/Mapsurfer/PYRWQMP.map&service=WFS&version=1.1.0&request=GetCapabilities>`__
+
+MapXtreme
+=========
+
+| WFS 1.0:
+http://199.29.1.81:8181/miwfs/GetFeature.ashx?service=WFS&version=1.0.0&request=GetCapabilities
+|  GetFeatures: [http://199.29.1.81:8181/miwfs/GetFeature.ashx?service=WFS&amp;version=1.0.0&amp;
+|  request=GetFeature&amp;typename=miwfs:World&amp;maxfeatures=10]
+
+Weather.gov
+===========
+
+| Experimental WFS server:
+|  WFS 1.0:
+http://www.weather.gov/forecasts/xml/OGC_services/ndfdOWSserver.php?SERVICE=WFS&version=1.0.0&Request=GetCapabilities
+|  GetFeature:
+http://www.weather.gov/forecasts/xml/OGC_services/ndfdOWSserver.php?SERVICE=WFS&version=1.0.0&Request=GetFeature&typename=ndfd:Forecast_Gml2Point&maxfeatures=10
+
+| WFS 1.1:
+http://www.weather.gov/forecasts/xml/OGC_services/ndfdOWSserver.php?SERVICE=WFS&version=1.1.0&Request=GetCapabilities
+|  GetFetaure:
+http://www.weather.gov/forecasts/xml/OGC_services/ndfdOWSserver.php?SERVICE=WFS&version=1.1.0&Request=GetFeature&typename=app:Forecast_GmlsfPoint&maxfeatures=10
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   </tbody>
+
+.. raw:: html
+
+   </table>
 
 +------------+----------------------------------------------------------+
 | |image1|   | Document generated by Confluence on Aug 11, 2014 12:26   |

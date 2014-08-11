@@ -1,627 +1,180 @@
 Slip
 ####
 
-+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
-| Data  |
-| :     |
-| SLIP  |
-| This  |
-| page  |
-| last  |
-| chang |
-| ed    |
-| on    |
-| Mar   |
-| 10,   |
-| 2009  |
-| by    |
-| jgarn |
-| ett.  |
-| The   |
-| `SLIP |
-| porta |
-| l <ht |
-| tps:/ |
-| /www2 |
-| .land |
-| gate. |
-| wa.go |
-| v.au/ |
-| slip/ |
-| porta |
-| l/abo |
-| ut/ab |
-| out.h |
-| tml>` |
-| __    |
-| is a  |
-| great |
-| colle |
-| ction |
-| of    |
-| Austr |
-| alian |
-| spati |
-| al    |
-| infor |
-| matio |
-| n     |
-| broug |
-| ht    |
-| toget |
-| her   |
-| by    |
-| Landg |
-| ate   |
-| in    |
-| weste |
-| rn    |
-| austr |
-| alia. |
-| This  |
-| porta |
-| l     |
-| is a  |
-| showc |
-| ase   |
-| of    |
-| how   |
-| gover |
-| nment |
-| s     |
-| at    |
-| all   |
-| level |
-| s     |
-| can   |
-| colla |
-| borat |
-| e     |
-| to    |
-| make  |
-| infor |
-| matio |
-| n     |
-| avail |
-| able  |
-| to    |
-| the   |
-| publi |
-| c.    |
-|       |
-| | Pub |
-| lic   |
-| WMS   |
-| Data  |
-| Servi |
-| ce    |
-| (Info |
-| rmati |
-| on    |
-| is    |
-| able  |
-| to be |
-| repro |
-| jecte |
-| d     |
-| on    |
-| the   |
-| fly)  |
-| |     |
-| https |
-| ://ww |
-| w2.la |
-| ndgat |
-| e.wa. |
-| gov.a |
-| u/ows |
-| /wmsp |
-| ublic |
-| ?requ |
-| est=G |
-| etCap |
-| abili |
-| ties& |
-| Servi |
-| ce=WM |
-| S     |
-|       |
-| | Pub |
-| lic   |
-| WMS   |
-| Image |
-| ry    |
-| Servi |
-| ce    |
-| (Info |
-| rmati |
-| on    |
-| is    |
-| able  |
-| to be |
-| repro |
-| jecte |
-| d     |
-| on    |
-| the   |
-| fly)  |
-| |     |
-| https |
-| ://ww |
-| w2.la |
-| ndgat |
-| e.wa. |
-| gov.a |
-| u/ows |
-| /wmsp |
-| ublic |
-| image |
-| ry?re |
-| quest |
-| =GetC |
-| apabi |
-| litie |
-| s&Ser |
-| vice= |
-| WMS   |
-|       |
-| | The |
-| follo |
-| wing  |
-| infor |
-| matio |
-| n     |
-| is    |
-| avail |
-| able  |
-| to    |
-| SLIP  |
-| regis |
-| tered |
-| users |
-| :     |
-| |     |
-| GDA94 |
-| -     |
-| Lat/L |
-| ong   |
-| WFS   |
-| Publi |
-| c     |
-| |     |
-| https |
-| ://ww |
-| w2.la |
-| ndgat |
-| e.wa. |
-| gov.a |
-| u/ows |
-| /wfsp |
-| ublic |
-| _4283 |
-| /wfs? |
-| reque |
-| st=Ge |
-| tCapa |
-| bilit |
-| ies&S |
-| ervic |
-| e=WFS |
-| ]     |
-|       |
-| | WGS |
-| 84    |
-| -     |
-| Lat/L |
-| ong   |
-| WFS   |
-| Publi |
-| c     |
-| |     |
-| https |
-| ://ww |
-| w2.la |
-| ndgat |
-| e.wa. |
-| gov.a |
-| u/ows |
-| /wfsp |
-| ublic |
-| _4326 |
-| /wfs? |
-| reque |
-| st=Ge |
-| tCapa |
-| bilit |
-| ies&S |
-| ervic |
-| e=WFS |
-| ]     |
-|       |
-| | GDA |
-| 94    |
-| -     |
-| Lat/L |
-| ong   |
-| WFS   |
-| Publi |
-| c     |
-| -     |
-| Recom |
-| mende |
-| d     |
-| for   |
-| users |
-| of    |
-| ArcGI |
-| S     |
-| v9.2  |
-| and   |
-| earli |
-| er,   |
-| and   |
-| MapIn |
-| fo    |
-| v9.0  |
-| and   |
-| later |
-| |     |
-| http: |
-| //www |
-| 2.lan |
-| dgate |
-| .wa.g |
-| ov.au |
-| /ows/ |
-| wfspu |
-| blic_ |
-| 4283/ |
-| wfs   |
-|       |
-| | WGS |
-| 84    |
-| -     |
-| Lat/L |
-| ong   |
-| WFS   |
-| Publi |
-| c     |
-| -     |
-| Recom |
-| mende |
-| d     |
-| for   |
-| users |
-| of    |
-| ArcGI |
-| S     |
-| v9.2  |
-| and   |
-| earli |
-| er,   |
-| and   |
-| MapIn |
-| fo    |
-| v9.0  |
-| and   |
-| later |
-| |     |
-| http: |
-| //www |
-| 2.lan |
-| dgate |
-| .wa.g |
-| ov.au |
-| /ows/ |
-| wfspu |
-| blic_ |
-| 4326/ |
-| wfs?r |
-| eques |
-| t=Get |
-| Capab |
-| iliti |
-| es&Se |
-| rvice |
-| =WFS  |
-|       |
-| | GDA |
-| 94    |
-| -     |
-| MGA49 |
-| WFS   |
-| Publi |
-| c     |
-| |     |
-| https |
-| ://ww |
-| w2.la |
-| ndgat |
-| e.wa. |
-| gov.a |
-| u/ows |
-| /wfsp |
-| ublic |
-| _2834 |
-| 9/wfs |
-| ?requ |
-| est=G |
-| etCap |
-| abili |
-| ties& |
-| Servi |
-| ce=WF |
-| S     |
-|       |
-| | GDA |
-| 94    |
-| -     |
-| MGA50 |
-| WFS   |
-| Publi |
-| c     |
-| |     |
-| https |
-| ://ww |
-| w2.la |
-| ndgat |
-| e.wa. |
-| gov.a |
-| u/ows |
-| /wfsp |
-| ublic |
-| _2835 |
-| 0/wfs |
-| ?requ |
-| est=G |
-| etCap |
-| abili |
-| ties& |
-| Servi |
-| ce=WF |
-| S     |
-|       |
-| | GDA |
-| 94    |
-| -     |
-| MGA51 |
-| WFS   |
-| Publi |
-| c     |
-| |     |
-| https |
-| ://ww |
-| w2.la |
-| ndgat |
-| e.wa. |
-| gov.a |
-| u/ows |
-| /wfsp |
-| ublic |
-| _2835 |
-| 1/wfs |
-| ?requ |
-| est=G |
-| etCap |
-| abili |
-| ties& |
-| Servi |
-| ce=WF |
-| S     |
-|       |
-| | GDA |
-| 94    |
-| -     |
-| MGA52 |
-| WFS   |
-| Publi |
-| c     |
-| |     |
-| https |
-| ://ww |
-| w2.la |
-| ndgat |
-| e.wa. |
-| gov.a |
-| u/ows |
-| /wfsp |
-| ublic |
-| _2835 |
-| 2/wfs |
-| ?requ |
-| est=G |
-| etCap |
-| abili |
-| ties& |
-| Servi |
-| ce=WF |
-| S     |
-|       |
-| Tile  |
-| Serve |
-| rs    |
-| ----- |
-| ----- |
-| --    |
-|       |
-| | An  |
-| exper |
-| iment |
-| al    |
-| WMS-C |
-| servi |
-| ce    |
-| (use  |
-| the   |
-| Add   |
-| Layer |
-| menu  |
-| for   |
-| this  |
-| one   |
-| drag  |
-| and   |
-| drop  |
-| will  |
-| not   |
-| work) |
-| :     |
-| |     |
-| http: |
-| //bet |
-| a.lan |
-| dgate |
-| .wa.g |
-| ov.au |
-| /tile |
-| cache |
-| /?REQ |
-| UEST= |
-| GetCa |
-| pabil |
-| ities |
-| &SERV |
-| ICE=W |
-| MS&ti |
-| led=t |
-| rue   |
-|       |
-| Using |
-|  SLIP |
-|  Serv |
-| ices  |
-| ----- |
-| ----- |
-| ----- |
-| ----  |
-|       |
-| To    |
-| acces |
-| s     |
-| these |
-| servi |
-| ces   |
-| you   |
-| will  |
-| need  |
-| to    |
-| regis |
-| ter   |
-| at    |
-| the   |
-| `SLIP |
-| porta |
-| l <ht |
-| tps:/ |
-| /www2 |
-| .land |
-| gate. |
-| wa.go |
-| v.au/ |
-| slip/ |
-| porta |
-| l/hom |
-| e/hom |
-| e.htm |
-| l>`__ |
-| .     |
-|       |
-| #. Fr |
-| om    |
-|    uD |
-| ig    |
-|    cl |
-| ick   |
-|    on |
-|    an |
-| y     |
-|    of |
-|    th |
-| e     |
-|    ab |
-| ove   |
-|    li |
-| nks   |
-|    (o |
-| r     |
-|    dr |
-| ag    |
-|    an |
-| d     |
-|    dr |
-| op    |
-|    on |
-| e     |
-|    of |
-|    th |
-| e     |
-|    ab |
-| ove   |
-|    li |
-| nks   |
-|    fr |
-| om    |
-|    yo |
-| ur    |
-|    we |
-| b     |
-|    br |
-| owser |
-|    to |
-|    uD |
-| ig)   |
-| #. En |
-| ter   |
-|    th |
-| e     |
-|    us |
-| ernam |
-| e/pas |
-| sowrd |
-|    us |
-| ed    |
-|    to |
-|    ac |
-| cess  |
-|    th |
-| e     |
-|    SL |
-| IP    |
-|    po |
-| rtal  |
-|    wh |
-| en    |
-|    pr |
-| ompte |
-| d     |
-|    by |
-|    uD |
-| ig    |
-|       |
-| Thank |
-| s     |
-| ----- |
-| -     |
-|       |
-| We    |
-| would |
-| like  |
-| to    |
-| thank |
-| SLIP  |
-| for   |
-| listi |
-| ng    |
-| uDig  |
-| as    |
-| recom |
-| mende |
-| d     |
-| deskt |
-| op    |
-| clien |
-| t.    |
-+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+.. raw:: html
+
+   <table>
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <tbody>
+
+.. raw:: html
+
+   <tr class="odd">
+
+.. raw:: html
+
+   <td align="left">
+
+| Data : SLIP
+| This page last changed on Mar 10, 2009 by jgarnett.
+| The `SLIP portal <https://www2.landgate.wa.gov.au/slip/portal/about/about.html>`__ is a great
+collection of Australian spatial information brought together by Landgate in western australia. This
+portal is a showcase of how governments at all levels can collaborate to make information available
+to the public.
+
+| Public WMS Data Service (Information is able to be reprojected on the fly)
+|  https://www2.landgate.wa.gov.au/ows/wmspublic?request=GetCapabilities&Service=WMS
+
+| Public WMS Imagery Service (Information is able to be reprojected on the fly)
+|  https://www2.landgate.wa.gov.au/ows/wmspublicimagery?request=GetCapabilities&Service=WMS
+
+| The following information is available to SLIP registered users:
+|  GDA94 - Lat/Long WFS Public
+| 
+`https://www2.landgate.wa.gov.au/ows/wfspublic\_4283/wfs?request=GetCapabilities&Service=WFS] <https://www2.landgate.wa.gov.au/ows/wfspublic_4283/wfs?request=GetCapabilities&Service=WFS]>`__
+
+| WGS84 - Lat/Long WFS Public
+| 
+`https://www2.landgate.wa.gov.au/ows/wfspublic\_4326/wfs?request=GetCapabilities&Service=WFS] <https://www2.landgate.wa.gov.au/ows/wfspublic_4326/wfs?request=GetCapabilities&Service=WFS]>`__
+
+| GDA94 - Lat/Long WFS Public - Recommended for users of ArcGIS v9.2 and earlier, and MapInfo v9.0
+and later
+|  http://www2.landgate.wa.gov.au/ows/wfspublic_4283/wfs
+
+| WGS84 - Lat/Long WFS Public - Recommended for users of ArcGIS v9.2 and earlier, and MapInfo v9.0
+and later
+|  http://www2.landgate.wa.gov.au/ows/wfspublic_4326/wfs?request=GetCapabilities&Service=WFS
+
+| GDA94 - MGA49 WFS Public
+|  https://www2.landgate.wa.gov.au/ows/wfspublic_28349/wfs?request=GetCapabilities&Service=WFS
+
+| GDA94 - MGA50 WFS Public
+|  https://www2.landgate.wa.gov.au/ows/wfspublic_28350/wfs?request=GetCapabilities&Service=WFS
+
+| GDA94 - MGA51 WFS Public
+|  https://www2.landgate.wa.gov.au/ows/wfspublic_28351/wfs?request=GetCapabilities&Service=WFS
+
+| GDA94 - MGA52 WFS Public
+|  https://www2.landgate.wa.gov.au/ows/wfspublic_28352/wfs?request=GetCapabilities&Service=WFS
+
+Tile Servers
+------------
+
+| An experimental WMS-C service (use the Add Layer menu for this one drag and drop will not work):
+|  http://beta.landgate.wa.gov.au/tilecache/?REQUEST=GetCapabilities&SERVICE=WMS&tiled=true
+
+Using SLIP Services
+-------------------
+
+To access these services you will need to register at the `SLIP
+portal <https://www2.landgate.wa.gov.au/slip/portal/home/home.html>`__.
+
+#. From uDig click on any of the above links (or drag and drop one of the above links from your web
+   browser to uDig)
+#. Enter the username/passowrd used to access the SLIP portal when prompted by uDig
+
+Thanks
+------
+
+We would like to thank SLIP for listing uDig as recommended desktop client.
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   </tbody>
+
+.. raw:: html
+
+   </table>
 
 +------------+----------------------------------------------------------+
 | |image1|   | Document generated by Confluence on Aug 11, 2014 12:26   |

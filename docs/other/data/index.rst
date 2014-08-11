@@ -1,976 +1,278 @@
 Index
 #####
 
-+---------------------------+---------------------------+---------------------------+---------------------------+
-| Data : Home |image1|      |
-| This page last changed on |
-| Nov 20, 2011 by jgarnett. |
-| The WMS and WFS links     |
-| links server              |
-| "Capabilities Documents"  |
-| you can drag into uDig    |
-| directly:                 |
-|                           |
-| +-------+-------+-------+ |
-| -------+-------+-------+- |
-| ------+-------+-------+-- |
-| -----+-------+-------+--- |
-| ----+-------+-------+---- |
-| ---+-------+-------+----- |
-| --+-------+               |
-| | | **T |                 |
-| | echno |                 |
-| | logy  |                 |
-| | Demo* |                 |
-| | *     |                 |
-| | |     |                 |
-| | WMS:\ |                 |
-| |  `dm  |                 |
-| | solut |                 |
-| | ions  |                 |
-| | <http |                 |
-| | ://ww |                 |
-| | w2.dm |                 |
-| | solut |                 |
-| | ions. |                 |
-| | ca/cg |                 |
-| | i-bin |                 |
-| | /mswm |                 |
-| | s_gma |                 |
-| | p?Ser |                 |
-| | vice= |                 |
-| | WMS&V |                 |
-| | ERSIO |                 |
-| | N=1.1 |                 |
-| | .0&RE |                 |
-| | QUEST |                 |
-| | =GetC |                 |
-| | apabi |                 |
-| | litie |                 |
-| | s>`__ |                 |
-| | WFS:\ |                 |
-| |  `dm  |                 |
-| | solut |                 |
-| | ions  |                 |
-| | <http |                 |
-| | ://ww |                 |
-| | w2.dm |                 |
-| | solut |                 |
-| | ions. |                 |
-| | ca/cg |                 |
-| | i-bin |                 |
-| | /mswf |                 |
-| | s_gma |                 |
-| | p?ver |                 |
-| | sion= |                 |
-| | 1.0.0 |                 |
-| | &requ |                 |
-| | est=g |                 |
-| | etcap |                 |
-| | abili |                 |
-| | ties& |                 |
-| | servi |                 |
-| | ce=wf |                 |
-| | s>`__ |                 |
-| | |     |                 |
-| | WMS:\ |                 |
-| |  `Dem |                 |
-| | o     |                 |
-| | Cubwe |                 |
-| | rx <h |                 |
-| | ttp:/ |                 |
-| | /demo |                 |
-| | .cube |                 |
-| | werx. |                 |
-| | com/d |                 |
-| | emo/c |                 |
-| | ubese |                 |
-| | rv/cu |                 |
-| | beser |                 |
-| | v.cgi |                 |
-| | ?CONF |                 |
-| | IG=ma |                 |
-| | in&SE |                 |
-| | RVICE |                 |
-| | =WMS& |                 |
-| | ?VERS |                 |
-| | ION=1 |                 |
-| | .1.1& |                 |
-| | REQUE |                 |
-| | ST=Ge |                 |
-| | tCapa |                 |
-| | bilit |                 |
-| | ies>` |                 |
-| | __    |                 |
-| | |     |                 |
-| | WMS:  |                 |
-| | `demo |                 |
-| | .open |                 |
-| | geo.o |                 |
-| | rg <h |                 |
-| | ttp:/ |                 |
-| | /demo |                 |
-| | .open |                 |
-| | geo.o |                 |
-| | rg/ge |                 |
-| | oserv |                 |
-| | er/ow |                 |
-| | s?ser |                 |
-| | vice= |                 |
-| | wms&v |                 |
-| | ersio |                 |
-| | n=1.1 |                 |
-| | .1&re |                 |
-| | quest |                 |
-| | =GetC |                 |
-| | apabi |                 |
-| | litie |                 |
-| | s>`__ |                 |
-| | |     |                 |
-| | WMS:  |                 |
-| | `demo |                 |
-| | .maps |                 |
-| | serve |                 |
-| | r.org |                 |
-| |  <htt |                 |
-| | p://d |                 |
-| | emo.m |                 |
-| | apser |                 |
-| | ver.o |                 |
-| | rg/cg |                 |
-| | i-bin |                 |
-| | /wms? |                 |
-| | SERVI |                 |
-| | CE=WM |                 |
-| | S&VER |                 |
-| | SION= |                 |
-| | 1.1.1 |                 |
-| | &REQU |                 |
-| | EST=G |                 |
-| | etCap |                 |
-| | abili |                 |
-| | ties> |                 |
-| | `__   |                 |
-| | |     |                 |
-| | WMS-C |                 |
-| | :     |                 |
-| | `sigm |                 |
-| | a.ope |                 |
-| | nplan |                 |
-| | s.org |                 |
-| |  <htt |                 |
-| | p://s |                 |
-| | igma. |                 |
-| | openp |                 |
-| | lans. |                 |
-| | org:8 |                 |
-| | 080/g |                 |
-| | eoweb |                 |
-| | cache |                 |
-| | /serv |                 |
-| | ice/w |                 |
-| | ms?re |                 |
-| | quest |                 |
-| | =getc |                 |
-| | apabi |                 |
-| | litie |                 |
-| | s&til |                 |
-| | ed=tr |                 |
-| | ue>`_ |                 |
-| | _     |                 |
-| | |     |                 |
-| | WMS-C |                 |
-| | :     |                 |
-| | `labs |                 |
-| | .meta |                 |
-| | carta |                 |
-| | .com  |                 |
-| | <http |                 |
-| | ://la |                 |
-| | bs.me |                 |
-| | tacar |                 |
-| | ta.co |                 |
-| | m/wms |                 |
-| | -c/ti |                 |
-| | lecac |                 |
-| | he.py |                 |
-| | ?SERV |                 |
-| | ICE=W |                 |
-| | MS&VE |                 |
-| | RSION |                 |
-| | =1.1. |                 |
-| | 1&REQ |                 |
-| | UEST= |                 |
-| | GetCa |                 |
-| | pabil |                 |
-| | ities |                 |
-| | &tile |                 |
-| | d=tru |                 |
-| | e>`__ |                 |
-| | |     |                 |
-| | WMS-C |                 |
-| | :     |                 |
-| | `demo |                 |
-| | .open |                 |
-| | geo.o |                 |
-| | rg <h |                 |
-| | ttp:/ |                 |
-| | /demo |                 |
-| | .open |                 |
-| | geo.o |                 |
-| | rg/ge |                 |
-| | oserv |                 |
-| | er/gw |                 |
-| | c/ser |                 |
-| | vice/ |                 |
-| | wms?r |                 |
-| | eques |                 |
-| | t=get |                 |
-| | capab |                 |
-| | iliti |                 |
-| | es&ti |                 |
-| | led=t |                 |
-| | rue>` |                 |
-| | __    |                 |
-| |       |                 |
-| | | **W |                 |
-| | orld* |                 |
-| | *     |                 |
-| | |     |                 |
-| | Downl |                 |
-| | oad:  |                 |
-| | `Natu |                 |
-| | ral   |                 |
-| | Earth |                 |
-| |  <htt |                 |
-| | p://w |                 |
-| | ww.na |                 |
-| | tural |                 |
-| | earth |                 |
-| | data. |                 |
-| | com/> |                 |
-| | `__   |                 |
-| |       |                 |
-| | | **C |                 |
-| | anada |                 |
-| | **    |                 |
-| | |     |                 |
-| | WMS:  |                 |
-| | `Geob |                 |
-| | ase < |                 |
-| | http: |                 |
-| | //wms |                 |
-| | .geob |                 |
-| | ase.c |                 |
-| | a/wms |                 |
-| | -bin/ |                 |
-| | cubes |                 |
-| | erv.c |                 |
-| | gi?re |                 |
-| | quest |                 |
-| | =getC |                 |
-| | apabi |                 |
-| | litie |                 |
-| | s>`__ |                 |
-| | |     |                 |
-| | WMS:\ |                 |
-| |  `Atl |                 |
-| | as    |                 |
-| | of    |                 |
-| | Canad |                 |
-| | a <ht |                 |
-| | tp:// |                 |
-| | atlas |                 |
-| | .gc.c |                 |
-| | a/cgi |                 |
-| | -bin/ |                 |
-| | atlas |                 |
-| | wms_e |                 |
-| | n?VER |                 |
-| | SION= |                 |
-| | 1.1.1 |                 |
-| | &Requ |                 |
-| | est=G |                 |
-| | etCap |                 |
-| | abili |                 |
-| | ties& |                 |
-| | Servi |                 |
-| | ce=WM |                 |
-| | S>`__ |                 |
-| | |     |                 |
-| | WMS:\ |                 |
-| |  `wms |                 |
-| | .cits |                 |
-| | .rnca |                 |
-| | n.gc. |                 |
-| | ca <h |                 |
-| | ttp:/ |                 |
-| | /wms. |                 |
-| | cits. |                 |
-| | rncan |                 |
-| | .gc.c |                 |
-| | a/cgi |                 |
-| | -bin/ |                 |
-| | cubes |                 |
-| | erv.c |                 |
-| | gi?VE |                 |
-| | RSION |                 |
-| | =1.1. |                 |
-| | 0&REQ |                 |
-| | UEST= |                 |
-| | GetCa |                 |
-| | pabil |                 |
-| | ities |                 |
-| | >`__  |                 |
-| | |     |                 |
-| | WFS:\ |                 |
-| |  `env |                 |
-| | dat < |                 |
-| | http: |                 |
-| | //map |                 |
-| | .ns.e |                 |
-| | c.gc. |                 |
-| | ca/Ma |                 |
-| | pServ |                 |
-| | er/ma |                 |
-| | pserv |                 |
-| | .exe? |                 |
-| | map=/ |                 |
-| | mapse |                 |
-| | rver/ |                 |
-| | servi |                 |
-| | ces/e |                 |
-| | nvdat |                 |
-| | /conf |                 |
-| | ig.ma |                 |
-| | p&ser |                 |
-| | vice= |                 |
-| | WFS&v |                 |
-| | ersio |                 |
-| | n=1.0 |                 |
-| | .0&re |                 |
-| | quest |                 |
-| | =GetC |                 |
-| | apabi |                 |
-| | litie |                 |
-| | s>`__ |                 |
-| | |     |                 |
-| | WMS:\ |                 |
-| |  `bc  |                 |
-| | air   |                 |
-| | photo |                 |
-| | s <ht |                 |
-| | tp:// |                 |
-| | openm |                 |
-| | aps.g |                 |
-| | ov.bc |                 |
-| | .ca/m |                 |
-| | apser |                 |
-| | ver/a |                 |
-| | ps?se |                 |
-| | rvice |                 |
-| | =wms& |                 |
-| | reque |                 |
-| | st=ge |                 |
-| | tcapa |                 |
-| | bilit |                 |
-| | ies&v |                 |
-| | ersio |                 |
-| | n=1.1 |                 |
-| | .1>`_ |                 |
-| | _     |                 |
-| | `bc   |                 |
-| | base  |                 |
-| | <http |                 |
-| | ://op |                 |
-| | enmap |                 |
-| | s.gov |                 |
-| | .bc.c |                 |
-| | a/map |                 |
-| | serve |                 |
-| | r/bas |                 |
-| | e2?se |                 |
-| | rvice |                 |
-| | =wms& |                 |
-| | reque |                 |
-| | st=ge |                 |
-| | tcapa |                 |
-| | bilit |                 |
-| | ies&v |                 |
-| | ersio |                 |
-| | n=1.1 |                 |
-| | .1>`_ |                 |
-| | _     |                 |
-| | `bc   |                 |
-| | cadas |                 |
-| | tre < |                 |
-| | http: |                 |
-| | //ope |                 |
-| | nmaps |                 |
-| | .gov. |                 |
-| | bc.ca |                 |
-| | /maps |                 |
-| | erver |                 |
-| | /cada |                 |
-| | stre? |                 |
-| | servi |                 |
-| | ce=wm |                 |
-| | s&req |                 |
-| | uest= |                 |
-| | getca |                 |
-| | pabil |                 |
-| | ities |                 |
-| | &vers |                 |
-| | ion=1 |                 |
-| | .1.1> |                 |
-| | `__   |                 |
-| | `bc   |                 |
-| | fores |                 |
-| | tvege |                 |
-| | tatio |                 |
-| | n <ht |                 |
-| | tp:// |                 |
-| | openm |                 |
-| | aps.g |                 |
-| | ov.bc |                 |
-| | .ca/m |                 |
-| | apser |                 |
-| | ver/f |                 |
-| | orest |                 |
-| | veget |                 |
-| | ation |                 |
-| | ?serv |                 |
-| | ice=w |                 |
-| | ms&re |                 |
-| | quest |                 |
-| | =getc |                 |
-| | apabi |                 |
-| | litie |                 |
-| | s&ver |                 |
-| | sion= |                 |
-| | 1.1.1 |                 |
-| | >`__  |                 |
-| | `imag |                 |
-| | es <h |                 |
-| | ttp:/ |                 |
-| | /open |                 |
-| | maps. |                 |
-| | gov.b |                 |
-| | c.ca/ |                 |
-| | image |                 |
-| | s/bas |                 |
-| | e.xml |                 |
-| | ?serv |                 |
-| | ice=w |                 |
-| | ms&re |                 |
-| | quest |                 |
-| | =getc |                 |
-| | apabi |                 |
-| | litie |                 |
-| | s&ver |                 |
-| | sion= |                 |
-| | 1.1.1 |                 |
-| | >`__  |                 |
-| | `bc   |                 |
-| | terre |                 |
-| | stria |                 |
-| | l     |                 |
-| | ecolo |                 |
-| | gy <h |                 |
-| | ttp:/ |                 |
-| | /open |                 |
-| | maps. |                 |
-| | gov.b |                 |
-| | c.ca/ |                 |
-| | mapse |                 |
-| | rver/ |                 |
-| | terre |                 |
-| | stria |                 |
-| | l_eco |                 |
-| | logy? |                 |
-| | servi |                 |
-| | ce=wm |                 |
-| | s&req |                 |
-| | uest= |                 |
-| | getca |                 |
-| | pabil |                 |
-| | ities |                 |
-| | &vers |                 |
-| | ion=1 |                 |
-| | .1.1> |                 |
-| | `__   |                 |
-| | `bc   |                 |
-| | water |                 |
-| | manag |                 |
-| | ement |                 |
-| |  <htt |                 |
-| | p://o |                 |
-| | penma |                 |
-| | ps.go |                 |
-| | v.bc. |                 |
-| | ca/ma |                 |
-| | pserv |                 |
-| | er/wa |                 |
-| | terma |                 |
-| | nagem |                 |
-| | ent?s |                 |
-| | ervic |                 |
-| | e=wms |                 |
-| | &requ |                 |
-| | est=g |                 |
-| | etcap |                 |
-| | abili |                 |
-| | ties& |                 |
-| | versi |                 |
-| | on=1. |                 |
-| | 1.1>` |                 |
-| | __    |                 |
-| | `bc   |                 |
-| | wild  |                 |
-| | lifem |                 |
-| | anage |                 |
-| | ment  |                 |
-| | <http |                 |
-| | ://op |                 |
-| | enmap |                 |
-| | s.gov |                 |
-| | .bc.c |                 |
-| | a/map |                 |
-| | serve |                 |
-| | r/wil |                 |
-| | dlife |                 |
-| | manag |                 |
-| | ement |                 |
-| | ?serv |                 |
-| | ice=w |                 |
-| | ms&re |                 |
-| | quest |                 |
-| | =getc |                 |
-| | apabi |                 |
-| | litie |                 |
-| | s&ver |                 |
-| | sion= |                 |
-| | 1.1.1 |                 |
-| | >`__  |                 |
-| | |     |                 |
-| | WMS:\ |                 |
-| |  `lib |                 |
-| | cwms. |                 |
-| | gov.b |                 |
-| | c.ca  |                 |
-| | <http |                 |
-| | ://li |                 |
-| | bcwms |                 |
-| | .gov. |                 |
-| | bc.ca |                 |
-| | /wmsc |                 |
-| | onnec |                 |
-| | tor/c |                 |
-| | om.es |                 |
-| | ri.ws |                 |
-| | it.WM |                 |
-| | SServ |                 |
-| | let/o |                 |
-| | gc_la |                 |
-| | yer_s |                 |
-| | ervic |                 |
-| | e?REQ |                 |
-| | UEST= |                 |
-| | GetCa |                 |
-| | pabil |                 |
-| | ities |                 |
-| | &Serv |                 |
-| | ice=W |                 |
-| | MS>`_ |                 |
-| | _     |                 |
-| |       |                 |
-| | | **N |                 |
-| | ew    |                 |
-| | Zeala |                 |
-| | nd**  |                 |
-| | |     |                 |
-| | Catal |                 |
-| | og:   |                 |
-| | http: |                 |
-| | //geo |                 |
-| | data. |                 |
-| | govt. |                 |
-| | nz/   |                 |
-| |       |                 |
-| | | **T |                 |
-| | hanks |                 |
-| | **    |                 |
-| | |     |                 |
-| | http: |                 |
-| | //ope |                 |
-| | nmaps |                 |
-| | .gov. |                 |
-| | bc.ca |                 |
-| | /     |                 |
-| | |     |                 |
-| | `GeoS |                 |
-| | erver |                 |
-| | List  |                 |
-| | <http |                 |
-| | ://ge |                 |
-| | oserv |                 |
-| | er.or |                 |
-| | g/dis |                 |
-| | play/ |                 |
-| | GEOS/ |                 |
-| | Avail |                 |
-| | able+ |                 |
-| | WMS+a |                 |
-| | nd+WF |                 |
-| | S+ser |                 |
-| | vers> |                 |
-| | `__   |                 |
-| | |     |                 |
-| | `Nati |                 |
-| | onal  |                 |
-| | Resou |                 |
-| | rce   |                 |
-| | Canad |                 |
-| | a <ht |                 |
-| | tp:// |                 |
-| | atlas |                 |
-| | .nrca |                 |
-| | n.gc. |                 |
-| | ca/si |                 |
-| | tes/e |                 |
-| | nglis |                 |
-| | h/dat |                 |
-| | aserv |                 |
-| | ices/ |                 |
-| | web_m |                 |
-| | ap_se |                 |
-| | rvice |                 |
-| | .html |                 |
-| | #requ |                 |
-| | ests> |                 |
-| | `__   |                 |
-| | |     |                 |
-| | `Mapp |                 |
-| | ing   |                 |
-| | Hacks |                 |
-| | Data  |                 |
-| | <http |                 |
-| | ://ww |                 |
-| | w.map |                 |
-| | pingh |                 |
-| | acks. |                 |
-| | com/d |                 |
-| | ata/> |                 |
-| | `__   |                 |
-| | |     |                 |
-| | `NYSD |                 |
-| | OP    |                 |
-| | ortho |                 |
-| | image |                 |
-| | ry    |                 |
-| | for   |                 |
-| | New   |                 |
-| | York  |                 |
-| | State |                 |
-| |  <htt |                 |
-| | p://w |                 |
-| | ww.ny |                 |
-| | sgis. |                 |
-| | state |                 |
-| | .ny.u |                 |
-| | s/gat |                 |
-| | eway/ |                 |
-| | mg/we |                 |
-| | bserv |                 |
-| | />`__ |                 |
-| | |     |                 |
-| | http: |                 |
-| | //sig |                 |
-| | ma.op |                 |
-| | enpla |                 |
-| | ns.or |                 |
-| | g     |                 |
-| |       |                 |
-| | Searc |                 |
-| | h     |                 |
-| | ----- |                 |
-| | -     |                 |
-| |       |                 |
-| | You   |                 |
-| | can   |                 |
-| | find  |                 |
-| | addit |                 |
-| | ional |                 |
-| | infor |                 |
-| | matio |                 |
-| | n     |                 |
-| | direc |                 |
-| | tly   |                 |
-| | from  |                 |
-| | the   |                 |
-| | appli |                 |
-| | catio |                 |
-| | n     |                 |
-| | `Sear |                 |
-| | ch    |                 |
-| | view  |                 |
-| | <http |                 |
-| | ://ud |                 |
-| | ig.re |                 |
-| | fract |                 |
-| | ions. |                 |
-| | net/c |                 |
-| | onflu |                 |
-| | ence/ |                 |
-| | /disp |                 |
-| | lay/E |                 |
-| | N/Sea |                 |
-| | rch+v |                 |
-| | iew>` |                 |
-| | __.   |                 |
-| | This  |                 |
-| | conte |                 |
-| | nt    |                 |
-| | is    |                 |
-| | backe |                 |
-| | d     |                 |
-| | by    |                 |
-| | sever |                 |
-| | al    |                 |
-| | publi |                 |
-| | c     |                 |
-| | catal |                 |
-| | ogs.  |                 |
-| |       |                 |
-| | Data  |                 |
-| | ----  |                 |
-| |       |                 |
-| | This  |                 |
-| | data  |                 |
-| | space |                 |
-| | is a  |                 |
-| | wiki, |                 |
-| | pleas |                 |
-| | e     |                 |
-| | share |                 |
-| | your  |                 |
-| | stori |                 |
-| | es,   |                 |
-| | tips, |                 |
-| | trips |                 |
-| | and   |                 |
-| | scrip |                 |
-| | ts    |                 |
-| | - we  |                 |
-| | will  |                 |
-| | all   |                 |
-| | benef |                 |
-| | it.   |                 |
-| |       |                 |
-| | `Bran |                 |
-| | denbu |                 |
-| | rg <B |                 |
-| | rande |                 |
-| | nburg |                 |
-| | .html |                 |
-| | >`__  |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^  |                 |
-| |       |                 |
-| | `Demo |                 |
-| |  Serv |                 |
-| | ers < |                 |
-| | Demo% |                 |
-| | 20Ser |                 |
-| | vers. |                 |
-| | html> |                 |
-| | `__   |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^   |                 |
-| |       |                 |
-| | `Expe |                 |
-| | rimen |                 |
-| | tal S |                 |
-| | erver |                 |
-| | s <Ex |                 |
-| | perim |                 |
-| | ental |                 |
-| | %20Se |                 |
-| | rvers |                 |
-| | .html |                 |
-| | >`__  |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^  |                 |
-| |       |                 |
-| | `FOSS |                 |
-| | 4G 20 |                 |
-| | 07 <F |                 |
-| | OSS4G |                 |
-| | %2020 |                 |
-| | 07.ht |                 |
-| | ml>`_ |                 |
-| | _     |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^     |                 |
-| |       |                 |
-| | `FOSS |                 |
-| | 4G 20 |                 |
-| | 09 <F |                 |
-| | OSS4G |                 |
-| | %2020 |                 |
-| | 09.ht |                 |
-| | ml>`_ |                 |
-| | _     |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^     |                 |
-| |       |                 |
-| | `Geob |                 |
-| | ase.c |                 |
-| | a pla |                 |
-| | cenam |                 |
-| | es <G |                 |
-| | eobas |                 |
-| | e.ca% |                 |
-| | 20pla |                 |
-| | cenam |                 |
-| | es.ht |                 |
-| | ml>`_ |                 |
-| | _     |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^     |                 |
-| |       |                 |
-| | `Mass |                 |
-| | achus |                 |
-| | etts  |                 |
-| | <Mass |                 |
-| | achus |                 |
-| | etts. |                 |
-| | html> |                 |
-| | `__   |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^   |                 |
-| |       |                 |
-| | `SLIP |                 |
-| |  <SLI |                 |
-| | P.htm |                 |
-| | l>`__ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| |       |                 |
-| | `Test |                 |
-| |  Serv |                 |
-| | ers < |                 |
-| | Test% |                 |
-| | 20Ser |                 |
-| | vers. |                 |
-| | html> |                 |
-| | `__   |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^   |                 |
-| |       |                 |
-| | `TIGE |                 |
-| | R <TI |                 |
-| | GER.h |                 |
-| | tml>` |                 |
-| | __    |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^    |                 |
-| |       |                 |
-| | `uDig |                 |
-| |  Samp |                 |
-| | le Da |                 |
-| | ta <u |                 |
-| | Dig%2 |                 |
-| | 0Samp |                 |
-| | le%20 |                 |
-| | Data. |                 |
-| | html> |                 |
-| | `__   |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^^^ |                 |
-| | ^^^   |                 |
-|                           |
-| +-------+-------+-------+ |
-| -------+-------+-------+- |
-| ------+-------+-------+-- |
-| -----+-------+-------+--- |
-| ----+-------+-------+---- |
-| ---+-------+-------+----- |
-| --+-------+               |
-                           
-+---------------------------+---------------------------+---------------------------+---------------------------+
+.. raw:: html
+
+   <table>
+
+.. raw:: html
+
+   <col width="25%" />
+
+.. raw:: html
+
+   <col width="25%" />
+
+.. raw:: html
+
+   <col width="25%" />
+
+.. raw:: html
+
+   <col width="25%" />
+
+.. raw:: html
+
+   <tbody>
+
+.. raw:: html
+
+   <tr class="odd">
+
+.. raw:: html
+
+   <td align="left">
+
+| Data : Home |image0|
+| This page last changed on Nov 20, 2011 by jgarnett.
+| The WMS and WFS links links server "Capabilities Documents&quot; you can drag into uDig directly:
+
+.. raw:: html
+
+   <table>
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <col width="5%" />
+
+.. raw:: html
+
+   <tbody>
+
+.. raw:: html
+
+   <tr class="odd">
+
+.. raw:: html
+
+   <td align="left">
+
+| **Technology Demo**
+|  WMS:\ `dm
+solutions <http://www2.dmsolutions.ca/cgi-bin/mswms_gmap?Service=WMS&VERSION=1.1.0&REQUEST=GetCapabilities>`__
+WFS:\ `dm
+solutions <http://www2.dmsolutions.ca/cgi-bin/mswfs_gmap?version=1.0.0&request=getcapabilities&service=wfs>`__
+|  WMS:\ `Demo
+Cubwerx <http://demo.cubewerx.com/demo/cubeserv/cubeserv.cgi?CONFIG=main&SERVICE=WMS&?VERSION=1.1.1&REQUEST=GetCapabilities>`__
+|  WMS:
+`demo.opengeo.org <http://demo.opengeo.org/geoserver/ows?service=wms&version=1.1.1&request=GetCapabilities>`__
+|  WMS:
+`demo.mapsserver.org <http://demo.mapserver.org/cgi-bin/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetCapabilities>`__
+|  WMS-C:
+`sigma.openplans.org <http://sigma.openplans.org:8080/geowebcache/service/wms?request=getcapabilities&tiled=true>`__
+|  WMS-C:
+`labs.metacarta.com <http://labs.metacarta.com/wms-c/tilecache.py?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetCapabilities&tiled=true>`__
+|  WMS-C:
+`demo.opengeo.org <http://demo.opengeo.org/geoserver/gwc/service/wms?request=getcapabilities&tiled=true>`__
+
+| **World**
+|  Download: `Natural Earth <http://www.naturalearthdata.com/>`__
+
+| **Canada**
+|  WMS: `Geobase <http://wms.geobase.ca/wms-bin/cubeserv.cgi?request=getCapabilities>`__
+|  WMS:\ `Atlas of
+Canada <http://atlas.gc.ca/cgi-bin/atlaswms_en?VERSION=1.1.1&Request=GetCapabilities&Service=WMS>`__
+| 
+WMS:\ `wms.cits.rncan.gc.ca <http://wms.cits.rncan.gc.ca/cgi-bin/cubeserv.cgi?VERSION=1.1.0&REQUEST=GetCapabilities>`__
+|  WFS:\ `env
+dat <http://map.ns.ec.gc.ca/MapServer/mapserv.exe?map=/mapserver/services/envdat/config.map&service=WFS&version=1.0.0&request=GetCapabilities>`__
+|  WMS:\ `bc air
+photos <http://openmaps.gov.bc.ca/mapserver/aps?service=wms&request=getcapabilities&version=1.1.1>`__
+`bc
+base <http://openmaps.gov.bc.ca/mapserver/base2?service=wms&request=getcapabilities&version=1.1.1>`__
+`bc
+cadastre <http://openmaps.gov.bc.ca/mapserver/cadastre?service=wms&request=getcapabilities&version=1.1.1>`__
+`bc
+forestvegetation <http://openmaps.gov.bc.ca/mapserver/forestvegetation?service=wms&request=getcapabilities&version=1.1.1>`__
+`images <http://openmaps.gov.bc.ca/images/base.xml?service=wms&request=getcapabilities&version=1.1.1>`__
+`bc terrestrial
+ecology <http://openmaps.gov.bc.ca/mapserver/terrestrial_ecology?service=wms&request=getcapabilities&version=1.1.1>`__
+`bc water
+management <http://openmaps.gov.bc.ca/mapserver/watermanagement?service=wms&request=getcapabilities&version=1.1.1>`__
+`bc wild
+lifemanagement <http://openmaps.gov.bc.ca/mapserver/wildlifemanagement?service=wms&request=getcapabilities&version=1.1.1>`__
+| 
+WMS:\ `libcwms.gov.bc.ca <http://libcwms.gov.bc.ca/wmsconnector/com.esri.wsit.WMSServlet/ogc_layer_service?REQUEST=GetCapabilities&Service=WMS>`__
+
+| **New Zealand**
+|  Catalog: http://geodata.govt.nz/
+
+| **Thanks**
+|  http://openmaps.gov.bc.ca/
+|  `GeoServer List <http://geoserver.org/display/GEOS/Available+WMS+and+WFS+servers>`__
+|  `National Resource
+Canada <http://atlas.nrcan.gc.ca/sites/english/dataservices/web_map_service.html#requests>`__
+|  `Mapping Hacks Data <http://www.mappinghacks.com/data/>`__
+|  `NYSDOP orthoimagery for New York State <http://www.nysgis.state.ny.us/gateway/mg/webserv/>`__
+|  http://sigma.openplans.org
+
+Search
+------
+
+You can find additional information directly from the application `Search
+view <http://udig.refractions.net/confluence//display/EN/Search+view>`__. This content is backed by
+several public catalogs.
+
+Data
+----
+
+This data space is a wiki, please share your stories, tips, trips and scripts - we will all benefit.
+
+`Brandenburg <Brandenburg.html>`__
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+`Demo Servers <Demo%20Servers.html>`__
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+`Experimental Servers <Experimental%20Servers.html>`__
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+`FOSS4G 2007 <FOSS4G%202007.html>`__
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+`FOSS4G 2009 <FOSS4G%202009.html>`__
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+`Geobase.ca placenames <Geobase.ca%20placenames.html>`__
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+`Massachusetts <Massachusetts.html>`__
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+`SLIP <SLIP.html>`__
+^^^^^^^^^^^^^^^^^^^^
+
+`Test Servers <Test%20Servers.html>`__
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+`TIGER <TIGER.html>`__
+^^^^^^^^^^^^^^^^^^^^^^
+
+`uDig Sample Data <uDig%20Sample%20Data.html>`__
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   </tbody>
+
+.. raw:: html
+
+   </table>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   </tbody>
+
+.. raw:: html
+
+   </table>
 
 +------------+----------------------------------------------------------+
-| |image3|   | Document generated by Confluence on Aug 11, 2014 12:26   |
+| |image2|   | Document generated by Confluence on Aug 11, 2014 12:26   |
 +------------+----------------------------------------------------------+
 
 .. |image0| image:: images/icons/home_16.gif
-.. |image1| image:: images/icons/home_16.gif
+.. |image1| image:: images/border/spacer.gif
 .. |image2| image:: images/border/spacer.gif
-.. |image3| image:: images/border/spacer.gif
