@@ -39,17 +39,15 @@ Catalog: http://geodata.govt.nz/
 **Thanks**
 
 * http://openmaps.gov.bc.ca/
-* `GeoServer List <http://geoserver.org/display/GEOS/Available+WMS+and+WFS+servers>`_
-* `National Resource Canada <http://atlas.nrcan.gc.ca/sites/english/dataservices/web_map_service.html#requests>`_
+* `National Resource Canada <http://atlas.nrcan.gc.ca/site/english/dataservices/>`_
 * `Mapping Hacks Data <http://www.mappinghacks.com/data/>`_
 * `NYSDOP orthoimagery for New York State <http://www.nysgis.state.ny.us/gateway/mg/webserv/>`_
-* http://sigma.openplans.org
 
 Search
 ------
 
 You can find additional information directly from the application `Search
-view <http://udig.refractions.net/confluence//display/EN/Search+view>`_. This content is backed by
+view <http://udig.github.io/docs/user/reference/Search%20view.html>`_. This content is backed by
 several public catalogs.
 
 Data
@@ -57,7 +55,7 @@ Data
 
 This data space is a wiki, please share your stories, tips, trips and scripts - we will all benefit.
 
-* `<brandenburg.rst>`_
+* `<Brandenburg brandenburg.rst>`_
 * `<demo_servers.rst>`_
 * `<experimental_servers.rst>`_
 * `<foss4g_2007.rst>`_
