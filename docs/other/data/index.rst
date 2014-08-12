@@ -68,5 +68,4 @@ This data space is a wiki, please share your stories, tips, trips and scripts - 
 * `<slip.rst>`_
 * `<test_servers.rst>`_
 * `<test_servers_2.rst>`_
-* `<Tiger tiger.rst>`_
 * `uDig Sample Data <udig_sample_data.rst>`_
