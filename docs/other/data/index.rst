@@ -56,8 +56,8 @@ Data
 This data space is a wiki, please share your stories, tips, trips and scripts - we will all benefit.
 
 * `Brandenburg <brandenburg.rst>`_
-* `<demo_servers.rst>`_
-* `<experimental_servers.rst>`_
+* `Demo Servers <demo_servers.rst>`_
+* `Exerimental Servers <experimental_servers.rst>`_
 * `<foss4g_2007.rst>`_
 * `<foss4g_2009.rst>`_
 * `<geobase.ca_placenames.rst>`_
