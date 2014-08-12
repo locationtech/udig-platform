@@ -1,142 +1,32 @@
 Foss4g 2009
 ###########
 
-.. raw:: html
-
-   <table>
-
-.. raw:: html
-
-   <col width="25%" />
-
-.. raw:: html
-
-   <col width="25%" />
-
-.. raw:: html
-
-   <col width="25%" />
-
-.. raw:: html
-
-   <col width="25%" />
-
-.. raw:: html
-
-   <tbody>
-
-.. raw:: html
-
-   <tr class="odd">
-
-.. raw:: html
-
-   <td align="left">
-
-| Data : FOSS4G 2009
-| This page last changed on Oct 08, 2009 by jgarnett.
-
-.. raw:: html
-
-   <table>
-
-.. raw:: html
-
-   <col width="8%" />
-
-.. raw:: html
-
-   <col width="8%" />
-
-.. raw:: html
-
-   <col width="8%" />
-
-.. raw:: html
-
-   <col width="8%" />
-
-.. raw:: html
-
-   <col width="8%" />
-
-.. raw:: html
-
-   <col width="8%" />
-
-.. raw:: html
-
-   <col width="8%" />
-
-.. raw:: html
-
-   <col width="8%" />
-
-.. raw:: html
-
-   <col width="8%" />
-
-.. raw:: html
-
-   <col width="8%" />
-
-.. raw:: html
-
-   <col width="8%" />
-
-.. raw:: html
-
-   <col width="8%" />
-
-.. raw:: html
-
-   <tbody>
-
-.. raw:: html
-
-   <tr class="odd">
-
-.. raw:: html
-
-   <td align="left">
-
 Australia
 ---------
 
-| Geoscience Australia:
-|  |image0| `www.ga.gov.au
-WMS <http://www.ga.gov.au/wms/getmap?dataset=national&request=capabilities&Service=WMS>`__
-|  |image1| `map connect
-WMS <http://mapconnect.ga.gov.au/wmsconnector/com.esri.wms.Esrimap?Version=1.1.1&Request=getcapabilities&Service=WMS&Servicename=GDA94_MapConnect_SDE_250kmap_WMS>`__
+Geoscience Australia:
+* |icon_warning| `www.ga.gov.au WMS <http://www.ga.gov.au/wms/getmap?dataset=national&request=capabilities&Service=WMS>`_
+* |icon_check| `map connect WMS <http://mapconnect.ga.gov.au/wmsconnector/com.esri.wms.Esrimap?Version=1.1.1&Request=getcapabilities&Service=WMS&Servicename=GDA94_MapConnect_SDE_250kmap_WMS>`_
 
-| SLIP: login for additional `services <SLIP.html>`__
-|  |image2| `beta.landgate
-tilecache <http://beta.landgate.wa.gov.au/tilecache/?REQUEST=GetCapabilities&SERVICE=WMS&tiled=true>`__
+SLIP: 
 
-| terrapages.net:
-|  |image3| `TileCache
-1 <http://wmsc1.terrapages.net/getmap?request=getcapabilities&service=wms&tiled=true>`__
-`2 <http://wmsc2.terrapages.net/getmap?request=getcapabilities&service=wms&tiled=true>`__
-`3 <http://wmsc3.terrapages.net/getmap?request=getcapabilities&service=wms&tiled=true>`__
-`4 <http://wmsc4.terrapages.net/getmap?request=getcapabilities&service=wms&tiled=true>`__
-`5 <http://wmsc5.terrapages.net/getmap?request=getcapabilities&service=wms&tiled=true>`__
-`6 <http://wmsc6.terrapages.net/getmap?request=getcapabilities&service=wms&tiled=true>`__
-`7 <http://wmsc7.terrapages.net/getmap?request=getcapabilities&service=wms&tiled=true>`__
-`8 <http://wmsc8.terrapages.net/getmap?request=getcapabilities&service=wms&tiled=true>`__
-|  |image4| `UMN
-Mapserver <http://wms-syd.terrapages.com/cgi-bin/mapserv?Request=GetCapabilities&Service=WMS>`__
-|  |image5| `GeoServer
-WMS <http://wms-syd.terrapages.com/geoserver/wms?service=WMS&request=GetCapabilities>`__
-|  |image6| `GeoServer
-WFS <http://wms-syd.terrapages.com/geoserver/wms?service=WFS&request=GetCapabilities>`__
+login for additional `services <SLIP.html>`_
 
-Localhost
----------
+* |icon_warning| `beta.landgate tilecache <http://beta.landgate.wa.gov.au/tilecache/?REQUEST=GetCapabilities&SERVICE=WMS&tiled=true>`_
 
-| Files: `C: <file:///C:/data>`__
-|  WMS: `GeoServer WMS <http://localhost:8080/geoserver/wms?service=WMS&request=GetCapabilities>`__
-|  WFS: `GeoServer WFS <http://localhost:8080/geoserver/wfs?service=WFS&request=GetCapabilities>`__
-|  Web: `GeoServer Demo <http://localhost:8080/geoserver/demo.do>`__
+terrapages.net:
+* |icon_warning| `TileCache 1 <http://wmsc1.terrapages.net/getmap?request=getcapabilities&service=wms&tiled=true>`_
+* `2 <http://wmsc2.terrapages.net/getmap?request=getcapabilities&service=wms&tiled=true>`_
+* `3 <http://wmsc3.terrapages.net/getmap?request=getcapabilities&service=wms&tiled=true>`_
+* `4 <http://wmsc4.terrapages.net/getmap?request=getcapabilities&service=wms&tiled=true>`_
+* `5 <http://wmsc5.terrapages.net/getmap?request=getcapabilities&service=wms&tiled=true>`_
+* `6 <http://wmsc6.terrapages.net/getmap?request=getcapabilities&service=wms&tiled=true>`_
+* `7 <http://wmsc7.terrapages.net/getmap?request=getcapabilities&service=wms&tiled=true>`_
+* `8 <http://wmsc8.terrapages.net/getmap?request=getcapabilities&service=wms&tiled=true>`_
+
+* |icon_error| `UMN Mapserver <http://wms-syd.terrapages.com/cgi-bin/mapserv?Request=GetCapabilities&Service=WMS>`_
+* |icon_error| `GeoServer WMS <http://wms-syd.terrapages.com/geoserver/wms?service=WMS&request=GetCapabilities>`_
+* |icon_check| `GeoServer WFS <http://wms-syd.terrapages.com/geoserver/wms?service=WFS&request=GetCapabilities>`_
 
 World
 -----
@@ -172,53 +62,9 @@ bioreg <http://www.marine.csiro.au/mapserver/cgi-bin/mapserv?map=/srv/www/htdocs
 |  `www.marine.csiro.au
 cmar <http://www.marine.csiro.au/mapserver/cgi-bin/mapserv?map=/srv/www/htdocs/CMAR_Warehouse_Data_WMS.map&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetCapabilities>`__
 
-.. raw:: html
 
-   </td>
+|icon_check| recommended |icon_warning| slow or incomplete |icon_error| broken
 
-.. raw:: html
-
-   </tr>
-
-.. raw:: html
-
-   </tbody>
-
-.. raw:: html
-
-   </table>
-
-|image7| recommended |image8| slow or incomplete |image9| broken
-
-.. raw:: html
-
-   </td>
-
-.. raw:: html
-
-   </tr>
-
-.. raw:: html
-
-   </tbody>
-
-.. raw:: html
-
-   </table>
-
-+-------------+----------------------------------------------------------+
-| |image11|   | Document generated by Confluence on Aug 11, 2014 12:26   |
-+-------------+----------------------------------------------------------+
-
-.. |image0| image:: images/icons/emoticons/warning.gif
-.. |image1| image:: images/icons/emoticons/check.gif
-.. |image2| image:: images/icons/emoticons/warning.gif
-.. |image3| image:: images/icons/emoticons/warning.gif
-.. |image4| image:: images/icons/emoticons/error.gif
-.. |image5| image:: images/icons/emoticons/error.gif
-.. |image6| image:: images/icons/emoticons/check.gif
-.. |image7| image:: images/icons/emoticons/check.gif
-.. |image8| image:: images/icons/emoticons/warning.gif
-.. |image9| image:: images/icons/emoticons/error.gif
-.. |image10| image:: images/border/spacer.gif
-.. |image11| image:: images/border/spacer.gif
+.. |icon_warning| image:: images/icons/emoticons/warning.gif
+.. |icon_check| image:: images/icons/emoticons/check.gif
+.. |icon_error| image:: images/icons/emoticons/error.gif
