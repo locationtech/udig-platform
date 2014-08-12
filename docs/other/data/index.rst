@@ -57,9 +57,9 @@ This data space is a wiki, please share your stories, tips, trips and scripts - 
 
 * `Brandenburg <brandenburg.rst>`_
 * `Demo Servers <demo_servers.rst>`_
-* `Exerimental Servers <experimental_servers.rst>`_
-* `<foss4g_2007.rst>`_
-* `<foss4g_2009.rst>`_
+* `Experimental Servers <experimental_servers.rst>`_
+* `Foss4g 2007 <foss4g_2007.rst>`_
+* `Foss4g 2009 <foss4g_2009.rst>`_
 * `<geobase.ca_placenames.rst>`_
 * `<massachusetts.rst>`_
 * `<sedac_wms.rst>`_
