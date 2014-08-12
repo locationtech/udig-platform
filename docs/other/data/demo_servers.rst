@@ -1,212 +1,32 @@
 Demo Servers
 ############
 
-.. raw:: html
-
-   <table>
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <col width="4%" />
-
-.. raw:: html
-
-   <tbody>
-
-.. raw:: html
-
-   <tr class="odd">
-
-.. raw:: html
-
-   <td align="left">
-
-| Data : Demo Servers
-| This page last changed on Nov 10, 2008 by jgarnett.
-| There are several Demo Servers available around the Internet, this page lists the ones we know are
+There are several Demo Servers available around the Internet, this page lists the ones we know are
 up and working.
-
--  `Cubeserv <#DemoServers-Cubeserv>`__
--  `GeoServer <#DemoServers-GeoServer>`__
--  `Ionic <#DemoServers-Ionic>`__
--  `MapGuide <#DemoServers-MapGuide>`__
--  `MapServer <#DemoServers-MapServer>`__
--  `MapXtreme <#DemoServers-MapXtreme>`__
--  `Weather.gov <#DemoServers-Weather.gov>`__
-
-In cases where WFS 1.1 is listed please be advised that UDig does not yet support these servers (so
-save these links for a rainy day).
 
 Cubeserv
 ========
 
-| WFS 1.0:
-http://cgns.nrcan.gc.ca/wfs/cubeserv.cgi?datastore=cgns&service=WFS&version=1.0.0&request=GetCapabilities
-|  GetFeatures:
-http://cgns.nrcan.gc.ca/wfs/cubeserv.cgi?datastore=cgns&service=WFS&version=1.0.0&request=GetFeature&typename=cw:GEONAMES_POINTS&maxfeatures=10
-
-| WFS 1.1:
-http://demo.cubewerx.com/demo/cubeserv/cubeserv.cgi?datastore=Foundation&service=WFS&version=1.1.0&request=GetCapabilities
-|  GetFeatures:
-http://demo.cubewerx.com/demo/cubeserv/cubeserv.cgi?datastore=Foundation&service=WFS&version=1.1.0&request=GetFeature&typename=cw:AEROFACP_1M&maxfeatures=10
+* `WMS 1.0.0 <http://cgns.nrcan.gc.ca/wfs/cubeserv.cgi?datastore=cgns&service=WFS&version=1.0.0&request=GetCapabilities>`_
+* `WMS 1.1.1 <http://demo.cubewerx.com/demo/cubeserv/cubeserv.cgi?datastore=Foundation&service=WMS&version=1.1.1&request=GetCapabilities>`_
 
 GeoServer
 =========
 
-WMS: http://giswebservices.massgis.state.ma.us/geoserver/wms?service=WMS&request=GetCapabilities
-
-Ionic
-=====
-
-WFS 1.1:
-http://webservices.ionicsoft.com:8080/unData/wfs/UN?service=WFS&version=1.1.0&request=GetCapabilities
-(returns 1.0 capabilities)
-
-MapGuide
-========
-
-| WMS 1.1.1:
-`enterprise.mapguide.com <http://enterprise.mapguide.com/mapguide2009/mapagent/mapagent.fcgi?service=WMS&REQUEST=GetCapabilities&VERSION=1.1.1>`__
-|  (From http://enterprise.mapguide.com/googlemapsdemo/ )
+* `WMS 1.3.0 <http://giswebservices.massgis.state.ma.us/geoserver/wms?service=WMS&request=GetCapabilities>`_
 
 MapServer
 =========
 
-| WFS 1.0:
-`www.bsc-eoc.org <http://www.bsc-eoc.org/cgi-bin/bsc_ows.asp?service=WFS&version=1.0.0&request=GetCapabilities>`__
-|  WFS 1.0:
-`excise.pyr.ec.gc.ca <http://excise.pyr.ec.gc.ca/cgi-bin/mapserv.exe?map=/LocalApps/Mapsurfer/PYRWQMP.map&service=WFS&version=1.0.0&request=GetCapabilities>`__
-
-| WFS 1.1:
-`www.bsc-eoc.org <http://www.bsc-eoc.org/cgi-bin/bsc_ows.asp?service=WFS&version=1.1.0&request=GetCapabilities>`__
-|  WFS 1.1:
-`excise.pyr.ec.gc.ca <http://excise.pyr.ec.gc.ca/cgi-bin/mapserv.exe?map=/LocalApps/Mapsurfer/PYRWQMP.map&service=WFS&version=1.1.0&request=GetCapabilities>`__
+* `WFS 1.0.0 www.bsc-eoc.org <http://www.bsc-eoc.org/cgi-bin/bsc_ows.asp?service=WFS&version=1.0.0&request=GetCapabilities>`_
+* `WFS 1.1.0 www.bsc-eoc.org <http://www.bsc-eoc.org/cgi-bin/bsc_ows.asp?service=WFS&version=1.1.0&request=GetCapabilities>`_
 
 MapXtreme
 =========
 
-| WFS 1.0:
-http://199.29.1.81:8181/miwfs/GetFeature.ashx?service=WFS&version=1.0.0&request=GetCapabilities
-|  GetFeatures: [http://199.29.1.81:8181/miwfs/GetFeature.ashx?service=WFS&amp;version=1.0.0&amp;
-|  request=GetFeature&amp;typename=miwfs:World&amp;maxfeatures=10]
+* `WFS 1.0.0 <http://199.29.1.81:8181/miwfs/GetFeature.ashx?service=WFS&version=1.0.0&request=GetCapabilities>`_
 
 Weather.gov
 ===========
 
-| Experimental WFS server:
-|  WFS 1.0:
-http://www.weather.gov/forecasts/xml/OGC_services/ndfdOWSserver.php?SERVICE=WFS&version=1.0.0&Request=GetCapabilities
-|  GetFeature:
-http://www.weather.gov/forecasts/xml/OGC_services/ndfdOWSserver.php?SERVICE=WFS&version=1.0.0&Request=GetFeature&typename=ndfd:Forecast_Gml2Point&maxfeatures=10
-
-| WFS 1.1:
-http://www.weather.gov/forecasts/xml/OGC_services/ndfdOWSserver.php?SERVICE=WFS&version=1.1.0&Request=GetCapabilities
-|  GetFetaure:
-http://www.weather.gov/forecasts/xml/OGC_services/ndfdOWSserver.php?SERVICE=WFS&version=1.1.0&Request=GetFeature&typename=app:Forecast_GmlsfPoint&maxfeatures=10
-
-.. raw:: html
-
-   </td>
-
-.. raw:: html
-
-   </tr>
-
-.. raw:: html
-
-   </tbody>
-
-.. raw:: html
-
-   </table>
-
-+------------+----------------------------------------------------------+
-| |image1|   | Document generated by Confluence on Aug 11, 2014 12:26   |
-+------------+----------------------------------------------------------+
-
-.. |image0| image:: images/border/spacer.gif
-.. |image1| image:: images/border/spacer.gif
+As of March 1, 2011, this server no longer supports WFS requests. Please see the following Technical Implementation Notice for more information: http://www.nws.noaa.gov/om/notification/tin10-59ending_wfs.htm
