@@ -55,7 +55,7 @@ Data
 
 This data space is a wiki, please share your stories, tips, trips and scripts - we will all benefit.
 
-* `<Brandenburg brandenburg.rst>`_
+* `Brandenburg <brandenburg.rst>`_
 * `<demo_servers.rst>`_
 * `<experimental_servers.rst>`_
 * `<foss4g_2007.rst>`_
