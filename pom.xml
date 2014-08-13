@@ -188,8 +188,8 @@
                     <target>
                         <artifact>
                             <groupId>org.locationtech.udig-target</groupId>
-                            <artifactId>udig-indigo-target</artifactId>
-                            <version>3.7</version>
+                            <artifactId>udig-luna-target</artifactId>
+                            <version>4.4</version>
                         </artifact>
                     </target>
                     <resolver>p2</resolver>
