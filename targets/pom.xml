@@ -23,6 +23,9 @@
     <packaging>pom</packaging>
 
     <modules>
+<!--
         <module>indigo</module>
+-->
+        <module>luna</module>
     </modules>
 </project>
