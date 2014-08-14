@@ -1,0 +1,17 @@
+language: java
+jdk:
+  - oraclejdk7
+  - openjdk7
+before_script:
+  - mvn clean install -f pom-libs.xml
+script:
+  - mvn clean install -Pproduct -Psdk
+notifications:
+  email:
+    on_success: never
+    on_failure: never
+branches:
+  only:
+    - luna-support
+    - master
+    - udig-gt-11-snapshot
