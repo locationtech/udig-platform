@@ -2,9 +2,9 @@ language: java
 jdk:
   - oraclejdk7
   - openjdk7
-script:
-  - travis_wait mvn clean install -f pom-libs.xml
-  - travis_wait mvn clean install -Pproduct -Psdk
+install: "travis_retry mvn install -DskipTests=true -f pom-libs.xml -B -V"
+script: "travis_retry mvn install -Pproduct -Psdk -B -V"
+env:  MAVEN_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
 notifications:
   email:
     on_success: never
