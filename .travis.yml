@@ -2,8 +2,7 @@ language: java
 jdk:
   - oraclejdk7
   - openjdk7
-python:
-  - "2.7"
+python: "2.7"
 env:
   - MAVEN_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
 install:
