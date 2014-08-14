@@ -18,8 +18,8 @@ notifications:
     channels: "irc.freenode.org#udig"
     on_success: change
     on_failure: always
-#    template: "%{repository} (%{branch}:%{commit} by %{author}): %{message} (%{build_url})"	
-    template: "%{repository} (%{branch}:%{commit}): %{message} (%{build_url})"	
+#    template: "%{repository} (%{branch}:%{commit} by %{author}): %{message} (%{build_url})"
+    template: "%{repository} (%{branch}:%{commit}): %{message} (%{build_url})"
 branches:
   only:
     - luna-support
