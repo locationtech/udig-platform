@@ -2,9 +2,8 @@ language: java
 jdk:
   - oraclejdk7
   - openjdk7
-before_script:
-  - travis_wait mvn clean install -f pom-libs.xml
 script:
+  - travis_wait mvn clean install -f pom-libs.xml
   - travis_wait mvn clean install -Pproduct -Psdk
 notifications:
   email:
