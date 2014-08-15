@@ -68,7 +68,7 @@
         <repository>
             <id>geotools-snapshot</id>
             <name>Geotools Snapshot</name>
-            <url>http://repo.opengeo.org</url>
+            <url>http://repo.boundlessgeo.com/main/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -77,7 +77,7 @@
             </snapshots>
         </repository>
 
-        <!-- The JAI tools maven repository is actually the offical sonaType snapshot repository -->
+        <!-- The JAI tools maven repository is actually the offical sonaType snapshot repository
         <repository>
             <id>sonatype-snapshot</id>
             <name>Sonatype Snapshot Repository</name>
@@ -89,6 +89,7 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+        -->
 
         <!-- GeoSolutions provide their own repository for imageio-ext builds -->
         <repository>
