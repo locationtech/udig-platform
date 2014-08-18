@@ -122,23 +122,15 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
          version="0.0.0"
          unpack="false"/>
 
-<!--
    <plugin
-         id="org.apache.jasper"
+         id="org.eclipse.core.net"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.apache.commons.el"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
--->
-   <plugin
-         id="org.eclipse.core.net"
+         id="org.eclipse.core.expressions"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -592,6 +584,20 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
 
    <plugin
          id="com.lowagie.text"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.runtime"
          download-size="0"
          install-size="0"
          version="0.0.0"
