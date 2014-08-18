@@ -12,75 +12,72 @@
       <category name="org.locationtech.udig.sdk"/>
    </feature>
    <feature url="features/org.locationtech.udig_application-feature.source_0.0.0.jar" id="org.locationtech.udig_application-feature.source" version="0.0.0">
-      <category name="org.locationtech.udig.sdk"/>
+      <category name="org.locationtech.udig.sdk.sources"/>
    </feature>
    <feature url="features/org.locationtech.udig_language-feature_0.0.0.jar" id="org.locationtech.udig_language-feature" version="0.0.0">
       <category name="org.locationtech.udig.language"/>
    </feature>
+<!--
    <feature url="features/org.locationtech.udig_platform-feature_0.0.0.jar" id="org.locationtech.udig_platform-feature" version="0.0.0">
       <category name="org.locationtech.udig"/>
       <category name="org.locationtech.udig.sdk"/>
    </feature>
    <feature url="features/org.locationtech.udig_platform-feature.source_0.0.0.jar" id="org.locationtech.udig_platform-feature.source" version="0.0.0">
-      <category name="org.locationtech.udig.sdk"/>
+      <category name="org.locationtech.udig.sdk.sources"/>
    </feature>
+-->
    <feature url="features/org.locationtech.udig_printing-feature_0.0.0.jar" id="org.locationtech.udig_printing-feature" version="0.0.0">
       <category name="org.locationtech.udig"/>
       <category name="org.locationtech.udig.sdk"/>
    </feature>
    <feature url="features/org.locationtech.udig_printing-feature.source_0.0.0.jar" id="org.locationtech.udig_printing-feature.source" version="0.0.0">
-      <category name="org.locationtech.udig.sdk"/>
+      <category name="org.locationtech.udig.sdk.sources"/>
    </feature>
    <feature url="features/org.locationtech.udig_tutorials-feature_0.0.0.jar" id="org.locationtech.udig_tutorials-feature" version="0.0.0">
       <category name="org.locationtech.udig"/>
       <category name="org.locationtech.udig.sdk"/>
    </feature>
    <feature url="features/org.locationtech.udig_tutorials-feature.source_0.0.0.jar" id="org.locationtech.udig_tutorials-feature.source" version="0.0.0">
+      <category name="org.locationtech.udig.sdk.sources"/>
+   </feature>
+   <feature url="features/org.eclipse.rcp.source_4.4.0.v20140606-1445.jar" id="org.eclipse.rcp.source" version="4.4.0.v20140606-1445">
+      <category name="org.locationtech.udig.sdk.sources"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.source_2.10.0.v20140519-0339.jar" id="org.eclipse.emf.source" version="2.10.0.v20140519-0339">
+      <category name="org.locationtech.udig.sdk.sources"/>
+   </feature>
+   <feature url="features/org.eclipse.gef.source_3.9.100.201405261516.jar" id="org.eclipse.gef.source" version="3.9.100.201405261516">
+      <category name="org.locationtech.udig.sdk.sources"/>
+   </feature>
+   <feature url="features/org.eclipse.xsd.source_2.10.0.v20140519-0339.jar" id="org.eclipse.xsd.source" version="2.10.0.v20140519-0339">
+      <category name="org.locationtech.udig.sdk.sources"/>
+   </feature>
+   <feature url="features/org.eclipse.rcp_4.4.0.v20140606-1445.jar" id="org.eclipse.rcp" version="4.4.0.v20140606-1445">
       <category name="org.locationtech.udig.sdk"/>
    </feature>
-   <feature url="features/org.eclipse.rcp.source_0.0.0.jar" id="org.eclipse.rcp.source" version="0.0.0">
+   <feature url="features/org.eclipse.help_2.0.102.v20140606-1215.jar" id="org.eclipse.help" version="2.0.102.v20140606-1215">
       <category name="org.locationtech.udig.sdk"/>
    </feature>
-   <feature url="features/org.eclipse.platform.source_0.0.0.jar" id="org.eclipse.platform.source" version="0.0.0">
+   <feature url="features/org.eclipse.help.source_2.0.102.v20140606-1215.jar" id="org.eclipse.help.source" version="2.0.102.v20140606-1215">
+      <category name="org.locationtech.udig.sdk.sources"/>
+   </feature>
+   <feature url="features/javax.media.jai_imageio-feature_1.1.3.jar" id="javax.media.jai_imageio-feature" version="1.1.3">
       <category name="org.locationtech.udig.sdk"/>
    </feature>
-   <feature url="features/org.eclipse.help.source_0.0.0.jar" id="org.eclipse.help.source" version="0.0.0">
+   <feature url="features/org.eclipse.e4.rcp_1.3.100.v20140606-1445.jar" id="org.eclipse.e4.rcp" version="1.3.100.v20140606-1445">
       <category name="org.locationtech.udig.sdk"/>
    </feature>
-   <feature url="features/org.eclipse.pde.source_0.0.0.jar" id="org.eclipse.pde.source" version="0.0.0">
+   <feature url="features/org.eclipse.e4.rcp.source_1.3.100.v20140606-1445.jar" id="org.eclipse.e4.rcp.source" version="1.3.100.v20140606-1445">
+      <category name="org.locationtech.udig.sdk.sources"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.common_2.10.0.v20140514-1158.jar" id="org.eclipse.emf.common" version="2.10.0.v20140514-1158">
       <category name="org.locationtech.udig.sdk"/>
    </feature>
-   <feature url="features/org.eclipse.emf.source_0.0.0.jar" id="org.eclipse.emf.source" version="0.0.0">
-      <category name="org.locationtech.udig.sdk"/>
-   </feature>
-   <feature url="features/org.eclipse.gef.source_0.0.0.jar" id="org.eclipse.gef.source" version="0.0.0">
-      <category name="org.locationtech.udig.sdk"/>
-   </feature>
-   <feature url="features/org.eclipse.xsd.source_0.0.0.jar" id="org.eclipse.xsd.source" version="0.0.0">
-      <category name="org.locationtech.udig.sdk"/>
-   </feature>
-   <feature url="features/org.eclipse.rcp.source_0.0.0.jar" id="org.eclipse.rcp.source" version="0.0.0">
-      <category name="org.locationtech.udig.sdk"/>
-   </feature>
-   <feature url="features/org.eclipse.platform.source_0.0.0.jar" id="org.eclipse.platform.source" version="0.0.0">
-      <category name="org.locationtech.udig.sdk"/>
-   </feature>
-   <feature url="features/org.eclipse.help.source_0.0.0.jar" id="org.eclipse.help.source" version="0.0.0">
-      <category name="org.locationtech.udig.sdk"/>
-   </feature>
-   <feature url="features/org.eclipse.pde.source_0.0.0.jar" id="org.eclipse.pde.source" version="0.0.0">
-      <category name="org.locationtech.udig.sdk"/>
-   </feature>
-   <feature url="features/org.eclipse.emf.source_0.0.0.jar" id="org.eclipse.emf.source" version="0.0.0">
-      <category name="org.locationtech.udig.sdk"/>
-   </feature>
-   <feature url="features/org.eclipse.gef.source_0.0.0.jar" id="org.eclipse.gef.source" version="0.0.0">
-      <category name="org.locationtech.udig.sdk"/>
-   </feature>
-   <feature url="features/org.eclipse.xsd.source_0.0.0.jar" id="org.eclipse.xsd.source" version="0.0.0">
+   <feature url="features/org.eclipse.emf.ecore_2.10.0.v20140514-1158.jar" id="org.eclipse.emf.ecore" version="2.10.0.v20140514-1158">
       <category name="org.locationtech.udig.sdk"/>
    </feature>
    <category-def name="org.locationtech.udig" label="uDig"/>
    <category-def name="org.locationtech.udig.language" label="uDig Languages"/>
    <category-def name="org.locationtech.udig.sdk" label="uDig SDK"/>
+   <category-def name="org.locationtech.udig.sdk.sources" label="org.locationtech.udig.sdk.sources"/>
 </site>

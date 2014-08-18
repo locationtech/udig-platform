@@ -28,31 +28,7 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
    </license>
 
    <includes
-         id="org.eclipse.rcp.source"
-         version="0.0.0"/>
-
-    <includes
-         id="org.eclipse.help.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.pde.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.platform.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.xsd.source"
-         version="0.0.0"/>
-
-   <includes
          id="org.locationtech.udig-feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.locationtech.udig_tutorials-feature"
          version="0.0.0"/>
 
    <includes
