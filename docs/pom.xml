@@ -20,6 +20,7 @@
    ant full
    ant user
    ant devel
+   ant data
    
    This class also contains scripts used to prep and convert.
 
@@ -205,6 +206,12 @@
       <id>user</id>
       <properties>
         <target>user</target>
+      </properties>
+    </profile>
+    <profile>
+      <id>data</id>
+      <properties>
+        <target>data</target>
       </properties>
     </profile>
   </profiles>
