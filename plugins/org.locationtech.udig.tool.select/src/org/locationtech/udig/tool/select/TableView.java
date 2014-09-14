@@ -24,6 +24,7 @@ import org.locationtech.udig.aoi.IAOIService;
 import org.locationtech.udig.core.IBlockingProvider;
 import org.locationtech.udig.core.IProvider;
 import org.locationtech.udig.core.StaticBlockingProvider;
+import org.locationtech.udig.core.feature.AdaptableFeatureCollection;
 import org.locationtech.udig.core.filter.AdaptingFilter;
 import org.locationtech.udig.core.filter.AdaptingFilterFactory;
 import org.locationtech.udig.internal.ui.UDIGDropHandler;
@@ -62,7 +63,6 @@ import org.locationtech.udig.ui.IDropHandlerListener;
 import org.locationtech.udig.ui.IFeatureTableLoadingListener;
 import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.ProgressManager;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -1113,6 +1113,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
                     attributeCombo.select(0);
                     
                     AdaptableFeatureCollection adaptableCollection = new AdaptableFeatureCollection(features);
+                    adaptableCollection.addAdapter(featureSource);
 
                     if( featureSource instanceof FeatureStore )
                         enableEditing(featureTypeCellModifier, query, adaptableCollection);
