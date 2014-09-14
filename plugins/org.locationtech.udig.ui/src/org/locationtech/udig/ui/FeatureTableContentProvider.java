@@ -32,13 +32,14 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.PlatformUI;
 import org.geotools.data.FeatureEvent;
 import org.geotools.data.FeatureListener;
+import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
-import org.geotools.data.collection.CollectionFeatureSource;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.locationtech.udig.core.IProvider;
+import org.locationtech.udig.core.feature.AdaptableFeatureCollection;
 import org.locationtech.udig.internal.ui.Trace;
 import org.locationtech.udig.internal.ui.UiPlugin;
 import org.locationtech.udig.ui.internal.Messages;
@@ -235,14 +236,22 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
             }
             features.clear();
 //FIXME it is necessary to found a new solution to set the listener
-//            if (oldInput != null) {
-//                CollectionFeatureSource old = (CollectionFeatureSource) oldInput;
-//                old.removeFeatureListener(listener);
-//            }
-//            if (newInput != null) {
-//                CollectionFeatureSource input = (CollectionFeatureSource) newInput;
-//                input.addFeatureListener(listener);
-//            }
+            if (oldInput != null && oldInput instanceof AdaptableFeatureCollection) 
+            {
+                AdaptableFeatureCollection old = (AdaptableFeatureCollection) oldInput;
+                FeatureSource source = (FeatureSource) old.getAdapter(FeatureSource.class);
+                if(source!= null) {
+                    source.removeFeatureListener(listener);
+                }
+            }
+            if (newInput != null && newInput instanceof AdaptableFeatureCollection) {
+                AdaptableFeatureCollection input = (AdaptableFeatureCollection) newInput;
+                FeatureSource source = (FeatureSource) input.getAdapter(FeatureSource.class);
+                if(source!= null) {
+                    source.addFeatureListener(listener);
+                    
+                }
+            }
 
             if (newInput == null)
                 return;
