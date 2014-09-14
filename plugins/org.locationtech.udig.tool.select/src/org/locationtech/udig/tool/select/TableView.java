@@ -1086,18 +1086,9 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         if(isAOIFilter()){
             filter = addAOIFilter(filter, schema.getCoordinateReferenceSystem());
         }
-          final Query query = new DefaultQuery(schema.getName().getLocalPart(), filter, queryAtts.toArray(new String[0]));
-          FeatureCollection<SimpleFeatureType, SimpleFeature>  featuresF = featureSource.getFeatures(query);        
-          //AdaptableFeatureCollection adaptableCollection = new AdaptableFeatureCollection(features);
-          
-          
-          
-          
-          final FeatureCollection<SimpleFeatureType, SimpleFeature>  features = featuresF;
-        //final Query query = new DefaultQuery(schema.getName().getLocalPart(), Filter.INCLUDE, queryAtts.toArray(new String[0]));
-        
-        //final FeatureCollection<SimpleFeatureType, SimpleFeature>  features = featureSource.getFeatures(query);
-//        final FeatureCollection<SimpleFeatureType, SimpleFeature>  features = featureSource.getFeatures();
+        final Query query = new DefaultQuery(schema.getName().getLocalPart(), filter, queryAtts.toArray(new String[0]));
+        FeatureCollection<SimpleFeatureType, SimpleFeature>  featuresF = featureSource.getFeatures(query);        
+        final FeatureCollection<SimpleFeatureType, SimpleFeature>  features = featuresF;
         
         Display.getDefault().asyncExec(new Runnable(){
             public void run() {
@@ -1113,7 +1104,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
                     attributeCombo.select(0);
                     
                     AdaptableFeatureCollection adaptableCollection = new AdaptableFeatureCollection(features);
-                    adaptableCollection.addAdapter(featureSource);
+                    adaptableCollection.addAdapter(featureSource); // used to listen for changes
 
                     if( featureSource instanceof FeatureStore )
                         enableEditing(featureTypeCellModifier, query, adaptableCollection);

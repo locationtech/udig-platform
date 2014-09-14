@@ -46,6 +46,11 @@ import org.locationtech.udig.ui.internal.Messages;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
+/**
+ * ContentProvider that agressively listens to FeatureCollection (using FeatureSource FeatureEvents).
+ * 
+ * @author Jody Garnett
+ */
 class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Collection<SimpleFeature>> {
 
     private static final IProgressMonitor NULL = new NullProgressMonitor();
@@ -59,7 +64,13 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
         owningFeatureTableControl = control;
         this.progressMonitorProvider=progressMonitorProvider;
     }
-
+    
+    /**
+     * Listens for changes in FeatureSource, updates the viewer if content provider changes.
+     * <p>
+     * If we were extra cool we could filter the incoming FeatureEvents based on if they
+     * are actually included in our ContentProvider. As it is we will refresh everything.
+     */
     private FeatureListener listener = new FeatureListener() {
 
         @Override
@@ -141,58 +152,10 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
         }
     };
 
-//    private CollectionListener listener = new CollectionListener(){
-//        public void collectionChanged( CollectionEvent event ) {
-//            if (listener == null)
-//                event.getCollection().removeListener(this);
-//            SimpleFeature changed[] = event.getFeatures();
-//            TableViewer viewer = FeatureTableContentProvider.this.owningFeatureTableControl
-//                    .getViewer();
-//
-//            switch( event.getEventType() ) {
-//            case CollectionEvent.FEATURES_ADDED:
-//                for( int i = 0; i < changed.length; i++ ) {
-//                    features.add(changed[i]);
-//                }
-//                viewer.setItemCount(features.size());
-//                viewer.getTable().clearAll();
-//                break;
-//            case CollectionEvent.FEATURES_REMOVED:
-//                for( int i = 0; i < changed.length; i++ ) {
-//                    for( Iterator<SimpleFeature> iter = features.iterator(); iter.hasNext(); ) {
-//                        if (iter.next().getID().equals(changed[i].getID())) {
-//                            iter.remove();
-//                            break;
-//                        }
-//
-//                    }
-//                    viewer.setItemCount(features.size());
-//                    viewer.getTable().clearAll();
-//                }
-//                break;
-//            case CollectionEvent.FEATURES_CHANGED:
-//                for( int i = 0; i < changed.length; i++ ) {
-//                    int j = 0;
-//                    for( ListIterator<SimpleFeature> iter = features.listIterator(); iter.hasNext(); ) {
-//                        j++;
-//                        if (iter.next().getID().equals(changed[i].getID())) {
-//                            iter.set(changed[i]);
-//                            break;
-//                        }
-//                    }
-//                }
-//                viewer.getTable().clearAll();
-//                break;
-//
-//            default:
-//                break;
-//            }
-//        }
-//    };
-
-    // Memory bound cache of features for table
-    // May be sorted according to FID or any of the attributes so don't rely on any given order because
-    // its liable to change.  User Lookup instead for quickly locating a features
+    /** Memory bound cache of features for table.
+     * May be sorted according to FID or any of the attributes so don't rely on any given order because
+     * its liable to change.  User Lookup instead for quickly locating a features
+     */
     List<SimpleFeature> features = Collections.synchronizedList( new ArrayList<SimpleFeature>());
 
     /**
