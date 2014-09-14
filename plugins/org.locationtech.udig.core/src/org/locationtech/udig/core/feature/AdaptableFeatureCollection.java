@@ -7,12 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.locationtech.udig.tool.select;
+package org.locationtech.udig.core.feature;
 
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.geotools.data.FeatureSource;
+import org.geotools.data.Query;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.collection.DecoratingFeatureCollection;
 import org.opengis.feature.simple.SimpleFeature;
@@ -32,6 +34,10 @@ public class AdaptableFeatureCollection extends
 
     public AdaptableFeatureCollection( final FeatureCollection<SimpleFeatureType, SimpleFeature> wrapped ) {
         super( wrapped );
+    }
+    public AdaptableFeatureCollection(
+            FeatureSource<SimpleFeatureType, SimpleFeature> featureSource, Query query) {
+        super(featureSource.getFeatures(query));
     }
     @SuppressWarnings("unchecked")
     public Object getAdapter( Class adapter ) {
