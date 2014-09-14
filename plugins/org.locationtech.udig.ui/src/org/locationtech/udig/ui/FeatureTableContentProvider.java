@@ -21,7 +21,9 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ILazyContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -198,22 +200,26 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
                 }
             }
             features.clear();
-//FIXME it is necessary to found a new solution to set the listener
-            if (oldInput != null && oldInput instanceof AdaptableFeatureCollection) 
-            {
+            
+            if (oldInput != null && oldInput instanceof AdaptableFeatureCollection) {
                 AdaptableFeatureCollection old = (AdaptableFeatureCollection) oldInput;
                 FeatureSource source = (FeatureSource) old.getAdapter(FeatureSource.class);
-                if(source!= null) {
+                if (source != null) {
                     source.removeFeatureListener(listener);
                 }
             }
             if (newInput != null && newInput instanceof AdaptableFeatureCollection) {
                 AdaptableFeatureCollection input = (AdaptableFeatureCollection) newInput;
                 FeatureSource source = (FeatureSource) input.getAdapter(FeatureSource.class);
-                if(source!= null) {
+                if (source != null) {
                     source.addFeatureListener(listener);
-                    
                 }
+                else {
+                    UiPlugin.trace(UiPlugin.ID,  FeatureTableContentProvider.class, "Unable to adapt to FeatureSource (to listen for changes):"+input,null);
+                }
+            }
+            else {
+                UiPlugin.trace(UiPlugin.ID,  FeatureTableContentProvider.class, "Unable to access FeatureSource (to listen for changes):"+newInput,null);
             }
 
             if (newInput == null)
