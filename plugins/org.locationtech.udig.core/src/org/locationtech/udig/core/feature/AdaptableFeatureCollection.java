@@ -22,9 +22,13 @@ import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * A feature collection that adapts to other objects.
+ * <p>
+ * The TableView depenends on being able to adapt a FeatureCollection to FeatureSource in
+ * order to listen to FeatureEvents.
  * 
  * @author Jesse Eichar
  * @since 1.1.0
+ * @version 2.0
  */
 public class AdaptableFeatureCollection extends
 		DecoratingFeatureCollection<SimpleFeatureType, SimpleFeature> implements
@@ -35,10 +39,7 @@ public class AdaptableFeatureCollection extends
     public AdaptableFeatureCollection( final FeatureCollection<SimpleFeatureType, SimpleFeature> wrapped ) {
         super( wrapped );
     }
-    public AdaptableFeatureCollection(
-            FeatureSource<SimpleFeatureType, SimpleFeature> featureSource, Query query) {
-        super(featureSource.getFeatures(query));
-    }
+
     @SuppressWarnings("unchecked")
     public Object getAdapter( Class adapter ) {
         for( Object obj : adapters ) {
