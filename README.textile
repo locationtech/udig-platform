@@ -107,6 +107,11 @@ See results at http://udig.refractions.net/download/unstable/ there should be a 
 
 h2. Option - Eclipse Build
 
+We have tested these instructions with Eclipse 4.3 Kepler.
+
+We have found incompatibilities with target definition when trying newer versions of Eclipse.
+
+
 h3. Preferences
 
 From the Eclipse **Preferences** screen:
