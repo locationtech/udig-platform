@@ -213,13 +213,14 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
                 FeatureSource source = (FeatureSource) input.getAdapter(FeatureSource.class);
                 if (source != null) {
                     source.addFeatureListener(listener);
+                } else {
+                    UiPlugin.trace(UiPlugin.ID, FeatureTableContentProvider.class,
+                            "Unable to adapt to FeatureSource (to listen for changes):" + input,
+                            null);
                 }
-                else {
-                    UiPlugin.trace(UiPlugin.ID,  FeatureTableContentProvider.class, "Unable to adapt to FeatureSource (to listen for changes):"+input,null);
-                }
-            }
-            else {
-                UiPlugin.trace(UiPlugin.ID,  FeatureTableContentProvider.class, "Unable to access FeatureSource (to listen for changes):"+newInput,null);
+            } else {
+                UiPlugin.trace(UiPlugin.ID, FeatureTableContentProvider.class,
+                        "Unable to access FeatureSource (to listen for changes):" + newInput, null);
             }
 
             if (newInput == null)
