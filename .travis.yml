@@ -9,7 +9,7 @@ install:
   - "travis_retry sudo pip install -q sphinx==1.1.3 --use-mirrors || (cat /home/travis/.pip/pip.log; false)"
   - "travis_wait mvn install -DskipTests=true -f pom-libs.xml -B -V" #download dependencies
 
-script: "travis_wait mvn install -Pproduct -Psdk -Pdocs -B -V"
+script: "travis_wait mvn install -Pproduct -Psdk -Pdocs -B -V -X"
 
 notifications:
   email:
@@ -25,4 +25,3 @@ branches:
   only:
     - luna-support
     - master
-    - udig-gt-11-snapshot
