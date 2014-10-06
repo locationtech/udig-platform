@@ -24,7 +24,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/ehcache-core-2.6.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/geocss_2.10-0.8.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/geodb-0.7-RC2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/geoscript-groovy-1.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/groovy-1.8.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/groovy-all-2.1.9.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-api-11.2.jar"/>
@@ -170,5 +169,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/slf4j-api-1.6.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/slf4j-log4j12-1.6.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-geojson-11.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib" sourcepath="lib"/>
+	<classpathentry exported="true" kind="lib" path="lib/geoscript-groovy-1.3.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
