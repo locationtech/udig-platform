@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.locationtech.udig.project.ui.internal;
 
@@ -7,11 +7,14 @@ import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.tool.display.PlaceholderToolbarContributionItem;
 import org.locationtech.udig.project.ui.tool.IToolManager;
 import org.locationtech.udig.project.ui.tool.ToolConstants;
-
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.ICoolBarManager;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.SubCoolBarManager;
 import org.eclipse.jface.action.ToolBarContributionItem;
 import org.eclipse.jface.action.ToolBarManager;
@@ -33,15 +36,42 @@ import org.eclipse.ui.part.EditorActionBarContributor;
 public class MapEditorActionBarContributor extends EditorActionBarContributor {
 	/** SubCoolBarManager used to wrap normal coolBarManager and watch the add/remove of items */
 	private SubCoolBarManager subManager;
-	
+
+	private static Boolean eclipse4;
+
+	private static boolean isEclipse4() {
+		if( eclipse4 == null ) {
+			Bundle bundle = FrameworkUtil.getBundle(EditorActionBarContributor.class);
+			eclipse4 = bundle.getVersion().getMajor() >= 3 && bundle.getVersion().getMinor() >= 100;
+		}
+		return eclipse4.booleanValue();
+	}
+
     @Override
     public void init( IActionBars bars, IWorkbenchPage page ) {
         super.init(bars, page);
     }
-    
-    
+
+    @Override
+    public void contributeToToolBar(IToolBarManager toolBarManager) {
+    	super.contributeToToolBar(toolBarManager);
+    	// See Bug 448365
+    	if( isEclipse4() ) {
+    		ApplicationGIS.getToolManager().contributeActionTools(toolBarManager, getActionBars());
+    		ToolBarManager mgrA = new ToolBarManager();
+    		mgrA.add(new Action("Dummy") {
+			});
+    		toolBarManager.add(new ToolBarContributionItem(mgrA));
+    	}
+    }
+
 	@Override
 	public void contributeToCoolBar(ICoolBarManager coolBarManager) {
+    	// See Bug 448365
+		if( isEclipse4() ) {
+			return;
+		}
+
 		if (coolBarManager instanceof SubCoolBarManager) {
 			subManager = (SubCoolBarManager) coolBarManager;
 		} else {
@@ -98,12 +128,14 @@ public class MapEditorActionBarContributor extends EditorActionBarContributor {
 	
 	@Override
 	public void dispose() {
-	    subManager.setVisible(false);
+		if( subManager != null ) {
+			subManager.setVisible(false);
 
-	    PlaceholderToolbarContributionItem actionToolbarPlaceholder = new PlaceholderToolbarContributionItem(ToolConstants.ACTION_TOOLBAR_ID);
-	    subManager.add(actionToolbarPlaceholder);
-	    PlaceholderToolbarContributionItem modalToolbarPlaceholder = new PlaceholderToolbarContributionItem(ToolConstants.MODAL_TOOLBAR_ID);
-	    subManager.add(modalToolbarPlaceholder);
+		    PlaceholderToolbarContributionItem actionToolbarPlaceholder = new PlaceholderToolbarContributionItem(ToolConstants.ACTION_TOOLBAR_ID);
+		    subManager.add(actionToolbarPlaceholder);
+		    PlaceholderToolbarContributionItem modalToolbarPlaceholder = new PlaceholderToolbarContributionItem(ToolConstants.MODAL_TOOLBAR_ID);
+		    subManager.add(modalToolbarPlaceholder);
+		}
 
 	    getActionBars().updateActionBars();
 	    super.dispose();
