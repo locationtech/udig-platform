@@ -68,7 +68,7 @@
         <repository>
             <id>geotools-snapshot</id>
             <name>Geotools Snapshot</name>
-            <url>http://repo.opengeo.org</url>
+            <url>http://repo.boundlessgeo.com/main/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
