@@ -18,9 +18,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.text.MessageFormat;
 
-import org.locationtech.udig.libs.internal.Activator;
-import org.locationtech.udig.ui.internal.Messages;
-
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -34,6 +31,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.WorkbenchAdvisor;
+import org.locationtech.udig.libs.internal.Activator;
+import org.locationtech.udig.ui.internal.Messages;
 import org.osgi.framework.Bundle;
 
 /**
@@ -79,7 +78,8 @@ public class UDIGApplication implements IApplication {
      * @param context the application context to pass to the application
      * @exception Exception if there is a problem running this application.
      */
-    public Object start( IApplicationContext context ) throws Exception {
+    public Object start(IApplicationContext context) throws Exception {
+        
         WorkbenchAdvisor workbenchAdvisor = createWorkbenchAdvisor();
         Display display = PlatformUI.createDisplay();
 
@@ -88,7 +88,7 @@ public class UDIGApplication implements IApplication {
             udigNameStr = "udig.exe"; //$NON-NLS-1$
         }
 
-        for( String arg : Platform.getCommandLineArgs() ) {
+        for (String arg : Platform.getCommandLineArgs()) {
             if ("--help".equalsIgnoreCase(arg) || "-h".equalsIgnoreCase(arg)) { //$NON-NLS-1$ //$NON-NLS-2$
                 String helpString = MessageFormat.format(Messages.UDIGApplication_helpstring,
                         udigNameStr);

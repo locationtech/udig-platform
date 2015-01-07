@@ -12,26 +12,15 @@
 package org.locationtech.udig.catalog.internal.shp;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import org.locationtech.udig.catalog.ID;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IGeoResourceInfo;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.URLUtils;
-import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureSource;
-import org.geotools.data.shapefile.indexed.IndexedShapefileDataStore;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.data.simple.SimpleFeatureStore;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
 import org.geotools.styling.AnchorPoint;
 import org.geotools.styling.ChannelSelection;
 import org.geotools.styling.ColorMap;
@@ -55,19 +44,21 @@ import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
-import org.geotools.styling.SLD;
-import org.geotools.styling.SLDParser;
 import org.geotools.styling.SelectedChannelType;
 import org.geotools.styling.ShadedRelief;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.Style;
-import org.geotools.styling.StyleFactory;
 import org.geotools.styling.StyleVisitor;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.UserLayer;
-import org.opengis.feature.simple.SimpleFeature;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.ui.graphics.SLDs;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.style.GraphicalSymbol;
 
@@ -155,9 +146,9 @@ public class ShpGeoResourceImpl extends IGeoResource {
         if (adaptee.isAssignableFrom(SimpleFeatureSource.class)) {
             return adaptee.cast(featureSource(monitor));
         }
-        if (adaptee.isAssignableFrom(IndexedShapefileDataStore.class)) {
-            return adaptee.cast(parent.getDS(monitor));
-        }
+//        if (adaptee.isAssignableFrom(IndexedShapefileDataStore.class)) {
+//            return adaptee.cast(parent.getDS(monitor));
+//        }
         if (adaptee.isAssignableFrom(Style.class)) {
             Style style = style(monitor);
             if (style != null) {

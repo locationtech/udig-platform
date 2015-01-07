@@ -52,10 +52,11 @@
     <packaging>pom</packaging>
 
     <properties>
-        <geotools.version>9.0-M0</geotools.version>
-        <imageio-ext.version>1.1.5</imageio-ext.version>
+        <!-- see geotools root pom for details -->
+        <geotools.version>11.2</geotools.version>
+        <imageio-ext.version>1.1.10</imageio-ext.version>
         <jfreechart.version>1.0.13</jfreechart.version>
-        <jt.version>1.3.0</jt.version>
+        <jt.version>1.3.1</jt.version>
         <lib.dir>${basedir}/lib</lib.dir>
         <lib.source.dir>${basedir}/lib-src</lib.source.dir>
     </properties>
@@ -112,11 +113,16 @@
             <artifactId>gt-brewer</artifactId>
             <version>${geotools.version}</version>
         </dependency>
+	
+	<!-- gt-11 no longer under development.
+	
         <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-shapefile-renderer</artifactId>
             <version>${geotools.version}</version>
         </dependency>
+	-->
+	
         <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-validation</artifactId>
@@ -194,11 +200,15 @@
             <artifactId>gt-shapefile</artifactId>
             <version>${geotools.version}</version>
         </dependency>
+	
+	<!-- gt-11: shapefile-ng was merged in shapefile
         <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-shapefile-ng</artifactId>
             <version>${geotools.version}</version>
         </dependency>
+	-->
+	
         <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-wfs</artifactId>
@@ -283,6 +293,49 @@
             <version>${geotools.version}</version>
         </dependency>
 
+        <!-- 
+          | geotools modules required for geoscript
+          | since release versions only referenceing the initial gt release version (and not patches)
+          | we have to manage these dependencies to have the same version like all other 
+          | gt-dependencies (geotools.version)
+          -->
+
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-netcdf</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-imagepyramid</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-coverage-api</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-geojson</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-gtopo30</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-unidata</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+
         <!-- geotools unsupported modules (ie legacy) -->
         
         <!-- stuff for jgrass contributions -->
@@ -294,55 +347,52 @@
         <dependency>
             <groupId>org.geoscript</groupId>
             <artifactId>geoscript-groovy</artifactId>
-            <version>1.1-M0</version>
+            <version>1.3.1</version>
             <exclusions>
-		        <!--
-		        <exclusion>
-		          <groupId>org.geotools</groupId>
-		          <artifactId>gt-geojson</artifactId>
-		        </exclusion>
-		        -->
-              <exclusion>
-		          <groupId>org.codehaus.groovy</groupId>
-		          <artifactId>groovy</artifactId>
-		        </exclusion>
-		        <exclusion>
-		          <groupId>org.geoscript</groupId>
-		          <artifactId>geocss_2.9.1</artifactId>
-		        </exclusion>
-		        <exclusion>
-                  <groupId>org.geotools.jdbc</groupId>
-                  <artifactId>gt-jdbc-spatialite</artifactId>                
-		        </exclusion>
-		        <exclusion>
-		          <groupId>net.sf.opencsv</groupId>
-		          <artifactId>opencsv</artifactId>
-		        </exclusion>
-		        <exclusion>
-		          <groupId>bouncycastle</groupId>
-		          <artifactId>bcmail-jdk14</artifactId>
-		        </exclusion>
-		        <exclusion>
-		          <groupId>bouncycastle</groupId>
-		          <artifactId>bcprov-jdk14</artifactId>
-		        </exclusion>
-		        <exclusion>
-		          <groupId>bouncycastle</groupId>
-		          <artifactId>bctsp-jdk14</artifactId>
-		        </exclusion>
-		        <exclusion>
-		          <groupId>org.bouncycastle</groupId>
-		          <artifactId>bcprov-jdk14</artifactId>
-		        </exclusion>
-		        <exclusion>
-		          <groupId>org.bouncycastle</groupId>
-		          <artifactId>bcmail-jdk14</artifactId>
-		        </exclusion>
-		        <exclusion>
-		          <groupId>com.lowagie</groupId>
-		          <artifactId>itext</artifactId>
-		        </exclusion>
-	      	</exclusions>
+                <exclusion>
+                    <groupId>org.geotools</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.codehaus.groovy</groupId>
+                    <artifactId>groovy</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.geoscript</groupId>
+                    <artifactId>geocss_2.9.1</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.geotools.jdbc</groupId>
+                    <artifactId>gt-jdbc-spatialite</artifactId>                
+                </exclusion>
+                <exclusion>
+                    <groupId>net.sf.opencsv</groupId>
+                    <artifactId>opencsv</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>bouncycastle</groupId>
+                    <artifactId>bcmail-jdk14</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>bouncycastle</groupId>
+                    <artifactId>bcprov-jdk14</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>bouncycastle</groupId>
+                    <artifactId>bctsp-jdk14</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bouncycastle</groupId>
+                    <artifactId>bcprov-jdk14</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bouncycastle</groupId>
+                    <artifactId>bcmail-jdk14</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.lowagie</groupId>
+                    <artifactId>itext</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>
@@ -532,84 +582,104 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- batik jars - used by geotools renderer -->
+        <!-- batik used by geotools renderer for SVG icons-->
         <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-svg</artifactId>
             <version>${geotools.version}</version>
         </dependency>
+        
+        <!-- batik jars provided as plugin by target platform -->
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-transcoder</artifactId>
             <version>1.7</version>
             <scope>provided</scope>
         </dependency>
-
-        <!-- using batik from eclipse 
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
-            <artifactId>batik-dom</artifactId>
+            <artifactId>batik-util</artifactId>
             <version>1.7</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-svg-dom</artifactId>
             <version>1.7</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-dom</artifactId>
+            <version>1.7</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-css</artifactId>
             <version>1.7</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-bridge</artifactId>
             <version>1.7</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-gvt</artifactId>
             <version>1.7</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-ext</artifactId>
             <version>1.7</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-xml</artifactId>
             <version>1.7</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-script</artifactId>
             <version>1.7</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-awt-util</artifactId>
             <version>1.7</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-parser</artifactId>
             <version>1.7</version>
-        </dependency>-->
+            <scope>provided</scope>
+        </dependency>
 
         <!-- These dependencies are for optional batik components and are not used -->
         <dependency>
             <groupId>xml-apis</groupId>
             <artifactId>xml-apis-xerces</artifactId>
             <version>2.7.1</version>
+            <scope>provided</scope>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>xml-apis</groupId>
             <artifactId>xml-apis</artifactId>
             <version>1.0.b2</version>
             <scope>provided</scope>
-        </dependency>-->
-
+        </dependency>
+		
+		<!-- Apache Commons Libraries -->
+		<!-- Prefer to use these from target platform if available -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -677,7 +747,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Jaitools deps -->
+        <!-- JAI Tools deps -->
         <dependency>
             <groupId>org.jaitools</groupId>
             <artifactId>jt-all</artifactId>
@@ -706,6 +776,7 @@
             <version>${jt.version}</version>
             <scope>provided</scope>
         </dependency>
+        
         <!-- antlr dependencies
              ==================
              

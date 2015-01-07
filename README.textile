@@ -1,3 +1,5 @@
+!https://travis-ci.org/uDig/udig-platform.svg?branch=master!:https://travis-ci.org/uDig/udig-platform
+
 h1. uDig Overview
 
 The User-friendly Desktop Internet GIS (uDig) is an open source ("EPL":http://www.eclipse.org/legal/epl-v10.html + "BSD":http://udig.refractions.net/files/bsd3-v10.html) desktop application framework, built with the Eclipse Rich Client (RCP) technology.
@@ -104,6 +106,11 @@ h2. Option - Command Line Build
 See results at http://udig.refractions.net/download/unstable/ there should be a 2.0.0-SNAPSHOT by the time you read this.
 
 h2. Option - Eclipse Build
+
+We have tested these instructions with Eclipse 4.3 Kepler.
+
+We have found incompatibilities with target definition when trying newer versions of Eclipse.
+
 
 h3. Preferences
 

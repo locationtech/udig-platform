@@ -23,12 +23,18 @@ public class MockHttpResponse implements HTTPResponse{
 
     private final InputStream in;
     private final String contentType;
+    private final String charset;
 
     public MockHttpResponse(final InputStream in, final String contentType){
-        this.in = in;
-        this.contentType = contentType;
+        this(in, contentType, "UTF-8");  //$NON-NLS-1$
     }
     
+    public MockHttpResponse(final InputStream in, final String contentType, final String charset){
+        this.in = in;
+        this.contentType = contentType;
+        this.charset = charset;
+    }
+
     @Override
     public void dispose() {
         try{
@@ -51,6 +57,15 @@ public class MockHttpResponse implements HTTPResponse{
     @Override
     public InputStream getResponseStream() throws IOException {
         return in;
+    }
+
+    /* (non-Javadoc)
+     * @see org.geotools.data.ows.HTTPResponse#getResponseCharset()
+     */
+    @Override
+    public String getResponseCharset() {
+        
+        return charset;
     }
     
 }

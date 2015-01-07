@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.locationtech.udig.tool.select;
+package org.locationtech.udig.core.feature;
 
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -20,39 +20,45 @@ import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * A feature collection that adapts to other objects.
+ * <p>
+ * The TableView depends on being able to adapt a FeatureCollection to FeatureSource in order to
+ * listen to FeatureEvents.
  * 
  * @author Jesse Eichar
  * @since 1.1.0
+ * @version 2.0
  */
 public class AdaptableFeatureCollection extends
-		DecoratingFeatureCollection<SimpleFeatureType, SimpleFeature> implements
-		IAdaptable {
-    
+        DecoratingFeatureCollection<SimpleFeatureType, SimpleFeature> implements IAdaptable {
+
     protected Set<Object> adapters = new CopyOnWriteArraySet<Object>();
 
-    public AdaptableFeatureCollection( final FeatureCollection<SimpleFeatureType, SimpleFeature> wrapped ) {
-        super( wrapped );
+    public AdaptableFeatureCollection(
+            final FeatureCollection<SimpleFeatureType, SimpleFeature> wrapped) {
+        super(wrapped);
     }
-    @SuppressWarnings("unchecked")
-    public Object getAdapter( Class adapter ) {
-        for( Object obj : adapters ) {
-            if( adapter.isAssignableFrom(obj.getClass()) )
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public Object getAdapter(Class adapter) {
+        for (Object obj : adapters) {
+            if (adapter.isAssignableFrom(obj.getClass()))
                 return obj;
         }
         return null;
     }
 
-    public void addAdapter( Object adapter ) {
+    public void addAdapter(Object adapter) {
         adapters.add(adapter);
     }
 
-    public boolean removeAdapter( Object adapter ) {
+    public boolean removeAdapter(Object adapter) {
         return adapters.remove(adapter);
     }
 
     public void clearAdapters() {
         adapters.clear();
     }
+
     @Override
     public int hashCode() {
         final int PRIME = 31;
@@ -63,7 +69,7 @@ public class AdaptableFeatureCollection extends
     }
 
     @Override
-    public boolean equals( Object obj ) {
+    public boolean equals(Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
@@ -76,7 +82,7 @@ public class AdaptableFeatureCollection extends
                 return false;
         } else if (!adapters.equals(other.adapters))
             return false;
-        if (delegate== null) {
+        if (delegate == null) {
             if (other.delegate != null)
                 return false;
         } else if (!delegate.equals(other.delegate))

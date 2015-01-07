@@ -7,10 +7,13 @@ Bundle-Activator: org.locationtech.udig.core.internal.CorePlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Eclipse-BuddyPolicy: ext
-Export-Package: org.locationtech.udig.core,org.locationtech.udig.core.
- enums,org.locationtech.udig.core.filter,org.locationtech.udig.core.in
- ternal,org.locationtech.udig.core.jts,org.locationtech.udig.core.open
- gis
+Export-Package: org.locationtech.udig.core,
+ org.locationtech.udig.core.enums,
+ org.locationtech.udig.core.feature,
+ org.locationtech.udig.core.filter,
+ org.locationtech.udig.core.internal,
+ org.locationtech.udig.core.jts,
+ org.locationtech.udig.core.opengis
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.locationtech.udig.libs;visibility:=reexport

@@ -9,6 +9,7 @@
  */
 package org.locationtech.udig.ui;
 
+import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -19,6 +20,7 @@ import java.util.NoSuchElementException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
+import org.opengis.feature.Feature;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -29,22 +31,30 @@ import org.opengis.feature.simple.SimpleFeatureType;
  * @since 1.1.0
  */
 public class FeatureCollectionSelection implements IStructuredSelection, IBlockingSelection {
-    Collection<Iterator> openIterators=new ArrayList<Iterator>(); 
+    
+    Collection<Iterator<Feature>> openIterators=new ArrayList<Iterator<Feature>>(); 
     FeatureCollection<SimpleFeatureType, SimpleFeature> wrapped;
     private volatile SimpleFeature firstElement;
+    
     public FeatureCollectionSelection( FeatureCollection<SimpleFeatureType, SimpleFeature> selectedFeatures ) {
         this.wrapped=selectedFeatures;
     }
     @Override
     protected void finalize() throws Throwable {
-        for( Iterator iterator : openIterators ) {
-            wrapped.close(iterator);
+       
+
+        for (Iterator<Feature> iterator : openIterators) {
+            if (iterator instanceof Closeable) {
+                ((Closeable) iterator).close();
+            }
         }
         super.finalize();
     }
+    
     public Object getFirstElement() {
-        if( isEmpty() )
+        if( isEmpty() ){
             throw new NoSuchElementException("SimpleFeature Collection is empty, there is no first element"); //$NON-NLS-1$
+        }
         if( firstElement==null ){
             synchronized (this) {
                 if( firstElement==null ){
@@ -59,13 +69,60 @@ public class FeatureCollectionSelection implements IStructuredSelection, IBlocki
         }
         return firstElement;
     }
+    
+    class SelectionIterator implements Iterator<Feature>,Closeable {
+        FeatureIterator<SimpleFeature> delegate = null;
+        public SelectionIterator(FeatureIterator<SimpleFeature> features) {
+            delegate = features;
+        }
 
+        @Override
+        public boolean hasNext() {
+            if( delegate == null ) return false;
+            boolean hasNext = delegate.hasNext();
+            
+            if(!hasNext){ // autoclose!
+                delegate.close();
+                delegate = null;
+            }
+            return hasNext;
+        }
+
+        @Override
+        public Feature next() {
+            if( delegate == null ){
+                throw new NoSuchElementException();
+            }
+            return delegate.next();
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void close() {
+            if( delegate != null ){
+                delegate.close();
+                delegate = null;
+            }
+        }
+        
+    }    
+
+    @SuppressWarnings("rawtypes")
     public Iterator iterator() {
-        Iterator iter=wrapped.iterator();
-        openIterators.add(iter);
-        return iter;
+        
+        if( wrapped instanceof Collection){
+            return ((Collection)wrapped).iterator();
+        } else {
+            Iterator iter=new SelectionIterator( wrapped.features() );
+            openIterators.add(iter);            
+            return iter;
+        }
     }
-
+    
     public int size() {
         return wrapped.size();
     }
@@ -76,16 +133,18 @@ public class FeatureCollectionSelection implements IStructuredSelection, IBlocki
 
     @SuppressWarnings("unchecked")
     public List toList() {
-        if( wrapped instanceof List)
+        
+        if (wrapped instanceof List){
             return (List) wrapped;
-        LinkedList arrayList = new LinkedList();
-        Iterator iter=wrapped.iterator();
-        try{
-            while(iter.hasNext()){
+        }
+        LinkedList<SimpleFeature> arrayList = new LinkedList<SimpleFeature>();
+        FeatureIterator<SimpleFeature> iter = wrapped.features();
+        try {
+            while (iter.hasNext()) {
                 arrayList.add(iter.next());
             }
-        }finally{
-            wrapped.close(iter);
+        } finally {
+            iter.close();
         }
         return arrayList;
     }

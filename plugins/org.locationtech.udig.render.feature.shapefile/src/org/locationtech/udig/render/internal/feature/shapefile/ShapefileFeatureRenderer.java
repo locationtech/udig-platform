@@ -12,11 +12,9 @@ package org.locationtech.udig.render.internal.feature.shapefile;
 import java.awt.RenderingHints;
 import java.util.HashMap;
 
-import org.locationtech.udig.render.internal.feature.basic.BasicFeatureRenderer;
-
-import org.geotools.map.MapContext;
 import org.geotools.renderer.GTRenderer;
-import org.geotools.renderer.shape.ShapefileRenderer;
+import org.geotools.renderer.lite.StreamingRenderer;
+import org.locationtech.udig.render.internal.feature.basic.BasicFeatureRenderer;
 
 /**
  * The default victim renderer. Based on the Lite-Renderer from Geotools.
@@ -25,15 +23,18 @@ import org.geotools.renderer.shape.ShapefileRenderer;
  * @version $Revision: 1.9 $
  */
 public class ShapefileFeatureRenderer extends BasicFeatureRenderer {
-    ShapefileRenderer renderer;
-
+    
+    //ShapefileRenderer renderer; it is not available in gt-11 
+    StreamingRenderer renderer;
+    
     public ShapefileFeatureRenderer() {
     }
 
     @Override
     protected GTRenderer getRenderer() {
         if (renderer == null) {
-            renderer = new ShapefileRenderer();
+            //renderer = new ShapefileRenderer();
+            renderer = new StreamingRenderer();
             HashMap<String, Object> rendererHints = new HashMap<String, Object>();
             rendererHints.put("optimizedDataLoadingEnabled", true); //$NON-NLS-1$
             renderer.setRendererHints(rendererHints);

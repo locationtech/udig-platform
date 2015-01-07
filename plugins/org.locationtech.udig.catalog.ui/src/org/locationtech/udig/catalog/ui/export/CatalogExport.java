@@ -14,6 +14,14 @@ package org.locationtech.udig.catalog.ui.export;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.locationtech.udig.catalog.internal.ui.ImageConstants;
 import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
 import org.locationtech.udig.catalog.ui.internal.Messages;
@@ -25,15 +33,6 @@ import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardAdapter;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardDialog;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
 import org.locationtech.udig.ui.PlatformGIS;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * Used to configure a {@link WorkflowWizardDialog} and {@link WorkflowWizard} with

@@ -15,17 +15,17 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.locationtech.udig.issues.IIssue;
-import org.locationtech.udig.issues.IListStrategy;
-
 import org.eclipse.ui.XMLMemento;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.SchemaException;
+import org.locationtech.udig.issues.IIssue;
+import org.locationtech.udig.issues.IListStrategy;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
@@ -139,7 +139,9 @@ public abstract class AbstractDatastoreStrategy implements IListStrategy{
     }
 
     public Collection<? extends IIssue> getIssues() throws IOException {
-        return new FeatureCollectionToIssueCollectionAdapter(getFeatures(), getAttributeMapper());
+        DefaultFeatureCollection fc = new DefaultFeatureCollection( getFeatures());
+        
+        return new FeatureCollectionToIssueCollectionAdapter(fc, getAttributeMapper());
     }
 
     protected FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatures() throws IOException {

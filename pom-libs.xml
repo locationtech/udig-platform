@@ -77,19 +77,6 @@
             </snapshots>
         </repository>
 
-        <!-- The JAI tools maven repository is actually the offical sonaType snapshot repository -->
-        <repository>
-            <id>sonatype-snapshot</id>
-            <name>Sonatype Snapshot Repository</name>
-            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-
         <!-- GeoSolutions provide their own repository for imageio-ext builds -->
         <repository>
             <id>geosolutions</id>

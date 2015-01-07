@@ -540,21 +540,21 @@ public final class FeatureUtil {
 	 *         the feature collection has more than Integer.MAX_VALUE features
 	 */
 	public static int computeCollectionSize(FeatureCollection<SimpleFeatureType, SimpleFeature> features) {
-
-		Iterator<SimpleFeature> iter = features.iterator();
-		int count = 0;
-		try {
-			while (iter.hasNext()) {
-				iter.next();
-				count++;
-			}
-		} catch (ArithmeticException e) {
-			count = Integer.MAX_VALUE;
-		} finally {
-			features.close(iter);
-		}
-
-		return count;
+    
+            FeatureIterator<SimpleFeature> iter = features.features();
+            int count = 0;
+            try {
+                while (iter.hasNext()) {
+                    iter.next();
+                    count++;
+                }
+            } catch (ArithmeticException e) {
+                count = Integer.MAX_VALUE;
+            } finally {
+                iter.close();
+            }
+    
+            return count;
 	}
 
 	/**
@@ -686,21 +686,21 @@ public final class FeatureUtil {
 	 */
 	public static List<SimpleFeature> getFeatures(final FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
 
-		FeatureIterator<SimpleFeature> iter = null;
-		List<SimpleFeature> featureList = new ArrayList<SimpleFeature>(featureCollection.size());
-		try {
-			iter = featureCollection.features();
-			while (iter.hasNext()) {
-
-				featureList.add(iter.next());
-
-			}
-			return featureList;
-		} finally {
-			if (iter != null) {
-				featureCollection.close(iter);
-			}
-		}
+            FeatureIterator<SimpleFeature> iter = null;
+            List<SimpleFeature> featureList = new ArrayList<SimpleFeature>(featureCollection.size());
+            try {
+                iter = featureCollection.features();
+                while (iter.hasNext()) {
+    
+                    featureList.add(iter.next());
+    
+                }
+                return featureList;
+            } finally {
+                if (iter != null) {
+                    iter.close();
+                }
+            }
 
 	}
 

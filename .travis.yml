@@ -1,19 +1,21 @@
 language: java
 jdk:
-  - openjdk7 # just run openJdk - oraclejdk7
+  - openjdk7 # just run openJDK
+  - oraclejdk7 # oracle jdk
+cache:
+  directories:
+  - $HOME/.m2
 env:
   global:
     - MAVEN_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
     - TRAVIS_PYTHON_VERSION="2.7"
-cache:
-  directories:
-  - $HOME/.m2
 install:
+  - "travis_retry rm -rf $HOME/.m2/.cache"
   - "travis_retry sudo pip install -q sphinx==1.1.3 --use-mirrors || (cat /home/travis/.pip/pip.log; false)"
   - "travis_wait mvn install -DskipTests=true -f pom-libs.xml -B -V" #download dependencies
-  - "travis_wait mvn install -f docs/pom.xml -Dtycho.mode=maven -Pdocs -B -V"
+  - "travis_wait mvn install -f docs/pom.xml -Dtycho.mode=maven -Pdocs -B -V" #build docs before creating products
 
-script: "travis_wait mvn install -Pproduct -Psdk -B -V"
+script: "travis_wait mvn install -Pproduct -Psdk -B -V -DinstallAtEnd=true"
 
 notifications:
   email:
@@ -23,6 +25,7 @@ notifications:
     channels: "irc.freenode.org#udig"
     on_success: change
     on_failure: always
+#    template: "%{repository} (%{branch}:%{commit} by %{author}): %{message} (%{build_url})"
     template: "%{repository} (%{branch}:%{commit}): %{message} (%{build_url})"
 branches:
   only:
