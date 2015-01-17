@@ -17,6 +17,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,6 @@ import org.junit.Test;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.IServiceFactory;
-import org.locationtech.udig.catalog.geotools.data.DataStoreService;
 import org.locationtech.udig.catalog.internal.shp.ShpServiceImpl;
 
 /**
@@ -91,18 +91,27 @@ public class ShapeCatalogTest {
     }
     
     @Test
-    public void testCatalogPluginShape() throws IOException {
+    public void testShapeCatalogPluginFSTYPEshape() throws IOException {
+        assertShapefileServiceImpl("shape");
+    }
+
+    @Test
+    public void testShapeCatalogPluginFSTYPEshapeNG() throws IOException {
+        assertShapefileServiceImpl("shape-ng");
+    }
+
+    private void assertShapefileServiceImpl(final String fstype) throws MalformedURLException {
         File file = new File("data/point.shp");
         Map<String, Serializable> map = new HashMap<String, Serializable>();
         map.put( "url", file.toURI().toURL() );
-        map.put( "fstype", "shape" );
+        map.put( "fstype", fstype);
                
         IServiceFactory serviceFactory = CatalogPlugin.getDefault().getServiceFactory();
         List<IService> test = serviceFactory.createService(map);
         assertFalse( "Able to connect to shapefile", test.isEmpty() );
         
         boolean found = checkForInstanceOf( test, ShpServiceImpl.class);
-        assertTrue( "ShpServiceImpl", found );
+        assertTrue( "ServiceFactory was unable to connect", found );
     }
     
     private <T> boolean checkForInstanceOf( List<T> list, Class<? extends T> type ){
@@ -115,22 +124,5 @@ public class ShapeCatalogTest {
         }
         return false;
     }
-    @Test
-    public void testCatalogPluginShapeNG() throws IOException {
-        File file = new File("data/point.shp");
-        Map<String, Serializable> map = new HashMap<String, Serializable>();
-        map.put( "url", file.toURI().toURL() );
-        map.put( "fstype", "shape-ng" );
-        
-        IServiceFactory serviceFactory = CatalogPlugin.getDefault().getServiceFactory();
-        List<IService> test = serviceFactory.createService(map);
-        
-        boolean found = checkForInstanceOf( test, ShpServiceImpl.class );
-        assertTrue( "ShpServiceImpl", !found );
-        
-        found = checkForInstanceOf( test, DataStoreService.class );
-        assertTrue( "ServiceFactory was unable to connect", found );
-    }
-    
 
 }
