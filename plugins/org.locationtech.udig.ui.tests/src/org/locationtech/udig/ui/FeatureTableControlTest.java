@@ -171,13 +171,19 @@ public class FeatureTableControlTest {
         TableItem topItem = viewer.getTable().getItem(0);
 
         SimpleFeature f = (SimpleFeature) topItem.getData();
+        final String featureId = f.getID();
         f.setAttribute(0, "newName"); //$NON-NLS-1$
 
         while( Display.getCurrent().readAndDispatch() );
         assertEquals("feature1", topItem.getText(1)); //$NON-NLS-1$
         table.update();
         while( Display.getCurrent().readAndDispatch() );
-        assertEquals("newName", table.getViewer().getTable().getItem(0).getText(1)); //$NON-NLS-1$
+        for (TableItem ti : table.getViewer().getTable().getItems()) {
+            SimpleFeature sf = (SimpleFeature) ti.getData();
+            if (sf.getID().equalsIgnoreCase(featureId)) {
+                assertEquals("newName", ti.getText(1)); //$NON-NLS-1$
+            }
+        }
     }
 
     @Test
