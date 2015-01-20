@@ -21,7 +21,6 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
-import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.SchemaException;
 import org.locationtech.udig.issues.IIssue;
@@ -139,9 +138,7 @@ public abstract class AbstractDatastoreStrategy implements IListStrategy{
     }
 
     public Collection<? extends IIssue> getIssues() throws IOException {
-        DefaultFeatureCollection fc = new DefaultFeatureCollection( getFeatures());
-        
-        return new FeatureCollectionToIssueCollectionAdapter(fc, getAttributeMapper());
+        return new FeatureCollectionToIssueCollectionAdapter(getFeatures(), getAttributeMapper());
     }
 
     protected FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatures() throws IOException {
