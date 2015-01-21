@@ -14,20 +14,17 @@ import java.util.AbstractCollection;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.eclipse.ui.WorkbenchException;
+import org.eclipse.ui.XMLMemento;
+import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.locationtech.udig.core.enums.Priority;
 import org.locationtech.udig.core.enums.Resolution;
 import org.locationtech.udig.issues.IIssue;
 import org.locationtech.udig.issues.IssuesListUtil;
 import org.locationtech.udig.issues.internal.IssuesActivator;
 import org.locationtech.udig.issues.internal.PlaceholderIssue;
-
-import org.eclipse.ui.WorkbenchException;
-import org.eclipse.ui.XMLMemento;
-import org.geotools.data.simple.SimpleFeatureCollection;
-import org.geotools.data.simple.SimpleFeatureIterator;
-import org.geotools.feature.DefaultFeatureCollection;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -42,20 +39,19 @@ import org.opengis.feature.simple.SimpleFeatureType;
  */
 public class FeatureCollectionToIssueCollectionAdapter extends AbstractCollection<IIssue> implements Collection<IIssue> {
 
-    private DefaultFeatureCollection  features;
+    private final FeatureCollection<SimpleFeatureType, SimpleFeature> features;
     private FeatureTypeAttributeMapper mapper;
 
-    public FeatureCollectionToIssueCollectionAdapter( DefaultFeatureCollection features, FeatureTypeAttributeMapper mapper ) {
-        this.features=features;
+    public FeatureCollectionToIssueCollectionAdapter( FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection, FeatureTypeAttributeMapper mapper ) {
+        this.features=featureCollection;
         this.mapper=mapper;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Iterator<IIssue> iterator() {
+        final FeatureIterator<SimpleFeature> iter = features.features();
+        
         return new Iterator<IIssue>(){
-            
-            SimpleFeatureIterator iter= features.features();
             
             public boolean hasNext() {
                 return iter.hasNext();

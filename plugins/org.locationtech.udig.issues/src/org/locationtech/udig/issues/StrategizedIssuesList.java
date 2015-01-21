@@ -28,133 +28,133 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 
 /**
- * An implementation that uses a strategy object to communicate with 
- * the storage device.  This object takes care of notification listening
- * and saving.
+ * An implementation that uses a strategy object to communicate with the storage device. This object
+ * takes care of notification listening and saving.
  * 
  * @author Jesse
  * @since 1.1.0
  */
 public class StrategizedIssuesList implements IRemoteIssuesList {
-    
+
     private final IssuesList wrapped;
+
     private IListStrategy dsStrategy;
-    private IIssuesListListener listener = new IIssuesListListener(){
-        
-        public void notifyChange( IssuesListEvent event ) {
+
+    private IIssuesListListener listener = new IIssuesListListener() {
+
+        public void notifyChange(IssuesListEvent event) {
 
             final IssuesListEventType type = event.getType();
-            final Collection< ? extends IIssue> changed = event.getChanged();
+            final Collection<? extends IIssue> changed = event.getChanged();
 
-            switch( type ) {
+            switch (type) {
             case ADD:
                 try {
-                        dsStrategy.addIssues(new ArrayList<IIssue>(changed));
-                    } catch (IOException e) {
-                        throw (RuntimeException) new RuntimeException( ).initCause( e );
-                    }
+                    dsStrategy.addIssues(new ArrayList<IIssue>(changed));
+                } catch (IOException e) {
+                    throw (RuntimeException) new RuntimeException().initCause(e);
+                }
                 break;
             case REMOVE:
                 try {
-                        dsStrategy.removeIssues(changed);
-                    } catch (IOException e) {
-                        throw (RuntimeException) new RuntimeException( ).initCause( e );
-                    }
+                    dsStrategy.removeIssues(changed);
+                } catch (IOException e) {
+                    throw (RuntimeException) new RuntimeException().initCause(e);
+                }
                 break;
             default:
                 break;
             }
         }
-        
+
     };
-    
+
     public StrategizedIssuesList() {
-        wrapped=new IssuesList();
+        wrapped = new IssuesList();
     }
-    
-    public void init(IListStrategy strategy) throws IOException{
-        this.dsStrategy=strategy;
+
+    public void init(IListStrategy strategy) throws IOException {
+        this.dsStrategy = strategy;
         refresh();
     }
-    
 
-    @SuppressWarnings("unchecked")
     public void refresh() throws IOException {
         try {
-            PlatformGIS.runBlockingOperation(new IRunnableWithProgress(){
+            PlatformGIS.runBlockingOperation(new IRunnableWithProgress() {
 
-                public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
+                public void run(IProgressMonitor monitor) throws InvocationTargetException,
+                        InterruptedException {
 
                     wrapped.removeListener(listener);
-                    
+
                     List<IIssue> issues = new ArrayList<IIssue>();
-                    Collection< ? extends IIssue> remoteList;
+                    Collection<? extends IIssue> remoteList;
                     try {
                         remoteList = dsStrategy.getIssues();
                     } catch (IOException e) {
-                        throw (RuntimeException) new RuntimeException( ).initCause( e );
+                        throw (RuntimeException) new RuntimeException().initCause(e);
                     }
-                    for( IIssue issue : remoteList ) {
+                    for (IIssue issue : remoteList) {
                         issues.add(issue);
                     }
-                    
-                    for ( Iterator<IIssue> iter=wrapped.iterator(); iter.hasNext(); ){
-                        IIssue issue=iter.next();
-                        IIssue newVersion =find(issue, issues);
-                        if( newVersion==null ){
+
+                    for (Iterator<IIssue> iter = wrapped.iterator(); iter.hasNext();) {
+                        IIssue issue = iter.next();
+                        IIssue newVersion = find(issue, issues);
+                        if (newVersion == null) {
                             iter.remove();
-                        }else {
+                        } else {
                             issues.remove(newVersion);
                         }
                     }
                     wrapped.addAll(issues);
-                    
+
                     wrapped.notify(issues, IssuesListEventType.REFRESH);
-                    
+
                     wrapped.addListener(listener);
                 }
-                
+
             }, ProgressManager.instance().get());
         } catch (Exception e) {
-            throw (IOException) new IOException( ).initCause( e );
-        } 
-        
+            throw (IOException) new IOException().initCause(e);
+        }
+
     }
 
-    private IIssue find( IIssue issue, Collection< ? extends IIssue> issues ) {
-        for( IIssue issue2 : issues ) {
-            if( issue2.getId()!=null && issue2.getId().equals(issue.getId()) )
+    private IIssue find(IIssue issue, Collection<? extends IIssue> issues) {
+        for (IIssue issue2 : issues) {
+            if (issue2.getId() != null && issue2.getId().equals(issue.getId()))
                 return issue2;
         }
         return null;
     }
 
     // All methods below are delegate methods
-    public boolean add( IIssue o ) {
+    public boolean add(IIssue o) {
         return wrapped.add(o);
     }
 
-    public void add( int index, IIssue element ) {
+    public void add(int index, IIssue element) {
         wrapped.add(index, element);
     }
 
-    public boolean addAll( Collection< ? extends IIssue> c ) {
+    public boolean addAll(Collection<? extends IIssue> c) {
         return wrapped.addAll(c);
     }
 
-    public boolean addAll( int index, Collection< ? extends IIssue> c ) {
+    public boolean addAll(int index, Collection<? extends IIssue> c) {
         return wrapped.addAll(index, c);
     }
 
-    public void addFirst( IIssue o ) {
+    public void addFirst(IIssue o) {
         wrapped.addFirst(o);
     }
 
-    public void addLast( IIssue o ) {
+    public void addLast(IIssue o) {
         wrapped.addLast(o);
     }
 
-    public void addListener( IIssuesListListener listener ) {
+    public void addListener(IIssuesListListener listener) {
         wrapped.addListener(listener);
     }
 
@@ -162,19 +162,19 @@ public class StrategizedIssuesList implements IRemoteIssuesList {
         wrapped.clear();
     }
 
-    public boolean contains( Object arg0 ) {
+    public boolean contains(Object arg0) {
         return wrapped.contains(arg0);
     }
 
-    public boolean containsAll( Collection< ? > arg0 ) {
+    public boolean containsAll(Collection<?> arg0) {
         return wrapped.containsAll(arg0);
     }
 
-    public boolean equals( Object arg0 ) {
+    public boolean equals(Object arg0) {
         return wrapped.equals(arg0);
     }
 
-    public IIssue get( int index ) {
+    public IIssue get(int index) {
         IIssue issue = wrapped.get(index);
         return issue;
     }
@@ -183,7 +183,7 @@ public class StrategizedIssuesList implements IRemoteIssuesList {
         return wrapped.getGroups();
     }
 
-    public List<IIssue> getIssues( String groupId ) {
+    public List<IIssue> getIssues(String groupId) {
         return wrapped.getIssues(groupId);
     }
 
@@ -191,7 +191,7 @@ public class StrategizedIssuesList implements IRemoteIssuesList {
         return wrapped.hashCode();
     }
 
-    public int indexOf( Object arg0 ) {
+    public int indexOf(Object arg0) {
         return wrapped.indexOf(arg0);
     }
 
@@ -203,7 +203,7 @@ public class StrategizedIssuesList implements IRemoteIssuesList {
         return wrapped.iterator();
     }
 
-    public int lastIndexOf( Object arg0 ) {
+    public int lastIndexOf(Object arg0) {
         return wrapped.lastIndexOf(arg0);
     }
 
@@ -211,7 +211,7 @@ public class StrategizedIssuesList implements IRemoteIssuesList {
         return wrapped.listIterator();
     }
 
-    public ListIterator<IIssue> listIterator( int index ) {
+    public ListIterator<IIssue> listIterator(int index) {
         return wrapped.listIterator(index);
     }
 
@@ -219,15 +219,15 @@ public class StrategizedIssuesList implements IRemoteIssuesList {
         return wrapped.remove();
     }
 
-    public IIssue remove( int index ) {
+    public IIssue remove(int index) {
         return wrapped.remove(index);
     }
 
-    public boolean remove( Object o ) {
+    public boolean remove(Object o) {
         return wrapped.remove(o);
     }
 
-    public boolean removeAll( Collection< ? > c ) {
+    public boolean removeAll(Collection<?> c) {
         return wrapped.removeAll(c);
     }
 
@@ -235,7 +235,7 @@ public class StrategizedIssuesList implements IRemoteIssuesList {
         return wrapped.removeFirst();
     }
 
-    public void removeIssues( String groupId ) {
+    public void removeIssues(String groupId) {
         wrapped.removeIssues(groupId);
     }
 
@@ -243,15 +243,15 @@ public class StrategizedIssuesList implements IRemoteIssuesList {
         return wrapped.removeLast();
     }
 
-    public void removeListener( IIssuesListListener listener ) {
+    public void removeListener(IIssuesListListener listener) {
         wrapped.removeListener(listener);
     }
 
-    public boolean retainAll( Collection< ? > c ) {
+    public boolean retainAll(Collection<?> c) {
         return wrapped.retainAll(c);
     }
 
-    public IIssue set( int index, IIssue element ) {
+    public IIssue set(int index, IIssue element) {
         return wrapped.set(index, element);
     }
 
@@ -259,7 +259,7 @@ public class StrategizedIssuesList implements IRemoteIssuesList {
         return wrapped.size();
     }
 
-    public List<IIssue> subList( int arg0, int arg1 ) {
+    public List<IIssue> subList(int arg0, int arg1) {
         return wrapped.subList(arg0, arg1);
     }
 
@@ -267,7 +267,7 @@ public class StrategizedIssuesList implements IRemoteIssuesList {
         return wrapped.toArray();
     }
 
-    public <T> T[] toArray( T[] arg0 ) {
+    public <T> T[] toArray(T[] arg0) {
         return wrapped.toArray(arg0);
     }
 
@@ -275,13 +275,13 @@ public class StrategizedIssuesList implements IRemoteIssuesList {
         return wrapped.toString();
     }
 
-    public void save( final IIssue issue ) throws IOException {
+    public void save(final IIssue issue) throws IOException {
         dsStrategy.modifyIssue(issue);
         wrapped.notify(issue, IssuesListEventType.SAVE);
     }
 
-    public void setStrategy( IListStrategy strategy ) {
-        dsStrategy=strategy;
+    public void setStrategy(IListStrategy strategy) {
+        dsStrategy = strategy;
     }
 
     public String getExtensionID() {

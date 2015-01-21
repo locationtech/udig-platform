@@ -24,7 +24,6 @@ import org.locationtech.udig.issues.IRemoteIssuesList;
 import org.locationtech.udig.issues.listeners.IIssuesListListener;
 import org.locationtech.udig.issues.listeners.IssuesListEvent;
 import org.locationtech.udig.issues.listeners.IssuesListEventType;
-
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
