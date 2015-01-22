@@ -14,17 +14,16 @@ import it.geosolutions.imageio.gdalframework.GDALUtilities;
 
 import java.net.URL;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.junit.Assume;
+import org.junit.Before;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.internal.geotiff.GeoTiffServiceExtension;
 import org.locationtech.udig.catalog.tests.AbstractGeoResourceTest;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.junit.Assume;
-import org.junit.Before;
-
 public class GeoTiffGeoResourceTest extends AbstractGeoResourceTest {
-    
+
     public static String TIFF_1 = "cir.tif"; //$NON-NLS-1$
     private IGeoResource resource;
     private IService service;
@@ -32,7 +31,7 @@ public class GeoTiffGeoResourceTest extends AbstractGeoResourceTest {
     @Before
     public void setUp() throws Exception {
         Assume.assumeTrue(GDALUtilities.isGDALAvailable());
-        
+
         GeoTiffServiceExtension fac = new GeoTiffServiceExtension();
         URL url = Data.getResource(GeoTiffGeoResourceTest.class, TIFF_1);
         service = fac.createService(url, fac.createParams(url));

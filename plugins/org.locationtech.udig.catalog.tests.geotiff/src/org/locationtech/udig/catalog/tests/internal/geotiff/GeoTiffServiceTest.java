@@ -15,15 +15,14 @@ import it.geosolutions.imageio.gdalframework.GDALUtilities;
 import java.io.File;
 import java.net.URL;
 
-import org.locationtech.udig.catalog.ID;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.internal.geotiff.GeoTiffServiceExtension;
-import org.locationtech.udig.catalog.tests.AbstractServiceTest;
-
 import org.geotools.gce.geotiff.GeoTiffFormat;
 import org.geotools.gce.geotiff.GeoTiffFormatFactorySpi;
 import org.junit.Assume;
 import org.junit.Before;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.geotiff.GeoTiffServiceExtension;
+import org.locationtech.udig.catalog.tests.AbstractServiceTest;
 
 public class GeoTiffServiceTest extends AbstractServiceTest {
     public static String TIFF_1 = "cir.tif"; //$NON-NLS-1$
@@ -32,23 +31,23 @@ public class GeoTiffServiceTest extends AbstractServiceTest {
     @Before
     public void setUp() throws Exception {
         Assume.assumeTrue(GDALUtilities.isGDALAvailable());
-        
+
         GeoTiffServiceExtension fac = new GeoTiffServiceExtension();
         URL url = Data.getResource(GeoTiffServiceTest.class, TIFF_1);
-        
+
         GeoTiffFormatFactorySpi factory = GeoTiffServiceExtension.getFactory();
         GeoTiffFormat format = (GeoTiffFormat) factory.createFormat();
-        
+
         try {
             ID id = new ID(url);
             File file = id.toFile();
-        
+
             format.accepts(file);
-            
+
         } catch (RuntimeException ex) {
             ex.printStackTrace();
         }
-        
+
         service = fac.createService(url, fac.createParams(url));
     }
 

@@ -20,7 +20,7 @@ public final class Data {
         // No instantiation.
     }
 
-    public static final URL getResource( final Class caller, String name ) throws IOException {
+    public static final URL getResource( final Class<?> caller, String name ) throws IOException {
         if (name == null) {
             name = "test-data"; //$NON-NLS-1$
         } else {
