@@ -13,26 +13,19 @@ package org.locationtech.udig.catalog.tests.ui;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Before;
+import org.junit.Test;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.internal.wms.WMSServiceImpl;
-import org.locationtech.udig.catalog.tests.ui.workflow.Assertion;
-import org.locationtech.udig.catalog.tests.ui.workflow.DialogDriver;
 import org.locationtech.udig.catalog.tests.ui.workflow.DummyMonitor;
-import org.locationtech.udig.catalog.ui.ConnectionErrorPage;
 import org.locationtech.udig.catalog.ui.wizard.CatalogImport;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.eclipse.jface.dialogs.IDialogConstants;
-import org.junit.Before;
-import org.junit.Test;
 
 public abstract class CatalogImportTest {
 
@@ -49,10 +42,10 @@ public abstract class CatalogImportTest {
 
 			final ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
 
-			List members = catalog.members(new DummyMonitor());
+			List<IResolve> members = catalog.members(new DummyMonitor());
 			if (!members.isEmpty()) {
 				//clear the catalog
-				for (Iterator itr = members.iterator(); itr.hasNext();) {
+				for (Iterator<IResolve> itr = members.iterator(); itr.hasNext();) {
 					IService service = (IService)itr.next();
 					catalog.remove(service);
 				}
@@ -79,7 +72,7 @@ public abstract class CatalogImportTest {
 
 			members = catalog.members(new DummyMonitor());
 			assertTrue(!members.isEmpty());
-			for (Iterator itr = members.iterator(); itr.hasNext();) {
+			for (Iterator<IResolve> itr = members.iterator(); itr.hasNext();) {
 				assertServiceType((IService)itr.next());
 			}
 	}

@@ -21,7 +21,7 @@ public class WFSCatalogImportTest extends CatalogImportTest {
 
 	@Override
 	Object getContext() throws Exception {
-		return new URL("http://www2.dmsolutions.ca/cgi-bin/mswfs_gmap?version=1.0.0&request=getcapabilities&service=wfs"); //$NON-NLS-1$
+		return new URL("http://demo.opengeo.org/geoserver/ows?service=wfs&version=1.0.0&request=GetCapabilities"); //$NON-NLS-1$
 	}
 
 	@Override
