@@ -9,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package es.udig.tools.geometry.split;
+package org.locationtech.tools.geometry.split;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

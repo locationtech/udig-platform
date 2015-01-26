@@ -139,7 +139,7 @@ class UsefulSplitLineBuilder {
 
         // if there isn't any coordinate outside, and there isn't any
         // intersection with the exterior boundary, return.
-        if (outsidePos == -1 && ! interStrategy.foundIntersection()) {
+        if (firstIntersectionCoord == null || outsidePos == -1 && ! interStrategy.foundIntersection()) {
             return modifiedCoords;
         }
         int posFirstCoord;
@@ -824,15 +824,17 @@ class UsefulSplitLineBuilder {
             double minExtDistance = Double.MAX_VALUE;
             double distance;
             Geometry intersection = polygon.getExteriorRing().intersection(segment);
-            // find the closest one to shortCoords[i]
-            for (int j = 0; j < intersection.getNumGeometries(); j++) {
-
-                Coordinate pointToTest = intersection.getGeometryN(j).getCoordinate();
-
-                distance = SplitUtil.calculateDistanceFromFirst(pointToTest, segCoords[0], segCoords[1]);
-
-                if (Math.abs(distance) < minExtDistance) {
-                    minExtDistance = Math.abs(distance);
+            if (!intersection.isEmpty()) {
+                // find the closest one to shortCoords[i]
+                for (int j = 0; j < intersection.getNumGeometries(); j++) {
+    
+                    Coordinate pointToTest = intersection.getGeometryN(j).getCoordinate();
+    
+                    distance = SplitUtil.calculateDistanceFromFirst(pointToTest, segCoords[0], segCoords[1]);
+    
+                    if (Math.abs(distance) < minExtDistance) {
+                        minExtDistance = Math.abs(distance);
+                    }
                 }
             }
 
@@ -848,10 +850,12 @@ class UsefulSplitLineBuilder {
 
                     Coordinate pointToTest = intersection.getGeometryN(h).getCoordinate();
 
-                    distance = SplitUtil.calculateDistanceFromFirst(pointToTest, segCoords[0], segCoords[1]);
+                    if (pointToTest != null) {
+                        distance = SplitUtil.calculateDistanceFromFirst(pointToTest, segCoords[0], segCoords[1]);
 
-                    if (Math.abs(distance) < minRingDistance) {
-                        minRingDistance = Math.abs(distance);
+                        if (Math.abs(distance) < minRingDistance) {
+                            minRingDistance = Math.abs(distance);
+                        }
                     }
                 }
             }
@@ -957,10 +961,12 @@ class UsefulSplitLineBuilder {
 
         if (lastOutsidePosition < lastPosition || lastOutsidePosition == -1) {
             // this coordinate must be eliminated from the array.
-            lineCoords[lastPosition] = lastCoord;
-            posLastCoord = lastPosition;
-            // insert the intersection coordinate into the polygon.
-            adaptedPolygon = insertCoordinateIntoPolygon(lastCoord, adaptedPolygon, splitLine);
+            if (lastCoord != null) {
+                lineCoords[lastPosition] = lastCoord;
+                posLastCoord = lastPosition;
+                // insert the intersection coordinate into the polygon.
+                adaptedPolygon = insertCoordinateIntoPolygon(lastCoord, adaptedPolygon, splitLine);
+            }
         } else {
             posLastCoord = lastOutsidePosition;
         }
