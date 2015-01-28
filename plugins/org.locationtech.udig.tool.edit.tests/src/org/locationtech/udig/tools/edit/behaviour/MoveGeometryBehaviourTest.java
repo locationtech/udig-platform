@@ -63,7 +63,7 @@ public class MoveGeometryBehaviourTest {
 
     /*
      * Test method for
-     * 'net.refMapMouseEvent.BUTTON1ractions.udig.tools.edit.behaviour.MoveGeometryBehaviour.isValid(EditToolHandler,
+     * 'MoveGeometryBehaviour.isValid(EditToolHandler,
      * MapMouseEvent, EventType)'
      */
     @Test
