@@ -52,7 +52,7 @@ public class MoveGeometryBehaviour extends MoveVertexBehaviour {
         if( !( isLegalState && isEventDragged && onlyButton1IsDown
                 && currentGeomNotNull) ) return false;
 
-        boolean altDown = e.isAltDown() && e.isModifierDown(MapMouseEvent.MOD1_DOWN_MASK) || allVerticesSelectedAndWithinGeom(handler) ||  handler.isLockOwner(this);
+        boolean altDown = e.isAltDown() && e.isModifierDown(MapMouseEvent.CTRL_DOWN_MASK) || allVerticesSelectedAndWithinGeom(handler) ||  handler.isLockOwner(this);
         
         return  altDown && ( handler.isLockOwner(this) ||
                 handler.getCurrentShape().contains(Point.valueOf(e.x, e.y), true) );
