@@ -29,7 +29,6 @@ The goal of uDig is to provide a complete Java solution for desktop GIS data acc
 
 h2. Steering Committee
 
-* Andrea Antonello @moovida 
 * Frank Gasdorf @fgdrf
 * Jesse Eichar @jesseeichar 
 * Jody Garnett @jodygarnett 
@@ -47,11 +46,10 @@ There are two ways to take part: indirectly using github pull requests; and dire
 
 h1. Build Instructions
 
-1. We have three branches in our short term roadmap:
+1. We have two branches in our short term roadmap:
    
    * https://github.com/uDig/udig-platform/tree/master
-   * https://github.com/uDig/udig-platform/tree/locationtech_rename
-   * https://github.com/uDig/udig-platform/tree/locationtech_ip2
+   * https://github.com/uDig/udig-platform/tree/luna-support
    
    Check out the branch you wish to work with (or fork as you see fit).
 
