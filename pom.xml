@@ -36,7 +36,7 @@
 
         <pomDependencies>consider</pomDependencies>
 
-        Simply run:
+        To get jai/imageio bundles pre-installed simply run:
            mvn clean install -f libs/jai-imageio/pom.xml 
 
         Our maven tests require a bit more memory:
@@ -46,7 +46,7 @@
            mvn install -Dall
 
         If you run into any problems (to list debug and stack trace)
-           mvn -Dall -e -X install
+           mvn install -Dall -e -X 
 
         Please note the Tycho maven plugin used to build RCP projects is a a work in progress; you
         will do better to review the stack trace with a checkout of the Tycho code in hand as the
@@ -66,9 +66,6 @@
         To run a full build with tests:
           mvn install -Dall -Ptest
           
-        To run a full build with user interfaces tests (requires a display):
-          mvn install -Dall -Ptest,test-ui
-
         To profile the tests you will need:
           mvn install -Ptest -Pprofile
 
