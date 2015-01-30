@@ -3,6 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Shp
 Bundle-SymbolicName: org.locationtech.udig.catalog.tests.shp
 Bundle-Version: 2.0.0.qualifier
+Bundle-Vendor: udig.refractions.net
 Bundle-Activator: org.locationtech.udig.catalog.tests.shp.TestActivator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

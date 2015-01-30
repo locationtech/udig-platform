@@ -11,3 +11,4 @@ Bundle-Activator: org.locationtech.udig.catalog.kml.core.KmlToolPlugin
 Require-Bundle: org.locationtech.udig.ui,
  org.locationtech.udig.catalog,
  org.locationtech.udig.project.ui
+Bundle-Vendor: udig.refractions.net
