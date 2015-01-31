@@ -36,9 +36,6 @@
 
         <pomDependencies>consider</pomDependencies>
 
-        To get jai/imageio bundles pre-installed simply run:
-           mvn clean install -f libs/jai-imageio/pom.xml 
-
         Our maven tests require a bit more memory:
            export MAVEN_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
 
