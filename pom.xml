@@ -331,6 +331,12 @@
                         <argLine>-Xmx1024m -XX:MaxPermSize=256m -Dlauncher.suppressErrors -Dsdtcore.headless ${tycho.test.OSspecific}</argLine>
                     </configuration>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.eclipse.tycho</groupId>
+                    <artifactId>tycho-versions-plugin</artifactId>
+                    <version>${tycho-version}</version>
+		</plugin>
             </plugins>
         </pluginManagement>
     </build>
