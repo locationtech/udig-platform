@@ -20,5 +20,11 @@
 		    class=""
             name="DummyMulitResource"/>
    </extension>
+   <extension
+         point="org.locationtech.udig.catalog.ui.fileFormat">
+      <provider
+            class="org.locationtech.udig.catalog.tests.ui.MoreThanOneExtensionFileProvider">
+      </provider>
+   </extension>
 
 </plugin>
