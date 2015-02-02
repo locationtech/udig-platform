@@ -17,6 +17,7 @@
             <id>test</id>
             <modules>
                 <module>org.locationtech.udig.ui.tests</module>
+                <module>org.locationtech.udig.core.tests</module>
                 <module>org.locationtech.udig.project.tests</module>
                 <module>org.locationtech.udig.catalog.tests</module>
                 <module>org.locationtech.udig.catalog.tests.ui</module>

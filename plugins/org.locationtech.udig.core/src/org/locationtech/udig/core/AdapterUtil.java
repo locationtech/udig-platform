@@ -144,6 +144,10 @@ public class AdapterUtil {
     @SuppressWarnings("unchecked")
     public <T> T adapt( String targetClass, Object obj, IProgressMonitor monitor ) throws IOException{
         Class< T > target=null;
+        
+        if (null == obj) {
+            return null;
+        }
         try {
             target=(Class<T>) obj.getClass().getClassLoader().loadClass(targetClass);
             return adaptTo(target, obj, monitor);
