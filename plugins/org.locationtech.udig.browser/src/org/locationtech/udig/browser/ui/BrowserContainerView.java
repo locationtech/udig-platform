@@ -56,7 +56,6 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.locationtech.udig.browser.BrowserPlugin;
 import org.locationtech.udig.browser.internal.Messages;
@@ -270,7 +269,7 @@ public class BrowserContainerView extends ViewPart {
             }
             this.browserData = null;
         }else{
-            String initialBrowserURL = System.getProperty(BROWSER_INITIAL_URL_PROPERTY, "http://udig.refractions.net/confluence/display/DATA");
+            String initialBrowserURL = System.getProperty(BROWSER_INITIAL_URL_PROPERTY, "http://udig.github.io/data/");
             addTab(Messages.BrowserContainerView_tabTitle, initialBrowserURL,  (Image)null, getListener());   //$NON-NLS-1$
         }
     }
