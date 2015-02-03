@@ -27,7 +27,7 @@ import org.eclipse.swt.widgets.Spinner;
 
 /**
  * A strategy for exporting to PDF
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -53,14 +53,14 @@ public class PDFImageExportFormat extends ImageExportFormat {
     public boolean useStandardDimensionControls() {
         return false;
     }
-    
+
     @Override
     public void write( IMap map, BufferedImage image, File destination ) {
         Image2Pdf.write(image, destination.getAbsolutePath(), paper(),
                 this.leftMarginSpinner.getSelection(),
-                this.topMarginSpinner.getSelection(), landscape(), getDpi());
+                this.topMarginSpinner.getSelection(), landscape(), getDPI());
     }
-    
+
     @Override
     public void createControl( Composite comp ) {
 
@@ -74,7 +74,7 @@ public class PDFImageExportFormat extends ImageExportFormat {
         createLandscapeLabel(group);
         createDpiCombo(group);
         createMarginsGroup(group);
-        
+
         setControl(group);
     }
 
@@ -93,7 +93,7 @@ public class PDFImageExportFormat extends ImageExportFormat {
         dpiCombo.select(0);
 
     }
-    
+
     private void createMarginsGroup(Group group) {
         GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = 2;
@@ -164,26 +164,27 @@ public class PDFImageExportFormat extends ImageExportFormat {
      *
      * @return output DPI
      */
-    public int getDpi() {        
+    @Override
+    public int getDPI() {
         return Integer.valueOf(dpiCombo.getItem(dpiCombo.getSelectionIndex())).intValue();
     }
-    
-    
+
+
     @Override
     public int getHeight( double mapwidth, double mapheight ) {
-        int paperHeight = paper().getPixelHeight(landscape(), getDpi());
+        int paperHeight = paper().getPixelHeight(landscape(), getDPI());
         int topMargin = topMarginSpinner.getSelection();
         int lowerMargin = lowerMarginSpinner.getSelection();
 
         return paperHeight - topMargin - lowerMargin;
     }
-    
+
     @Override
     public int getWidth( double mapwidth, double mapheight ) {
-        int paperWidth = paper().getPixelWidth(landscape(), getDpi());
+        int paperWidth = paper().getPixelWidth(landscape(), getDPI());
         int rightMargin = rightMarginSpinner.getSelection();
         int leftMargin = leftMarginSpinner.getSelection();
-        
+
         return paperWidth - rightMargin - leftMargin;
     }
 

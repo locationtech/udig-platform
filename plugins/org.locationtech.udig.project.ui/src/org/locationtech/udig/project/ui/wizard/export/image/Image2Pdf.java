@@ -33,8 +33,8 @@ public class Image2Pdf {
 
 	/**
 	 * writes a buffered image to pdf at a given resolution
-	 * 
-	 * 
+	 *
+	 *
 	 * @param image
 	 *            the image to write
 	 * @param pdfPath
