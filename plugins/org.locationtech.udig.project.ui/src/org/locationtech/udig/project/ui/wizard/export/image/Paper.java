@@ -16,8 +16,7 @@ public enum Paper {
 	A0(841,1189),
 	A1(594,841),
 	A2(420,594),
-	A3(594,420),
-	//A3(297, 420),
+	A3(297, 420),
 	A4(210,297);
 	
 	final double MILLIMETERS_PER_INCH = 25.4;
