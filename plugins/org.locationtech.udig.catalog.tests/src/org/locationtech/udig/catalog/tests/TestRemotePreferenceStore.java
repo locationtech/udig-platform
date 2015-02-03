@@ -92,5 +92,28 @@ public class TestRemotePreferenceStore {
         assertEquals(val2_flt.floatValue(), Float.parseFloat(prefStore.getValue(key_flt)), 0);
         assertEquals(val2_lng.longValue(), Long.parseLong(prefStore.getValue(key_lng)));
     }
-    
+
+    /**
+     * test updated value of already stored key
+     */
+    @Test
+    public void testUdig2047saveRemote() throws IOException {
+        // check initial value of
+        assertNull(prefStore.getValue(key_str));
+
+        prefStore.setValue(key_str, val2_str);
+        prefStore.save();
+
+        // read it back again
+        assertEquals(val2_str, prefStore.getValue(key_str));
+
+        prefStore.setValue(key_str, key_str);
+
+        prefStore.save();
+
+        // read it back again
+        assertEquals(key_str, prefStore.getValue(key_str));
+
+    }
+
 }

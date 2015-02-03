@@ -120,8 +120,8 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
             } else if (remoteValue == null) {
                 putValue(names[i], localValue); //first save
             } else {
-                if (remoteValue.equals(localValue)) {
-                    putValue(names[i], localValue); //regular save
+                if (!remoteValue.equals(localValue)) {
+                    putValue(names[i], localValue); // regular save
                 }
             }
         }
