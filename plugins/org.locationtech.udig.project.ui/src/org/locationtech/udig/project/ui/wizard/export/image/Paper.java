@@ -1,12 +1,12 @@
 /**
- * 
+ *
  */
 package org.locationtech.udig.project.ui.wizard.export.image;
 
 
 /**
- * The types of paper to export 
- * 
+ * The types of paper to export
+ *
  * @author Jesse
  */
 public enum Paper {
@@ -18,14 +18,14 @@ public enum Paper {
 	A2(420,594),
 	A3(297, 420),
 	A4(210,297);
-	
+
 	final double MILLIMETERS_PER_INCH = 25.4;
-	
+
 	private final int width;
 	private final int height;
 
 	/**
-	 * 
+	 *
 	 * @param width width in millimeters
 	 * @param height height in millimeters
 	 */
@@ -34,7 +34,7 @@ public enum Paper {
 		this.height = height;
 	}
 
-	
+
 	/**
 	 * gets the page width in millimeters
 	 *
@@ -43,7 +43,7 @@ public enum Paper {
 	public int getWidth() {
 	    return width;
 	}
-	
+
 	/**
 	 * gets the page height in millimeters
 	 *
@@ -52,7 +52,7 @@ public enum Paper {
 	public int getHeight() {
 	    return height;
 	}
-	
+
 	private int toPixels(int width2, double dpi) {
 		return (int) ((width2/MILLIMETERS_PER_INCH)*dpi);
 	}
@@ -66,11 +66,11 @@ public enum Paper {
 	public int getPixelWidth(boolean landscape, int dpi) {
 	    if( landscape ){
 	        return toPixels(height, dpi);
-	    } 
-	    
+	    }
+
 	 	return toPixels(width, dpi);
 	}
-	
+
 	/**
 	 * get paper height in pixels
 	 *
@@ -80,9 +80,9 @@ public enum Paper {
 	public int getPixelHeight(boolean landscape, int dpi) {
         if( landscape ){
             return toPixels(width, dpi);
-        } 
+        }
 		return toPixels(height, dpi);
 	}
-	
-	
+
+
 }
