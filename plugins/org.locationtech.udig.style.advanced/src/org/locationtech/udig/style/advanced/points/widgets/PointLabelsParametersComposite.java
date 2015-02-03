@@ -13,8 +13,6 @@ import static org.locationtech.udig.style.advanced.utils.Utilities.ff;
 
 import java.awt.Color;
 
-import org.locationtech.udig.style.sld.SLD;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.SelectionEvent;
@@ -29,8 +27,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.styling.TextSymbolizer;
-import org.opengis.filter.expression.Expression;
-
 import org.locationtech.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
 import org.locationtech.udig.style.advanced.common.ParameterComposite;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
@@ -41,10 +37,12 @@ import org.locationtech.udig.style.advanced.utils.FontEditor;
 import org.locationtech.udig.style.advanced.utils.StolenColorEditor;
 import org.locationtech.udig.style.advanced.utils.Utilities;
 import org.locationtech.udig.style.advanced.utils.VendorOptions;
+import org.locationtech.udig.style.sld.SLD;
+import org.opengis.filter.expression.Expression;
 
 /**
  * A composite that holds widgets for labels parameter setting.
- * 
+ *
  * @author Andrea Antonello (www.hydrologis.com)
  */
 public class PointLabelsParametersComposite extends ParameterComposite {
@@ -133,6 +131,8 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         GridData labelNameTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         labelNameText.setLayoutData(labelNameTextGD);
         labelNameText.addFocusListener(this);
+        labelNameText.setToolTipText(Messages.LabelNameField_TooltipText);
+
         labelNameAttributecombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         GridData labelNameAttributecomboGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         labelNameAttributecombo.setLayoutData(labelNameAttributecomboGD);
@@ -144,8 +144,6 @@ public class PointLabelsParametersComposite extends ParameterComposite {
             int index = getAttributeIndex(labelName, allAttributesArrays);
             if (index != -1) {
                 labelNameAttributecombo.select(index);
-            } else {
-                labelNameText.setText(labelName);
             }
         } else {
             labelNameText.setText(""); //$NON-NLS-1$
@@ -402,8 +400,6 @@ public class PointLabelsParametersComposite extends ParameterComposite {
             int index = getAttributeIndex(labelName, allAttributesArrays);
             if (index != -1) {
                 labelNameAttributecombo.select(index);
-            } else {
-                labelNameText.setText(labelName);
             }
         } else {
             labelNameText.setText(""); //$NON-NLS-1$

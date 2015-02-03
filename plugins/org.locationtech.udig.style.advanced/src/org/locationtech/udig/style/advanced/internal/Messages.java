@@ -249,6 +249,7 @@ public class Messages extends NLS {
 	public static String VendorOptions_5;
 	public static String VendorOptions_7;
 	public static String VendorOptions_9;
+	public static String LabelNameField_TooltipText;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
