@@ -26,75 +26,74 @@ import org.eclipse.jface.util.SafeRunnable;
 
 /**
  * An abstract preference store implementation for remote preference stores. This class is quite
- * similar to <code>org.eclipse.jface.preference.PreferenceStore</code>, with the exception that
- * it loads and saves its values from a remote source on startup and shutdown, respectively.
- * 
+ * similar to <code>org.eclipse.jface.preference.PreferenceStore</code>, with the exception that it
+ * loads and saves its values from a remote source on startup and shutdown, respectively.
+ *
  * @author chorner
  */
 public abstract class RemotePreferenceStore implements IPersistentPreferenceStore {
 
     /**
-     * List of registered listeners (element type:
-     * <code>IPropertyChangeListener</code>). These listeners are to be
-     * informed when the current value of a preference changes.
+     * List of registered listeners (element type: <code>IPropertyChangeListener</code>). These
+     * listeners are to be informed when the current value of a preference changes.
      */
     private Set<IPropertyChangeListener> listeners = new CopyOnWriteArraySet<IPropertyChangeListener>();
 
     /**
-     * The locally stored copy of the map from preference name to preference value
-     * (represented as strings).
+     * The locally stored copy of the map from preference name to preference value (represented as
+     * strings).
      */
     private Map<String, String> localProperties;
-    
+
     /**
-     * The mapping from preference name to default preference value (represented
-     * as strings); <code>null</code> if none.
+     * The mapping from preference name to default preference value (represented as strings);
+     * <code>null</code> if none.
      */
     private Map<String, String> defaultProperties;
 
     /**
-     * Indicates whether a value as been changed by <code>setToDefault</code>
-     * or <code>setValue</code>; initially <code>false</code>.
+     * Indicates whether a value as been changed by <code>setToDefault</code> or
+     * <code>setValue</code>; initially <code>false</code>.
      */
     private boolean dirty = false;
-    
+
     /**
      * Indicates that the remote store has been initially contacted.
      */
     private boolean ready = false;
 
     /**
-     * Obtains the remote value for the specified preference.  Subclasses must implement.
+     * Obtains the remote value for the specified preference. Subclasses must implement.
      *
      * @param name key
      * @return String value
      */
-    protected abstract String getValue( String name );
-    
+    protected abstract String getValue(String name);
+
     /**
      * Stores a remote value for the preference with the specified key. Subclasses must implement.
      */
-    public abstract void putValue( String name, String value );
-    
+    public abstract void putValue(String name, String value);
+
     /**
      * Determines if the key specified exists in the remote store.
      *
      * @param name key of the preference
      * @return true if key exists
      */
-    public abstract boolean isKey( String name );
-    
+    public abstract boolean isKey(String name);
+
     public RemotePreferenceStore() {
         defaultProperties = new HashMap<String, String>();
         localProperties = new HashMap<String, String>();
     }
-    
+
     /**
      * This is the initial hit of the remote store. All methods that read or write will check to
      * ensure we've interacted with the store prior to doing anything.
      */
     protected void load() {
-        //grab all the preferences (initial load so we can detect local modifications)
+        // grab all the preferences (initial load so we can detect local modifications)
         String[] names = preferenceNames();
         for (int i = 0; i < names.length; i++) {
             String value = getValue(names[i]);
@@ -115,10 +114,10 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
                 if (defaultValue == null) {
                     throw new IOException("Default property value not defined"); //$NON-NLS-1$
                 } else {
-                    putValue(names[i], defaultValue); //revert to default
+                    putValue(names[i], defaultValue); // revert to default
                 }
             } else if (remoteValue == null) {
-                putValue(names[i], localValue); //first save
+                putValue(names[i], localValue); // first save
             } else {
                 if (!remoteValue.equals(localValue)) {
                     putValue(names[i], localValue); // regular save
@@ -127,12 +126,12 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         }
         dirty = false;
     }
-    
+
     /**
      * Had to add this method as the Property object was being unreliable in returning its contents
-     * using the getProperty method.  We also want null to be null, rather than not "null".
+     * using the getProperty method. We also want null to be null, rather than not "null".
      */
-    private String toString( Object object ) {
+    private String toString(Object object) {
         if (object == null)
             return null;
         if (object instanceof Boolean) {
@@ -145,11 +144,11 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         return String.valueOf(object);
     }
 
-    public void addPropertyChangeListener( IPropertyChangeListener listener ) {
+    public void addPropertyChangeListener(IPropertyChangeListener listener) {
         listeners.add(listener);
     }
 
-    public boolean contains( String name ) {
+    public boolean contains(String name) {
         if (name == null)
             return false;
         if (localProperties.containsKey(name) || defaultProperties.containsKey(name))
@@ -162,23 +161,24 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
             return true;
     }
 
-    public void firePropertyChangeEvent( String name, Object oldValue, Object newValue ) {
+    public void firePropertyChangeEvent(String name, Object oldValue, Object newValue) {
         // Do we need to fire an event.
         if ((oldValue == null || !oldValue.equals(newValue))) {
-            final PropertyChangeEvent pe = new PropertyChangeEvent(this, name,
-                    oldValue, newValue);
-            for( final IPropertyChangeListener l : listeners ) {
-                SafeRunnable.run(new SafeRunnable(JFaceResources.getString("PreferenceStore.changeError")) { //$NON-NLS-1$
-                        public void run() {
-                            l.propertyChange(pe);
-                        }
-                });
+            final PropertyChangeEvent pe = new PropertyChangeEvent(this, name, oldValue, newValue);
+            for (final IPropertyChangeListener l : listeners) {
+                SafeRunnable.run(new SafeRunnable(JFaceResources
+                        .getString("PreferenceStore.changeError")) { //$NON-NLS-1$
+                            public void run() {
+                                l.propertyChange(pe);
+                            }
+                        });
             }
         }
     }
 
-    public boolean getBoolean( String name ) {
-        if (!ready) load();
+    public boolean getBoolean(String name) {
+        if (!ready)
+            load();
         return getBoolean(localProperties, name);
     }
 
@@ -190,16 +190,16 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
             return true;
         return false;
     }
-    
-    public boolean getDefaultBoolean( String name ) {
+
+    public boolean getDefaultBoolean(String name) {
         return getBoolean(defaultProperties, name);
     }
 
-    public double getDefaultDouble( String name ) {
+    public double getDefaultDouble(String name) {
         return getDouble(defaultProperties, name);
     }
 
-    private double getDouble( Map<String, String> p, String name ) {
+    private double getDouble(Map<String, String> p, String name) {
         String value = p != null ? p.get(name) : null;
         if (value == null)
             return DOUBLE_DEFAULT_DEFAULT;
@@ -211,11 +211,11 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         return ival;
     }
 
-    public float getDefaultFloat( String name ) {
+    public float getDefaultFloat(String name) {
         return getFloat(defaultProperties, name);
     }
 
-    private float getFloat( Map<String, String> p, String name ) {
+    private float getFloat(Map<String, String> p, String name) {
         String value = p != null ? p.get(name) : null;
         if (value == null)
             return FLOAT_DEFAULT_DEFAULT;
@@ -227,11 +227,11 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         return ival;
     }
 
-    public int getDefaultInt( String name ) {
+    public int getDefaultInt(String name) {
         return getInt(defaultProperties, name);
     }
 
-    private int getInt( Map<String, String> p, String name ) {
+    private int getInt(Map<String, String> p, String name) {
         String value = p != null ? p.get(name) : null;
         if (value == null)
             return INT_DEFAULT_DEFAULT;
@@ -243,11 +243,11 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         return ival;
     }
 
-    public long getDefaultLong( String name ) {
+    public long getDefaultLong(String name) {
         return getLong(defaultProperties, name);
     }
 
-    private long getLong( Map<String, String> p, String name ) {
+    private long getLong(Map<String, String> p, String name) {
         String value = p != null ? p.get(name) : null;
         if (value == null)
             return LONG_DEFAULT_DEFAULT;
@@ -259,122 +259,128 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         return ival;
     }
 
-    public String getDefaultString( String name ) {
+    public String getDefaultString(String name) {
         return getString(defaultProperties, name);
     }
 
-    private String getString( Map<String, String> p, String name ) {
+    private String getString(Map<String, String> p, String name) {
         String value = p != null ? p.get(name) : null;
         if (value == null)
             return STRING_DEFAULT_DEFAULT;
         return value;
     }
 
-    public double getDouble( String name ) {
-        if (!ready) load();
+    public double getDouble(String name) {
+        if (!ready)
+            load();
         return getDouble(localProperties, name);
     }
 
-    public float getFloat( String name ) {
-        if (!ready) load();
+    public float getFloat(String name) {
+        if (!ready)
+            load();
         return getFloat(localProperties, name);
     }
 
-    public int getInt( String name ) {
-        if (!ready) load();
+    public int getInt(String name) {
+        if (!ready)
+            load();
         return getInt(localProperties, name);
     }
 
-    public long getLong( String name ) {
-        if (!ready) load();
+    public long getLong(String name) {
+        if (!ready)
+            load();
         return getLong(localProperties, name);
     }
 
-    public String getString( String name ) {
-        if (!ready) load();
+    public String getString(String name) {
+        if (!ready)
+            load();
         return getString(localProperties, name);
     }
 
-    public boolean isDefault( String name ) {
-        //does not check remote store
+    public boolean isDefault(String name) {
+        // does not check remote store
         return (!localProperties.containsKey(name) && defaultProperties.containsKey(name));
     }
 
     public boolean needsSaving() {
-        if (!ready) load();
+        if (!ready)
+            load();
         return dirty;
     }
 
     /**
-     * Returns an enumeration of all preferences known to this store which have
-     * current values other than their default value.
-     * 
+     * Returns an enumeration of all preferences known to this store which have current values other
+     * than their default value.
+     *
      * @return an array of preference names
      */
     public String[] preferenceNames() {
         Set<String> names = defaultProperties.keySet();
         return (String[]) names.toArray(new String[names.size()]);
     }
-    
-    public void removePropertyChangeListener( IPropertyChangeListener listener ) {
+
+    public void removePropertyChangeListener(IPropertyChangeListener listener) {
         listeners.remove(listener);
     }
 
-    public void setDefault( String name, double value ) {
+    public void setDefault(String name, double value) {
         setValue(defaultProperties, name, value);
     }
 
-    public void setDefault( String name, float value ) {
+    public void setDefault(String name, float value) {
         setValue(defaultProperties, name, value);
     }
 
-    public void setDefault( String name, int value ) {
+    public void setDefault(String name, int value) {
         setValue(defaultProperties, name, value);
     }
 
-    public void setDefault( String name, long value ) {
+    public void setDefault(String name, long value) {
         setValue(defaultProperties, name, value);
     }
 
-    public void setDefault( String name, String value ) {
+    public void setDefault(String name, String value) {
         setValue(defaultProperties, name, value);
     }
 
-    public void setDefault( String name, boolean value ) {
+    public void setDefault(String name, boolean value) {
         setValue(defaultProperties, name, value);
     }
 
-    private void setValue( Map<String, String> p, String name, double value ) {
+    private void setValue(Map<String, String> p, String name, double value) {
         Assert.isTrue(p != null && name != null);
         p.put(name, toString(new Double(value)));
     }
 
-    private void setValue( Map<String, String> p, String name, float value ) {
+    private void setValue(Map<String, String> p, String name, float value) {
         Assert.isTrue(p != null && name != null);
         p.put(name, toString(new Float(value)));
     }
 
-    private void setValue( Map<String, String> p, String name, int value ) {
+    private void setValue(Map<String, String> p, String name, int value) {
         Assert.isTrue(p != null && name != null);
         p.put(name, toString(Integer.valueOf(value)));
     }
 
-    private void setValue( Map<String, String> p, String name, long value ) {
+    private void setValue(Map<String, String> p, String name, long value) {
         Assert.isTrue(p != null && name != null);
         p.put(name, toString(Long.valueOf(value)));
     }
 
-    private void setValue( Map<String, String> p, String name, String value ) {
+    private void setValue(Map<String, String> p, String name, String value) {
         Assert.isTrue(p != null && name != null && value != null);
         p.put(name, value);
     }
 
-    private void setValue( Map<String, String> p, String name, boolean value ) {
+    private void setValue(Map<String, String> p, String name, boolean value) {
         Assert.isTrue(p != null && name != null);
         p.put(name, toString(Boolean.valueOf(value)));
     }
 
-    public void setToDefault( String name ) {
+    public void setToDefault(String name) {
         Object oldValue = localProperties.get(name);
         localProperties.remove(name);
         dirty = true;
@@ -384,7 +390,7 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         firePropertyChangeEvent(name, oldValue, newValue);
     }
 
-    public void setValue( String name, double value ) {
+    public void setValue(String name, double value) {
         double oldValue = getDouble(name);
         if (oldValue != value) {
             setValue(localProperties, name, value);
@@ -393,7 +399,7 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         }
     }
 
-    public void setValue( String name, float value ) {
+    public void setValue(String name, float value) {
         float oldValue = getFloat(name);
         if (oldValue != value) {
             setValue(localProperties, name, value);
@@ -402,7 +408,7 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         }
     }
 
-    public void setValue( String name, int value ) {
+    public void setValue(String name, int value) {
         int oldValue = getInt(name);
         if (oldValue != value) {
             setValue(localProperties, name, value);
@@ -411,7 +417,7 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         }
     }
 
-    public void setValue( String name, long value ) {
+    public void setValue(String name, long value) {
         long oldValue = getLong(name);
         if (oldValue != value) {
             setValue(localProperties, name, value);
@@ -420,7 +426,7 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         }
     }
 
-    public void setValue( String name, String value ) {
+    public void setValue(String name, String value) {
         String oldValue = getString(name);
         if (oldValue == null || !oldValue.equals(value)) {
             setValue(localProperties, name, value);
@@ -429,7 +435,7 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         }
     }
 
-    public void setValue( String name, boolean value ) {
+    public void setValue(String name, boolean value) {
         boolean oldValue = getBoolean(name);
         if (oldValue != value) {
             setValue(localProperties, name, value);
