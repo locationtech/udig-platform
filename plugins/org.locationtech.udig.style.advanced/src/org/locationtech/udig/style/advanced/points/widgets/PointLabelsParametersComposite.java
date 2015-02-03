@@ -552,9 +552,15 @@ public class PointLabelsParametersComposite extends ParameterComposite {
             setEnabled(selected);
             notifyListeners(String.valueOf(selected), false, STYLEEVENTTYPE.LABELENABLE);
         } else if (source.equals(labelNameAttributecombo)) {
-            int index = labelNameAttributecombo.getSelectionIndex();
-            String nameField = labelNameAttributecombo.getItem(index);
-            notifyListeners(nameField, true, STYLEEVENTTYPE.LABEL);
+            boolean comboIsNone = comboIsNone(labelNameAttributecombo);
+            if (comboIsNone) {
+                String text = labelNameText.getText();
+                notifyListeners(text, false, STYLEEVENTTYPE.LABEL);
+            } else {
+                int index = labelNameAttributecombo.getSelectionIndex();
+                String nameField = labelNameAttributecombo.getItem(index);
+                notifyListeners(nameField, true, STYLEEVENTTYPE.LABEL);
+            }
         } else if (source.equals(fontButton)) {
             FontData[] fontData = fontEditor.getFontList();
             if (fontData.length > 0) {
