@@ -34,10 +34,15 @@
                 <property><name>all</name></property>
             </activation>
             <modules>
-                <module>org.locationtech.udig.rcp_feature</module>
                 <module>org.locationtech.udig_tutorials-feature</module>
+                <module>org.locationtech.udig_tutorials.custom-feature</module>
+
+                <!-- build example feature after plugins -->
+                <module>org.locationtech.udig.tutorials.rcp-feature</module>
+
+                <module>org.locationtech.udig.rcp_feature</module>
                 <module>org.locationtech.udig_sdk-feature</module>
-             </modules>
+            </modules>
         </profile>
     </profiles>
 

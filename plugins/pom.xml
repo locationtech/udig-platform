@@ -75,12 +75,7 @@
                 <module>org.locationtech.udig.tutorials.tracking</module>
                 <module>org.locationtech.udig.tutorials.urladapter</module>
                 <module>org.locationtech.udig.tutorials.workbench</module>
-                
-                <module>org.locationtech.udig_tutorials.custom-feature</module>
-                
-                <!-- build example feature after plugins -->
-                <module>org.locationtech.udig.tutorials.rcp-feature</module>
-             </modules>
+            </modules>
         </profile>
     </profiles>
 
