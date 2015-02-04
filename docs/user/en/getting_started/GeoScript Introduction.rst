@@ -12,6 +12,10 @@ from within uDig to do geo-scripting.
 * :doc:`/reference/GeoScript editor`
 * `geoscript <http://geoscript.org/>`_ 
 
+**Limitations**
+
+* CSV Readers and Writers from **geoscript.layer.io** are not supported at the moment.
+
 
 Open the GeoScript editor
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -147,3 +151,5 @@ Just to add one more complex example, lets see a script that can render a map, p
 
 .. figure:: /images/geoscript_editor/08_render.png
    :width: 80%
+
+
