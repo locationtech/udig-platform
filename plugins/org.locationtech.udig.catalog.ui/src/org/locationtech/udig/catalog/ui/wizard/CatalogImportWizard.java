@@ -64,11 +64,11 @@ public class CatalogImportWizard extends WorkflowWizard {
 
         // add the services to the catalog
         ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
-        catalog.add(services.iterator().next());// add the first service to catalog
 
-        // for (IService service : services) {
-        // catalog.add(service);
-        // }
+        // import all services
+        for (IService service : services) {
+            catalog.add(service);
+        }
 
         // To meet Eclipse UI Guidelines wizards are supposed to show the result
         // of their action - in this case selecting the first service added
