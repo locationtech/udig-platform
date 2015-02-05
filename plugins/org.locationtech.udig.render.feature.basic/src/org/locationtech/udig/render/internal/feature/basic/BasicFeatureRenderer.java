@@ -294,9 +294,8 @@ public class BasicFeatureRenderer extends RendererImpl {
      * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#dispose()
      */
     public void dispose() {
-        if (getRenderer() != null)
+        if (getRenderer() != null && getState() != DONE)
             getRenderer().stopRendering();
-
     }
 
     @Override
