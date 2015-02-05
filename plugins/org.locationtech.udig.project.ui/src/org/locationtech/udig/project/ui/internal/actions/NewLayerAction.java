@@ -137,7 +137,7 @@ public class NewLayerAction extends ActionDelegate implements IWorkbenchWindowAc
     @SuppressWarnings("unchecked")
 	private GeometryDescriptor findGeometryType(ISelection selection) {
 
-        if( selection.isEmpty() ){
+        if (selection == null || selection.isEmpty()) {
             return null;
         }
     	if (selection instanceof IStructuredSelection) {
