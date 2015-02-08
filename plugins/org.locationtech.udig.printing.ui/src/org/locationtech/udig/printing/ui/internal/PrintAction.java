@@ -12,11 +12,7 @@
 package org.locationtech.udig.printing.ui.internal;
 
 import java.io.File;
-
-import org.locationtech.udig.printing.model.Page;
-import org.locationtech.udig.printing.ui.internal.editor.PageEditorInput;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.ui.UDIGEditorInput;
+import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -26,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
@@ -33,11 +30,16 @@ import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.printing.ui.internal.editor.PageEditorInput;
+import org.locationtech.udig.project.ui.UDIGEditorInput;
 
 /**
+ * creates a pdf file from the printing page.
  * 
  * @author Richard Gould
  * @author Andrea Antonello (www.hydrologis.com)
+ * @author Frank Gasdorf
  */
 public class PrintAction extends Action implements IEditorActionDelegate {
 
@@ -58,6 +60,7 @@ public class PrintAction extends Action implements IEditorActionDelegate {
         }
 
         FileDialog fileDialog = new FileDialog(workbenchWindow.getShell(), SWT.SAVE);
+        fileDialog.setOverwrite(true);
         String path = fileDialog.open();
 
         File outFile = null;
@@ -70,6 +73,16 @@ public class PrintAction extends Action implements IEditorActionDelegate {
             outFile = new File(path);
         }
 
+        // Workaround for Windows systems to check, if there is a lock
+        boolean fileIsLocked = !outFile.renameTo(outFile);
+        
+        if (fileIsLocked) {
+            MessageDialog.open(MessageDialog.ERROR, workbenchWindow.getShell(), Messages.PrintAction_errorDialogTitle, 
+                    MessageFormat.format(Messages.PrintAction_errorDialogLockMessage, outFile.getAbsolutePath()), SWT.NONE);
+            return;
+        }
+
+        
         // copy the page before modifying it
         final Page copy = (Page) EcoreUtil.copy((EObject) page);
         final PdfPrintingEngine engine = new PdfPrintingEngine(copy, outFile);

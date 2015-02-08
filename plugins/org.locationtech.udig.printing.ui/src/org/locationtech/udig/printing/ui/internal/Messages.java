@@ -79,6 +79,8 @@ public class Messages extends NLS {
 	public static String PrintAction_jobStatus;
 	public static String PrintAction_jobTitle;
 	public static String PrintAction_pageError;
+	public static String PrintAction_errorDialogTitle;
+	public static String PrintAction_errorDialogLockMessage;
 	public static String CreatePageAction_error_cannotFindDefaultTemplate;
 	public static String CreatePageAction_dialog_message;
 	public static String CreatePageAction_newPageName;
