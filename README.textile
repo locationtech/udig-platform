@@ -121,7 +121,7 @@ From the Eclipse **Preferences** screen:
    Confirm the uDig header is available for **New Java Files** as shown::
 <pre><code>/* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2013, Refractions Research Inc.
+ * (C) 2015, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0

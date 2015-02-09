@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Rcp Plug-in
 Bundle-SymbolicName: org.locationtech.udig.tutorials.rcp; singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 1.5.0.qualifier
 Bundle-Activator: org.locationtech.udig.tutorials.rcp.Activator
 Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.ui,
