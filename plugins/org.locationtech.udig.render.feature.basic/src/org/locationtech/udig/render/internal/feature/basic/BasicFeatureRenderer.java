@@ -79,7 +79,7 @@ import com.vividsolutions.jts.geom.TopologyException;
 
 /**
  * The default victim renderer. Based on the Lite-Renderer from Geotools.
- * 
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
@@ -145,7 +145,7 @@ public class BasicFeatureRenderer extends RendererImpl {
      * so there is a quick shortcircuit check in the beginning Obtains the features source, creates
      * the MapLayer and Map context objects required for Lite renderer and creates the lite
      * renderer.
-     * 
+     *
      * @throws IOException
      * @throws SchemaException
      */
@@ -164,7 +164,7 @@ public class BasicFeatureRenderer extends RendererImpl {
         layers = new Layer[1];
         CoordinateReferenceSystem layerCRS = layer.getCRS();
         SimpleFeatureType schema = featureSource.getSchema();
-        
+
         // Original Query provided by Layer.getFilter() as adjusted by selection and edit filter
         Query query = getContext().getFeatureQuery();
         if( styleBlackboard.contains(ProjectBlackboardConstants.LAYER__STYLE_FILTER)){
@@ -199,11 +199,11 @@ public class BasicFeatureRenderer extends RendererImpl {
             // double check the implementation is respecting our layer CRS
             FeatureCollection<SimpleFeatureType, SimpleFeature> features = featureSource.getFeatures( query );
             CoordinateReferenceSystem queryCRS = features.getSchema().getCoordinateReferenceSystem();
-            
+
             if(queryCRS.equals(layerCRS)){
                 layers[0] = featureLayer;
             } else {
-                // workaround 
+                // workaround
                 FeatureCollection<SimpleFeatureType, SimpleFeature> reprojectingFc = new ForceCoordinateSystemFeatureResults(
                         features, layerCRS);
                 layers[0] = new FeatureLayer(reprojectingFc, style, layer.getName());
@@ -258,7 +258,7 @@ public class BasicFeatureRenderer extends RendererImpl {
 
     /**
      * Returns an estimate of the rendering buffer needed to properly display this
-     * layer taking into consideration the sizes of strokes, symbols and icons in 
+     * layer taking into consideration the sizes of strokes, symbols and icons in
      * the feature type styles.
      *
      * For more Details have a look at StreamingRenderer#findRenderingBuffer(Style)
@@ -282,7 +282,7 @@ public class BasicFeatureRenderer extends RendererImpl {
         }
 
         if(!rbe.isEstimateAccurate())
-            RendererPlugin.log("Assuming rendering buffer = " + rbe.getBuffer() 
+            RendererPlugin.log("Assuming rendering buffer = " + rbe.getBuffer()
                 + ", but estimation is not accurate, you may want to set a buffer manually", null);
 
         // the actual amount we have to grow the rendering area by is half of the stroke/symbol sizes
@@ -294,8 +294,14 @@ public class BasicFeatureRenderer extends RendererImpl {
      * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#dispose()
      */
     public void dispose() {
-        if (getRenderer() != null && getState() != DONE)
-            getRenderer().stopRendering();
+        if (getRenderer() != null && getState() != DONE && getState() != DISPOSED && getState() != CANCELLED) {
+            try {
+                getRenderer().stopRendering();
+            } catch (Exception e) {
+                // log this exception with its state
+                RendererPlugin.log("Error stop rendering Renderer (with State " + getState()+ ")", e); //$NON-NLS-1$
+            }
+        }
     }
 
     @Override
@@ -319,7 +325,7 @@ public class BasicFeatureRenderer extends RendererImpl {
     }
     /**
      * Internal method used to draw into the provided graphics.
-     * 
+     *
      * @param graphics
      * @param bounds
      * @param monitor
@@ -329,18 +335,18 @@ public class BasicFeatureRenderer extends RendererImpl {
     @SuppressWarnings("unchecked")
     private void render( Graphics2D graphics, ReferencedEnvelope bounds, IProgressMonitor monitor, boolean clear)
             throws RenderException {
-        
+
         if( monitor == null ){
             monitor = new NullProgressMonitor();
         }
-        
+
         getContext().setStatus(ILayer.WAIT);
         getContext().setStatusMessage(Messages.BasicFeatureRenderer_rendering_status);
         String endMessage = null;
         int endStatus = ILayer.DONE;
         try {
             monitor.beginTask("rendering features", 100);
-            
+
             if (getContext().getLayer().getSchema() == null
                     || getContext().getLayer().getSchema().getGeometryDescriptor() == null) {
                 endStatus = ILayer.WARNING;
@@ -376,19 +382,19 @@ public class BasicFeatureRenderer extends RendererImpl {
             } catch (FactoryException e) {
                 throw (RenderException) new RenderException().initCause(e);
             }
-            
+
             listener.init( new SubProgressMonitor( monitor,90) );
             setQueries();
-            
+
             monitor.worked(5);
-            
+
             Point min = getContext().worldToPixel(
                     new Coordinate(validBounds.getMinX(), validBounds
                             .getMinY()));
             Point max = getContext().worldToPixel(
                     new Coordinate(validBounds.getMaxX(), validBounds
                             .getMaxY()));
-   
+
             int width = Math.abs(max.x - min.x);
             int height = Math.abs(max.y - min.y);
 
@@ -406,12 +412,12 @@ public class BasicFeatureRenderer extends RendererImpl {
             // lower right
             paintArea.add(  Math.max(min.x, max.x) + expandPaintAreaBy,
                             Math.max(min.y, max.y) + expandPaintAreaBy);
-            
+
             if( clear ){ // if partial update on live screen
                 graphics.setBackground(new Color(0,0,0,0));
                 graphics.clearRect(paintArea.x, paintArea.y, paintArea.width, paintArea.height);
             }
-            
+
             validBounds=getContext().worldBounds(paintArea);
 
             MapViewport mapViewport = new MapViewport( validBounds );
@@ -540,7 +546,7 @@ public class BasicFeatureRenderer extends RendererImpl {
      * </ul>
      * <p>
      * It returns the validated bounds.
-     * 
+     *
      * @param viewBounds requested bounds; if null the image bounds will be used
      * @param monitor
      * @param context context allowing access to the layer and thus the data bounds
@@ -564,13 +570,13 @@ public class BasicFeatureRenderer extends RendererImpl {
             return context.getImageBounds(); // layer bounds are unknown so draw what is on screen!
         }
         // if the viewBounds interesect the layer at all then let us draw what is on the screen
-        if( layerBounds.getCoordinateReferenceSystem() == viewBounds.getCoordinateReferenceSystem() && 
+        if( layerBounds.getCoordinateReferenceSystem() == viewBounds.getCoordinateReferenceSystem() &&
                 layerBounds.intersects((BoundingBox) viewBounds)) {
             // these bounds look okay; transform them to the viewportCRS
             ReferencedEnvelope screen = new ReferencedEnvelope(viewBounds, viewCRS);
             return screen;
         }
-        else {            
+        else {
             try {
                 ReferencedEnvelope crsBounds = ReferencedEnvelopeCache.getReferencedEnvelope(viewCRS);
                 if( crsBounds.isEmpty() || crsBounds.isNull() ){
@@ -640,7 +646,7 @@ public class BasicFeatureRenderer extends RendererImpl {
                     if (getRenderer() != null){
                         getRenderer().stopRendering();
                     }
-                }                
+                }
                 if (e instanceof IOException) {
                     if (getRenderer() != null){
                         getRenderer().stopRendering();
@@ -666,7 +672,7 @@ public class BasicFeatureRenderer extends RendererImpl {
 
         /**
          * Initialize listener
-         * 
+         *
          * @param monitor
          */
         public void init( IProgressMonitor monitor ) {
