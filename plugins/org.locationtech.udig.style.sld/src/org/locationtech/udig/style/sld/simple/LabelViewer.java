@@ -11,15 +11,8 @@ package org.locationtech.udig.style.sld.simple;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.preferences.PreferenceConstants;
-import org.locationtech.udig.style.sld.AbstractSimpleConfigurator;
-import org.locationtech.udig.style.sld.SLD;
-import org.locationtech.udig.style.sld.internal.FontEditor;
-import org.locationtech.udig.style.sld.internal.Messages;
-import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyListener;
@@ -41,6 +34,13 @@ import org.geotools.styling.LinePlacement;
 import org.geotools.styling.PointPlacement;
 import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.TextSymbolizer;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.style.sld.AbstractSimpleConfigurator;
+import org.locationtech.udig.style.sld.SLD;
+import org.locationtech.udig.style.sld.internal.FontEditor;
+import org.locationtech.udig.style.sld.internal.Messages;
+import org.locationtech.udig.ui.graphics.SLDs;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.filter.expression.Expression;
@@ -300,6 +300,9 @@ public class LabelViewer {
                     }
                 }
                 this.field.removeAll();
+                // sort in alphabetical order
+                Collections.sort(list);
+
                 this.field.setItems(list.toArray(new String[0]));
                 if (this.labelType == null) {
                     this.field.select(0);
@@ -440,8 +443,11 @@ public class LabelViewer {
             List<AttributeDescriptor> types = this.schema.getAttributeDescriptors();
             List<String> typeStrings = new ArrayList<String>();
             for (AttributeDescriptor attributeDescriptor : types) {
-				typeStrings.add(attributeDescriptor.getLocalName());
-			}
+                typeStrings.add(attributeDescriptor.getLocalName());
+            }
+
+            // sort in alphabetical order
+            Collections.sort(typeStrings);
             this.field.setItems(typeStrings.toArray(new String[0]));
         }
         this.field.setToolTipText(Messages.LabelViewer_field_tooltip); 
