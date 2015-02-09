@@ -12,10 +12,10 @@ package org.locationtech.udig.style.advanced.points;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 
 import org.locationtech.udig.style.sld.SLD;
-
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
@@ -38,7 +38,6 @@ import org.geotools.filter.text.ecql.ECQL;
 import org.geotools.styling.Font;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.Filter;
-
 import org.locationtech.udig.style.advanced.StylePlugin;
 import org.locationtech.udig.style.advanced.common.FiltersComposite;
 import org.locationtech.udig.style.advanced.common.IStyleChangesListener;
@@ -53,6 +52,7 @@ import org.locationtech.udig.style.advanced.points.widgets.PointCharacterChooser
 import org.locationtech.udig.style.advanced.points.widgets.PointGeneralParametersComposite;
 import org.locationtech.udig.style.advanced.points.widgets.PointLabelsParametersComposite;
 import org.locationtech.udig.style.advanced.utils.Utilities;
+
 import static org.locationtech.udig.style.advanced.utils.Utilities.*;
 
 @SuppressWarnings("nls")
@@ -185,6 +185,10 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
         List<String> numericAttributeNames = pointPropertiesEditor.getNumericAttributeNames();
         numericAttributesArrays = (String[]) numericAttributeNames.toArray(new String[numericAttributeNames.size()]);
         List<String> allAttributeNames = pointPropertiesEditor.getAllAttributeNames();
+
+        // sort alphabetical
+        Collections.sort(allAttributeNames);
+
         allAttributesArrays = (String[]) allAttributeNames.toArray(new String[allAttributeNames.size()]);
         // geometryPropertyName = pointPropertiesEditor.getGeometryPropertyName().getLocalPart();
 

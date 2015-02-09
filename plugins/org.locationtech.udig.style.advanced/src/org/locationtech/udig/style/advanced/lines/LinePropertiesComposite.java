@@ -12,10 +12,10 @@ package org.locationtech.udig.style.advanced.lines;
 import static org.locationtech.udig.style.advanced.utils.Utilities.sb;
 
 import java.net.MalformedURLException;
+import java.util.Collections;
 import java.util.List;
 
 import org.locationtech.udig.style.sld.SLD;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.ModifyEvent;
@@ -31,7 +31,6 @@ import org.geotools.styling.Font;
 import org.geotools.styling.Graphic;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.Filter;
-
 import org.locationtech.udig.style.advanced.common.BoderParametersComposite;
 import org.locationtech.udig.style.advanced.common.FiltersComposite;
 import org.locationtech.udig.style.advanced.common.IStyleChangesListener;
@@ -105,6 +104,8 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
         List<String> numericAttributeNames = linePropertiesEditor.getNumericAttributeNames();
         numericAttributesArrays = numericAttributeNames.toArray(new String[0]);
         List<String> allAttributeNames = linePropertiesEditor.getAllAttributeNames();
+        // sort alphabetical
+        Collections.sort(allAttributeNames);
         allAttributesArrays = allAttributeNames.toArray(new String[0]);
         List<String> stringAttributeNames = linePropertiesEditor.getStringAttributeNames();
         stringattributesArrays = stringAttributeNames.toArray(new String[0]);
