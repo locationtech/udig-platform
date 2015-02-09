@@ -14,30 +14,12 @@ import java.awt.Color;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
-import org.locationtech.udig.project.internal.StyleBlackboard;
-import org.locationtech.udig.style.internal.StyleLayer;
-import org.locationtech.udig.style.sld.ImageConstants;
-import org.locationtech.udig.style.sld.SLDContent;
-import org.locationtech.udig.style.sld.SLDPlugin;
-import org.locationtech.udig.style.sld.editor.BorderColorComboListener.Outline;
-import org.locationtech.udig.style.sld.editor.CustomDynamicPalette.TABLE;
-import org.locationtech.udig.style.sld.editor.internal.BrewerPaletteLabelProvider;
-import org.locationtech.udig.style.sld.editor.internal.StyleTreeContentProvider;
-import org.locationtech.udig.style.sld.editor.internal.StyleTreeLabelProvider;
-import org.locationtech.udig.style.sld.editor.internal.StyleTreeSorter;
-import org.locationtech.udig.style.sld.internal.Messages;
-import org.locationtech.udig.ui.DecoratorOverlayIcon;
-import org.locationtech.udig.ui.ErrorManager;
-import org.locationtech.udig.ui.PlatformGIS;
-import org.locationtech.udig.ui.graphics.SLDs;
-import org.locationtech.udig.ui.graphics.TableSettings;
-import org.locationtech.udig.ui.graphics.TableUtils;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -110,6 +92,24 @@ import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.geotools.util.NullProgressListener;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.sld.ImageConstants;
+import org.locationtech.udig.style.sld.SLDContent;
+import org.locationtech.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.style.sld.editor.BorderColorComboListener.Outline;
+import org.locationtech.udig.style.sld.editor.CustomDynamicPalette.TABLE;
+import org.locationtech.udig.style.sld.editor.internal.BrewerPaletteLabelProvider;
+import org.locationtech.udig.style.sld.editor.internal.StyleTreeContentProvider;
+import org.locationtech.udig.style.sld.editor.internal.StyleTreeLabelProvider;
+import org.locationtech.udig.style.sld.editor.internal.StyleTreeSorter;
+import org.locationtech.udig.style.sld.internal.Messages;
+import org.locationtech.udig.ui.DecoratorOverlayIcon;
+import org.locationtech.udig.ui.ErrorManager;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.graphics.SLDs;
+import org.locationtech.udig.ui.graphics.TableSettings;
+import org.locationtech.udig.ui.graphics.TableUtils;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
@@ -118,7 +118,6 @@ import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Divide;
 import org.opengis.filter.expression.Expression;
-import org.opengis.filter.expression.Literal;
 import org.opengis.util.ProgressListener;
 
 import com.vividsolutions.jts.geom.LineString;
@@ -956,17 +955,24 @@ public class StyleThemePage extends StyleEditorPage {
 	private void loadWithAttributeTypes(Combo attributeCombo,
 			StyleLayer selectedLayer) {
 		SimpleFeatureType featureType = selectedLayer.getSchema();
-		
+
 		if (featureType != null) {
-		    for (int i = 0; i < featureType.getAttributeCount(); i++) {
-		        AttributeDescriptor attributeType = featureType.getDescriptor(i);
-		        if (!(attributeType instanceof GeometryDescriptor)) { //don't include the geometry
-		            attributeCombo.add(attributeType.getName().getLocalPart());
-		            if (isNumber(attributeType)) {
-		                numericAttr.add(attributeType.getName().getLocalPart());
-		            }
-		        }
-		    }
+                    List<String> attributesList = new ArrayList<String>();
+                    for (int i = 0; i < featureType.getAttributeCount(); i++) {
+                        AttributeDescriptor attributeType = featureType.getDescriptor(i);
+                        if (!(attributeType instanceof GeometryDescriptor)) { // don't include the geometry
+                            attributesList.add(attributeType.getName().getLocalPart());
+                            if (isNumber(attributeType)) {
+                                numericAttr.add(attributeType.getName().getLocalPart());
+                            }
+                        }
+                    }
+
+                    // sort alphabetical
+                    Collections.sort(attributesList);
+                    attributeCombo.removeAll();
+                    attributeCombo.setItems(attributesList.toArray(new String[] {}));
+
 		    //select the first numeric attribute that isn't ID
 		    int index = -1;
 		    if (numericAttr.size() > 1) {
