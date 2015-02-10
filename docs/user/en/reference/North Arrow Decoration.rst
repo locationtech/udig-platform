@@ -12,10 +12,14 @@ projection and any orientation.
 Style
 -----
 
-Unlike most of the Map Decorations there is no Style Editor defined for the North Arrow. If you
-would like to contribute one please contact the friendly uDig Community (udig-devel at
-lists.refractions.net) to get involved.
+You can change the Location style of the North Arrow:
+
+.. figure:: /images/north_arrow_decoration/north-arrow-location-style.png
+   :align: center
+   :alt:
+
 
 **Related reference**
 
 :doc:`Style Editor dialog`
+:doc:`North Arrow Decoration`

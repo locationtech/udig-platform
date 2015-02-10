@@ -56,7 +56,7 @@ public class LocationStyleContent extends StyleContent {
     private static final String Y = "y"; //$NON-NLS-1$
     /** Magic key used to record x screen coordinate in our IMemento */
     private static final String X = "x";  //$NON-NLS-1$
-
+    
     /** extension id */
     public static final String ID = "org.locationtech.udig.printing.ui.locationStyle"; //$NON-NLS-1$
     

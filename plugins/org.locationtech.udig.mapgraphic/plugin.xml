@@ -105,6 +105,11 @@
           id="org.locationtech.udig.mapgraphic.style.bartype"
           name="BarType Style">
     </style>
+    <style
+          class="org.locationtech.udig.mapgraphic.scale.ScaleDenomStyleContent"
+          id="org.locationtech.udig.mapgraphic.scaledenom.style"
+          name="Map Scale">
+    </style>
    </extension>
    <extension
          point="org.locationtech.udig.style.styleConfigurator">
@@ -155,6 +160,34 @@
           requires="org.locationtech.udig.mapgraphic.graticule.GraticuleGraphic"
           styleId="org.locationtech.udig.tool.edit.mapgraphic.graticule.style">
     </styleConfigurator>
+    <styleConfigurator
+          class="org.locationtech.udig.mapgraphic.style.FontStyleConfigurator"
+          id="font"
+          label="%font.style.label"
+          requires="org.locationtech.udig.mapgraphic.scale.ScaleDenomMapGraphic"
+          styleId="org.locationtech.udig.mapgraphic.style.font">
+    </styleConfigurator>
+    <styleConfigurator
+          class="org.locationtech.udig.mapgraphic.style.PositionStyleConfigurator"
+          id="position"
+          label="%printing.ui.location.config.label"
+          requires="org.locationtech.udig.mapgraphic.scale.ScaleDenomMapGraphic"
+          styleId="org.locationtech.udig.printing.ui.locationStyle">
+    </styleConfigurator>
+    <styleConfigurator
+          class="org.locationtech.udig.mapgraphic.scale.ScaleDenomStyleConfigurator"
+          id="mapscale"
+          label="Background"
+          requires="org.locationtech.udig.mapgraphic.scale.ScaleDenomMapGraphic"
+          styleId="org.locationtech.udig.mapgraphic.scaledenom.style">
+    </styleConfigurator>
+    <styleConfigurator
+          class="org.locationtech.udig.mapgraphic.style.PositionStyleConfigurator"
+          id="northarrowposition"
+          label="%printing.ui.location.config.label"
+          requires="org.locationtech.udig.mapgraphic.northarrow.NorthArrowMapGraphic"
+          styleId="org.locationtech.udig.printing.ui.locationStyle">
+    </styleConfigurator>
    </extension>
    <extension
          point="org.locationtech.udig.mapgraphic.mapgraphic">
@@ -170,7 +203,7 @@
             name="%mapgraphic.grid.name"/>
       <mapGraphic
             class="org.locationtech.udig.mapgraphic.northarrow.NorthArrowMapGraphic"
-            icon="icons/obj16/graphic_obj.gif"
+            icon="icons/obj16/northarrow.png"
             id="org.locationtech.udig.mapgraphic.NorthArrowMapGraphic"
             name="%mapgraphic.northarrow.name">
       </mapGraphic>
@@ -179,7 +212,13 @@
             icon="icons/etool16/graticule.png"
             id="graticule"
             name="Graticule">
-      </mapGraphic>      
+      </mapGraphic>
+ <mapGraphic
+       class="org.locationtech.udig.mapgraphic.scale.ScaleDenomMapGraphic"
+       icon="icons/obj16/scale_obj.png"
+       id="org.locationtech.udig.mapgraphic.scaleDenom"
+       name="Map Scale">
+ </mapGraphic>      
     <!--  <mapGraphic
             class="org.locationtech.udig.mapgraphic.scalebar.ScaleDenomMapGraphic"
             id="org.locationtech.udig.mapgraphic.scalebar.ScaleDenomMapGraphic"

@@ -39,8 +39,10 @@ public class GraticuleStyle {
     /**
      * Default {@link GraticuleStyle style}
      */
-    public static final GraticuleStyle DEFAULT = new GraticuleStyle(new Color(0, 180, 255, 100),
-            new Color(0, 180, 255, 100), 100, ViewportGraphics.LINE_SOLID, 1, true, true, EPSG_4326);
+    //new Color(0, 180, 255, 100),
+    public static final GraticuleStyle DEFAULT = new GraticuleStyle(
+            new Color(0, 180, 255, 100), 100, 
+            ViewportGraphics.LINE_SOLID, 1, true, true, EPSG_4326);
 
     /**
      * Graticule opacity (0-255)
@@ -75,11 +77,6 @@ public class GraticuleStyle {
     private Boolean isShowLabels;
 
     /**
-     * Graticule font {@link Color}
-     */
-    private Color fontColor;
-
-    /**
      * Flag controlling CRS initialization;
      */
     private Boolean isInitCRS;
@@ -92,7 +89,6 @@ public class GraticuleStyle {
     /**
      * Constructor.
      * 
-     * @param fontColor - Graticule font {@link Color}
      * @param lineColor - Graticule line {@link Color}
      * @param opacity - Graticule opacity (0-255)
      * @param lineStyle - Graticule line style
@@ -100,11 +96,10 @@ public class GraticuleStyle {
      * @param isShowLabels - Flag controlling graticule state
      * @param isInitCRS - Flag controlling graticule CRS initialization
      */
-    public GraticuleStyle(Color fontColor, Color lineColor, int opacity, int lineStyle,
+    public GraticuleStyle( Color lineColor, int opacity, int lineStyle,
             int lineWidth, Boolean isShowLabels, Boolean isInitCRS, String crs) {
 
         this.opacity = opacity;
-        this.fontColor = fontColor;
         this.lineColor = lineColor;
         this.lineStyle = lineStyle;
         this.lineWidth = lineWidth;
@@ -120,22 +115,12 @@ public class GraticuleStyle {
      */
     public GraticuleStyle(GraticuleStyle oldStyle) {
         opacity = oldStyle.getOpacity();
-        fontColor = oldStyle.getFontColor();
         lineColor = oldStyle.getLineColor();
         lineStyle = oldStyle.getLineStyle();
         lineWidth = oldStyle.getLineWidth();
         isShowLabels = oldStyle.isShowLabels();
         isInitCRS = oldStyle.isInitCRS();
         crs = oldStyle.getCRS();
-    }
-
-    public Color getFontColor() {
-        return new Color(fontColor.getRed(), fontColor.getGreen(), fontColor.getBlue(),
-                getOpacity());
-    }
-
-    public void setFontColor(Color color) {
-        this.fontColor = color;
     }
 
     public Color getLineColor() {
@@ -224,6 +209,7 @@ public class GraticuleStyle {
         FontStyle style = (FontStyle) styleBlackboard.get(FontStyleContent.ID);
         if (style == null) {
             style = new FontStyle();
+            style.setColor(new Color(0, 180, 255, 100));
             styleBlackboard.put(FontStyleContent.ID, style);
         }
         return style;

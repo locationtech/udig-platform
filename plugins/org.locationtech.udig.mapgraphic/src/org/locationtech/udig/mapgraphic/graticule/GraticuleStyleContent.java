@@ -33,14 +33,6 @@ public class GraticuleStyleContent extends StyleContent {
 
     private static final String LINE_ALPHA_ID = "LINE_ALPHA_ID"; //$NON-NLS-1$
 
-    private static final String FONT_RED_ID = "FONT_RED_ID"; //$NON-NLS-1$
-
-    private static final String FONT_GREEN_ID = "FONT_GREEN_ID"; //$NON-NLS-1$
-
-    private static final String FONT_BLUE_ID = "FONT_BLUE_ID"; //$NON-NLS-1$
-
-    private static final String FONT_ALPHA_ID = "FONT_ALPHA_ID"; //$NON-NLS-1$
-
     private static final String SHOW_LABELS_ID = "SHOW_LABELS_ID"; //$NON-NLS-1$
 
     private static final String INIT_CRS_ID = "INIT_CRS_ID"; //$NON-NLS-1$
@@ -58,7 +50,6 @@ public class GraticuleStyleContent extends StyleContent {
             throws IOException {
         if (resource.canResolve(GraticuleGraphic.class))
             return GraticuleStyle.DEFAULT;
-
         return null;
     }
 
@@ -74,15 +65,12 @@ public class GraticuleStyleContent extends StyleContent {
         Color lineColor = new Color(memento.getInteger(LINE_RED_ID),
                 memento.getInteger(LINE_GREEN_ID), memento.getInteger(LINE_BLUE_ID),
                 memento.getInteger(LINE_ALPHA_ID));
-        Color fontColor = new Color(memento.getInteger(FONT_RED_ID),
-                memento.getInteger(FONT_GREEN_ID), memento.getInteger(FONT_BLUE_ID),
-                memento.getInteger(FONT_ALPHA_ID));
         Boolean isShowLabels = memento.getBoolean(SHOW_LABELS_ID);
         Boolean isInitCRS = memento.getBoolean(INIT_CRS_ID);
         int opacity = memento.getInteger(OPACITY_ID);
         String crs = memento.getString(CRS_ID);
 
-        return new GraticuleStyle(fontColor, lineColor, opacity, lineStyle, lineWidth,
+        return new GraticuleStyle(lineColor, opacity, lineStyle, lineWidth,
                 isShowLabels, isInitCRS, crs);
     }
 
@@ -102,10 +90,6 @@ public class GraticuleStyleContent extends StyleContent {
             memento.putInteger(LINE_GREEN_ID, style.getLineColor().getGreen());
             memento.putInteger(LINE_BLUE_ID, style.getLineColor().getBlue());
             memento.putInteger(LINE_ALPHA_ID, style.getLineColor().getAlpha());
-            memento.putInteger(FONT_RED_ID, style.getFontColor().getRed());
-            memento.putInteger(FONT_GREEN_ID, style.getFontColor().getGreen());
-            memento.putInteger(FONT_BLUE_ID, style.getFontColor().getBlue());
-            memento.putInteger(FONT_ALPHA_ID, style.getFontColor().getAlpha());
             memento.putInteger(OPACITY_ID, style.getOpacity());
             memento.putBoolean(SHOW_LABELS_ID, style.isShowLabels());
             memento.putBoolean(INIT_CRS_ID, style.isInitCRS());
