@@ -1,5 +1,5 @@
 Map Scale Decoration
-###################
+####################
 
 The map scale decoration is used to provide an in map indication of the current map scale in the format 1:N.
 
@@ -8,7 +8,7 @@ The map scale decoration is used to provide an in map indication of the current 
    :alt: 
 
 Map Scale Style Pages
--------------------
+---------------------
 
 You can determine if you want a background (and select the color):
 
