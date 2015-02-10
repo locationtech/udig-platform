@@ -55,7 +55,7 @@ several public catalogs.
 Data
 ----
 
-This data space is a wiki, please share your stories, tips, trips and scripts - we will all benefit.
+If you have some stores, tips or scripts to share this page is on `github <https://github.com/uDig/udig-platform/tree/master/docs/data/>`_ - send us a pull request.
 
 .. toctree::
    :maxdepth: 1
