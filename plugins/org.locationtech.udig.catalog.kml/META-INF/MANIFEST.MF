@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.locationtech.udig.catalog.kml;singleton:=true
-Bundle-Version: 1.5.0.qualifier
+Bundle-Version: 1.5.0.RC1
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .

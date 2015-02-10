@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: org.locationtech.udig.catalog.mysql;singleton:=true
-Bundle-Version: 1.5.0.qualifier
+Bundle-Version: 1.5.0.RC1
 Bundle-Activator: org.locationtech.udig.catalog.internal.mysql.MySQLPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin

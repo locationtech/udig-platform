@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Issues Test Plug-in
 Bundle-SymbolicName: org.locationtech.udig.issues.test;singleton:=true
-Bundle-Version: 1.5.0.qualifier
+Bundle-Version: 1.5.0.RC1
 Bundle-Activator: org.locationtech.udig.issues.test.IssuesTestActivator
 Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.ui,

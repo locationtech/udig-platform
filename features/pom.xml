@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.locationtech</groupId>
         <artifactId>udig-tycho</artifactId>
-        <version>1.5.0-SNAPSHOT</version>
+        <version>1.5.0.RC1</version>
     </parent>
 
     <artifactId>features</artifactId>
