@@ -64,12 +64,12 @@ import org.locationtech.udig.project.ui.tool.options.PreferencesShortcutToolOpti
 import org.locationtech.udig.project.ui.viewers.MapEditDomain;
 import org.locationtech.udig.ui.IDropAction;
 import org.locationtech.udig.ui.IDropHandlerListener;
+import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.UDIGDragDropUtilities;
 import org.locationtech.udig.ui.ViewerDropLocation;
 import org.locationtech.udig.ui.operations.LazyOpFilter;
 import org.locationtech.udig.ui.operations.OpAction;
 import org.locationtech.udig.ui.operations.OpFilter;
-
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -611,7 +611,7 @@ public class ToolManager implements IToolManager {
      * @param map
      * @param categories
      */
-    private void setEnabled( IMap map, Collection<? extends ToolCategory> categories) {
+    private void setEnabled( final IMap map, final Collection<? extends ToolCategory> categories) {
         
         if(selectedLayerListener == null)
         	selectedLayerListener = new EditManagerListener();
@@ -622,22 +622,28 @@ public class ToolManager implements IToolManager {
         if(!map.getEditManager().containsListener(selectedLayerListener))
         	map.getEditManager().addListener(selectedLayerListener);
         
-        for( ToolCategory cat : categories ) {
-            for( ModalItem item : cat ) {
-                OpFilter enablesFor = item.getEnablesFor();
-                ILayer selectedLayer = map.getEditManager().getSelectedLayer();
+        PlatformGIS.syncInDisplayThread(new Runnable(){
 
-                // JG: I don't trust asserts in production code!
-                // assert enablesFor instanceof LazyOpFilter;
-                
-                if( !(enablesFor instanceof LazyOpFilter) ){
-                    enablesFor = new LazyOpFilter(item, enablesFor);
-                }
-                
-                boolean accept = enablesFor.accept(selectedLayer);
-                item.setEnabled(accept);
-            }
-        }
+			@Override
+			public void run() {
+				ILayer selectedLayer = map.getEditManager().getSelectedLayer();
+				
+				for( ToolCategory cat : categories ) {
+		            for( ModalItem item : cat ) {
+		                OpFilter enablesFor = item.getEnablesFor();
+		        
+		                // JG: I don't trust asserts in production code!
+		                // assert enablesFor instanceof LazyOpFilter;
+		                if( !(enablesFor instanceof LazyOpFilter) ){
+		                    enablesFor = new LazyOpFilter(item, enablesFor);
+		                }
+		                
+		                boolean accept = enablesFor.accept(selectedLayer);
+		                item.setEnabled(accept);
+		            }
+		        }
+			}});
+        
     }
 
     /**
