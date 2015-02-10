@@ -1,0 +1,42 @@
+Foss4g 2007
+###########
+
+British Columbia
+----------------
+
+WMS:
+
+* `bc airphotos <http://openmaps.gov.bc.ca/mapserver/aps?service=wms&request=getcapabilities&version=1.1.1>`_
+* `bc base <http://openmaps.gov.bc.ca/mapserver/base2?service=wms&request=getcapabilities&version=1.1.1>`_
+* `bc cadastre <http://openmaps.gov.bc.ca/mapserver/cadastre?service=wms&request=getcapabilities&version=1.1.1>`_
+* `bc forestvegetation <http://openmaps.gov.bc.ca/mapserver/forestvegetation?service=wms&request=getcapabilities&version=1.1.1>`_
+* `images <http://openmaps.gov.bc.ca/images/base.xml?service=wms&request=getcapabilities&version=1.1.1>`_
+* `bc terrestrial ecology <http://openmaps.gov.bc.ca/mapserver/terrestrial_ecology?service=wms&request=getcapabilities&version=1.1.1>`_
+* `bc water management <http://openmaps.gov.bc.ca/mapserver/watermanagement?service=wms&request=getcapabilities&version=1.1.1>`_
+* `bc wild lifemanagement <http://openmaps.gov.bc.ca/mapserver/wildlifemanagement?service=wms&request=getcapabilities&version=1.1.1>`_
+* `libcwms.gov.bc.ca <http://libcwms.gov.bc.ca/wmsconnector/com.esri.wsit.WMSServlet/ogc_layer_service?REQUEST=GetCapabilities&Service=WMS>`_
+
+Canada
+------
+
+WMS:
+
+* `dm solutions <http://www2.dmsolutions.ca/cgi-bin/mswms_gmap?Service=WMS&VERSION=1.1.0&REQUEST=GetCapabilities>`_
+* `Atlas of Canada <http://atlas.gc.ca/cgi-bin/atlaswms_en?VERSION=1.1.1&Request=GetCapabilities&Service=WMS>`_
+* `wms.cits.rncan.gc.ca <http://wms.cits.rncan.gc.ca/cgi-bin/cubeserv.cgi?VERSION=1.1.0&REQUEST=GetCapabilities>`_
+* `env dat <http://map.ns.ec.gc.ca/MapServer/mapserv.exe?map=/mapserver/services/envdat/config.map&service=WFS&version=1.0.0&request=GetCapabilities>`__
+
+WFS:
+
+* `dm solutions <http://www2.dmsolutions.ca/cgi-bin/mswfs_gmap?version=1.0.0&request=getcapabilities&service=wfs>`__
+* `emandev.cciw.ca <http://emandev.cciw.ca/cgi-bin/mapserver/mapserv.exe?map=/inetpub/wwwroot/emanco/cgi-bin/mapserver/naturewatch.map&version=1.0.0&service=WFS&request=GetCapabilities>`__
+
+World
+-----
+
+WMS: 
+
+* `jpl nasa <http://wms.jpl.nasa.gov/wms.cgi?Service=WMS&Version=1.1.1&Request=GetCapabilities>`_
+* `maps.customweather.com <http://maps.customweather.com/image?REQUEST=GetCapabilities&service=WMS>`_
+* `mapserv2.esrin.esa.it <http://mapserv2.esrin.esa.it/cubestor/cubeserv/cubeserv.cgi?VERSION=1.1.1&REQUEST=GetCapabilities&SERVICE=WMS>`_
+* `Demo Cubwerx <http://demo.cubewerx.com/demo/cubeserv/cubeserv.cgi?CONFIG=main&SERVICE=WMS&?VERSION=1.1.1&REQUEST=GetCapabilities>`_

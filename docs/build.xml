@@ -64,7 +64,14 @@
         </antcall>
     </target>
 
-    <target name="full" depends="user,devel,user-help">
+    <target name="data" depends="init">
+        <antcall target="sphinx">
+            <param name="id" value="data/en" />
+            <param name="build" value="html" />
+        </antcall>
+    </target>
+
+    <target name="full" depends="user,devel,user-help,data">
     </target>
 
     <target name="user-help" depends="init">

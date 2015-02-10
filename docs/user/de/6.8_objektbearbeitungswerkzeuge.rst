@@ -1,0 +1,65 @@
+6.8 Objektbearbeitungswerkzeuge
+===============================
+
+Objektbearbeitungswerkzeuge
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Diese Werkzeuge arbeiten an bestehenden Features (geogr. Objekten). Sie dienen bspw. dazu, Features
+zu teilen oder zu löschen.
+
+Zu diesen Werkzeugen gehören:
+
+-  `Differenzwerkzeug <#6.8Objektbearbeitungswerkzeuge-Differenzwerkzeug>`__
+-  `Feature teilen <#6.8Objektbearbeitungswerkzeuge-Featureteilen>`__
+-  `Feature löschen <#6.8Objektbearbeitungswerkzeuge-Featurel%C3%B6schen>`__
+
+Differenzwerkzeug - |image0|
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Das Differenzwerkzeug erlaubt es, Polygone zu zeichnen, von denen anschließend automatisch alle
+Bereiche (Flächen) entfernt werden, die bereits duch andere Polygone abgedeckt sind.
+
+| |image1|
+|  Dieses Bild zeigt die Verwendung des Differenzwerkzeugs zum Zeichnen eines Polygons.
+
+| |image2|
+|  Hier sehen Sie die daraus resultierende Geometrie. Zur Klarheit wurden die anderen Features
+mittels `Löschwerkzeug <#6.8Objektbearbeitungswerkzeuge-Featurel%C3%B6schen>`__ aus der Karte
+entfernt.
+
+Feature teilen - |image3|
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Das Trennwerkzeug dient schlichtweg dazu, Features "durchzuschneiden", also aus einem Polygon oder
+einer Linie mehrere zu erzeugen. Ziehen Sie dazu einfach eine ein- oder mehrteilige Linie durch ein
+bestehendes Feature. Mit einem Doppelklick Führen Sie den Trennvorgang aus.
+
+Feature löschen - |image4|
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Das Löschwerkzeug entfernt angeklickte Features aus dem aktuellen Kartenlayer.
+
+| |image5|
+|  Das Bild zeigt das Löschwerkzeug vor dem Klicken auf ein Feature.
+
+| |image6|
+|  Hier sehen Sie das Ergebnis des Löschvorgangs - Ungarn ist weg.
+
+Weiter im Tutorial: `7 Fenster und Editoren
+anordnen <7%20Fenster%20und%20Editoren%20anordnen.html>`__
+
+|image7|
+
+-  `Eckpunkt-Werkzeuge <6.6%20Eckpunkt-Werkzeuge.html>`__
+-  `Geometrieerstellungswerkzeuge <6.7%20Geometrieerstellungswerkzeuge.html>`__
+
+(c) Copyright (c) 2004-2008 Refractions Research Inc. and others.
+
+.. |image0| image:: /images/6.8_objektbearbeitungswerkzeuge/difference_feature_mode.gif
+.. |image1| image:: /images/6.8_objektbearbeitungswerkzeuge/drawfill.png
+.. |image2| image:: /images/6.8_objektbearbeitungswerkzeuge/afterdelete.png
+.. |image3| image:: /images/6.8_objektbearbeitungswerkzeuge/split_feature_mode.gif
+.. |image4| image:: /images/6.8_objektbearbeitungswerkzeuge/delete_feature_mode.gif
+.. |image5| image:: /images/6.8_objektbearbeitungswerkzeuge/delete_pre.gif
+.. |image6| image:: /images/6.8_objektbearbeitungswerkzeuge/delete_post.gif
+.. |image7| image:: http://udig.refractions.net/image/DE/ngrelr.gif

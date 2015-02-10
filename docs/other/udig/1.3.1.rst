@@ -1,0 +1,1173 @@
+1.3.1
+#####
+
++------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+
+| uDig |
+| :    |
+| 1.3. |
+| 1    |
+| This |
+| page |
+| last |
+| chan |
+| ged  |
+| on   |
+| Dec  |
+| 21,  |
+| 2011 |
+| by   |
+| jgar |
+| nett |
+| .    |
+| This |
+| is a |
+| quic |
+| k    |
+| rele |
+| ase  |
+| as   |
+| we   |
+| forg |
+| ot   |
+| the  |
+| **to |
+| ols. |
+| jar* |
+| *    |
+| need |
+| ed   |
+| for  |
+| spat |
+| ial  |
+| tool |
+| box  |
+| (sor |
+| ry   |
+| moov |
+| ida! |
+| ).   |
+|      |
+| -  ` |
+| Issu |
+| es < |
+| #1.3 |
+| .1-I |
+| ssue |
+| s>`_ |
+| _    |
+| -  ` |
+| Chec |
+| klis |
+| t <# |
+| 1.3. |
+| 1-Ch |
+| eckl |
+| ist> |
+| `__  |
+|      |
+| Issu |
+| es   |
+| ==== |
+| ==   |
+|      |
+| | |i |
+| mage |
+| 17|  |
+| Tool |
+| s    |
+| Jar  |
+| not  |
+| incl |
+| uded |
+| for  |
+| Spat |
+| ial  |
+| Tool |
+| box  |
+| |    |
+| |ima |
+| ge18 |
+| |    |
+| http |
+| s:// |
+| jira |
+| .cod |
+| ehau |
+| s.or |
+| g/br |
+| owse |
+| /UDI |
+| G-15 |
+| 47   |
+| Copy |
+| and  |
+| past |
+| e    |
+| feat |
+| ures |
+| do   |
+| not  |
+| refr |
+| esh  |
+| auto |
+| mati |
+| call |
+| y    |
+| the  |
+| Tabl |
+| e    |
+| View |
+| |    |
+| |ima |
+| ge19 |
+| |    |
+| http |
+| s:// |
+| jira |
+| .cod |
+| ehau |
+| s.or |
+| g/br |
+| owse |
+| /UDI |
+| G-18 |
+| 65   |
+| Righ |
+| t    |
+| clic |
+| k    |
+| zoom |
+| out  |
+| not  |
+| work |
+| ing  |
+|      |
+| With |
+| thes |
+| e    |
+| issu |
+| es   |
+| fixe |
+| d    |
+| we   |
+| can  |
+| now  |
+| make |
+| the  |
+| 1.3. |
+| 1    |
+| rele |
+| ase. |
+|      |
+| **To |
+| ols  |
+| Jar* |
+| *    |
+|      |
+| It   |
+| woul |
+| d    |
+| be   |
+| real |
+| ly   |
+| good |
+| if   |
+| we   |
+| sort |
+| ed   |
+| out  |
+| a    |
+| long |
+| term |
+| solu |
+| tion |
+| for  |
+| Spat |
+| ial  |
+| Tool |
+| box. |
+| The  |
+| ecli |
+| pse  |
+| comp |
+| iler |
+| is   |
+| avai |
+| labl |
+| e;   |
+| but  |
+| no   |
+| idea |
+| if   |
+| we   |
+| can  |
+| ask  |
+| it   |
+| to   |
+| comp |
+| ile  |
+| the  |
+| GPL  |
+| "Scr |
+| ipt" |
+| code |
+| as   |
+| need |
+| ed?  |
+|      |
+| For  |
+| now  |
+| the  |
+| buil |
+| d.pr |
+| oper |
+| ites |
+| ment |
+| ions |
+| the  |
+| tool |
+| s.ja |
+| r    |
+| agai |
+| n    |
+| so   |
+| it   |
+| will |
+| not  |
+| be   |
+| left |
+| out  |
+| (i.e |
+| .    |
+| it   |
+| will |
+| show |
+| up   |
+| as   |
+| an   |
+| erro |
+| r).  |
+|      |
+| **Ta |
+| bleV |
+| iew  |
+| refr |
+| esh  |
+| on   |
+| copy |
+| feat |
+| ures |
+| **   |
+|      |
+| Levi |
+| 's   |
+| fix  |
+| for  |
+| Tabl |
+| eVie |
+| w    |
+| intr |
+| oduc |
+| ed   |
+| a    |
+| regr |
+| essi |
+| on;  |
+| basi |
+| call |
+| y    |
+| ever |
+| y    |
+| time |
+| laye |
+| r    |
+| refr |
+| esh  |
+| was  |
+| call |
+| ed   |
+| he   |
+| issu |
+| ed   |
+| an   |
+| edit |
+| even |
+| t    |
+| so   |
+| the  |
+| tabl |
+| e    |
+| view |
+| woul |
+| d    |
+| refe |
+| tch  |
+| its  |
+| cont |
+| ents |
+| .    |
+|      |
+| This |
+| also |
+| mark |
+| ed   |
+| the  |
+| Map  |
+| as   |
+| dirt |
+| y;   |
+| and  |
+| thus |
+| need |
+| ing  |
+| save |
+| .    |
+| So   |
+| ever |
+| y    |
+| time |
+| a    |
+| laye |
+| r    |
+| was  |
+| adde |
+| d    |
+| to   |
+| the  |
+| map; |
+| the  |
+| map  |
+| was  |
+| cons |
+| ider |
+| ed   |
+| dirt |
+| y.   |
+|      |
+| |ima |
+| ge20 |
+| |    |
+| http |
+| s:// |
+| jira |
+| .cod |
+| ehau |
+| s.or |
+| g/br |
+| owse |
+| /UDI |
+| G-15 |
+| 47   |
+|      |
+| With |
+| that |
+| in   |
+| mind |
+| let  |
+| us   |
+| look |
+| at   |
+| diff |
+| eren |
+| t    |
+| ways |
+| to   |
+| noti |
+| ce   |
+| the  |
+| chan |
+| ge   |
+| bein |
+| g    |
+| made |
+| :    |
+|      |
+| | 1. |
+| Wrap |
+| Feat |
+| ureS |
+| tore |
+| appl |
+| ies  |
+| a    |
+| UDIG |
+| Feat |
+| ureS |
+| Tore |
+| or a |
+| UDIG |
+| Simp |
+| leFe |
+| atur |
+| eSto |
+| re   |
+| arou |
+| nd   |
+| any  |
+| and  |
+| all  |
+| feat |
+| ures |
+| stor |
+| es.  |
+| Levi |
+| earl |
+| ier  |
+| you  |
+| only |
+| look |
+| ed   |
+| at   |
+| UDIG |
+| Feat |
+| ureS |
+| tore |
+| and  |
+| thus |
+| did  |
+| not  |
+| hit  |
+| any  |
+| of   |
+| the  |
+| brea |
+| kpoi |
+| nts  |
+| |    |
+| 2.   |
+| This |
+| UDIG |
+| Simp |
+| leFe |
+| atur |
+| eSto |
+| re   |
+| **mu |
+| st** |
+| be   |
+| call |
+| ed   |
+| by   |
+| any  |
+| modi |
+| fica |
+| tion |
+| ;    |
+| we   |
+| shou |
+| ld   |
+| ask  |
+| it   |
+| to   |
+| issu |
+| e    |
+| an   |
+| edit |
+| even |
+| t    |
+|      |
+| This |
+| fix  |
+| was  |
+| succ |
+| essf |
+| ul.  |
+|      |
+| |ima |
+| ge21 |
+| |    |
+| http |
+| s:// |
+| jira |
+| .cod |
+| ehau |
+| s.or |
+| g/br |
+| owse |
+| /UDI |
+| G-18 |
+| 65   |
+|      |
+| **Zo |
+| om   |
+| Tool |
+| **   |
+|      |
+| | A  |
+| righ |
+| t    |
+| clic |
+| k    |
+| drag |
+| with |
+| the  |
+| zoom |
+| tool |
+| shou |
+| ld   |
+| zoom |
+| out: |
+| |    |
+| |ima |
+| ge22 |
+| |    |
+| http |
+| s:// |
+| jira |
+| .cod |
+| ehau |
+| s.or |
+| g/br |
+| owse |
+| /UDI |
+| G-19 |
+| 65   |
+|      |
+| The  |
+| zoom |
+| ing  |
+| and  |
+| zoom |
+| out  |
+| meth |
+| ods  |
+| were |
+| iden |
+| tica |
+| l;   |
+| I    |
+| rest |
+| ored |
+| the  |
+| calc |
+| ulat |
+| ion  |
+| from |
+| 1.2. |
+| x    |
+| (cen |
+| tre  |
+| of   |
+| the  |
+| rect |
+| angl |
+| e,   |
+| and  |
+| set  |
+| the  |
+| zoom |
+| scal |
+| e    |
+| to   |
+| be   |
+| the  |
+| rati |
+| o    |
+| of   |
+| the  |
+| rect |
+| angl |
+| e    |
+| to   |
+| the  |
+| scre |
+| en). |
+|      |
+| Chec |
+| klis |
+| t    |
+| ==== |
+| ==== |
+| =    |
+|      |
+| #. | |
+| imag |
+| e23| |
+|    S |
+| witc |
+| h    |
+|    b |
+| ack  |
+|    t |
+| o    |
+|    8 |
+| .0-M |
+| 4    |
+|    f |
+| or   |
+|    r |
+| elea |
+| se   |
+| #. | |
+| imag |
+| e24| |
+|    B |
+| uild |
+|    u |
+| dig. |
+| prod |
+| uct  |
+|    t |
+| o    |
+|    t |
+| arge |
+| t    |
+|    d |
+| irec |
+| tory |
+| #. | |
+| imag |
+| e25| |
+|    R |
+| elea |
+| se   |
+|    i |
+| n    |
+|    J |
+| ira  |
+|      |
+|    - |
+|   ht |
+| tps: |
+| //ji |
+| ra.c |
+| odeh |
+| aus. |
+| org/ |
+| brow |
+| se/U |
+| DIG/ |
+| fixf |
+| orve |
+| rsio |
+| n/18 |
+| 149  |
+|      |
+| #. | |
+| imag |
+| e26| |
+|    U |
+| pdat |
+| e    |
+|    d |
+| eplo |
+| y/ud |
+| ig-1 |
+| .3.x |
+| .htm |
+| l    |
+| #. | |
+| imag |
+| e27| |
+|    R |
+| un   |
+|    t |
+| hrou |
+| gh   |
+|    t |
+| he   |
+|    d |
+| eplo |
+| y    |
+|    s |
+| crip |
+| ts   |
+| #. | |
+| imag |
+| e28| |
+|    U |
+| ploa |
+| d    |
+|    t |
+| o    |
+|    t |
+| he   |
+|    s |
+| tagi |
+| ng   |
+|    a |
+| rea  |
+|    f |
+| or   |
+|    t |
+| esti |
+| ng   |
+|      |
+|    - |
+|   ht |
+| tp:/ |
+| /udi |
+| g.re |
+| frac |
+| tion |
+| s.ne |
+| t/do |
+| wnlo |
+| ad/u |
+| nsta |
+| ble/ |
+|      |
+| #. W |
+| alkt |
+| hrou |
+| gh   |
+|    1 |
+|      |
+|    - |
+|   |i |
+| mage |
+| 29|  |
+|      |
+|   So |
+| me   |
+|      |
+|   cl |
+| arif |
+| icat |
+| ions |
+|      |
+|   ar |
+| ound |
+|      |
+|   us |
+| e    |
+|      |
+|   of |
+|      |
+|   pr |
+| oxie |
+| s    |
+|      |
+|   fo |
+| r    |
+|      |
+|   wa |
+| lkth |
+| roug |
+| h    |
+|      |
+|   1  |
+|      |
+|   (l |
+| ink  |
+|      |
+|   to |
+|      |
+|   `R |
+| unni |
+| ng   |
+|      |
+|   uD |
+| ig < |
+| http |
+| ://u |
+| dig. |
+| refr |
+| acti |
+| ons. |
+| net/ |
+| conf |
+| luen |
+| ce// |
+| disp |
+| lay/ |
+| EN/R |
+| unni |
+| ng+u |
+| Dig> |
+| `__) |
+|    - |
+|   Up |
+| date |
+|      |
+|   th |
+| e    |
+|      |
+|   uD |
+| ig   |
+|      |
+|   he |
+| lp   |
+|      |
+|   co |
+| nten |
+| t    |
+|      |
+|   (e |
+| xamp |
+| le   |
+|      |
+|   `W |
+| hat  |
+|      |
+|   is |
+|      |
+|   ne |
+| w <h |
+| ttp: |
+| //ud |
+| ig.r |
+| efra |
+| ctio |
+| ns.n |
+| et/c |
+| onfl |
+| uenc |
+| e//d |
+| ispl |
+| ay/E |
+| N/Wh |
+| at+i |
+| s+ne |
+| w>`_ |
+| _)   |
+|    - |
+|   We |
+| lcom |
+| e    |
+|      |
+|   pa |
+| ge   |
+|      |
+|   ne |
+| eds  |
+|      |
+|   so |
+| me   |
+|      |
+|   lo |
+| ve   |
+|      |
+|   (e |
+| xamp |
+| le   |
+|      |
+|   Of |
+| fica |
+| l    |
+|      |
+|   We |
+| bsit |
+| e    |
+|      |
+|   sh |
+| ould |
+|      |
+|   op |
+| en   |
+|      |
+|   in |
+|      |
+|   a  |
+|      |
+|   ne |
+| w    |
+|      |
+|   wi |
+| ndow |
+| )    |
+|      |
+| #. | |
+| imag |
+| e30| |
+|    W |
+| alkt |
+| hrou |
+| gh   |
+|    2 |
+|      |
+|    - |
+|   No |
+| tice |
+|      |
+|   a  |
+|      |
+|   ne |
+| w    |
+|      |
+|   ve |
+| rsio |
+| n    |
+|      |
+|   of |
+|      |
+|   Ge |
+| oSer |
+| ver  |
+|      |
+|   is |
+|      |
+|   re |
+| leas |
+| ed   |
+|      |
+|   to |
+| day  |
+|    - |
+|   Cr |
+| eati |
+| ng   |
+|      |
+|   a  |
+|      |
+|   La |
+| ke   |
+|      |
+|   in |
+|      |
+|   se |
+| ctio |
+| n    |
+|      |
+|   10 |
+|      |
+|   Cr |
+| eate |
+|      |
+|   Ge |
+| omet |
+| ry;  |
+|      |
+|   re |
+| sult |
+| s    |
+|      |
+|   in |
+|      |
+|   a  |
+|      |
+|   do |
+| uble |
+|      |
+|   la |
+| ke;  |
+|      |
+|   la |
+| ke   |
+|      |
+|   is |
+|      |
+|   al |
+| so   |
+|      |
+|   no |
+| t    |
+|      |
+|   vi |
+| sibl |
+| e    |
+|      |
+|   un |
+| til  |
+|      |
+|   re |
+| fres |
+| h    |
+|      |
+|   is |
+|      |
+|   ca |
+| lled |
+|    - |
+|   To |
+| ol   |
+|      |
+|   op |
+| tion |
+| s    |
+|      |
+|   do |
+|      |
+|   no |
+| t    |
+|      |
+|   al |
+| ways |
+|      |
+|   sh |
+| ow   |
+|      |
+|   th |
+| e    |
+|      |
+|   to |
+| ol   |
+|      |
+|   na |
+| me   |
+|      |
+|   as |
+|      |
+|   ex |
+| pect |
+| ed   |
+|      |
+|   (e |
+| xpec |
+| t    |
+|      |
+|   tr |
+| oubl |
+| e    |
+|      |
+|   is |
+|      |
+|   du |
+| e    |
+|      |
+|   to |
+|      |
+|   mu |
+| ltip |
+| le   |
+|      |
+|   ma |
+| ps)  |
+|    - |
+|   Fi |
+| ll   |
+|      |
+|   to |
+| ol   |
+|      |
+|   do |
+| es   |
+|      |
+|   no |
+| t    |
+|      |
+|   ha |
+| ve   |
+|      |
+|   an |
+| y    |
+|      |
+|   pr |
+| oble |
+| ms   |
+|      |
+|   (o |
+| nly  |
+|      |
+|   Cr |
+| eate |
+|      |
+|   Po |
+| lygo |
+| n)   |
+|      |
+| #. | |
+| imag |
+| e31| |
+|    T |
+| ag   |
+|    a |
+| nd   |
+|    c |
+| opy  |
+|    t |
+| o    |
+|    t |
+| he   |
+|    r |
+| elea |
+| se   |
+|    a |
+| rea  |
+| #. | |
+| imag |
+| e32| |
+|    U |
+| ploa |
+| d    |
+|    m |
+| odif |
+| ied  |
+|    w |
+| alkt |
+| hrou |
+| gh   |
+|    1 |
+|    a |
+| nd   |
+|    w |
+| alkt |
+| hrou |
+| gh   |
+|    2 |
+|      |
+|    - |
+|   ht |
+| tp:/ |
+| /udi |
+| g.re |
+| frac |
+| tion |
+| s.ne |
+| t/do |
+| wnlo |
+| ad/  |
+|      |
+| #. | |
+| imag |
+| e33| |
+|    N |
+| o    |
+|    a |
+| nnou |
+| ncem |
+| ent  |
+|    a |
+| s    |
+|    t |
+| his  |
+|    i |
+| s    |
+|    j |
+| ust  |
+|    a |
+|    p |
+| atch |
+      
++------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+
+
++-------------+----------------------------------------------------------+
+| |image35|   | Document generated by Confluence on Aug 11, 2014 12:31   |
++-------------+----------------------------------------------------------+
+
+.. |image0| image:: images/icons/emoticons/check.gif
+.. |image1| image:: images/icons/emoticons/check.gif
+.. |image2| image:: images/icons/emoticons/check.gif
+.. |image3| image:: images/icons/emoticons/check.gif
+.. |image4| image:: images/icons/emoticons/check.gif
+.. |image5| image:: images/icons/emoticons/check.gif
+.. |image6| image:: images/icons/emoticons/check.gif
+.. |image7| image:: images/icons/emoticons/check.gif
+.. |image8| image:: images/icons/emoticons/check.gif
+.. |image9| image:: images/icons/emoticons/check.gif
+.. |image10| image:: images/icons/emoticons/check.gif
+.. |image11| image:: images/icons/emoticons/check.gif
+.. |image12| image:: images/icons/emoticons/check.gif
+.. |image13| image:: images/icons/emoticons/check.gif
+.. |image14| image:: images/icons/emoticons/check.gif
+.. |image15| image:: images/icons/emoticons/check.gif
+.. |image16| image:: images/icons/emoticons/check.gif
+.. |image17| image:: images/icons/emoticons/check.gif
+.. |image18| image:: images/icons/emoticons/check.gif
+.. |image19| image:: images/icons/emoticons/check.gif
+.. |image20| image:: images/icons/emoticons/check.gif
+.. |image21| image:: images/icons/emoticons/check.gif
+.. |image22| image:: images/icons/emoticons/check.gif
+.. |image23| image:: images/icons/emoticons/check.gif
+.. |image24| image:: images/icons/emoticons/check.gif
+.. |image25| image:: images/icons/emoticons/check.gif
+.. |image26| image:: images/icons/emoticons/check.gif
+.. |image27| image:: images/icons/emoticons/check.gif
+.. |image28| image:: images/icons/emoticons/check.gif
+.. |image29| image:: images/icons/emoticons/check.gif
+.. |image30| image:: images/icons/emoticons/check.gif
+.. |image31| image:: images/icons/emoticons/check.gif
+.. |image32| image:: images/icons/emoticons/check.gif
+.. |image33| image:: images/icons/emoticons/check.gif
+.. |image34| image:: images/border/spacer.gif
+.. |image35| image:: images/border/spacer.gif

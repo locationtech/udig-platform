@@ -1,0 +1,592 @@
+1.1.0
+#####
+
++---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+| uDig :  |
+| 1.1.0   |
+| This    |
+| page    |
+| last    |
+| changed |
+| on Jun  |
+| 23,     |
+| 2010 by |
+| jgarnet |
+| t.      |
+| The     |
+| uDig    |
+| 1.1.x   |
+| branch  |
+| has     |
+| been in |
+| product |
+| ion     |
+| for two |
+| years   |
+| now,    |
+| with a  |
+| focus   |
+| on      |
+| `suppor |
+| ting    |
+| project |
+| s       |
+| from    |
+| around  |
+| the     |
+| world < |
+| http:// |
+| www.fos |
+| s4g2007 |
+| .org/pr |
+| esentat |
+| ions/vi |
+| ew.php? |
+| abstrac |
+| t_id=12 |
+| 7>`__.  |
+| We need |
+| to tie  |
+| off     |
+| this    |
+| develop |
+| ment    |
+| and     |
+| show    |
+| the     |
+| user    |
+| communi |
+| ty      |
+| all the |
+| results |
+| of all  |
+| this    |
+| hard    |
+| work.   |
+|         |
+| `Status |
+|  <#1.1. |
+| 0-Statu |
+| s>`__   |
+| `Questi |
+| ons     |
+| and     |
+| Answers |
+|  <#1.1. |
+| 0-Quest |
+| ionsand |
+| Answers |
+| >`__    |
+|         |
+| -  `Are |
+|    we   |
+|    stil |
+| l       |
+|    usin |
+| g       |
+|    GeoT |
+| ools    |
+|    2.2. |
+| x <#1.1 |
+| .0-Arew |
+| estillu |
+| singGeo |
+| Tools2. |
+| 2.x>`__ |
+|         |
+| After   |
+| the     |
+| 1.1.0   |
+| release |
+| we will |
+| double  |
+| back    |
+| and     |
+| focus   |
+| on the  |
+| SDK and |
+| develop |
+| er      |
+| documen |
+| tation  |
+| as      |
+| time,   |
+| availab |
+| le      |
+| volunte |
+| ers     |
+| and     |
+| trainin |
+| g       |
+| courses |
+| permit. |
+|         |
+| Referen |
+| ce:     |
+|         |
+| Status  |
+| ======  |
+|         |
+| #. |ima |
+| ge18|   |
+|    Inst |
+| aller   |
+|    for  |
+|    OSX  |
+| #. |ima |
+| ge19|   |
+|    Rele |
+| ase     |
+|    for  |
+|    comm |
+| unity   |
+|    test |
+| ing     |
+|         |
+|    -  | |
+| image20 |
+| |       |
+|       Q |
+| uicksta |
+| rt      |
+|    -  | |
+| image21 |
+| |       |
+|       W |
+| alkthro |
+| ugh     |
+|       1 |
+|    -  | |
+| image22 |
+| |       |
+|       W |
+| alkthro |
+| ugh     |
+|       2 |
+|         |
+| #. Issu |
+| es      |
+|    from |
+|    Test |
+| ing     |
+|         |
+|    -  | |
+| image23 |
+| |       |
+|       C |
+| annot   |
+|       D |
+| nD      |
+|       f |
+| rom     |
+|       F |
+| irefox  |
+|       3 |
+|       R |
+| C1,     |
+|       r |
+| esolved |
+|    -  | |
+| image24 |
+| |       |
+|       S |
+| cramble |
+| d       |
+|       P |
+| NG      |
+|       i |
+| mages;  |
+|       r |
+| esolved |
+|    -  | |
+| image25 |
+| |       |
+|       S |
+| everal  |
+|       p |
+| roblems |
+|       w |
+| ith     |
+|       D |
+| E       |
+|       e |
+| xport   |
+|    -  | |
+| image26 |
+| |       |
+|       F |
+| R       |
+|       h |
+| elp     |
+|       d |
+| oes     |
+|       n |
+| ot      |
+|       h |
+| ave     |
+|       q |
+| uicksta |
+| rt      |
+|       a |
+| nd      |
+|       w |
+| ords    |
+|       a |
+| re      |
+|       m |
+| essed   |
+|       u |
+| p       |
+|    -  | |
+| image27 |
+| |       |
+|       l |
+| inux    |
+|       u |
+| dig.ini |
+|       m |
+| issing  |
+|       a |
+|       - |
+| data    |
+|       o |
+| ption   |
+|       ( |
+| resulti |
+| ng      |
+|       i |
+| n       |
+|       a |
+|       w |
+| orkspac |
+| e       |
+|       c |
+| onflict |
+|       w |
+| ith     |
+|       n |
+| ormal   |
+|       e |
+| clipse  |
+|       u |
+| se)     |
+|    -  | |
+| image28 |
+| |       |
+|       w |
+| indows  |
+|       i |
+| nstalle |
+| r       |
+|       d |
+| id      |
+|       n |
+| ot      |
+|       i |
+| nclude  |
+|       a |
+|       J |
+| RE      |
+|         |
+| #. Veri |
+| fy      |
+|    bug  |
+|    fixe |
+| s       |
+|    did  |
+|    no   |
+|    harm |
+|         |
+|    -  | |
+| image29 |
+| |       |
+|       T |
+| esting  |
+|       r |
+| enderin |
+| g       |
+|       a |
+| s       |
+|       C |
+| RS      |
+|       h |
+| andling |
+|       h |
+| as      |
+|       c |
+| hanged  |
+|    -  | |
+| image30 |
+| |       |
+|       T |
+| est     |
+|       r |
+| eshape  |
+|    -  | |
+| image31 |
+| |       |
+|       I |
+| mportin |
+| g       |
+|       P |
+| NG      |
+|       ( |
+| and     |
+|       o |
+| ther)   |
+|       b |
+| ased    |
+|       w |
+| orld+im |
+| age     |
+|       f |
+| iles    |
+|    -  O |
+| ther    |
+|       f |
+| ormats  |
+|       w |
+| hen     |
+|       r |
+| equesti |
+| ng      |
+|       W |
+| MS.     |
+|    -  T |
+| est     |
+|       o |
+| n       |
+|       w |
+| indows  |
+|    -  T |
+| est     |
+|       o |
+| n       |
+|       l |
+| inux    |
+|    -  T |
+| est     |
+|       o |
+| n       |
+|       m |
+| ac      |
+|       o |
+| sx      |
+|    -  E |
+| xport   |
+|       t |
+| o       |
+|       P |
+| NG      |
+|         |
+| #. Pack |
+| age     |
+|    up   |
+|    fina |
+| l       |
+|    rele |
+| ase     |
+|         |
+|    -  | |
+| image32 |
+| |       |
+|       E |
+| xport   |
+|       o |
+| ut      |
+|       E |
+| N       |
+|       h |
+| elp     |
+|    -  | |
+| image33 |
+| |       |
+|       E |
+| xport   |
+|       o |
+| ut      |
+|       D |
+| E       |
+|       h |
+| elp     |
+|    -  | |
+| image34 |
+| |       |
+|       E |
+| xport   |
+|       o |
+| ut      |
+|       F |
+| R       |
+|       h |
+| elp     |
+|    -  | |
+| image35 |
+| |       |
+|       E |
+| xport   |
+|       o |
+| ut      |
+|       E |
+| S       |
+|       h |
+| elp     |
+|    -  C |
+| reate   |
+|       R |
+| elease  |
+|       C |
+| andidat |
+| e       |
+|         |
+| #. Fina |
+| l       |
+|    Acce |
+| ptance  |
+|    Test |
+|         |
+|    -  Q |
+| uicksta |
+| rt      |
+|    -  W |
+| alkthro |
+| ugh     |
+|       1 |
+|    -  W |
+| alkthro |
+| ugh     |
+|       2 |
+|         |
+| #. uDig |
+|    1.1. |
+| 0       |
+| #. Pres |
+| s       |
+|    Rele |
+| ase     |
+|         |
+| Questio |
+| ns and  |
+| Answers |
+| ======= |
+| ======= |
+| ======= |
+|         |
+| Are we  |
+| still u |
+| sing Ge |
+| oTools  |
+| 2.2.x   |
+| ------- |
+| ------- |
+| ------- |
+| ------- |
+| -----   |
+|         |
+| Yes we  |
+| are.    |
+| The     |
+| uDig    |
+| 1.1.x   |
+| series  |
+| will    |
+| have a  |
+| long    |
+| life    |
+| and     |
+| will be |
+| locked  |
+| down to |
+| the     |
+| GeoTool |
+| s       |
+| 2.2.x   |
+| series  |
+| of      |
+| release |
+| s.      |
+|         |
+| The     |
+| changes |
+| made to |
+| GeoTool |
+| s       |
+| 2.3     |
+| onward  |
+| have    |
+| introdu |
+| ced     |
+| errors  |
+| (partic |
+| ularly  |
+| with    |
+| regards |
+| to the  |
+| use of  |
+| Filter) |
+| .       |
+| We are  |
+| going   |
+| to see  |
+| these   |
+| mistake |
+| s       |
+| fixed   |
+| on      |
+| GeoTool |
+| s       |
+| trunk   |
+| (where  |
+| we have |
+| the     |
+| rest of |
+| the     |
+| communi |
+| ty      |
+| around  |
+| to back |
+| us up). |
++---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+
++-------------+----------------------------------------------------------+
+| |image37|   | Document generated by Confluence on Aug 11, 2014 12:31   |
++-------------+----------------------------------------------------------+
+
+.. |image0| image:: images/icons/emoticons/check.gif
+.. |image1| image:: images/icons/emoticons/check.gif
+.. |image2| image:: images/icons/emoticons/check.gif
+.. |image3| image:: images/icons/emoticons/check.gif
+.. |image4| image:: images/icons/emoticons/check.gif
+.. |image5| image:: images/icons/emoticons/check.gif
+.. |image6| image:: images/icons/emoticons/check.gif
+.. |image7| image:: images/icons/emoticons/check.gif
+.. |image8| image:: images/icons/emoticons/check.gif
+.. |image9| image:: images/icons/emoticons/check.gif
+.. |image10| image:: images/icons/emoticons/check.gif
+.. |image11| image:: images/icons/emoticons/check.gif
+.. |image12| image:: images/icons/emoticons/check.gif
+.. |image13| image:: images/icons/emoticons/check.gif
+.. |image14| image:: images/icons/emoticons/check.gif
+.. |image15| image:: images/icons/emoticons/check.gif
+.. |image16| image:: images/icons/emoticons/check.gif
+.. |image17| image:: images/icons/emoticons/check.gif
+.. |image18| image:: images/icons/emoticons/check.gif
+.. |image19| image:: images/icons/emoticons/check.gif
+.. |image20| image:: images/icons/emoticons/check.gif
+.. |image21| image:: images/icons/emoticons/check.gif
+.. |image22| image:: images/icons/emoticons/check.gif
+.. |image23| image:: images/icons/emoticons/check.gif
+.. |image24| image:: images/icons/emoticons/check.gif
+.. |image25| image:: images/icons/emoticons/check.gif
+.. |image26| image:: images/icons/emoticons/check.gif
+.. |image27| image:: images/icons/emoticons/check.gif
+.. |image28| image:: images/icons/emoticons/check.gif
+.. |image29| image:: images/icons/emoticons/check.gif
+.. |image30| image:: images/icons/emoticons/check.gif
+.. |image31| image:: images/icons/emoticons/check.gif
+.. |image32| image:: images/icons/emoticons/check.gif
+.. |image33| image:: images/icons/emoticons/check.gif
+.. |image34| image:: images/icons/emoticons/check.gif
+.. |image35| image:: images/icons/emoticons/check.gif
+.. |image36| image:: images/border/spacer.gif
+.. |image37| image:: images/border/spacer.gif
