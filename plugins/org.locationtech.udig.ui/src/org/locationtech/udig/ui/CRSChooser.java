@@ -22,7 +22,6 @@ import java.util.regex.Pattern;
 
 import org.locationtech.udig.internal.ui.UiPlugin;
 import org.locationtech.udig.ui.internal.Messages;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -53,6 +52,7 @@ import org.geotools.referencing.ReferencingFactoryFinder;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.metadata.Identifier;
 import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.IdentifiedObject;
 import org.opengis.referencing.ReferenceIdentifier;
 import org.opengis.referencing.crs.CRSAuthorityFactory;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -475,7 +475,10 @@ public class CRSChooser {
         for( Object object : ReferencingFactoryFinder.getCRSAuthorityFactories(null) ) {
             CRSAuthorityFactory factory = (CRSAuthorityFactory) object;
             try {
-                return (CoordinateReferenceSystem) factory.createObject(code);
+                IdentifiedObject identifiedObject = factory.createObject(code);
+                if (identifiedObject instanceof CoordinateReferenceSystem) {
+                    return (CoordinateReferenceSystem) factory.createObject(code);
+                }
             } catch (FactoryException e2) {
                 // then we have the wrong factory
                 // is there a better way to do this?
