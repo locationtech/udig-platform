@@ -9,7 +9,7 @@ export INSTALLER="${BASE}/installer"
 #export TARGET=${BASE}/target
 #export TARGET=${BASE}/../features/org.locationtech.udig-product/target/products/
 export SERIES=1.5
-export VERSION=1.5.0-SNAPSHOT
+export VERSION=1.5.0.RC1
 export BUILD="${BASE}/build"
 
 # Tycho Build
