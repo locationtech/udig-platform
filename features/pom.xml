@@ -22,6 +22,9 @@
         
         <profile>
             <id>site</id>
+            <activation>
+                <property><name>all</name></property>
+            </activation>
             <modules>
                 <module>org.locationtech.udig-site</module>
                 <module>org.locationtech.udig-site.community</module>
@@ -39,6 +42,17 @@
                 <module>org.locationtech.udig_sdk-feature</module>
              </modules>
         </profile>
+
+        <profile>
+            <id>unstable</id>
+            <activation>
+                <property><name>all</name></property>
+            </activation>
+            <modules>
+                <module>org.locationtech.udig_unstable-feature</module>
+             </modules>
+        </profile>
+
     </profiles>
 
     <modules>
