@@ -3,12 +3,14 @@
    <description name="uDig Community Update Site" url="http://udig.refractions.net/files/update/1.2/community">
       This is the Refractions Research update site for the User-friendly Desktop Internet GIS (uDig) community contributions.
    </description>
+   <!-- fgdrf : TODO add here community features again
    <feature url="features/es.axios.udig.editingtools_1.3.0.m5.jar" id="es.axios.udig.editingtools" version="1.3.0.m5">
       <category name="Axios Extensions for uDig"/>
    </feature>
    <feature url="features/es.axios.udig.spatialoperations_1.3.0.m5.jar" id="es.axios.udig.spatialoperations" version="1.3.0.m5">
       <category name="Axios Extensions for uDig"/>
    </feature>
+   
    <category-def name="Axios Extensions for uDig" label="Axios Extensions for uDig"/>
    <feature url="features/eu.hydrologis.jgrass.feature_3.0.0.jar" id="eu.hydrologis.jgrass.feature" version="3.0.0">
       <category name="JGrass Extensions for uDig"/>
@@ -29,4 +31,5 @@
          Extra gpl import-export features of JGrass (dxf, osm, etc...).
       </description>
    </category-def>
+   -->
 </site>
