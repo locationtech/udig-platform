@@ -1,4 +1,4 @@
-!https://travis-ci.org/uDig/udig-platform.svg?branch=luna-support!:https://travis-ci.org/uDig/udig-platform
+!https://travis-ci.org/uDig/udig-platform.svg?branch=master!:https://travis-ci.org/uDig/udig-platform
 
 h1. uDig Overview
 
