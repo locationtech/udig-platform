@@ -42,6 +42,8 @@
                 
                 <module>org.locationtech.udig.tools.tests</module>
                 <module>org.locationtech.udig.bookmarks.tests</module>
+
+                <module>org.locationtech.udig.mapgraphic.tests</module>
             </modules>
         </profile>
 
