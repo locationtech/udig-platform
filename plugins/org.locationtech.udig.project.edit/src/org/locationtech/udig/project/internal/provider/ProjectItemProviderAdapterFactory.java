@@ -105,21 +105,10 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory imp
      */
     @Override
     public Adapter createLayerAdapter() {
-        if (layerItemProvider == null) {
-            layerItemProvider = new LayerItemProvider(this);
-        }
-
-        return layerItemProvider;
+        return new LayerItemProvider(this);
     }
 
-    /**
-     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Map} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected MapItemProvider mapItemProvider;
-
+ 
     /**
      * This creates an adapter for a {@link org.locationtech.udig.project.internal.Map}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
@@ -128,20 +117,8 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory imp
      */
     @Override
     public Adapter createMapAdapter() {
-        if (mapItemProvider == null) {
-            mapItemProvider = new MapItemProvider(this);
-        }
-
-        return mapItemProvider;
+        return new MapItemProvider(this);
     }
-
-    /**
-     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Project} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected ProjectItemProvider projectItemProvider;
 
     /**
      * This creates an adapter for a {@link org.locationtech.udig.project.internal.Project}. <!--
@@ -151,11 +128,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory imp
      */
     @Override
     public Adapter createProjectAdapter() {
-        if (projectItemProvider == null) {
-            projectItemProvider = new ProjectItemProvider(this);
-        }
-
-        return projectItemProvider;
+        return new ProjectItemProvider(this);
     }
 
     /**
@@ -408,14 +381,6 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory imp
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Layer} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected LayerItemProvider layerItemProvider;
-
-    /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -526,12 +491,6 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory imp
             contextModelItemProvider.dispose();
         if (editManagerItemProvider != null)
             editManagerItemProvider.dispose();
-        if (layerItemProvider != null)
-            layerItemProvider.dispose();
-        if (mapItemProvider != null)
-            mapItemProvider.dispose();
-        if (projectItemProvider != null)
-            projectItemProvider.dispose();
         if (projectRegistryItemProvider != null)
             projectRegistryItemProvider.dispose();
         if (styleBlackboardItemProvider != null)
