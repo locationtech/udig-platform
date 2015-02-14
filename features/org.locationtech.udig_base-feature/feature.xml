@@ -2,7 +2,7 @@
 <feature
       id="org.locationtech.udig_base-feature"
       label="org.locationtech.udig_base-feature"
-      version="1.5.0.qualifier"
+      version="2.0.0.qualifier"
       provider-name="Refractions Research"
       plugin="org.locationtech.udig_base">
 
