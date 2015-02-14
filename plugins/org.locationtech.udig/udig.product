@@ -10,12 +10,14 @@
       </text>
    </aboutInfo>
 
-   <configIni use="default" path="/org.locationtech.udig-feature/config.files/configuration/config.ini">
+   <configIni use="default">
    </configIni>
 
    <launcherArgs>
-      <vmArgs>-Dosgi.parentClassloader=ext -Xmx386M -Dorg.eclipse.emf.ecore.plugin.EcorePlugin.doNotLoadResourcesPlugin=true -XX:MaxPermSize=256m</vmArgs>
-      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts -Djava.awt.headless=true</vmArgsMac>
+      <vmArgs>-Dosgi.parentClassloader=ext -Xmx386M -Dorg.eclipse.emf.ecore.plugin.EcorePlugin.doNotLoadResourcesPlugin=true -XX:MaxPermSize=256m
+      </vmArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts -Djava.awt.headless=true
+      </vmArgsMac>
    </launcherArgs>
 
    <windowImages i16="/org.locationtech.udig/icons/icon16.gif" i32="/org.locationtech.udig/icons/icon32.gif" i48="/org.locationtech.udig/icons/icon48.gif" i64="/org.locationtech.udig/icons/icon64.gif" i128="/org.locationtech.udig/icons/icon128.gif"/>
@@ -71,13 +73,15 @@ Content and such source code may be obtained at http://github.com/udig .
       <feature id="org.eclipse.help"/>
       <feature id="org.eclipse.emf.common"/>
       <feature id="org.eclipse.emf.ecore"/>
+      <feature id="org.eclipse.equinox.p2.user.ui" version="2.2.0.v20140523-0116"/>
    </features>
 
    <configurations>
-      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
-      <plugin id="org.eclipse.equinox.p2.reconciler.dropins" autoStart="true" startLevel="5" />
+      <plugin id="org.eclipse.equinox.event" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.p2.reconciler.dropins" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
    </configurations>
 

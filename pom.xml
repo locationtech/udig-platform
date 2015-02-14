@@ -4,7 +4,7 @@
 
     <groupId>org.locationtech</groupId>
     <artifactId>udig-tycho</artifactId>
-    <version>1.5.0-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     
     <description>
@@ -188,8 +188,8 @@
                     <target>
                         <artifact>
                             <groupId>org.locationtech.udig-target</groupId>
-                            <artifactId>udig-indigo-target</artifactId>
-                            <version>3.7</version>
+                            <artifactId>udig-luna-target</artifactId>
+                            <version>4.4</version>
                         </artifact>
                     </target>
                     <resolver>p2</resolver>

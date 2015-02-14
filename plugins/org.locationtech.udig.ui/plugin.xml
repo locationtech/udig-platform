@@ -75,14 +75,15 @@
          label="%UpdateActionSet.menu.label"
          path="help/helpEnd">
 			</menu>
-				<action
+				<!-- Replaced with p2 default wizards -->
+				<!--action
          class="org.locationtech.udig.InstallWizardAction"
          disabledIcon="icons/dtool16/usearch_obj.gif"
          icon="icons/etool16/usearch_obj.gif"
          id="org.locationtech.udig.updateMenu.newUpdates"
          label="%UpdateActionSet.updates.label"
          menubarPath="help/helpEnd">
-			</action>
+			</action-->
    <action
          class="org.locationtech.udig.internal.ui.ShowSubmitIssueAction"
          id="org.locationtech.udig.ui.submitIssueAction"

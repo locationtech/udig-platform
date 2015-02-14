@@ -2,7 +2,7 @@
 <feature
       id="org.locationtech.udig_tutorials.custom-feature"
       label="Feature for Custom Aplication"
-      version="1.5.0.qualifier"
+      version="2.0.0.qualifier"
       provider-name="A Humble uDig Student">
 
    <description url="http://udig.github.com/docs/dev/custom_application_tutorial.html">

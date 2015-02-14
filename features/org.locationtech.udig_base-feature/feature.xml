@@ -2,7 +2,7 @@
 <feature
       id="org.locationtech.udig_base-feature"
       label="org.locationtech.udig_base-feature"
-      version="1.5.0.qualifier"
+      version="2.0.0.qualifier"
       provider-name="Refractions Research"
       plugin="org.locationtech.udig_base">
 
@@ -116,13 +116,6 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
          version="0.0.0"/>
 
    <plugin
-         id="org.eclipse.update.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.emf.common.ui"
          download-size="0"
          install-size="0"
@@ -130,28 +123,14 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
          unpack="false"/>
 
    <plugin
-         id="org.apache.jasper"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.update.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.commons.el"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.core.net"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.expressions"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -605,6 +584,20 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
 
    <plugin
          id="com.lowagie.text"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.runtime"
          download-size="0"
          install-size="0"
          version="0.0.0"
