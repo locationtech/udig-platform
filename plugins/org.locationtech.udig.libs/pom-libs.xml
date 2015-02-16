@@ -962,18 +962,6 @@
                             <goal>run</goal>
                         </goals>
                     </execution>
-                    <execution>
-                        <id>checktools</id>
-                        <phase>package</phase>
-                        <configuration>
-                            <target>
-                                <ant antfile="${basedir}/tools_jar.xml" dir="${basedir}" target="tools"/>
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
                 </executions>
             </plugin>
          </plugins>
