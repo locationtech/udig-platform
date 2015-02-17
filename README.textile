@@ -34,26 +34,24 @@ h2. Steering Committee
 
 h2. Contributing
 
-Join us in working on uDig
+Join us in working on uDig:
 
-* "How to Take part":http://udig.refractions.net/confluence/display/ADMIN/How+to+take+part
-* "Development Environment":http://udig.refractions.net/confluence/display/ADMIN/02+Development+Environment
-* "Project Procedures":http://udig.refractions.net/confluence/display/ADMIN/04+Project+Procedures
+* "Contributing":CONTRIBUTING.textile
 
-There are two ways to take part: indirectly using github pull requests; and directly by obtaining commit access.
+There are two ways to take part: indirectly using github pull requests; and directly by obtaining commit access. Remember that a pull request is the start of a conversation!
 
 h1. Build Instructions
 
 1. We have two branches in our short term roadmap:
    
-   * https://github.com/uDig/udig-platform/tree/master
-   * https://github.com/uDig/udig-platform/tree/luna-support
+   * https://github.com/locationtech/udig-platform (luna)
+   * https://github.com/locationtech/udig-platform/tree/1.5.x (indigo)
    
    Check out the branch you wish to work with (or fork as you see fit).
 
    To check it out:
    <pre><code>
-     git clone https://github.com/uDig/udig-platform.git udig
+     git https://github.com/locationtech/udig-platform udig
      cd udig
      git checkout master
    </pre></code>
