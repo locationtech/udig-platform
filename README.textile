@@ -141,7 +141,7 @@ h3. Target Platform and Running uDig
 
 uDig makes use of a target platform, in order to download and reference bundles from:
 
-* Eclipse Rich Client Platform (we are using Indigo)
+* Eclipse Rich Client Platform (Indigo or Luna)
 * Babel Project (providing translations)
 * Orbit (open source components that have been checked by the Eclipse legal team)
 
@@ -175,6 +175,11 @@ Later if there is a need to work offline you can easily create a new target plat
 5. Open up *org.locationtech.udig/udig.product* and click *Launch the product*
 
 !extras/images/product.png!
+
+Tips:
+
+* Edit your Run Configuration to turn on tracing when debugging
+* Check your Run Configuration has been created with Java 7
 
 h3. Find Bugs
 
