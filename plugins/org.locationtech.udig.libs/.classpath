@@ -24,6 +24,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/ehcache-core-2.6.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/geocss_2.10-0.8.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/geodb-0.7-RC2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/geoscript-groovy-1.3.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/groovy-1.8.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/groovy-all-2.1.9.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-api-11.2.jar"/>
@@ -37,6 +38,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-cql-11.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-data-11.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-hsql-11.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-geojson-11.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-geotiff-11.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-graph-11.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-grassraster-11.2.jar"/>
@@ -156,19 +158,16 @@
 	<classpathentry exported="true" kind="lib" path="lib/quartz-2.1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/scala-library-2.10.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/scannotation-1.0.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-api-1.6.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-log4j12-1.6.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/sqlite-jdbc-spatialite-3.7.2-2.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/stringtemplate-3.2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/udunits-4.3.16.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/vecmath-1.3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/ws-commons-util-1.0.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xml-commons-resolver-1.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-client-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-common-3.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/xpp3_min-1.1.4c.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/log4j-over-slf4j-1.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/slf4j-api-1.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/slf4j-log4j12-1.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-geojson-11.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/geoscript-groovy-1.3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-client-3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib" sourcepath="lib"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
