@@ -200,7 +200,7 @@ public class BasicFeatureRenderer extends RendererImpl {
             FeatureCollection<SimpleFeatureType, SimpleFeature> features = featureSource.getFeatures( query );
             CoordinateReferenceSystem queryCRS = features.getSchema().getCoordinateReferenceSystem();
 
-            if(queryCRS.equals(layerCRS)){
+            if(queryCRS != null && queryCRS.equals(layerCRS)){
                 layers[0] = featureLayer;
             } else {
                 // workaround
