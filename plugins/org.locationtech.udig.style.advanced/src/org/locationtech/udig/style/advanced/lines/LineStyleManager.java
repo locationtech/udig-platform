@@ -15,8 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 
-import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
-
+import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -35,7 +34,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.styling.Style;
-
 import org.locationtech.udig.style.advanced.StylePlugin;
 import org.locationtech.udig.style.advanced.common.StyleFilter;
 import org.locationtech.udig.style.advanced.common.StyleManager;
@@ -43,6 +41,7 @@ import org.locationtech.udig.style.advanced.common.styleattributeclasses.Feature
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
 import org.locationtech.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 
 /**
  * A style viewer that manages {@link Style}s.
@@ -172,26 +171,5 @@ public class LineStyleManager extends StyleManager{
         });
         return stylesViewer;
     }
-
-//    /**
-//     * Add a style to the {@link TableViewer viewer} from a file.
-//     * 
-//     * @param files the array of files to import.
-//     * @throws Exception
-//     */
-//    public void importToStyle( File... files ) throws Exception {
-//        List<Style> styles = getStyles();
-//
-//        for( File file : files ) {
-//            String name = file.getName();
-//            File newFile = new File(styleFolderFile, name);
-//            FileUtils.copyFile(file, newFile);
-//            Style style = Utilities.createStyleFromGraphic(newFile);
-//            styles.add(style);
-//            styleToDisk(style);
-//        }
-//        stylesViewer.refresh(false, true);
-//    }
-
 
 }

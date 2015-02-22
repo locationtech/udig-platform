@@ -174,25 +174,4 @@ public class PointStyleManager extends StyleManager {
         });
         return stylesViewer;
     }
-
-    /**
-     * Add a style to the {@link TableViewer viewer} from a file.
-     * 
-     * @param files the array of files to import.
-     * @throws Exception
-     */
-    public void importToStyle( File... files ) throws Exception {
-        List<StyleWrapper> styles = getStyles();
-
-        for( File file : files ) {
-            String name = file.getName();
-            File newFile = new File(styleFolderFile, name);
-            FileUtils.copyFile(file, newFile);
-            StyleWrapper style = Utilities.createStyleFromGraphic(newFile);
-            styles.add(style);
-            styleToDisk(style);
-        }
-        stylesViewer.refresh(false, true);
-    }
-
 }
