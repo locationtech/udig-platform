@@ -141,6 +141,9 @@ public class PolygonGeneralParametersComposite extends ParameterComposite {
                 PolygonSymbolizerWrapper.class);
         nameText.setText(ruleWrapper.getName());
 
+        if (polygonSymbolizerWrapper == null) {
+            return;
+        }
         // offset
         String xOffset = polygonSymbolizerWrapper.getxOffset();
         String yOffset = polygonSymbolizerWrapper.getyOffset();

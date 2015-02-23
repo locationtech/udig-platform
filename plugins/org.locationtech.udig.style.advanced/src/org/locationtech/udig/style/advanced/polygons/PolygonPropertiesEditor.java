@@ -51,6 +51,7 @@ import org.locationtech.udig.style.advanced.common.styleattributeclasses.Polygon
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
 import org.locationtech.udig.style.advanced.internal.Messages;
+import org.locationtech.udig.style.advanced.internal.StyleEditorUtilities;
 import org.locationtech.udig.style.advanced.utils.ImageCache;
 import org.locationtech.udig.style.advanced.utils.Utilities;
 
@@ -360,7 +361,6 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
         Image saveAllImg = ImageCache.getInstance().getImage(ImageCache.SAVEALL);
         Image delImg = ImageCache.getInstance().getImage(ImageCache.DELETE);
         Image loadImg = ImageCache.getInstance().getImage(ImageCache.APPLY);
-        // Image importImg = ImageCache.getInstance().getImage(ImageCache.IMPORT);
         Image exportImg = ImageCache.getInstance().getImage(ImageCache.ONECLICKEXPORT);
         Image openImg = ImageCache.getInstance().getImage(ImageCache.OPEN);
 
@@ -453,6 +453,8 @@ public class PolygonPropertiesEditor extends PropertiesEditor {
             }
         });
 
+        StyleEditorUtilities.createImportButton(rulesGroup, SWT.PUSH, polygonStyleManager);
+        
         final Button exportButton = new Button(rulesGroup, SWT.PUSH);
         exportButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         exportButton.setImage(exportImg);
