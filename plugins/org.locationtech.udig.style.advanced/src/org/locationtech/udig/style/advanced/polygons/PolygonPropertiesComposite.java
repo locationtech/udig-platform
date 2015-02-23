@@ -96,14 +96,29 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
     }
 
     private void update() {
-        generalParametersComposite.update(ruleWrapper);
-        borderParametersComposite.update(ruleWrapper);
-        fillParametersComposite.update(ruleWrapper);
-        labelsParametersComposite.update(ruleWrapper);
-        filtersComposite.update(ruleWrapper);
+        if (generalParametersComposite != null) {
+            generalParametersComposite.update(ruleWrapper);
+        }
+        
+        if (borderParametersComposite != null) {
+            borderParametersComposite.update(ruleWrapper);
+        }
+        
+        if (fillParametersComposite != null) {
+            fillParametersComposite.update(ruleWrapper);
+        }
+        if (labelsParametersComposite != null) {
+            labelsParametersComposite.update(ruleWrapper);
+        }
+        
+        if (filtersComposite != null) {
+            filtersComposite.update(ruleWrapper);
+        }
 
-        polygonPropertiesEditor.refreshTreeViewer(ruleWrapper);
-        polygonPropertiesEditor.refreshPreviewCanvasOnStyle();
+        if (polygonPropertiesEditor != null) {
+            polygonPropertiesEditor.refreshTreeViewer(ruleWrapper);
+            polygonPropertiesEditor.refreshPreviewCanvasOnStyle();
+        }
     }
 
     private void init() {

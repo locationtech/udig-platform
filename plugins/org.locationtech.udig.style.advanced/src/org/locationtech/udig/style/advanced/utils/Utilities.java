@@ -102,7 +102,7 @@ public class Utilities {
     public static final String DEFAULT_STYLENAME = "default style";
 
     public static final String SLD_EXTENTION = ".sld";
-
+    
     /**
      * The SLD defined well known mark codes.
      */
@@ -1205,7 +1205,7 @@ public class Utilities {
             exGraphic = sf.createExternalGraphic(graphicsPath.toURI().toURL(), "image/png");
         } else if (name.toLowerCase().endsWith(".svg")) {
             exGraphic = sf.createExternalGraphic(graphicsPath.toURI().toURL(), "image/svg+xml");
-        } else if (name.toLowerCase().endsWith(".sld")) {
+        } else if (name.toLowerCase().endsWith(SLD_EXTENTION)) {
             StyledLayerDescriptor sld = readStyle(graphicsPath);
             Style style = SLDs.getDefaultStyle(sld);
             return new StyleWrapper(style);
