@@ -1,7 +1,7 @@
-What is new 1.1.0
+What is new 1.1
 #################
 
-The following feature are new for uDig 1.1.0:
+The following feature are new for uDig 1.1:
 
 * `Map Improvements`_
 
@@ -46,7 +46,7 @@ Editing Tools
    :align: center
    :alt:
 
-Editing tools have been revised for uDig 1.1.0. The new tools are more responsive and provide better
+Editing tools have been revised for uDig 1.1. The new tools are more responsive and provide better
 feedback.
 
 +------------+------------+------------+------------+------------+------------+

@@ -1,5 +1,12 @@
-What is new 1.2.0
-#################
+What is new 1.2
+###############
+
+**Related reference**
+
+.. toctree::
+   :maxdepth: 1
+
+   What is new 1.1
 
 The following features are new for the uDig 1.2 series:
 
@@ -17,13 +24,6 @@ The following features are new for the uDig 1.2 series:
 * `ArcSDE`_
 * `Advanced Symbology`_
 * `Framework Improvements`_
-
-**Related reference**
-
-.. toctree::
-   :maxdepth: 1
-
-   What is new 1.1
 
 Terradata
 =========
