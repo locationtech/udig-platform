@@ -4,7 +4,7 @@ Reference
 Reference for the uDig application describing wizards, views, and shortcuts.
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    Advanced Tools
    Filters and Expressions
