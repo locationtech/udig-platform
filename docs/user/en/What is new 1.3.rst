@@ -5,8 +5,11 @@ The following features are new for the uDig 1.3 series.
 
 **Related reference**
 
-:doc:`What is new 1.2`
-:doc:`What is new 1.1`
+.. toctree::
+   :maxdepth: 1
+
+   What is new 1.1
+   What is new 1.2
 
 New Property Pages
 ==================

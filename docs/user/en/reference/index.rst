@@ -9,6 +9,7 @@ Reference for the uDig application describing wizards, views, and shortcuts.
    Advanced Tools
    Filters and Expressions
    Help contents
+   Graticule Decoration
    Icons and buttons
    Menus
    Perspectives
