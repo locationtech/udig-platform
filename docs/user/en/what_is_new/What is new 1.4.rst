@@ -1,19 +1,13 @@
-What is new 1.4
-###############
+.. _what_is_new_1_4:
 
-The following features are new for the uDig 1.4 series.
+What is new for uDig 1.4
+========================
 
-**Related reference**
-
-.. toctree::
-   :maxdepth: 1
-
-   What is new 1.1
-   What is new 1.2
-   What is new 1.3
+.. contents:: :local:
+   :depth: 1
 
 License Change
-==============
+--------------
 
 The uDig project has changed to a dual BSD / EPL license.
 
@@ -27,7 +21,7 @@ This license change has enabled the uDig project to
 `LocationTech <http://locationtech.org>`_ industry working group.
 
 GeoScript Editor
-================
+----------------
 
 uDig is pleased to directly offer a scripting environment for the first time. Scripting a powerful technique
 in a Geospatial Information Systems allowing non-developers the ability to automate common tasks.
@@ -36,14 +30,14 @@ in a Geospatial Information Systems allowing non-developers the ability to autom
    :align: center
    :alt: 
    
-There is a quick tutorial (:doc:`/getting_started/GeoScript Introduction`) and a reference page for the :doc:`/reference/GeoScript editor`.
+There is a quick tutorial (:doc:`../getting_started/GeoScript Introduction`) and a reference page for the :doc:`../reference/GeoScript editor`.
 
 For more information and tutorials please checkout GeoScript at `geoscript.org <http://geoscript.org/>`_
 
 Documents
-=========
+---------
 
-The :doc:`/reference/Document view` added to list resource and feature documents.
+The :doc:`../reference/Document view` added to list resource and feature documents.
 
 Attachments and links:
 
@@ -62,11 +56,11 @@ Feature Hotlinks:
    :alt:
    :figwidth: 80%
 
-For more information, check out the Tasks section on :doc:`/tasks/Working with Documents`.
+For more information, check out the Tasks section on :doc:`../tasks/Working with Documents`.
 
 
 Graticule
-==========
+----------
 
 A new Graticule map decoration has been added.
 
@@ -79,6 +73,6 @@ It is also possible to overlay grids in different coordinate systems:
 
 And here the tasks that can get you started with the graticule:
 
-* :doc:`/reference/Graticule Decoration` 
-* :doc:`/tasks/Add new Graticule`
-* :doc:`/tasks/Add multiple Graticules with different CRS`
+* :doc:`../reference/Graticule Decoration` 
+* :doc:`../tasks/Add new Graticule`
+* :doc:`../tasks/Add multiple Graticules with different CRS`

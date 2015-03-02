@@ -3,14 +3,14 @@ uDig User Guide
 ###############
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    uDig Overview
    getting_started/index
    concepts/index
    tasks/index
    reference/index
-   What is new
+   what_is_new/index
    Tips and Tricks
 
 Online Help

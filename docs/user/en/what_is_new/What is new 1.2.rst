@@ -1,62 +1,43 @@
-What is new 1.2
-###############
+.. _what_is_new_1_2:
 
-**Related reference**
+What is new for uDig 1.2
+========================
 
-.. toctree::
-   :maxdepth: 1
-
-   What is new 1.1
-
-The following features are new for the uDig 1.2 series:
-
-* `Terradata`_
-* `Spatial Toolbox`_
-* `Generic DataStore`_
-* `Improved Tools for working with Raster Data`_
-* `Additional Export wizards`_
-* `Additional Import wizards`_
-* `New Style Editor Pages`_
-* `Additional Raster Formats`_
-* `Tile Server Support`_
-* `WFS 1.1.0 Support`_
-* `Experimental Tiled Renderer`_
-* `ArcSDE`_
-* `Advanced Symbology`_
-* `Framework Improvements`_
+.. contents:: :local:
+   :depth: 1
 
 Terradata
-=========
+---------
 
 Support for the Terradata database has been provided.
 
-* :doc:`/reference/Teradata page`
+* :doc:`../reference/Teradata page`
 
 
 Spatial Toolbox
-===============
+---------------
 
 Spatial toolbox has arrived allowing access to a vast range of spatial functionality provided by
 through Open Modeling Services 3 components.
 
 For more information:
 
-* :doc:`/getting_started/Introduction to the Spatial Toolbox` covers the installation and use of JGrass compoenents
-* :doc:`/reference/Spatial Toolbox View`
+* :doc:`../getting_started/Introduction to the Spatial Toolbox` covers the installation and use of JGrass compoenents
+* :doc:`../reference/Spatial Toolbox View`
 
 
 Generic DataStore
-=================
+-----------------
 
 The GeoTools library provides access to more data formats than we have created customer wizards for.
 In the interests of encourage adopting and testing of new technologies we have created a "generic"
 GeoTools DataStore wizard allowing you to try out ... everything.
 
-* :doc:`/reference/DataStore page`
+* :doc:`../reference/DataStore page`
 
 
 Improved Tools for working with Raster Data
-===========================================
+-------------------------------------------
 
 A couple of tools have been added for working with raster data:
 
@@ -64,9 +45,9 @@ A couple of tools have been added for working with raster data:
 -  Profile Tool
 
 Additional Export wizards
-=========================
+-------------------------
 
-The :doc:`/reference/Export Wizard` allows you to export new kinds of information from the
+The :doc:`../reference/Export Wizard` allows you to export new kinds of information from the
 uDig catalog for use in other applications.
 
 -  Export coverage to tiff or esri ascii
@@ -75,9 +56,9 @@ uDig catalog for use in other applications.
 These are export wizards available from the :menuselection:`File --> Export` menu.
 
 Additional Import wizards
-=========================
+-------------------------
 
-The :doc:`/reference/Import Wizard` allows you to import new kinds of information into the
+The :doc:`../reference/Import Wizard` allows you to import new kinds of information into the
 uDig catalog for use.
 
 -  Allows the easy creation of an image moasic from a directory of images
@@ -90,22 +71,22 @@ These are import wizards available from the :menuselection:`File --> Import` men
 
 
 New Style Editor Pages
-======================
+----------------------
 
 A great series of new style editor pages has been created showcasing the power of the rendering
 engine.
 
-* :doc:`/reference/Raster Style Pages`
+* :doc:`../reference/Raster Style Pages`
 
-* :doc:`/reference/Feature Style Pages`
+* :doc:`../reference/Feature Style Pages`
 
 
-.. figure:: images/what_is_new_1.2.0/Simple-Points-Screen.jpg
+.. figure:: ../images/what_is_new_1.2.0/Simple-Points-Screen.jpg
    :align: center
    :alt:
 
 Additional Raster Formats
-=========================
+-------------------------
 
 A great improvement is the ability to work with additional raster formats, and working with images
 larger then memory.
@@ -119,24 +100,24 @@ On select platforms:
 -  MrSID
 
 Tile Server Support
-===================
+-------------------
 
 This release provides support for Web Map Server Caching (WMS-C) allowing access to tile servers
 such as GeoWebCache and TileCache.
 
-* :doc:`/reference/NASA WorldWind page`
+* :doc:`../reference/NASA WorldWind page`
 
-* :doc:`/reference/Web Map Server Tile Cache page`
+* :doc:`../reference/Web Map Server Tile Cache page`
 
-* :doc:`/reference/Web Map Tiles page`
+* :doc:`../reference/Web Map Tiles page`
 
 
-.. figure:: /images/what_is_new_1.2.0/WebMapTiles.png
+.. figure:: ../images/what_is_new_1.2.0/WebMapTiles.png
    :align: center
    :alt:
 
 WFS 1.1.0 Support
-=================
+-----------------
 
 Thanks to OpenGeo for implementing WFS 1.1.0 support. You can now specifiy WFS=1.1.0 in your
 capabilities connection URL to work with servers supporting this standard.
@@ -144,19 +125,19 @@ capabilities connection URL to work with servers supporting this standard.
 This feature does not support WFS-T at this time.
 
 Experimental Tiled Renderer
-===========================
+---------------------------
 
 You can turn on Tiled rendering (as an option in preferences). When combined with the new flicker
 free panning tool results in a nice sliding map experience.
 
 ArcSDE
-======
+------
 
 The ArcSDE support has been rewritten from the ground up in collaboration between OpenGeo and
 Refractions. The new implementation is threaded allowing for a responsive user interface experience.
 
 Advanced Symbology
-==================
+------------------
 
 The rendering system has received a great many enhancements:
 
@@ -169,7 +150,7 @@ Advanced "Vendor Specific Options":
 -  Geometry functions
 
 Framework Improvements
-======================
+----------------------
 
 For the developer community using uDig as a platform for custom applications:
 

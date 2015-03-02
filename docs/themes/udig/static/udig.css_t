@@ -100,6 +100,10 @@ div.content {
     font-size: 0.9em;
 }
 
+div.topic {
+    border-width: 0px;
+}
+
 div.section {
     margin-top: 20px;
     margin-left: 20px;
