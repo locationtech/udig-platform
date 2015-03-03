@@ -110,6 +110,10 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 					entry.setOpacity((Double)newValue);
 				}else if (newValue instanceof String){
 					try{
+						if (((String) newValue).endsWith("%")){ //$NON-NLS-1$
+							//remove "%"
+							newValue = ((String) newValue).substring(0, ((String) newValue).length()-1);
+						}
 						Double d= Double.parseDouble((String)newValue);
 						if (d >= 0 && d <=1){
 							entry.setOpacity(d);
@@ -333,7 +337,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 	}
 	
 	/**
-	 * @see org.locationtech.udig.style.raster.ui.IColorMapTypePanel#getColorMap()
+	 * @see net.refractions.udig.style.raster.ui.IColorMapTypePanel#getColorMap()
 	 */
 	@Override
 	public ColorMap getColorMap() throws Exception{
@@ -357,7 +361,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 	
 
 	/**
-	 * @see org.locationtech.udig.style.raster.ui.IColorMapTypePanel#setColorPalette(org.geotools.brewer.color.BrewerPalette)
+	 * @see net.refractions.udig.style.raster.ui.IColorMapTypePanel#setColorPalette(org.geotools.brewer.color.BrewerPalette)
 	 */
 	@Override
 	public void setColorPalette(BrewerPalette palette, boolean reverse){
@@ -443,7 +447,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 	
 	
 	/**
-	 * @see org.locationtech.udig.style.raster.ui.IColorMapTypePanel#init(org.geotools.styling.ColorMap)
+	 * @see net.refractions.udig.style.raster.ui.IColorMapTypePanel#init(org.geotools.styling.ColorMap)
 	 */
 	@Override
 	public void init(ColorMap cm){

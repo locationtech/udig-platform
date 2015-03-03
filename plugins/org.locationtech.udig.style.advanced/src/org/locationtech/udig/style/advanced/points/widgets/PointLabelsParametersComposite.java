@@ -131,8 +131,6 @@ public class PointLabelsParametersComposite extends ParameterComposite {
         GridData labelNameTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         labelNameText.setLayoutData(labelNameTextGD);
         labelNameText.addFocusListener(this);
-        labelNameText.setToolTipText(Messages.LabelNameField_TooltipText);
-
         labelNameAttributecombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         GridData labelNameAttributecomboGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         labelNameAttributecombo.setLayoutData(labelNameAttributecomboGD);
@@ -144,6 +142,8 @@ public class PointLabelsParametersComposite extends ParameterComposite {
             int index = getAttributeIndex(labelName, allAttributesArrays);
             if (index != -1) {
                 labelNameAttributecombo.select(index);
+            } else {
+                labelNameText.setText(labelName);
             }
         } else {
             labelNameText.setText(""); //$NON-NLS-1$
@@ -403,6 +403,9 @@ public class PointLabelsParametersComposite extends ParameterComposite {
             int index = getAttributeIndex(labelName, allAttributesArrays);
             if (index != -1) {
                 labelNameAttributecombo.select(index);
+            } else {
+                labelNameText.setText(labelName);
+                labelNameAttributecombo.select(0);
             }
         } else {
             labelNameText.setText(""); //$NON-NLS-1$
@@ -556,15 +559,9 @@ public class PointLabelsParametersComposite extends ParameterComposite {
             setEnabled(selected);
             notifyListeners(String.valueOf(selected), false, STYLEEVENTTYPE.LABELENABLE);
         } else if (source.equals(labelNameAttributecombo)) {
-            boolean comboIsNone = comboIsNone(labelNameAttributecombo);
-            if (comboIsNone) {
-                String text = labelNameText.getText();
-                notifyListeners(text, false, STYLEEVENTTYPE.LABEL);
-            } else {
-                int index = labelNameAttributecombo.getSelectionIndex();
-                String nameField = labelNameAttributecombo.getItem(index);
-                notifyListeners(nameField, true, STYLEEVENTTYPE.LABEL);
-            }
+            int index = labelNameAttributecombo.getSelectionIndex();
+            String nameField = labelNameAttributecombo.getItem(index);
+            notifyListeners(nameField, true, STYLEEVENTTYPE.LABEL);
         } else if (source.equals(fontButton)) {
             FontData[] fontData = fontEditor.getFontList();
             if (fontData.length > 0) {

@@ -556,38 +556,8 @@ public class SingleBandEditorPage extends StyleEditorPage {
 		
 		Style style = (Style) l.getStyleBlackboard().get(SLDContent.ID);
 		
-		RasterSymbolizer symbolizer = SLD.rasterSymbolizer(style);
-		if (symbolizer == null || symbolizer.getColorMap() == null){
-			//no symbolizer
-			
-		}else{
-			ColorMap cm = symbolizer.getColorMap();
-			for (IColorMapTypePanel pnl : stylePanels){
-				if (pnl.canSupport(cm.getType())){
-					pnl.init(cm);
-					cmbThemingStyle.setSelection(new StructuredSelection(pnl));
-					cmbThemingStyle.getControl().notifyListeners(SWT.Selection, new Event());
-				}
-			}
-			if (formatter.getRawDataType() == DataType.INTEGER){
-				//if some of the entries are doubles we want to format in double
-				//regardless of the fact that the raster is an integer raster.
-				try{
-					for (ColorMapEntry e : cm.getColorMapEntries()){ 
-						Double dvalue = (Double) e.getQuantity().evaluate(null, Double.class);
-						Integer ivalue = (Integer) e.getQuantity().evaluate(null, Integer.class);
-						if (ivalue.doubleValue() != dvalue){
-							formatter.setDataType(DataType.DOUBLE);
-						}
-					}
-				}catch (Exception ex){
-					//eatme
-				}
-			}
-			
-		}
-		
 		//set inputs based on brewer and colorRules
+		//do this first so we don't overwrite any custom color rules
 		List<Object> inputs = new ArrayList<Object>();
 		BrewerPalette[] palettes = getBrewer().getPalettes(ColorBrewer.ALL);
 		Arrays.sort(palettes, 0, palettes.length, new Comparator<BrewerPalette>(){
@@ -619,7 +589,37 @@ public class SingleBandEditorPage extends StyleEditorPage {
 				}
 			}
 		}
-		
+				
+		RasterSymbolizer symbolizer = SLD.rasterSymbolizer(style);
+		if (symbolizer == null || symbolizer.getColorMap() == null){
+			//no symbolizer
+			
+		}else{
+			ColorMap cm = symbolizer.getColorMap();
+			for (IColorMapTypePanel pnl : stylePanels){
+				if (pnl.canSupport(cm.getType())){
+					pnl.init(cm);
+					cmbThemingStyle.setSelection(new StructuredSelection(pnl));
+					cmbThemingStyle.getControl().notifyListeners(SWT.Selection, new Event());
+				}
+			}
+			if (formatter.getRawDataType() == DataType.INTEGER){
+				//if some of the entries are doubles we want to format in double
+				//regardless of the fact that the raster is an integer raster.
+				try{
+					for (ColorMapEntry e : cm.getColorMapEntries()){ 
+						Double dvalue = (Double) e.getQuantity().evaluate(null, Double.class);
+						Integer ivalue = (Integer) e.getQuantity().evaluate(null, Integer.class);
+						if (ivalue.doubleValue() != dvalue){
+							formatter.setDataType(DataType.DOUBLE);
+						}
+					}
+				}catch (Exception ex){
+					//eatme
+				}
+			}
+			
+		}
 	}
 
 	@Override
