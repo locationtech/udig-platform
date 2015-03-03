@@ -337,7 +337,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 	}
 	
 	/**
-	 * @see net.refractions.udig.style.raster.ui.IColorMapTypePanel#getColorMap()
+	 * @see org.locationtech.udig.style.raster.ui.IColorMapTypePanel#getColorMap()
 	 */
 	@Override
 	public ColorMap getColorMap() throws Exception{
@@ -361,7 +361,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 	
 
 	/**
-	 * @see net.refractions.udig.style.raster.ui.IColorMapTypePanel#setColorPalette(org.geotools.brewer.color.BrewerPalette)
+	 * @see org.locationtech.udig.style.raster.ui.IColorMapTypePanel#setColorPalette(org.geotools.brewer.color.BrewerPalette)
 	 */
 	@Override
 	public void setColorPalette(BrewerPalette palette, boolean reverse){
@@ -447,7 +447,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 	
 	
 	/**
-	 * @see net.refractions.udig.style.raster.ui.IColorMapTypePanel#init(org.geotools.styling.ColorMap)
+	 * @see org.locationtech.udig.style.raster.ui.IColorMapTypePanel#init(org.geotools.styling.ColorMap)
 	 */
 	@Override
 	public void init(ColorMap cm){
