@@ -117,6 +117,7 @@ public class PolygonLabelsParametersComposite extends ParameterComposite {
         GridData labelNameTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         labelNameText.setLayoutData(labelNameTextGD);
         labelNameText.addFocusListener(this);
+        labelNameText.setToolTipText(Messages.LabelNameField_TooltipText);
         labelNameAttributecombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         GridData labelNameAttributecomboGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         labelNameAttributecombo.setLayoutData(labelNameAttributecomboGD);
