@@ -152,7 +152,7 @@ public class StyleXMLPage extends StyleEditorPage {
     }
 
     public boolean okToLeave() {
-        boolean readyToLeave = false;
+        boolean readyToLeave = true;
         if (dirty) { //!dirty was a condition -- not required for the moment  
             readyToLeave = updateSLD();
         }
