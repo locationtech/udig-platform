@@ -17,7 +17,6 @@ import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.style.internal.StyleLayer;
 import org.locationtech.udig.style.sld.SLD;
-
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -44,7 +43,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Style;
-
 import org.locationtech.udig.style.advanced.common.GroupRulesTreeContentProvider;
 import org.locationtech.udig.style.advanced.common.GroupRulesTreeLabelProvider;
 import org.locationtech.udig.style.advanced.common.PropertiesEditor;
@@ -52,7 +50,9 @@ import org.locationtech.udig.style.advanced.common.styleattributeclasses.Feature
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.LineSymbolizerWrapper;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
+import org.locationtech.udig.style.advanced.internal.ImportStyleSelectionAdapter;
 import org.locationtech.udig.style.advanced.internal.Messages;
+import org.locationtech.udig.style.advanced.internal.StyleEditorUtilities;
 import org.locationtech.udig.style.advanced.utils.ImageCache;
 import org.locationtech.udig.style.advanced.utils.Utilities;
 
@@ -361,7 +361,6 @@ public class LinePropertiesEditor extends PropertiesEditor {
         Image saveAllImg = ImageCache.getInstance().getImage(ImageCache.SAVEALL);
         Image delImg = ImageCache.getInstance().getImage(ImageCache.DELETE);
         Image loadImg = ImageCache.getInstance().getImage(ImageCache.APPLY);
-        // Image importImg = ImageCache.getInstance().getImage(ImageCache.IMPORT);
         Image exportImg = ImageCache.getInstance().getImage(ImageCache.ONECLICKEXPORT);
         Image openImg = ImageCache.getInstance().getImage(ImageCache.OPEN);
 
@@ -454,6 +453,8 @@ public class LinePropertiesEditor extends PropertiesEditor {
             }
         });
 
+        StyleEditorUtilities.createImportButton(rulesGroup, SWT.PUSH, lineStyleManager);
+        
         final Button exportButton = new Button(rulesGroup, SWT.PUSH);
         exportButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         exportButton.setImage(exportImg);
