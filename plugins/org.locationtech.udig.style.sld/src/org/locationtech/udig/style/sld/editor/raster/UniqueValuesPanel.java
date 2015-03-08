@@ -110,6 +110,10 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 					entry.setOpacity((Double)newValue);
 				}else if (newValue instanceof String){
 					try{
+						if (((String) newValue).endsWith("%")){ //$NON-NLS-1$
+							//remove "%"
+							newValue = ((String) newValue).substring(0, ((String) newValue).length()-1);
+						}
 						Double d= Double.parseDouble((String)newValue);
 						if (d >= 0 && d <=1){
 							entry.setOpacity(d);

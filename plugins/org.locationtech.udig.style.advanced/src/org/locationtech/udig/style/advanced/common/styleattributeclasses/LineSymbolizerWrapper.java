@@ -203,6 +203,7 @@ public class LineSymbolizerWrapper extends SymbolizerWrapper {
     
 
     public void clearGraphicStroke(){
+    	if (stroke == null) return;
    		stroke.setGraphicStroke(null);
    		strokeGraphicStroke = null;
     }
@@ -213,9 +214,11 @@ public class LineSymbolizerWrapper extends SymbolizerWrapper {
 
     public void setStrokeGraphicStroke( Graphic strokeGraphicStroke ) {
         this.strokeGraphicStroke = strokeGraphicStroke;
-        checkStrokeExists();
+        if (hasStroke){
+        	checkStrokeExists();
 
-        stroke.setGraphicStroke(strokeGraphicStroke);
+        	stroke.setGraphicStroke(strokeGraphicStroke);
+        }
     }
 
     // ///// GETTERS/SETTERS
@@ -247,71 +250,85 @@ public class LineSymbolizerWrapper extends SymbolizerWrapper {
 
     public void setStrokeWidth( String strokeWidth, boolean isProperty ) {
         this.strokeWidth = strokeWidth;
-        checkStrokeExists();
-        if (isProperty) {
-            stroke.setWidth(ff.property(strokeWidth));
-        } else {
-            stroke.setWidth(ff.literal(strokeWidth));
+        if (hasStroke){
+        	checkStrokeExists();
+        	if (isProperty) {
+        		stroke.setWidth(ff.property(strokeWidth));
+        	} else {
+        		stroke.setWidth(ff.literal(strokeWidth));
+        	}
         }
     }
 
     public void setStrokeColor( String strokeColor, boolean isProperty ) {
         this.strokeColor = strokeColor;
-        checkStrokeExists();
-        if (isProperty) {
-            stroke.setColor(ff.property(strokeColor));
-        } else {
-            if (strokeColor != null) {
-                stroke.setColor(ff.literal(strokeColor));
+        if (hasStroke){
+        	checkStrokeExists();
+        	if (isProperty) {
+        		stroke.setColor(ff.property(strokeColor));
+        	} else {
+        		if (strokeColor != null) {
+        			stroke.setColor(ff.literal(strokeColor));
+        		}
             }
         }
     }
 
     public void setStrokeOpacity( String strokeOpacity, boolean isProperty ) {
         this.strokeOpacity = strokeOpacity;
-        checkStrokeExists();
-        if (isProperty) {
-            stroke.setOpacity(ff.property(strokeOpacity));
-        } else {
-            stroke.setOpacity(ff.literal(strokeOpacity));
-        }
+        if (hasStroke){
+        	checkStrokeExists();
+        	if (isProperty) {
+        		stroke.setOpacity(ff.property(strokeOpacity));
+        	} else {
+        		stroke.setOpacity(ff.literal(strokeOpacity));
+        	}
         
-        //update end point styles if applicable
-        if (endPointStyle != null){
-       		endPointStyle.setStrokeOpacity(strokeOpacity, isProperty);
-       		endPointStyle.setFillOpacity(strokeOpacity, isProperty);
-        }
-        if (startPointStyle != null){
-        	startPointStyle.setStrokeOpacity(strokeOpacity, isProperty);
-        	startPointStyle.setFillOpacity(strokeOpacity, isProperty);
+        	//update end point styles if applicable
+        	if (endPointStyle != null){
+        		endPointStyle.setStrokeOpacity(strokeOpacity, isProperty);
+        		endPointStyle.setFillOpacity(strokeOpacity, isProperty);
+        	}
+        	if (startPointStyle != null){
+        		startPointStyle.setStrokeOpacity(strokeOpacity, isProperty);
+        		startPointStyle.setFillOpacity(strokeOpacity, isProperty);
+        	}
         }
     }
 
     public void setDash( String dash ) {
         this.dash = dash;
-        checkStrokeExists();
-        float[] dashArray = Utilities.getDash(dash);
-        stroke.setDashArray(dashArray);
+        if (hasStroke){
+        	checkStrokeExists();
+        	float[] dashArray = Utilities.getDash(dash);
+        	stroke.setDashArray(dashArray);
+        }
     }
 
     public void setDashOffset( String dashOffset ) {
         this.dashOffset = dashOffset;
-        checkStrokeExists();
-        if (dashOffset != null && dashOffset.length() > 0) {
-            stroke.setDashOffset(ff.literal(dashOffset));
+        if (hasStroke){
+        	checkStrokeExists();
+        	if (dashOffset != null && dashOffset.length() > 0) {
+        		stroke.setDashOffset(ff.literal(dashOffset));
+        	}
         }
     }
 
     public void setLineCap( String lineCap ) {
         this.lineCap = lineCap;
-        checkStrokeExists();
-        stroke.setLineCap(ff.literal(lineCap));
+        if (hasStroke){
+        	checkStrokeExists();
+        	stroke.setLineCap(ff.literal(lineCap));
+        }
     }
 
     public void setLineJoin( String lineJoin ) {
         this.lineJoin = lineJoin;
-        checkStrokeExists();
-        stroke.setLineJoin(ff.literal(lineJoin));
+        if (hasStroke){
+        	checkStrokeExists();
+        	stroke.setLineJoin(ff.literal(lineJoin));
+        }
     }
 
     // getters

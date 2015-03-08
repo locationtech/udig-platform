@@ -130,7 +130,6 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         labelNameText.setLayoutData(labelNameTextGD);
         labelNameText.addFocusListener(this);
         labelNameText.setToolTipText(Messages.LabelNameField_TooltipText);
-
         labelNameAttributecombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         GridData labelNameAttributecomboGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
         labelNameAttributecombo.setLayoutData(labelNameAttributecomboGD);
@@ -142,6 +141,8 @@ public class LineLabelsParametersComposite extends ParameterComposite {
             int index = getAttributeIndex(labelName, allAttributesArrays);
             if (index != -1) {
                 labelNameAttributecombo.select(index);
+            } else {
+                labelNameText.setText(labelName);
             }
         } else {
             labelNameText.setText(""); //$NON-NLS-1$
@@ -397,6 +398,9 @@ public class LineLabelsParametersComposite extends ParameterComposite {
         if (labelName != null) {
             int index = getAttributeIndex(labelName, allAttributesArrays);
             if (index != -1) {
+                labelNameAttributecombo.select(index);
+            } else {
+                labelNameText.setText(labelName);
                 labelNameAttributecombo.select(index);
             }
         } else {
