@@ -28,9 +28,9 @@ import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.tests.support.MapTests;
 import org.locationtech.udig.project.ui.internal.actions.OnProjectDropAction;
 import org.locationtech.udig.ui.ViewerDropLocation;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -99,7 +99,7 @@ public class OnProjectDropActionTest extends AbstractProjectUITestCase{
     @Test
     public void testPerformAddResource() {
 
-        assertEquals(1, map.getProject().getElements().size());
+        assertEquals(3, map.getProject().getElements().size());
 
         action.init(null, null, ViewerDropLocation.ON, map.getProject(), resource);
         action.perform(new NullProgressMonitor());
@@ -117,7 +117,7 @@ public class OnProjectDropActionTest extends AbstractProjectUITestCase{
     @Test
     public void testPerformAddIllegalObject() {
 
-        assertEquals(1, map.getProject().getElements().size());
+        assertEquals(3, map.getProject().getElements().size());
 
         action.init(null, null, ViewerDropLocation.ON, map.getProject(), "Object"); //$NON-NLS-1$
         try{

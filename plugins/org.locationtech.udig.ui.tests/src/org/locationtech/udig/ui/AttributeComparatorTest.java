@@ -17,6 +17,7 @@ import java.util.Collections;
 import org.eclipse.swt.SWT;
 import org.geotools.data.DataUtilities;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -35,7 +36,7 @@ public class AttributeComparatorTest {
      * 
      * @throws Throwable
      */
-    @Test
+    @Ignore
     public void testCompare() throws Throwable {
        SimpleFeatureType type = DataUtilities.createType("type", "name:String,id:int");
 
@@ -53,7 +54,7 @@ public class AttributeComparatorTest {
         sort(features, feature1, feature2, "name"); //$NON-NLS-1$
         sort(features, feature1, feature2, "id"); //$NON-NLS-1$
     }
-
+    
     private void sort( ArrayList<SimpleFeature> features, SimpleFeature feature1, SimpleFeature feature2, String xpath ) {
         Collections.sort(features, new AttributeComparator(SWT.UP, xpath));
 

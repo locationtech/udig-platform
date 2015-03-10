@@ -14,3 +14,4 @@ javaCompiler...args
 build.xml
 workspace
 runtime-udig.product
+plugins/org.locationtech.udig.catalog.tests.ui/CatalogViewDNDTest.launch

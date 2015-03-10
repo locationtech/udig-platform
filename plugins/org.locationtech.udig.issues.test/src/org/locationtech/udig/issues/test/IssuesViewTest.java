@@ -635,7 +635,7 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         }
     }
 
-    @Test
+    @Ignore
     public void testSetContentProvider() throws Exception {
         view.setContentProvider(new TestContentProvider.Provider1());
         assertEquals(TestContentProvider.Provider1.CHILD,viewer.getTree().getTopItem().getData());

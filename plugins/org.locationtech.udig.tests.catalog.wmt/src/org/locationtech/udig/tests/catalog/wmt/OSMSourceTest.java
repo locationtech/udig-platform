@@ -42,7 +42,7 @@ public class OSMSourceTest {
                 source);
     }
     
-    @Test
+    @Ignore
     public void testZoomLevelMappingScaleFactor50() throws Exception {
                 
         // Tests for scale-factor = 50

@@ -308,11 +308,25 @@
           | gt-dependencies (geotools.version)
           -->
 
+        <!-- managed netCDF dependencies -->
         <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-netcdf</artifactId>
             <version>${geotools.version}</version>
+            <exclusions>
+              <exclusion>  <!-- declare the exclusion here -->
+                <groupId>c3p0</groupId>
+                <artifactId>c3p0</artifactId>
+                <version>0.9.1.1</version>
+              </exclusion>
+          </exclusions> 
         </dependency>
+        <dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.5</version>
+        </dependency>
+        
 
         <dependency>
             <groupId>org.geotools</groupId>
@@ -558,12 +572,14 @@
             <version>${geotools.version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
+
+        <!-- IGNORE -->
+        <!--dependency>
             <groupId>ant</groupId>
             <artifactId>ant-optional</artifactId>
             <version>1.5.1</version>
             <scope>provided</scope>
-        </dependency>
+        </dependency-->
 
         <!-- We get this from the base RCP as such they are already provided by 
         our org.locationtech.udig.libs dependencies in the MANIFEST.MF 
