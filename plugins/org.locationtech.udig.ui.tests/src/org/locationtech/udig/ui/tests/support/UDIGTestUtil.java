@@ -5,6 +5,7 @@ package org.locationtech.udig.ui.tests.support;
 
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 
 import org.junit.Assert;
@@ -174,7 +175,8 @@ public final class UDIGTestUtil {
         if (urls != null) {
             for (URL url : urls) {
                 try {
-                    url.openConnection().connect();
+                    URLConnection connection = url.openConnection();
+                    connection.setConnectTimeout(3000);
                 } catch (IOException e) {
                     e.printStackTrace();
                     Assume.assumeNoException(e);
