@@ -177,6 +177,7 @@ public final class UDIGTestUtil {
                 try {
                     URLConnection connection = url.openConnection();
                     connection.setConnectTimeout(3000);
+                    connection.connect();
                 } catch (IOException e) {
                     e.printStackTrace();
                     Assume.assumeNoException(e);
