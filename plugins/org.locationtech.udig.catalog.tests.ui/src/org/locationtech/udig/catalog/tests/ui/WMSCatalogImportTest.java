@@ -21,7 +21,7 @@ import org.locationtech.udig.catalog.internal.wms.WMSServiceImpl;
 public class WMSCatalogImportTest extends CatalogImportTest {
 
 	@Override
-	Object getContext() throws MalformedURLException {
+	URL getContext() throws MalformedURLException {
 		return new URL("http://demo.opengeo.org/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
 	}
 	

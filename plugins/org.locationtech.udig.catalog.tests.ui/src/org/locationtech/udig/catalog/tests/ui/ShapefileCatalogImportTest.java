@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.FileLocator;
 public class ShapefileCatalogImportTest extends CatalogImportTest {
 
 	@Override
-	Object getContext() throws Exception {
+	URL getContext() throws Exception {
 		URL url = CatalogTestsUIPlugin.getDefault().getBundle()
 			.getEntry("data/streams.shp"); //$NON-NLS-1$
 		return FileLocator.toFileURL(url);
