@@ -56,9 +56,10 @@ import org.opengis.filter.FilterFactory;
 import org.opengis.filter.Id;
 import org.opengis.filter.identity.Identifier;
 
-@SuppressWarnings({"nls", "deprecation"})
+@SuppressWarnings({"nls"})
 public class FeatureTableControlTest {
 
+    private static final String ID_ATTRIBUTE = "id";
     private Shell shell;
     private FeatureTableControl table;
     private SimpleFeature feature1;
@@ -73,7 +74,7 @@ public class FeatureTableControlTest {
         shell = new Shell(display.getActiveShell());
         shell.setLayout(new FillLayout());
 
-        SimpleFeatureType ft = DataUtilities.createType("type", "name:String,id:int");
+        SimpleFeatureType ft = DataUtilities.createType("type", "name:String," + ID_ATTRIBUTE + ":int");
         feature1 = SimpleFeatureBuilder.build(ft, new Object[]{"feature1", 1}, "feature1");
         feature2 = SimpleFeatureBuilder.build(ft, new Object[]{"feature2", 2}, "feature2");
         feature3 = SimpleFeatureBuilder.build(ft, new Object[]{"feature3", 3}, "feature3");
@@ -135,7 +136,7 @@ public class FeatureTableControlTest {
     
     @Test
     public void testUpdateFeatureCollection() throws Exception {
-        SimpleFeatureType ft = DataUtilities.createType("type", "name:String,id:int"); //$NON-NLS-1$//$NON-NLS-2$
+        SimpleFeatureType ft = DataUtilities.createType("type", "name:String,"+ ID_ATTRIBUTE + ":int"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
         SimpleFeature f1 = SimpleFeatureBuilder.build(ft, new Object[]{"feature1", 10}, "feature1"); //$NON-NLS-1$ //$NON-NLS-2$
         SimpleFeature f2 = SimpleFeatureBuilder.build(ft, new Object[]{"feature5", 5}, "feature5"); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -151,7 +152,7 @@ public class FeatureTableControlTest {
             public boolean isTrue() {
                 SimpleFeature feature=(SimpleFeature) table.getViewer().getTable().getItem(0).getData();
                 return table.getViewer().getTable().getItemCount()==5  
-                    && ((Integer) feature.getAttribute("id")).intValue()==10; //$NON-NLS-1$
+                    && ((Integer) feature.getAttribute(ID_ATTRIBUTE)).intValue()==10; //$NON-NLS-1$
             }
             
         }, false);
@@ -159,7 +160,7 @@ public class FeatureTableControlTest {
         SimpleFeature feature=(SimpleFeature) table.getViewer().getTable().getItem(0).getData();
         
         assertEquals( 5, table.getViewer().getTable().getItemCount() );
-        assertEquals( 10, ((Integer) feature.getAttribute("id")).intValue() ); //$NON-NLS-1$
+        assertEquals( 10, ((Integer) feature.getAttribute(ID_ATTRIBUTE)).intValue() ); //$NON-NLS-1$
         table.assertInternallyConsistent();
     }
     
@@ -171,7 +172,7 @@ public class FeatureTableControlTest {
         TableItem topItem = viewer.getTable().getItem(0);
 
         SimpleFeature f = (SimpleFeature) topItem.getData();
-        final String featureId = f.getID();
+        final Object featureId = f.getAttribute(ID_ATTRIBUTE);
         f.setAttribute(0, "newName"); //$NON-NLS-1$
 
         while( Display.getCurrent().readAndDispatch() );
@@ -180,7 +181,7 @@ public class FeatureTableControlTest {
         while( Display.getCurrent().readAndDispatch() );
         for (TableItem ti : table.getViewer().getTable().getItems()) {
             SimpleFeature sf = (SimpleFeature) ti.getData();
-            if (sf.getID().equalsIgnoreCase(featureId)) {
+            if (sf.getAttribute(ID_ATTRIBUTE).equals(featureId)) {
                 assertEquals("newName", ti.getText(1)); //$NON-NLS-1$
             }
         }
