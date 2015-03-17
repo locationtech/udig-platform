@@ -61,7 +61,7 @@ public abstract class CatalogImportTest {
 			catalogImport.run(new DummyMonitor(),context);
 
             //sleep for 10 seconds, if dialog still active by then kill it
-            UDIGTestUtil.inDisplayThreadWait(2000000, new WaitCondition(){
+            UDIGTestUtil.inDisplayThreadWait(10000, new WaitCondition(){
 
                 public boolean isTrue() {
                     try {
