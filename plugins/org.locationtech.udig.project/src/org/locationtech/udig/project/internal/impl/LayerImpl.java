@@ -61,7 +61,6 @@ import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.ProgressManager;
 import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 import org.locationtech.udig.ui.palette.ColourScheme;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -107,6 +106,7 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory2;
+import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
@@ -297,7 +297,28 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
                     // if bounds are still null event is probably a commit
                     if (bounds != null) {
-                        bounds.expandToInclude(featureEvent.getBounds());
+                        ReferencedEnvelope delta = featureEvent.getBounds();
+                        if( bounds.isEmpty() ){
+                            bounds = delta;
+                        }
+                        else if (CRS.equalsIgnoreMetadata(delta.getCoordinateReferenceSystem(), bounds.getCoordinateReferenceSystem())){
+                            bounds.expandToInclude(delta);
+                        }
+                        else {
+                            try {
+                                bounds.expandToInclude(
+                                        delta.transform( bounds.getCoordinateReferenceSystem(), true )
+                                );
+                            } catch (TransformException e) {
+                                // reproject or give up and copy ...
+                                bounds = delta;
+                            } catch (FactoryException e) {
+                                // reproject or give up and copy ...
+                                bounds = delta;
+                            }
+                            // reproject or give up and copy ...
+                            bounds = delta;
+                        }
                     }
                 }
                 getFeatureChanges().add(featureEvent);
