@@ -4,8 +4,9 @@ Bundle-Name: Catalog Test Plug In
 Bundle-SymbolicName: org.locationtech.udig.catalog.tests; singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: udig.refractions.net
-Export-Package: org.locationtech.udig.catalog.tests,org.locationtech.u
- dig.catalog.tests.internal;x-internal:=true
+Export-Package: org.locationtech.udig.catalog.tests,
+ org.locationtech.udig.catalog.tests.internal;x-internal:=true,
+ org.locationtech.udig.catalog.util
 Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
  org.junit;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.jface;visibility:=reexport,

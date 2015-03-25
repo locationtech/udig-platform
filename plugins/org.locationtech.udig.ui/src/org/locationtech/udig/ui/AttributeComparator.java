@@ -42,7 +42,11 @@ public class AttributeComparator implements Comparator<SimpleFeature>, Serializa
             if( data1==null )
                 return 0;
             else
-                return 1;
+                return sortDir * 1;
+        } else {
+            if (data1==null) {
+                return sortDir * -1;
+            }
         }
         
         if( data0.equals(data1) ){

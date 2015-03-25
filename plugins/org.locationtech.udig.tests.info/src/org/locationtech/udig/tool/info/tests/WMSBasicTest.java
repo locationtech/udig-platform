@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.locationtech.udig.catalog.util.CatalogTestUtils;
 import org.locationtech.udig.catalog.wmsc.server.MockHttpResponse;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IMap;
@@ -31,7 +32,6 @@ import org.locationtech.udig.project.ui.tool.IToolContext;
 import org.locationtech.udig.tool.info.InfoTool;
 import org.locationtech.udig.tool.info.LayerPointInfo;
 import org.locationtech.udig.tool.info.internal.WMSDescribeLayer;
-
 import org.geotools.data.ows.HTTPResponse;
 import org.geotools.data.ows.Layer;
 import org.geotools.data.wms.WebMapServer;
@@ -68,7 +68,11 @@ public class WMSBasicTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		crs = CRS.decode("EPSG:4326");
+                stableWMS = new URL(
+                        "http://vmap0.tiles.osgeo.org/wms/vmap0?SERVICE=wms&VERSION=1.1.0&REQUEST=GetCapabilities");
+                CatalogTestUtils.assumeNoConnectionException(stableWMS, 2000);
+
+                crs = CRS.decode("EPSG:4326");
 		
 		Envelope env = new Envelope(-10.0, 10.0, -10.0, 10.0);
 		bbox = new ReferencedEnvelope(env, crs);
@@ -84,7 +88,6 @@ public class WMSBasicTest {
 		wmslayer.setQueryable(true);
 		wmslayer.setSrs(Collections.singleton("EPSG:4326"));
 		
-		stableWMS = new URL("http://vmap0.tiles.osgeo.org/wms/vmap0?SERVICE=wms&VERSION=1.1.0&REQUEST=GetCapabilities");
 		wms = new FudgeServer();
 		
 		layers = new ArrayList<ILayer>();

@@ -14,16 +14,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.ui.PlatformUI;
+import org.junit.Before;
+import org.junit.Test;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.internal.ui.CatalogView;
-import org.locationtech.udig.catalog.tests.DummyService;
 import org.locationtech.udig.catalog.tests.ui.workflow.DummyMonitor;
 import org.locationtech.udig.internal.ui.StaticDestinationProvider;
 import org.locationtech.udig.internal.ui.UDIGDropHandler;
@@ -33,11 +37,6 @@ import org.locationtech.udig.ui.IDropHandlerListener;
 import org.locationtech.udig.ui.ViewerDropLocation;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.ui.PlatformUI;
-import org.junit.Before;
-import org.junit.Test;
 
 public abstract class CatalogViewDNDTest {
 
@@ -74,8 +73,9 @@ public abstract class CatalogViewDNDTest {
 	}
 
     @Test
-	public void testSingle() throws Throwable {
-		Object data = getData();
+    public void testSingle() throws Throwable {
+        URL data = getData();
+        UDIGTestUtil.assumeNoConnectionException(Collections.singletonList(data));
 
         final Throwable[] failure=new Throwable[1];
         handler.addListener(new IDropHandlerListener(){
@@ -114,9 +114,9 @@ public abstract class CatalogViewDNDTest {
 	}
 
     @Test
-	public void testMulti() throws Throwable {
-		Object data = getDataMulti();
-
+    public void testMulti() throws Throwable {
+        URL[] data = getDataMulti();
+        UDIGTestUtil.assumeNoConnectionException(Arrays.asList(getDataMulti()));
         final Throwable[] failure=new Throwable[1];
         handler.addListener(new IDropHandlerListener(){
 
@@ -164,8 +164,8 @@ public abstract class CatalogViewDNDTest {
         return "At least 1 dummy resource objects should be in catalog"; //$NON-NLS-1$
     }
 
-    abstract Object getData() throws Exception;
-	abstract Object getDataMulti() throws Exception;
+    abstract URL getData() throws Exception;
+    abstract URL[] getDataMulti() throws Exception;
 
 	void makeAssertion(String assertionDescription, ICatalog catalog) throws Exception {
 		assertTrue(assertionDescription, !catalog.members(null).isEmpty());

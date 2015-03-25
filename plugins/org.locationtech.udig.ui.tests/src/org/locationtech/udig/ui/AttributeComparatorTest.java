@@ -17,6 +17,9 @@ import java.util.Collections;
 import org.eclipse.swt.SWT;
 import org.geotools.data.DataUtilities;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -29,6 +32,24 @@ import org.opengis.feature.simple.SimpleFeatureType;
 @SuppressWarnings("nls")
 public class AttributeComparatorTest {
 
+    public static SimpleFeatureType featurType;
+    private SimpleFeature featureNameNullIdOne;
+    private SimpleFeature featureNameNotNullIdTwo; 
+    
+    @BeforeClass
+    public static void beforeClass() throws Throwable {
+        featurType = DataUtilities.createType("type", "name:String,id:int");
+    }
+    
+    @Before
+    public void setUp() {
+        final String name2 = "name2"; //$NON-NLS-1$
+
+        featureNameNullIdOne = SimpleFeatureBuilder.build(featurType, new Object[]{null, 1}, "1");
+
+        featureNameNotNullIdTwo = SimpleFeatureBuilder.build(featurType, new Object[]{name2, 2},"2");
+
+    }
     /**
      * Test method for
      * {@link org.locationtech.udig.ui.AttributeComparator#compare(org.geotools.feature.SimpleFeature, org.geotools.feature.SimpleFeature)}.
@@ -37,21 +58,13 @@ public class AttributeComparatorTest {
      */
     @Test
     public void testCompare() throws Throwable {
-       SimpleFeatureType type = DataUtilities.createType("type", "name:String,id:int");
-
         ArrayList<SimpleFeature> features = new ArrayList<SimpleFeature>(2);
 
-        final String name1 = null;
-        final String name2 = "name2"; //$NON-NLS-1$
-        SimpleFeature feature1 = SimpleFeatureBuilder.build(type, new Object[]{name1, 1}, "1");
+        features.add(featureNameNotNullIdTwo);
+        features.add(featureNameNullIdOne);
 
-        SimpleFeature feature2 = SimpleFeatureBuilder.build(type, new Object[]{name2, 2},"2");
-
-        features.add(feature1);
-        features.add(feature2);
-
-        sort(features, feature1, feature2, "name"); //$NON-NLS-1$
-        sort(features, feature1, feature2, "id"); //$NON-NLS-1$
+        sort(features, featureNameNotNullIdTwo, featureNameNullIdOne, "name");
+        sort(features, featureNameNullIdOne, featureNameNotNullIdTwo, "id");
     }
 
     private void sort( ArrayList<SimpleFeature> features, SimpleFeature feature1, SimpleFeature feature2, String xpath ) {
@@ -66,4 +79,39 @@ public class AttributeComparatorTest {
         assertEquals(feature2, features.get(1));
     }
 
+    /**
+     * compare features where an attribute of one object is null, expects to 
+     */
+    @Test
+    public void testCompareNullWithNonNullStringAttribute() {
+
+        AttributeComparator nameUpComparator = new AttributeComparator(SWT.UP, "name");
+        assertEquals(-1, nameUpComparator.compare(featureNameNullIdOne, featureNameNotNullIdTwo));
+        assertEquals(1, nameUpComparator.compare(featureNameNotNullIdTwo, featureNameNullIdOne));
+
+        AttributeComparator nameDownComparator = new AttributeComparator(SWT.DOWN, "name");
+        assertEquals(1, nameDownComparator.compare(featureNameNullIdOne, featureNameNotNullIdTwo));
+        assertEquals(-1, nameDownComparator.compare(featureNameNotNullIdTwo, featureNameNullIdOne));
+    }
+
+    @Test
+    public void testCompareNullWithNonNullIntAttribute() {
+
+        AttributeComparator nameUpComparator = new AttributeComparator(SWT.UP, "id");
+        assertEquals(1, nameUpComparator.compare(featureNameNullIdOne, featureNameNotNullIdTwo));
+        assertEquals(-1, nameUpComparator.compare(featureNameNotNullIdTwo, featureNameNullIdOne));
+
+        AttributeComparator nameDownComparator = new AttributeComparator(SWT.DOWN, "id");
+        assertEquals(-1, nameDownComparator.compare(featureNameNullIdOne, featureNameNotNullIdTwo));
+        assertEquals(1, nameDownComparator.compare(featureNameNotNullIdTwo, featureNameNullIdOne));
+    }
+
+    @Test
+    public void testCompareWithSameObject() {
+        
+        AttributeComparator nameComparator = new AttributeComparator(SWT.UP, "name");
+        
+        assertEquals(0, nameComparator.compare(featureNameNullIdOne, featureNameNullIdOne));
+        
+    }
 }

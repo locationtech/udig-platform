@@ -22,13 +22,12 @@
             <plugin>
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>tycho-surefire-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>org.eclipse.tycho</groupId>
-                <artifactId>target-platform-configuration</artifactId>
+                <configuration>
+                    <useuiharness>false</useuiharness>
+                    <useuithread>false</useuithread>
+                    <useUIThread>false</useUIThread>
+                </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>
