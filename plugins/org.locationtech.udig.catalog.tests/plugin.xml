@@ -12,6 +12,16 @@
             class="org.locationtech.udig.catalog.tests.DummyMultiResourceServiceExtension"
             id="MultiDummy"
             name="MultiDummy"/>
+      <service
+            class="org.locationtech.udig.catalog.tests.internal.LessInterestingService"
+            id="LessInterestingService"
+            name="LessInterestingService">
+      </service>
+      <service
+            class="org.locationtech.udig.catalog.tests.internal.MoreInterestingService"
+            id="MoreInterestingService"
+            name="MoreInterestingService">
+      </service>
    </extension>
     <extension
           point="org.locationtech.udig.catalog.resolvers">

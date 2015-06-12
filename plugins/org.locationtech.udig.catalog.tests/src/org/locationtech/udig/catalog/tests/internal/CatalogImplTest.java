@@ -12,13 +12,20 @@ package org.locationtech.udig.catalog.tests.internal;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 
-import org.locationtech.udig.catalog.URLUtils;
-
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.URLUtils;
 
 /**
  * Tests for the default catalog
@@ -56,5 +63,12 @@ public class CatalogImplTest {
     @Test
     public void testAquire() {
         
+    }
+    
+    @Test
+    public void testServiceComparison() throws Exception {
+        ICatalog ci = CatalogPlugin.getDefault().getLocalCatalog();
+        IService service = ci.acquire(new URL("http://www.randomurl.com"), new NullProgressMonitor()); //$NON-NLS-1$
+        assertTrue(service instanceof MoreInterestingService.MoreInterestingServiceImpl);
     }
 }

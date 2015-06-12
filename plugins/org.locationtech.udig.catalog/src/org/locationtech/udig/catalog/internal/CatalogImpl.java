@@ -1155,10 +1155,12 @@ public class CatalogImpl extends ICatalog {
                     double metric1 = info1.getMetric();
                     double metric2 = info2.getMetric();
                     
+                    // needs to be sorted in descending order, so that the most matching
+                    // is the first (callers of constructServices always choose the first)
                     if (metric1 > metric2) {
-                        return 1;
+                        return -1;
                     }else if(metric1 < metric2){
-                       return -1;
+                       return 1;
                     }else{
                        return 0;
                     }
