@@ -19,6 +19,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.junit.After;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.locationtech.udig.catalog.internal.ui.ConnectionPageDecorator;
 import org.locationtech.udig.catalog.ui.ConnectionFactoryManager;
 import org.locationtech.udig.catalog.ui.UDIGConnectionFactoryDescriptor;
@@ -29,18 +37,12 @@ import org.locationtech.udig.catalog.ui.workflow.Workflow;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardDialog;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
-
-import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.junit.After;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.locationtech.udig.catalog.util.CatalogTestUtils;
 
 public class ConnectionTest {
 	Shell shell;
 
+	private static URL capabilitiesRequestURL = null;
 	WorkflowWizard wizard;
 
 	WorkflowWizardDialog dialog;
@@ -50,6 +52,14 @@ public class ConnectionTest {
 	ConnectionPageDecorator page;
 
 	private Workflow workflow;
+
+
+    @BeforeClass
+    public static void beforeClass() throws Exception {
+        capabilitiesRequestURL = new URL(
+                "http://demo.opengeo.org/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
+        CatalogTestUtils.assumeNoConnectionException(capabilitiesRequestURL, 1000);
+    }
 
     private void init( String urlString ) {
         ArrayList<String> l = new ArrayList<String>();
@@ -107,8 +117,8 @@ public class ConnectionTest {
 
 		// create a workbench selection
 		try {
-			URL url = new URL("http://demo.opengeo.org/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
-			workflow.setContext(url);
+			
+			workflow.setContext(capabilitiesRequestURL);
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
@@ -135,12 +145,12 @@ public class ConnectionTest {
 	
 	@Test
 	public void testConnection() {
-        init("org.locationtech.udig.catalog.ui.WMS"); //$NON-NLS-1$
+	    init("org.locationtech.udig.catalog.ui.WMS"); //$NON-NLS-1$
 
 		//create a workbench selection
 		try {
-			URL url = new URL("http://demo.opengeo.org/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
-			workflow.setContext(url);
+			
+			workflow.setContext(capabilitiesRequestURL);
 			
 		} 
 		catch (Exception e) {

@@ -60,6 +60,7 @@ import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
+@Ignore
 public class WriteChangesBehaviourTest {
 
     private TestHandler handler;
@@ -98,7 +99,6 @@ public class WriteChangesBehaviourTest {
     /*
      * Test method for 'org.locationtech.udig.tools.edit.behaviour.SetEditFeatureBehaviour.run(EditToolHandler)'
      */
-    @Ignore
     @Test
     public void testPolygon() throws Exception {
         AcceptChangesBehaviour behaviour;
@@ -164,7 +164,6 @@ public class WriteChangesBehaviourTest {
     /*
      * Test method for 'org.locationtech.udig.tools.edit.behaviour.SetEditFeatureBehaviour.run(EditToolHandler)'
      */
-    @Ignore
     @Test
     public void testMultiPolygon() throws Exception {
         AcceptChangesBehaviour behaviour;
@@ -338,7 +337,6 @@ public class WriteChangesBehaviourTest {
         return bb.toCoord(org.locationtech.udig.tools.edit.support.Point.valueOf(i,j));
     }
 
-    @Ignore
     @Test
     public void testPoint() throws Exception {
         AcceptChangesBehaviour behaviour=new AcceptChangesBehaviour(Point.class, false);

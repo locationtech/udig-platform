@@ -165,24 +165,6 @@ public final class UDIGTestUtil {
 		if (throwExceptionOnTimeout && !condition.isTrue() && startTime + maxWaitInMilliSeconds < lastTime){
             throw new IllegalStateException("condition is false!  Condition that failed is:"+ condition);  //$NON-NLS-1$
             }
-}
+	}
 
-    /**
-     * uses Assume.assumeNoException to verify if its possible to connect to an URL
-     * @param urls List of URL's to connect to
-     */
-    public static void assumeNoConnectionException(List<URL> urls) {
-        if (urls != null) {
-            for (URL url : urls) {
-                try {
-                    URLConnection connection = url.openConnection();
-                    connection.setConnectTimeout(3000);
-                    connection.connect();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Assume.assumeNoException(e);
-                }
-            }
-        }
-    }
 }
