@@ -71,7 +71,7 @@ public class LessInterestingService implements ServiceExtension {
     public Map<String, Serializable> createParams(URL url) {
         URL testURL = null;
         try {
-            testURL = new URL(CatalogImplTest.TEST_URL);
+            testURL = new URL(CatalogImplTest.SERVICE_COMPARISON_TEST_URL);
         }
         catch(Exception e) {}
                

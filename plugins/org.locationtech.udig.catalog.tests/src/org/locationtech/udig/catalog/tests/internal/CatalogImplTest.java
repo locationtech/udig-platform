@@ -31,7 +31,7 @@ import org.locationtech.udig.catalog.URLUtils;
  */
 public class CatalogImplTest {
     
-    public static String TEST_URL = "http://www.randomurl.com"; //$NON-NLS-1$
+    public static String SERVICE_COMPARISON_TEST_URL = "http://www.randomurl.com"; //$NON-NLS-1$
 
     @Ignore
     @Test
@@ -66,7 +66,7 @@ public class CatalogImplTest {
     @Test
     public void testServiceComparison() throws Exception {
         ICatalog ci = CatalogPlugin.getDefault().getLocalCatalog();
-        IService service = ci.acquire(new URL(TEST_URL), new NullProgressMonitor());
+        IService service = ci.acquire(new URL(SERVICE_COMPARISON_TEST_URL), new NullProgressMonitor());
         assertTrue(service instanceof MoreInterestingService.MoreInterestingServiceImpl);
     }
 }
