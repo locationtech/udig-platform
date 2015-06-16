@@ -14,11 +14,14 @@ import static org.junit.Assert.assertTrue;
 
 import java.net.URL;
 
-import org.locationtech.udig.catalog.URLUtils;
-
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.URLUtils;
 
 /**
  * Tests for the default catalog
@@ -27,6 +30,8 @@ import org.junit.Test;
  * @since 1.1.0
  */
 public class CatalogImplTest {
+    
+    public static String SERVICE_COMPARISON_TEST_URL = "http://www.randomurl.com"; //$NON-NLS-1$
 
     @Ignore
     @Test
@@ -56,5 +61,12 @@ public class CatalogImplTest {
     @Test
     public void testAquire() {
         
+    }
+    
+    @Test
+    public void testServiceComparison() throws Exception {
+        ICatalog ci = CatalogPlugin.getDefault().getLocalCatalog();
+        IService service = ci.acquire(new URL(SERVICE_COMPARISON_TEST_URL), new NullProgressMonitor());
+        assertTrue(service instanceof MoreInterestingService.MoreInterestingServiceImpl);
     }
 }
