@@ -26,6 +26,7 @@ import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.tests.ui.workflow.DummyMonitor;
 import org.locationtech.udig.catalog.ui.wizard.CatalogImport;
+import org.locationtech.udig.catalog.util.CatalogTestUtils;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
@@ -36,13 +37,12 @@ public abstract class CatalogImportTest {
     @Before
     public void setUp() throws Exception {
         catalogImport = new CatalogImport();
-        UDIGTestUtil.assumeNoConnectionException(Collections.singletonList(getContext()));
+        CatalogTestUtils.assumeNoConnectionException(getContext(), 1000);
     }
 
     @Test
 	public void testNormal() throws Exception{
-			Object context = getContext();
-
+			URL context = getContext();
 			final ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
 
 			List<IResolve> members = catalog.members(new DummyMonitor());
