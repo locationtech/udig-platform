@@ -25,19 +25,19 @@ import org.geotools.data.ows.AbstractOpenWebService;
 import org.geotools.data.ows.Specification;
 import org.geotools.data.wms.WMS1_1_1;
 import org.geotools.ows.ServiceException;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.locationtech.udig.catalog.tests.wmsc.Activator;
 import org.locationtech.udig.catalog.util.CatalogTestUtils;
 
 public class TileImageReadWriterTest {
     
-    URL serverURL = null; // default to offline
+    private static URL serverURL = null; // default to offline
     
-    @Before
-    public void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         URL url = new URL( "http://localhost:8080/geoserver/ows?service=wms&version=1.3.0&request=GetCapabilities");
-        
+        CatalogTestUtils.assumeNoConnectionException(url, 1000);
         serverURL = url;
     }
 
@@ -45,8 +45,6 @@ public class TileImageReadWriterTest {
     public void testIsStale() throws Exception {
         Activator instance = Activator.getDefault();
         assertNotNull("Run as a JUnit Plug-in Test", instance); //$NON-NLS-1$
-        
-        CatalogTestUtils.assumeNoConnectionException(serverURL, 2000);
         
         if(serverURL == null ) return; // skip as we are offline
         MockTiledWebMapServer service = new MockTiledWebMapServer( serverURL );
