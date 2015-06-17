@@ -64,21 +64,22 @@ public class MoreInterestingService implements ServiceExtension {
     
     @Override
     public IService createService(URL id, Map<String, Serializable> params) {
-        return new MoreInterestingServiceImpl((URL) params.get("id")); //$NON-NLS-1$
-    }
-
-    @Override
-    public Map<String, Serializable> createParams(URL url) {
         URL testURL = null;
         try {
             testURL = new URL(CatalogImplTest.SERVICE_COMPARISON_TEST_URL);
         }
         catch(Exception e) {}
-               
-        if (!url.equals(testURL)) {
+        Serializable paramId = params.get("id"); //$NON-NLS-1$
+        if( paramId == null || !paramId.equals(testURL))
+        {
             return null;
         }
         
+        return new MoreInterestingServiceImpl((URL) params.get("id")); //$NON-NLS-1$
+    }
+
+    @Override
+    public Map<String, Serializable> createParams(URL url) {
         Map<String, Serializable> params = new TreeMap<String, Serializable>();
         params.put("id",url); //$NON-NLS-1$
         return params;

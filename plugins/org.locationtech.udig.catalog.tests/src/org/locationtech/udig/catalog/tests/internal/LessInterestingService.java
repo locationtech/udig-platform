@@ -64,6 +64,17 @@ public class LessInterestingService implements ServiceExtension {
     
     @Override
     public IService createService(URL id, Map<String, Serializable> params) {
+        URL testURL = null;
+        try {
+            testURL = new URL(CatalogImplTest.SERVICE_COMPARISON_TEST_URL);
+        }
+        catch(Exception e) {}
+        Serializable paramId = params.get("id"); //$NON-NLS-1$
+        if( paramId == null || !paramId.equals(testURL))
+        {
+            return null;
+        }
+        
         return new LessInterestingServiceImpl((URL) params.get("id")); //$NON-NLS-1$
     }
 
