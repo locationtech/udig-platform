@@ -80,16 +80,6 @@ public class LessInterestingService implements ServiceExtension {
 
     @Override
     public Map<String, Serializable> createParams(URL url) {
-        URL testURL = null;
-        try {
-            testURL = new URL(CatalogImplTest.SERVICE_COMPARISON_TEST_URL);
-        }
-        catch(Exception e) {}
-               
-        if (!url.equals(testURL)) {
-            return null;
-        }
-        
         Map<String, Serializable> params = new TreeMap<String, Serializable>();
         params.put("id",url); //$NON-NLS-1$
         return params;
