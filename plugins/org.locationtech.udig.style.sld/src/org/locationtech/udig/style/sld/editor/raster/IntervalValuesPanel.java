@@ -20,8 +20,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.style.sld.editor.CustomDynamicPalette;
 import org.locationtech.udig.style.sld.internal.Messages;
-
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CellLabelProvider;
@@ -347,7 +347,13 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 					i++;
 				}
 			}else{
-				Color[] clrs = currentPalette.getColors(currentPalette.getMaxColors());
+				//we want to turn this into a dynamic palette and generate gradients for
+				//in between colors
+				CustomDynamicPalette newPalette = new CustomDynamicPalette(
+						currentPalette.getName(),
+						currentPalette.getDescription(),
+						currentPalette.getColors(currentPalette.getMaxColors()));
+				Color[] clrs = newPalette.getColors(colors.size());
 				if (reverseColors){
 					reverse(clrs);
 				}
