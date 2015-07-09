@@ -10,7 +10,9 @@ following pages are available.
 
 * `Simple Raster`_
 
-* `Single Band Rasters`_
+* `Legacy Raster`_
+
+* `Single Band Raster`_
 
 * `XML`_
 
@@ -67,7 +69,7 @@ Allows simple control over the rendering of a raster image.
       -  1.0: Direct 1 to 1 ratio
       -  1-\*: Minimises the contribution; dimming the channel accordingly
 
-Single Band Rasters
+Legacy Raster
 ===================
 
 Used to handle single band rasters (such as digital elevation models) where you can map value ranges
@@ -77,6 +79,17 @@ to artificial colours for display. A number of predefined color maps are provide
    :align: center
    :alt:
 
+Single Band Raster
+===================
+
+An updated interface fo styling single band rasters (ex. digital elevation models).  Users can generate color themes for their
+rasters using predefined theme types and color palettes.  This interface also provides tools for generating breaks based on
+values from the raster.  Generated values and colors can be manually modified if required.
+
+.. figure:: /images/raster_style_pages/SingleBandRastersNew.png
+   :align: center
+   :alt:
+   
 XML
 ===
 
