@@ -264,8 +264,7 @@ Bundle-ClassPath: .,
  lib/ws-commons-util-1.0.1.jar,
  lib/xml-commons-resolver-1.2.jar,
  lib/xmlrpc-common-3.0.jar,
- lib/xmlrpc-client-3.0.jar,
- lib/
+ lib/xmlrpc-client-3.0.jar
 Export-Package: .,
  antlr,
  antlr.ASdebug,
