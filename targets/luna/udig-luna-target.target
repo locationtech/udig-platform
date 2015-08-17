@@ -510,7 +510,7 @@
 <unit id="org.eclipse.update.configurator.nl_fr" version="0.0.0" />
 <unit id="org.eclipse.update.configurator.nl_it" version="0.0.0" />
 <unit id="org.eclipse.update.configurator.nl_ko" version="0.0.0" />
-<repository location="http://download.eclipse.org/technology/babel/update-site/R0.12.1/luna" />
+<repository location="http://archive.eclipse.org/technology/babel/update-site/R0.12.1/luna" />
 </location>
 </locations>
 </target>
