@@ -56,7 +56,7 @@ public final class RuntimeFieldEditor extends FieldEditor {
     private Text memoryText;
     private String workspacePath;
 
-    private static String[] langArray = new String[]{"de", "en", "es", "eu", "fr", "it", "ko"};
+    private static String[] langArray = new String[]{"de", "en", "es", "eu", "fr", "it", "ko", "ru"};
     private IPreferenceStore preferenceStore;
     private Text proxyHostText;
     private Text proxyPortText;
