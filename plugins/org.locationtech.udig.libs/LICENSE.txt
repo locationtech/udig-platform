@@ -68,7 +68,7 @@ The most recent code audit was performed in 2010:
 * JODA 1.6 (license?)
 * JSQLParser (license?)
 * MYSQL (license?)
-* JSR-275 (license?)
+* JSR-275 (JCP Spec License)
 * JSR-305 (license?)
 * PostGIS Driver (license?)
 * Pico Container 1.2 (license?)
