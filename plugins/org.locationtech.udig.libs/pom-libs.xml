@@ -61,6 +61,17 @@
         <lib.source.dir>${basedir}/lib-src</lib.source.dir>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+            <!-- make version explicit here, its approved by CQ#: 7583 -->
+            <groupId>net.java.dev.jsr-275</groupId>
+            <artifactId>jsr-275</artifactId>
+            <version>1.0-beta-2</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <!-- uDig Specific Extras -->
         <dependency>
@@ -121,16 +132,16 @@
             <artifactId>gt-brewer</artifactId>
             <version>${geotools.version}</version>
         </dependency>
-	
-	<!-- gt-11 no longer under development.
-	
+    
+    <!-- gt-11 no longer under development.
+    
         <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-shapefile-renderer</artifactId>
             <version>${geotools.version}</version>
         </dependency>
-	-->
-	
+    -->
+    
         <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-validation</artifactId>
@@ -208,15 +219,15 @@
             <artifactId>gt-shapefile</artifactId>
             <version>${geotools.version}</version>
         </dependency>
-	
-	<!-- gt-11: shapefile-ng was merged in shapefile
+    
+    <!-- gt-11: shapefile-ng was merged in shapefile
         <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-shapefile-ng</artifactId>
             <version>${geotools.version}</version>
         </dependency>
-	-->
-	
+    -->
+    
         <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-wfs</artifactId>
@@ -460,9 +471,9 @@
             <version>${jfreechart.version}</version>
             <exclusions>
                 <exclusion>
-		          <groupId>jfree</groupId>
-		          <artifactId>jcommon</artifactId>
-		        </exclusion>
+                  <groupId>jfree</groupId>
+                  <artifactId>jcommon</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -685,9 +696,9 @@
             <version>1.0.b2</version>
             <scope>provided</scope>
         </dependency>
-		
-		<!-- Apache Commons Libraries -->
-		<!-- Prefer to use these from target platform if available -->
+        
+        <!-- Apache Commons Libraries -->
+        <!-- Prefer to use these from target platform if available -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -837,9 +848,9 @@
             <version>0.7.6</version>
             <exclusions>
                 <exclusion>
-		          <groupId>org.codehaus.groovy</groupId>
-		          <artifactId>groovy-all</artifactId>
-		        </exclusion>
+                  <groupId>org.codehaus.groovy</groupId>
+                  <artifactId>groovy-all</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
