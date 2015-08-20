@@ -4,8 +4,6 @@ plugins/org.locationtech.udig.libs.db2/libs/
 plugins/org.locationtech.udig.libs/lib-src/
 plugins/org.locationtech.udig.libs/lib/
 plugins/org.locationtech.udig.*/.settings
-plugins/eu.udig.libs.teradata/gtlib
-plugins/org.locationtech.udig.libs/src/org/
 features/org.locationtech.udig-site.community/artifacts.jar
 features/org.locationtech.udig-site.community/content.jar
 target
