@@ -153,6 +153,15 @@
 <unit id="org.eclipse.babel.nls_mylyn_es.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.babel.nls_tools.gef_es.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.babel.nls_birt_es.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.babel.nls_tools.tm_ru.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.babel.nls_tools.gef_ru.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.babel.nls_tools.objectteams_ru.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.babel.nls_rt.equinox_ru.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.babel.nls_birt_ru.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.babel.nls_modeling.emft.emf-facet_ru.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.babel.nls_mylyn_ru.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.babel.nls_eclipse_ru.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.babel.nls_rt.equinox.p2_ru.feature.group" version="0.0.0"/>
 <repository location="http://archive.eclipse.org/technology/babel/update-site/R0.10.0/indigo"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">

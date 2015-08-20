@@ -1477,6 +1477,294 @@ the Babel downloads.
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.core.commands.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.databinding.beans.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.databinding.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.databinding.observable.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.databinding.property.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.expressions.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.jobs.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.net.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.runtime.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.variables.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.app.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.common.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.ds.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.preferences.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.registry.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.security.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.util.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.help.base.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.help.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.help.ui.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.help.webapp.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jface.databinding.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jface.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jface.text.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.osgi.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.osgi.services.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcp.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.swt.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.cheatsheets.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.forms.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.intro.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.intro.universal.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.views.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.views.properties.tabbed.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.workbench.nl_ru"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.core.commands"
          download-size="0"
          install-size="0"
