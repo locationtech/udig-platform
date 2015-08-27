@@ -231,9 +231,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @generated not
      * @ordered
      */
-    protected volatile BrewerPalette colorPalette = PlatformGIS.getColorBrewer().getPalette(
-            ProjectPlugin.getPlugin().getPreferenceStore()
-                    .getString(PreferenceConstants.P_DEFAULT_PALETTE));
+    protected volatile BrewerPalette colorPalette = null;
 
     /**
      * The cached value of the '{@link #getEditManagerInternal() <em>Edit Manager Internal</em>}' containment reference.
@@ -273,7 +271,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @generated not 
      * @ordered
      */
-    protected volatile ColourScheme colourScheme = ColourScheme.getDefault(getColorPalette());
+    protected volatile ColourScheme colourScheme = null;
 
     /**
      * The cached value of the '{@link #getBlackBoardInternal() <em>Black Board Internal</em>}' containment reference.
@@ -1466,6 +1464,9 @@ public class MapImpl extends EObjectImpl implements Map {
      * @generated
      */
     public ColourScheme getColourScheme() {
+        if (colourScheme == null) {
+            colourScheme = ColourScheme.getDefault(getColorPalette());
+        }
         return colourScheme;
     }
 
