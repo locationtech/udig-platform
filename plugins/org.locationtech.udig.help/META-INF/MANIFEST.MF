@@ -8,7 +8,6 @@ Bundle-Localization: plugin
 Require-Bundle: org.apache.ant,
  org.eclipse.help.base,
  org.eclipse.help.ui,
- org.eclipse.help.webapp,
  org.eclipse.ui.intro,
  org.eclipse.ui.cheatsheets,
  org.locationtech.udig.style.sld,

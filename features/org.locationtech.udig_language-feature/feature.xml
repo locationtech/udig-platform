@@ -45,7 +45,6 @@ the Babel downloads.
       <import plugin="org.eclipse.help.base"/>
       <import plugin="org.eclipse.help"/>
       <import plugin="org.eclipse.help.ui"/>
-      <import plugin="org.eclipse.help.webapp"/>
       <import plugin="org.eclipse.jface.databinding"/>
       <import plugin="org.eclipse.jface"/>
       <import plugin="org.eclipse.jface.text"/>
@@ -498,46 +497,6 @@ the Babel downloads.
 
    <plugin
          id="org.eclipse.help.ui.nl_ko"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.help.webapp.nl_de"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.help.webapp.nl_es"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.help.webapp.nl_fr"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.help.webapp.nl_it"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.help.webapp.nl_ko"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -2913,14 +2872,6 @@ the Babel downloads.
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.help.webapp.nl_eu"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.jface.databinding.nl_eu"
          download-size="0"
          install-size="0"
@@ -3394,14 +3345,6 @@ the Babel downloads.
 
    <plugin
          id="org.eclipse.help.ui.nl_ru"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.help.webapp.nl_ru"
          download-size="0"
          install-size="0"
          version="0.0.0"
