@@ -8,7 +8,6 @@ Bundle-Localization: plugin
 Require-Bundle: org.apache.ant,
  org.eclipse.help.base,
  org.eclipse.help.ui,
- org.eclipse.ui.intro,
  org.eclipse.ui.cheatsheets,
  org.locationtech.udig.style.sld,
  org.locationtech.udig.project.ui,
@@ -16,4 +15,3 @@ Require-Bundle: org.apache.ant,
  org.locationtech.udig.catalog.ui,
  org.locationtech.udig.tool.default
 Import-Package: org.locationtech.udig.project.ui.internal
-
