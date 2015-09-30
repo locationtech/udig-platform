@@ -17,8 +17,10 @@ For more information visit http://udig.refractions.net
    </configIni>
 
    <launcherArgs>
-      <vmArgs>-Xmx386M -Dosgi.parentClassloader=ext</vmArgs>
-      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts -Djava.awt.headless=true</vmArgsMac>
+      <vmArgs>-Xmx386M -Dosgi.parentClassloader=ext
+      </vmArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts -Djava.awt.headless=true
+      </vmArgsMac>
    </launcherArgs>
 
    <windowImages i16="/org.locationtech.udig.tutorials.customapp/icons/world16.gif" i32="/org.locationtech.udig.tutorials.customapp/icons/world32.gif" i48="/org.locationtech.udig.tutorials.customapp/icons/world48.gif" i64="/org.locationtech.udig.tutorials.customapp/icons/world64.gif" i128="/org.locationtech.udig.tutorials.customapp/icons/world128.gif"/>
@@ -44,12 +46,14 @@ For more information visit http://udig.refractions.net
    </plugins>
 
    <features>
-      <feature id="org.locationtech.udig_tutorials.custom_feature"/>
-      <feature id="org.locationtech.udig_base"/>
-      <feature id="org.locationtech.udig_platform"/>
-      <feature id="org.locationtech.udig_application"/>
-      <feature id="org.locationtech.udig_printing"/>
+      <feature id="org.locationtech.udig_tutorials.custom-feature"/>
+      <feature id="org.locationtech.udig_base-feature"/>
+      <feature id="org.locationtech.udig_platform-feature"/>
+      <feature id="org.locationtech.udig_application-feature"/>
+      <feature id="org.locationtech.udig_printing-feature"/>
+      <feature id="javax.media.jai_imageio-feature" version="1.1.3"/>
       <feature id="org.eclipse.rcp"/>
+      <feature id="org.eclipse.help"/>
    </features>
 
 
