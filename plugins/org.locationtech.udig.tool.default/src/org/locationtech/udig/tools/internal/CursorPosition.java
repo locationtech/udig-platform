@@ -157,7 +157,8 @@ public class CursorPosition extends AbstractTool {
             String string = format.format(value);
 
             String[] parts = string.split("\\.");
-            if(parts[0].length()>3){
+            int prefix = parts[0].startsWith("-") ? 1 : 0;
+            if(parts[0].length()>3+prefix){
             	string = parts[0];
             }
             return string;
