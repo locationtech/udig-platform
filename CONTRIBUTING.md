@@ -1,0 +1,6 @@
+Thanks for contributing to uDig. Pull requests should include a test case and appropriate headers:
+* If your contribution is less then 1000 lines a project committer will review and apply it to the codebase on your behalf.
+* If your contribution is over 1000 lines please check for additional instructions
+
+
+In general, please consult [Contributing via Git!](http://wiki.eclipse.org/Development_Resources/Contributing_via_Git) instructions, especially *Signing off on a commit* section
