@@ -3,4 +3,6 @@ Thanks for contributing to uDig. Pull requests should include a test case and ap
 * If your contribution is over 1000 lines please check for additional instructions
 
 
-In general, please consult "Contributing via Git":http://wiki.eclipse.org/Development_Resources/Contributing_via_Git instructions, especially *Signing off on a commit* section
+In general, please consult 
+ * "Eclipse.org Committer Guidelines":http://www.eclipse.org/legal/committerguidelines.php
+ * "Contributing via Git":http://wiki.eclipse.org/Development_Resources/Contributing_via_Git instructions, especially *Signing off on a commit* section
