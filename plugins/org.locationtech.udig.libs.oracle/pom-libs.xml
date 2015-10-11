@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.locationtech.udig</groupId>
@@ -8,7 +9,8 @@
         <relativePath>../../pom-libs.xml</relativePath>
     </parent>
 
-    <!-- This script was created to automagically download the external libs 
+    <!-- 
+        This script was created to automagically download the external libs 
         required for this plugin to build and export correctly.
         
         At the time of writing the Oracle JDBC Driver required a click-through license
@@ -35,8 +37,17 @@
         2. This gives us something to add to the plugin MANIFEST.MF
         3. Proivde a wizard for users to replace this jar
            with their own downloaded copy.
-           
      -->
+
+    <artifactId>pom-libs.dummy.oracle</artifactId>
+    <name>Oracle Dummy Jar Creation</name>
+    
+    <packaging>pom</packaging>
+
+    <properties>
+        <lib.dir>${basedir}/libs</lib.dir>
+        <lib.dummy.dir>${lib.dir}/dummy</lib.dummy.dir>
+    </properties>
 
     <developers>
         <developer>
@@ -58,20 +69,6 @@
             <timezone>+1</timezone>
         </developer>
     </developers>
-
-    <modelVersion>4.0.0</modelVersion>
-    
-    <groupId>org.locationtech.udig.libs.oracle</groupId>
-    <artifactId>download</artifactId>
-    <version>0.0.2</version>
-    <name>Oracle Dummy Jar Creation</name>
-    
-    <packaging>pom</packaging>
-
-    <properties>
-        <lib.dir>${basedir}/libs</lib.dir>
-        <lib.dummy.dir>${lib.dir}/dummy</lib.dummy.dir>
-    </properties>
 
     <profiles>
         <profile>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.locationtech.udig</groupId>
@@ -25,6 +26,16 @@
         3. Proivde a wizard for users to replace these jars
      -->
 
+    <artifactId>pom-libs.dummy.db2</artifactId>
+    <name>DB2 Dummy Jar Creation</name>
+    
+    <packaging>pom</packaging>
+
+    <properties>
+        <lib.dir>${basedir}/libs</lib.dir>
+        <lib.dummy.dir>${lib.dir}/dummy</lib.dummy.dir>
+    </properties>
+
     <developers>
         <developer>
             <id>jodygarnett</id>
@@ -45,20 +56,6 @@
             <timezone>+1</timezone>
         </developer>
     </developers>
-
-    <modelVersion>4.0.0</modelVersion>
-    
-    <groupId>org.locationtech.udig.libs.db2</groupId>
-    <artifactId>download</artifactId>
-    <version>0.0.2</version>
-    <name>DB2 Dummy Jar Creation</name>
-    
-    <packaging>pom</packaging>
-
-    <properties>
-        <lib.dir>${basedir}/libs</lib.dir>
-        <lib.dummy.dir>${lib.dir}/dummy</lib.dummy.dir>
-    </properties>
 
     <build>
         <plugins>

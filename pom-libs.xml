@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
 
     <!-- This script was created to automagically download the external libs 
         required for uDig to build and export correctly. 
@@ -13,9 +14,6 @@
           - verify the classpath (Manfiest Runtime tab) references the libs;
           - ensure the lib versions in the classpath are also correct. -->
 
-
-    <modelVersion>4.0.0</modelVersion>
-    
     <groupId>org.locationtech.udig</groupId>
     <artifactId>pom-libs.parent</artifactId>
     <version>0.0.2</version>
