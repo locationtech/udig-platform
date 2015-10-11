@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.locationtech</groupId>
+        <groupId>org.locationtech.udig</groupId>
         <artifactId>udig-target</artifactId>
         <version>2.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.locationtech.udig-target</groupId>
-    <artifactId>udig-luna-target</artifactId>
+    <groupId>org.locationtech.udig.udig-target</groupId>
+    <artifactId>udig-target-luna</artifactId>
     <version>4.4</version>
     <packaging>eclipse-target-definition</packaging>
 

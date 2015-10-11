@@ -7,14 +7,11 @@
 
     <parent>
         <artifactId>plugins</artifactId>
-        <groupId>org.locationtech</groupId>
+        <groupId>org.locationtech.udig</groupId>
         <version>2.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.locationtech</groupId>
     <artifactId>org.locationtech.udig.mapgraphic.tests</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
-
     <packaging>eclipse-test-plugin</packaging>
 
     <build>

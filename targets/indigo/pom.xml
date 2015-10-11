@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.locationtech</groupId>
+        <groupId>org.locationtech.udig</groupId>
         <artifactId>udig-target</artifactId>
         <version>1.5.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.locationtech.udig-target</groupId>
-    <artifactId>udig-indigo-target</artifactId>
+    <groupId>org.locationtech.udig.udig-target</groupId>
+    <artifactId>udig-target-indigo</artifactId>
     <version>3.7</version>
     <packaging>eclipse-target-definition</packaging>
 
