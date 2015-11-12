@@ -84,6 +84,13 @@
                 <enabled>true</enabled>
             </releases>
         </repository>
+
+	<repository>
+            <id>ecc</id>
+            <name>ECC Repository</name>
+            <url>https://github.com/ElectronicChartCentre/ecc-mvn-repo/raw/master/releases</url>
+        </repository>
+
     </repositories>
 
     <build>
