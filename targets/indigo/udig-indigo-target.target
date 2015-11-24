@@ -162,7 +162,7 @@
 <unit id="org.eclipse.babel.nls_mylyn_ru.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.babel.nls_eclipse_ru.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.babel.nls_rt.equinox.p2_ru.feature.group" version="0.0.0"/>
-<repository location="http://archive.eclipse.org/technology/babel/update-site/R0.10.0/indigo"/>
+<repository location="http://archive.eclipse.org/technology/babel/update-site/R0.10.1/indigo"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="javax.media.jai_imageio-feature.feature.group" version="1.1.3"/>
