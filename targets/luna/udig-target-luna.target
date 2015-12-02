@@ -571,7 +571,7 @@
 <unit id="org.eclipse.ui.workbench.nl_ru" version="0.0.0" />
 <unit id="org.eclipse.ui.workbench.texteditor.nl_ru" version="0.0.0" />
 <unit id="org.eclipse.update.configurator.nl_ru" version="0.0.0" />
-<repository location="http://archive.eclipse.org/technology/babel/update-site/R0.12.1/luna" />
+<repository location="http://download.eclipse.org/technology/babel/update-site/R0.13.1/luna"/>
 </location>
 </locations>
 </target>
