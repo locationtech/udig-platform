@@ -8,4 +8,4 @@ Require-Bundle: org.eclipse.core.runtime,
  org.junit;bundle-version="[4.0.0,5.0.0)",
  org.locationtech.udig.style.sld,
  org.locationtech.udig.libs
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

@@ -134,11 +134,11 @@ public class ViewerOld extends JPanel {
             buffer.append(" - ");
         }
         buffer.append(coverage.getName().toString(JComponent.getDefaultLocale()));
-        if (coverage != coverage.geophysics(true)) {
-            buffer.append(" (packed)");
-        } else if (coverage != coverage.geophysics(false)) {
-            buffer.append(" (geophysics)");
-        }
+//        if (coverage != coverage.geophysics(true)) {
+//            buffer.append(" (packed)");
+//        } else if (coverage != coverage.geophysics(false)) {
+//            buffer.append(" (geophysics)");
+//        }
         return show(new ViewerOld(coverage), buffer.toString());
     }
 

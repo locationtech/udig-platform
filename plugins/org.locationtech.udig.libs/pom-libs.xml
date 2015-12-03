@@ -30,7 +30,7 @@
 
     <properties>
         <!-- see geotools root pom for details -->
-        <geotools.version>14.0</geotools.version>
+        <geotools.version>14.1</geotools.version>
         <imageio-ext.version>1.1.12</imageio-ext.version>
         <jfreechart.version>1.0.13</jfreechart.version>
         <jt.version>1.4.0</jt.version>
@@ -325,6 +325,43 @@
 
         <dependency>
             <groupId>org.geotools</groupId>
+            <artifactId>gt-wfs-ng</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-css</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-mbtiles</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-geopkg</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-geobuf</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-ogr-jni</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+
+        <!-- others -->
+        <dependency>
+            <groupId>org.geotools</groupId>
             <artifactId>gt-imagepyramid</artifactId>
             <version>${geotools.version}</version>
         </dependency>
@@ -362,6 +399,7 @@
             <exclusions>
                 <exclusion>
                     <groupId>org.geotools</groupId>
+                    <artifactId>*</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>org.codehaus.groovy</groupId>

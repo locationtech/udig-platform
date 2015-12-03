@@ -16,4 +16,4 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.ui,
  org.locationtech.udig.ui.tests
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

@@ -37,7 +37,6 @@ import org.locationtech.udig.project.render.RenderException;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 import org.locationtech.udig.render.gridcoverage.basic.internal.Messages;
 import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.coverage.CoverageFactoryFinder;
 import org.geotools.coverage.grid.GridCoverage2D;
@@ -334,13 +333,14 @@ public class GridCoverageReaderRenderer extends RendererImpl {
 
             renderer.paint(graphics, (GridCoverage2D) coverage, rasterSymbolizer);
         } catch (IOException e) {
-            // TODO Handle IOException
             throw (RuntimeException) new RuntimeException().initCause(e);
         } catch (FactoryException e) {
             throw (RuntimeException) new RuntimeException().initCause(e);
         } catch (TransformException e) {
             throw (RuntimeException) new RuntimeException().initCause(e);
         } catch (NoninvertibleTransformException e) {
+            throw (RuntimeException) new RuntimeException().initCause(e);
+        } catch (Exception e) {
             throw (RuntimeException) new RuntimeException().initCause(e);
         }
 

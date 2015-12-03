@@ -22,16 +22,9 @@ import javax.media.jai.InterpolationNearest;
 import javax.media.jai.JAI;
 import javax.media.jai.TileCache;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.internal.render.impl.RendererImpl;
-import org.locationtech.udig.project.render.IRenderContext;
-import org.locationtech.udig.project.render.RenderException;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.coverage.grid.GridCoverage2D;
-import org.geotools.coverage.grid.ViewType;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.gce.grassraster.JGrassMapEnvironment;
 import org.geotools.gce.grassraster.JGrassRegion;
@@ -40,15 +33,19 @@ import org.geotools.referencing.CRS;
 import org.geotools.renderer.lite.RendererUtilities;
 import org.geotools.renderer.lite.gridcoverage2d.GridCoverageRenderer;
 import org.geotools.styling.RasterSymbolizer;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
+import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.render.impl.RendererImpl;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.RenderException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
-
-import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
-import org.locationtech.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
-import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
 
 /**
  * The renderer for GRASS type rasters, as wrapped by the JGrassMapGeoResource
@@ -163,7 +160,6 @@ public class RasterRenderer extends RendererImpl {
             // .getMaxY(), ewRes, nsRes);
             JGrassMapEnvironment grassMapEnvironment = grassMapGeoResource.getjGrassMapEnvironment();
             GridCoverage2D coverage = JGrassCatalogUtilities.getGridcoverageFromGrassraster(grassMapEnvironment, drawMapRegion);
-            coverage = coverage.view(ViewType.RENDERED);
             if (coverage != null) {
 
                 // setting rendering hints

@@ -1300,7 +1300,7 @@ public class StyleThemePage extends StyleEditorPage {
                         classifierModified = true;
                     else if ((getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_uniques)) && !(function instanceof UniqueIntervalFunction)) 
                         classifierModified = true;
-                    else if (!function.getExpression().equals(expr))
+                    else if (!function.equals(expr))
                         classifierModified = true;
                 }
                 

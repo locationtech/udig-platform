@@ -7,4 +7,4 @@ Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.core.runtime,
  org.locationtech.udig.catalog.wfs,
  org.locationtech.udig.catalog.tests
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

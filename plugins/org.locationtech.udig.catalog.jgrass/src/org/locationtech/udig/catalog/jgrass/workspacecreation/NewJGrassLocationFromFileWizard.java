@@ -21,9 +21,6 @@ import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.coverage.grid.GridCoverage2D;
-import org.geotools.coverage.grid.GridGeometry2D;
-import org.geotools.coverage.grid.ViewType;
-import org.geotools.coverage.processing.Operations;
 import org.geotools.gce.arcgrid.ArcGridReader;
 import org.geotools.gce.geotiff.GeoTiffReader;
 import org.geotools.gce.grassraster.GrassCoverageWriter;
@@ -31,13 +28,10 @@ import org.geotools.gce.grassraster.JGrassMapEnvironment;
 import org.geotools.gce.grassraster.JGrassRegion;
 import org.geotools.gce.grassraster.format.GrassCoverageFormat;
 import org.geotools.gce.grassraster.format.GrassCoverageFormatFactory;
-import org.geotools.referencing.CRS;
-import org.opengis.coverage.grid.GridCoverageWriter;
-import org.opengis.parameter.GeneralParameterValue;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
 import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
 import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
+import org.opengis.parameter.GeneralParameterValue;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * @author Andrea Antonello - www.hydrologis.com
@@ -73,13 +67,11 @@ public class NewJGrassLocationFromFileWizard extends Wizard implements INewWizar
             if (mapFile.getName().endsWith(".asc")) {
                 ArcGridReader arcGridReader = new ArcGridReader(mapFile);
                 geodata = arcGridReader.read(null);
-                geodata = geodata.view(ViewType.GEOPHYSICS);
                 geodata = JGrassCatalogUtilities.removeNovalues(geodata);
                 fileCrs = arcGridReader.getCrs();
             } else if (mapFile.getName().endsWith(".tif") || mapFile.getName().endsWith(".tiff")) {
                 GeoTiffReader geotiffGridReader = new GeoTiffReader(mapFile);
                 geodata = geotiffGridReader.read(null);
-                geodata = geodata.view(ViewType.GEOPHYSICS);
                 geodata = JGrassCatalogUtilities.removeNovalues(geodata);
                 fileCrs = geotiffGridReader.getCrs();
             }

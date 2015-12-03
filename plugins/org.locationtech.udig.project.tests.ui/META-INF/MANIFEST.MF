@@ -51,4 +51,4 @@ Require-Bundle: org.eclipse.gef;bundle-version="3.7.0",
  org.locationtech.udig.project.tests;visibility:=reexport,
  org.locationtech.udig.catalog.tests.ui;visibility:=reexport
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

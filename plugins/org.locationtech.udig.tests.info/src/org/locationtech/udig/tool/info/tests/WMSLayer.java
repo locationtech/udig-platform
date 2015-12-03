@@ -16,15 +16,14 @@ import org.locationtech.udig.project.ILayerListener;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.IStyleBlackboard;
 import org.locationtech.udig.project.Interaction;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.data.Query;
 import org.geotools.data.ows.Layer;
 import org.geotools.data.wms.WebMapServer;
-import org.geotools.filter.Filter;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.filter.Filter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 
@@ -60,11 +59,6 @@ public class WMSLayer implements ILayer {;
 		
 	}
 
-	public Filter createBBoxFilter(Envelope boundingBox, IProgressMonitor monitor) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	// public ReferencedEnvelope getBounds(IProgressMonitor monitor, CoordinateReferenceSystem crs) throws IOException {
 	public ReferencedEnvelope getBounds(IProgressMonitor monitor, CoordinateReferenceSystem crs) {
 		// TODO Auto-generated method stub
@@ -77,11 +71,6 @@ public class WMSLayer implements ILayer {;
 	}
 
 	public CoordinateReferenceSystem getCRS() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Filter getFilter() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -355,6 +344,22 @@ public class WMSLayer implements ILayer {;
     public boolean isShown() {
         // TODO Auto-generated method stub
         return false;
+    }
+
+
+
+    @Override
+    public Filter getFilter() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+
+    @Override
+    public Filter createBBoxFilter(Envelope boundingBox, IProgressMonitor monitor) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 	
