@@ -548,14 +548,17 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     	if (getTool() instanceof ModalTool) {
             if( isActive() != active ){
                 ModalTool modalTool = getModalTool();
-                modalTool.setActive(active);
                 if (active){
-                    // allow tool manager to update the activeTool cursor etc..
+                    // allow tool manager to update the activeTool cursor etc.. --> calls setActive()
                     toolManager.setActiveModalToolProxy(this);
 //                  String currentCursorID = modalTool.getCursorID();
 //                  toolContext.getViewportPane().setCursor(toolManager.findToolCursor(currentCursorID));
                 }
-    		}
+                else
+                {
+                    modalTool.setActive(active); // only called when deactivated, because it gets also called by toolManager.setActiveModalToolProxy
+                }
+            }
     	}
     }
 
