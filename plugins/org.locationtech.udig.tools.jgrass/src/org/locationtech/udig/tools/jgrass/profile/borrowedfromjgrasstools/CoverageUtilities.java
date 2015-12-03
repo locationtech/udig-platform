@@ -18,9 +18,13 @@ import java.util.List;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridEnvelope2D;
 import org.geotools.coverage.grid.GridGeometry2D;
+import org.geotools.geometry.jts.JTS;
+import org.geotools.referencing.CRS;
 import org.geotools.referencing.operation.matrix.XAffineTransform;
 import org.opengis.geometry.DirectPosition;
 import org.opengis.geometry.Envelope;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.opengis.referencing.operation.MathTransform;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -33,6 +37,8 @@ import com.vividsolutions.jts.linearref.LengthIndexedLine;
  * </p>
  * 
  * @author Andrea Antonello - www.hydrologis.com
+ * @author Frank Gasdorf
+ * 
  * @since 0.1
  */
 public class CoverageUtilities {
@@ -93,7 +99,7 @@ public class CoverageUtilities {
      * @return the list of {@link ProfilePoint}s.
      * @throws Exception
      */
-    public static List<ProfilePoint> doProfile( GridCoverage2D coverage, double step, Coordinate... coordinates )
+    public static List<ProfilePoint> doProfile(CoordinateReferenceSystem mapCRS, GridCoverage2D coverage, double step, Coordinate... coordinates )
             throws Exception {
         List<ProfilePoint> profilePointsList = new ArrayList<ProfilePoint>();
 
@@ -103,19 +109,35 @@ public class CoverageUtilities {
 
         double progressive = 0.0;
         Point2D point = new Point2D.Double();
+        
+        CoordinateReferenceSystem coverageCRS = coverage.getCoordinateReferenceSystem();
+        MathTransform mathTransform = null;
+        if (mapCRS != coverageCRS) {
+            mathTransform = CRS.findMathTransform(mapCRS, coverageCRS, true);
+        }
+
         while( progressive < lineLength + step ) { // run over by a step to make sure we get the
                                                    // last coord back from the extractor
             Coordinate c = indexedLine.extractPoint(progressive);
+            Coordinate current = null;
+            if (mathTransform != null) {
+                current = JTS.transform(c, null, mathTransform);
+            } else {
+                current = c;
+            }
+            
             double value = JGTConstants.doubleNovalue;
             try {
-                point.setLocation(c.x, c.y);
+                point.setLocation(current.x, current.y);
                 double[] evaluated = coverage.evaluate(point, (double[]) null);
                 value = evaluated[0];
             } catch (Exception e) {
                 // ignore problematic points (outside etc)
             }
-            ProfilePoint profilePoint = new ProfilePoint(progressive, value, c.x, c.y);
-            profilePointsList.add(profilePoint);
+            if (value != JGTConstants.doubleNovalue) {
+                ProfilePoint profilePoint = new ProfilePoint(progressive, value, current.x, current.y);
+                profilePointsList.add(profilePoint);
+            }
             progressive = progressive + step;
         }
         return profilePointsList;
