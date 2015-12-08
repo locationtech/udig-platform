@@ -9,26 +9,18 @@
  */
 package org.locationtech.udig.style.advanced.editorpages;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.MissingResourceException;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.NameImpl;
-import org.geotools.renderer.i18n.ErrorKeys;
-import org.geotools.renderer.i18n.Errors;
-import org.geotools.styling.ColorMap;
-import org.geotools.styling.ColorMapEntry;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
@@ -43,6 +35,7 @@ import org.locationtech.udig.style.advanced.StylePlugin;
 import org.locationtech.udig.style.advanced.internal.Messages;
 import org.locationtech.udig.style.advanced.raster.CoverageColorEditor;
 import org.locationtech.udig.style.advanced.raster.CoverageRule;
+import org.locationtech.udig.style.advanced.raster.CoverageRuleUtils;
 import org.locationtech.udig.style.internal.StyleLayer;
 import org.locationtech.udig.style.sld.SLDContent;
 import org.locationtech.udig.style.sld.SLDContentManager;
@@ -50,7 +43,6 @@ import org.locationtech.udig.style.sld.editor.StyleEditorPage;
 import org.locationtech.udig.ui.ExceptionDetailsDialog;
 import org.locationtech.udig.ui.graphics.SLDs;
 import org.opengis.coverage.grid.GridCoverage;
-import org.opengis.filter.expression.Expression;
 import org.opengis.style.SemanticType;
 
 /**
@@ -108,7 +100,7 @@ public class CoverageStyleEditorPage extends StyleEditorPage {
             // Rule ruleToUpdate = SLDs.getRasterSymbolizerRule(style);
             RasterSymbolizer rasterSymbolizer = SLDs.rasterSymbolizer(style);
 
-            List<CoverageRule> listOfRules = createCoverageRulesForRasterSymbolizer(rasterSymbolizer);
+            List<CoverageRule> listOfRules = CoverageRuleUtils.createCoverageRulesForRasterSymbolizer(rasterSymbolizer);
             
             colorRulesEditor.setLayer(layer);
 
@@ -127,30 +119,7 @@ public class CoverageStyleEditorPage extends StyleEditorPage {
 
     }
 
-    private List<CoverageRule> createCoverageRulesForRasterSymbolizer(
-            RasterSymbolizer rasterSymbolizer) {
-        List<CoverageRule> listOfRules = new ArrayList<CoverageRule>();
-        
-        ColorMap colorMap = rasterSymbolizer.getColorMap();
-        ColorMapEntry[] colorMapEntries = colorMap.getColorMapEntries();
-        for( int i = 0; i < colorMapEntries.length - 1; i++ ) {
-            double fromQuantity = getQuantity(colorMapEntries[i]);
-            java.awt.Color f = getColor(colorMapEntries[i]);
-            double fromOpacity = getOpacity(colorMapEntries[i]);
 
-            double toQuantity = getQuantity(colorMapEntries[i + 1]);
-            java.awt.Color t = getColor(colorMapEntries[i + 1]);
-            // double toOpacity = getOpacity(colorMapEntries[i + 1]);
-
-            Color fromColor = new Color(Display.getDefault(), f.getRed(), f.getGreen(), f.getBlue());
-            Color toColor = new Color(Display.getDefault(), t.getRed(), t.getGreen(), t.getBlue());
-            CoverageRule rule = new CoverageRule(new double[]{fromQuantity, toQuantity}, fromColor, toColor, fromOpacity,
-                    true);
-            listOfRules.add(rule);
-        }
-        
-        return listOfRules;
-    }
 
     public String getErrorMessage() {
         return null;
@@ -190,7 +159,7 @@ public class CoverageStyleEditorPage extends StyleEditorPage {
                 // // return false;
                 // }
 
-                RasterSymbolizer rasterSym = createColorMapForCoverageRules(colorRulesEditor.getRulesList(), colorRulesEditor.getAlphaVAlue());
+                RasterSymbolizer rasterSym = CoverageRuleUtils.createColorMapForCoverageRules(colorRulesEditor.getRulesList(), colorRulesEditor.getAlphaVAlue());
 
                 Style newStyle = SLD.wrapSymbolizers(rasterSym);
                 Layer selLayer = getSelectedLayer();
@@ -211,58 +180,7 @@ public class CoverageStyleEditorPage extends StyleEditorPage {
         return true;
     }
 
-    private RasterSymbolizer createColorMapForCoverageRules(final List<CoverageRule> list, final int alpha) {
-        final StyleFactory sf = CommonFactoryFinder.getStyleFactory(null);
-        final StyleBuilder sB = new StyleBuilder(sf);
-        final RasterSymbolizer rasterSym = sf.createRasterSymbolizer();
 
-        ColorMap colorMap = sf.createColorMap();
-        colorMap.setType(ColorMap.TYPE_RAMP);
-
-        ColorMapEntry lastColorMapEntry = null;
-        
-        for( int i = 0; i < list.size(); i++ ) {
-            CoverageRule coverageRule = list.get(i);
-            if (!coverageRule.isActive()) {
-                continue;
-            }
-            Color fromColor = coverageRule.getFromColor();
-            Color toColor = coverageRule.getToColor();
-            double[] values = coverageRule.getFromToValues();
-            double opacity = coverageRule.getOpacity();
-
-            Expression fromColorExpr = sB.colorExpression(new java.awt.Color(fromColor.getRed(), fromColor.getGreen(),
-                    fromColor.getBlue(), 255));
-            Expression toColorExpr = sB.colorExpression(new java.awt.Color(toColor.getRed(), toColor.getGreen(), toColor
-                    .getBlue(), 255));
-            Expression fromExpr = sB.literalExpression(values[0]);
-            Expression toExpr = sB.literalExpression(values[1]);
-            Expression opacityExpr = sB.literalExpression(opacity);
-
-            ColorMapEntry entry = sf.createColorMapEntry();
-            entry.setQuantity(fromExpr);
-            entry.setColor(fromColorExpr);
-            entry.setOpacity(opacityExpr);
-            colorMap.addColorMapEntry(entry);
-
-            lastColorMapEntry = sf.createColorMapEntry();
-            lastColorMapEntry.setQuantity(toExpr);
-            lastColorMapEntry.setOpacity(opacityExpr);
-            lastColorMapEntry.setColor(toColorExpr);
-        }
-        // add last Entry
-        if (lastColorMapEntry != null) {
-            colorMap.addColorMapEntry(lastColorMapEntry);
-        }
-        
-        rasterSym.setColorMap(colorMap);
-
-        /*
-         * set global transparency for the map
-         */
-        rasterSym.setOpacity(sB.literalExpression(alpha / 100.0));
-        return rasterSym;
-    }
 
     public void refresh() {
     }
@@ -303,48 +221,6 @@ public class CoverageStyleEditorPage extends StyleEditorPage {
         style.setName("simpleStyle"); //$NON-NLS-1$
 
         return style;
-    }
-
-    /**
-     * @param entry
-     * @return
-     * @throws NumberFormatException
-     */
-    private static java.awt.Color getColor( ColorMapEntry entry ) throws NumberFormatException {
-        final Expression color = entry.getColor();
-        final String colorString = (String) color.evaluate(null, String.class);
-        return java.awt.Color.decode(colorString);
-    }
-
-    /**
-     * @param entry
-     * @return
-     * @throws IllegalArgumentException
-     * @throws MissingResourceException
-     */
-    private static double getOpacity( ColorMapEntry entry ) throws IllegalArgumentException, MissingResourceException {
-
-        Expression opacity = entry.getOpacity();
-        Double opacityValue = null;
-        if (opacity != null)
-            opacityValue = (Double) opacity.evaluate(null, Double.class);
-        else
-            return 1.0;
-        if ((opacityValue.doubleValue() - 1) > 0 || opacityValue.doubleValue() < 0) {
-            throw new IllegalArgumentException(Errors.format(ErrorKeys.ILLEGAL_ARGUMENT_$2, Messages.CoverageStyleEditorPage_4, opacityValue));
-        }
-        return opacityValue.doubleValue();
-    }
-
-    /**
-     * @param entry
-     * @return
-     */
-    private static double getQuantity( ColorMapEntry entry ) {
-        Expression quantity = entry.getQuantity();
-        Double quantityString = (Double) quantity.evaluate(null, Double.class);
-        double q = quantityString.doubleValue();
-        return q;
     }
 
     public void gotFocus() {

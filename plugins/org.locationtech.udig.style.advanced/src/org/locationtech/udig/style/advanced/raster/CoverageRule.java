@@ -9,9 +9,7 @@
  */
 package org.locationtech.udig.style.advanced.raster;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.graphics.RGB;
 
 /**
  * This object holds everything needed to create a {@link CoverageRuleComposite}. 
@@ -22,20 +20,19 @@ import org.eclipse.swt.widgets.Display;
  * @author Andrea Antonello - www.hydrologis.com
  */
 public class CoverageRule {
+    
+    private static final RGB BLACK_DEFAULT_RGB = new RGB(0, 0, 0);
     private double[] fromToValues = null;
-    private Color fromColor = null;
-    private Color toColor = null;
+    private RGB fromColor = null;
+    private RGB toColor = null;
     private boolean isActive = true;
     private double opacity = 1.0;
 
     public CoverageRule() {
-        this.fromColor = Display.getDefault().getSystemColor(SWT.COLOR_BLACK);
-        this.toColor = Display.getDefault().getSystemColor(SWT.COLOR_BLACK);
-        this.fromToValues = new double[]{Double.NaN, Double.NaN};
-        this.isActive = true;
+        this(new double[]{Double.NaN, Double.NaN}, BLACK_DEFAULT_RGB, BLACK_DEFAULT_RGB, 1.0, true);
     }
 
-    public CoverageRule( double[] fromToValues, Color fromColor, Color toColor, double opacity,
+    public CoverageRule( double[] fromToValues, RGB fromColor, RGB toColor, double opacity,
             boolean isActive ) {
         this.fromColor = fromColor;
         this.toColor = toColor;
@@ -48,11 +45,11 @@ public class CoverageRule {
         return fromToValues;
     }
 
-    public Color getFromColor() {
+    public RGB getFromColor() {
         return fromColor;
     }
 
-    public Color getToColor() {
+    public RGB getToColor() {
         return toColor;
     }
 
@@ -64,7 +61,7 @@ public class CoverageRule {
         return opacity;
     }
 
-    public void setFromColor( Color fromColor ) {
+    public void setFromColor( RGB fromColor ) {
         this.fromColor = fromColor;
     }
 
@@ -76,7 +73,7 @@ public class CoverageRule {
         this.isActive = isActive;
     }
 
-    public void setToColor( Color toColor ) {
+    public void setToColor( RGB toColor ) {
         this.toColor = toColor;
     }
     
@@ -90,10 +87,12 @@ public class CoverageRule {
     public String ruleToString() {
         StringBuffer rule = new StringBuffer();
         rule.append(fromToValues[0] + ":"); //$NON-NLS-1$
-        rule.append(fromColor.getRed() + ":" + fromColor.getGreen() + ":" + fromColor.getBlue() //$NON-NLS-1$ //$NON-NLS-2$
+        if (fromColor != null) {
+            rule.append(fromColor.red + ":" + fromColor.green + ":" + fromColor.blue //$NON-NLS-1$ //$NON-NLS-2$
                 + " "); //$NON-NLS-1$
+        } 
         rule.append(fromToValues[1] + ":"); //$NON-NLS-1$
-        rule.append(toColor.getRed() + ":" + toColor.getGreen() + ":" + toColor.getBlue() + " "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        rule.append(toColor.red + ":" + toColor.green + ":" + toColor.blue + " "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         return rule.toString();
     }
 

@@ -9,6 +9,7 @@
  */
 package org.locationtech.udig.style.advanced.raster;
 
+import java.awt.Color;
 import java.awt.image.RenderedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,16 +21,12 @@ import java.util.Set;
 import javax.media.jai.iterator.RectIter;
 import javax.media.jai.iterator.RectIterFactory;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.internal.Layer;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -44,7 +41,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.coverage.grid.GridCoverage2D;
-
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.style.advanced.internal.Messages;
 
 /**
@@ -100,10 +98,12 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         addRuleButton.setText("+"); //$NON-NLS-1$
         addRuleButton.setLayoutData(gridData);
         addRuleButton.addSelectionListener(this);
+        addRuleButton.setToolTipText(Messages.CoverageColorEditor_addColorMapEntryTooltip);
         removeRuleButton = new Button(this, SWT.NONE);
         removeRuleButton.setText("-"); //$NON-NLS-1$
         removeRuleButton.setLayoutData(gridData1);
         removeRuleButton.addSelectionListener(this);
+        removeRuleButton.setToolTipText(Messages.CoverageColorEditor_removeDisabledColorMapEntryTooltip);
         moveRuleUpButton = new Button(this, SWT.UP | SWT.ARROW);
         moveRuleUpButton.setLayoutData(gridData2);
         moveRuleUpButton.addSelectionListener(this);
@@ -217,9 +217,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
                 double[] nvArray = getExtraNovalues();
                 if (nvArray.length > 0) {
                     for( double nv : nvArray ) {
-                        Color fromColor = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
-                        Color toColor = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
-                        CoverageRule rule = new CoverageRule(new double[]{nv, nv}, fromColor, toColor, 0.0, true);
+                        CoverageRule rule = new CoverageRule(new double[]{nv, nv}, RuleValues.asRGB(Color.WHITE), RuleValues.asRGB(Color.WHITE), 0.0, true);
                         listOfRules.add(0, rule);
                         redoLayout();
                     }
@@ -315,15 +313,14 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
                 listOfRules.add(0, r);
                 redoLayout();
             } else if (selectedButton.equals(removeRuleButton)) {
-                for( int i = 0; i < listOfRules.size(); i++ ) {
-                    CoverageRule r = listOfRules.get(i);
-                    if (r.isActive()) {
-                        listOfRules.remove(r);
-                        // if (i > 0) {
-                        // i--;
-                        // }
+                List<CoverageRule> rulesToRemove = new ArrayList<CoverageRule>();
+                for (CoverageRule rule : listOfRules) {
+                    if (!rule.isActive()) {
+                        rulesToRemove.add(rule);
                     }
                 }
+                listOfRules.removeAll(rulesToRemove);
+                rulesToRemove.clear();
                 redoLayout();
             } else if (selectedButton.equals(moveRuleUpButton)) {
                 for( int i = 0; i < listOfRules.size(); i++ ) {
@@ -389,9 +386,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
                 } while( !iter.nextLineDone() );
                 minMax = new double[]{min, max};
 
-                Color fromColor = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
-                Color toColor = Display.getDefault().getSystemColor(SWT.COLOR_BLACK);
-                CoverageRule rule = new CoverageRule(minMax, fromColor, toColor, 1.0, true);
+                CoverageRule rule = new CoverageRule(minMax, RuleValues.asRGB(Color.WHITE), RuleValues.asRGB(Color.BLACK), 1.0, true);
                 listOfRules.clear();
                 listOfRules.add(rule);
                 redoLayout();
@@ -409,9 +404,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
                     List<RuleValues> rulesValuesList = PredefinedColorRules.getRulesValuesList(colorRules, minMax);
                     for( RuleValues ruleValues : rulesValuesList ) {
                         double[] fromToValues = new double[]{ruleValues.fromValue, ruleValues.toValue};
-                        Color fromColor = RuleValues.asSWT(ruleValues.fromColor);
-                        Color toColor = RuleValues.asSWT(ruleValues.toColor);
-                        CoverageRule rule = new CoverageRule(fromToValues, fromColor, toColor, 1.0, true);
+                        CoverageRule rule = new CoverageRule(fromToValues, RuleValues.asRGB(ruleValues.fromColor), RuleValues.asRGB(ruleValues.toColor), 1.0, true);
                         listOfRules.add(rule);
                     }
                     redoLayout();
@@ -507,6 +500,8 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
                 }
 
                 rulesComposite.layout();
+                rulesComposite.pack();
+//                scrolledRulesComposite.pack();
             }
         });
     }
