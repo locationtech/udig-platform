@@ -54,7 +54,7 @@ import org.locationtech.udig.style.advanced.internal.Messages;
  */
 public class CoverageColorEditor extends Composite implements SelectionListener {
 
-    private ArrayList<CoverageRule> listOfRules = null;
+    private List<CoverageRule> listOfRules = null;
     private Button addRuleButton = null;
     private Button removeRuleButton = null;
     private Button moveRuleUpButton = null;
@@ -476,7 +476,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         }
     }
 
-    public void setRulesList( ArrayList<CoverageRule> listOfRules ) {
+    public void setRulesList( List<CoverageRule> listOfRules ) {
         this.listOfRules = listOfRules;
         /*
          * take minMax out of that
@@ -511,7 +511,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         });
     }
 
-    public ArrayList<CoverageRule> getRulesList() {
+    public List<CoverageRule> getRulesList() {
         return listOfRules;
     }
 
