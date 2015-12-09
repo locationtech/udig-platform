@@ -1,3 +1,12 @@
+/*
+ * uDig - User Friendly Desktop Internet GIS client
+ * (C) HydroloGIS - www.hydrologis.com 
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
+ * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
+ */
 package org.locationtech.udig.style.advanced.raster;
 
 import java.util.ArrayList;
@@ -16,12 +25,19 @@ import org.geotools.styling.StyleFactory;
 import org.locationtech.udig.style.advanced.internal.Messages;
 import org.opengis.filter.expression.Expression;
 
+/**
+ * Utility class to convert from / to CoverageRules to RasterSymbolizer with a ColorMap
+ * 
+ * @author Andrea Antonello - www.hydrologis.com
+ * @author Frank Gasdorf
+ *
+ */
 public final class CoverageRuleUtils {
 
     /**
-     * @param list
-     * @param alpha
-     * @return
+     * @param list CoverageRule-List to apply, <br><b>NOTE:</b> only active rules are used 
+     * @param alpha Alpha Channel as values from 0 to 100 (percent)
+     * @return RasterSymbolizer with a ColorMap created from given CoverageRule-List  
      */
     public static RasterSymbolizer createColorMapForCoverageRules(final List<CoverageRule> list, final int alpha) {
         final StyleFactory sf = CommonFactoryFinder.getStyleFactory(null);
@@ -77,8 +93,8 @@ public final class CoverageRuleUtils {
     }
 
     /**
-     * @param rasterSymbolizer
-     * @return
+     * @param rasterSymbolizer RasterSymbolizer with ColorMap elements
+     * @return CoverageRule-List extracted from RasterSymbolizer ColorMap definitions 
      */
     public static List<CoverageRule> createCoverageRulesForRasterSymbolizer(
             RasterSymbolizer rasterSymbolizer) {

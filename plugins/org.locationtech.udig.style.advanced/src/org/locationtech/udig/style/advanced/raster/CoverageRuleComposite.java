@@ -36,6 +36,7 @@ import org.eclipse.swt.widgets.Text;
  * A composite that represents a facility to create color rules
  * 
  * @author Andrea Antonello - www.hydrologis.com
+ * @author Frank Gasdorf
  */
 public class CoverageRuleComposite implements MouseListener, SelectionListener, KeyListener, DisposeListener {
 

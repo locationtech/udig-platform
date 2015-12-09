@@ -49,6 +49,7 @@ import org.locationtech.udig.style.advanced.internal.Messages;
  * The composite holding the raster map style logic.
  * 
  * @author Andrea Antonello - www.hydrologis.com
+ * @author Frank Gasdorf
  */
 public class CoverageColorEditor extends Composite implements SelectionListener {
 
