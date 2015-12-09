@@ -316,7 +316,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
             } else if (selectedButton.equals(removeRuleButton)) {
                 List<CoverageRule> rulesToRemove = new ArrayList<CoverageRule>();
                 for (CoverageRule rule : listOfRules) {
-                    if (!rule.isActive()) {
+                    if (rule.isActive()) {
                         rulesToRemove.add(rule);
                     }
                 }
