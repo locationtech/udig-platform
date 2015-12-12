@@ -60,6 +60,7 @@ import com.vividsolutions.jts.geom.Coordinate;
  * </p>
  * 
  * @author Andrea Antonello - www.hydrologis.com
+ * @author Frank Gasdorf
  */
 public class ProfileTool extends SimpleTool implements IEditManagerListener {
 
@@ -122,6 +123,10 @@ public class ProfileTool extends SimpleTool implements IEditManagerListener {
         }
 
         Point current = e.getPoint();
+        handlePointClick(current);
+    }
+
+    private void handlePointClick(Point current) {
         // if enough points are there, create the profile
         if (points.isEmpty() || !current.equals(points.get(points.size() - 1))) {
             points.add(current);
@@ -146,6 +151,10 @@ public class ProfileTool extends SimpleTool implements IEditManagerListener {
     }
 
     protected void onMouseDoubleClicked( MapMouseEvent e ) {
+        // check, if the current point is not equal to the last, if so add it to profile and finish
+        Point current = e.getPoint();
+        handlePointClick(current);
+
         currentPointNumber = 0;
         doubleClicked = true;
     }
@@ -193,8 +202,10 @@ public class ProfileTool extends SimpleTool implements IEditManagerListener {
 
             Point lastPoint = points.get(points.size() - 1);
             Coordinate end = getContext().pixelToWorld(lastPoint.x, lastPoint.y);
+            
 
-            final List<ProfilePoint> profile = CoverageUtilities.doProfile(rasterMapResource, step, begin, end);
+            final List<ProfilePoint> profile = CoverageUtilities.doProfile(getContext().getCRS(), rasterMapResource, step, begin, end);
+            
             begin = end;
 
             Display.getDefault().syncExec(new Runnable(){
@@ -226,6 +237,10 @@ public class ProfileTool extends SimpleTool implements IEditManagerListener {
             cleanupOnDeactivation();
             IEditManager editManager = ApplicationGIS.getActiveMap().getEditManager();
             editManager.removeListener(this);
+        } else {
+            IEditManager editManager = ApplicationGIS.getActiveMap().getEditManager();
+            editManager.addListener(this);
+            selectedLayer = editManager.getSelectedLayer();
         }
         super.setActive(active);
     }
