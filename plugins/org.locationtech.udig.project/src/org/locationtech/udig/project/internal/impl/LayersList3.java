@@ -1,6 +1,6 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2004, Refractions Research Inc.
+ * (C) 2004, 2015 Refractions Research Inc. and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,7 +22,6 @@ import org.locationtech.udig.project.interceptor.MapInterceptor;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.locationtech.udig.project.internal.Trace;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.emf.common.notify.Adapter;
@@ -37,6 +36,9 @@ import org.eclipse.emf.ecore.InternalEObject;
  * so you will need to figure out how to call layer.setMap yourself.
  * 
  * @author Jesse
+ * @author Frank Gasdorf
+ * @author Erdal Karaca
+ * 
  * @since 1.1.0
  */
 class LayersList3 extends SynchronizedEObjectResolvingEList<Layer> {
@@ -55,15 +57,19 @@ class LayersList3 extends SynchronizedEObjectResolvingEList<Layer> {
      * 
      * @param adapter adapter to add to all layers.
      */
-    public void addDeepAdapter( Adapter adapter ) {
+    public void addDeepAdapter( final Adapter adapter ) {
         deepAdapters.add(adapter);
         if (!owner.eAdapters().contains(adapter))
             owner.eAdapters().add(adapter);
-        for( Object object : this ) {
-            Layer layer = (Layer) object;
-            if (!layer.eAdapters().contains(adapter))
-                layer.eAdapters().add(adapter);
-        }
+
+        syncedIteration(new IEListVisitor<Layer>(){
+            public void visit( final Layer layer ) {
+                if (!layer.eAdapters().contains(adapter)) {
+                    layer.eAdapters().add(adapter);
+                }
+            }
+        });
+
     }
 
     /**
@@ -71,12 +77,15 @@ class LayersList3 extends SynchronizedEObjectResolvingEList<Layer> {
      * 
      * @param toRemove
      */
-    public void removeDeepAdapter( Adapter toRemove ) {
+    public void removeDeepAdapter( final Adapter toRemove ) {
         deepAdapters.remove(toRemove);
         owner.eAdapters().remove(toRemove);
-        for( Object object : this ) {
-            ((Layer) object).eAdapters().remove(toRemove);
-        }
+
+        syncedIteration(new IEListVisitor<Layer>() {
+            public void visit(final Layer layer) {
+                layer.eAdapters().remove(toRemove);
+            }
+        });
     }
 
     @Override
@@ -153,10 +162,19 @@ class LayersList3 extends SynchronizedEObjectResolvingEList<Layer> {
     }
 
     private void removeAllInterceptors( Collection<?> c ) {
-        for( Iterator<?> iter = c.iterator(); iter.hasNext(); ) {
-            Layer element = (Layer) iter.next();
-            runLayerInterceptor(element, "layerRemoved"); //$NON-NLS-1$
-            element.eAdapters().removeAll(deepAdapters);
+        
+        // iterating over instances of LayersList2 must be synced
+        if (c instanceof LayersList3) {
+            ((LayersList3) c).syncedIteration(new IEListVisitor<Layer>(){
+                public void visit( final Layer element ) {
+                    runLayerInterceptorAndRemove(element);
+                }
+            });
+        } else {
+            for( final Iterator iter = c.iterator(); iter.hasNext(); ) {
+                final Layer element = (Layer) iter.next();
+                runLayerInterceptorAndRemove(element);
+            }
         }
     }
 
@@ -220,4 +238,8 @@ class LayersList3 extends SynchronizedEObjectResolvingEList<Layer> {
         }
     }
 
+    private void runLayerInterceptorAndRemove( final Layer element ) {
+        runLayerInterceptor(element, "layerRemoved"); //$NON-NLS-1$
+        element.eAdapters().removeAll(deepAdapters);
+    }
 }

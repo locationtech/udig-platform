@@ -1,6 +1,6 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2004, Refractions Research Inc.
+ * (C) 2004, 2015 Refractions Research Inc. and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,25 +12,21 @@ package org.locationtech.udig.project.internal.impl;
 import java.util.Collection;
 import java.util.concurrent.locks.Lock;
 
-import org.locationtech.udig.ui.UDIGDisplaySafeLock;
-
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 
 /**
- * Synchronizes reads and writes but not within synchronization block during notification. When
- * iterating make sure to use:<pre>
- * synchronized( list ){
- *   for( Object item : list ){
- *      // do iterations
- *   }
- * }</pre>
+ * Synchronizes reads and writes. When iterating its recommend to use {@link #syncedIteration(IEListVisitor)} otherwise 
+ * ConcurrentModificationExceptions are potential possible
  * 
  * @author Jesse
+ * @author Frank Gasdorf
+ * @author Erdal Karaca
+ * 
  * @since 1.1.0
  */
-public class SynchronizedEObjectResolvingEList<E> extends EObjectResolvingEList<E> {
+public class SynchronizedEObjectResolvingEList<E> extends EObjectResolvingEList<E> implements ISynchronizedEListIteration<E> {
 
     /** long serialVersionUID field */
     private static final long serialVersionUID = -7051345525714825128L;
@@ -121,4 +117,17 @@ public class SynchronizedEObjectResolvingEList<E> extends EObjectResolvingEList<
             lock.unlock();
         }
     }
+
+    @Override
+    public void syncedIteration( final IEListVisitor<E> visitor ) {
+        lock.lock();
+        try {
+            for( final E object : this ) {
+                visitor.visit(object);
+            }
+        } finally {
+            lock.unlock();
+        }
+    }
+
 }
