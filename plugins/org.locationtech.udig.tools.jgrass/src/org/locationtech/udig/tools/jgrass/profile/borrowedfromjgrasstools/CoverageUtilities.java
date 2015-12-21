@@ -135,7 +135,7 @@ public class CoverageUtilities {
                 // ignore problematic points (outside etc)
             }
             if (value != JGTConstants.doubleNovalue) {
-                ProfilePoint profilePoint = new ProfilePoint(progressive, value, current.x, current.y);
+                ProfilePoint profilePoint = new ProfilePoint(progressive, value, c.x, c.y);
                 profilePointsList.add(profilePoint);
             }
             progressive = progressive + step;

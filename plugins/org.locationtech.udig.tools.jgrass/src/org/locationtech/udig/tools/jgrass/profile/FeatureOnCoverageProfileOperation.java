@@ -101,7 +101,7 @@ public class FeatureOnCoverageProfileOperation implements IOp {
                     Geometry geometry = (Geometry) lineFeature.getDefaultGeometry();
                     Coordinate[] coordinates = geometry.getCoordinates();
 
-                    List<ProfilePoint> profile = CoverageUtilities.doProfile(coverage, step, coordinates);
+                    List<ProfilePoint> profile = CoverageUtilities.doProfile(lineFeature.getType().getCoordinateReferenceSystem(), coverage, step, coordinates);
 
                     for( ProfilePoint profilePoint : profile ) {
                         double elevation = profilePoint.getElevation();
