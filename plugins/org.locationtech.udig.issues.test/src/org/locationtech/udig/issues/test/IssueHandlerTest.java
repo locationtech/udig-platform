@@ -37,6 +37,7 @@ import org.locationtech.udig.issues.IssueConstants;
 import org.locationtech.udig.issues.internal.view.IssueHandler;
 import org.locationtech.udig.issues.internal.view.IssuesView;
 import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.tests.ui.TestPerspectiveFactory;
 import org.locationtech.udig.project.tests.ui.ViewPart1;
 import org.locationtech.udig.project.testsupport.MapTests;
 import org.locationtech.udig.project.ui.ApplicationGIS;
@@ -52,9 +53,9 @@ public class IssueHandlerTest extends AbstractProjectUITestCase {
     @Test
     public void testRestorePerspective() throws WorkbenchException {
         int windows=PlatformUI.getWorkbench().getWorkbenchWindowCount();
-        IPerspectiveDescriptor p = PlatformUI.getWorkbench().getPerspectiveRegistry().findPerspectiveWithId("org.locationtech.udig.project.tests.ui.perspective.test"); //$NON-NLS-1$
+        IPerspectiveDescriptor p = PlatformUI.getWorkbench().getPerspectiveRegistry().findPerspectiveWithId(TestPerspectiveFactory.ID);
         getActiveWindow().getActivePage().setPerspective(p);
-        assertEquals("org.locationtech.udig.project.tests.ui.perspective.test", getActiveWindow().getActivePage().getPerspective().getId()); //$NON-NLS-1$
+        assertEquals(TestPerspectiveFactory.ID, getActiveWindow().getActivePage().getPerspective().getId());
         TestIssue issue = new TestIssue(){
             @Override
             public String getPerspectiveID() {

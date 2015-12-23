@@ -32,7 +32,11 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.views.IViewDescriptor;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.junit.After;
 import org.junit.Before;
@@ -83,7 +87,27 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         FeatureIssue.setTesting(true);
         ((IssuesList)IIssuesManager.defaultInstance.getIssuesList()).listeners.clear();
         IIssuesManager.defaultInstance.getIssuesList().clear();
-        view=(IssuesView) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(IssueConstants.VIEW_ID);
+        IWorkbench workbench = PlatformUI.getWorkbench();
+        
+//        workbench.openWorkbenchWindow(workbench.getPerspectiveRegistry().getDefaultPerspective(), null);
+        IViewDescriptor viewDescriptor = workbench.getViewRegistry().find(IssueConstants.VIEW_ID);
+        assertNotNull("ViewDescriptor is null", viewDescriptor);
+        
+        IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
+        assertNotNull("Active Worbench Window is null", activeWorkbenchWindow);
+        
+        IWorkbenchPage activePage = activeWorkbenchWindow.getActivePage();
+        assertNotNull("Active Page is null", activePage);
+        
+        IViewPart viewPart = activePage.showView(IssueConstants.VIEW_ID);
+        assertNotNull("ViewPart from showView is null", viewPart);
+        
+        assertNotNull("ViewPart for ID '" + IssueConstants.VIEW_ID + "' is null", viewPart);
+        
+        assertTrue("ViewPart should be the IssueView", viewPart instanceof IssuesView);
+        
+        view = (IssuesView) viewPart;
+//        view=(IssuesView) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(IssueConstants.VIEW_ID);
         view.forTestingShowResolvedssues(false);
         view.forTestingGetResolvedIssues().clear();
         viewer = view.forTestingGetViewer();

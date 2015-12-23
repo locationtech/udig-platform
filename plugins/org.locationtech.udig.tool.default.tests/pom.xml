@@ -14,16 +14,35 @@
     <artifactId>org.locationtech.udig.tool.default.tests</artifactId>
     <packaging>eclipse-test-plugin</packaging>
 
-    <build>
+    <build> 
         <plugins>
             <plugin>
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>tycho-surefire-plugin</artifactId>
+                <configuration>
+                    <testRuntime>p2Installed</testRuntime>
+                </configuration>
             </plugin>
 
             <plugin>
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>target-platform-configuration</artifactId>
+                <configuration>
+                    <dependency-resolution>
+                        <extraRequirements>
+                            <requirement>
+                                <type>p2-installable-unit</type>
+                                <id>org.locationtech.udig-product</id>
+                                <versionRange>0.0.0</versionRange>
+                            </requirement>
+                          <requirement>
+                             <type>eclipse-feature</type>
+                             <id>org.eclipse.e4.rcp</id>
+                             <versionRange>0.0.0</versionRange>
+                          </requirement>
+                        </extraRequirements>
+                    </dependency-resolution>
+                </configuration>
             </plugin>
         </plugins>
     </build>

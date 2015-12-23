@@ -149,7 +149,7 @@ public class MapTests {
             context.setGeoResourceInternal(layer.getGeoResources().get(0));
             context.setLayerInternal(layer);
     		renderer.setContext(context);
-    		context = rm.getRendererCreator().getConfiguration().iterator().next();
+//    		context = rm.getRendererCreator().getConfiguration().iterator().next();
     		((CompositeRenderContext) renderer.getContext()).addContexts(Collections.singleton(context));
     		RenderExecutor ex=RenderFactory.eINSTANCE.createRenderExecutor(renderer);
     		rm.setRenderExecutor(ex);

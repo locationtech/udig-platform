@@ -20,9 +20,9 @@ import org.eclipse.swt.widgets.Display;
 import org.geotools.data.DataUtilities;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.testsupport.CatalogTests;
 import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.command.AbstractCommand;
@@ -48,14 +48,13 @@ public class FeatureValidationTest {
      * Test method for 'org.locationtech.udig.validation.ValidateGeometry.op(Display, Object,
      * IProgressMonitor)'
      */
-    @Ignore
     @Test
     public void testGeometryOp() throws Exception {
         SimpleFeature[] features = FeatureCreationTestUtil.createDefaultTestFeatures("someType", 5); //$NON-NLS-1$
         Geometry geometry = (Geometry) features[0].getDefaultGeometry();
 		geometry.getCoordinates()[0].x = 2;
         //features[0].setDefaultGeometry(null);
-        IGeoResource resource = MapTests.createGeoResource(features, true);
+        IGeoResource resource = CatalogTests.createGeoResource(features, true);
         Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(500,512));
         ValidateGeometry isValidGeometry = new ValidateGeometry();
         isValidGeometry.op(Display.getDefault(), map.getLayersInternal().get(0), new NullProgressMonitor());
@@ -82,7 +81,6 @@ public class FeatureValidationTest {
      * Test method for 'org.locationtech.udig.validation.ValidateLineMustBeASinglePart.op(Display,
      * Object, IProgressMonitor)'
      */
-    @Ignore
     @Test
     public void testLineMustBeASinglePartOp() throws Exception {
         //create features suitable for the test
@@ -105,7 +103,7 @@ public class FeatureValidationTest {
         features[0]=SimpleFeatureBuilder.build(ft,new Object[]{line[0], attrValues[0]}, Integer.toString(0));    
         features[1]=SimpleFeatureBuilder.build(ft,new Object[]{line[1], attrValues[1]}, Integer.toString(1));    
         
-        IGeoResource resource = MapTests.createGeoResource(features, true);
+        IGeoResource resource = CatalogTests.createGeoResource(features, true);
         Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(500,512));
         ValidateLineMustBeASinglePart isValidLine = new ValidateLineMustBeASinglePart();
         isValidLine.op(Display.getDefault(), map.getLayersInternal().get(0), new NullProgressMonitor());
@@ -133,7 +131,6 @@ public class FeatureValidationTest {
      * Test method for 'org.locationtech.udig.validation.ValidateLineNoSelfIntersect.op(Display,
      * Object, IProgressMonitor)'
      */
-    @Ignore
     @Test
     public void testLineNoSelfIntersectOp() throws Exception {
         //create features suitable for the test
@@ -155,7 +152,7 @@ public class FeatureValidationTest {
         features[0]=SimpleFeatureBuilder.build(ft,new Object[]{line[0], attrValues[0]}, Integer.toString(0));    
         features[1]=SimpleFeatureBuilder.build(ft,new Object[]{line[1], attrValues[1]}, Integer.toString(1));    
         
-        IGeoResource resource = MapTests.createGeoResource(features, true);
+        IGeoResource resource = CatalogTests.createGeoResource(features, true);
         Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(500,512));
         ValidateLineNoSelfIntersect isValidLine = new ValidateLineNoSelfIntersect();
         isValidLine.op(Display.getDefault(), map.getLayersInternal().get(0), new NullProgressMonitor());
@@ -183,7 +180,6 @@ public class FeatureValidationTest {
      * Test method for 'org.locationtech.udig.validation.ValidateLineNoSelfOverlap.op(Display,
      * Object, IProgressMonitor)'
      */
-    @Ignore
     @Test
     public void testLineNoSelfOverlapOp() throws Exception {
         //create features suitable for the test
@@ -206,7 +202,7 @@ public class FeatureValidationTest {
         features[0]=SimpleFeatureBuilder.build(ft,new Object[]{line[0], attrValues[0]}, Integer.toString(0));    
         features[1]=SimpleFeatureBuilder.build(ft,new Object[]{line[1], attrValues[1]}, Integer.toString(1));    
         
-        IGeoResource resource = MapTests.createGeoResource(features, true);
+        IGeoResource resource = CatalogTests.createGeoResource(features, true);
         Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(500,512));
         ValidateLineNoSelfOverlapping isValidLine = new ValidateLineNoSelfOverlapping();
         isValidLine.op(Display.getDefault(), map.getLayersInternal().get(0), new NullProgressMonitor());
@@ -257,7 +253,7 @@ public class FeatureValidationTest {
         features[1]=SimpleFeatureBuilder.build(ft,new Object[]{line[1], attrValues[1]}, Integer.toString(1));    
         //FeatureFactory ff = new FeatureFactory();
         
-        IGeoResource resource = MapTests.createGeoResource(features, true);
+        IGeoResource resource = CatalogTests.createGeoResource(features, true);
         Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(500,512));
         ValidateNullZero isValidAttr = new ValidateNullZero();
 
