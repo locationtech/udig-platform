@@ -18,9 +18,6 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.locationtech.udig.ui.internal.Messages;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ICellModifier;
@@ -42,6 +39,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
+import org.locationtech.udig.ui.internal.Messages;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
@@ -59,7 +59,7 @@ public class FeatureTypeEditorTest {
     
     @Before
     public void setUp() throws Exception {
-        features = UDIGTestUtil.createDefaultTestFeatures(featureTypeName, 1); 
+        features = FeatureCreationTestUtil.createDefaultTestFeatures(featureTypeName, 1); 
         featureType = features[0].getFeatureType();
         dialog = new Dialog(Display.getCurrent().getActiveShell()){
             SimpleFeatureTypeBuilder builder=null;

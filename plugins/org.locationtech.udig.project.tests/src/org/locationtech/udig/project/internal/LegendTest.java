@@ -9,17 +9,15 @@
  */
 package org.locationtech.udig.project.internal;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.locationtech.udig.project.tests.support.MapTests;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.project.testsupport.MapTests;
 
 /**
  * Test map handling of legend items.

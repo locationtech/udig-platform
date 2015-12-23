@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.locationtech.udig.catalog.tests.DummyService;
+import org.locationtech.udig.catalog.testsupport.DummyService;
 import org.locationtech.udig.catalog.ui.UDIGConnectionFactory;
 import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
 

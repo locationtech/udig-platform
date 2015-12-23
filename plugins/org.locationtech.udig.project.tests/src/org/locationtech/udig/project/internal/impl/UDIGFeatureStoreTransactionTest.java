@@ -14,19 +14,18 @@ import static org.junit.Assert.assertTrue;
 
 import java.awt.Dimension;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.internal.EditManager;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Transaction;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -42,7 +41,7 @@ public class UDIGFeatureStoreTransactionTest extends AbstractProjectTestCase {
     @Ignore
     @Test
     public void testTransactionUse() throws Exception {
-        IGeoResource resource1 = MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures(
+        IGeoResource resource1 = MapTests.createGeoResource(FeatureCreationTestUtil.createDefaultTestFeatures(
                 "type1", 4), false); //$NON-NLS-1$
         Map map = MapTests.createNonDynamicMapAndRenderer(resource1, new Dimension(512,512));
         ILayer layer = map.getLayersInternal().get(0);

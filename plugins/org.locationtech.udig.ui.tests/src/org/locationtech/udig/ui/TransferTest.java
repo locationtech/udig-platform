@@ -11,8 +11,6 @@
 package org.locationtech.udig.ui;
 
 import static org.junit.Assert.assertSame;
-import org.locationtech.udig.internal.ui.UDigByteAndLocalTransfer;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.Transfer;
@@ -21,6 +19,8 @@ import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.referencing.CRS;
 import org.junit.Test;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
+import org.locationtech.udig.internal.ui.UDigByteAndLocalTransfer;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
@@ -34,7 +34,7 @@ public class TransferTest {
     public void testFeatureTransfering() throws Exception {
         Display display=Display.getCurrent();
         Clipboard cp=new Clipboard(display);
-        SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("test", 1); //$NON-NLS-1$
+        SimpleFeature[] features = FeatureCreationTestUtil.createDefaultTestFeatures("test", 1); //$NON-NLS-1$
         cp.setContents(features,new Transfer[]{UDigByteAndLocalTransfer.getInstance()});
         assertSame(features[0], cp.getContents(UDigByteAndLocalTransfer.getInstance()));
 
@@ -48,7 +48,7 @@ public class TransferTest {
     public void testGeometryTransfering() throws Exception {
         Display display=Display.getCurrent();
         Clipboard cp=new Clipboard(display);
-        SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("test", 1); //$NON-NLS-1$
+        SimpleFeature[] features = FeatureCreationTestUtil.createDefaultTestFeatures("test", 1); //$NON-NLS-1$
         cp.setContents(new Object[]{features[0].getDefaultGeometry()},new Transfer[]{UDigByteAndLocalTransfer.getInstance()});
         assertSame(features[0].getDefaultGeometry(), cp.getContents(UDigByteAndLocalTransfer.getInstance()));
 
@@ -62,7 +62,7 @@ public class TransferTest {
     public void testSelectionTransfering() throws Exception{
         Display display=Display.getCurrent();
         Clipboard cp=new Clipboard(display);
-        SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("test", 1); //$NON-NLS-1$
+        SimpleFeature[] features = FeatureCreationTestUtil.createDefaultTestFeatures("test", 1); //$NON-NLS-1$
         FilterFactory factory= CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
         SimpleFeatureType featureType = features[0].getFeatureType();
         BoundingBox bounds = features[0].getBounds();

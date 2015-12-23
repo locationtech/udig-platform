@@ -12,8 +12,8 @@ package org.locationtech.udig.catalog.tests.internal;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import org.locationtech.udig.catalog.tests.DummyService;
 
+import org.locationtech.udig.catalog.testsupport.DummyService;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Test;
 

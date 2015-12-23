@@ -1,4 +1,4 @@
-package org.locationtech.udig.catalog.util;
+package org.locationtech.udig.catalog.testsupport;
 
 import java.io.IOException;
 import java.net.URL;
@@ -13,7 +13,7 @@ import org.junit.Assume;
  * @author FGasdorf
  *
  */
-public final class CatalogTestUtils {
+public final class CatalogConnectionUtils {
 
     /**
      * uses Assume.assumeNoException to verify if its possible to connect to an URL

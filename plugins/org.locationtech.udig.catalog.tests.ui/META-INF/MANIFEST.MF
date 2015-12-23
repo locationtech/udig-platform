@@ -22,8 +22,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.locationtech.udig.catalog.wms,
  org.locationtech.udig.catalog.worldimage,
  org.locationtech.udig.catalog.geotools,
- org.locationtech.udig.catalog.tests;visibility:=reexport,
- org.locationtech.udig.ui.tests;visibility:=reexport
+ org.locationtech.udig.ui.tests;visibility:=reexport,
+ org.locationtech.udig.catalog.testsupport,
+ org.locationtech.udig.catalog.tests;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.locationtech.udig.catalog.tests.ui.CatalogTestsUIPlugin
 Export-Package: org.locationtech.udig.catalog.tests.ui,org.locationtec

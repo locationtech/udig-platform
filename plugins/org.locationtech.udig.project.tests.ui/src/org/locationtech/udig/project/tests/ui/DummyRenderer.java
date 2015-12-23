@@ -12,10 +12,9 @@ package org.locationtech.udig.project.tests.ui;
 
 import java.awt.Graphics2D;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.locationtech.udig.project.internal.render.impl.RendererImpl;
 import org.locationtech.udig.project.render.RenderException;
-
-import org.eclipse.core.runtime.IProgressMonitor;
 
 public class DummyRenderer extends RendererImpl {
 

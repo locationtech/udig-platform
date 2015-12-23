@@ -5,11 +5,11 @@
     <extension
          point="org.locationtech.udig.catalog.ServiceExtension">
       <service
-            class="org.locationtech.udig.catalog.tests.DummyServiceExtension"
+            class="org.locationtech.udig.catalog.testsupport.DummyServiceExtension"
             id="Dummy"
             name="Dummy"/>
       <service
-            class="org.locationtech.udig.catalog.tests.DummyMultiResourceServiceExtension"
+            class="org.locationtech.udig.catalog.testsupport.DummyMultiResourceServiceExtension"
             id="MultiDummy"
             name="MultiDummy"/>
       <service
@@ -27,12 +27,12 @@
           point="org.locationtech.udig.catalog.resolvers">
        <factory
              class="org.locationtech.udig.catalog.tests.internal.DummyResolverFactory"
-             resolveableType="org.locationtech.udig.catalog.tests.DummyGeoResource">
+             resolveableType="org.locationtech.udig.catalog.testsupport.DummyGeoResource">
           <resolve type="org.locationtech.udig.catalog.tests.internal.ResolvedTo"/>
        </factory>
        <factory
              class="org.locationtech.udig.catalog.tests.internal.DummyResolverFactory"
-             resolveableType="org.locationtech.udig.catalog.tests.DummyService">
+             resolveableType="org.locationtech.udig.catalog.testsupport.DummyService">
           <resolve type="org.locationtech.udig.catalog.tests.internal.ResolvedTo"/>
        </factory>
     </extension>

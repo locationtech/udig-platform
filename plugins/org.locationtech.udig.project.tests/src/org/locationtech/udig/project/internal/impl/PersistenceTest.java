@@ -22,15 +22,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.Project;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.ProjectRegistry;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
@@ -45,6 +36,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.ProjectRegistry;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -98,12 +97,12 @@ public class PersistenceTest extends AbstractProjectTestCase {
         
         project=registry.getProject(FileLocator.toFileURL(Platform.getInstanceLocation().getURL()).getFile());
 
-		resource1 = MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures(type1Name,4),false);
+		resource1 = MapTests.createGeoResource(FeatureCreationTestUtil.createDefaultTestFeatures(type1Name,4),false);
 		Map map = MapTests.createNonDynamicMapAndRenderer(resource1, new Dimension(512,512));
         map.setName(firstMapName); 
 		map.getLayersInternal().get(0).setName(firstMapLayerName); 
 		
-		resource2 = MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures(type2Name,6),false); 
+		resource2 = MapTests.createGeoResource(FeatureCreationTestUtil.createDefaultTestFeatures(type2Name,6),false); 
 		map=MapTests.createNonDynamicMapAndRenderer(resource2, new Dimension(512,512));
 		map.setName(secondMapName); 
 		map.getLayersInternal().get(0).setName(secondMapLayerName); 

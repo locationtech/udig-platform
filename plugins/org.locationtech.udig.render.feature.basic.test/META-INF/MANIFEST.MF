@@ -11,6 +11,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.locationtech.udig.libs,
  org.locationtech.udig.project,
  org.locationtech.udig.project.tests,
- org.locationtech.udig.ui.tests
+ org.locationtech.udig.ui.tests,
+ org.locationtech.udig.project.testsupport,
+ org.locationtech.udig.core.testsupport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

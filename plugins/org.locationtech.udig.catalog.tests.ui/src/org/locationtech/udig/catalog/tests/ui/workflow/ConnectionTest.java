@@ -28,6 +28,7 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.locationtech.udig.catalog.internal.ui.ConnectionPageDecorator;
+import org.locationtech.udig.catalog.testsupport.CatalogConnectionUtils;
 import org.locationtech.udig.catalog.ui.ConnectionFactoryManager;
 import org.locationtech.udig.catalog.ui.UDIGConnectionFactoryDescriptor;
 import org.locationtech.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
@@ -37,7 +38,6 @@ import org.locationtech.udig.catalog.ui.workflow.Workflow;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardDialog;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
-import org.locationtech.udig.catalog.util.CatalogTestUtils;
 
 public class ConnectionTest {
 	Shell shell;
@@ -58,7 +58,7 @@ public class ConnectionTest {
     public static void beforeClass() throws Exception {
         capabilitiesRequestURL = new URL(
                 "http://demo.opengeo.org/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
-        CatalogTestUtils.assumeNoConnectionException(capabilitiesRequestURL, 1000);
+        CatalogConnectionUtils.assumeNoConnectionException(capabilitiesRequestURL, 1000);
     }
 
     private void init( String urlString ) {

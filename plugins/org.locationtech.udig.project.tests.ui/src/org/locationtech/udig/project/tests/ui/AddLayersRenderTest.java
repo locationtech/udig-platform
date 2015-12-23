@@ -15,8 +15,15 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.ui.PlatformUI;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.render.CompositeRenderContext;
 import org.locationtech.udig.project.internal.render.RenderContext;
@@ -27,19 +34,12 @@ import org.locationtech.udig.project.internal.render.Renderer;
 import org.locationtech.udig.project.internal.render.impl.CompositeContextListener;
 import org.locationtech.udig.project.internal.render.impl.CompositeRendererImpl;
 import org.locationtech.udig.project.render.IRenderer;
-import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
 import org.locationtech.udig.project.ui.internal.LayersView;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.ui.PlatformUI;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 
 public class AddLayersRenderTest extends AbstractProjectUITestCase {
@@ -132,7 +132,7 @@ public class AddLayersRenderTest extends AbstractProjectUITestCase {
         renders=0;
         
         List<IGeoResource> resources=new ArrayList<IGeoResource>();
-        SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("type2", 4); //$NON-NLS-1$
+        SimpleFeature[] features = FeatureCreationTestUtil.createDefaultTestFeatures("type2", 4); //$NON-NLS-1$
         resources.add(MapTests.createGeoResource(features, true));
         ApplicationGIS.addLayersToMap(map, resources, 0);
         UDIGTestUtil.inDisplayThreadWait(3000, new WaitCondition(){
@@ -150,9 +150,9 @@ public class AddLayersRenderTest extends AbstractProjectUITestCase {
     public void testAddMultipleLayers() throws Exception {
         renders=0;
         List<IGeoResource> resources=new ArrayList<IGeoResource>();
-        SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("type3", 3); //$NON-NLS-1$
-        SimpleFeature[] features2 = UDIGTestUtil.createDefaultTestFeatures("type4", 4); //$NON-NLS-1$
-        SimpleFeature[] features3 = UDIGTestUtil.createDefaultTestFeatures("type5", 5); //$NON-NLS-1$
+        SimpleFeature[] features = FeatureCreationTestUtil.createDefaultTestFeatures("type3", 3); //$NON-NLS-1$
+        SimpleFeature[] features2 = FeatureCreationTestUtil.createDefaultTestFeatures("type4", 4); //$NON-NLS-1$
+        SimpleFeature[] features3 = FeatureCreationTestUtil.createDefaultTestFeatures("type5", 5); //$NON-NLS-1$
         resources.add(MapTests.createGeoResource(features, true));
         resources.add(MapTests.createGeoResource(features2, true));
         IGeoResource createGeoResource = MapTests.createGeoResource(features3, true);

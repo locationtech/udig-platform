@@ -18,17 +18,16 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Test;
 import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
-import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.locationtech.udig.ui.palette.ColourScheme;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.junit.Test;
 
 public class LayerColoursTest extends AbstractProjectTestCase {
 
@@ -39,17 +38,17 @@ public class LayerColoursTest extends AbstractProjectTestCase {
     public void testColourScheme() throws Exception {
          //add and remove some layers, and make sure the colours are proper
         Map map = MapTests.createDefaultMap("test", 2, true, new Dimension(10,10)); //$NON-NLS-1$
-        IGeoResource resource1 = MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures(
+        IGeoResource resource1 = MapTests.createGeoResource(FeatureCreationTestUtil.createDefaultTestFeatures(
                 "type1", 4), false); //$NON-NLS-1$
-        IGeoResource resource2 = MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures(
+        IGeoResource resource2 = MapTests.createGeoResource(FeatureCreationTestUtil.createDefaultTestFeatures(
                 "type2", 4), false); //$NON-NLS-1$
-        IGeoResource resource3 = MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures(
+        IGeoResource resource3 = MapTests.createGeoResource(FeatureCreationTestUtil.createDefaultTestFeatures(
                 "type3", 4), false); //$NON-NLS-1$
-        IGeoResource resource4 = MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures(
+        IGeoResource resource4 = MapTests.createGeoResource(FeatureCreationTestUtil.createDefaultTestFeatures(
                 "type4", 4), false); //$NON-NLS-1$
-        IGeoResource resource5 = MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures(
+        IGeoResource resource5 = MapTests.createGeoResource(FeatureCreationTestUtil.createDefaultTestFeatures(
                 "type5", 4), false); //$NON-NLS-1$
-        IGeoResource resource6 = MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures(
+        IGeoResource resource6 = MapTests.createGeoResource(FeatureCreationTestUtil.createDefaultTestFeatures(
                 "type6", 4), false); //$NON-NLS-1$
         assertEquals(1, map.getMapLayers().size());
         

@@ -14,14 +14,14 @@ package org.locationtech.udig.project.command;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.commands.DefaultErrorHandler;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;
 import org.junit.Test;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.commands.DefaultErrorHandler;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
 
 public class CommandManagerTest extends AbstractProjectTestCase {
 	

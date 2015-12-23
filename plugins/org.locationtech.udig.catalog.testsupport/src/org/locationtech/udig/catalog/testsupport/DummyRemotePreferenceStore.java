@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.locationtech.udig.catalog.tests;
+package org.locationtech.udig.catalog.testsupport;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +27,7 @@ public class DummyRemotePreferenceStore extends RemotePreferenceStore {
     public Map<String, String> preferences = new HashMap<String, String>();
     
     @Override
-    protected String getValue( String name ) {
+    public String getValue( String name ) {
         return preferences.get(name);
     }
 

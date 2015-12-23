@@ -15,18 +15,6 @@ import static org.junit.Assert.assertEquals;
 import java.awt.Dimension;
 import java.io.IOException;
 
-import org.locationtech.udig.AbstractProjectUITestCase;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.core.filter.AdaptingFilter;
-import org.locationtech.udig.core.filter.AdaptingFilterFactory;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
-import org.locationtech.udig.ui.WaitCondition;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -37,6 +25,18 @@ import org.geotools.data.Query;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.filter.AdaptingFilter;
+import org.locationtech.udig.core.filter.AdaptingFilterFactory;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.testsupport.MapTests;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -63,7 +63,7 @@ public class ToolManagerTest extends AbstractProjectUITestCase {
 
         }, true);
 
-        SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("new", 1); //$NON-NLS-1$
+        SimpleFeature[] features = FeatureCreationTestUtil.createDefaultTestFeatures("new", 1); //$NON-NLS-1$
         IGeoResource resource = MapTests.createGeoResource(features, true);
         Layer layer = map.getLayerFactory().createLayer(resource);
         map.getLayersInternal().add(layer);
@@ -107,7 +107,7 @@ public class ToolManagerTest extends AbstractProjectUITestCase {
     
     @Test
     public void testDeleteAction() throws Exception {
-        SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("new", 15); //$NON-NLS-1$
+        SimpleFeature[] features = FeatureCreationTestUtil.createDefaultTestFeatures("new", 15); //$NON-NLS-1$
         IGeoResource resource = MapTests.createGeoResource(features, true);
         Layer layer = map.getLayerFactory().createLayer(resource);
         map.getLayersInternal().add(layer);

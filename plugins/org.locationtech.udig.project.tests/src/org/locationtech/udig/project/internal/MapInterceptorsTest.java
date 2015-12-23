@@ -12,11 +12,11 @@ package org.locationtech.udig.project.internal;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
-import org.locationtech.udig.project.tests.support.MapTests;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.testsupport.MapTests;
 
 public class MapInterceptorsTest extends AbstractProjectTestCase {
 

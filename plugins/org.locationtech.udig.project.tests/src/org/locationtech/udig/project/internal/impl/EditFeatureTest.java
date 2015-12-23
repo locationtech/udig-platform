@@ -28,13 +28,13 @@ import org.junit.Test;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.tests.CatalogTests;
+import org.locationtech.udig.catalog.testsupport.CatalogTests;
 import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
 import org.locationtech.udig.project.command.factory.EditCommandFactory;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
@@ -50,10 +50,9 @@ public class EditFeatureTest extends AbstractProjectTestCase {
     private Map map;
     private SimpleFeature[] features;
     
-    @SuppressWarnings("deprecation")
     @Before
     public void setUp() throws Exception {
-        features = UDIGTestUtil.createTestFeatures("testType", new Geometry[]{}, //$NON-NLS-1$
+        features = FeatureCreationTestUtil.createTestFeatures("testType", new Geometry[]{}, //$NON-NLS-1$
         		new String[]{"firstValue", ORIGINAL_VALUE, "thirdValue", "fourthValue"}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         IGeoResource resource=CatalogTests.createGeoResource(features,true);
         service=resource.service(null);

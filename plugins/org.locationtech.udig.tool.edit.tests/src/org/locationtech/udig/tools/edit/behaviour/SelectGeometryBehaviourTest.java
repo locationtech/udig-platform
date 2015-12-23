@@ -26,7 +26,7 @@ import org.locationtech.udig.project.BlackboardEvent;
 import org.locationtech.udig.project.IBlackboard;
 import org.locationtech.udig.project.IBlackboardListener;
 import org.locationtech.udig.project.internal.EditManager;
-import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
 import org.locationtech.udig.project.ui.internal.tool.ToolContext;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
@@ -38,7 +38,6 @@ import org.locationtech.udig.tools.edit.support.EditBlackboardEvent;
 import org.locationtech.udig.tools.edit.support.EditGeom;
 import org.locationtech.udig.tools.edit.support.PrimitiveShape;
 import org.locationtech.udig.tools.edit.support.TestHandler;
-
 import org.geotools.data.FeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;

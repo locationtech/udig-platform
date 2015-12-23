@@ -21,8 +21,15 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.SortedSet;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.notify.impl.NotificationImpl;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.tests.DummyService;
+import org.locationtech.udig.catalog.testsupport.DummyService;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.ProjectPackage;
@@ -37,16 +44,8 @@ import org.locationtech.udig.project.internal.render.impl.PlaceHolder;
 import org.locationtech.udig.project.internal.render.impl.RendererCreatorImpl;
 import org.locationtech.udig.project.render.IRenderer;
 import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.project.tests.support.TestFeatureStore;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.common.notify.impl.NotificationImpl;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.locationtech.udig.project.testsupport.MapTests;
+import org.locationtech.udig.project.testsupport.TestFeatureStore;
 
 /**
  * Tests the renderer creator implementation.

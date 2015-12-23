@@ -14,14 +14,13 @@ import static org.junit.Assert.assertEquals;
 
 import java.awt.Dimension;
 
-import org.locationtech.udig.project.internal.render.ViewportModel;
-import org.locationtech.udig.project.tests.support.MapTests;
-
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Envelope;

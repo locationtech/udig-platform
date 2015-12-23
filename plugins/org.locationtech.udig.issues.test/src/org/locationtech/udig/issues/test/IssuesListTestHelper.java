@@ -17,17 +17,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.locationtech.udig.core.enums.Priority;
-import org.locationtech.udig.core.enums.Resolution;
-import org.locationtech.udig.issues.FeatureIssue;
-import org.locationtech.udig.issues.IListStrategy;
-import org.locationtech.udig.issues.IRemoteIssuesList;
-import org.locationtech.udig.issues.StrategizedIssuesList;
-import org.locationtech.udig.issues.internal.datastore.AbstractDatastoreStrategy;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.tests.support.MapTests;
-
 import org.geotools.data.DataStore;
 import org.geotools.data.DataUtilities;
 import org.geotools.data.FeatureSource;
@@ -39,6 +28,16 @@ import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.SchemaException;
 import org.geotools.feature.collection.AdaptorFeatureCollection;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.udig.core.enums.Priority;
+import org.locationtech.udig.core.enums.Resolution;
+import org.locationtech.udig.issues.FeatureIssue;
+import org.locationtech.udig.issues.IListStrategy;
+import org.locationtech.udig.issues.IRemoteIssuesList;
+import org.locationtech.udig.issues.StrategizedIssuesList;
+import org.locationtech.udig.issues.internal.datastore.AbstractDatastoreStrategy;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 

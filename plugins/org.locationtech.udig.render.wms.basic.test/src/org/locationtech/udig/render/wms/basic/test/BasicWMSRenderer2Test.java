@@ -18,13 +18,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.locationtech.udig.AbstractProjectUITestCase;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.render.internal.wms.basic.BasicWMSRenderer2;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.ows.Layer;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -32,6 +25,12 @@ import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.junit.Before;
 import org.junit.Test;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.testsupport.MapTests;
+import org.locationtech.udig.render.internal.wms.basic.BasicWMSRenderer2;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Envelope;

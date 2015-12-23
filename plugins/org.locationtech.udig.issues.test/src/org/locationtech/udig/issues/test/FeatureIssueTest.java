@@ -19,9 +19,10 @@ import java.awt.Dimension;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.tests.CatalogTests;
+import org.locationtech.udig.catalog.testsupport.CatalogTests;
 import org.locationtech.udig.core.enums.Priority;
 import org.locationtech.udig.core.enums.Resolution;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
 import org.locationtech.udig.issues.FeatureIssue;
 import org.locationtech.udig.issues.IIssue;
 import org.locationtech.udig.issues.internal.view.IssueHandler;
@@ -36,11 +37,10 @@ import org.locationtech.udig.project.command.MapCommand;
 import org.locationtech.udig.project.command.UndoableCommand;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -84,7 +84,7 @@ public class FeatureIssueTest extends AbstractProjectUITestCase {
 	
 	@Before
 	public void setUp() throws Exception {
-		features = UDIGTestUtil.createDefaultTestFeatures("test", 20); //$NON-NLS-1$
+		features = FeatureCreationTestUtil.createDefaultTestFeatures("test", 20); //$NON-NLS-1$
 		resource = CatalogTests.createGeoResource(features, true);
 		map=MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(10,10));
 	}

@@ -18,14 +18,13 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.SortedSet;
 
+import org.junit.Test;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.render.RenderContext;
 import org.locationtech.udig.project.internal.render.RendererCreator;
 import org.locationtech.udig.project.internal.render.SelectionLayer;
-import org.locationtech.udig.project.tests.support.MapTests;
-
-import org.junit.Test;
+import org.locationtech.udig.project.testsupport.MapTests;
 
 public class CompositeRenderContextImplTest {
 

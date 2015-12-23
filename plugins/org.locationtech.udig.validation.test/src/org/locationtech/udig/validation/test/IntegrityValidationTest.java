@@ -17,9 +17,8 @@ import java.awt.Dimension;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.project.command.AbstractCommand;
 import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.locationtech.udig.validation.ValidateOverlaps;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.swt.widgets.Display;

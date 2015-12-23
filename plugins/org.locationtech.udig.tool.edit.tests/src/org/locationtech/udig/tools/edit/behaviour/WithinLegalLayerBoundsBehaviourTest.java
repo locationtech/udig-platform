@@ -12,8 +12,14 @@ package org.locationtech.udig.tools.edit.behaviour;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+
+import org.geotools.referencing.CRS;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.junit.Before;
+import org.junit.Test;
 import org.locationtech.udig.AbstractProjectUITestCase;
-import org.locationtech.udig.catalog.tests.CatalogTests;
+import org.locationtech.udig.catalog.testsupport.CatalogTests;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.ui.ApplicationGIS;
@@ -24,11 +30,6 @@ import org.locationtech.udig.tools.edit.enablement.WithinLegalLayerBoundsBehavio
 import org.locationtech.udig.tools.edit.support.TestHandler;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.geotools.referencing.CRS;
-import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.junit.Before;
-import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -46,7 +47,7 @@ public class WithinLegalLayerBoundsBehaviourTest extends AbstractProjectUITestCa
         map=(Map) handler.getContext().getMap();
         GeometryFactory fac=new GeometryFactory();
         Point geom=fac.createPoint(new Coordinate(-564121,-1632497));
-        SimpleFeature[] feature = UDIGTestUtil.createTestFeatures("test", new Point[]{geom}, new String[]{"name"}, CRS.decode("EPSG:2065")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SimpleFeature[] feature = FeatureCreationTestUtil.createTestFeatures("test", new Point[]{geom}, new String[]{"name"}, CRS.decode("EPSG:2065")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         Layer layer = map.getLayerFactory().createLayer(CatalogTests.createGeoResource(feature, true));
         map.getLayersInternal().add( layer );
         map.getViewportModelInternal().setCRS(DefaultGeographicCRS.WGS84);

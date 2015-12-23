@@ -7,23 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.locationtech.udig.catalog.tests;
+package org.locationtech.udig.catalog.testsupport;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
-
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.ICatalog;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IResolve;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.memory.ActiveMemoryDataStore;
-import org.locationtech.udig.catalog.memory.MemoryServiceExtensionImpl;
-import org.locationtech.udig.catalog.memory.internal.MemoryServiceImpl;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureSource;
@@ -32,6 +22,16 @@ import org.geotools.data.SchemaNotFoundException;
 import org.geotools.data.memory.MemoryDataStore;
 import org.geotools.feature.IllegalAttributeException;
 import org.geotools.feature.SchemaException;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.memory.ActiveMemoryDataStore;
+import org.locationtech.udig.catalog.memory.MemoryServiceExtensionImpl;
+import org.locationtech.udig.catalog.memory.internal.MemoryServiceImpl;
+import org.locationtech.udig.catalog.testsupport.DummyService;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -124,7 +124,7 @@ public class CatalogTests {
     	}
 
     public static IGeoResource createGeoResource( String typeName, int numFeatures, boolean deleteService ) throws IOException, SchemaException, IllegalAttributeException {
-        return createGeoResource(UDIGTestUtil.createDefaultTestFeatures(typeName, numFeatures), deleteService);
+        return createGeoResource(FeatureCreationTestUtil.createDefaultTestFeatures(typeName, numFeatures), deleteService);
     }
 
     /**

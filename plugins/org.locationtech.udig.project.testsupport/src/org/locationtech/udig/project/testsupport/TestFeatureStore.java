@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.locationtech.udig.project.tests.support;
+package org.locationtech.udig.project.testsupport;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -17,7 +17,6 @@ import java.util.Set;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureListener;
 import org.geotools.data.FeatureReader;
-import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
 import org.geotools.data.QueryCapabilities;
 import org.geotools.data.ResourceInfo;
@@ -26,7 +25,6 @@ import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.junit.Ignore;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
@@ -40,7 +38,6 @@ import org.opengis.filter.identity.FeatureId;
  * @author Jesse
  * @since 1.1.0
  */
-@Ignore
 public class TestFeatureStore implements SimpleFeatureStore {
 
     public Name getName() {

@@ -18,19 +18,6 @@ import java.awt.geom.AffineTransform;
 import java.util.Arrays;
 import java.util.List;
 
-import org.locationtech.udig.TestViewportPane;
-import org.locationtech.udig.core.internal.FeatureUtils;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.render.impl.ViewportModelImpl;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.tools.edit.EditState;
-import org.locationtech.udig.tools.edit.support.EditBlackboard;
-import org.locationtech.udig.tools.edit.support.Point;
-import org.locationtech.udig.tools.edit.support.PrimitiveShape;
-import org.locationtech.udig.tools.edit.support.TestHandler;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
@@ -40,6 +27,18 @@ import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureIterator;
 import org.junit.Before;
 import org.junit.Test;
+import org.locationtech.udig.TestViewportPane;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.render.impl.ViewportModelImpl;
+import org.locationtech.udig.project.testsupport.MapTests;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.tools.edit.EditState;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.Point;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.tools.edit.support.TestHandler;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
@@ -77,7 +76,7 @@ public class DifferenceFeatureCommandTest {
              }), new LinearRing[0]);
     
         handler=new TestHandler();
-        features=UDIGTestUtil.createTestFeatures("DifferenceFeatureTests", new Geometry[]{line, poly}, new String[]{"line", "poly"});   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+        features=FeatureCreationTestUtil.createTestFeatures("DifferenceFeatureTests", new Geometry[]{line, poly}, new String[]{"line", "poly"});   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
         map = MapTests.createNonDynamicMapAndRenderer(MapTests.createGeoResource(features, true), new Dimension(500,500));
         
         Envelope env=map.getBounds(null);

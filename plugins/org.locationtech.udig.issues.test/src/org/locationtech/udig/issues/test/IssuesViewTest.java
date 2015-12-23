@@ -19,10 +19,30 @@ import static org.junit.Assert.assertTrue;
 import java.awt.Dimension;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IMemento;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.PlatformUI;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.core.enums.Priority;
 import org.locationtech.udig.core.enums.Resolution;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
 import org.locationtech.udig.issues.AbstractIssue;
 import org.locationtech.udig.issues.FeatureIssue;
 import org.locationtech.udig.issues.IIssue;
@@ -47,31 +67,10 @@ import org.locationtech.udig.issues.listeners.IIssuesListListener;
 import org.locationtech.udig.issues.listeners.IssuesListEvent;
 import org.locationtech.udig.issues.listeners.IssuesListEventType;
 import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.MapTests;
 import org.locationtech.udig.project.tests.ui.ViewPart1;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IMemento;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.PlatformUI;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 
 public class IssuesViewTest extends AbstractProjectUITestCase {
@@ -303,7 +302,7 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         
         list.clear();
         
-        SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("test", 4); //$NON-NLS-1$
+        SimpleFeature[] features = FeatureCreationTestUtil.createDefaultTestFeatures("test", 4); //$NON-NLS-1$
         IGeoResource resource = MapTests.createGeoResource(features, false);
         final Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(512,512));
         class FixIssue extends TestIssue{

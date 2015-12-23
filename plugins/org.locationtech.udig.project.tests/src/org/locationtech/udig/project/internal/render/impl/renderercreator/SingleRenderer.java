@@ -11,10 +11,9 @@ package org.locationtech.udig.project.internal.render.impl.renderercreator;
 
 import java.awt.Graphics2D;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.locationtech.udig.project.internal.render.impl.RendererImpl;
 import org.locationtech.udig.project.render.RenderException;
-
-import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Simulats a renderer that renders a single class.

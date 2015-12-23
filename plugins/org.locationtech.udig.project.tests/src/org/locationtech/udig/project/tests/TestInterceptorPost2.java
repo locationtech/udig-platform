@@ -10,11 +10,10 @@
  */
 package org.locationtech.udig.project.tests;
 
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.IResourceInterceptor;
-
 import org.geotools.data.FeatureSource;
 import org.junit.Ignore;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IResourceInterceptor;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 

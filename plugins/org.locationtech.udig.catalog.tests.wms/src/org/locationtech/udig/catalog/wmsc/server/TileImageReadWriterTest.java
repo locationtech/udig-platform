@@ -28,7 +28,7 @@ import org.geotools.ows.ServiceException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.locationtech.udig.catalog.tests.wmsc.Activator;
-import org.locationtech.udig.catalog.util.CatalogTestUtils;
+import org.locationtech.udig.catalog.testsupport.CatalogConnectionUtils;
 
 public class TileImageReadWriterTest {
     
@@ -37,7 +37,7 @@ public class TileImageReadWriterTest {
     @BeforeClass
     public static void setUp() throws Exception {
         URL url = new URL( "http://localhost:8080/geoserver/ows?service=wms&version=1.3.0&request=GetCapabilities");
-        CatalogTestUtils.assumeNoConnectionException(url, 1000);
+        CatalogConnectionUtils.assumeNoConnectionException(url, 1000);
         serverURL = url;
     }
 

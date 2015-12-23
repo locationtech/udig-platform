@@ -14,6 +14,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.resource.Resource;
+import org.junit.After;
+import org.junit.Before;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.IResolve;
@@ -23,10 +26,6 @@ import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.Project;
 import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.locationtech.udig.project.internal.commands.NullCommand;
-
-import org.eclipse.emf.ecore.resource.Resource;
-import org.junit.After;
-import org.junit.Before;
 
 /**
  * Attempts to clean up after running by clearing the project registry, maps, and projects.

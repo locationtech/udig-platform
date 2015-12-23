@@ -12,11 +12,10 @@ package org.locationtech.udig.tool.info.tests;
 
 import java.awt.Dimension;
 
+import org.junit.Test;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.tests.support.MapTests;
-
-import org.junit.Test;
+import org.locationtech.udig.project.testsupport.MapTests;
 
 public class BetterWMSTest extends AbstractProjectUITestCase {
 

@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.geotools.util.Range;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.render.Renderer;
@@ -23,8 +24,6 @@ import org.locationtech.udig.project.render.AbstractRenderMetrics;
 import org.locationtech.udig.project.render.IRenderContext;
 import org.locationtech.udig.project.render.IRenderMetricsFactory;
 import org.locationtech.udig.project.render.IRenderer;
-
-import org.geotools.util.Range;
 
 /**
  * For testing.  Creates a MultiLayerRenderer.  Accepts resources that resolve to RendererCreatorTestObjForMulitRenderer objects.
@@ -64,7 +63,6 @@ public class MultiRenderMetricsFactory implements IRenderMetricsFactory {
         public Renderer createRenderer() {
             return new MultiLayerRenderer();
         }
-        @SuppressWarnings("unchecked")
         public Set<Range<Double>> getValidScaleRanges() {
             return new HashSet<Range<Double>>();
         }

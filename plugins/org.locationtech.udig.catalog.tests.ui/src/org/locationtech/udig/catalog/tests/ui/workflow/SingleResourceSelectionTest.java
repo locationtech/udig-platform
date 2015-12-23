@@ -17,9 +17,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.locationtech.udig.catalog.internal.ui.ConnectionPageDecorator;
 import org.locationtech.udig.catalog.internal.ui.ResourceSelectionPage;
-import org.locationtech.udig.catalog.tests.DummyService;
+import org.locationtech.udig.catalog.testsupport.DummyService;
 import org.locationtech.udig.catalog.ui.ConnectionFactoryManager;
 import org.locationtech.udig.catalog.ui.UDIGConnectionFactoryDescriptor;
 import org.locationtech.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
@@ -30,13 +36,6 @@ import org.locationtech.udig.catalog.ui.workflow.Workflow;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardDialog;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
-
-import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 public class SingleResourceSelectionTest {
 	

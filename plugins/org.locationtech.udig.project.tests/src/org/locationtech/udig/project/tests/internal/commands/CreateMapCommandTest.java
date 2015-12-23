@@ -17,19 +17,22 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.collections.MapUtils;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.IServiceFactory;
-import org.locationtech.udig.catalog.tests.DummyService;
+import org.locationtech.udig.catalog.testsupport.CatalogTests;
+import org.locationtech.udig.catalog.testsupport.DummyService;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.Project;
 import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.locationtech.udig.project.internal.commands.CreateMapCommand;
 import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.locationtech.udig.project.testsupport.MapTests;
 
 public class CreateMapCommandTest extends AbstractProjectTestCase {
 	
@@ -37,16 +40,8 @@ public class CreateMapCommandTest extends AbstractProjectTestCase {
 	
 	@Before
 	public void setUp() throws Exception {
-		//get a georesource
-		IServiceFactory sFactory 
-			= CatalogPlugin.getDefault().getServiceFactory();
-		
-		HashMap<String, Serializable> map = new HashMap<String, Serializable>();
-		map.put("dummy", DummyService.url); //$NON-NLS-1$
-		
-		List<IService> services = sFactory.createService(map);
-		service = services.get(0);
-//        catalog.add(service);
+	    IGeoResource createGeoResource = MapTests.createGeoResource("dummy", 10, true);
+	    service = createGeoResource.service(new NullProgressMonitor());
 	}
 	
 	@SuppressWarnings("unchecked")

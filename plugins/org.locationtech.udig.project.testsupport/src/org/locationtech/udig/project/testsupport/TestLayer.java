@@ -7,14 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.locationtech.udig.project.tests.support;
+package org.locationtech.udig.project.testsupport;
 
 import java.util.List;
 
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.project.internal.impl.LayerImpl;
-
-import org.junit.Ignore;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
@@ -22,8 +20,9 @@ import org.opengis.feature.simple.SimpleFeatureType;
  * 
  * @author jones
  * @since 1.1.0
+ * 
+ * TODO refactor this TestLayer to be independent from project.ui classes such as ColourScheme (indirectly referenced because of LayerImpl)
  */
-@Ignore
 public class TestLayer extends LayerImpl {
 
     private List<IGeoResource> resources;

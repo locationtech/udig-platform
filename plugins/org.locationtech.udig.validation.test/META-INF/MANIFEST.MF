@@ -7,13 +7,9 @@ Bundle-Activator: org.locationtech.udig.validation.test.TestPlugin
 Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.locationtech.udig.libs,
  org.locationtech.udig.validation,
- org.locationtech.udig.project.tests,
  org.junit;bundle-version="[4.0.0,5.0.0)",
- org.locationtech.udig.catalog,
- org.locationtech.udig.project,
- org.locationtech.udig.ui,
- org.locationtech.udig.ui.tests
+ org.locationtech.udig.core.testsupport,
+ org.locationtech.udig.project.testsupport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

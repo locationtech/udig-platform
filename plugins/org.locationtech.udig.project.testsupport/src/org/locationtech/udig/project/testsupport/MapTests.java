@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.locationtech.udig.project.tests.support;
+package org.locationtech.udig.project.testsupport;
 
 import java.awt.Dimension;
 import java.io.IOException;
@@ -18,11 +18,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.data.FeatureStore;
+import org.geotools.feature.IllegalAttributeException;
+import org.geotools.feature.SchemaException;
+import org.geotools.styling.Style;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.tests.CatalogTests;
+import org.locationtech.udig.catalog.testsupport.CatalogTests;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
@@ -41,13 +47,6 @@ import org.locationtech.udig.project.internal.render.impl.RenderContextImpl;
 import org.locationtech.udig.project.internal.render.impl.RenderManagerImpl;
 import org.locationtech.udig.project.internal.render.impl.RendererCreatorImpl;
 import org.locationtech.udig.style.sld.SLDContent;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.data.FeatureStore;
-import org.geotools.feature.IllegalAttributeException;
-import org.geotools.feature.SchemaException;
-import org.geotools.styling.Style;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
 
@@ -194,7 +193,7 @@ public class MapTests {
         int toCreate=numFeatures;
         if( numFeatures == 0)
             toCreate=1;
-        SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures(featureTypeName, toCreate);
+        SimpleFeature[] features = FeatureCreationTestUtil.createDefaultTestFeatures(featureTypeName, toCreate);
         IGeoResource resource = CatalogTests.createGeoResource(features, deleteExistingService);
         if( numFeatures == 0)
             resource.resolve(FeatureStore.class, new NullProgressMonitor()).removeFeatures(Filter.INCLUDE);
@@ -205,7 +204,7 @@ public class MapTests {
      * @deprecated Moved to CatalogTests
      */
     public static IGeoResource createGeoResource( String typeName, int numFeatures, boolean deleteService ) throws IOException, SchemaException, IllegalAttributeException {
-        return CatalogTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures(typeName, numFeatures), deleteService);
+        return CatalogTests.createGeoResource(FeatureCreationTestUtil.createDefaultTestFeatures(typeName, numFeatures), deleteService);
     }
 
     public static LayerImpl createLayer( URL id, Object resolveTo, Map map ) throws Exception {

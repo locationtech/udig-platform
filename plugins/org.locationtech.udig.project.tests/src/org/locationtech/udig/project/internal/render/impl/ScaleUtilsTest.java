@@ -10,8 +10,6 @@ import static org.junit.Assert.fail;
 import java.awt.Dimension;
 import java.awt.Point;
 
-import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
-
 import org.easymock.EasyMock;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
@@ -19,6 +17,7 @@ import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Coordinate;

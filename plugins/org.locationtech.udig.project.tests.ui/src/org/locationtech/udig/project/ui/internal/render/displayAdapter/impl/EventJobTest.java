@@ -16,15 +16,14 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
+import org.junit.Test;
 import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseListener;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelEvent;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
-
-import org.junit.Before;
-import org.junit.Test;
 
 public class EventJobTest {
 

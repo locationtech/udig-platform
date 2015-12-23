@@ -21,7 +21,7 @@ import java.util.List;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.command.CommandManager;
 import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.TestMapDisplay;
+import org.locationtech.udig.project.testsupport.TestMapDisplay;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.tools.edit.EditState;
 import org.locationtech.udig.tools.edit.EventBehaviour;
@@ -32,7 +32,6 @@ import org.locationtech.udig.tools.edit.support.EditGeom;
 import org.locationtech.udig.tools.edit.support.Point;
 import org.locationtech.udig.tools.edit.support.SnapBehaviour;
 import org.locationtech.udig.tools.edit.support.TestHandler;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureSource;
 import org.geotools.geometry.jts.JTS;

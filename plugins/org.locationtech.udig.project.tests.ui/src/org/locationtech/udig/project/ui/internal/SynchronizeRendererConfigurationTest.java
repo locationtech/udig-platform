@@ -17,8 +17,11 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.locationtech.udig.AbstractProjectUITestCase;
-import org.locationtech.udig.catalog.tests.CatalogTests;
+import org.locationtech.udig.catalog.testsupport.CatalogTests;
 import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.Layer;
@@ -28,14 +31,10 @@ import org.locationtech.udig.project.internal.render.RenderContext;
 import org.locationtech.udig.project.internal.render.SelectionLayer;
 import org.locationtech.udig.project.render.IRenderContext;
 import org.locationtech.udig.project.render.IRenderer;
-import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 public class SynchronizeRendererConfigurationTest extends AbstractProjectUITestCase {
 

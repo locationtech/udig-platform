@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Testsupport Bundle with Utilities
+Bundle-SymbolicName: org.locationtech.udig.core.testsupport
+Bundle-Version: 2.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.locationtech.udig.libs
+Export-Package: org.locationtech.udig.core.testsupport

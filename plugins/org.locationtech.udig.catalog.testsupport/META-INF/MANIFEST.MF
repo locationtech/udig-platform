@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Catalog Testsupport Bundle
+Bundle-SymbolicName: org.locationtech.udig.catalog.testsupport
+Bundle-Version: 2.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.locationtech.udig.libs,
+ org.locationtech.udig.catalog,
+ org.eclipse.jface,
+ org.locationtech.udig.core.testsupport,
+ org.junit
+Export-Package: org.locationtech.udig.catalog.testsupport

@@ -16,21 +16,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.awt.Dimension;
 
-import org.locationtech.udig.AbstractProjectUITestCase;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.internal.ui.MapPerspective;
-import org.locationtech.udig.issues.AbstractIssue;
-import org.locationtech.udig.issues.IssueConstants;
-import org.locationtech.udig.issues.internal.view.IssueHandler;
-import org.locationtech.udig.issues.internal.view.IssuesView;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.project.tests.ui.ViewPart1;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
-import org.locationtech.udig.project.ui.internal.MapPart;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;
@@ -43,6 +28,20 @@ import org.eclipse.ui.WorkbenchException;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
+import org.locationtech.udig.internal.ui.MapPerspective;
+import org.locationtech.udig.issues.AbstractIssue;
+import org.locationtech.udig.issues.IssueConstants;
+import org.locationtech.udig.issues.internal.view.IssueHandler;
+import org.locationtech.udig.issues.internal.view.IssuesView;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.tests.ui.ViewPart1;
+import org.locationtech.udig.project.testsupport.MapTests;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
+import org.locationtech.udig.project.ui.internal.MapPart;
 import org.opengis.feature.simple.SimpleFeature;
 
 public class IssueHandlerTest extends AbstractProjectUITestCase {
@@ -139,7 +138,7 @@ public class IssueHandlerTest extends AbstractProjectUITestCase {
         
         assertNull(getActiveWindow().getActivePage().getActiveEditor());
         
-        SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("test", 4); //$NON-NLS-1$
+        SimpleFeature[] features = FeatureCreationTestUtil.createDefaultTestFeatures("test", 4); //$NON-NLS-1$
         IGeoResource resource = MapTests.createGeoResource(features, false);
         final Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(512,512));
         

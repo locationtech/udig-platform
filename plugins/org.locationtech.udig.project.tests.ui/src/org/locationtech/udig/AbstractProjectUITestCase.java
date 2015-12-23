@@ -12,12 +12,6 @@ package org.locationtech.udig;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import org.locationtech.udig.internal.ui.UDIGDropHandler;
-import org.locationtech.udig.internal.ui.UDIGDropHandler.CompositeDropActionJob;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
-import org.locationtech.udig.project.ui.internal.MapEditorPart;
-import org.locationtech.udig.ui.WaitCondition;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ui.IEditorPart;
@@ -29,6 +23,12 @@ import org.eclipse.ui.intro.IIntroManager;
 import org.eclipse.ui.intro.IIntroPart;
 import org.junit.After;
 import org.junit.Before;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
+import org.locationtech.udig.internal.ui.UDIGDropHandler.CompositeDropActionJob;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 public abstract class AbstractProjectUITestCase extends AbstractProjectTestCase {
 

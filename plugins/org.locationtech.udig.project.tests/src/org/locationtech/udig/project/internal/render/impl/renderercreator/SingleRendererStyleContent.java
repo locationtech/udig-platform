@@ -13,11 +13,10 @@ import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.StyleContent;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.StyleContent;
 
 /**
  * For testing. A style for SingleRenderer

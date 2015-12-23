@@ -11,6 +11,7 @@
 package org.locationtech.udig.catalog.tests.ui.dnd;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -21,6 +22,10 @@ import java.util.Collections;
 import java.util.Iterator;
 
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +34,7 @@ import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.internal.ui.CatalogView;
 import org.locationtech.udig.catalog.tests.ui.workflow.DummyMonitor;
-import org.locationtech.udig.catalog.util.CatalogTestUtils;
+import org.locationtech.udig.catalog.testsupport.CatalogConnectionUtils;
 import org.locationtech.udig.internal.ui.StaticDestinationProvider;
 import org.locationtech.udig.internal.ui.UDIGDropHandler;
 import org.locationtech.udig.internal.ui.UDIGViewerDropAdapter;
@@ -62,9 +67,18 @@ public abstract class CatalogViewDNDTest {
 			catalog.remove((IService) itr.next());
 		}
 
-		view = (CatalogView) PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage().showView(
-						CatalogView.VIEW_ID);
+		IWorkbench workbench = PlatformUI.getWorkbench();
+		assertNotNull(workbench);
+		
+		IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
+		assertNotNull(activeWorkbenchWindow);
+		
+		IWorkbenchPage activePage = activeWorkbenchWindow.getActivePage();
+		assertNotNull(activePage);
+		
+		view = (CatalogView) activePage.showView(CatalogView.VIEW_ID);
+		assertNotNull(view);
+		
 		viewer = view.getTreeviewer();
 		UDIGViewerDropAdapter adapter = new UDIGViewerDropAdapter(viewer,
 				new StaticDestinationProvider(view));
@@ -76,7 +90,7 @@ public abstract class CatalogViewDNDTest {
     @Test
     public void testSingle() throws Throwable {
         URL data = getData();
-        CatalogTestUtils.assumeNoConnectionException(Collections.singletonList(data), 1000);
+        CatalogConnectionUtils.assumeNoConnectionException(Collections.singletonList(data), 1000);
 
         final Throwable[] failure=new Throwable[1];
         handler.addListener(new IDropHandlerListener(){
@@ -117,7 +131,7 @@ public abstract class CatalogViewDNDTest {
     @Test
     public void testMulti() throws Throwable {
         URL[] data = getDataMulti();
-        CatalogTestUtils.assumeNoConnectionException(Arrays.asList(getDataMulti()), 1000);
+        CatalogConnectionUtils.assumeNoConnectionException(Arrays.asList(getDataMulti()), 1000);
         final Throwable[] failure=new Throwable[1];
         handler.addListener(new IDropHandlerListener(){
 

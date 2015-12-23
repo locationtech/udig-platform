@@ -16,6 +16,9 @@
         <profile>
             <id>test</id>
             <modules>
+                <module>org.locationtech.udig.core.testsupport</module>
+                <module>org.locationtech.udig.catalog.testsupport</module>
+                <module>org.locationtech.udig.project.testsupport</module>
                 <module>org.locationtech.udig.ui.tests</module>
                 <module>org.locationtech.udig.core.tests</module>
                 <module>org.locationtech.udig.project.tests</module>

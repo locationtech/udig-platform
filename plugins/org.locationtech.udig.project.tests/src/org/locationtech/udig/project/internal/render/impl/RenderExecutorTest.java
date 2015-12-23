@@ -25,15 +25,6 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.render.RenderExecutor;
-import org.locationtech.udig.project.internal.render.Renderer;
-import org.locationtech.udig.project.render.IRenderer;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.style.sld.SLDContent;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
@@ -43,6 +34,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.render.RenderExecutor;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.testsupport.MapTests;
+import org.locationtech.udig.style.sld.SLDContent;
 import org.opengis.feature.simple.SimpleFeature;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -86,7 +85,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 		
 		Polygon poly2=factory.createPolygon( ring2, new LinearRing[]{});
 		
-		SimpleFeature[] features=UDIGTestUtil.createTestFeatures("testType", new Geometry[]{poly1, poly2},new String[]{},  //$NON-NLS-1$
+		SimpleFeature[] features=FeatureCreationTestUtil.createTestFeatures("testType", new Geometry[]{poly1, poly2},new String[]{},  //$NON-NLS-1$
 				DefaultEngineeringCRS.CARTESIAN_2D);
 		map=MapTests.createNonDynamicMapAndRenderer(MapTests.createGeoResource(features, true), new Dimension(w,h));
 		StyleBuilder sb=new StyleBuilder();

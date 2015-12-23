@@ -13,18 +13,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.awt.Dimension;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.command.AbstractCommand;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-import org.locationtech.udig.validation.ValidateGeometry;
-import org.locationtech.udig.validation.ValidateLineMustBeASinglePart;
-import org.locationtech.udig.validation.ValidateLineNoSelfIntersect;
-import org.locationtech.udig.validation.ValidateLineNoSelfOverlapping;
-import org.locationtech.udig.validation.ValidateNullZero;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;
@@ -34,6 +22,17 @@ import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.testsupport.MapTests;
+import org.locationtech.udig.validation.ValidateGeometry;
+import org.locationtech.udig.validation.ValidateLineMustBeASinglePart;
+import org.locationtech.udig.validation.ValidateLineNoSelfIntersect;
+import org.locationtech.udig.validation.ValidateLineNoSelfOverlapping;
+import org.locationtech.udig.validation.ValidateNullZero;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Id;
@@ -52,7 +51,7 @@ public class FeatureValidationTest {
     @Ignore
     @Test
     public void testGeometryOp() throws Exception {
-        SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("someType", 5); //$NON-NLS-1$
+        SimpleFeature[] features = FeatureCreationTestUtil.createDefaultTestFeatures("someType", 5); //$NON-NLS-1$
         Geometry geometry = (Geometry) features[0].getDefaultGeometry();
 		geometry.getCoordinates()[0].x = 2;
         //features[0].setDefaultGeometry(null);
