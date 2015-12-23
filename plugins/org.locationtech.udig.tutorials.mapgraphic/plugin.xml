@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
-   <extension
-         id="org.locationtech.udig.tutorials.mapgraphic.mapgraphics"
+   <extension 
          point="org.locationtech.udig.mapgraphic.mapgraphic">
       <mapGraphic
             class="org.locationtech.udig.tutorials.mapgraphic.CoordinateGraphic"

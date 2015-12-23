@@ -2,8 +2,6 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         id="org.locationtech.udig.tutorials.tracking.graphics"
-         name="Tracking MapGraphic"
          point="org.locationtech.udig.mapgraphic.mapgraphic">
       <mapGraphic
             class="org.locationtech.udig.tutorials.tracking.TrackingGraphic"
