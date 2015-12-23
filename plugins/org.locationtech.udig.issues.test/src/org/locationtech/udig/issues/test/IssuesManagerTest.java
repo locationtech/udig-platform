@@ -52,9 +52,16 @@ import org.opengis.feature.simple.SimpleFeatureType;
 
 public class IssuesManagerTest extends AbstractProjectUITestCase {
 
-    @Before
+    private IssuesManager issueManager;
+
+	@Before
     public void setUp() throws Exception {
         FeatureIssue.setTesting(true);
+        issueManager = new IssuesManager();
+        IIssuesList issueslist = issueManager.getIssuesList();
+        // its possible that issues coming from PreferencesStore into list
+        issueslist.clear();
+        assertEquals(0, issueslist.size());
     }
     
     @After
@@ -67,16 +74,15 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
      */
     @Test
     public void testRemoveIssues() {
-        IssuesManager m = new IssuesManager();
-        IIssuesList issueslist = m.getIssuesList();
+        IIssuesList issueslist = issueManager.getIssuesList();
         for( int i = 0; i < 10; i++ ) {
             issueslist.add(new DummyIssue(i, i < 6 ? "toRemove" : "g" + i)); //$NON-NLS-1$ //$NON-NLS-2$
         }
         DummyListener l = new DummyListener();
-        m.addIssuesListListener(l);
+        issueManager.addIssuesListListener(l);
 
         assertEquals(10, issueslist.size());
-        m.removeIssues("toRemove"); //$NON-NLS-1$
+        issueManager.removeIssues("toRemove"); //$NON-NLS-1$
         assertEquals("All the issues with groupId \"toRemove\"" + //$NON-NLS-1$
                 " should be gone leaving 4 items", 4, issueslist.size()); //$NON-NLS-1$
         for( IIssue issue : issueslist ) {
@@ -86,7 +92,7 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
         assertEquals(1, l.timesCalled);
         l.changes = 0;
         l.timesCalled = 0;
-        m.removeIssues("hello"); //$NON-NLS-1$
+        issueManager.removeIssues("hello"); //$NON-NLS-1$
         assertEquals(0, l.changes);
         assertEquals(0, l.timesCalled);
         assertEquals(4, issueslist.size());
@@ -94,9 +100,9 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
 
     @Test
     public void testSetIssuesList() throws Exception {
-        IssuesManager m = new IssuesManager();
         IIssuesList issuesList = new IssuesList();
-        m.setIssuesList(issuesList);
+        issuesList.clear();
+        issueManager.setIssuesList(issuesList);
 
         final AtomicBoolean addedListener = new AtomicBoolean(false);
         final AtomicBoolean removedListener = new AtomicBoolean(false);
@@ -117,14 +123,14 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
 
         addedListener.set(false);
 
-        m.setIssuesList(new IssuesList());
+        issueManager.setIssuesList(new IssuesList());
 
         assertFalse(addedListener.get());
         assertTrue(removedListener.get());
 
         removedListener.set(false);
 
-        m.setIssuesList(issuesList);
+        issueManager.setIssuesList(issuesList);
 
         assertTrue(addedListener.get());
         assertFalse(removedListener.get());
@@ -133,9 +139,8 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
     @Test
     public void testListeners() throws Exception {
 
-        IssuesManager m = new IssuesManager();
         final IssuesListEvent[] listEvent = new IssuesListEvent[1];
-        m.addIssuesListListener(new IIssuesListListener(){
+        issueManager.addIssuesListListener(new IIssuesListListener(){
 
             public void notifyChange( IssuesListEvent event ) {
                 listEvent[0] = event;
@@ -145,7 +150,7 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
 
         final IssuesManagerEvent[] managerEvent = new IssuesManagerEvent[1];
 
-        m.addListener(new IIssuesManagerListener(){
+        issueManager.addListener(new IIssuesManagerListener(){
 
             public void notifyChange( IssuesManagerEvent event ) {
                 managerEvent[0] = event;
@@ -153,21 +158,21 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
 
         });
 
-        m.getIssuesList().add(new DummyIssue(0));
+        issueManager.getIssuesList().add(new DummyIssue(0));
 
         assertNotNull(listEvent[0]);
         assertNull(managerEvent[0]);
 
         listEvent[0] = null;
 
-        m.setIssuesList(new IssuesList());
+        issueManager.setIssuesList(new IssuesList());
 
         assertEquals(IssuesManagerEventType.ISSUES_LIST_CHANGE, managerEvent[0].getType());
         assertNull(listEvent[0]);
 
         managerEvent[0] = null;
 
-        m.getIssuesList().add(new DummyIssue(0));
+        issueManager.getIssuesList().add(new DummyIssue(0));
 
         assertNotNull(listEvent[0]);
         assertNull(managerEvent[0]);
@@ -176,34 +181,34 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
 
     @Test
     public void testDirtyEvents() throws Exception {
-            IssuesManager m = new IssuesManager();
-            m.setIssuesList(IssuesListTestHelper.createInMemoryDatastoreIssuesList(null, null));
+        issueManager.setIssuesList(IssuesListTestHelper.createInMemoryDatastoreIssuesList(null,
+                null));
 
-            FeatureIssue createFeatureIssue = IssuesListTestHelper.createFeatureIssue("newFeature"); //$NON-NLS-1$
-            m.getIssuesList().add(createFeatureIssue);
+        FeatureIssue createFeatureIssue = IssuesListTestHelper.createFeatureIssue("newFeature"); //$NON-NLS-1$
+        issueManager.getIssuesList().add(createFeatureIssue);
 
-            final IssuesManagerEvent[] managerEvent = new IssuesManagerEvent[1];
+        final IssuesManagerEvent[] managerEvent = new IssuesManagerEvent[1];
 
-            m.addListener(new IIssuesManagerListener(){
+        issueManager.addListener(new IIssuesManagerListener() {
 
-                public void notifyChange( IssuesManagerEvent event ) {
-                    managerEvent[0] = event;
-                }
+            public void notifyChange(IssuesManagerEvent event) {
+                managerEvent[0] = event;
+            }
 
-            });
+        });
 
-            createFeatureIssue.setPriority(Priority.CRITICAL);
+        createFeatureIssue.setPriority(Priority.CRITICAL);
 
-            assertEquals(IssuesManagerEventType.DIRTY_ISSUE, managerEvent[0].getType());
-            assertEquals(Boolean.TRUE, managerEvent[0].getNewValue());
-            managerEvent[0] = null;
+        assertEquals(IssuesManagerEventType.DIRTY_ISSUE, managerEvent[0].getType());
+        assertEquals(Boolean.TRUE, managerEvent[0].getNewValue());
+        managerEvent[0] = null;
 
-            m.save(new NullProgressMonitor());
+        issueManager.save(new NullProgressMonitor());
 
-            assertEquals(IssuesManagerEventType.SAVE, managerEvent[0].getType());
-            assertNull(managerEvent[0].getNewValue());
-            assertEquals(createFeatureIssue, ((Collection) managerEvent[0].getOldValue())
-                    .iterator().next());
+        assertEquals(IssuesManagerEventType.SAVE, managerEvent[0].getType());
+        assertNull(managerEvent[0].getNewValue());
+        assertEquals(createFeatureIssue, ((Collection) managerEvent[0].getOldValue()).iterator()
+                .next());
     }
 
     @Test
