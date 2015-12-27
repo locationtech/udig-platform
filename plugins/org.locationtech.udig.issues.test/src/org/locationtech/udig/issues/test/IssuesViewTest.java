@@ -104,7 +104,7 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         
         assertNotNull("ViewPart for ID '" + IssueConstants.VIEW_ID + "' is null", viewPart);
         
-        assertTrue("ViewPart should be the IssueView", viewPart instanceof IssuesView);
+//        assertTrue("ViewPart should be the IssueView", viewPart instanceof IssuesView);
         
         view = (IssuesView) viewPart;
 //        view=(IssuesView) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(IssueConstants.VIEW_ID);
@@ -283,7 +283,6 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         });
     }
 
-    @Ignore
     @Test
     public void testFixIssue() throws Exception {
         list.clear();
@@ -461,7 +460,7 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         assertEquals( list.get(0), ((Tree)viewer.getControl()).getItem(0).getData());
 
     }
-    
+
     @Test
     public void testCloseView() throws Exception {
         IIssuesList old = IIssuesManager.defaultInstance.getIssuesList();
@@ -477,16 +476,16 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
                 if(event.getType()==IssuesListEventType.SAVE)
                     saved.set(true);
             }
-            
+
         });
         view.getSite().getPage().hideView(view);
         assertTrue(saved.get());
         }finally{
             IIssuesManager.defaultInstance.setIssuesList(old);
         }
-        
+
     }
-    
+
     @Test
     public void testDispose() throws Exception {
         view.disposeListeners();
@@ -547,21 +546,20 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
 
     @Test
     public void testGroupDeleteResolvedIssues() throws Exception {
-    	for (IIssue issue : list) {
-			issue.setResolution(Resolution.RESOLVED);
-		}
-    	view.setFocus();
-    	view.forTestingShowResolvedssues(true);
+        for (IIssue issue : list) {
+            issue.setResolution(Resolution.RESOLVED);
+        }
+        view.setFocus();
+        view.forTestingShowResolvedssues(true);
         IIssuesList list=view.forTestingGetResolvedIssues();
-    	IIssue issue = list.get(0);
-		viewer.setSelection(new StructuredSelection(issue));
-		Event event = new Event();
-		event.display=Display.getCurrent();
-		view.forTestingGetDeleteGroupAction().runWithEvent(event);
-		assertEquals("all items should have been deleted", 0,list.size()); //$NON-NLS-1$
-		
-	}
-    
+        IIssue issue = list.get(0);
+        viewer.setSelection(new StructuredSelection(issue));
+        Event event = new Event();
+        event.display=Display.getCurrent();
+        view.forTestingGetDeleteGroupAction().runWithEvent(event);
+        assertEquals("all items should have been deleted", 0,list.size()); //$NON-NLS-1$
+    }
+
     @Test
     public void testButtonEnablement() {
     	viewer.setSelection(new StructuredSelection());
@@ -581,21 +579,21 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         try{
             assertFalse(view.forTestingGetRefreshButton().isEnabled());
             assertFalse(view.forTestingGetSaveButton().isEnabled());
-    
+
             IIssuesManager.defaultInstance.setIssuesList(IssuesListTestHelper.createInMemoryDatastoreIssuesList(null, null));
             IIssuesManager.defaultInstance.getIssuesList().addAll(list);
             IIssuesList list=IIssuesManager.defaultInstance.getIssuesList();
             
             assertTrue(view.forTestingGetRefreshButton().isEnabled());
             assertFalse(view.forTestingGetSaveButton().isEnabled());
-            
+
             list.get(0).setDescription("New Description"); //$NON-NLS-1$
 
             assertTrue(view.forTestingGetRefreshButton().isEnabled());
             assertTrue(view.forTestingGetSaveButton().isEnabled());
-            
+
             IIssuesManager.defaultInstance.save(new NullProgressMonitor());
-            
+
             assertTrue(view.forTestingGetRefreshButton().isEnabled());
             assertFalse(view.forTestingGetSaveButton().isEnabled());
             
@@ -606,7 +604,7 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
             IIssuesManager.defaultInstance.setIssuesList(old);
         }
     }
-    
+
     @Test
     public void testRefreshAction() throws Exception {
         IIssuesList old = IIssuesManager.defaultInstance.getIssuesList();
@@ -753,38 +751,42 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         view.setExpansionProvider(new TestExpansionProvider.Provider1());
         assertTrue(viewer.getTree().getTopItem().getExpanded());
     }
-    
-    @Ignore
+
     @Test
-    public void testInit() throws Exception {
+    public void testInitFromPreferencesStoreWithCorrectEntries() throws Exception {
         IPreferenceStore preferenceStore = IssuesActivator.getDefault().getPreferenceStore();
-        preferenceStore.setValue(PreferenceConstants.KEY_VIEW_CONTENT_PROVIDER, "org.locationtech.udig.issues.test.TestContentProvider"); //$NON-NLS-1$
-        preferenceStore.setValue(PreferenceConstants.KEY_VIEW_SORTER, "org.locationtech.udig.issues.test.TestSorter"); //$NON-NLS-1$
-        preferenceStore.setValue(PreferenceConstants.KEY_VIEW_EXPANSION_PROVIDER, "org.locationtech.udig.issues.test.TestContentProvider"); //$NON-NLS-1$
-        preferenceStore.setValue(PreferenceConstants.KEY_VIEW_LABEL_PROVIDER, "org.locationtech.udig.issues.test.TestLabelProvider"); //$NON-NLS-1$
+        // value is the id Element from extension point definition
+        String elementNamespace="org.locationtech.udig.issues";
         
+        preferenceStore.setValue(PreferenceConstants.KEY_VIEW_CONTENT_PROVIDER, elementNamespace+".TestContentProvider");
+        preferenceStore.setValue(PreferenceConstants.KEY_VIEW_SORTER, elementNamespace+".TestSorter");
+        preferenceStore.setValue(PreferenceConstants.KEY_VIEW_EXPANSION_PROVIDER, elementNamespace+".TestContentProvider"); 
+        preferenceStore.setValue(PreferenceConstants.KEY_VIEW_LABEL_PROVIDER, elementNamespace +".TestLabelProvider");
+
         view.initViewerProviders();
-        
+
         assertTrue( viewer.getContentProvider() instanceof TestContentProvider.Provider1 );
         assertTrue( ((StrategizedSorter)viewer.getSorter()).getStrategy() instanceof TestSorter.Sorter1 );
         assertTrue( view.getExpansionProvider() instanceof TestExpansionProvider.Provider1 );
         assertTrue( viewer.getLabelProvider() instanceof TestLabelProvider.Provider1 );
-        
+    }
+
+    @Test
+    public void testInitFromPreferencesStoreWithIncorrectValuesAndFallbackBehavior() throws Exception {
+        IPreferenceStore preferenceStore = IssuesActivator.getDefault().getPreferenceStore();
         preferenceStore.setValue(PreferenceConstants.KEY_VIEW_CONTENT_PROVIDER, "randomNonsense value"); //$NON-NLS-1$
         preferenceStore.setValue(PreferenceConstants.KEY_VIEW_LABEL_PROVIDER, "randomNonsense value"); //$NON-NLS-1$
         preferenceStore.setValue(PreferenceConstants.KEY_VIEW_EXPANSION_PROVIDER, "randomNonsense value"); //$NON-NLS-1$
         preferenceStore.setValue(PreferenceConstants.KEY_VIEW_SORTER, "randomNonsense value"); //$NON-NLS-1$
 
         view.initViewerProviders();
-        
+
         assertTrue( viewer.getContentProvider() instanceof IssuesContentProvider );
         assertTrue( ((StrategizedSorter)viewer.getSorter()).getStrategy() instanceof IssuesSorter );
         assertTrue( view.getExpansionProvider() instanceof IssueExpansionProvider );
         assertTrue( viewer.getLabelProvider() instanceof IssuesLabelProvider );
     }
 
-    
-    
     /**
      * @param view
      * @param criticalPriorityRow
@@ -798,7 +800,6 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
     }
 
     class TestIssue extends AbstractIssue {
-
 
         TestIssue( Priority p2, Resolution r ) {
             Priority p=p2;

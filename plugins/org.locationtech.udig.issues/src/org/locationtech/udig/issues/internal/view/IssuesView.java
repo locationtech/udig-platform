@@ -258,7 +258,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
         
         setExpansionProvider(load("expansionProvider", KEY_VIEW_EXPANSION_PROVIDER, new IssueExpansionProvider())); //$NON-NLS-1$
         
-		IssuesContentProvider contentProvider = load("contentProvider", KEY_VIEW_CONTENT_PROVIDER, new IssuesContentProvider()); //$NON-NLS-1$
+                IIssuesContentProvider contentProvider = load("contentProvider", KEY_VIEW_CONTENT_PROVIDER, new IssuesContentProvider()); //$NON-NLS-1$
 		if( contentProvider instanceof IssuesContentProvider ){
 			((IssuesContentProvider)contentProvider).setShowGroup(defaultShowGroup );
 		}
