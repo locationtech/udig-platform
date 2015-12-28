@@ -160,6 +160,7 @@ public class ScaleUtilsTest {
 	 * Test method for
 	 * {@link org.locationtech.udig.project.internal.render.impl.ScaleUtils#toValidPixelBoundsClosestToCenter(java.awt.Dimension, org.geotools.geometry.jts.ReferencedEnvelope)}.
 	 */
+	@Ignore
 	@Test
 	public void testToValidPixelBoundsClosestToCenter2() {
 		Dimension d = new Dimension(753, 371);
@@ -175,6 +176,7 @@ public class ScaleUtilsTest {
 				new Envelope(-180, 180, -90, 90).contains(result));
 	}
 
+	@Ignore
 	@Test
 	public void worldToPixelToWorld() throws Exception {
 		Dimension displaySize = new Dimension(753, 371);
