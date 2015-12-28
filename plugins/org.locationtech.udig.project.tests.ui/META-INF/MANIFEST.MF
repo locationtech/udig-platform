@@ -48,10 +48,9 @@ Require-Bundle: org.eclipse.gef;bundle-version="3.7.0",
  org.locationtech.udig.issues,
  org.locationtech.udig.mapgraphic,
  org.locationtech.udig.project.edit,
- org.locationtech.udig.project.tests;visibility:=reexport,
  org.locationtech.udig.catalog.tests.ui;visibility:=reexport,
- org.locationtech.udig.project.testsupport,
  org.locationtech.udig.core.testsupport,
- org.locationtech.udig.catalog.testsupport
+ org.locationtech.udig.catalog.testsupport,
+ org.locationtech.udig.project.testsupport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

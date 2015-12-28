@@ -21,7 +21,7 @@ import org.junit.Test;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.commands.DefaultErrorHandler;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.testsupport.AbstractProjectTestCase;
 
 public class CommandManagerTest extends AbstractProjectTestCase {
 	

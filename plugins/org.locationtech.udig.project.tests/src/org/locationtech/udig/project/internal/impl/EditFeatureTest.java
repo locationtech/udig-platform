@@ -33,7 +33,7 @@ import org.locationtech.udig.core.internal.FeatureUtils;
 import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
 import org.locationtech.udig.project.command.factory.EditCommandFactory;
 import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.testsupport.AbstractProjectTestCase;
 import org.locationtech.udig.project.testsupport.MapTests;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;

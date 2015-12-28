@@ -30,7 +30,7 @@ public class GeoTiffServiceTest extends AbstractServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        Assume.assumeTrue(GDALUtilities.isGDALAvailable());
+        Assume.assumeTrue("GDAL isn't available",GDALUtilities.isGDALAvailable());
 
         GeoTiffServiceExtension fac = new GeoTiffServiceExtension();
         URL url = Data.getResource(GeoTiffServiceTest.class, TIFF_1);

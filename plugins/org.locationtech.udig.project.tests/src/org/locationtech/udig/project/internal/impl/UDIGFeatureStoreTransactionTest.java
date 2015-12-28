@@ -24,7 +24,7 @@ import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.EditManager;
 import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.testsupport.AbstractProjectTestCase;
 import org.locationtech.udig.project.testsupport.MapTests;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;

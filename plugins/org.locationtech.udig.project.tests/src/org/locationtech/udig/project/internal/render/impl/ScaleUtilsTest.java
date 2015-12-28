@@ -143,7 +143,6 @@ public class ScaleUtilsTest {
 	 * Test method for
 	 * {@link org.locationtech.udig.project.internal.render.impl.ScaleUtils#toValidPixelBoundsClosestToCenter(java.awt.Dimension, org.geotools.geometry.jts.ReferencedEnvelope)}.
 	 */
-	@Ignore
 	@Test
 	public void testToValidPixelBoundsClosestToCenter1() {
 		Dimension d = new Dimension(360, 180);
@@ -161,7 +160,6 @@ public class ScaleUtilsTest {
 	 * Test method for
 	 * {@link org.locationtech.udig.project.internal.render.impl.ScaleUtils#toValidPixelBoundsClosestToCenter(java.awt.Dimension, org.geotools.geometry.jts.ReferencedEnvelope)}.
 	 */
-	@Ignore
 	@Test
 	public void testToValidPixelBoundsClosestToCenter2() {
 		Dimension d = new Dimension(753, 371);
@@ -177,7 +175,6 @@ public class ScaleUtilsTest {
 				new Envelope(-180, 180, -90, 90).contains(result));
 	}
 
-	@Ignore
 	@Test
 	public void worldToPixelToWorld() throws Exception {
 		Dimension displaySize = new Dimension(753, 371);
@@ -193,7 +190,6 @@ public class ScaleUtilsTest {
 	 * Test method for
 	 * {@link org.locationtech.udig.project.internal.render.impl.ScaleUtils#nearestPixel(java.awt.geom.Rectangle2D, int, int)}.
 	 */
-	@Ignore
 	@Test
 	public void testNearestPixel() {
 		Dimension display = new Dimension(360,180);
@@ -213,7 +209,6 @@ public class ScaleUtilsTest {
 	 * Test method for
 	 * {@link org.locationtech.udig.project.internal.render.impl.ScaleUtils#pixelBounds(int, int, org.geotools.geometry.jts.ReferencedEnvelope, java.awt.Dimension)}.
 	 */
-	@Ignore
 	@Test
 	public void testPixelBounds() {
 		ReferencedEnvelope currentBounds = new ReferencedEnvelope(-180, 180,
@@ -236,7 +231,6 @@ public class ScaleUtilsTest {
 		fail("Not yet implemented");
 	}
 
-	@Ignore
 	@Test
 	public void shiftToWorld() throws Exception {
 		ReferencedEnvelope env = new ReferencedEnvelope(-200,200,-20,20, DefaultGeographicCRS.WGS84);

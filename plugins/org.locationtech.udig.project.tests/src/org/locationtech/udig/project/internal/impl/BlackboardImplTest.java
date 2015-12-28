@@ -18,7 +18,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.locationtech.udig.project.internal.Blackboard;
 import org.locationtech.udig.project.internal.ProjectFactory;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.testsupport.AbstractProjectTestCase;
 
 public class BlackboardImplTest extends AbstractProjectTestCase {
 	

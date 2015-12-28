@@ -26,7 +26,7 @@ import org.junit.Test;
 import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IGeoResourceInfo;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.testsupport.AbstractProjectTestCase;
 
 public class TestCatalogRef extends AbstractProjectTestCase {
     

@@ -20,7 +20,7 @@ import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.render.IRenderContext;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.testsupport.AbstractProjectTestCase;
 import org.locationtech.udig.project.testsupport.MapTests;
 import org.opengis.feature.simple.SimpleFeature;
 

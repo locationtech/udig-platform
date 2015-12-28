@@ -26,7 +26,7 @@ import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.render.impl.RenderContextImpl;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.testsupport.AbstractProjectTestCase;
 import org.locationtech.udig.project.testsupport.MapTests;
 import org.locationtech.udig.project.testsupport.TestMapDisplay;
 import org.opengis.feature.simple.SimpleFeature;

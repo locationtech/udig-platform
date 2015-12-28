@@ -25,7 +25,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.locationtech.udig.internal.ui.UDIGDropHandler;
 import org.locationtech.udig.internal.ui.UDIGDropHandler.CompositeDropActionJob;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.testsupport.AbstractProjectTestCase;
 import org.locationtech.udig.project.ui.internal.MapEditorPart;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;

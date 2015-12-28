@@ -9,8 +9,7 @@ Export-Package: org.locationtech.udig.project.command,org.locationtech
  s.edit,org.locationtech.udig.project.internal.impl,org.locationtech.u
  dig.project.internal.render,org.locationtech.udig.project.internal.re
  nder.impl,org.locationtech.udig.project.render,org.locationtech.udig.
- project.tests.internal.commands,org.locationtech.udig.project.tests.s
- upport
+ project.tests.internal.commands
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.core.runtime,
  org.locationtech.udig.style.sld,
@@ -22,3 +21,4 @@ Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
  org.locationtech.udig.catalog.testsupport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Fragment-Host: org.locationtech.udig.project

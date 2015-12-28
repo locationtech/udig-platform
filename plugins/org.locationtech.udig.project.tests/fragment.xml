@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
-<plugin>
+<fragment>
 
      <extension
          point="org.locationtech.udig.project.persister">
@@ -89,4 +89,4 @@
                id="org.locationtech.udig.project.tests.layerCreated1"
                name="TestLayerCreatedInterceptor"/>
       </extension>
-</plugin>
+</fragment>

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.locationtech.udig.project.tests.ui;
+package org.locationtech.udig.project.testsupport;
 
 import org.junit.Ignore;
 import org.locationtech.udig.project.interceptor.MapInterceptor;
@@ -21,12 +21,15 @@ import org.locationtech.udig.project.internal.Map;
 @Ignore
 public class TestMapOpeningInterceptor implements MapInterceptor {
 
+    public static Map mapOpening;
+
     public TestMapOpeningInterceptor() {
         super();
     }
 
     public void run( Map map ) {
-        System.out.println(map.getName()+" is being opened.  This is a test interceptor"); //$NON-NLS-1$
+        mapOpening=map;
+//        System.out.println(map.getName()+" is being opened.  This is a test interceptor"); //$NON-NLS-1$
     }
 
 }

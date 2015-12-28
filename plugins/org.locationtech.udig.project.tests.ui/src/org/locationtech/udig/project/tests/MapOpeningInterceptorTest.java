@@ -18,7 +18,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.TestMapOpeningInterceptor;
+import org.locationtech.udig.project.testsupport.TestMapOpeningInterceptor;
 import org.locationtech.udig.project.testsupport.MapTests;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.ui.WaitCondition;

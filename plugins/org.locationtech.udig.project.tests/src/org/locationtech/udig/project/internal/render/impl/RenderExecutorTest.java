@@ -39,7 +39,7 @@ import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.render.RenderExecutor;
 import org.locationtech.udig.project.internal.render.Renderer;
 import org.locationtech.udig.project.render.IRenderer;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.testsupport.AbstractProjectTestCase;
 import org.locationtech.udig.project.testsupport.MapTests;
 import org.locationtech.udig.style.sld.SLDContent;
 import org.opengis.feature.simple.SimpleFeature;

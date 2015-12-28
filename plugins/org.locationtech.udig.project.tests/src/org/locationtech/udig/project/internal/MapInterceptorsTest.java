@@ -15,8 +15,9 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.testsupport.AbstractProjectTestCase;
 import org.locationtech.udig.project.testsupport.MapTests;
+import org.locationtech.udig.project.testsupport.TestMapOpeningInterceptor;
 
 public class MapInterceptorsTest extends AbstractProjectTestCase {
 

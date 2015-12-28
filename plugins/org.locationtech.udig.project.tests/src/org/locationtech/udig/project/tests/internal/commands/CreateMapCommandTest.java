@@ -13,26 +13,19 @@ package org.locationtech.udig.project.tests.internal.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
 
-import org.apache.commons.collections.MapUtils;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Before;
 import org.junit.Test;
-import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.IServiceFactory;
 import org.locationtech.udig.catalog.testsupport.CatalogTests;
-import org.locationtech.udig.catalog.testsupport.DummyService;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.Project;
 import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.locationtech.udig.project.internal.commands.CreateMapCommand;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
-import org.locationtech.udig.project.testsupport.MapTests;
+import org.locationtech.udig.project.testsupport.AbstractProjectTestCase;
 
 public class CreateMapCommandTest extends AbstractProjectTestCase {
 	
@@ -40,7 +33,7 @@ public class CreateMapCommandTest extends AbstractProjectTestCase {
 	
 	@Before
 	public void setUp() throws Exception {
-	    IGeoResource createGeoResource = MapTests.createGeoResource("dummy", 10, true);
+	    IGeoResource createGeoResource = CatalogTests.createGeoResource("dummy", 10, true);
 	    service = createGeoResource.service(new NullProgressMonitor());
 	}
 	

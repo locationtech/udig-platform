@@ -43,7 +43,7 @@ import org.locationtech.udig.project.internal.render.SelectionLayer;
 import org.locationtech.udig.project.internal.render.impl.PlaceHolder;
 import org.locationtech.udig.project.internal.render.impl.RendererCreatorImpl;
 import org.locationtech.udig.project.render.IRenderer;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.testsupport.AbstractProjectTestCase;
 import org.locationtech.udig.project.testsupport.MapTests;
 import org.locationtech.udig.project.testsupport.TestFeatureStore;
 
