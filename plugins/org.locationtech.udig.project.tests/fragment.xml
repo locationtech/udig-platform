@@ -23,7 +23,7 @@
             target="org.geotools.data.FeatureSource"/>
       <cachingStrategy
             class="org.locationtech.udig.project.tests.TestInterceptorCaching"
-            id="org.locationtech.udig.project.tests.interceptor2"/>
+            id="interceptor2"/>
       <interceptor
             class="org.locationtech.udig.project.tests.TestInterceptorPost"
             id="org.locationtech.udig.project.tests.interceptor3"

@@ -102,7 +102,7 @@ public class LayerImplTest {
         assertFalse(TestInterceptorCaching.obtained);
         assertTrue(TestInterceptorPost.runs>0);
         
-        ProjectPlugin.getPlugin().getPreferenceStore().setValue(PreferenceConstants.P_LAYER_RESOURCE_CACHING_STRATEGY, "org.locationtech.udig.project.tests.org.locationtech.udig.project.tests.interceptor2"); //$NON-NLS-1$
+        ProjectPlugin.getPlugin().getPreferenceStore().setValue(PreferenceConstants.P_LAYER_RESOURCE_CACHING_STRATEGY, "org.locationtech.udig.project.interceptor2"); //$NON-NLS-1$
         try{
             TestInterceptorPre.runs=0;
             TestInterceptorPost.runs=0;

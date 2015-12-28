@@ -4,12 +4,6 @@ Bundle-Name: Project Tests Plug-in
 Bundle-SymbolicName: org.locationtech.udig.project.tests; singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: udig.refractions.net
-Export-Package: org.locationtech.udig.project.command,org.locationtech
- .udig.project.internal,org.locationtech.udig.project.internal.command
- s.edit,org.locationtech.udig.project.internal.impl,org.locationtech.u
- dig.project.internal.render,org.locationtech.udig.project.internal.re
- nder.impl,org.locationtech.udig.project.render,org.locationtech.udig.
- project.tests.internal.commands
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.core.runtime,
  org.locationtech.udig.style.sld,
