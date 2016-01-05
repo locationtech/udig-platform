@@ -41,7 +41,7 @@
                 <module>org.locationtech.udig.tool.default.tests</module>
                 <module>org.locationtech.udig.tool.edit.tests</module>
                 <module>org.locationtech.udig.tool.select.tests</module>
-                <module>org.locationtech.udig.validation.test</module>
+                <module>org.locationtech.udig.validation.tests</module>
                 
                 <module>org.locationtech.udig.tools.tests</module>
                 <module>org.locationtech.udig.bookmarks.tests</module>

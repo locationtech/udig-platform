@@ -14,19 +14,19 @@ import static org.junit.Assert.assertTrue;
 
 import java.awt.Dimension;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.command.AbstractCommand;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.testsupport.MapTests;
-import org.locationtech.udig.validation.ValidateOverlaps;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.swt.widgets.Display;
 import org.geotools.data.DataUtilities;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.testsupport.CatalogTests;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.testsupport.MapTests;
+import org.locationtech.udig.project.testsupport.command.BlankUndoableCommand;
+import org.locationtech.udig.validation.OpUtils;
+import org.locationtech.udig.validation.ValidateOverlaps;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Id;
@@ -41,7 +41,6 @@ public class IntegrityValidationTest {
      * Test method for 'org.locationtech.udig.validation.ValidateOverlaps.op(Display,
      * Object, IProgressMonitor)'
      */
-    @Ignore
     @Test
     public void testOverlapsOp() throws Exception {
         //create features suitable for the test
@@ -66,7 +65,7 @@ public class IntegrityValidationTest {
         attrValues[2] = "value2"; //$NON-NLS-1$
         attrValues[3] = "value3"; //$NON-NLS-1$
 
-        SimpleFeatureType ft = DataUtilities.createType("myLineType", "*geom:LineString,name:String"); //$NON-NLS-1$ //$NON-NLS-2$
+        SimpleFeatureType ft = DataUtilities.createType("myLineType", "geom:LineString,name:String"); //$NON-NLS-1$ //$NON-NLS-2$
         ft = DataUtilities.createSubType(ft, null, DefaultEngineeringCRS.CARTESIAN_2D);
         SimpleFeature[] features = new SimpleFeature[4];
         // add lines
@@ -75,27 +74,22 @@ public class IntegrityValidationTest {
         features[2] = SimpleFeatureBuilder.build(ft,new Object[]{line[2], attrValues[2]}, Integer.toString(2));
         features[3] = SimpleFeatureBuilder.build(ft,new Object[]{line[3], attrValues[3]}, Integer.toString(3));
 
-        IGeoResource resource = MapTests.createGeoResource(features, true);
+        IGeoResource resource = CatalogTests.createGeoResource(features, true);
         Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(500, 512));
+        
+        // necessary to avoid info dialog (User interaction required)
+        OpUtils.unitTestRun = true;
+        
         ValidateOverlaps validator = new ValidateOverlaps();
         validator.op(Display.getDefault(), map.getLayersInternal().get(0),
                 new NullProgressMonitor());
         assertEquals(1, validator.genericResults.failedFeatures.size()); //only line[0] and line[1] should fail (counts as 1)
-        map.sendCommandSync(new AbstractCommand(){
-
-            public void run( IProgressMonitor monitor ) throws Exception {
-            }
-
-            public String getName() {
-                return null;
-            }
-
-        });//send a sync command so async doesn't give us a false junit failure
+        map.sendCommandSync(new BlankUndoableCommand());//send a sync command so async doesn't give us a false junit failure
 
         Id filter = (Id) map.getLayersInternal().get(0).getFilter();
         String[] fids = filter.getIDs().toArray(new String[0]);
         //System.out.println(fids[0].length()+" features in FID");
-        assertEquals(1, fids[0].length()); //only 1 feature failed?
+        assertEquals(1, fids.length); //only 1 feature failed?
         assertEquals(features[0].getID(), fids[0]); //it was feature 0 that failed?
     }
 

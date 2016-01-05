@@ -1,13 +1,14 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2006, Refractions Research Inc.
+ * (C) 2006,2015 Refractions Research Inc. and Others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.locationtech.udig.validation.test;
+package org.locationtech.udig.validation;
+
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,13 +27,11 @@ import org.locationtech.udig.catalog.testsupport.CatalogTests;
 import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.UndoableCommand;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.testsupport.MapTests;
-import org.locationtech.udig.validation.ValidateGeometry;
-import org.locationtech.udig.validation.ValidateLineMustBeASinglePart;
-import org.locationtech.udig.validation.ValidateLineNoSelfIntersect;
-import org.locationtech.udig.validation.ValidateLineNoSelfOverlapping;
-import org.locationtech.udig.validation.ValidateNullZero;
+import org.locationtech.udig.project.testsupport.command.BlankUndoableCommand;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Id;
@@ -59,21 +58,11 @@ public class FeatureValidationTest {
         ValidateGeometry isValidGeometry = new ValidateGeometry();
         isValidGeometry.op(Display.getDefault(), map.getLayersInternal().get(0), new NullProgressMonitor());
         assertEquals(1,isValidGeometry.results.failedFeatures.size());
-        map.sendCommandSync(new AbstractCommand(){
+        map.sendCommandSync(new BlankUndoableCommand());//send a sync command so async doesn't give us a false junit failure
 
-            public void run( IProgressMonitor monitor ) throws Exception {
-            }
-
-            public String getName() {
-                return null;
-            }
-            
-        });//send a sync command so async doesn't give us a false junit failure
-        
-        //System.out.println("\n"+map.getLayersInternal().get(0).getFilter().getClass());
         Id filter = (Id) map.getLayersInternal().get(0).getFilter();
         String[] fids = filter.getIDs().toArray(new String[0]);
-        assertEquals(1,fids[0].length());
+        assertEquals(1,filter.getIDs().size());
         assertEquals(features[0].getID(),fids[0]);
     }
 
@@ -96,34 +85,26 @@ public class FeatureValidationTest {
         String[] attrValues = new String[3];
         attrValues[0] = "value0"; attrValues[1] = "value1"; attrValues[2] = "value2"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-        SimpleFeatureType ft=DataUtilities.createType("myLineType", "*geom:LineString,name:String"); //$NON-NLS-1$ //$NON-NLS-2$
+        SimpleFeatureType ft=DataUtilities.createType("myLineType", "geom:LineString,name:String"); //$NON-NLS-1$ //$NON-NLS-2$
         ft=DataUtilities.createSubType(ft, null, DefaultEngineeringCRS.CARTESIAN_2D);
         SimpleFeature[] features=new SimpleFeature[2];
         // add lines
         features[0]=SimpleFeatureBuilder.build(ft,new Object[]{line[0], attrValues[0]}, Integer.toString(0));    
         features[1]=SimpleFeatureBuilder.build(ft,new Object[]{line[1], attrValues[1]}, Integer.toString(1));    
-        
+
         IGeoResource resource = CatalogTests.createGeoResource(features, true);
         Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(500,512));
+
         ValidateLineMustBeASinglePart isValidLine = new ValidateLineMustBeASinglePart();
         isValidLine.op(Display.getDefault(), map.getLayersInternal().get(0), new NullProgressMonitor());
-        //System.out.println(isValidLine.genericResults.failedFeatures.size()+" failed feature");
+        map.sendCommandSync(new BlankUndoableCommand());//send a sync command so async doesn't give us a false junit failure
+
         assertEquals(1,isValidLine.results.failedFeatures.size());
-        map.sendCommandSync(new AbstractCommand(){
-
-            public void run( IProgressMonitor monitor ) throws Exception {
-            }
-
-            public String getName() {
-                return null;
-            }
-            
-        });//send a sync command so async doesn't give us a false junit failure
         
         Id filter = (Id) map.getLayersInternal().get(0).getFilter();
         String[] fids = filter.getIDs().toArray(new String[0]);
-        //System.out.println(fids[0].length()+" features in FID");
-        assertEquals(1,fids[0].length()); //only 1 feature failed?
+
+        assertEquals(1,filter.getIDs().size()); //only 1 feature failed?
         assertEquals(features[1].getID(),fids[0]); //feature 1 failed?
     }
 
@@ -145,7 +126,7 @@ public class FeatureValidationTest {
         String[] attrValues = new String[2];
         attrValues[0] = "value0"; attrValues[1] = "value1"; //$NON-NLS-1$ //$NON-NLS-2$
 
-        SimpleFeatureType ft=DataUtilities.createType("myLineType", "*geom:LineString,name:String"); //$NON-NLS-1$ //$NON-NLS-2$
+        SimpleFeatureType ft=DataUtilities.createType("myLineType", "geom:LineString,name:String"); //$NON-NLS-1$ //$NON-NLS-2$
         ft=DataUtilities.createSubType(ft, null, DefaultEngineeringCRS.CARTESIAN_2D);
         SimpleFeature[] features=new SimpleFeature[2];
         // add lines
@@ -156,23 +137,13 @@ public class FeatureValidationTest {
         Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(500,512));
         ValidateLineNoSelfIntersect isValidLine = new ValidateLineNoSelfIntersect();
         isValidLine.op(Display.getDefault(), map.getLayersInternal().get(0), new NullProgressMonitor());
-        //System.out.println(isValidLine.genericResults.failedFeatures.size()+" failed feature");
+        map.sendCommandSync(new BlankUndoableCommand());//send a sync command so async doesn't give us a false junit failure
         assertEquals(1,isValidLine.results.failedFeatures.size());
-        map.sendCommandSync(new AbstractCommand(){
-
-            public void run( IProgressMonitor monitor ) throws Exception {
-            }
-
-            public String getName() {
-                return null;
-            }
-            
-        });//send a sync command so async doesn't give us a false junit failure
         
         Id filter = (Id) map.getLayersInternal().get(0).getFilter();
         String[] fids = filter.getIDs().toArray(new String[0]);
-        //System.out.println(fids[0].length()+" features in FID");
-        assertEquals(1,fids[0].length()); //only 1 feature failed?
+
+        assertEquals(1,filter.getIDs().size()); //only 1 feature failed?
         assertEquals(features[1].getID(),fids[0]); //feature 1 failed?
     }
 
@@ -195,7 +166,7 @@ public class FeatureValidationTest {
         String[] attrValues = new String[2];
         attrValues[0] = "value0"; attrValues[1] = "value1"; //$NON-NLS-1$ //$NON-NLS-2$
 
-        SimpleFeatureType ft=DataUtilities.createType("myLineType", "*geom:LineString,name:String"); //$NON-NLS-1$ //$NON-NLS-2$
+        SimpleFeatureType ft=DataUtilities.createType("myLineType", "geom:LineString,name:String"); //$NON-NLS-1$ //$NON-NLS-2$
         ft=DataUtilities.createSubType(ft, null, DefaultEngineeringCRS.CARTESIAN_2D);
         SimpleFeature[] features=new SimpleFeature[2];
         // add lines
@@ -206,23 +177,14 @@ public class FeatureValidationTest {
         Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(500,512));
         ValidateLineNoSelfOverlapping isValidLine = new ValidateLineNoSelfOverlapping();
         isValidLine.op(Display.getDefault(), map.getLayersInternal().get(0), new NullProgressMonitor());
-        //System.out.println(isValidLine.genericResults.failedFeatures.size()+" failed feature");
+
         assertEquals(1,isValidLine.results.failedFeatures.size());
-        map.sendCommandSync(new AbstractCommand(){
+        map.sendCommandSync(new BlankUndoableCommand());//send a sync command so async doesn't give us a false junit failure
 
-            public void run( IProgressMonitor monitor ) throws Exception {
-            }
-
-            public String getName() {
-                return null;
-            }
-            
-        });//send a sync command so async doesn't give us a false junit failure
-        
         Id filter = (Id) map.getLayersInternal().get(0).getFilter();
         String[] fids = filter.getIDs().toArray(new String[0]);
-        //System.out.println(fids[0].length()+" features in FID");
-        assertEquals(1,fids[0].length()); //only 1 feature failed?
+
+        assertEquals(1,filter.getIDs().size()); //only 1 feature failed?
         assertEquals(features[1].getID(),fids[0]); //feature 1 failed?
     }
 
@@ -245,7 +207,7 @@ public class FeatureValidationTest {
         String[] attrValues = new String[2];
         attrValues[0] = "value0"; attrValues[1] = null; //$NON-NLS-1$
 
-        SimpleFeatureType ft=DataUtilities.createType("myLineType", "*geom:LineString,name:String"); //$NON-NLS-1$ //$NON-NLS-2$
+        SimpleFeatureType ft=DataUtilities.createType("myLineType", "geom:LineString,name:String"); //$NON-NLS-1$ //$NON-NLS-2$
         ft=DataUtilities.createSubType(ft, null, DefaultEngineeringCRS.CARTESIAN_2D);
         SimpleFeature[] features=new SimpleFeature[2];
         // add lines
@@ -348,5 +310,4 @@ public class FeatureValidationTest {
         assertEquals(features[1].getID(),fids[0]); //feature 1 failed?
     }
     */
-
 }

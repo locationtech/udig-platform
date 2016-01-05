@@ -1,12 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Test Plug-in
-Bundle-SymbolicName: org.locationtech.udig.validation.test;singleton:=true
+Bundle-SymbolicName: org.locationtech.udig.validation.tests;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.locationtech.udig.validation,
  org.junit;bundle-version="[4.0.0,5.0.0)",
  org.locationtech.udig.core.testsupport,
  org.locationtech.udig.project.testsupport,
@@ -14,3 +13,4 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.ui.tests;bundle-version="2.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Fragment-Host: org.locationtech.udig.validation 

@@ -10,6 +10,7 @@
 package org.locationtech.udig.project.ui.internal;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -193,8 +194,8 @@ public class FeatureTypeMatch {
             Name featureName = schema.getName();
             if (namespace != null) {
 
-                if (namespace.compareTo(URI.create(featureName.getNamespaceURI())) == 0
-                        && typeName.equals(featureName.getLocalPart())) {
+                if (compareNamespaces(namespace, featureName.getNamespaceURI()) == 0 && 
+                        typeName.equals(featureName.getLocalPart())) {
                     return PERFECT;
                 }
                 return NO_MATCH;
@@ -233,6 +234,17 @@ public class FeatureTypeMatch {
             return accuracy;
         }
         return NO_MATCH;
+    }
+
+    private int compareNamespaces(URI elementNamespace, String featureNamespace) {
+        URI notNullFeatureNamespace = null;
+        if (featureNamespace == null) {
+            notNullFeatureNamespace = URI.create("*");
+        } else {
+            notNullFeatureNamespace = URI.create(featureNamespace);
+        }
+        
+        return elementNamespace.compareTo(notNullFeatureNamespace);
     }
 
     @Override

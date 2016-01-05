@@ -16,8 +16,8 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import com.vividsolutions.jts.geom.LineString;
 
 /**
- * Overrides the FeatureValidationOp abstract class and returns the appropriate validation method for the
- * validation type.
+ * Overrides the FeatureValidationOp abstract class and returns the appropriate validation method
+ * for the validation type.
  * <p>
  * </p>
  * 
@@ -30,8 +30,11 @@ public class ValidateLineNoSelfOverlapping extends FeatureValidationOp {
     }
 
     @Override
-    protected boolean canValidate( SimpleFeatureType featureType ) {
-        if (featureType.getGeometryDescriptor() instanceof LineString) {
+    protected boolean canValidate(SimpleFeatureType featureType) {
+        if (featureType.getGeometryDescriptor() != null
+                && featureType.getGeometryDescriptor().getType() != null
+                && LineString.class.isAssignableFrom(featureType.getGeometryDescriptor().getType()
+                        .getBinding())) {
             return true;
         }
         return false;

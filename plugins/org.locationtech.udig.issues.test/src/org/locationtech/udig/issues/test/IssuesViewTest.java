@@ -40,7 +40,6 @@ import org.eclipse.ui.views.IViewDescriptor;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.catalog.IGeoResource;
@@ -688,7 +687,6 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         
     }
 
-    @Ignore
     @Test
     public void testSetExpansionProvider() throws Exception {
         viewer.setSelection(new StructuredSelection());
