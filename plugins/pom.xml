@@ -31,7 +31,7 @@
                 <module>org.locationtech.udig.catalog.tests.wfs</module>
                 <module>org.locationtech.udig.catalog.tests.wms</module>
                 <module>org.locationtech.udig.tests.info</module>
-                <module>org.locationtech.udig.issues.test</module>
+                <module>org.locationtech.udig.issues.tests</module>
                 <module>org.locationtech.udig.libs.tests</module>
                 <module>org.locationtech.udig.location.test</module>
                 <module>org.locationtech.udig.render.feature.basic.test</module>

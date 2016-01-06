@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<fragment>
+   <extension
+         point="org.locationtech.udig.issues.issuesViewConfiguration">
+      <contentProvider
+            class="org.locationtech.udig.issues.TestContentProvider$Provider1"
+            id="TestContentProvider"/>
+      <expansionProvider
+            class="org.locationtech.udig.issues.TestExpansionProvider$Provider1"
+            id="TestContentProvider"/>
+      <sorter
+            class="org.locationtech.udig.issues.TestSorter$Sorter1"
+            id="TestSorter"/>
+      <labelProvider
+            class="org.locationtech.udig.issues.TestLabelProvider$Provider1"
+            id="TestLabelProvider"/>
+   </extension>
+   <extension
+         point="org.locationtech.udig.issues.issueFixer">
+      <fixer
+            class="org.locationtech.udig.issues.NonExistentClass"
+            id="TestIssueFixer1">
+         <requiredKey key="missingKey"/>
+      </fixer>
+      <fixer
+            class="org.locationtech.udig.issues.NonExistentClass"
+            id="TestIssueFixer2"
+            targetClass="org.locationtech.udig.issues.DummyFixableIssue"/>
+      <fixer
+            class="org.locationtech.udig.issues.DummyAutoIssueFixer"
+            id="TestIssueFixer3"
+            targetClass="org.locationtech.udig.issues.FixableIssue">
+         <requiredKey key="fixable"/>
+      </fixer>
+   </extension>
+
+</fragment>
