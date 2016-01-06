@@ -258,13 +258,14 @@ public class LayerResource extends IGeoResource {
                 // its a library class so use normal class loader
                 classLoader = Thread.currentThread().getContextClassLoader();
             }
-            Class<T> loadClass = (Class<T>) classLoader.loadClass(attribute);
+            Class<T> loadClass = (Class<T>) Class.forName(attribute, true, classLoader);
             assignableFrom = (loadClass).isAssignableFrom(class1);
         } catch (ClassNotFoundException e) {
             return false;
         }
         return assignableFrom;
     }
+
     /**
      * Carefully checks if the requested information is available.
      * <p>
