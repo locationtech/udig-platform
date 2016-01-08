@@ -1,0 +1,44 @@
+<class-diagram version="1.0.9" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="false">  
+  <interface id="1" corner="BOTTOM_RIGHT" language="java" name="org.locationtech.udig.project.ILayer" 
+    project="org.locationtech.udig.project" 
+    file="/org.locationtech.udig.project/src/org/locationtech/udig/project/ILayer.java" binary="false">    
+    <position height="-1" width="-1" x="179" y="203"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <interface id="2" corner="BOTTOM_RIGHT" language="java" name="org.locationtech.udig.project.IStyleBlackboard" 
+    project="org.locationtech.udig.project" 
+    file="/org.locationtech.udig.project/src/org/locationtech/udig/project/IStyleBlackboard.java" binary="false">    
+    <position height="-1" width="-1" x="179" y="321"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <class id="3" corner="BOTTOM_RIGHT" language="java" name="org.locationtech.udig.catalog.IGeoResource" 
+    project="org.locationtech.udig.catalog" 
+    file="/org.locationtech.udig.catalog/src/org/locationtech/udig/catalog/IGeoResource.java" binary="false">    
+    <position height="-1" width="-1" x="385" y="203"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <dependency id="4">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <dependency id="5">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    visibility="true">    
+    <attributes public="false" package="false" protected="false" private="false"/>    
+    <operations public="false" package="false" protected="false" private="false"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

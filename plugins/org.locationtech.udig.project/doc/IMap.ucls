@@ -1,0 +1,53 @@
+<class-diagram version="1.0.9" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="false">  
+  <interface id="1" corner="BOTTOM_RIGHT" language="java" name="org.locationtech.udig.project.IMap" 
+    project="org.locationtech.udig.project" 
+    file="/org.locationtech.udig.project/src/org/locationtech/udig/project/IMap.java" binary="false">    
+    <position height="-1" width="-1" x="219" y="256"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <interface id="2" corner="BOTTOM_RIGHT" language="java" name="org.locationtech.udig.project.ILayer" 
+    project="org.locationtech.udig.project" 
+    file="/org.locationtech.udig.project/src/org/locationtech/udig/project/ILayer.java" binary="false">    
+    <position height="-1" width="-1" x="219" y="386"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <interface id="3" corner="BOTTOM_RIGHT" language="java" name="org.locationtech.udig.project.render.IViewportModel" 
+    project="org.locationtech.udig.project" 
+    file="/org.locationtech.udig.project/src/org/locationtech/udig/project/render/IViewportModel.java" binary="false">    
+    <position height="-1" width="-1" x="456" y="255"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <interface id="4" corner="BOTTOM_RIGHT" language="java" name="org.locationtech.udig.project.IProject" 
+    project="org.locationtech.udig.project" 
+    file="/org.locationtech.udig.project/src/org/locationtech/udig/project/IProject.java" binary="false">    
+    <position height="-1" width="-1" x="218" y="161"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <dependency id="5">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="6">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    visibility="true">    
+    <attributes public="false" package="false" protected="false" private="false"/>    
+    <operations public="false" package="false" protected="false" private="false"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

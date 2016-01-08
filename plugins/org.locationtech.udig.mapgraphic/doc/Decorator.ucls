@@ -1,0 +1,73 @@
+<class-diagram version="1.0.9" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <interface id="1" corner="BOTTOM_RIGHT" language="java" name="org.locationtech.udig.mapgraphic.MapGraphic" 
+    project="org.locationtech.udig.mapgraphic" 
+    file="/org.locationtech.udig.mapgraphic/src/org/locationtech/udig/mapgraphic/MapGraphic.java" binary="false">    
+    <position height="-1" width="-1" x="-107" y="379"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <class id="2" corner="BOTTOM_RIGHT" language="java" name="org.locationtech.udig.mapgraphic.grid.GridMapGraphic" 
+    project="org.locationtech.udig.mapgraphic" 
+    file="/org.locationtech.udig.mapgraphic/src/org/locationtech/udig/mapgraphic/grid/GridMapGraphic.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="141" y="339"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="3" corner="BOTTOM_RIGHT" language="java" name="org.locationtech.udig.legend.ui.LegendGraphic" 
+    project="org.locationtech.udig.legend" 
+    file="/org.locationtech.udig.legend/src/org/locationtech/udig/legend/ui/LegendGraphic.java" binary="false">    
+    <position height="-1" width="-1" x="125" y="410"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="4" corner="BOTTOM_RIGHT" language="java" 
+    name="org.locationtech.udig.mapgraphic.northarrow.NorthArrowMapGraphic" project="org.locationtech.udig.mapgraphic" 
+    file="/org.locationtech.udig.mapgraphic/src/org/locationtech/udig/mapgraphic/northarrow/NorthArrowMapGraphic.java" 
+    binary="false">    
+    <position height="53" width="214" x="56" y="466"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="5" corner="BOTTOM_RIGHT" language="java" name="org.locationtech.udig.mapgraphic.graticule.GraticuleGraphic" 
+    project="org.locationtech.udig.mapgraphic" 
+    file="/org.locationtech.udig.mapgraphic/src/org/locationtech/udig/mapgraphic/graticule/GraticuleGraphic.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="150" y="266"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <realization id="6">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <realization id="7">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <realization id="8">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <realization id="9">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    visibility="true">    
+    <attributes public="false" package="false" protected="false" private="false"/>    
+    <operations public="false" package="false" protected="false" private="false"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

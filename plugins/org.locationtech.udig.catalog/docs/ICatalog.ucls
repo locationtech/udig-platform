@@ -1,45 +1,42 @@
-<class-diagram version="0.9.86" automaticImage="PNG" icons="true" always-add-relationships="false" 
-  generalizations="false" realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
-  <class corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.catalog.ISearch" 
-    project="net.refractions.udig.catalog" 
-    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/ISearch.java" binary="false">    
-    <position x="144" y="115" width="-1" height="-1"/>    
-    <display autosize="true" package="false" initial-value="false" signature="true" visibility="true">      
+<class-diagram version="1.0.9" icons="true" automaticImage="PNG" always-add-relationships="false" 
+  generalizations="false" realizations="true" associations="false" dependencies="false" nesting-relationships="true">  
+  <class id="1" corner="BOTTOM_RIGHT" language="java" name="org.locationtech.udig.catalog.ISearch" 
+    project="org.locationtech.udig.catalog" 
+    file="/org.locationtech.udig.catalog/src/org/locationtech/udig/catalog/ISearch.java" binary="false">    
+    <position height="42" width="142" x="41" y="37"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
-      <operations public="true" package="true" protected="true" private="true"/>    
+      <operations public="false" package="false" protected="false" private="false"/>    
     </display>  
   </class>  
-  <class corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.catalog.IRepository" 
-    project="net.refractions.udig.catalog" 
-    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IRepository.java" binary="false">    
-    <position x="438" y="115" width="-1" height="-1"/>    
-    <display autosize="true" package="false" initial-value="false" signature="true" visibility="true">      
+  <class id="2" corner="BOTTOM_RIGHT" language="java" name="org.locationtech.udig.catalog.IRepository" 
+    project="org.locationtech.udig.catalog" 
+    file="/org.locationtech.udig.catalog/src/org/locationtech/udig/catalog/IRepository.java" binary="false">    
+    <position height="42" width="142" x="41" y="119"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
-      <operations public="true" package="true" protected="true" private="true"/>    
+      <operations public="false" package="false" protected="false" private="false"/>    
     </display>  
   </class>  
-  <class corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.catalog.ICatalog" 
-    project="net.refractions.udig.catalog" 
-    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/ICatalog.java" binary="false">    
-    <position x="437" y="352" width="-1" height="-1"/>    
-    <display autosize="true" package="false" initial-value="false" signature="true" visibility="true">      
+  <class id="3" corner="BOTTOM_RIGHT" language="java" name="org.locationtech.udig.catalog.ICatalog" 
+    project="org.locationtech.udig.catalog" 
+    file="/org.locationtech.udig.catalog/src/org/locationtech/udig/catalog/ICatalog.java" binary="false">    
+    <position height="42" width="142" x="41" y="201"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
-      <operations public="true" package="true" protected="true" private="true"/>    
+      <operations public="false" package="false" protected="false" private="false"/>    
     </display>  
   </class>  
-  <generalization>    
-    <source project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IRepository" 
-      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IRepository.java" binary="false"/>    
-    <target project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.ISearch" 
-      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/ISearch.java" binary="false"/>  
+  <generalization id="4">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="2"/>  
   </generalization>  
-  <generalization>    
-    <source project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.ICatalog" 
-      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/ICatalog.java" binary="false"/>    
-    <target project="net.refractions.udig.catalog" name="net.refractions.udig.catalog.IRepository" 
-      file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IRepository.java" binary="false"/>  
+  <generalization id="5">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
   </generalization>  
-  <classifier-display autosize="true" package="true" initial-value="false" signature="true" visibility="true">    
+  <classifier-display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+    visibility="true">    
     <attributes public="true" package="true" protected="true" private="true"/>    
     <operations public="true" package="true" protected="true" private="true"/>  
   </classifier-display>  
