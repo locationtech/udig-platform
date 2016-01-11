@@ -16,6 +16,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.ContextModelListenerAdapter;
 import org.locationtech.udig.project.internal.Layer;
@@ -40,13 +46,6 @@ import org.locationtech.udig.project.render.IRenderer;
 import org.locationtech.udig.project.render.RenderException;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
-
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 
 import com.vividsolutions.jts.geom.Envelope;
 
@@ -100,8 +99,7 @@ public class RenderManagerDynamic extends RenderManagerImpl {
      * 
      * @generated NOT
      */
-    @SuppressWarnings("unchecked")
-	public RenderManagerDynamic() {
+    public RenderManagerDynamic() {
 		super();
 		eAdapters().add(viewportModelChangeListener);
 	}
@@ -118,7 +116,7 @@ public class RenderManagerDynamic extends RenderManagerImpl {
 		if (getMapDisplay() == null || getRenderExecutor() == null) {
 			return; // we are not set up to renderer yet!
 		}
-		getRendererCreator().reset();
+
 		validateRendererConfiguration();
 		final SelectionLayer selectionLayer = getRendererCreator()
 				.findSelectionLayer(layer);
@@ -184,7 +182,6 @@ public class RenderManagerDynamic extends RenderManagerImpl {
 		if (selectionLayer == null)
 			return;
 
-		getRendererCreator().reset();
 		validateRendererConfiguration();
 
 		getRenderExecutor().visit(new ExecutorVisitor() {
@@ -253,7 +250,6 @@ public class RenderManagerDynamic extends RenderManagerImpl {
 	 * 
 	 * @generated NOT
 	 */
-	@SuppressWarnings("unchecked")
 	public void refresh(final Envelope bounds) {
 		checkState();
 		if (!renderingEnabled) {
@@ -266,7 +262,6 @@ public class RenderManagerDynamic extends RenderManagerImpl {
 		if (getMapDisplay().getWidth() < 1 || getMapDisplay().getHeight() < 1)
 			return;
 
-		getRendererCreator().reset();
 		validateRendererConfiguration();
 
 		if (!getMapInternal().getContextModel().eAdapters().contains(
@@ -299,7 +294,6 @@ public class RenderManagerDynamic extends RenderManagerImpl {
 	 * 
 	 * @generated NOT
 	 */
-	@SuppressWarnings("unchecked")
 	public void dispose() {
 		configuration = null;
 		Set<EObject> set = new HashSet<EObject>();
@@ -357,7 +351,6 @@ public class RenderManagerDynamic extends RenderManagerImpl {
 	/**
 	 * @see org.locationtech.udig.project.render.impl.RenderManagerImpl#setRenderExecutor(org.locationtech.udig.project.render.RenderExecutor)
 	 */
-	@SuppressWarnings("unchecked")
 	public void setRenderExecutor(RenderExecutor newRenderExecutor) {
 		checkState();
 		if (renderExecutor != null) {
@@ -377,7 +370,6 @@ public class RenderManagerDynamic extends RenderManagerImpl {
 	 * @see org.locationtech.udig.project.render.impl.RenderManagerImpl#basicSetMap(org.locationtech.udig.project.Map,
 	 *      org.eclipse.emf.common.notify.NotificationChain)
 	 */
-	@SuppressWarnings("unchecked")
 	public NotificationChain basicSetMapInternal(Map newMap,
 			NotificationChain msgs) {
 		if (getMapInternal() != null) {
