@@ -302,7 +302,7 @@ public class RendererCreatorImpl implements RendererCreator {
      */
     private void initRenderMetrics() {
         synchronized (this.layers){
-            for( Layer layer : getLayers() ) {
+            for( Layer layer : this.layers ) {
                 if (!layerToMetricsFactoryMap.containsKey(layer))
                     initFactories(layer);
             }
@@ -390,7 +390,7 @@ public class RendererCreatorImpl implements RendererCreator {
         	
             synchronized (layers) {
             	Collection<Layer> removedLayers = (Collection<Layer>) event.getOldValue();
-
+            	
                 for ( Iterator iter = layers.iterator(); iter.hasNext(); ) {
                     Layer l = (Layer) iter.next();
                     if( removedLayers.contains(l))
@@ -478,10 +478,12 @@ public class RendererCreatorImpl implements RendererCreator {
         } catch (IOException e) {
             return null;
         }
-        for( Layer layer : getLayers() )
-            if (layer instanceof SelectionLayer)
-                if (((SelectionLayer) layer).getWrappedLayer() == targetLayer)
-                    return (SelectionLayer) layer;
+        synchronized (this.layers) {
+            for( Layer layer : this.layers )
+                if (layer instanceof SelectionLayer)
+                    if (((SelectionLayer) layer).getWrappedLayer() == targetLayer)
+                        return (SelectionLayer) layer;
+        }
 
         return null;
     }
