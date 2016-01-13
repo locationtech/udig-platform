@@ -314,7 +314,7 @@ public class ResourceFinder {
      */
     public Class findClass(String uri) throws IOException, ClassNotFoundException {
         String className = findString(uri);
-        return (Class) classLoader.loadClass(className);
+        return Class.forName(className, true, classLoader);
     }
 
     /**
@@ -332,7 +332,7 @@ public class ResourceFinder {
         List<Class> classes = new ArrayList<Class>();
         List<String> strings = findAllStrings(uri);
         for (String className : strings) {
-            Class clazz = classLoader.loadClass(className);
+            Class clazz = Class.forName(className, true, classLoader);
             classes.add(clazz);
         }
         return classes;
@@ -355,7 +355,7 @@ public class ResourceFinder {
         List<String> strings = findAvailableStrings(uri);
         for (String className : strings) {
             try {
-                Class clazz = classLoader.loadClass(className);
+                Class clazz = Class.forName(className, true, classLoader);
                 classes.add(clazz);
             } catch (Exception notAvailable) {
                 resourcesNotLoaded.add(className);
@@ -394,7 +394,7 @@ public class ResourceFinder {
             Map.Entry entry = (Map.Entry) iterator.next();
             String string = (String) entry.getKey();
             String className = (String) entry.getValue();
-            Class clazz = classLoader.loadClass(className);
+            Class clazz = Class.forName(className, true, classLoader);
             classes.put(string, clazz);
         }
         return classes;
@@ -470,7 +470,7 @@ public class ResourceFinder {
      */
     public Class findImplementation(Class interfase) throws IOException, ClassNotFoundException {
         String className = findString(interfase.getName());
-        Class impl = classLoader.loadClass(className);
+        Class impl = Class.forName(className, true, classLoader);
         if (!interfase.isAssignableFrom(impl)) {
             throw new ClassCastException("Class not of type: " + interfase.getName());
         }
@@ -506,7 +506,7 @@ public class ResourceFinder {
         List<Class> implementations = new ArrayList<Class>();
         List<String> strings = findAllStrings(interfase.getName());
         for (String className : strings) {
-            Class impl = classLoader.loadClass(className);
+            Class impl = Class.forName(className, true, classLoader);
             if (!interfase.isAssignableFrom(impl)) {
                 throw new ClassCastException("Class not of type: " + interfase.getName());
             }
@@ -544,7 +544,7 @@ public class ResourceFinder {
         List<String> strings = findAvailableStrings(interfase.getName());
         for (String className : strings) {
             try {
-                Class impl = classLoader.loadClass(className);
+                Class impl = Class.forName(className, true, classLoader);
                 if (interfase.isAssignableFrom(impl)) {
                     implementations.add(impl);
                 } else {
@@ -630,7 +630,7 @@ public class ResourceFinder {
             String string = (String) entry.getKey();
             String className = (String) entry.getValue();
             try {
-                Class impl = classLoader.loadClass(className);
+                Class impl = Class.forName(className, true, classLoader);
                 if (interfase.isAssignableFrom(impl)) {
                     implementations.put(string, impl);
                 } else {

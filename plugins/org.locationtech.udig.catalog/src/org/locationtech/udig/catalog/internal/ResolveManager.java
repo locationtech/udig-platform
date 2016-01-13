@@ -159,7 +159,7 @@ public class ResolveManager implements IResolveManager {
 							// their XML resoleableType info?
 		}
         try {
-            Class< ? > clazz=resolve.getClass().getClassLoader().loadClass(requiredType);
+            Class< ? > clazz=Class.forName(requiredType, true, resolve.getClass().getClassLoader());
             return clazz.isAssignableFrom(resolve.getClass() );
         }
         catch (ClassNotFoundException huh){
@@ -189,7 +189,7 @@ public class ResolveManager implements IResolveManager {
                     if( classLoader==null ){
                         classLoader=ClassLoader.getSystemClassLoader();
                     }
-                    Class< ? > resolvedClass = classLoader.loadClass(resolveType);
+                    Class< ? > resolvedClass = Class.forName(resolveType, true, classLoader);
                     
                     if( target.isAssignableFrom(resolvedClass) ){
                         return true;
@@ -213,7 +213,7 @@ public class ResolveManager implements IResolveManager {
             	}
             	ClassLoader classLoader = factory.getClass().getClassLoader();
                 if( classLoader != null ){
-                	Class< ? > resolvedClass = classLoader.loadClass(resolveType);
+                	Class< ? > resolvedClass = Class.forName(resolveType, true,  classLoader);
                 	if( target.isAssignableFrom(resolvedClass) ){
                         return true;
                     }

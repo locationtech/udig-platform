@@ -233,13 +233,15 @@ public class UDIGDNDProcessor {
                 Object[] array = (Object[])data;
                 for( Object object : array ) {
                     Class< ? extends Object> c;
-                    c = getClassLoader(object).loadClass(clazz);
+                    ClassLoader classLoader = getClassLoader(object);
+                    c = Class.forName(clazz, true, classLoader);
                     if( c!=null )
                         return c;
                 }
                 return null;
             }else{
-                return getClassLoader(data).loadClass(clazz);
+                ClassLoader classLoader = getClassLoader(data);
+                return Class.forName(clazz, true, classLoader);
             }
         }
 
@@ -275,7 +277,7 @@ public class UDIGDNDProcessor {
                 
                 try {
                     String clazz = target.getAttribute("class"); //$NON-NLS-1$
-                    c = dloader.loadClass(clazz);
+                    c = Class.forName(clazz, true, dloader);
                     
                     if (c == null)
                         continue;

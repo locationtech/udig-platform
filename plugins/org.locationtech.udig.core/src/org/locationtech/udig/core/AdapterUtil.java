@@ -12,7 +12,6 @@ package org.locationtech.udig.core;
 import java.io.IOException;
 
 import org.locationtech.udig.core.internal.CorePlugin;
-
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
@@ -63,7 +62,7 @@ public class AdapterUtil {
             classLoader = obj.getClass().getClassLoader();
         }
         try {
-            target = classLoader.loadClass(targetClass);
+            target = Class.forName(targetClass, true, classLoader);
         } catch (Throwable e) {
             //do nothing this is ok.
             return false;
@@ -149,7 +148,7 @@ public class AdapterUtil {
             return null;
         }
         try {
-            target=(Class<T>) obj.getClass().getClassLoader().loadClass(targetClass);
+            target=(Class<T>) Class.forName(targetClass,  true, obj.getClass().getClassLoader());
             return adaptTo(target, obj, monitor);
         } catch (ClassNotFoundException e) {
             //do nothing.

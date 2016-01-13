@@ -33,7 +33,6 @@ import org.locationtech.udig.project.IResourceCachingInterceptor;
 import org.locationtech.udig.project.IResourceInterceptor;
 import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.locationtech.udig.project.preferences.PreferenceConstants;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -258,8 +257,8 @@ public class LayerResource extends IGeoResource {
                 // its a library class so use normal class loader
                 classLoader = Thread.currentThread().getContextClassLoader();
             }
-            Class<T> loadClass = (Class<T>) classLoader.loadClass(attribute);
-            assignableFrom = (loadClass).isAssignableFrom(class1);
+            Class<T> clazz = (Class<T>) Class.forName(attribute, true, classLoader); 
+            assignableFrom = clazz.isAssignableFrom(class1);
         } catch (ClassNotFoundException e) {
             return false;
         }

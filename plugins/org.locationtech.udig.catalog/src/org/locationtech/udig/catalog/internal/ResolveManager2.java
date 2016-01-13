@@ -348,7 +348,7 @@ public class ResolveManager2 implements IResolveManager {
         }
         try {
             ClassLoader contextClassloader = factory.getClass().getClassLoader();
-            return contextClassloader.loadClass(className);
+            return Class.forName(className, true, contextClassloader);
         } catch (ClassNotFoundException notFound) {
             // check if the factory knows what to do - perhaps load via spring
             // or service provider interface

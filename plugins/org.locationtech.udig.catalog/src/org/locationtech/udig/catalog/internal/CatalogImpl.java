@@ -952,7 +952,7 @@ public class CatalogImpl extends ICatalog {
         for( IConfigurationElement element : list ) {
             try {
                 String attribute = element.getAttribute("descriptorClass"); //$NON-NLS-1$
-                Class< ? > c = descriptor.getClass().getClassLoader().loadClass(attribute);
+                Class< ? > c = Class.forName(attribute, true, descriptor.getClass().getClassLoader());
                 if (c.isAssignableFrom(descriptor.getClass())) {
                     TemporaryResourceFactory fac = (TemporaryResourceFactory) element
                             .createExecutableExtension("factory"); //$NON-NLS-1$

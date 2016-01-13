@@ -112,7 +112,7 @@ class OpFilterPropertyValueCondition implements OpFilter {
 
         if (targetClass == null) {
             try {
-                targetClass = object.getClass().getClassLoader().loadClass(targetObject);
+                targetClass = Class.forName(targetObject, true, object.getClass().getClassLoader());
             } catch (ClassNotFoundException e) {
                 UiPlugin.log("",e); //$NON-NLS-1$
                 return null;

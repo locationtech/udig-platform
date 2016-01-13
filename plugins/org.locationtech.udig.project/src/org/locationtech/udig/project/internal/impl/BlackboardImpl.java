@@ -513,8 +513,9 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
                 } else {
                     try {
                         ClassLoader classLoader = persistenceTarget.getClassLoader();
+                        
                         if (classLoader != null) {
-                            objectClass = classLoader.loadClass(className);
+                            objectClass = Class.forName(className, true, classLoader);
                         } else {
                             objectClass = Class.forName(className);
                         }
