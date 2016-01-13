@@ -117,7 +117,10 @@ public class RenderManagerDynamic extends RenderManagerImpl {
 			return; // we are not set up to renderer yet!
 		}
 
+		getRendererCreator().reset();
+		
 		validateRendererConfiguration();
+
 		final SelectionLayer selectionLayer = getRendererCreator()
 				.findSelectionLayer(layer);
 
@@ -182,6 +185,8 @@ public class RenderManagerDynamic extends RenderManagerImpl {
 		if (selectionLayer == null)
 			return;
 
+		getRendererCreator().reset();
+		
 		validateRendererConfiguration();
 
 		getRenderExecutor().visit(new ExecutorVisitor() {
@@ -262,6 +267,8 @@ public class RenderManagerDynamic extends RenderManagerImpl {
 		if (getMapDisplay().getWidth() < 1 || getMapDisplay().getHeight() < 1)
 			return;
 
+		getRendererCreator().reset();
+		
 		validateRendererConfiguration();
 
 		if (!getMapInternal().getContextModel().eAdapters().contains(
