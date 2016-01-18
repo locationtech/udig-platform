@@ -35,6 +35,11 @@
                                 <id>org.locationtech.udig-product</id>
                                 <versionRange>0.0.0</versionRange>
                             </requirement>
+                            <requirement>
+                                <type>p2-installable-unit</type>
+                                <id>org.locationtech.udig.project.edit</id>
+                                <versionRange>0.0.0</versionRange>
+                            </requirement>
                           <requirement>
                              <type>eclipse-feature</type>
                              <id>org.eclipse.e4.rcp</id>

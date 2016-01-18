@@ -209,7 +209,9 @@ public class LayersView extends ViewPart
         public void changed( ViewportModelEvent event ) {
             viewer.getControl().getDisplay().asyncExec(new Runnable(){
                 public void run() {
-                    viewer.update(currentMap.getMapLayers().toArray(), null);
+                    if (viewer != null && !viewer.getControl().isDisposed()) {
+                        viewer.update(currentMap.getMapLayers().toArray(), null);
+                    }
                 }
             });
         }

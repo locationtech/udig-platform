@@ -22,15 +22,13 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.eclipse.swt.widgets.Display;
+import org.junit.Before;
+import org.junit.Test;
 import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.eclipse.swt.widgets.Display;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 public class UDIGDisplaySafeLockTest {
 
@@ -481,8 +479,7 @@ public class UDIGDisplaySafeLockTest {
             lock.unlock();
         }
     }
-    
-    @Ignore("fails in tycho")
+
     @Test
     public void testSignalAll() throws Exception {
             final Condition condition = lock.newCondition();

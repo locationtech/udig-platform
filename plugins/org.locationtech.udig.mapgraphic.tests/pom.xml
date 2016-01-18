@@ -20,8 +20,8 @@
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>tycho-surefire-plugin</artifactId>
                 <configuration>
-                    <useUIHarness>false</useUIHarness>
-                    <useUIThread>false</useUIThread>
+                    <useUIHarness>true</useUIHarness>
+                    <useUIThread>true</useUIThread>
                     <testRuntime>p2Installed</testRuntime>
                 </configuration>
             </plugin>

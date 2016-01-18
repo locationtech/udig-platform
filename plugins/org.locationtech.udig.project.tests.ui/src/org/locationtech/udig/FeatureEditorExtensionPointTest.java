@@ -25,8 +25,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
+import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.locationtech.udig.project.ui.internal.FeatureEditorExtensionProcessor;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -57,6 +57,12 @@ public class FeatureEditorExtensionPointTest extends AbstractProjectUITestCase {
     @Before
     public void setUp() {
         processor = new FeatureEditorExtensionProcessor();
+        processor.startPartListener();
+    }
+
+    @After
+    public void tearDown() {
+        processor.stopPartListener();
     }
 
     @Test
@@ -165,7 +171,6 @@ public class FeatureEditorExtensionPointTest extends AbstractProjectUITestCase {
         return manager;
     }
 
-    @Ignore("test fails in tycho")
     @Test
     public void testOpenMemory() throws Exception {
         SimpleFeatureTypeBuilder builder = new SimpleFeatureTypeBuilder();
