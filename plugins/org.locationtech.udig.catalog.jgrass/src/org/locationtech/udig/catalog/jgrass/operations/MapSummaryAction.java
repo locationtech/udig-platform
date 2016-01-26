@@ -12,14 +12,9 @@ package org.locationtech.udig.catalog.jgrass.operations;
 import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 
 import javax.media.jai.iterator.RandomIter;
 import javax.media.jai.iterator.RandomIterFactory;
-
-import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResource;
-import org.locationtech.udig.ui.ExceptionDetailsDialog;
-import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -41,7 +36,6 @@ import org.eclipse.ui.PlatformUI;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridEnvelope2D;
 import org.geotools.coverage.grid.GridGeometry2D;
-import org.geotools.coverage.grid.ViewType;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.gce.grassraster.JGrassMapEnvironment;
@@ -52,16 +46,16 @@ import org.geotools.geometry.Envelope2D;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.parameter.Parameter;
 import org.geotools.referencing.operation.matrix.XAffineTransform;
-import org.geotools.resources.coverage.CoverageUtilities;
+import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
+import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResource;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.PlatformGIS;
 import org.opengis.coverage.grid.GridCoverageReader;
-import org.opengis.coverage.grid.GridEnvelope;
 import org.opengis.geometry.DirectPosition;
 import org.opengis.geometry.Envelope;
 import org.opengis.parameter.GeneralParameterValue;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
-import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
 
 /**
  * Action map summary.
@@ -93,7 +87,6 @@ public class MapSummaryAction implements IObjectActionDelegate, IWorkbenchWindow
                                 AbstractGridCoverage2DReader gridCoverage2DReader = rGeo.resolve(
                                         AbstractGridCoverage2DReader.class, pm);
                                 geodata = ((GridCoverage2D) gridCoverage2DReader.read(null));
-                                geodata = geodata.view(ViewType.GEOPHYSICS);
 
                                 Envelope envelope = geodata.getEnvelope();
                                 DirectPosition lowerCorner = envelope.getLowerCorner();
@@ -165,7 +158,6 @@ public class MapSummaryAction implements IObjectActionDelegate, IWorkbenchWindow
                                 AbstractGridFormat format = (AbstractGridFormat) new GrassCoverageFormatFactory().createFormat();
                                 AbstractGridCoverage2DReader reader = format.getReader(mapEnvironment.getCELL());
                                 geodata = ((GridCoverage2D) reader.read(readParams));
-                                geodata = geodata.view(ViewType.GEOPHYSICS);
                             } else {
                                 MessageDialog.openInformation(shell, "WARNING", "Unable to read format");
                                 return;

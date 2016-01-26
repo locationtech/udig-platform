@@ -27,5 +27,5 @@ Require-Bundle: org.eclipse.core.runtime,
  org.locationtech.udig.libs,
  org.eclipse.core.expressions
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: net.miginfocom.swt;version="[3.7.0,3.8.0)"

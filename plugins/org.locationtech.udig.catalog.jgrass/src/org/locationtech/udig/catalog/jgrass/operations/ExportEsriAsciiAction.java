@@ -13,9 +13,6 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import org.locationtech.udig.ui.ExceptionDetailsDialog;
-import org.locationtech.udig.ui.PlatformGIS;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.action.IAction;
@@ -37,7 +34,6 @@ import org.eclipse.ui.PlatformUI;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridEnvelope2D;
 import org.geotools.coverage.grid.GridGeometry2D;
-import org.geotools.coverage.grid.ViewType;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.gce.arcgrid.ArcGridFormat;
 import org.geotools.gce.arcgrid.ArcGridWriteParams;
@@ -49,14 +45,15 @@ import org.geotools.geometry.DirectPosition2D;
 import org.geotools.geometry.Envelope2D;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.parameter.Parameter;
+import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.PlatformGIS;
 import org.opengis.coverage.grid.GridCoverageReader;
 import org.opengis.geometry.Envelope;
 import org.opengis.parameter.GeneralParameterValue;
 import org.opengis.parameter.ParameterValueGroup;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
-import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
 
 /**
  * Action export a map to esri ascii.
@@ -113,7 +110,6 @@ public class ExportEsriAsciiAction
                                             .createFormat();
                                     GridCoverageReader reader = format.getReader(mapEnvironment.getCELL());
                                     GridCoverage2D geodata = ((GridCoverage2D) reader.read(readParams));
-                                    geodata = geodata.view(ViewType.GEOPHYSICS);
 
                                     final ArcGridFormat format1 = new ArcGridFormat();
                                     final ArcGridWriteParams wp = new ArcGridWriteParams();

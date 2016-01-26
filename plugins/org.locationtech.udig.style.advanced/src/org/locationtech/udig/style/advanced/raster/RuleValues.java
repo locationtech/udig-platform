@@ -11,7 +11,7 @@ package org.locationtech.udig.style.advanced.raster;
 
 import java.awt.Color;
 
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.graphics.RGB;
 
 /**
  * Simple container for color rules.
@@ -24,9 +24,7 @@ public class RuleValues {
     public Color fromColor;
     public Color toColor;
 
-    public static org.eclipse.swt.graphics.Color asSWT( Color awtColor ) {
-        org.eclipse.swt.graphics.Color color = new org.eclipse.swt.graphics.Color(Display
-                .getDefault(), awtColor.getRed(), awtColor.getGreen(), awtColor.getBlue());
-        return color;
+    public static RGB asRGB( Color awtColor ) {
+        return new RGB(awtColor.getRed(), awtColor.getGreen(), awtColor.getBlue());
     }
 }

@@ -10,5 +10,5 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.catalog.wmt,
  org.junit;bundle-version="[4.0.0,5.0.0)"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: org.locationtech.udig.catalog.wmsc.server

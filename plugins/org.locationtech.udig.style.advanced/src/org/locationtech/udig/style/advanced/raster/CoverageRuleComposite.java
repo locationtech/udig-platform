@@ -9,7 +9,13 @@
  */
 package org.locationtech.udig.style.advanced.raster;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseEvent;
@@ -30,8 +36,9 @@ import org.eclipse.swt.widgets.Text;
  * A composite that represents a facility to create color rules
  * 
  * @author Andrea Antonello - www.hydrologis.com
+ * @author Frank Gasdorf
  */
-public class CoverageRuleComposite implements MouseListener, SelectionListener, KeyListener {
+public class CoverageRuleComposite implements MouseListener, SelectionListener, KeyListener, DisposeListener {
 
     private Label fromLabel;
     private Label toLabel;
@@ -42,10 +49,13 @@ public class CoverageRuleComposite implements MouseListener, SelectionListener, 
     private CoverageRule rule = null;
     private Composite parent = null;
     private Text alphaText;
+    private Color fromLabelBGColor = null;
+    private Color toLabelBGColor = null;
+    private Map<RGB, Color> colors = new HashMap<RGB, Color>();
 
     public CoverageRuleComposite( Composite parent, int style, CoverageRule rule ) {
         this.parent = parent;
-
+        parent.addDisposeListener(this);
         GridLayout gridLayout1 = new GridLayout();
         gridLayout1.numColumns = 7;
         gridLayout1.makeColumnsEqualWidth = false;
@@ -142,10 +152,28 @@ public class CoverageRuleComposite implements MouseListener, SelectionListener, 
             value = String.valueOf(this.rule.getFromToValues()[1]);
         }
         toValueText.setText(value);
-        fromLabel.setBackground(this.rule.getFromColor());
-        toLabel.setBackground(this.rule.getToColor());
+        
+        this.fromLabelBGColor = registerAndSetBackground(fromLabel, this.rule.getFromColor());
+        this.toLabelBGColor = registerAndSetBackground(toLabel, this.rule.getToColor());
 
         alphaText.setText(String.valueOf(this.rule.getOpacity()));
+    }
+
+    private Color registerAndSetBackground(final Label label, final RGB rgbValue) {
+        Color color = null;
+        if (rgbValue != null && label != null && !label.isDisposed()) {
+            // test if color has been created 
+            color = colors.get(rgbValue);
+            
+            if (color == null) {
+                color = new Color(label.getDisplay(), rgbValue);
+                // required to dispose later
+                colors.put(rgbValue, color);
+            }
+            
+            label.setBackground(color);
+       }
+        return color;
     }
 
     /**
@@ -164,17 +192,18 @@ public class CoverageRuleComposite implements MouseListener, SelectionListener, 
             Label l = (Label) o;
             ColorDialog c = new ColorDialog(parent.getShell());
             c.setRGB(new RGB(l.getBackground().getRed(), l.getBackground().getGreen(), l.getBackground().getBlue()));
-            RGB color = c.open();
-            if (color == null) {
+            RGB rgbColor = c.open();
+            if (rgbColor == null) {
                 return;
             }
-            Color colorObject = new Color(parent.getDisplay(), color);
+            
 
-            ((Label) o).setBackground(colorObject);
             if (o.equals(fromLabel)) {
-                rule.setFromColor(colorObject);
+                this.fromLabelBGColor = registerAndSetBackground(fromLabel, rgbColor);
+                rule.setFromColor(rgbColor);
             } else if (o.equals(toLabel)) {
-                rule.setToColor(colorObject);
+                this.toLabelBGColor = registerAndSetBackground(toLabel, rgbColor);
+                rule.setToColor(rgbColor);
             }
 
         }
@@ -223,6 +252,27 @@ public class CoverageRuleComposite implements MouseListener, SelectionListener, 
                 return;
             }
         }
-
     }
+
+    @Override
+    public void widgetDisposed(DisposeEvent e) {
+        // dispose system resources such as colors here
+        disposeInternal(fromLabelBGColor);
+        disposeInternal(toLabelBGColor);
+        fromLabelBGColor = null;
+        toLabelBGColor = null;
+
+        for (Entry<RGB, Color> entry : colors.entrySet()) {
+            disposeInternal(entry.getValue());
+        }
+        colors.clear();
+    }
+
+    private void disposeInternal(final Color color) {
+        if (color != null && !color.isDisposed()) {
+            color.dispose();
+        }
+    }
+    
+
 }

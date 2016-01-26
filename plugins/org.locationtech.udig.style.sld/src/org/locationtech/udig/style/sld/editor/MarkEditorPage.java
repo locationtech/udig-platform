@@ -38,14 +38,6 @@ import org.opengis.filter.expression.Expression;
  * @since 1.1.0
  */
 public class MarkEditorPage extends Page {
-    private static FilterFactoryImpl factory = new FilterFactoryImpl();
-    private static Expression[] WELL_KNOWN_NAMES = {
-            factory.createLiteralExpression("square"), //$NON-NLS-1$
-            factory.createLiteralExpression("circle"), //$NON-NLS-1$
-            factory.createLiteralExpression("triangle"), //$NON-NLS-1$
-            factory.createLiteralExpression("star"), //$NON-NLS-1$
-            factory.createLiteralExpression("cross"), //$NON-NLS-1$
-            factory.createLiteralExpression("X") }; //$NON-NLS-1$
     
     Composite markComposite;
     private Label titleLabel;

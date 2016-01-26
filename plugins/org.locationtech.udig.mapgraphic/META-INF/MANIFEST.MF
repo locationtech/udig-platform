@@ -20,7 +20,7 @@ Export-Package: org.locationtech.udig.mapgraphic,org.locationtech.udig
  .mapgraphic.grid,org.locationtech.udig.mapgraphic.internal,org.locati
  ontech.udig.mapgraphic.northarrow,org.locationtech.udig.mapgraphic.sc
  alebar,org.locationtech.udig.mapgraphic.style
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: javax.media.jai,
  javax.media.jai.iterator,
  javax.media.jai.operator,

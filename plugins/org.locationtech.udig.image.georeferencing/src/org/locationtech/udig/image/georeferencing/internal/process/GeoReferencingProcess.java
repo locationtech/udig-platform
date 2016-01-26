@@ -24,6 +24,15 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.coverage.grid.GridCoverage2D;
+import org.geotools.coverage.grid.GridCoverageFactory;
+import org.geotools.coverage.processing.Operations;
+import org.geotools.gce.geotiff.GeoTiffWriter;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.crs.DefaultDerivedCRS;
+import org.geotools.referencing.cs.DefaultCartesianCS;
+import org.geotools.referencing.operation.transform.WarpTransform2D;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IResolve;
@@ -31,17 +40,6 @@ import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.IServiceFactory;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.ui.ApplicationGIS;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.coverage.grid.GridCoverage2D;
-import org.geotools.coverage.grid.GridCoverageFactory;
-import org.geotools.coverage.grid.ViewType;
-import org.geotools.coverage.processing.Operations;
-import org.geotools.gce.geotiff.GeoTiffWriter;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.crs.DefaultDerivedCRS;
-import org.geotools.referencing.cs.DefaultCartesianCS;
-import org.geotools.referencing.operation.transform.WarpTransform2D;
 import org.opengis.coverage.Coverage;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
@@ -195,7 +193,7 @@ public class GeoReferencingProcess {
 			filename += ".tif"; //$NON-NLS-1$
 		}
 		writer = new GeoTiffWriter(new File(filename));
-		writer.write(warpedCoverage.view(ViewType.GEOPHYSICS), null);
+		writer.write(warpedCoverage, null);
 
 		// add the result as a layer to the map by
 		// loading that file as a layer
@@ -203,7 +201,7 @@ public class GeoReferencingProcess {
 		IGeoResource tiffResource = null;
 		try {
 			writer = new GeoTiffWriter(tempfile);
-			writer.write(warpedCoverage.view(ViewType.GEOPHYSICS), null);
+			writer.write(warpedCoverage, null);
 			// tiffResource = getTiffResource(tempfile.toURL());
 			tiffResource = getTiffResource(tempfile.toURI().toURL());
 		} catch (IOException e) {

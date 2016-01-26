@@ -15,15 +15,7 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.style,
  org.locationtech.udig.style.sld
 Bundle-ActivationPolicy: lazy
-Export-Package: org.locationtech.udig.style.advanced,org.locationtech.
- udig.style.advanced.common,org.locationtech.udig.style.advanced.commo
- n.styleattributeclasses,org.locationtech.udig.style.advanced.editorpa
- ges,org.locationtech.udig.style.advanced.lines,org.locationtech.udig.
- style.advanced.lines.widgets,org.locationtech.udig.style.advanced.poi
- nts,org.locationtech.udig.style.advanced.points.widgets,org.locationt
- ech.udig.style.advanced.polygons,org.locationtech.udig.style.advanced
- .polygons.widgets,org.locationtech.udig.style.advanced.raster,org.loc
- ationtech.udig.style.advanced.utils
 Import-Package: com.google.common.collect;version="[12.0.0,16.0.0)",
  javax.media.jai,
  javax.media.jai.iterator
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

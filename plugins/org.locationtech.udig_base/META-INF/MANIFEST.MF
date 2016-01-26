@@ -5,4 +5,4 @@ Bundle-SymbolicName: org.locationtech.udig_base
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

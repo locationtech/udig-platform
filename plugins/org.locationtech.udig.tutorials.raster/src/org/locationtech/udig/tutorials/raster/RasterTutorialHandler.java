@@ -27,7 +27,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridCoverageFactory;
-import org.geotools.coverage.grid.ViewType;
 import org.geotools.coverage.processing.CoverageProcessor;
 import org.geotools.factory.Hints;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -82,17 +81,13 @@ public class RasterTutorialHandler extends AbstractHandler {
 
         RenderingHints hints = new RenderingHints(Hints.LENIENT_DATUM_SHIFT, Boolean.TRUE);        
         CoverageProcessor processor = new CoverageProcessor(hints);
-        
-        GridCoverage2D reprojected = gridCoverage.view(ViewType.GEOPHYSICS);
                 
         ParameterValueGroup param = processor.getOperation("Resample").getParameters();
-        param.parameter("Source").setValue( reprojected );
+        param.parameter("Source").setValue( gridCoverage );
         param.parameter("CoordinateReferenceSystem").setValue(targetCRS);
         param.parameter("InterpolationType").setValue("NearestNeighbor");
         
-        reprojected = (GridCoverage2D) processor.doOperation(param);
-        
-        reprojected = reprojected.view(ViewType.RENDERED);
+        GridCoverage2D reprojected = (GridCoverage2D) processor.doOperation(param);
         
         ImageViewer.show(gridCoverage, "Normal Grid Coverage");
         ImageViewer.show(reprojected, "Reprojected Grid Coverage");

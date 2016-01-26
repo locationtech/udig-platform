@@ -14,8 +14,7 @@ package org.locationtech.udig.project.ui.operations;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.ui.operations.AbstractPropertyValue;
 import org.locationtech.udig.ui.operations.PropertyValue;
-
-import org.geotools.filter.Filter;
+import org.opengis.filter.Filter;
 
 /**
  * Checks if a layer has a selection
@@ -34,7 +33,7 @@ public class LayerSelectionProperty extends AbstractPropertyValue<ILayer>
     }
 
     public boolean isTrue(ILayer object, String value) {
-        Boolean hasSelection = object.getFilter() != Filter.ALL;
+        Boolean hasSelection = object.getFilter() != Filter.INCLUDE;
         return hasSelection.toString().equalsIgnoreCase(value);
     }
 

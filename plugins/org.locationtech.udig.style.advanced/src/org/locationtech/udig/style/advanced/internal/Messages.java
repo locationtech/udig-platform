@@ -13,12 +13,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.locationtech.udig.style.advanced.internal.messages"; //$NON-NLS-1$
-	public static String Alignments_0;
-	public static String Alignments_1;
-	public static String Alignments_2;
-	public static String Alignments_3;
-	public static String Alignments_4;
-	public static String Alignments_5;
+
 	public static String BoderParametersComposite_0;
 	public static String BoderParametersComposite_1;
 	public static String BoderParametersComposite_10;
@@ -42,6 +37,8 @@ public class Messages extends NLS {
 	public static String CoverageColorEditor_6;
 	public static String CoverageColorEditor_7;
 	public static String CoverageColorEditor_9;
+	public static String CoverageColorEditor_removeDisabledColorMapEntryTooltip;
+	public static String CoverageColorEditor_addColorMapEntryTooltip;
 	public static String CoverageColorMaskStyleEditorPage_0;
 	public static String CoverageColorMaskStyleEditorPage_1;
 	public static String CoverageStyleEditorPage_0;

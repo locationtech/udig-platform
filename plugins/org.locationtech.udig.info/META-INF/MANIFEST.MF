@@ -23,7 +23,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.forms,
  org.locationtech.udig.catalog.shp;visibility:=reexport
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: javax.media.jai,
  javax.media.jai.iterator,
  javax.media.jai.operator,

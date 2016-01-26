@@ -9,11 +9,11 @@
  */
 package org.locationtech.udig.catalog.internal.worldimage;
 
+import static org.eclipse.jface.dialogs.MessageDialog.QUESTION;
 import static org.locationtech.udig.catalog.worldimage.internal.Messages.InMemoryCoverageLoader_close_button;
 import static org.locationtech.udig.catalog.worldimage.internal.Messages.InMemoryCoverageLoader_message;
 import static org.locationtech.udig.catalog.worldimage.internal.Messages.InMemoryCoverageLoader_msgTitle;
 import static org.locationtech.udig.catalog.worldimage.internal.Messages.InMemoryCoverageLoader_restart_button;
-import static org.eclipse.jface.dialogs.MessageDialog.QUESTION;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -23,11 +23,6 @@ import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.text.MessageFormat;
 import java.util.Hashtable;
-
-import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResource;
-import org.locationtech.udig.catalog.rasterings.GridCoverageLoader;
-import org.locationtech.udig.catalog.rasterings.RasteringsPlugin;
-import org.locationtech.udig.internal.ui.UiPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
@@ -39,11 +34,14 @@ import org.geotools.coverage.grid.GeneralGridGeometry;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridCoverageFactory;
 import org.geotools.coverage.grid.GridGeometry2D;
-import org.geotools.coverage.grid.ViewType;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.geometry.GeneralEnvelope;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResource;
+import org.locationtech.udig.catalog.rasterings.GridCoverageLoader;
+import org.locationtech.udig.catalog.rasterings.RasteringsPlugin;
+import org.locationtech.udig.internal.ui.UiPlugin;
 import org.opengis.coverage.grid.GridCoverage;
 import org.opengis.coverage.grid.GridEnvelope;
 import org.opengis.geometry.Envelope;
@@ -89,7 +87,7 @@ public class InMemoryCoverageLoader extends GridCoverageLoader {
                 GeneralEnvelope env = reader.getOriginalEnvelope();
                 GridGeometry2D all = new GridGeometry2D(range, env);
                 GridCoverage2D coverage2d = (GridCoverage2D) super.load(all, monitor);
-                RenderedImage image = coverage2d.view(ViewType.RENDERED).getRenderedImage();
+                RenderedImage image = coverage2d.getRenderedImage();
 
 				RasteringsPlugin
 						.log("WARNING.  Loading image fully into memory.  It is about " + size(image) + " MB in size decompressed", null); //$NON-NLS-1$//$NON-NLS-2$

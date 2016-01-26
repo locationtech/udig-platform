@@ -7,4 +7,4 @@ Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.locationtech.udig.libs,
  org.junit;bundle-version="[4.0.0,5.0.0)"
 Export-Package: org.locationtech.udig.libs.tests
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

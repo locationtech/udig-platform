@@ -13,9 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import org.locationtech.udig.ui.ExceptionDetailsDialog;
-import org.locationtech.udig.ui.PlatformGIS;
-
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -37,7 +34,6 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.IWorkbenchWindowPulldownDelegate;
 import org.eclipse.ui.PlatformUI;
 import org.geotools.coverage.grid.GridCoverage2D;
-import org.geotools.coverage.grid.ViewType;
 import org.geotools.coverage.processing.Operations;
 import org.geotools.gce.arcgrid.ArcGridReader;
 import org.geotools.gce.geotiff.GeoTiffReader;
@@ -46,13 +42,14 @@ import org.geotools.gce.grassraster.JGrassMapEnvironment;
 import org.geotools.gce.grassraster.format.GrassCoverageFormat;
 import org.geotools.gce.grassraster.format.GrassCoverageFormatFactory;
 import org.geotools.referencing.CRS;
-import org.opengis.coverage.grid.GridCoverageWriter;
-import org.opengis.parameter.GeneralParameterValue;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
 import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
 import org.locationtech.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
 import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.opengis.coverage.grid.GridCoverageWriter;
+import org.opengis.parameter.GeneralParameterValue;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * Action to import an esrii ascii grid into the mapset.
@@ -113,14 +110,12 @@ public class ImportEsriAsciiOrGeotiffAction
                                     if (mapFile.getName().toLowerCase().endsWith(".asc")) {
                                         ArcGridReader arcGridReader = new ArcGridReader(mapFile);
                                         geodata = arcGridReader.read(null);
-                                        geodata = geodata.view(ViewType.GEOPHYSICS);
                                         geodata = JGrassCatalogUtilities.removeNovalues(geodata);
                                         fileCrs = arcGridReader.getCrs();
                                     } else if (mapFile.getName().toLowerCase().endsWith(".tif")
                                             || mapFile.getName().toLowerCase().endsWith(".tiff")) {
                                         GeoTiffReader geotiffGridReader = new GeoTiffReader(mapFile);
                                         geodata = geotiffGridReader.read(null);
-                                        geodata = geodata.view(ViewType.GEOPHYSICS);
                                         geodata = JGrassCatalogUtilities.removeNovalues(geodata);
                                         fileCrs = geotiffGridReader.getCrs();
                                     }

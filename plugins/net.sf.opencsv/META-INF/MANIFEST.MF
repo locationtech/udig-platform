@@ -7,4 +7,4 @@ Bundle-ClassPath: .,lib/opencsv-2.3.jar
 Export-Package: au.com.bytecode.opencsv,
  au.com.bytecode.opencsv.bean
 Eclipse-BundleShape: dir
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
