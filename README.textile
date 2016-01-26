@@ -99,6 +99,11 @@ h2. Option - Command Line Build
 
 See results at http://udig.refractions.net/download/unstable/ there should be a 2.0.0-SNAPSHOT by the time you read this.
 
+4. To test an individual module::
+      
+      cd plugins/org.locationtech.catalog.tests.ui
+      mvn clean install -Ptest -fae
+
 h2. Option - Eclipse Build
 
 We have tested these instructions with Eclipse 4.3 Kepler.
