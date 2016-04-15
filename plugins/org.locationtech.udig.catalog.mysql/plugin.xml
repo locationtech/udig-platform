@@ -16,6 +16,7 @@
             id="com.iai.udig.catalog.mysql.factory">
       </factory>
       <wizardPage
+            banner="icons/wizban/mysql_wiz.png"
             class="org.locationtech.udig.catalog.internal.mysql.ui.MySQLUserHostPage"
             description="%wizard.description"
             icon="icons/etool16/mysql_wiz.png"
