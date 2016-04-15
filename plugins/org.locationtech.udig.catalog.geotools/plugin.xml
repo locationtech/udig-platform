@@ -27,10 +27,10 @@
       <wizardPage
             banner="icons/wizban/datastore_wiz.gif"
             class="org.locationtech.udig.catalog.geotools.data.DataStoreConnectionPage"
-            description="Direct access to GeoTools data stores"
+            description="%DataStoreConnectionPage.description"
             icon="icons/obj16/datastore_obj.gif"
             id="org.locationtech.udig.catalog.geotools.connection.dataStorePage"
-            name="DataStore">
+            name="%DataStoreConnectionPage.name">
       </wizardPage>
       <wizardPage
             banner="icons/wizban/datastore_wiz.gif"
@@ -45,6 +45,9 @@
       <provider
             class="org.locationtech.udig.catalog.geotools.data.FileDataStoreFormatProvider">
       </provider>
+      <fileService
+             fileExtension="*.gpkg"
+             name="%geopackage.fileservice.name"/>
    </extension>
    <extension
          point="org.eclipse.ui.startup">
