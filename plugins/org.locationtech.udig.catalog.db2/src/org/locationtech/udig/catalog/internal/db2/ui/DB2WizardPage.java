@@ -48,7 +48,7 @@ import static org.geotools.data.db2.DB2NGDataStoreFactory.*;
  * </p>
  * 
  * @author Justin Deoliveira, jdeolive, for Refractions Research, Inc.
- * @author dadler
+ * @author David Adler, dadler, for AdtechGeospatial
  * @author Jesse Eichar, jeichar, for Refractions Research, Inc.
  * @author Richard Gould, rgould, for Refractions Research, Inc.
  * @author Adrian Custer, acuster.
@@ -62,9 +62,8 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
     private static final String DB2_RECENT = "DB2_RECENT"; //$NON-NLS-1$
     private static final String DB2_WIZARD = "DB2_WIZARD"; //$NON-NLS-1$
     // CONNECTION
-    // TODO: doesn't db2 use 446 as in
-    // "http://publib.boulder.ibm.com/infocenter/dzichelp/v2r2/index.jsp?topic=/com.ibm.db29.doc.inst/tcpip.htm"
-    // ?
+    // The default port for DB2 LUW is 50000
+    // The default port for DB2 z/OS is 446
     private static final DataBaseConnInfo DEFAULT_DB2_CONN_INFO = new DataBaseConnInfo(
             "", "50000", "", "", "", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
     private static DB2NGDataStoreFactory factory = DB2ServiceExtension.getFactory();
@@ -155,6 +154,7 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
         final String portText = currentDBCI.getPortString();
         final String userText = currentDBCI.getUserString();
         final String passText = currentDBCI.getPassString();
+        final String schemaText = currentDBCI.getSchemaString();        
         final String db = currentDBCI.getDbString();
 
         // TODO: this is what the parent couldConnect() does.
@@ -189,6 +189,9 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
                         params.put(HOST.key, hostText);
                         params.put(PORT.key, (Integer) PORT.parse(portText));
                         params.put(DATABASE.key, db);
+                        params.put(USER.key, userText);
+                        params.put(PASSWD.key, passText);
+                        params.put(SCHEMA.key, schemaText);                        
                         dataSource = DB2ServiceExtension.getFactory().createDataSource(params);
                         dataSource.setUsername(userText);
                         dataSource.setPassword(passText);
@@ -196,7 +199,7 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
                         // Is this needed/useful?
                         DriverManager.setLoginTimeout(3);
                         monitor.worked(1);
-                        monitor.subTask("establish connection");
+                        monitor.subTask("establish connection"); //$NON-NLS-1$
 
                         if (monitor.isCanceled()) {
                             dataSource.close();
@@ -204,10 +207,11 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
                         }
 
                         connection = dataSource.getConnection();
-                        monitor.subTask("connected");
+                        monitor.subTask("connected"); //$NON-NLS-1$
                         monitor.worked(1);
 
                     } catch (Throwable shame) {
+                        System.out.println("exception: " + shame.getMessage());
                         if (dataSource != null) {
                             try {
                                 dataSource.close();
@@ -271,7 +275,7 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
 
         Map<String, Serializable> params = new HashMap<String, Serializable>();
 
-        params.put(DBTYPE.key, (Serializable)DBTYPE.sample); //$NON-NLS-1$
+        params.put(DBTYPE.key, (Serializable)DBTYPE.sample);
         params.put(HOST.key, emptyAsNull(currentDBCI.getHostString()));
         String dbport = emptyAsNull(currentDBCI.getPortString());
         try {
@@ -287,8 +291,8 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
         params.put(USER.key, emptyAsNull(userName));
         String password = currentDBCI.getPassString();
         params.put(PASSWD.key, emptyAsNull(password));
-
-        params.put(SCHEMA.key, emptyAsNull(currentDBCI.getSchemaString()));
+        String schema = currentDBCI.getSchemaString().toUpperCase();  // TODO - handle intentional lower case
+        params.put(SCHEMA.key, emptyAsNull(schema));
 
         return params;
     }

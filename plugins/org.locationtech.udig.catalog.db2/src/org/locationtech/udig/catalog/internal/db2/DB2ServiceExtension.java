@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.Platform;
 import org.geotools.data.DataAccessFactory;
 import org.geotools.data.DataAccessFinder;
 import org.geotools.data.DataStoreFactorySpi;
+import org.geotools.data.db2.DB2NGJNDIDataStoreFactory;
 import org.geotools.data.db2.DB2NGDataStoreFactory;
 import static org.geotools.data.db2.DB2NGDataStoreFactory.*;
 /**
@@ -45,12 +46,13 @@ public class DB2ServiceExtension extends AbstractDataStoreServiceExtension imple
      */
     public synchronized static DB2NGDataStoreFactory getFactory() {
         if (avaialble && factory == null ) {
-        	// factory = new DB2NGDataStoreFactory(); // this was a bad idea
+        	// factory = new DB2NGJNDIDataStoreFactory(); // this was a bad idea
         	Iterator<DataAccessFactory> available = DataAccessFinder.getAvailableDataStores();
         	while( available.hasNext() ){
         		DataAccessFactory access = available.next();
-        		if( access instanceof DB2NGDataStoreFactory){
-        			factory = (DB2NGDataStoreFactory) access;
+        		if( access instanceof DB2NGJNDIDataStoreFactory){
+ //       			factory = (DB2NGJNDIDataStoreFactory) access;
+        		        factory = new DB2NGDataStoreFactory();
         			break;
         		}
         	}
@@ -86,7 +88,7 @@ public class DB2ServiceExtension extends AbstractDataStoreServiceExtension imple
         } catch (Exception unexpected) {
             if (Platform.inDevelopmentMode()) {
                 // this should never happen
-                DB2Plugin.log("DB2ServiceExtension.canProcess errored out with: "
+                DB2Plugin.log("DB2ServiceExtension.canProcess errored out with: " //$NON-NLS-1$
                         + unexpected, unexpected);
             }
             return null; // the factory cannot really use these parameters
@@ -114,9 +116,9 @@ public class DB2ServiceExtension extends AbstractDataStoreServiceExtension imple
     protected URL paramsToUrl(Map<String, Serializable> params) {
         URL dbUrl = null;        
         try {
-            Object host = DB2NGDataStoreFactory.HOST.lookUp( params );
-            Object port = DB2NGDataStoreFactory.PORT.lookUp( params );
-            Object db = DB2NGDataStoreFactory.DATABASE.lookUp( params );
+            Object host = DB2NGJNDIDataStoreFactory.HOST.lookUp( params );
+            Object port = DB2NGJNDIDataStoreFactory.PORT.lookUp( params );
+            Object db = DB2NGJNDIDataStoreFactory.DATABASE.lookUp( params );
             
             dbUrl = new URL("http://" + host + ".db2.jdbc:" + port + "/" + db); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         } catch (Exception e) {
@@ -134,7 +136,7 @@ public class DB2ServiceExtension extends AbstractDataStoreServiceExtension imple
         ParamInfo info = parseParamInfo(url);
         
         Map<String,Serializable> params = new HashMap<String,Serializable>();
-        params.put(DBTYPE.key, (Serializable)DBTYPE.sample); // dbtype //$NON-NLS-1$
+        params.put(DBTYPE.key, (Serializable)DBTYPE.sample); // dbtype 
         params.put(HOST.key,info.host); // host
         params.put(PORT.key,info.the_port); // port
         params.put(DATABASE.key,info.the_database); // database
@@ -150,7 +152,7 @@ public class DB2ServiceExtension extends AbstractDataStoreServiceExtension imple
     private static final boolean isDB2URL( URL url ){
         if (url == null )
             return false;
-        return url.getProtocol().toLowerCase().equals("db2") || url.getProtocol().toLowerCase().equals("db2.jdbc") || //$NON-NLS-1$ //$NON-NLS-2$
+        return url.getProtocol().toLowerCase().equals("db2") || url.getProtocol().toLowerCase().equals("db2.jdbc") || //$NON-NLS-1$ //$NON-NLS-2$ 
         url.getProtocol().toLowerCase().equals("jdbc.db2"); //$NON-NLS-1$
     }
 

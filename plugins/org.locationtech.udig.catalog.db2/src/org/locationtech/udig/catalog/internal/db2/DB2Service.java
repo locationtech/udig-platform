@@ -110,9 +110,11 @@ public class DB2Service extends IService {
                     members = new ArrayList<DB2GeoResource>();
 
                     String[] names = ds.getTypeNames();
-                    if (names == null)
+                    if (names == null || names.length == 0)
+                    {
+                        members = null;
                         return members;
-
+                    }
                     for( int i = 0; i < names.length; i++ ) {
                         members.add(new DB2GeoResource(this, names[i]));
                     }
