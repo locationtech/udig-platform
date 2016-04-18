@@ -35,21 +35,25 @@ import static org.geotools.data.db2.DB2NGDataStoreFactory.*;
  * 
  * @author Justin Deoliveira,Refractions Research Inc.,jdeolive@refractions.net
  * @since 1.0.1
+ * @author David Adler, Adtech Geospatial,dadler@adtechgeospatial.com
+ * @since 1.5.x
  */
 public class DB2ServiceExtension extends AbstractDataStoreServiceExtension implements ServiceExtension {
     private static DB2NGDataStoreFactory factory = null;
-    private static boolean avaialble = true;
+    private static boolean available = true;
     
     /**
      * Factory describing connection parameters.
      * @return factory describing DB2 connection parameters
      */
+    // We want to use a DB2NGDataStoreFactory but this is not in the list of DataStores
+    // DB2NGJNDIDataStoreFactory is returned so if we find this,
+    // create a DB2NGDataStoreFactory
     public synchronized static DB2NGDataStoreFactory getFactory() {
-        if (avaialble && factory == null ) {
-        	// factory = new DB2NGJNDIDataStoreFactory(); // this was a bad idea
-        	Iterator<DataAccessFactory> available = DataAccessFinder.getAvailableDataStores();
-        	while( available.hasNext() ){
-        		DataAccessFactory access = available.next();
+        if (available && factory == null ) {
+        	Iterator<DataAccessFactory> dataStores = DataAccessFinder.getAvailableDataStores();
+        	while( dataStores.hasNext() ){
+        		DataAccessFactory access = dataStores.next();
         		if( access instanceof DB2NGJNDIDataStoreFactory){
  //       			factory = (DB2NGJNDIDataStoreFactory) access;
         		        factory = new DB2NGDataStoreFactory();
@@ -57,7 +61,7 @@ public class DB2ServiceExtension extends AbstractDataStoreServiceExtension imple
         		}
         	}
         	if( factory == null ){
-        		avaialble = false; // not available! oh no!        		
+        		available = false; // not available! oh no!        		
         	}
         }
         return factory;

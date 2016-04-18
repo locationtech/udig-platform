@@ -43,6 +43,9 @@ import org.geotools.jdbc.JDBCDataStore;
  * Service handle for the DB2 Universal Database.
  * 
  * @author Justin Deoliveira,Refractions Research Inc.,jdeolive@refractions.net
+ * @since 1.0.1
+ * @author David Adler, Adtech Geospatial,dadler@adtechgeospatial.com
+ * @since 1.5.x * 
  */
 public class DB2Service extends IService {
 
@@ -123,7 +126,8 @@ public class DB2Service extends IService {
                 rLock.unlock();
             }
         } else {
-            monitor.done();
+            if (!(monitor == null))
+                monitor.done();
         }
         return members;
     }
