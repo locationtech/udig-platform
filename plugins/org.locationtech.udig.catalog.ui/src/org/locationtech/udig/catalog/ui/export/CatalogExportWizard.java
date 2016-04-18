@@ -222,23 +222,26 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
                 }
 
                 if (polygonCollection.size() > 0) {
-                    exportPolygonFeatures(data, monitor, file, polygonCollection, schema, geomName,
-                            mt);
+                    exportPolygonFeatures(data, monitor, file, polygonCollection, schema, mt);
                 }
                 if (pointCollection.size() > 0) {
-                    exportPointFeatures(data, monitor, file, pointCollection, schema, geomName, mt);
+                    exportPointFeatures(data, monitor, file, pointCollection, schema, mt);
                 }
                 if (lineCollection.size() > 0) {
-                    exportLineFeatures(data, monitor, file, lineCollection, schema, geomName, mt);
+                    exportLineFeatures(data, monitor, file, lineCollection, schema, mt);
                 }
             } else {
                 // single geometry type
                 SimpleFeatureType destinationFeatureType = createFeatureType(schema,
                         (Class< ? extends Geometry>) schema.getGeometryDescriptor().getType()
                                 .getBinding(), crs);
-                ReprojectingFeatureCollection processed = new ReprojectingFeatureCollection(fc,
-                        monitor, destinationFeatureType, mt);
-                boolean success = writeToShapefile(processed, destinationFeatureType, file);
+
+                ShapefileDataStore shapefile = createShapefile(destinationFeatureType, file);
+                SimpleFeatureType targetFeatureType = shapefile.getSchema();
+
+                ReprojectingFeatureCollection processed = new ReprojectingFeatureCollection(fc, monitor, targetFeatureType, mt);
+                boolean success = writeToShapefile(shapefile, processed);
+
                 if (success) {
                     addToCatalog(file, data);
                 } else {
@@ -468,54 +471,54 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
 
     private void exportLineFeatures( Data data, IProgressMonitor currentMonitor, File file,
             SimpleFeatureCollection lineCollection,
-            SimpleFeatureType schema, String geomName, MathTransform mt )
+            SimpleFeatureType schema, MathTransform mt )
             throws IllegalFilterException, IOException, SchemaException, MalformedURLException {
 
-        SimpleFeatureType finalFeatureType;
-
         File lineFile = addFileNameSuffix(file, LINE_SUFFIX);
+        ShapefileDataStore shapefile = createShapefile(createFeatureType(schema, MultiLineString.class, data.getCRS()), lineFile);
+        SimpleFeatureType targetFeatureType = shapefile.getSchema();
 
-        finalFeatureType = createFeatureType(schema, MultiLineString.class, data.getCRS());
         SimpleFeatureCollection temp = new ToMultiLineFeatureCollection(
-                                                lineCollection, finalFeatureType, 
+                                                lineCollection, targetFeatureType, 
                                                 schema.getGeometryDescriptor(), 
                                                 mt, currentMonitor);
-        
-        if (writeToShapefile(temp, finalFeatureType, lineFile))
+
+        if (writeToShapefile(shapefile, temp))
             addToCatalog(lineFile, data);
     }
 
     private void exportPointFeatures( Data data, IProgressMonitor currentMonitor, File file,
             SimpleFeatureCollection pointCollection,
-            SimpleFeatureType schema, String geomName, MathTransform mt )
+            SimpleFeatureType schema, MathTransform mt )
             throws IllegalFilterException, IOException, SchemaException, MalformedURLException {
 
-        SimpleFeatureType createFeatureType;
         File pointFile = addFileNameSuffix(file, POINT_SUFFIX);
+        ShapefileDataStore shapefile = createShapefile(createFeatureType(schema, MultiPoint.class, data.getCRS()), pointFile);
+        SimpleFeatureType targetFeatureType = shapefile.getSchema();
 
-        createFeatureType = createFeatureType(schema, MultiPoint.class, data.getCRS());
         SimpleFeatureCollection temp = new ToMultiPointFeatureCollection(
-                                                pointCollection, createFeatureType, 
+                                                pointCollection, targetFeatureType, 
                                                 schema.getGeometryDescriptor(), 
                                                 mt, currentMonitor);
 
-        if (writeToShapefile(temp, createFeatureType, pointFile))
+        if (writeToShapefile(shapefile, temp))
             addToCatalog(pointFile, data);
     }
 
     private void exportPolygonFeatures( Data data, IProgressMonitor currentMonitor, File file,
             SimpleFeatureCollection polygonCollection,
-            SimpleFeatureType schema, String geomName, MathTransform mt )
+            SimpleFeatureType schema, MathTransform mt )
             throws IllegalFilterException, IOException, SchemaException, MalformedURLException {
-        
-        File polyFile = addFileNameSuffix(file, POLY_SUFFIX);
 
-        SimpleFeatureType createFeatureType = createFeatureType(schema, MultiPolygon.class, data.getCRS());
+        File polyFile = addFileNameSuffix(file, POLY_SUFFIX);
+        ShapefileDataStore shapefile = createShapefile(createFeatureType(schema, MultiPolygon.class, data.getCRS()), polyFile);
+        SimpleFeatureType targetFeatureType = shapefile.getSchema();
 
         SimpleFeatureCollection temp = new ToMultiPolygonFeatureCollection( 
-                                                polygonCollection, createFeatureType, 
-                                                schema.getGeometryDescriptor(), mt, currentMonitor);
-        if (writeToShapefile(temp, createFeatureType, polyFile))
+                polygonCollection, targetFeatureType,
+                schema.getGeometryDescriptor(), mt, currentMonitor);
+
+        if (writeToShapefile(shapefile, temp))
             addToCatalog(polyFile, data);
     }
 
@@ -611,12 +614,14 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
         Function function = ff.function("geometryType", ff.property(geomName));
         return ff.equal(function, ff.literal(type)); //$NON-NLS-1$
     }
-
-    private boolean writeToShapefile(SimpleFeatureCollection fc, SimpleFeatureType type, File file ) throws IOException {
+    
+    
+    
+    private ShapefileDataStore createShapefile( SimpleFeatureType targetType, File file) throws IOException {
         
         if (!canWrite(file)) {
-            throw new IOException(MessageFormat.format(Messages.CatalogExport_cannotWrite,
-                    file.getAbsolutePath()));
+            throw new IOException(MessageFormat.format(Messages.CatalogExport_cannotWrite, file
+                    .getAbsolutePath()));
         }
         // creates the shapefile
         ShapefileDataStoreFactory dataStoreFactory = new ShapefileDataStoreFactory();
@@ -624,44 +629,18 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
         params.put("url", URLUtils.fileToURL(file)); //$NON-NLS-1$
         params.put("create spatial index", Boolean.TRUE); //$NON-NLS-1$
         ShapefileDataStore ds = (ShapefileDataStore) dataStoreFactory.createDataStore(params);
-        ds.createSchema(type);
+        ds.createSchema(targetType);
         
-        SimpleFeatureStore featureSource = (SimpleFeatureStore) ds.getFeatureSource();
+        
+        return ds;
+        
+    }
+
+    private boolean writeToShapefile(ShapefileDataStore shapefile, SimpleFeatureCollection fc) throws IOException {
+        SimpleFeatureStore featureSource = (SimpleFeatureStore) shapefile.getFeatureSource();
         List<FeatureId> ids = featureSource.addFeatures(fc);
         return ids.size() >= 0;
     }
-    
-// old version    
-//    private boolean writeToShapefile( 
-//            FeatureCollection<SimpleFeatureType, SimpleFeature> fc, 
-//            SimpleFeatureType type, File file ) throws IOException {
-//        
-//        if (!canWrite(file)) {
-//            throw new IOException(MessageFormat.format(Messages.CatalogExport_cannotWrite, file
-//                    .getAbsolutePath()));
-//        }
-//         URL shpFileURL = URLUtils.fileToURL(file);
-//         ShapefileDataStore ds = new IndexedShapefileDataStore(shpFileURL);
-//         ds.createSchema(type);
-//
-//        final int count[] = new int[1];
-//        /*
-//         * DefaultTransaction t = new DefaultTransaction("export"); //$NON-NLS-1$ final
-//         * FeatureWriter<SimpleFeatureType, SimpleFeature> writer = ds.getFeatureWriterAppend(t);
-//         * try { fc.accepts(new FeatureVisitor(){ public void visit( Feature feature ) {
-//         * SimpleFeature simpleFeature = (SimpleFeature) feature; try { SimpleFeature copy =
-//         * writer.next(); for( Property attribute : simpleFeature.getProperties() ) { try {
-//         * copy.setAttribute(attribute.getName(), attribute.getValue()); } catch (Throwable t) {
-//         * System.out.println("Issue copying " + attribute); //$NON-NLS-1$ } } writer.write();
-//         * count[0]++; } catch (IOException e) { throw (RuntimeException) new
-//         * RuntimeException().initCause(e); } } }, new NullProgressListener()); } finally {
-//         * t.commit(); writer.close(); }
-//         */
-//        SimpleFeatureStore featureSource = (SimpleFeatureStore) ds.getFeatureSource();
-//        List<FeatureId> ids = featureSource.addFeatures(fc);
-//        count[0] = ids.size();
-//        return count[0] >= 0;
-//    }
 
     private boolean canWrite( File file ) throws IOException {
         if (file.exists()) {
