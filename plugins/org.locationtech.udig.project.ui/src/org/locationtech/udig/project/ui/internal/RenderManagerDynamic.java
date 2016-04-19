@@ -68,6 +68,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * 
  * @generated
  */
+@Deprecated
 public class RenderManagerDynamic extends RenderManagerImpl {
 	/**
 	 * Watches the layer add / delete / change of zorder and style changes.

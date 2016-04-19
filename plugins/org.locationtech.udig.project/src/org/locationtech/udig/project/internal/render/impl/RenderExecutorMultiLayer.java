@@ -125,6 +125,7 @@ public class RenderExecutorMultiLayer extends RenderExecutorImpl {
      */
     public RenderExecutorMultiLayer() {
         renderJob = new RenderJob(this);
+        renderListener = getRendererListener();
     }
 
     String jobName;

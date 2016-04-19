@@ -53,6 +53,8 @@ import com.vividsolutions.jts.geom.Envelope;
  * @since 1.0.0
  */
 public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
+    
+    private boolean isDisposed = false;
     /**
      * Listens to a layer for visibility events and styling events. <b>Public ONLY for testing
      * purposes</b>
@@ -212,7 +214,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      */
     protected Renderer renderer;
 
-    protected Adapter renderListener = getRendererListener();
+    protected Adapter renderListener;
 
     /**
      * A listener that triggers an update when the style of its layer changes or the visibility
@@ -232,6 +234,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     public RenderExecutorImpl() {
         super();
         renderJob = new RenderJob(this);
+        renderListener = getRendererListener();
     }
 
     /**
@@ -249,8 +252,12 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      * @generated NOT
      */
     public void dispose() {
-        while (getRenderer().eAdapters().remove(renderListener))
-            ;
+        if(isDisposed)
+            return;
+        
+        isDisposed = true;
+        
+        while( getRenderer().eAdapters().remove(renderListener) );
         eAdapters().clear();
         removeLayerListener(getContext());
         stopRendering();
@@ -271,8 +278,12 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
             exc.printStackTrace();
         }
 
-        if (getRenderer().getState() != DISPOSED)
-            getRenderer().setState(DISPOSED);
+        if (getRenderer().getState() != DISPOSED) getRenderer().setState(DISPOSED);
+
+        if(this.renderJob != null){
+            this.renderJob.cancel();
+            this.renderJob = null;
+        }
     }
 
     /**
@@ -288,8 +299,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      * @generated NOT
      */
     public void stopRendering() {
-        if (renderJob.cancel())
-            return;
+        if (renderJob == null || renderJob.cancel()) return;
+        
         final AtomicBoolean done = new AtomicBoolean(renderJob.cancel());
         IJobChangeListener listener = new JobChangeAdapter() {
             @Override

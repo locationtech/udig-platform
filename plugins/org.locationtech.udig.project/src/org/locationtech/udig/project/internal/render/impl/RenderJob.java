@@ -17,6 +17,7 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Messages;
 import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.locationtech.udig.project.internal.render.RenderExecutor;
@@ -93,6 +94,10 @@ public class RenderJob extends Job {
     }
 
     protected void startRendering( Envelope bounds2, IProgressMonitor monitor ) throws Throwable {
+        
+        if(executor == null)
+            return;
+        
         Envelope bounds=bounds2;
         //validate bounds
         IRenderContext context2 = getExecutor().getContext();
@@ -114,6 +119,18 @@ public class RenderJob extends Job {
             initializeLabelPainter(context2);
         }
 
+        //Analyze scales
+        Layer layer = (Layer)context2.getLayer();
+        if(layer != null){
+            double maxScaleDenominator = layer.getMaxScaleDenominator();
+            double scaleDenominator = context2.getViewportModel().getScaleDenominator();
+            if(maxScaleDenominator != -1 && scaleDenominator > maxScaleDenominator){
+                return; //No rendering is needed.
+            }
+        }
+
+        if(executor == null)
+            return;
         executor.getRenderer().render(new SubProgressMonitor(monitor,0));
     }
 
@@ -200,12 +217,31 @@ public class RenderJob extends Job {
     }
 
     /**
+     * Checks state of  rendering of the map.
+     * Returns <code>true</code> if everything is fine and job
+     * can do the rendering.
+     * Returns <code>false</code> if job must immediately stop execution and exit.
+     * 
+     * @return
+     */
+    private boolean isRenderingEnabled(){
+        if(executor != null){
+            IRenderContext renderContext = executor.getContext();
+            RenderManager renderManager = (RenderManager)renderContext.getRenderManager();
+            if(renderManager != null && renderManager.isRenderingEnabled())
+                return true;
+            
+        }
+        return false;
+    }
+
+    /**
      * @see org.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.IProgressMonitor)
      */
     protected IStatus run( IProgressMonitor monitor ) {
     	
-    	if( !((RenderManager)getExecutor().getContext().getRenderManager()).isRenderingEnabled() ){
-    		return Status.OK_STATUS;
+    	if(!isRenderingEnabled()){
+    		return Status.CANCEL_STATUS;
     	}
     	
         setThread(Thread.currentThread());
@@ -232,8 +268,11 @@ public class RenderJob extends Job {
     
     private synchronized ReferencedEnvelope combineRequests() throws TransformException, FactoryException {
         CoordinateReferenceSystem targetCRS = getExecutor().getContext().getCRS();
-    	ReferencedEnvelope bounds = new ReferencedEnvelope( targetCRS );
+        
+        
+    	ReferencedEnvelope bounds;
     	try{
+    	    bounds = new ReferencedEnvelope( targetCRS );//This may fail
     		for( ReferencedEnvelope env : requests ) {
     			CoordinateReferenceSystem envCRS = env.getCoordinateReferenceSystem();
     			if( env.isNull() || env.isEmpty() || envCRS == null){
@@ -282,6 +321,10 @@ public class RenderJob extends Job {
         this.bounds = bounds;
     }
 
+    public void disposeRenderExecutor(){
+        this.executor = null;
+    }
+
     /**
      * Add a request to draw the provided envelope.
      * <p>
@@ -328,18 +371,34 @@ public class RenderJob extends Job {
                 return true;
             else if (getRenderer() instanceof CompositeRendererImpl)
                 return false;
-            else
-                return other.getRenderer().getClass().equals(
-                        getRenderer().getClass())
-                        && !isCanceled() && !other.isCanceled() &&
-                        isUsingLocalResources(getRenderer()) && isUsingLocalResources(other.getRenderer());
     
+            if( other.getRenderer().getClass().equals(getRenderer().getClass())  && !isCanceled() && !other.isCanceled()){
+                
+                if(isUsingLocalResources(getRenderer()) && isUsingLocalResources(other.getRenderer())){
+                    return true;
+                }
+                if(isConflictingGeoResources(other.getRenderer())){
+                    return true;
+                }
+            }
+            
+            return false;
         }
     
         private boolean isUsingLocalResources(Renderer renderer) {
             try {
                 return renderer.getContext().getGeoResource().getIdentifier().toString().startsWith("file:/"); //$NON-NLS-1$
             } catch(Exception e) {
+                return false;
+            }
+        }
+    
+        private boolean isConflictingGeoResources(Renderer renderer){
+            try {
+                String conflictResolutionMarker1 = (String)renderer.getContext().getGeoResource().getPersistentProperties().get("RENDERING_CONFLICT_RESOLUTION_MARKER"); //$NON-NLS-1$
+                String conflictResolutionMarker2 = (String)getRenderer().getContext().getGeoResource().getPersistentProperties().get("RENDERING_CONFLICT_RESOLUTION_MARKER"); //$NON-NLS-1$
+                return (conflictResolutionMarker1 != null && conflictResolutionMarker2 != null && conflictResolutionMarker1.equals(conflictResolutionMarker2));
+            }catch(Exception e) {
                 return false;
             }
         }

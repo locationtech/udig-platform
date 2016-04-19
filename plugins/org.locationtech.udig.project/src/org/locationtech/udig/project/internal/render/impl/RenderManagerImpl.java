@@ -73,6 +73,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      * @generated NOT
      * @ordered
      */
+    @Deprecated
     protected RendererCreator rendererCreator;
 
     /**
@@ -435,13 +436,13 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     public void dispose() {
         checkState();
         if (renderExecutor != null) {
-            ((RenderContextImpl) renderExecutor.getContext()).dispose();
             getRenderExecutor().dispose();
+            ((RenderContextImpl) renderExecutor.getContext()).dispose();
         }
 
         mapDisplay = null;
-
         renderExecutor = null;
+        rendererCreator = null;
 
         getMapInternal().setRenderManagerInternal(null);
 

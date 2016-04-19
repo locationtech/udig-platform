@@ -1,54 +1,42 @@
-/* uDig - User Friendly Desktop Internet GIS client
- * http://udig.refractions.net
- * (C) 2004-2012, Refractions Research Inc.
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
- * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
- */
-package org.locationtech.udig.project.internal.render.impl;
+package  org.locationtech.udig.project.internal.render.impl;
 
 import java.text.MessageFormat;
 import java.util.Collection;
-
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.internal.Messages;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.Trace;
-import org.locationtech.udig.project.internal.render.ExecutorVisitor;
-import org.locationtech.udig.project.internal.render.RenderExecutor;
-import org.locationtech.udig.project.internal.render.Renderer;
-import org.locationtech.udig.project.render.IRenderContext;
-import org.locationtech.udig.project.render.IRenderer;
-import org.locationtech.udig.project.render.RenderException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 
 import com.vividsolutions.jts.geom.Envelope;
 
-/**
- * An Executor specifically for executing CompositeRenderers.
- * <p>
- * This class appears to actually *be* the uDig appplication :-)
- * <p>
- * This class is supposed to listen to all events going down and is supposed to queue up some work
- * and let 'er rip.
- * <ul>
- * <li>RENDER_REQUEST causes this to refresh()
- * 
- * @author jeichar
- * @since 0.6.0
- */
-@Deprecated
-public class RenderExecutorComposite extends RenderExecutorMultiLayer {
+import  org.locationtech.udig.project.ILayer;
+import  org.locationtech.udig.project.internal.Map;
+import  org.locationtech.udig.project.internal.Messages;
+import  org.locationtech.udig.project.internal.ProjectPlugin;
+import  org.locationtech.udig.project.internal.Trace;
+import  org.locationtech.udig.project.internal.render.ExecutorVisitor;
+import  org.locationtech.udig.project.internal.render.RenderExecutor;
+import  org.locationtech.udig.project.internal.render.RenderManager;
+import  org.locationtech.udig.project.internal.render.RenderPackage;
+import  org.locationtech.udig.project.internal.render.Renderer;
+import  org.locationtech.udig.project.render.IRenderContext;
+import  org.locationtech.udig.project.render.IRenderer;
+import  org.locationtech.udig.project.render.RenderException;
 
-    protected static class CompositeRendererJob extends RenderJob {
+/**
+ * New implementation of {@link RenderExecutor} being a root of all other executors for {@link Map} rendering.
+ * 
+ * 
+ * @author vitalid
+ *
+ */
+public class RootCompositeRenderExecutor extends RenderExecutorImpl {
+
+    protected static class RootCompositeRenderJob extends RenderJob {
 
         private static final int TIMEOUT = 20000;
 
@@ -57,7 +45,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
          * 
          * @param executor
          */
-        public CompositeRendererJob( RenderExecutorComposite executor ) {
+        public RootCompositeRenderJob( RootCompositeRenderExecutor executor ) {
             super(executor);
             setPriority(Job.INTERACTIVE);
         }
@@ -74,10 +62,10 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
         }
 
         /**
-         * @see org.locationtech.udig.project.internal.render.impl.RenderJob#getExecutor()
+         * @see  org.locationtech.udig.project.internal.render.impl.RenderJob#getExecutor()
          */
-        public RenderExecutorComposite getExecutor() {
-            return (RenderExecutorComposite) executor;
+        public RootCompositeRenderExecutor getExecutor() {
+            return (RootCompositeRenderExecutor) executor;
         }
 
         /**
@@ -94,7 +82,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
                 getExecutor().inUpdate = true;
             }
 
-            CompositeRendererImpl renderer2 = getExecutor().getRenderer();
+            RootCompositeRendererImpl renderer2 = getExecutor().getRenderer();
             long start = System.currentTimeMillis();
             synchronized (getExecutor()) {
                 while( (getMonitor() != null && !getMonitor().isCanceled())
@@ -135,13 +123,13 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
         }
 
         /**
-         * @see org.locationtech.udig.project.internal.render.impl.RenderJob#postRendering()
+         * @see  org.locationtech.udig.project.internal.render.impl.RenderJob#postRendering()
          */
         protected void postRendering() {
 
             if (monitor.isCanceled()) {
                 executor.getRenderer().setState(CANCELLED);
-                for( RenderExecutor renderer : ((CompositeRendererImpl) executor.getRenderer())
+                for( RenderExecutor renderer : ((RootCompositeRendererImpl) executor.getRenderer())
                         .getRenderExecutors() ) {
                     if (renderer.getContext().isVisible() && executor.getState() != IRenderer.DONE) {
                         renderer.getContext().setStatus(ILayer.WARNING);
@@ -156,7 +144,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
         }
 
         /**
-         * @see org.locationtech.udig.project.internal.render.impl.RenderJob#startRendering()
+         * @see  org.locationtech.udig.project.internal.render.impl.RenderJob#startRendering()
          */
         protected void startRendering( Envelope bounds, IProgressMonitor monitor ) throws Throwable {
             // need to show that we are in update just in case a renderer triggers a state event
@@ -179,23 +167,46 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
      * @author jeichar
      * @since 0.6.0
      */
-    protected static class CompositeRendererListener extends MultiLayerRendererListener {
+    protected static class RootCompositeRendererListener extends AdapterImpl {
 
-        /**
-         * Construct <code>CompositeRendererListener</code>.
-         * 
-         * @param executor
-         */
-        CompositeRendererListener( RenderExecutorComposite executor ) {
-            super(executor);
+        
+        protected RootCompositeRenderExecutor executor;
+
+        RootCompositeRendererListener( RootCompositeRenderExecutor executor ) {
+            this.executor = executor;
+        }
+        
+        protected RootCompositeRenderExecutor getExecutor() {
+            return executor;
         }
 
-        RenderExecutorComposite getExecutor() {
-            return (RenderExecutorComposite) executor;
+        
+        public void notifyChanged( Notification msg ) {
+            if (msg.getNotifier() instanceof Renderer) {
+                if (msg.getFeatureID(Renderer.class) == RenderPackage.RENDERER__STATE) {
+                    if (msg.getNewIntValue() == IRenderer.RENDER_REQUEST) {
+                        executor.setRenderBounds(executor.getRenderer().getRenderBounds());
+                    }
+                    stateChanged(msg);
+                }
+            }
         }
 
+//        protected void stateChanged( Notification msg ) {
+//            executor.setState(msg.getNewIntValue());
+//            if (msg.getNewIntValue() == IRenderer.RENDER_REQUEST) {
+//                try {
+//                    executor.render();
+//                } catch (RenderException e) {
+//                    // won't happen
+//                    throw (RuntimeException) new RuntimeException().initCause(e);
+//                }
+//            }
+//
+//        }
+
         /**
-         * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorMultiLayer.MultiLayerRendererListener#stateChanged(org.eclipse.emf.common.notify.Notification)
+         * @see  org.locationtech.udig.project.internal.render.impl.RenderExecutorMultiLayer.MultiLayerRendererListener#stateChanged(org.eclipse.emf.common.notify.Notification)
          */
         protected void stateChanged( Notification msg ) {
             switch( msg.getNewIntValue() ) {
@@ -231,7 +242,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
                 executor.eSetDeliver(false);
                 executor.setState(msg.getNewIntValue());
                 executor.eSetDeliver(oldValue);
-                ((RenderExecutorComposite) executor).refresh();
+                executor.refresh();
                 break;
             case Renderer.STARTING:
                 boolean oldValue2 = executor.eDeliver();
@@ -243,44 +254,45 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
         }
 
     }
+    
 
-    class RedrawJob implements Runnable {
-
-        ReferencedEnvelope bounds;
-
-        public void run() {
-
-            stopRendering();
-
-            if (!Thread.currentThread().isInterrupted())
-                runRenderJob();
-            return;
-        }
-
-        void runRenderJob() {
-            dirty = false;
-            if (getContext().getMapDisplay() == null || getContext().getMapDisplay().getWidth() < 1
-                    || getContext().getMapDisplay().getHeight() < 1)
-                return;
-            if (RenderExecutorComposite.this.getState() == IRenderer.DISPOSED)
-                throw new RuntimeException("attempted to run a disposed renderer"); //$NON-NLS-1$
-
-            clearImage(bounds, RenderExecutorComposite.this);
-            renderJob.setName(getRenderJobName());
-            renderJob.addRequest(bounds);
-
-            if (!Thread.currentThread().isInterrupted()) {
-                redraw = null;
-            }
-        }
-
-    }
+//    class RedrawJob implements Runnable {
+//
+//        ReferencedEnvelope bounds;
+//
+//        public void run() {
+//
+//            stopRendering();
+//
+//            if (!Thread.currentThread().isInterrupted())
+//                runRenderJob();
+//            return;
+//        }
+//
+//        void runRenderJob() {
+//            dirty = false;
+//            if (getContext().getMapDisplay() == null || getContext().getMapDisplay().getWidth() < 1
+//                    || getContext().getMapDisplay().getHeight() < 1)
+//                return;
+//            if (RootCompositeRenderExecutor.this.getState() == IRenderer.DISPOSED)
+//                throw new RuntimeException("attempted to run a disposed renderer"); //$NON-NLS-1$
+//
+//            clearImage(bounds, RootCompositeRenderExecutor.this);
+//            renderJob.setName(getRenderJobName());
+//            renderJob.addRequest(bounds);
+//
+//            if (!Thread.currentThread().isInterrupted()) {
+//                redraw = null;
+//            }
+//        }
+//
+//    }
 
     /**
      * @param renderer2
      * @return
      */
-    static boolean isRendering( CompositeRendererImpl renderer2 ) {
+    static boolean isRendering( RootCompositeRendererImpl renderer2 ) {
         Collection<RenderExecutor> executors = renderer2.getRenderExecutors();
         for( RenderExecutor executor : executors ) {
             if (executor.getContext().isVisible()
@@ -298,12 +310,37 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
     Job refreshJob;
 
     int timeout = 0;
+    
+    private boolean isDisposed = false;
+    
+
+    private RenderManager renderManager;
+    
 
     /**
      * Construct <code>CompositeRendererExecutorImpl</code>.
      */
-    public RenderExecutorComposite() {
-        renderJob = new CompositeRendererJob(this);
+    public RootCompositeRenderExecutor(RenderManager renderManager) {
+        this.renderManager = renderManager;
+        renderJob = new RootCompositeRenderJob(this);
+        
+        renderListener =  new RootCompositeRendererListener(this);
+    }
+    
+    
+
+    
+    @Override
+    public synchronized void dispose(){
+        if(isDisposed)
+            return;
+        
+        isDisposed = true;
+        
+        if(refreshJob != null)
+            refreshJob.cancel();
+        refreshJob = null;
+        super.dispose();
     }
 
     @Override
@@ -317,16 +354,16 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
     }
 
     /**
-     * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl#getRenderer()
+     * @see  org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl#getRenderer()
      */
-    public CompositeRendererImpl getRenderer() {
-        return (CompositeRendererImpl) renderer;
+    public RootCompositeRendererImpl getRenderer() {
+        return (RootCompositeRendererImpl) renderer;
     }
 
-    @Override
-    protected RendererListener getRendererListener() {
-        return new CompositeRendererListener(this);
-    }
+//    @Override
+//    protected RendererListener getRendererListener() {
+//        return new RootCompositeRendererListener(this);
+//    }
 
     @Override
     protected String getRenderJobName() {
@@ -338,12 +375,16 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
      * Continually refresh the display until all renderers are done.
      */
     public synchronized void refresh() {
+        
+        if(isDisposed)
+            return;
+        
         if (refreshJob == null) {
             refreshJob = new Job(getRenderJobName()){
                 @Override
                 protected IStatus run( IProgressMonitor monitor ) {
                     try {
-                        ((CompositeRendererJob) renderJob).incrementalUpdate();
+                        ((RootCompositeRenderJob) renderJob).incrementalUpdate();
                     } catch (Exception e) {
                         // log error
                         ProjectPlugin.log(null, e);
@@ -359,21 +400,40 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
     }
 
     /**
-     * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorMultiLayer#registerFeatureListener()
+     * @see  org.locationtech.udig.project.internal.render.impl.RenderExecutorMultiLayer#registerFeatureListener()
      */
     protected void registerFeatureListener() {
         // do nothing
     }
 
     @Override
-    public synchronized void render() {
+    public void render() {
+        
+        stopRendering();
 
-        RedrawJob runnable = new RedrawJob();
-        runnable.bounds = getRenderBounds();
-        if (redraw != null)
-            redraw.interrupt();
-        redraw = new Thread(runnable);
-        redraw.start();
+        if (getContext().getMapDisplay() == null || getContext().getMapDisplay().getWidth() < 1
+                || getContext().getMapDisplay().getHeight() < 1)
+            return;
+        
+        if (this.getState() == IRenderer.DISPOSED)
+            throw new RuntimeException("attempted to run a disposed renderer"); //$NON-NLS-1$
+
+        ReferencedEnvelope bounds = getRenderBounds();
+        clearImage(bounds, RootCompositeRenderExecutor.this);
+        renderJob.setName(getRenderJobName());
+        renderJob.addRequest(bounds);
+
+//        if (!Thread.currentThread().isInterrupted()) {
+//            redraw = null;
+//        }
+        
+
+//        RedrawJob runnable = new RedrawJob();
+//        runnable.bounds = getRenderBounds();
+//        if (redraw != null)
+//            redraw.interrupt();
+//        redraw = new Thread(runnable);
+//        redraw.start();
     }
 
     /**
@@ -385,23 +445,17 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
     protected synchronized void resetTimeout() {
         timeout = 0;
     }
-    protected void resyncState( Renderer renderer ) {
-
-        // FIXME sync sub renderers, witness composite renderer
-        //
-        // for( Renderer child : parent.children() ) resyncState( child );
-    }
 
     /**
-     * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl#setRenderer(org.locationtech.udig.project.render.Renderer)
+     * @see  org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl#setRenderer( org.locationtech.udig.project.render.Renderer)
      */
     public void setRenderer( Renderer newRenderer ) {
         renderJob.setSystem(false);
-        super.setRendererInternal(newRenderer);
+        super.setRenderer(newRenderer);
     }
 
     /**
-     * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl#stopRendering()
+     * @see  org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl#stopRendering()
      */
     public void stopRendering() {
         for( RenderExecutor executor : getRenderer().getRenderExecutors() ) {
@@ -411,9 +465,10 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
     }
 
     /**
-     * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl#visit(org.locationtech.udig.project.render.ExecutorVisitor)
+     * @see  org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl#visit( org.locationtech.udig.project.render.ExecutorVisitor)
      */
     public void visit( ExecutorVisitor visitor ) {
         visitor.visit(this);
     };
+    
 }
