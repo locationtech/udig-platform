@@ -30,14 +30,16 @@ import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.db2.DB2Plugin;
 import org.locationtech.udig.catalog.db2.internal.Messages;
 import org.locationtech.udig.catalog.internal.db2.DB2ServiceExtension;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
 import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryDatastoreWizardPage;
 import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
 import org.locationtech.udig.catalog.ui.wizard.DataBaseConnInfo;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Listener;
 import org.geotools.data.DataStoreFactorySpi;
 import org.geotools.data.db2.DB2NGDataStoreFactory;
 
@@ -48,11 +50,12 @@ import static org.geotools.data.db2.DB2NGDataStoreFactory.*;
  * </p>
  * 
  * @author Justin Deoliveira, jdeolive, for Refractions Research, Inc.
- * @author David Adler, dadler, for AdtechGeospatial
  * @author Jesse Eichar, jeichar, for Refractions Research, Inc.
  * @author Richard Gould, rgould, for Refractions Research, Inc.
  * @author Adrian Custer, acuster.
  * @since 1.0.1
+ * @author David Adler, dadler, for AdtechGeospatial 
+ * @since 2.0.x 
  */
 public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
 
@@ -68,10 +71,7 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
             "", "50000", "", "", "", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
     private static DB2NGDataStoreFactory factory = DB2ServiceExtension.getFactory();
 
-    // TO UNDERSTAND
-    ArrayList<DataBaseConnInfo> dbData;
 
-    // private DB2Preferences preferences;
 
     /**
      * Constructs a DB2 database connection wizard page. Reads any settings that may have been saved
@@ -102,28 +102,25 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
                     storedDBCIList.add(dbs);
             }
         }
-
-        // Populate the db and schema exclusion lists
-        //        dbExclusionList.add("");                                                //$NON-NLS-1$
-        //        schemaExclusionList.add("");                                            //$NON-NLS-1$
-
-        // Populate the Char and CharSeq exclusion lists
-        // TODO: when we activate Verification
     }
     /**
      * Checks if all user input fields are non-empty.
      * 
      * @return true if all needed fields are non-empty.
      */
-
+// couldConnect() checks for all fields except schema which isn't required
+// for the connection. This method does the additional check that the
+// schema field is filled as well.
     protected boolean areAllFieldsFilled() {
-
-        // What does this do?
-        if (!DB2Preferences.isInstalled())
-            return false;
-
-        return couldConnect();
-
+        if (couldConnect()) {
+            int index = schemaComboWgt.getSelectionIndex();
+            if (index < 0)
+                return false;
+            String selectedSchema = schemaComboWgt.getItem(index);
+            if (!selectedSchema.isEmpty())
+                return true;
+        }
+        return false;
     }
 
     private String emptyAsNull( String value ) {
@@ -156,11 +153,6 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
         final String passText = currentDBCI.getPassString();
         final String schemaText = currentDBCI.getSchemaString();        
         final String db = currentDBCI.getDbString();
-
-        // TODO: this is what the parent couldConnect() does.
-        if (!areAllFieldsFilled()) {
-            return null;
-        }
 
         if (dataSource == null) {
             runInPage(new IRunnableWithProgress(){
@@ -211,7 +203,7 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
                         monitor.worked(1);
 
                     } catch (Throwable shame) {
-                        System.out.println("exception: " + shame.getMessage());
+                        System.out.println("exception: " + shame.getMessage()); //$NON-NLS-1$
                         if (dataSource != null) {
                             try {
                                 dataSource.close();
@@ -231,10 +223,7 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
                             }
                         }
                     }
-                    /*
-                     * Postgis DB checks monitor here if( monitor.isCanceled()){ if( dataSource !=
-                     * null ){ dataSource.close(); dataSource = null; } }
-                     */
+
                 }
             });
         }
@@ -316,12 +305,6 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
         List<IService> servers = new ArrayList<IService>();
         servers.add(service);
 
-        /*
-         * Success! Store the connection settings in history.
-         */
-        // saveWidgetValues();
-        // TODO: Review: This no longer exists so was removed-AVC
-
         return servers;
     }
 
@@ -344,17 +327,6 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
 
         return isComplete;
     }
-    /**
-     * TODO: VERIFY According the Javadocs in the previous version of this class, DB2 does not
-     * support getting database names. If that's true, then we will have to activate the method
-     * below.
-     */
-    // @Override
-    // protected ResultSet getDatabaseResultSet(Connection c) throws SQLException
-    // protected String [] lookupDbNamesForDisplay(Connection con)
-    // {
-    // return null;
-    // }
 
     /**
      * Gets the names of all the schema available for the specified database. The DB2 catalog table
@@ -370,46 +342,113 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
         // and the connection should be closed soon anyways.
     }
 
+// Change lookup button text and tooltip to indicate that it only gets the schema information
+// as DB2 doesn't return database names for selection. The user needs to type in the database
+// name. It would be better if the database input field wasn't a drop-down but there doesn't seem
+// to be an easy way to change this.
     @Override
     protected void doCreateWizardPage( Composite parent ) {
 
-        // TODO: Review and remove. The string is now set in the default
-        // this.portWgt.setTextLimit(5);
-        //        this.portWgt.setText("50000"); //$NON-NLS-1$
-        // this.schemaWgt.setEnabled(false);
-
-        // TODO: Remove. This is now done in the DataBaseRegistryWizardPage
-        // String[] recentDB2s = this.settings.getArray(DB2_RECENT);
-        // ArrayList<String> hosts = new ArrayList<String>();
-        // this.dbData = new ArrayList<DataBaseConnInfo>();
-        // if (recentDB2s != null) {
-        // for( String recent : recentDB2s ) {
-        // DataBaseConnInfo dbs = new DataBaseConnInfo(recent);
-        // this.dbData.add(dbs);
-        // hosts.add(dbs.getHostString());
-        // }
-        // }
-        // if (hosts.size() > 0) {
-        // ((CCombo) this.hostWgt).setItems(hosts.toArray(new String[0]));
-        // ((CCombo) this.hostWgt).addModifyListener(new ModifyListener(){
-        // public void modifyText( ModifyEvent e ) {
-        // if (e.widget != null) {
-        // for( DataBaseConnInfo db : DB2WizardPage.this.dbData ) {
-        // if (db.getHostString().equalsIgnoreCase(getHostText())) {
-        // setPortText(db.getPortString());
-        // setUserText(db.getUserString());
-        // setPassText(db.getPassString());
-        // setPassText(db.getPassString());
-        // setDBText(db.getDbString());
-        // DB2WizardPage.this.schemaWgt.setText(db.getSchemaString());
-        // break;
-        // }
-        // }
-        // }
-        // }
-        // });
-        // }
+        lookupBtnWgt.setText(Messages.DB2WizardPage_button_lookup_text);
+        lookupBtnWgt.setToolTipText(Messages.DB2WizardPage_button_lookup_tooltip);
+        Listener listeners[] = lookupBtnWgt.getListeners(org.eclipse.swt.SWT.Selection);
+//        lookupBtnWgt.addSelectionListener(this);        
+        connectBtnWgt.setVisible(false);  // Don't use it for DB2
     }
+
+    /**
+     * Evaluates if the currentDBCI is complete enough that
+     * we could attempt a connection
+     * 
+     * @return true if we have all the pieces to connect, false otherwise
+     */
+    @Override    
+    protected boolean couldConnect() {
+
+        if ((currentDBCI.getHostString().isEmpty())
+                || (currentDBCI.getPortString().isEmpty())
+                || (currentDBCI.getUserString().isEmpty())
+                || (currentDBCI.getPassString().isEmpty())
+                || (currentDBCI.getDbString().isEmpty())) {
+            return (false);
+        }
+        // All are set
+        return (true);
+    }
+    /**
+     * The method called by the event handling mechanism for any regular (i.e. not 'default)
+     * selection event on any widget to which this class was added as a SelectionListener. The only
+     * widgets we care about are the button widgets. Text and Combo widgets will receive
+     * modifyEvents for any changes to their contents so we handle their entries in the
+     * modifyText(..) method.
+     * 
+     * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+     * @see #widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
+     * @param e the SelectionEvent which includes e.widget, the widget generating the event
+     */
+//    @Override
+    public void widgetSelected0( SelectionEvent e ) {
+        // Catch the situation where we are disposed between the event being
+        // fired and this handler being called.
+        if (null == e.widget) {
+            return;
+        }
+
+        // SWITCH on widget
+
+        if (e.widget.equals(lookupBtnWgt)) {
+
+            // Trap a spurious second click, re-enable at end
+            // Ofcourse this is a race condition so the trap might not work
+            lookupBtnWgt.setEnabled(false);
+
+            // Get a connection for the lookup
+            DataSource dataSource = null;
+
+            // This check should always be true, because we should check before
+            // calling the method. Note, we catch a 'false' here in the next
+            // statement below since 'con' will remain 'null'.
+            if (couldConnect()) {
+                try {
+                    dataSource = getDataSource();
+                } catch (Exception ex) {
+                    // Log the error
+                    CatalogUIPlugin.log(ex.getLocalizedMessage(), ex);
+                    // Set the error in the animated area of the Dialog
+                    setErrorMessage(ex.getLocalizedMessage());
+                }
+            }
+
+            // Did we fail? If so, bail out
+            if (dataSource == null) {
+                // Re-enable the lookup button
+                // e.g user now starts the server, wants to connect
+                lookupBtnWgt.setEnabled(true);
+                return;
+            }
+
+            // Reset any previous error messages
+            setErrorMessage(null);
+
+            String[]  arr = lookupSchemaNamesForDisplay(dataSource);
+            if (null != arr) {
+                schemaComboWgt.setItems(arr);
+                schemaComboWgt.select(0);
+            }
+
+            // Set focus on the schema list
+            schemaComboWgt.setFocus();
+
+            // Re-enable the lookup widget
+            // This allows the user can try again, for example, if the server
+            // has changed in the meantime.
+            lookupBtnWgt.setEnabled(true);
+
+            // Activate Finish Button
+            getWizard().getContainer().updateButtons();
+        }
+
+    }    
     @Override
     protected String getDriversMessage() {
         return Messages.DB2WizardPage_installDrivers;

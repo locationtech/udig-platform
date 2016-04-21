@@ -17,9 +17,6 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
  * Preference page for DB2; allows people to install the correct drivers.
  * 
  * @author jones
- * @since 1.0.1
- * @author David Adler, Adtech Geospatial,dadler@adtechgeospatial.com
- * @since 1.5.x
  */
 public class DB2Preferences extends AbstractProprietaryJarPreferencePage
         implements

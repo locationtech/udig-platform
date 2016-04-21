@@ -36,7 +36,7 @@ import static org.geotools.data.db2.DB2NGDataStoreFactory.*;
  * @author Justin Deoliveira,Refractions Research Inc.,jdeolive@refractions.net
  * @since 1.0.1
  * @author David Adler, Adtech Geospatial,dadler@adtechgeospatial.com
- * @since 1.5.x
+ * @since 2.0.x
  */
 public class DB2ServiceExtension extends AbstractDataStoreServiceExtension implements ServiceExtension {
     private static DB2NGDataStoreFactory factory = null;
@@ -69,19 +69,6 @@ public class DB2ServiceExtension extends AbstractDataStoreServiceExtension imple
 
     public IService createService( URL id, Map<String, Serializable> params ) {
         
-        // We expect the port value (key '3') to be a String but some of the extensions (ArcServiceExtension)
-        // change this from a String to an Integer which causes us to fail.
-        // In order to cope with this, we make a local copy of the parameters and force the port
-        // value to be a String.
-        /*
-        Map<String, Serializable> paramsLocal = new HashMap<String, Serializable>();      
-        Set<Entry<String, Serializable>> entries = params.entrySet();
-        Iterator<Entry<String, Serializable>> it = entries.iterator();
-        while (it.hasNext()) {
-            Entry<String, Serializable> entry = it.next();
-            paramsLocal.put(entry.getKey(), entry.getValue().toString());
-        }
-        */
         try {
             if( getFactory() == null || !getFactory().isAvailable() ){
                 return null; // factory not available
@@ -92,7 +79,7 @@ public class DB2ServiceExtension extends AbstractDataStoreServiceExtension imple
         } catch (Exception unexpected) {
             if (Platform.inDevelopmentMode()) {
                 // this should never happen
-                DB2Plugin.log("DB2ServiceExtension.canProcess errored out with: " //$NON-NLS-1$
+                DB2Plugin.log("DB2ServiceExtension.canProcess failed out with: " //$NON-NLS-1$
                         + unexpected, unexpected);
             }
             return null; // the factory cannot really use these parameters

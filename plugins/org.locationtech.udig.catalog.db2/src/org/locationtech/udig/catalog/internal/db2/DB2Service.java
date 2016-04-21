@@ -45,7 +45,7 @@ import org.geotools.jdbc.JDBCDataStore;
  * @author Justin Deoliveira,Refractions Research Inc.,jdeolive@refractions.net
  * @since 1.0.1
  * @author David Adler, Adtech Geospatial,dadler@adtechgeospatial.com
- * @since 1.5.x * 
+ * @since 2.0.x 
  */
 public class DB2Service extends IService {
 
@@ -113,7 +113,7 @@ public class DB2Service extends IService {
                     members = new ArrayList<DB2GeoResource>();
 
                     String[] names = ds.getTypeNames();
-                    if (names == null || names.length == 0)
+                    if (names == null || names.length == 0)  // If nothing found, reset so we can try again
                     {
                         members = null;
                         return members;

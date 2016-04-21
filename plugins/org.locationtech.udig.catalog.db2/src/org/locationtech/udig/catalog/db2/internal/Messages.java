@@ -24,6 +24,8 @@ public class Messages extends NLS {
 	public static String DB2WizardPage_warning;
 	public static String DB2WizardPage_connectionTask;
 	public static String DB2WizardPage_installDrivers;
+	public static String DB2WizardPage_button_lookup_text;	
+	public static String DB2WizardPage_button_lookup_tooltip;		
 	public static String DB2Preferences_restartNeeded;
 	public static String DB2Preferences_restartTitle;
 	public static String DB2Preferences_copyError;
