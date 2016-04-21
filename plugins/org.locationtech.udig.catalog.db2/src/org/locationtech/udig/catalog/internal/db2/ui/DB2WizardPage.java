@@ -30,16 +30,13 @@ import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.db2.DB2Plugin;
 import org.locationtech.udig.catalog.db2.internal.Messages;
 import org.locationtech.udig.catalog.internal.db2.DB2ServiceExtension;
-import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
 import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryDatastoreWizardPage;
 import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
 import org.locationtech.udig.catalog.ui.wizard.DataBaseConnInfo;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Listener;
 import org.geotools.data.DataStoreFactorySpi;
 import org.geotools.data.db2.DB2NGDataStoreFactory;
 
@@ -351,8 +348,6 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
 
         lookupBtnWgt.setText(Messages.DB2WizardPage_button_lookup_text);
         lookupBtnWgt.setToolTipText(Messages.DB2WizardPage_button_lookup_tooltip);
-        Listener listeners[] = lookupBtnWgt.getListeners(org.eclipse.swt.SWT.Selection);
-//        lookupBtnWgt.addSelectionListener(this);        
         connectBtnWgt.setVisible(false);  // Don't use it for DB2
     }
 
@@ -375,80 +370,23 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
         // All are set
         return (true);
     }
+    
     /**
-     * The method called by the event handling mechanism for any regular (i.e. not 'default)
-     * selection event on any widget to which this class was added as a SelectionListener. The only
-     * widgets we care about are the button widgets. Text and Combo widgets will receive
-     * modifyEvents for any changes to their contents so we handle their entries in the
-     * modifyText(..) method.
+     * DB2 doesn't return a list of database names from the catalog so just return
+     * null which results in no attempt to modify the DB name drop-down widget.
+     * The comment for this method in DataBaseRegistryWizardPage says that instead
+     * of overriding this method, the developer should override getDatabaseResultSet
+     * but it doesn't work for DB2 because there is no result set to return and
+     * returning null results in a null pointer exception.
      * 
-     * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-     * @see #widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
-     * @param e the SelectionEvent which includes e.widget, the widget generating the event
+     * @param dataSource the current data source
+     * @return null.
      */
-//    @Override
-    public void widgetSelected0( SelectionEvent e ) {
-        // Catch the situation where we are disposed between the event being
-        // fired and this handler being called.
-        if (null == e.widget) {
-            return;
-        }
+    @Override
+    protected String[] lookupDbNamesForDisplay( DataSource dataSource ) {
+        return null;
+    }
 
-        // SWITCH on widget
-
-        if (e.widget.equals(lookupBtnWgt)) {
-
-            // Trap a spurious second click, re-enable at end
-            // Ofcourse this is a race condition so the trap might not work
-            lookupBtnWgt.setEnabled(false);
-
-            // Get a connection for the lookup
-            DataSource dataSource = null;
-
-            // This check should always be true, because we should check before
-            // calling the method. Note, we catch a 'false' here in the next
-            // statement below since 'con' will remain 'null'.
-            if (couldConnect()) {
-                try {
-                    dataSource = getDataSource();
-                } catch (Exception ex) {
-                    // Log the error
-                    CatalogUIPlugin.log(ex.getLocalizedMessage(), ex);
-                    // Set the error in the animated area of the Dialog
-                    setErrorMessage(ex.getLocalizedMessage());
-                }
-            }
-
-            // Did we fail? If so, bail out
-            if (dataSource == null) {
-                // Re-enable the lookup button
-                // e.g user now starts the server, wants to connect
-                lookupBtnWgt.setEnabled(true);
-                return;
-            }
-
-            // Reset any previous error messages
-            setErrorMessage(null);
-
-            String[]  arr = lookupSchemaNamesForDisplay(dataSource);
-            if (null != arr) {
-                schemaComboWgt.setItems(arr);
-                schemaComboWgt.select(0);
-            }
-
-            // Set focus on the schema list
-            schemaComboWgt.setFocus();
-
-            // Re-enable the lookup widget
-            // This allows the user can try again, for example, if the server
-            // has changed in the meantime.
-            lookupBtnWgt.setEnabled(true);
-
-            // Activate Finish Button
-            getWizard().getContainer().updateButtons();
-        }
-
-    }    
     @Override
     protected String getDriversMessage() {
         return Messages.DB2WizardPage_installDrivers;

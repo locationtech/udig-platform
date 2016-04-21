@@ -23,17 +23,13 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
 import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.IServiceInfo;
-import org.locationtech.udig.catalog.IResolve.Status;
 import org.locationtech.udig.catalog.db2.DB2Plugin;
-import org.locationtech.udig.ui.ErrorManager;
 import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.data.DataStore;
 import org.geotools.data.db2.DB2NGDataStoreFactory;
