@@ -5,6 +5,7 @@ Bundle-SymbolicName: org.locationtech.udig.catalog.geotools;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.locationtech.udig.catalog.geotools.Activator
 Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.locationtech.udig.catalog.ui

@@ -70,7 +70,8 @@ public class DataSourceSelectionPage extends WorkflowWizardPage implements
 	public DataSourceSelectionPage() {
 		super("dataSourceWizardPage"); //$NON-NLS-1$
 		setTitle(Messages.DataSourceSelectionPage_pageTitle); 
-		setDescription(Messages.DataSourceSelectionPage_defaultMessage); 
+		setDescription(Messages.DataSourceSelectionPage_defaultMessage);
+		setImageDescriptor(CatalogUIPlugin.imageDescriptorFromPlugin(CatalogUIPlugin.ID, "icons/wizban/add_wiz.gif"));
 	}
 
 	/**

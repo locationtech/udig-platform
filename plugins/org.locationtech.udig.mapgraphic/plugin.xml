@@ -25,6 +25,7 @@
          <factory class="org.locationtech.udig.mapgraphic.internal.ui.MapGraphicConnectionFactory"
             id="org.locationtech.udig.mapgraphic.decoratorFactory"/>
       <wizardPage
+            banner="icons/wizban/add_wiz.gif"
             class="org.locationtech.udig.mapgraphic.internal.ui.MapGraphicWizardPage"
             description="%mapGraphic.wizardPageDescription"
             icon="icons/obj16/graphic_obj.gif"
