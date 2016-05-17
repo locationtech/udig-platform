@@ -10,11 +10,15 @@
  */
 package org.locationtech.udig.style.sld.editor;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.style.sld.SLD;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jface.action.Action;
@@ -85,35 +89,34 @@ public class OpenStyleEditorAction extends Action implements IWorkbenchWindowAct
         // the filter to apply, if defined
         // String[] displayedIds = null;
 
-        try {
-            if (SLD.POINT.supports(selectedLayer)) {
-                Class< ? > pointClass = Class.forName("org.locationtech.udig.style.advanced.editorpages.SimplePointEditorPage"); //$NON-NLS-1$
-                Field idField = pointClass.getField("ID"); //$NON-NLS-1$
-                Object value = idField.get(null);
-                pageId = value.toString();
-            } else if (SLD.LINE.supports(selectedLayer)) {
-                Class< ? > pointClass = Class.forName("org.locationtech.udig.style.advanced.editorpages.SimpleLineEditorPage"); //$NON-NLS-1$
-                Field idField = pointClass.getField("ID"); //$NON-NLS-1$
-                Object value = idField.get(null);
-                pageId = value.toString();
-            } else if (SLD.POLYGON.supports(selectedLayer)) {
-                Class< ? > pointClass = Class.forName("org.locationtech.udig.style.advanced.editorpages.SimplePolygonEditorPage"); //$NON-NLS-1$
-                Field idField = pointClass.getField("ID"); //$NON-NLS-1$
-                Object value = idField.get(null);
-                pageId = value.toString();
-            } else if (selectedLayer.getGeoResource().getInfo(new NullProgressMonitor()).getDescription()
-                    .equals("grassbinaryraster")) { //$NON-NLS-1$
-                Class< ? > pointClass = Class.forName("org.locationtech.udig.style.jgrass.colors.JGrassRasterStyleEditorPage"); //$NON-NLS-1$
-                Field idField = pointClass.getField("ID"); //$NON-NLS-1$
-                Object value = idField.get(null);
-                pageId = value.toString();
-            }
-        } catch (Exception e) {
-            // fallback on simple
-            pageId = "simple"; //$NON-NLS-1$
-        }
-
         final EditorPageManager manager = EditorPageManager.loadManager(plugin, selectedLayer);
+        List<?> elements = manager.getElements(EditorPageManager.PRE_ORDER);
+        Set<String> ids = new HashSet<String>();
+        for(Object element : elements) {
+        	ids.add(((EditorNode)element).getId());
+        }
+		try {
+	        if (SLD.POINT.supports(selectedLayer)) {
+	            if(ids.contains("org.locationtech.udig.style.advanced.editorpages.SimplePointEditorPage")) {//$NON-NLS-1$
+	            	pageId = "org.locationtech.udig.style.advanced.editorpages.SimplePointEditorPage";//$NON-NLS-1$
+	            }
+	        } else if (SLD.LINE.supports(selectedLayer)) {
+	            if(ids.contains("org.locationtech.udig.style.advanced.editorpages.SimpleLineEditorPage")) {//$NON-NLS-1$
+	            	pageId = "org.locationtech.udig.style.advanced.editorpages.SimpleLineEditorPage";//$NON-NLS-1$
+	            }
+	        } else if (SLD.POLYGON.supports(selectedLayer)) {
+	        	if(ids.contains("org.locationtech.udig.style.advanced.editorpages.SimplePolygonEditorPage")) {//$NON-NLS-1$
+	            	pageId = "org.locationtech.udig.style.advanced.editorpages.SimplePolygonEditorPage";//$NON-NLS-1$
+	            }
+	        } else if (selectedLayer.getGeoResource().getInfo(new NullProgressMonitor()).getDescription()
+	        		.equals("grassbinaryraster")) { //$NON-NLS-1$
+	        	if(ids.contains("org.locationtech.udig.style.jgrass.colors.JGrassRasterStyleEditorPage")) {//$NON-NLS-1$
+				 	pageId = "org.locationtech.udig.style.jgrass.colors.JGrassRasterStyleEditorPage";//$NON-NLS-1$
+				}
+	        }
+		} catch (IOException e) {
+			pageId = "simple";//$NON-NLS-1$
+		}
 
         StyleEditorDialog dialog = StyleEditorDialog.createDialogOn(shell, pageId, selectedLayer, manager);
         dialog.open();
