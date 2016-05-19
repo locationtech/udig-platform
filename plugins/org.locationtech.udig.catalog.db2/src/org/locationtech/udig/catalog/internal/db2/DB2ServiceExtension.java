@@ -34,9 +34,8 @@ import static org.geotools.data.db2.DB2NGDataStoreFactory.*;
  * DB2 service extension implementation.
  * 
  * @author Justin Deoliveira,Refractions Research Inc.,jdeolive@refractions.net
- * @since 1.0.1
  * @author David Adler, Adtech Geospatial,dadler@adtechgeospatial.com
- * @since 2.0.x
+ * @since 1.0.1
  */
 public class DB2ServiceExtension extends AbstractDataStoreServiceExtension implements ServiceExtension {
     private static DB2NGDataStoreFactory factory = null;

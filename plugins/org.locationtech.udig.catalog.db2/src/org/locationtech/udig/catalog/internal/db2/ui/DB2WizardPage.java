@@ -50,9 +50,8 @@ import static org.geotools.data.db2.DB2NGDataStoreFactory.*;
  * @author Jesse Eichar, jeichar, for Refractions Research, Inc.
  * @author Richard Gould, rgould, for Refractions Research, Inc.
  * @author Adrian Custer, acuster.
+ * @author David Adler, dadler, for Adtech Geospatial
  * @since 1.0.1
- * @author David Adler, dadler, for AdtechGeospatial 
- * @since 2.0.x 
  */
 public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
 
