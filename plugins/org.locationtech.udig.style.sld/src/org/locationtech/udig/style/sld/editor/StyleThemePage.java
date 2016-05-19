@@ -1261,6 +1261,7 @@ public class StyleThemePage extends StyleEditorPage {
                     StyleBlackboard bb = getSelectedLayer().getStyleBlackboard();
                     IMemento memento = (IMemento) bb.get(DialogSettingsStyleContent.EXTENSION_ID);
                     String paletteName = memento.getString(PALETTE_KEY);
+                    if (paletteName == null) return;
                     pal = getBrewer().getPalette(paletteName);
                 }
                 String paletteName = pal.getName();
