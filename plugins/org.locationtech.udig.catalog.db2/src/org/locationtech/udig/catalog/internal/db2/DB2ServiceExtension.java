@@ -27,35 +27,40 @@ import org.eclipse.core.runtime.Platform;
 import org.geotools.data.DataAccessFactory;
 import org.geotools.data.DataAccessFinder;
 import org.geotools.data.DataStoreFactorySpi;
+import org.geotools.data.db2.DB2NGJNDIDataStoreFactory;
 import org.geotools.data.db2.DB2NGDataStoreFactory;
 import static org.geotools.data.db2.DB2NGDataStoreFactory.*;
 /**
  * DB2 service extension implementation.
  * 
  * @author Justin Deoliveira,Refractions Research Inc.,jdeolive@refractions.net
+ * @author David Adler, Adtech Geospatial,dadler@adtechgeospatial.com
  * @since 1.0.1
  */
 public class DB2ServiceExtension extends AbstractDataStoreServiceExtension implements ServiceExtension {
     private static DB2NGDataStoreFactory factory = null;
-    private static boolean avaialble = true;
+    private static boolean available = true;
     
     /**
      * Factory describing connection parameters.
      * @return factory describing DB2 connection parameters
      */
+    // We want to use a DB2NGDataStoreFactory but this is not in the list of DataStores
+    // DB2NGJNDIDataStoreFactory is returned so if we find this,
+    // create a DB2NGDataStoreFactory
     public synchronized static DB2NGDataStoreFactory getFactory() {
-        if (avaialble && factory == null ) {
-        	// factory = new DB2NGDataStoreFactory(); // this was a bad idea
-        	Iterator<DataAccessFactory> available = DataAccessFinder.getAvailableDataStores();
-        	while( available.hasNext() ){
-        		DataAccessFactory access = available.next();
-        		if( access instanceof DB2NGDataStoreFactory){
-        			factory = (DB2NGDataStoreFactory) access;
+        if (available && factory == null ) {
+        	Iterator<DataAccessFactory> dataStores = DataAccessFinder.getAvailableDataStores();
+        	while( dataStores.hasNext() ){
+        		DataAccessFactory access = dataStores.next();
+        		if( access instanceof DB2NGJNDIDataStoreFactory){
+ //       			factory = (DB2NGJNDIDataStoreFactory) access;
+        		        factory = new DB2NGDataStoreFactory();
         			break;
         		}
         	}
         	if( factory == null ){
-        		avaialble = false; // not available! oh no!        		
+        		available = false; // not available! oh no!        		
         	}
         }
         return factory;
@@ -63,19 +68,6 @@ public class DB2ServiceExtension extends AbstractDataStoreServiceExtension imple
 
     public IService createService( URL id, Map<String, Serializable> params ) {
         
-        // We expect the port value (key '3') to be a String but some of the extensions (ArcServiceExtension)
-        // change this from a String to an Integer which causes us to fail.
-        // In order to cope with this, we make a local copy of the parameters and force the port
-        // value to be a String.
-        /*
-        Map<String, Serializable> paramsLocal = new HashMap<String, Serializable>();      
-        Set<Entry<String, Serializable>> entries = params.entrySet();
-        Iterator<Entry<String, Serializable>> it = entries.iterator();
-        while (it.hasNext()) {
-            Entry<String, Serializable> entry = it.next();
-            paramsLocal.put(entry.getKey(), entry.getValue().toString());
-        }
-        */
         try {
             if( getFactory() == null || !getFactory().isAvailable() ){
                 return null; // factory not available
@@ -86,7 +78,7 @@ public class DB2ServiceExtension extends AbstractDataStoreServiceExtension imple
         } catch (Exception unexpected) {
             if (Platform.inDevelopmentMode()) {
                 // this should never happen
-                DB2Plugin.log("DB2ServiceExtension.canProcess errored out with: "
+                DB2Plugin.log("DB2ServiceExtension.canProcess failed out with: " //$NON-NLS-1$
                         + unexpected, unexpected);
             }
             return null; // the factory cannot really use these parameters
@@ -114,9 +106,9 @@ public class DB2ServiceExtension extends AbstractDataStoreServiceExtension imple
     protected URL paramsToUrl(Map<String, Serializable> params) {
         URL dbUrl = null;        
         try {
-            Object host = DB2NGDataStoreFactory.HOST.lookUp( params );
-            Object port = DB2NGDataStoreFactory.PORT.lookUp( params );
-            Object db = DB2NGDataStoreFactory.DATABASE.lookUp( params );
+            Object host = DB2NGJNDIDataStoreFactory.HOST.lookUp( params );
+            Object port = DB2NGJNDIDataStoreFactory.PORT.lookUp( params );
+            Object db = DB2NGJNDIDataStoreFactory.DATABASE.lookUp( params );
             
             dbUrl = new URL("http://" + host + ".db2.jdbc:" + port + "/" + db); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         } catch (Exception e) {
@@ -134,7 +126,7 @@ public class DB2ServiceExtension extends AbstractDataStoreServiceExtension imple
         ParamInfo info = parseParamInfo(url);
         
         Map<String,Serializable> params = new HashMap<String,Serializable>();
-        params.put(DBTYPE.key, (Serializable)DBTYPE.sample); // dbtype //$NON-NLS-1$
+        params.put(DBTYPE.key, (Serializable)DBTYPE.sample); // dbtype 
         params.put(HOST.key,info.host); // host
         params.put(PORT.key,info.the_port); // port
         params.put(DATABASE.key,info.the_database); // database
@@ -150,7 +142,7 @@ public class DB2ServiceExtension extends AbstractDataStoreServiceExtension imple
     private static final boolean isDB2URL( URL url ){
         if (url == null )
             return false;
-        return url.getProtocol().toLowerCase().equals("db2") || url.getProtocol().toLowerCase().equals("db2.jdbc") || //$NON-NLS-1$ //$NON-NLS-2$
+        return url.getProtocol().toLowerCase().equals("db2") || url.getProtocol().toLowerCase().equals("db2.jdbc") || //$NON-NLS-1$ //$NON-NLS-2$ 
         url.getProtocol().toLowerCase().equals("jdbc.db2"); //$NON-NLS-1$
     }
 

@@ -23,17 +23,13 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
 import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.IServiceInfo;
-import org.locationtech.udig.catalog.IResolve.Status;
 import org.locationtech.udig.catalog.db2.DB2Plugin;
-import org.locationtech.udig.ui.ErrorManager;
 import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.data.DataStore;
 import org.geotools.data.db2.DB2NGDataStoreFactory;
@@ -43,6 +39,8 @@ import org.geotools.jdbc.JDBCDataStore;
  * Service handle for the DB2 Universal Database.
  * 
  * @author Justin Deoliveira,Refractions Research Inc.,jdeolive@refractions.net
+ * @author David Adler, Adtech Geospatial,dadler@adtechgeospatial.com
+ * @since 1.0.1
  */
 public class DB2Service extends IService {
 
@@ -110,9 +108,11 @@ public class DB2Service extends IService {
                     members = new ArrayList<DB2GeoResource>();
 
                     String[] names = ds.getTypeNames();
-                    if (names == null)
+                    if (names == null || names.length == 0)  // If nothing found, reset so we can try again
+                    {
+                        members = null;
                         return members;
-
+                    }
                     for( int i = 0; i < names.length; i++ ) {
                         members.add(new DB2GeoResource(this, names[i]));
                     }
@@ -121,7 +121,8 @@ public class DB2Service extends IService {
                 rLock.unlock();
             }
         } else {
-            monitor.done();
+            if (!(monitor == null))
+                monitor.done();
         }
         return members;
     }

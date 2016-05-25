@@ -27,7 +27,7 @@ import org.osgi.framework.BundleContext;
  */
 public class DB2Plugin extends AbstractUIPlugin {
 
-    /** id of plugin, matches id decalred in plugin.xml * */
+    /** id of plugin, matches id declared in plugin.xml * */
     public static final String ID = "org.locationtech.udig.catalog.db2"; //$NON-NLS-1$
 
     // The shared instance.

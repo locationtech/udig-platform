@@ -33,7 +33,6 @@ import org.locationtech.udig.catalog.internal.db2.DB2ServiceExtension;
 import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryDatastoreWizardPage;
 import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
 import org.locationtech.udig.catalog.ui.wizard.DataBaseConnInfo;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -48,10 +47,10 @@ import static org.geotools.data.db2.DB2NGDataStoreFactory.*;
  * </p>
  * 
  * @author Justin Deoliveira, jdeolive, for Refractions Research, Inc.
- * @author dadler
  * @author Jesse Eichar, jeichar, for Refractions Research, Inc.
  * @author Richard Gould, rgould, for Refractions Research, Inc.
  * @author Adrian Custer, acuster.
+ * @author David Adler, dadler, for Adtech Geospatial
  * @since 1.0.1
  */
 public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
@@ -62,17 +61,13 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
     private static final String DB2_RECENT = "DB2_RECENT"; //$NON-NLS-1$
     private static final String DB2_WIZARD = "DB2_WIZARD"; //$NON-NLS-1$
     // CONNECTION
-    // TODO: doesn't db2 use 446 as in
-    // "http://publib.boulder.ibm.com/infocenter/dzichelp/v2r2/index.jsp?topic=/com.ibm.db29.doc.inst/tcpip.htm"
-    // ?
+    // The default port for DB2 LUW is 50000
+    // The default port for DB2 z/OS is 446
     private static final DataBaseConnInfo DEFAULT_DB2_CONN_INFO = new DataBaseConnInfo(
             "", "50000", "", "", "", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
     private static DB2NGDataStoreFactory factory = DB2ServiceExtension.getFactory();
 
-    // TO UNDERSTAND
-    ArrayList<DataBaseConnInfo> dbData;
 
-    // private DB2Preferences preferences;
 
     /**
      * Constructs a DB2 database connection wizard page. Reads any settings that may have been saved
@@ -103,28 +98,25 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
                     storedDBCIList.add(dbs);
             }
         }
-
-        // Populate the db and schema exclusion lists
-        //        dbExclusionList.add("");                                                //$NON-NLS-1$
-        //        schemaExclusionList.add("");                                            //$NON-NLS-1$
-
-        // Populate the Char and CharSeq exclusion lists
-        // TODO: when we activate Verification
     }
     /**
      * Checks if all user input fields are non-empty.
      * 
      * @return true if all needed fields are non-empty.
      */
-
+// couldConnect() checks for all fields except schema which isn't required
+// for the connection. This method does the additional check that the
+// schema field is filled as well.
     protected boolean areAllFieldsFilled() {
-
-        // What does this do?
-        if (!DB2Preferences.isInstalled())
-            return false;
-
-        return couldConnect();
-
+        if (couldConnect()) {
+            int index = schemaComboWgt.getSelectionIndex();
+            if (index < 0)
+                return false;
+            String selectedSchema = schemaComboWgt.getItem(index);
+            if (!selectedSchema.isEmpty())
+                return true;
+        }
+        return false;
     }
 
     private String emptyAsNull( String value ) {
@@ -155,12 +147,8 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
         final String portText = currentDBCI.getPortString();
         final String userText = currentDBCI.getUserString();
         final String passText = currentDBCI.getPassString();
+        final String schemaText = currentDBCI.getSchemaString();        
         final String db = currentDBCI.getDbString();
-
-        // TODO: this is what the parent couldConnect() does.
-        if (!areAllFieldsFilled()) {
-            return null;
-        }
 
         if (dataSource == null) {
             runInPage(new IRunnableWithProgress(){
@@ -189,6 +177,9 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
                         params.put(HOST.key, hostText);
                         params.put(PORT.key, (Integer) PORT.parse(portText));
                         params.put(DATABASE.key, db);
+                        params.put(USER.key, userText);
+                        params.put(PASSWD.key, passText);
+                        params.put(SCHEMA.key, schemaText);                        
                         dataSource = DB2ServiceExtension.getFactory().createDataSource(params);
                         dataSource.setUsername(userText);
                         dataSource.setPassword(passText);
@@ -196,7 +187,7 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
                         // Is this needed/useful?
                         DriverManager.setLoginTimeout(3);
                         monitor.worked(1);
-                        monitor.subTask("establish connection");
+                        monitor.subTask("establish connection"); //$NON-NLS-1$
 
                         if (monitor.isCanceled()) {
                             dataSource.close();
@@ -204,10 +195,11 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
                         }
 
                         connection = dataSource.getConnection();
-                        monitor.subTask("connected");
+                        monitor.subTask("connected"); //$NON-NLS-1$
                         monitor.worked(1);
 
                     } catch (Throwable shame) {
+                        System.out.println("exception: " + shame.getMessage()); //$NON-NLS-1$
                         if (dataSource != null) {
                             try {
                                 dataSource.close();
@@ -227,10 +219,7 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
                             }
                         }
                     }
-                    /*
-                     * Postgis DB checks monitor here if( monitor.isCanceled()){ if( dataSource !=
-                     * null ){ dataSource.close(); dataSource = null; } }
-                     */
+
                 }
             });
         }
@@ -271,7 +260,7 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
 
         Map<String, Serializable> params = new HashMap<String, Serializable>();
 
-        params.put(DBTYPE.key, (Serializable)DBTYPE.sample); //$NON-NLS-1$
+        params.put(DBTYPE.key, (Serializable)DBTYPE.sample);
         params.put(HOST.key, emptyAsNull(currentDBCI.getHostString()));
         String dbport = emptyAsNull(currentDBCI.getPortString());
         try {
@@ -287,8 +276,8 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
         params.put(USER.key, emptyAsNull(userName));
         String password = currentDBCI.getPassString();
         params.put(PASSWD.key, emptyAsNull(password));
-
-        params.put(SCHEMA.key, emptyAsNull(currentDBCI.getSchemaString()));
+        String schema = currentDBCI.getSchemaString().toUpperCase();  // TODO - handle intentional lower case
+        params.put(SCHEMA.key, emptyAsNull(schema));
 
         return params;
     }
@@ -312,12 +301,6 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
         List<IService> servers = new ArrayList<IService>();
         servers.add(service);
 
-        /*
-         * Success! Store the connection settings in history.
-         */
-        // saveWidgetValues();
-        // TODO: Review: This no longer exists so was removed-AVC
-
         return servers;
     }
 
@@ -340,17 +323,6 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
 
         return isComplete;
     }
-    /**
-     * TODO: VERIFY According the Javadocs in the previous version of this class, DB2 does not
-     * support getting database names. If that's true, then we will have to activate the method
-     * below.
-     */
-    // @Override
-    // protected ResultSet getDatabaseResultSet(Connection c) throws SQLException
-    // protected String [] lookupDbNamesForDisplay(Connection con)
-    // {
-    // return null;
-    // }
 
     /**
      * Gets the names of all the schema available for the specified database. The DB2 catalog table
@@ -366,46 +338,54 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
         // and the connection should be closed soon anyways.
     }
 
+// Change lookup button text and tooltip to indicate that it only gets the schema information
+// as DB2 doesn't return database names for selection. The user needs to type in the database
+// name. It would be better if the database input field wasn't a drop-down but there doesn't seem
+// to be an easy way to change this.
     @Override
     protected void doCreateWizardPage( Composite parent ) {
 
-        // TODO: Review and remove. The string is now set in the default
-        // this.portWgt.setTextLimit(5);
-        //        this.portWgt.setText("50000"); //$NON-NLS-1$
-        // this.schemaWgt.setEnabled(false);
-
-        // TODO: Remove. This is now done in the DataBaseRegistryWizardPage
-        // String[] recentDB2s = this.settings.getArray(DB2_RECENT);
-        // ArrayList<String> hosts = new ArrayList<String>();
-        // this.dbData = new ArrayList<DataBaseConnInfo>();
-        // if (recentDB2s != null) {
-        // for( String recent : recentDB2s ) {
-        // DataBaseConnInfo dbs = new DataBaseConnInfo(recent);
-        // this.dbData.add(dbs);
-        // hosts.add(dbs.getHostString());
-        // }
-        // }
-        // if (hosts.size() > 0) {
-        // ((CCombo) this.hostWgt).setItems(hosts.toArray(new String[0]));
-        // ((CCombo) this.hostWgt).addModifyListener(new ModifyListener(){
-        // public void modifyText( ModifyEvent e ) {
-        // if (e.widget != null) {
-        // for( DataBaseConnInfo db : DB2WizardPage.this.dbData ) {
-        // if (db.getHostString().equalsIgnoreCase(getHostText())) {
-        // setPortText(db.getPortString());
-        // setUserText(db.getUserString());
-        // setPassText(db.getPassString());
-        // setPassText(db.getPassString());
-        // setDBText(db.getDbString());
-        // DB2WizardPage.this.schemaWgt.setText(db.getSchemaString());
-        // break;
-        // }
-        // }
-        // }
-        // }
-        // });
-        // }
+        lookupBtnWgt.setText(Messages.DB2WizardPage_button_lookup_text);
+        lookupBtnWgt.setToolTipText(Messages.DB2WizardPage_button_lookup_tooltip);
+        connectBtnWgt.setVisible(false);  // Don't use it for DB2
     }
+
+    /**
+     * Evaluates if the currentDBCI is complete enough that
+     * we could attempt a connection
+     * 
+     * @return true if we have all the pieces to connect, false otherwise
+     */
+    @Override    
+    protected boolean couldConnect() {
+
+        if ((currentDBCI.getHostString().isEmpty())
+                || (currentDBCI.getPortString().isEmpty())
+                || (currentDBCI.getUserString().isEmpty())
+                || (currentDBCI.getPassString().isEmpty())
+                || (currentDBCI.getDbString().isEmpty())) {
+            return (false);
+        }
+        // All are set
+        return (true);
+    }
+    
+    /**
+     * DB2 doesn't return a list of database names from the catalog so just return
+     * null which results in no attempt to modify the DB name drop-down widget.
+     * The comment for this method in DataBaseRegistryWizardPage says that instead
+     * of overriding this method, the developer should override getDatabaseResultSet
+     * but it doesn't work for DB2 because there is no result set to return and
+     * returning null results in a null pointer exception.
+     * 
+     * @param dataSource the current data source
+     * @return null.
+     */
+    @Override
+    protected String[] lookupDbNamesForDisplay( DataSource dataSource ) {
+        return null;
+    }
+
     @Override
     protected String getDriversMessage() {
         return Messages.DB2WizardPage_installDrivers;

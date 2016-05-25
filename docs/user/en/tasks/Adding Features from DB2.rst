@@ -1,67 +1,23 @@
 Adding Features from DB2
 ########################
 
-Adding Features from a DB2
-~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are a number of options for adding a layer to your map.
+There are a number of options for adding a DB2 layer to your map.
 
-Toolbar
-=======
+#. Open the Add Data dialog with one of the following:
 
-1. Press the **New** button on the toolbar to show the Add Layer Wizard
-#. Select the **Add** item from the **Layer** menu to show the Add Layer Wizard.
-#. Use the **Add Layer** wizard to select a service providing data
-#. Select the resource you wish to display
-#. A style will be automatically created for you and the layer added to your map
-
-Menu
-====
-
-Using **Layer** menu:
-
-1. Select the **Add** item from the **Layer** menu to show the Add Layer Wizard.
-#. Use the **Add Layer** wizard to select a service providing data
-#. Select the resource you wish to display
-#. A style will be automatically created for you and the layer added to your map
-
-Using **File** menu:
-
-1. Select the :menuselection:`File --> New --> Layer` from the file menu
-#. Use the **Add Layer** wizard to select a service providing data
-#. Select the resource you wish to display
-#. A style will be automatically created for you and the layer added to your map
-
-Using Filesystem
-================
-
-From filesystem to **Layer View**:
-
-1. You can directly drag a file (such as an image or shapefile) into the **Layer view**
-#. You can specify exactly where in the Layer view you wish the add the Layer
-#. The layer will be created with a default style and added to your Map
-
-From filesystem to **Map editor**:
-
-1. You can directly drag a file (such as an image or shapefile) onto an open map
-#. The layer will be created with a default style and added to your Map
-
-Using a Browser
-===============
-
-You can quickly add a layer from a web browser (or the embedded **Web view**):
-
-1. Drag the URL of a WMS or WFS into the **Layer view**
-#. You can specify exactly where in the Layer view you wish to add the Layer
-#. The resource selection page will open up to allow you to choose which layers to add
-#. The layer(s) will be created (with a default style) and added to your map
+  - Press the **New** button on the toolbar 
+  - Select **Add** item from the **Layer** menu 
+  - Select **New --> Layer** from the **File** menu
+  
 #. If you have not set your DB2 preference (:menuselection:`Window --> Preferences...`) then
    you will have the chance to do so now. See :ref:`preferences-page-catalog-db2` for instructions on how to do this
 #. Select DB2 from the Wizard and press **Next**
 #. Fill in the DB2 page
 
-   -  Enter your DB2 host and authentication parameters
-   -  Select the database connect and optionally a schema
+   -  Enter your DB2 host, authentication parameters and database name
+   -  Press the **Get schemas** button to populate the schema drop-down list
+   -  Select a schema from the drop-down list
 
 #. Press **Next**
 #. From the :doc:`/reference/Resource Selection page` select the layer(s) that
@@ -69,7 +25,7 @@ You can quickly add a layer from a web browser (or the embedded **Web view**):
 #. Press **Finish**
 
 The selected DB2 tables will be added to the Catalog and a new map containing selected Layers will
-show up.
+be displayed.
 
 **Related reference**
 
