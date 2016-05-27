@@ -1,6 +1,5 @@
 .DS_Store
 Thumbs.db
-plugins/org.locationtech.udig.libs.db2/libs/
 plugins/org.locationtech.udig.libs/lib-src/
 plugins/org.locationtech.udig.libs/lib/
 plugins/org.locationtech.udig.*/.settings
