@@ -107,8 +107,7 @@ public final class ScaleUtils {
 	 */
 	public static boolean isLatLong(CoordinateReferenceSystem crs) {
 		Unit<?> unit = getUnit(crs);
-		Unit<?> degrees = getUnit(DefaultGeographicCRS.WGS84);
-		boolean isLatLong = CRS.equalsIgnoreMetadata(unit, degrees);
+		boolean isLatLong = unit.getStandardUnit().equals(javax.measure.unit.SI.RADIAN);
 		return isLatLong;
 	}
 
