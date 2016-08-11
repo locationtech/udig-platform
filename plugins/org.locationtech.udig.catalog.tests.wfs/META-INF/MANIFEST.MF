@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Wfs Test Plug-in
 Bundle-SymbolicName: org.locationtech.udig.catalog.tests.wfs;singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.0.0.RC1
 Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.core.runtime,
  org.locationtech.udig.catalog.wfs,
