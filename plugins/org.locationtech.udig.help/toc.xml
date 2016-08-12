@@ -1267,12 +1267,18 @@
 <topic label="Tips and Tricks" href="EN/Tips and Tricks.html">
         </topic>
         
-<topic label="What is new" href="EN/What is new.html">
-    <topic label="What is new 1.1" href="EN/What is new 1.1.html">
+<topic label="What is new" href="EN/what_is_new/index.html">
+    <topic label="What is new 1.1" href="EN/what_is_new/What is new 1.1.html">
         </topic>
-    <topic label="What is new 1.2" href="EN/What is new 1.2.html">
+    <topic label="What is new 1.2" href="EN/what_is_new/What is new 1.2.html">
         </topic>
-    <topic label="What is new 1.3" href="EN/What is new 1.3.html">
+    <topic label="What is new 1.3" href="EN/what_is_new/What is new 1.3.html">
+        </topic>
+    <topic label="What is new 1.4" href="EN/what_is_new/What is new 1.4.html">
+        </topic>
+    <topic label="What is new 1.5" href="EN/what_is_new/What is new 1.5.html">
+        </topic>
+    <topic label="What is new 2.0" href="EN/what_is_new/What is new 2.0.html">
         </topic>
 </topic>
         
