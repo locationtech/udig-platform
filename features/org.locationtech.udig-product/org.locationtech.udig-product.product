@@ -79,7 +79,9 @@ Content and such source code may be obtained at http://github.com/udig .
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.p2.reconciler.dropins" autoStart="true" startLevel="5" />
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
-      <property name="org.eclipse.update.reconcile" value="false"/>  
+      <property name="org.eclipse.update.reconcile" value="false"/>
+      <property name="osgi.configuration.area.default" value="$LOCALAPPDATA$/uDig/configuration" os="win32" />
+      <property name="osgi.instance.area.default" value="$LOCALAPPDATA$/uDig/workspace" os="win32" />
    </configurations>
 
 </product>
