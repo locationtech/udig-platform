@@ -70,8 +70,7 @@ public class PDFImageExportFormat extends ImageExportFormat {
 
         createPaperLabel(group);
         createPaperCombo(group);
-        createLandscapeButton(group);
-        createLandscapeLabel(group);
+        createLandscapeCheckbox(group);
         createDpiCombo(group);
         createMarginsGroup(group);
 
@@ -125,10 +124,6 @@ public class PDFImageExportFormat extends ImageExportFormat {
 
     }
 
-    private void createLandscapeLabel(Group group) {
-        ImageExportPage.createLabel(group, Messages.ImageExportPage_landscapeLabel);
-    }
-
     private void createPaperLabel(Group group) {
         ImageExportPage.createLabel(group, Messages.ImageExportPage_size_Label);
     }
@@ -144,10 +139,14 @@ public class PDFImageExportFormat extends ImageExportFormat {
         paperCombo.select(0);
     }
 
-    private void createLandscapeButton(Group group) {
+    private void createLandscapeCheckbox(Group group) {
         landscape = new Button(group, SWT.CHECK);
+        landscape.setText(Messages.ImageExportPage_landscapeLabel);
+
+        final GridData gridData = new GridData(SWT.LEFT, SWT.CENTER, false, false);
+        gridData.horizontalSpan = 2;
         landscape
-                .setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+            .setLayoutData(gridData);
     }
 
     public boolean landscape() {
