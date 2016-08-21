@@ -121,6 +121,12 @@ public class ExportMapToImageWizard extends Wizard implements IExportWizard {
     @Override
     public boolean performFinish() {
 
+	// reset error message if user hit finish again (hopefully with modified parameters)
+        if (getContainer().getCurrentPage() instanceof WizardPage) {
+            WizardPage wp = (WizardPage) getContainer().getCurrentPage();
+            wp.setErrorMessage(null);
+        };
+
         final Collection<String> errors = new ArrayList<String>();
         final Collection<IMap> renderedMaps = new ArrayList<IMap>();
         try {
