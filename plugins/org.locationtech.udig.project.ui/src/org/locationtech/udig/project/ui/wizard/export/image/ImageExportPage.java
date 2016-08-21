@@ -316,7 +316,7 @@ public class ImageExportPage extends WizardPage {
         int index = 0;
 
         for( ImageExportFormat format : formats ) {
-            if (format.getExtension().equalsIgnoreCase(preferedFormat)) {
+            if (format.getName().equalsIgnoreCase(preferedFormat)) {
                 formatCombo.select(index);
                 break;
             }
