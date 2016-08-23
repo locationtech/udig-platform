@@ -4,13 +4,13 @@
 
     <parent>
         <groupId>org.locationtech.udig</groupId>
-        <artifactId>udig-target</artifactId>
-        <version>1.5.0-SNAPSHOT</version>
+        <artifactId>udig-tycho</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <groupId>org.locationtech.udig.udig-target</groupId>
-    <artifactId>udig-target-indigo</artifactId>
-    <version>3.7</version>
+    <artifactId>org.locationtech.udig.target</artifactId>
+    <version>4.4</version>
     <packaging>eclipse-target-definition</packaging>
 
 </project>

@@ -191,8 +191,8 @@
                     <!-- target from sub-module eclipse-target-definition project -->
                     <target>
                         <artifact>
-                            <groupId>org.locationtech.udig.udig-target</groupId>
-                            <artifactId>udig-target-luna</artifactId>
+                            <groupId>org.locationtech.udig</groupId>
+                            <artifactId>org.locationtech.udig.target</artifactId>
                             <version>4.4</version>
                         </artifact>
                     </target>
@@ -363,7 +363,7 @@
     </reporting>
 
     <modules>
-        <module>targets</module>
+        <module>extras/org.locationtech.udig.target</module>
         <module>plugins</module>
         <module>features</module>
     </modules>
