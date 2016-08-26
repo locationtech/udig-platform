@@ -141,7 +141,7 @@ include:
    It must be unique among all other test plugins.
 
 Adding the Plugin to the org.locationtech.udig.test Feature
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The easiest way to add a plugin to a particular feature is using the eclipse feature editor.
 

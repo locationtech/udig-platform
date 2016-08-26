@@ -4,7 +4,7 @@ Utility Classes
 There are a host of utility classes provided to make your life as an RCP developer easier.
 
 org.locationtech.udig.ui
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 The **org.locationtech.udig.ui** plugin contains all manner of code and utilities that help with user
 interface development. You will find some of our basic drag and drop and operation support code
@@ -118,7 +118,7 @@ or
     Geometry boundingGeom = service.getGeometry();
 
 org.locationtech.udig.core
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This plug-in contains adapters and wrapper between Eclipse RCP concepts (like IAdaptable) and open
 source concepts like Features; Filters and so on.
@@ -178,6 +178,6 @@ This replaces code such as the following:
     }
 
 org.locationtech.udig.libs
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This plug-in rounds up all the open source libraries we use.

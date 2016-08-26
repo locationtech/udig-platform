@@ -15,7 +15,7 @@ The PlatformGIS utility class can probably be made available as a workbench serv
 a singleton.
 
 org.locationtech.udig\_platform-feature
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The feature "org.locationtech.udig\_platform-feature" containing the following plugins:
 
