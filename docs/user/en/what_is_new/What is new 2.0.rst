@@ -8,6 +8,10 @@ This release is a Bugfix release and many changes in the codebase are because of
 .. contents:: :local:
    :depth: 1
 
+Improvements and Fixes
+----------------------
+DB2 catalog plugins and implementation to connect to IBM DB2 Databases has been updated by David Adler. There is also a Recipe available : `how to visualize DB2 spatial Data with uDig <https://developer.ibm.com/recipes/tutorials/visualize-db2-spatial-data-with-udig-open-source-gis/>`_
+
 Updated 3rd-party Dependencies
 ------------------------------
 
