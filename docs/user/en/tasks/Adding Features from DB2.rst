@@ -8,7 +8,7 @@ There are a number of options for adding a DB2 layer to your map.
 
   - Press the **New** button on the toolbar 
   - Select **Add** item from the **Layer** menu 
-  - Select **New --> Layer** from the **File** menu
+  - Select :menuselection:`New --> Layer` from the **File** menu
   
 #. If you have not set your DB2 preference (:menuselection:`Window --> Preferences...`) then
    you will have the chance to do so now. See :ref:`preferences-page-catalog-db2` for instructions on how to do this
