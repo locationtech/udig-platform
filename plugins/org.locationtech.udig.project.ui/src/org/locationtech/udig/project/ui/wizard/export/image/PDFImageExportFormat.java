@@ -58,7 +58,7 @@ public class PDFImageExportFormat extends ImageExportFormat {
     public void write( IMap map, BufferedImage image, File destination ) {
         Image2Pdf.write(image, destination.getAbsolutePath(), paper(),
                 this.leftMarginSpinner.getSelection(),
-                this.topMarginSpinner.getSelection(), landscape(), getDPI());
+                this.topMarginSpinner.getSelection(), landscape());
     }
 
     @Override

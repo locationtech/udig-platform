@@ -199,8 +199,7 @@ public class SivecoExportMapToImageWizard extends Wizard implements IExportWizar
                         paper, 
                         10, /*top and bottom margin*/
                         10, /*left and right margin*/
-                        isLandscape,
-                        dpi);
+                        isLandscape);
 	    
         monitor.done();
         
