@@ -11,12 +11,15 @@
 package org.locationtech.udig.catalog.ui.export;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.HashSet;
 
 import org.geotools.data.Query;
+
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.ui.ProgressManager;
+
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
@@ -32,6 +35,7 @@ public class Data {
     private Query query;
     private String name;
     private boolean checked;
+    private Charset charset;
     
     public String getName() {
         return name;
@@ -103,6 +107,12 @@ public class Data {
         this.checked = checked;
     }
     
-    
+    public Charset getCharset() {
+        return charset;
+    }
+
+    public void setCharset(Charset charset) {
+        this.charset = charset;
+    }
     
 }
