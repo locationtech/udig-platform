@@ -192,23 +192,11 @@ public class ShpServiceExtension extends AbstractDataStoreServiceExtension imple
     }
 
     /**
-     * Sets the charset to be used during service creation. The value is set according
-     * to the system parameter "shp.encoding" if defined otherwise no value is set which
-     * defaults to ISO-8859-1. 
+     * Sets the charset to be used during service creation. 
      * 
      * @param params
      */
     private Charset getCharsetParam() {
-
-        String charsetName = System.getProperty(SHP_CHARSET_PARAM_NAME);
-        if (charsetName != null) {
-            try {
-                //test that Charset actually exists
-                return Charset.forName(charsetName);
-            } catch (Exception e) {
-                return Charset.defaultCharset();
-            }               
-        }
-        return null;
+        return Charset.forName(ShpPlugin.getDefault().defaultCharset());
     }
 }
