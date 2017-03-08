@@ -31,6 +31,8 @@ import org.opengis.feature.simple.SimpleFeature;
 /**
  * Selects and drags single features.
  * 
+ * @deprecated {@link ArrowSelectionWithPopup} should be used instead
+ * 
  * @author jones
  * @since 1.0.0
  */

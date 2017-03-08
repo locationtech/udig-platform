@@ -10,26 +10,13 @@
 package org.locationtech.udig.tools.edit.commands;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.command.AbstractCommand;
-import org.locationtech.udig.project.command.UndoableComposite;
-import org.locationtech.udig.project.command.UndoableMapCommand;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.ui.AnimationUpdater;
-import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import org.locationtech.udig.project.ui.tool.IToolContext;
-import org.locationtech.udig.tool.edit.internal.Messages;
-import org.locationtech.udig.tools.edit.EditPlugin;
-import org.locationtech.udig.tools.edit.EditToolHandler;
-import org.locationtech.udig.tools.edit.support.EditBlackboard;
-
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
@@ -45,6 +32,35 @@ import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.TransformException;
+
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.ui.AnimationUpdater;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.preferences.PreferenceConstants;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.tool.edit.internal.Messages;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.ui.PlatformGIS;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.MenuAdapter;
+import org.eclipse.swt.events.MenuEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -65,8 +81,14 @@ import com.vividsolutions.jts.geom.GeometryFactory;
  */
 public class SelectFeaturesAtPointCommand extends AbstractCommand implements UndoableMapCommand {
 
-    // The size of the box that is searched.  This is a 7x7 box of pixels.  
-    private static final int SEARCH_SIZE = 7;
+    // The size of the box that is searched.  This is a 7x7 box of pixels by default.  
+    private int SEARCH_SIZE = Platform.getPreferencesService().getInt(
+            ProjectUIPlugin.ID, PreferenceConstants.FEATURE_SELECTION_RADIUS, 7, null);
+
+    // The attribute name to be used when multiple features are retrieved.  
+    private String ATTRIBUTE_NAME = Platform.getPreferencesService().getString(
+            ProjectUIPlugin.ID, PreferenceConstants.FEATURE_ATTRIBUTE_NAME, "ID", null);
+
     private EditToolHandler handler;
     private final Set<Class< ? extends Geometry>> acceptableClasses = new HashSet<Class< ? extends Geometry>>();
     private MapMouseEvent event;
@@ -78,6 +100,9 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
     // report
     boolean warned = false;
 
+    //used for locking
+    public final Object lock = new Object();
+    
     public SelectFeaturesAtPointCommand( SelectionParameter parameterObject ) {
         this.parameters = parameterObject;
         this.handler = parameterObject.handler;
@@ -174,11 +199,12 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
 
     }
 
-    private void runSelectionStrategies( IProgressMonitor monitor, FeatureIterator<SimpleFeature> reader ) {
-        List<SelectionStrategy> strategies = parameters.selectionStrategies;
-        UndoableComposite compositeCommand = new UndoableComposite();
+    private void runSelectionStrategies(final IProgressMonitor monitor, FeatureIterator<SimpleFeature> reader ) {
+        final List<SelectionStrategy> strategies = parameters.selectionStrategies;
+        final UndoableComposite compositeCommand = new UndoableComposite();
         compositeCommand.setName(Messages.SelectGeometryCommand_name);
         
+        /*
         SimpleFeature firstFeature = reader.next();
         for( SelectionStrategy selectionStrategy : strategies ) {
           selectionStrategy.run(monitor, compositeCommand, parameters, firstFeature,
@@ -193,6 +219,96 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
                   false);
             }
         }
+        */
+        //code that enables selection of appropriate feature when multiple exist
+        //in the point where mouse click takes place
+        //******************************************************************/
+        List<SimpleFeature> featureList =new ArrayList<SimpleFeature>();
+        while (reader.hasNext()){
+            featureList.add(reader.next());
+        }      
+        final SimpleFeature[] features = featureList.toArray(new SimpleFeature[]{});
+
+        if (features.length == 1) {
+            for( SelectionStrategy selectionStrategy : strategies ) {
+                selectionStrategy.run(monitor, compositeCommand, parameters, features[0],
+                        true);
+            }
+        } else if (features.length > 1) {
+            PlatformGIS.syncInDisplayThread(new Runnable() {
+                @Override
+                public void run() {
+                    final Menu menu = new Menu(((ViewportPane) event.source).getControl().getShell(), SWT.POP_UP);
+                    for (final SimpleFeature feat : features) {
+                        MenuItem item = new MenuItem(menu, SWT.PUSH);
+                        //SimpleFeature feature=iter.next();
+                        boolean hasNameAttrib = feat.getAttribute(ATTRIBUTE_NAME) != null 
+                                && !"".equals(feat.getAttribute(ATTRIBUTE_NAME).toString());
+                        item.setText(hasNameAttrib ? 
+                                feat.getAttribute(ATTRIBUTE_NAME).toString() : feat.getID());
+
+                        //add selection listener to execute selection logic upon menu item selection
+                        item.addSelectionListener(new SelectionAdapter() {                                              
+                            @Override
+                            public void widgetSelected(SelectionEvent e) {
+                                for( SelectionStrategy selectionStrategy : strategies ) {
+                                    selectionStrategy.run(monitor, compositeCommand, parameters, feat,
+                                            true);
+                                }
+                                //notify mother thread lock 
+                                synchronized (lock) {
+                                    lock.notify();
+                                }
+                            }
+                        });
+                    }
+
+                    //add menu listener to dispose menu upon hide
+                    //dispose is called on a new UI thread
+                    menu.addMenuListener(new MenuAdapter() {                                                
+                        @Override
+                        public void menuHidden(MenuEvent e) {
+                            e.display.asyncExec(new Runnable(){
+                                @Override public void run(){
+                                    menu.dispose();
+                                }
+                            });
+
+                        }
+                    });
+
+                    //add dispose listener that calls notify on lock
+                    //object. This is needed in case no selection has 
+                    //occurred otherwise the lock object will never 
+                    //be relinquished
+                    menu.addDisposeListener(new DisposeListener() {
+                        @Override
+                        public void widgetDisposed(DisposeEvent e) {
+                            //notify mother thread lock 
+                            synchronized (lock) {
+                                lock.notify();
+                            }       
+                        }
+                    });
+
+                    //menu.setLocation(event.getPoint().x+10, event.getPoint().y+10);
+                    menu.setVisible(true);
+                }
+
+            });
+            //lock here waiting for users selection or menu popup dispose to occur
+            //THIS IS needed so that compositeCommand below can be properly populated 
+            synchronized (lock) {
+                try {
+                    //add a 60 sec timeout just to ensure that if something weird
+                    //happens, the lock eventually will be released
+                    lock.wait(60000); 
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        //******************************************************************/
 
         this.command = compositeCommand;
     }

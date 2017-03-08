@@ -511,6 +511,12 @@
             class="org.locationtech.udig.tools.edit.preferences.PerformancelPreferences"
             id="org.locationtech.udig.tool.edit.preference.performance"
             name="%preferences.edit.tool.performance.name"/>
+      <page
+            category="org.locationtech.udig.project.ui.preferences.tool"
+            class="org.locationtech.udig.tools.edit.preferences.DeleteToolPreferences"
+            id="org.locationtech.udig.tools.delete.preferences"
+            name="%preferences.delete.tool.name">
+      </page>
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">
