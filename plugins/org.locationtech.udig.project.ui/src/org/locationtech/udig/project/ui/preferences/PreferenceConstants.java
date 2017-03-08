@@ -61,5 +61,15 @@ public interface PreferenceConstants {
      * The default Tileset image type
      */
     public static final String DEFAULT_IMAGE_TYPE = "image/png"; //$NON-NLS-1$
-    
+
+    /**
+     * The default feature attribute to be displayed in a popup when a tool action returns multiple features.
+     */
+    public static final String FEATURE_ATTRIBUTE_NAME = "featureAttributeName"; //$NON-NLS-1$
+
+    /**
+     * The radius to be used during UI single feature selection search like commands (select, edit etc.). 
+     */
+    public static final String FEATURE_SELECTION_RADIUS = "featureSelectionRadius"; //$NON-NLS-1$
+
 }

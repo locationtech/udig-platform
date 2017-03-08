@@ -120,9 +120,13 @@ public class Messages extends NLS {
 	public static String RemoveSelectedVerticesCommand_name;
 	public static String SnapToVertexCommand_name;
 	public static String DeleteTool_confirmation_text;
+	public static String DeleteTool_confirmation_text2;
 	public static String DeleteTool_confirmation_title;
 	public static String DeleteTool_warning;
 	public static String DeleteTool_status;
+	public static String DeleteToolPreferences_description;
+	public static String DeleteToolPreferences_Delete_Radius;
+	public static String DeleteToolPreferences_Delete_Radius_tooltip;
     public static String ValidHoleValidator_holeOverlap;
     public static String ValidHoleValidator_outsideShell;
     public static String ValidHoleValidator_selfIntersection;

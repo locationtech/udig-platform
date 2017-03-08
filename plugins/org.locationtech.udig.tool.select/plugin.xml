@@ -28,7 +28,7 @@
          </modalTool>
           <modalTool
                 categoryId="org.locationtech.udig.tool.category.selection"
-                class="org.locationtech.udig.tool.select.ArrowSelection"
+                class="org.locationtech.udig.tool.select.ArrowSelectionWithPopup"
                 icon="icons/etool16/select_feature_mode.gif"
                 id="org.locationtech.udig.tools.ArrowSelect"
                 largeIcon="icons/etool24/select_feature_mode.png"

@@ -37,7 +37,9 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
         store.setDefault(PreferenceConstants.P_HIDE_SELECTED_FEATURES, true);
         store.setDefault(PreferenceConstants.P_SNAP_BEHAVIOUR, SnapBehaviour.OFF.toString());
         store.setDefault(PreferenceConstants.P_ADVANCED_ACTIVE, false); 
-        store.setDefault(PreferenceConstants.P_SELECT_POST_ACCEPT, true); 
+        store.setDefault(PreferenceConstants.P_SELECT_POST_ACCEPT, true);     
+        store.setDefault(PreferenceConstants.P_DELETE_TOOL_CONFIRM, true); 
+        store.setDefault(PreferenceConstants.P_DELETE_TOOL_RADIUS, 6); 
     }
 
 }

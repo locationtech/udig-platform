@@ -16,6 +16,8 @@ import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.command.AbstractCommand;
 import org.locationtech.udig.project.command.UndoableMapCommand;
 import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.preferences.PreferenceConstants;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.project.ui.tool.IToolContext;
 import org.locationtech.udig.tools.edit.EditToolHandler;
@@ -23,6 +25,8 @@ import org.locationtech.udig.tools.edit.support.Point;
 import org.locationtech.udig.tools.edit.support.PrimitiveShape;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
+
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
@@ -41,6 +45,10 @@ import org.opengis.filter.Id;
  * @since 1.1.0
  */
 public class SetEditFeatureCommand extends AbstractCommand implements UndoableMapCommand {
+
+    // The size of the box that is searched.  This is a 7x7 box of pixels by default.  
+    private int SEARCH_SIZE = Platform.getPreferencesService().getInt(
+            ProjectUIPlugin.ID, PreferenceConstants.FEATURE_SELECTION_RADIUS, 7, null);
 
     EditToolHandler handler;
     Point clickPoint;
@@ -67,7 +75,7 @@ public class SetEditFeatureCommand extends AbstractCommand implements UndoableMa
     public void run( IProgressMonitor monitor ) throws Exception {
         IToolContext context = handler.getContext();
         java.awt.Point point = new java.awt.Point(clickPoint.getX(), clickPoint.getY());
-        ReferencedEnvelope bbox = handler.getContext().getBoundingBox(point,7);
+        ReferencedEnvelope bbox = handler.getContext().getBoundingBox(point,SEARCH_SIZE);
         FeatureCollection<SimpleFeatureType, SimpleFeature> fc = context.getFeaturesInBbox(handler.getEditLayer(), bbox);
         FeatureIterator<SimpleFeature> it = fc.features();
         SimpleFeature feature = null;

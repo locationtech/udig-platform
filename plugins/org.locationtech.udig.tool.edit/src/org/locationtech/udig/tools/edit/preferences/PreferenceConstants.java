@@ -24,4 +24,7 @@ public class PreferenceConstants {
     public static final String P_HIDE_SELECTED_FEATURES = "P_HIDE_SELECTED_FEATURES"; //$NON-NLS-1$
     public static final String P_ADVANCED_ACTIVE = "P_ADVANCED_ACTIVE"; //$NON-NLS-1$
     public static final String P_SELECT_POST_ACCEPT = "P_DESELECT_POST_ACCEPT"; //$NON-NLS-1$
+    
+    public static final String P_DELETE_TOOL_RADIUS = "P_DELETE_TOOL_RADIUS"; //$NON-NLS-1$
+    public static final String P_DELETE_TOOL_CONFIRM = "P_DELETE_TOOL_CONFIRM"; //$NON-NLS-1$
 }
