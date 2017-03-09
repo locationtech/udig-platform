@@ -30,7 +30,8 @@ public class ScaleDenomStyleContent extends StyleContent {
 	public static final String ID = "org.locationtech.udig.mapgraphic.scaledenom.style"; //$NON-NLS-1$
 
 	private static final String COLOR = "COLOR"; //$NON-NLS-1$
-
+	private static final String LABEL_PREFIX = "LABEL_PREFIX"; //$NON-NLS-1$
+	
 	public ScaleDenomStyleContent() {
 		super(ID);
 	}
@@ -49,13 +50,14 @@ public class ScaleDenomStyleContent extends StyleContent {
 	@Override
 	public Object load(IMemento memento) {
 		try {
+		        ScaleDenomStyle style = null;
 			Integer color = memento.getInteger(COLOR);
-
-			if (color != null) {
-				return new ScaleDenomStyle(new Color(color));
-			} else {
-				return new ScaleDenomStyle();
+			String label = memento.getString(LABEL_PREFIX);
+			style = color != null ? new ScaleDenomStyle(new Color(color)) : new ScaleDenomStyle();
+			if (label != null) {
+			    style.setLabel(label);
 			}
+			return style;
 
 		} catch (Throwable e) {
 			MapGraphicPlugin.log("Error decoding the stored font", e); //$NON-NLS-1$
@@ -73,6 +75,9 @@ public class ScaleDenomStyleContent extends StyleContent {
 		ScaleDenomStyle style = (ScaleDenomStyle) value;
 		if (style.getColor() != null) {
 			memento.putInteger(COLOR, style.getColor().getRGB());
+		}
+		if (style.getLabel() != null) {
+		    memento.putString(LABEL_PREFIX, style.getLabel());
 		}
 
 	}

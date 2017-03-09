@@ -15,6 +15,8 @@ import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.text.NumberFormat;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.locationtech.udig.mapgraphic.MapGraphic;
 import org.locationtech.udig.mapgraphic.MapGraphicContext;
 import org.locationtech.udig.mapgraphic.style.FontStyle;
@@ -62,8 +64,14 @@ public class ScaleDenomMapGraphic implements MapGraphic {
 
 		Point loc = getGraphicLocation(context);
 
+		ScaleDenomStyle background = getStyle(context);
+		
 		String denomStr = NUMBER_FORMAT.format(scaleDenom);
-		String str = "1:" + denomStr; //$NON-NLS-1$
+		String str =  "1:" + denomStr; //$NON-NLS-1$
+		//check if a prefix is provided
+		if (StringUtils.trimToNull(background.getLabel()) != null){
+                    str = background.getLabel() + " " + str;
+                } 
 		Rectangle2D bnds = g.getStringBounds(str);
 		
 		int x = loc.x;
@@ -76,8 +84,7 @@ public class ScaleDenomMapGraphic implements MapGraphic {
 			 y = context.getMapDisplay().getHeight() + y - (int)bnds.getHeight();
 		}
 		
-		//draw rectangle
-		ScaleDenomStyle background = getStyle(context);
+		//draw rectangle		
 		if (background.getColor() != null){
 			context.getGraphics().setColor(background.getColor());
 			g.fillRect(x -2 , y-2, (int)bnds.getWidth() + 4, (int)bnds.getHeight() + 4);
