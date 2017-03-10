@@ -23,6 +23,8 @@ The style pages used by Map Graphics are each unique; for more information pleas
 
 * :doc:`Scalebar Decoration`
 
+* :doc:`Mapscale Decoration`
+
 * :doc:`The Processing Region`
 
 * :doc:`Graticule Decoration`

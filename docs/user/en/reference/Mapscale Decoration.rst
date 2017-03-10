@@ -10,7 +10,7 @@ The map scale decoration is used to provide an in map indication of the current 
 Map Scale Style Pages
 ---------------------
 
-You can determine if you want a background (and select the color):
+You can determine if you want a background (and select the color) and/or add a textual label prefix:
 
 .. figure:: /images/mapscale_decoration/Mapscale-background-style.png
    :align: center
