@@ -21,9 +21,11 @@
    <feature url="features/org.locationtech.udig_application-platform.source_0.0.0.jar" id="org.locationtech.udig_platform-feature.source" version="0.0.0">
       <category name="org.locationtech.udig.sdk.sources"/>
    </feature>
+<!--
    <feature url="features/org.locationtech.udig_language-feature_0.0.0.jar" id="org.locationtech.udig_language-feature" version="0.0.0">
       <category name="org.locationtech.udig.language"/>
    </feature>
+-->
    <feature url="features/org.locationtech.udig_printing-feature_0.0.0.jar" id="org.locationtech.udig_printing-feature" version="0.0.0">
       <category name="org.locationtech.udig"/>
       <category name="org.locationtech.udig.sdk"/>
@@ -42,7 +44,9 @@
       <category name="org.locationtech.udig.sdk"/>
    </feature>
    <category-def name="org.locationtech.udig" label="uDig"/>
+<!--
    <category-def name="org.locationtech.udig.language" label="uDig Languages"/>
+-->
    <category-def name="org.locationtech.udig.sdk" label="uDig SDK"/>
    <category-def name="org.locationtech.udig.sdk.sources" label="org.locationtech.udig.sdk.sources"/>
 </site>
