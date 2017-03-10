@@ -9,6 +9,12 @@
  */
 package org.locationtech.udig.mapgraphic.scale;
 
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.internal.Messages;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.IStyleConfigurator;
+import org.locationtech.udig.ui.ColorEditor;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -17,11 +23,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.locationtech.udig.mapgraphic.MapGraphic;
-import org.locationtech.udig.mapgraphic.internal.Messages;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.style.IStyleConfigurator;
-import org.locationtech.udig.ui.ColorEditor;
+import org.eclipse.swt.widgets.Text;
 
 /**
  * A style configurator for the scale denom style.
@@ -33,6 +35,7 @@ public class ScaleDenomStyleConfigurator extends IStyleConfigurator implements S
 
 	private Button btnCheck;
 	private ColorEditor btnColor;
+	private Text labelText;
 	
 	private ScaleDenomStyle style;
 	
@@ -47,6 +50,13 @@ public class ScaleDenomStyleConfigurator extends IStyleConfigurator implements S
         GridLayout gridLayout = new GridLayout(3, false);
         parent.setLayout(gridLayout);
 
+        //label prefix part
+        Label labelLabel = new Label(parent, SWT.NONE);
+        labelLabel.setText(Messages.ScaleDenomStyleConfigurator_labelPrefix); 
+        
+        labelText = new Text(parent, SWT.BORDER);
+        labelText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
+        
         Label l = new Label(parent, SWT.NONE);
         l.setText(Messages.ScaleDenomStyleConfigurator_DrawBackground);
         
@@ -61,9 +71,11 @@ public class ScaleDenomStyleConfigurator extends IStyleConfigurator implements S
     }
     
     
-	@Override
-	public void preApply() {
-	}
+    @Override
+    public void preApply() {
+        style = (ScaleDenomStyle) getStyleBlackboard().get(ScaleDenomStyleContent.ID);
+        style.setLabel(labelText.getText());
+    }
 	
 	
     @Override
@@ -73,6 +85,7 @@ public class ScaleDenomStyleConfigurator extends IStyleConfigurator implements S
         	style = new ScaleDenomStyle();
         }
         
+        labelText.setText(style.getLabel());
         btnCheck.setSelection(style.getColor() != null);
         if (style.getColor() != null){
         	btnColor.setColor(style.getColor());
@@ -87,7 +100,7 @@ public class ScaleDenomStyleConfigurator extends IStyleConfigurator implements S
 		if (btnCheck.getSelection()){
 			style.setColor(btnColor.getColor());
 		}else{
-			style.setColor(null);;
+			style.setColor(null);
 		}
 		
 		getStyleBlackboard().put(ScaleDenomStyleContent.ID, style);

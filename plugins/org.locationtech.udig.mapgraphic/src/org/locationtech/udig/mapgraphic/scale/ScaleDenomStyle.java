@@ -20,13 +20,14 @@ import java.awt.Color;
 public class ScaleDenomStyle {
     
     private Color backgroundColor;
-    
+    private String label;
 
     /**
      * Create new Style with the provided color
      * @param color
      */
     public ScaleDenomStyle( Color color ) {
+        label = ""; //$NON-NLS-1$
         this.backgroundColor = color;
     }
     
@@ -34,6 +35,7 @@ public class ScaleDenomStyle {
      * Creates a new Style with no background color
      */
     public ScaleDenomStyle(){
+        label = ""; //$NON-NLS-1$
     	backgroundColor = Color.WHITE;
     }
     
@@ -52,5 +54,20 @@ public class ScaleDenomStyle {
      */
     public void setColor(Color color){
     	this.backgroundColor = color;
+    }
+
+    /**
+     * @return the label
+     */
+    public String getLabel() {
+        return label;
+    }
+
+    /**
+     * Sets a text prefix to be displayed prior to the scale value. 
+     * @param label the label to set
+     */
+    public void setLabel(String label) {
+        this.label = label;
     }
 }

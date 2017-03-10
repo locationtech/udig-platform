@@ -354,7 +354,7 @@ public class ScalebarMapGraphic implements MapGraphic {
         MessageFormat formatter = new MessageFormat("", Locale.getDefault()); //$NON-NLS-1$
         formatter.applyPattern(NUMBER_PATTERN);
 
-        for( int i = -1; i < numIntervals - 1; i++ ) {
+        for( int i = 0; i < numIntervals; i++ ) {
 
             drawIntervalLabel(nice, x, y, height, barWidth, width, numIntervals, c,
                     graphics, formatter, i);
@@ -363,7 +363,7 @@ public class ScalebarMapGraphic implements MapGraphic {
         formatter = new MessageFormat("", Locale.getDefault()); //$NON-NLS-1$
         formatter.applyPattern(NUMBER_PATTERN + measurement.display);
         drawIntervalLabel(nice, x, y, height, barWidth, width, numIntervals, c,
-                graphics, formatter, numIntervals - 1);
+                graphics, formatter, numIntervals);
     }
 
     /**
@@ -378,7 +378,7 @@ public class ScalebarMapGraphic implements MapGraphic {
         Rectangle2D msgBounds = graphics.getStringBounds(msg);
 
         int yText = y + (height - barWidth) - 12;
-        int xText = x + barWidth + (i + 1) * (width / numIntervals)
+        int xText = x + barWidth + i * (width / numIntervals)
                 - ((int) msgBounds.getWidth() / 2);
 
         // Draw the string denoting kilometres (or metres)
