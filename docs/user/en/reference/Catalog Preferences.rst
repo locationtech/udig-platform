@@ -95,3 +95,21 @@ Since the drivers are copied into the uDig updating the drivers will require the
 
 .. |image0| image:: /images/db2_preferences/db2Preferences.jpg
 .. |image1| image:: /images/db2_preferences/restart.jpg
+
+.. _preferences-page-catalog-wms:
+
+WMS Preference Page
+----------------------
+
+The WMS Preference Page is used to configure parameter when connecting to a Web Map Server.
+
+The WMS response timeout controls the max wait time (in sec) for a response from a WMS server. 
+The default value is 30 sec.   
+
+	|image2|
+
+**Related reference**
+
+:doc:`Web Map Server page`
+
+.. |image2| image:: /images/wms_preferences/wmsCatalogPreferences.jpg

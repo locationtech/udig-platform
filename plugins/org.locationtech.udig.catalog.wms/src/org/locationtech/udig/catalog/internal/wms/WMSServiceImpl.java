@@ -29,6 +29,7 @@ import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.IServiceInfo;
 import org.locationtech.udig.catalog.IResolve.Status;
 import org.locationtech.udig.catalog.wms.internal.Messages;
+import org.locationtech.udig.catalog.wms.preferences.WmsPreferenceConstants;
 import org.locationtech.udig.catalog.wms.preferences.WmsPreferencePage;
 import org.locationtech.udig.ui.ErrorManager;
 import org.locationtech.udig.ui.UDIGDisplaySafeLock;
@@ -359,7 +360,7 @@ public class WMSServiceImpl extends IService {
          */
         public CustomWMS( URL serverURL ) throws IOException, ServiceException, SAXException {
             super(serverURL, WmsPlugin.getDefault().getPreferenceStore().getInt(
-                    WmsPreferencePage.WMS_RESPONSE_TIMEOUT));
+                    WmsPreferenceConstants.WMS_RESPONSE_TIMEOUT));
             
             if (WmsPlugin.isDebugging(REQUEST)) {
                 System.out.println("Connection to WMS located at: " + serverURL); //$NON-NLS-1$

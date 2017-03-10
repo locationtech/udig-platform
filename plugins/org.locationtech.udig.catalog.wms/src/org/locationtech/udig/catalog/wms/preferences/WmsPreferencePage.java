@@ -15,8 +15,6 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
  */
 public class WmsPreferencePage extends FieldEditorPreferencePage
 implements IWorkbenchPreferencePage {
-
-	public static final String WMS_RESPONSE_TIMEOUT = "WMS_RESPONSE_TIMEOUT";
 	
 	public WmsPreferencePage() {
 		super(GRID);
@@ -32,8 +30,8 @@ implements IWorkbenchPreferencePage {
 	@Override
 	protected void createFieldEditors() {
 		
-		addField(new IntegerFieldEditor(WMS_RESPONSE_TIMEOUT, "WMS response timeout", getFieldEditorParent()));   
-
+		addField(new IntegerFieldEditor(WmsPreferenceConstants.WMS_RESPONSE_TIMEOUT, 
+				"WMS response timeout", getFieldEditorParent()));   
 	}
 
 }

@@ -17,7 +17,8 @@ public class WmsPreferenceInitializer extends AbstractPreferenceInitializer {
     public void initializeDefaultPreferences() {
         IPreferenceStore store = WmsPlugin.getDefault().getPreferenceStore();
        
-        store.setDefault(WmsPreferencePage.WMS_RESPONSE_TIMEOUT, 30);
+        store.setDefault(WmsPreferenceConstants.WMS_RESPONSE_TIMEOUT, 
+        		WmsPreferenceConstants.DEFAULT_WMS_RESPONSE_TIMEOUT_IN_SECONDS);
 
     }
 
