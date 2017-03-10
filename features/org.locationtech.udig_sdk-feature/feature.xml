@@ -31,8 +31,9 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
          id="org.locationtech.udig-feature"
          version="0.0.0"/>
 
+<!--
    <includes
          id="org.locationtech.udig_language-feature"
          version="0.0.0"/>
-
+-->
 </feature>

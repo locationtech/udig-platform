@@ -101,6 +101,7 @@
 <unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/"/>
 </location>
+<!-- problems to resolve bundles, P2 update sites moving too
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.compare.core.nl_de" version="0.0.0" />
 <unit id="org.eclipse.compare.core.nl_es" version="0.0.0" />
@@ -571,7 +572,8 @@
 <unit id="org.eclipse.ui.workbench.nl_ru" version="0.0.0" />
 <unit id="org.eclipse.ui.workbench.texteditor.nl_ru" version="0.0.0" />
 <unit id="org.eclipse.update.configurator.nl_ru" version="0.0.0" />
-<repository location="http://download.eclipse.org/technology/babel/update-site/R0.13.1/luna"/>
+<repository location="http://archive.eclipse.org/technology/babel/update-site/R0.13.1/luna"/>
 </location>
+-->
 </locations>
 </target>

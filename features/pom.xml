@@ -58,7 +58,9 @@
     <modules>
         <module>org.locationtech.udig_application-feature</module>
         <module>org.locationtech.udig_base-feature</module>
+	<!-- often problems to resolve dependencies from bable update site 
         <module>org.locationtech.udig_language-feature</module>
+	-->
         <module>org.locationtech.udig_platform-feature</module>
         <module>org.locationtech.udig_printing-feature</module>
         <module>org.locationtech.udig-feature</module>
