@@ -29,6 +29,8 @@ import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.IServiceInfo;
 import org.locationtech.udig.catalog.IResolve.Status;
 import org.locationtech.udig.catalog.wms.internal.Messages;
+import org.locationtech.udig.catalog.wms.preferences.WmsPreferenceConstants;
+import org.locationtech.udig.catalog.wms.preferences.WmsPreferencePage;
 import org.locationtech.udig.ui.ErrorManager;
 import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 
@@ -36,6 +38,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+
 import org.geotools.data.ows.GetCapabilitiesRequest;
 import org.geotools.data.ows.GetCapabilitiesResponse;
 import org.geotools.data.ows.Layer;
@@ -356,7 +359,9 @@ public class WMSServiceImpl extends IService {
          * @throws IOException
          */
         public CustomWMS( URL serverURL ) throws IOException, ServiceException, SAXException {
-            super(serverURL);
+            super(serverURL, WmsPlugin.getDefault().getPreferenceStore().getInt(
+                    WmsPreferenceConstants.WMS_RESPONSE_TIMEOUT));
+            
             if (WmsPlugin.isDebugging(REQUEST)) {
                 System.out.println("Connection to WMS located at: " + serverURL); //$NON-NLS-1$
             }

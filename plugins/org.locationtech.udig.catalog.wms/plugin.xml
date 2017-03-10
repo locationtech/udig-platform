@@ -64,4 +64,19 @@
           </resolve>
        </factory>
     </extension>
+  <extension
+       point="org.eclipse.ui.preferencePages">
+    <page
+          category="org.locationtech.udig.catalog.ui.preferences.CatalogPreferencePage"
+          class="org.locationtech.udig.catalog.wms.preferences.WmsPreferencePage"
+          id="org.locationtech.udig.catalog.wms.preferences.WmsPreferencePage"
+          name="%preferences.wms.name">
+    </page>
+ </extension>
+ <extension
+       point="org.eclipse.core.runtime.preferences">
+    <initializer
+          class="org.locationtech.udig.catalog.wms.preferences.WmsPreferenceInitializer">
+    </initializer>
+ </extension>   
 </plugin>
