@@ -1,3 +1,4 @@
+sudo: true
 language: java
 jdk:
   - openjdk7 # just run openJdk - oraclejdk7
@@ -9,11 +10,11 @@ cache:
   directories:
   - $HOME/.m2
 install:
-  - "travis_retry sudo pip install -q sphinx==1.1.3 --use-mirrors || (cat /home/travis/.pip/pip.log; false)"
+  - "travis_retry pip install -q sphinx==1.1.3 --use-mirrors"
   - "travis_wait mvn install -DskipTests=true -f pom-libs.xml -B -V" #download dependencies
-  - "travis_wait mvn install -f docs/pom.xml -Dtycho.mode=maven -Pdocs -B -V"
+  - "travis_wait mvn install -f docs/pom.xml --batch --quiet -Dtycho.mode=maven -Pdocs -B -V" #build documentation using sphinx
 
-script: "travis_wait mvn install -Pproduct -Psdk -B -V"
+script: "travis_wait mvn install --batch --quiet -Pproduct -Psdk -B -V"
 
 notifications:
   email:
