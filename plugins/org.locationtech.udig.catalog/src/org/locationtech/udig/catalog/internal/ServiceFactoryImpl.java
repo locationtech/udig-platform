@@ -149,6 +149,9 @@ public class ServiceFactoryImpl extends IServiceFactory {
                 Map<String, Serializable> connectionParameters = candidateEntry.getValue();
                 try {
                     IService sevice = serviceExtension.createService(null, connectionParameters);
+                    if (sevice == null) {
+                        continue;
+                    }
                     CatalogImpl.runInterceptor(sevice, ServiceInterceptor.CREATED_ID);
                     candidates.add(sevice);
 //                    List<IService> service = createService(connectionParameters);

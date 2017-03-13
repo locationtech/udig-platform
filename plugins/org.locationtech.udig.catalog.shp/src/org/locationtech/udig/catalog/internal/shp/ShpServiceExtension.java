@@ -13,8 +13,8 @@ package org.locationtech.udig.catalog.internal.shp;
 
 import java.io.File;
 import java.io.Serializable;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +26,6 @@ import org.locationtech.udig.catalog.shp.internal.Messages;
 
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFactorySpi;
-import org.geotools.data.DataUtilities;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 
 /**
@@ -36,6 +35,10 @@ import org.geotools.data.shapefile.ShapefileDataStoreFactory;
  * @since 0.6
  */
 public class ShpServiceExtension extends AbstractDataStoreServiceExtension implements ServiceExtension {
+
+    //name of system variable to hold the charset encoding to be used during
+    //shp service creation. Should be defined as a system variable during startup
+    public static String SHP_CHARSET_PARAM_NAME = "shp.encoding";
 
     // this is for backwards compatibility with 1.1.x.  The parameter key was 
     // changed in geotools since 2.2
@@ -108,7 +111,14 @@ public class ShpServiceExtension extends AbstractDataStoreServiceExtension imple
                 return null; // file does not exist?
             }
             HashMap<String,Serializable> params = new HashMap<String,Serializable>();
-            params.put(ShapefileDataStoreFactory.URLP.key,cleanedShapeURL); 
+            params.put(ShapefileDataStoreFactory.URLP.key,cleanedShapeURL);          
+            
+            //set the charset to be used for the shapefile during loading
+            Charset charset = getCharsetParam();
+            if (charset != null) {
+                params.put(ShapefileDataStoreFactory.DBFCHARSET.key, charset.name());
+            }
+   
             return params;
         }
         return null;
@@ -181,4 +191,12 @@ public class ShpServiceExtension extends AbstractDataStoreServiceExtension imple
         return reasonForFailure(createParams(url));
     }
 
+    /**
+     * Sets the charset to be used during service creation. 
+     * 
+     * @param params
+     */
+    private Charset getCharsetParam() {
+        return Charset.forName(ShpPlugin.getDefault().defaultCharset());
+    }
 }

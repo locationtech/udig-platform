@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +41,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+
 import org.geotools.data.FeatureSource;
 import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
@@ -55,6 +57,7 @@ import org.geotools.filter.IllegalFilterException;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.operation.transform.IdentityTransform;
 import org.geotools.referencing.wkt.UnformattableObjectException;
+
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.IGeoResource;
@@ -71,6 +74,7 @@ import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
 import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.ProgressManager;
+
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
@@ -236,7 +240,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
                         (Class< ? extends Geometry>) schema.getGeometryDescriptor().getType()
                                 .getBinding(), crs);
 
-                ShapefileDataStore shapefile = createShapefile(destinationFeatureType, file);
+                ShapefileDataStore shapefile = createShapefile(destinationFeatureType, file, data.getCharset());
                 SimpleFeatureType targetFeatureType = shapefile.getSchema();
 
                 ReprojectingFeatureCollection processed = new ReprojectingFeatureCollection(fc, monitor, targetFeatureType, mt);
@@ -475,7 +479,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
             throws IllegalFilterException, IOException, SchemaException, MalformedURLException {
 
         File lineFile = addFileNameSuffix(file, LINE_SUFFIX);
-        ShapefileDataStore shapefile = createShapefile(createFeatureType(schema, MultiLineString.class, data.getCRS()), lineFile);
+        ShapefileDataStore shapefile = createShapefile(createFeatureType(schema, MultiLineString.class, data.getCRS()), lineFile, data.getCharset());
         SimpleFeatureType targetFeatureType = shapefile.getSchema();
 
         SimpleFeatureCollection temp = new ToMultiLineFeatureCollection(
@@ -493,7 +497,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
             throws IllegalFilterException, IOException, SchemaException, MalformedURLException {
 
         File pointFile = addFileNameSuffix(file, POINT_SUFFIX);
-        ShapefileDataStore shapefile = createShapefile(createFeatureType(schema, MultiPoint.class, data.getCRS()), pointFile);
+        ShapefileDataStore shapefile = createShapefile(createFeatureType(schema, MultiPoint.class, data.getCRS()), pointFile, data.getCharset());
         SimpleFeatureType targetFeatureType = shapefile.getSchema();
 
         SimpleFeatureCollection temp = new ToMultiPointFeatureCollection(
@@ -511,7 +515,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
             throws IllegalFilterException, IOException, SchemaException, MalformedURLException {
 
         File polyFile = addFileNameSuffix(file, POLY_SUFFIX);
-        ShapefileDataStore shapefile = createShapefile(createFeatureType(schema, MultiPolygon.class, data.getCRS()), polyFile);
+        ShapefileDataStore shapefile = createShapefile(createFeatureType(schema, MultiPolygon.class, data.getCRS()), polyFile, data.getCharset());
         SimpleFeatureType targetFeatureType = shapefile.getSchema();
 
         SimpleFeatureCollection temp = new ToMultiPolygonFeatureCollection( 
@@ -617,7 +621,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
     
     
     
-    private ShapefileDataStore createShapefile( SimpleFeatureType targetType, File file) throws IOException {
+    private ShapefileDataStore createShapefile( SimpleFeatureType targetType, File file, Charset charset) throws IOException {
         
         if (!canWrite(file)) {
             throw new IOException(MessageFormat.format(Messages.CatalogExport_cannotWrite, file
@@ -629,6 +633,9 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
         params.put("url", URLUtils.fileToURL(file)); //$NON-NLS-1$
         params.put("create spatial index", Boolean.TRUE); //$NON-NLS-1$
         ShapefileDataStore ds = (ShapefileDataStore) dataStoreFactory.createDataStore(params);
+        if (charset != null) {
+            ds.setCharset(charset);
+        }
         ds.createSchema(targetType);
         
         

@@ -10,6 +10,7 @@
 package org.locationtech.udig.catalog.ui.export;
 
 import java.io.File;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import org.locationtech.udig.catalog.ui.internal.Messages;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPage;
 import org.locationtech.udig.ui.CRSDialogCellEditor;
+import org.locationtech.udig.ui.CharsetDialogCellEditor;
 
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.IPageChangedListener;
@@ -56,6 +58,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
+
 import org.geotools.data.FeatureSource;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
@@ -114,8 +117,9 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
         viewer.setAutoExpandLevel(3);
         
         final String crs="CRS"; //$NON-NLS-1$
-        viewer.setColumnProperties(new String[]{"name",crs}); //$NON-NLS-1$
-        viewer.setCellEditors(new CellEditor[]{new TextCellEditor(tree), new CRSDialogCellEditor(tree)});
+        final String charset="charset"; //$NON-NLS-1$
+        viewer.setColumnProperties(new String[]{"name",crs, charset}); //$NON-NLS-1$
+        viewer.setCellEditors(new CellEditor[]{new TextCellEditor(tree), new CRSDialogCellEditor(tree), new CharsetDialogCellEditor(tree)});
         viewer.setCellModifier(new ICellModifier(){
 
             public boolean canModify( Object element, String property ) {
@@ -126,6 +130,8 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
                 Data data = (Data)element;
                 if( crs.equals(property) ){
                     return data.getCRS();
+                } else if (charset.equals(property)) {
+                    return data.getCharset();
                 }else{
                     if( data.getName()==null ){
                         return ((ExportResourceLabelProvider)viewer.getLabelProvider()).getColumnText(data, 0);
@@ -140,7 +146,9 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
                 TreeItem item=(TreeItem) element;
                 Data data=(Data) item.getData();
                 if( crs.equals(property) ){
-                data.setCRS((CoordinateReferenceSystem)value);
+                    data.setCRS((CoordinateReferenceSystem)value);
+                } else if (charset.equals(property)) {
+                    data.setCharset((Charset) value);
                 }else{
                     data.setName((String) value);
                 }
@@ -256,6 +264,7 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
         TableLayout tableLayout = new TableLayout();
         tableLayout.addColumnData(new ColumnWeightData(1,true));
         tableLayout.addColumnData(new ColumnWeightData(1,true));
+        tableLayout.addColumnData(new ColumnWeightData(1,true));
         tree.setLayout(tableLayout);
 
         TreeColumn name=new TreeColumn(tree, SWT.DEFAULT);
@@ -266,6 +275,10 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
         projection.setMoveable(false);
         projection.setResizable(true);
 
+        TreeColumn charset =new TreeColumn(tree, SWT.DEFAULT);
+        charset.setMoveable(false);
+        charset.setResizable(true);
+ 
         return tree;
     }
 
@@ -420,7 +433,8 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
                 return wrapped.getImage(data.getResource());
             case 1:
                 return null;
-
+            case 2:
+                return null;
             default:
                 break;
             }
@@ -441,9 +455,18 @@ public class ExportResourceSelectionPage extends WorkflowWizardPage implements I
                     return data.getName(); 
                 }
             case 1:
-            	if( crs==null )
-            		return "undefined";
-                return crs.getName().toString();
+                if( crs==null ) {
+                    return "undefined"; //$NON-NLS-1$
+                } else {
+                    return crs.getName().toString();
+                }
+            case 2:
+                if( data.getCharset()==null ) {
+                    //addition to handle problem with charset always being set to ISO-8859-1 
+                    data.setCharset((System.getProperty("shp.encoding") != null) ? 
+                            Charset.forName(System.getProperty("shp.encoding")) : Charset.defaultCharset()); 
+                } 
+                return data.getCharset().displayName();
 
             default:
                 break;

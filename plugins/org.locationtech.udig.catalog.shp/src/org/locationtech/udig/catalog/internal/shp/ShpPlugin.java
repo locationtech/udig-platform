@@ -10,6 +10,7 @@
  */
 package org.locationtech.udig.catalog.internal.shp;
 
+import java.nio.charset.Charset;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.logging.ConsoleHandler;
@@ -172,8 +173,25 @@ public class ShpPlugin extends AbstractUIPlugin {
         getPreferenceStore().setValue(PreferenceConstants.P_CREATE_INDEX, useSpatialIndex);
     }
 
+    /**
+     * The value is set according to the system parameter "shp.encoding" if not present or not valid
+     * then charset is obtained from UI plugin charset value
+     *  
+     * @return the charset to be used as String
+     */
     public String defaultCharset() {
-        return UiPlugin.getDefault().getPreferenceStore().getString(org.locationtech.udig.ui.preferences.PreferenceConstants.P_DEFAULT_CHARSET);
+        String charsetName = System.getProperty(ShpServiceExtension.SHP_CHARSET_PARAM_NAME);
+        if (charsetName != null) {
+            try {
+                //test that Charset actually exists
+                return Charset.forName(charsetName).name();
+            } catch (Exception e) {
+            	getDefault().getLog().log(new Status(IStatus.WARNING, ID, 
+            			"Unable to parse charset " + charsetName + ". Default UI charset will be used for shp encoding"));
+            }               
+        }
+        return UiPlugin.getDefault().getPreferenceStore().getString(
+        		org.locationtech.udig.ui.preferences.PreferenceConstants.P_DEFAULT_CHARSET);
     }
 
 }
