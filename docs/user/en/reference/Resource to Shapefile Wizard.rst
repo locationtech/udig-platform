@@ -29,6 +29,9 @@ List of selected resources:
 -  Projection: Shows the projection of the resource; you can change setting to transform the
    contents into the requested projection. The projection information will be stored in the
    resulting **prj** file.
+-  Charset: Shapefile charset encoding; you can control the encoding of string fields during
+   export. The proposed value is controlled by the startup system property **shp.encoding** or if not 
+   specified by the preference value **General-->udig UI-->Default Character Set**      
 
 **Related concepts**
 
