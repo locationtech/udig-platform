@@ -27,5 +27,4 @@ notifications:
     template: "%{repository} (%{branch}:%{commit}): %{message} (%{build_url})"
 branches:
   only:
-    - luna-support
     - master
