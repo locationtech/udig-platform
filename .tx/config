@@ -1,0 +1,568 @@
+[main]
+host = https://www.transifex.com
+type = PROPERTIES
+
+[udig.udig_plugin]
+file_filter = plugins/org.locationtech.udig/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig/plugin.properties
+source_lang = en
+
+[udig.udig_browser-plugin]
+file_filter = plugins/org.locationtech.udig.browser/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.browser/plugin.properties
+source_lang = en
+
+[udig.udig_catalog-plugin]
+file_filter = plugins/org.locationtech.udig.catalog/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog/plugin.properties
+source_lang = en
+
+[udig.udig_catalog_arcsde-plugin]
+file_filter = plugins/org.locationtech.udig.catalog.arcsde/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.arcsde/plugin.properties
+source_lang = en
+
+[udig.udig_catalog_db2-plugin]
+file_filter = plugins/org.locationtech.udig.catalog.db2/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.db2/plugin.properties
+source_lang = en
+
+[udig.udig_catalog_geotiff-plugin]
+file_filter = plugins/org.locationtech.udig.catalog.geotiff/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.geotiff/plugin.properties
+source_lang = en
+
+[udig.udig_catalog_google2-plugin]
+file_filter = plugins/org.locationtech.udig.catalog.google2/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.google2/plugin.properties
+source_lang = en
+
+[udig.udig_catalog_imageio-plugin]
+file_filter = plugins/org.locationtech.udig.catalog.imageio/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.imageio/plugin.properties
+source_lang = en
+
+[udig.udig_catalog_mysql-plugin]
+file_filter = plugins/org.locationtech.udig.catalog.mysql/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.mysql/plugin.properties
+source_lang = en
+
+[udig.udig_catalog_oracle-plugin]
+file_filter = plugins/org.locationtech.udig.catalog.oracle/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.oracle/plugin.properties
+source_lang = en
+
+[udig.udig_catalog_postgis-plugin]
+file_filter = plugins/org.locationtech.udig.catalog.postgis/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.postgis/plugin.properties
+source_lang = en
+
+[udig.udig_catalog_shp-plugin]
+file_filter = plugins/org.locationtech.udig.catalog.shp/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.shp/plugin.properties
+source_lang = en
+
+[udig.udig_catalog_ui-plugin]
+file_filter = plugins/org.locationtech.udig.catalog.ui/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.ui/plugin.properties
+source_lang = en
+
+[udig.udig_catalog_wfs-plugin]
+file_filter = plugins/org.locationtech.udig.catalog.wfs/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.wfs/plugin.properties
+source_lang = en
+
+[udig.udig_catalog_wms-plugin]
+file_filter = plugins/org.locationtech.udig.catalog.wms/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.wms/plugin.properties
+source_lang = en
+
+[udig.udig_catalog_wms-messages]
+file_filter = plugins/org.locationtech.udig.catalog.wms/src/org/locationtech/udig/catalog/wms/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.wms/src/org/locationtech/udig/catalog/wms/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_wmt-plugin]
+file_filter = plugins/org.locationtech.udig.catalog.wmt/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.wmt/plugin.properties
+source_lang = en
+
+[udig.udig_catalog_worldimage-plugin]
+file_filter = plugins/org.locationtech.udig.catalog.worldimage/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.worldimage/plugin.properties
+source_lang = en
+
+[udig.udig_context-plugin]
+file_filter = plugins/org.locationtech.udig.context/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.context/plugin.properties
+source_lang = en
+
+[udig.udig_core-plugin]
+file_filter = plugins/org.locationtech.udig.core/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.core/plugin.properties
+source_lang = en
+
+[udig.udig_feature_editor-plugin]
+file_filter = plugins/org.locationtech.udig.feature.editor/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.feature.editor/plugin.properties
+source_lang = en
+
+[udig.udig_help-plugin]
+file_filter = plugins/org.locationtech.udig.help/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.help/plugin.properties
+source_lang = en
+
+[udig.udig_info-plugin]
+file_filter = plugins/org.locationtech.udig.info/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.info/plugin.properties
+source_lang = en
+
+[udig.udig_issues-plugin]
+file_filter = plugins/org.locationtech.udig.issues/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.issues/plugin.properties
+source_lang = en
+
+[udig.udig_legend-plugin]
+file_filter = plugins/org.locationtech.udig.legend/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.legend/plugin.properties
+source_lang = en
+
+[udig.udig_libs-plugin]
+file_filter = plugins/org.locationtech.udig.libs/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.libs/plugin.properties
+source_lang = en
+
+[udig.udig_location-plugin]
+file_filter = plugins/org.locationtech.udig.location/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.location/plugin.properties
+source_lang = en
+
+[udig.udig_mapgraphic-plugin]
+file_filter = plugins/org.locationtech.udig.mapgraphic/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.mapgraphic/plugin.properties
+source_lang = en
+
+[udig.udig_printing_model-plugin]
+file_filter = plugins/org.locationtech.udig.printing.model/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.printing.model/plugin.properties
+source_lang = en
+
+[udig.udig_printing_model_edit-plugin]
+file_filter = plugins/org.locationtech.udig.printing.model.edit/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.printing.model.edit/plugin.properties
+source_lang = en
+
+[udig.udig_printing_ui-plugin]
+file_filter = plugins/org.locationtech.udig.printing.ui/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.printing.ui/plugin.properties
+source_lang = en
+
+[udig.udig_project-plugin]
+file_filter = plugins/org.locationtech.udig.project/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.project/plugin.properties
+source_lang = en
+
+[udig.udig_project_edit-plugin]
+file_filter = plugins/org.locationtech.udig.project.edit/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.project.edit/plugin.properties
+source_lang = en
+
+[udig.udig_project_ui-plugin]
+file_filter = plugins/org.locationtech.udig.project.ui/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.project.ui/plugin.properties
+source_lang = en
+
+[udig.udig_project_ui_editor-plugin]
+file_filter = plugins/org.locationtech.udig.project.ui.editor/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.project.ui.editor/plugin.properties
+source_lang = en
+
+[udig.udig_render_feature_basic-plugin]
+file_filter = plugins/org.locationtech.udig.render.feature.basic/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.render.feature.basic/plugin.properties
+source_lang = en
+
+[udig.udig_render_feature_shapefile-plugin]
+file_filter = plugins/org.locationtech.udig.render.feature.shapefile/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.render.feature.shapefile/plugin.properties
+source_lang = en
+
+[udig.udig_render_gridcoverage_basic-plugin]
+file_filter = plugins/org.locationtech.udig.render.gridcoverage.basic/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.render.gridcoverage.basic/plugin.properties
+source_lang = en
+
+[udig.udig_render_wms_basic-plugin]
+file_filter = plugins/org.locationtech.udig.render.wms.basic/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.render.wms.basic/plugin.properties
+source_lang = en
+
+[udig.udig_render_wmt_basic-plugin]
+file_filter = plugins/org.locationtech.udig.render.wmt.basic/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.render.wmt.basic/plugin.properties
+source_lang = en
+
+[udig.udig_style-plugin]
+file_filter = plugins/org.locationtech.udig.style/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.style/plugin.properties
+source_lang = en
+
+[udig.udig_style_sld-plugin]
+file_filter = plugins/org.locationtech.udig.style.sld/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.style.sld/plugin.properties
+source_lang = en
+
+[udig.udig_style_wms-plugin]
+file_filter = plugins/org.locationtech.udig.style.wms/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.style.wms/plugin.properties
+source_lang = en
+
+[udig.udig_tool_default-plugin]
+file_filter = plugins/org.locationtech.udig.tool.default/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.tool.default/plugin.properties
+source_lang = en
+
+[udig.udig_tool_edit-plugin]
+file_filter = plugins/org.locationtech.udig.tool.edit/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.tool.edit/plugin.properties
+source_lang = en
+
+[udig.udig_tool_select-plugin]
+file_filter = plugins/org.locationtech.udig.tool.select/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.tool.select/plugin.properties
+source_lang = en
+
+[udig.udig_ui-plugin]
+file_filter = plugins/org.locationtech.udig.ui/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.ui/plugin.properties
+source_lang = en
+
+[udig.udig_validation-plugin]
+file_filter = plugins/org.locationtech.udig.validation/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.validation/plugin.properties
+source_lang = en
+
+[udig.udig_base-plugin]
+file_filter = plugins/org.locationtech.udig_base/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig_base/plugin.properties
+source_lang = en
+
+[udig.udig_catalog_jgrass-plugin]
+file_filter = plugins/org.locationtech.udig.catalog.jgrass/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.jgrass/plugin.properties
+source_lang = en
+
+[udig.udig_catalog_kml-plugin]
+file_filter = plugins/org.locationtech.udig.catalog.kml/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.kml/plugin.properties
+source_lang = en
+
+[udig.udig_style_jgrass-plugin]
+file_filter = plugins/org.locationtech.udig.style.jgrass/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.style.jgrass/plugin.properties
+source_lang = en
+
+[udig.udig_tools-plugin]
+file_filter = plugins/org.locationtech.udig.tools/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.tools/plugin.properties
+source_lang = en
+
+[udig.udig_tools_jgrass-plugin]
+file_filter = plugins/org.locationtech.udig.tools.jgrass/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.tools.jgrass/plugin.properties
+source_lang = en
+
+[udig.udig_bookmarks-plugin]
+file_filter = plugins/org.locationtech.udig.bookmarks/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.bookmarks/plugin.properties
+source_lang = en
+
+[udig.udig_browser-messages]
+file_filter = plugins/org.locationtech.udig.browser/src/org/locationtech/udig/browser/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.browser/src/org/locationtech/udig/browser/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog-messages]
+file_filter = plugins/org.locationtech.udig.catalog/src/org/locationtech/udig/catalog/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog/src/org/locationtech/udig/catalog/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_arcgrid-messages]
+file_filter = plugins/org.locationtech.udig.catalog.arcgrid/src/org/locationtech/udig/arcgrid/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.arcgrid/src/org/locationtech/udig/arcgrid/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_arcsde-messages]
+file_filter = plugins/org.locationtech.udig.catalog.arcsde/src/org/locationtech/udig/catalog/arcsde/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.arcsde/src/org/locationtech/udig/catalog/arcsde/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_db2-messages]
+file_filter = plugins/org.locationtech.udig.catalog.db2/src/org/locationtech/udig/catalog/db2/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.db2/src/org/locationtech/udig/catalog/db2/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_geotiff-messages]
+file_filter = plugins/org.locationtech.udig.catalog.geotiff/src/org/locationtech/udig/catalog/geotiff/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.geotiff/src/org/locationtech/udig/catalog/geotiff/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_google2-messages]
+file_filter = plugins/org.locationtech.udig.catalog.google2/src/org/locationtech/udig/catalog/google/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.google2/src/org/locationtech/udig/catalog/google/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_imageio-messages]
+file_filter = plugins/org.locationtech.udig.catalog.imageio/src/org/locationtech/udig/catalog/imageio/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.imageio/src/org/locationtech/udig/catalog/imageio/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_mysql-messages]
+file_filter = plugins/org.locationtech.udig.catalog.mysql/src/org/locationtech/udig/catalog/mysql/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.mysql/src/org/locationtech/udig/catalog/mysql/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_oracle-messages]
+file_filter = plugins/org.locationtech.udig.catalog.oracle/src/org/locationtech/udig/catalog/oracle/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.oracle/src/org/locationtech/udig/catalog/oracle/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_postgis-messages]
+file_filter = plugins/org.locationtech.udig.catalog.postgis/src/org/locationtech/udig/catalog/postgis/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.postgis/src/org/locationtech/udig/catalog/postgis/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_rasterings-messages]
+file_filter = plugins/org.locationtech.udig.catalog.rasterings/src/org/locationtech/udig/catalog/rasterings/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.rasterings/src/org/locationtech/udig/catalog/rasterings/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_shp-messages]
+file_filter = plugins/org.locationtech.udig.catalog.shp/src/org/locationtech/udig/catalog/shp/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.shp/src/org/locationtech/udig/catalog/shp/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_ui-database_messages]
+file_filter = plugins/org.locationtech.udig.catalog.ui/src/org/locationtech/udig/catalog/service/database/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.ui/src/org/locationtech/udig/catalog/service/database/messages.properties
+source_lang = en
+
+[udig.udig_catalog_ui-messages]
+file_filter = plugins/org.locationtech.udig.catalog.ui/src/org/locationtech/udig/catalog/ui/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.ui/src/org/locationtech/udig/catalog/ui/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_wfs-messages]
+file_filter = plugins/org.locationtech.udig.catalog.wfs/src/org/locationtech/udig/catalog/wfs/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.wfs/src/org/locationtech/udig/catalog/wfs/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_wmt-messages]
+file_filter = plugins/org.locationtech.udig.catalog.wmt/src/org/locationtech/udig/catalog/wmt/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.wmt/src/org/locationtech/udig/catalog/wmt/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_worldimage-messages]
+file_filter = plugins/org.locationtech.udig.catalog.worldimage/src/org/locationtech/udig/catalog/worldimage/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.worldimage/src/org/locationtech/udig/catalog/worldimage/internal/messages.properties
+source_lang = en
+
+[udig.udig_context-messages]
+file_filter = plugins/org.locationtech.udig.context/src/org/locationtech/udig/context/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.context/src/org/locationtech/udig/context/internal/messages.properties
+source_lang = en
+
+[udig.udig_core-messages]
+file_filter = plugins/org.locationtech.udig.core/src/org/locationtech/udig/core/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.core/src/org/locationtech/udig/core/internal/messages.properties
+source_lang = en
+
+[udig.udig_feature_editor-messages]
+file_filter = plugins/org.locationtech.udig.feature.editor/src/org/locationtech/udig/feature/editor/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.feature.editor/src/org/locationtech/udig/feature/editor/internal/messages.properties
+source_lang = en
+
+[udig.udig_info-messages]
+file_filter = plugins/org.locationtech.udig.info/src/org/locationtech/udig/tool/info/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.info/src/org/locationtech/udig/tool/info/internal/messages.properties
+source_lang = en
+
+[udig.udig_issues-messages]
+file_filter = plugins/org.locationtech.udig.issues/src/org/locationtech/udig/issues/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.issues/src/org/locationtech/udig/issues/internal/messages.properties
+source_lang = en
+
+[udig.udig_legend-messages]
+file_filter = plugins/org.locationtech.udig.legend/src/org/locationtech/udig/legend/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.legend/src/org/locationtech/udig/legend/internal/messages.properties
+source_lang = en
+
+[udig.udig_libs-messages]
+file_filter = plugins/org.locationtech.udig.libs/src/org/locationtech/udig/libs/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.libs/src/org/locationtech/udig/libs/internal/messages.properties
+source_lang = en
+
+[udig.udig_location-messages]
+file_filter = plugins/org.locationtech.udig.location/src/org/locationtech/udig/location/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.location/src/org/locationtech/udig/location/internal/messages.properties
+source_lang = en
+
+[udig.udig_mapgraphic-messages]
+file_filter = plugins/org.locationtech.udig.mapgraphic/src/org/locationtech/udig/mapgraphic/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.mapgraphic/src/org/locationtech/udig/mapgraphic/internal/messages.properties
+source_lang = en
+
+[udig.udig_printing_model-messages]
+file_filter = plugins/org.locationtech.udig.printing.model/src/org/locationtech/udig/printing/model/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.printing.model/src/org/locationtech/udig/printing/model/internal/messages.properties
+source_lang = en
+
+[udig.udig_printing_ui-messages]
+file_filter = plugins/org.locationtech.udig.printing.ui/src/org/locationtech/udig/printing/ui/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.printing.ui/src/org/locationtech/udig/printing/ui/internal/messages.properties
+source_lang = en
+
+[udig.udig_project_commands-messages]
+file_filter = plugins/org.locationtech.udig.project/src/org/locationtech/udig/project/internal/commands/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.project/src/org/locationtech/udig/project/internal/commands/messages.properties
+source_lang = en
+
+[udig.udig_project-messages]
+file_filter = plugins/org.locationtech.udig.project/src/org/locationtech/udig/project/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.project/src/org/locationtech/udig/project/internal/messages.properties
+source_lang = en
+
+[udig.udig_project_edit-messages]
+file_filter = plugins/org.locationtech.udig.project.edit/src/org/locationtech/udig/project/edit/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.project.edit/src/org/locationtech/udig/project/edit/internal/messages.properties
+source_lang = en
+
+[udig.udig_project_ui-messages]
+file_filter = plugins/org.locationtech.udig.project.ui/src/org/locationtech/udig/project/ui/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.project.ui/src/org/locationtech/udig/project/ui/internal/messages.properties
+source_lang = en
+
+[udig.udig_render_feature_basic-messages]
+file_filter = plugins/org.locationtech.udig.render.feature.basic/src/org/locationtech/udig/render/feature/basic/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.render.feature.basic/src/org/locationtech/udig/render/feature/basic/internal/messages.properties
+source_lang = en
+
+[udig.udig_render_gridcoverage_basic-messages]
+file_filter = plugins/org.locationtech.udig.render.gridcoverage.basic/src/org/locationtech/udig/render/gridcoverage/basic/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.render.gridcoverage.basic/src/org/locationtech/udig/render/gridcoverage/basic/internal/messages.properties
+source_lang = en
+
+[udig.udig_render_wms_basic-messages]
+file_filter = plugins/org.locationtech.udig.render.wms.basic/src/org/locationtech/udig/render/wms/basic/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.render.wms.basic/src/org/locationtech/udig/render/wms/basic/internal/messages.properties
+source_lang = en
+
+[udig.udig_render_wmt_basic-messages]
+file_filter = plugins/org.locationtech.udig.render.wmt.basic/src/org/locationtech/udig/render/wmt/basic/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.render.wmt.basic/src/org/locationtech/udig/render/wmt/basic/internal/messages.properties
+source_lang = en
+
+[udig.udig_style-messages]
+file_filter = plugins/org.locationtech.udig.style/src/org/locationtech/udig/style/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.style/src/org/locationtech/udig/style/internal/messages.properties
+source_lang = en
+
+[udig.udig_style_sld-messages]
+file_filter = plugins/org.locationtech.udig.style.sld/src/org/locationtech/udig/style/sld/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.style.sld/src/org/locationtech/udig/style/sld/internal/messages.properties
+source_lang = en
+
+[udig.udig_style_wms-messages]
+file_filter = plugins/org.locationtech.udig.style.wms/src/org/locationtech/udig/style/wms/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.style.wms/src/org/locationtech/udig/style/wms/internal/messages.properties
+source_lang = en
+
+[udig.udig_tool_default-messages]
+file_filter = plugins/org.locationtech.udig.tool.default/src/org/locationtech/udig/tools/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.tool.default/src/org/locationtech/udig/tools/internal/messages.properties
+source_lang = en
+
+[udig.udig_tool_edit-messages]
+file_filter = plugins/org.locationtech.udig.tool.edit/src/org/locationtech/udig/tool/edit/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.tool.edit/src/org/locationtech/udig/tool/edit/internal/messages.properties
+source_lang = en
+
+[udig.udig_tool_select-messages]
+file_filter = plugins/org.locationtech.udig.tool.select/src/org/locationtech/udig/tool/select/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.tool.select/src/org/locationtech/udig/tool/select/internal/messages.properties
+source_lang = en
+
+[udig.udig_ui-messages]
+file_filter = plugins/org.locationtech.udig.ui/src/org/locationtech/udig/ui/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.ui/src/org/locationtech/udig/ui/internal/messages.properties
+source_lang = en
+
+[udig.udig_validation-messages]
+file_filter = plugins/org.locationtech.udig.validation/src/org/locationtech/udig/validation/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.validation/src/org/locationtech/udig/validation/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_jgrass-messages]
+file_filter = plugins/org.locationtech.udig.catalog.jgrass/src/org/locationtech/udig/catalog/jgrass/messages/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.jgrass/src/org/locationtech/udig/catalog/jgrass/messages/messages.properties
+source_lang = en
+
+[udig.udig_catalog_kml-messages]
+file_filter = plugins/org.locationtech.udig.catalog.kml/src/main/java/org.locationtech.udig/catalog/kml/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.kml/src/main/java/org.locationtech.udig/catalog/kml/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_teradata-messages]
+file_filter = plugins/org.locationtech.udig.catalog.teradata/src/org/locationtech/udig/catalog/teradata/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.teradata/src/org/locationtech/udig/catalog/teradata/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_teradata-bundle]
+file_filter = plugins/org.locationtech.udig.catalog.teradata/OSGI-INF/l10n/bundle_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.teradata/OSGI-INF/l10n/bundle.properties
+source_lang = en
+
+[udig.udig_image_georeferencing-messages]
+file_filter = plugins/org.locationtech.udig.image.georeferencing/src/org/locationtech/udig/image/georeferencing/internal/i18n/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.image.georeferencing/src/org/locationtech/udig/image/georeferencing/internal/i18n/messages.properties
+source_lang = en
+
+[udig.udig_omsbox-messages]
+file_filter = plugins/org.locationtech.udig.omsbox/src/i18n/omsbox/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.omsbox/src/i18n/omsbox/messages.properties
+source_lang = en
+
+[udig.udig_style_advanced-messages]
+file_filter = plugins/org.locationtech.udig.style.advanced/src/org/locationtech/udig/style/advanced/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.style.advanced/src/org/locationtech/udig/style/advanced/internal/messages.properties
+source_lang = en
+
+[udig.udig_style_jgrass-messages]
+file_filter = plugins/org.locationtech.udig.style.jgrass/src/org/locationtech/udig/style/jgrass/messages/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.style.jgrass/src/org/locationtech/udig/style/jgrass/messages/messages.properties
+source_lang = en
+
+[udig.udig_tools-messages]
+file_filter = plugins/org.locationtech.udig.tools/src/org/locationtech/udig/tools/internal/i18n/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.tools/src/org/locationtech/udig/tools/internal/i18n/messages.properties
+source_lang = en
+
+[udig.udig_tools_jgrass-messages]
+file_filter = plugins/org.locationtech.udig.tools.jgrass/src/org/locationtech/udig/tools/jgrass/i18n/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.tools.jgrass/src/org/locationtech/udig/tools/jgrass/i18n/messages.properties
+source_lang = en
+
+[udig.udig_bookmarks-messages]
+file_filter = plugins/org.locationtech.udig.bookmarks/src/org/locationtech/udig/bookmarks/internal/messages_<lang>.properties
+source_file = plugins/org.locationtech.udig.bookmarks/src/org/locationtech/udig/bookmarks/internal/messages.properties
+source_lang = en
+
+[udig.udig_catalog_geotools-plugin]
+file_filter = plugins/org.locationtech.udig.catalog.geotools/plugin_<lang>.properties
+source_file = plugins/org.locationtech.udig.catalog.geotools/plugin.properties
+source_lang = en
+
+[udig.udig_jconsole-plugin]
+file_filter = plugins/org.locationtech.udig.jconsole/src/org/locationtech/udig/jconsole/JavaEditorMessages_<lang>.properties
+source_file = plugins/org.locationtech.udig.jconsole/src/org/locationtech/udig/jconsole/JavaEditorMessages.properties
+source_lang = en

@@ -1,0 +1,141 @@
+<project name="translations" default="full">
+    <!-- 
+
+    use this ant script to synchronize translated properties files from
+    Transifex (www.transifex.com) into the working copy.
+
+    Its possible to synchronize every translation file from Transifex or
+    just a specific language. With an other option you can secify, which
+    kind of properties will be synchronized (reviewed, translator or 
+    developer - further details : 
+       http://help.transifex.com/features/client/#user-client-08-mode)
+
+
+    Options (as properties argument '-D'):
+
+      tx.language : synchronize only the specifc language country code (see 
+                    ISO 639-1 code at http://en.wikipedia.org/wiki/Language_localisation)
+
+      tx.mode     : NOTE!!! This option requires transifex client tool in version 0.8++
+                    mode to define which status the translated properties have.
+                    
+    execution examples:
+
+     * sychronize every translated language
+
+        ant -f transifex-sync.xml
+
+
+     * sychronize a specific language, in this case German
+
+        ant -f transifex-sync.xml -Dtx.language=de
+
+
+     * sychronize a specific language and only reviewed properties, ignore all others
+
+        ant -f transifex-sync.xml -Dtx.language=de -Dtx.mode=reviewed
+
+    -->
+
+    <target name="init">
+        <property environment="env"/>
+
+        <!-- set geoserver root dir of cloned repository path -->
+        <property name="tx.exec.dir" location="${basedir}/../"/>
+
+        <echo message="Root folder where tx client tool will be executed is ${tx.exec.dir}"/>
+
+        <!-- TODO check whether the .tx folder exists in geoserver root dir -->
+
+        <condition property="tx.available" else="false">
+            <or>
+                <and>
+                    <and>
+                        <os family="unix" />
+                    </and>
+                    <or>
+                        <available file="tx" filepath="${env.PATH}"/>
+                        <available file="tx.exe" filepath="${env.PATH}"/>
+                    </or>
+                    <available file="config" filepath="${tx.exec.dir}/.tx/"/>
+                </and>
+                <and>
+                    <and>
+                        <os family="windows" />
+                    </and>
+                    <or>
+                        <available file="tx" filepath="${env.Path}"/>
+                        <available file="tx.exe" filepath="${env.Path}"/>
+                    </or>
+                    <available file="config" filepath="${tx.exec.dir}/.tx/"/>
+                </and>
+            </or>
+        </condition>
+
+        <condition property="tx.languageIsntSet">
+           <not>
+               <isset property="tx.language"/>
+           </not>
+        </condition>
+
+        <condition property="tx.modeIsntSet">
+           <not>
+               <isset property="tx.mode"/>
+           </not>
+        </condition>
+
+        <echo message="Transifex environment available : ${tx.available}" />
+        <echo message="   if not, please check the path for the client tool" />
+        <echo message="   or required config file at ${tx.exec.dir}/.tx/" />
+        <echo message="   For further information visit Transifex help : http://help.transifex.com/features/client/"/>
+    </target>
+
+    <target name="full" depends="init">
+       <antcall target="tx-all"/>
+       <antcall target="tx-language"/>
+    </target>
+
+    <target name="tx-all" if="tx.languageIsntSet">
+        <antcall target="tx-mode">
+            <param name="language.option" value=""/>
+            <param name="language.setting" value=""/>
+        </antcall>
+        <antcall target="tx-no-mode">
+            <param name="language.option" value=""/>
+            <param name="language.setting" value=""/>
+        </antcall>
+    </target>
+
+    <target name="tx-language" if="tx.language">
+        <antcall target="tx-mode">
+            <param name="language.option" value="-l"/>
+            <param name="language.setting" value="${tx.language}"/>
+        </antcall>
+        <antcall target="tx-no-mode">
+            <param name="language.option" value="-l"/>
+            <param name="language.setting" value="${tx.language}"/>
+        </antcall>
+    </target>
+
+    <target name="tx-mode" if="tx.mode">
+        <antcall target="tx">
+            <param name="mode.option" value="--mode"/>
+            <param name="mode.setting" value="${tx.mode}"/>
+        </antcall>
+    </target>
+
+    <target name="tx-no-mode" if="tx.modeIsntSet">
+        <antcall target="tx">
+            <param name="mode.option" value=""/>
+            <param name="mode.setting" value=""/>
+        </antcall>
+    </target>
+
+    <target name="tx" if="tx.available">
+        <echo message="pull -f --skip ${language.option} ${language.setting} ${mode.option} ${mode.setting}"/>
+        <exec executable="tx" failonerror="true" dir="${tx.exec.dir}">
+            <arg line="pull -f --skip ${language.option} ${language.setting} ${mode.option} ${mode.setting}"/>
+        </exec>
+    </target>
+
+</project>
