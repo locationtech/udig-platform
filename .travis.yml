@@ -14,8 +14,8 @@ cache:
   directories:
   - $HOME/.m2
 install:
-  - "pip install 'requests[security]'"
-  - "pip install -q sphinx==1.1.3"
+  - "sudo pip install 'requests[security]'"
+  - "sudo pip install -q sphinx==1.1.3"
   - "travis_wait mvn install --quiet -B -f pom-libs.xml -DskipTests=true" #download dependencies
   - "travis_wait mvn install --quiet -B -f docs/pom.xml -Dtycho.mode=maven -Pdocs" #build documentation using sphinx
 
