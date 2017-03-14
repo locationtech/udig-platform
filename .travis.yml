@@ -17,13 +17,10 @@ install:
   - "sudo pip install 'requests[security]'"
   - "sudo pip install -q sphinx==1.1.3"
   - "travis_wait mvn install -B -f docs/pom.xml -Dtycho.mode=maven -Pdocs" #build documentation using sphinx
-#- "travis_wait mvn install -B -f pom-libs.xml -DskipTests=true" #download dependencies
+  - "travis_wait mvn install -B -f pom-libs.xml -DskipTests=true" #download dependencies
 
 script: 
-  - "python -V"
-  - "py -V"
-  - 
-  - "travis_wait mvn install --quiet -B -Pproduct -Psdk"
+  - "travis_wait mvn install -B -Pproduct -Psdk"
 
 notifications:
   email:
