@@ -10,14 +10,28 @@ env:
   global:
     - MAVEN_OPTS="-Xmx4096m -XX:MaxPermSize=512m"
     - TRAVIS_PYTHON_VERSION="2.7"
+    - MVN_VERION="3.3.9"
 cache:
   directories:
   - $HOME/.m2
+
+before_install:
+  - wget http://apache.claz.org/maven/maven-3/${MVN_VERION}/binaries/apache-maven-${MVN_VERION}-bin.tar.gz
+  - tar zxvf apache-maven-${MVN_VERION}-bin.tar.gz
+  - chmod +x apache-maven-${MVN_VERION}/bin/mvn
+  - export M2_HOME=$PWD/apache-maven-${MVN_VERION}
+  - export PATH=$PWD/apache-maven-${MVN_VERION}/bin:${PATH}
+  - hash -r
 install:
   - "sudo pip install 'requests[security]'"
   - "sudo pip install -q sphinx==1.1.3"
   - "travis_wait mvn install -B -f docs/pom.xml -Dtycho.mode=maven -Pdocs" #build documentation using sphinx
   - "travis_wait mvn install -B -f pom-libs.xml -DskipTests=true" #download dependencies
+
+before_script:
+  - export M2_HOME=$PWD/apache-maven-${MVN_VERION}
+  - export PATH=$PWD/apache-maven-${MVN_VERION}/bin:${PATH}
+  - hash -r
 
 script: 
   - "travis_wait mvn install -B -Pproduct -Psdk -T 4"
