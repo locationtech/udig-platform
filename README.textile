@@ -152,11 +152,11 @@ uDig makes use of a target platform, in order to download and reference bundles 
 
 Here is how to set that up:
 
-1. Use the **Import Existing Projects** wizard to import the targets/indigo project into workspace.
+1. Use the **Import Existing Projects** wizard to import the "extras/org.locationtech.udig.target":extras/org.locationtech.udig.target project into workspace.
 
 !extras/images/import_projects_targets.png!
 
-2. Open up udig-indigo-target.target and click on Set as Target Platform
+2. Open up "org.locationtech.udig.target.target":extras/org.locationtech.udig.target/org.locationtech.udig.target.target and click on Set as Target Platform
 
 !extras/images/target.png!
 
@@ -177,7 +177,7 @@ Later if there is a need to work offline you can easily create a new target plat
 
 4. Once the target platform is finished you can import the remaining uDig projects.
 
-5. Open up *org.locationtech.udig/udig.product* and click *Launch the product*
+5. Open up "org.locationtech.udig/udig.product":plugins/org.locationtech.udig/udig.product and click *Launch the product*
 
 !extras/images/product.png!
 
