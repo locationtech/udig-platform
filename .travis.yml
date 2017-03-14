@@ -10,10 +10,10 @@ cache:
   directories:
   - $HOME/.m2
 install:
-  - "travis_wait mvn install --quiet --batch-mode -V -DskipTests=true -f pom-libs.xml" #download dependencies
-  - "travis_wait mvn install --quiet --batch-mode -V -f docs/pom.xml --batch --quiet -Dtycho.mode=maven -Pdocs" #build documentation using sphinx
+  - "travis_wait mvn install --quiet -B -f pom-libs.xml -DskipTests=true" #download dependencies
+  - "travis_wait mvn install --quiet -B -f docs/pom.xml -Dtycho.mode=maven -Pdocs" #build documentation using sphinx
 
-script: "travis_wait mvn install --batch --quiet -Pproduct -Psdk -B -V"
+script: "travis_wait mvn install --quiet -B -Pproduct -Psdk"
 
 notifications:
   email:
