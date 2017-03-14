@@ -1,7 +1,7 @@
 sudo: true
 language: java
 jdk:
-  - openjdk8 # just run openJdk - oraclejdk7
+  - oraclejdk8 # just run openJdk - oraclejdk7
 
 python:
   - "2.7"
