@@ -8,7 +8,6 @@ python:
 
 env:
   global:
-    - MAVEN_OPTS="-Xmx8g -XX:-UseGCOverheadLimit"
     - TRAVIS_PYTHON_VERSION="2.7"
     - MVN_VERION="3.3.9"
 cache:
@@ -16,6 +15,7 @@ cache:
   - $HOME/.m2
 
 before_install:
+  - echo "MAVEN_OPTS='-Xmx8g -XX:-UseGCOverheadLimit'" > ~/.mavenrc
   - wget http://apache.claz.org/maven/maven-3/${MVN_VERION}/binaries/apache-maven-${MVN_VERION}-bin.tar.gz
   - tar zxvf apache-maven-${MVN_VERION}-bin.tar.gz
   - chmod +x apache-maven-${MVN_VERION}/bin/mvn
