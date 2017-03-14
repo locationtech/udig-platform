@@ -20,7 +20,7 @@ install:
   - "travis_wait mvn install -B -f pom-libs.xml -DskipTests=true" #download dependencies
 
 script: 
-  - "travis_wait mvn install -B -Pproduct -Psdk"
+  - "travis_wait mvn install -B -Pproduct -Psdk -T 4"
 
 notifications:
   email:
