@@ -1,14 +1,14 @@
 sudo: true
 language: java
 jdk:
-  - openjdk7 # just run openJdk - oraclejdk7
+  - openjdk8 # just run openJdk - oraclejdk7
 
 python:
   - "2.7"
 
 env:
   global:
-    - MAVEN_OPTS="-Xmx4096m -XX:MaxPermSize=512m"
+    - MAVEN_OPTS="-Xmx8g -XX:-UseGCOverheadLimit"
     - TRAVIS_PYTHON_VERSION="2.7"
     - MVN_VERION="3.3.9"
 cache:
