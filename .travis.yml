@@ -8,7 +8,7 @@ python:
 
 env:
   global:
-    - MAVEN_OPTS="-Xmx2g"
+    - MAVEN_OPTS="-Xmx4096m -XX:MaxPermSize=512m"
     - TRAVIS_PYTHON_VERSION="2.7"
 cache:
   directories:
