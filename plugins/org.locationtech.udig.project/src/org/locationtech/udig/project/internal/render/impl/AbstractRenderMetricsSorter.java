@@ -100,16 +100,32 @@ public class AbstractRenderMetricsSorter implements Comparator<AbstractRenderMet
         int first = -1;
         int last = 1;
 
-        // check the layer/map blackboard for a preferred or non-preferred renderer
-        int perferredMapRenderer = rateUsingBlackboardSettings(o1, o1.getRenderContext().getMap()
+        // check the layer blackboard for a preferred or non-preferred renderer
+        int perferredMapRenderer = rateUsingBlackboardSettings(o1, o1.getRenderContext().getLayer()
                 .getBlackboard());
-        if (perferredMapRenderer > 0) {
+        int perferredMapRenderer2 = rateUsingBlackboardSettings(o2, o2.getRenderContext().getLayer()
+                .getBlackboard());        
+        if (perferredMapRenderer > perferredMapRenderer2) {
             return first;
         }
-        if (perferredMapRenderer < 0) {
+        if (perferredMapRenderer < perferredMapRenderer2) {
+            return last;
+        }
+        
+        // check the map blackboard for a preferred or non-preferred renderer
+        perferredMapRenderer = rateUsingBlackboardSettings(o1, o1.getRenderContext().getMap()
+                .getBlackboard());
+        perferredMapRenderer2 = rateUsingBlackboardSettings(o2, o2.getRenderContext().getMap()
+                .getBlackboard());  
+        if (perferredMapRenderer > perferredMapRenderer2) {
+            return first;
+        }
+        if (perferredMapRenderer < perferredMapRenderer2) {
             return last;
         }
 
+        //if no BlackboardSettings exist to influence the renderer choice then
+        //compute a rate for each metric and compare
         double r1 = rate(o1);
         double r2 = rate(o2);
 
