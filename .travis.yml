@@ -47,5 +47,4 @@ notifications:
     template: "%{repository} (%{branch}:%{commit}): %{message} (%{build_url})"
 branches:
   only:
-    - enable-travis-build
     - master
