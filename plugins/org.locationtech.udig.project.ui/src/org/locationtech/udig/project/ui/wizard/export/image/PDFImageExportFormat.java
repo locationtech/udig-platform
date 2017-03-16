@@ -29,10 +29,13 @@ import org.eclipse.swt.widgets.Spinner;
  * A strategy for exporting to PDF
  *
  * @author jesse
+ * @author Frank Gasdorf
  * @since 1.1.0
  */
 public class PDFImageExportFormat extends ImageExportFormat {
 
+    private static final int PDF_DEFAULT_USER_UNIT = 72;
+    
     private Combo dpiCombo;
     private Spinner topMarginSpinner;
     private Spinner lowerMarginSpinner;
@@ -57,8 +60,8 @@ public class PDFImageExportFormat extends ImageExportFormat {
     @Override
     public void write( IMap map, BufferedImage image, File destination ) {
         Image2Pdf.write(image, destination.getAbsolutePath(), paper(),
-                this.leftMarginSpinner.getSelection(),
-                this.topMarginSpinner.getSelection(), landscape());
+                Paper.toPixels(this.leftMarginSpinner.getSelection(), PDF_DEFAULT_USER_UNIT),
+                Paper.toPixels(this.topMarginSpinner.getSelection(), PDF_DEFAULT_USER_UNIT), landscape());
     }
 
     @Override
@@ -171,18 +174,20 @@ public class PDFImageExportFormat extends ImageExportFormat {
 
     @Override
     public int getHeight( double mapwidth, double mapheight ) {
+        // ignore viewport size of the current map and use paper format instead
         int paperHeight = paper().getPixelHeight(landscape(), getDPI());
-        int topMargin = topMarginSpinner.getSelection();
-        int lowerMargin = lowerMarginSpinner.getSelection();
+        int topMargin = Paper.toPixels(topMarginSpinner.getSelection(), PDF_DEFAULT_USER_UNIT);
+        int lowerMargin = Paper.toPixels(lowerMarginSpinner.getSelection(), PDF_DEFAULT_USER_UNIT);
 
         return paperHeight - topMargin - lowerMargin;
     }
 
     @Override
     public int getWidth( double mapwidth, double mapheight ) {
+        // ignore viewport size of the current map and use paper format instead
         int paperWidth = paper().getPixelWidth(landscape(), getDPI());
-        int rightMargin = rightMarginSpinner.getSelection();
-        int leftMargin = leftMarginSpinner.getSelection();
+        int rightMargin = Paper.toPixels(rightMarginSpinner.getSelection(), PDF_DEFAULT_USER_UNIT);
+        int leftMargin = Paper.toPixels(leftMarginSpinner.getSelection(), PDF_DEFAULT_USER_UNIT);
 
         return paperWidth - rightMargin - leftMargin;
     }
