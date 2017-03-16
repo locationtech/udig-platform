@@ -12,9 +12,7 @@ package org.locationtech.udig.project.ui.wizard.export.image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.ui.internal.Messages;
-
+import org.eclipse.draw2d.geometry.Insets;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -24,6 +22,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.internal.Messages;
 
 /**
  * A strategy for exporting to PDF
@@ -60,8 +60,12 @@ public class PDFImageExportFormat extends ImageExportFormat {
     @Override
     public void write( IMap map, BufferedImage image, File destination ) {
         Image2Pdf.write(image, destination.getAbsolutePath(), paper(),
-                Paper.toPixels(this.leftMarginSpinner.getSelection(), PDF_DEFAULT_USER_UNIT),
-                Paper.toPixels(this.topMarginSpinner.getSelection(), PDF_DEFAULT_USER_UNIT), landscape());
+               new Insets(
+                       Paper.toPixels(this.topMarginSpinner.getSelection(), PDF_DEFAULT_USER_UNIT),
+                       Paper.toPixels(this.leftMarginSpinner.getSelection(), PDF_DEFAULT_USER_UNIT),
+                       Paper.toPixels(this.lowerMarginSpinner.getSelection(), PDF_DEFAULT_USER_UNIT),
+                       Paper.toPixels(this.rightMarginSpinner.getSelection(), PDF_DEFAULT_USER_UNIT)
+                       ), landscape());
     }
 
     @Override

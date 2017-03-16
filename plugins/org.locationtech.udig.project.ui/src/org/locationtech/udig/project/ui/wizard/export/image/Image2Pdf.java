@@ -18,6 +18,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.eclipse.draw2d.geometry.Insets;
+
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Image;
@@ -34,20 +36,16 @@ public class Image2Pdf {
     /**
      * writes a buffered image to pdf at a given resolution
      *
-     *
      * @param image the image to write
      * @param pdfPath the path to the pdf document to create
      * @param paper the paper type
-     * @param widthMarginInPixel border in pixels to use on the x-axis
-     * @param heightMarginInPixel border in pixels to use on the y-axis
+     * @param marginBorder margins for left, right, top and bottom
      * @param lanscape true if the document should be in landscape mode
      */
     public static void write(BufferedImage image, String pdfPath, Paper paper,
-            int widthMarginInPixel, int heightMarginInPixel, boolean landscape) {
-
-        Rectangle documentPageSize = calculateSize(landscape, paper, 0, 0);
-        Rectangle imageSizeInPixel = calculateSize(landscape, paper, widthMarginInPixel,
-                heightMarginInPixel);
+            Insets marginBorder, boolean landscape) {
+        Rectangle documentPageSize = calculateSize(landscape, paper, null);
+        Rectangle imageSizeInPixel = calculateSize(landscape, paper, marginBorder);
 
         float imgHeightInPixel = imageSizeInPixel.getHeight();
         float imgWidthInPixel = imageSizeInPixel.getWidth();
@@ -65,9 +63,11 @@ public class Image2Pdf {
             doc.setPageSize(documentPageSize);
             doc.newPage(); // not needed for page 1, needed for >1
 
-
             // high in itext is measured from lower left
-            iTextImage.setAbsolutePosition(widthMarginInPixel, heightMarginInPixel);
+            int absoluteX = (marginBorder != null ? marginBorder.left : 0);
+            int absoluteY = (marginBorder != null ? marginBorder.bottom : 0);
+
+            iTextImage.setAbsolutePosition(absoluteX, absoluteY);
             iTextImage.scaleToFit(imgWidthInPixel, imgHeightInPixel);
             doc.add(iTextImage);
         } catch (DocumentException de) {
@@ -83,12 +83,10 @@ public class Image2Pdf {
     /**
      * @param landscape if the image is in landscape format
      * @param paper paper definition
-     * @param widthMarginInPixel right and left margin in pixel
-     * @param heightMarginInPixel top and bottom margin in pixel
+     * @param marginBorder margins for left, right, top and bottom
      * @return final image size to render
      */
-    private static Rectangle calculateSize(boolean landscape, Paper paper, int widthMarginInPixel,
-            int heightMarginInPixel) {
+    private static Rectangle calculateSize(boolean landscape, Paper paper, Insets marginBorder) {
         Rectangle rectangle = null;
         switch (paper) {
         case LETTER:
@@ -121,8 +119,10 @@ public class Image2Pdf {
         }
 
         // apply margins for the border
-        return new Rectangle(rectangle.getWidth() - (2 * widthMarginInPixel),
-                rectangle.getHeight() - (2 * heightMarginInPixel));
+        int marginWidth = (marginBorder != null ? marginBorder.left + marginBorder.right : 0);
+        int marginHeigth = (marginBorder != null ? marginBorder.top + marginBorder.bottom : 0);
+        return new Rectangle(rectangle.getWidth() - marginWidth,
+                rectangle.getHeight() - marginHeigth);
     }
 
     public static void main(String[] args) {
@@ -134,7 +134,8 @@ public class Image2Pdf {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        write(b, path + ".pdf", Paper.A1, 10, 10, false); //$NON-NLS-1$
+        write(b, path + ".pdf", Paper.A1, new Insets(10, 10, 10, 10), false); //$NON-NLS-1$
         System.out.println("finished"); //$NON-NLS-1$
     }
+
 }
