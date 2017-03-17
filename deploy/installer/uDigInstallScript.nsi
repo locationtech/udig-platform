@@ -36,6 +36,11 @@
 ;For more info on this file read the Users Manual, and especially the
 ;Modern UI Readme.  And check out the other examples, though I imagine this
 ;one will be the best...
+; makensis -DPLATFORM=win32 -DVERSION=2.0.0
+; default for PLATFORM is win64
+!define PLATFORM win64
+!define VERSION 2.0.0
+!define SOFTWARE_VERSION ${VERSION}
 
 ;--------------------------------
 ;Include Modern UI
@@ -47,18 +52,15 @@
 
   ;Name and file
   ; The following is changed by win32.sh
-  Name "uDig VersionXXXX"
-  OutFile "udig-VersionXXXX.exe"
+  Name "uDig ${SOFTWARE_VERSION}"
+  OutFile "udig-${SOFTWARE_VERSION}.exe"
   ;:TODO: End of changes required when upgrading installer to new version of uDIG.
 
 
-  ;Default installation folder
-  InstallDir "$PROGRAMFILES\uDig\VersionXXXX"
-  
   ;Get installation folder from registry if available - This will check the registry to see if an install directory
   ;is present, and if so, replace the value in InstallDir with it.  If there is no value, the installer will fall
   ;back on InstallDir as the default install directory.
-  InstallDirRegKey HKCU "Software\VersionXXXX" ""
+  InstallDirRegKey HKCU "Software\${SOFTWARE_VERSION}" ""
 
 ;--------------------------------
 ;Variables
@@ -120,7 +122,7 @@
   ;you like the uDig start menu
   ;Start Menu Folder Page Configuration
   !define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKCU" 
-  !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\uDigVersionXXXX" 
+  !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\uDig${SOFTWARE_VERSION}" 
   !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
   
   !insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
@@ -146,7 +148,6 @@
 
 Section "uDig Section" SecuDig
 
-
   SetOutPath "$INSTDIR"
   
   ;This is where the files to add are.  You could change this to run in
@@ -158,7 +159,7 @@ Section "uDig Section" SecuDig
   File /r udig
     
   ;Store installation folderh
-  WriteRegStr HKCU "Software\uDigVersionXXXX" "" $INSTDIR
+  WriteRegStr HKCU "Software\uDig${SOFTWARE_VERSION}" "" $INSTDIR
   
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -214,7 +215,7 @@ Section "uDig Section" SecuDig
      DONE:
     SetOutPath "$INSTDIR\udig\"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\uDig.lnk" \
-                   "$INSTDIR\udig\udig.bat" "-data $\"%HOMEDRIVE%%HOMEPATH%\uDig\$\" -configuration $\"%APPDATA%\udig\VersionXXXX\$\" -vm $\"$INSTDIR\udig\jre\bin\javaw.exe$\"" \
+                   "$INSTDIR\udig\udig.bat" "-data $\"%HOMEDRIVE%%HOMEPATH%\uDig\$\" -configuration $\"%APPDATA%\udig\${SOFTWARE_VERSION}\$\" -vm $\"$INSTDIR\udig\jre\bin\javaw.exe$\"" \
                    "$INSTDIR\udig\icons\32-uDigIcon.ico" 0 SW_SHOWNORMAL
 
     ;Set path back to normal
@@ -246,6 +247,15 @@ Function .onInit
 
    ClearErrors
 
+   ; Default installation folder and correct Registry access
+   !if ${PLATFORM} == win64
+     StrCpy $INSTDIR $PROGRAMFILES64\uDig\${SOFTWARE_VERSION}
+     SetRegView 64
+   !else
+     StrCpy $INSTDIR $PROGRAMFILES\uDig\${SOFTWARE_VERSION}
+     SetRegView 32
+   !endif 
+
 ; Splash screen
   SetOutPath $TEMP
   File /oname=spltmp.bmp "splash.bmp"
@@ -275,7 +285,7 @@ Section "Uninstall"
   RMDIR "$INSTDIR\.."
 
   ;REMOVE THE CONFIGURATION DATA 
-  RMDIR /r "$APPDATA\uDig\uDigVersionXXXX"
+  RMDIR /r "$APPDATA\uDig\uDig${SOFTWARE_VERSION}"
   ;WILL REMOVE IF THERE ARE NO MORE UDIG INSTALLS
   RMDIR "$APPDATA\uDig"
   
@@ -308,7 +318,7 @@ Section "Uninstall"
     
   RMDIR /r "$SMPROGRAMS\$MUI_TEMP"
 
-  DeleteRegKey /ifempty HKCU "Software\uDigVersionXXXX"
+  DeleteRegKey /ifempty HKCU "Software\uDig${SOFTWARE_VERSION}"
 
 SectionEnd
 

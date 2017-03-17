@@ -102,43 +102,41 @@ function prepare_resources () {
 }
 
 function windows_installer () {
+
+    NSIS_PARA_PRE="/"
     MAKENSIS=`which makensis`
     if [ $? == 0 ] ; then
-        HERE=`pwd`
-        # todo use sed or something to update VERSION inside uDigInstallScript.nsi
-        
-        cp ${INSTALLER}/* ${BUILD}/${PLATFORM}
-        cp ${INSTALLER}/*.txt ${BUILD}/${PLATFORM}
-        cp ${INSTALLER}/*.bmp ${BUILD}/${PLATFORM}
-        cp ${INSTALLER}/udig/icons ${BUILD}/${PLATFORM}/icons
-        
-        sed -e "s/VersionXXXX/${VERSION}/g" ${INSTALLER}/uDigInstallScript.nsi > ${BUILD}/${PLATFORM}/uDigInstallScript.nsi
-        
-        cd ${BUILD}/${PLATFORM}
-        makensis "-NOCD" uDigInstallScript.nsi
-        cd ${HERE}
-        cp ${BUILD}/${PLATFORM}/udig-*.exe ${BUILD}/udig-${VERSION}.${EXT}.exe
+	NSIS_PARA_PRE="-"
+        TOOL="makensis -NOCD"
     else
         WINE=`which wine`
         if [ $? == 0 ] ; then
-            cp installer/* ${BUILD}/${PLATFORM}/
-            HERE=`pwd`
             if [ ! -f "${TOOL}" ] ; then
                 TOOL=`find $HOME/.wine -name makensis.exe|sed -n 1p`
             fi
     
             if [ -f "${TOOL}" ] ; then
-                cd ${BUILD}/${PLATFORM}
-                $WINE "${TOOL}" "/NOCD" uDigInstallScript.nsi
-                cd ${HERE}
-                cp ${BUILD}/${PLATFORM}/udig-*.exe ${BUILD}/udig-${VERSION}.${EXT}.exe
+                TOOL="${WINE} ${TOOL} /NOCD"
             else
                 echo "makensisw.exe cannot be found"
+                return 1
             fi
         else 
             echo "wine is not installed so not creating windows installer"
+            return 1
         fi
     fi
+
+    HERE=`pwd`
+    cp ${INSTALLER}/* ${BUILD}/${PLATFORM}
+    cp ${INSTALLER}/*.txt ${BUILD}/${PLATFORM}
+    cp ${INSTALLER}/*.bmp ${BUILD}/${PLATFORM}
+    cp ${INSTALLER}/udig/icons ${BUILD}/${PLATFORM}/icons
+
+    cd ${BUILD}/${PLATFORM}
+    $TOOL uDigInstallScript.nsi ${NSIS_PARA_PRE}DPLATFORM=${PLATFORM} ${NSIS_PARA_PRE}DVERSION=${VERSION}
+    cd ${HERE}
+    cp ${BUILD}/${PLATFORM}/udig-*.exe ${BUILD}/udig-${VERSION}.${EXT}.exe
 }
 
 
