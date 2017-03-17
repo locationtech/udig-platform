@@ -30,36 +30,10 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.ICatalog;
-import org.locationtech.udig.catalog.ID;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.IServiceFactory;
-import org.locationtech.udig.core.internal.CorePlugin;
-import org.locationtech.udig.mapgraphic.style.LocationStyleContent;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.LayerFactory;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.render.RenderException;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.BoundsStrategy;
-import org.locationtech.udig.project.ui.SelectionStyle;
-import org.locationtech.udig.project.ui.ApplicationGIS.DrawMapParameter;
-import org.locationtech.udig.project.ui.internal.Messages;
-import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
-import org.locationtech.udig.project.ui.wizard.export.image.Image2Pdf;
-import org.locationtech.udig.project.ui.wizard.export.image.ImageExportPage;
-import org.locationtech.udig.project.ui.wizard.export.image.MapSelectorPageWithScaleColumn;
-import org.locationtech.udig.project.ui.wizard.export.image.PDFImageExportFormat;
-import org.locationtech.udig.project.ui.wizard.export.image.Paper;
-import org.locationtech.udig.project.ui.wizard.export.image.XAffineTransform;
-import org.locationtech.udig.style.sld.editor.DialogSettingsStyleContent;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.draw2d.geometry.Insets;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -74,9 +48,34 @@ import org.geotools.data.DataUtilities;
 import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
-import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceFactory;
+import org.locationtech.udig.core.internal.CorePlugin;
+import org.locationtech.udig.mapgraphic.style.LocationStyleContent;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerFactory;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.ApplicationGIS.DrawMapParameter;
+import org.locationtech.udig.project.ui.BoundsStrategy;
+import org.locationtech.udig.project.ui.SelectionStyle;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.wizard.export.image.Image2Pdf;
+import org.locationtech.udig.project.ui.wizard.export.image.ImageExportPage;
+import org.locationtech.udig.project.ui.wizard.export.image.MapSelectorPageWithScaleColumn;
+import org.locationtech.udig.project.ui.wizard.export.image.PDFImageExportFormat;
+import org.locationtech.udig.project.ui.wizard.export.image.Paper;
+import org.locationtech.udig.project.ui.wizard.export.image.XAffineTransform;
+import org.locationtech.udig.style.sld.editor.DialogSettingsStyleContent;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -196,11 +195,10 @@ public class SivecoExportMapToImageWizard extends Wizard implements IExportWizar
         
         Image2Pdf.write(image, 
                         dest.getAbsolutePath(), 
-                        paper, 
-                        10, /*top and bottom margin*/
-                        10, /*left and right margin*/
-                        isLandscape,
-                        dpi);
+                        paper,
+                        /* top, left, bottom and right margin*/
+                        new Insets(10, 10, 10, 10),
+                        isLandscape);
 	    
         monitor.done();
         
