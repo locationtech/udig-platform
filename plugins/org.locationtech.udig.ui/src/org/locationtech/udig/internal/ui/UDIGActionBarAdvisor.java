@@ -153,6 +153,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
 
         IMenuManager editMenu = new MenuManager(Messages.UDIGWorkbenchAdvisor_edit,
                 IWorkbenchActionConstants.M_EDIT);
+        editMenu.add(new GroupMarker(IWorkbenchActionConstants.FIND_EXT));
         fillEditMenu(editMenu);
         menuBar.add(editMenu);
 
