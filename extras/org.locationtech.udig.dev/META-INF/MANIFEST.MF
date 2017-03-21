@@ -1,8 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Developers Documentation Plug-in
-Bundle-SymbolicName: org.locationtech.udig.dev;singleton:=true
-Bundle-Version: 1.5.0.qualifier
-Bundle-Vendor: udig.refractions.net
-Bundle-Localization: plugin
-Eclipse-LazyStart: true
