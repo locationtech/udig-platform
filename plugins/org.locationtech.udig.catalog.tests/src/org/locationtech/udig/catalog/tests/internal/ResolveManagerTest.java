@@ -19,8 +19,7 @@ import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.IResolveAdapterFactory;
 import org.locationtech.udig.catalog.IResolveManager;
-import org.locationtech.udig.catalog.tests.DummyService;
-
+import org.locationtech.udig.catalog.testsupport.DummyService;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Test;

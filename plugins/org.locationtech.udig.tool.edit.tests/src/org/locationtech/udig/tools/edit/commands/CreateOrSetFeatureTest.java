@@ -17,8 +17,7 @@ import java.awt.Dimension;
 import org.locationtech.udig.core.internal.FeatureUtils;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.MapTests;
-
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureSource;
 import org.geotools.factory.CommonFactoryFinder;

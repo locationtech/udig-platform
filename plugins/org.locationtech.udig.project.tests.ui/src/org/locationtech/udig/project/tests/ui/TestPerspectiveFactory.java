@@ -22,6 +22,8 @@ import org.junit.Ignore;
  */
 @Ignore
 public class TestPerspectiveFactory implements IPerspectiveFactory {
+    
+    public static final String ID = "org.locationtech.udig.project.tests.ui.perspective.test";
 
     public void createInitialLayout( IPageLayout layout ) {
         

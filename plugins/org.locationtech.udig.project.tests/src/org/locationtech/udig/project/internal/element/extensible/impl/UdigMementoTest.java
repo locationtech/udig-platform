@@ -18,10 +18,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import org.locationtech.udig.project.memento.UdigMemento;
-
 import org.eclipse.ui.IMemento;
 import org.junit.Test;
+import org.locationtech.udig.project.memento.UdigMemento;
 
 @SuppressWarnings("nls")
 public class UdigMementoTest {

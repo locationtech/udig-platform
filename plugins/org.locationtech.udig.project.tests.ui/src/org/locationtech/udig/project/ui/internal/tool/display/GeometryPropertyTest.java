@@ -16,21 +16,20 @@ import static org.junit.Assert.assertTrue;
 
 import java.net.URL;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.tests.CatalogTests;
+import org.locationtech.udig.catalog.testsupport.CatalogTests;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.locationtech.udig.ui.operations.IOpFilterListener;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 public class GeometryPropertyTest {
 

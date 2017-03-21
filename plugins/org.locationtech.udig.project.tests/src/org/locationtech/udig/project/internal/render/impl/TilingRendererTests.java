@@ -10,7 +10,7 @@
  */
 package org.locationtech.udig.project.internal.render.impl;
 
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.testsupport.AbstractProjectTestCase;
 
 public class TilingRendererTests extends AbstractProjectTestCase {
 

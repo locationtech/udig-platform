@@ -15,15 +15,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.util.Range;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.render.Renderer;
 import org.locationtech.udig.project.render.AbstractRenderMetrics;
 import org.locationtech.udig.project.render.IRenderContext;
 import org.locationtech.udig.project.render.IRenderMetricsFactory;
 import org.locationtech.udig.project.render.IRenderer;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.util.Range;
 
 /**
  * A Rendermetrics factory that makes a RenderMetrics that behaves badly which makes a renderer that

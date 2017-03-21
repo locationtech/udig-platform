@@ -14,12 +14,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.awt.Dimension;
 
-import org.locationtech.udig.project.tests.support.TestMapDisplay;
+import org.locationtech.udig.project.testsupport.TestMapDisplay;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.tools.edit.support.Point;
 import org.locationtech.udig.tools.edit.support.TestHandler;
 import org.locationtech.udig.tools.edit.support.TestMouseTracker;
-
 import org.junit.Test;
 
 public class MouseTrackerTest {

@@ -21,12 +21,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.geotools.data.FeatureStore;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.factory.GeoTools;
+import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
+import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.project.BlackboardEvent;
 import org.locationtech.udig.project.IBlackboard;
 import org.locationtech.udig.project.IBlackboardListener;
 import org.locationtech.udig.project.internal.EditManager;
-import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
 import org.locationtech.udig.project.ui.internal.tool.ToolContext;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
@@ -38,7 +49,6 @@ import org.locationtech.udig.tools.edit.support.EditBlackboardEvent;
 import org.locationtech.udig.tools.edit.support.EditGeom;
 import org.locationtech.udig.tools.edit.support.PrimitiveShape;
 import org.locationtech.udig.tools.edit.support.TestHandler;
-
 import org.geotools.data.FeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
@@ -78,6 +88,9 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
     
     @Before
     public void setUp() throws Exception {
+        List<Map> elements = ProjectPlugin.getPlugin().getProjectRegistry().getDefaultProject().getElements(Map.class);
+        elements.clear();
+        
         map=MapTests.createDefaultMap("Test",3,true,new Dimension(500,500)); //$NON-NLS-1$
         FeatureStore<SimpleFeatureType, SimpleFeature> resource = map.getLayersInternal().get(0).getResource(FeatureStore.class, null);
         features=resource.getFeatures();
@@ -94,6 +107,7 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
 			resource.modifyFeatures(defaultGeometry, fac.createPoint(c),
                     filterFactory.id(ids));
         }
+        System.out.println(map.getLayersInternal().get(0).getFeatureChanges().size());
         ((EditManager)map.getEditManager()).commitTransaction();
 
         handler=new TestHandler();
@@ -101,6 +115,11 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
         ((ToolContext)handler.getContext()).setRenderManagerInternal(map.getRenderManagerInternal());
     }
     
+    @After
+    public void tearDown() {
+        map.getLayersInternal().remove(0);
+        
+    }
     /*
      * Test method for 'org.locationtech.udig.tools.edit.mode.MoveVertexMode.isValid(EditToolHandler, MapMouseEvent, EventType)'
      */
@@ -142,7 +161,6 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'org.locationtech.udig.tools.edit.mode.MoveVertexMode.run(EditToolHandler, MapMouseEvent, EventType)'
      */
-    @Ignore
     @Test
     public void testRun() throws Exception {
         SelectFeatureBehaviour mode=new SelectFeatureBehaviour(new Class[]{Point.class}, BBOX.class);

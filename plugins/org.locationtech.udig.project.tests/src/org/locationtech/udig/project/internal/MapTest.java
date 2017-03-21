@@ -11,11 +11,10 @@ package org.locationtech.udig.project.internal;
 
 import java.awt.Dimension;
 
-import org.locationtech.udig.project.tests.support.MapTests;
-
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.junit.Before;
 import org.junit.Test;
+import org.locationtech.udig.project.testsupport.MapTests;
 
 /**
  * Test Map.

@@ -21,13 +21,12 @@ import java.util.List;
 
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.tests.DummyService;
+import org.locationtech.udig.catalog.testsupport.DummyService;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.render.impl.CompositeRenderContextImpl;
 import org.locationtech.udig.project.render.AbstractRenderMetrics;
-import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.locationtech.udig.render.internal.wms.basic.BasicWMSMetricsFactory2;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.ows.CRSEnvelope;
 import org.geotools.data.ows.Layer;

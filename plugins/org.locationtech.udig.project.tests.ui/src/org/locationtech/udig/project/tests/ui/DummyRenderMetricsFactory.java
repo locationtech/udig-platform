@@ -13,7 +13,7 @@ package org.locationtech.udig.project.tests.ui;
 import java.io.IOException;
 import java.util.List;
 
-import org.locationtech.udig.catalog.tests.DummyGeoResource;
+import org.locationtech.udig.catalog.testsupport.DummyGeoResource;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.render.Renderer;
 import org.locationtech.udig.project.render.AbstractRenderMetrics;

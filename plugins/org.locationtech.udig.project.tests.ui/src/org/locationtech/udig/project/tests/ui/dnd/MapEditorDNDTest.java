@@ -20,10 +20,17 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.geotools.data.memory.MemoryDataStore;
+import org.geotools.data.shapefile.ShapefileDataStore;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.tests.ui.CatalogTestsUIPlugin;
 import org.locationtech.udig.catalog.ui.ConnectionFactoryManager;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
 import org.locationtech.udig.internal.ui.UDIGControlDropListener;
 import org.locationtech.udig.internal.ui.UDIGDropHandler;
 import org.locationtech.udig.project.ILayer;
@@ -31,7 +38,7 @@ import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.IMapCompositionListener;
 import org.locationtech.udig.project.MapCompositionEvent;
 import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
 import org.locationtech.udig.project.ui.internal.MapEditorPart;
@@ -42,13 +49,6 @@ import org.locationtech.udig.ui.UDIGDragDropUtilities;
 import org.locationtech.udig.ui.ViewerDropLocation;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.eclipse.core.runtime.FileLocator;
-import org.geotools.data.memory.MemoryDataStore;
-import org.geotools.data.shapefile.ShapefileDataStore;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 public class MapEditorDNDTest extends AbstractProjectUITestCase {
 	
@@ -269,8 +269,8 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
     @Test
     public void testMultiGeoResources() throws Exception {
         Object data = new Object[]{ 
-                MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures("test1", 2), true), //$NON-NLS-1$
-                MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures("test2", 2), true) //$NON-NLS-1$
+                MapTests.createGeoResource(FeatureCreationTestUtil.createDefaultTestFeatures("test1", 2), true), //$NON-NLS-1$
+                MapTests.createGeoResource(FeatureCreationTestUtil.createDefaultTestFeatures("test2", 2), true) //$NON-NLS-1$
         };
                 
         int base = 0;

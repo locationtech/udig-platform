@@ -21,17 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.locationtech.udig.catalog.util.CatalogTestUtils;
-import org.locationtech.udig.catalog.wmsc.server.MockHttpResponse;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.internal.render.ViewportModel;
-import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
-import org.locationtech.udig.project.ui.tool.IToolContext;
-import org.locationtech.udig.tool.info.InfoTool;
-import org.locationtech.udig.tool.info.LayerPointInfo;
-import org.locationtech.udig.tool.info.internal.WMSDescribeLayer;
 import org.geotools.data.ows.HTTPResponse;
 import org.geotools.data.ows.Layer;
 import org.geotools.data.wms.WebMapServer;
@@ -42,6 +31,17 @@ import org.geotools.ows.ServiceException;
 import org.geotools.referencing.CRS;
 import org.junit.Before;
 import org.junit.Test;
+import org.locationtech.udig.catalog.testsupport.CatalogConnectionUtils;
+import org.locationtech.udig.catalog.wmsc.server.MockHttpResponse;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.tool.info.InfoTool;
+import org.locationtech.udig.tool.info.LayerPointInfo;
+import org.locationtech.udig.tool.info.internal.WMSDescribeLayer;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Envelope;
@@ -70,7 +70,7 @@ public class WMSBasicTest {
 	public void setUp() throws Exception {
                 stableWMS = new URL(
                         "http://vmap0.tiles.osgeo.org/wms/vmap0?SERVICE=wms&VERSION=1.1.0&REQUEST=GetCapabilities");
-                CatalogTestUtils.assumeNoConnectionException(stableWMS, 2000);
+                CatalogConnectionUtils.assumeNoConnectionException(stableWMS, 2000);
 
                 crs = CRS.decode("EPSG:4326");
 		

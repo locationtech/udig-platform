@@ -88,17 +88,19 @@ public class IssuesListPersister {
 
 				// persist bounds
 				ReferencedEnvelope bounds = issue.getBounds();
-				child.putString(MIN_X, Double.toString(bounds.getMinX()));
-				child.putString(MAX_X, Double.toString(bounds.getMaxX()));
-				child.putString(MIN_Y, Double.toString(bounds.getMinY()));
-				child.putString(MAX_Y, Double.toString(bounds.getMaxY()));
-				child.putString(CRS, bounds.getCoordinateReferenceSystem()
-						.toWKT());
+				if (bounds != null) {
+        				child.putString(MIN_X, Double.toString(bounds.getMinX()));
+        				child.putString(MAX_X, Double.toString(bounds.getMaxX()));
+        				child.putString(MIN_Y, Double.toString(bounds.getMinY()));
+        				child.putString(MAX_Y, Double.toString(bounds.getMaxY()));
+        				child.putString(CRS, bounds.getCoordinateReferenceSystem()
+        						.toWKT());
+				}
 
 				issue.getViewMemento(child.createChild(MEMENTO_VIEW_DATA));
 				issue.save(child.createChild(MEMENTO_ISSUE_DATA));
 			} catch (Throwable e) {
-				IssuesActivator.log("error when daving issue", e); //$NON-NLS-1$
+				IssuesActivator.log("error when saving issue", e); //$NON-NLS-1$
 			}
 		}
 		FileWriter fileWriter = new FileWriter(getLocalIssuesFile());

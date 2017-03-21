@@ -16,14 +16,13 @@ import static org.junit.Assert.assertNotNull;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.render.IRenderContext;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
 import org.junit.Before;
 import org.junit.Test;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.testsupport.AbstractProjectTestCase;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.opengis.feature.simple.SimpleFeature;
 
 public class RenderContextTest extends AbstractProjectTestCase {
@@ -32,7 +31,7 @@ public class RenderContextTest extends AbstractProjectTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		SimpleFeature[] features=UDIGTestUtil.createDefaultTestFeatures("testType", 3); //$NON-NLS-1$
+		SimpleFeature[] features=FeatureCreationTestUtil.createDefaultTestFeatures("testType", 3); //$NON-NLS-1$
 		Map map=MapTests.createNonDynamicMapAndRenderer(MapTests.createGeoResource(features,true), new Dimension(512,512));
 		context=map.getRenderManagerInternal().getRenderExecutor().getContext();
 	}

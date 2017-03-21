@@ -13,9 +13,8 @@ import java.io.IOException;
 
 import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.IResolveAdapterFactory;
-import org.locationtech.udig.catalog.tests.DummyGeoResource;
-import org.locationtech.udig.catalog.tests.DummyService;
-
+import org.locationtech.udig.catalog.testsupport.DummyGeoResource;
+import org.locationtech.udig.catalog.testsupport.DummyService;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**

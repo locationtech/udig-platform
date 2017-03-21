@@ -12,11 +12,11 @@ package org.locationtech.udig.catalog.tests.internal.wfs;
 
 import java.net.URL;
 
+import org.junit.Before;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.internal.wfs.WFSServiceExtension;
 import org.locationtech.udig.catalog.tests.AbstractServiceTest;
-import org.locationtech.udig.catalog.util.CatalogTestUtils;
-import org.junit.Before;
+import org.locationtech.udig.catalog.testsupport.CatalogConnectionUtils;
 
 /**
  * @author dzwiers
@@ -29,7 +29,7 @@ public class WFSServiceTest extends AbstractServiceTest {
     public void setUp() throws Exception {
         WFSServiceExtension fac = new WFSServiceExtension();
         URL url = new URL("http://demo.opengeo.org/geoserver/wfs?"); //$NON-NLS-1$
-        CatalogTestUtils.assumeNoConnectionException(url, 3000);
+        CatalogConnectionUtils.assumeNoConnectionException(url, 3000);
         service = fac.createService(url, fac.createParams(url));
     }
     

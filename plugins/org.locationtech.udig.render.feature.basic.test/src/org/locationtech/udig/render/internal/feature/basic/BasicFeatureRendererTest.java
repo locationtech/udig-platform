@@ -14,14 +14,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.awt.Dimension;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.render.impl.RenderContextImpl;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.project.tests.support.TestMapDisplay;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -30,6 +22,13 @@ import org.geotools.referencing.ReferencingFactoryFinder;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.render.impl.RenderContextImpl;
+import org.locationtech.udig.project.testsupport.AbstractProjectTestCase;
+import org.locationtech.udig.project.testsupport.MapTests;
+import org.locationtech.udig.project.testsupport.TestMapDisplay;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.referencing.crs.CRSFactory;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -125,7 +124,7 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
         
         linestring=(LineString) JTS.transform(linestring, CRS.findMathTransform(DefaultGeographicCRS.WGS84, crs, true));
         
-        SimpleFeature[] features = UDIGTestUtil.createTestFeatures("testBC_ALBERS_Viewport", new Geometry[]{ //$NON-NLS-1$
+        SimpleFeature[] features = FeatureCreationTestUtil.createTestFeatures("testBC_ALBERS_Viewport", new Geometry[]{ //$NON-NLS-1$
                 linestring
         }
         , null, crs);
@@ -165,7 +164,7 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
     @Ignore
     @Test
     public void testLayerWithNoBounds() throws Exception {
-        SimpleFeature[] features = UDIGTestUtil.createTestFeatures("testNoBounds_Viewport", new Geometry[]{ //$NON-NLS-1$
+        SimpleFeature[] features = FeatureCreationTestUtil.createTestFeatures("testNoBounds_Viewport", new Geometry[]{ //$NON-NLS-1$
         }
         , null, DefaultGeographicCRS.WGS84);
         

@@ -16,16 +16,15 @@ import static org.junit.Assert.assertSame;
 
 import java.awt.Color;
 
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.ui.graphics.Glyph;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.junit.Before;
 import org.junit.Test;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.testsupport.MapTests;
+import org.locationtech.udig.ui.graphics.Glyph;
 
 public class LayerItemProviderTest {
 

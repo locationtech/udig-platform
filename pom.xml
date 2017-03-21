@@ -331,7 +331,9 @@
                     <version>${tycho-version}</version>
                     <configuration>
                         <useUIHarness>true</useUIHarness>
-                        <product>org.locationtech.udig-product</product>
+                        <useUIThread>true</useUIThread>
+                        <product>org.locationtech.udig.product</product>
+                        <application>org.locationtech.udig.ui.application</application>
                         <argLine>-Xmx1024m -XX:MaxPermSize=256m -Dlauncher.suppressErrors -Dsdtcore.headless ${tycho.test.OSspecific} ${tycho.test.envSettings}</argLine>
                     </configuration>
                 </plugin>

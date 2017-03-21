@@ -15,8 +15,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.locationtech.udig.catalog.tests.DummyMultiResourceService;
-import org.locationtech.udig.catalog.tests.DummyMultiResourceServiceExtension;
+import org.locationtech.udig.catalog.testsupport.DummyMultiResourceService;
+import org.locationtech.udig.catalog.testsupport.DummyMultiResourceServiceExtension;
 
 public class DummyMulitResourceConnectionFactory extends DummyConnectionFactory {
 

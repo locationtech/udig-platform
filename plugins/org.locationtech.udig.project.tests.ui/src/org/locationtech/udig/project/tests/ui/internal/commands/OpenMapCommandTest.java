@@ -16,22 +16,6 @@ import static org.junit.Assert.assertNotNull;
 import java.util.HashMap;
 import java.util.List;
 
-import org.locationtech.udig.AbstractProjectUITestCase;
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.ICatalog;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.IServiceFactory;
-import org.locationtech.udig.catalog.tests.DummyService;
-import org.locationtech.udig.catalog.tests.ui.workflow.Runner;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.commands.CreateMapCommand;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.commands.OpenProjectElementCommand;
-import org.locationtech.udig.project.ui.internal.MapEditorInput;
-import org.locationtech.udig.project.ui.internal.MapEditorPart;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.swt.widgets.Display;
@@ -39,6 +23,21 @@ import org.eclipse.ui.PlatformUI;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceFactory;
+import org.locationtech.udig.catalog.tests.ui.workflow.Runner;
+import org.locationtech.udig.catalog.testsupport.DummyService;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.commands.CreateMapCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.commands.OpenProjectElementCommand;
+import org.locationtech.udig.project.ui.internal.MapEditorInput;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
 
 public class OpenMapCommandTest extends AbstractProjectUITestCase {
 	

@@ -15,18 +15,8 @@ import static org.junit.Assert.assertNull;
 import java.io.IOException;
 import java.net.URI;
 
-import org.locationtech.udig.catalog.tests.CatalogTests;
-import org.locationtech.udig.core.internal.FeatureUtils;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.interceptor.CacheInterceptor.ViewStyleContent;
-import org.locationtech.udig.project.internal.interceptor.ShowViewInterceptor;
-import org.locationtech.udig.project.tests.support.MapTests;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ui.XMLMemento;
-import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
@@ -37,6 +27,14 @@ import org.geotools.feature.FeatureCollection;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.catalog.testsupport.CatalogTests;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.interceptor.CacheInterceptor.ViewStyleContent;
+import org.locationtech.udig.project.internal.interceptor.ShowViewInterceptor;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -77,7 +75,6 @@ public class ShowViewInterceptorTest {
      * Test method for
      * {@link org.locationtech.udig.project.interceptor.ShowViewInterceptor#run(org.locationtech.udig.project.ILayer, org.geotools.data.FeatureSource)}.
      */
-    @Ignore
     @Test
     public void testFilterOnLayerStyleBlackboard() throws Exception {
         layer.getStyleBlackboard().put(ShowViewInterceptor.KEY, filter);
@@ -96,7 +93,6 @@ public class ShowViewInterceptorTest {
      * Test method for
      * {@link org.locationtech.udig.project.interceptor.ShowViewInterceptor#run(org.locationtech.udig.project.ILayer, org.geotools.data.FeatureSource)}.
      */
-    @Ignore
     @Test
     public void testFilterOnLayerBlackboard() throws Exception {
         layer.getBlackboard().put(ShowViewInterceptor.KEY, filter);
@@ -125,11 +121,10 @@ public class ShowViewInterceptorTest {
      * Test method for
      * {@link org.locationtech.udig.project.interceptor.ShowViewInterceptor#run(org.locationtech.udig.project.ILayer, org.geotools.data.FeatureSource)}.
      */
-    @Ignore
     @Test
     public void testQueryOnLayerStyleBlackboard() throws Exception {
         layer.getStyleBlackboard().put(ShowViewInterceptor.KEY,
-                new DefaultQuery(f.getFeatureType().getTypeName(), filter));
+                new Query(f.getFeatureType().getTypeName(), filter));
 
         FeatureCollection<SimpleFeatureType, SimpleFeature>  features = assertFilter(layer, 1);
         assertEquals(f, features.features().next());
@@ -145,11 +140,10 @@ public class ShowViewInterceptorTest {
      * Test method for
      * {@link org.locationtech.udig.project.interceptor.ShowViewInterceptor#run(org.locationtech.udig.project.ILayer, org.geotools.data.FeatureSource)}.
      */
-    @Ignore
     @Test
     public void testQueryOnLayerBlackboard() throws Exception {
         layer.getBlackboard().put(ShowViewInterceptor.KEY,
-                new DefaultQuery(f.getFeatureType().getTypeName(), filter));
+                new Query(f.getFeatureType().getTypeName(), filter));
 
         FeatureCollection<SimpleFeatureType, SimpleFeature>  features = assertFilter(layer, 1);
         assertEquals(f, features.features().next());
@@ -173,7 +167,7 @@ public class ShowViewInterceptorTest {
     public void testStyleContentTestNulls() throws Exception {
         ViewStyleContent content = new ViewStyleContent();
         XMLMemento memento = XMLMemento.createWriteRoot("root");
-        DefaultQuery start = new DefaultQuery();
+        Query start = new Query();
         content.save(memento, start);
         Query loaded = (Query) content.load(memento);
         assertEquals(start, loaded);
@@ -183,12 +177,12 @@ public class ShowViewInterceptorTest {
     public void testStyleContentAllNoneFilters() throws Exception {
         ViewStyleContent content = new ViewStyleContent();
         XMLMemento memento = XMLMemento.createWriteRoot("root");
-        DefaultQuery start = new DefaultQuery("Feature", Filter.EXCLUDE);
+        Query start = new Query("Feature", Filter.EXCLUDE);
         content.save(memento, start);
         Query loaded = (Query) content.load(memento);
         assertEquals(start, loaded);
 
-        start = new DefaultQuery("Feature", Filter.INCLUDE);
+        start = new Query("Feature", Filter.INCLUDE);
         content.save(memento, start);
         loaded = (Query) content.load(memento);
         assertEquals(start, loaded);
@@ -198,7 +192,7 @@ public class ShowViewInterceptorTest {
     @Test
     public void testStyleContentFullQuery() throws Exception {
         XMLMemento memento = XMLMemento.createWriteRoot("root");
-        DefaultQuery start = new DefaultQuery("type", new URI(
+        Query start = new Query("type", new URI(
                 "http://localhost"), filter, 27, new String[] { "att" },
                 "handle");
         ViewStyleContent content = new ViewStyleContent();

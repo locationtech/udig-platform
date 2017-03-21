@@ -10,7 +10,6 @@
 package org.locationtech.udig.project.internal;
 
 import org.junit.Ignore;
-
 import org.locationtech.udig.project.interceptor.MapInterceptor;
 
 /**

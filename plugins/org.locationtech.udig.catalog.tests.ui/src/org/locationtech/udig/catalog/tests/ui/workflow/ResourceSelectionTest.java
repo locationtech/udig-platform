@@ -19,6 +19,7 @@ import java.util.Map;
 
 import org.locationtech.udig.catalog.internal.ui.ConnectionPageDecorator;
 import org.locationtech.udig.catalog.internal.ui.ResourceSelectionPage;
+import org.locationtech.udig.catalog.testsupport.CatalogConnectionUtils;
 import org.locationtech.udig.catalog.ui.ConnectionFactoryManager;
 import org.locationtech.udig.catalog.ui.UDIGConnectionFactoryDescriptor;
 import org.locationtech.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
@@ -29,7 +30,6 @@ import org.locationtech.udig.catalog.ui.workflow.Workflow;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardDialog;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
-import org.locationtech.udig.catalog.util.CatalogTestUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -92,7 +92,7 @@ public class ResourceSelectionTest {
 	public void testNormal() throws Exception {
 		//create a context
 		URL url = new URL("http://demo.opengeo.org/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
-		CatalogTestUtils.assumeNoConnectionException(url, 3000);
+		CatalogConnectionUtils.assumeNoConnectionException(url, 3000);
 		workflow.setContext(url);
 			
 		Assertion a1 = new Assertion() {
@@ -121,7 +121,7 @@ public class ResourceSelectionTest {
 	public void testNormalSelectedGeoResource() throws Exception {
 		//create a workbench selection
 		URL url = new URL("http://demo.opengeo.org/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities#topp:tasmania_cities"); //$NON-NLS-1$
-		CatalogTestUtils.assumeNoConnectionException(url, 3000);
+		CatalogConnectionUtils.assumeNoConnectionException(url, 3000);
 		workflow.setContext(url);
 		
 		Assertion a1 = new Assertion() {

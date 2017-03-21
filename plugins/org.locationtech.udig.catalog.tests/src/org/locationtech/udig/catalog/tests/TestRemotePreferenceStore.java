@@ -17,6 +17,7 @@ import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.locationtech.udig.catalog.testsupport.DummyRemotePreferenceStore;
 
 public class TestRemotePreferenceStore {
 

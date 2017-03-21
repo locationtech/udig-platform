@@ -14,14 +14,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.geotools.util.Range;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.render.Renderer;
 import org.locationtech.udig.project.render.AbstractRenderMetrics;
 import org.locationtech.udig.project.render.IRenderContext;
 import org.locationtech.udig.project.render.IRenderMetricsFactory;
 import org.locationtech.udig.project.render.IRenderer;
-
-import org.geotools.util.Range;
 
 /**
  * For testing.  Creates a normal Renderer.  Accepts resources that resolve to RendererCreatorTestObjForSingleRenderer objects.

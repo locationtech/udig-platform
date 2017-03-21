@@ -4,23 +4,15 @@ Bundle-Name: Project Tests Plug-in
 Bundle-SymbolicName: org.locationtech.udig.project.tests; singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: udig.refractions.net
-Export-Package: org.locationtech.udig.project.command,org.locationtech
- .udig.project.internal,org.locationtech.udig.project.internal.command
- s.edit,org.locationtech.udig.project.internal.impl,org.locationtech.u
- dig.project.internal.render,org.locationtech.udig.project.internal.re
- nder.impl,org.locationtech.udig.project.render,org.locationtech.udig.
- project.tests.internal.commands,org.locationtech.udig.project.tests.s
- upport
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
- org.locationtech.udig.project,
- org.eclipse.ui,
  org.eclipse.core.runtime,
- org.locationtech.udig.style,
  org.locationtech.udig.style.sld,
- org.locationtech.udig.catalog.tests;visibility:=reexport,
- org.locationtech.udig.ui.tests,
  org.locationtech.udig.ui,
  org.locationtech.udig.project.edit,
- org.easymock
+ org.easymock,
+ org.locationtech.udig.core.testsupport,
+ org.locationtech.udig.project.testsupport,
+ org.locationtech.udig.catalog.testsupport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Fragment-Host: org.locationtech.udig.project

@@ -23,17 +23,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.locationtech.udig.AbstractProjectUITestCase;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.IProjectElement;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.Project;
-import org.locationtech.udig.project.internal.ProjectElement;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.ProjectRegistry;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.window.Window;
@@ -41,6 +30,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.ProjectRegistry;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.opengis.feature.simple.SimpleFeature;
 
 public class DeleteTest extends AbstractProjectUITestCase {
@@ -49,7 +48,7 @@ public class DeleteTest extends AbstractProjectUITestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		SimpleFeature [] features=UDIGTestUtil.createDefaultTestFeatures("Tests",4); //$NON-NLS-1$
+		SimpleFeature [] features=FeatureCreationTestUtil.createDefaultTestFeatures("Tests",4); //$NON-NLS-1$
 		IGeoResource resource = MapTests.createGeoResource(features, true);
 		Map map=MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(512,512));
 		project=map.getProjectInternal();

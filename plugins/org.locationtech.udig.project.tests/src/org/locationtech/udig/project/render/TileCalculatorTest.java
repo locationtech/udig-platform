@@ -18,10 +18,9 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
-
 import org.junit.Before;
 import org.junit.Test;
+import org.locationtech.udig.project.testsupport.AbstractProjectTestCase;
 
 import com.vividsolutions.jts.geom.Envelope;
 

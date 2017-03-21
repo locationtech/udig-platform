@@ -44,7 +44,6 @@ import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.locationtech.udig.core.StaticProvider;
 import org.locationtech.udig.core.internal.FeatureUtils;
@@ -172,7 +171,7 @@ public class FeatureTableControlTest {
         TableItem topItem = viewer.getTable().getItem(0);
 
         SimpleFeature f = (SimpleFeature) topItem.getData();
-        final Object featureId = f.getAttribute(ID_ATTRIBUTE);
+        final Object featureId = f.getIdentifier().getID();
         f.setAttribute(0, "newName"); //$NON-NLS-1$
 
         while( Display.getCurrent().readAndDispatch() );
@@ -181,7 +180,7 @@ public class FeatureTableControlTest {
         while( Display.getCurrent().readAndDispatch() );
         for (TableItem ti : table.getViewer().getTable().getItems()) {
             SimpleFeature sf = (SimpleFeature) ti.getData();
-            if (sf.getAttribute(ID_ATTRIBUTE).equals(featureId)) {
+            if (sf.getIdentifier().getID().equals(featureId)) {
                 assertEquals("newName", ti.getText(1)); //$NON-NLS-1$
             }
         }
@@ -192,7 +191,6 @@ public class FeatureTableControlTest {
         assertEquals(features, table.getFeatures());
     }
 
-    @Ignore
     @Test
     public void testSetFeatures() {
         DefaultFeatureCollection newFeatures = new DefaultFeatureCollection();
@@ -217,7 +215,6 @@ public class FeatureTableControlTest {
         assertEquals(1, table.getViewer().getTable().getItemCount());
         item = table.getViewer().getTable().getItem(0);
         assertEquals(feature2, item.getData());
-
     }
 
     @Test
@@ -252,7 +249,6 @@ public class FeatureTableControlTest {
 
     }
 
-    @Ignore
     @Test
     public void testGetSelection() throws Exception {
 
@@ -344,7 +340,6 @@ public class FeatureTableControlTest {
         }, false);
     }
 
-    @Ignore
     @Test
     public void testSort() {
         TableColumn column = table.getViewer().getTable().getColumn(0);
@@ -380,35 +375,49 @@ public class FeatureTableControlTest {
         }
     }
 
-    @Ignore
     @Test
-    public void s() throws Exception {
-        selectFeature(3, true);
+    public void testSelectionColor() throws Exception {
+        final Table tree = table.getViewer().getTable();
+        
+        // select feature4
+//        selectFeature(3, true);
+        tree.setSelection(3);
+        
+        assertEquals(feature4, tree.getItem(3).getData());
+        
         table.promoteSelection();
         while( Display.getCurrent().readAndDispatch() );
-        final Table tree = table.getViewer().getTable();
-
-        Color selectedBackColor = Display.getCurrent().getSystemColor(SWT.COLOR_LIST_SELECTION);
-
+        
         assertEquals(feature4, tree.getItem(0).getData());
-        assertEquals(tree.getItem(0).getBackground(), selectedBackColor);
+        for (int i=0; i<tree.getItemCount(); i++) {
+            System.out.println(tree.getItem(0).getBackground().toString());
+        }
+        assertEquals(tree.getItem(0).getBackground(), Display.getCurrent().getSystemColor(SWT.COLOR_LIST_SELECTION));
+        
+        // select feature2
+        tree.setSelection(2);
+//        selectFeature(1, true);
 
-        selectFeature(1, false);
+
         while( Display.getCurrent().readAndDispatch() );
-
-        assertEquals("Tree Item2 should be feature2", feature2, tree.getItem(2).getData());
+        for (int i=0; i<tree.getItemCount(); i++) {
+            System.out.println(tree.getItem(0).getBackground().toString());
+        }
+        
+        // feature4 is still selected
         assertEquals(feature4, tree.getItem(0).getData());
-        assertEquals(tree.getItem(2).getBackground(), selectedBackColor);
+
+        // feature2 should be selected as well but is not promoted yet
+        assertEquals("Tree Item2 should be feature2", feature2, tree.getItem(2).getData());
+        assertEquals(tree.getItem(2).getBackground(), Display.getCurrent().getSystemColor(SWT.COLOR_LIST_SELECTION));
     }
 
-    @Ignore
     @Test
     public void testUserSelection() throws Exception {
 
         // test normal click
         doEventBasedSelection(1, 0, 1);
 
-        
         IStructuredSelection structuredSelection = ((IStructuredSelection) table.getSelection());
         assertNotNull( "Selection expected", structuredSelection );
         
@@ -418,9 +427,9 @@ public class FeatureTableControlTest {
         Id idFilter = (Id) firstElement;
         assertFalse( "Expect a non empty selection", idFilter.getIdentifiers().isEmpty() );
         assertFalse( "Expect a non empty selection", idFilter.getIDs().isEmpty() );        
-		Set<Object> ds = (idFilter).getIDs();
-		
-		String[] fids = ds.toArray(new String[0]);
+        Set<Object> ds = (idFilter).getIDs();
+
+        String[] fids = ds.toArray(new String[0]);
         assertEquals("Expect selected ID to match", feature2.getID(), fids[0]);
         
         assertSelectedBackgroundColor(1);
@@ -516,7 +525,5 @@ public class FeatureTableControlTest {
         }
         return false;
     }
-    
-    
 
 }

@@ -14,9 +14,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Set;
 
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.IResourceInterceptor;
-
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureListener;
 import org.geotools.data.FeatureSource;
@@ -26,6 +23,8 @@ import org.geotools.data.ResourceInfo;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.junit.Ignore;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IResourceInterceptor;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.Name;

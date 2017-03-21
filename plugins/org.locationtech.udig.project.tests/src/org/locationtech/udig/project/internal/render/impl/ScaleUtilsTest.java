@@ -10,8 +10,6 @@ import static org.junit.Assert.fail;
 import java.awt.Dimension;
 import java.awt.Point;
 
-import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
-
 import org.easymock.EasyMock;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
@@ -19,6 +17,7 @@ import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -144,7 +143,6 @@ public class ScaleUtilsTest {
 	 * Test method for
 	 * {@link org.locationtech.udig.project.internal.render.impl.ScaleUtils#toValidPixelBoundsClosestToCenter(java.awt.Dimension, org.geotools.geometry.jts.ReferencedEnvelope)}.
 	 */
-	@Ignore
 	@Test
 	public void testToValidPixelBoundsClosestToCenter1() {
 		Dimension d = new Dimension(360, 180);
@@ -194,7 +192,6 @@ public class ScaleUtilsTest {
 	 * Test method for
 	 * {@link org.locationtech.udig.project.internal.render.impl.ScaleUtils#nearestPixel(java.awt.geom.Rectangle2D, int, int)}.
 	 */
-	@Ignore
 	@Test
 	public void testNearestPixel() {
 		Dimension display = new Dimension(360,180);
@@ -214,7 +211,6 @@ public class ScaleUtilsTest {
 	 * Test method for
 	 * {@link org.locationtech.udig.project.internal.render.impl.ScaleUtils#pixelBounds(int, int, org.geotools.geometry.jts.ReferencedEnvelope, java.awt.Dimension)}.
 	 */
-	@Ignore
 	@Test
 	public void testPixelBounds() {
 		ReferencedEnvelope currentBounds = new ReferencedEnvelope(-180, 180,
@@ -237,7 +233,6 @@ public class ScaleUtilsTest {
 		fail("Not yet implemented");
 	}
 
-	@Ignore
 	@Test
 	public void shiftToWorld() throws Exception {
 		ReferencedEnvelope env = new ReferencedEnvelope(-200,200,-20,20, DefaultGeographicCRS.WGS84);

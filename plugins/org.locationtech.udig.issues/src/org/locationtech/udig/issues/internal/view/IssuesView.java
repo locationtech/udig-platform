@@ -42,7 +42,6 @@ import org.locationtech.udig.issues.listeners.IssuesManagerEvent;
 import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.ProgressManager;
-
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -69,6 +68,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Tree;
@@ -258,7 +258,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
         
         setExpansionProvider(load("expansionProvider", KEY_VIEW_EXPANSION_PROVIDER, new IssueExpansionProvider())); //$NON-NLS-1$
         
-		IssuesContentProvider contentProvider = load("contentProvider", KEY_VIEW_CONTENT_PROVIDER, new IssuesContentProvider()); //$NON-NLS-1$
+                IIssuesContentProvider contentProvider = load("contentProvider", KEY_VIEW_CONTENT_PROVIDER, new IssuesContentProvider()); //$NON-NLS-1$
 		if( contentProvider instanceof IssuesContentProvider ){
 			((IssuesContentProvider)contentProvider).setShowGroup(defaultShowGroup );
 		}
@@ -828,7 +828,6 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 	 * Set to true when we are internally setting the selection and don't want to be renotified.
 	 */
 	private boolean settingSelection=false;
-	@SuppressWarnings("unchecked")
 	public void selectionChanged(SelectionChangedEvent event) {
 		ISelection selection = event.getSelection();
 		setSelection(selection);
@@ -838,6 +837,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 	 * Sets the selection on the view
 	 * @param selection the new selection, should be issues.
 	 */
+	@SuppressWarnings("rawtypes")
 	public void setSelection(ISelection selection) {
 		if( settingSelection )
 			return ;
@@ -883,6 +883,10 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
             return super.findItem(item);
         }
 
+        @Override
+        protected boolean getExpanded(Item item) {
+            return super.getExpanded(item);
+            }
 	}
     public static int columnToIndex( Column column ) {
         switch( column ) {
@@ -969,17 +973,17 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
 
     private void doExpand( TreeItem item ) {
         int autoExpandLevel = viewer.getAutoExpandLevel();
-        if( autoExpandLevel == TreeViewer.ALL_LEVELS )
-        	autoExpandLevel = Integer.MAX_VALUE;
-
-        if( depth(item, 0)>=autoExpandLevel )
+        
+        if (autoExpandLevel == 0) {
+            // do not expand
+            return;
+        }
+        
+        if (autoExpandLevel == TreeViewer.ALL_LEVELS ||
+            autoExpandLevel > 0) {
+            // let the Item decide if it should be expanded
             item.setExpanded(expansionProvider.expand(viewer, item, item.getData()));
-    }
-
-    private int depth( TreeItem item, int depth ) {
-        if ( item.getParentItem() !=null )
-            return depth(item.getParentItem(), depth+1);
-        return 0;
+        }
     }
 
     /**

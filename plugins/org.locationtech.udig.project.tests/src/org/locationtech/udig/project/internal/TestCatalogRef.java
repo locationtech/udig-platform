@@ -20,14 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.locationtech.udig.catalog.ID;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IGeoResourceInfo;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.project.testsupport.AbstractProjectTestCase;
 
 public class TestCatalogRef extends AbstractProjectTestCase {
     

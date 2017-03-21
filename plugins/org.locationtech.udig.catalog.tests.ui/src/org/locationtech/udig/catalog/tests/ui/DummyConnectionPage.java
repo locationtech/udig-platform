@@ -18,9 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.locationtech.udig.catalog.testsupport.DummyService;
 import org.locationtech.udig.catalog.ui.AbstractUDIGImportPage;
 import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
@@ -44,7 +44,7 @@ public class DummyConnectionPage extends AbstractUDIGImportPage
 	public Map<String, Serializable> getParams() {
 		URL url = null;
 		try {
-			url = new URL("http://dummy.refractions.net"); //$NON-NLS-1$
+			url = new URL(DummyService.url.toExternalForm()); //$NON-NLS-1$
 		} 
 		catch (MalformedURLException e) {}
 		
@@ -56,7 +56,7 @@ public class DummyConnectionPage extends AbstractUDIGImportPage
 	public List<URL> getURLs() {
 		try {
 			ArrayList<URL> list = new ArrayList<URL>();
-			list.add(new URL("http://dummy.refractions.net")); //$NON-NLS-1$
+			list.add(new URL(DummyService.url.toExternalForm())); //$NON-NLS-1$
 			return list;
 		} 
 		catch (MalformedURLException e) {

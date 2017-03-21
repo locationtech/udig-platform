@@ -10,9 +10,8 @@
  */
 package org.locationtech.udig.project.internal.impl;
 
-import org.locationtech.udig.project.IPersister;
-
 import org.eclipse.ui.IMemento;
+import org.locationtech.udig.project.IPersister;
 
 public class CPersister extends IPersister<C> {
 

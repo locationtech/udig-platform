@@ -10,13 +10,13 @@
  */
 package org.locationtech.udig.catalog.tests.util;
 
-import org.locationtech.udig.catalog.util.GeoToolsAdapters;
-import org.locationtech.udig.ui.ProgressMonitorTaskNamer;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.util.ProgressListener;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.locationtech.udig.catalog.util.GeoToolsAdapters;
 
 public class GeoToolsAdaptersTest {
     /** Little progress monitor used for testing */

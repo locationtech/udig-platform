@@ -16,24 +16,24 @@ import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.internal.ui.UDIGDropHandler;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.TestsUIPlugin;
-import org.locationtech.udig.ui.ViewerDropLocation;
-import org.locationtech.udig.ui.WaitCondition;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.styling.Style;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.testsupport.CatalogTests;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.testsupport.MapTests;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.TestsUIPlugin;
+import org.locationtech.udig.style.sld.SLDContent;
+import org.locationtech.udig.ui.ViewerDropLocation;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 /**
  * TODO Purpose of 
@@ -55,16 +55,16 @@ public class SLDDropActionTest {
     public void setUp() throws Exception {
         map=MapTests.createDefaultMap("DropActionTestFeatures", 2, true, null); //$NON-NLS-1$
         IGeoResource[] resources = new IGeoResource[]{
-                MapTests.createGeoResource("DropActionTestFeatures2", 3, true), //$NON-NLS-1$
-                MapTests.createGeoResource("DropActionTestFeatures2", 4, true), //$NON-NLS-1$
-                MapTests.createGeoResource("DropActionTestFeatures2", 5, true), //$NON-NLS-1$
-                MapTests.createGeoResource("DropActionTestFeatures2", 6, true) //$NON-NLS-1$
+                CatalogTests.createGeoResource("DropActionTestFeatures1", 3, true), //$NON-NLS-1$
+                CatalogTests.createGeoResource("DropActionTestFeatures2", 4, true), //$NON-NLS-1$
+                CatalogTests.createGeoResource("DropActionTestFeatures3", 5, true), //$NON-NLS-1$
+                CatalogTests.createGeoResource("DropActionTestFeatures4", 6, true) //$NON-NLS-1$
                 
         };
         ApplicationGIS.addLayersToMap(map, Arrays.asList(resources),0,null, true);
         action = new SLDDropAction();
 
-        sldURL = FileLocator.toFileURL(TestsUIPlugin.getDefault().getBundle().getEntry("/test-data/teststyle.sld")); //$NON-NLS-1$
+        sldURL = FileLocator.toFileURL(TestsUIPlugin.getDefault().getBundle().getEntry("test-data/teststyle.sld")); //$NON-NLS-1$
         sldFile = new File( sldURL.getFile() );
         handler=new UDIGDropHandler();
         assertTrue(sldFile.exists());
@@ -158,7 +158,6 @@ public class SLDDropActionTest {
         assertTrue(isTestStyle(map.getEditManager().getSelectedLayer(), expectedName));
     }
 
-    @Ignore
     @Test
     public void testDropOnMapIntegration() throws Exception {
         map.getEditManagerInternal().setSelectedLayer(map.getLayersInternal().get(3));
@@ -196,7 +195,7 @@ public class SLDDropActionTest {
     }
 
     boolean isTestStyle( final ILayer destination, final String expectedName ) {
-        Style style=(Style) destination.getStyleBlackboard().get("org.locationtech.udig.style.sld"); //$NON-NLS-1$
+        Style style=(Style) destination.getStyleBlackboard().get(SLDContent.ID);
         String name = style.getName();
         return name.equals(expectedName);
     }

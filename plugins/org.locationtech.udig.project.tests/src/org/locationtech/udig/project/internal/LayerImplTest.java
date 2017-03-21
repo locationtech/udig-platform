@@ -22,9 +22,21 @@ import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.data.FeatureSource;
+import org.geotools.data.FeatureStore;
+import org.geotools.data.Transaction;
+import org.geotools.feature.DefaultFeatureCollection;
+import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.CRS;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.ITransientResolve;
-import org.locationtech.udig.catalog.tests.CatalogTests;
+import org.locationtech.udig.catalog.testsupport.CatalogTests;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
 import org.locationtech.udig.project.IResourceInterceptor;
 import org.locationtech.udig.project.internal.impl.LayerImpl;
 import org.locationtech.udig.project.internal.impl.LayerResource;
@@ -33,22 +45,7 @@ import org.locationtech.udig.project.preferences.PreferenceConstants;
 import org.locationtech.udig.project.tests.TestInterceptorCaching;
 import org.locationtech.udig.project.tests.TestInterceptorPost;
 import org.locationtech.udig.project.tests.TestInterceptorPre;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.data.FeatureSource;
-import org.geotools.data.FeatureStore;
-import org.geotools.data.Transaction;
-import org.geotools.feature.DefaultFeatureCollection;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureCollections;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.CRS;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.locationtech.udig.project.testsupport.MapTests;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -105,7 +102,7 @@ public class LayerImplTest {
         assertFalse(TestInterceptorCaching.obtained);
         assertTrue(TestInterceptorPost.runs>0);
         
-        ProjectPlugin.getPlugin().getPreferenceStore().setValue(PreferenceConstants.P_LAYER_RESOURCE_CACHING_STRATEGY, "org.locationtech.udig.project.tests.org.locationtech.udig.project.tests.interceptor2"); //$NON-NLS-1$
+        ProjectPlugin.getPlugin().getPreferenceStore().setValue(PreferenceConstants.P_LAYER_RESOURCE_CACHING_STRATEGY, "org.locationtech.udig.project.interceptor2"); //$NON-NLS-1$
         try{
             TestInterceptorPre.runs=0;
             TestInterceptorPost.runs=0;
@@ -344,7 +341,7 @@ public class LayerImplTest {
         assertEquals( new Envelope(0,45,0,45), layer.getBounds(null, layer.getCRS()) );
         
         CoordinateReferenceSystem decode = CRS.decode("EPSG:2065");
-        SimpleFeature[] feature = UDIGTestUtil.createTestFeatures("test", new Point[]{null}, new String[]{"name"}, decode); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SimpleFeature[] feature = FeatureCreationTestUtil.createTestFeatures("test", new Point[]{null}, new String[]{"name"}, decode); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         layer = map.getLayerFactory().createLayer(CatalogTests.createGeoResource(feature, true));
         map.getLayersInternal().add( layer );
         

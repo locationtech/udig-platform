@@ -107,7 +107,7 @@ public class WFSConnectionFactory extends UDIGConnectionFactory {
 //            return toCapabilitiesURL( CatalogPlugin.locateURL(data) );
 //        }
         else if (ID.cast(data) != null){
-        	return ID.cast(data).toURL();
+            return toCapabilitiesURL(ID.cast(data).toURL());
         }
         else {
             return null; // no idea what this should be

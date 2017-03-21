@@ -14,16 +14,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.awt.Dimension;
 
-import org.locationtech.udig.AbstractProjectUITestCase;
-import org.locationtech.udig.core.internal.FeatureUtils;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.render.RenderPackage;
-import org.locationtech.udig.project.internal.render.Renderer;
-import org.locationtech.udig.project.render.IRenderer;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.ui.WaitCondition;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
@@ -33,6 +23,16 @@ import org.geotools.factory.GeoTools;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.testsupport.MapTests;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
@@ -44,7 +44,7 @@ public class EditReRenderTest extends AbstractProjectUITestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		features = UDIGTestUtil.createDefaultTestFeatures("featuretype", 4); //$NON-NLS-1$
+		features = FeatureCreationTestUtil.createDefaultTestFeatures("featuretype", 4); //$NON-NLS-1$
 		map = MapTests.createNonDynamicMapAndRenderer(MapTests.createGeoResource(features, true),new Dimension(512,512));
 		map.setRenderManagerInternal(null);
 		

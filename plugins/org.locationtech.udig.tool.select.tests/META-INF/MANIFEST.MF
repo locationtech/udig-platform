@@ -10,6 +10,8 @@ Require-Bundle: org.eclipse.ui,
  org.junit;bundle-version="[4.0.0,5.0.0)",
  org.locationtech.udig.project.ui,
  org.locationtech.udig.tool.select,
- org.locationtech.udig.project.tests.ui
+ org.locationtech.udig.project.tests.ui,
+ org.locationtech.udig.project.testsupport,
+ org.locationtech.udig.catalog.testsupport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

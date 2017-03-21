@@ -13,11 +13,13 @@ import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.swing.plaf.OptionPaneUI;
+
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.command.MapCommand;
 import org.locationtech.udig.project.command.factory.SelectionCommandFactory;
 import org.locationtech.udig.validation.internal.Messages;
-
+import org.apache.log4j.Logger;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.geotools.factory.CommonFactoryFinder;
@@ -37,6 +39,8 @@ import org.opengis.filter.identity.Identifier;
  */
 public class OpUtils {
 
+    private static final Logger LOG = Logger.getLogger(OpUtils.class);
+    public static boolean unitTestRun = false;
     /**
      * Notifies the user of the result of the validation. Currently, this method displays a crude
      * pop-up window, but one day... it will populate the analysis window
@@ -57,11 +61,16 @@ public class OpUtils {
         for( int i = 0; (i < results.validationList.size()) && (i < 10); i++) {
         	buffer.append(MessageFormat.format(Messages.OpUtils_notifyResult, i, results.validationList.get(i)));
         }
-        display.asyncExec(new Runnable(){
-            public void run() {
-                MessageDialog.openInformation(display.getActiveShell(), Messages.OpUtils_results, buffer.toString());  
-            }
-        });
+        
+        if (!unitTestRun) {
+            display.asyncExec(new Runnable(){
+                public void run() {
+                    MessageDialog.openInformation(display.getActiveShell(), Messages.OpUtils_results, buffer.toString());  
+                }
+            });
+        } else {
+            LOG.info(buffer.toString());
+        }
     }
 
     /**

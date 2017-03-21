@@ -30,7 +30,10 @@ public class ValidateLineMustBeASinglePart extends FeatureValidationOp {
     
     @Override
     protected boolean canValidate( SimpleFeatureType featureType ) {
-        if (featureType.getGeometryDescriptor() instanceof LineString) {
+        if (featureType.getGeometryDescriptor() != null
+                && featureType.getGeometryDescriptor().getType() != null
+                && LineString.class.isAssignableFrom(featureType.getGeometryDescriptor().getType()
+                        .getBinding())) {
             return true;
         }
         return false;

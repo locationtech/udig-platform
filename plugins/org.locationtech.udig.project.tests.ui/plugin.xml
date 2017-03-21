@@ -140,12 +140,10 @@
       <extension
             point="org.locationtech.udig.ui.objectProperty">
          <object
-               class="java.lang.Object"
                targetClass="java.lang.Object">
             <property
                   class="org.locationtech.udig.project.ui.internal.tool.display.TestProperty"
-                  id="test.tool.manager"
-                  value="org.locationtech.udig.project.ui.internal.tool.display.TestProperty"/>
+                  id="test.tool.manager"/>
          </object>
       </extension>
 </plugin>

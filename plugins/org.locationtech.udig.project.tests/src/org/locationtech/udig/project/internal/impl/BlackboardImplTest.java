@@ -12,13 +12,13 @@ package org.locationtech.udig.project.internal.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import org.locationtech.udig.project.internal.Blackboard;
-import org.locationtech.udig.project.internal.ProjectFactory;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.project.internal.Blackboard;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.testsupport.AbstractProjectTestCase;
 
 public class BlackboardImplTest extends AbstractProjectTestCase {
 	

@@ -13,21 +13,5 @@
 
     <artifactId>org.locationtech.udig.tutorials.catalog.tests.csv</artifactId>
     <packaging>eclipse-plugin</packaging>
-<!--
-    <packaging>eclipse-test-plugin</packaging>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.eclipse.tycho</groupId>
-                <artifactId>tycho-surefire-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>org.eclipse.tycho</groupId>
-                <artifactId>target-platform-configuration</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-    -->
 </project>

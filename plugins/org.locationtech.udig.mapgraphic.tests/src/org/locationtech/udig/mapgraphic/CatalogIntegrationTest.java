@@ -17,17 +17,20 @@ public class CatalogIntegrationTest {
         
         IRepository local = CatalogPlugin.getDefault().getLocal();
         local.acquire(MapGraphicService.SERVICE_URL, null);
-        
+        System.out.println("1");
         // Test ScaleBar
         final ID SCALE_BAR = new ID(MapGraphicService.SERVICE_URL+"#scalebar", null); //$NON-NLS-1$
         IGeoResource scalebarResource = local.getById(IGeoResource.class, SCALE_BAR,
                 new NullProgressMonitor());
+        System.out.println("2");
         assertNotNull(scalebarResource);
         
         // Test Graticule
         final ID GRATICULE = new ID(MapGraphicService.SERVICE_URL+"#graticule", null); //$NON-NLS-1$
+        System.out.println("3");
         IGeoResource graticuleResource = local.getById(IGeoResource.class, GRATICULE,
                 new NullProgressMonitor());
+        System.out.println("4");
         assertNotNull(graticuleResource);
         
     }

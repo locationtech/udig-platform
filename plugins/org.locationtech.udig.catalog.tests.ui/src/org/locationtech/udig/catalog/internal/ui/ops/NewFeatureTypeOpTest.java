@@ -28,7 +28,7 @@ import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.IServiceFactory;
 import org.locationtech.udig.catalog.internal.wfs.WFSServiceExtension;
 import org.locationtech.udig.catalog.tests.ui.CatalogTestsUIPlugin;
-import org.locationtech.udig.catalog.util.CatalogTestUtils;
+import org.locationtech.udig.catalog.testsupport.CatalogConnectionUtils;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 import org.eclipse.core.runtime.FileLocator;
@@ -131,7 +131,7 @@ public class NewFeatureTypeOpTest {
     @Test
     public void testCreateTypeOnIllegalDS() throws Exception {
         URL id=new URL("http://demo.opengeo.org/geoserver/wfs"); //$NON-NLS-1$
-        CatalogTestUtils.assumeNoConnectionException(id, 3000);
+        CatalogConnectionUtils.assumeNoConnectionException(id, 3000);
         
         WFSServiceExtension ext=new WFSServiceExtension();
         Map<String, Serializable> params = ext.createParams(id);

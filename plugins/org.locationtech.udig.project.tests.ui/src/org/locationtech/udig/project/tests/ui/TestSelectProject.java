@@ -10,13 +10,12 @@
  */
 package org.locationtech.udig.project.tests.ui;
 
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.ProjectExplorer;
-import org.locationtech.udig.ui.operations.IOp;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;
 import org.junit.Ignore;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.ProjectExplorer;
+import org.locationtech.udig.ui.operations.IOp;
 
 @Ignore
 public class TestSelectProject implements IOp {

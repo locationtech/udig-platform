@@ -25,15 +25,6 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.render.RenderExecutor;
-import org.locationtech.udig.project.internal.render.Renderer;
-import org.locationtech.udig.project.render.IRenderer;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.style.sld.SLDContent;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
@@ -43,6 +34,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.catalog.testsupport.CatalogTests;
+import org.locationtech.udig.core.testsupport.FeatureCreationTestUtil;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.render.RenderExecutor;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.testsupport.AbstractProjectTestCase;
+import org.locationtech.udig.project.testsupport.MapTests;
+import org.locationtech.udig.style.sld.SLDContent;
 import org.opengis.feature.simple.SimpleFeature;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -86,9 +86,9 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 		
 		Polygon poly2=factory.createPolygon( ring2, new LinearRing[]{});
 		
-		SimpleFeature[] features=UDIGTestUtil.createTestFeatures("testType", new Geometry[]{poly1, poly2},new String[]{},  //$NON-NLS-1$
+		SimpleFeature[] features=FeatureCreationTestUtil.createTestFeatures("testType", new Geometry[]{poly1, poly2},new String[]{},  //$NON-NLS-1$
 				DefaultEngineeringCRS.CARTESIAN_2D);
-		map=MapTests.createNonDynamicMapAndRenderer(MapTests.createGeoResource(features, true), new Dimension(w,h));
+		map=MapTests.createNonDynamicMapAndRenderer(CatalogTests.createGeoResource(features, true), new Dimension(w,h));
 		StyleBuilder sb=new StyleBuilder();
 		Style style=sb.createStyle(features[0].getName().getLocalPart(), sb.createPolygonSymbolizer(Color.BLACK,Color.BLACK, 1));
 		SLDContent.apply(map.getLayersInternal().get(0), style, null);
@@ -102,14 +102,6 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	public void tearDown() throws Exception {
 		map.getRenderManagerInternal().dispose();
 	}
-	
-	/*
-	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.setState(int)'
-	 */
-	@Test
-	public void testSetState() {
-		
-	}
 
 	/*
 	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.render(Graphics2D, IProgressMonitor)'
@@ -119,26 +111,23 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	public void testRenderGraphics2DIProgressMonitor() throws Exception {
 		BufferedImage image=new BufferedImage(w,h,BufferedImage.TYPE_4BYTE_ABGR);
 
-		
 		Graphics2D g=image.createGraphics();
 		g.setBackground(new Color( 0,0,0,0) );
 		g.clearRect(0,0,w-1,h-1);
-		
 
 		testImage(image,true, -1,-1,-1,-1);
-		
+
 		map.getRenderManagerInternal().getRenderExecutor().render(g, null);
 		showImage("testRenderGraphics2DIProgressMonitor", image); //$NON-NLS-1$
 
 		testImage(image, false, 0,0,512,512);
-		
 	}
 
 	/*
 	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.render(Envelope, IProgressMonitor)'
 	 */
 	@Ignore
-    @Test
+	@Test
 	public void testRenderEnvelopeIProgressMonitor() throws Exception {
 		RenderExecutor ex=map.getRenderManagerInternal().getRenderExecutor();
 		BufferedImage image = ex.getContext().getImage(w,h);
@@ -181,7 +170,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.render(Envelope, IProgressMonitor)'
 	 */
 	@Ignore
-    @Test
+	@Test
 	public void testRenderRectangle() throws Exception {
 		RenderExecutor ex=map.getRenderManagerInternal().getRenderExecutor();
 		BufferedImage image = ex.getContext().getImage(w,h);
@@ -235,42 +224,10 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	}
 
 	/*
-	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.dispose()'
-	 */
-    @Test
-	public void testDispose() {
-
-	}
-
-	/*
-	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.resyncState(Renderer)'
-	 */
-    @Test
-	public void testResyncState() {
-
-	}
-
-	/*
-	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.setLayerState(IRenderContext, int)'
-	 */
-    @Test
-	public void testSetLayerState() {
-
-	}
-
-	/*
-	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.stopRendering()'
-	 */
-    @Test
-	public void testStopRendering() {
-
-	}
-
-	/*
 	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.render()'
 	 */
 	@Ignore
-    @Test
+	@Test
 	public void testRender() throws Exception {
 		RenderExecutor ex=map.getRenderManagerInternal().getRenderExecutor();
 		BufferedImage image = ex.getContext().getImage(w,h);
@@ -294,34 +251,10 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	}
 
 	/*
-	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.getContext()'
-	 */
-    @Test
-	public void testGetContext() {
-
-	}
-
-	/*
-	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.getRenderer()'
-	 */
-    @Test
-	public void testGetRenderer() {
-
-	}
-
-	/*
-	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.addLayerListener(RenderContext)'
-	 */
-    @Test
-	public void testAddLayerListener() {
-
-	}
-
-	/*
 	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.render(Envelope)'
 	 */
-    @Ignore
-    @Test
+	@Ignore
+	@Test
 	public void testRenderEnvelope() throws Exception {
 		RenderExecutor ex=map.getRenderManagerInternal().getRenderExecutor();
 		BufferedImage image = ex.getContext().getImage();

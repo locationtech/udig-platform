@@ -14,9 +14,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.net.URL;
 
-import org.locationtech.udig.catalog.wfs.internal.Messages;
-
 import org.junit.Test;
+import org.locationtech.udig.catalog.wfs.internal.Messages;
 
 public class WFSServiceExtensionTest {
 

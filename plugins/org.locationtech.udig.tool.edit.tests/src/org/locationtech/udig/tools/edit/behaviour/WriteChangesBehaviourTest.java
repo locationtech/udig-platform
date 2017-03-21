@@ -24,14 +24,13 @@ import org.locationtech.udig.project.command.UndoableMapCommand;
 import org.locationtech.udig.project.internal.EditManager;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.TestLayer;
+import org.locationtech.udig.project.testsupport.TestLayer;
 import org.locationtech.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
 import org.locationtech.udig.tools.edit.support.EditBlackboard;
 import org.locationtech.udig.tools.edit.support.EditGeom;
 import org.locationtech.udig.tools.edit.support.PrimitiveShape;
 import org.locationtech.udig.tools.edit.support.ShapeType;
 import org.locationtech.udig.tools.edit.support.TestHandler;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.DataUtilities;
 import org.geotools.data.FeatureSource;
