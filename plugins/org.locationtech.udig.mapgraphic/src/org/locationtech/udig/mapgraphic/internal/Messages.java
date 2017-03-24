@@ -48,8 +48,6 @@ public class Messages extends NLS {
     public static String OtherAction_wizardTitle;
     public static String LocationStyleConfigurator_height;
     public static String LocationStyleConfigurator_width;
-    public static String LocationStyleConfigurator_y;
-    public static String LocationStyleConfigurator_x;
     public static String ScalebarMapGraphic_zoomInRequiredMessage;
     public static String ScalebarStyleConfigurator_verticalAlignment;
     public static String ScalebarStyleConfigurator_horizontalAlignment;
