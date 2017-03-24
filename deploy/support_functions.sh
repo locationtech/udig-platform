@@ -134,7 +134,7 @@ function windows_installer () {
     cp ${INSTALLER}/udig/icons ${BUILD}/${PLATFORM}/icons
 
     cd ${BUILD}/${PLATFORM}
-    $TOOL uDigInstallScript.nsi ${NSIS_PARA_PRE}DPLATFORM=${PLATFORM} ${NSIS_PARA_PRE}DVERSION=${VERSION}
+    $TOOL ${NSIS_PARA_PRE}DPLATFORM=${PLATFORM} ${NSIS_PARA_PRE}DVERSION=${VERSION} uDigInstallScript.nsi
     cd ${HERE}
     cp ${BUILD}/${PLATFORM}/udig-*.exe ${BUILD}/udig-${VERSION}.${EXT}.exe
 }
