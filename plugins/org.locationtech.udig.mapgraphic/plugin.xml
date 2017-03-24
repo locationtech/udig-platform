@@ -130,14 +130,14 @@
     <styleConfigurator
           class="org.locationtech.udig.mapgraphic.scalebar.BarStyleConfigurator"
           id="bartype"
-          label="BarType"
+          label="%mapgraphic.style.bartype.configPage.label"
           requires="org.locationtech.udig.mapgraphic.scalebar.ScalebarMapGraphic"
           styleId="org.locationtech.udig.mapgraphic.style.bartype">
     </styleConfigurator>
     <styleConfigurator
           class="org.locationtech.udig.mapgraphic.grid.GridStyleConfigurator"
           id="org.locationtech.udig.tool.edit.mapgraphic.grid.configurator"
-          label="Grid"
+          label="%mapgraphic.grid.configurator.configPage.label"
           requires="org.locationtech.udig.mapgraphic.grid.GridMapGraphic"
           styleId="org.locationtech.udig.tool.edit.mapgraphic.grid.style"/>
     <styleConfigurator
@@ -150,14 +150,14 @@
     <styleConfigurator
           class="org.locationtech.udig.mapgraphic.graticule.GraticuleCRSConfigurator"
           id="org.locationtech.udig.tool.edit.mapgraphic.graticule.crs"
-          label="Projection"
+          label="%mapgraphic.graticule.crs.configPage.label"
           requires="org.locationtech.udig.mapgraphic.graticule.GraticuleGraphic"
           styleId="org.locationtech.udig.tool.edit.mapgraphic.graticule.style">
     </styleConfigurator>
     <styleConfigurator
           class="org.locationtech.udig.mapgraphic.graticule.GraticuleLinesConfigurator"
           id="org.locationtech.udig.tool.edit.mapgraphic.graticule.lines"
-          label="Lines"
+          label="%mapgraphic.graticule.lines.configPage.label"
           requires="org.locationtech.udig.mapgraphic.graticule.GraticuleGraphic"
           styleId="org.locationtech.udig.tool.edit.mapgraphic.graticule.style">
     </styleConfigurator>
@@ -178,7 +178,7 @@
     <styleConfigurator
           class="org.locationtech.udig.mapgraphic.scale.ScaleDenomStyleConfigurator"
           id="mapscale"
-          label="Background"
+          label="%mapgraphic.scaledenom.style.configPage.label"
           requires="org.locationtech.udig.mapgraphic.scale.ScaleDenomMapGraphic"
           styleId="org.locationtech.udig.mapgraphic.scaledenom.style">
     </styleConfigurator>

@@ -26,7 +26,7 @@
       <styleConfigurator
             class="org.locationtech.udig.mapgraphic.style.FontStyleConfigurator"
             id="org.locationtech.udig.legend.ui.style.font"
-            label="Font"
+            label="%mapgraphic.style.font.configPage.label"
             requires="org.locationtech.udig.legend.ui.LegendGraphic"
             styleId="org.locationtech.udig.mapgraphic.style.font">
       </styleConfigurator>
