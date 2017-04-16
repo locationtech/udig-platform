@@ -9,25 +9,25 @@
  */
 package org.locationtech.udig.style.advanced.common;
 
+import static org.locationtech.udig.style.advanced.utils.Utilities.SLD_EXTENTION;
+import static org.locationtech.udig.style.advanced.utils.Utilities.readStyle;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.jface.viewers.TableViewer;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayerDescriptor;
-
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.FeatureTypeStyleWrapper;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.SymbolizerWrapper;
-import static org.locationtech.udig.style.advanced.utils.Utilities.*;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 /**
  * An abstract manager for styles.
@@ -48,7 +48,16 @@ public abstract class StyleManager {
      * Reload the style folder content in the {@link TableViewer viewer}.
      */
     public void reloadStyleFolder() {
-        File[] sldFilesArray = styleFolderFile.listFiles(new FilenameFilter(){
+        List<StyleWrapper> newStylesList = readStylesFormFolder(styleFolderFile);
+
+        stylesViewer.setInput(newStylesList);
+    }
+
+    /**
+     * @return
+     */
+    public static List<StyleWrapper> readStylesFormFolder(File styleFolder) {
+        File[] sldFilesArray = styleFolder.listFiles(new FilenameFilter(){
             public boolean accept( File dir, String name ) {
                 return name.toLowerCase().endsWith(SLD_EXTENTION);
             }
@@ -68,8 +77,7 @@ public abstract class StyleManager {
                 e.printStackTrace();
             }
         }
-
-        stylesViewer.setInput(newStylesList);
+        return newStylesList;
     }
 
     /**

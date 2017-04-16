@@ -35,7 +35,6 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.geotools.styling.FeatureTypeStyle;
@@ -50,6 +49,7 @@ import org.locationtech.udig.style.advanced.common.styleattributeclasses.PointSy
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
 import org.locationtech.udig.style.advanced.internal.Messages;
+import org.locationtech.udig.style.advanced.internal.StyleEditorUtilities;
 import org.locationtech.udig.style.advanced.utils.ImageCache;
 import org.locationtech.udig.style.advanced.utils.Utilities;
 import org.locationtech.udig.style.internal.StyleLayer;
@@ -368,7 +368,7 @@ public class PointPropertiesEditor extends PropertiesEditor {
         Image saveAllImg = ImageCache.getInstance().getImage(ImageCache.SAVEALL);
         Image delImg = ImageCache.getInstance().getImage(ImageCache.DELETE);
         Image loadImg = ImageCache.getInstance().getImage(ImageCache.APPLY);
-        Image importImg = ImageCache.getInstance().getImage(ImageCache.IMPORT);
+        
         Image exportImg = ImageCache.getInstance().getImage(ImageCache.ONECLICKEXPORT);
         Image openImg = ImageCache.getInstance().getImage(ImageCache.OPEN);
 
@@ -461,34 +461,7 @@ public class PointPropertiesEditor extends PropertiesEditor {
             }
         });
 
-        final Button importButton = new Button(rulesGroup, SWT.PUSH);
-        importButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        importButton.setImage(importImg);
-        importButton.setToolTipText(Messages.PointPropertiesEditor_23);
-        importButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
-                FileDialog fileDialog = new FileDialog(importButton.getShell(), SWT.OPEN | SWT.MULTI);
-                String path = fileDialog.open();
-                if (path == null || path.length() < 1) {
-                    return;
-                }
-                File firstFile = new File(path);
-                if (!firstFile.exists()) {
-                    throw new IllegalArgumentException();
-                }
-                File folder = firstFile.getParentFile();
-                String[] fileNames = fileDialog.getFileNames();
-                File[] files = new File[fileNames.length];
-                for( int i = 0; i < files.length; i++ ) {
-                    files[i] = new File(folder, fileNames[i]);
-                }
-                try {
-                    pointStyleManager.importToStyle(files);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
+        StyleEditorUtilities.createImportButton(rulesGroup, SWT.PUSH, pointStyleManager);
 
         final Button exportButton = new Button(rulesGroup, SWT.PUSH);
         exportButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
