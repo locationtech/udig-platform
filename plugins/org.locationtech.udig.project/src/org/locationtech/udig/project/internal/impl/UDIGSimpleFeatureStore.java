@@ -201,7 +201,8 @@ public class UDIGSimpleFeatureStore implements SimpleFeatureStore, UDIGStore {
         EditManager editManager = (EditManager) layer.getMap().getEditManager();
         Transaction transaction = editManager.getTransaction();
         
-        if (wrapped.getTransaction() == Transaction.AUTO_COMMIT) {
+        if (wrapped.getTransaction() == null 
+        		|| wrapped.getTransaction() == Transaction.AUTO_COMMIT) {
             // change over from autocommit to transactional
             wrapped.setTransaction(transaction);
         }
