@@ -205,7 +205,7 @@ public class ColorMapLegendCreator {
 
 			String l1 = entry.getLabel();
 			String l2 = prevEntry.getLabel();
-			if (i <= entries.length - 3){
+			if (i < entries.length - 1){
 				if (l2 == null){
 					text = new String[]{q2};
 				}else{
