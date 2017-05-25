@@ -209,13 +209,13 @@ public abstract class DatabaseServiceDialect {
      * @return the vividsolutions class
      */
     public Class<? extends Geometry> toGeomClass(String geomName) {
-    	if(geomName.equals("GEOMETRYCOLLECTION") || geomName.equals("GEOMETRY")) return Geometry.class;
-    	if(geomName.equals("POINT")) return Point.class;
-    	if(geomName.equals("MULTIPOINT")) return MultiPoint.class;
-    	if(geomName.equals("POLYGON")) return Polygon.class;
-    	if(geomName.equals("MULTIPOLYGON")) return MultiPolygon.class;
-    	if(geomName.equals("LINESTRING")) return LineString.class;
-    	if(geomName.equals("MULTILINESTRING")) return MultiLineString.class;
+    	if(geomName.equalsIgnoreCase("GEOMETRYCOLLECTION") || geomName.equalsIgnoreCase("GEOMETRY")) return Geometry.class;
+    	if(geomName.equalsIgnoreCase("POINT")) return Point.class;
+    	if(geomName.equalsIgnoreCase("MULTIPOINT")) return MultiPoint.class;
+    	if(geomName.equalsIgnoreCase("POLYGON")) return Polygon.class;
+    	if(geomName.equalsIgnoreCase("MULTIPOLYGON")) return MultiPolygon.class;
+    	if(geomName.equalsIgnoreCase("LINESTRING")) return LineString.class;
+    	if(geomName.equalsIgnoreCase("MULTILINESTRING")) return MultiLineString.class;
     	return Geometry.class;
     }
     
