@@ -60,6 +60,7 @@ public class SetAttributesCommand extends AbstractEditCommand implements Undoabl
             Object value[] ) {
         this.xpath = xpath;
         this.value = value;
+        this.oldValue = new Object[value.length];
         editFeature = feature;
         editLayer = layer;
     }
@@ -74,6 +75,7 @@ public class SetAttributesCommand extends AbstractEditCommand implements Undoabl
     public SetAttributesCommand( String xpath[], Object value[] ) {
         editFeature=new EditFeatureProvider(this);
         editLayer=new EditLayerProvider(this);
+        this.oldValue = new Object[value.length];
         this.xpath=xpath;
         this.value=value; 
     }
