@@ -100,6 +100,8 @@ public class Messages extends NLS {
 	public static String FeatureTypeEditor_newFeatureTypeName;
 	public static String FeatureTypeEditor_typeColumnName;
 	public static String FeatureTypeEditor_nameColumnName;
+	public static String FeatureTypeEditor_lengthColumnName;
+	public static String FeatureTypeEditor_isNullColumnName;
 	public static String FeatureTableControl_loadingMessage;
 	public static String FeatureTypeEditor_multiPolygonType;
 	public static String FeatureTypeEditor_defaultNameAttributeName;

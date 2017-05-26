@@ -10,15 +10,12 @@
 package org.locationtech.udig.ui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
-import org.locationtech.udig.internal.ui.UiPlugin;
-import org.locationtech.udig.ui.internal.Messages;
-import org.locationtech.udig.ui.preferences.PreferenceConstants;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -63,10 +60,17 @@ import org.geotools.feature.AttributeTypeBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.internal.Messages;
+import org.locationtech.udig.ui.preferences.PreferenceConstants;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.FeatureType;
 import org.opengis.feature.type.GeometryDescriptor;
+import org.opengis.filter.Filter;
+import org.opengis.filter.PropertyIsLessThanOrEqualTo;
+import org.opengis.filter.expression.Function;
+import org.opengis.filter.expression.Literal;
 import org.opengis.metadata.Identifier;
 import org.opengis.referencing.ReferenceIdentifier;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -89,6 +93,8 @@ import com.vividsolutions.jts.geom.Polygon;
 public class FeatureTypeEditor {
 
     private static final int MAX_ATTRIBUTE_LENGTH = 10485759;  //Maximum allows by postgis and is "big enough" 
+    
+    private static final List ALLOWED_BINDINGS_FOR_LENGHT_SET = Arrays.asList(String.class, Double.class, Long.class, Integer.class, Short.class);
     /**
      * The index of the name column in the viewer.
      */
@@ -101,7 +107,15 @@ public class FeatureTypeEditor {
      * The index of the type column in the viewer.
      */
     private static final int OTHER_COLUMN = 2;
-
+    /**
+     * The index of the length column in the viewer.
+     */
+    private static final int LENGTH_COLUMN = 3;
+    /**
+     * The index of the NULL column in the viewer.
+     */
+    private static final int IS_NULL_COLUMN = 4;
+    
     private static final List<LegalAttributeTypes> TYPES;
     static {
         List<LegalAttributeTypes> types = new ArrayList<LegalAttributeTypes>();
@@ -187,6 +201,8 @@ public class FeatureTypeEditor {
         tableLayout.addColumnData(new ColumnWeightData(1));
         tableLayout.addColumnData(new ColumnWeightData(1));
         tableLayout.addColumnData(new ColumnWeightData(1));
+        tableLayout.addColumnData(new ColumnWeightData(1));
+        tableLayout.addColumnData(new ColumnWeightData(1));
 
         tree.setLayout(tableLayout);
 
@@ -201,11 +217,21 @@ public class FeatureTypeEditor {
         column = new TreeColumn(tree, SWT.CENTER);
         column.setResizable(true);
         
+        column = new TreeColumn(tree, SWT.CENTER);
+        column.setResizable(true);
+        column.setText(Messages.FeatureTypeEditor_lengthColumnName); 
+
+        column = new TreeColumn(tree, SWT.CENTER);
+        column.setResizable(true);
+        column.setText(Messages.FeatureTypeEditor_isNullColumnName); 
+
         viewer.setContentProvider(new FeatureTypeContentProvider(viewer));
         viewer.setLabelProvider(new FeatureTypeLabelProvider());
         viewer.setColumnProperties(new String[]{String.valueOf(NAME_COLUMN),
                 String.valueOf(TYPE_COLUMN),
-                String.valueOf(OTHER_COLUMN)
+                String.valueOf(OTHER_COLUMN),
+                String.valueOf(LENGTH_COLUMN),
+                String.valueOf(IS_NULL_COLUMN)
                 });
 
         setEditable(editable);
@@ -244,11 +270,17 @@ public class FeatureTypeEditor {
 
             TextCellEditor attributeNameEditor = new TextCellEditor(tree);
             ComboBoxCellEditor attributeTypeEditor = new ComboBoxCellEditor(tree, comboItems, SWT.READ_ONLY|SWT.FULL_SELECTION);
-			DialogCellEditor crsEditor = createCRSEditor(tree);
-			viewer.setCellEditors(new CellEditor[]{attributeNameEditor,
+            TextCellEditor attributeLengthEditor = new TextCellEditor(tree);
+            BooleanCellEditor attributeIsNullEditor = new BooleanCellEditor(tree);
+            DialogCellEditor crsEditor = createCRSEditor(tree);
+            viewer.setCellEditors(new CellEditor[]{attributeNameEditor,
                     attributeTypeEditor,
-                    crsEditor
+                    crsEditor,
+                    attributeLengthEditor,
+                    attributeIsNullEditor
             });
+
+
             viewer.setCellModifier(new AttributeCellModifier());
         } else {
             viewer.setCellEditors(null);
@@ -358,8 +390,17 @@ public class FeatureTypeEditor {
         builder = new SimpleFeatureTypeBuilder();
         builder.setName(Messages.FeatureTypeEditor_newFeatureTypeName); 
         builder.setCRS(getDefaultCRS());
-        builder.length(MAX_ATTRIBUTE_LENGTH).add(Messages.FeatureTypeEditor_defaultNameAttributeName, String.class); 
-        builder.add(Messages.FeatureTypeEditor_defaultGeometryName, LineString.class); 
+        //no need to provide a default length since length can be specified via the UI
+        //builder.length(MAX_ATTRIBUTE_LENGTH).add(Messages.FeatureTypeEditor_defaultNameAttributeName, String.class); 
+        builder.add(Messages.FeatureTypeEditor_defaultNameAttributeName, String.class); 
+        
+        //add geometry attribute as not null
+        AttributeTypeBuilder attribBuilder = new AttributeTypeBuilder();
+        attribBuilder.setName(Messages.FeatureTypeEditor_defaultGeometryName);
+        attribBuilder.setCRS(builder.getCRS());
+        attribBuilder.nillable(false);
+        attribBuilder.binding(LineString.class);
+        builder.add(attribBuilder.buildDescriptor(Messages.FeatureTypeEditor_defaultGeometryName)); 
         return builder.buildFeatureType();
     }
 
@@ -423,6 +464,14 @@ public class FeatureTypeEditor {
                     SimpleFeatureType ft = (SimpleFeatureType) viewer.getInput();
                     SimpleFeatureTypeBuilder ftB = builderFromFeatureType(ft);
                     int index = 0;
+                    
+                    //find the next index to append in case user has not changed the field name
+                    for (AttributeDescriptor attr : ft.getAttributeDescriptors()) {
+                        if (attr.getLocalName().equalsIgnoreCase(Messages.FeatureTypeEditor_newAttributeTypeDefaultName + index)) {
+                                index++;        
+                        }
+                    }
+                    
                     while( true ) {
                         try {
                             ftB.add(Messages.FeatureTypeEditor_newAttributeTypeDefaultName + index, String.class); 
@@ -608,7 +657,7 @@ public class FeatureTypeEditor {
             case 1: // Attribute Type element
                 return attribute.getType().getBinding().getSimpleName();
             case 2: // Attribute Type element
-			if (attribute instanceof GeometryDescriptor) {
+                if (attribute instanceof GeometryDescriptor) {
                     CoordinateReferenceSystem crs = ((GeometryDescriptor)attribute).getCoordinateReferenceSystem();
                     if(crs!=null){
                         return crs.getName().toString();
@@ -616,6 +665,11 @@ public class FeatureTypeEditor {
                         return "Unspecified";
                     }
                 }
+                break;
+            case 3: // Attribute Type element
+                return getAttributeRestriction(attribute, "length", String.class); //$NON-NLS-1$
+            case 4: // Attribute Type element
+                return Boolean.toString(attribute.isNillable());
 
             default:
                 break;
@@ -683,6 +737,10 @@ public class FeatureTypeEditor {
         public boolean canModify( Object element, String property ) {
             if (String.valueOf(OTHER_COLUMN).equals(property) && !(element instanceof GeometryDescriptor))
                 return false;
+            if (String.valueOf(LENGTH_COLUMN).equals(property) && 
+                    !(ALLOWED_BINDINGS_FOR_LENGHT_SET.contains(((AttributeDescriptor)element).getType().getBinding()))) {
+                return false;
+            }
             return true;
         }
 
@@ -691,7 +749,6 @@ public class FeatureTypeEditor {
             switch( Integer.parseInt(property) ) {
             case NAME_COLUMN:
                 return editElement.getName().toString();
-
             case TYPE_COLUMN:
                 for( int i = 0; i < legalTypes.size(); i++ ) {
                     if (legalTypes.get(i).getType() == editElement.getType().getBinding())
@@ -700,8 +757,14 @@ public class FeatureTypeEditor {
                 return -1;
             case OTHER_COLUMN:
                 return ((GeometryDescriptor)element).getCoordinateReferenceSystem();
+            case LENGTH_COLUMN:
+                String lengthValue = getAttributeRestriction(editElement, "length", String.class); //$NON-NLS-1$
+                return lengthValue != null ? lengthValue : "";
+            case IS_NULL_COLUMN:
+                String nullValue = getAttributeRestriction(editElement, "nillable", String.class); //$NON-NLS-1$
+                return nullValue;
             }
-            
+
             return null;
         }
 
@@ -765,6 +828,27 @@ public class FeatureTypeEditor {
 
                 builder.setCRS(crs);
                 return builder.buildDescriptor( editElement.getLocalName());
+            case LENGTH_COLUMN:
+                try {
+                    int length = Integer.parseInt((String)value);
+                    builder.length(length);
+                    return builder.buildDescriptor(editElement.getLocalName());
+                } catch (NumberFormatException e) {
+                    //e.printStackTrace();
+                    return null;
+                } 
+            case IS_NULL_COLUMN:
+                boolean isNull = true;
+                if( value instanceof Boolean) {
+                    isNull = (Boolean) value;
+                }
+                else if( value instanceof String) {
+                    isNull = Boolean.getBoolean((String)value);
+                }
+                builder.nillable(isNull);
+                builder.setMinOccurs(1);
+                return builder.buildDescriptor(editElement.getLocalName());
+
             default:
                 return null;
             }
@@ -807,4 +891,26 @@ public class FeatureTypeEditor {
         errorDecorator.showHoverText(errorMessage);
     }
 
+    /**
+     * @param editElement
+     * @return 
+     * @return 
+     */
+    protected static <T> T getAttributeRestriction(AttributeDescriptor editElement, String restrictionName, Class<T> type) {
+        for ( Filter r :editElement.getType().getRestrictions() ) {
+            if( r instanceof PropertyIsLessThanOrEqualTo ) {
+                PropertyIsLessThanOrEqualTo c = (PropertyIsLessThanOrEqualTo) r;
+                if ( c.getExpression1() instanceof Function &&
+                        ((Function) c.getExpression1()).getName().toLowerCase().endsWith( restrictionName) ) {
+                    if ( c.getExpression2() instanceof Literal ) {
+                        T value = c.getExpression2().evaluate(null,type);
+                        if ( value != null ) {
+                            return value;
+                        }
+                    }
+                }
+            } 
+        }
+        return null;
+    }
 }
