@@ -9,7 +9,7 @@ Adding features from MySQL
    -  Select the database connect and optionally a schema
 
 #. Press **Next**
-#. Select they layer(s) to be added 
+#. Select the layer(s) to be added 
 
    |wizardpage|
 
