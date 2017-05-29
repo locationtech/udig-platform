@@ -11,7 +11,7 @@ Adding features from MySQL
 #. Press **Next**
 #. Select they layer(s) to be added 
 
-.. image:: /images/mysql_page/MySql2.png    
+   |wizardpage|
 
 #. Press **Finish**
 
@@ -22,4 +22,4 @@ added to the Catalog view
 
 :doc:`/reference/MySQL page`
 
-
+.. |wizardpage| image:: /images/mysql_page/MySql2.png
