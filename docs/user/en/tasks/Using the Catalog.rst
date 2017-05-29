@@ -29,6 +29,7 @@ Contents:
    Adding Features from DB2
    Adding features from Oracle
    Adding features from PostGIS
+   Adding features from MySQL
    Adding features from WFS
    Adding layers from WMS
    Enabling a Tileset from a WMS Server

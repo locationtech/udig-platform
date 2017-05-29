@@ -371,7 +371,11 @@
         <topic label="Adding features from PostGIS" href="EN/tasks/Adding features from PostGIS.html">
         
                 </topic>
-                    
+                
+        <topic label="Adding features from MySQL" href="EN/tasks/Adding features from MySQL.html">
+        
+        </topic>       
+        
         <topic label="Adding features from WFS" href="EN/tasks/Adding features from WFS.html">
         
                 </topic>

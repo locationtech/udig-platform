@@ -35,6 +35,8 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
  */
 public class MySqlLookUpSchemaRunnable implements LookUpSchemaRunnable {
 
+    private final String[] geomTypes = {"geometry", "point", "multipoint", "line", "linestring", "polygon", "multipolygon"};
+    
     private final String host;
     private final int port;
     private final String username;
@@ -116,15 +118,14 @@ public class MySqlLookUpSchemaRunnable implements LookUpSchemaRunnable {
             if (statement.execute(sql)) {
                 ResultSet results = statement.getResultSet();
                 while (results.next()) {
-                	if ( results.getString("Type").equalsIgnoreCase("geometry") ) // should be more types
-                	{
-                    Pair<String, String> typeSrid = new Pair<String, String>(results
-                            .getString("Type"), "4362"); // assumed srid
-                    String geom = results.getString("Field");
-                    Pair<String, Pair<String, String>> all = new Pair<String, Pair<String, String>>(
-                            geom, typeSrid);
-                    return all;
-                	}
+                    if ( existsInArray(results.getString("Type"), geomTypes, false)) {
+                        Pair<String, String> typeSrid = new Pair<String, String>(results
+                                .getString("Type"), "4362"); // assumed srid
+                        String geom = results.getString("Field");
+                        Pair<String, Pair<String, String>> all = new Pair<String, Pair<String, String>>(
+                                geom, typeSrid);
+                        return all;
+                    }
                 }
             }
 
@@ -160,4 +161,27 @@ public class MySqlLookUpSchemaRunnable implements LookUpSchemaRunnable {
         return tables;
     }
 
+    /**
+     * checks whether a String value exists in the provide array of Strings 
+     * 
+     * @param valuetoTest
+     * @param array
+     * @param caseSensitive flags to enable/disable case sensitivity during comparison
+     * @return
+     */
+    private boolean existsInArray(String valuetoTest, String[] array, boolean caseSensitive) {
+
+        for (String entry : array) {
+            if (caseSensitive) {
+                if (entry.equals(valuetoTest)) {
+                    return true;
+                }
+            } else {
+                if (entry.equalsIgnoreCase(valuetoTest)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
