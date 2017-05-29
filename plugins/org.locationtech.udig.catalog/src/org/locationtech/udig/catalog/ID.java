@@ -468,7 +468,7 @@ public class ID implements Serializable {
      * @return true if ID refers to a database (ie is a jdbc url)
      */
     public boolean isJDBC() {
-        return id.startsWith("jdbc"); //$NON-NLS-1$
+        return id.startsWith("jdbc") || (url != null && url.getProtocol().contains("jdbc")) ; //$NON-NLS-1$ //$NON-NLS-2$
         // if( url != null){
         // String PROTOCOL = url.getProtocol();
         // String HOST = url.getHost();
