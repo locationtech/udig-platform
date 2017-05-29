@@ -2,10 +2,10 @@ Adding features from MySQL
 ############################
 
 #. Select :menuselection:`Layer --> Add ...` from the menu bar to open the Add Data wizard
-#. Select **Mysql Host** from the list and press **Next**.
-#. Fill in the Mysql page:
+#. Select **MySQL Host** from the list and press **Next**.
+#. Fill in the MySQL page:
 
-   -  Enter your Mysql host and authentication parameters
+   -  Enter your MySQL host and authentication parameters
    -  Select the database connect and optionally a schema
 
 #. Press **Next**
@@ -15,7 +15,7 @@ Adding features from MySQL
 
 #. Press **Finish**
 
-Layers will be added to the current map (created if needed). The Mysql server defined will be
+Layers will be added to the current map (created if needed). The MySQL server defined will be
 added to the Catalog view
 
 **Related reference**
