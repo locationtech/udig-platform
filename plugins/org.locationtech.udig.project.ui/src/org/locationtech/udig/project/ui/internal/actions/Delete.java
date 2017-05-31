@@ -47,6 +47,7 @@ import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.action.IAction;
@@ -59,6 +60,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
+
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.StringUtils;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**
@@ -287,14 +291,14 @@ public class Delete extends UDIGGenericAction {
         
         // START TEMPORARY NEW CODE
         boolean delete = MessageDialog.openConfirm( Display.getCurrent().getActiveShell(), Messages.Delete_delete, message );
-        boolean deleteFiles = false;
+        boolean deleteFiles = getDoDelete();
         // END TEMPORARY NEW CODE
         
         
         if( delete ){
-            if (deleteFiles != getDoDelete()) {
-                setDoDelete(deleteFiles);
-            }
+            //if (deleteFiles != getDoDelete()) {
+            //    setDoDelete(deleteFiles);
+            //}
             return Pair.create(deleteFiles, Window.OK);
         } else {
             // Window.CANCEL
@@ -344,12 +348,18 @@ public class Delete extends UDIGGenericAction {
                     if (resource == null) {
                         return;
                     }
-                    String path = resource.getURI().toFileString();
+                    URI resourceUri = resource.getURI();
+                    String path = resourceUri.toFileString();
                     resource.unload();
+                    if (resourceUri.hasAuthority()) {
+                        path = StringUtils.removeStart(path, "//");
+                    }
+                    /*
                     int lastIndexOf = path.lastIndexOf('/');
                     if (lastIndexOf == -1)
                         lastIndexOf = path.length();
                     path = path.substring(0, lastIndexOf);
+                    */
                     final File file = new File(path);
                     deleteFile(file);
                 } catch (Exception e) {
@@ -420,12 +430,19 @@ public class Delete extends UDIGGenericAction {
                 try {
                     resourceSet.getResources().remove(resource);
                     resource.unload();
+                    /*
                     int lastIndexOf = path.lastIndexOf('/');
                     if (lastIndexOf == -1)
                         lastIndexOf = path.length();
                     path = path.substring(0, lastIndexOf);
+                    */
                     final File file = new File(path);
                     deleteFile(file);
+                    //also delete the directory containing the files
+                    String dirPath = FilenameUtils.getFullPathNoEndSeparator(path);
+                    if (dirPath.endsWith(".udig")) {
+                        deleteFile(new File(dirPath));
+                    }
                 } catch (Exception e) {
                     ProjectUIPlugin.log("Error deleting project file", e); //$NON-NLS-1$
                 }
