@@ -120,13 +120,11 @@ public class MySQLServiceImpl extends IService {
         try {
             if (members == null) {
                 members = new LinkedList<MySQLGeoResource>();
-                if (ds.getDataSource() == null) {          
-	                String[] typenames = ds.getTypeNames();
-	                if (typenames != null)
-	                    for( int i = 0; i < typenames.length; i++ ) {
-	                        members.add(new MySQLGeoResource(this, typenames[i]));
-	                    }
-                }
+                String[] typenames = ds.getTypeNames();
+                if (typenames != null)
+                    for( int i = 0; i < typenames.length; i++ ) {
+                        members.add(new MySQLGeoResource(this, typenames[i]));
+                    }
             }
         } finally {
             rLock.unlock();
