@@ -45,8 +45,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ProjectImpl extends EObjectImpl implements Project {
 
-	protected static final String AUTHORITY_SEPARATOR = "//";
-	
     /**
      * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
@@ -360,7 +358,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
     private static String findProjectResourcePath(URI projectURI) {
         String projectPath = projectURI.toFileString();
         if (projectURI.hasAuthority()) { //remove '//' character (added in URI from emf version 2.9 and onward
-            projectPath = StringUtils.removeStart(projectPath, AUTHORITY_SEPARATOR);
+            projectPath = StringUtils.removeStart(projectPath, "//");
         }
         projectPath = projectPath.substring(0, projectPath.lastIndexOf(File.separatorChar));
         while (projectPath.startsWith(File.separator + File.separator)) {
@@ -378,7 +376,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
             URI elementPathUri = projectElement.eResource().getURI();
             elementPath = elementPathUri.toFileString();
             if (elementPathUri.hasAuthority()) { //remove '//' character (added in URI from emf version 2.9 and onward
-                elementPath = StringUtils.removeStart(elementPath, AUTHORITY_SEPARATOR);
+                elementPath = StringUtils.removeStart(elementPath, "//");
             }
             elementPath = elementPath.substring(0, elementPath.lastIndexOf(File.separatorChar));
             while (elementPath.startsWith(File.separator + File.separator)) {
