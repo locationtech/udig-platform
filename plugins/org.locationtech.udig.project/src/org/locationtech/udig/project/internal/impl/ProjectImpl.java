@@ -10,6 +10,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.locationtech.udig.project.command.Command;
 import org.locationtech.udig.project.command.CommandManager;
 import org.locationtech.udig.project.internal.Messages;
@@ -355,6 +357,9 @@ public class ProjectImpl extends EObjectImpl implements Project {
 
     private static String findProjectResourcePath(URI projectURI) {
         String projectPath = projectURI.toFileString();
+        if (projectURI.hasAuthority()) { //remove '//' character (added in URI from emf version 2.9 and onward
+            projectPath = StringUtils.removeStart(projectPath, "//");
+        }
         projectPath = projectPath.substring(0, projectPath.lastIndexOf(File.separatorChar));
         while (projectPath.startsWith(File.separator + File.separator)) {
             projectPath = projectPath.substring(1);
@@ -368,7 +373,11 @@ public class ProjectImpl extends EObjectImpl implements Project {
     private String findElementResourcePath(ProjectElement projectElement, String elementPath2) {
         String elementPath = elementPath2;
         if (projectElement.eResource() != null) {
-            elementPath = projectElement.eResource().getURI().toFileString();
+            URI elementPathUri = projectElement.eResource().getURI();
+            elementPath = elementPathUri.toFileString();
+            if (elementPathUri.hasAuthority()) { //remove '//' character (added in URI from emf version 2.9 and onward
+                elementPath = StringUtils.removeStart(elementPath, "//");
+            }
             elementPath = elementPath.substring(0, elementPath.lastIndexOf(File.separatorChar));
             while (elementPath.startsWith(File.separator + File.separator)) {
                 elementPath = elementPath.substring(1);
