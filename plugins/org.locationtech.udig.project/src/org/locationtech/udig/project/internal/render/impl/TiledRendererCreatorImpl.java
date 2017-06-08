@@ -322,6 +322,18 @@ public class TiledRendererCreatorImpl implements RendererCreator {
     }
 
     /**
+     * @throws UnsupportedOperationException
+     */
+    public Collection<String> getAvailableRendererIds(Layer layer) {
+    	List<String> result = new ArrayList<String>(); 
+    	Collection<AbstractRenderMetrics> metrics = getAvailableRendererMetrics(layer);
+    	for (AbstractRenderMetrics metric : metrics) {
+    		result.add(metric.getId());
+    	}
+    	return result;
+    }
+    
+    /**
      * 
      * @throws UnsupportedOperationException
      */
