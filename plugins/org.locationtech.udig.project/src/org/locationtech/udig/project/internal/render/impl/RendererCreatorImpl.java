@@ -116,6 +116,25 @@ public class RendererCreatorImpl implements RendererCreator {
         return renderers;
     }
 
+    /**
+     * returns a list of available metrics Ids by Layer.
+     *  
+     * @param layer
+     * @return
+     */
+    public Collection<String> getAvailableRendererIds(Layer layer) {
+        List<String> idsList = new ArrayList<String>();
+        
+        List<InternalRenderMetrics> availableRenderers = layerToMetricsFactoryMap.get(layer);
+        
+        for( InternalRenderMetrics irm : availableRenderers ) {
+        	idsList.add(irm.getId());
+        }
+        
+        return idsList;
+    }
+
+    
     public Collection<AbstractRenderMetrics> getAvailableRendererMetrics(Layer layer) {
         List<AbstractRenderMetrics> metrics = new ArrayList<AbstractRenderMetrics>();
         
@@ -132,6 +151,8 @@ public class RendererCreatorImpl implements RendererCreator {
             IRenderContext renderContext = internalRenderMetrics.getRenderContext();
             IRenderMetricsFactory renderMetricsFactory = internalRenderMetrics.getRenderMetricsFactory();
             AbstractRenderMetrics createMetrics = renderMetricsFactory.createMetrics(renderContext);
+            //set the id since initially it is set only in InternalRenderMetrics 
+            createMetrics.setId(internalRenderMetrics.getId());
             metrics.add(createMetrics);
         }
         return metrics;

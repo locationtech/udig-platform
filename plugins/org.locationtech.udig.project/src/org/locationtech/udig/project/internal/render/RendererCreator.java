@@ -130,4 +130,11 @@ public interface RendererCreator{
      * @return the set of {@link IRenderMetrics} that can render the provided layer.
      */
     public Collection<AbstractRenderMetrics> getAvailableRendererMetrics(Layer layer);
+    
+    /**
+     * Returns the ids of all the renderers that are capable of rendering the provided layer.
+     *
+     * @return the the ids of all the renderers that are capable of rendering the provided layer.
+     */
+    public Collection<String> getAvailableRendererIds(Layer layer);
 }
