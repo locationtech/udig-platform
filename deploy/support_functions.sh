@@ -34,7 +34,7 @@ function assemble() {
 
             echo "Assemble ${BUILD}/udig-${VERSION}.${EXT}.zip"
             cd ${BUILD}/${PLATFORM}
-            zip -9 -r -q ../udig-${VERSION}.${EXT}.zip udig
+            zip -9 -X -r -q ../udig-${VERSION}.${EXT}.zip udig
         else 
            echo "Already Exists ${BUILD}/udig-${VERSION}.${EXT}.zip"
         fi
