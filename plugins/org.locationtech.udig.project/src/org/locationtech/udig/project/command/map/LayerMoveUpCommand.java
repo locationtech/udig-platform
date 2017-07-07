@@ -11,6 +11,7 @@
 package org.locationtech.udig.project.command.map;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -69,6 +70,8 @@ public class LayerMoveUpCommand extends AbstractCommand implements UndoableMapCo
         }
     }
     public void rollback( IProgressMonitor monitor ) throws Exception {
+        // need to reverse otherwise nothing happens on multiselect
+        Collections.reverse(selection);
         for( ILayer layer : selection ) {
             getMap().lowerLayer((Layer) layer);
         }
