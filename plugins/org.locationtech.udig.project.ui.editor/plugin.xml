@@ -298,6 +298,7 @@
                         icon="icons/elcl16/mylar_mode.gif"
                         id="org.locationtech.udig.project.ui.mylar.action"
                         label="%mylarAction.label"
+                        tooltip="%mylarAction.tooltip"
                         menubarPath="map/mode.ext"
                         style="push">
                   </action>
