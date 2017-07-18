@@ -11,22 +11,19 @@ package org.locationtech.udig.tutorials.preferredzoomlevels;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
-
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.preferences.PreferenceConstants;
-import org.locationtech.udig.project.ui.internal.DefaultMapViewPart;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.IStatusLineManager;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.ui.internal.DefaultMapViewPart;
 
 /**
  * 
@@ -41,7 +38,7 @@ public class View extends DefaultMapViewPart {
 			IProgressMonitor monitor) throws IOException {
 		
 		@SuppressWarnings("nls")
-        URL url = FileLocator.resolve(FileLocator.find(Activator.getDefault().getBundle(), new Path("data/face.shp"), Collections.emptyMap()));
+        URL url = FileLocator.resolve(FileLocator.find(Activator.getDefault().getBundle(), new Path("data/face.shp"), new HashMap<String, String>()));
 		IService r = CatalogPlugin.getDefault().getLocalCatalog().acquire(url, monitor);
 		resources.add(r.resources(monitor).get(0));
 	}

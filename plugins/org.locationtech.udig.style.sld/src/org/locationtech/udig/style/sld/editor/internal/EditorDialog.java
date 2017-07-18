@@ -25,13 +25,9 @@ package org.locationtech.udig.style.sld.editor.internal;
 import java.util.Iterator;
 import java.util.List;
 
-import org.locationtech.udig.style.sld.IEditorPage;
-import org.locationtech.udig.style.sld.IEditorPageContainer;
-import org.locationtech.udig.style.sld.SLDPlugin;
-import org.locationtech.udig.style.sld.editor.EditorPageManager;
-
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.DialogMessageArea;
@@ -47,7 +43,6 @@ import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.util.Assert;
 import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.util.ListenerList;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.util.SafeRunnable;
 import org.eclipse.jface.viewers.ISelection;
@@ -86,6 +81,10 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Sash;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
+import org.locationtech.udig.style.sld.IEditorPage;
+import org.locationtech.udig.style.sld.IEditorPageContainer;
+import org.locationtech.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.style.sld.editor.EditorPageManager;
 
 /**
  * Adapting PreferenceDialog to allow for the general approach to be used for
@@ -213,7 +212,7 @@ public class EditorDialog extends Dialog implements IEditorPageContainer, IPageC
 	 */
 	private TreeViewer treeViewer;
 	
-    private ListenerList pageChangedListeners = new ListenerList(3);
+    private ListenerList<IPageChangedListener> pageChangedListeners = new ListenerList<IPageChangedListener>(3);
 
 	/**
 	 * Creates a new preference dialog under the control of the given preference
