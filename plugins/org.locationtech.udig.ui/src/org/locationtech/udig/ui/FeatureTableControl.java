@@ -10,7 +10,6 @@
  */
 package org.locationtech.udig.ui;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
@@ -22,11 +21,6 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-
-import org.locationtech.udig.core.IProvider;
-import org.locationtech.udig.internal.ui.Trace;
-import org.locationtech.udig.internal.ui.UiPlugin;
-import org.locationtech.udig.ui.internal.Messages;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -63,6 +57,10 @@ import org.eclipse.ui.part.PageBook;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
+import org.locationtech.udig.core.IProvider;
+import org.locationtech.udig.internal.ui.Trace;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.internal.Messages;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
@@ -473,7 +471,7 @@ public class FeatureTableControl implements ISelectionProvider {
 
     private void setCellEditors( IAdaptable adaptable, int attributeCount ) {
         if (adaptable.getAdapter(CellEditor[].class) != null) {
-            CellEditor[] editors = (CellEditor[]) adaptable.getAdapter(Array.class);
+            CellEditor[] editors = (CellEditor[]) adaptable.getAdapter(CellEditor[].class);
             if (editors.length < attributeCount) {
                 UiPlugin.log(
                         "not enough cell editors for feature type so not used", new Exception()); //$NON-NLS-1$
