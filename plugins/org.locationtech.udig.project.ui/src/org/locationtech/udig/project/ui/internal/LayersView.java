@@ -31,6 +31,8 @@ import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.ProjectPackage;
 import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.impl.IEListVisitor;
+import org.locationtech.udig.project.internal.impl.SynchronizedEObjectWithInverseResolvingEList;
 import org.locationtech.udig.project.render.IViewportModel;
 import org.locationtech.udig.project.render.IViewportModelListener;
 import org.locationtech.udig.project.render.ViewportModelEvent;
@@ -400,6 +402,15 @@ public class LayersView extends ViewPart
 
     private abstract class LayerAction extends Action implements ISelectionListener {
 
+        /**
+         * marker if layer is selected
+         */
+        protected static final char SELECTED = 'X';
+        /**
+         * marker if layer isn't selected
+         */
+        protected static final char UNSELECTED = 'O';
+        protected final String SEL_INDEX_SEARCH_PATTERN = new StringBuilder().append(UNSELECTED).append(SELECTED).toString();
         protected IStructuredSelection selection;
 
         /**
@@ -417,21 +428,77 @@ public class LayersView extends ViewPart
             if (!(selection instanceof IStructuredSelection))
                 return;
             this.selection = (IStructuredSelection) selection;
-            if (part instanceof LayersView && selection != null && !selection.isEmpty())
-                setEnabled(true);
+            if (getCurrentMap() != null && part instanceof LayersView) {
+                setEnabled(canEnable(this.selection));
+                return;
+            }
+            setEnabled(false);
         }
+        abstract boolean canEnable(IStructuredSelection selection);
 
+        /**
+         * Returns a String of selection status for each map layer. if a layer is selected {@link #SELECTED} is at the specific
+         * index and if a layer isn't selected, {@link #UNSELECTED} is at the index.
+         * e.g '0XX0' means, that layer 1 and 4 are not selected whereas 2 and 3 are. It can be used to find out, if an action
+         * should be enabled/disabled.
+         *
+         * @param currentMap current map
+         * @param selection current selection
+         * @return empty string (anything else than layers are in the selection) or String of {@link #SELECTED} and
+         *         {@link #UNSELECTED} for each layer at the specific index
+         */
+        @SuppressWarnings("rawtypes")
+        protected String getSelectionIndexForLayers(Map currentMap, IStructuredSelection selection) {
+            final List<Layer> selectedLayers = new ArrayList<Layer>();
+            if (currentMap == null || selection == null) {
+                return selectedLayers.toString();
+            }
+
+            if (selection != null) {
+                for (Iterator iter = selection.iterator(); iter.hasNext();) {
+                    Object obj = iter.next();
+                    if (obj instanceof Layer) {
+                        selectedLayers.add((Layer) obj);
+                    }
+                }
+            }
+
+            final StringBuilder selectionIndex = new StringBuilder();
+            List<Layer> mapLayers = currentMap.getLayersInternal();
+            if (mapLayers instanceof SynchronizedEObjectWithInverseResolvingEList) {
+                ((SynchronizedEObjectWithInverseResolvingEList<Layer>) mapLayers).syncedIteration(new IEListVisitor<Layer>() {
+                    @Override
+                    public void visit(Layer layer) {
+                        if (selectedLayers.contains(layer)) {
+                            selectionIndex.append(SELECTED);
+                        } else {
+                            selectionIndex.append(UNSELECTED);
+                        }
+                    }
+                });
+
+            } else {
+                for (Layer layer : mapLayers) {
+                    if (selectedLayers.contains(layer)) {
+                        selectionIndex.append(SELECTED);
+                    } else {
+                        selectionIndex.append(UNSELECTED);
+                    }
+                }
+            }
+            return selectionIndex.toString();
+        }
         /**
          * @see org.eclipse.jface.action.Action#setEnabled(boolean)
          */
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings("rawtypes")
         public void setEnabled( boolean enabled ) {
             super.setEnabled(false);
 
             if (!enabled || selection == null || selection.isEmpty())
                 return;
 
-            for( Iterator iter = selection.iterator(); iter.hasNext(); ) {
+            for(Iterator iter = selection.iterator(); iter.hasNext(); ) {
                 Object obj = iter.next();
                 if (!(obj instanceof Layer))
                     return;
@@ -634,7 +701,7 @@ public class LayersView extends ViewPart
                 setCurrentMap((Map)obj);
             }
         }
-                
+
         viewer.setSorter(new ViewerLayerSorter());
 
         // sets the layer visibility to match the check box setting.
@@ -735,9 +802,16 @@ public class LayersView extends ViewPart
             public void run() {
                 if( selection.isEmpty() ) return;
                 IMap map = getCurrentMap();
-                // map.sendCommandSync( new LayerMoveDownCommand( selection ));
-                map.sendCommandASync( new LayerMoveDownCommand( selection ));
+                map.sendCommandSync( new LayerMoveDownCommand( selection ));
+                viewer.setSelection(viewer.getSelection());
             }
+
+            @Override
+            boolean canEnable(IStructuredSelection selection) {
+                String selectionIndex = new StringBuilder(getSelectionIndexForLayers(getCurrentMap(), selection)).toString();
+                return selectionIndex.indexOf(SEL_INDEX_SEARCH_PATTERN) >= 0;
+            }
+
         };
         downAction.setEnabled(false);
         downAction.setToolTipText(Messages.LayersView_down_tooltip);
@@ -756,9 +830,16 @@ public class LayersView extends ViewPart
             public void run() {
                 if( selection.isEmpty() ) return;
                 IMap map = getCurrentMap();
-                //map.sendCommandSync( new LayerMoveUpCommand( selection ));
-                map.sendCommandASync( new LayerMoveUpCommand( selection ));
+                map.sendCommandSync( new LayerMoveUpCommand( selection ));
+                viewer.setSelection(viewer.getSelection());
             }
+
+            @Override
+            boolean canEnable(IStructuredSelection selection) {
+                String selectionIndex = new StringBuilder(getSelectionIndexForLayers(getCurrentMap(), selection)).reverse().toString();
+                return selectionIndex.indexOf(SEL_INDEX_SEARCH_PATTERN) >= 0;
+            }
+
         };
         upAction.setEnabled(false);
         upAction.setToolTipText(Messages.LayersView_up_tooltip);
