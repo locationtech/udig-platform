@@ -17,10 +17,9 @@ import org.geotools.feature.FeatureIterator;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
-
+import org.locationtech.udig.core.internal.FeatureUtils;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.command.MapCommand;
-import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 import org.locationtech.udig.project.ui.internal.commands.draw.DrawShapeCommand;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
@@ -178,23 +177,22 @@ public class DeleteTool extends AbstractModalTool implements ModalTool {
 
                     @Override
                     public void run() {
-                        // TODO Auto-generated method stub
-                        for (final SimpleFeature feature : features) {
+                    	final String attribName = FeatureUtils.getActualPropertyName(
+                    			features[0].getFeatureType(), ATTRIBUTE_NAME);
+                        for (final SimpleFeature feat : features) {
                             MenuItem item = new MenuItem(menu, SWT.PUSH);
                             //SimpleFeature feature=iter.next();
-                            boolean hasNameAttrib = feature.getAttribute(ATTRIBUTE_NAME) != null 
-                                    && !"".equals(feature.getAttribute(ATTRIBUTE_NAME).toString());
-                            item.setText(hasNameAttrib ? 
-                                    feature.getAttribute(ATTRIBUTE_NAME).toString() : feature.getID());
+                            item.setText(attribName != null ? 
+                                    feat.getAttribute(attribName).toString() : feat.getID());
                             item.addSelectionListener(new SelectionAdapter() {
 
                                 @Override
                                 public void widgetSelected(SelectionEvent e) {
                                     if (DELETE_CONFIRM && !MessageDialog.openConfirm(null, "", MessageFormat.format(
-                                            Messages.DeleteTool_confirmation_text2, feature.getIdentifier()))) {
+                                            Messages.DeleteTool_confirmation_text2, feat.getIdentifier()))) {
                                         return;
                                     }
-                                    MapCommand deleteFeatureCommand = getContext().getEditFactory().createDeleteFeature(feature, selectedLayer);
+                                    MapCommand deleteFeatureCommand = getContext().getEditFactory().createDeleteFeature(feat, selectedLayer);
                                     getContext().sendASyncCommand(deleteFeatureCommand);
 
                                 }

@@ -17,6 +17,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,6 +33,7 @@ import org.geotools.referencing.CRS;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
+import org.opengis.feature.type.FeatureType;
 import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
@@ -638,6 +641,53 @@ public class FeatureUtils {
         return true;
     }
 
+	/**
+	 * Performs a case insensitive lookup for the provided propertyName in the {@link FeatureType}.
+	 * 
+	 * @param featureType
+	 * @param propertyName
+	 * @return the actual propertyName (case sensitive) or null if none is found  
+	 */
+	public static String getActualPropertyName(final SimpleFeatureType featureType, final String propertyName) {
+
+		assert featureType != null : "featureType cannot be null";
+		assert propertyName != null : "propertyName != cannot be null";
+
+		for (int i = 0; i < featureType.getAttributeCount(); i++) {
+			String name = featureType.getDescriptor(i).getLocalName();
+
+			if (propertyName.equalsIgnoreCase(name)) {
+				return name;
+			}
+		}
+		return null;
+	}
+
+	
+	/**
+	 * Performs a case insensitive lookup for the provided propertyNames in the {@link FeatureType}.
+	 * 
+	 * @param featureType
+	 * @param propertyName
+	 * @return a list of actual propertyName (case sensitive). If a propertyName is not present
+	 * 			then it is skipped from the list  
+	 */
+	public static List<String> getActualPropertyName(final SimpleFeatureType featureType, final List<String> propertyNames) {
+
+		assert featureType != null : "featureType cannot be null";
+		assert propertyNames != null : "propertyName != cannot be null";
+
+		List<String> nameList = new LinkedList<String>();
+		
+		for (String property : propertyNames) {
+			String name = getActualPropertyName(featureType, property);
+			if (name != null) {
+				nameList.add(name);
+			}
+		}
+		return nameList;
+	}
+	
    public static Set<Identifier> stringToId(FilterFactory fac, String fid) {
 	   return stringToId(fac, Collections.singleton(fid));
 	}

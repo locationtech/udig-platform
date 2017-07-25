@@ -32,7 +32,7 @@ import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.TransformException;
-
+import org.locationtech.udig.core.internal.FeatureUtils;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.command.AbstractCommand;
 import org.locationtech.udig.project.command.UndoableComposite;
@@ -238,14 +238,14 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
             PlatformGIS.syncInDisplayThread(new Runnable() {
                 @Override
                 public void run() {
+                	final String attribName = FeatureUtils.getActualPropertyName(
+                			features[0].getFeatureType(), ATTRIBUTE_NAME);
                     final Menu menu = new Menu(((ViewportPane) event.source).getControl().getShell(), SWT.POP_UP);
                     for (final SimpleFeature feat : features) {
                         MenuItem item = new MenuItem(menu, SWT.PUSH);
                         //SimpleFeature feature=iter.next();
-                        boolean hasNameAttrib = feat.getAttribute(ATTRIBUTE_NAME) != null 
-                                && !"".equals(feat.getAttribute(ATTRIBUTE_NAME).toString());
-                        item.setText(hasNameAttrib ? 
-                                feat.getAttribute(ATTRIBUTE_NAME).toString() : feat.getID());
+                        item.setText(attribName != null ? 
+                                feat.getAttribute(attribName).toString() : feat.getID());
 
                         //add selection listener to execute selection logic upon menu item selection
                         item.addSelectionListener(new SelectionAdapter() {                                              
