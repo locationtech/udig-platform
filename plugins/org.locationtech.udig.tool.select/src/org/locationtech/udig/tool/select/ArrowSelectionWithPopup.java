@@ -25,7 +25,7 @@ import org.geotools.feature.FeatureIterator;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
-
+import org.locationtech.udig.core.internal.FeatureUtils;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
@@ -116,21 +116,20 @@ public class ArrowSelectionWithPopup extends AbstractModalTool implements ModalT
 
                                     @Override
                                     public void run() {
-                                        // TODO Auto-generated method stub
+                                    	final String attribName = FeatureUtils.getActualPropertyName(
+                                    			features[0].getFeatureType(), ATTRIBUTE_NAME);
+                                       
                                         for (final SimpleFeature feat : features) {
                                             MenuItem item = new MenuItem(menu, SWT.PUSH);
-                                            //SimpleFeature feature=iter.next();
-                                            boolean hasNameAttrib = feat.getAttribute(ATTRIBUTE_NAME) != null 
-                                                    && !"".equals(feat.getAttribute(ATTRIBUTE_NAME).toString());
-                                            item.setText(hasNameAttrib ? 
-                                                    feat.getAttribute(ATTRIBUTE_NAME).toString() : feat.getID());
+                                            item.setText(attribName != null ? 
+                                                    feat.getAttribute(attribName).toString() : feat.getID());
+                                            
                                             item.addSelectionListener(new SelectionListener() {
 
                                                 @Override
                                                 public void widgetSelected(SelectionEvent e) {
                                                     getContext().sendASyncCommand(getContext().getEditFactory().createSetEditFeatureCommand(feat, selectedLayer));
                                                     getContext().sendASyncCommand(getContext().getSelectionFactory().createFIDSelectCommand(selectedLayer, feat));
-
                                                 }
 
                                                 @Override
