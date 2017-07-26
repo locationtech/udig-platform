@@ -644,6 +644,7 @@ public class FeatureUtils {
 	/**
 	 * Performs a case insensitive lookup for the provided propertyName in the {@link FeatureType}.
 	 * 
+	 * 
 	 * @param featureType
 	 * @param propertyName
 	 * @return the actual propertyName (case sensitive) or null if none is found  
@@ -653,9 +654,18 @@ public class FeatureUtils {
 		assert featureType != null : "featureType cannot be null";
 		assert propertyName != null : "propertyName != cannot be null";
 
+		//if an exact match is found return it
 		for (int i = 0; i < featureType.getAttributeCount(); i++) {
 			String name = featureType.getDescriptor(i).getLocalName();
-
+			if (propertyName.equals(name)) {
+				return name;
+			}
+		}
+		
+		//otherwise return the first match found by performing a case 
+		//insensitive check for equality 
+		for (int i = 0; i < featureType.getAttributeCount(); i++) {
+			String name = featureType.getDescriptor(i).getLocalName();
 			if (propertyName.equalsIgnoreCase(name)) {
 				return name;
 			}
