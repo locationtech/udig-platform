@@ -238,14 +238,15 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
             PlatformGIS.syncInDisplayThread(new Runnable() {
                 @Override
                 public void run() {
-                	final String attribName = FeatureUtils.getActualPropertyName(
-                			features[0].getFeatureType(), ATTRIBUTE_NAME);
+                    final String attribName = FeatureUtils.getActualPropertyName(
+                            features[0].getFeatureType(), ATTRIBUTE_NAME);
                     final Menu menu = new Menu(((ViewportPane) event.source).getControl().getShell(), SWT.POP_UP);
                     for (final SimpleFeature feat : features) {
                         MenuItem item = new MenuItem(menu, SWT.PUSH);
                         //SimpleFeature feature=iter.next();
-                        item.setText(attribName != null ? 
-                                feat.getAttribute(attribName).toString() : feat.getID());
+                        Object attribValue = attribName != null ? feat.getAttribute(attribName) : null;
+                        item.setText(attribValue != null ? 
+                                attribValue.toString() : feat.getID());
 
                         //add selection listener to execute selection logic upon menu item selection
                         item.addSelectionListener(new SelectionAdapter() {                                              

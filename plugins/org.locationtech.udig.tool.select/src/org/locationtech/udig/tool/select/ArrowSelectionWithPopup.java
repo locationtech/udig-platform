@@ -121,8 +121,9 @@ public class ArrowSelectionWithPopup extends AbstractModalTool implements ModalT
                                        
                                         for (final SimpleFeature feat : features) {
                                             MenuItem item = new MenuItem(menu, SWT.PUSH);
-                                            item.setText(attribName != null ? 
-                                                    feat.getAttribute(attribName).toString() : feat.getID());
+                                            Object attribValue = attribName != null ? feat.getAttribute(attribName) : null;
+                                            item.setText(attribValue != null ? 
+                                                    attribValue.toString() : feat.getID());
                                             
                                             item.addSelectionListener(new SelectionListener() {
 

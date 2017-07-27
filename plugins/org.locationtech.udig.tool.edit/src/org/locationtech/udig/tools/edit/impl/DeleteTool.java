@@ -182,8 +182,9 @@ public class DeleteTool extends AbstractModalTool implements ModalTool {
                         for (final SimpleFeature feat : features) {
                             MenuItem item = new MenuItem(menu, SWT.PUSH);
                             //SimpleFeature feature=iter.next();
-                            item.setText(attribName != null ? 
-                                    feat.getAttribute(attribName).toString() : feat.getID());
+                            Object attribValue = attribName != null ? feat.getAttribute(attribName) : null;
+                            item.setText(attribValue != null ? 
+                                    attribValue.toString() : feat.getID());
                             item.addSelectionListener(new SelectionAdapter() {
 
                                 @Override
