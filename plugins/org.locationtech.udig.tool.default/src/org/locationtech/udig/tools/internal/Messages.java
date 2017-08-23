@@ -26,6 +26,8 @@ public class Messages extends NLS {
     public static String Navigation_Scale;
     public static String Navigation_Tiled;
 	public static String ScrollZoom_scroll_zoom;
+
+
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

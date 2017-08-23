@@ -8,16 +8,18 @@ Edit Tool Performance Preferences
 Available Preferences
 ~~~~~~~~~~~~~~~~~~~~~
 
--  Fill Vertex Handles - Indicates whether the vertex handles should be filled. This can greatly
-   slow down drawing of the edit feature and adversely affect the user interaction during editing
-   when editing geometries with many vertices.
-
-   Default is off.
-
 -  Fill Selected Polygons - Indicates whether polygons will be filled. It is an attractive effect
    but can be problematic when the selected polygon takes up most of the display.
 
-   Default is off.
+   Default is on.
+
+-  Hide Features On Select - Indicates to hide selected Feature of the Layer. The feature is filtered 
+   during rendering and therefore only the selection is rendered. It depends on the amount of data in 
+   feature store and implementation for filtering using indices how performant it works. This can be 
+   quite expensive
+
+   Default is on.
+
 
 **Related reference**
 

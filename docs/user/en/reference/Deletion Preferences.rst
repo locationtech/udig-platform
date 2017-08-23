@@ -8,9 +8,10 @@ Deletion Preferences
 Available Preferences
 ~~~~~~~~~~~~~~~~~~~~~
 
--  delete radius - Declares how big (in pixel) the selection radius will be during delete operations. Default to 6 if not set.
+-  Delete Radius - Declares how big (in pixel) the delete radius will be during delete operations to find features for the selected
+   map layer. If more features than one are found a popup is shown and the user may select a feature to delete. Default to 6 if not set.
 
--  confirm delete - if checked then when a feature is selected for deletion by the Delete Feature Tool a confirmation
+-  Confirm Delete - if checked then when a feature is selected for deletion by the Delete Feature Tool a confirmation
    popup will occur
 
 
@@ -22,5 +23,6 @@ Available Preferences
 Peers
 ~~~~~
 
-:doc:`Edit Tool Preferences`
+:doc:`Tool Preferences`
 
+:doc:`Edit Tool Preferences`

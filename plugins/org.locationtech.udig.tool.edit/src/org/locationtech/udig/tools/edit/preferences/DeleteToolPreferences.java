@@ -9,16 +9,20 @@
  */
 package org.locationtech.udig.tools.edit.preferences;
 
-import org.locationtech.udig.tool.edit.internal.Messages;
-import org.locationtech.udig.tools.edit.EditPlugin;
-
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
-import org.eclipse.jface.preference.StringFieldEditor;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.dialogs.PreferenceLinkArea;
+import org.eclipse.ui.preferences.IWorkbenchPreferenceContainer;
+import org.locationtech.udig.tool.edit.internal.Messages;
+import org.locationtech.udig.tools.edit.EditPlugin;
 
 /**
  * Preference page for all tools.
@@ -37,9 +41,21 @@ public class DeleteToolPreferences extends FieldEditorPreferencePage implements 
     }
 
     @Override
+    protected Control createContents(Composite parent) {
+        // create a link to general tooling preferences page
+        PreferenceLinkArea preferenceLinkArea = new PreferenceLinkArea(parent, SWT.WRAP | SWT.MULTI,
+                "org.locationtech.udig.project.ui.preferences.tool",
+                org.locationtech.udig.project.ui.internal.Messages.PREFERENCES_LINK_TO_GENERAL_PAGE,
+                (IWorkbenchPreferenceContainer) getContainer(), null);
+        preferenceLinkArea.getControl()
+                .setLayoutData(GridDataFactory.fillDefaults().hint(150, SWT.DEFAULT).create());
+        return super.createContents(parent);
+    }
+
+    @Override
     protected void createFieldEditors() {
     
-        featureDeleteRadius = new IntegerFieldEditor(PreferenceConstants.P_DELETE_TOOL_RADIUS, Messages.DeleteToolPreferences_Delete_Radius, getFieldEditorParent());
+        featureDeleteRadius = new IntegerFieldEditor(PreferenceConstants.P_DELETE_TOOL_SEARCH_SCALEFACTOR, Messages.DeleteToolPreferences_Delete_Radius, getFieldEditorParent());
         addField(featureDeleteRadius);
         featureDeleteRadius.getLabelControl(getFieldEditorParent()).setToolTipText(Messages.DeleteToolPreferences_Delete_Radius_tooltip);
         addField(new BooleanFieldEditor(PreferenceConstants.P_DELETE_TOOL_CONFIRM, Messages.DeleteTool_confirmation_title,

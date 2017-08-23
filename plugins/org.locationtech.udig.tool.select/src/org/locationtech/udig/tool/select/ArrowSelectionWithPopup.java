@@ -17,24 +17,9 @@ package org.locationtech.udig.tool.select;
 import java.awt.Point;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Iterator;
-
-import org.geotools.data.FeatureSource;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureIterator;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.locationtech.udig.core.internal.FeatureUtils;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
-import org.locationtech.udig.project.ui.tool.AbstractModalTool;
-import org.locationtech.udig.project.ui.tool.ModalTool;
-import org.locationtech.udig.tool.select.internal.Messages;
-import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
@@ -43,6 +28,22 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.geotools.data.FeatureSource;
+import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.preferences.PreferenceConstants;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.tool.AbstractModalTool;
+import org.locationtech.udig.project.ui.tool.ModalTool;
+import org.locationtech.udig.tool.select.internal.Messages;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * Selects and drags single features providing an appropriate selection popup 
@@ -75,6 +76,12 @@ public class ArrowSelectionWithPopup extends AbstractModalTool implements ModalT
     public void mouseReleased( final MapMouseEvent e ) {
 
         if( e.x==x && e.y==y ){
+            final int selectionSearchSize = Platform.getPreferencesService().getInt(
+                    ProjectUIPlugin.ID, PreferenceConstants.FEATURE_SELECTION_SCALEFACTOR, PreferenceConstants.DEFAULT_FEATURE_SELECTION_SCALEFACTOR, null);
+            
+            final String featureAttributeName = Platform.getPreferencesService().getString(
+                    ProjectUIPlugin.ID, PreferenceConstants.FEATURE_ATTRIBUTE_NAME, "id", null); //$NON-NLS-1$
+
             //creates a pop-up menu to hold the values if multiple items are found in a position
             //final Menu menu = new Menu(ApplicationGISInternal.getActiveEditor().getComposite().getShell(), SWT.POP_UP);
             final Menu menu = new Menu(((ViewportPane) e.source).getControl().getShell(), SWT.POP_UP);
@@ -83,10 +90,11 @@ public class ArrowSelectionWithPopup extends AbstractModalTool implements ModalT
 
                 @SuppressWarnings("unchecked")
                 public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
+
                     monitor.beginTask(Messages.ArrowSelection_0, 5);
                     ReferencedEnvelope bbox = getContext().getBoundingBox(
                             new Point(x,y),
-                            SELECTION_SEARCH_SIZE);
+                            selectionSearchSize);
 
                     FeatureCollection<SimpleFeatureType, SimpleFeature> collection=null;
                     FeatureIterator<SimpleFeature> iter=null;
@@ -116,9 +124,10 @@ public class ArrowSelectionWithPopup extends AbstractModalTool implements ModalT
 
                                     @Override
                                     public void run() {
-                                    	final String attribName = FeatureUtils.getActualPropertyName(
-                                    			features[0].getFeatureType(), ATTRIBUTE_NAME);
-                                       
+                                        final String attribName = FeatureUtils
+                                                .getActualPropertyName(features[0].getFeatureType(),
+                                                        featureAttributeName);
+
                                         for (final SimpleFeature feat : features) {
                                             MenuItem item = new MenuItem(menu, SWT.PUSH);
                                             Object attribValue = attribName != null ? feat.getAttribute(attribName) : null;

@@ -24,7 +24,22 @@ public class PreferenceConstants {
     public static final String P_HIDE_SELECTED_FEATURES = "P_HIDE_SELECTED_FEATURES"; //$NON-NLS-1$
     public static final String P_ADVANCED_ACTIVE = "P_ADVANCED_ACTIVE"; //$NON-NLS-1$
     public static final String P_SELECT_POST_ACCEPT = "P_DESELECT_POST_ACCEPT"; //$NON-NLS-1$
-    
-    public static final String P_DELETE_TOOL_RADIUS = "P_DELETE_TOOL_RADIUS"; //$NON-NLS-1$
+
+    /**
+     * The confirmation setting for delete tool.
+     */
     public static final String P_DELETE_TOOL_CONFIRM = "P_DELETE_TOOL_CONFIRM"; //$NON-NLS-1$
+
+    /**
+     * The scale factor to be used during UI delete command.
+     */
+    public static final String P_DELETE_TOOL_SEARCH_SCALEFACTOR = "P_DELETE_TOOL_SEARCH_SCALEFACTOR"; //$NON-NLS-1$
+
+    /**
+     * default scale factor for delete tool (Default is
+     * {@value #P_DEFAULT_DELETE_SEARCH_SCALEFACTOR}) see
+     * <code>IAbstractContext.getBoundingBox( Point screenLocation, int scalefactor)</code>
+     */
+    public static final int P_DEFAULT_DELETE_SEARCH_SCALEFACTOR = 6;
+
 }
