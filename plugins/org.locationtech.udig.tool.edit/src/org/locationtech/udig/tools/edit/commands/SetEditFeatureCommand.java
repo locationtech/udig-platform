@@ -40,15 +40,17 @@ import org.opengis.filter.Id;
 
 /**
  * Sets the feature currently being edited in the edit manager.
- * 
+ *
  * @author chorner
  * @since 1.1.0
  */
 public class SetEditFeatureCommand extends AbstractCommand implements UndoableMapCommand {
 
-    // The size of the box that is searched.  This is a 7x7 box of pixels by default.  
-    private int SEARCH_SIZE = Platform.getPreferencesService().getInt(
-            ProjectUIPlugin.ID, PreferenceConstants.FEATURE_SELECTION_RADIUS, 7, null);
+    // The size of the box that is searched. It uses the preferences settings value for the size of
+    // the area
+    private int SEARCH_SIZE = Platform.getPreferencesService().getInt(ProjectUIPlugin.ID,
+            PreferenceConstants.FEATURE_SELECTION_SCALEFACTOR,
+            PreferenceConstants.DEFAULT_FEATURE_SELECTION_SCALEFACTOR, null);
 
     EditToolHandler handler;
     Point clickPoint;

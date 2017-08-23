@@ -32,19 +32,8 @@ import org.eclipse.jface.action.IStatusLineManager;
  */
 public abstract class AbstractModalTool extends AbstractTool implements ModalTool {
 
-    // The size of the box that is searched during selection.  
-    protected int SELECTION_SEARCH_SIZE;
-        
-    // The attribute name to be used when multiple features are retrieved.  
-    //if attribute does not exist in FeatureType then the FID value is used
-    protected String ATTRIBUTE_NAME;
-    
-//    String statusBarMessage;
-//    String statusBarErrorMessage;
-    
     private boolean active;
 
-    
     /** 
      * Current ID of the tool cursor. 
      */
@@ -78,12 +67,7 @@ public abstract class AbstractModalTool extends AbstractTool implements ModalToo
 
     public void setActive( boolean active ) {
         this.active=active;
-        
-        SELECTION_SEARCH_SIZE = Platform.getPreferencesService().getInt(
-                        ProjectUIPlugin.ID, PreferenceConstants.FEATURE_SELECTION_RADIUS, 6, null);
-        ATTRIBUTE_NAME = Platform.getPreferencesService().getString(
-                        ProjectUIPlugin.ID, PreferenceConstants.FEATURE_ATTRIBUTE_NAME, "ID", null); //$NON-NLS-1$
-       
+
         setStatusBarMessage(active);
         if (!active) {
             deregisterMouseListeners();

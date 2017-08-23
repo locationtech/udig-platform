@@ -14,12 +14,12 @@ package org.locationtech.udig.tool.select.internal;
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "org.locationtech.udig.tool.select.internal.messages"; //$NON-NLS-1$
-	public static String ArrowSelection_0;
+    private static final String BUNDLE_NAME = "org.locationtech.udig.tool.select.internal.messages"; //$NON-NLS-1$
+    public static String ArrowSelection_0;
     public static String TableView_0;
     public static String TableView_1;
-	public static String TableView_allCheckText;
-	public static String TableView_allToolTip;
+    public static String TableView_allCheckText;
+    public static String TableView_allToolTip;
     public static String TableView_compositeName;
     public static String TableView_deleteCommandName;
     public static String TableView_featureSelected;
@@ -35,11 +35,14 @@ public class Messages extends NLS {
     public static String Zoom_To_Selection;
     public static String Group_AOI;
     public static String Navigate_Selection;
-	static {
-		// initialize resource bundle
-		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
-	}
+    public static String Feature_Selection_Radius;
+    public static String Feature_Selection_Radius_tooltip;
 
-	private Messages() {
-	}
+    static {
+        // initialize resource bundle
+        NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+    }
+
+    private Messages() {
+    }
 }

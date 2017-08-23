@@ -649,7 +649,7 @@ public class FeatureUtils {
      * @param featureType FeatureType to find named attribute
      * @param propertyName attribute name
      * @return the actual propertyName (case sensitive) or null if none is found
-     * @throws IllegalArgumentException if featureType and/or property is null/empty
+     * @throws IllegalArgumentException if featureType and/or property is null
      */
     public static String getActualPropertyName(final SimpleFeatureType featureType,
             final String propertyName) {
@@ -661,10 +661,16 @@ public class FeatureUtils {
             throw new IllegalArgumentException("propertyName cannot be null");
         }
 
+        final String internalPropertyName = propertyName.trim();
+
+        if (internalPropertyName.isEmpty()) {
+            // avoid iteration through all properties twice
+            return null;
+        }
         // if an exact match is found return it
         for (int i = 0; i < featureType.getAttributeCount(); i++) {
             String name = featureType.getDescriptor(i).getLocalName();
-            if (propertyName.equals(name)) {
+            if (internalPropertyName.equals(name)) {
                 return name;
             }
         }
@@ -673,7 +679,7 @@ public class FeatureUtils {
         // insensitive check for equality
         for (int i = 0; i < featureType.getAttributeCount(); i++) {
             String name = featureType.getDescriptor(i).getLocalName();
-            if (propertyName.equalsIgnoreCase(name)) {
+            if (internalPropertyName.equalsIgnoreCase(name)) {
                 return name;
             }
         }
@@ -696,8 +702,8 @@ public class FeatureUtils {
         if (featureType == null) {
             throw new IllegalArgumentException("featureType cannot be null");
         }
-        if (propertyNames == null || propertyNames.isEmpty()) {
-            throw new IllegalArgumentException("propertyName cannot be null / empty");
+        if (propertyNames == null) {
+            throw new IllegalArgumentException("propertyName cannot be null");
         }
 
         List<String> nameList = new LinkedList<String>();

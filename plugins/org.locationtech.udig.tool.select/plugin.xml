@@ -12,6 +12,7 @@
                   largeIcon="icons/etool24/selection_mode.png"
                   name="%selection.bbox.name"
                   onToolbar="true"
+                  preferencePageId="org.locationtech.udig.tool.select.page"
                   toolCursorId="bboxCursor"
                   tooltip="%selection.bbox.tooltip">
    			<cursor
@@ -34,6 +35,7 @@
                 largeIcon="icons/etool24/select_feature_mode.png"
                 name="%selection.arrow.name"
                 onToolbar="false"
+                preferencePageId="org.locationtech.udig.tool.select.page"
                 toolCursorId="selectFeatureCursor"
                 tooltip="%selection.arrow.tooltip">
    			<cursor
@@ -170,7 +172,7 @@
             point="org.eclipse.ui.preferencePages">
          <page
                category="org.locationtech.udig.project.ui.preferences.tool"
-               class="org.locationtech.udig.tool.select.internal.SelectionToolPreferencePage"
+               class="org.locationtech.udig.tool.select.preferences.SelectionToolPreferencePage"
                id="org.locationtech.udig.tool.select.page"
                name="%selection.page">
          </page>
@@ -178,7 +180,7 @@
       <extension
             point="org.eclipse.core.runtime.preferences">
          <initializer
-               class="org.locationtech.udig.tool.select.SelectionToolPreferenceInitializer">
+               class="org.locationtech.udig.tool.select.preferences.SelectionToolPreferenceInitializer">
          </initializer>
       </extension>
       <extension

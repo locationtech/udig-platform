@@ -1,9 +1,14 @@
 package org.locationtech.udig.core;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import org.geotools.data.DataUtilities;
 import org.geotools.feature.SchemaException;
@@ -60,6 +65,40 @@ public class FeatureUtilsTest {
     @Test
     public void  testActualPropertyWithNameThatDoesNotExists() {
         assertNull(FeatureUtils.getActualPropertyName(featureType, "whatever"));
+    }
 
+    @Test(expected=IllegalArgumentException.class)
+    public void testActualPropertiesNamesNullList() {
+        List<String> propertyNames = null;
+        FeatureUtils.getActualPropertyName(featureType,propertyNames);
+    }
+
+    @Test
+    public void testActualPropertiesNamesEmptyList() {
+        List<String> propertyNames = Collections.emptyList();
+        List<String> result = FeatureUtils.getActualPropertyName(featureType,propertyNames);
+        assertTrue(result.isEmpty());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testActualPropertiesFeatureTypeNull() {
+        List<String> propertyNames = Collections.emptyList();
+        FeatureUtils.getActualPropertyName(null, propertyNames);
+    }
+
+    @Test
+    public void testActualPropertiesUpperLowerCaseFirstMatchingAttribut() {
+        List<String> propertyNames = Arrays.asList("name", "Name");
+        List<String> result = FeatureUtils.getActualPropertyName(featureType, propertyNames);
+
+        assertTrue(result.indexOf("name") < result.indexOf("Name"));
+    }
+
+    @Test
+    public void testActualPropertiesRequestPropertyThatDoesNotExtsis() {
+        List<String> propertyNames = Arrays.asList("name", "Whatever");
+        List<String> result = FeatureUtils.getActualPropertyName(featureType, propertyNames);
+        assertFalse(result.contains("Whatever"));
+        assertTrue(result.contains("name"));
     }
 }

@@ -667,16 +667,12 @@ public class Messages extends NLS {
     public static String LegendView_new_folder_tooltip;
 
     public static String LayerCRSPropertyPage_warningMessage;
-    
+
     public static String Feature_Attribute_Name;
-    
-    public static String Feature_Selection_Radius;
-    
+
     public static String Feature_Attribute_Name_tooltip;
-    
-    public static String Feature_Selection_Radius_tooltip;
 
-
+    public static String PREFERENCES_LINK_TO_GENERAL_PAGE;
 
     static {
         // initialize resource bundle

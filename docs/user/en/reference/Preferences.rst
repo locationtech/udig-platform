@@ -23,17 +23,6 @@ Preference Pages
    Rendering Preferences
    Tool Preferences
 
-
-
-.. * :doc:`Tool Preferences`
-
-..   * :doc:`Edit Tool Preferences`
-
-..      * :doc:`Edit Tool Performance Preferences`
-
-..      * :doc:`Snapping`
-
-
 Restore Defaults
 ~~~~~~~~~~~~~~~~
 

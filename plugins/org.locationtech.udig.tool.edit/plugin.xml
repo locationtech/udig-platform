@@ -332,6 +332,7 @@
                       largeIcon="icons/etool24/delete_feature_mode.png"
                       name="%edit.delete.name"
                       onToolbar="true"
+                      preferencePageId="org.locationtech.udig.tools.delete.preferences"
                       toolCursorId="deleteCursor"
                       tooltip="%edit.delete.tooltip">
                   <cursor

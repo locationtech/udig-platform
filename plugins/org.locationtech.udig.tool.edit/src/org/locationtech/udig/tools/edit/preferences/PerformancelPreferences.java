@@ -9,15 +9,13 @@
  */
 package org.locationtech.udig.tools.edit.preferences;
 
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.tool.edit.internal.Messages;
-import org.locationtech.udig.tools.edit.EditPlugin;
-
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.locationtech.udig.tool.edit.internal.Messages;
+import org.locationtech.udig.tools.edit.EditPlugin;
 
 /**
  * Preferences for setting optional preferences that impact the performance of editing.
@@ -44,15 +42,6 @@ public class PerformancelPreferences extends FieldEditorPreferencePage
         addField( new BooleanFieldEditor(PreferenceConstants.P_HIDE_SELECTED_FEATURES, 
                 Messages.PerformancelPreferences_hide_features,
                 getFieldEditorParent()));
-        addField( new BooleanFieldEditor(org.locationtech.udig.project.preferences.PreferenceConstants.P_SHOW_ANIMATIONS, 
-                org.locationtech.udig.project.ui.internal.Messages.RenderPreferences_animations,
-                getFieldEditorParent()){
-            
-            @Override
-            public IPreferenceStore getPreferenceStore() {
-                return ProjectPlugin.getPlugin().getPreferenceStore();
-            }
-        });
     }
 
     public void init( IWorkbench workbench ) {
