@@ -6,16 +6,42 @@ creating projects and the elements that can be contained by projects.
 
 .. _preferences-page-project-layer:
 
-Layer Preferences
------------------
+General Preferences
+-------------------
 
-Currently there are no layer level preferences that can be set. Future versions will provide options
-that can be set for layers.
+These general settings are used for all type of project-elements such as layers and maps.
 
-.. figure:: /images/layer_preferences/layerpreferences.png
+.. figure:: /images/preferences/project_prefs.png
    :align: center
    :alt:
 
+Delete project files?
+`````````````````````
+
+Indicates to remove file resources from filesystem once the maps or layers were removed from map.
+
+Default is checked
+
+Undo history size
+`````````````````
+
+Number of possible steps to undo
+
+Default is 10
+
+
+Layer Preferences
+-----------------
+
+.. figure:: /images/preferences/project_layer_prefs.png
+   :align: center
+   :alt:
+
+Color Highlighting
+``````````````````
+TBD
+
+Default is None
 
 .. _preferences-page-project-map:
 
@@ -24,7 +50,7 @@ Map Preferences
 
 Map Preference page is used to supply system wide defaults for the Map Editor.
 
-.. figure:: /images/map_preferences/mappreferences.png
+.. figure:: /images/preferences/project_map_prefs.png
    :align: center
    :alt:
 
@@ -34,6 +60,13 @@ Remove Temporary Layers on exit
 When checked this option will remove temporary layers from the map. If it is not checked the layer
 will stay in the map, but all data is lost since the layer is temporary. This option can be useful
 if the FeatureType is complex and recreating the FeatureType can be time consuming.
+
+Default is checked
+
+Warn when an irreversible command is about to be executed
+`````````````````````````````````````````````````````````
+
+TBD
 
 Default is checked
 
@@ -62,16 +95,27 @@ The color that selected feature will be drawn in.
 
 Default is dark yellow.
 
+Selection Color 2
+`````````````````
+
+TBD
+
+Default is black.
+
+Default Palette
+```````````````
+
+TBD
 
 
 Printing Preferences
 --------------------
 
-.. figure:: /images/printing_preferences/printingpreferences.png
+.. figure:: /images/preferences/project_printing_prefs.png
    :align: center
    :alt:
 
-Available Preferences
-`````````````````````
+Default Template
+````````````````
 
-Default Template - Declares what page template should be used by default.
+Declares what page template should be used by default.
