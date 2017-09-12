@@ -853,7 +853,9 @@ public class ProjectExplorer extends ViewPart
             }
             for( IProjectElement element2 : element ) {
                 IProject project = element2.getProject();
-                treeViewer.setExpandedState(project, true);
+                if (project != null) {
+                    treeViewer.setExpandedState(project, true);
+                }
             }
         }
     }
