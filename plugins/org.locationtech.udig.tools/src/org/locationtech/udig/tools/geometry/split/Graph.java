@@ -60,8 +60,9 @@ final class Graph extends PlanarGraph{
     public void addEdges(final List<Geometry> nodedHolesList,final  int boundary, final int interior, final int exterior) {
 
         for (Geometry geom : nodedHolesList) {
-
-            addEdges(geom, boundary, interior, exterior);
+            if (!geom.isEmpty()){
+                addEdges(geom, boundary, interior, exterior);
+            }
         }
     }
     

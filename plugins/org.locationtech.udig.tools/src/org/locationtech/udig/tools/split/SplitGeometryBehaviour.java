@@ -90,7 +90,7 @@ class SplitGeometryBehaviour implements Behaviour {
     public void handleError( EditToolHandler handler, Throwable error, UndoableMapCommand command ) {
         assert error != null;
 
-        String message = error.getMessage();
+        String message = getRootCause(error);
         DialogUtil.openError(Messages.SplitGeometryBehaviour_transaction_failed, message);
         
         //re-initializes the handler
@@ -99,4 +99,21 @@ class SplitGeometryBehaviour implements Behaviour {
         handler.getEditBlackboard( handler.getEditLayer() ).clear();
     }
 
+    /**
+     * 
+     * @param e
+     * @return
+     */
+    public String getRootCause(Throwable e) {
+        StringBuffer buf = new StringBuffer();
+        if (e.getMessage() != null) {
+            buf.append(e.getMessage()).append("\nRoot cause:"); //$NON-NLS-1$
+        }
+        while (e.getCause() != null) {
+            buf.append(e.getCause().getMessage()).append(" "); //$NON-NLS-1$
+            e = e.getCause();
+        }
+
+        return buf.toString();
+    }
 }

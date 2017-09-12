@@ -6,16 +6,17 @@ Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.locationtech.udig.tools.Activator
 Bundle-Vendor: uDig Community
 Bundle-Localization: plugin
-Export-Package: org.locationtech.udig.tools.arc,org.locationtech.udig.
- tools.arc.internal;x-friends:="org.locationtech.udig.tools.tests",org
- .locationtech.udig.tools.geometry.merge;x-friends:="org.locationtech.
- udig.tools.tests",org.locationtech.udig.tools.geometry.split;x-friend
- s:="org.locationtech.udig.tools.tests",org.locationtech.udig.tools.ge
- ometry.trim;x-friends:="org.locationtech.udig.tools.tests",org.locati
- ontech.udig.tools.merge,org.locationtech.udig.tools.parallel,org.loca
- tiontech.udig.tools.parallel.internal;x-friends:="org.locationtech.ud
- ig.tools.tests",org.locationtech.udig.tools.split,org.locationtech.ud
- ig.tools.trim
+Export-Package: org.locationtech.udig.tools.arc,
+ org.locationtech.udig.tools.arc.internal;x-friends:="org.locationtech.udig.tools.tests",
+ org.locationtech.udig.tools.feature.util,
+ org.locationtech.udig.tools.geometry.merge;x-friends:="org.locationtech.udig.tools.tests",
+ org.locationtech.udig.tools.geometry.split;x-friends:="org.locationtech.udig.tools.tests",
+ org.locationtech.udig.tools.geometry.trim;x-friends:="org.locationtech.udig.tools.tests",
+ org.locationtech.udig.tools.merge,
+ org.locationtech.udig.tools.parallel,
+ org.locationtech.udig.tools.parallel.internal;x-friends:="org.locationtech.udig.tools.tests",
+ org.locationtech.udig.tools.split,
+ org.locationtech.udig.tools.trim
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.locationtech.udig.ui,
