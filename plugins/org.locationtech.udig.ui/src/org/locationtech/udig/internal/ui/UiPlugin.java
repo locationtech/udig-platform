@@ -45,8 +45,10 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
+
 import org.locationtech.udig.core.AbstractUdigUIPlugin;
 import org.locationtech.udig.core.internal.ExtensionPointProcessor;
 import org.locationtech.udig.core.internal.ExtensionPointUtil;
@@ -56,6 +58,7 @@ import org.locationtech.udig.ui.UDIGMenuBuilder;
 import org.locationtech.udig.ui.internal.Messages;
 import org.locationtech.udig.ui.preferences.PreferenceConstants;
 import org.locationtech.udig.ui.preferences.RuntimeFieldEditor;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.Preferences;
@@ -445,6 +448,13 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     public static void setProxy( String proxyHost, String proxyPort, String proxyNonHost ) throws FileNotFoundException,
             IOException {
         File iniFile = getIniFile();
+        
+        if (iniFile == null) {
+                String message = ".ini file does not exist. Changes will not be saved."; //$NON-NLS-1$
+                MessageDialog.openWarning(null, null, message);
+                return;
+        }
+        
         BufferedReader bR = null;
         StringBuilder sB = new StringBuilder();
         try {
@@ -494,27 +504,30 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         Properties properties = new Properties();
         File iniFile = getIniFile();
         if (iniFile == null) {
-            return properties;
+            properties.put(RuntimeFieldEditor.PROXYHOST, System.getProperty(RuntimeFieldEditor.PROXYHOST));
+            properties.put(RuntimeFieldEditor.PROXYPORT, System.getProperty(RuntimeFieldEditor.PROXYPORT));
+            properties.put(RuntimeFieldEditor.PROXYNONHOSTS, System.getProperty(RuntimeFieldEditor.PROXYNONHOSTS));
+        } else {
+            BufferedReader bR = new BufferedReader(new FileReader(iniFile));
+            String line = null;
+            while( (line = bR.readLine()) != null ) {
+                if (line.matches(".*D" + RuntimeFieldEditor.PROXYHOST + ".*")) {
+                    String proxyHost = line.split("=")[1].trim();
+                    properties.put(RuntimeFieldEditor.PROXYHOST, proxyHost);
+                }
+                if (line.matches(".*D" + RuntimeFieldEditor.PROXYPORT + ".*")) {
+                    String proxyPort = line.split("=")[1].trim();
+                    properties.put(RuntimeFieldEditor.PROXYPORT, proxyPort);
+                }
+                if (line.matches(".*D" + RuntimeFieldEditor.PROXYNONHOSTS + ".*")) {
+                    String proxyNonHosts = line.split("=")[1].trim();
+                    // remove quotes if there are
+                    proxyNonHosts = proxyNonHosts.replaceAll(PROXYQUOTES, "");
+                    properties.put(RuntimeFieldEditor.PROXYNONHOSTS, proxyNonHosts);
+                }
+            }
+            bR.close();
         }
-        BufferedReader bR = new BufferedReader(new FileReader(iniFile));
-        String line = null;
-        while( (line = bR.readLine()) != null ) {
-            if (line.matches(".*D" + RuntimeFieldEditor.PROXYHOST + ".*")) {
-                String proxyHost = line.split("=")[1].trim();
-                properties.put(RuntimeFieldEditor.PROXYHOST, proxyHost);
-            }
-            if (line.matches(".*D" + RuntimeFieldEditor.PROXYPORT + ".*")) {
-                String proxyPort = line.split("=")[1].trim();
-                properties.put(RuntimeFieldEditor.PROXYPORT, proxyPort);
-            }
-            if (line.matches(".*D" + RuntimeFieldEditor.PROXYNONHOSTS + ".*")) {
-                String proxyNonHosts = line.split("=")[1].trim();
-                // remove quotes if there are
-                proxyNonHosts = proxyNonHosts.replaceAll(PROXYQUOTES, "");
-                properties.put(RuntimeFieldEditor.PROXYNONHOSTS, proxyNonHosts);
-            }
-        }
-        bR.close();
 
         return properties;
     }
