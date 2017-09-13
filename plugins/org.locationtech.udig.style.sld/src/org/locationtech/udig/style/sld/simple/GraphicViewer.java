@@ -154,7 +154,7 @@ public class GraphicViewer {
         
         this.name = new Combo( part, SWT.DROP_DOWN );
         this.name.setItems(build.getWellKnownMarkNames());
-        this.name.setTextLimit( 9 );
+        this.name.setTextLimit( 32 );
         this.name.addKeyListener(klisten);
         this.name.setToolTipText(Messages.GraphicViewer_name_tooltip); 
         return part;            
