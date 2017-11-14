@@ -209,8 +209,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
                 DefaultFeatureCollection lineCollection = new DefaultFeatureCollection();
                 DefaultFeatureCollection polygonCollection = new DefaultFeatureCollection();
 
-                SimpleFeatureCollection featureCollection = fs.getFeatures();
-                FeatureIterator<SimpleFeature> featureIterator = featureCollection.features();
+                FeatureIterator<SimpleFeature> featureIterator = fc.features();
                 while( featureIterator.hasNext() ) {
                     SimpleFeature feature = featureIterator.next();
                     String geometryType = ((Geometry) feature.getDefaultGeometry())
