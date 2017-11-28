@@ -219,6 +219,9 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
                     } else {
                         request.addLayer(layer);
                     }
+                } else {
+                	//no point to continue since no rendering will occur
+                	return;
                 }
             }
 
