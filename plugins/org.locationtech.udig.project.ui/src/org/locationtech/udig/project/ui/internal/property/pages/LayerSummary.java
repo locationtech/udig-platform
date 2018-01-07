@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.impl.LayerImpl;
 import org.locationtech.udig.project.ui.internal.Messages;
 import org.locationtech.udig.project.ui.summary.SummaryControl;
 import org.locationtech.udig.project.ui.summary.SummaryData;
@@ -56,7 +57,7 @@ public class LayerSummary extends PropertyPage implements IWorkbenchPropertyPage
         nameData.setModifier(new NameModifier());
         data.add(nameData);
         newName=oldName=nameData.getInfo();
-        data.add(new SummaryData(Messages.LayerSummary_id,layer.getID()));
+        data.add(new SummaryData(Messages.LayerSummary_id,LayerImpl.getDisplayID(layer)));
         data.add(new SummaryData(Messages.LayerSummary_bounds, bounds==null?Messages.LayerSummary_unknownBounds:parseBounds(bounds)));
         data.add(new SummaryData(Messages.LayerSummary_selection,layer.getFilter()));
         data.add(new SummaryData(Messages.LayerSummary_status, layer.getStatusMessage()));

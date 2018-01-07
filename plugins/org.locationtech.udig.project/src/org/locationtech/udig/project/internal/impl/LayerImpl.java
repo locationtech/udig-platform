@@ -2484,4 +2484,20 @@ public class LayerImpl extends EObjectImpl implements Layer {
         return allRanges;
     }
 
+    /**
+     * Returns layer ID taking properly care to hide user password by displaying * chars instead
+     * 
+     * @param layer
+     * @return
+     */
+        public static String getDisplayID(final Layer layer) {
+                String id = layer.getID().toString();
+        String userInfo = layer.getID().getUserInfo();
+        if (userInfo != null) {
+                userInfo = userInfo.substring(0, userInfo.indexOf(":")+1);
+                userInfo = userInfo.concat("******");
+                id = layer.getID().toString().replace(layer.getID().getUserInfo(), userInfo);
+        }
+                return id;
+        }
 }

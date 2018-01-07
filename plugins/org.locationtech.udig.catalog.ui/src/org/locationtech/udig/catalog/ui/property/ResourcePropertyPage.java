@@ -65,7 +65,7 @@ public class ResourcePropertyPage extends PropertyPage implements IWorkbenchProp
         label.setText("ID:");
         
         Text text = new Text( page, SWT.SINGLE | SWT.BORDER );
-        text.setText( resource.getID().toString() );
+        text.setText( resource.getDisplayID() );
         text.setEditable(false);
         text.setLayoutData("width 100:300:,wrap");
         
