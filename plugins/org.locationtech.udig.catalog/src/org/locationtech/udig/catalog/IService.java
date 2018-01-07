@@ -369,6 +369,23 @@ public abstract class IService implements IResolve {
     }
 
     /**
+     * hide user password from the layer ID if it exists and returns
+     * ID as String.
+     * 
+     * @param layer
+     * @return
+     */
+	public String getDisplayID() {
+    	String userInfo = getIdentifier().getUserInfo();
+    	if (userInfo != null) {
+    		userInfo = userInfo.substring(0, userInfo.indexOf(":")+1);
+    		userInfo = userInfo.concat("******");
+    		return new ID(getIdentifier().toString().replace(getIdentifier().getUserInfo(), userInfo), null).toString();
+    	}
+        return getID().toString();
+	}
+	
+    /**
      * Map of parameters used to create this entry. There is no guarantee that these params created
      * a usable service (@see getStatus() ). These params may have been modified within the factory
      * during creation. This method is intended to be used for cloning (@see IServiceFactory) or for
