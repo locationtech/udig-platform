@@ -41,7 +41,6 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.internal.views.properties.tabbed.TabbedPropertyViewPlugin;
 import org.eclipse.ui.internal.views.properties.tabbed.TabbedPropertyViewStatusCodes;
 import org.eclipse.ui.views.properties.tabbed.ISectionDescriptorProvider;
 import org.eclipse.ui.views.properties.tabbed.ITypeMapper;
@@ -349,6 +348,6 @@ public class FeaturePanelRegistry {
                 .format(TAB_ERROR, new Object[]{pluginId, category});
         IStatus status = new Status(IStatus.ERROR, pluginId,
                 TabbedPropertyViewStatusCodes.TAB_ERROR, message, null);
-        TabbedPropertyViewPlugin.getPlugin().getLog().log(status);
+        FeatureEditorPlugin.getDefault().getLog().log(status);
     }
 }

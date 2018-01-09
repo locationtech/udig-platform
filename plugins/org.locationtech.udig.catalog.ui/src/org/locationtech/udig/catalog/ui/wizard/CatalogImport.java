@@ -96,7 +96,7 @@ public class CatalogImport {
         if (d == null)
             d = Display.getCurrent();
         Shell parent = d.getActiveShell();
-        return new Shell(parent);
+        return parent != null ? parent : new Shell(parent);
     }
 
     public WorkflowWizardDialog getDialog() {

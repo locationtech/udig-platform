@@ -9,12 +9,11 @@
  */
 package org.locationtech.udig.ui;
 
-import org.locationtech.udig.internal.ui.UiPlugin;
-
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.IShellProvider;
+import org.eclipse.jface.window.SameShellProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
@@ -26,6 +25,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TreeItem;
+import org.locationtech.udig.internal.ui.UiPlugin;
 
 /**
  * A dialog that, on opening, will zoom from the start location/size the location of the provided dialog.
@@ -55,7 +55,7 @@ public class ZoomingDialog extends Dialog {
      * @param start the rectangle, in Display coordinates, to zoom from when opening.
      */
     public ZoomingDialog( Shell parentShell, Dialog delegate, Rectangle start){
-        super(new ZoomShellProvider(parentShell)); 
+        super(new SameShellProvider(parentShell)); 
         this.delegate=delegate;
         this.location=new Point(start.x, start.y);
         this.size=new Point(start.width, start.height);
@@ -371,24 +371,6 @@ public class ZoomingDialog extends Dialog {
         return bounds;
     }
 
-    private static class ZoomShellProvider implements IShellProvider{
 
-        private Shell template;
-
-        public ZoomShellProvider( Shell shell ) {
-            this.template=shell;
-        }
-
-        public Shell getShell() {
-
-            Shell shell;
-            if( template==null )
-                shell=new Shell();
-            else
-                shell = new Shell(template.getDisplay());
-            return shell;
-        }
-        
-    }
 
 }

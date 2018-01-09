@@ -34,6 +34,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PropertyDialogAction;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * A command hander to display an IGeoResource properties page.
@@ -43,14 +44,14 @@ import org.eclipse.ui.dialogs.PropertyDialogAction;
  */
 public class IServicePropertiesCommandHandler extends AbstractHandler implements IHandler {
 
-    public Object execute( final ExecutionEvent arg0 ) throws ExecutionException {
+    public Object execute( final ExecutionEvent event ) throws ExecutionException {
 
         final IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench()
                 .getActiveWorkbenchWindow();
         
         IShellProvider shellProvider = new IShellProvider(){
             public Shell getShell() {
-                return new Shell(activeWorkbenchWindow.getShell());
+            	return HandlerUtil.getActiveShell(event);
             }
         };
 
