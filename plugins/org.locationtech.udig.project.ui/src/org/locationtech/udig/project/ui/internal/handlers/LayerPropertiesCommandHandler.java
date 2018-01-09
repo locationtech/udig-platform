@@ -19,7 +19,6 @@ import org.eclipse.jface.window.IShellProvider;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PropertyDialogAction;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -38,7 +37,7 @@ public class LayerPropertiesCommandHandler extends AbstractHandler implements IH
         IShellProvider shellProvider = new IShellProvider(){
 
             public Shell getShell() {
-                return new Shell(activeWorkbenchWindow.getShell());
+            	return HandlerUtil.getActiveShell(event);
             }
 
         };

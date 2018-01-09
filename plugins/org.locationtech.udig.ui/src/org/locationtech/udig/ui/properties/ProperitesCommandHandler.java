@@ -47,13 +47,13 @@ public class ProperitesCommandHandler extends AbstractHandler {
     public ProperitesCommandHandler(Class<?> fowardType) {
         this.forwardType = fowardType;
     }
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public Object execute(final ExecutionEvent event) throws ExecutionException {
 
         final IWorkbenchWindow activeWorkbenchWindow = HandlerUtil.getActiveWorkbenchWindow(event);
-
+        
         IShellProvider shellProvider = new IShellProvider() {
             public Shell getShell() {
-                return new Shell(activeWorkbenchWindow.getShell());
+            	return HandlerUtil.getActiveShell(event);
             }
         };
 
