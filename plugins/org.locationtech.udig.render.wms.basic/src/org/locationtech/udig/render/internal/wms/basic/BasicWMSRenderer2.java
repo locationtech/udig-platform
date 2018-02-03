@@ -195,6 +195,7 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
 
             double currScale = getContext().getViewportModel().getScaleDenominator();
             List<ILayer> layers = getLayers();
+            int countAddedLayers = 0;
             for( int i = layers.size() - 1; i >= 0; i-- ) {
                 ILayer ilayer = layers.get(i);
                 Layer layer;
@@ -219,11 +220,19 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
                     } else {
                         request.addLayer(layer);
                     }
+                    countAddedLayers++;
+                } else {
+                    //skip layer addition
+                    continue;
                 }
             }
 
             if (monitor.isCanceled())
                 return;
+
+            if (countAddedLayers == 0) {
+                return;
+            }
 
             List<Layer> wmsLayers = getWMSLayers();
             if (wmsLayers == null || wmsLayers.isEmpty()){
