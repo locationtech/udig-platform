@@ -11,9 +11,6 @@ import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-import javax.media.jai.JAI;
-import javax.media.jai.TileCache;
-
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.ProjectBlackboardConstants;
@@ -95,8 +92,6 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
 
     private boolean selection;
 
-    protected TileCache tempCache;
-
     /**
      * For context specific label painters; if null
      * then the label painter on the blackboard is used.
@@ -129,14 +124,6 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
         this.imageBounds = impl.imageBounds;
     }
 
-    public synchronized TileCache getTileCache(){
-        if( tempCache == null){
-            tempCache =JAI.createTileCache();
-            tempCache.setMemoryCapacity(16*1024*1024);
-            tempCache.setMemoryThreshold(0.75f);
-        }
-        return tempCache;
-    }
     /**
      * Sets the size of the image.  If set to null the size of the image will
      * be the same as the mapdisplay.
@@ -392,12 +379,8 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
 
     public void dispose() {
         image = null;
-        if( tempCache != null){
-            tempCache.flush();
-            tempCache = null;
-        }
     }
-    
+
     public RenderContextImpl copy() {
         return new RenderContextImpl(this);
     }

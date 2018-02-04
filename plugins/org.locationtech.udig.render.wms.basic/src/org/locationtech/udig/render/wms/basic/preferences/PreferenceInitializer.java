@@ -10,11 +10,10 @@
  */
 package org.locationtech.udig.render.wms.basic.preferences;
 
-import org.locationtech.udig.render.wms.basic.WMSPlugin;
-
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.locationtech.udig.render.wms.basic.WMSPlugin;
 
 /**
  * Class used to initialize default preference values.

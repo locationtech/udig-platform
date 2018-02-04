@@ -17,12 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.locationtech.udig.catalog.ID;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.internal.ui.UDigByteAndLocalTransfer;
-import org.locationtech.udig.project.internal.impl.LayerImpl;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -74,15 +68,17 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.TextOperationAction;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.joda.time.DateTime;
-
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.internal.ui.UDigByteAndLocalTransfer;
+import org.locationtech.udig.jconsole.core.IProcessListener;
+import org.locationtech.udig.jconsole.internal.JConsoleConstants;
+import org.locationtech.udig.jconsole.internal.JConsoleScriptExecutor;
+import org.locationtech.udig.jconsole.internal.ui.RunningProcessListDialog;
 import org.locationtech.udig.jconsole.util.ImageCache;
 import org.locationtech.udig.jconsole.util.Keywords;
-import org.locationtech.udig.omsbox.OmsBoxPlugin;
-import org.locationtech.udig.omsbox.core.IProcessListener;
-import org.locationtech.udig.omsbox.core.JConsoleOutputConsole;
-import org.locationtech.udig.omsbox.core.OmsScriptExecutor;
-import org.locationtech.udig.omsbox.ui.RunningProcessListDialog;
-import org.locationtech.udig.omsbox.utils.OmsBoxConstants;
+import org.locationtech.udig.project.internal.impl.LayerImpl;
 
 /**
  * Java specific text editor.
@@ -377,11 +373,11 @@ public class JavaEditor extends TextEditor {
 
         final Combo heapCombo = new Combo(buttonsComposite, SWT.DROP_DOWN);
         heapCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-        heapCombo.setItems(OmsBoxConstants.HEAPLEVELS);
+        heapCombo.setItems(JConsoleConstants.HEAPLEVELS);
         heapCombo.setToolTipText("Memory [MB]");
-        int savedHeapLevel = OmsBoxPlugin.getDefault().retrieveSavedHeap();
-        for( int i = 0; i < OmsBoxConstants.HEAPLEVELS.length; i++ ) {
-            if (OmsBoxConstants.HEAPLEVELS[i].equals(String.valueOf(savedHeapLevel))) {
+        int savedHeapLevel = JConsolePlugin.getDefault().retrieveSavedHeap();
+        for( int i = 0; i < JConsoleConstants.HEAPLEVELS.length; i++ ) {
+            if (JConsoleConstants.HEAPLEVELS[i].equals(String.valueOf(savedHeapLevel))) {
                 heapCombo.select(i);
                 break;
             }
@@ -389,7 +385,7 @@ public class JavaEditor extends TextEditor {
         heapCombo.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
                 String item = heapCombo.getText();
-                OmsBoxPlugin.getDefault().saveHeap(Integer.parseInt(item));
+                JConsolePlugin.getDefault().saveHeap(Integer.parseInt(item));
             }
         });
         heapCombo.addModifyListener(new ModifyListener(){
@@ -401,18 +397,18 @@ public class JavaEditor extends TextEditor {
                     return;
                 }
                 if (item.length() > 0) {
-                    OmsBoxPlugin.getDefault().saveHeap(Integer.parseInt(item));
+                    JConsolePlugin.getDefault().saveHeap(Integer.parseInt(item));
                 }
             }
         });
 
         final Combo logCombo = new Combo(buttonsComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         logCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-        logCombo.setItems(OmsBoxConstants.LOGLEVELS_GUI);
+        logCombo.setItems(JConsoleConstants.LOGLEVELS_GUI);
         logCombo.setToolTipText("Enable/disable logging");
-        String savedLogLevel = OmsBoxPlugin.getDefault().retrieveSavedLogLevel();
-        for( int i = 0; i < OmsBoxConstants.LOGLEVELS_GUI.length; i++ ) {
-            if (OmsBoxConstants.LOGLEVELS_GUI[i].equals(savedLogLevel)) {
+        String savedLogLevel = JConsolePlugin.getDefault().retrieveSavedLogLevel();
+        for( int i = 0; i < JConsoleConstants.LOGLEVELS_GUI.length; i++ ) {
+            if (JConsoleConstants.LOGLEVELS_GUI[i].equals(savedLogLevel)) {
                 logCombo.select(i);
                 break;
             }
@@ -420,7 +416,7 @@ public class JavaEditor extends TextEditor {
         logCombo.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
                 String item = logCombo.getText();
-                OmsBoxPlugin.getDefault().saveLogLevel(item);
+                JConsolePlugin.getDefault().saveLogLevel(item);
             }
         });
 
@@ -548,7 +544,7 @@ public class JavaEditor extends TextEditor {
     }
 
     private void stopScript() {
-        HashMap<String, Process> runningProcessesMap = OmsBoxPlugin.getDefault().getRunningProcessesMap();
+        HashMap<String, Process> runningProcessesMap = JConsolePlugin.getDefault().getRunningProcessesMap();
 
         Shell shell = getEditorSite().getShell();
         if (runningProcessesMap.size() == 0) {
@@ -587,7 +583,7 @@ public class JavaEditor extends TextEditor {
             text = doc.get();
         }
 
-        String dateTimeString = new DateTime().toString(OmsBoxConstants.dateTimeFormatterYYYYMMDDHHMMSS);
+        String dateTimeString = new DateTime().toString(JConsoleConstants.dateTimeFormatterYYYYMMDDHHMMSS);
 
         String title = getTitle();
         JConsoleOutputConsole outputConsole = new JConsoleOutputConsole("Script: " + title + " (" + dateTimeString + " )");
@@ -603,16 +599,16 @@ public class JavaEditor extends TextEditor {
 
         try {
             final String scriptID = "geoscript_" + dateTimeString;
-            OmsScriptExecutor executor = new OmsScriptExecutor();
-            String loggerLevelGui = OmsBoxPlugin.getDefault().retrieveSavedLogLevel();
-            String ramLevel = String.valueOf(OmsBoxPlugin.getDefault().retrieveSavedHeap());
+            JConsoleScriptExecutor executor = new JConsoleScriptExecutor();
+            String loggerLevelGui = JConsolePlugin.getDefault().retrieveSavedLogLevel();
+            String ramLevel = String.valueOf(JConsolePlugin.getDefault().retrieveSavedHeap());
             executor.addProcessListener(new IProcessListener(){
                 public void onProcessStopped() {
-                    OmsBoxPlugin.getDefault().cleanProcess(scriptID);
+                    JConsolePlugin.getDefault().cleanProcess(scriptID);
                 }
             });
             Process process = executor.exec(text, internalStream, errorStream, loggerLevelGui, ramLevel);
-            OmsBoxPlugin.getDefault().addProcess(process, scriptID);
+            JConsolePlugin.getDefault().addProcess(process, scriptID);
 
         } catch (Exception e) {
             e.printStackTrace();

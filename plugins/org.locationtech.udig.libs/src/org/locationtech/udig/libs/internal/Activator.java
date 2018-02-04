@@ -18,14 +18,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.ConsoleHandler;
-import java.util.logging.Filter;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-
-import javax.imageio.spi.ImageReaderSpi;
-import javax.media.jai.JAI;
-import javax.media.jai.util.ImagingListener;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -49,7 +43,6 @@ import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.referencing.factory.PropertyAuthorityFactory;
 import org.geotools.referencing.factory.ReferencingFactoryContainer;
 import org.geotools.referencing.factory.epsg.ThreadedHsqlEpsgFactory;
-import org.geotools.image.io.ImageIOExt;
 import org.geotools.util.logging.LoggerFactory;
 import org.geotools.util.logging.Logging;
 import org.opengis.geometry.DirectPosition;
@@ -88,19 +81,7 @@ public class Activator implements BundleActivator {
     private static final String DATABASES_FOLDER_NAME = "databases";
     private static final String EPSG_DATABASEFOLDER_PREFIX = "epsg_v";
 
-    @SuppressWarnings("deprecation")
     public void start( final BundleContext context ) throws Exception {
-        if (Platform.getOS().equals(Platform.OS_WIN32)) {
-            try {
-                // PNG native support is not very good .. this turns it off
-                ImageIOExt.allowNativeCodec("png", ImageReaderSpi.class, false); //$NON-NLS-1$
-            } catch (Throwable t) {
-                // we should not die if JAI is missing; we have a warning for that...
-                System.out.println("Difficulty turnning windows native PNG support (which will result in scrambled images from WMS servers)"); //$NON-NLS-1$
-                t.printStackTrace();
-            }
-        }
-
         // System properites work for controlling referencing behavior
         // not so sure about the geotools global hints
         //
@@ -115,21 +96,7 @@ public class Activator implements BundleActivator {
         Hints global = new Hints(map);
         GeoTools.init(global);
         Logging.GEOTOOLS.setLoggerFactory((LoggerFactory<?>)null);
-        
-        // Suppress JAI warnings when native support unavailable 
-        JAI.getDefaultInstance().setImagingListener(new ImagingListener() {
-            final Logger LOGGER = Logging.getLogger("javax.media.jai");
-            public boolean errorOccurred(String message, Throwable thrown, Object where,
-                    boolean isRetryable) throws RuntimeException {
-                if (message.contains("Continuing in pure Java mode")) {
-                    LOGGER.log(Level.FINE, message, thrown);
-                } else {
-                    LOGGER.log(Level.INFO, message, thrown);
-                }
-                return false; // we are not trying to recover
-            }
-        });
-        
+
 //        ClassLoader cl = Thread.currentThread().getContextClassLoader();
 //        Thread.currentThread().setContextClassLoader(GeoTools.class.getClassLoader());
 //        try {

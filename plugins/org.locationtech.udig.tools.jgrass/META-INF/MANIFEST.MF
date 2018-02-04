@@ -10,18 +10,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.locationtech.udig.libs,
  org.locationtech.udig.project.ui,
- org.locationtech.udig.catalog.rasterings,
  org.locationtech.udig.style.sld,
- org.locationtech.udig.catalog.jgrass,
- org.eclipse.xsd;bundle-version="2.7.0"
+ org.eclipse.xsd;bundle-version="2.7.0",
+ org.locationtech.udig.ui
 Eclipse-LazyStart: true
 Bundle-ClassPath: .
-Export-Package: org.locationtech.udig.tools.jgrass.profile.borrowedfro
- mjgrasstools
-Import-Package: javax.media.jai,
- javax.media.jai.iterator,
- javax.media.jai.operator,
- javax.media.jai.registry,
- javax.media.jai.remote,
- javax.media.jai.tilecodec,
- javax.media.jai.util

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.locationtech.udig.project.ui.tool">
+      <modalTool
+            categoryId="org.locationtech.udig.tool.category.info"
+            class="org.locationtech.udig.tools.jgrass.profile.ProfileTool"
+            icon="icons/profileview.png"
+            id="org.locationtech.udig.tools.jgrass.profiletool"
+            name="%profile.name"
+            onToolbar="true"
+            toolCursorId="profileCursor"
+            tooltip="%profile.tooltip">
+               <cursor
+                     hotspotX="10"
+                     hotspotY="10"
+                     id="profileCursor"
+                     image="icons/profilecursor.gif">
+               </cursor>
+           <enablement>
+              <adaptsTo
+                    target="org.opengis.coverage.grid.GridCoverage">
+              </adaptsTo>
+           </enablement>
+      </modalTool>
+      <toolCursor
+            hotspotX="10"
+            hotspotY="10"
+            id="profileCursor"
+            image="icons/profilecursor.gif"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="true"
+            class="org.locationtech.udig.tools.jgrass.profile.ProfileView"
+            icon="icons/profileview.png"
+            id="org.locationtech.udig.tools.jgrass.profileview"
+            name="Profile View"
+            restorable="false">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.exportWizards">
+      <wizard
+            class="org.locationtech.udig.tools.jgrass.coverageexport.TiffAsciiExportWizard"
+            icon="icons/grid_obj.gif"
+            id="org.locationtech.udig.tools.jgrass.rasterexport.TiffAsciiExportWizard"
+            name="Export coverage to tiff or esri ascii">
+      </wizard>
+   </extension>
+</plugin>

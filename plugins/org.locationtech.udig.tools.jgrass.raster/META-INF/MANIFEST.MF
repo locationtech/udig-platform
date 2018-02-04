@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JGrass Raster Tools Plug-in
+Bundle-SymbolicName: org.locationtech.udig.tools.jgrass.raster;singleton:=true
+Bundle-Version: 2.0.0.qualifier
+Bundle-Activator: org.locationtech.udig.tools.jgrass.JGrassToolsPlugin
+Bundle-Vendor: HydroloGIS S.r.l.
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.libs,
+ org.locationtech.udig.project.ui,
+ org.locationtech.udig.catalog.rasterings,
+ org.locationtech.udig.style.sld,
+ org.eclipse.xsd;bundle-version="2.7.0",
+ org.locationtech.udig.ui
+Eclipse-LazyStart: true
+Bundle-ClassPath: .

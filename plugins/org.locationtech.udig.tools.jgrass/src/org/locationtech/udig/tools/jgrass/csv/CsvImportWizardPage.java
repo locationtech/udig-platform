@@ -47,10 +47,9 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.gce.grassraster.JGrassConstants;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import org.locationtech.udig.catalog.jgrass.core.ChooseCoordinateReferenceSystemDialog;
 import org.locationtech.udig.tools.jgrass.i18n.Messages;
+import org.locationtech.udig.ui.ChooseCoordinateReferenceSystemDialog;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * @author Andrea Antonello - www.hydrologis.com

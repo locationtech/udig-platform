@@ -56,7 +56,6 @@
                 <!-- TUTORIALS -->
                 <module>net.sf.opencsv/</module>
                 <module>org.locationtech.udig.tutorials.preferredzoomlevels</module>
-                <module>org.locationtech.udig.tutorials.tool-view</module>
                 <module>org.locationtech.udig.tutorials.catalog.csv</module>
                 <module>org.locationtech.udig.tutorials.catalog.tests.csv</module>
 
@@ -66,7 +65,6 @@
                 <module>org.locationtech.udig.tutorials.featureeditor</module>
                 <module>org.locationtech.udig.tutorials.genericprojectelement</module>
                 <module>org.locationtech.udig.tutorials.mapgraphic</module>
-                <module>org.locationtech.udig.tutorials.raster</module>
                 <module>org.locationtech.udig.tutorials.rcp</module>
                 <module>org.locationtech.udig.tutorials.render.csv</module>
                 <module>org.locationtech.udig.tutorials.shpexport</module>
@@ -82,22 +80,23 @@
                 
                 <!-- build example feature after plugins -->
                 <module>org.locationtech.udig.tutorials.rcp-feature</module>
+
+<!-- excluded regarding JAI/imageio dependency cleanup (CQ7142)
+                <module>org.locationtech.udig.tutorials.raster</module>
+                <module>org.locationtech.udig.tutorials.tool-view</module>
+-->
              </modules>
         </profile>
     </profiles>
 
     <modules>
         <module>org.locationtech.udig.catalog.csw</module>
-        <module>org.locationtech.udig.catalog.jgrass</module>
         <module>org.locationtech.udig.catalog.kml</module>
         <module>org.locationtech.udig.catalog.teradata</module>
         <module>org.locationtech.udig.image.georeferencing</module>
         <module>org.locationtech.udig.jconsole</module>
-        <module>org.locationtech.udig.omsbox</module>
         <module>org.locationtech.udig.style.advanced</module>
-        <module>org.locationtech.udig.style.jgrass</module>
         <module>org.locationtech.udig.tools</module>
-        <module>org.locationtech.udig.tools.jgrass</module>
         <module>org.locationtech.udig</module>
         <module>org.locationtech.udig_base</module>
         <module>org.locationtech.udig.browser</module>
@@ -141,7 +140,6 @@
         <module>org.locationtech.udig.project.ui.editor</module>
         <module>org.locationtech.udig.render.feature.basic</module>
         <module>org.locationtech.udig.render.feature.shapefile</module>
-        <module>org.locationtech.udig.render.gridcoverage.basic</module>
         <module>org.locationtech.udig.render.wms.basic</module>
         <module>org.locationtech.udig.render.wmt.basic</module>
         <module>org.locationtech.udig.socket</module>
@@ -151,9 +149,21 @@
         <module>org.locationtech.udig.tool.default</module>
         <module>org.locationtech.udig.tool.edit</module>
         <module>org.locationtech.udig.tool.select</module>
+        <module>org.locationtech.udig.tools.jgrass</module>
+        <module>org.locationtech.udig.tools.jgrass.raster</module>
         <module>org.locationtech.udig.ui</module>
         <module>org.locationtech.udig.validation</module>
         <module>org.locationtech.udig.bookmarks</module>
+<!-- excluded regarding JAI/imageio dependency cleanup (CQ7142)
+        <module>org.locationtech.udig.render.gridcoverage.basic</module>
+        <module>org.locationtech.udig.catalog.jgrass</module>
+        <module>org.locationtech.udig.style.jgrass</module>
+        <module>org.locationtech.udig.omsbox</module>
+-->
+<!-- new modules to untie raster stuff from core modules
+        <module>org.locationtech.udig.style.advanced.raster</module>
+	<module>org.locationtech.udig.style.sld.raster</module>
+-->
     </modules>
 
 </project>

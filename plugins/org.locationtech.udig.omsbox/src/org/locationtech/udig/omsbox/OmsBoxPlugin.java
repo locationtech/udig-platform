@@ -140,55 +140,10 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
     public static final String OMSBOX_RAM_KEY = "OMSBOX_RAM_KEY"; //$NON-NLS-1$
 
-    /**
-     * Utility method to get the heap memory from the prefs.
-     * 
-     * @return the heap memory last saved or 64 megabytes.
-     */
-    public int retrieveSavedHeap() {
-        IPreferenceStore preferenceStore = OmsBoxPlugin.getDefault().getPreferenceStore();
-        int savedRam = preferenceStore.getInt(OMSBOX_RAM_KEY);
-        if (savedRam <= 0) {
-            savedRam = 64;
-        }
-        return savedRam;
-    }
-
-    /**
-     * Save the heap memory to the preferences.
-     * 
-     * @param mem the memory to save.
-     */
-    public void saveHeap( int mem ) {
-        IPreferenceStore preferenceStore = OmsBoxPlugin.getDefault().getPreferenceStore();
-        preferenceStore.setValue(OMSBOX_RAM_KEY, mem);
-    }
 
     public static final String OMSBOX_LOG_KEY = "OMSBOX_LOG_KEY"; //$NON-NLS-1$
 
-    /**
-     * Utility method to get the log level from the prefs.
-     * 
-     * @return the log level string.
-     */
-    public String retrieveSavedLogLevel() {
-        IPreferenceStore preferenceStore = OmsBoxPlugin.getDefault().getPreferenceStore();
-        String savedLogLevel = preferenceStore.getString(OMSBOX_LOG_KEY);
-        if (savedLogLevel.length() == 0) {
-            savedLogLevel = "OFF";
-        }
-        return savedLogLevel;
-    }
 
-    /**
-     * Save the log level to the preferences.
-     * 
-     * @param logLevel the log level to save.
-     */
-    public void saveLogLevel( final String logLevel ) {
-        IPreferenceStore preferenceStore = OmsBoxPlugin.getDefault().getPreferenceStore();
-        preferenceStore.setValue(OMSBOX_LOG_KEY, logLevel);
-    }
 
     public static final String LAST_CHOSEN_FOLDER = "last_chosen_folder_key";
 
@@ -224,137 +179,6 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
         store.putValue(LAST_CHOSEN_FOLDER, folderPath);
     }
 
-    public String getClasspathJars() throws Exception {
-        try {
-            StringBuilder sb = new StringBuilder();
-            sb.append(".");
-            sb.append(File.pathSeparator);
-
-            String sysClassPath = System.getProperty("java.class.path");
-            if (sysClassPath != null && sysClassPath.length() > 0 && !sysClassPath.equals("null")) {
-                addPath(sysClassPath, sb);
-                sb.append(File.pathSeparator);
-            }
-
-            // add this plugins classes
-            Bundle omsBundle = Platform.getBundle(OmsBoxPlugin.PLUGIN_ID);
-            String pluginPath = getPath(omsBundle, "/");
-            if (pluginPath != null) {
-                addPath(pluginPath, sb);
-                sb.append(File.pathSeparator);
-                addPath(pluginPath + File.separator + "bin", sb);
-            }
-            // add udig libs
-            Bundle udigLibsBundle = Platform.getBundle("org.locationtech.udig.libs");
-            String udigLibsFolderPath = getPath(udigLibsBundle, "lib");
-            if (udigLibsFolderPath != null) {
-                sb.append(File.pathSeparator);
-                addPath(udigLibsFolderPath + File.separator + "*", sb);
-
-                File libsPluginPath = new File(udigLibsFolderPath).getParentFile();
-                File[] toolsJararray = libsPluginPath.listFiles(new FilenameFilter(){
-                    public boolean accept( File dir, String name ) {
-                        return name.startsWith("tools_") && name.endsWith(".jar");
-                    }
-                });
-                if (toolsJararray.length == 1) {
-                    sb.append(File.pathSeparator);
-                    addPath(toolsJararray[0].getAbsolutePath(), sb);
-                }
-            }
-
-            // add custom libs from plugins
-            addCustomLibs(sb);
-
-            // add jars in the default folder
-            File extraSpatialtoolboxLibsFolder = getExtraSpatialtoolboxLibsFolder();
-            if (extraSpatialtoolboxLibsFolder != null) {
-                File[] extraJars = extraSpatialtoolboxLibsFolder.listFiles(new FilenameFilter(){
-                    public boolean accept( File dir, String name ) {
-                        return name.endsWith(".jar");
-                    }
-                });
-                for( File extraJar : extraJars ) {
-                    sb.append(File.pathSeparator);
-                    addPath(extraJar.getAbsolutePath(), sb);
-                }
-            }
-
-            // add loaded jars
-            String[] retrieveSavedJars = retrieveSavedJars();
-            for( String file : retrieveSavedJars ) {
-                sb.append(File.pathSeparator);
-                addPath(file, sb);
-            }
-
-            return sb.toString();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    private void addPath( String path, StringBuilder sb ) throws IOException {
-        sb.append("\"").append(path).append("\"");
-        // sb.append(path);
-    }
-
-    /**
-     * Adds custom libs from the plugins.
-     * 
-     * FIXME this should hopefully get better at some point. 
-     * 
-     * @throws IOException 
-     */
-    private void addCustomLibs( StringBuilder sb ) throws IOException {
-        // add some extra jars that are locked inside some eclipse plugins
-        Bundle log4jBundle = Platform.getBundle("org.apache.log4j");
-        String log4jFolderPath = getPath(log4jBundle, "/");
-        if (log4jFolderPath != null) {
-            sb.append(File.pathSeparator);
-            addPath(log4jFolderPath + File.separator + "*", sb);
-        }
-        Bundle itextBundle = Platform.getBundle("com.lowagie.text");
-        
-        String itextPath = getPath(itextBundle, "/");
-        if (itextPath != null) {
-            itextPath = itextPath.replaceAll("!", "");
-            sb.append(File.pathSeparator);
-            addPath(itextPath, sb);
-        }
-        
-        Location installLocation = Platform.getInstallLocation();
-        File installFolder = DataUtilities.urlToFile(installLocation.getURL());
-        if (installFolder != null && installFolder.exists()) {
-            File pluginsFolder = new File(installFolder, "plugins");
-            if (pluginsFolder.exists()) {
-
-                File[] files = pluginsFolder.listFiles(new FilenameFilter(){
-                    public boolean accept( File dir, String name ) {
-                        boolean isCommonsLog = name.startsWith("org.apache.commons.logging_") && name.endsWith(".jar");
-                        return isCommonsLog;
-                    }
-                });
-                if (files.length > 1) {
-                    sb.append(File.pathSeparator);
-                    addPath(files[0].getAbsolutePath(), sb);
-                }
-                files = pluginsFolder.listFiles(new FilenameFilter(){
-                    public boolean accept( File dir, String name ) {
-                        boolean isJunit = name.startsWith("junit") && name.endsWith(".jar");
-                        return isJunit;
-                    }
-                });
-                if (files.length > 1) {
-                    sb.append(File.pathSeparator);
-                    addPath(files[0].getAbsolutePath(), sb);
-                }
-            }
-        }
-    }
-
     /**
      * Get the folder named spatialtoolbox in the installation folder.
      * 
@@ -372,82 +196,11 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
         return null;
     }
 
-    /**
-     * @return the java path used by the uDig instance or "java".
-     */
-    public static String getUdigJava() {
-        String[] possibleJava = {"javaw.exe", "java.exe", "java"};
-        Location installLocation = Platform.getInstallLocation();
-        File installFolder = DataUtilities.urlToFile(installLocation.getURL());
-        if (installFolder != null && installFolder.exists()) {
-            File jreFolder = new File(installFolder, "jre/bin");
-            if (jreFolder.exists()) {
-                for( String pJava : possibleJava ) {
-                    File java = new File(jreFolder, pJava);
-                    if (java.exists()) {
-                        return java.getAbsolutePath();
-                    }
-                }
-            }
-        }
-        String jreDirectory = System.getProperty("java.home");
-        File javaFolder = new File(jreDirectory, "jre/bin");
-        if (javaFolder.exists()) {
-            for( String pJava : possibleJava ) {
-                File java = new File(javaFolder, pJava);
-                if (java.exists()) {
-                    return java.getAbsolutePath();
-                }
-            }
-        }
-        return "java";
-    }
 
-    private HashMap<String, Process> runningProcessesMap = new HashMap<String, Process>();
+
+
 
     private ILayer processingRegionLayer;
-    public void addProcess( Process process, String id ) {
-        Process tmp = runningProcessesMap.get(id);
-        if (tmp != null) {
-            tmp.destroy();
-        }
-        runningProcessesMap.put(id, process);
-    }
-
-    public void killProcess( String id ) {
-        Process process = runningProcessesMap.get(id);
-        if (process != null) {
-            runningProcessesMap.remove(id);
-            process.destroy();
-        }
-        // also cleanup if needed
-        Set<Entry<String, Process>> entrySet = runningProcessesMap.entrySet();
-        for( Entry<String, Process> entry : entrySet ) {
-            if (entry.getValue() == null) {
-                String key = entry.getKey();
-                if (key != null)
-                    runningProcessesMap.remove(key);
-            }
-        }
-    }
-
-    public HashMap<String, Process> getRunningProcessesMap() {
-        return runningProcessesMap;
-    }
-
-    public void cleanProcess( String id ) {
-        runningProcessesMap.remove(id);
-    }
-
-    private String getPath( Bundle omsBundle, String path ) throws IOException {
-        URL entry = omsBundle.getEntry(path);
-        if (entry == null) {
-            return null;
-        }
-        URL resolvedURL = FileLocator.resolve(entry);
-        File file = new File(resolvedURL.getFile());
-        return file.getAbsolutePath();
-    }
 
     /**
      * Looks up the ProcessingRegion decorator for the current Map.

@@ -18,13 +18,13 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.locationtech.udig.project.render.AbstractRenderMetrics;
-import org.locationtech.udig.project.render.IRenderContext;
-import org.locationtech.udig.project.render.IRenderMetricsFactory;
-
 import org.geotools.data.ows.Layer;
 import org.geotools.data.wms.WebMapServer;
 import org.geotools.referencing.CRS;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.project.render.IRenderer;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -74,10 +74,10 @@ public class BasicWMSMetricsFactory2 implements IRenderMetricsFactory {
     }
 
     private boolean searchForCRSMatch( CoordinateReferenceSystem crs, org.geotools.data.ows.Layer layer ) {
-        Set srs =  layer.getSrs();
-        for( Iterator i=srs.iterator(); i.hasNext();) {
+        Set<String> srs =  layer.getSrs();
+        for(Iterator<String> i=srs.iterator(); i.hasNext();) {
             try {
-                String epsgCode = (String) i.next();
+                String epsgCode = i.next();
                 CoordinateReferenceSystem rs = getCRS(epsgCode);
                 
                 if (rs.equals(crs)) {
@@ -129,7 +129,7 @@ public class BasicWMSMetricsFactory2 implements IRenderMetricsFactory {
     /**
      * @see org.locationtech.udig.project.render.RenderMetrics#getRendererType()
      */
-    public Class getRendererType() {
+    public Class<? extends IRenderer> getRendererType() {
         return BasicWMSRenderer2.class;
     }
 

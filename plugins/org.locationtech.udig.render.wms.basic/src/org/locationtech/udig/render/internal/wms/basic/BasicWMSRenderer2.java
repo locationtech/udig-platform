@@ -21,13 +21,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -37,35 +35,13 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
-import javax.imageio.spi.ImageReaderSpi;
 import javax.naming.OperationNotSupportedException;
-
-import org.locationtech.udig.catalog.util.CRSUtil;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.ProjectBlackboardConstants;
-import org.locationtech.udig.project.internal.StyleBlackboard;
-import org.locationtech.udig.project.internal.render.ViewportModel;
-import org.locationtech.udig.project.internal.render.impl.RendererImpl;
-import org.locationtech.udig.project.render.ICompositeRenderContext;
-import org.locationtech.udig.project.render.IMultiLayerRenderer;
-import org.locationtech.udig.project.render.IRenderContext;
-import org.locationtech.udig.project.render.RenderException;
-import org.locationtech.udig.render.wms.basic.WMSPlugin;
-import org.locationtech.udig.render.wms.basic.internal.Messages;
-import org.locationtech.udig.render.wms.basic.preferences.PreferenceConstants;
-import org.locationtech.udig.style.wms.WMSStyleContent;
-import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridCoverageFactory;
 import org.geotools.data.Query;
@@ -78,22 +54,33 @@ import org.geotools.data.wms.request.GetMapRequest;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.geometry.GeneralEnvelope;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.gml2.SrsSyntax;
 import org.geotools.ows.ServiceException;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.renderer.lite.RendererUtilities;
 import org.geotools.renderer.lite.gridcoverage2d.GridCoverageRenderer;
-import org.geotools.resources.image.ImageUtilities;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.xml.DocumentWriter;
 import org.geotools.xml.filter.FilterSchema;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.element.util.ElementUtils;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.render.impl.RendererImpl;
+import org.locationtech.udig.project.render.ICompositeRenderContext;
+import org.locationtech.udig.project.render.IMultiLayerRenderer;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.render.wms.basic.WMSPlugin;
+import org.locationtech.udig.render.wms.basic.internal.Messages;
+import org.locationtech.udig.render.wms.basic.preferences.PreferenceConstants;
+import org.locationtech.udig.style.wms.WMSStyleContent;
 import org.opengis.filter.Filter;
 import org.opengis.geometry.MismatchedDimensionException;
 import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.referencing.ReferenceIdentifier;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.TransformException;
@@ -109,12 +96,13 @@ import com.vividsolutions.jts.geom.Envelope;
 public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRenderer {
 
     private static final String REFRESH_JOB = Messages.BasicWMSRenderer2_refreshJob_title;
-    private static final String EPSG_4326 = "EPSG:4326"; //$NON-NLS-1$
-    private static final String CRS_84 = "CRS:84"; //$NON-NLS-1$
-    private static final String EPSG_4269 = "EPSG:4269"; //$NON-NLS-1$
+    public static final String EPSG_4326 = "EPSG:4326"; //$NON-NLS-1$
+    public static final String CRS_84 = "CRS:84"; //$NON-NLS-1$
+    public static final String EPSG_4269 = "EPSG:4269"; //$NON-NLS-1$
     private static final ReferencedEnvelope NILL_BOX = new ReferencedEnvelope(0, 0, 0, 0,
             DefaultGeographicCRS.WGS84);
-    private static final String EPSG_CODE = "CRS_EPSG_CODE";
+    public static final String EPSG_CODE = "CRS_EPSG_CODE";
+    private static final String DONT_FIND = "DONT_FIND";
 
     /**
      * Construct a new BasicWMSRenderer
@@ -244,8 +232,14 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
             CoordinateReferenceSystem viewportCRS = getViewportCRS();
             IMap map = getContext().getMap();
             
-            String requestCRScode = findRequestCRS(wmsLayers, viewportCRS, map);
-            
+            String requestCRScode = ElementUtils.findRequestCRS(wmsLayers, viewportCRS, map, Arrays.asList(EPSG_4269, EPSG_4326, CRS_84));
+            if (requestCRScode == null) {
+                WMSPlugin
+                .log("ERROR: Illegal State: Basic WMS Renderer contains layers with no common CRS. Unable to perform request."); //$NON-NLS-1$
+                return;
+            } else {
+                ElementUtils.updateViewportModelCRS(map,viewportCRS, EPSG_CODE, DONT_FIND);
+            }
             // TODO: make findRequestCRS more efficient (we are running CRS.decode at *least* twice)
             CoordinateReferenceSystem requestCRS = CRS.decode(requestCRScode);
 
@@ -342,7 +336,6 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
         }
     }
 
-    @SuppressWarnings("unchecked")
     private void setFilter( WebMapServer wms, GetMapRequest request ) {
         Filter mapFilter = null;
 
@@ -368,14 +361,13 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
             return;
 
         StringBuilder builder = new StringBuilder();
-        HashMap hashMap = new HashMap();
         for( Map.Entry<ILayer, Filter> entry : filters.entrySet() ) {
             if (entry.getValue() == null)
                 builder.append('(');
             try {
                 StringWriter writer = new StringWriter();
                 DocumentWriter.writeDocument(entry.getValue(), FilterSchema.getInstance(), writer,
-                        hashMap);
+                        Collections.emptyMap());
                 builder.append(writer.toString());
             } catch (OperationNotSupportedException e) {
                 WMSPlugin.log("Error writing filter for layer: " + entry.getKey().getID(), e); //$NON-NLS-1$
@@ -442,9 +434,8 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
         return gc;
     }
 
-    @SuppressWarnings("unchecked")
     private void setImageFormat( WebMapServer wms, GetMapRequest request ) {
-        List formats = wms.getCapabilities().getRequest().getGetMap().getFormats();
+        List<String> formats = wms.getCapabilities().getRequest().getGetMap().getFormats();
         String str;
         if (getPreferencesStore().getBoolean(PreferenceConstants.P_USE_DEFAULT_ORDER)) {
             str = getPreferencesStore().getDefaultString(PreferenceConstants.P_IMAGE_TYPE_ORDER);
@@ -756,161 +747,6 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
         }
 
         return envelope;
-    }
-
-    /**
-     * We have made this visible so that WMSDescribeLayer (used by InfoView2)
-     * can figure out how to make the *exact* same request in order
-     * to a getInfo operation. We should really store the last request
-     * on the layer blackboard for this intra module communication.
-     * 
-     * @return SRS code
-     */
-    public static String findRequestCRS( List<Layer> layers, CoordinateReferenceSystem viewportCRS, IMap map ) {
-        String requestCRS = null;
-
-        if (layers == null || layers.isEmpty()) {
-            return null;
-        }
-
-        Collection<String> viewportEPSG=extractEPSG(map, viewportCRS);
-        if( viewportEPSG!=null ){
-            String match=matchEPSG(layers, viewportEPSG);
-            if( match!=null ){
-                return match;
-            }
-        }
-        
-        if( matchEPSG(layers, CRS_84) ){
-            return CRS_84;    // preferred default
-        }
-        
-        if( matchEPSG(layers, EPSG_4326) ){
-            return EPSG_4326; // recommended from WMS specification
-        }
-        
-        // Why prefer NAD84?
-        if ( matchEPSG(layers, EPSG_4269)) {
-            return EPSG_4269; // similar to CRS_84
-        }
-
-        Layer firstLayer = layers.get(0);
-        for (Object object : firstLayer.getSrs()) {
-            String epsgCode = (String) object;
-
-            try {
-                // Check to see if *we* can actually use this code first.
-                CoordinateReferenceSystem check = CRS.decode(epsgCode);
-                if( check == null ) {
-                    continue; // skip this one!
-                }
-            } catch (NoSuchAuthorityCodeException e) {
-                continue; // skip this one we do not have an authority for it
-            } catch (FactoryException e) {
-                e.printStackTrace(); // internal trouble :(
-            }
-            
-            if (matchEPSG(layers, epsgCode)) {
-                requestCRS = epsgCode;
-                return requestCRS;
-            }
-        }
-
-        if (requestCRS == null) {
-            // Hmm. Our layers have no SRS in common - we are in an illegal state
-            WMSPlugin
-                    .log("ERROR: Illegal State: Basic WMS Renderer contains layers with no common CRS. Unable to perform request."); //$NON-NLS-1$
-            return null;
-        }
-        return requestCRS;
-    }
-
-    private static String matchEPSG(List<Layer> layers, Collection<String> epsgCodes) {
-        for (String epsg : epsgCodes) {
-            if (matchEPSG(layers, epsg))
-                return epsg;
-        }
-        return null;
-    }
-
-
-    private static Collection<String> extractEPSG(final IMap map,
-            final CoordinateReferenceSystem crs) {
-
-        final Collection<String> codes = new ArrayList<String>();
-        if (CRS.equalsIgnoreMetadata(crs, DefaultGeographicCRS.WGS84)) {
-            codes.add(CRS_84);
-            codes.add(EPSG_4326);
-            return codes;
-        }        
-        codes.addAll(CRSUtil.extractAuthorityCodes(crs));
-
-        final String DONT_FIND = "DONT_FIND";
-        boolean search = map.getBlackboard().get(EPSG_CODE) != DONT_FIND;
-        if (codes.isEmpty() && search) {
-            PlatformGIS.syncInDisplayThread(new Runnable() {
-                public void run() {
-                    Shell shell = Display.getCurrent().getActiveShell();
-
-                    ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
-                    try {
-                        dialog.run(false, true, new IRunnableWithProgress() {
-
-                            public void run(IProgressMonitor monitor)
-                                    throws InvocationTargetException, InterruptedException {
-                                CoordinateReferenceSystem found = CRSUtil
-                                        .findEPSGCode(crs, monitor);
-                                if (found == null) {
-                                    return;
-                                }
-
-                                ViewportModel model = (ViewportModel) map.getViewportModel();
-                                model.eSetDeliver(false);
-                                try {
-                                    model.setCRS(found);
-                                    codes.addAll(CRSUtil.extractAuthorityCodes(found));
-                                } finally {
-                                    model.eSetDeliver(true);
-                                }
-                            }
-
-                        });
-                    } catch (InvocationTargetException e) {
-                        WMSPlugin.log("Error tracking down EPSG Code", e);
-                        dontFind(map, DONT_FIND);
-                    } catch (InterruptedException e) {
-                        WMSPlugin.log("Error tracking down EPSG Code", e);
-                        dontFind(map, DONT_FIND);
-                    }
-                    dontFind(map, DONT_FIND);
-                }
-            });
-        }
-        return codes;
-    }
-	
-
-    private static void dontFind( final IMap map, final String DONT_FIND ) {
-        map.getBlackboard().put(EPSG_CODE,
-                DONT_FIND);
-    }
-    /**
-     * Quickly check provided layers to ensure they have the provided epsgCode in common.
-     * 
-     * @param layers
-     * @param epsgCode
-     * @return
-     */
-    private static boolean matchEPSG(List<Layer> layers, String epsgCode) {
-        boolean match = true;
-        for (Layer layer : layers) {
-            Set<String> srs = layer.getSrs();
-            if (!srs.contains(epsgCode)) {
-                match = false;
-                break;
-            }
-        }
-        return match;
     }
 
     private List<ILayer> getLayers() {

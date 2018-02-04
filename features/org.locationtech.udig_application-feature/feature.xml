@@ -106,13 +106,14 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
          version="0.0.0"
          unpack="false"/>
 
+<!-- excluded regarding JAI/imageio dependency cleanup (CQ7142)
    <plugin
          id="org.locationtech.udig.render.gridcoverage.basic"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+-->
    <plugin
          id="org.locationtech.udig.tools.edit"
          download-size="0"
@@ -188,14 +189,14 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+<!-- excluded regarding JAI/imageio dependency cleanup (CQ7142)
    <plugin
          id="org.locationtech.udig.style.jgrass"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+-->
    <plugin
          id="org.locationtech.udig.tools.jgrass"
          download-size="0"
@@ -209,13 +210,13 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+<!-- excluded regarding JAI/imageio dependency cleanup (CQ7142)
    <plugin
          id="org.locationtech.udig.omsbox"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
-
+-->
    <plugin
          id="org.locationtech.udig.tools"
          download-size="0"

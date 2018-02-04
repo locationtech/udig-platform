@@ -24,11 +24,10 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
 import org.joda.time.DateTime;
-
+import org.locationtech.udig.jconsole.core.IProcessListener;
+import org.locationtech.udig.jconsole.internal.OmsScriptExecutor;
 import org.locationtech.udig.omsbox.OmsBoxPlugin;
-import org.locationtech.udig.omsbox.core.IProcessListener;
 import org.locationtech.udig.omsbox.core.JConsoleOutputConsole;
-import org.locationtech.udig.omsbox.core.OmsScriptExecutor;
 import org.locationtech.udig.omsbox.utils.OmsBoxConstants;
 import org.locationtech.udig.omsbox.view.OmsBoxView;
 

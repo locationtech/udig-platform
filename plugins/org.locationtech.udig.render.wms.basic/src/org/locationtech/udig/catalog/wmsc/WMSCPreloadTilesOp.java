@@ -10,12 +10,11 @@
  */
 package org.locationtech.udig.catalog.wmsc;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.swt.widgets.Display;
 import org.locationtech.udig.catalog.internal.wmsc.WMSCGeoResourceImpl;
 import org.locationtech.udig.catalog.wmsc.server.TileSet;
 import org.locationtech.udig.ui.operations.IOp;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.swt.widgets.Display;
 
 public class WMSCPreloadTilesOp implements IOp {
 

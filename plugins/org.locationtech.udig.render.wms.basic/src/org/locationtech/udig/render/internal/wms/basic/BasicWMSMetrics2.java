@@ -17,9 +17,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.data.ows.Layer;
+import org.geotools.data.ows.StyleImpl;
+import org.geotools.styling.Style;
+import org.geotools.util.Range;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.element.util.ElementUtils;
 import org.locationtech.udig.project.internal.render.Renderer;
 import org.locationtech.udig.project.render.AbstractRenderMetrics;
 import org.locationtech.udig.project.render.ICompositeRenderContext;
@@ -30,12 +36,6 @@ import org.locationtech.udig.style.sld.SLDContent;
 import org.locationtech.udig.style.wms.WMSStyleContent;
 import org.locationtech.udig.ui.ProgressManager;
 import org.locationtech.udig.ui.graphics.SLDs;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.data.ows.Layer;
-import org.geotools.data.ows.StyleImpl;
-import org.geotools.styling.Style;
-import org.geotools.util.Range;
 
 
 /**
@@ -127,7 +127,7 @@ public class BasicWMSMetrics2 extends AbstractRenderMetrics {
                 return false;
             }
             
-            if( BasicWMSRenderer2.findRequestCRS(owsLayers, context.getCRS(), context.getMap())==null )
+            if( ElementUtils.findRequestCRS(owsLayers, context.getCRS(), context.getMap())==null )
                 return false;
             
             Style style = (Style) previousLayer.getStyleBlackboard().get(SLDContent.ID);

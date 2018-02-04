@@ -18,9 +18,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
-
+import org.locationtech.udig.jconsole.internal.ui.RunningProcessListDialog;
 import org.locationtech.udig.omsbox.OmsBoxPlugin;
-import org.locationtech.udig.omsbox.ui.RunningProcessListDialog;
 import org.locationtech.udig.omsbox.view.OmsBoxView;
 
 /**

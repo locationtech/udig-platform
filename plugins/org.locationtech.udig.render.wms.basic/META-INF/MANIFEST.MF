@@ -15,7 +15,6 @@ Require-Bundle: org.locationtech.udig.project,
  org.eclipse.ui,
  org.locationtech.udig.style.sld,
  org.locationtech.udig.ui,
- org.locationtech.udig.render.gridcoverage.basic,
  org.locationtech.udig.style.wms,
  org.locationtech.udig.catalog.wms
 Bundle-ActivationPolicy: lazy
