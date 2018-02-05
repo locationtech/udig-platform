@@ -19,6 +19,9 @@ import org.osgi.framework.BundleContext;
  */
 public class CatalogTestsUIPlugin extends AbstractUIPlugin {
 
+    public static final String WMSTestCapabilitiesURL = "https://demo.geo-solutions.it/geoserver/ows?service=wms&version=1.1.1&request=GetCapabilities"; //$NON-NLS-1$
+
+    public static final String WFSTestCapabilitiesURL = "https://demo.geo-solutions.it/geoserver/ows?service=wfs&version=1.0.0&request=GetCapabilities"; //$NON-NLS-1$
 	
 	//The shared instance.
 	private static CatalogTestsUIPlugin plugin;

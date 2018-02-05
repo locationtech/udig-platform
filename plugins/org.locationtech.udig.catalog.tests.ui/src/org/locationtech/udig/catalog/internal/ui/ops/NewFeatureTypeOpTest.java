@@ -130,7 +130,7 @@ public class NewFeatureTypeOpTest {
 
     @Test
     public void testCreateTypeOnIllegalDS() throws Exception {
-        URL id=new URL("http://demo.opengeo.org/geoserver/wfs"); //$NON-NLS-1$
+        URL id=new URL("http://localhost:12763/geoserver/wfs"); //$NON-NLS-1$
         CatalogTestUtils.assumeNoConnectionException(id, 3000);
         
         WFSServiceExtension ext=new WFSServiceExtension();
