@@ -20,6 +20,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureIterator;
+import org.geotools.data.simple.SimpleFeatureStore;
+import org.geotools.factory.CommonFactoryFinder;
+import org.junit.After;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.ServiceExtension;
@@ -30,16 +39,6 @@ import org.locationtech.udig.catalog.internal.shp.ShpServiceExtension;
 import org.locationtech.udig.document.source.BasicHotlinkDescriptorParser;
 import org.locationtech.udig.document.source.BasicHotlinkSource;
 import org.locationtech.udig.tool.info.tests.Activator;
-
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.data.simple.SimpleFeatureCollection;
-import org.geotools.data.simple.SimpleFeatureIterator;
-import org.geotools.data.simple.SimpleFeatureStore;
-import org.geotools.factory.CommonFactoryFinder;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
@@ -49,12 +48,12 @@ import org.osgi.framework.Bundle;
 @SuppressWarnings("nls")
 public class BasicHotlinkTest {
 
-    private IService service;
-    private IGeoResource resource;
-    private BasicHotlinkDescriptorParser parser;
+    private static IService service;
+    private static IGeoResource resource;
+    private static BasicHotlinkDescriptorParser parser;
     
-    @Before
-    public void setUp() throws Exception {
+    @BeforeClass
+    public static void beforeClass() throws Exception {
         assertNotNull("Please run as Plugin Test", Activator.getDefault());
 
         Bundle bundle = Activator.getDefault().getBundle();
@@ -79,14 +78,6 @@ public class BasicHotlinkTest {
         parser = new BasicHotlinkDescriptorParser(resource);
         parser.setDescriptors(descriptors);
 
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        if (service != null) {
-            service.dispose(new NullProgressMonitor());
-            service = null;
-        }
     }
 
     @Test

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.catalog.util.http.MockHttpResponse;
 
 public class WMSCParserTest {
 

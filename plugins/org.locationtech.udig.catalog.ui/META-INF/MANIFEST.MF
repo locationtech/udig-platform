@@ -6,19 +6,21 @@ Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.locationtech.udig.catalog.ui.CatalogUIPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
-Export-Package: org.locationtech.udig.catalog.internal.ui;x-friends:="
- org.locationtech.udig.catalog.tests.ui",org.locationtech.udig.catalog
- .internal.ui.actions;x-friends:="org.locationtech.udig.catalog.tests.
- ui",org.locationtech.udig.catalog.internal.ui.ops;x-friends:="org.loc
- ationtech.udig.catalog.tests.ui",org.locationtech.udig.catalog.memory
- ,org.locationtech.udig.catalog.service,org.locationtech.udig.catalog.
- service.database,org.locationtech.udig.catalog.ui,org.locationtech.ud
- ig.catalog.ui.export,org.locationtech.udig.catalog.ui.internal;x-frie
- nds:="org.locationtech.udig.catalog.tests.ui",org.locationtech.udig.c
- atalog.ui.operation,org.locationtech.udig.catalog.ui.preferences,org.
- locationtech.udig.catalog.ui.property,org.locationtech.udig.catalog.u
- i.search,org.locationtech.udig.catalog.ui.wizard,org.locationtech.udi
- g.catalog.ui.workflow
+Export-Package: org.locationtech.udig.catalog.internal.ui;x-friends:="org.locationtech.udig.catalog.ui.tests",
+ org.locationtech.udig.catalog.internal.ui.actions;x-friends:="org.locationtech.udig.catalog.ui.tests",
+ org.locationtech.udig.catalog.internal.ui.ops;x-friends:="org.locationtech.udig.catalog.ui.tests",
+ org.locationtech.udig.catalog.memory,
+ org.locationtech.udig.catalog.service,
+ org.locationtech.udig.catalog.service.database,
+ org.locationtech.udig.catalog.ui,
+ org.locationtech.udig.catalog.ui.export,
+ org.locationtech.udig.catalog.ui.internal;x-friends:="org.locationtech.udig.catalog.ui.tests",
+ org.locationtech.udig.catalog.ui.operation,
+ org.locationtech.udig.catalog.ui.preferences,
+ org.locationtech.udig.catalog.ui.property,
+ org.locationtech.udig.catalog.ui.search,
+ org.locationtech.udig.catalog.ui.wizard,
+ org.locationtech.udig.catalog.ui.workflow
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.jface,
