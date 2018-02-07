@@ -18,7 +18,18 @@ import java.awt.geom.AffineTransform;
 import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.data.FeatureSource;
+import org.geotools.data.FeatureStore;
+import org.geotools.data.Query;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.factory.GeoTools;
+import org.geotools.feature.FeatureIterator;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.locationtech.udig.TestViewportPane;
+import org.locationtech.udig.catalog.tests.CatalogTests;
 import org.locationtech.udig.core.internal.FeatureUtils;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.render.impl.ViewportModelImpl;
@@ -30,16 +41,6 @@ import org.locationtech.udig.tools.edit.support.Point;
 import org.locationtech.udig.tools.edit.support.PrimitiveShape;
 import org.locationtech.udig.tools.edit.support.TestHandler;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.data.FeatureSource;
-import org.geotools.data.FeatureStore;
-import org.geotools.data.Query;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.geotools.feature.FeatureIterator;
-import org.junit.Before;
-import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
@@ -59,6 +60,7 @@ import com.vividsolutions.jts.geom.Polygon;
  * @author jones
  * @since 1.1.0
  */
+@Ignore
 public class DifferenceFeatureCommandTest {
 
     private SimpleFeature[] features;

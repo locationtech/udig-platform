@@ -219,7 +219,8 @@ public class LayersView extends ViewPart
     private void updateViewer() {
         Runnable runnable = new Runnable(){
             public void run() {
-                viewer.update(getCurrentMap().getMapLayers().toArray(),
+                if (viewer != null && currentMap != null && currentMap.getMapLayers() != null)
+                viewer.update(currentMap.getMapLayers().toArray(),
                         new String[]{MylarAction.KEY});
             }
         };

@@ -230,6 +230,7 @@ public class FeatureTableControlTest {
         }
     }
 
+    @Ignore("This test fails sometimes on first assertTrue, kind of toggeling test")
     @Test
     public void testMessage() {
         String string = "Test Message"; //$NON-NLS-1$
