@@ -62,6 +62,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;
@@ -637,14 +638,29 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
 
     @Test
     public void testSetContentProvider() throws Exception {
+        printViewerItemsData();
         view.setContentProvider(new TestContentProvider.Provider1());
-        assertEquals(TestContentProvider.Provider1.CHILD,viewer.getTree().getTopItem().getData());
-        
+        assertTreeItemEquals(TestContentProvider.Provider1.CHILD, ((Tree)viewer.getControl()).getTopItem());
+
+        printViewerItemsData();
         view.setContentProvider(new TestContentProvider.Provider2());
-        assertEquals(TestContentProvider.Provider2.CHILD,viewer.getTree().getTopItem().getData());
-        
+        assertTreeItemEquals(TestContentProvider.Provider2.CHILD,viewer.getTree().getTopItem());
+
+        printViewerItemsData();
         IssueConfiguration.get().setContentProvider(new TestContentProvider.Provider1());
-        assertEquals(TestContentProvider.Provider1.CHILD,viewer.getTree().getTopItem().getData());
+        assertTreeItemEquals(TestContentProvider.Provider1.CHILD,viewer.getTree().getTopItem());
+    }
+
+    private void printViewerItemsData() {
+        for (TreeItem treeItem : ((Tree)viewer.getControl()).getItems()) {
+            System.out.println(treeItem.getText() + " -> " + treeItem.getData());
+        }
+    }
+
+    private void assertTreeItemEquals(String child, TreeItem topItem) {
+        assertNotNull("Tree Item should be set", topItem);
+        assertNotNull("Tree Item Data should not be null", topItem.getData());
+        assertEquals(child, topItem.getData());
     }
 
     @Test
