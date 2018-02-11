@@ -339,21 +339,21 @@ public abstract class IService implements IResolve {
                         throw new IllegalStateException("Lookup of getInfo not available from the display thread"); //$NON-NLS-1$
                     }
                     info = createInfo(monitor);
-                    
+
                     if( info == null ){
                         info = INFO_UNAVAILABLE;
                     }
                     else {
                         // broadcast the change - code taken from ArcServiceImpl
-                        
+
                         // this delta describes what has changed
                         /*
                         IResolveDelta delta = new ResolveDelta(this, IResolveDelta.Kind.CHANGED);
-                        
+
                         // fire the change
                         CatalogImpl localCatalog = (CatalogImpl) CatalogPlugin.getDefault().getLocalCatalog();
                         localCatalog.fire(new ResolveChangeEvent(this, IResolveChangeEvent.Type.POST_CHANGE, delta));
-                        */
+                         */
                     }
                 }
             }
@@ -361,7 +361,7 @@ public abstract class IService implements IResolve {
         if (info == INFO_UNAVAILABLE) {
             return null; // info was not available
         }
-       return info;        
+        return info;        
     }
 
     public ID getID() {
@@ -375,15 +375,15 @@ public abstract class IService implements IResolve {
      * @param layer
      * @return
      */
-	public String getDisplayID() {
-    	String userInfo = getIdentifier().getUserInfo();
-    	if (userInfo != null) {
-    		userInfo = userInfo.substring(0, userInfo.indexOf(":")+1);
-    		userInfo = userInfo.concat("******");
-    		return new ID(getIdentifier().toString().replace(getIdentifier().getUserInfo(), userInfo), null).toString();
-    	}
+    public String getDisplayID() {
+        String userInfo = getIdentifier().getUserInfo();
+        if (userInfo != null) {
+            userInfo = userInfo.substring(0, userInfo.indexOf(":")+1);
+            userInfo = userInfo.concat("******");
+            return new ID(getIdentifier().toString().replace(getIdentifier().getUserInfo(), userInfo), null).toString();
+        }
         return getID().toString();
-	}
+    }
 	
     /**
      * Map of parameters used to create this entry. There is no guarantee that these params created

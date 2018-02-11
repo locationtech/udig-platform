@@ -249,7 +249,6 @@ public class MySQLServiceImpl extends IService {
 
         public String getTitle() {
             return "MySQL " + getDisplayID(); //$NON-NLS-1$
-            //return "MySQL " + getIdentifier().getHost() + URLUtils.urlToFile(getIdentifier()).getAbsolutePath(); //$NON-NLS-1$
         }
 
     }
