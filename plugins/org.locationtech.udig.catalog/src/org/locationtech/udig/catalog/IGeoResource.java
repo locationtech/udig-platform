@@ -377,16 +377,16 @@ public abstract class IGeoResource implements IResolve {
      * @param layer
      * @return
      */
-	public String getDisplayID() {
-    	String userInfo = getIdentifier().getUserInfo();
-    	if (userInfo != null) {
-    		userInfo = userInfo.substring(0, userInfo.indexOf(":")+1);
-    		userInfo = userInfo.concat("******");
-    		return new ID(getIdentifier().toString().replace(getIdentifier().getUserInfo(), userInfo), null).toString();
-    	}
+    public String getDisplayID() {
+        String userInfo = getIdentifier().getUserInfo();
+        if (userInfo != null) {
+            userInfo = userInfo.substring(0, userInfo.indexOf(":")+1);
+            userInfo = userInfo.concat("******");
+            return new ID(getIdentifier().toString().replace(getIdentifier().getUserInfo(), userInfo), null).toString();
+        }
         return getID().toString();
-	}
-	
+    }
+
     /**
      * Disposes of any resources or listeners required. Default implementation does nothing.
      * 
