@@ -11,7 +11,6 @@ package org.locationtech.udig.project.internal.commands.edit;
 
 import java.awt.Rectangle;
 import java.io.IOException;
-import java.text.Format;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -22,19 +21,16 @@ import java.util.Set;
 
 import org.locationtech.udig.core.internal.FeatureUtils;
 import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.LayerEvent;
 import org.locationtech.udig.project.command.AbstractCommand;
 import org.locationtech.udig.project.command.UndoableMapCommand;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Messages;
 import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.impl.LayerImpl;
 import org.locationtech.udig.project.internal.render.ViewportModel;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.swt.widgets.Display;
-import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureEvent;
 import org.geotools.data.FeatureEvent.Type;
 import org.geotools.data.FeatureListener;
@@ -176,6 +172,13 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
             } finally {
                 targetLayer.eSetDeliver(true);
                 destination.removeFeatureListener(listener);
+                //close all iterators in CopyFeatureCollection. If
+                //not done then a deadlock may occur while trying to 
+                //copy features within the same layer due to read locks
+                //not being properly released.
+                for (FeatureIterator it : c.iterators.values()) {
+                	it.close();
+                }
             }
             if(performedZoom) {
             	getMap().getRenderManager().refresh(null);
@@ -285,7 +288,7 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
 
         queryAttributes.putAll(FeatureUtils.createAttributeMapping(sourceSchema, targetSchema));
         Set<String> properties = new HashSet(queryAttributes.values());
-        return new DefaultQuery(sourceSchema.getName().getLocalPart(), filter, properties
+        return new Query(sourceSchema.getName().getLocalPart(), filter, properties
                 .toArray(new String[properties.size()]));
     }
 

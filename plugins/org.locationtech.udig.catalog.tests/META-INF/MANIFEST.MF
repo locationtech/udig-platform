@@ -6,7 +6,8 @@ Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: udig.refractions.net
 Export-Package: org.locationtech.udig.catalog.tests,
  org.locationtech.udig.catalog.tests.internal;x-internal:=true,
- org.locationtech.udig.catalog.util
+ org.locationtech.udig.catalog.util,
+ org.locationtech.udig.catalog.util.http
 Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
  org.junit;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.jface;visibility:=reexport,
@@ -16,4 +17,4 @@ Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
  org.locationtech.udig.ui.tests
 Bundle-Activator: org.locationtech.udig.catalog.tests.TestActivator
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

@@ -21,6 +21,7 @@ import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class CommandManagerTest extends AbstractProjectTestCase {
@@ -90,6 +91,7 @@ public class CommandManagerTest extends AbstractProjectTestCase {
     }
 
     @Test
+    @Ignore(" ")
     public void testExecuteSyncDeadLocks() {
         final CommandManager manager=new CommandManager("test", new DefaultErrorHandler(), new CommandListener(){ //$NON-NLS-1$
 
@@ -98,7 +100,9 @@ public class CommandManagerTest extends AbstractProjectTestCase {
             
         }, 2000);
         final Result result=new Result();
+        result.ran = false;
         final Result resultInner=new Result();
+        resultInner.ran = false;
         manager.syncExecute(new Command(){
 
             public void run( IProgressMonitor monitor ) throws Exception {

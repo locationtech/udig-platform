@@ -31,7 +31,7 @@ public class WFSGeoResourceTest extends AbstractGeoResourceTest {
     @Before
     public void setUp() throws Exception {
         WFSServiceExtension fac = new WFSServiceExtension();
-        URL url = new URL("http://demo.opengeo.org/geoserver/wfs?"); //$NON-NLS-1$
+        URL url = new URL("https://demo.geo-solutions.it/geoserver/wfs?"); //$NON-NLS-1$
         CatalogTestUtils.assumeNoConnectionException(url, 3000);
         service = fac.createService(url, fac.createParams(url));
         resource = service.resources((IProgressMonitor) null).get(0);

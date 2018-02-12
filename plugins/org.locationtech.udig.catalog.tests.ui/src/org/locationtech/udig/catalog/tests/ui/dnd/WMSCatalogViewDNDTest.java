@@ -21,19 +21,20 @@ import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.internal.wms.WMSServiceImpl;
+import org.locationtech.udig.catalog.tests.ui.CatalogTestsUIPlugin;
 
 public class WMSCatalogViewDNDTest extends CatalogViewDNDTest {
 	
 	@Override
 	protected URL getData() throws Exception {
-        return new URL("http://demo.opengeo.org/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
+        return new URL(CatalogTestsUIPlugin.WMSTestCapabilitiesURL);
 	}
 	
 	
 	@Override
 	URL[] getDataMulti() throws Exception {
 		return new URL[]{
-			new URL("http://demo.opengeo.org/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"), //$NON-NLS-1$
+			new URL(CatalogTestsUIPlugin.WMSTestCapabilitiesURL),
             new URL("http://atlas.gc.ca/cgi-bin/atlaswms_en?VERSION=1.1.1&Request=GetCapabilities&Service=WMS") //$NON-NLS-1$
 		};
 	}

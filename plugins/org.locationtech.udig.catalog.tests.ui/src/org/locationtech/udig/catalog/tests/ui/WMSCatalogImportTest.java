@@ -22,7 +22,7 @@ public class WMSCatalogImportTest extends CatalogImportTest {
 
 	@Override
 	URL getContext() throws MalformedURLException {
-		return new URL("http://demo.opengeo.org/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
+		return new URL(CatalogTestsUIPlugin.WMSTestCapabilitiesURL);
 	}
 	
 	@Override

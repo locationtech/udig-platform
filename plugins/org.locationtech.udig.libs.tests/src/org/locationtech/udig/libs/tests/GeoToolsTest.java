@@ -21,18 +21,18 @@ import javax.swing.Icon;
 
 import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
 import org.apache.batik.util.XMLResourceDescriptor;
+import org.eclipse.core.runtime.Platform;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.renderer.style.SVGGraphicFactory;
 import org.geotools.util.Version;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.libs.internal.Activator;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.expression.Literal;
+import org.osgi.framework.Bundle;
 
 /**
  * This JUnit TestCase is used to verify that GeoTools has been correctly
@@ -43,12 +43,25 @@ import org.opengis.filter.expression.Literal;
  */
 public class GeoToolsTest {
     
-    @Ignore
+    /**
+     * @throws java.lang.Exception
+     */
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {
+        Bundle bundle = Platform.getBundle( Activator.ID );
+        if( bundle == null ){
+            throw new IllegalStateException("Please run as a JUnit Plug-in Test");
+        }
+    }
+
+    @Test
     public void testGeoTools(){
          Version version = GeoTools.getVersion();
-         assertEquals( 2, version.getMajor() );
-         assertTrue( version.getMinor().toString().startsWith("6") );
+         assertEquals( 14, version.getMajor() );
+         assertTrue( version.getMinor().toString().startsWith("1") );
     }
+
+    @Ignore("FIXME: due to migration to batik bundle from Orbit")
     @Test
     public void testSVGGraphicsFactory() throws Exception {
         URL url = GeoToolsTest.class.getResource("example.svg");
@@ -61,40 +74,14 @@ public class GeoToolsTest {
         assertNotNull( icon );
         
     }
-    
+
+    @Ignore("FIXME: due to migration to batik bundle from Orbit")
     @Test
     public void testParseSVG() throws Exception {
         URL url = GeoToolsTest.class.getResource("example.svg");
         String parser = XMLResourceDescriptor.getXMLParserClassName();
+        System.out.println("used parser : " + parser);
         SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
         f.createDocument(url.toString());
     }
-    /**
-     * @throws java.lang.Exception
-     */
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-    }
-
-    /**
-     * @throws java.lang.Exception
-     */
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception {
-    }
-
-    /**
-     * @throws java.lang.Exception
-     */
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    /**
-     * @throws java.lang.Exception
-     */
-    @After
-    public void tearDown() throws Exception {
-    }
-
 }

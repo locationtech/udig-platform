@@ -18,11 +18,26 @@
             <plugin>
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>tycho-surefire-plugin</artifactId>
+                <configuration>
+                   <testRuntime>p2Installed</testRuntime>
+                   <application>org.locationtech.udig.ui.application</application>
+                </configuration>
             </plugin>
 
             <plugin>
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>target-platform-configuration</artifactId>
+                <configuration>
+                   <dependency-resolution>
+                      <extraRequirements>
+                         <requirement>
+                            <type>p2-installable-unit</type>
+                            <id>org.locationtech.udig-product</id>
+                            <versionRange>0.0.0</versionRange>
+                         </requirement>
+                      </extraRequirements>
+                   </dependency-resolution>
+                </configuration>
             </plugin>
         </plugins>
     </build>

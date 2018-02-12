@@ -10,3 +10,4 @@ Require-Bundle: org.locationtech.udig.tutorials.catalog.csv,
  org.junit;bundle-version="[4.0.0,5.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.locationtech.udig.tutorials.catalog.csv.internal.Activator
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
