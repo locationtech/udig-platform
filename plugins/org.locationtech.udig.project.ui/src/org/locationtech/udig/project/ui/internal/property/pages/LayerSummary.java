@@ -56,7 +56,7 @@ public class LayerSummary extends PropertyPage implements IWorkbenchPropertyPage
         nameData.setModifier(new NameModifier());
         data.add(nameData);
         newName=oldName=nameData.getInfo();
-        data.add(new SummaryData(Messages.LayerSummary_id,layer.getID()));
+        data.add(new SummaryData(Messages.LayerSummary_id, layer.getGeoResource().getDisplayID()));
         data.add(new SummaryData(Messages.LayerSummary_bounds, bounds==null?Messages.LayerSummary_unknownBounds:parseBounds(bounds)));
         data.add(new SummaryData(Messages.LayerSummary_selection,layer.getFilter()));
         data.add(new SummaryData(Messages.LayerSummary_status, layer.getStatusMessage()));

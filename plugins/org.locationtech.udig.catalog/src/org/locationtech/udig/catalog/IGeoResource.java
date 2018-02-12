@@ -371,6 +371,23 @@ public abstract class IGeoResource implements IResolve {
     }
 
     /**
+     * hide user password from the layer ID if it exists and returns
+     * ID as String.
+     * 
+     * @param layer
+     * @return
+     */
+    public String getDisplayID() {
+        String userInfo = getIdentifier().getUserInfo();
+        if (userInfo != null) {
+            userInfo = userInfo.substring(0, userInfo.indexOf(":")+1);
+            userInfo = userInfo.concat("******");
+            return new ID(getIdentifier().toString().replace(getIdentifier().getUserInfo(), userInfo), null).toString();
+        }
+        return getID().toString();
+    }
+
+    /**
      * Disposes of any resources or listeners required. Default implementation does nothing.
      * 
      * @param monitor monitor to show progress
