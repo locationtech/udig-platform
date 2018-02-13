@@ -65,10 +65,17 @@ public class LayerMoveUpCommand extends AbstractCommand implements UndoableMapCo
     }
 
     public void run( IProgressMonitor monitor ) throws Exception {
+        int maxAllowedIndex = getMap().getLayersInternal().size()-1;
         for( ILayer layer : selection ) {
+            int layerIndex = layer.getZorder();
+            if (layerIndex == maxAllowedIndex) {
+                maxAllowedIndex--;
+                continue;
+            }
             getMap().raiseLayer((Layer) layer);
         }
     }
+    
     public void rollback( IProgressMonitor monitor ) throws Exception {
         // need to reverse otherwise nothing happens on multiselect
         Collections.reverse(selection);
