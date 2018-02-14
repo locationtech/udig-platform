@@ -22,33 +22,11 @@
                   hotspotX="5"
                   image="icons/pointer/info_source.png"/>
          </modalTool>
-         <modalTool
-               categoryId="org.locationtech.udig.tool.category.info"
-               class="org.locationtech.udig.tool.info.DistanceTool"
-               commandHandler="org.locationtech.udig.tool.info.internal.DistanceToolCommandHandler"
-               commandIds="org.locationtech.udig.tool.edit.clearAction"
-               icon="icons/etool16/measure_mode.gif"
-               id="org.locationtech.udig.tool.info.distancetool"
-               largeIcon="icons/etool24/measure_mode.png"
-               name="%distance.name"
-               onToolbar="true"
-               toolCursorId="measureCursor"
-               tooltip="%distance.tooltip">
-   	       <cursor
-		   		hotspotX="10"
-	 		    hotspotY="10"
-		        image="icons/pointer/measure_source.gif"/>
- 	     </modalTool>
          <toolCursor
                hotspotX="5"
                hotspotY="5"
                id="infoCursor"
                image="icons/pointer/info_source.png"/>
-         <toolCursor
-               hotspotX="10"
-               hotspotY="10"
-               id="measureCursor"
-               image="icons/pointer/measure_source.gif"/>
    </extension>
    <extension
          name="Information Views"

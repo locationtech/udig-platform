@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.locationtech.udig.project.ui.tool">
+         <modalTool
+               categoryId="org.locationtech.udig.tool.category.measure"
+               class="org.locationtech.udig.tool.measure.DistanceTool"
+               commandHandler="org.locationtech.udig.tool.measure.internal.DistanceToolCommandHandler"
+               commandIds="org.locationtech.udig.tool.edit.clearAction"
+               icon="icons/etool16/measure_mode.gif"
+               id="org.locationtech.udig.tool.info.distancetool"
+               largeIcon="icons/etool24/measure_mode.png"
+               name="%distance.name"
+               onToolbar="true"
+               toolCursorId="measureCursor"
+               tooltip="%distance.tooltip">
+             <cursor
+               hotspotX="10"
+              hotspotY="10"
+              image="icons/pointer/measure_source.gif"/>
+         </modalTool>         <toolCursor
+               hotspotX="10"
+               hotspotY="10"
+               id="measureCursor"
+               image="icons/pointer/measure_source.gif"/>
+      <category
+            commandId="org.locationtech.udig.tools.measureCommand"
+            id="org.locationtech.udig.tool.category.measure"
+            name="%measure.tools.name"/>
+
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+<command
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            name="%measure.category.name"
+            id="org.locationtech.udig.tools.measureCommand"/>
+   </extension>
+
+</plugin>
