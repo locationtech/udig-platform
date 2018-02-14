@@ -8,32 +8,37 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.locationtech.udig.tool.info;
+package org.locationtech.udig.tool.measure;
 
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.locationtech.udig.catalog.util.CRSUtil;
-import org.locationtech.udig.internal.ui.UiPlugin;
-import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
-import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import org.locationtech.udig.project.ui.tool.SimpleTool;
-import org.locationtech.udig.tool.info.internal.Messages;
-import org.locationtech.udig.ui.PlatformGIS;
+import javax.measure.Measure;
+import javax.measure.quantity.Length;
+import javax.measure.unit.NonSI;
+import javax.measure.unit.SI;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.action.IStatusLineManager;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.geotools.geometry.jts.JTS;
+import org.locationtech.udig.catalog.util.CRSUtil;
+import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.tool.SimpleTool;
+import org.locationtech.udig.tool.measure.internal.MeasurementToolPlugin;
+import org.locationtech.udig.tool.measure.internal.Messages;
 import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -42,11 +47,11 @@ public class DistanceTool extends SimpleTool implements KeyListener {
     public DistanceTool() {
         super(MOUSE | MOTION);
     }
-    
+
     List<Point> points = new ArrayList<Point>();
     DistanceFeedbackCommand command;
     private Point now;
-    
+
     @Override
     protected void onMouseMoved( MapMouseEvent e ) {
         now = e.getPoint();
@@ -98,7 +103,7 @@ public class DistanceTool extends SimpleTool implements KeyListener {
             double distance = distance();
             displayOnStatusBar(distance);
         } catch (Exception e1) {
-            InfoPlugin.log("", e1); //$NON-NLS-1$
+            MeasurementToolPlugin.log("", e1); //$NON-NLS-1$
             displayError();
         }
     }
@@ -107,9 +112,9 @@ public class DistanceTool extends SimpleTool implements KeyListener {
     public void setActive( boolean active ) {
         super.setActive(active);
         final IStatusLineManager statusBar = getContext().getActionBars().getStatusLineManager();
-        
+
         disposeCommand();
-        
+
         if (statusBar == null)
             return; // shouldn't happen if the tool is being used.
         getContext().updateUI(new Runnable(){
@@ -118,7 +123,7 @@ public class DistanceTool extends SimpleTool implements KeyListener {
                 statusBar.setMessage(null);
             }
         });
-        
+
         if (active) {
             Control control = getContext().getViewportPane().getControl();
             control.addKeyListener(this);
@@ -126,9 +131,9 @@ public class DistanceTool extends SimpleTool implements KeyListener {
             Control control = getContext().getViewportPane().getControl();
             control.removeKeyListener(this);
         }
-        
+
     }
-    
+
     private double distance() throws TransformException {
         if (points.isEmpty())
             return 0;
@@ -150,11 +155,11 @@ public class DistanceTool extends SimpleTool implements KeyListener {
             distance += JTS.orthodromicDistance(begin, end, getContext().getCRS());
             start = current;
         }
-        
+
         return distance;
     }
 
-    
+
     private void displayError() {
         final IStatusLineManager statusBar = getContext().getActionBars().getStatusLineManager();
 
@@ -163,26 +168,57 @@ public class DistanceTool extends SimpleTool implements KeyListener {
 
         getContext().updateUI(new Runnable(){
             public void run() {
-                statusBar.setErrorMessage(Messages.DistanceTool_error); 
+                statusBar.setErrorMessage(Messages.DistanceTool_error);
             }
         });
     }
-    
+
     private void displayOnStatusBar( double distance ) {
         final IStatusLineManager statusBar = getContext().getActionBars().getStatusLineManager();
 
         if (statusBar == null)
             return; // shouldn't happen if the tool is being used.
-        String units = UiPlugin.getDefault().getPreferenceStore().getString(org.locationtech.udig.ui.preferences.PreferenceConstants.P_DEFAULT_UNITS);
+
+        IPreferenceStore preferenceStore = new ScopedPreferenceStore(InstanceScope.INSTANCE, "org.locationtech.udig.ui");
+
+        String units = preferenceStore.getString(org.locationtech.udig.ui.preferences.PreferenceConstants.P_DEFAULT_UNITS);
         if (units.equals( org.locationtech.udig.ui.preferences.PreferenceConstants.AUTO_UNITS) && CRSUtil.isCoordinateReferenceSystemImperial(context.getCRS())){
             units = org.locationtech.udig.ui.preferences.PreferenceConstants.IMPERIAL_UNITS;
         }
-        final String message;
+
+        final Measure<Double, Length> distanceInMeter = Measure.valueOf(distance, SI.METER);
+
+        Measure<Double, Length> result = null;
         if (units.equals( org.locationtech.udig.ui.preferences.PreferenceConstants.IMPERIAL_UNITS)){
-            message = createMessageImperial(distance);
-        }else{
-            message = createMessageMetric(distance);
+            Measure<Double, Length> distanceInMiles = distanceInMeter.to(NonSI.MILE);
+            double distInMilesValue = distanceInMiles.getValue().doubleValue();
+
+
+            if (distInMilesValue > Measure.valueOf(1, NonSI.MILE).doubleValue(NonSI.MILE)) {
+                // everything longer than a mile
+                result = distanceInMiles;
+            } else if (distInMilesValue > Measure.valueOf(1, NonSI.FOOT).doubleValue(NonSI.MILE)) {
+                // everything longer that a foot
+                result = distanceInMiles.to(NonSI.FOOT);
+            } else {
+                // shorter than a foot
+                result = distanceInMiles.to(NonSI.INCH);
+            }
+        } else {
+            double distanceInMeterValue = distanceInMeter.getValue().doubleValue();
+
+            if (distanceInMeterValue > Measure.valueOf(1000, SI.METER).doubleValue(SI.METER)) {
+                result = distanceInMeter.to(SI.KILOMETER);
+            } else if (distanceInMeterValue > Measure.valueOf(1, SI.METER).doubleValue(SI.METER)) {
+                result = distanceInMeter.to(SI.METER);
+            } else if (distanceInMeterValue > Measure.valueOf(1, SI.CENTIMETER).doubleValue(SI.METER)) {
+                result = distanceInMeter.to(SI.CENTIMETER);
+            } else {
+                result = distanceInMeter.to(SI.MILLIMETER);
+            }
         }
+
+        final String message = MessageFormat.format(Messages.DistanceTool_distance, round(result.getValue(), 2) + " " + result.getUnit());
 
         getContext().updateUI(new Runnable(){
             public void run() {
@@ -191,57 +227,13 @@ public class DistanceTool extends SimpleTool implements KeyListener {
             }
         });
     }
-    /**
-     * @param distance
-     * @return
-     */
-    private String createMessageMetric( double distance ) {
-        String message = Messages.DistanceTool_distance; 
-        
-        if (distance > 100000.0) {
-            message = message.concat((int) (distance / 1000.0) + "km");    //$NON-NLS-1$
-        } else if (distance > 10000.0) { //km + m
-            message = message.concat(round(distance / 1000.0, 1) + "km"); //$NON-NLS-1$
-        } else if (distance > 1000.0) { //km + m
-            message = message.concat(round(distance / 1000.0, 2) + "km"); //$NON-NLS-1$
-        } else if (distance > 100.0) { //m
-            message = message.concat(round(distance, 1) + "m"); //$NON-NLS-1$
-        } else if (distance > 1.0) { //m
-            message = message.concat(round(distance, 2) + "m"); //$NON-NLS-1$
-        } else { //mm
-            message = message.concat(round(distance * 1000.0, 1) + "mm"); //$NON-NLS-1$
-        }
 
-        return message;
-    }
-    
-    private String createMessageImperial( double distance ) {
-        String message = Messages.DistanceTool_distance; 
-        //distance is in meter
-        distance = (distance/1000) * 0.621371192;  //convert to miles
-        
-        if (distance > 1000.0) {
-            message = message.concat((int) (distance) + "mi");    //$NON-NLS-1$
-        } else if (distance > 100.0) { //mile
-            message = message.concat(round(distance, 1) + "mi"); //$NON-NLS-1$
-        } else if (distance > 1.0) { //mile
-            message = message.concat(round(distance, 2) + "mi"); //$NON-NLS-1$
-        } else if (distance > 0.1) { //mile
-            message = message.concat((int)(distance*5280) + "ft"); //$NON-NLS-1$
-        } else if (distance > 0.0189) { //mile approx.100ft
-            message = message.concat(round(distance*5280, 1) + "ft"); //$NON-NLS-1$
-        } else { //mile
-            message = message.concat(round(distance*5280*12, 1) + "in"); //$NON-NLS-1$
-        }
 
-        return message;
-    }
-    
     /**
      * Truncates a double to the given number of decimal places. Note:
      * truncation at zero decimal places will still show up as x.0, since we're
      * using the double type.
-     * 
+     *
      * @param value
      *            number to round-off
      * @param decimalPlaces
@@ -251,10 +243,10 @@ public class DistanceTool extends SimpleTool implements KeyListener {
     private double round(double value, int decimalPlaces) {
         double divisor = Math.pow(10, decimalPlaces);
         double newVal = value * divisor;
-        newVal =  (Long.valueOf(Math.round(newVal)).intValue())/divisor; 
+        newVal =  (Long.valueOf(Math.round(newVal)).intValue())/divisor;
         return newVal;
     }
-    
+
     class DistanceFeedbackCommand extends AbstractDrawCommand {
 
         public Rectangle getValidArea() {
@@ -272,7 +264,7 @@ public class DistanceTool extends SimpleTool implements KeyListener {
                 graphics.drawLine(start.x, start.y, current.x, current.y);
                 start = current;
             }
-            if (start == null || now == null) 
+            if (start == null || now == null)
                 return;
             graphics.drawLine(start.x, start.y, now.x, now.y);
 
@@ -280,7 +272,7 @@ public class DistanceTool extends SimpleTool implements KeyListener {
         }
 
     }
-    
+
     public void reset() {
         points.clear();
         if (command != null) {

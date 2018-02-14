@@ -120,12 +120,13 @@ public class MapToolPaletteFactory {
             }
             categories.add(container);
         }
-        
+
         Comparator<PaletteContainer> sorter = new Comparator<PaletteContainer>(){
             List<String> preferredOrder = Arrays.asList(new String[]{
                     "org.locationtech.udig.tool.category.zoom",
                     "org.locationtech.udig.tool.category.pan",
                     "org.locationtech.udig.tool.category.info",
+                    "org.locationtech.udig.tool.category.measure",
                     "org.locationtech.udig.tool.category.selection"
             });
             int order( String id ){
