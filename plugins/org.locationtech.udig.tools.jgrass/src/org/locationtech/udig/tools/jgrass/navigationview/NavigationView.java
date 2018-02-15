@@ -97,7 +97,6 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
 
-import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
 import org.locationtech.udig.tools.jgrass.JGrassToolsPlugin;
 
 /**

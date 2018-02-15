@@ -17,6 +17,7 @@ import java.util.List;
 
 import javax.media.jai.Interpolation;
 
+import org.locationtech.udig.ui.ChooseCoordinateReferenceSystemDialog;
 import org.locationtech.udig.ui.ExceptionDetailsDialog;
 import org.locationtech.udig.ui.PlatformGIS;
 
@@ -73,7 +74,6 @@ import org.opengis.referencing.operation.MathTransform;
 import com.vividsolutions.jts.geom.Coordinate;
 
 import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
-import org.locationtech.udig.catalog.jgrass.core.ChooseCoordinateReferenceSystemDialog;
 import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
 import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
 

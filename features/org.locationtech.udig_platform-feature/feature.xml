@@ -71,21 +71,7 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
          unpack="false"/>
 
    <plugin
-         id="org.locationtech.udig.catalog.geotiff"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.locationtech.udig.catalog.postgis"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.locationtech.udig.catalog.rasterings"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -107,13 +93,6 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
 
    <plugin
          id="org.locationtech.udig.catalog.wms"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.locationtech.udig.catalog.worldimage"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -146,20 +125,6 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
          unpack="false"/>
 
    <plugin
-         id="org.locationtech.udig.catalog.imageio"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.locationtech.udig.catalog.arcgrid"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.locationtech.udig.catalog.mysql"
          download-size="0"
          install-size="0"
@@ -175,13 +140,6 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
 
    <plugin
          id="org.locationtech.udig.catalog.geotools"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.locationtech.udig.catalog.jgrass"
          download-size="0"
          install-size="0"
          version="0.0.0"

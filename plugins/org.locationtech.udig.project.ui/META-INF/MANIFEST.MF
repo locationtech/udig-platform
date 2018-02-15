@@ -47,12 +47,4 @@ Require-Bundle: org.locationtech.udig.style.sld,
  org.eclipse.core.expressions,
  com.lowagie.text
 Bundle-ActivationPolicy: lazy
-Import-Package: javax.media.jai,
- javax.media.jai.iterator,
- javax.media.jai.operator,
- javax.media.jai.registry,
- javax.media.jai.remote,
- javax.media.jai.tilecodec,
- javax.media.jai.util,
- javax.media.jai.widget,
- net.miginfocom.swt
+Import-Package: net.miginfocom.swt

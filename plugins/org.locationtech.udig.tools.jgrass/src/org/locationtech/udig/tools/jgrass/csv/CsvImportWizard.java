@@ -20,12 +20,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.ui.ExceptionDetailsDialog;
-import org.locationtech.udig.ui.PlatformGIS;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -40,10 +34,17 @@ import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.gce.grassraster.JGrassConstants;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.memory.MemoryCatalogUtils;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.tools.jgrass.JGrassToolsPlugin;
+import org.locationtech.udig.tools.jgrass.i18n.Messages;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.PlatformGIS;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -51,10 +52,6 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
-
-import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
-import org.locationtech.udig.tools.jgrass.JGrassToolsPlugin;
-import org.locationtech.udig.tools.jgrass.i18n.Messages;
 
 /**
  * Csv to feature layer import wizard.
@@ -110,7 +107,7 @@ public class CsvImportWizard extends Wizard implements INewWizard {
                             csvFile, crs, fieldsAndTypesIndex, separator, pm);
 
                     SimpleFeatureType featureType = csvFileFeatureCollection.getSchema();
-                    JGrassCatalogUtilities.removeMemoryServiceByTypeName(featureType.getTypeName());
+                    MemoryCatalogUtils.removeMemoryServiceByTypeName(featureType.getTypeName());
                     IGeoResource resource = CatalogPlugin.getDefault().getLocalCatalog().createTemporaryResource(featureType);
 
                     SimpleFeatureStore resolve = (SimpleFeatureStore) resource.resolve(FeatureStore.class, pm);

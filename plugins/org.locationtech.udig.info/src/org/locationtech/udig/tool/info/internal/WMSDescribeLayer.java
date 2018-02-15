@@ -16,22 +16,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.render.ICompositeRenderContext;
-import org.locationtech.udig.project.render.IRenderContext;
-import org.locationtech.udig.render.internal.wms.basic.BasicWMSRenderer2;
-import org.locationtech.udig.style.wms.WMSStyleContent;
-import org.locationtech.udig.tool.info.InfoPlugin;
-import org.locationtech.udig.tool.info.LayerPointInfo;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.ows.Layer;
@@ -41,106 +27,22 @@ import org.geotools.data.wms.request.GetFeatureInfoRequest;
 import org.geotools.data.wms.request.GetMapRequest;
 import org.geotools.data.wms.response.GetFeatureInfoResponse;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.CRS;
-import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.opengis.metadata.Identifier;
-import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.NoSuchAuthorityCodeException;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.render.ICompositeRenderContext;
+import org.locationtech.udig.style.wms.WMSStyleContent;
+import org.locationtech.udig.tool.info.InfoPlugin;
+import org.locationtech.udig.tool.info.LayerPointInfo;
 import org.xml.sax.SAXException;
 
 import com.vividsolutions.jts.geom.Envelope;
 
 public class WMSDescribeLayer {
     
-    /** Figures out the mapping from wms layers to udig layers */
-    private Map<Layer, ILayer> getLayerMap( ICompositeRenderContext composite, IProgressMonitor monitor ) throws IOException {
-        Map<Layer, ILayer> mapping=new HashMap<Layer, ILayer>();
-        for( IRenderContext context: composite.getContexts() ) {
-            ILayer layer = context.getLayer();
-            if( context.getLayer().isVisible()
-                //&& layer.isApplicable("information" )
-                ) {                
-                Layer wmslayer = layer.getResource( Layer.class, monitor );
-                mapping.put( wmslayer, layer );
-            }
-        }
-        return mapping;
-    }
-    
     public WebMapServer getWMS( ICompositeRenderContext context, IProgressMonitor monitor ) throws IOException {
         return context.getLayer().getResource(WebMapServer.class, monitor );
     }
-    
-    /** Get list of applicable wms layers from composite */
-    private List<Layer> getLayerList(ICompositeRenderContext composite) throws IOException {
-        List<Layer> layers = new ArrayList<Layer>();
-        for( IRenderContext context: composite.getContexts()) {
-            ILayer layer = context.getLayer();
-            if( layer.isVisible()
-                // && layer.isApplicable("information")
-                    ) {
-                Layer wmslayer = layer.getResource( org.geotools.data.ows.Layer.class, null );                
-                layers.add( wmslayer );
-            }            
-        }    
-        return layers;
-    }
-    
-    /**
-     * Implementation is forgiving codes must be in uppercase etc ... 
-     *
-     * @param crs CoordinateReferenceSystem
-     * @param codes Set of valid vodes
-     * 
-     * @return Code common to both or null
-     */
-    private static String commonCode( CoordinateReferenceSystem crs, Set<String> codes ) {        
-        // First pass based on string identity
-        //
-        Set<String> crsCodes = new HashSet<String>();        
-        for( Identifier id : crs.getIdentifiers() ) {
-            String code = id.toString();
-            if( codes.contains( code ) ) return code;
-            crsCodes.add( code );
-        }
-        // Second pass based on CoordinateReferenceSystem equality
-        for( String code : codes ) {
-            try {               
-                CoordinateReferenceSystem check = CRS.decode( code );
-                if( crs.equals( check )) {
-                    // note we are trusting the code of the matched crs
-                    // (because if the id provided by crs worked we would
-                    // not get this far
-                    //
-                    return check.getIdentifiers().iterator().next().getCode();
-                }                
-            } catch (NoSuchAuthorityCodeException e) {
-                // could not understand code
-            } catch (FactoryException e) {
-                // could not understand code                
-            }
-        }
-        // last pass do the power set lookup based on id
-        //
-        for( String code : codes ) {
-            try {               
-                CoordinateReferenceSystem check = CRS.decode( code );
-                for( Identifier checkId : check.getIdentifiers() ) {
-                    String checkCode = checkId.toString();
-                    if( crsCodes.contains( checkCode ) ) {
-                        return code;
-                    }                    
-                }                
-            } catch (NoSuchAuthorityCodeException e) {
-                // could not understand code
-            } catch (FactoryException e) {
-                // could not understand code
-            }
-        }        
-        return null;
-    }
-    
+
     @SuppressWarnings("unchecked")
     public static List<LayerPointInfo> info( ILayer layer, ReferencedEnvelope bbox ) throws IOException {
         LayerPointInfo info = info2( layer, bbox );
@@ -150,7 +52,7 @@ public class WMSDescribeLayer {
     }
     
     /**
-     * Aquire info for the provided bbox
+     * Acquire info for the provided bbox
      * 
      * @param layer Must be associated with a wms layer 
      * @param bbox
@@ -197,13 +99,7 @@ public class WMSDescribeLayer {
             return null;
         }
         GetMapRequest getmap = wms.createGetMapRequest();        
-        String code = BasicWMSRenderer2.findRequestCRS(
-                Collections.singletonList( wmslayer ), map.getViewportModel().getCRS(), map );
-
         getmap.setBBox( bbox );
-        String srs = CRS.toSRS(bbox.getCoordinateReferenceSystem() );
-        //getmap.setSRS( code != null ? code : srs );
-        
         getmap.setProperty( GetMapRequest.LAYERS, wmslayer.getName() );
         int width = map.getRenderManager().getMapDisplay().getWidth();
         int height = map.getRenderManager().getMapDisplay().getHeight();

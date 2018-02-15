@@ -14,8 +14,10 @@
    </configIni>
 
    <launcherArgs>
-      <vmArgs>-Xmx386M -Dosgi.parentClassloader=ext -Dorg.eclipse.emf.ecore.plugin.EcorePlugin.doNotLoadResourcesPlugin=true -XX:MaxPermSize=256m</vmArgs>
-      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts -Djava.awt.headless=true</vmArgsMac>
+      <vmArgs>-Xmx386M -Dosgi.parentClassloader=ext -Dorg.eclipse.emf.ecore.plugin.EcorePlugin.doNotLoadResourcesPlugin=true -XX:MaxPermSize=256m
+      </vmArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts -Djava.awt.headless=true
+      </vmArgsMac>
    </launcherArgs>
 
    <windowImages i16="./icons/icon16.gif" i32="./icons/icon32.gif" i48="./icons/icon48.gif" i64="./icons/icon64.gif" i128="./icons/icon128.gif"/>
@@ -64,10 +66,6 @@ Content and such source code may be obtained at http://github.com/udig .
    <features>
       <feature id="org.locationtech.udig_base-feature"/>
       <feature id="org.locationtech.udig-feature"/>
-<!--
-      <feature id="org.locationtech.udig_language-feature"/>
--->
-      <feature id="javax.media.jai_imageio-feature"/>
       <feature id="org.locationtech.udig_application-feature"/>
       <feature id="org.eclipse.rcp"/>
       <feature id="org.eclipse.help"/>
@@ -81,7 +79,7 @@ Content and such source code may be obtained at http://github.com/udig .
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.p2.reconciler.dropins" autoStart="true" startLevel="5" />
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
-      <property name="org.eclipse.update.reconcile" value="false"/>
+      <property name="org.eclipse.update.reconcile" value="false" />
       <property name="osgi.configuration.area.default" value="$LOCALAPPDATA$/uDig/configuration" os="win32" />
       <property name="osgi.instance.area.default" value="$LOCALAPPDATA$/uDig/workspace" os="win32" />
    </configurations>

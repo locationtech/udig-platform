@@ -25,7 +25,6 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +44,6 @@ import org.geotools.coverage.grid.GridCoverageFactory;
 import org.geotools.coverage.grid.GridEnvelope2D;
 import org.geotools.coverage.grid.GridGeometry2D;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
-import org.geotools.data.memory.MemoryDataStore;
 import org.geotools.gce.grassraster.JGrassConstants;
 import org.geotools.gce.grassraster.JGrassMapEnvironment;
 import org.geotools.gce.grassraster.JGrassRegion;
@@ -69,8 +67,7 @@ import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
 import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
 import org.locationtech.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
 import org.locationtech.udig.catalog.jgrass.core.JGrassService;
-import org.locationtech.udig.catalog.memory.MemoryServiceExtensionImpl;
-import org.locationtech.udig.catalog.memory.internal.MemoryServiceImpl;
+import org.locationtech.udig.catalog.memory.MemoryCatalogUtils;
 import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IMap;
@@ -297,28 +294,10 @@ public class JGrassCatalogUtilities {
      * java.lang.UnsupportedOperationException: Schema modification not supported)
      * 
      * @param typeName the name of the type to remove, if it is there
+     * @deprecated Use {@link MemoryCatalogUtils#removeMemoryServiceByTypeName(String)} instead
      */
     public static synchronized void removeMemoryServiceByTypeName( String typeName ) {
-        MemoryServiceImpl service = null;
-        try {
-            List< ? extends IResolve> members = CatalogPlugin.getDefault().getLocalCatalog().members(new NullProgressMonitor());
-            for( IResolve resolve : members ) {
-                if (resolve instanceof MemoryServiceImpl) {
-                    if (URLUtils.urlEquals(resolve.getIdentifier(), MemoryServiceExtensionImpl.URL, true)) {
-                        service = (MemoryServiceImpl) resolve;
-                        break;
-                    }
-                }
-            }
-            if (service == null)
-                return;
-            MemoryDataStore ds = service.resolve(MemoryDataStore.class, new NullProgressMonitor());
-            if (Arrays.asList(ds.getTypeNames()).contains(typeName)) {
-                CatalogPlugin.getDefault().getLocalCatalog().remove(service);
-            }
-        } catch (IOException e) {
-            CatalogPlugin.log("Error finding services", e); //$NON-NLS-1$
-        }
+        MemoryCatalogUtils.removeMemoryServiceByTypeName(typeName);
     }
 
     /**

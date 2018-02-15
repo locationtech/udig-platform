@@ -66,13 +66,14 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
          version="0.0.0"
          unpack="false"/>
 
+<!-- excluded regarding JAI/imageio dependency cleanup (CQ7142)
    <plugin
          id="org.locationtech.udig.render.gridcoverage.basic"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+-->
    <plugin
          id="org.locationtech.udig.mapgraphic"
          download-size="0"

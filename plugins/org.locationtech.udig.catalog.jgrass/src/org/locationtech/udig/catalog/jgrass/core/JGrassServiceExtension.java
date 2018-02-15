@@ -29,6 +29,7 @@ import org.geotools.gce.grassraster.JGrassMapEnvironment;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
+import org.locationtech.udig.ui.ChooseCoordinateReferenceSystemDialog;
 
 /**
  * <p>

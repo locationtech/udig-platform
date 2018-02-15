@@ -10,12 +10,6 @@
  */
 package org.locationtech.udig.render.internal.wmsc.basic;
 
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.internal.PreferenceConstants;
-import org.locationtech.udig.catalog.wmsc.server.TileImageReadWriter;
-import org.locationtech.udig.catalog.wmsc.server.TileWorkerQueue;
-import org.locationtech.udig.render.wms.basic.internal.Messages;
-
 import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IntegerFieldEditor;
@@ -29,6 +23,11 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.internal.PreferenceConstants;
+import org.locationtech.udig.catalog.wmsc.server.TileImageReadWriter;
+import org.locationtech.udig.catalog.wmsc.server.TileWorkerQueue;
+import org.locationtech.udig.render.wms.basic.internal.Messages;
 
 /**
  * Preferences page for setting WMS-C Tile cache settings

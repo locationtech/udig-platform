@@ -11,9 +11,6 @@
 package org.locationtech.udig.render.wms.basic.preferences;
 
 
-import org.locationtech.udig.render.wms.basic.WMSPlugin;
-import org.locationtech.udig.render.wms.basic.internal.Messages;
-
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
@@ -24,6 +21,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.locationtech.udig.render.wms.basic.WMSPlugin;
+import org.locationtech.udig.render.wms.basic.internal.Messages;
 
 /**
  * Preference page controling the basic wms renderer.

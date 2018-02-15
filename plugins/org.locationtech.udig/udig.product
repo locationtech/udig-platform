@@ -67,7 +67,6 @@ Content and such source code may be obtained at http://github.com/udig .
       <feature id="org.locationtech.udig_base-feature"/>
       <feature id="org.locationtech.udig-feature"/>
       <feature id="org.locationtech.udig_language-feature"/>
-      <feature id="javax.media.jai_imageio-feature"/>
       <feature id="org.locationtech.udig_application-feature"/>
       <feature id="org.eclipse.rcp"/>
       <feature id="org.eclipse.help"/>

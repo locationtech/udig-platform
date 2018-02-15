@@ -15,15 +15,12 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.resources,
  org.eclipse.core.filesystem,
  org.locationtech.udig.libs,
- org.locationtech.udig.omsbox,
  org.locationtech.udig.ui,
  org.locationtech.udig.project,
  org.locationtech.udig.catalog,
- org.locationtech.udig.catalog.rasterings,
  org.locationtech.udig.catalog.ui,
  org.locationtech.udig.project.ui,
- org.locationtech.udig.mapgraphic,
- org.locationtech.udig.catalog.jgrass
+ org.locationtech.udig.mapgraphic
 Bundle-ActivationPolicy: lazy
 Eclipse-BuddyPolicy: global
 Eclipse-AutoStart: true 

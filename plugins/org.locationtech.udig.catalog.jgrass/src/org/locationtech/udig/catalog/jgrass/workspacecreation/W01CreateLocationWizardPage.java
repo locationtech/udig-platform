@@ -26,9 +26,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.locationtech.udig.ui.ChooseCoordinateReferenceSystemDialog;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import org.locationtech.udig.catalog.jgrass.core.ChooseCoordinateReferenceSystemDialog;
 
 /**
  * @author Andrea Antonello - www.hydrologis.com
