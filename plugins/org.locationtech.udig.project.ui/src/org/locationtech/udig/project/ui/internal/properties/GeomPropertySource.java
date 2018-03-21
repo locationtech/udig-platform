@@ -34,11 +34,17 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.FocusCellOwnerDrawHighlighter;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.TableViewerEditor;
+import org.eclipse.jface.viewers.TableViewerFocusCellManager;
 import org.eclipse.jface.viewers.TextCellEditor;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MenuDetectEvent;
@@ -256,6 +262,26 @@ public class GeomPropertySource implements IPropertySource2 {
                                      coordinateViewer.setContentProvider(ArrayContentProvider.getInstance());
                                      coordinateViewer.setInput(geom.getCoordinates());
 
+                                     //extra configuration to control how traversing of cells
+                                     //is achieved during editing or not
+                                     TableViewerFocusCellManager focusCellManager =
+                                     		new TableViewerFocusCellManager(
+                                     				coordinateViewer,
+                                     				new FocusCellOwnerDrawHighlighter(coordinateViewer));
+                                     ColumnViewerEditorActivationStrategy editorActivationStrategy =
+                                     		new ColumnViewerEditorActivationStrategy(coordinateViewer) {
+
+                                     	@Override
+                                     	protected boolean isEditorActivationEvent(
+                                     			ColumnViewerEditorActivationEvent event) {
+                                     		ViewerCell cell = (ViewerCell) event.getSource();
+                                     		return cell.getColumnIndex() == 1 || cell.getColumnIndex() == 2;
+                                     	}
+
+                                     };
+                                     TableViewerEditor.create(coordinateViewer, focusCellManager, editorActivationStrategy,
+                                     		TableViewerEditor.TABBING_HORIZONTAL| TableViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR);     
+                                     
                                      MenuManager menuManager = new MenuManager();
                                      Menu menu = menuManager.createContextMenu(coordinateViewer.getControl());
                                      coordinateViewer.getControl().setMenu(menu);
@@ -333,7 +359,7 @@ public class GeomPropertySource implements IPropertySource2 {
                                  protected void okPressed() {
 
                                      //if coordinate has been added or removed then edit geometry using appropriate CoordinateOperation
-                                     if (coordAdded || coordRemoved) {                                                       
+                                     if (coordAdded || coordRemoved || coordChanged) {                                                       
                                          Hints hints = new Hints( Hints.CRS, ApplicationGIS.getActiveMap().getViewportModel().getCRS());
                                          GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory(hints);
                                          GeometryEditor editor = new GeometryEditor(geometryFactory);
@@ -506,7 +532,7 @@ public class GeomPropertySource implements IPropertySource2 {
      * @author Nikolaos Pringouris <nprigour@gmail.com>
      *
      */
-    public class GeomAdaptCoordinateOperation extends GeometryEditor.CoordinateOperation {
+    public static class GeomAdaptCoordinateOperation extends GeometryEditor.CoordinateOperation {
 
         private boolean changed;
         private Coordinate[] modifiedCoordinates;
