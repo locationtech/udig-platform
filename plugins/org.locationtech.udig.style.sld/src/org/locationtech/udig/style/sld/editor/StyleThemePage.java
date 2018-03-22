@@ -99,7 +99,6 @@ import org.locationtech.udig.style.sld.SLDContent;
 import org.locationtech.udig.style.sld.SLDPlugin;
 import org.locationtech.udig.style.sld.editor.BorderColorComboListener.Outline;
 import org.locationtech.udig.style.sld.editor.CustomDynamicPalette.TABLE;
-import org.locationtech.udig.style.sld.editor.internal.BrewerPaletteLabelProvider;
 import org.locationtech.udig.style.sld.editor.internal.StyleTreeContentProvider;
 import org.locationtech.udig.style.sld.editor.internal.StyleTreeLabelProvider;
 import org.locationtech.udig.style.sld.editor.internal.StyleTreeSorter;
@@ -935,7 +934,6 @@ public class StyleThemePage extends StyleEditorPage {
         gridData = createDefaultGridData();
         normalizeCombo.setLayoutData(gridData);
         updateNormalize();
-        normalizeCombo.setToolTipText(Messages.StyleEditor_theme_normalize_tip); 
         normalizeCombo.setVisibleItemCount(10);
         normalizeCombo.addSelectionListener(new SimpleComboListener());
 

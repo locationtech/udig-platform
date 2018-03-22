@@ -87,7 +87,6 @@ public class Messages extends NLS {
 	public static String StyleEditor_theme_palette_all            ;
 	public static String StyleEditor_theme_palette                ;
 	public static String StyleEditor_theme_opacity                ;
-	public static String StyleEditor_theme_normalize_tip          ;
 	public static String StyleEditor_theme_normalize              ;
 	public static String StyleEditor_theme_none                   ;
 	public static String StyleEditor_theme_failure                ;
@@ -161,16 +160,7 @@ public class Messages extends NLS {
 	public static String GraphicViewer_name_tooltip ;
 	public static String FillViewer_percent_tooltip ;
 	public static String FillViewer_colour_tooltip  ;
-	public static String SLDMarkerEditorPart_width_tooltip;
-	public static String SLDMarkerEditorPart_border_enabled_tooltip;
-	public static String SLDMarkerEditorPart_border_width_tooltip;
-	public static String SLDMarkerEditorPart_border_opacity_tooltip;
-	public static String SLDMarkerEditorPart_marker_enabled_tooltip;
-	public static String SLDMarkerEditorPart_fill_opacity_tooltip;
-	public static String SLDLineEditorPart_border_width_tooltip;
-	public static String SLDLineEditorPart_border_opacity_tooltip;
     public static String StyleEditorDialog_defaults;
-    public static String StyleThemePage_13;
     public static String PointEditorPage_fancyCombo_default;
     public static String PointEditorPage_fancyCombo_unselected;
     public static String StylingConstants_label_opacity;

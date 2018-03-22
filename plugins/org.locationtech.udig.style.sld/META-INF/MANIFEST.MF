@@ -7,9 +7,11 @@ Bundle-Activator: org.locationtech.udig.style.sld.SLDPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Eclipse-BuddyPolicy: global
-Export-Package: org.locationtech.udig.style.filter,org.locationtech.ud
- ig.style.sld,org.locationtech.udig.style.sld.editor,org.locationtech.
- udig.style.sld.editor.internal,org.locationtech.udig.style.sld.simple
+Export-Package: org.locationtech.udig.style.filter,
+ org.locationtech.udig.style.sld,
+ org.locationtech.udig.style.sld.editor,
+ org.locationtech.udig.style.sld.editor.internal,
+ org.locationtech.udig.style.sld.simple
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.locationtech.udig.project,
@@ -18,5 +20,4 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.ui,
  org.eclipse.ui.forms
 Bundle-ActivationPolicy: lazy
-Import-Package: net.miginfocom.swt;version="[3.7.0,3.8.0)",
- javax.media.jai
+Import-Package: net.miginfocom.swt;version="[3.7.0,3.8.0)"
