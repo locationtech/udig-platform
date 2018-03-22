@@ -11,7 +11,6 @@ package org.locationtech.udig.style.sld.simple;
 
 import org.locationtech.udig.style.sld.AbstractSimpleConfigurator;
 import org.locationtech.udig.style.sld.SLDPlugin;
-import org.locationtech.udig.style.sld.SimpleRasterConfigurator;
 import org.locationtech.udig.style.sld.internal.Messages;
 
 import org.eclipse.swt.SWT;

@@ -39,26 +39,6 @@
       </styleConfigurator>
       -->
       <styleConfigurator
-            class="org.locationtech.udig.style.sld.SimpleRasterConfigurator"
-            id="simple-raster"
-            label="%simpleRaster.label"
-            requires="org.opengis.coverage.grid.GridCoverage"
-            styleId="org.locationtech.udig.style.sld">
-      </styleConfigurator>
-      <styleConfigurator
-            class="org.locationtech.udig.style.sld.SimpleRasterConfigurator"
-            id="simple-raster-wms"
-            label="%simple.label"
-            requires="org.geotools.data.ows.Layer"
-            styleId="org.locationtech.udig.style.sld"/>
-      <styleConfigurator
-            class="org.locationtech.udig.style.sld.SimpleRasterConfigurator"
-            id="simple-raster"
-            label="%simple.label"
-            requires="org.geotools.coverage.grid.io.AbstractGridCoverage2DReader"
-            styleId="org.locationtech.udig.style.sld">
-      </styleConfigurator>
-      <styleConfigurator
             class="org.locationtech.udig.style.cache.CacheConfigurator"
             id="cache"
             label="%cache.label"
@@ -98,10 +78,6 @@
             label="%point.label"
             class="org.locationtech.udig.style.sld.internal.SLDMarkerEditorPart"
             contentType="org.geotools.styling.PointSymbolizer"/>
-      <sldEditorPart
-            label="%raster.label"
-            class="org.locationtech.udig.style.sld.internal.SLDRasterEditorPart"
-            contentType="org.geotools.styling.RasterSymbolizer"/>
    </extension>
    <extension
          point="org.eclipse.ui.popupMenus">
@@ -157,19 +133,6 @@
             id="xml"
             label="%xmlPage.label"
             requires="org.geotools.data.FeatureSource"/>
-      <StyleEditorPage
-            class="org.locationtech.udig.style.sld.editor.StyleXMLPage"
-            contentType="org.locationtech.udig.project.ILayer"
-            id="xml"
-            label="%xmlPage.label"
-            requires="org.opengis.coverage.grid.GridCoverage"/>
-      <StyleEditorPage
-            class="org.locationtech.udig.style.sld.editor.raster.SingleBandEditorPage"
-            contentType="org.locationtech.udig.project.ILayer"
-            id="org.locationtech.udig.style.raster.SingleBandRasterPage"
-            label="Single Band Raster"
-            requires="org.opengis.coverage.grid.GridCoverage">
-      </StyleEditorPage>
 <!--
       <StyleEditorPage
             class="org.locationtech.udig.style.sld.editor.PointEditorPage"

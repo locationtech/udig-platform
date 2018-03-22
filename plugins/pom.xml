@@ -147,6 +147,7 @@
         <module>org.locationtech.udig.socket</module>
         <module>org.locationtech.udig.style</module>
         <module>org.locationtech.udig.style.sld</module>
+        <module>org.locationtech.udig.style.sld.raster</module>
         <module>org.locationtech.udig.style.wms</module>
         <module>org.locationtech.udig.tool.default</module>
         <module>org.locationtech.udig.tool.edit</module>

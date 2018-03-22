@@ -204,14 +204,12 @@ public class SLDLineEditorPart extends SLDEditorPart implements SelectionListene
         lineWidth.setMaximum(30);
         lineWidth.setPageIncrement(5);
         lineWidth.addSelectionListener(this);
-        lineWidth.setToolTipText( Messages.SLDLineEditorPart_border_width_tooltip ); 
         
         lineOpacity = new Spinner( border, SWT.HORIZONTAL);
         lineOpacity.setMinimum(0);
         lineOpacity.setMaximum(opacityMaxValue);
         lineOpacity.setPageIncrement(10);
         lineOpacity.addSelectionListener( this );
-        lineOpacity.setToolTipText( Messages.SLDLineEditorPart_border_opacity_tooltip ); 
     }
     
     protected Control createPartControl( Composite parent ) {
