@@ -38,7 +38,7 @@ import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.locationtech.udig.project.preferences.PreferenceConstants;
 import org.locationtech.udig.style.sld.AbstractSimpleConfigurator;
 import org.locationtech.udig.style.sld.SLD;
-import org.locationtech.udig.style.sld.internal.FontEditor;
+import org.locationtech.udig.style.sld.editor.FontEditor;
 import org.locationtech.udig.style.sld.internal.Messages;
 import org.locationtech.udig.ui.graphics.SLDs;
 import org.opengis.feature.simple.SimpleFeatureType;

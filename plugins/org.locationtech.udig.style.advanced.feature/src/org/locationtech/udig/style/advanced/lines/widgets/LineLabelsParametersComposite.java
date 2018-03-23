@@ -1,0 +1,659 @@
+/*
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org 
+ * (C) HydroloGIS - www.hydrologis.com 
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
+ * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
+ */
+package org.locationtech.udig.style.advanced.lines.widgets;
+
+import static org.locationtech.udig.style.advanced.utils.Utilities.ff;
+
+import java.awt.Color;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.widgets.Text;
+import org.geotools.styling.TextSymbolizer;
+import org.locationtech.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
+import org.locationtech.udig.style.advanced.common.ParameterComposite;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
+import org.locationtech.udig.style.advanced.internal.Messages;
+import org.locationtech.udig.style.advanced.internal.VendorOptions;
+import org.locationtech.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.style.sld.SLD;
+import org.locationtech.udig.style.sld.editor.FontEditor;
+import org.locationtech.udig.ui.ColorEditor;
+import org.opengis.filter.expression.Expression;
+
+/**
+ * A composite that holds widgets for labels parameter setting.
+ * 
+ * @author Andrea Antonello (www.hydrologis.com)
+ */
+public class LineLabelsParametersComposite extends ParameterComposite {
+
+    private final Composite parent;
+    private final String[] numericAttributesArrays;
+
+    private Composite mainComposite;
+    private Button labelEnableButton;
+    private Spinner labelOpacitySpinner;
+    private Combo labelOpacityAttributecombo;
+    private Button haloColorButton;
+    private ColorEditor haloColorEditor;
+    private Spinner haloRadiusSpinner;
+    private Text initialGapText;
+    private Text maxDisplacementText;
+    private Text repeatText;
+    private Text autoWrapText;
+    private Text spaceAroundText;
+    private FontEditor fontEditor;
+    private Button fontButton;
+    private ColorEditor fontColorEditor;
+    private Button fontColorButton;
+    private Text perpendicularOffsetText;
+    private Text followLineText;
+    private Text maxAngleDeltaText;
+    private Text labelNameText;
+    private Combo labelNameAttributecombo;
+    private String[] allAttributesArrays;
+
+    public LineLabelsParametersComposite( Composite parent, String[] numericAttributesArrays, String[] allAttributesArrays ) {
+        this.parent = parent;
+        this.numericAttributesArrays = numericAttributesArrays;
+        this.allAttributesArrays = allAttributesArrays;
+    }
+
+    public Composite getComposite() {
+        return mainComposite;
+    }
+
+    /**
+     * Initialize the composite with values from a rule.
+     * 
+     * @param ruleWrapper the rule to take the info from.
+     */
+    public void init( RuleWrapper ruleWrapper ) {
+        TextSymbolizerWrapper textSymbolizerWrapper = ruleWrapper.getTextSymbolizersWrapper();
+        boolean widgetEnabled = true;
+        if (textSymbolizerWrapper == null) {
+            widgetEnabled = false;
+            /*
+             * create a dummy local one to create the widgets
+             */
+            TextSymbolizer newSymbolizer = Utilities.createDefaultTextSymbolizer(SLD.LINE);
+            textSymbolizerWrapper = new TextSymbolizerWrapper(newSymbolizer, null, SLD.LINE);
+        }
+
+        mainComposite = new Composite(parent, SWT.NONE);
+        mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        mainComposite.setLayout(new GridLayout(3, true));
+
+        labelEnableButton = new Button(mainComposite, SWT.CHECK);
+        GridData labelEnableButtonGD = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
+        labelEnableButtonGD.horizontalSpan = 3;
+        labelEnableButton.setLayoutData(labelEnableButtonGD);
+        labelEnableButton.setText(Messages.LineLabelsParametersComposite_0);
+        labelEnableButton.setSelection(widgetEnabled);
+        labelEnableButton.addSelectionListener(this);
+
+        // header
+        new Label(mainComposite, SWT.NONE);
+        Label valueLabel = new Label(mainComposite, SWT.NONE);
+        valueLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
+        valueLabel.setText(Messages.LineLabelsParametersComposite_1);
+        Label fieldsLabel = new Label(mainComposite, SWT.NONE);
+        fieldsLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
+        fieldsLabel.setText(Messages.LineLabelsParametersComposite_2);
+
+        // label name
+        Label labelNameLabel = new Label(mainComposite, SWT.NONE);
+        labelNameLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        labelNameLabel.setText(Messages.LineLabelsParametersComposite_3);
+
+        labelNameText = new Text(mainComposite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+        GridData labelNameTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        labelNameText.setLayoutData(labelNameTextGD);
+        labelNameText.addFocusListener(this);
+        labelNameText.setToolTipText(Messages.LabelNameField_TooltipText);
+        labelNameAttributecombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
+        GridData labelNameAttributecomboGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        labelNameAttributecombo.setLayoutData(labelNameAttributecomboGD);
+        labelNameAttributecombo.setItems(allAttributesArrays);
+        labelNameAttributecombo.addSelectionListener(this);
+        labelNameAttributecombo.select(0);
+        String labelName = textSymbolizerWrapper.getLabelName();
+        if (labelName != null) {
+            int index = getAttributeIndex(labelName, allAttributesArrays);
+            if (index != -1) {
+                labelNameAttributecombo.select(index);
+            } else {
+                labelNameText.setText(labelName);
+            }
+        } else {
+            labelNameText.setText(""); //$NON-NLS-1$
+        }
+
+        // label alpha
+        Label labelOpactityLabel = new Label(mainComposite, SWT.NONE);
+        labelOpactityLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        labelOpactityLabel.setText(Messages.LineLabelsParametersComposite_5);
+        labelOpacitySpinner = new Spinner(mainComposite, SWT.BORDER);
+        labelOpacitySpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        labelOpacitySpinner.setMaximum(100);
+        labelOpacitySpinner.setMinimum(0);
+        labelOpacitySpinner.setIncrement(10);
+        String opacity = textSymbolizerWrapper.getOpacity();
+        Double tmpOpacity = isDouble(opacity);
+        int tmp = 100;
+        if (tmpOpacity != null) {
+            tmp = (int) (tmpOpacity.doubleValue() * 100);
+        }
+        labelOpacitySpinner.setSelection(tmp);
+        labelOpacitySpinner.addSelectionListener(this);
+        labelOpacityAttributecombo = new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
+        labelOpacityAttributecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        labelOpacityAttributecombo.setItems(numericAttributesArrays);
+        labelOpacityAttributecombo.addSelectionListener(this);
+        labelOpacityAttributecombo.select(0);
+        if (tmpOpacity == null) {
+            int index = getAttributeIndex(opacity, numericAttributesArrays);
+            if (index != -1) {
+                labelOpacityAttributecombo.select(index);
+            }
+        }
+
+        // font
+        Label fontLabel = new Label(mainComposite, SWT.NONE);
+        fontLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        fontLabel.setText(Messages.LineLabelsParametersComposite_6);
+
+        fontEditor = new FontEditor(mainComposite);
+        GridData fontButtonGD = new GridData(SWT.FILL, SWT.FILL, true, false);
+        fontButtonGD.horizontalSpan = 2;
+        fontButton = fontEditor.getButton();
+        fontButton.setLayoutData(fontButtonGD);
+        fontEditor.setListener(this);
+
+        FontData[] fontData = textSymbolizerWrapper.getFontData();
+        if (fontData != null) {
+            fontEditor.setFontList(fontData);
+        }
+
+        // font color
+        Label fontColorLabel = new Label(mainComposite, SWT.NONE);
+        fontColorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        fontColorLabel.setText(Messages.LineLabelsParametersComposite_7);
+
+        fontColorEditor = new ColorEditor(mainComposite);
+        fontColorButton = fontColorEditor.getButton();
+        fontColorButton.addSelectionListener(this);
+        GridData fontColorButtonGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        fontColorButtonGD.horizontalSpan = 2;
+        fontColorButton.setLayoutData(fontColorButtonGD);
+        Color tmpColor = null;;
+        try {
+            tmpColor = Color.decode(textSymbolizerWrapper.getColor());
+        } catch (Exception e) {
+            tmpColor = Color.black;
+        }
+        fontColorEditor.setColor(tmpColor);
+
+        // label halo
+        Label haloLabel = new Label(mainComposite, SWT.NONE);
+        haloLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        haloLabel.setText(Messages.LineLabelsParametersComposite_8);
+
+        haloColorEditor = new ColorEditor(mainComposite);
+        haloColorButton = haloColorEditor.getButton();
+        haloColorButton.addSelectionListener(this);
+        GridData haloColorButtonGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        haloColorButton.setLayoutData(haloColorButtonGD);
+        tmpColor = null;;
+        try {
+            tmpColor = Color.decode(textSymbolizerWrapper.getHaloColor());
+        } catch (Exception e) {
+            tmpColor = Color.black;
+        }
+        haloColorEditor.setColor(tmpColor);
+
+        haloRadiusSpinner = new Spinner(mainComposite, SWT.BORDER);
+        haloRadiusSpinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        haloRadiusSpinner.setMaximum(20);
+        haloRadiusSpinner.setMinimum(0);
+        haloRadiusSpinner.setIncrement(1);
+        String haloRadius = textSymbolizerWrapper.getHaloRadius();
+        Double tmpRadius = isDouble(haloRadius);
+        tmp = 0;
+        if (tmpRadius != null) {
+            tmp = tmpRadius.intValue();
+        }
+        haloRadiusSpinner.setSelection(tmp);
+        haloRadiusSpinner.addSelectionListener(this);
+
+        // perpend offset
+        Label perpendicularOffsetLabel = new Label(mainComposite, SWT.NONE);
+        perpendicularOffsetLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        perpendicularOffsetLabel.setText(Messages.LineLabelsParametersComposite_9);
+
+        perpendicularOffsetText = new Text(mainComposite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+        GridData perpendicularOffsetTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        perpendicularOffsetTextGD.horizontalSpan = 2;
+        perpendicularOffsetText.setLayoutData(perpendicularOffsetTextGD);
+        perpendicularOffsetText.addFocusListener(this);
+        String perpendicularOffset = textSymbolizerWrapper.getPerpendicularOffset();
+        if (perpendicularOffset != null) {
+            perpendicularOffsetText.setText(perpendicularOffset);
+        } else {
+            perpendicularOffsetText.setText(""); //$NON-NLS-1$
+        }
+
+        // initial gap
+        Label initialGapLabel = new Label(mainComposite, SWT.NONE);
+        initialGapLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        initialGapLabel.setText(Messages.LineLabelsParametersComposite_11);
+
+        initialGapText = new Text(mainComposite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+        GridData initialGapTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        initialGapTextGD.horizontalSpan = 2;
+        initialGapText.setLayoutData(initialGapTextGD);
+        initialGapText.addFocusListener(this);
+        String initialGap = textSymbolizerWrapper.getInitialGap();
+        if (initialGap != null) {
+            initialGapText.setText(initialGap);
+        } else {
+            initialGapText.setText(""); //$NON-NLS-1$
+        }
+
+        Group vendorOptionsGroup = new Group(mainComposite, SWT.SHADOW_ETCHED_IN);
+        GridData vendorOptionsGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+        vendorOptionsGD.horizontalSpan = 3;
+        vendorOptionsGroup.setLayoutData(vendorOptionsGD);
+        vendorOptionsGroup.setLayout(new GridLayout(2, false));
+        vendorOptionsGroup.setText(Messages.LineLabelsParametersComposite_13);
+
+        // max displacement
+        Label maxDisplacementLabel = new Label(vendorOptionsGroup, SWT.NONE);
+        maxDisplacementLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        maxDisplacementLabel.setText(VendorOptions.VENDOROPTION_MAXDISPLACEMENT.toGuiString());
+        maxDisplacementText = new Text(vendorOptionsGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+        GridData maxDisplacementTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        maxDisplacementText.setLayoutData(maxDisplacementTextGD);
+        maxDisplacementText.addFocusListener(this);
+        String maxDisplacementVO = textSymbolizerWrapper.getMaxDisplacementVO();
+        if (maxDisplacementVO != null) {
+            maxDisplacementText.setText(maxDisplacementVO);
+        } else {
+            maxDisplacementText.setText(""); //$NON-NLS-1$
+        }
+
+        // repeat
+        Label repeatLabel = new Label(vendorOptionsGroup, SWT.NONE);
+        repeatLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        repeatLabel.setText(VendorOptions.VENDOROPTION_REPEAT.toGuiString());
+        repeatText = new Text(vendorOptionsGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+        GridData repeatTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        repeatText.setLayoutData(repeatTextGD);
+        repeatText.addFocusListener(this);
+        String repeatVO = textSymbolizerWrapper.getRepeatVO();
+        if (repeatVO != null) {
+            repeatText.setText(repeatVO);
+        } else {
+            repeatText.setText(""); //$NON-NLS-1$
+        }
+
+        // autoWrap
+        Label autoWrapLabel = new Label(vendorOptionsGroup, SWT.NONE);
+        autoWrapLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        autoWrapLabel.setText(VendorOptions.VENDOROPTION_AUTOWRAP.toGuiString());
+        autoWrapText = new Text(vendorOptionsGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+        GridData autoWrapTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        autoWrapText.setLayoutData(autoWrapTextGD);
+        autoWrapText.addFocusListener(this);
+        String autoWrapVO = textSymbolizerWrapper.getAutoWrapVO();
+        if (autoWrapVO != null) {
+            autoWrapText.setText(autoWrapVO);
+        } else {
+            autoWrapText.setText(""); //$NON-NLS-1$
+        }
+
+        // spaceAround
+        Label spaceAroundLabel = new Label(vendorOptionsGroup, SWT.NONE);
+        spaceAroundLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        spaceAroundLabel.setText(VendorOptions.VENDOROPTION_SPACEAROUND.toGuiString());
+        spaceAroundText = new Text(vendorOptionsGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+        GridData spaceAroundTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        spaceAroundText.setLayoutData(spaceAroundTextGD);
+        spaceAroundText.addFocusListener(this);
+        String spaceAroundVO = textSymbolizerWrapper.getSpaceAroundVO();
+        if (spaceAroundVO != null) {
+            spaceAroundText.setText(spaceAroundVO);
+        } else {
+            spaceAroundText.setText(""); //$NON-NLS-1$
+        }
+
+        // flollowLine
+        Label flollowLineLabel = new Label(vendorOptionsGroup, SWT.NONE);
+        flollowLineLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        flollowLineLabel.setText(VendorOptions.VENDOROPTION_FOLLOWLINE.toGuiString());
+        followLineText = new Text(vendorOptionsGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+        GridData flollowLineTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        followLineText.setLayoutData(flollowLineTextGD);
+        followLineText.addFocusListener(this);
+        String flollowLineVO = textSymbolizerWrapper.getFollowLineVO();
+        if (flollowLineVO != null) {
+            followLineText.setText(flollowLineVO);
+        } else {
+            followLineText.setText(""); //$NON-NLS-1$
+        }
+
+        // maxAngleDelta
+        Label maxAngleDeltaLabel = new Label(vendorOptionsGroup, SWT.NONE);
+        maxAngleDeltaLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        maxAngleDeltaLabel.setText(VendorOptions.VENDOROPTION_MAXANGLEDELTA.toGuiString());
+        maxAngleDeltaText = new Text(vendorOptionsGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+        GridData maxAngleDeltaTextGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        maxAngleDeltaText.setLayoutData(maxAngleDeltaTextGD);
+        maxAngleDeltaText.addFocusListener(this);
+        String maxAngleDeltaVO = textSymbolizerWrapper.getMaxAngleDeltaVO();
+        if (maxAngleDeltaVO != null) {
+            maxAngleDeltaText.setText(maxAngleDeltaVO);
+        } else {
+            maxAngleDeltaText.setText(""); //$NON-NLS-1$
+        }
+
+        checkEnablements();
+    }
+
+    /**
+     * Initialize the composite with values from a rule.
+     * 
+     * @param ruleWrapper the rule to take the info from.
+     */
+    public void update( RuleWrapper ruleWrapper ) {
+        TextSymbolizerWrapper textSymbolizerWrapper = ruleWrapper.getTextSymbolizersWrapper();
+        if (textSymbolizerWrapper == null) {
+            labelEnableButton.setSelection(false);
+            checkEnablements();
+            return;
+        } else {
+            labelEnableButton.setSelection(true);
+        }
+
+        String labelName = textSymbolizerWrapper.getLabelName();
+        if (labelName != null) {
+            int index = getAttributeIndex(labelName, allAttributesArrays);
+            if (index != -1) {
+                labelNameAttributecombo.select(index);
+            } else {
+                labelNameText.setText(labelName);
+                labelNameAttributecombo.select(index);
+            }
+        } else {
+            labelNameText.setText(""); //$NON-NLS-1$
+        }
+
+        FontData[] fontData = textSymbolizerWrapper.getFontData();
+        if (fontData != null) {
+            fontEditor.setFontList(fontData);
+        }
+
+        String color = textSymbolizerWrapper.getColor();
+        if (color != null) {
+            fontColorEditor.setColor(Color.decode(color));
+        }
+
+        String opacity = textSymbolizerWrapper.getOpacity();
+        Double tmpOpacity = isDouble(opacity);
+        int tmp = 100;
+        if (tmpOpacity != null) {
+            tmp = (int) (tmpOpacity.doubleValue() * 100);
+        }
+        labelOpacitySpinner.setSelection(tmp);
+        if (tmpOpacity == null) {
+            int index = getAttributeIndex(opacity, numericAttributesArrays);
+            if (index != -1) {
+                labelOpacityAttributecombo.select(index);
+            }
+        }
+
+        Color tmpColor = null;;
+        try {
+            tmpColor = Color.decode(textSymbolizerWrapper.getHaloColor());
+        } catch (Exception e) {
+            tmpColor = Color.black;
+        }
+        haloColorEditor.setColor(tmpColor);
+
+        String haloRadius = textSymbolizerWrapper.getHaloRadius();
+        Double tmpRadius = isDouble(haloRadius);
+        tmp = 0;
+        if (tmpRadius != null) {
+            tmp = tmpRadius.intValue();
+        }
+        haloRadiusSpinner.setSelection(tmp);
+
+        // perpend offset
+        String perpendicularOffset = textSymbolizerWrapper.getPerpendicularOffset();
+        if (perpendicularOffset != null) {
+            perpendicularOffsetText.setText(perpendicularOffset);
+        } else {
+            perpendicularOffsetText.setText(""); //$NON-NLS-1$
+        }
+
+        // initial gap
+        String initialGap = textSymbolizerWrapper.getInitialGap();
+        if (initialGap != null) {
+            initialGapText.setText(initialGap);
+        } else {
+            initialGapText.setText(""); //$NON-NLS-1$
+        }
+
+        // max displacement
+        String maxDisplacementVO = textSymbolizerWrapper.getMaxDisplacementVO();
+        if (maxDisplacementVO != null) {
+            maxDisplacementText.setText(maxDisplacementVO);
+        } else {
+            maxDisplacementText.setText(""); //$NON-NLS-1$
+        }
+
+        // repeat
+        String repeatVO = textSymbolizerWrapper.getRepeatVO();
+        if (repeatVO != null) {
+            repeatText.setText(repeatVO);
+        } else {
+            repeatText.setText(""); //$NON-NLS-1$
+        }
+
+        // autoWrap
+        String autoWrapVO = textSymbolizerWrapper.getAutoWrapVO();
+        if (autoWrapVO != null) {
+            autoWrapText.setText(autoWrapVO);
+        } else {
+            autoWrapText.setText(""); //$NON-NLS-1$
+        }
+
+        // spaceAround
+        String spaceAroundVO = textSymbolizerWrapper.getSpaceAroundVO();
+        if (spaceAroundVO != null) {
+            spaceAroundText.setText(spaceAroundVO);
+        } else {
+            spaceAroundText.setText(Messages.LineLabelsParametersComposite_26);
+        }
+
+        // followline
+        String flollowLineVO = textSymbolizerWrapper.getFollowLineVO();
+        if (flollowLineVO != null) {
+            followLineText.setText(flollowLineVO);
+        } else {
+            followLineText.setText(Messages.LineLabelsParametersComposite_27);
+        }
+
+        // maxAngleDelta
+        String maxAngleDeltaVO = textSymbolizerWrapper.getMaxAngleDeltaVO();
+        if (maxAngleDeltaVO != null) {
+            maxAngleDeltaText.setText(maxAngleDeltaVO);
+        } else {
+            maxAngleDeltaText.setText(Messages.LineLabelsParametersComposite_28);
+        }
+
+        checkEnablements();
+    }
+
+    private void checkEnablements() {
+        boolean comboIsNone = comboIsNone(labelNameAttributecombo);
+        boolean selected = labelEnableButton.getSelection();
+        if (!selected) {
+            setEnabled(false);
+        } else {
+        	setEnabled(true);
+            labelNameText.setEnabled(comboIsNone);
+            comboIsNone = comboIsNone(labelOpacityAttributecombo);
+            labelOpacitySpinner.setEnabled(comboIsNone);
+        }
+    }
+
+    public void widgetSelected( SelectionEvent e ) {
+        Object source = e.getSource();
+        if (source.equals(labelEnableButton)) {
+            boolean selected = labelEnableButton.getSelection();
+            setEnabled(selected);
+            notifyListeners(String.valueOf(selected), false, STYLEEVENTTYPE.LABELENABLE);
+        } else if (source.equals(labelNameAttributecombo)) {
+            boolean comboIsNone = comboIsNone(labelNameAttributecombo);
+            if (comboIsNone) {
+                String text = labelNameText.getText();
+                notifyListeners(text, false, STYLEEVENTTYPE.LABEL);
+            } else {
+                int index = labelNameAttributecombo.getSelectionIndex();
+                String nameField = labelNameAttributecombo.getItem(index);
+                notifyListeners(nameField, true, STYLEEVENTTYPE.LABEL);
+            }
+        } else if (source.equals(fontButton)) {
+            FontData[] fontData = fontEditor.getFontList();
+            if (fontData.length > 0) {
+                FontData fd = fontData[0];
+                String name = fd.getName();
+                String style = String.valueOf(fd.getStyle());
+                String height = String.valueOf(fd.getHeight());
+                Color color = fontEditor.getAWTColor();
+                Expression colorExpr = ff.literal(color);
+                String fontColor = colorExpr.evaluate(null, String.class);
+
+                notifyListeners(new String[]{name, style, height, fontColor}, false, STYLEEVENTTYPE.LABELFONT);
+                fontColorEditor.setColor(color);
+                notifyListeners(fontColor, false, STYLEEVENTTYPE.LABELCOLOR);
+            }
+        } else if (source.equals(fontColorButton)) {
+            Color color = fontColorEditor.getColor();
+            Expression colorExpr = ff.literal(color);
+            String fontColor = colorExpr.evaluate(null, String.class);
+            fontEditor.setColorValue(color);
+            notifyListeners(fontColor, false, STYLEEVENTTYPE.LABELCOLOR);
+        } else if (source.equals(haloColorButton)) {
+            Color color = haloColorEditor.getColor();
+            Expression colorExpr = ff.literal(color);
+            String haloColor = colorExpr.evaluate(null, String.class);
+            notifyListeners(haloColor, false, STYLEEVENTTYPE.LABELHALOCOLOR);
+
+            //keeps the halo radius the same;  
+            int radius = haloRadiusSpinner.getSelection();
+            if (radius == 0){
+            	//if we change the color chances are we want at least some halo
+            	//this also keeps the radius insync with the style symbolizer;
+            	radius = 1;
+            	haloRadiusSpinner.setSelection(radius);
+            }
+            notifyListeners(String.valueOf(radius), false, STYLEEVENTTYPE.LABELHALORADIUS);
+        } else if (source.equals(haloRadiusSpinner)) {
+            int radius = haloRadiusSpinner.getSelection();
+
+            notifyListeners(String.valueOf(radius), false, STYLEEVENTTYPE.LABELHALORADIUS);
+        } else if (source.equals(labelOpacitySpinner) || source.equals(labelOpacityAttributecombo)) {
+            boolean comboIsNone = comboIsNone(labelOpacityAttributecombo);
+            if (comboIsNone) {
+                int index = labelOpacityAttributecombo.getSelectionIndex();
+                String opacityField = labelOpacityAttributecombo.getItem(index);
+                notifyListeners(opacityField, true, STYLEEVENTTYPE.LABELOPACITY);
+            } else {
+                int opacity = labelOpacitySpinner.getSelection();
+                String opacityStr = String.valueOf(opacity);
+                notifyListeners(opacityStr, false, STYLEEVENTTYPE.LABELOPACITY);
+            }
+        }
+
+        checkEnablements();
+    }
+
+    private void setEnabled( boolean enable ) {
+        labelOpacitySpinner.setEnabled(enable);
+        labelOpacityAttributecombo.setEnabled(enable);
+        haloColorButton.setEnabled(enable);
+        haloColorEditor.setEnabled(enable);
+        haloRadiusSpinner.setEnabled(enable);
+        initialGapText.setEnabled(enable);
+        maxDisplacementText.setEnabled(enable);
+        repeatText.setEnabled(enable);
+        autoWrapText.setEnabled(enable);
+        spaceAroundText.setEnabled(enable);
+        fontEditor.setEnabled(enable);
+        fontButton.setEnabled(enable);
+        fontColorEditor.setEnabled(enable);
+        fontColorButton.setEnabled(enable);
+        perpendicularOffsetText.setEnabled(enable);
+        followLineText.setEnabled(enable);
+        maxAngleDeltaText.setEnabled(enable);
+        labelNameText.setEnabled(enable);
+        labelNameAttributecombo.setEnabled(enable);
+    }
+
+    public void focusGained( FocusEvent e ) {
+    }
+
+    public void focusLost( FocusEvent e ) {
+        Object source = e.getSource();
+        if (source.equals(initialGapText)) {
+            String text = initialGapText.getText();
+            notifyListeners(text, false, STYLEEVENTTYPE.LABELINITIALGAP);
+        } else if (source.equals(perpendicularOffsetText)) {
+            String text = perpendicularOffsetText.getText();
+            notifyListeners(text, false, STYLEEVENTTYPE.LABELPERPENDICULAROFFSET);
+        } else if (source.equals(maxDisplacementText)) {
+            String text = maxDisplacementText.getText();
+            notifyListeners(text, false, STYLEEVENTTYPE.LABELMAXDISPLACEMENT_VO);
+        } else if (source.equals(spaceAroundText)) {
+            String text = spaceAroundText.getText();
+            notifyListeners(text, false, STYLEEVENTTYPE.LABELSPACEAROUND_VO);
+        } else if (source.equals(autoWrapText)) {
+            String text = autoWrapText.getText();
+            notifyListeners(text, false, STYLEEVENTTYPE.LABELAUTOWRAP_VO);
+        } else if (source.equals(repeatText)) {
+            String text = repeatText.getText();
+            notifyListeners(text, false, STYLEEVENTTYPE.LABELREPEAT_VO);
+        } else if (source.equals(followLineText)) {
+            String text = followLineText.getText();
+            notifyListeners(text, false, STYLEEVENTTYPE.LABELFOLLOWLINE_VO);
+        } else if (source.equals(maxAngleDeltaText)) {
+            String text = maxAngleDeltaText.getText();
+            notifyListeners(text, false, STYLEEVENTTYPE.LABELMAXANGLEDELTA_VO);
+        } else if (source.equals(labelNameText)) {
+            String text = labelNameText.getText();
+            notifyListeners(text, false, STYLEEVENTTYPE.LABEL);
+        }
+        checkEnablements();
+    }
+}

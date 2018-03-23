@@ -94,7 +94,9 @@
         <module>org.locationtech.udig.image.georeferencing</module>
         <module>org.locationtech.udig.jconsole</module>
         <module>org.locationtech.udig.omsbox</module>
-        <module>org.locationtech.udig.style.advanced</module>
+        <module>org.locationtech.udig.style.advanced.core</module>
+        <module>org.locationtech.udig.style.advanced.feature</module>
+        <module>org.locationtech.udig.style.advanced.raster</module>
         <module>org.locationtech.udig.style.jgrass</module>
         <module>org.locationtech.udig.tools</module>
         <module>org.locationtech.udig.tools.jgrass</module>

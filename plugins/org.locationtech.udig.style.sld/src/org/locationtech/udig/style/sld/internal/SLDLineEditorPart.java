@@ -13,6 +13,7 @@ package org.locationtech.udig.style.sld.internal;
 import java.awt.Color;
 
 import org.locationtech.udig.style.sld.SLDEditorPart;
+import org.locationtech.udig.ui.ColorEditor;
 import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.swt.SWT;
@@ -39,7 +40,7 @@ import org.geotools.styling.StyleBuilder;
  */
 public class SLDLineEditorPart extends SLDEditorPart implements SelectionListener {
 
-    private StolenColorEditor lineColourEditor;
+    private ColorEditor lineColourEditor;
     Spinner lineWidth;
     Spinner lineOpacity;
     Combo linejoinCombo;
@@ -197,7 +198,7 @@ public class SLDLineEditorPart extends SLDEditorPart implements SelectionListene
         borderEnabled.setEnabled( false );
         borderEnabled.setSelection( true );
         
-        lineColourEditor = new StolenColorEditor( border, this);
+        lineColourEditor = new ColorEditor(border, this);
         
         lineWidth = new Spinner( border, SWT.HORIZONTAL);     
         lineWidth.setMinimum(1);

@@ -23,8 +23,6 @@ import org.eclipse.swt.widgets.Composite;
  * @author Jody Garnett 
  */
 public class ColorEditor extends ColorSelector {
-
-    private SelectionListener listener = null;
     
     /**
      * Construct <code>ColorEditor</code>.
@@ -34,16 +32,10 @@ public class ColorEditor extends ColorSelector {
     public ColorEditor( Composite parent ) {
         super( parent );
     }
-    
-    @Deprecated
-    public void setListener( SelectionListener selectionListener ) {
-        if( listener != null ){
-            getButton().removeSelectionListener(listener);
-        }
-        listener = selectionListener;
-        if( listener != null ){
-            getButton().addSelectionListener(listener);
-        }
+
+    public ColorEditor(Composite parent, SelectionListener buttonSelectionListerner) {
+        this(parent);
+        addButtonSelectionListener(buttonSelectionListerner);
     }
 
     public java.awt.Color getColor(){
@@ -59,5 +51,13 @@ public class ColorEditor extends ColorSelector {
             RGB rgb = new RGB(color.getRed(), color.getGreen(), color.getBlue() );
             setColorValue( rgb );    
         }                
+    }
+
+    public void addButtonSelectionListener(final SelectionListener selectionListener) {
+        getButton().addSelectionListener(selectionListener);
+    }
+
+    public void removeButtonSelectionListener(final SelectionListener selectionListener) {
+        getButton().removeSelectionListener(selectionListener);
     }
 }

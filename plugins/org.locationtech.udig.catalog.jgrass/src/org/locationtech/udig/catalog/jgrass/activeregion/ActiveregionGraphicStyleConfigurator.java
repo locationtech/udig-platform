@@ -16,13 +16,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.locationtech.udig.project.IBlackboard;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.impl.UDIGFeatureStore;
-import org.locationtech.udig.project.ui.internal.dialogs.ColorEditor;
-import org.locationtech.udig.style.IStyleConfigurator;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
@@ -43,17 +36,22 @@ import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.gce.grassraster.JGrassRegion;
 import org.geotools.referencing.CRS;
-import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import com.vividsolutions.jts.geom.Envelope;
-
 import org.locationtech.udig.catalog.jgrass.activeregion.dialogs.CatalogJGrassMapsetTreeViewerDialog;
 import org.locationtech.udig.catalog.jgrass.activeregion.dialogs.FeatureChooserDialog;
 import org.locationtech.udig.catalog.jgrass.activeregion.dialogs.JGRasterChooserDialog;
 import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
 import org.locationtech.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
 import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.impl.UDIGFeatureStore;
+import org.locationtech.udig.style.IStyleConfigurator;
+import org.locationtech.udig.ui.ColorEditor;
+import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
+
+import com.vividsolutions.jts.geom.Envelope;
 
 public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator implements SelectionListener, ModifyListener {
 
@@ -335,8 +333,8 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator imp
                 textModified(res_type);
             }
         });
-        foregroundColor.addSelectionListener(this);
-        backgroundColour.addSelectionListener(this);
+        foregroundColor.addButtonSelectionListener(this);
+        backgroundColour.addButtonSelectionListener(this);
 
         /*
          * layout

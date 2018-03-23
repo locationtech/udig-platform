@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.locationtech.udig.style.sld.StyleEditorPage">
+      <StyleEditorPage
+            class="org.locationtech.udig.style.advanced.raster.editorpages.CoverageStyleEditorPage"
+            contentType="org.locationtech.udig.project.ILayer"
+            id="org.locationtech.udig.style.advanced.raster.editorpages.CoverageStyleEditorPage"
+            label="Legacy Raster"
+            requires="org.opengis.coverage.grid.GridCoverage">
+      </StyleEditorPage>
+      <StyleEditorPage
+            class="org.locationtech.udig.style.advanced.raster.editorpages.CoverageColorMaskStyleEditorPage"
+            contentType="org.locationtech.udig.project.ILayer"
+            id="org.locationtech.udig.style.advanced.editorpages.CoverageColorMaskStyleEditorPage"
+            label="Raster Color Mask"
+            requires="org.opengis.coverage.grid.GridCoverage">
+      </StyleEditorPage>
+   </extension>
+
+</plugin>

@@ -14,6 +14,7 @@ package org.locationtech.udig.style.sld.internal;
 import java.awt.Color;
 
 import org.locationtech.udig.style.sld.SLDEditorPart;
+import org.locationtech.udig.ui.ColorEditor;
 import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.swt.SWT;
@@ -40,11 +41,11 @@ import org.geotools.styling.StyleBuilder;
  */
 public class SLDPolygonEditorPart extends SLDEditorPart implements SelectionListener {
 
-    private StolenColorEditor borderColour;
+    private ColorEditor borderColour;
     private Button borderEnabled;
     private Spinner borderWidth;
 
-    private StolenColorEditor fillColour;
+    private ColorEditor fillColour;
     private Button fillEnabled;
     private Spinner borderOpacity;
 
@@ -206,7 +207,8 @@ public class SLDPolygonEditorPart extends SLDEditorPart implements SelectionList
         });
 //        borderEnabled.setToolTipText(Messages.SLDMarkerEditorPart_boder_enabled_tooltip); 
 
-        borderColour = new StolenColorEditor(border, this);
+        borderColour = new ColorEditor(border);
+        borderColour.addButtonSelectionListener(this);
 
         borderWidth = new Spinner(border, SWT.NONE);
         borderWidth.setMinimum(1);
@@ -235,7 +237,8 @@ public class SLDPolygonEditorPart extends SLDEditorPart implements SelectionList
             }
         });
 
-        fillColour = new StolenColorEditor(fill, this);
+        fillColour = new ColorEditor(fill);
+        fillColour.addButtonSelectionListener(this);
 
         fillOpacity = new Spinner(fill, SWT.NONE);
         fillOpacity.setMinimum(0);

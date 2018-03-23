@@ -13,9 +13,6 @@ package org.locationtech.udig.style.sld.internal;
 
 import java.awt.Color;
 
-import org.locationtech.udig.style.sld.SLDEditorPart;
-import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -32,6 +29,9 @@ import org.geotools.styling.Graphic;
 import org.geotools.styling.Mark;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.StyleBuilder;
+import org.locationtech.udig.style.sld.SLDEditorPart;
+import org.locationtech.udig.ui.ColorEditor;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 /**
  * Simple view part for editing a Marker.
@@ -44,12 +44,12 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
     private int opacityMaxValue = 100;
     private double opacityMaxValueFloat = 100.0;
 
-    private StolenColorEditor borderColour;
+    private ColorEditor borderColour;
     private Button borderEnabled;
     private Spinner borderWidth;
     private Spinner borderOpacity;
 
-    private StolenColorEditor markerColour;
+    private ColorEditor markerColour;
     private Button markerEnabled;
     private Combo markerType;
     private Spinner markerWidth;
@@ -264,7 +264,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
         borderEnabled = new Button(border, SWT.CHECK);
         borderEnabled.addSelectionListener(this);
 
-        borderColour = new StolenColorEditor(border, this);
+        borderColour = new ColorEditor(border, this);
 
         borderWidth = new Spinner(border, SWT.NONE);
         borderWidth.setMinimum(1);
@@ -282,7 +282,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
         markerEnabled = new Button(fill, SWT.CHECK);
         markerEnabled.addSelectionListener(this);
 
-        markerColour = new StolenColorEditor(fill, this);
+        markerColour = new ColorEditor(fill, this);
 
         markerOpacity = new Spinner(fill, SWT.NONE);
         markerOpacity.setMinimum(0);
