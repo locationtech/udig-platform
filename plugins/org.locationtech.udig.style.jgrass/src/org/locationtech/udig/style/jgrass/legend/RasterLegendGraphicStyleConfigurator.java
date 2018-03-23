@@ -13,13 +13,6 @@ import java.awt.Color;
 import java.io.File;
 import java.util.List;
 
-import org.locationtech.udig.project.IBlackboard;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.dialogs.ColorEditor;
-import org.locationtech.udig.style.IStyleConfigurator;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
@@ -36,10 +29,15 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-
 import org.locationtech.udig.catalog.jgrass.activeregion.dialogs.JGRasterChooserDialog;
 import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.style.IStyleConfigurator;
 import org.locationtech.udig.style.jgrass.messages.Messages;
+import org.locationtech.udig.ui.ColorEditor;
 
 public class RasterLegendGraphicStyleConfigurator extends IStyleConfigurator implements SelectionListener, ModifyListener {
 
@@ -193,9 +191,9 @@ public class RasterLegendGraphicStyleConfigurator extends IStyleConfigurator imp
         backgroundAlphaText.addModifyListener(this);
         forgroundAlphaText.addModifyListener(this);
         isroundedButton.addSelectionListener(this);
-        foregroundColor.addSelectionListener(this);
-        backgroundColour.addSelectionListener(this);
-        fontColour.addSelectionListener(this);
+        foregroundColor.addButtonSelectionListener(this);
+        backgroundColour.addButtonSelectionListener(this);
+        fontColour.addButtonSelectionListener(this);
     }
     @Override
     public boolean canStyle( Layer aLayer ) {

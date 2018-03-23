@@ -14,14 +14,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.ProjectBlackboardConstants;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.ui.internal.dialogs.ColorEditor;
-import org.locationtech.udig.ui.PlatformGIS;
-import org.locationtech.udig.ui.palette.ColourScheme;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionEvent;
@@ -35,6 +27,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.geotools.brewer.color.BrewerPalette;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.ui.ColorEditor;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.palette.ColourScheme;
 
 /**
  * <p>

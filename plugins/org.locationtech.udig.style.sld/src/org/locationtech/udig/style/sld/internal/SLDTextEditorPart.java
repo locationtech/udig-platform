@@ -14,10 +14,6 @@ package org.locationtech.udig.style.sld.internal;
 import java.awt.Color;
 import java.util.List;
 
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.style.sld.SLDEditorPart;
-import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -37,6 +33,11 @@ import org.geotools.factory.GeoTools;
 import org.geotools.styling.HaloImpl;
 import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.TextSymbolizer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.sld.SLDEditorPart;
+import org.locationtech.udig.style.sld.editor.FontEditor;
+import org.locationtech.udig.ui.ColorEditor;
+import org.locationtech.udig.ui.graphics.SLDs;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.filter.expression.Expression;
@@ -75,7 +76,7 @@ public class SLDTextEditorPart extends SLDEditorPart {
     private static final int FONTCOLOR = 2;
     private static final int HALOCOLOR = 2;
 
-    private StolenColorEditor labelHaloColorEditor;
+    private ColorEditor labelHaloColorEditor;
     private FontEditor labelFont;
     private Combo labelCombo;
     private Button labelHaloEnabled;
@@ -153,7 +154,7 @@ public class SLDTextEditorPart extends SLDEditorPart {
             }
         });
 
-        labelHaloColorEditor = new StolenColorEditor(halo, new SelectionAdapter(){
+        labelHaloColorEditor = new ColorEditor(halo, new SelectionAdapter(){
             public void widgetSelected( SelectionEvent event ) {
                 apply(HALOCOLOR);
             }

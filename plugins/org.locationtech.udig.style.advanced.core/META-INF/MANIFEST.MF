@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Advanced Style Core
+Bundle-SymbolicName: org.locationtech.udig.style.advanced.core
+Bundle-Version: 2.0.0.qualifier
+Bundle-Activator: org.locationtech.udig.style.advanced.core.AdvancedStylePlugin
+Bundle-Vendor: HydroloGIS S.r.l.
+Require-Bundle: org.eclipse.core.runtime,
+ org.locationtech.udig.catalog,
+ org.locationtech.udig.style.sld,
+ org.locationtech.udig.ui
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Export-Package: org.locationtech.udig.style.advanced.utils
+Import-Package: com.google.common.collect;version="[12.0.0,16.0.0)"

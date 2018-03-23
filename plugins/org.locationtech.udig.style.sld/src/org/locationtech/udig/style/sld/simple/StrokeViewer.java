@@ -12,11 +12,6 @@ package org.locationtech.udig.style.sld.simple;
 import java.awt.Color;
 import java.text.MessageFormat;
 
-import org.locationtech.udig.style.sld.AbstractSimpleConfigurator;
-import org.locationtech.udig.style.sld.internal.Messages;
-import org.locationtech.udig.style.sld.internal.StolenColorEditor;
-import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
@@ -28,6 +23,10 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.StyleBuilder;
+import org.locationtech.udig.style.sld.AbstractSimpleConfigurator;
+import org.locationtech.udig.style.sld.internal.Messages;
+import org.locationtech.udig.ui.ColorEditor;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 /**
  * Allows editing/viewing of a Style Layer Descriptor "Stroke".
@@ -64,7 +63,7 @@ public class StrokeViewer {
     double opacity = Double.NaN;
 
     Button on;
-    StolenColorEditor chooser;
+    ColorEditor chooser;
     Combo size;
     Combo percent;
 
@@ -130,7 +129,7 @@ public class StrokeViewer {
 
         this.on = new Button(part, SWT.CHECK);
 
-        this.chooser = new StolenColorEditor(part, this.sync);
+        this.chooser = new ColorEditor(part, this.sync);
 
         this.size = new Combo(part, SWT.DROP_DOWN);
         this.size.setItems(new String[]{"1", "2", "3", "5", "10"}); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
@@ -177,14 +176,14 @@ public class StrokeViewer {
     void listen( boolean listen ) {
         if (listen) {
             this.on.addSelectionListener(this.sync);
-            this.chooser.setListener(this.sync);
+            this.chooser.addButtonSelectionListener(this.sync);
             this.size.addSelectionListener(this.sync);
             this.size.addModifyListener(this.sync);
             this.percent.addSelectionListener(this.sync);
             this.percent.addModifyListener(this.sync);
         } else {
             this.on.removeSelectionListener(this.sync);
-            this.chooser.setListener(null);
+            this.chooser.removeButtonSelectionListener(this.sync);
             this.size.removeSelectionListener(this.sync);
             this.size.removeModifyListener(this.sync);
             this.percent.removeSelectionListener(this.sync);

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.locationtech.udig.style.sld.StyleEditorPage">
+      <StyleEditorPage
+            class="org.locationtech.udig.style.advanced.editorpages.SimplePointEditorPage"
+            contentType="org.locationtech.udig.project.ILayer"
+            id="org.locationtech.udig.style.advanced.editorpages.SimplePointEditorPage"
+            label="Points"
+            requires="org.geotools.data.FeatureSource">
+      </StyleEditorPage>
+      <StyleEditorPage
+            class="org.locationtech.udig.style.advanced.editorpages.SimpleLineEditorPage"
+            contentType="org.locationtech.udig.project.ILayer"
+            id="org.locationtech.udig.style.advanced.editorpages.SimpleLineEditorPage"
+            label="Lines"
+            requires="org.geotools.data.FeatureSource">
+      </StyleEditorPage>
+      <StyleEditorPage
+            class="org.locationtech.udig.style.advanced.editorpages.SimplePolygonEditorPage"
+            contentType="org.locationtech.udig.project.ILayer"
+            id="org.locationtech.udig.style.advanced.editorpages.SimplePolygonEditorPage"
+            label="Polygons"
+            requires="org.geotools.data.FeatureSource">
+      </StyleEditorPage>
+   </extension>
+
+</plugin>

@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.locationtech.udig.style.sld.editor" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.style.sld" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
-      <appinfo>
-         <meta.schema plugin="org.locationtech.udig.style.sld.editor" id="StyleEditorPage" name="%StyleEditor.name"/>
-      </appinfo>
+      <appInfo>
+         <meta.schema plugin="org.locationtech.udig.style.sld" id="StyleEditorPage" name="%StyleEditor.name"/>
+      </appInfo>
       <documentation>
          An extension point for Style Layer Desriptor (SLD) style content.
       </documentation>
@@ -12,16 +12,16 @@
 
    <element name="extension">
       <annotation>
-         <appinfo>
+         <appInfo>
             <meta.element />
-         </appinfo>
+         </appInfo>
          <documentation>
             An extension point for adding ui components used to edit a component of an SLD.
          </documentation>
       </annotation>
       <complexType>
          <sequence minOccurs="0" maxOccurs="unbounded">
-            <element ref="StyleEditorPage"/>
+            <element ref="StyleEditorPage" minOccurs="1" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -35,16 +35,6 @@
                <documentation>
                   
                </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="name" type="string">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-               <appinfo>
-                  <meta.attribute translatable="true"/>
-               </appinfo>
             </annotation>
          </attribute>
       </complexType>
@@ -71,9 +61,9 @@ Pages should completly delegate their state to the layer (ie the style blackboar
                <documentation>
                   A human readable label used to identify the sld extension in the ui. For example, &quot;Line&quot;, &quot;Point&quot;, etc.
                </documentation>
-               <appinfo>
+               <appInfo>
                   <meta.attribute translatable="true"/>
-               </appinfo>
+               </appInfo>
             </annotation>
          </attribute>
          <attribute name="class" type="string" use="required">
@@ -81,9 +71,9 @@ Pages should completly delegate their state to the layer (ie the style blackboar
                <documentation>
                   A subclass of SLDEditorPage to instantiate
                </documentation>
-               <appinfo>
+               <appInfo>
                   <meta.attribute kind="java" basedOn="org.locationtech.udig.style.sld.editor.StyleEditorPage"/>
-               </appinfo>
+               </appInfo>
             </annotation>
          </attribute>
          <attribute name="contentType" type="string" use="required">
@@ -91,9 +81,9 @@ Pages should completly delegate their state to the layer (ie the style blackboar
                <documentation>
                   The class of style component of interest (SLD, Style, FeatureTypeStyle, Rule, Symbolizer, etc).
                </documentation>
-               <appinfo>
+               <appInfo>
                   <meta.attribute kind="java" basedOn="java.lang.Class"/>
-               </appinfo>
+               </appInfo>
             </annotation>
          </attribute>
          <attribute name="category" type="string">
@@ -108,18 +98,18 @@ Pages should completly delegate their state to the layer (ie the style blackboar
                <documentation>
                   if defined, the selected layer must resolve this class in order for this page to be displayed
                </documentation>
-               <appinfo>
+               <appInfo>
                   <meta.attribute kind="java" basedOn="java.lang.Class"/>
-               </appinfo>
+               </appInfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
 
    <annotation>
-      <appinfo>
+      <appInfo>
          <meta.section type="since"/>
-      </appinfo>
+      </appInfo>
       <documentation>
          1.0
       </documentation>
@@ -127,9 +117,9 @@ Pages should completly delegate their state to the layer (ie the style blackboar
 
 
    <annotation>
-      <appinfo>
+      <appInfo>
          <meta.section type="apiInfo"/>
-      </appinfo>
+      </appInfo>
       <documentation>
          [Enter API information here.]
       </documentation>
@@ -137,18 +127,11 @@ Pages should completly delegate their state to the layer (ie the style blackboar
 
 
    <annotation>
-      <appinfo>
+      <appInfo>
          <meta.section type="copyright"/>
-      </appinfo>
+      </appInfo>
       <documentation>
-uDig - User Friendly Desktop Internet GIS client
-<A HREF="http://udig.refractions.net">http://udig.refractions.net</A>
-(C) 2004-2012, Refractions Research Inc.
-
-All rights reserved. This program and the accompanying materials
-are made available under the terms of the Eclipse Public License v1.0
-(<A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>), and Refractions BSD
-License v1.0 (<A HREF="http://www.eclipse.org/org/documents/edl-v10.html">http://www.eclipse.org/org/documents/edl-v10.html</A>).
+         uDig - User Friendly Desktop Internet GIS client
       </documentation>
    </annotation>
 
