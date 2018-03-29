@@ -762,7 +762,7 @@ public class FeatureTypeEditor {
                 return lengthValue != null ? lengthValue : "";
             case IS_NULL_COLUMN:
                 String nullValue = getAttributeRestriction(editElement, "nillable", String.class); //$NON-NLS-1$
-                return nullValue;
+                return nullValue == null ? editElement.isNillable() : Boolean.getBoolean(nullValue);
             }
 
             return null;
@@ -885,6 +885,11 @@ public class FeatureTypeEditor {
             }
         }
     }
+    
+    /**
+     * 
+     * @param errorMessage
+     */
     public void setErrorMessage( String errorMessage ) {
         errorDecorator.setDescriptionText(errorMessage);
         errorDecorator.show();
@@ -892,16 +897,21 @@ public class FeatureTypeEditor {
     }
 
     /**
+     * 
      * @param editElement
-     * @return 
-     * @return 
+     * @param restrictionName
+     * @param type
+     * @return
      */
     protected static <T> T getAttributeRestriction(AttributeDescriptor editElement, String restrictionName, Class<T> type) {
+        if (restrictionName == null) {
+            return null;
+        }
         for ( Filter r :editElement.getType().getRestrictions() ) {
             if( r instanceof PropertyIsLessThanOrEqualTo ) {
                 PropertyIsLessThanOrEqualTo c = (PropertyIsLessThanOrEqualTo) r;
                 if ( c.getExpression1() instanceof Function &&
-                        ((Function) c.getExpression1()).getName().toLowerCase().endsWith( restrictionName) ) {
+                        ((Function) c.getExpression1()).getName().toLowerCase().endsWith( restrictionName.toLowerCase()) ) {
                     if ( c.getExpression2() instanceof Literal ) {
                         T value = c.getExpression2().evaluate(null,type);
                         if ( value != null ) {
