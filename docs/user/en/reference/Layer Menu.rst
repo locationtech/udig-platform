@@ -16,7 +16,14 @@ Opens the :doc:`Add Data wizard` to add additional layers to the current map.
 Create
 ------
 
-Opens the Create Data wizard to create custom layers for the current map.
+Opens the **Create Layer Dialog** to create custom layers for the current map.
+
+.. figure:: /images/layer_menu/CreateLayer.png
+   :align: center
+   :alt: 
+
+The dialog provides the ability to specify attribute fields for the layer. Restrictions
+related to the allowed length of the attribute value and whether null is allowed can also be specified       
 
 Map Graphics
 ------------
