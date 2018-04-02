@@ -19,4 +19,4 @@ Require-Bundle: org.eclipse.core.runtime,
  org.locationtech.udig.libs;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Import-Package: com.google.common.cache;version="[12.0.0,16.0.0)"
+Import-Package: com.google.common.cache;version="12.0.0"
