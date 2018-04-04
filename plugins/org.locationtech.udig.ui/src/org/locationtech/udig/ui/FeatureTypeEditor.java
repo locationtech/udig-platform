@@ -476,6 +476,7 @@ public class FeatureTypeEditor {
                                 // ignore,  user has changed attribute
                             }
                             index++;
+
                         }
                     }
 
