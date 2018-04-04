@@ -463,29 +463,34 @@ public class FeatureTypeEditor {
                 public void runWithEvent( Event event ) {
                     SimpleFeatureType ft = (SimpleFeatureType) viewer.getInput();
                     SimpleFeatureTypeBuilder ftB = builderFromFeatureType(ft);
+
                     int index = 0;
-                    
-                    //find the next index to append in case user has not changed the field name
-                    for (AttributeDescriptor attr : ft.getAttributeDescriptors()) {
-                        if (attr.getLocalName().equalsIgnoreCase(Messages.FeatureTypeEditor_newAttributeTypeDefaultName + index)) {
-                                index++;        
-                        }
-                    }
-                    
-                    while( true ) {
-                        try {
-                            ftB.add(Messages.FeatureTypeEditor_newAttributeTypeDefaultName + index, String.class); 
-                            break;
-                        } catch (IllegalArgumentException e) {
+                    List<Integer> usedIndices = new ArrayList<Integer>();
+
+                    // get max Index of added attributes
+                    for (AttributeDescriptor at: ft.getAttributeDescriptors()) {
+                        if (at.getLocalName().startsWith(Messages.FeatureTypeEditor_newAttributeTypeDefaultName)) {
+                            try {
+                                usedIndices.add(Integer.valueOf(at.getLocalName().replace(Messages.FeatureTypeEditor_newAttributeTypeDefaultName, "")));
+                            } catch (Exception e) {
+                                // ignore,  user has changed attribute
+                            }
                             index++;
+
                         }
                     }
+
+                    Collections.sort(usedIndices, Collections.reverseOrder());
+                    // TODO improve : implement algorithm to find first unused number in sorted list
+                    if (usedIndices.size() > 0) {
+                        index = usedIndices.get(0)  + 1; // reverse ordered, highest first
+                    }
+
+                    ftB.add(Messages.FeatureTypeEditor_newAttributeTypeDefaultName + index, String.class);
                     featureType = ftB.buildFeatureType();
                     viewer.setInput(featureType);
                     // TODO check if it is better to do something and then: viewer.refresh(false);
                 }
-
-
             };
             createAttributeAction.setId("org.locationtech.udig.ui.FeatureTypeEditor.createAttributeAction"); //$NON-NLS-1$
             createAttributeAction.setText(Messages.addAttributeAction_label); 
