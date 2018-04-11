@@ -313,21 +313,32 @@ public class FeaturePropertySource implements IPropertySource2 {
             if (id instanceof Integer) {
                 int i = ((Integer) id).intValue();
                 Object attr = feature.getAttribute(i);
+                if (hasValueChanged(value, attr)) {
+                    EditCommand command = (EditCommand) EditCommandFactory.getInstance().createSetAttributeCommand(
+                            attrs.get(i).getName().getLocalPart(), value);
+                    map.sendCommandASync(command);
+                }
                 EditCommand command = (EditCommand) EditCommandFactory.getInstance().createSetAttributeCommand(
                         attrs.get(i).getName().getLocalPart(), value);
                 map.sendCommandASync(command);
                 if (attr instanceof String) {
                     feature.setAttribute(i, value);
                 } else if (attr instanceof Integer) {
-                    feature.setAttribute(i, Integer.valueOf((String) value));
+                    feature.setAttribute(i, (Integer)value);
+                }else if (attr instanceof Long) {
+                    feature.setAttribute(i, (Long) value);
                 } else if (attr instanceof Double) {
-                    feature.setAttribute(i, Double.valueOf((String) value));
+                    feature.setAttribute(i, (Double) value);
                 } else if (attr instanceof Float) {
-                    feature.setAttribute(i, Float.valueOf((String) value));
+                    feature.setAttribute(i, (Float) value);
                 } else if (attr instanceof Boolean) {
                     feature.setAttribute(i, Boolean.valueOf(((Integer) value).intValue() == 0
-                            ? true
-                            : false));
+                            ? true : false));
+                } else if (attr == null) {
+                    //if attr value is initially null the feature.getAttribute(i) 
+                    //will return null. In this case, set the value by obtaining its name 
+                    //from the AttributeDescriptor list
+                    feature.setAttribute(attrs.get(i).getName().getLocalPart(), value);
                 }
             }
             if (value instanceof Geometry) {
@@ -343,10 +354,19 @@ public class FeaturePropertySource implements IPropertySource2 {
         }
     }
 
+    private boolean hasValueChanged(Object newValue, Object currentValue) {
+        if (newValue == null && currentValue == null) {
+                return false;
+        } if (newValue != null && newValue.equals(currentValue)) {
+                return false;
+        }
+        return true;
+    }
+    
     private Object getGeomProperty( Geometry id ) {
         Object geom = geomProperties.get(id);
         if (geom == null) {
-            geom = new GeomPropertySource(id);
+            geom = new GeomPropertySource(id, feature);
             geomProperties.put(id, geom);
         }
         return geom;

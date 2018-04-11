@@ -71,7 +71,7 @@ public class GeometryPropertyDescriptor extends PropertyDescriptor {
                 label = new Label(parent, SWT.READ_ONLY);
                 if (geometry != null)
                     label.setText(getLabelProvider().getText(geometry));
-                GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
+                GridData data = new GridData(SWT.FILL, SWT.TOP, true, true);
                 data.verticalSpan = 2;
                 label.setLayoutData(data);
                 button = new Button(parent, SWT.PUSH | SWT.FLAT);
@@ -133,7 +133,13 @@ public class GeometryPropertyDescriptor extends PropertyDescriptor {
              * @see org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
              */
             public String getText( Object element ) {
-                Geometry geom = (Geometry) element;
+
+                Geometry geom = null;
+                if (element instanceof GeomPropertySource) {
+                    geom = (Geometry) ((GeomPropertySource)element).getEditableValue();
+                } else {
+                    geom = (Geometry) element;
+                }
                 return geom.getGeometryType();
             }
         };
