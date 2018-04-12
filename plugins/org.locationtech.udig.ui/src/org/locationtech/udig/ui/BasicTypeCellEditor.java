@@ -12,6 +12,7 @@ package org.locationtech.udig.ui;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.widgets.Composite;
 
@@ -107,7 +108,7 @@ public class BasicTypeCellEditor extends TextCellEditor {
         if( type == Short.class ){
             return Short.valueOf(value);
         }else if( type == String.class ){
-            return value;
+            return StringUtils.trimToNull(value);
         }else if( type == Integer.class ){
             return Integer.valueOf(value);
         }else if( type == Byte.class ){

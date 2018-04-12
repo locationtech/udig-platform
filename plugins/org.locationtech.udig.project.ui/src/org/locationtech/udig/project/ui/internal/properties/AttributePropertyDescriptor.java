@@ -13,11 +13,7 @@ package org.locationtech.udig.project.ui.internal.properties;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-
-import org.locationtech.udig.project.ui.internal.Messages;
-import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
-import org.locationtech.udig.ui.AttributeValidator;
-import org.locationtech.udig.ui.BasicTypeCellEditor;
+import java.util.Date;
 
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ComboBoxCellEditor;
@@ -27,6 +23,11 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.ui.AttributeValidator;
+import org.locationtech.udig.ui.DateTimeCellEditor;
+import org.locationtech.udig.ui.NumberCellEditor;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.util.CodeList;
@@ -90,19 +91,21 @@ public class AttributePropertyDescriptor extends PropertyDescriptor {
             if (String.class.isAssignableFrom(type.getType().getBinding()))
                 return new TextCellEditor(parent);
             if (Integer.class.isAssignableFrom(type.getType().getBinding()))
-                return new BasicTypeCellEditor(parent, Integer.class);
+                return new NumberCellEditor(parent, Integer.class);
             if (Double.class.isAssignableFrom(type.getType().getBinding()))
-                return new BasicTypeCellEditor(parent, Double.class);
+                return new NumberCellEditor(parent, Double.class);
             if (Float.class.isAssignableFrom(type.getType().getBinding()))
-                return new BasicTypeCellEditor(parent, Float.class);
+                return new NumberCellEditor(parent, Float.class);
             if (Long.class.isAssignableFrom(type.getType().getBinding()))
-                return new BasicTypeCellEditor(parent, Long.class);
+                return new NumberCellEditor(parent, Long.class);
             if (BigInteger.class.isAssignableFrom(type.getType().getBinding()))
-                return new BasicTypeCellEditor(parent, BigInteger.class);
+                return new NumberCellEditor(parent, BigInteger.class);
             if (BigDecimal.class.isAssignableFrom(type.getType().getBinding()))
-                return new BasicTypeCellEditor(parent, BigDecimal.class);
+                return new NumberCellEditor(parent, BigDecimal.class);
             if (Long.class.isAssignableFrom(type.getType().getBinding()))
-                return new BasicTypeCellEditor(parent, Long.class);
+                return new NumberCellEditor(parent, Long.class);
+            if (Date.class.isAssignableFrom(type.getType().getBinding()))
+                return new DateTimeCellEditor(parent);
             if (CodeList.class.isAssignableFrom(type.getType().getBinding())) {
                 return new ComboBoxCellEditor(parent, comboBoxList);
             }
