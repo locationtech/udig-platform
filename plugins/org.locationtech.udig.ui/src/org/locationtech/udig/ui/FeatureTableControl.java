@@ -11,9 +11,12 @@
 package org.locationtech.udig.ui;
 
 import java.lang.reflect.Array;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -572,15 +575,21 @@ public class FeatureTableControl implements ISelectionProvider {
                 BasicTypeCellEditor textCellEditor = new BasicTypeCellEditor(control, String.class);
                 editors[i + 1] = textCellEditor;
             } else if (concreteType.isAssignableFrom(Integer.class)) {
-                BasicTypeCellEditor textCellEditor = new BasicTypeCellEditor(control, Integer.class);
+                NumberCellEditor textCellEditor = new NumberCellEditor(control, Integer.class);
                 editors[i + 1] = textCellEditor;
             } else if (concreteType.isAssignableFrom(Double.class)) {
-                BasicTypeCellEditor textCellEditor = new BasicTypeCellEditor(control, Double.class);
+                NumberCellEditor textCellEditor = new NumberCellEditor(control, Double.class);
                 editors[i + 1] = textCellEditor;
             } else if (concreteType.isAssignableFrom(Float.class)) {
-                BasicTypeCellEditor textCellEditor = new BasicTypeCellEditor(control, Float.class);
+                NumberCellEditor textCellEditor = new NumberCellEditor(control, Float.class);
                 editors[i + 1] = textCellEditor;
-
+            } else if (concreteType.isAssignableFrom(BigDecimal.class)) {
+                NumberCellEditor textCellEditor = new NumberCellEditor(control, BigDecimal.class);
+                editors[i + 1] = textCellEditor;
+            } else if (concreteType.isAssignableFrom(BigInteger.class)) {
+                NumberCellEditor textCellEditor = new NumberCellEditor(control, BigInteger.class);
+                editors[i + 1] = textCellEditor;
+                
             } else if (concreteType.isAssignableFrom(Boolean.class)) {
                 BooleanCellEditor textCellEditor = new BooleanCellEditor(control);
                 editors[i + 1] = textCellEditor;
@@ -590,6 +599,9 @@ public class FeatureTableControl implements ISelectionProvider {
                         Character.class);
                 editors[i + 1] = textCellEditor;
 
+            } else if (Date.class.isAssignableFrom(concreteType)) {
+                DateTimeCellEditor textCellEditor = new DateTimeCellEditor(control);
+                editors[i + 1] = textCellEditor;
             }
             // else if( concreteType.isAssignableFrom(Date.class)){
             // WarningCellEditor textCellEditor = new WarningCellEditor(control, "The Date type does
@@ -602,11 +614,11 @@ public class FeatureTableControl implements ISelectionProvider {
                 editors[i + 1] = textCellEditor;
 
             } else if (concreteType.isAssignableFrom(Short.class)) {
-                BasicTypeCellEditor textCellEditor = new BasicTypeCellEditor(control, Short.class);
+                NumberCellEditor textCellEditor = new NumberCellEditor(control, Short.class);
                 editors[i + 1] = textCellEditor;
 
             } else if (concreteType.isAssignableFrom(Long.class)) {
-                BasicTypeCellEditor textCellEditor = new BasicTypeCellEditor(control, Long.class);
+                NumberCellEditor textCellEditor = new NumberCellEditor(control, Long.class);
                 editors[i + 1] = textCellEditor;
 
             } else {

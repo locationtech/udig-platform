@@ -33,7 +33,7 @@ import org.opengis.feature.type.AttributeDescriptor;
 public class AttributeValidator implements ICellEditorValidator {
     private final AttributeDescriptor attributeDescriptor;
     private final SimpleFeatureType featureType;
-    private Object[] values;
+    private Object value;
     
     /** "Expected" index of the attributeType in the SimpleFeatureType */
     private int indexof;
@@ -47,13 +47,13 @@ public class AttributeValidator implements ICellEditorValidator {
     public AttributeValidator( AttributeDescriptor attributeType, SimpleFeatureType featureType) {
         this.attributeDescriptor = attributeType;
         this.featureType=featureType;
-        values=new Object[featureType.getAttributeCount()];
         for( int i = 0; i < featureType.getAttributeCount(); i++ ) {
             AttributeDescriptor attributeType2 = featureType.getDescriptor(i);
             if( attributeType2==attributeType ){
                 this.indexof=i;
+                value=attributeType2.getDefaultValue();
             }
-            values[i]=attributeType2.getDefaultValue();
+            
         }
     }
     
