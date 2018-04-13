@@ -33,10 +33,9 @@ public class WMSCatalogViewDNDTest extends CatalogViewDNDTest {
 	
 	@Override
 	URL[] getDataMulti() throws Exception {
-		return new URL[]{
-			new URL(CatalogTestsUIPlugin.WMSTestCapabilitiesURL),
-            new URL("http://atlas.gc.ca/cgi-bin/atlaswms_en?VERSION=1.1.1&Request=GetCapabilities&Service=WMS") //$NON-NLS-1$
-		};
+            return new URL[] { new URL(CatalogTestsUIPlugin.WMSTestCapabilitiesURL), new URL(
+                    "https://demo.boundlessgeo.com/geoserver/ows?service=wms&version=1.1.1&request=GetCapabilities") //$NON-NLS-1$
+            };
 	}
 	
 	@Override
