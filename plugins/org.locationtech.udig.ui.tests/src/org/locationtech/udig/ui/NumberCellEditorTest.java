@@ -10,7 +10,9 @@
 package org.locationtech.udig.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -22,10 +24,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test Cell Editor
+ * Test NumberCellEditor
  * 
- * @author Jesse
- * @since 1.1.0
+ * @author Nikolaos Pringouris <nprigour@gmail.com>
+ * @since 2.0.0
  */
 public class NumberCellEditorTest {
 
@@ -89,13 +91,12 @@ public class NumberCellEditorTest {
         assertNull(editor.getValue() );
     }
     
-    @Test
+    @Test(expected = NumberFormatException.class)
     public void testWrongFormatNumber() throws Exception {
         NumberCellEditor editor;
-        editor = new NumberCellEditor(shell, Integer.class);
+        editor = new NumberCellEditor(shell, Integer.class);    
         
         //empty string
-        editor.setValue(" ");
         editor.getValue();
         assertNull(editor.getValue() );
         
@@ -103,6 +104,20 @@ public class NumberCellEditorTest {
         editor.setValue("aa");
         editor.getValue();
         assertNull(editor.getValue() );
+    }
+    
+    @Test
+    public void testIsValidCall() throws Exception {
+        NumberCellEditor editor;
+        editor = new NumberCellEditor(shell, Integer.class);   
+        
+        //empty string
+        editor.setValue("aa");
+        assertFalse(editor.isValueValid());
+        
+        //empty string
+        editor.setValue("");
+        assertTrue(editor.isValueValid());
     }
     
     private void runTest( Object value, Object value2, Class<? extends Number> class1 ) {

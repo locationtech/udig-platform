@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * 
  * @author Nikolaos Pringouris <nprigour@gmail.com>
- *
+ * @since 2.0.0 
  */
 public class NumberCellEditor extends TextCellEditor {
 
@@ -40,16 +40,7 @@ public class NumberCellEditor extends TextCellEditor {
      */
     @Override
     protected Object doGetValue() {
-        //System.out.println("NumberCellEditor doGetValue -->" + (data != null ? data : "null"));
-        //BigDecimal value = NumberUtils.createBigDecimal(StringUtils.isNotEmpty(text.getText()) ? text.getText() : null );
-        //data = value;
-        try {
-            return convertToNumber();
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return convertToNumber();
     }
 
 
@@ -85,6 +76,17 @@ public class NumberCellEditor extends TextCellEditor {
         }catch(NumberFormatException e){
             return super.isCorrect(value);
         }
+    }
+
+    
+    @Override
+    public boolean isValueValid() {
+        try {
+            Number number = convertToNumber();
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
     }
 
     private Number convertToNumber() {
