@@ -10,6 +10,8 @@
 package org.locationtech.udig.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -22,6 +24,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * 
+ * @author Nikolaos Pringouris <nprigour@gmail.com>
+ * @since 2.0.0
+ */
 public class DateTimeCellEditorTest {
 
     private Shell shell;
@@ -35,8 +42,7 @@ public class DateTimeCellEditorTest {
     public void tearDown() throws Exception {
         shell.dispose();
     }
-
-    
+   
     @Test
     public void testDoGetValue() {
         DateTimeCellEditor editor;
@@ -56,5 +62,18 @@ public class DateTimeCellEditorTest {
         assertEquals( null, editor.getValue() );
         
     }
-
+  
+    @Test
+    public void testIsValidCall() throws Exception {
+        DateTimeCellEditor editor;
+        editor = new DateTimeCellEditor(shell);
+        
+        //empty string
+        editor.setValue("");
+        assertFalse(editor.isValueValid());
+        
+        //empty string
+        editor.setValue(null);
+        assertTrue(editor.isValueValid());
+    }
 }

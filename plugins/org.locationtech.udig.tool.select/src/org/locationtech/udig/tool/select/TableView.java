@@ -1058,14 +1058,14 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
             }
             @Override
             protected void makeModification( SimpleFeature feature, ILayer layer, String property, Object value, Item item ) {
-                if( value == null ){
-                    // not a valid entry.
-                    return;
-                }
+                //if( value == null ){
+                //    // not a valid entry.
+                //    return;
+                //}
                 TableItem tableItem=(TableItem) item;
                 Schema schema = new Schema();
                 int columnIndex = schema.getIndexOf( feature.getFeatureType(), property );
-                tableItem.setText(columnIndex+1, value.toString());
+                tableItem.setText(columnIndex+1, value != null ? value.toString() : "");
                 
                 UndoableComposite composite = new UndoableComposite();
                 composite.getCommands().add(new SetEditingFlag(true));

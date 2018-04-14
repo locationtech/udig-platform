@@ -27,11 +27,13 @@ import org.eclipse.swt.widgets.Control;
  * The class can return a java.util.Date or java.sql.Date with format dd/MM/yyyy HH:mm:ss
  * 
  * @author Nikolaos Pringouris <nprigour@gmail.com>
+ * @since 2.0.0
+ * 
  */
 public class DateTimeCellEditor extends DialogCellEditor {
 
-	private DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-	
+    private DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
     public DateTimeCellEditor() {
         super();
     }
@@ -45,74 +47,82 @@ public class DateTimeCellEditor extends DialogCellEditor {
     }
 
 
-    
+
     @Override
     protected Object openDialogBox(Control cellEditorWindow) {
         DateTimePickerDialog dialog = new DateTimePickerDialog(cellEditorWindow.getShell(), "choose date:", true);
         Date d= (Date) doGetValue();
         java.util.Calendar c = Calendar.getInstance();
         if (d != null) {
-        	c.setTime(d);
+            c.setTime(d);
         }
         dialog.setDate(c);
 
         if (dialog.open() != Dialog.CANCEL) {
-        	if (dialog.shouldNullify()) {//call explicitly doSeValue passing null as argument
-        		doSetValue(null);
-        		return null;
-        	} else {
-        		return (dialog.getDate() != null) ? dialog.getDate().getTime() : null;
-        	}
+            if (dialog.shouldNullify()) {//call explicitly doSeValue passing null as argument
+                doSetValue(null);
+                return null;
+            } else {
+                return (dialog.getDate() != null) ? dialog.getDate().getTime() : null;
+            }
         }
         return null;
     }
-   
-    
-    
+
     @Override
-	protected Object doGetValue() {
-    	Object object = super.doGetValue();
-    	//System.out.println("doGet Object is " + object + " type " + (object!= null ? object.getClass() : "null") );
-    	if (object == null) {
-    		return null;
-    	} else if (Date.class.isAssignableFrom(object.getClass())) {
-    		return object;
-    	} else if (object instanceof  String) {
-    		try {
-				return format.parse((String)object);
-			} catch (ParseException e) {
-				// probably a an empty String
-				//e.printStackTrace();
-			}
-    	}
-		return null;
-	}
+    protected Object doGetValue() {
+        Object object = super.doGetValue();
+        if (object == null) {
+            return null;
+        } else if (Date.class.isAssignableFrom(object.getClass())) {
+            return object;
+        } else if (object instanceof  String) {
+            try {
+                return format.parse((String)object);
+            } catch (ParseException e) {
+                // probably a an empty String
+                //e.printStackTrace();
+            }
+        }
+        return null;
+    }
 
-    
-	@Override
-	protected void doSetValue(Object value) {
-		//if instance of Date apply the appropriate format
-		//System.out.println("doSet Object is " + value + " type " + (value!= null ? value.getClass() : "null") );
-		if (value instanceof Date) {
-			super.doSetValue(getDateFormatter().format(value));
-		} else {
-			super.doSetValue(value);
-		}
-	}
+    @Override
+    protected void doSetValue(Object value) {
+        //if instance of Date apply the appropriate format
+        if (value instanceof Date) {
+            super.doSetValue(getDateFormatter().format(value));
+        } else {
+            super.doSetValue(value);
+        }
+    }
+  
+    @Override
+    public boolean isValueValid() {
+        Object object = super.doGetValue();
+        if (object instanceof  String) {
+            try {
+                format.parse((String)object);
+            } catch (ParseException e) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	/**
+    /**
      * @return localized date formatter to use
      */
     public DateFormat getDateFormatter() {
         return format;
     }
 
-	/**
+    /**
      * @return localized date formatter to use
      */
     public void setDateFormatter(DateFormat format) {
         this.format = format;
     }
-    
+
 
 }
