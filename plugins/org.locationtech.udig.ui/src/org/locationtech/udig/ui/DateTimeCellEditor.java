@@ -9,7 +9,6 @@
  */
 package org.locationtech.udig.ui;
 
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,9 +21,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 /**
- * Class represents a special cell editor which will open a calendar/date 
- * dialog in which a date and time can be selected.
- * The class can return a java.util.Date or java.sql.Date with format dd/MM/yyyy HH:mm:ss
+ * Class represents a special cell editor which will open a calendar/date dialog in which a date and
+ * time can be selected. The class can return a java.util.Date or java.sql.Date with format
+ * dd/MM/yyyy HH:mm:ss
  * 
  * @author Nikolaos Pringouris <nprigour@gmail.com>
  * @since 2.0.0
@@ -46,12 +45,11 @@ public class DateTimeCellEditor extends DialogCellEditor {
         super(parent);
     }
 
-
-
     @Override
     protected Object openDialogBox(Control cellEditorWindow) {
-        DateTimePickerDialog dialog = new DateTimePickerDialog(cellEditorWindow.getShell(), "choose date:", true);
-        Date d= (Date) doGetValue();
+        DateTimePickerDialog dialog = new DateTimePickerDialog(cellEditorWindow.getShell(),
+                "choose date:", true);
+        Date d = (Date) doGetValue();
         java.util.Calendar c = Calendar.getInstance();
         if (d != null) {
             c.setTime(d);
@@ -59,7 +57,7 @@ public class DateTimeCellEditor extends DialogCellEditor {
         dialog.setDate(c);
 
         if (dialog.open() != Dialog.CANCEL) {
-            if (dialog.shouldNullify()) {//call explicitly doSeValue passing null as argument
+            if (dialog.shouldNullify()) {// call explicitly doSeValue passing null as argument
                 doSetValue(null);
                 return null;
             } else {
@@ -76,12 +74,12 @@ public class DateTimeCellEditor extends DialogCellEditor {
             return null;
         } else if (Date.class.isAssignableFrom(object.getClass())) {
             return object;
-        } else if (object instanceof  String) {
+        } else if (object instanceof String) {
             try {
-                return format.parse((String)object);
+                return format.parse((String) object);
             } catch (ParseException e) {
                 // probably a an empty String
-                //e.printStackTrace();
+                // e.printStackTrace();
             }
         }
         return null;
@@ -89,20 +87,20 @@ public class DateTimeCellEditor extends DialogCellEditor {
 
     @Override
     protected void doSetValue(Object value) {
-        //if instance of Date apply the appropriate format
+        // if instance of Date apply the appropriate format
         if (value instanceof Date) {
             super.doSetValue(getDateFormatter().format(value));
         } else {
             super.doSetValue(value);
         }
     }
-  
+
     @Override
     public boolean isValueValid() {
         Object object = super.doGetValue();
-        if (object instanceof  String) {
+        if (object instanceof String) {
             try {
-                format.parse((String)object);
+                format.parse((String) object);
             } catch (ParseException e) {
                 return false;
             }
@@ -123,6 +121,5 @@ public class DateTimeCellEditor extends DialogCellEditor {
     public void setDateFormatter(DateFormat format) {
         this.format = format;
     }
-
 
 }

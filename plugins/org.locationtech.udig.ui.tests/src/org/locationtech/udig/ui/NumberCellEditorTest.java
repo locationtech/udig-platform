@@ -35,14 +35,14 @@ public class NumberCellEditorTest {
 
     @Before
     public void setUp() throws Exception {
-        shell=new Shell(Display.getCurrent());
+        shell = new Shell(Display.getCurrent());
     }
-    
+
     @After
     public void tearDown() throws Exception {
         shell.dispose();
     }
-    
+
     @Test
     public void testShort() throws Exception {
         runTest(Short.valueOf((short) 2), Short.valueOf((short) 3), Short.class);
@@ -55,32 +55,32 @@ public class NumberCellEditorTest {
 
     @Test
     public void testLong() throws Exception {
-        runTest(Long.valueOf(2l), Long.valueOf(3l), Long.class); 
+        runTest(Long.valueOf(2l), Long.valueOf(3l), Long.class);
     }
-    
+
     @Test
     public void testDouble() throws Exception {
-        runTest(Double.valueOf(2), Double.valueOf(3), Double.class); 
+        runTest(Double.valueOf(2), Double.valueOf(3), Double.class);
     }
 
     @Test
     public void testFloat() throws Exception {
-        runTest(Float.valueOf(2), Float.valueOf(3), Float.class); 
+        runTest(Float.valueOf(2), Float.valueOf(3), Float.class);
     }
 
     @Test
     public void testBigDecimal() throws Exception {
-        runTest(BigDecimal.valueOf(2), BigDecimal.valueOf(3), BigDecimal.class); 
+        runTest(BigDecimal.valueOf(2), BigDecimal.valueOf(3), BigDecimal.class);
     }
 
     @Test
     public void testBigInteger() throws Exception {
-        runTest(BigInteger.valueOf(2), BigInteger.valueOf(3), BigInteger.class); 
+        runTest(BigInteger.valueOf(2), BigInteger.valueOf(3), BigInteger.class);
     }
-    
+
     @Test
     public void testNull() throws Exception {
-        runTest(null, Integer.valueOf(3), Integer.class); 
+        runTest(null, Integer.valueOf(3), Integer.class);
     }
 
     @Test
@@ -88,47 +88,47 @@ public class NumberCellEditorTest {
         NumberCellEditor editor;
         editor = new NumberCellEditor(shell, Integer.class);
         editor.setValue("");
-        assertNull(editor.getValue() );
+        assertNull(editor.getValue());
     }
-    
+
     @Test(expected = NumberFormatException.class)
     public void testWrongFormatNumber() throws Exception {
         NumberCellEditor editor;
-        editor = new NumberCellEditor(shell, Integer.class);    
-        
-        //empty string
+        editor = new NumberCellEditor(shell, Integer.class);
+
+        // empty string
         editor.getValue();
-        assertNull(editor.getValue() );
-        
-        //not parsable number
+        assertNull(editor.getValue());
+
+        // not parsable number
         editor.setValue("aa");
         editor.getValue();
-        assertNull(editor.getValue() );
+        assertNull(editor.getValue());
     }
-    
+
     @Test
     public void testIsValidCall() throws Exception {
         NumberCellEditor editor;
-        editor = new NumberCellEditor(shell, Integer.class);   
-        
-        //empty string
+        editor = new NumberCellEditor(shell, Integer.class);
+
+        // empty string
         editor.setValue("aa");
         assertFalse(editor.isValueValid());
-        
-        //empty string
+
+        // empty string
         editor.setValue("");
         assertTrue(editor.isValueValid());
     }
-    
-    private void runTest( Object value, Object value2, Class<? extends Number> class1 ) {
+
+    private void runTest(Object value, Object value2, Class<? extends Number> class1) {
         NumberCellEditor editor;
         editor = new NumberCellEditor(shell, class1);
-        
+
         editor.setValue(value);
-        assertEquals( value, editor.getValue() );
+        assertEquals(value, editor.getValue());
 
         editor.setValue(value2);
-        assertEquals( value2, editor.getValue() );
+        assertEquals(value2, editor.getValue());
     }
 
 }
