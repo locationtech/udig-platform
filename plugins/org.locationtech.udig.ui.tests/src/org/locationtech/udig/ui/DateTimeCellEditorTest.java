@@ -35,44 +35,44 @@ public class DateTimeCellEditorTest {
 
     @Before
     public void setUp() throws Exception {
-        shell=new Shell(Display.getCurrent());
+        shell = new Shell(Display.getCurrent());
     }
-    
+
     @After
     public void tearDown() throws Exception {
         shell.dispose();
     }
-   
+
     @Test
     public void testDoGetValue() {
         DateTimeCellEditor editor;
         editor = new DateTimeCellEditor(shell);
-        
+
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        String dateString ="12/12/2022 23:00:00";     
+        String dateString = "12/12/2022 23:00:00";
         try {
             Date time = format.parse(dateString);
             editor.setValue(time);
-            assertEquals(time.getTime(), ((Date)editor.getValue()).getTime() );
+            assertEquals(time.getTime(), ((Date) editor.getValue()).getTime());
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         editor.setValue("");
-        assertEquals( null, editor.getValue() );
-        
+        assertEquals(null, editor.getValue());
+
     }
-  
+
     @Test
     public void testIsValidCall() throws Exception {
         DateTimeCellEditor editor;
         editor = new DateTimeCellEditor(shell);
-        
-        //empty string
+
+        // empty string
         editor.setValue("");
         assertFalse(editor.isValueValid());
-        
-        //empty string
+
+        // empty string
         editor.setValue(null);
         assertTrue(editor.isValueValid());
     }
