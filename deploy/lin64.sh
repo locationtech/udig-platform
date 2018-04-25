@@ -2,4 +2,4 @@
 echo "Release Linux 64"
 source ./support_functions.sh
 
-assemble "linux64" "linux.gtk.x86_64" "${JRE_LIN64}"
+assemble "linux64" "linux.gtk.x86_64"

@@ -5,16 +5,14 @@ This directory contains a series of scripts used to package the uDig
 application after it has been exported from eclipse.
 
 To use:
-1. Download the latest custom JREs into a jre/ folder
-2. Export udig.product to a subdirectory 1.2.x/ folder
-3. Update versions.sh to reflect the above two settings and the version you are releasing
-4. ./clean.sh - to remove the build directory
-5. Individual scripts to package:
+1. Export udig.product to a subdirectory 1.2.x/ folder
+2. Update versions.sh to reflect the above two settings and the version you are releasing
+3. ./clean.sh - to remove the build directory
+4. Individual scripts to package:
    ./win32 - package jre, udig.bat
    ./win64 - (pending the availability of an appropriate JRE)
    ./lin32 - package jre, udig.sh
    ./lin64 - package jre, udig.sh
-   ./mac32 - renames udig_internal back to udig
    ./mac64 - renames udig_internal back to udig
    ./sdk - very simple script removes configuration and application
 5. Upload to:

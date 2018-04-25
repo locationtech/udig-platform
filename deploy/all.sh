@@ -4,9 +4,6 @@
 export SCRIPTS=`dirname $0`
 
 cd ${SCRIPTS}
-./mac32.sh
-
-cd ${SCRIPTS}
 ./mac64.sh
 
 cd ${SCRIPTS}

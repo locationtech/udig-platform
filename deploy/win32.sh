@@ -2,4 +2,4 @@
 echo "Release Win 32"
 source ./support_functions.sh
 
-assemble "win32" "win32.win32.x86" "${JRE_WIN32}"
+assemble "win32" "win32.win32.x86"

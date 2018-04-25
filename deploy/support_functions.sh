@@ -3,7 +3,6 @@ source ./versions.sh
 function assemble() {
     PLATFORM=$1
     EXT=$2
-    PLATFORM_JRE=$3
     
     echo "Looking for ${PRODUCT_TARGET}/org.locationtech.udig-product-${EXT}.zip"
     
@@ -25,10 +24,6 @@ function assemble() {
             echo "Extracting ${PRODUCT_TARGET}/org.locationtech.udig-product-${EXT}.zip"
             unzip -q -d ${BUILD}/${PLATFORM}/udig ${PRODUCT_TARGET}/org.locationtech.udig-product-${EXT}.zip
 
-            echo "Preparing ${BUILD}/${PLATFORM} with ${JRE}/${PLATFORM_JRE}"
-
-            extract_jre
-            
             echo "Preparing ${BUILD}/${PLATFORM} with start up scripts and html files"
             prepare_resources
 
@@ -260,26 +255,4 @@ function check() {
   else
     echo "$2 succeeded return value $1"
   fi
-}
-
-function extract_jre () {
-
-    if [[ $PLATFORM == linux* ]] ; then
-        echo "Looking for ${JRE}/${PLATFORM_JRE}.tar.gz"
-        if [ -f ${JRE}/${PLATFORM_JRE}.tar.gz ] ; then
-            echo "Extracting ${JRE}/${PLATFORM_JRE}.tar.gz"
-            tar xzf ${JRE}/${PLATFORM_JRE}.tar.gz -C ${BUILD}/${PLATFORM}/udig
-        else
-            echo "${JRE}/${PLATFORM_JRE}.tar.gz not found - user will require their own JRE"
-            exit
-        fi
-    else
-        echo "Looking for ${JRE}/${PLATFORM_JRE}.zip"
-        if [ -f ${JRE}/${PLATFORM_JRE}.zip ] ; then
-            echo "Extracting ${JRE}/${PLATFORM_JRE}.zip ..."
-            unzip -q -d ${BUILD}/${PLATFORM}/udig ${JRE}/${PLATFORM_JRE}.zip
-        else
-            echo "${JRE}/${PLATFORM_JRE}.zip not found - user will require their own JRE"
-        fi
-    fi
 }
