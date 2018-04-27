@@ -18,4 +18,4 @@ Bundle-ClassPath: .,
  lib/jsde_sdk-9.2+.jar,
  lib/jpe_sdk-9.2+.jar,
  lib/icu4j-3.2+.jar
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

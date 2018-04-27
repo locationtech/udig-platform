@@ -22,7 +22,7 @@ import org.locationtech.udig.catalog.wmsc.server.Tile;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.jdom.Element;
+import org.jdom2.Element;
 import org.junit.Test;
 
 public class WWSourceTest {

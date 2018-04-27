@@ -9,4 +9,4 @@ Require-Bundle: org.locationtech.udig.catalog,
  org.eclipse.core.runtime,
  org.eclipse.ui,
   org.locationtech.udig.libs
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

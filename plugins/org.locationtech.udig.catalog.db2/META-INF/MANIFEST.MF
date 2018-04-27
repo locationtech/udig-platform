@@ -12,5 +12,5 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.libs,
  org.locationtech.udig.catalog.ui
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: udig.refractions.net

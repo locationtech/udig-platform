@@ -39,8 +39,7 @@ import org.geotools.data.ows.Layer;
 import org.geotools.data.ows.StyleImpl;
 import org.geotools.data.ows.WMSCapabilities;
 import org.geotools.data.wfs.WFSDataStore;
-import org.geotools.data.wfs.v1_0_0.FeatureSetDescription;
-import org.geotools.data.wfs.v1_0_0.WFSCapabilities;
+
 import org.geotools.data.wms.WebMapServer;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.metadata.Identifier;
@@ -119,15 +118,7 @@ public class ContextExportWizard extends Wizard implements IExportWizard {
         out.append( txt );
         out.append("\n");//$NON-NLS-1$
     }   
-    private static FeatureSetDescription find( WFSCapabilities caps, String typeName ){
-        for( Object obj : caps.getFeatureTypes() ){
-            FeatureSetDescription description = (FeatureSetDescription) obj;
-            if( typeName.equals( description.getName() )){
-                return description;
-            }
-        }
-        return null;
-    }
+
     private static void writeFeatureType( ILayer layer, BufferedWriter out ) throws IOException {
         WFSDataStore wfs = (WFSDataStore) layer.getResource( WFSDataStore.class, null );
         SimpleFeatureType type = layer.getSchema();

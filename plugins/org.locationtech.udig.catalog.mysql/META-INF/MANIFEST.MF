@@ -13,4 +13,4 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.libs
 Bundle-ActivationPolicy: lazy
 Export-Package: org.locationtech.udig.catalog
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

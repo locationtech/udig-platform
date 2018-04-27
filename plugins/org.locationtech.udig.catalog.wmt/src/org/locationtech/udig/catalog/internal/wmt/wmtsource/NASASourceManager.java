@@ -24,11 +24,11 @@ import org.locationtech.udig.catalog.internal.wmt.ui.wizard.controls.WMTWizardCo
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TreeItem;
-import org.jdom.Attribute;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.Namespace;
-import org.jdom.input.SAXBuilder;
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.Namespace;
+import org.jdom2.input.SAXBuilder;
 
 /**
  * Manages the access on the NASA TiledGroups configuration file 

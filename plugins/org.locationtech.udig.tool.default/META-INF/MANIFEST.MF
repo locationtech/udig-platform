@@ -13,4 +13,4 @@ Require-Bundle: org.locationtech.udig.project,
  org.locationtech.udig.ui,
  org.locationtech.udig.project.ui
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

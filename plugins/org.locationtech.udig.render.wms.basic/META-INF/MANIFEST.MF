@@ -19,4 +19,4 @@ Require-Bundle: org.locationtech.udig.project,
  org.locationtech.udig.style.wms,
  org.locationtech.udig.catalog.wms
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

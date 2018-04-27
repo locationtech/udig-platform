@@ -20,4 +20,4 @@ Ant-Version: Apache Ant 1.7.0
 Bundle-Activator: org.locationtech.udig.catalog.imageio.Activator
 Bundle-ClassPath: .
 Export-Package: org.locationtech.udig.catalog.imageio
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

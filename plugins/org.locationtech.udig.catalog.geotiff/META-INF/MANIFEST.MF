@@ -15,4 +15,4 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Export-Package: org.locationtech.udig.catalog.internal.geotiff;x-frien
  ds:="org.locationtech.udig.catalog.test.geotiff"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

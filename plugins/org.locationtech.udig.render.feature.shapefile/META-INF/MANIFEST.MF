@@ -12,4 +12,4 @@ Require-Bundle: org.eclipse.core.runtime,
  org.locationtech.udig.render.feature.basic,
  org.eclipse.ui
 Eclipse-LazyStart: true
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

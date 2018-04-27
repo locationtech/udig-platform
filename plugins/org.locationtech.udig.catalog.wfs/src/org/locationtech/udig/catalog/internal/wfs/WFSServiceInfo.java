@@ -19,7 +19,8 @@ import org.locationtech.udig.catalog.wfs.internal.Messages;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.data.wfs.WFSDataStore;
-import org.geotools.data.wfs.v1_0_0.xml.WFSSchema;
+import org.geotools.wfs.WFS;
+
 
 /**
  * Description of WFSService.
@@ -43,7 +44,7 @@ class WFSServiceInfo extends IServiceInfo {
      * @return Service version
      */
     public String getVersion(){
-        return ds.getServiceVersion();
+        return ds.getInfo().getVersion();
     }
     
     public String getAbstract() {
@@ -55,7 +56,11 @@ class WFSServiceInfo extends IServiceInfo {
     }
 
     public URI getSchema() {
-        return WFSSchema.NAMESPACE;
+        try {
+			return new URI(WFS.NAMESPACE);
+		} catch (URISyntaxException e) {
+			return null;
+		}
     }
 
     public String getDescription() {

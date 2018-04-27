@@ -17,4 +17,4 @@ Export-Package: org.locationtech.udig.catalog.internal.wfs;x-friends:=
  og.internal.wfs.ui;x-friends:="org.locationtech.udig.context,org.loca
  tiontech.udig.catalog.tests.wfs",org.locationtech.udig.catalog.wfs.in
  ternal;x-friends:="org.locationtech.udig.catalog.tests.wfs"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

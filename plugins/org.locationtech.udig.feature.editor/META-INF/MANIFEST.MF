@@ -15,4 +15,4 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.libs,
  org.eclipse.ui.views.properties.tabbed
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

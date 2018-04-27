@@ -10,7 +10,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.locationtech.udig.catalog.rasterings,
  org.locationtech.udig.libs
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: javax.media.jai,
  javax.media.jai.iterator,
  javax.media.jai.operator,

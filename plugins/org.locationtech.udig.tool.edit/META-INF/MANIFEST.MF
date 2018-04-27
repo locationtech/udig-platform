@@ -23,4 +23,4 @@ Export-Package: org.locationtech.udig.tool.edit,org.locationtech.udig.
  locationtech.udig.tools.edit.impl,org.locationtech.udig.tools.edit.pr
  eferences,org.locationtech.udig.tools.edit.support,org.locationtech.u
  dig.tools.edit.validator
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

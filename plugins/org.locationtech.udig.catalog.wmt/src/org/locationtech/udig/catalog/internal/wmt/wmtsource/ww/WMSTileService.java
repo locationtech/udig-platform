@@ -15,7 +15,7 @@ import org.locationtech.udig.catalog.internal.wmt.tile.WWTile;
 import org.locationtech.udig.catalog.internal.wmt.tile.WWTile.WWTileName;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Represents &lt;WMSAccessor&gt; inside a &lt;ImageAccessor&gt;

@@ -13,7 +13,7 @@ import java.text.MessageFormat;
 
 import org.locationtech.udig.catalog.internal.wmt.tile.WWTile.WWTileName;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Represents &lt;ImageTileService&gt; inside a &lt;ImageAccessor&gt;
