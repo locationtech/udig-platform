@@ -1,8 +1,10 @@
 package org.locationtech.udig.catalog.util;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.MessageFormat;
 import java.util.List;
 
 import org.junit.Assume;
@@ -22,11 +24,20 @@ public final class CatalogTestUtils {
     public static void assumeNoConnectionException(URL url, int timeoutInMS) {
         try {
             URLConnection connection = url.openConnection();
+            if (connection instanceof HttpURLConnection) {
+                HttpURLConnection httpConnection = ((HttpURLConnection)connection);
+                if (HttpURLConnection.HTTP_OK != httpConnection.getResponseCode()) {
+                    throw new IOException("Responsecode != 200",
+                            new Throwable(MessageFormat.format("HTTP {0} : {1}",
+                                    httpConnection.getResponseCode(),
+                                    httpConnection.getResponseMessage())));
+                }
+            }
             connection.setConnectTimeout(timeoutInMS);
             connection.connect();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Assume.assumeNoException(e);
+        } catch (Throwable e) {
+            Assume.assumeNoException("unable to connect to, skipping test", e);
+            throw new RuntimeException(e);
         }
     }
     
