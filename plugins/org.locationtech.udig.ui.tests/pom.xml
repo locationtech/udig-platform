@@ -18,8 +18,7 @@
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>tycho-surefire-plugin</artifactId>
                 <configuration>
-                   <testRuntime>p2Installed</testRuntime>
-                   <application>org.locationtech.udig.ui.application</application>
+                    <application>org.locationtech.udig.ui.application</application>
                 </configuration>
             </plugin>
 
