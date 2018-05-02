@@ -57,8 +57,8 @@ public class GeoToolsTest {
     @Test
     public void testGeoTools(){
          Version version = GeoTools.getVersion();
-         assertEquals( 14, version.getMajor() );
-         assertTrue( version.getMinor().toString().startsWith("1") );
+         assertEquals( 19, version.getMajor() );
+         assertEquals( 0, version.getMinor() );
     }
 
     @Ignore("FIXME: due to migration to batik bundle from Orbit")
