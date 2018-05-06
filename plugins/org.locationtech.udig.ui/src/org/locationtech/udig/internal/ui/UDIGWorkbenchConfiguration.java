@@ -46,7 +46,7 @@ public class UDIGWorkbenchConfiguration implements WorkbenchConfiguration {
         
         configurer.setShowCoolBar(true);
         configurer.setShowFastViewBars(true);
-        //configurer.setShowPerspectiveBar(true);
+        configurer.setShowPerspectiveBar(true);
         
         // these are required for the update site if nothing else
         configurer.setShowStatusLine(true);
