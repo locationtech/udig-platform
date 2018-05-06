@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.locationtech.udig.catalog.IGeoResourceInfo;
 import org.locationtech.udig.core.internal.ExtensionPointUtil;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.style.sld.SLD;
@@ -108,11 +109,16 @@ public class OpenStyleEditorAction extends Action implements IWorkbenchWindowAct
 	        	if(ids.contains("org.locationtech.udig.style.advanced.editorpages.SimplePolygonEditorPage")) {//$NON-NLS-1$
 	            	pageId = "org.locationtech.udig.style.advanced.editorpages.SimplePolygonEditorPage";//$NON-NLS-1$
 	            }
-	        } else if (selectedLayer.getGeoResource().getInfo(new NullProgressMonitor()).getDescription()
-	        		.equals("grassbinaryraster")) { //$NON-NLS-1$
-	        	if(ids.contains("org.locationtech.udig.style.jgrass.colors.JGrassRasterStyleEditorPage")) {//$NON-NLS-1$
-				 	pageId = "org.locationtech.udig.style.jgrass.colors.JGrassRasterStyleEditorPage";//$NON-NLS-1$
-				}
+	        } else {
+                    IGeoResourceInfo resourceInfo = selectedLayer.getGeoResource()
+                            .getInfo(new NullProgressMonitor());
+                    if (resourceInfo != null && resourceInfo.getDescription() != null
+                            && resourceInfo.getDescription().equals("grassbinaryraster")) { //$NON-NLS-1$
+                        if (ids.contains(
+                                "org.locationtech.udig.style.jgrass.colors.JGrassRasterStyleEditorPage")) {//$NON-NLS-1$
+                            pageId = "org.locationtech.udig.style.jgrass.colors.JGrassRasterStyleEditorPage";//$NON-NLS-1$
+                        }
+                    }
 	        }
 		} catch (IOException e) {
 			pageId = "simple";//$NON-NLS-1$
