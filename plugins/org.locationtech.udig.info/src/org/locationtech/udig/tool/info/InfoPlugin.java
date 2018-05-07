@@ -10,17 +10,10 @@
  */
 package org.locationtech.udig.tool.info;
 
-import java.net.URL;
-
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -43,17 +36,6 @@ public class InfoPlugin extends AbstractUIPlugin {
     private static InfoPlugin plugin;
 
     public static final String ID = "org.locationtech.udig.info"; //$NON-NLS-1$
-
-    public static final String IMG_OBJ_PATH = "icons/obj16/"; //$NON-NLS-1$
-    public static final String IMG_OBJ_BASE = IMG_OBJ_PATH + "base_doc_obj.png"; //$NON-NLS-1$
-    public static final String IMG_OBJ_FILE = IMG_OBJ_PATH + "file_doc_obj.png"; //$NON-NLS-1$
-    public static final String IMG_OBJ_LINK = IMG_OBJ_PATH + "link_doc_obj.png"; //$NON-NLS-1$
-    public static final String IMG_OBJ_ACTION = IMG_OBJ_PATH + "action_doc_obj.png"; //$NON-NLS-1$
-    
-    public static final String IMG_OVR_PATH = "icons/ovr16/"; //$NON-NLS-1$
-    public static final String IMG_OVR_ATTACHMENT = IMG_OVR_PATH + "attach_ovr.png"; //$NON-NLS-1$
-    public static final String IMG_OVR_TEMPLATE = IMG_OVR_PATH + "template_ovr.png"; //$NON-NLS-1$
-    public static final String IMG_OVR_HOTLINK = IMG_OVR_PATH + "hotlink_ovr.png"; //$NON-NLS-1$
 
     /**
      * The constructor.
@@ -126,43 +108,4 @@ public class InfoPlugin extends AbstractUIPlugin {
         return getDefault().isDebugging()
                 && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
     }
-
-    @Override
-    protected void initializeImageRegistry(ImageRegistry reg) {
-        super.initializeImageRegistry(reg);
-
-        addImage(reg, IMG_OBJ_BASE);
-        
-        addImage(reg, IMG_OBJ_FILE);
-        addImage(reg, IMG_OBJ_LINK);
-        addImage(reg, IMG_OBJ_ACTION);
-        
-        addImage(reg, IMG_OVR_ATTACHMENT);
-        addImage(reg, IMG_OVR_HOTLINK);
-        addImage(reg, IMG_OVR_TEMPLATE);
-        
-    }
-    
-    /**
-     * Adds image to the registry.
-     * 
-     * @param reg
-     * @param imagePath
-     */
-    private void addImage(ImageRegistry reg, String imagePath) {
-        
-        final Bundle bundle = Platform.getBundle(ID);
-        
-        final Path attachImgPath = new Path(imagePath);
-        URL url = FileLocator.find(bundle, attachImgPath, null);
-        ImageDescriptor attachImg;
-        if( url != null ){
-            attachImg = ImageDescriptor.createFromURL(url);            
-        }
-        else {
-            log("Unable to find image for "+imagePath, null);
-            attachImg = ImageDescriptor.getMissingImageDescriptor();
-        }
-        reg.put(imagePath, attachImg);
-    }    
 }

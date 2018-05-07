@@ -40,14 +40,6 @@
             id="org.locationtech.udig.tool.info.infoView">
          <description/>
       </view>
-      <view
-            category="org.locationtech.udig.project.ui.project"
-            class="org.locationtech.udig.document.ui.DocumentView"
-            icon="icons/view16/document_view.gif"
-            id="org.locationtech.udig.tool.info.documentView"
-            name="%docView.name"
-            restorable="true">
-      </view>
    </extension>
    <extension
          name="Information Displays"
@@ -66,52 +58,7 @@
             class="org.locationtech.udig.tool.info.internal.display.FeatureDisplay"/>
    </extension>
    <extension
-         id="shp"
-         name="Shapefile Document Resolvers"
-         point="org.locationtech.udig.catalog.resolvers">
-      <factory
-            class="org.locationtech.udig.document.source.ShpDocumentResolveFactory"
-            resolveableType="org.locationtech.udig.catalog.internal.shp.ShpGeoResourceImpl">
-         <resolve
-               type="org.locationtech.udig.catalog.document.IHotlinkSource"></resolve>
-         <resolve
-               type="org.locationtech.udig.catalog.document.IDocumentSource"></resolve>
-         <resolve
-               type="org.locationtech.udig.catalog.document.IAttachmentSource">
-         </resolve>
-      </factory>
-      <factory
-            class="org.locationtech.udig.document.source.BasicHotlinkResolveFactory"
-            resolveableType="org.locationtech.udig.catalog.IGeoResource">
-         <resolve
-               type="org.locationtech.udig.catalog.document.IHotlinkSource">
-         </resolve>
-      </factory>
-   </extension>
-   <extension
          point="org.eclipse.ui.propertyPages">
-      <page
-            category="org.locationtech.udig.catalog.ui.property.resourcePage"
-            class="org.locationtech.udig.document.ui.DocumentPropertyPage"
-            icon="icons/obj16/file_doc_obj.png"
-            id="org.locationtech.udig.catalog.document.property.documentPage"
-            name="%documentPage.name">
-         <enabledWhen>
-            <and>
-               <or>
-                  <instanceof
-                        value="org.locationtech.udig.catalog.IGeoResource">
-                  </instanceof>
-                  <adapt
-                        type="org.locationtech.udig.catalog.IGeoResource">
-                  </adapt>
-               </or>
-               <test
-                     property="org.locationtech.udig.catalog.featureSource">
-               </test>
-            </and>
-         </enabledWhen>
-      </page>
       <page
             category="org.locationtech.udig.catalog.ui.property.resourcePage"
             class="org.locationtech.udig.tool.info.internal.InfoPropertyPage"
