@@ -27,7 +27,8 @@
                 <module>org.locationtech.udig.catalog.tests.geotiff</module>
                 <module>org.locationtech.udig.catalog.tests.wfs</module>
                 <module>org.locationtech.udig.catalog.tests.wms</module>
-                <module>org.locationtech.udig.tests.info</module>
+                <module>org.locationtech.udig.document.tests</module>
+                <module>org.locationtech.udig.info.tests</module>
                 <module>org.locationtech.udig.issues.test</module>
                 <module>org.locationtech.udig.libs.tests</module>
                 <module>org.locationtech.udig.location.test</module>
@@ -127,6 +128,7 @@
         <module>org.locationtech.udig.graph</module>
         <module>org.locationtech.udig.help</module>
         <module>org.locationtech.udig.info</module>
+        <module>org.locationtech.udig.document</module>
         <module>org.locationtech.udig.issues</module>
         <module>org.locationtech.udig.legend</module>
         <module>org.locationtech.udig.libs</module>

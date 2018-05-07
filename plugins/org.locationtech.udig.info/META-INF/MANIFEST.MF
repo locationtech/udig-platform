@@ -6,22 +6,17 @@ Bundle-Version: 2.1.0.qualifier
 Bundle-Activator: org.locationtech.udig.tool.info.InfoPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
-Export-Package: org.locationtech.udig.document.model;x-friends:="org.l
- ocationtech.udig.tests.info",org.locationtech.udig.document.source,or
- g.locationtech.udig.document.ui,org.locationtech.udig.tool.info,org.l
- ocationtech.udig.tool.info.internal;x-friends:="org.locationtech.udig
- .tests.info",org.locationtech.udig.tool.info.internal.display;x-frien
- ds:="org.locationtech.udig.tests.info"
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
+Export-Package: org.locationtech.udig.tool.info,
+ org.locationtech.udig.tool.info.internal;x-friends:="org.locationtech.udig.info.tests",
+ org.locationtech.udig.tool.info.internal.display;x-friends:="org.locationtech.udig.info.tests"
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.ui.forms,
+ org.eclipse.ui.views,
  org.locationtech.udig.project,
  org.locationtech.udig.project.ui,
- org.locationtech.udig.ui,
- org.eclipse.ui.views,
  org.locationtech.udig.style.wms,
- org.locationtech.udig.render.wms.basic,
- org.eclipse.ui.forms,
- org.locationtech.udig.catalog.shp;visibility:=reexport
+ org.locationtech.udig.render.wms.basic
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: javax.media.jai,
