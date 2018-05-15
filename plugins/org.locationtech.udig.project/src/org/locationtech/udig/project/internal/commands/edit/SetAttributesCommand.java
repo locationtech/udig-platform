@@ -21,7 +21,7 @@ import org.locationtech.udig.project.command.UndoableMapCommand;
 import org.locationtech.udig.project.command.provider.EditFeatureProvider;
 import org.locationtech.udig.project.command.provider.EditLayerProvider;
 import org.locationtech.udig.project.internal.Messages;
-
+import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
@@ -34,7 +34,7 @@ import org.opengis.filter.Id;
 
 /**
  * This command modifies an attribute of the current editFeature(the victim that is currently
- * edittable).
+ * editable).
  * 
  * @author jeichar
  * @since 0.3
@@ -53,18 +53,22 @@ public class SetAttributesCommand extends AbstractEditCommand implements Undoabl
      * Creates a new instance of SetAttributeCommand.
      * 
      * @param feature the feature to modify
+     * @param layer to ask for object
      * @param xpath the xpath that identifies an attribute in the current edit feature.
      * @param value the value that will replace the old attribute value.
      */
-    public SetAttributesCommand( IBlockingProvider<SimpleFeature> feature, IBlockingProvider<ILayer> layer, String xpath[],
-            Object value[] ) {
+    public SetAttributesCommand(IBlockingProvider<SimpleFeature> feature,
+            IBlockingProvider<ILayer> layer, String xpath[], Object value[]) {
+        Validate.notNull(xpath);
+        Validate.notNull(value);
+        Validate.isTrue(xpath.length == value.length, "xpath and values do not have same lenght");
         this.xpath = xpath;
         this.value = value;
-        this.oldValue = new Object[value.length];
+        this.oldValue = new Object[xpath.length];
         editFeature = feature;
         editLayer = layer;
     }
-    
+
     /**
      * Creates a new instance of SetAttributeCommand.
      * 
@@ -72,12 +76,15 @@ public class SetAttributesCommand extends AbstractEditCommand implements Undoabl
      * @param xpath the xpath that identifies an attribute in the current edit feature.
      * @param value the value that will replace the old attribute value.
      */
-    public SetAttributesCommand( String xpath[], Object value[] ) {
-        editFeature=new EditFeatureProvider(this);
-        editLayer=new EditLayerProvider(this);
-        this.oldValue = new Object[value.length];
-        this.xpath=xpath;
-        this.value=value; 
+    public SetAttributesCommand(String xpath[], Object value[]) {
+        Validate.notNull(xpath);
+        Validate.notNull(value);
+        Validate.isTrue(xpath.length == value.length, "xpath and values do not have same lenght");
+        editFeature = new EditFeatureProvider(this);
+        editLayer = new EditLayerProvider(this);
+        this.oldValue = new Object[xpath.length];
+        this.xpath = xpath;
+        this.value = value;
     }
 
     /**
@@ -138,8 +145,7 @@ public class SetAttributesCommand extends AbstractEditCommand implements Undoabl
         AttributeDescriptor[] array = attributeList.toArray( new AttributeDescriptor[attributeList.size()]);
         
         FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-		Id id = filterFactory.id(
-                FeatureUtils.stringToId(filterFactory, feature.getID()));
+        Id id = filterFactory.id(FeatureUtils.stringToId(filterFactory, feature.getID()));
         resource.modifyFeatures(array, oldValue, id);
     }
 
@@ -148,7 +154,7 @@ public class SetAttributesCommand extends AbstractEditCommand implements Undoabl
      */
     public String getName() {
         return MessageFormat.format(
-                Messages.SetAttributeCommand_setFeatureAttribute, new Object[]{xpath}); 
+                Messages.SetAttributeCommand_setFeatureAttribute, new Object[]{xpath});
     }
 
     @Override
