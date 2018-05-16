@@ -1,15 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Tests Plug-in
-Bundle-SymbolicName: org.locationtech.udig.tool.select.tests
+Bundle-Name: Issues Test Plug-in
+Bundle-SymbolicName: org.locationtech.udig.issues.tests;singleton:=true
 Bundle-Version: 2.1.0.qualifier
-Bundle-Activator: org.locationtech.udig.tool.select.tests.Activator
+Bundle-Activator: org.locationtech.udig.issues.test.IssuesTestActivator
 Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.junit;bundle-version="[4.0.0,5.0.0)",
- org.locationtech.udig.project.ui,
- org.locationtech.udig.tool.select,
+ org.locationtech.udig.issues,
  org.locationtech.udig.project.ui.tests
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

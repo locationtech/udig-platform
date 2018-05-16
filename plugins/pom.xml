@@ -16,35 +16,31 @@
         <profile>
             <id>test</id>
             <modules>
-                <module>org.locationtech.udig.ui.tests</module>
-                <module>org.locationtech.udig.core.tests</module>
-                <module>org.locationtech.udig.project.tests</module>
+                <module>org.locationtech.udig.bookmarks.tests</module>
+                <module>org.locationtech.udig.catalog.geotiff.tests</module>
                 <module>org.locationtech.udig.catalog.tests</module>
-                <module>org.locationtech.udig.catalog.tests.ui</module>
-                <module>org.locationtech.udig.project.tests.ui</module>
-
-                
-                <module>org.locationtech.udig.catalog.tests.geotiff</module>
-                <module>org.locationtech.udig.catalog.tests.wfs</module>
-                <module>org.locationtech.udig.catalog.tests.wms</module>
+                <module>org.locationtech.udig.catalog.ui.tests</module>
+                <module>org.locationtech.udig.catalog.wfs.tests</module>
+                <module>org.locationtech.udig.catalog.wms.tests</module>
+                <module>org.locationtech.udig.catalog.wmt.tests</module>
+                <module>org.locationtech.udig.core.tests</module>
                 <module>org.locationtech.udig.document.tests</module>
                 <module>org.locationtech.udig.info.tests</module>
-                <module>org.locationtech.udig.issues.test</module>
+                <module>org.locationtech.udig.issues.tests</module>
                 <module>org.locationtech.udig.libs.tests</module>
-                <module>org.locationtech.udig.location.test</module>
-                <module>org.locationtech.udig.render.feature.basic.test</module>
-                <module>org.locationtech.udig.render.wms.basic.test</module>
+                <module>org.locationtech.udig.location.tests</module>
+                <module>org.locationtech.udig.mapgraphic.tests</module>
+                <module>org.locationtech.udig.project.tests</module>
+                <module>org.locationtech.udig.project.ui.tests</module>
+                <module>org.locationtech.udig.render.feature.basic.tests</module>
+                <module>org.locationtech.udig.render.wms.basic.tests</module>
                 <module>org.locationtech.udig.style.tests</module>
-                <module>org.locationtech.udig.tests.catalog.wmt</module>
                 <module>org.locationtech.udig.tool.default.tests</module>
                 <module>org.locationtech.udig.tool.edit.tests</module>
                 <module>org.locationtech.udig.tool.select.tests</module>
-                <module>org.locationtech.udig.validation.test</module>
-                
                 <module>org.locationtech.udig.tools.tests</module>
-                <module>org.locationtech.udig.bookmarks.tests</module>
-
-                <module>org.locationtech.udig.mapgraphic.tests</module>
+                <module>org.locationtech.udig.ui.tests</module>
+                <module>org.locationtech.udig.validation.tests</module>
             </modules>
         </profile>
 
@@ -59,7 +55,7 @@
                 <module>org.locationtech.udig.tutorials.preferredzoomlevels</module>
                 <module>org.locationtech.udig.tutorials.tool-view</module>
                 <module>org.locationtech.udig.tutorials.catalog.csv</module>
-                <module>org.locationtech.udig.tutorials.catalog.tests.csv</module>
+                <module>org.locationtech.udig.tutorials.catalog.csv.tests</module>
 
                 <module>org.locationtech.udig.tutorials.customapp</module>
                 <module>org.locationtech.udig.tutorials.distancetool</module>
