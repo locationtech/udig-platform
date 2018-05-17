@@ -97,35 +97,36 @@ public class RenderMetricsSorter implements Comparator<InternalRenderMetrics>, S
         int first = -1;
         int last = 1;
         
+        // check the layer blackboard for a preferred or non-preferred renderer
         // check the layer blackboards for a preferred or non-preferred renderer
-        int preferredLayerRenderer = rateUsingBlackboardSettings(o1, o1.getRenderContext().getLayer()
+        int perferredMapRenderer = rateUsingBlackboardSettings(o1, o1.getRenderContext().getLayer()
                 .getBlackboard());
-        if (preferredLayerRenderer == 0) {
-            preferredLayerRenderer = rateUsingBlackboardSettings(o1, o1.getRenderContext().getLayer()
+        if (perferredMapRenderer == 0) {
+        	perferredMapRenderer = rateUsingBlackboardSettings(o1, o1.getRenderContext().getLayer()
                     .getStyleBlackboard());
         }
-        int preferredLayerRenderer2 = rateUsingBlackboardSettings(o2, o2.getRenderContext().getLayer()
+        int perferredMapRenderer2 = rateUsingBlackboardSettings(o2, o2.getRenderContext().getLayer()
                 .getBlackboard());
-        if (preferredLayerRenderer2 == 0) {
-            preferredLayerRenderer2 = rateUsingBlackboardSettings(o2, o2.getRenderContext().getLayer()
+        if (perferredMapRenderer2 == 0) {
+        	perferredMapRenderer2 = rateUsingBlackboardSettings(o2, o2.getRenderContext().getLayer()
                     .getStyleBlackboard());
         }       
-        if (preferredLayerRenderer > preferredLayerRenderer2) {
+        if (perferredMapRenderer > perferredMapRenderer2) {
             return first;
         }
-        if (preferredLayerRenderer < preferredLayerRenderer2) {
+        if (perferredMapRenderer < perferredMapRenderer2) {
             return last;
         }
         
         // check the map blackboard for a preferred or non-preferred renderer
-        int preferredMapRenderer = rateUsingBlackboardSettings(o1, o1.getRenderContext().getMap()
+        perferredMapRenderer = rateUsingBlackboardSettings(o1, o1.getRenderContext().getMap()
                 .getBlackboard());
-        int preferredMapRenderer2 = rateUsingBlackboardSettings(o2, o2.getRenderContext().getMap()
+        perferredMapRenderer2 = rateUsingBlackboardSettings(o2, o2.getRenderContext().getMap()
                 .getBlackboard());  
-        if (preferredMapRenderer > preferredMapRenderer2) {
+        if (perferredMapRenderer > perferredMapRenderer2) {
             return first;
         }
-        if (preferredMapRenderer < preferredMapRenderer2) {
+        if (perferredMapRenderer < perferredMapRenderer2) {
             return last;
         }
         

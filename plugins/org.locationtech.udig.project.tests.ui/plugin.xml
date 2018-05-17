@@ -148,27 +148,4 @@
                   value="org.locationtech.udig.project.ui.internal.tool.display.TestProperty"/>
          </object>
       </extension>
-      <extension
-            point="org.eclipse.ui.menus">
-         <menuContribution
-               allPopups="false"
-               locationURI="menu:org.eclipse.ui.main.menu?after=window">
-            <menu
-                  label="Renderer Testing">
-               <command
-                     commandId="org.locationtech.udig.project.tests.configurerenderers"
-                     label="configure renderers"
-                     style="push">
-               </command>
-            </menu>
-         </menuContribution>
-      </extension>
-      <extension
-            point="org.eclipse.ui.commands">
-         <command
-               defaultHandler="org.locationtech.udig.project.tests.ui.RendererSetterHandler"
-               id="org.locationtech.udig.project.tests.configurerenderers"
-               name="configure renderers">
-         </command>
-      </extension>
 </plugin>
