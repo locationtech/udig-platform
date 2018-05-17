@@ -321,8 +321,9 @@ public class TiledRendererCreatorImpl implements RendererCreator {
         throw new UnsupportedOperationException("Renderers don't have information in this system."); //$NON-NLS-1$
     }
 
+
     /**
-     * @throws UnsupportedOperationException
+     * 
      */
     public Collection<String> getAvailableRendererIds(Layer layer) {
     	List<String> result = new ArrayList<String>(); 
