@@ -51,6 +51,16 @@
       <renderer
             class="org.locationtech.udig.project.internal.render.impl.renderercreator.BadRenderMetricsFactory"
             />
+      <renderer
+            class="org.locationtech.udig.project.internal.render.impl.renderercreator.HighLatencyFeatureRenderMetricsFactory"
+            id="rendererHighLatency"
+            name="rendererHighLatencyTest">
+      </renderer>
+      <renderer
+            class="org.locationtech.udig.project.internal.render.impl.renderercreator.LowLatencyFeatureRenderMetricsFactory"
+            id="rendererLowLatency"
+            name="rendererLowLatencyTest">
+      </renderer>
    </extension>
       <extension
             point="org.locationtech.udig.project.mapInterceptor">
