@@ -99,9 +99,9 @@ public class RenderMetricsSorter implements Comparator<InternalRenderMetrics>, S
         
         // check the layer blackboard for a preferred or non-preferred renderer
         int perferredMapRenderer = rateUsingBlackboardSettings(o1, o1.getRenderContext().getLayer()
-                .getStyleBlackboard());
+                .getBlackboard());
         int perferredMapRenderer2 = rateUsingBlackboardSettings(o2, o2.getRenderContext().getLayer()
-                .getStyleBlackboard());        
+                .getBlackboard());        
         if (perferredMapRenderer > perferredMapRenderer2) {
             return first;
         }
