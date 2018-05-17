@@ -17,7 +17,7 @@ import org.locationtech.udig.project.render.RenderException;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * Simulats a renderer that renders a single class.
+ * Simulates a renderer that renders a single class.
  * 
  * @author Jesse
  * @since 1.1.0
