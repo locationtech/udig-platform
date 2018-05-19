@@ -93,6 +93,9 @@ public class MapTests {
         layer.setDefaultColor(tmp.getDefaultColor());
         layer.setName(tmp.getName());
 
+        if (displaySize == null) {
+            displaySize = new Dimension(1024, 800);
+        }
         if( style!=null ){
             StyleBlackboard styleBlackboard = layer.getStyleBlackboard();
             styleBlackboard.put(SLDContent.ID, style);
@@ -191,6 +194,9 @@ public class MapTests {
 
     public static Map createDefaultMap(String featureTypeName, int numFeatures, 
             boolean deleteExistingService, Dimension displaySize, boolean createRenderManager) throws Exception {
+        if (displaySize == null) {
+            displaySize = new Dimension(1024, 800);
+        }
         int toCreate=numFeatures;
         if( numFeatures == 0)
             toCreate=1;
