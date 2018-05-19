@@ -11,6 +11,9 @@
 package org.locationtech.udig.project.internal.impl;
 
 import static org.junit.Assert.assertNotNull;
+
+import java.awt.Dimension;
+
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
@@ -34,7 +37,7 @@ public class LayerResourceTest extends AbstractProjectTestCase {
     @Before
     public void setUp() throws Exception {
         resource=MapTests.createGeoResource("test", 3, true); //$NON-NLS-1$
-        map = MapTests.createNonDynamicMapAndRenderer(resource, null);
+        map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(1024, 800));
         layer=map.getLayersInternal().get(0);
     }
     
