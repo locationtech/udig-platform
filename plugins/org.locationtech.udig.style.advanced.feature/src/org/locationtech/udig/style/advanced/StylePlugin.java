@@ -20,7 +20,7 @@ import org.locationtech.udig.style.advanced.utils.ImageCache;
 public class StylePlugin extends AbstractUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "org.locationtech.udig.style.advanced"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "org.locationtech.udig.style.advanced.feature"; //$NON-NLS-1$
 
     // The shared instance
     private static StylePlugin plugin;
