@@ -19,13 +19,21 @@ import static org.junit.Assert.assertTrue;
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IMemento;
+import org.eclipse.ui.IViewPart;
+import org.geotools.data.DataStore;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.core.enums.Priority;
 import org.locationtech.udig.issues.AbstractIssue;
 import org.locationtech.udig.issues.FeatureIssue;
 import org.locationtech.udig.issues.IIssue;
 import org.locationtech.udig.issues.IIssuesList;
-import org.locationtech.udig.issues.IIssuesManager;
 import org.locationtech.udig.issues.IssuesList;
 import org.locationtech.udig.issues.internal.IssuesManager;
 import org.locationtech.udig.issues.listeners.IIssueListener;
@@ -37,23 +45,17 @@ import org.locationtech.udig.issues.listeners.IssuesManagerEvent;
 import org.locationtech.udig.issues.listeners.IssuesManagerEventType;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IMemento;
-import org.eclipse.ui.IViewPart;
-import org.geotools.data.DataStore;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 public class IssuesManagerTest extends AbstractProjectUITestCase {
 
+    private IssuesManager issueManager = new IssuesManager();
+    private IIssuesList issueslist;
+
     @Before
     public void setUp() throws Exception {
+        issueslist = issueManager.getIssuesList();
+        issueslist.clear();
         FeatureIssue.setTesting(true);
     }
     
@@ -67,16 +69,17 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
      */
     @Test
     public void testRemoveIssues() {
-        IssuesManager m = new IssuesManager();
-        IIssuesList issueslist = m.getIssuesList();
-        for( int i = 0; i < 10; i++ ) {
-            issueslist.add(new DummyIssue(i, i < 6 ? "toRemove" : "g" + i)); //$NON-NLS-1$ //$NON-NLS-2$
-        }
-        DummyListener l = new DummyListener();
-        m.addIssuesListListener(l);
+        assertEquals(0, issueslist.size());
 
+        for( int i = 0; i < 10; i++ ) {
+            issueslist.add(new DummyIssue(i, i < 6 ? "toRemove" : "others")); //$NON-NLS-1$ //$NON-NLS-2$
+        }
         assertEquals(10, issueslist.size());
-        m.removeIssues("toRemove"); //$NON-NLS-1$
+
+        DummyListener l = new DummyListener();
+        issueManager.addIssuesListListener(l);
+
+        issueManager.removeIssues("toRemove"); //$NON-NLS-1$
         assertEquals("All the issues with groupId \"toRemove\"" + //$NON-NLS-1$
                 " should be gone leaving 4 items", 4, issueslist.size()); //$NON-NLS-1$
         for( IIssue issue : issueslist ) {
@@ -86,7 +89,7 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
         assertEquals(1, l.timesCalled);
         l.changes = 0;
         l.timesCalled = 0;
-        m.removeIssues("hello"); //$NON-NLS-1$
+        issueManager.removeIssues("hello"); //$NON-NLS-1$
         assertEquals(0, l.changes);
         assertEquals(0, l.timesCalled);
         assertEquals(4, issueslist.size());
@@ -94,10 +97,6 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
 
     @Test
     public void testSetIssuesList() throws Exception {
-        IssuesManager m = new IssuesManager();
-        IIssuesList issuesList = new IssuesList();
-        m.setIssuesList(issuesList);
-
         final AtomicBoolean addedListener = new AtomicBoolean(false);
         final AtomicBoolean removedListener = new AtomicBoolean(false);
         DummyIssue dummyIssue = new DummyIssue(3){
@@ -111,20 +110,20 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
                 removedListener.set(true);
             }
         };
-        issuesList.add(dummyIssue);
+        issueslist.add(dummyIssue);
         assertTrue(addedListener.get());
         assertFalse(removedListener.get());
 
         addedListener.set(false);
 
-        m.setIssuesList(new IssuesList());
+        issueManager.setIssuesList(new IssuesList());
 
         assertFalse(addedListener.get());
         assertTrue(removedListener.get());
 
         removedListener.set(false);
 
-        m.setIssuesList(issuesList);
+        issueManager.setIssuesList(issueslist);
 
         assertTrue(addedListener.get());
         assertFalse(removedListener.get());
@@ -132,10 +131,8 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
 
     @Test
     public void testListeners() throws Exception {
-
-        IssuesManager m = new IssuesManager();
         final IssuesListEvent[] listEvent = new IssuesListEvent[1];
-        m.addIssuesListListener(new IIssuesListListener(){
+        issueManager.addIssuesListListener(new IIssuesListListener(){
 
             public void notifyChange( IssuesListEvent event ) {
                 listEvent[0] = event;
@@ -145,7 +142,7 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
 
         final IssuesManagerEvent[] managerEvent = new IssuesManagerEvent[1];
 
-        m.addListener(new IIssuesManagerListener(){
+        issueManager.addListener(new IIssuesManagerListener(){
 
             public void notifyChange( IssuesManagerEvent event ) {
                 managerEvent[0] = event;
@@ -153,38 +150,38 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
 
         });
 
-        m.getIssuesList().add(new DummyIssue(0));
+        issueManager.getIssuesList().add(new DummyIssue(0));
 
         assertNotNull(listEvent[0]);
         assertNull(managerEvent[0]);
 
         listEvent[0] = null;
 
-        m.setIssuesList(new IssuesList());
+        issueManager.setIssuesList(new IssuesList());
 
         assertEquals(IssuesManagerEventType.ISSUES_LIST_CHANGE, managerEvent[0].getType());
         assertNull(listEvent[0]);
 
         managerEvent[0] = null;
 
-        m.getIssuesList().add(new DummyIssue(0));
+        issueManager.getIssuesList().add(new DummyIssue(0));
 
         assertNotNull(listEvent[0]);
         assertNull(managerEvent[0]);
 
     }
 
+    @SuppressWarnings("rawtypes")
     @Test
     public void testDirtyEvents() throws Exception {
-            IssuesManager m = new IssuesManager();
-            m.setIssuesList(IssuesListTestHelper.createInMemoryDatastoreIssuesList(null, null));
+            issueManager.setIssuesList(IssuesListTestHelper.createInMemoryDatastoreIssuesList(null, null));
 
             FeatureIssue createFeatureIssue = IssuesListTestHelper.createFeatureIssue("newFeature"); //$NON-NLS-1$
-            m.getIssuesList().add(createFeatureIssue);
+            issueManager.getIssuesList().add(createFeatureIssue);
 
             final IssuesManagerEvent[] managerEvent = new IssuesManagerEvent[1];
 
-            m.addListener(new IIssuesManagerListener(){
+            issueManager.addListener(new IIssuesManagerListener(){
 
                 public void notifyChange( IssuesManagerEvent event ) {
                     managerEvent[0] = event;
@@ -198,7 +195,7 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
             assertEquals(Boolean.TRUE, managerEvent[0].getNewValue());
             managerEvent[0] = null;
 
-            m.save(new NullProgressMonitor());
+            issueManager.save(new NullProgressMonitor());
 
             assertEquals(IssuesManagerEventType.SAVE, managerEvent[0].getType());
             assertNull(managerEvent[0].getNewValue());
@@ -208,23 +205,20 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
 
     @Test
     public void testSaveIssuesList() throws Exception {
-        IssuesManager m = new IssuesManager();
-        IIssuesList issuesList = new IssuesList();
-        m.setIssuesList(issuesList);
-        issuesList.add(IssuesListTestHelper.createFeatureIssue("1")); //$NON-NLS-1$
+        issueslist.add(IssuesListTestHelper.createFeatureIssue("1")); //$NON-NLS-1$
 
         // no exception happens, and nothing else.
-        assertFalse(m.save(new NullProgressMonitor()));
+        assertFalse(issueManager.save(new NullProgressMonitor()));
 
         DataStore[] store = new DataStore[1];
         SimpleFeatureType[] featureType = new SimpleFeatureType[1];
-        issuesList = IssuesListTestHelper.createInMemoryDatastoreIssuesList(store, featureType);
-        m.setIssuesList(issuesList);
+        IIssuesList issuesList = IssuesListTestHelper.createInMemoryDatastoreIssuesList(store, featureType);
+        issueManager.setIssuesList(issuesList);
 
         FeatureIssue createIssue = IssuesListTestHelper.createFeatureIssue("2"); //$NON-NLS-1$
         issuesList.add(createIssue);
         issuesList.add(IssuesListTestHelper.createFeatureIssue("3")); //$NON-NLS-1$
-        assertFalse(m.save(new NullProgressMonitor()));
+        assertFalse(issueManager.save(new NullProgressMonitor()));
 
         createIssue.setPriority(Priority.TRIVIAL);
 
@@ -243,17 +237,14 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
         Listener listener = new Listener();
         issuesList.addListener(listener);
 
-        assertTrue(m.save(new NullProgressMonitor()));
+        assertTrue(issueManager.save(new NullProgressMonitor()));
         assertEquals(1, listener.saved.size());
         assertEquals(createIssue.getId(), listener.saved.iterator().next().getId());
     }
 
-    @Ignore("fails in tycho")
     @Test
     public void testLoadedIssueThrowsException() throws Exception {
-        final IIssuesList list = IIssuesManager.defaultInstance.getIssuesList();
-        list.clear();
-        list.add(new AbstractIssue(){
+        issueslist.add(new AbstractIssue(){
 
             public void fixIssue( IViewPart part, IEditorPart editor ) {
             }
@@ -273,17 +264,15 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
             }
             
         });
-        
+
         UDIGTestUtil.inDisplayThreadWait(5000, new WaitCondition(){
 
             public boolean isTrue()  {
-                return list.isEmpty();
+                return issueslist.isEmpty();
             }
             
         }, true);
 
-        assertTrue(list.isEmpty());
-        
+        assertTrue(issueslist.isEmpty());
     }
-    
 }
