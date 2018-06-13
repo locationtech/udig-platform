@@ -14,36 +14,7 @@ package org.locationtech.udig.project.ui.internal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.locationtech.udig.internal.ui.IDropTargetProvider;
-import org.locationtech.udig.project.BlackboardEvent;
-import org.locationtech.udig.project.EditManagerEvent;
-import org.locationtech.udig.project.IBlackboard;
-import org.locationtech.udig.project.IBlackboardListener;
-import org.locationtech.udig.project.IEditManagerListener;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.IProjectElement;
-import org.locationtech.udig.project.command.map.LayerMoveDownCommand;
-import org.locationtech.udig.project.command.map.LayerMoveUpCommand;
-import org.locationtech.udig.project.internal.ContextModel;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.ProjectPackage;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.impl.IEListVisitor;
-import org.locationtech.udig.project.internal.impl.SynchronizedEObjectWithInverseResolvingEList;
-import org.locationtech.udig.project.render.IViewportModel;
-import org.locationtech.udig.project.render.IViewportModelListener;
-import org.locationtech.udig.project.render.ViewportModelEvent;
-import org.locationtech.udig.project.ui.AdapterFactoryLabelProviderDecorator;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.actions.Delete;
-import org.locationtech.udig.project.ui.internal.actions.MylarAction;
-import org.locationtech.udig.project.ui.tool.IToolManager;
-import org.locationtech.udig.ui.PlatformGIS;
-import org.locationtech.udig.ui.UDIGDragDropUtilities;
-import org.locationtech.udig.ui.ZoomingDialog;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.notify.Adapter;
@@ -62,6 +33,7 @@ import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.ICheckStateListener;
+import org.eclipse.jface.viewers.ICheckable;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -94,10 +66,39 @@ import org.eclipse.ui.dialogs.PropertyDialogAction;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
+import org.locationtech.udig.internal.ui.IDropTargetProvider;
+import org.locationtech.udig.project.BlackboardEvent;
+import org.locationtech.udig.project.EditManagerEvent;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IBlackboardListener;
+import org.locationtech.udig.project.IEditManagerListener;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.command.map.LayerMoveDownCommand;
+import org.locationtech.udig.project.command.map.LayerMoveUpCommand;
+import org.locationtech.udig.project.internal.ContextModel;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.impl.IEListVisitor;
+import org.locationtech.udig.project.internal.impl.ISynchronizedEListIteration;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.render.IViewportModelListener;
+import org.locationtech.udig.project.render.ViewportModelEvent;
+import org.locationtech.udig.project.ui.AdapterFactoryLabelProviderDecorator;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.actions.Delete;
+import org.locationtech.udig.project.ui.internal.actions.MylarAction;
+import org.locationtech.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.UDIGDragDropUtilities;
+import org.locationtech.udig.ui.ZoomingDialog;
 
 /**
  * The Layers View.
- * 
+ *
  * @author jeichar
  * @since 0.6.0
  */
@@ -448,7 +449,7 @@ public class LayersView extends ViewPart
          * @return empty string (anything else than layers are in the selection) or String of {@link #SELECTED} and
          *         {@link #UNSELECTED} for each layer at the specific index
          */
-        @SuppressWarnings("rawtypes")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         protected String getSelectionIndexForLayers(Map currentMap, IStructuredSelection selection) {
             final List<Layer> selectedLayers = new ArrayList<Layer>();
             if (currentMap == null || selection == null) {
@@ -466,8 +467,8 @@ public class LayersView extends ViewPart
 
             final StringBuilder selectionIndex = new StringBuilder();
             List<Layer> mapLayers = currentMap.getLayersInternal();
-            if (mapLayers instanceof SynchronizedEObjectWithInverseResolvingEList) {
-                ((SynchronizedEObjectWithInverseResolvingEList<Layer>) mapLayers).syncedIteration(new IEListVisitor<Layer>() {
+            if (mapLayers instanceof ISynchronizedEListIteration) {
+                ((ISynchronizedEListIteration<Layer>) mapLayers).syncedIteration(new IEListVisitor<Layer>() {
                     @Override
                     public void visit(Layer layer) {
                         if (selectedLayers.contains(layer)) {
@@ -552,7 +553,7 @@ public class LayersView extends ViewPart
                     return;
 
                 List<Layer> layers = currentMap.getLayersInternal();
-                if (!requiresCheckboxUpdate(layers)) {
+                if (!requiresCheckboxUpdate(viewer, layers)) {
                     return;
                 }
 
@@ -575,13 +576,33 @@ public class LayersView extends ViewPart
         }, true);
     }
 
-    private boolean requiresCheckboxUpdate( List<Layer> layers ) {
-        for( Layer layer : layers ) {
-            if (!(layer.isVisible() == viewer.getChecked(layer))) {
-                return true;
+    protected boolean requiresCheckboxUpdate(final ICheckable viewer, final Layer layer) {
+        return !(layer.isVisible() == viewer.getChecked(layer));
+    }
+
+    protected boolean requiresCheckboxUpdate(final ICheckable viewer, List<Layer> layers) {
+        if (layers instanceof ISynchronizedEListIteration) {
+            final AtomicBoolean refreshRequired = new AtomicBoolean(false);
+            @SuppressWarnings("unchecked")
+            ISynchronizedEListIteration<Layer> syncheEList = (ISynchronizedEListIteration<Layer>) layers;
+            syncheEList.syncedIteration(new IEListVisitor<Layer>() {
+
+                public void visit(Layer layer) {
+                    if (requiresCheckboxUpdate(viewer, layer)) {
+                        refreshRequired.set(true);
+                    }
+                }
+
+            });
+            return refreshRequired.get();
+        } else {
+            for (Layer layer : layers) {
+                if (requiresCheckboxUpdate(viewer, layer)) {
+                    return true;
+                }
             }
+            return false;
         }
-        return false;
     }
 
     void updateCheckbox( final Layer layer ) {
