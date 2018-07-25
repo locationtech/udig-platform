@@ -12,6 +12,7 @@ package org.locationtech.udig.project.ui.internal.property.pages;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.ui.internal.Messages;
 import org.locationtech.udig.project.ui.summary.SummaryControl;
@@ -24,6 +25,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IWorkbenchPropertyPage;
 import org.eclipse.ui.dialogs.PropertyPage;
+import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
@@ -31,6 +33,7 @@ import org.opengis.filter.Filter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Envelope;
+
 
 /**
  * Shows a summary of the layer
@@ -60,6 +63,18 @@ public class LayerSummary extends PropertyPage implements IWorkbenchPropertyPage
         data.add(new SummaryData(Messages.LayerSummary_bounds, bounds==null?Messages.LayerSummary_unknownBounds:parseBounds(bounds)));
         data.add(new SummaryData(Messages.LayerSummary_selection,layer.getFilter()));
         data.add(new SummaryData(Messages.LayerSummary_status, layer.getStatusMessage()));
+        try {
+        	if (layer.getGeoResource().canResolve(IService.class)) {
+        		IService service = layer.getGeoResource().resolve(IService.class, ProgressManager.instance().get());
+        		ShapefileDataStore store = service.resolve(ShapefileDataStore.class, ProgressManager.instance().get());
+        		if (store != null) {
+        			data.add(new SummaryData(Messages.LayerSummary_charset, store.getCharset()));
+        		}
+        	}
+        } catch (Exception e) {
+        	//
+        }       	
+        
         if ( layer.getSchema()!=null ){
             SimpleFeatureType schema = layer.getSchema();
             SummaryData schemaData=new SummaryData(Messages.LayerSummary_featureType, schema.getName().getLocalPart());
