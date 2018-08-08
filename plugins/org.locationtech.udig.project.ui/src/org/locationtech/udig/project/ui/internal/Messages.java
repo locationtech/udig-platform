@@ -54,6 +54,8 @@ public class Messages extends NLS {
 
     public static String LayerSummary_boundsFormat;
 
+    public static String LayerSummary_charset;
+    
     public static String LayerSummary_featureType;
 
     public static String LayerSummary_maxOccurs;
