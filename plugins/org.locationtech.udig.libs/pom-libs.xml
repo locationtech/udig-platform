@@ -26,8 +26,8 @@
 	<properties>
 		<!-- see geotools root pom for details -->
 		<geotools.version>19.2</geotools.version>
-		<imageio-ext.version>1.1.20</imageio-ext.version>
-		<jaiext.version>1.0.20</jaiext.version>
+		<imageio-ext.version>1.1.24</imageio-ext.version>
+		<jaiext.version>1.0.24</jaiext.version>
 		<jfreechart.version>1.0.13</jfreechart.version>
 		<jt.version>1.4.0</jt.version>
 		<solrj.version>7.2.1</solrj.version>
