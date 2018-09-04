@@ -24,4 +24,4 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.tool.select,
  org.locationtech.udig.mapgraphic
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

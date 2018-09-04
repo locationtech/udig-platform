@@ -15,4 +15,4 @@ Require-Bundle: org.locationtech.udig.printing.model;visibility:=reexport,
  org.locationtech.udig.ui
 Bundle-ActivationPolicy: lazy
 Export-Package: org.locationtech.udig.printing.model.provider
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

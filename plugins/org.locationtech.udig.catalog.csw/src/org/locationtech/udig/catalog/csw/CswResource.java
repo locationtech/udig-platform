@@ -14,6 +14,7 @@ package org.locationtech.udig.catalog.csw;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
@@ -33,7 +34,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.data.wfs.WFSDataStore;
 import org.geotools.data.wms.WebMapServer;
 import org.geotools.data.wms.xml.WMSSchema;
-import org.geotools.data.wfs.v1_0_0.xml.WFSSchema;
+import org.geotools.wfs.WFS;
 
 import com.vividsolutions.jts.geom.Envelope;
 
@@ -244,7 +245,11 @@ static class CswWFSResource extends CswResource{
      * @see org.locationtech.udig.catalog.Csw.CswResource#getSchema()
      */
     protected URI getSchema() {
-        return WFSSchema.NAMESPACE;
+        try {
+			return new URI(WFS.NAMESPACE);
+		} catch (URISyntaxException e) {
+			return null;
+		}
     }
 
     /*

@@ -9,6 +9,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.locationtech.udig.catalog,
  org.locationtech.udig.catalog.ui
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
 Eclipse-BundleShape: dir

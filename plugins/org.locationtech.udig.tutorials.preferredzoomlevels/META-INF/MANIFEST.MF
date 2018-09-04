@@ -13,4 +13,4 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.catalog.shp,
  org.locationtech.udig.render.feature.basic
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

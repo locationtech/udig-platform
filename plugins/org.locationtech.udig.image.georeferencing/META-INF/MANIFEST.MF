@@ -11,7 +11,7 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.tools.edit,
  org.eclipse.help
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: uDig Community
 Export-Package: org.locationtech.udig.image.georeferencing;uses:="org.
  eclipse.ui.plugin,org.osgi.framework",org.locationtech.udig.image.geo

@@ -23,7 +23,7 @@ import org.locationtech.udig.catalog.internal.wmt.tile.WMTTile.WMTTileFactory;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.jdom.Element;
+import org.jdom2.Element;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**

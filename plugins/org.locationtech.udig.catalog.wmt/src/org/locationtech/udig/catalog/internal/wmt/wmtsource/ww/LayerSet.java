@@ -18,9 +18,9 @@ import org.locationtech.udig.catalog.internal.wmt.WMTPlugin;
 import org.locationtech.udig.catalog.wmt.internal.Messages;
 import org.locationtech.udig.core.internal.CorePlugin;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.input.SAXBuilder;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
 
 /**
  * Represents a &lt;LayerSet&gt;, which may contain &lt;ChildLayerSet&gt;

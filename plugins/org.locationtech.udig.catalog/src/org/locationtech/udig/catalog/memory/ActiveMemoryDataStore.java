@@ -100,11 +100,14 @@ public class ActiveMemoryDataStore extends MemoryDataStore {
     }
     
     public void removeSchema( String typeName ) {
-        schema.remove(typeName);
-        memory.remove(typeName);
-        for(MemoryServiceListener listener : this.list) {
-            listener.schemaChanged();
-        }
+        try {
+			super.removeSchema(typeName);
+			for(MemoryServiceListener listener : this.list) {
+			    listener.schemaChanged();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
 }

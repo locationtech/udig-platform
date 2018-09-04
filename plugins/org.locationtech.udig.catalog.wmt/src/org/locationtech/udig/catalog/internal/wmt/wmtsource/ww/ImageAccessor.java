@@ -20,7 +20,7 @@ import org.locationtech.udig.project.internal.render.impl.ScaleUtils;
 import org.eclipse.swt.widgets.Display;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Represents a &lt;ImageAccessor&gt; of a &lt;QuadTileSet&gt;

@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.Map;
 
 import org.locationtech.udig.core.enums.Priority;
 import org.locationtech.udig.core.enums.Resolution;
@@ -35,6 +34,7 @@ import org.geotools.data.FeatureStore;
 import org.geotools.data.FeatureWriter;
 import org.geotools.data.Transaction;
 import org.geotools.data.memory.MemoryDataStore;
+import org.geotools.data.memory.MemoryEntry;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.SchemaException;
 import org.geotools.feature.collection.AdaptorFeatureCollection;
@@ -119,8 +119,8 @@ public class IssuesListTestHelper {
             SimpleFeatureType[] featureType) throws SchemaException, IOException, Exception {
         class TestMemoryDataStore extends MemoryDataStore{
             @Override
-            protected Map features( String typeName ) throws IOException {
-                return super.features(typeName);
+            protected MemoryEntry entry( String typeName ) throws IOException {
+                return super.entry(typeName);
             }
         };
         
@@ -152,7 +152,7 @@ public class IssuesListTestHelper {
                     @Override
                     protected Iterator openIterator() {
                         try {
-                            ArrayList<SimpleFeature> features = new ArrayList<SimpleFeature>(ds.features(ft.getName().getLocalPart()).values());
+                            ArrayList<SimpleFeature> features = new ArrayList<SimpleFeature>(ds.entry(ft.getName().getLocalPart()).getMemory().values());
                             Collections.sort(features, new Comparator<SimpleFeature>(){
 
                                 public int compare( SimpleFeature o1, SimpleFeature o2 ) {
@@ -185,7 +185,7 @@ public class IssuesListTestHelper {
                     @Override
                     public int size() {
                         try {
-                            return ds.features(ft.getName().getLocalPart()).size();
+                            return ds.entry(ft.getName().getLocalPart()).getMemory().size();
                         } catch (IOException e) {
                             throw (RuntimeException) new RuntimeException( ).initCause( e );
                         }

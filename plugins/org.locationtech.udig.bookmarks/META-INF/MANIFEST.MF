@@ -18,5 +18,5 @@ Export-Package: org.locationtech.udig.bookmarks,org.locationtech.udig.
  nal.command;x-friends:="org.locationtech.udig.bookmarks.tests",org.lo
  cationtech.udig.bookmarks.internal.ui;x-friends:="org.locationtech.ud
  ig.bookmarks.tests"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: udig.refractions.net
