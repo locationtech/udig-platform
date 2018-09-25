@@ -96,45 +96,47 @@ public class SplitLineCommand extends AbstractCommand implements MapCommand, Und
 
     public void run( IProgressMonitor monitor ) throws Exception {
         editBlackboard.startBatchingEvents();
-        
-        oldshape = shapeProvider.get(new SubProgressMonitor(monitor, 1));
-        oldFeature = featureProvider.get(new SubProgressMonitor(monitor, 1));
-        oldGeometry = (Geometry) oldFeature.getDefaultGeometry();
-        layer = layerProvider.get(new SubProgressMonitor(monitor, 1));
-
-        editBlackboard.removeGeometries(Collections.singleton(oldshape.getEditGeom()));
-        ShapeType shapeType = oldshape.getEditGeom().getShapeType();
-        EditGeom current = editBlackboard.newGeom(oldshape.getEditGeom().getFeatureIDRef().get(), shapeType);
-        first = current;
-
-        final Set<EditGeom> addedGeoms=new HashSet<EditGeom>();
-        for( int i = 0; i < oldshape.getNumPoints(); i++ ) {
-            addCoords(current.getShell(), i);
-            if (current.getShell().getNumPoints() > 1 && i < oldshape.getNumPoints() - 1
-                    && points.contains(oldshape.getPoint(i))) {
-
-                current = editBlackboard.newGeom("newFeature" + System.currentTimeMillis(), shapeType); //$NON-NLS-1$
-                List<Coordinate> coords = oldshape.getCoordsAt(i);
-                editBlackboard.addCoordinate(coords.get(coords.size() - 1), current.getShell());
-                addedGeoms.add(current);
+        try {
+            oldshape = shapeProvider.get(new SubProgressMonitor(monitor, 1));
+            oldFeature = featureProvider.get(new SubProgressMonitor(monitor, 1));
+            oldGeometry = (Geometry) oldFeature.getDefaultGeometry();
+            layer = layerProvider.get(new SubProgressMonitor(monitor, 1));
+    
+            editBlackboard.removeGeometries(Collections.singleton(oldshape.getEditGeom()));
+            ShapeType shapeType = oldshape.getEditGeom().getShapeType();
+            EditGeom current = editBlackboard.newGeom(oldshape.getEditGeom().getFeatureIDRef().get(), shapeType);
+            first = current;
+    
+            final Set<EditGeom> addedGeoms=new HashSet<EditGeom>();
+            for( int i = 0; i < oldshape.getNumPoints(); i++ ) {
+                addCoords(current.getShell(), i);
+                if (current.getShell().getNumPoints() > 1 && i < oldshape.getNumPoints() - 1
+                        && points.contains(oldshape.getPoint(i))) {
+    
+                    current = editBlackboard.newGeom("newFeature" + System.currentTimeMillis(), shapeType); //$NON-NLS-1$
+                    List<Coordinate> coords = oldshape.getCoordsAt(i);
+                    editBlackboard.addCoordinate(coords.get(coords.size() - 1), current.getShell());
+                    addedGeoms.add(current);
+                }
             }
+            
+            editBlackboard.removeGeometries(addedGeoms);
+    
+            if (getCurrentShape() == oldshape) {
+                currentShapeSet = true;
+                setCurrentShape(first.getShell());
+            }
+    
+            final FeatureStore<SimpleFeatureType, SimpleFeature> store = layer.getResource(FeatureStore.class, new SubProgressMonitor(
+                    monitor, 1));
+    
+            modifyOldFeature(store);
+    
+            createAndAddFeatures(addedGeoms, store);
         }
-        
-        editBlackboard.removeGeometries(addedGeoms);
-
-        if (getCurrentShape() == oldshape) {
-            currentShapeSet = true;
-            setCurrentShape(first.getShell());
+        finally {
+            editBlackboard.fireBatchedEvents();
         }
-
-        final FeatureStore<SimpleFeatureType, SimpleFeature> store = layer.getResource(FeatureStore.class, new SubProgressMonitor(
-                monitor, 1));
-
-        modifyOldFeature(store);
-
-        createAndAddFeatures(addedGeoms, store);
-        
-        editBlackboard.fireBatchedEvents();
     }
 
     @SuppressWarnings({"unchecked"}) 

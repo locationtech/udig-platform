@@ -59,19 +59,23 @@ public class SelectVertexCommand extends AbstractCommand implements UndoableMapC
 
     public void run( IProgressMonitor monitor ) throws Exception {
         editBlackboard.startBatchingEvents();
-        oldPoints= new Selection(editBlackboard.getSelection());
-        oldPoints.disconnect();
-        if( type==Type.ADD)
-            editBlackboard.selectionAddAll(points);
-        else if( type==Type.SET ){
-                editBlackboard.selectionClear();
+        try {
+            oldPoints= new Selection(editBlackboard.getSelection());
+            oldPoints.disconnect();
+            if( type==Type.ADD)
+                editBlackboard.selectionAddAll(points);
+            else if( type==Type.SET ){
+                    editBlackboard.selectionClear();
+                    if( !points.isEmpty() )
+                        editBlackboard.selectionAddAll(points);
+            }else{
                 if( !points.isEmpty() )
-                    editBlackboard.selectionAddAll(points);
-        }else{
-            if( !points.isEmpty() )
-                editBlackboard.selectionRemoveAll(points);
+                    editBlackboard.selectionRemoveAll(points);
+            }
         }
-         editBlackboard.fireBatchedEvents();   
+        finally {
+            editBlackboard.fireBatchedEvents();
+        }
     }
 
     public String getName() {

@@ -60,10 +60,14 @@ public class DefaultCancelEditingCommand extends AbstractCommand implements Undo
 
         EditBlackboard editBlackboard = handler.getEditBlackboard(editLayer);
         editBlackboard.startBatchingEvents();
-        editBlackboard.clear();
-        editBlackboard.fireBatchedEvents();
+        try {
+            editBlackboard.clear();
+        }
+        finally {
+            editBlackboard.fireBatchedEvents();
 
-        handler.repaint();
+            handler.repaint();
+        }
     }
 
     public String getName() {
@@ -76,12 +80,16 @@ public class DefaultCancelEditingCommand extends AbstractCommand implements Undo
         
         EditBlackboard editBlackboard = handler.getEditBlackboard(editLayer);
         editBlackboard.startBatchingEvents();
-        for( EditGeom geom : geoms ) {
-            copyFeature(editBlackboard, geom);
+        try {
+            for( EditGeom geom : geoms ) {
+                copyFeature(editBlackboard, geom);
+            }
+            handler.setCurrentState(this.currentState);
         }
-        handler.setCurrentState(this.currentState);
-        editBlackboard.fireBatchedEvents();
-        handler.repaint();
+        finally {
+            editBlackboard.fireBatchedEvents();
+            handler.repaint();
+        }
     }
 
     /**

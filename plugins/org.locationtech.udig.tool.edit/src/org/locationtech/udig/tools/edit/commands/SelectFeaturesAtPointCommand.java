@@ -123,32 +123,36 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
             ILayer editLayer = handler.getEditLayer();
 
             EditBlackboard editBlackboard = handler.getEditBlackboard(editLayer);
-            editBlackboard.startBatchingEvents();
+            
             BlockingSelectionAnim animation = new BlockingSelectionAnim(event.x, event.y);
             AnimationUpdater.runTimer(context.getMapDisplay(), animation);
             FeatureIterator<SimpleFeature> iter = getFeatureIterator();
             try {
-
-                if (iter.hasNext()) {
-                    runSelectionStrategies(monitor, iter);
-                } else {
-                    runDeselectionStrategies(monitor);
+                editBlackboard.startBatchingEvents();
+                try {
+                    if (iter.hasNext()) {
+                        runSelectionStrategies(monitor, iter);
+                    } else {
+                        runDeselectionStrategies(monitor);
+                    }
+    
+                    setAndRun(monitor, command);
                 }
-
-                setAndRun(monitor, command);
-			} finally {
-				try {
-					if (iter != null) {
-						iter.close();
-					}
-				} finally {
-					if (animation != null) {
-						animation.setValid(false);
-						animation = null;
-					}
-				}
-				editBlackboard.fireBatchedEvents();
-			}
+                finally {
+                    editBlackboard.fireBatchedEvents();
+                }
+            } finally {
+                try {
+                    if (iter != null) {
+                        iter.close();
+                    }
+                } finally {
+                    if (animation != null) {
+                        animation.setValid(false);
+                        animation = null;
+                    }
+                }
+            }
         }
     }
 

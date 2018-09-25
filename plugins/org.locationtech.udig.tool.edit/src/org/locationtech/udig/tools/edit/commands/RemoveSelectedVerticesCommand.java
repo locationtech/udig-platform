@@ -65,70 +65,74 @@ public class RemoveSelectedVerticesCommand extends AbstractCommand
         EditState oldState = handler.getCurrentState();
         try {
             handler.setCurrentState(EditState.BUSY);
-            DeleteVertexAnimation deleteVertexAnimation=null;
-            if( runAnimation ){
-                for( Point point : selection ) {
-                    deleteVertexAnimation = new DeleteVertexAnimation(point);
-                    AnimationUpdater.runTimer(handler.getContext().getMapDisplay(), deleteVertexAnimation);
+            try {
+                DeleteVertexAnimation deleteVertexAnimation=null;
+                if( runAnimation ){
+                    for( Point point : selection ) {
+                        deleteVertexAnimation = new DeleteVertexAnimation(point);
+                        AnimationUpdater.runTimer(handler.getContext().getMapDisplay(), deleteVertexAnimation);
+                    }
+                    if( deleteVertexAnimation!=null ){
+                        final DeleteVertexAnimation finalDeleteVertexAnim=deleteVertexAnimation;
+                        PlatformGIS.wait(deleteVertexAnimation.getFrameInterval(), 5000, new WaitCondition(){
+        
+                            public boolean isTrue()  {
+                                return !finalDeleteVertexAnim.isValid();
+                            }
+                            
+                        }, null);
+                    }
                 }
-                if( deleteVertexAnimation!=null ){
-                    final DeleteVertexAnimation finalDeleteVertexAnim=deleteVertexAnimation;
-                    PlatformGIS.wait(deleteVertexAnimation.getFrameInterval(), 5000, new WaitCondition(){
-    
-                        public boolean isTrue()  {
-                            return !finalDeleteVertexAnim.isValid();
+                HashSet<Point> points = new HashSet<Point>(selection);
+                HashSet<EditGeom> allAffectedGeoms = new HashSet<EditGeom>();
+                for( Point point : points ) {
+                    allAffectedGeoms.addAll(blackboard.getGeoms(point.getX(), point.getY()));
+                }
+                
+                Map<PrimitiveShape, Integer> deletes = new HashMap<PrimitiveShape, Integer>();
+                
+                for( EditGeom geom : allAffectedGeoms ) {
+                    for( PrimitiveShape shape : geom ) {
+                        for( int i = 0; i < shape.getNumPoints(); i++ ) {
+                            Point shapePoint = shape.getPoint(i);
+                            if (points.contains(shapePoint)) {
+                                Bag bag = new Bag();
+                                bag.p = shapePoint;
+                                bag.coords = shape.getCoordsAt(i);
+                                bag.shape = shape;
+                                bag.index = i - get(deletes, shape);
+                                bag.action = Action.REMOVE;
+                                increment( deletes, shape);
+                                undoData.add(bag);
+                            }
                         }
-                        
-                    }, null);
+                    }
                 }
-            }
-            HashSet<Point> points = new HashSet<Point>(selection);
-            HashSet<EditGeom> allAffectedGeoms = new HashSet<EditGeom>();
-            for( Point point : points ) {
-                allAffectedGeoms.addAll(blackboard.getGeoms(point.getX(), point.getY()));
-            }
-            
-            Map<PrimitiveShape, Integer> deletes = new HashMap<PrimitiveShape, Integer>();
-            
-            for( EditGeom geom : allAffectedGeoms ) {
-                for( PrimitiveShape shape : geom ) {
-                    for( int i = 0; i < shape.getNumPoints(); i++ ) {
-                        Point shapePoint = shape.getPoint(i);
-                        if (points.contains(shapePoint)) {
+                for( Point point : points ) {
+                    blackboard.removeCoordsAtPoint(point.getX(), point.getY());
+                }
+                for( PrimitiveShape shape : deletes.keySet() ) {
+                    if (shape.getNumPoints()>0 && shape.getEditGeom().getShapeType() == ShapeType.POLYGON) {
+                        if( !shape.getPoint(0).equals(shape.getPoint(shape.getNumPoints()-1)) ){
+                            List<Coordinate> singletonList = Collections.singletonList(shape
+                                    .getCoord(0));
+                            blackboard.addCoordinate(shape.getCoord(0), shape);
                             Bag bag = new Bag();
-                            bag.p = shapePoint;
-                            bag.coords = shape.getCoordsAt(i);
+                            bag.p = shape.getPoint(shape.getNumPoints()-1);
+                            bag.coords = singletonList;
                             bag.shape = shape;
-                            bag.index = i - get(deletes, shape);
-                            bag.action = Action.REMOVE;
-                            increment( deletes, shape);
+                            bag.index = -1;
+                            bag.action = Action.ADD;
                             undoData.add(bag);
                         }
                     }
+    
                 }
             }
-            for( Point point : points ) {
-                blackboard.removeCoordsAtPoint(point.getX(), point.getY());
-            }
-            for( PrimitiveShape shape : deletes.keySet() ) {
-                if (shape.getNumPoints()>0 && shape.getEditGeom().getShapeType() == ShapeType.POLYGON) {
-                    if( !shape.getPoint(0).equals(shape.getPoint(shape.getNumPoints()-1)) ){
-                        List<Coordinate> singletonList = Collections.singletonList(shape
-                                .getCoord(0));
-                        blackboard.addCoordinate(shape.getCoord(0), shape);
-                        Bag bag = new Bag();
-                        bag.p = shape.getPoint(shape.getNumPoints()-1);
-                        bag.coords = singletonList;
-                        bag.shape = shape;
-                        bag.index = -1;
-                        bag.action = Action.ADD;
-                        undoData.add(bag);
-                    }
-                }
-
+            finally {
+                handler.setCurrentState(oldState);
             }
         } finally {
-            handler.setCurrentState(oldState);
             blackboard.fireBatchedEvents();
         }
     }

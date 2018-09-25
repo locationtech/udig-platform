@@ -77,37 +77,44 @@ public class InsertVertexCommand extends AbstractCommand implements UndoableMapC
     public void rollback( IProgressMonitor monitor ) throws Exception {
         board.startBatchingEvents();
 
-        if (handler.getContext().getMapDisplay() != null) {
-            IAnimation animation = new DeleteVertexAnimation(point);
-            AnimationUpdater.runTimer(handler.getContext().getMapDisplay(), animation);
-        }
-        
-        board.removeCoordinate(index, toAdd, shape.get(new SubProgressMonitor(monitor, 1)));
-        board.selectionClear();
-        board.selectionAddAll(oldSelection);
-        board.fireBatchedEvents();
-        
-        if ( getMap()!=null )
-            handler.repaint();
+        try {
+            if (handler.getContext().getMapDisplay() != null) {
+                IAnimation animation = new DeleteVertexAnimation(point);
+                AnimationUpdater.runTimer(handler.getContext().getMapDisplay(), animation);
+            }
 
+            board.removeCoordinate(index, toAdd, shape.get(new SubProgressMonitor(monitor, 1)));
+            board.selectionClear();
+            board.selectionAddAll(oldSelection);
+        }
+        finally {
+            board.fireBatchedEvents();
+            
+            if ( getMap()!=null )
+                handler.repaint();
+        }
     }
 
     public void run( IProgressMonitor monitor ) throws Exception {
         board.startBatchingEvents();
-        PrimitiveShape primitiveShape = shape.get(new SubProgressMonitor(monitor, 1));
-        board.insertCoordinate( toAdd, index, primitiveShape);
-        oldSelection=new Selection(board.getSelection());
-        oldSelection.disconnect();
-        board.selectionClear();
-        board.selectionAdd(point);
-        board.fireBatchedEvents();
-        if ( getMap()!=null )
-            handler.repaint();
-        
-        if( mapDisplay!=null ){
-            IAnimation animation=new AddVertexAnimation(point.getX(), point.getY());
-            AnimationUpdater.runTimer(mapDisplay, animation);
-            handler.repaint();                
+        try {
+            PrimitiveShape primitiveShape = shape.get(new SubProgressMonitor(monitor, 1));
+            board.insertCoordinate( toAdd, index, primitiveShape);
+            oldSelection=new Selection(board.getSelection());
+            oldSelection.disconnect();
+            board.selectionClear();
+            board.selectionAdd(point);
+        }
+        finally {
+            board.fireBatchedEvents();
+            if ( getMap()!=null )
+                handler.repaint();
+            
+            if( mapDisplay!=null ){
+                IAnimation animation=new AddVertexAnimation(point.getX(), point.getY());
+                AnimationUpdater.runTimer(mapDisplay, animation);
+                handler.repaint();                
+            }
         }
     }
 
