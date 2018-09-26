@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -48,6 +49,7 @@ import org.locationtech.udig.tool.edit.internal.Messages;
 import org.locationtech.udig.tools.edit.EditPlugin;
 import org.locationtech.udig.tools.edit.EditToolHandler;
 import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.EditGeom;
 import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -175,8 +177,19 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
         	logTransformationWarning(e);
         }
         // creates a bbox filter using the bbox in the layer crs and grabs the features present in this bbox
+        // but not the edit geoms
+        FilterFactory2 factory = CommonFactoryFinder.getFilterFactory2(GeoTools.getDefaultHints());
         Filter createBBoxFilter = createBBoxFilter(bbox, editLayer, filterType);
-        FeatureCollection<SimpleFeatureType, SimpleFeature> collection = store.getFeatures(createBBoxFilter);
+        List<Filter> idFilterList = new LinkedList<Filter>();
+        for (EditGeom geom : handler.getCurrentEditBlackboard().getGeoms()) {
+                if (geom.getFeatureIDRef().get() != null) {
+                        idFilterList.add(factory.id(factory.featureId(geom.getFeatureIDRef().get())));
+                }
+        }
+        FeatureCollection<SimpleFeatureType, SimpleFeature> collection = store.getFeatures(
+                factory.and(
+                        createBBoxFilter,
+                        factory.not(factory.or(idFilterList))));
 
         FeatureIterator<SimpleFeature> reader = new IntersectTestingIterator(bbox, collection.features());
         
