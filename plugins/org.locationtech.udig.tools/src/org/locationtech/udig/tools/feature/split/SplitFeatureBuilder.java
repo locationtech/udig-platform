@@ -29,6 +29,7 @@ import org.locationtech.udig.tools.feature.util.GeoToolsUtils;
 import org.locationtech.udig.tools.geometry.internal.util.GeometryUtil;
 import org.locationtech.udig.tools.geometry.split.SplitStrategy;
 import org.locationtech.udig.tools.geometry.split.VertexStrategy;
+import org.locationtech.udig.tools.internal.i18n.Messages;
 
 /**
  * <p>
@@ -229,8 +230,7 @@ public final class SplitFeatureBuilder {
 				}
 			}
 			if (!existSplit) {
-				throw new CannotSplitException(
-						"The split line cannot split any features"); //$NON-NLS-1$ 
+			        throw new CannotSplitException(Messages.SplitFeatureBuilder_cannotSplit);
 			}
 		} catch (OperationNotFoundException e) {
 			throw makeFailException(e);

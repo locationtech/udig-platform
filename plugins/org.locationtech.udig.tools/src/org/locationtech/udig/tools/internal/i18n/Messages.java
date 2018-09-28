@@ -60,6 +60,8 @@ public class Messages extends NLS {
 
     public static String MergeTool_title_tool;
 
+    public static String SplitFeatureBuilder_cannotSplit;
+
     public static String SplitFeaturesCommand_did_not_apply_to_any_feature;
 
     public static String SplitFeaturesCommand_no_geometry_were_created;

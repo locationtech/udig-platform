@@ -110,6 +110,8 @@ public class Messages extends NLS {
 	public static String DeleteFeatureCommand_deleteFeature;
 	public static String RenderExecutorImpl_1;
 	public static String RenderExecutorImpl_2;
+	public static String EditManagerImpl_rollback_message;
+	public static String EditManagerImpl_commit_message;
 	public static String ExportProjectWizard_Title;
 	public static String ExportProjectWizard_Destination2;
 	public static String ExportProjectWizard_Exporting;
