@@ -182,8 +182,8 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
                 if (points.get(i - 1).point.equals(p)) {
                     return points.get(i - 1);
                 }
-                if (points.size() > i + 1 && points.get(i + 1).point.equals(p)) {
-                    return points.get(i + 1);
+                if (points.size() > i && points.get(i).point.equals(p)) {
+                    return points.get(i);
                 }
             }
             PointCoordMap bag = new PointCoordMap(p);
@@ -700,10 +700,11 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
                     } else if (!addedBefore && !addedAfter) {
                         attemptBeforeAndAfterVertexCollapse(startIndex);
                     }
-
+                    
+                    break;
                 }
 
-                break;
+                
             }
 
             if (toRemove != null) {

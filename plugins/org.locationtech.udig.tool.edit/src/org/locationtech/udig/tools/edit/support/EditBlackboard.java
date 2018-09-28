@@ -540,68 +540,109 @@ public class EditBlackboard {
             return;
 
         startBatchingEvents();
-        synchronized (this) {
-            for( Point start : selection ) {
-                Collection<LazyCoord> coords = selection.getLazyCoordinates(start);
-                Point end = Point.valueOf(start.getX() + diffX, start.getY() + diffY);
-                List<LazyCoord> endCoords = coordMapping.get(end);
-
-                coordMapping.get(start).removeAll(coords);
-                if (endCoords != null) {
-                    endCoords.addAll(coords);
-                } else {
-                    coordMapping.put(end, new LinkedList<LazyCoord>(coords));
-                }
-
-                Set<EditGeom> startGeoms = geomMapping.get(start);
-                Set<EditGeom> endGeoms = geomMapping.get(end);
-                Set<PrimitiveShape> changed = new HashSet<PrimitiveShape>();
-
-                if (startGeoms == null)
-                    continue;
-
-                endGeoms = endGeoms == null ? new HashSet<EditGeom>() : endGeoms;
-                Set<EditGeom> toRemove = new HashSet<EditGeom>();
-                Set<EditGeom> toAdd = new HashSet<EditGeom>();
-                for( Iterator<EditGeom> geomIter = startGeoms.iterator(); geomIter.hasNext(); ) {
-                    EditGeom geom = geomIter.next();
-                    geom.setChanged(true);
-
-                    for( PrimitiveShape shape : geom ) {
-
-                        for( Iterator<Point> shapeIter = shape.getMutator().getCopyIterator(); shapeIter
-                                .hasNext(); ) {
-                            Point p = shapeIter.next();
-                            if (p.equals(start)) {
-                                toAdd.add(geom);
-                                for( LazyCoord coord : coords ) {
-                                    if (shape.hasVertex(p, coord)) {
-                                        changed.add(shape);
-                                        shape.getMutator().move(start, end, coord);
-                                    }
-
+        try
+        {
+                synchronized (this) 
+                {
+                        // we need to order the points such that 
+                        //   if there exist two points such that
+                        //     point 1 has the end point x and point 2 has the start point x
+                        //   point 1  must come after point 2
+                        // no circles will build since we have same movement on all points
+                        List<Point> orderedStartPointList= new LinkedList<Point>();
+                        List<Point> orderedEndPointList= new LinkedList<Point>();
+                        // TODO IBK: ZZ faster sort operation
+                        for( Point start : selection ) 
+                        {
+                                Point end = Point.valueOf(start.getX() + diffX, start.getY() + diffY);
+                                int findIndexEnd = orderedStartPointList.lastIndexOf(end);
+                                int findIndexStart = orderedEndPointList.indexOf(start);
+                                if(findIndexEnd == -1 && findIndexStart == -1)
+                                {
+                                        orderedStartPointList.add(start);
+                                        orderedEndPointList.add(end);
                                 }
-                            }
+                                else if(findIndexStart == -1)
+                                {
+                                        orderedStartPointList.add(findIndexEnd+1, start);
+                                        orderedEndPointList.add(findIndexEnd+1, end);
+                                }
+                                else if(findIndexEnd == -1)
+                                {
+                                        orderedStartPointList.add(findIndexStart, start);
+                                        orderedEndPointList.add(findIndexStart, end);
+                                }// last case should never happen (see above)
+                                        
                         }
-                        if (shape.getMutator().getLazyCoordsAt(start).isEmpty())
-                            toRemove.add(geom);
+                        
+                    for( Point start : orderedStartPointList ) 
+                    {
+                        Collection<LazyCoord> coords = selection.getLazyCoordinates(start);
+                        Point end = Point.valueOf(start.getX() + diffX, start.getY() + diffY);
+                        List<LazyCoord> endCoords = coordMapping.get(end);
+        
+                        coordMapping.get(start).removeAll(coords);
+                        if (endCoords != null) {
+                            endCoords.addAll(coords);
+                        } else {
+                            coordMapping.put(end, new LinkedList<LazyCoord>(coords));
+                        }
+        
+                        Set<EditGeom> startGeoms = geomMapping.get(start);
+                        Set<EditGeom> endGeoms = geomMapping.get(end);
+                        /*ProjectPlugin.log("start("+start+"): "+startGeoms);
+                        ProjectPlugin.log("end("+end+"): "+endGeoms);*/
+                        Set<PrimitiveShape> changed = new HashSet<PrimitiveShape>();
+        
+                        if (startGeoms == null)
+                            continue;
+        
+                        endGeoms = endGeoms == null ? new HashSet<EditGeom>() : endGeoms;
+                        Set<EditGeom> toRemove = new HashSet<EditGeom>();
+                        Set<EditGeom> toAdd = new HashSet<EditGeom>();
+                        for( Iterator<EditGeom> geomIter = startGeoms.iterator(); geomIter.hasNext(); ) {
+                            EditGeom geom = geomIter.next();
+                            geom.setChanged(true);
+        
+                            for( PrimitiveShape shape : geom ) {
+        
+                                for( Iterator<Point> shapeIter = shape.getMutator().getCopyIterator(); shapeIter
+                                        .hasNext(); ) {
+                                    Point p = shapeIter.next();
+                                    if (p.equals(start)) {
+                                        toAdd.add(geom);
+                                        for( LazyCoord coord : coords ) {
+                                            if (shape.hasVertex(p, coord)) {
+                                                changed.add(shape);
+                                                shape.getMutator().move(start, end, coord);
+                                            }
+        
+                                        }
+                                    }
+                                }
+                                if (shape.getMutator().getLazyCoordsAt(start).isEmpty())
+                                    toRemove.add(geom);
+                            }
+        
+                            if (!changed.isEmpty())
+                                notify(new EditBlackboardEvent(this, changed, EventType.MOVE_POINT, start,
+                                        end));
+                        }
+                        endGeoms.addAll(toAdd);
+                        startGeoms.removeAll(toRemove);
+                        geomMapping.put(end, endGeoms);
+                        if (EditPlugin.isDebugging(EditPlugin.RUN_ASSERTIONS))
+                            for( EditGeom geom : endGeoms ) {
+                                geom.assertValid();
+                            }
+        
                     }
-
-                    if (!changed.isEmpty())
-                        notify(new EditBlackboardEvent(this, changed, EventType.MOVE_POINT, start,
-                                end));
                 }
-                endGeoms.addAll(toAdd);
-                startGeoms.removeAll(toRemove);
-                geomMapping.put(end, endGeoms);
-                if (EditPlugin.isDebugging(EditPlugin.RUN_ASSERTIONS))
-                    for( EditGeom geom : endGeoms ) {
-                        geom.assertValid();
-                    }
-
-            }
         }
-        fireBatchedEvents();
+        finally
+        {
+                fireBatchedEvents();
+        }
 
     }
 
