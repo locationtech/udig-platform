@@ -248,7 +248,10 @@ public class ScaleRatioLabel extends ContributionItem implements KeyListener, Fo
     }
     
     String toLabel( double scaleDenominator ){
-        return "1:" + nf.format( scaleDenominator );
+        if(scaleDenominator >= 1)
+            return "1:" + nf.format( scaleDenominator );
+        else
+            return nf.format( 1.0 / scaleDenominator ) + ":1";
     }
     
     private void updateScale() {
