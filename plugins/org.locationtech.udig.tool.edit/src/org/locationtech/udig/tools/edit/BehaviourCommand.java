@@ -100,7 +100,9 @@ public class BehaviourCommand extends AbstractCommand implements PostDeterminedE
     public void rollback( IProgressMonitor monitor ) throws Exception {
         monitor.beginTask(getName(), commandsRan.size()*12);
         monitor.worked(2);
-        for( UndoableMapCommand command : commandsRan ) {
+        for(int i = commandsRan.size()-1; i>=0; i--)
+        {
+            UndoableMapCommand command = commandsRan.get(i);
             command.setMap(getMap());
             IProgressMonitor submonitor = new SubProgressMonitor(monitor, 10);
             command.rollback(submonitor);
