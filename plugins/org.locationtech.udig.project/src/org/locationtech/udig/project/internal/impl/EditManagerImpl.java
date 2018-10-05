@@ -689,17 +689,21 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
     public void refreshEditFeature() {
         Layer editLayer = getEditLayerInternal();
         try {
-            FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools
-                    .getDefaultHints());
+            FilterFactory filterFactory = CommonFactoryFinder
+                    .getFilterFactory(GeoTools.getDefaultHints());
             FeatureStore resource = editLayer.getResource(FeatureStore.class, null);
             Set<Identifier> fids = FeatureUtils.stringToId(filterFactory, getEditFeature().getID());
             Id filter = filterFactory.id(fids);
             FeatureIterator<SimpleFeature> features = resource.getFeatures(filter).features();
-            if (features.hasNext()) {
-                SimpleFeature feature = features.next();
-                setEditFeature(feature, editLayer);
-            } else {
-                setEditFeature(null, editLayer);
+            try {
+                if (features.hasNext()) {
+                    SimpleFeature feature = features.next();
+                    setEditFeature(feature, editLayer);
+                } else {
+                    setEditFeature(null, editLayer);
+                }
+            } finally {
+                features.close();
             }
 
         } catch (Exception e) {
