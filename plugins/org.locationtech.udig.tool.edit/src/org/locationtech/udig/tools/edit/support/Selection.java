@@ -297,10 +297,14 @@ public class Selection extends AbstractSet<Point> implements Set<Point> {
             if (e.isEmpty())
                 return;
             e.get(0).getEditBlackboard().startBatchingEvents();
-            for( EditBlackboardEvent event : e ) {
-                changed(event);
+            try {
+                for( EditBlackboardEvent event : e ) {
+                    changed(event);
+                }
             }
-            e.get(0).getEditBlackboard().fireBatchedEvents();
+            finally {
+                e.get(0).getEditBlackboard().fireBatchedEvents();
+            }
         }
 
     }

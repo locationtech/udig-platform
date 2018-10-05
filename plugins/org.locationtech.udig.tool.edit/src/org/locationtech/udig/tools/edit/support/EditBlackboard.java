@@ -540,68 +540,72 @@ public class EditBlackboard {
             return;
 
         startBatchingEvents();
-        synchronized (this) {
-            for( Point start : selection ) {
-                Collection<LazyCoord> coords = selection.getLazyCoordinates(start);
-                Point end = Point.valueOf(start.getX() + diffX, start.getY() + diffY);
-                List<LazyCoord> endCoords = coordMapping.get(end);
-
-                coordMapping.get(start).removeAll(coords);
-                if (endCoords != null) {
-                    endCoords.addAll(coords);
-                } else {
-                    coordMapping.put(end, new LinkedList<LazyCoord>(coords));
-                }
-
-                Set<EditGeom> startGeoms = geomMapping.get(start);
-                Set<EditGeom> endGeoms = geomMapping.get(end);
-                Set<PrimitiveShape> changed = new HashSet<PrimitiveShape>();
-
-                if (startGeoms == null)
-                    continue;
-
-                endGeoms = endGeoms == null ? new HashSet<EditGeom>() : endGeoms;
-                Set<EditGeom> toRemove = new HashSet<EditGeom>();
-                Set<EditGeom> toAdd = new HashSet<EditGeom>();
-                for( Iterator<EditGeom> geomIter = startGeoms.iterator(); geomIter.hasNext(); ) {
-                    EditGeom geom = geomIter.next();
-                    geom.setChanged(true);
-
-                    for( PrimitiveShape shape : geom ) {
-
-                        for( Iterator<Point> shapeIter = shape.getMutator().getCopyIterator(); shapeIter
-                                .hasNext(); ) {
-                            Point p = shapeIter.next();
-                            if (p.equals(start)) {
-                                toAdd.add(geom);
-                                for( LazyCoord coord : coords ) {
-                                    if (shape.hasVertex(p, coord)) {
-                                        changed.add(shape);
-                                        shape.getMutator().move(start, end, coord);
+        try {
+            synchronized (this) {
+                for( Point start : selection ) {
+                    Collection<LazyCoord> coords = selection.getLazyCoordinates(start);
+                    Point end = Point.valueOf(start.getX() + diffX, start.getY() + diffY);
+                    List<LazyCoord> endCoords = coordMapping.get(end);
+    
+                    coordMapping.get(start).removeAll(coords);
+                    if (endCoords != null) {
+                        endCoords.addAll(coords);
+                    } else {
+                        coordMapping.put(end, new LinkedList<LazyCoord>(coords));
+                    }
+    
+                    Set<EditGeom> startGeoms = geomMapping.get(start);
+                    Set<EditGeom> endGeoms = geomMapping.get(end);
+                    Set<PrimitiveShape> changed = new HashSet<PrimitiveShape>();
+    
+                    if (startGeoms == null)
+                        continue;
+    
+                    endGeoms = endGeoms == null ? new HashSet<EditGeom>() : endGeoms;
+                    Set<EditGeom> toRemove = new HashSet<EditGeom>();
+                    Set<EditGeom> toAdd = new HashSet<EditGeom>();
+                    for( Iterator<EditGeom> geomIter = startGeoms.iterator(); geomIter.hasNext(); ) {
+                        EditGeom geom = geomIter.next();
+                        geom.setChanged(true);
+    
+                        for( PrimitiveShape shape : geom ) {
+    
+                            for( Iterator<Point> shapeIter = shape.getMutator().getCopyIterator(); shapeIter
+                                    .hasNext(); ) {
+                                Point p = shapeIter.next();
+                                if (p.equals(start)) {
+                                    toAdd.add(geom);
+                                    for( LazyCoord coord : coords ) {
+                                        if (shape.hasVertex(p, coord)) {
+                                            changed.add(shape);
+                                            shape.getMutator().move(start, end, coord);
+                                        }
+    
                                     }
-
                                 }
                             }
+                            if (shape.getMutator().getLazyCoordsAt(start).isEmpty())
+                                toRemove.add(geom);
                         }
-                        if (shape.getMutator().getLazyCoordsAt(start).isEmpty())
-                            toRemove.add(geom);
+    
+                        if (!changed.isEmpty())
+                            notify(new EditBlackboardEvent(this, changed, EventType.MOVE_POINT, start,
+                                    end));
                     }
-
-                    if (!changed.isEmpty())
-                        notify(new EditBlackboardEvent(this, changed, EventType.MOVE_POINT, start,
-                                end));
+                    endGeoms.addAll(toAdd);
+                    startGeoms.removeAll(toRemove);
+                    geomMapping.put(end, endGeoms);
+                    if (EditPlugin.isDebugging(EditPlugin.RUN_ASSERTIONS))
+                        for( EditGeom geom : endGeoms ) {
+                            geom.assertValid();
+                        }
+    
                 }
-                endGeoms.addAll(toAdd);
-                startGeoms.removeAll(toRemove);
-                geomMapping.put(end, endGeoms);
-                if (EditPlugin.isDebugging(EditPlugin.RUN_ASSERTIONS))
-                    for( EditGeom geom : endGeoms ) {
-                        geom.assertValid();
-                    }
-
             }
         }
-        fireBatchedEvents();
+        finally {
+            fireBatchedEvents();
+        }
 
     }
 
@@ -618,58 +622,62 @@ public class EditBlackboard {
 
         if (deltaX == 0 && deltaY == 0)
             return;
-        synchronized (this) {
-            Set<Point> moved = new HashSet<Point>();
-            Map<Point, List<LazyCoord>> newCoordMapping = new HashMap<Point, List<LazyCoord>>();
+        startBatchingEvents();
+        try {
+            synchronized (this) {
+                Set<Point> moved = new HashSet<Point>();
+                Map<Point, List<LazyCoord>> newCoordMapping = new HashMap<Point, List<LazyCoord>>();
 
-            startBatchingEvents();
-            for( PrimitiveShape shape : geom ) {
-                for( Point point : shape ) {
-                    if (moved.contains(point))
-                        continue;
-
-                    moved.add(point);
-                    Point destPoint = Point.valueOf(point.getX() + deltaX, point.getY() + deltaY);
-
-                    List<LazyCoord> coords = shape.getMutator().getLazyCoordsAt(point);
-                    coordMapping.get(point).removeAll(coords);
-
-                    newCoordMapping.put(destPoint, coords);
-
-                    geomMapping.get(point).remove(geom);
-
-                    notify(new EditBlackboardEvent(this, Collections.singleton(shape),
-                            EventType.MOVE_POINT, point, destPoint));
+                for( PrimitiveShape shape : geom ) {
+                    for( Point point : shape ) {
+                        if (moved.contains(point))
+                            continue;
+    
+                        moved.add(point);
+                        Point destPoint = Point.valueOf(point.getX() + deltaX, point.getY() + deltaY);
+    
+                        List<LazyCoord> coords = shape.getMutator().getLazyCoordsAt(point);
+                        coordMapping.get(point).removeAll(coords);
+    
+                        newCoordMapping.put(destPoint, coords);
+    
+                        geomMapping.get(point).remove(geom);
+    
+                        notify(new EditBlackboardEvent(this, Collections.singleton(shape),
+                                EventType.MOVE_POINT, point, destPoint));
+                    }
                 }
-            }
 
-            for( PrimitiveShape shape : geom ) {
-                shape.getMutator().move(deltaX, deltaY);
-            }
-
-            for( Map.Entry<Point, List<LazyCoord>> entry : newCoordMapping.entrySet() ) {
-                List<LazyCoord> destCoords = coordMapping.get(entry.getKey());
-                if (destCoords == null) {
-                    destCoords = new ArrayList<LazyCoord>();
-                    coordMapping.put(entry.getKey(), destCoords);
+                for( PrimitiveShape shape : geom ) {
+                    shape.getMutator().move(deltaX, deltaY);
                 }
-                destCoords.addAll(entry.getValue());
 
-                Set<EditGeom> destGeoms = geomMapping.get(entry.getKey());
-                if (destGeoms == null) {
-                    destGeoms = new HashSet<EditGeom>();
-                    destGeoms.add(geom);
-                    geomMapping.put(entry.getKey(), destGeoms);
-                } else {
-                    if (!destGeoms.contains(geom))
+                for( Map.Entry<Point, List<LazyCoord>> entry : newCoordMapping.entrySet() ) {
+                    List<LazyCoord> destCoords = coordMapping.get(entry.getKey());
+                    if (destCoords == null) {
+                        destCoords = new ArrayList<LazyCoord>();
+                        coordMapping.put(entry.getKey(), destCoords);
+                    }
+                    destCoords.addAll(entry.getValue());
+
+                    Set<EditGeom> destGeoms = geomMapping.get(entry.getKey());
+                    if (destGeoms == null) {
+                        destGeoms = new HashSet<EditGeom>();
                         destGeoms.add(geom);
+                        geomMapping.put(entry.getKey(), destGeoms);
+                    } else {
+                        if (!destGeoms.contains(geom))
+                            destGeoms.add(geom);
+                    }
                 }
-            }
 
-            geom.assertValid();
-            geom.setChanged(true);
+                geom.assertValid();
+                geom.setChanged(true);
+            }
         }
-        fireBatchedEvents();
+        finally {
+            fireBatchedEvents();
+        }
     }
 
     /**
