@@ -160,8 +160,7 @@ public class EditBlackboard {
                         "EditBlackboard does not contain EditGeom " + geom); //$NON-NLS-1$
             Point p = Point.valueOf(x, y);
             geomClosest = geom.getClosestEdge(p, treatUnknownAsPolygon);
-            Coordinate toCoord = toCoord(p);
-            LazyCoord lazyCoord = doInsertCoord(p, toCoord, geomClosest.indexOfPrevious+1,
+            LazyCoord lazyCoord = doInsertCoord(p, geomClosest.addedCoord, geomClosest.indexOfPrevious+1,
                     geomClosest.part);
 
             geom.assertValid();
@@ -199,8 +198,9 @@ public class EditBlackboard {
         synchronized (this) {
             candidates = getCandidates(x, y, treatUnknownAsPolygon);
             Point p = Point.valueOf(x, y);
-            Coordinate toCoord = toCoord(p);
+           
             if (candidates.size() == 0) {
+                Coordinate toCoord = toCoord(p);
                 EditGeom editGeom = getGeoms().get(0);
                 LazyCoord lazyCoord = doAddCoord(p, toCoord, editGeom.getShell());
                 editGeom.getShell().assertValid();
@@ -212,7 +212,7 @@ public class EditBlackboard {
                 for( ClosestEdge edge : candidates ) {
                     EditGeom geom = edge.shape;
 
-                    doInsertCoord(p, toCoord, edge.indexOfPrevious+1, edge.part);
+                    doInsertCoord(p, edge.addedCoord, edge.indexOfPrevious+1, edge.part);
                     changed.put(geom, edge.part);
 
                     edge.part.assertValid();
