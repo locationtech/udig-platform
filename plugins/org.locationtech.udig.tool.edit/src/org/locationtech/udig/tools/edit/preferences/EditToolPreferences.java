@@ -77,7 +77,11 @@ public class EditToolPreferences extends FieldEditorPreferencePage
         addField(new ColorFieldEditor(PreferenceConstants.P_SNAP_CIRCLE_COLOR, 
         		Messages.EditToolPreferences_feedbackColor,
                 getFieldEditorParent()));
-        
+
+        addField(new IntegerFieldEditor(PreferenceConstants.P_MESSAGE_DISPLAY_DELAY, 
+                Messages.EditToolPreferences_messageDisplayDelay,
+                getFieldEditorParent()));
+
         addField(new FeatureEditorFieldEditor(getFieldEditorParent()));
     }
 

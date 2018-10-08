@@ -200,7 +200,7 @@ public class PreferenceUtil {
     }
 
     public short getMessageDisplayDelay() {
-        return 2000;
+        return (short) store.getInt(PreferenceConstants.P_MESSAGE_DISPLAY_DELAY);
     }
     
 }

@@ -42,4 +42,9 @@ public class PreferenceConstants {
      */
     public static final int P_DEFAULT_DELETE_SEARCH_SCALEFACTOR = 6;
 
+    /**
+     * The message display delay.
+     */
+    public static final String P_MESSAGE_DISPLAY_DELAY = "P_MESSAGE_DISPLAY_DELAY"; //$NON-NLS-1$
+
 }

@@ -41,6 +41,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
         store.setDefault(PreferenceConstants.P_DELETE_TOOL_CONFIRM, true); 
         store.setDefault(PreferenceConstants.P_DELETE_TOOL_SEARCH_SCALEFACTOR,
                 PreferenceConstants.P_DEFAULT_DELETE_SEARCH_SCALEFACTOR);
+        store.setDefault(PreferenceConstants.P_MESSAGE_DISPLAY_DELAY, 2000);
     }
 
 }
