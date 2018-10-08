@@ -221,8 +221,10 @@ public class MessageBubble extends AbstractDrawCommand implements IAnimation {
     @Override
     public void setValid( boolean valid ) {
         super.setValid(valid);
-        display.removeMouseListener(mouseListener);
-        display.removeMouseWheelListener(wheelListener);
+        if (display != null) {
+            display.removeMouseListener(mouseListener);
+            display.removeMouseWheelListener(wheelListener);
+        }
     }
     
     private MapMouseListener mouseListener=new MapMouseListener(){
