@@ -75,6 +75,7 @@ public class Messages extends NLS {
 	public static String EditToolPreferences_selectedGeom;
 	public static String EditToolPreferences_advanced_editing_name;
 	public static String EditToolPreferences_vertexDiameter;
+	public static String EditToolPrefernece_fillTransparency;
 	public static String EditToolPreferences_grid;
 	public static String EditToolPreferences_all;
 	public static String EditToolPreferences_current;

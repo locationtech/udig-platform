@@ -74,6 +74,12 @@ public class EditToolPreferences extends FieldEditorPreferencePage
         		Messages.EditToolPreferences_vertexDiameter,
                 getFieldEditorParent()));
 
+        IntegerFieldEditor fillTransparency = new IntegerFieldEditor(PreferenceConstants.P_FILL_TRANSPARENCY,
+                Messages.EditToolPrefernece_fillTransparency,
+                getFieldEditorParent());
+        fillTransparency.setValidRange(0, 100);
+        addField(fillTransparency);
+
         addField(new ColorFieldEditor(PreferenceConstants.P_SNAP_CIRCLE_COLOR, 
         		Messages.EditToolPreferences_feedbackColor,
                 getFieldEditorParent()));
