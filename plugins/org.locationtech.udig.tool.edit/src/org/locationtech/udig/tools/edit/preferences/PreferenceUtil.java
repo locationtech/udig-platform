@@ -202,5 +202,9 @@ public class PreferenceUtil {
     public short getMessageDisplayDelay() {
         return 2000;
     }
+
+    public boolean collapseVertices() {
+        return store.getBoolean(PreferenceConstants.P_COLLAPSE_VERTICES);
+    }
     
 }

@@ -72,7 +72,7 @@ public class EditBlackboard {
      */
     public EditBlackboard(int width, int height, AffineTransform toScreen,
             MathTransform layerToMap) {
-        collapseVertices = true;
+        collapseVertices = PreferenceUtil.instance().collapseVertices();
         this.width = width;
         this.height = height;
         coordMapping = new HashMap<Point, List<LazyCoord>>();
