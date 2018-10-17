@@ -226,17 +226,28 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
                 }
                 break;
             case Renderer.RENDER_REQUEST:
-                boolean oldValue = executor.eDeliver();
-                executor.eSetDeliver(false);
-                executor.setState(msg.getNewIntValue());
-                executor.eSetDeliver(oldValue);
+                //use this block and synchronization, such that we won't lose delivery because of too many rendering calls
+                synchronized (getExecutor()) {
+                    boolean oldValue = executor.eDeliver();
+                    try {
+                        executor.eSetDeliver(false);
+                        executor.setState(msg.getNewIntValue());
+                    } finally {
+                        executor.eSetDeliver(oldValue);
+                    }
+                }
                 ((RenderExecutorComposite) executor).refresh();
                 break;
             case Renderer.STARTING:
-                boolean oldValue2 = executor.eDeliver();
-                executor.eSetDeliver(false);
-                executor.setState(msg.getNewIntValue());
-                executor.eSetDeliver(oldValue2);
+                synchronized (getExecutor()) {
+                    boolean oldValue2 = executor.eDeliver();
+                    try {
+                        executor.eSetDeliver(false);
+                        executor.setState(msg.getNewIntValue());
+                    } finally {
+                        executor.eSetDeliver(oldValue2);
+                    }
+                }
                 break;
             }
         }
