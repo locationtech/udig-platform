@@ -42,4 +42,9 @@ public class PreferenceConstants {
      */
     public static final int P_DEFAULT_DELETE_SEARCH_SCALEFACTOR = 6;
 
+    /**
+     * The collapse vertices setting in edit blackboard.
+     */
+    public static final String P_COLLAPSE_VERTICES = "P_COLLAPSE_VERTICES"; //$NON-NLS-1$
+
 }
