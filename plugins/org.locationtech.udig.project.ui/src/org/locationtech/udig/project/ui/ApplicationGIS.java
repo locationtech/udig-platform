@@ -802,7 +802,9 @@ public class ApplicationGIS {
                 RendererCreator decisive = new RendererCreatorImpl();
                 decisive.setContext(tools);
 
-                decisive.getLayers().addAll(layersToRender);
+                synchronized (decisive.getLayers()) {
+                    decisive.getLayers().addAll(layersToRender);
+                }
 
                 SortedSet<RenderContext> sortedContexts = new TreeSet<RenderContext>(
                         decisive.getConfiguration());
