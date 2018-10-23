@@ -202,7 +202,7 @@ public class WMSDescribeLayer {
 
         getmap.setBBox( bbox );
         String srs = CRS.toSRS(bbox.getCoordinateReferenceSystem() );
-        //getmap.setSRS( code != null ? code : srs );
+        getmap.setSRS( code != null ? code : srs );
         
         getmap.setProperty( GetMapRequest.LAYERS, wmslayer.getName() );
         int width = map.getRenderManager().getMapDisplay().getWidth();
