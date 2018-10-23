@@ -154,7 +154,7 @@ public class PreferenceUtil {
      */
     public Color getDrawVertexFillColor() {
         Color base = getSelectionColor();
-        return reduceTransparency(base,.35f);
+        return reduceTransparency(base, (float) store.getInt(PreferenceConstants.P_VERTEX_TRANSPARENCY) / 100);
     }
 
     /**
