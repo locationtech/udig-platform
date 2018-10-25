@@ -43,9 +43,8 @@ public class PreferenceConstants {
     public static final int P_DEFAULT_DELETE_SEARCH_SCALEFACTOR = 6;
 
     /** 
-     * The factor to reduce the transparency of the color used for the vertex of 
-     * the edit geoms.
+     * The opacity of color used for the vertex of the edit geoms.
      */
-    public static final String P_VERTEX_TRANSPARENCY = "P_VERTEX_TRANSPARENCY"; //$NON-NLS-1$
+    public static final String P_VERTEX_OPACITY = "P_VERTEX_OPACITY"; //$NON-NLS-1$
 
 }
