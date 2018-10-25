@@ -74,11 +74,11 @@ public class EditToolPreferences extends FieldEditorPreferencePage
         		Messages.EditToolPreferences_vertexDiameter,
                 getFieldEditorParent()));
 
-        IntegerFieldEditor vertexTransparency = new IntegerFieldEditor(PreferenceConstants.P_VERTEX_TRANSPARENCY,
-                Messages.EditToolPreferneces_vertexTransparency,
+        IntegerFieldEditor vertexOpacity = new IntegerFieldEditor(PreferenceConstants.P_VERTEX_OPACITY,
+                Messages.EditToolPreferneces_vertexOpacity,
                 getFieldEditorParent());
-        vertexTransparency.setValidRange(0, 100);
-        addField(vertexTransparency);
+        vertexOpacity.setValidRange(0, 100);
+        addField(vertexOpacity);
 
         addField(new ColorFieldEditor(PreferenceConstants.P_SNAP_CIRCLE_COLOR, 
         		Messages.EditToolPreferences_feedbackColor,
