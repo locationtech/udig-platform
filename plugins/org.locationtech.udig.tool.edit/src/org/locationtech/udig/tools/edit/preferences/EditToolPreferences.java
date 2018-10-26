@@ -75,7 +75,7 @@ public class EditToolPreferences extends FieldEditorPreferencePage
                 getFieldEditorParent()));
 
         IntegerFieldEditor vertexOpacity = new IntegerFieldEditor(PreferenceConstants.P_VERTEX_OPACITY,
-                Messages.EditToolPreferneces_vertexOpacity,
+                Messages.EditToolPreferences_vertexOpacity,
                 getFieldEditorParent());
         vertexOpacity.setValidRange(0, 100);
         addField(vertexOpacity);
