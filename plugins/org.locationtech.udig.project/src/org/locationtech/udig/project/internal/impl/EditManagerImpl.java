@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceFactory;
 import org.locationtech.udig.core.internal.FeatureUtils;
 import org.locationtech.udig.project.AdaptableFeature;
 import org.locationtech.udig.project.EditManagerEvent;
@@ -24,25 +28,27 @@ import org.locationtech.udig.project.internal.Messages;
 import org.locationtech.udig.project.internal.ProjectPackage;
 import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.geotools.data.FeatureEvent;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
@@ -108,7 +114,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
     /**
      * Transaction used for the map.
      */
-    final UDIGTransaction transaction = new UDIGTransaction();
+    UDIGTransaction transaction = new UDIGTransaction();
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -397,6 +403,15 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
                 reader = results.features();
                 setEditFeature(reader.next(), editLayerInternal);
             } catch (Exception e2) {
+                // provide feedback in case of error
+                PlatformGIS.syncInDisplayThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        MessageDialog.openError(new Shell(), "commit problem",
+                                "An unrecoverable error occured while commiting the transaction. Connection will be reset and changes since last commit will be lost.");
+                        resetEditLayerConnection();
+                    }
+                });
                 setEditFeature(null, null);
             } finally {
                 if (reader != null) {
@@ -452,7 +467,15 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
             transaction.rollbackInternal();
 
         } catch (IOException e) {
-            throw e;
+            // provide feedback in case of error
+            PlatformGIS.syncInDisplayThread(new Runnable() {
+                @Override
+                public void run() {
+                    MessageDialog.openError(new Shell(), "rollback problem",
+                            "An unrecoverable error occured while executing rollbsack. Connection will be reset");
+                    resetEditLayerConnection();
+                }
+            });
         } finally {
             commitRollbackComplete();
 
@@ -859,4 +882,25 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
                     editLayerLocked));
     }
 
+    /**
+     * QUICK FIX to address problem with SQL Connection being closed for unknown reason. Method used
+     * if we catch an exception during {@link #commitTransaction()} and
+     * {@link #rollbackTransaction()}
+     */
+    private void resetEditLayerConnection() {
+        try {
+            // transaction is doomed so close it, reset service and reopen it.
+            transaction.closeInternal();
+            IServiceFactory serviceFactory = CatalogPlugin.getDefault().getServiceFactory();
+            ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
+            IService serviceOriginal = getMapInternal().getEditManagerInternal().getEditLayer()
+                    .findGeoResource(FeatureStore.class).service(new NullProgressMonitor());
+            catalog.replace(serviceOriginal.getID(),
+                    serviceFactory.createService(serviceOriginal.getConnectionParams()).get(0));
+            transaction = new UDIGTransaction();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 } // LayerManagerImpl
