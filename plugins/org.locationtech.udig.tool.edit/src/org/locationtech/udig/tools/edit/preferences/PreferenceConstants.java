@@ -43,10 +43,9 @@ public class PreferenceConstants {
     public static final int P_DEFAULT_DELETE_SEARCH_SCALEFACTOR = 6;
 
     /** 
-     * The factor to reduce the transparency of the color used to fill the geoms on 
-     * the EditBlackboard.
+     * The opacity of color used to fill the geoms on the EditBlackboard.
      */
-    public static final String P_FILL_TRANSPARENCY = "P_FILL_TRANSPARENCY"; //$NON-NLS-1$
+    public static final String P_FILL_OPACITY = "P_FILL_OPACITY"; //$NON-NLS-1$
     
     /** 
      * The opacity of color used for the vertex of the edit geoms.

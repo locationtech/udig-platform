@@ -129,7 +129,7 @@ public class PreferenceUtil {
      */
     public Color getDrawGeomsFill() {
         Color base = getSelectionColor();
-        return reduceTransparency(base, (float) store.getInt(PreferenceConstants.P_FILL_TRANSPARENCY) / 100);
+        return reduceTransparency(base, (float) store.getInt(PreferenceConstants.P_FILL_OPACITY) / 100);
     }
 
     /**
