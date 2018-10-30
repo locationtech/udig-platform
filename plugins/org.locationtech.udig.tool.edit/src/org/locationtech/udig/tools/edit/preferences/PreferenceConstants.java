@@ -47,5 +47,10 @@ public class PreferenceConstants {
      * the EditBlackboard.
      */
     public static final String P_FILL_TRANSPARENCY = "P_FILL_TRANSPARENCY"; //$NON-NLS-1$
+    
+    /** 
+     * The opacity of color used for the vertex of the edit geoms.
+     */
+    public static final String P_VERTEX_OPACITY = "P_VERTEX_OPACITY"; //$NON-NLS-1$
 
 }
