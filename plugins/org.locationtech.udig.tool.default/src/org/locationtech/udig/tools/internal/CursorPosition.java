@@ -11,7 +11,9 @@ package org.locationtech.udig.tools.internal;
 
 import java.awt.Point;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.text.ParseException;
 
 import org.locationtech.udig.project.command.Command;
 import org.locationtech.udig.project.internal.command.navigation.SetViewportCenterCommand;
@@ -54,6 +56,8 @@ import com.vividsolutions.jts.geom.Coordinate;
 public class CursorPosition extends AbstractTool {
 	private static final String ID = "CURSOR_POSITION_LABEL"; //$NON-NLS-1$
 
+	static char decimalSeparator = DecimalFormatSymbols.getInstance().getDecimalSeparator();
+	
 	/**
 	 * Creates an new instance of CursorPosition
 	 */
@@ -138,7 +142,7 @@ public class CursorPosition extends AbstractTool {
 		}
 		
 		private String getString(Coordinate coord) {
-			String value=getString(coord.x)+", "+getString(coord.y); //$NON-NLS-1$
+			String value=getString(coord.x)+" "+getString(coord.y); //$NON-NLS-1$
 			return value;
 		}
 		private String getString( double value ) {
@@ -157,7 +161,7 @@ public class CursorPosition extends AbstractTool {
             String string = format.format(value);
 
             String[] parts = string.split("\\.");
-            if(parts[0].length()>3){
+            if(parts.length > 3){
             	string = parts[0];
             }
             return string;
@@ -240,7 +244,9 @@ public class CursorPosition extends AbstractTool {
 		modifiedvalue = stripCode(modifiedvalue, upperCase);
 		if (tmp.length() != modifiedvalue.length())
 			latlong = true;
-		String[] components = modifiedvalue.split(","); //$NON-NLS-1$
+		
+		String[] components = modifiedvalue.split(
+				decimalSeparator == ',' ? " " : ","); //$NON-NLS-1$
 		if (components.length == 1) {
 			components = modifiedvalue.split(" "); //$NON-NLS-1$
 		}
@@ -253,9 +259,9 @@ public class CursorPosition extends AbstractTool {
 		if (components[1].endsWith(")") || components[1].endsWith("]")) { //$NON-NLS-1$ //$NON-NLS-2$
 			components[1] = components[1].substring(0, components[1].length()-1);
 		}
-		try {
-			double arg1 = Double.parseDouble(components[0]);
-			double arg0 = Double.parseDouble(components[1]);
+		try {			
+			double arg1 = NumberFormat.getInstance().parse(components[0]).doubleValue();
+			double arg0 = NumberFormat.getInstance().parse(components[1]).doubleValue();
 			Coordinate coord = new Coordinate(arg1, arg0);
 			if (latlong && crs!=null) {
 				try {
@@ -267,6 +273,8 @@ public class CursorPosition extends AbstractTool {
 			}
 			return coord;
 		} catch (NumberFormatException e) {
+			return null;
+		} catch (ParseException e1) {
 			return null;
 		}
 	}
