@@ -180,14 +180,14 @@ public class DrawCoordinateCommand extends AbstractDrawCommand {
     /**
      * @return the useCircle
      */
-    protected boolean isUseCircle() {
+    public boolean isUseCircle() {
         return useCircle;
     }
 
     /**
      * @param useCircle the useCircle to set
      */
-    protected void setUseCircle(boolean useCircle) {
+    public void setUseCircle(boolean useCircle) {
         this.useCircle = useCircle;
     }
 
