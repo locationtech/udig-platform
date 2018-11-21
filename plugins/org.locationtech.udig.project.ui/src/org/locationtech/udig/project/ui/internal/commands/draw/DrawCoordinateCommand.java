@@ -78,7 +78,7 @@ public class DrawCoordinateCommand extends AbstractDrawCommand {
         } else {
             this.crs = crs;
         }
-        useCircle = true;
+        useCircle = false;
     }
 
     /**
