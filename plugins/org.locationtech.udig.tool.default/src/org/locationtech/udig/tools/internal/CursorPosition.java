@@ -245,7 +245,7 @@ public class CursorPosition extends AbstractTool {
 		if (components.length == 1 ) {
 			components = StringUtils.split(modifiedvalue, ",");
 		}
-		if( components.length == 1 ) {
+		if( components.length >= 1 ) {
 			return null;
 		}
 		
@@ -270,6 +270,8 @@ public class CursorPosition extends AbstractTool {
 		} catch (NumberFormatException e) {
 		    return null;
 		} catch (ParseException e1) {
+		    return null;
+		} catch (Exception e1) {
 		    return null;
 		}
 	}
