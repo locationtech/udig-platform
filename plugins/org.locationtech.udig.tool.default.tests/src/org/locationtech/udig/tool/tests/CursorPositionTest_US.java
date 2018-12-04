@@ -1,12 +1,11 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/* uDig - User Friendly Desktop Internet GIS client
+ * https://locationtech.org/projects/technology.udig
+ * (C) 2018, Eclipse Foundation
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
- * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
- * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Eclipse Distribution
+ * License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
  */
 package org.locationtech.udig.tool.tests;
 
@@ -24,7 +23,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 
 public class CursorPositionTest_US extends CursorPositionTest {
 
-    @Rule public final DefaultLocaleRule defaultLocaleRule = new DefaultLocaleRule(Locale.US);
+    @Rule public final LocaleConfigureRule defaultLocaleRule = new LocaleConfigureRule(Locale.US);
     @Test  
     public void testParseString() throws Exception {
 

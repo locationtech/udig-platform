@@ -245,7 +245,7 @@ public class CursorPosition extends AbstractTool {
 		if (components.length == 1 ) {
 			components = StringUtils.split(modifiedvalue, ",");
 		}
-		if( components.length >= 1 ) {
+		if( components.length <= 1 ) {
 			return null;
 		}
 		

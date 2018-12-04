@@ -13,8 +13,6 @@ package org.locationtech.udig.tool.tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import java.util.Locale;
-
 import org.locationtech.udig.tools.internal.CursorPosition;
 
 import org.geotools.geometry.jts.JTS;
@@ -25,6 +23,11 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
+/**
+ * CursorPositionTest class containing parse string tests that should
+ * succeed independant of the used Locale. 
+ *
+ */
 public abstract class CursorPositionTest {
 
     @Test
