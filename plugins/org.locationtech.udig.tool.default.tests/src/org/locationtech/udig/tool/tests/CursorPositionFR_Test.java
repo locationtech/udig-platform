@@ -10,7 +10,6 @@
 package org.locationtech.udig.tool.tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 import java.util.Locale;
 
@@ -21,19 +20,17 @@ import org.locationtech.udig.tools.internal.CursorPosition;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
-public class CursorPositionTest_US extends CursorPositionTest {
+public class CursorPositionFR_Test extends CursorPositionTest {
 
-    @Rule public final LocaleConfigureRule defaultLocaleRule = new LocaleConfigureRule(Locale.US);
+    @Rule public final LocaleConfigureRule defaultLocaleRule = new LocaleConfigureRule(Locale.FRENCH);
     @Test  
     public void testParseString() throws Exception {
 
         //System.out.println(Locale.getDefault());
         
-        // Locales with '.' as decimal operator  parsing of numbers with ',' 
-        // causes a problem
+        // Locales with ',' as decimal operator  should work correctly
         Coordinate coord = CursorPosition.parse(" 124,88 234,22", DefaultGeographicCRS.WGS84); //$NON-NLS-1$
-        // wrong parsing due to wrongly used decimal seperator
-        assertEquals(new Coordinate(124, 88), coord);
+        assertEquals(new Coordinate(124.88, 234.22), coord);
         
         // Locales with ',' as decimal operator  should NOT work correctly
         coord = CursorPosition.parse(" 124.88, 234.22", DefaultGeographicCRS.WGS84); //$NON-NLS-1$
@@ -41,7 +38,7 @@ public class CursorPositionTest_US extends CursorPositionTest {
         
         // Locales with ',' as decimal operator  should NOT work correctly
         coord = CursorPosition.parse(" 124,88, 234,22", DefaultGeographicCRS.WGS84); //$NON-NLS-1$
-        assertNotEquals(new Coordinate(124.88, 234.22), coord);
+        assertEquals(new Coordinate(124.88, 234.22), coord);
 
     }
 
