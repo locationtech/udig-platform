@@ -45,7 +45,7 @@ public final class LocaleConfigureRule implements TestRule {
     public Statement apply(final Statement base, final Description description) {
         return new Statement() {
             final Locale defaultLocale = Locale.getDefault();
-            
+
             @Override
             public void evaluate() throws Throwable {
                 try {

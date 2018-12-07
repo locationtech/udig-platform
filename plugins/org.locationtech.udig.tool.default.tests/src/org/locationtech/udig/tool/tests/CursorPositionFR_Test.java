@@ -22,21 +22,23 @@ import com.vividsolutions.jts.geom.Coordinate;
 
 public class CursorPositionFR_Test extends CursorPositionTest {
 
-    @Rule public final LocaleConfigureRule defaultLocaleRule = new LocaleConfigureRule(Locale.FRENCH);
-    @Test  
+    @Rule
+    public final LocaleConfigureRule defaultLocaleRule = new LocaleConfigureRule(Locale.FRENCH);
+
+    @Test
     public void testParseString() throws Exception {
 
-        //System.out.println(Locale.getDefault());
-        
-        // Locales with ',' as decimal operator  should work correctly
+        // System.out.println(Locale.getDefault());
+
+        // Locales with ',' as decimal operator should work correctly
         Coordinate coord = CursorPosition.parse(" 124,88 234,22", DefaultGeographicCRS.WGS84); //$NON-NLS-1$
         assertEquals(new Coordinate(124.88, 234.22), coord);
-        
-        // Locales with ',' as decimal operator  should NOT work correctly
+
+        // Locales with ',' as decimal operator should NOT work correctly
         coord = CursorPosition.parse(" 124.88, 234.22", DefaultGeographicCRS.WGS84); //$NON-NLS-1$
         assertEquals(new Coordinate(124.88, 234.22), coord);
-        
-        // Locales with ',' as decimal operator  should NOT work correctly
+
+        // Locales with ',' as decimal operator should NOT work correctly
         coord = CursorPosition.parse(" 124,88, 234,22", DefaultGeographicCRS.WGS84); //$NON-NLS-1$
         assertEquals(new Coordinate(124.88, 234.22), coord);
 

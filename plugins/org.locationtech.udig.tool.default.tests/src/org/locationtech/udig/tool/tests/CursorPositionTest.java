@@ -24,17 +24,17 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import com.vividsolutions.jts.geom.Coordinate;
 
 /**
- * CursorPositionTest class containing parse string tests that should
- * succeed independant of the used Locale. 
+ * CursorPositionTest class containing parse string tests that should succeed independant of the
+ * used Locale.
  *
  */
 public abstract class CursorPositionTest {
 
     @Test
     public void testParseStringCommon() throws Exception {
-        
-        //System.out.println(Locale.getDefault());
-        
+
+        // System.out.println(Locale.getDefault());
+
         Coordinate coord = CursorPosition.parse("124,88", DefaultGeographicCRS.WGS84); //$NON-NLS-1$
         assertEquals(new Coordinate(124, 88), coord);
         coord = CursorPosition.parse("(124,88)", DefaultGeographicCRS.WGS84); //$NON-NLS-1$
