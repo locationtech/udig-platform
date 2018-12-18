@@ -39,7 +39,7 @@ public class InitMapCRS implements LayerInterceptor {
 	        // If the Current CRS==ViewportModel.BAD_DEFAULT then it can also be changed.  It means that the DEFAULT_CRS was
 	        // an illegal EPSG code
 	        CoordinateReferenceSystem crs = layer.getMap().getViewportModel().getCRS();
-			if( defaultCRS!=-1 && crs==ViewportModel.BAD_DEFAULT ){
+			if( defaultCRS!=-1 && crs!=ViewportModel.BAD_DEFAULT ){
 	            return;
 	        }
 	        List<ILayer> layers = layer.getMapInternal().getMapLayers();
