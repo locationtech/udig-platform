@@ -1,3 +1,12 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * https://locationtech.org/projects/technology.udig
+ * (C) 2018, Eclipse Foundation
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Eclipse Distribution
+ * License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
+ */
 package org.locationtech.udig.render.internal.gridcoverage.basic;
 
 import java.awt.Rectangle;
@@ -18,19 +27,15 @@ import org.opengis.parameter.ParameterValueGroup;
 public class BasicGridCoverage2DTestReader extends AbstractGridCoverage2DReader {
 
     private int reads;
-    
-    public int getReads() 
-    {
+
+    public int getReads() {
         return reads;
     }
 
-
-    public BasicGridCoverage2DTestReader() 
-    {
+    public BasicGridCoverage2DTestReader() {
         this.reads = 0;
     }
-    
-    
+
     @Override
     public Format getFormat() {
         return new Format() {
@@ -53,23 +58,10 @@ public class BasicGridCoverage2DTestReader extends AbstractGridCoverage2DReader 
             @Override
             public ParameterValueGroup getReadParameters() {
                 Map<String, Object> paramMap = new HashMap<String, Object>();
-                paramMap.put("name", "BasicGridCoverage2DFormat");  //$NON-NLS-1$//$NON-NLS-2$
-                paramMap.put(AbstractGridFormat.READ_GRIDGEOMETRY2D.getName().toString(),new GridGeometry2D(new Rectangle(), new Rectangle()));
-                
-/*                GridEnvelope2D gridEnvelope = new GridEnvelope2D(0, 0, mapDisplay.getWidth(), mapDisplay.getHeight());
-                org.opengis.geometry.Envelope env;
-                double west= bounds.getMinX();
-                double east= bounds.getMaxX();
-                double south= bounds.getMinY();
-                double north= bounds.getMaxY();
-                if (destinationCRS != null) {
-                    env = new ReferencedEnvelope(west, east, south, north, destinationCRS);
-                } else {
-                    DirectPosition2D minDp = new DirectPosition2D(west, south);
-                    DirectPosition2D maxDp = new DirectPosition2D(east, north);
-                    env = new Envelope2D(minDp, maxDp);
-                }
-                readGridGeometry2DParam.setValue(new GridGeometry2D(gridEnvelope, env)*/
+                paramMap.put("name", "BasicGridCoverage2DFormat"); //$NON-NLS-1$//$NON-NLS-2$
+                paramMap.put(AbstractGridFormat.READ_GRIDGEOMETRY2D.getName().toString(),
+                        new GridGeometry2D(new Rectangle(), new Rectangle()));
+
                 GeneralParameterValue[] gpv = new GeneralParameterValue[1];
                 gpv[0] = new Parameter<GridGeometry2D>(AbstractGridFormat.READ_GRIDGEOMETRY2D);
                 return new ParameterGroup(paramMap, gpv);
@@ -89,14 +81,13 @@ public class BasicGridCoverage2DTestReader extends AbstractGridCoverage2DReader 
             public ParameterValueGroup getWriteParameters() {
                 return null;
             }
-            
+
         };
     }
 
     @Override
     public GridCoverage2D read(GeneralParameterValue[] arg0)
-            throws IllegalArgumentException, IOException 
-    {
+            throws IllegalArgumentException, IOException {
         reads++;
         return null;
     }

@@ -33,7 +33,7 @@
                 <module>org.locationtech.udig.libs.tests</module>
                 <module>org.locationtech.udig.location.test</module>
                 <module>org.locationtech.udig.render.feature.basic.test</module>
-				<module>org.locationtech.udig.render.gridcoverage.basic.test</module>
+                <module>org.locationtech.udig.render.gridcoverage.basic.test</module>
                 <module>org.locationtech.udig.render.wms.basic.test</module>
                 <module>org.locationtech.udig.style.tests</module>
                 <module>org.locationtech.udig.tests.catalog.wmt</module>
