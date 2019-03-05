@@ -27,6 +27,7 @@ import org.locationtech.udig.project.ui.tool.AbstractTool;
 import org.locationtech.udig.project.ui.tool.ActionTool;
 import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
 import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ui.tool.IToolManager;
 import org.locationtech.udig.project.ui.tool.ModalTool;
 import org.locationtech.udig.project.ui.tool.Tool;
 import org.locationtech.udig.project.ui.tool.ToolConstants;
@@ -643,7 +644,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
                     if (selectionProviderInstance != null)
                         return selectionProviderInstance;
                 }
-                ToolManager m = (ToolManager) ApplicationGIS.getToolManager();
+                IToolManager m = ApplicationGIS.getToolManager();
                 ModalToolCategory cat = m.findModalCategory(getCategoryId());
                 if (cat != null){
                     selectionProviderInstance = cat.getSelectionProvider();

@@ -21,7 +21,7 @@ import org.locationtech.udig.project.tests.support.MapTests;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
 import org.locationtech.udig.project.ui.internal.MapEditorPart;
-
+import org.locationtech.udig.project.ui.tool.IToolManager;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -41,7 +41,7 @@ public class ToolManagerTest {
     @Ignore
     @Test
     public void testSetCurrentEditor() {
-        ToolManager manager = (ToolManager) ApplicationGIS.getToolManager();
+        IToolManager manager = ApplicationGIS.getToolManager();
         List<ActionToolCategory> categories = manager.getActiveToolCategories();
         ToolProxy tool=null;
         for( ActionToolCategory category : categories ) {
