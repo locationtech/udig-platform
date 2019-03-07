@@ -120,6 +120,7 @@ public class SelectVerticesWithBoxBehaviour implements LockingBehaviour {
                 handler.unlock(this);
                 selectBehaviour=null;
                 drawShapeCommand=null;
+                handler.repaint();
                 if( e.isShiftDown() )
                     return new SelectVertexCommand(handler.getCurrentGeom().getEditBlackboard(), points,
                             SelectVertexCommand.Type.ADD);
