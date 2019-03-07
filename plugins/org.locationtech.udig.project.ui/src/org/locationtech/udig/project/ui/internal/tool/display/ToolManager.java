@@ -26,50 +26,6 @@ import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.core.filter.AdaptingFilter;
-import org.locationtech.udig.core.filter.AdaptingFilterFactory;
-import org.locationtech.udig.core.internal.ExtensionPointList;
-import org.locationtech.udig.internal.ui.UDIGDNDProcessor;
-import org.locationtech.udig.internal.ui.UDIGDropHandler;
-import org.locationtech.udig.internal.ui.UDigByteAndLocalTransfer;
-import org.locationtech.udig.internal.ui.UiPlugin;
-import org.locationtech.udig.internal.ui.operations.OperationCategory;
-import org.locationtech.udig.internal.ui.operations.OperationMenuFactory;
-import org.locationtech.udig.internal.ui.operations.RunOperationsAction;
-import org.locationtech.udig.project.EditManagerEvent;
-import org.locationtech.udig.project.IEditManagerListener;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.ProjectPackage;
-import org.locationtech.udig.project.internal.commands.CreateMapCommand;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
-import org.locationtech.udig.project.ui.internal.MapEditor;
-import org.locationtech.udig.project.ui.internal.MapEditorPart;
-import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
-import org.locationtech.udig.project.ui.internal.MapPart;
-import org.locationtech.udig.project.ui.internal.Messages;
-import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
-import org.locationtech.udig.project.ui.internal.actions.Delete;
-import org.locationtech.udig.project.ui.internal.tool.ToolContext;
-import org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl;
-import org.locationtech.udig.project.ui.tool.IContextMenuContributionTool;
-import org.locationtech.udig.project.ui.tool.IToolManager;
-import org.locationtech.udig.project.ui.tool.ModalTool;
-import org.locationtech.udig.project.ui.tool.Tool;
-import org.locationtech.udig.project.ui.tool.ToolConstants;
-import org.locationtech.udig.project.ui.tool.options.PreferencesShortcutToolOptionsContributionItem;
-import org.locationtech.udig.project.ui.viewers.MapEditDomain;
-import org.locationtech.udig.ui.IDropAction;
-import org.locationtech.udig.ui.IDropHandlerListener;
-import org.locationtech.udig.ui.PlatformGIS;
-import org.locationtech.udig.ui.UDIGDragDropUtilities;
-import org.locationtech.udig.ui.ViewerDropLocation;
-import org.locationtech.udig.ui.operations.LazyOpFilter;
-import org.locationtech.udig.ui.operations.OpAction;
-import org.locationtech.udig.ui.operations.OpFilter;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -118,8 +74,50 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.dialogs.PropertyDialogAction;
-import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.ViewPart;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.filter.AdaptingFilter;
+import org.locationtech.udig.core.filter.AdaptingFilterFactory;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.internal.ui.UDIGDNDProcessor;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
+import org.locationtech.udig.internal.ui.UDigByteAndLocalTransfer;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.internal.ui.operations.OperationCategory;
+import org.locationtech.udig.internal.ui.operations.OperationMenuFactory;
+import org.locationtech.udig.internal.ui.operations.RunOperationsAction;
+import org.locationtech.udig.project.EditManagerEvent;
+import org.locationtech.udig.project.IEditManagerListener;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.commands.CreateMapCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.internal.actions.Delete;
+import org.locationtech.udig.project.ui.internal.tool.ToolContext;
+import org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl;
+import org.locationtech.udig.project.ui.tool.IContextMenuContributionTool;
+import org.locationtech.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.project.ui.tool.ModalTool;
+import org.locationtech.udig.project.ui.tool.Tool;
+import org.locationtech.udig.project.ui.tool.ToolConstants;
+import org.locationtech.udig.project.ui.tool.options.PreferencesShortcutToolOptionsContributionItem;
+import org.locationtech.udig.project.ui.viewers.MapEditDomain;
+import org.locationtech.udig.ui.IDropAction;
+import org.locationtech.udig.ui.IDropHandlerListener;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.UDIGDragDropUtilities;
+import org.locationtech.udig.ui.ViewerDropLocation;
+import org.locationtech.udig.ui.operations.LazyOpFilter;
+import org.locationtech.udig.ui.operations.OpAction;
+import org.locationtech.udig.ui.operations.OpFilter;
 import org.opengis.filter.Filter;
 
 /**
@@ -763,21 +761,25 @@ public class ToolManager implements IToolManager {
         addToolAction(toolAction);
         return toolAction;
     }
-    public ActionToolCategory findActionCategory( String id ) {
+    
+    @Override
+    public final ActionToolCategory findActionCategory( String id ) {
         for( ActionToolCategory category : actionCategories ) {
             if (category.getId().equals(id))
                 return category;
         }
         return null;
     }
-    MenuToolCategory findMenuCategory( String id ) {
+    @Override
+    public final MenuToolCategory findMenuCategory( String id ) {
         for( MenuToolCategory category : menuCategories ) {
             if (category.getId().equals(id))
                 return category;
         }
         return null;
     }
-    protected ModalToolCategory findModalCategory( String id ) {
+    @Override
+    public final ModalToolCategory findModalCategory( String id ) {
         for( ModalToolCategory category : modalCategories ) {
             String id2 = category.getId();
             if (id2.equals(id))

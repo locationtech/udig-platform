@@ -19,50 +19,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import org.locationtech.udig.aoi.AOIListener;
-import org.locationtech.udig.aoi.IAOIService;
-import org.locationtech.udig.core.IBlockingProvider;
-import org.locationtech.udig.core.IProvider;
-import org.locationtech.udig.core.StaticBlockingProvider;
-import org.locationtech.udig.core.feature.AdaptableFeatureCollection;
-import org.locationtech.udig.core.filter.AdaptingFilter;
-import org.locationtech.udig.core.filter.AdaptingFilterFactory;
-import org.locationtech.udig.internal.ui.UDIGDropHandler;
-import org.locationtech.udig.project.EditManagerEvent;
-import org.locationtech.udig.project.IEditManagerListener;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.ILayerListener;
-import org.locationtech.udig.project.IMapCompositionListener;
-import org.locationtech.udig.project.LayerEvent;
-import org.locationtech.udig.project.MapCompositionEvent;
-import org.locationtech.udig.project.command.AbstractCommand;
-import org.locationtech.udig.project.command.CompositeCommand;
-import org.locationtech.udig.project.command.MapCommand;
-import org.locationtech.udig.project.command.UndoableCommand;
-import org.locationtech.udig.project.command.UndoableComposite;
-import org.locationtech.udig.project.command.factory.EditCommandFactory;
-import org.locationtech.udig.project.command.factory.SelectionCommandFactory;
-import org.locationtech.udig.project.command.provider.FIDFeatureProvider;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.commands.edit.DeleteFeatureCommand;
-import org.locationtech.udig.project.internal.commands.edit.DeleteManyFeaturesCommand;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.IUDIGView;
-import org.locationtech.udig.project.ui.internal.MapEditor;
-import org.locationtech.udig.project.ui.internal.MapPart;
-import org.locationtech.udig.project.ui.internal.tool.display.ToolManager;
-import org.locationtech.udig.project.ui.tool.IToolContext;
-import org.locationtech.udig.project.ui.tool.ToolsConstants;
-import org.locationtech.udig.tool.select.internal.Messages;
-import org.locationtech.udig.tool.select.internal.ZoomSelection;
-import org.locationtech.udig.ui.FeatureTableControl;
-import org.locationtech.udig.ui.IDropAction;
-import org.locationtech.udig.ui.IDropHandlerListener;
-import org.locationtech.udig.ui.IFeatureTableLoadingListener;
-import org.locationtech.udig.ui.PlatformGIS;
-import org.locationtech.udig.ui.ProgressManager;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -127,12 +83,50 @@ import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.Schema;
 import org.geotools.filter.FilterAttributeExtractor;
 import org.geotools.filter.IllegalFilterException;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.CRS;
+import org.locationtech.udig.aoi.AOIListener;
+import org.locationtech.udig.aoi.IAOIService;
+import org.locationtech.udig.core.IBlockingProvider;
+import org.locationtech.udig.core.IProvider;
+import org.locationtech.udig.core.StaticBlockingProvider;
+import org.locationtech.udig.core.feature.AdaptableFeatureCollection;
+import org.locationtech.udig.core.filter.AdaptingFilter;
+import org.locationtech.udig.core.filter.AdaptingFilterFactory;
+import org.locationtech.udig.project.EditManagerEvent;
+import org.locationtech.udig.project.IEditManagerListener;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILayerListener;
+import org.locationtech.udig.project.IMapCompositionListener;
+import org.locationtech.udig.project.LayerEvent;
+import org.locationtech.udig.project.MapCompositionEvent;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.CompositeCommand;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.UndoableCommand;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.command.factory.EditCommandFactory;
+import org.locationtech.udig.project.command.factory.SelectionCommandFactory;
+import org.locationtech.udig.project.command.provider.FIDFeatureProvider;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.commands.edit.DeleteFeatureCommand;
+import org.locationtech.udig.project.internal.commands.edit.DeleteManyFeaturesCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.IUDIGView;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ui.tool.ToolsConstants;
+import org.locationtech.udig.tool.select.internal.Messages;
+import org.locationtech.udig.tool.select.internal.ZoomSelection;
+import org.locationtech.udig.ui.FeatureTableControl;
+import org.locationtech.udig.ui.IFeatureTableLoadingListener;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.ProgressManager;
 import org.opengis.feature.Feature;
 import org.opengis.feature.FeatureVisitor;
 import org.opengis.feature.simple.SimpleFeature;
@@ -143,10 +137,8 @@ import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.Id;
-import org.opengis.filter.IncludeFilter;
 import org.opengis.filter.identity.FeatureId;
 import org.opengis.filter.spatial.BBOX;
-import org.opengis.filter.spatial.Intersects;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
@@ -154,7 +146,6 @@ import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
 
 /**
  * Table view for selected Layer, may choose
@@ -593,7 +584,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         
         this.promoteSelection=new PromoteSelectionAction();
         
-        zoom=((ToolManager) ApplicationGIS.getToolManager()).createToolAction(ZoomSelection.ID, ToolsConstants.ZOOM_CATEGORY);
+        zoom=ApplicationGIS.getToolManager().createToolAction(ZoomSelection.ID, ToolsConstants.ZOOM_CATEGORY);
         icon = AbstractUIPlugin.imageDescriptorFromPlugin( SelectPlugin.ID, "icons/elcl16/zoom_select_co.png"); //$NON-NLS-1$
         zoom.setImageDescriptor( icon );
         zoom.setText(Messages.TableView_zoomToolText);
@@ -1379,20 +1370,21 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
 	        searchWidget.setEditable(true);
 	        searchWidget.addListener(SWT.FocusIn, new Listener(){
 	            public void handleEvent( Event e ) {
-                    if( searchWidget.getForeground().equals(systemColor) ){
-                        searchWidget.setForeground(e.display.getSystemColor(SWT.COLOR_BLACK));
-                        searchWidget.setText(""); //$NON-NLS-1$
-                    }
-					ApplicationGIS.getToolManager().unregisterActions(TableView.this);
+                        if (searchWidget.getForeground().equals(systemColor)) {
+                            searchWidget.setForeground(e.display.getSystemColor(SWT.COLOR_BLACK));
+                            searchWidget.setText(""); //$NON-NLS-1$
+                        }
+                        ApplicationGIS.getToolManager().unregisterActions(TableView.this);
 	            }
 	        });
 	        searchWidget.addListener(SWT.FocusOut, new Listener(){
 	            public void handleEvent( Event e ) {
-	                    if( !searchWidget.getForeground().equals(systemColor) && searchWidget.getText().trim().length()==0 ){
-	                        searchWidget.setForeground(systemColor);
-	                        searchWidget.setText(""); //$NON-NLS-1$
-	                    }
-	                    ApplicationGIS.getToolManager().registerActionsWithPart(TableView.this);
+                        if (!searchWidget.getForeground().equals(systemColor)
+                                && searchWidget.getText().trim().length() == 0) {
+                            searchWidget.setForeground(systemColor);
+                            searchWidget.setText(""); //$NON-NLS-1$
+                        }
+                        ApplicationGIS.getToolManager().registerActionsWithPart(TableView.this);
 	            }
 	        });
 			searchWidget.addListener(SWT.KeyUp, this);	
