@@ -48,13 +48,15 @@ public class DistanceTool extends SimpleTool implements KeyListener {
         super(MOUSE | MOTION);
     }
 
-    List<Point> points = new ArrayList<Point>();
+    List<Coordinate> points = new ArrayList<Coordinate>();
     DistanceFeedbackCommand command;
-    private Point now;
+    private Coordinate now;
 
+    double lastSegmentDistance = 0;
+    
     @Override
     protected void onMouseMoved( MapMouseEvent e ) {
-        now = e.getPoint();
+        now = getContext().pixelToWorld(e.x, e.y);
         if (command == null || points.isEmpty())
             return;
         Rectangle area = command.getValidArea();
@@ -66,7 +68,7 @@ public class DistanceTool extends SimpleTool implements KeyListener {
     }
 
     public void onMouseReleased( MapMouseEvent e ) {
-        Point current = e.getPoint();
+        Coordinate current = getContext().pixelToWorld(e.x, e.y);
         if (points.isEmpty() || !current.equals(points.get(points.size() - 1)))
             points.add(current);
         if (command == null || !command.isValid()) {
@@ -137,25 +139,24 @@ public class DistanceTool extends SimpleTool implements KeyListener {
     private double distance() throws TransformException {
         if (points.isEmpty())
             return 0;
-        Iterator<Point> iter = points.iterator();
-        Point start = iter.next();
+        Iterator<Coordinate> iter = points.iterator();
+        Coordinate start = iter.next();
         double distance = 0;
+        double lastSegment = 0;
         while( iter.hasNext() ) {
-            Point current = iter.next();
-            Coordinate begin = getContext().pixelToWorld(start.x, start.y);
-            Coordinate end = getContext().pixelToWorld(current.x, current.y);
-            distance += JTS.orthodromicDistance(begin, end, getContext().getCRS());
+        	Coordinate current = iter.next();
+        	lastSegment = JTS.orthodromicDistance(start, current, getContext().getCRS());
+            distance += lastSegment;
             start = current;
         }
 
         if (now != null) {
-            Point current = now;
-            Coordinate begin = getContext().pixelToWorld(start.x, start.y);
-            Coordinate end = getContext().pixelToWorld(current.x, current.y);
-            distance += JTS.orthodromicDistance(begin, end, getContext().getCRS());
-            start = current;
+        	Coordinate current = now;
+        	lastSegment = JTS.orthodromicDistance(start, current, getContext().getCRS());
+            distance += lastSegment;
         }
-
+        this.lastSegmentDistance = lastSegment;
+        
         return distance;
     }
 
@@ -187,12 +188,15 @@ public class DistanceTool extends SimpleTool implements KeyListener {
         }
 
         final Measure<Double, Length> distanceInMeter = Measure.valueOf(distance, SI.METER);
-
+        final Measure<Double, Length> lastSegmentInMeter = Measure.valueOf(lastSegmentDistance, SI.METER);
+        
         Measure<Double, Length> result = null;
+        Measure<Double, Length> resultLastSegment = null;
         if (units.equals( org.locationtech.udig.ui.preferences.PreferenceConstants.IMPERIAL_UNITS)){
             Measure<Double, Length> distanceInMiles = distanceInMeter.to(NonSI.MILE);
+            Measure<Double, Length> lastSegmentInMiles = lastSegmentInMeter.to(NonSI.MILE);
             double distInMilesValue = distanceInMiles.getValue().doubleValue();
-
+            double lastSegmentInMilesValue = lastSegmentInMiles.getValue().doubleValue();
 
             if (distInMilesValue > Measure.valueOf(1, NonSI.MILE).doubleValue(NonSI.MILE)) {
                 // everything longer than a mile
@@ -204,9 +208,21 @@ public class DistanceTool extends SimpleTool implements KeyListener {
                 // shorter than a foot
                 result = distanceInMiles.to(NonSI.INCH);
             }
+            
+            if (lastSegmentInMilesValue > Measure.valueOf(1, NonSI.MILE).doubleValue(NonSI.MILE)) {
+                // everything longer than a mile
+            	resultLastSegment = lastSegmentInMiles;
+            } else if (lastSegmentInMilesValue > Measure.valueOf(1, NonSI.FOOT).doubleValue(NonSI.MILE)) {
+                // everything longer that a foot
+            	resultLastSegment = lastSegmentInMiles.to(NonSI.FOOT);
+            } else {
+                // shorter than a foot
+            	resultLastSegment = lastSegmentInMiles.to(NonSI.INCH);
+            }
         } else {
             double distanceInMeterValue = distanceInMeter.getValue().doubleValue();
-
+            double lastSegmentInMeterValue = lastSegmentInMeter.getValue().doubleValue();
+            
             if (distanceInMeterValue > Measure.valueOf(1000, SI.METER).doubleValue(SI.METER)) {
                 result = distanceInMeter.to(SI.KILOMETER);
             } else if (distanceInMeterValue > Measure.valueOf(1, SI.METER).doubleValue(SI.METER)) {
@@ -216,9 +232,21 @@ public class DistanceTool extends SimpleTool implements KeyListener {
             } else {
                 result = distanceInMeter.to(SI.MILLIMETER);
             }
+            
+            if (lastSegmentInMeterValue > Measure.valueOf(1000, SI.METER).doubleValue(SI.METER)) {
+            	resultLastSegment = lastSegmentInMeter.to(SI.KILOMETER);
+            } else if (lastSegmentInMeterValue > Measure.valueOf(1, SI.METER).doubleValue(SI.METER)) {
+            	resultLastSegment = lastSegmentInMeter.to(SI.METER);
+            } else if (lastSegmentInMeterValue > Measure.valueOf(1, SI.CENTIMETER).doubleValue(SI.METER)) {
+            	resultLastSegment = lastSegmentInMeter.to(SI.CENTIMETER);
+            } else {
+            	resultLastSegment = lastSegmentInMeter.to(SI.MILLIMETER);
+            }
         }
 
-        final String message = MessageFormat.format(Messages.DistanceTool_distance, round(result.getValue(), 2) + " " + result.getUnit());
+        final String message = MessageFormat.format(Messages.DistanceTool_distance, 
+        		round(result.getValue(), 2) + " " + result.getUnit(), 
+        		round(resultLastSegment.getValue(), 2) + " " + resultLastSegment.getUnit());
 
         getContext().updateUI(new Runnable(){
             public void run() {
@@ -257,16 +285,17 @@ public class DistanceTool extends SimpleTool implements KeyListener {
             if (points.isEmpty())
                 return;
             graphics.setColor(Color.BLACK);
-            Iterator<Point> iter = points.iterator();
-            Point start = iter.next();
+            Iterator<Coordinate> iter = points.iterator();
+            Point start = getContext().worldToPixel(iter.next());
             while( iter.hasNext() ) {
-                Point current = iter.next();
+            	Point current = getContext().worldToPixel(iter.next());
                 graphics.drawLine(start.x, start.y, current.x, current.y);
                 start = current;
             }
             if (start == null || now == null)
                 return;
-            graphics.drawLine(start.x, start.y, now.x, now.y);
+            Point nowPoint = getContext().worldToPixel(now);
+            graphics.drawLine(start.x, start.y, nowPoint.x, nowPoint.y);
 
             displayResult();
         }

@@ -209,7 +209,7 @@ public class ModalToolCategory extends ToolCategory {
 		 */
 		@Override
 		protected boolean isActiveItem() {
-			return getTools().contains( ((ToolManager)manager).getActiveToolProxy());
+			return getTools().contains(manager.getActiveToolProxy());
 		}
     }
 

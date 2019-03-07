@@ -56,6 +56,9 @@ public class SelectAllFeaturesOp implements IOp {
         ReferencedEnvelope bounds = viewportModel.getBounds();
         CoordinateReferenceSystem dataCrs = schema.getCoordinateReferenceSystem();
         
+        if (dataCrs == null) {
+        	dataCrs = viewportModel.getCRS();
+        }
         ReferencedEnvelope newBounds = bounds.transform(dataCrs, true);
         
         String name = geometryDescriptor.getLocalName();

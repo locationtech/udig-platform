@@ -111,6 +111,11 @@ public class GridCoverageReaderRenderer extends RendererImpl {
     public synchronized void render( Graphics2D graphics, IProgressMonitor monitor )
             throws RenderException {
         try {
+                // faster rendering if out of scale
+                GridCoverageRenderState state = getRenderState(getContext());
+                double scale = state.context.getViewportModel().getScaleDenominator();
+                if (scale < state.minScale || scale > state.maxScale)
+                    return;
         	// get the current context
         	final IRenderContext currentContext = getContext();       	
         	final IGeoResource geoResource = currentContext.getGeoResource();

@@ -42,4 +42,14 @@ public class PreferenceConstants {
      */
     public static final int P_DEFAULT_DELETE_SEARCH_SCALEFACTOR = 6;
 
+    /** 
+     * The opacity of color used to fill the geoms on the EditBlackboard.
+     */
+    public static final String P_FILL_OPACITY = "P_FILL_OPACITY"; //$NON-NLS-1$
+    
+    /** 
+     * The opacity of color used for the vertex of the edit geoms.
+     */
+    public static final String P_VERTEX_OPACITY = "P_VERTEX_OPACITY"; //$NON-NLS-1$
+
 }
