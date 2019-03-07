@@ -87,6 +87,7 @@ public class DrawCoordinateCommand extends AbstractDrawCommand {
      * 
      * @see org.locationtech.udig.project.command.MapCommand#run()
      */
+    @Override
     public void run(IProgressMonitor monitor) throws Exception {
 
         final Point point = getMap().getViewportModel().worldToPixel(coord);
@@ -130,7 +131,7 @@ public class DrawCoordinateCommand extends AbstractDrawCommand {
     /**
      * @return Returns the paint.
      */
-    public Paint getPaint() {
+    public Color getPaint() {
         return paint;
     }
 
@@ -231,12 +232,7 @@ public class DrawCoordinateCommand extends AbstractDrawCommand {
 
     }
 
-    public void setValid(boolean valid) {
-        super.setValid(valid);
-        if (!valid)
-            dispose();
-    }
-
+    @Override
     protected void finalize() {
         dispose();
     }
