@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test WMT Plug-in
+Bundle-SymbolicName: org.locationtech.udig.catalog.wmt.tests
+Bundle-Version: 2.1.0.qualifier
+Bundle-Vendor: udig.refractions.net
+Bundle-Activator: org.locationtech.udig.tests.catalog.wmt.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.catalog.wmt,
+ org.junit;bundle-version="[4.0.0,5.0.0)"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.locationtech.udig.catalog.wmsc.server

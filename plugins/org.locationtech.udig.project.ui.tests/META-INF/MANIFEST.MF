@@ -1,0 +1,54 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Project UI Test Plug-in
+Bundle-SymbolicName: org.locationtech.udig.project.ui.tests;singleton:=true
+Bundle-Version: 2.1.0.qualifier
+Bundle-Vendor: udig.refractions.net
+Bundle-Activator: org.locationtech.udig.project.ui.TestsUIPlugin
+Export-Package: org.locationtech.udig; uses:="org.locationtech.udig.pr
+ oject.render.displayAdapter,  org.locationtech.udig.project.internal.
+ render,  org.locationtech.udig.project.ui.render.glass,  org.location
+ tech.udig.project.ui.commands,  org.locationtech.udig.project.ui.rend
+ er.displayAdapter,  org.locationtech.udig.project.ui.tool,  org.locat
+ iontech.udig.project.tests.support,  org.eclipse.swt.graphics,  org.e
+ clipse.swt.widgets,  org.locationtech.udig.project.ui.internal",org.l
+ ocationtech.udig.feature.editor; uses:="org.locationtech.udig.project
+ .ui,  org.opengis.feature.simple,  org.locationtech.udig.project.ui.t
+ ool,  org.eclipse.swt.graphics,  org.eclipse.swt.widgets",org.locatio
+ ntech.udig.project.tests;uses:="org.locationtech.udig",org.locationte
+ ch.udig.project.tests.ui; uses:="org.locationtech.udig.ui.operations,
+   org.eclipse.core.runtime,  org.locationtech.udig.project.internal.r
+ ender,  org.eclipse.ui,  org.eclipse.ui.actions,  org.locationtech.ud
+ ig.project.internal.render.impl,  org.locationtech.udig,  org.eclipse
+ .ui.part,  org.locationtech.udig.project.ui.internal.wizard,  org.ecl
+ ipse.jface.action,  org.locationtech.udig.project,  org.locationtech.
+ udig.project.internal,  org.locationtech.udig.project.interceptor,  o
+ rg.locationtech.udig.project.render,  org.eclipse.swt.widgets",org.lo
+ cationtech.udig.project.tests.ui.dnd;uses:="org.locationtech.udig.pro
+ ject,org.locationtech.udig.internal.ui,org.locationtech.udig",org.loc
+ ationtech.udig.project.tests.ui.internal.commands;x-internal:=true;us
+ es:="org.locationtech.udig.catalog,org.locationtech.udig.project.inte
+ rnal,org.locationtech.udig",org.locationtech.udig.project.ui; uses:="
+ org.eclipse.core.runtime,  org.eclipse.emf.common.notify.impl,  org.e
+ clipse.ui.plugin,  org.locationtech.udig,  org.eclipse.emf.common.not
+ ify,  org.locationtech.udig.project.ui.commands",org.locationtech.udi
+ g.project.ui.internal;x-internal:=true;uses:="junit.framework,org.loc
+ ationtech.udig",org.locationtech.udig.project.ui.internal.actions;x-i
+ nternal:=true; uses:="junit.framework,  org.locationtech.udig.project
+ ,  org.locationtech.udig.project.internal,  org.locationtech.udig",or
+ g.locationtech.udig.project.ui.internal.aoi;x-internal:=true,org.loca
+ tiontech.udig.project.ui.internal.render.displayAdapter.impl;x-intern
+ al:=true;uses:="org.locationtech.udig.project.ui.render.displayAdapte
+ r,junit.framework",org.locationtech.udig.project.ui.internal.tool.dis
+ play;x-internal:=true,org.locationtech.udig.project.ui.tool;uses:="or
+ g.locationtech.udig"
+Require-Bundle: org.eclipse.gef;bundle-version="3.7.0",
+ org.locationtech.udig.catalog.shp,
+ org.locationtech.udig.catalog.ui,
+ org.locationtech.udig.issues,
+ org.locationtech.udig.mapgraphic,
+ org.locationtech.udig.project.edit,
+ org.locationtech.udig.project.tests;visibility:=reexport,
+ org.locationtech.udig.catalog.ui.tests;visibility:=reexport
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
