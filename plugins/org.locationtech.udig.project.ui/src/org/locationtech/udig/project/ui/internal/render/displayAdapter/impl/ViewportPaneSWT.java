@@ -559,10 +559,8 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
         REPAINT.y = y;
         REPAINT.width = width;
         REPAINT.height = height;
-        if (Display.getCurrent() != null) {
-            REPAINT.run();
-        }else
-        	display.asyncExec(REPAINT);
+        
+        display.asyncExec(REPAINT);
     }
 
     /**
