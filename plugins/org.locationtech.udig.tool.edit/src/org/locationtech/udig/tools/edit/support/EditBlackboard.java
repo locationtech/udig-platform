@@ -870,7 +870,6 @@ public class EditBlackboard {
      * 
      * @param transform new transform
      */
-
     public void setToScreenTransform(AffineTransform newToScreen) {
         if (newToScreen == null)
             return;
