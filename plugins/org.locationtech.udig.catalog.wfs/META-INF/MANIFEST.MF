@@ -12,9 +12,7 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.catalog.ui,
  org.locationtech.udig.libs
 Bundle-ActivationPolicy: lazy
-Export-Package: org.locationtech.udig.catalog.internal.wfs;x-friends:=
- "org.locationtech.udig.catalog.tests.wfs",org.locationtech.udig.catal
- og.internal.wfs.ui;x-friends:="org.locationtech.udig.context,org.loca
- tiontech.udig.catalog.tests.wfs",org.locationtech.udig.catalog.wfs.in
- ternal;x-friends:="org.locationtech.udig.catalog.tests.wfs"
+Export-Package: org.locationtech.udig.catalog.internal.wfs;x-friends:="org.locationtech.udig.catalog.wfs.tests",
+ org.locationtech.udig.catalog.internal.wfs.ui;x-friends:="org.locationtech.udig.context,org.locationtech.udig.catalog.wfs.tests",
+ org.locationtech.udig.catalog.wfs.internal;x-friends:="org.locationtech.udig.catalog.wfs.tests"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

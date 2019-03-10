@@ -16,7 +16,7 @@ Require-Bundle: org.eclipse.ui;visibility:=reexport,
 Bundle-ActivationPolicy: lazy
 Export-Package: org.locationtech.udig,
  org.locationtech.udig.aoi,
- org.locationtech.udig.internal.aoi;x-friends:="org.locationtech.udig.ui.tests,org.locationtech.udig.project.tests.ui",
+ org.locationtech.udig.internal.aoi;x-friends:="org.locationtech.udig.ui.tests,org.locationtech.udig.project.ui.tests",
  org.locationtech.udig.internal.ui;x-internal:=true,
  org.locationtech.udig.internal.ui.operations;x-internal:=true,
  org.locationtech.udig.ui,

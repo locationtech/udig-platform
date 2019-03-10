@@ -13,10 +13,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.cheatsheets,
  org.locationtech.udig.libs
 Bundle-ActivationPolicy: lazy
-Export-Package: org.locationtech.udig.issues,org.locationtech.udig.iss
- ues.internal;x-friends:="org.locationtech.udig.issues.test",org.locat
- iontech.udig.issues.internal.datastore;x-friends:="org.locationtech.u
- dig.issues.test",org.locationtech.udig.issues.internal.view;x-friends
- :="org.locationtech.udig.issues.test",org.locationtech.udig.issues.li
- steners
+Export-Package: org.locationtech.udig.issues,
+ org.locationtech.udig.issues.internal;x-friends:="org.locationtech.udig.issues.tests",
+ org.locationtech.udig.issues.internal.datastore;x-friends:="org.locationtech.udig.issues.tests",
+ org.locationtech.udig.issues.internal.view;x-friends:="org.locationtech.udig.issues.tests",
+ org.locationtech.udig.issues.listeners
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

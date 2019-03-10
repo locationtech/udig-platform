@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: WMS Renderer Test Plug-in
+Bundle-SymbolicName: org.locationtech.udig.render.wms.basic.tests
+Bundle-Version: 2.1.0.qualifier
+Bundle-Activator: org.locationtech.udig.render.wms.basic.test.Activator
+Bundle-Vendor: udig.refractions.net
+Require-Bundle: org.eclipse.core.runtime,
+ org.locationtech.udig.render.wms.basic,
+ org.locationtech.udig.project.ui,
+ org.locationtech.udig.project.ui.tests,
+ org.locationtech.udig.catalog.wms
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
