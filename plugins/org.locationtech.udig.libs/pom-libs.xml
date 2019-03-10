@@ -25,11 +25,12 @@
 
 	<properties>
 		<!-- see geotools root pom for details -->
-		<geotools.version>19.2</geotools.version>
-		<imageio-ext.version>1.1.24</imageio-ext.version>
-		<jaiext.version>1.0.24</jaiext.version>
+		<geotools.version>19.4</geotools.version>
+		<imageio-ext.version>1.1.25</imageio-ext.version>
+		<jaiext.version>1.0.26</jaiext.version>
 		<jfreechart.version>1.0.13</jfreechart.version>
 		<jt.version>1.4.0</jt.version>
+		<jts.version>1.14.0</jts.version>
 		<solrj.version>7.2.1</solrj.version>
 		<lib.dir>${basedir}/lib</lib.dir>
 		<lib.source.dir>${basedir}/lib-src</lib.source.dir>
@@ -654,7 +655,7 @@
 		<dependency>
 			<groupId>com.vividsolutions</groupId>
 			<artifactId>jts-core</artifactId>
-			<version>1.14.0</version>
+			<version>${jts.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>xerces</groupId>
@@ -665,7 +666,7 @@
 		<dependency>
 			<groupId>com.vividsolutions</groupId>
 			<artifactId>jts-example</artifactId>
-			<version>1.14.0</version>
+			<version>${jts.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>xerces</groupId>

@@ -35,81 +35,81 @@
 	<classpathentry exported="true" kind="lib" path="lib/geoscript-groovy-1.10.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/groovy-2.4.14.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/groovy-all-2.4.12.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-api-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-app-schema-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-app-schema-resolver-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-arcgrid-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-common-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-brewer-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-charts-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-complex-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-coverage-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-coverage-api-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-cql-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-css-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-data-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-extension-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-hsql-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-feature-pregeneralized-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-geobuf-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-geojson-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-geojsondatastore-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-geometry-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-geopkg-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-geotiff-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-graph-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-grassraster-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-grid-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-gtopo30-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-image-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-imageio-ext-gdal-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-imagemosaic-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-imagemosaic-jdbc-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-imagepyramid-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-db2-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-h2-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-mysql-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-oracle-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-postgis-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-sqlserver-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-teradata-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-main-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-mbstyle-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-mbtiles-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-metadata-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-netcdf-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-opengis-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-process-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-process-feature-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-process-geometry-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-process-raster-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-property-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-referencing-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-render-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-svg-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-swing-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-tile-client-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-transform-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-validation-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-wfs-ng-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-wms-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-wmts-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-wps-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xml-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-core-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-fes-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-filter-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-gml2-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-gml3-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-kml-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-ows-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-sld-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wfs-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wmts-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wps-19.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-api-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-app-schema-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-app-schema-resolver-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-arcgrid-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-common-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-brewer-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-charts-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-complex-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-coverage-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-coverage-api-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-cql-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-css-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-data-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-extension-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-hsql-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-feature-pregeneralized-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-geobuf-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-geojson-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-geojsondatastore-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-geometry-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-geopkg-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-geotiff-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-graph-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-grassraster-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-grid-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-gtopo30-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-image-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-imageio-ext-gdal-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-imagemosaic-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-imagemosaic-jdbc-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-imagepyramid-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-db2-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-h2-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-mysql-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-oracle-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-postgis-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-sqlserver-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-teradata-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-main-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-mbstyle-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-mbtiles-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-metadata-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-netcdf-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-opengis-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-process-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-process-feature-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-process-geometry-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-process-raster-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-property-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-referencing-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-render-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-svg-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-swing-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-tile-client-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-transform-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-validation-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-wfs-ng-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-wms-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-wmts-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-wps-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xml-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-core-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-fes-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-filter-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-gml2-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-gml3-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-kml-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-ows-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-sld-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wfs-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wmts-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wps-19.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/guava-18.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/h2-1.1.119.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hatbox-1.0.b7.jar"/>
@@ -118,31 +118,31 @@
 	<classpathentry exported="true" kind="lib" path="lib/httpcore-4.4.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/httpmime-4.5.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/httpservices-4.6.6.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-arcgrid-1.1.24.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-arcgrid-1.1.25.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdal-bindings-1.9.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalarcbinarygrid-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdaldted-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalecw-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalecwjp2-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalehdr-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalenvihdr-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalerdasimg-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalframework-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalidrisi-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalkakadujp2-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalmrsid-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalmrsidjp2-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalnitf-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalrpftoc-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalsrp-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalvrt-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-geocore-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-imagereadmt-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-netcdf-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-netcdf-core-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-streams-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-tiff-1.1.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-utilities-1.1.24.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalarcbinarygrid-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdaldted-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalecw-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalecwjp2-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalehdr-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalenvihdr-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalerdasimg-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalframework-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalidrisi-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalkakadujp2-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalmrsid-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalmrsidjp2-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalnitf-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalrpftoc-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalsrp-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalvrt-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-geocore-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-imagereadmt-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-netcdf-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-netcdf-core-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-streams-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-tiff-1.1.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-utilities-1.1.25.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jackson-annotations-2.5.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jackson-core-2.5.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jackson-databind-2.5.3.jar"/>
@@ -167,45 +167,46 @@
 	<classpathentry exported="true" kind="lib" path="lib/jsqlparser-0.3.14.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jsr-275-1.0-beta-2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jsr305-1.3.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-affine-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-algebra-1.0.24.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-affine-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-algebra-1.0.26.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jt-attributeop-1.4.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-bandcombine-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-bandmerge-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-bandselect-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-binarize-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-border-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-buffer-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-classifier-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-colorconvert-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-colorindexer-1.0.24.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-bandcombine-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-bandmerge-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-bandselect-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-binarize-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-border-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-buffer-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-classifier-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-colorconvert-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-colorindexer-1.0.26.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jt-contour-1.4.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-crop-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-errordiffusion-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-format-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-imagefunction-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-iterators-1.0.24.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-crop-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-errordiffusion-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-format-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-imagefunction-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-iterators-1.0.26.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jt-jiffle-language-0.2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jt-jiffleop-0.2.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-lookup-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-mosaic-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-nullop-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-orderdither-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-piecewise-1.0.24.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-lookup-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-mosaic-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-nullop-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-orderdither-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-piecewise-1.0.26.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jt-rangelookup-1.4.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-rescale-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-rlookup-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-scale-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-scale2-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-stats-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-translate-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-utilities-1.0.24.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-rescale-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-rlookup-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-scale-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-scale2-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-shadedrelief-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-stats-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-translate-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-utilities-1.0.26.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jt-utils-1.4.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-vectorbin-1.0.24.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-vectorbin-1.0.26.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jt-vectorbinarize-1.4.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jt-vectorize-1.4.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-warp-1.0.24.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-zonal-1.0.24.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-warp-1.0.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-zonal-1.0.26.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jt-zonalstats-1.4.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jtds-1.3.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jts-core-1.14.0.jar"/>
@@ -213,18 +214,18 @@
 	<classpathentry exported="true" kind="lib" path="lib/jts-io-1.14.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/miglayout-3.7-swing.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/mysql-connector-java-5.1.46.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/net.opengis.fes-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/net.opengis.ows-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wcs-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wfs-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wmts-19.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wps-19.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/net.opengis.fes-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/net.opengis.ows-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wcs-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wfs-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wmts-19.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wps-19.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/netcdf-java-4.0.41.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/netcdf4-4.6.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/opencsv-3.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/opendap-2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.eclipse.xsd-2.12.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/org.w3.xlink-19.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.w3.xlink-19.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/oro-2.0.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/parboiled-core-1.1.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/parboiled-java-1.1.7.jar"/>
