@@ -232,7 +232,7 @@ public class GeometryCreationUtil {
         LinearRing shell = GeometryBuilder.create().safeCreateLinearRing(shellCoords);
 
         try {
-            if (CGAlgorithms.isCCW(shellCoords)) {
+            if (CGAlgorithms.isCCW(shell.getCoordinates())) {
                 shell = JTSUtilities.reverseRing(shell);
             }
         } catch (Exception e) {
@@ -248,7 +248,7 @@ public class GeometryCreationUtil {
             }
             LinearRing hole = GeometryBuilder.create().safeCreateLinearRing(coordArray);
             // FIXME test when the hole has only one coordinate.
-            if (!(coordArray.length <= 2) && !CGAlgorithms.isCCW(coordArray)) {
+            if (!(coordArray.length <= 2) && !CGAlgorithms.isCCW(hole.getCoordinates())) {
                 hole = JTSUtilities.reverseRing((LinearRing) hole);
             }
             currentHoles.add(hole);
