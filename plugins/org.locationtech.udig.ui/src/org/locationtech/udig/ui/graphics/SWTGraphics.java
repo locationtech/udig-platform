@@ -353,12 +353,14 @@ public class SWTGraphics implements ViewportGraphics {
         transform.getMatrix(matrix);
         if( swtTransform==null ){
             swtTransform=new Transform(display, 
-                    (float)matrix[0], (float)matrix[1], (float)matrix[2], 
-                    (float)matrix[3], (float)matrix[4], (float)matrix[5] );
+                    (float)matrix[0], (float)matrix[2],
+                    (float)matrix[1], (float)matrix[3],
+                    (float)matrix[4], (float)matrix[5] );
         }else{
             swtTransform.setElements(
-                    (float)matrix[0], (float)matrix[1], (float)matrix[2], 
-                    (float)matrix[3], (float)matrix[4], (float)matrix[5] );
+                    (float)matrix[0], (float)matrix[2],
+                    (float)matrix[1], (float)matrix[3],
+                    (float)matrix[4], (float)matrix[5] );
         }
         
         gc.setTransform(swtTransform);
