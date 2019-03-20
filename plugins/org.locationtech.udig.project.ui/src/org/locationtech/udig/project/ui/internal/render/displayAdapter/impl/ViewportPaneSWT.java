@@ -11,6 +11,8 @@ package org.locationtech.udig.project.ui.internal.render.displayAdapter.impl;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 
@@ -77,6 +79,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
     Dimension displaySize = new Dimension(0, 0);
 
     private org.eclipse.swt.graphics.Image swtImage;
+    private AffineTransform backBufferTrsf = new AffineTransform();
 
     private Display display;
 
@@ -256,6 +259,19 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
     	IPreferenceStore store = UiPlugin.getDefault().getPreferenceStore();
     	boolean useAdvancedGraphics = store.getBoolean(org.locationtech.udig.ui.preferences.PreferenceConstants.P_ADVANCED_GRAPHICS); 
     	
+    	AffineTransform viewportTrsf = this.renderManager.getMapInternal().getViewportModel().worldToScreenTransform();
+    	if (viewportTrsf.equals(this.backBufferTrsf)) {
+    		viewportTrsf = new AffineTransform();
+    	} else  {
+    		//swtImage was rendered for a viewport different than the current one. 
+    		try {
+    			viewportTrsf.concatenate(this.backBufferTrsf.createInverse());
+    		} catch (NoninvertibleTransformException ex) {
+    			System.out.println(ex);
+    			viewportTrsf = new AffineTransform();
+    		}
+    	}
+    	
         if ((getStyle()&SWT.DOUBLE_BUFFERED)==0){
             if (buffer == null) {
                 buffer = new Image(display, displaySize.width, displaySize.height);
@@ -269,7 +285,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
             	swtGraphics = new NonAdvancedSWTGraphics(buffer, display);
             }
 
-            painter.paint(swtGraphics, swtImage, minWidth, minHeight);
+            painter.paint(swtGraphics, swtImage, viewportTrsf, minWidth, minHeight);
             swtGraphics.dispose();
 
             gc.drawImage(buffer, 0, 0);
@@ -282,7 +298,8 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
         	} else {
         		swtGraphics = new NonAdvancedSWTGraphics(gc, display, null);
         	}
-            painter.paint(swtGraphics, swtImage, minWidth, minHeight);
+        	
+            painter.paint(swtGraphics, swtImage, viewportTrsf, minWidth, minHeight);
             swtGraphics.dispose();
         }
     }
@@ -334,6 +351,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
     private org.eclipse.swt.graphics.Image createImage() {
         org.eclipse.swt.graphics.Image newImage;
         RenderedImage image = renderManager.getImage();
+        this.backBufferTrsf=renderManager.getMapInternal().getViewportModel().worldToScreenTransform();
         if (image != null)
             newImage = AWTSWTImageUtils.createSWTImage(image, false);
         else {
@@ -616,3 +634,4 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
         this.glass = glass;
     }
 }
+ 
