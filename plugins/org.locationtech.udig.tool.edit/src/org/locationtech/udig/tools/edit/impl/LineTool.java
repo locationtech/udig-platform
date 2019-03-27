@@ -124,10 +124,12 @@ public class LineTool extends AbstractEditTool {
         helper.add( new MoveVertexBehaviour() );
         helper.add( new MoveGeometryBehaviour());
         helper.stopMutualExclusiveList();
+        helper.stopAdvancedFeatures();
         
-
+        helper.startAdvancedFeatures();
         helper.add( new SelectVerticesWithBoxBehaviour() );
         helper.stopAdvancedFeatures();
+        
         helper.add( new AcceptOnDoubleClickBehaviour() );
         helper.add( new SetSnapSizeBehaviour());
         helper.add( new StartExtendLineBehaviour() );
