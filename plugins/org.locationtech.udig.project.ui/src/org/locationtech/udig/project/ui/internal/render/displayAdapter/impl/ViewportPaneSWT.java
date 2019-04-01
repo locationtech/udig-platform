@@ -79,7 +79,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
     Dimension displaySize = new Dimension(0, 0);
 
     private org.eclipse.swt.graphics.Image swtImage;
-    private AffineTransform backBufferTrsf = new AffineTransform();
+    private AffineTransform swtImageTrsf = new AffineTransform();
 
     private Display display;
 
@@ -228,7 +228,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
         else
             antiAliasing=SWT.OFF;
         g.setAntialias(antiAliasing);
-        Image swtImage = getImage();
+        Image swtImage = getImage(); //shadows this.swtImage
         
         int minHeight;
         int minWidth;
@@ -254,23 +254,37 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
                 repaintRequest = null;
         }
     }
+    
+    /**
+     * When the viewport parameters change, this.swtImage will be out of sync with the viewport 
+     * until renderManager completes and updates this.swtImage. During any repaints in this period, 
+     * this.swtImage needs to be transformed to the correct location in the new viewport.
+     * 
+     * @return A transform to position this.swtImage within the current viewport.
+     */
+    private AffineTransform getSwtImageToViewportTransform() {
+    	AffineTransform viewportTrsf = new AffineTransform(); //identity
+    	
+    	AffineTransform worldToScreenTrsf = this.renderManager.getMapInternal().getViewportModel().worldToScreenTransform();
+    	if (!worldToScreenTrsf.equals(this.swtImageTrsf)) { 
+    		//swtImage was rendered for a different viewport
+    		try {
+    			viewportTrsf = worldToScreenTrsf;
+    			viewportTrsf.concatenate(this.swtImageTrsf.createInverse());
+    		} catch (NoninvertibleTransformException ex) {
+    			UiPlugin.getDefault().log("Viewport transform was not invertible.", ex);
+    			//just return the default transform.
+    		}
+    	}
+    	
+    	return viewportTrsf;
+    }
 
     private void getDoubleBufferGraphics( final Display display, GC gc, int minWidth, int minHeight ) {
     	IPreferenceStore store = UiPlugin.getDefault().getPreferenceStore();
     	boolean useAdvancedGraphics = store.getBoolean(org.locationtech.udig.ui.preferences.PreferenceConstants.P_ADVANCED_GRAPHICS); 
     	
-    	AffineTransform viewportTrsf = this.renderManager.getMapInternal().getViewportModel().worldToScreenTransform();
-    	if (viewportTrsf.equals(this.backBufferTrsf)) {
-    		viewportTrsf = new AffineTransform();
-    	} else  {
-    		//swtImage was rendered for a viewport different than the current one. 
-    		try {
-    			viewportTrsf.concatenate(this.backBufferTrsf.createInverse());
-    		} catch (NoninvertibleTransformException ex) {
-    			System.out.println(ex);
-    			viewportTrsf = new AffineTransform();
-    		}
-    	}
+    	AffineTransform viewportTrsf = getSwtImageToViewportTransform();
     	
         if ((getStyle()&SWT.DOUBLE_BUFFERED)==0){
             if (buffer == null) {
@@ -335,6 +349,8 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
             disposeMutex = null;
 
             swtImage = createImage();
+            this.swtImageTrsf=renderManager.getMapInternal().getViewportModel().worldToScreenTransform();
+            
             return swtImage;
 
         } catch (Throwable e) {
@@ -351,7 +367,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
     private org.eclipse.swt.graphics.Image createImage() {
         org.eclipse.swt.graphics.Image newImage;
         RenderedImage image = renderManager.getImage();
-        this.backBufferTrsf=renderManager.getMapInternal().getViewportModel().worldToScreenTransform();
+        
         if (image != null)
             newImage = AWTSWTImageUtils.createSWTImage(image, false);
         else {
