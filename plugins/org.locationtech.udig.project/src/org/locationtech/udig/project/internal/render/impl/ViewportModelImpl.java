@@ -675,7 +675,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      */
     public AffineTransform worldToScreenTransform() {
         if (!validState())
-            return null;
+            return new AffineTransform(); //Identity (screen-space is arbitrary here.)
         // set up the affine transform and calculate scale values
         return worldToScreenTransform(getBounds(), getRenderManagerInternal().getMapDisplay()
                 .getDisplaySize());
