@@ -93,6 +93,9 @@ public class SWTGraphics implements ViewportGraphics {
         back = new Color(display, 255, 255, 255);
         gc.setBackground(back);
         
+        if (swtTransform != null)
+        	swtTransform.dispose();
+        swtTransform = new Transform(display);
 
         gc.setAdvanced(true);
     }
@@ -281,9 +284,6 @@ public class SWTGraphics implements ViewportGraphics {
 	 */
 	public void translate(Point offset) {
         AWTSWTImageUtils.checkAccess();
-        if( swtTransform==null ){
-            swtTransform=new Transform(display);
-        }
         swtTransform.translate(offset.x, offset.y);
         gc.setTransform(swtTransform);
 	}
@@ -351,15 +351,13 @@ public class SWTGraphics implements ViewportGraphics {
         AWTSWTImageUtils.checkAccess();
         double[] matrix=new double[6];
         transform.getMatrix(matrix);
-        if( swtTransform==null ){
-            swtTransform=new Transform(display, 
-                    (float)matrix[0], (float)matrix[1], (float)matrix[2], 
-                    (float)matrix[3], (float)matrix[4], (float)matrix[5] );
-        }else{
-            swtTransform.setElements(
-                    (float)matrix[0], (float)matrix[1], (float)matrix[2], 
-                    (float)matrix[3], (float)matrix[4], (float)matrix[5] );
-        }
+
+        //Note that the arguments are not in the same order as the elements returned by 
+        //AffineTransform.getMatrix(double[]). Consult the javadocs for details.
+        swtTransform.setElements(
+                (float)matrix[0], (float)matrix[2],
+                (float)matrix[1], (float)matrix[3],
+                (float)matrix[4], (float)matrix[5] );
         
         gc.setTransform(swtTransform);
     }
