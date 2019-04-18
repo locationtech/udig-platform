@@ -83,12 +83,10 @@ public class PolygonTool extends AbstractEditTool {
         helper.stopAdvancedFeatures();
 //      vertex selection OR geometry selection should not both happen so make them a mutual exclusion behaviour
         helper.startMutualExclusiveList();
-        helper.startOrderedList(false);
+        helper.add( new AcceptWhenOverFirstVertexBehaviour());
         AddVertexWhileCreatingBehaviour addVertexWhileCreatingBehaviour = new AddVertexWhileCreatingBehaviour();
         addVertexWhileCreatingBehaviour.setEditValidator(new PolygonCreationValidator());
-        helper.add( addVertexWhileCreatingBehaviour);
-        helper.add( new AcceptWhenOverFirstVertexBehaviour());
-        helper.stopOrderedList();
+        helper.add( addVertexWhileCreatingBehaviour);  
         helper.startAdvancedFeatures();
         helper.add(new SelectVertexOnMouseDownBehaviour());
         helper.add( new SelectVertexBehaviour());
