@@ -592,19 +592,23 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         
         deleteAction = new DeleteAction();
     }
-
-    /* Called when a Layer is selected - will need to check if we care */
-    void layerSelected( ILayer selected ){
-        if( layer == selected ) {
-            return; // we already know
-        }        
-        if( layer!=null ){
+    
+    private void unhookLayerListeners() {
+    	if( layer!=null ){
             layer.removeListener(layerListener);
             if( layer.getMap()!=null ){
                 layer.getMap().removeMapCompositionListener(compositionListener);
                 layer.getMap().getEditManager().removeListener(editManagerListener);
             }
         }
+    }
+
+    /* Called when a Layer is selected - will need to check if we care */
+    void layerSelected( ILayer selected ){
+        if( layer == selected ) {
+            return; // we already know
+        }        
+        unhookLayerListeners();
         
         if( selected==null || !selected.hasResource( FeatureSource.class ) || selected.getMap()==null ){
             if( currentEditor!=null ){
@@ -838,8 +842,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
             ISelectionService selectionService = getSite().getWorkbenchWindow().getSelectionService();
             selectionService.removePostSelectionListener(workbenchSelectionListener);
         }
-        if( layer!=null && layerListener!=null )
-            layer.removeListener(layerListener);
+        unhookLayerListeners();
         table = null;
         activePartListener = null;
         workbenchSelectionListener = null;
