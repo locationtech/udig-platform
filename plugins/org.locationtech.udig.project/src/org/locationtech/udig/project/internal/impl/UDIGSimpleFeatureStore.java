@@ -38,8 +38,11 @@ import org.geotools.data.Transaction;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.factory.Hints;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.opengis.feature.Feature;
+import org.opengis.feature.FeatureVisitor;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
@@ -282,10 +285,19 @@ public class UDIGSimpleFeatureStore implements SimpleFeatureStore, UDIGStore {
     public List<FeatureId> addFeatures( FeatureCollection<SimpleFeatureType, SimpleFeature> features )
             throws IOException {
         setTransactionInternal();
+        
+        FeatureVisitor vis = new FeatureVisitor() {
+			@Override
+			public void visit(Feature arg0) {
+				arg0.getUserData().put(Hints.USE_PROVIDED_FID, Boolean.TRUE);		
+			}
+		};
+		features.accepts(vis, null);
+        
         List<FeatureId> ids = wrapped.addFeatures(features);
         
-        FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
-        Id filter = ff.id( new HashSet<FeatureId>( ids ) );
+        //FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
+        //Id filter = ff.id( new HashSet<FeatureId>( ids ) );
         
         fireLayerEditEvent( FeatureEvent.Type.CHANGED, null, Filter.INCLUDE );
         
