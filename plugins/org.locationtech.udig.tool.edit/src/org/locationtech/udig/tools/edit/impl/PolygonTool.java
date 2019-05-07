@@ -83,7 +83,7 @@ public class PolygonTool extends AbstractEditTool {
         helper.stopAdvancedFeatures();
 //      vertex selection OR geometry selection should not both happen so make them a mutual exclusion behaviour
         helper.startMutualExclusiveList();
-        helper.add( new AcceptWhenOverFirstVertexBehaviour());
+        helper.add( new AcceptWhenOverFirstVertexBehaviour(3));
         AddVertexWhileCreatingBehaviour addVertexWhileCreatingBehaviour = new AddVertexWhileCreatingBehaviour();
         addVertexWhileCreatingBehaviour.setEditValidator(new PolygonCreationValidator());
         helper.add( addVertexWhileCreatingBehaviour);  
@@ -116,7 +116,7 @@ public class PolygonTool extends AbstractEditTool {
         helper.add( new SelectVerticesWithBoxBehaviour() );
         helper.stopAdvancedFeatures();
         
-        helper.add( new AcceptOnDoubleClickBehaviour() );
+        helper.add( new AcceptOnDoubleClickBehaviour(3) );
         helper.add( new SetSnapSizeBehaviour());
         helper.done();
 

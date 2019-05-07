@@ -43,6 +43,16 @@ import org.eclipse.core.runtime.NullProgressMonitor;
  * @since 1.1.0
  */
 public class AcceptWhenOverFirstVertexBehaviour implements EventBehaviour {
+	
+	int minimumVertices;
+	
+	public AcceptWhenOverFirstVertexBehaviour() {
+		this(0);
+	}
+	
+	public AcceptWhenOverFirstVertexBehaviour(int minimumVerticesInShape) {
+		this.minimumVertices = minimumVerticesInShape;
+	}
 
     public boolean isValid( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
         boolean legalState=handler.getCurrentState()==EditState.CREATING;
@@ -56,7 +66,7 @@ public class AcceptWhenOverFirstVertexBehaviour implements EventBehaviour {
         boolean button1Released=e.button==MapMouseEvent.BUTTON1;
         
         return legalState && legalEventType && shapeAndGeomNotNull && button1Released 
-        && !e.buttonsDown() && !e.modifiersDown() && overFirstVertex(handler, e);
+        && !e.buttonsDown() && !e.modifiersDown() && handler.getCurrentShape().getNumPoints() >= minimumVertices && overFirstVertex(handler, e);
     }
     
     private boolean overFirstVertex(EditToolHandler handler, MapMouseEvent e) {

@@ -42,6 +42,15 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 public class AcceptOnDoubleClickBehaviour implements EventBehaviour {
 
     boolean addPoint=true;
+    int minimumVertices;
+    
+    public AcceptOnDoubleClickBehaviour() {
+    	this(0);
+    }
+    
+    public AcceptOnDoubleClickBehaviour(int minimumVerticesInShape) {
+    	this.minimumVertices = minimumVerticesInShape;
+    }
     
     public boolean isValid( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
         boolean goodState = handler.getCurrentState()!=EditState.NONE;
@@ -52,6 +61,9 @@ public class AcceptOnDoubleClickBehaviour implements EventBehaviour {
         boolean shapeIsSet=handler.getCurrentShape()!=null;
         if( !(shapeIsSet && goodState && releasedEvent && noModifiers && button1 && onlyButton1Down) )
             return false;
+        
+        if (handler.getCurrentShape().getNumPoints() < minimumVertices)
+        	return false;
         
         boolean changedGeom=false;
         for( EditGeom geom : handler.getEditBlackboard(handler.getEditLayer()).getGeoms() ) {

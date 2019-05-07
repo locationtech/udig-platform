@@ -85,7 +85,7 @@ public class HoleTool extends AbstractEditTool {
         AddVertexWhileCreatingBehaviour addVertexWhileCreatingBehaviour = new AddVertexWhileCreatingBehaviour();
         addVertexWhileCreatingBehaviour.setEditValidator(new ValidHoleValidator());
         helper.add( addVertexWhileCreatingBehaviour);
-        helper.add( new AcceptWhenOverFirstVertexBehaviour());
+        helper.add( new AcceptWhenOverFirstVertexBehaviour(3));
         helper.stopOrderedList();
         helper.startOrderedList(true);
         // behaviours that select the geometry and hole
@@ -95,7 +95,7 @@ public class HoleTool extends AbstractEditTool {
         helper.stopMutualExclusiveList();
         
         helper.add( new SetSnapSizeBehaviour());
-        helper.add( new AcceptOnDoubleClickBehaviour() );
+        helper.add( new AcceptOnDoubleClickBehaviour(3) );
         helper.done();
     }
 

@@ -79,7 +79,7 @@ public class FillDifferenceTool extends AbstractEditTool{
         
         helper.startOrderedList(false);
         helper.add( new AddVertexWhileCreatingBehaviour());
-        helper.add( new AcceptWhenOverFirstVertexBehaviour());
+        helper.add( new AcceptWhenOverFirstVertexBehaviour(3));
         helper.stopOrderedList();
         
         //override so that editing will not be started if there are no geometries on the blackboard.
@@ -87,7 +87,7 @@ public class FillDifferenceTool extends AbstractEditTool{
         helper.stopMutualExclusiveList();
 
 
-        helper.add( new AcceptOnDoubleClickBehaviour() );
+        helper.add( new AcceptOnDoubleClickBehaviour(3) );
         helper.done();
     }
 
