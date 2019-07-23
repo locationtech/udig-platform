@@ -16,8 +16,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.regex.Pattern;
@@ -68,10 +68,9 @@ import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.filter.Filter;
 import org.opengis.filter.Id;
 import org.opengis.filter.identity.FeatureId;
-import com.radiantsolutions.revealwb.core.models.ObjectModel;
+
 import com.radiantsolutions.revealwb.core.utilities.TextComboCellEditor;
-import com.radiantsolutions.revealwb.restclient.ProjectRestService;
-import com.radiantsolutions.revealwb.restclient.exceptions.RevealWorkbenchGeneralException;
+import com.radiantsolutions.revealwb.digitizer.DigitizingProjectManager;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
@@ -575,20 +574,13 @@ public class FeatureTableControl implements ISelectionProvider {
             String localName = aType.getLocalName();
             Composite control = (Composite) tableViewer.getControl();
             if (concreteType.isAssignableFrom(String.class)) {
-            	//check if its label called label...
+            	//check if its label called 'label'...
                 //if yes... make the editor a string drop down editor with the objects name
             	if(localName.equals("label")) {
-            		ProjectRestService service = new ProjectRestService();
-            		List<ObjectModel> typeObjects = null;
-					try {
-						typeObjects = service.getObjects();
-					} catch (RevealWorkbenchGeneralException e) {
-						e.printStackTrace();
-					}
-					Iterator<ObjectModel> objItr = typeObjects.iterator();
 					String[] objLabels = new String[0];
-					while(objItr.hasNext()) {
-						objLabels = push(objLabels, objItr.next().getLabel());
+					//grab list of Objects from cached list.
+					for(Entry<Long, String> entry : DigitizingProjectManager.CASHE_OBJECTS_MODELS.entrySet()) {
+						objLabels = push(objLabels, entry.getValue() + " - " + entry.getKey());
 					}
 				
 					TextComboCellEditor textCellEditor = new TextComboCellEditor(control, objLabels);
