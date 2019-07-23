@@ -31,5 +31,9 @@ Export-Package: org.locationtech.udig,
  org.locationtech.udig.ui.preferences,
  org.locationtech.udig.ui.properties
 Import-Package: com.google.common.base;version="12.0.0",
+ com.radiantsolutions.revealwb.core.models,
+ com.radiantsolutions.revealwb.core.utilities,
+ com.radiantsolutions.revealwb.restclient,
+ com.radiantsolutions.revealwb.restclient.exceptions,
  net.miginfocom.swt;version="[3.7.0,3.8.0)"
 
