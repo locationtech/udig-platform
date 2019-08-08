@@ -21,8 +21,8 @@ import org.locationtech.udig.project.preferences.PreferenceConstants;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
- * This class sets the initial CRS of a map.  
- * 
+ * This class sets the initial CRS of a map.
+ *
  * @author jesse
  */
 public class InitMapCRS implements LayerInterceptor {
@@ -34,22 +34,30 @@ public class InitMapCRS implements LayerInterceptor {
 	            return;
 	        }
 	        int defaultCRS = ProjectPlugin.getPlugin().getPreferenceStore().getInt(PreferenceConstants.P_DEFAULT_CRS);
-	        
-	        // If the default CRS == -1 then the preferences declare that the CRS should be the CRS of the first layer added
-	        // If the Current CRS==ViewportModel.BAD_DEFAULT then it can also be changed.  It means that the DEFAULT_CRS was
-	        // an illegal EPSG code
-	        CoordinateReferenceSystem crs = layer.getMap().getViewportModel().getCRS();
-			if( defaultCRS!=-1 && crs==ViewportModel.BAD_DEFAULT ){
+
+	        if (isSetValidDefaultCRS(layer.getMap().getViewportModel().getCRS(), ViewportModel.BAD_DEFAULT, defaultCRS)) {
 	            return;
 	        }
 	        List<ILayer> layers = layer.getMapInternal().getMapLayers();
 	        //  If first layer or if the crs has been unchanged from the original CRS
-	        if( layers.size()>1&&layer.getMapInternal().getViewportModelInternal().isSetCRS()){
+	        if (layers.size() > 1 && layer.getMapInternal().getViewportModelInternal().isSetCRS()) {
 	            return;
 	        }
-	        
+
 	        layer.getMapInternal().getViewportModelInternal().setCRS(layer.getCRS());
-        }
+	    }
 	}
 
+	/**
+	 * If the default CRS == -1 then the preferences declare that the CRS should be the CRS of the first layer added
+	 * If the Current CRS==ViewportModel.BAD_DEFAULT then it can also be changed.  It means that the DEFAULT_CRS was
+	 * an illegal EPSG code
+
+	 * @param viewportModelCRS current CRS of viewportModel
+	 * @param currentDefault configured default EPSG code for viewportModel
+	 * @return true if its allows to use CRS from layer
+	 */
+	public static boolean isSetValidDefaultCRS(final CoordinateReferenceSystem viewportModelCRS, final CoordinateReferenceSystem badCRS, int currentDefault) {
+	    return currentDefault != -1 && viewportModelCRS != badCRS;
+	}
 }
