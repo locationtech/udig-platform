@@ -32,11 +32,11 @@ before_script:
 install:
   - "sudo pip install 'requests[security]'"
   - "sudo pip install -q sphinx==1.1.3"
-  - "travis_wait 10 mvn install -B -f docs/pom.xml -Dtycho.mode=maven -Pdocs" #build documentation using sphinx
-  - "travis_wait 10 mvn install -B -f pom-libs.xml -DskipTests=true" #download dependencies
+  - "mvn install -B -f docs/pom.xml -Dtycho.mode=maven -Pdocs" #build documentation using sphinx
+  - "mvn install -B -f pom-libs.xml -DskipTests=true" #download dependencies
 
 script: 
-  - "travis_wait 40 mvn install -B -Pproduct -Psdk -T4"
+  - "mvn install -B -Pproduct -Psdk -T4"
 
 notifications:
   email:
