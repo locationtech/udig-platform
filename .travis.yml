@@ -1,21 +1,27 @@
 sudo: true
+dist: trusty
 language: java
 jdk: oraclejdk8
-
-python:
-  - "2.7"
-
-env:
-  global:
-    - TRAVIS_PYTHON_VERSION="2.7"
-    - MVN_VERION="3.3.9"
-
 cache:
   directories:
   - $HOME/.m2
+python:
+  - "2.7"
+env:
+  global:
+    - TRAVIS_PYTHON_VERSION="2.7"
+    - MVN_VERION="3.5.4"
+    - MAVEN_OPTS="-Xmx8g -XX:-UseGCOverheadLimit"
 
 before_install:
-  - echo "MAVEN_OPTS='-Xmx8g -XX:-UseGCOverheadLimit'" > ~/.mavenrc
+  - rm ~/.m2/settings.xml
+  - unset _JAVA_OPTIONS
+
+before_script:
+  - wget https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/${MVN_VERION}/apache-maven-%{MVN_VERION}-bin.tar.gz
+  - tar zxf apache-maven-${MVN_VERION}-bin.tar.gz
+  - export M2_HOME=$PWD/apache-maven-${MVN_VERION}
+  - export PATH=$M2_HOME/bin:$PATH
 
 install:
   - "sudo pip install 'requests[security]'"
@@ -30,8 +36,3 @@ notifications:
   email:
     on_success: never
     on_failure: never
-
-branches:
-  only:
-    - master
-    - /^travis.*$/
