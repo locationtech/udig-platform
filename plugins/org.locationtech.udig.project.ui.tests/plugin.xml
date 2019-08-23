@@ -162,6 +162,18 @@
                </command>
             </menu>
          </menuContribution>
+         <menuContribution
+               allPopups="false"
+               locationURI="menu:org.eclipse.ui.main.menu?after=window">
+            <menu
+                  label="Draw Commands Testing">
+               <command
+                     commandId="org.locationtech.udig.project.tests.draw.coordinatecommand"
+                     label="Show Coordinate "
+                     style="push">
+               </command>
+            </menu>
+         </menuContribution>        
       </extension>
       <extension
             point="org.eclipse.ui.commands">
@@ -170,5 +182,10 @@
                id="org.locationtech.udig.project.tests.configurerenderers"
                name="configure renderers">
          </command>
+         <command
+               defaultHandler="org.locationtech.udig.project.tests.ui.internal.commands.draw.TestDrawCoordinateCommandHandler"
+               id="org.locationtech.udig.project.tests.draw.coordinatecommand"
+               name="Test Draw Coordinate Command ">
+         </command>         
       </extension>
 </plugin>

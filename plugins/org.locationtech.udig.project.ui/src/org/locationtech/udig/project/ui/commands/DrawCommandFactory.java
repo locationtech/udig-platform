@@ -18,11 +18,13 @@ import java.io.IOException;
 import java.util.List;
 
 import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.command.UndoableMapCommand;
 import org.locationtech.udig.project.render.IViewportModel;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 import org.locationtech.udig.project.ui.IAnimation;
 import org.locationtech.udig.project.ui.internal.commands.draw.CompositeDrawCommand;
+import org.locationtech.udig.project.ui.internal.commands.draw.DrawCoordinateCommand;
 import org.locationtech.udig.project.ui.internal.commands.draw.DrawEditFeatureCommand;
 import org.locationtech.udig.project.ui.internal.commands.draw.DrawFeatureCommand;
 import org.locationtech.udig.project.ui.internal.commands.draw.DrawShapeCommand;
@@ -34,6 +36,8 @@ import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
+
+import com.vividsolutions.jts.geom.Coordinate;
 
 /**
  * Creates draw commands.
@@ -164,6 +168,30 @@ public class DrawCommandFactory {
         return new DrawFeatureCommand(feature);
     }
 
+    /**
+     *  Creates a new {@linkplain DrawCoordinateCommand}
+     *  
+     * @param coord the Coordinate to draw its location
+     * @param map the map to run command on
+     * @return a new {@linkplain DrawCoordinateCommand}
+     * @see DrawCoordinateCommand
+     */
+    public DrawCoordinateCommand createDrawCoordinateCommand( Coordinate coord, IMap map) {
+        return new DrawCoordinateCommand(coord, map);
+    }
+       
+    /**
+     *  Creates a new {@linkplain DrawCoordinateCommand}
+     *  
+     * @param coord the Coordinate to draw its location
+     * @param crs the crs of the Coordinate
+     * @return a new {@linkplain DrawCoordinateCommand}
+     * @see DrawCoordinateCommand
+     */
+    public DrawCoordinateCommand createDrawCoordinateCommand( Coordinate coord, CoordinateReferenceSystem crs) {
+        return new DrawCoordinateCommand(coord, crs);
+    }
+    
     /**
      * Creates a new {@linkplain DrawFeatureCommand}
      * 
