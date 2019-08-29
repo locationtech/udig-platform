@@ -88,7 +88,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @generated NOT
      * @ordered
      */
-    protected CoordinateReferenceSystem cRS = DEFAULT_CRS;
+    protected CoordinateReferenceSystem cRS = ViewportModelImpl.getDefaultCRS();
 
     /**
      * This is true if the CRS attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -99,16 +99,6 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     protected boolean cRSESet = false;
 
     /**
-     * The default value of the '{@link #getBounds() <em>Bounds</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see #getBounds()
-     * @generated NOT
-     * @ordered
-     */
-    protected static final ReferencedEnvelope BOUNDS_EDEFAULT = NIL_BBOX; //$NON-NLS-1$
-
-    /**
      * The cached value of the '{@link #getBounds() <em>Bounds</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
@@ -116,7 +106,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @generated NOT
      * @ordered
      */
-    protected ReferencedEnvelope bounds = BOUNDS_EDEFAULT;
+    protected ReferencedEnvelope bounds = ViewportModelImpl.getDefaultReferencedEnvelope();
 
     /**
      * The default value of the '{@link #getCenter() <em>Center</em>}' attribute. <!--
@@ -1117,7 +1107,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
             unsetCRS();
             return;
         case RenderPackage.VIEWPORT_MODEL__BOUNDS:
-            setBounds(BOUNDS_EDEFAULT);
+            setBounds(getDefaultReferencedEnvelope());
             return;
         case RenderPackage.VIEWPORT_MODEL__CENTER:
             setCenter(CENTER_EDEFAULT);
@@ -1164,7 +1154,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         case RenderPackage.VIEWPORT_MODEL__CRS:
             return isSetCRS();
         case RenderPackage.VIEWPORT_MODEL__BOUNDS:
-            return BOUNDS_EDEFAULT == null ? bounds != null : !BOUNDS_EDEFAULT.equals(bounds);
+            return getDefaultReferencedEnvelope() == null ? bounds != null : !getDefaultReferencedEnvelope().equals(bounds);
         case RenderPackage.VIEWPORT_MODEL__CENTER:
             return CENTER_EDEFAULT == null ? getCenter() != null : !CENTER_EDEFAULT
                     .equals(getCenter());
@@ -1198,7 +1188,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * Returns the system wide default CRS
+     * @returns the system wide default CRS
      */
     public static CoordinateReferenceSystem getDefaultCRS() {
         try {
@@ -1212,6 +1202,14 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         }
     }
 
+    /**
+     * @returns a default NIL Bounding Box based on system wide default CRS
+     * @return
+     */
+    public static ReferencedEnvelope getDefaultReferencedEnvelope() {
+    	return new ReferencedEnvelope(0, 0, 0, 0, ViewportModelImpl.getDefaultCRS());
+    }
+    
     /**
      * FIXME, This method was added as a work around for the fact that we do not have the ability to
      * chain or batch commands.
