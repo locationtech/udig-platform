@@ -45,17 +45,6 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
     CoordinateReferenceSystem BAD_DEFAULT = DefaultEngineeringCRS.GENERIC_2D;
 
     /**
-     * A Default setting to use for the viewport CRS.
-     */
-    public static final CoordinateReferenceSystem DEFAULT_CRS = ViewportModelImpl.getDefaultCRS();
-
-    /**
-     * A Default setting to use for the viewport screen size.
-     */
-    public static final ReferencedEnvelope NIL_BBOX = new ReferencedEnvelope(0, 0, 0, 0,
-            DEFAULT_CRS);
-
-    /**
      * Returns the local coordinate system. The local coordinate system is the CRS that all the
      * layer data will be transformed into. Once the layer data is transformed into the local CRS
      * then it is transformed for display onto the screen

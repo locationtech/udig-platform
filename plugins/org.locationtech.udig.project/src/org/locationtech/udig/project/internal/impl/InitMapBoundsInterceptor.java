@@ -13,6 +13,7 @@ import org.locationtech.udig.project.interceptor.LayerInterceptor;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.internal.render.impl.ViewportModelImpl;
 import org.locationtech.udig.ui.ProgressManager;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -38,7 +39,7 @@ public class InitMapBoundsInterceptor implements LayerInterceptor {
 
         ReferencedEnvelope bounds = map.getViewportModelInternal().getBounds();
         //  If first layer or if the crs has been unchanged from the original BBox
-		if( map.getMapLayers().size()==1 || bounds==ViewportModel.NIL_BBOX){
+		if( map.getMapLayers().size()==1 || bounds == ViewportModelImpl.getDefaultReferencedEnvelope()){
             bounds = map.getBounds(ProgressManager.instance().get());
             map.getViewportModelInternal().setBounds(bounds);
         }
