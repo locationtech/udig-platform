@@ -340,6 +340,12 @@
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-netcdf</artifactId>
 			<version>${geotools.version}</version>
+			<exclusions>
+			  <exclusion>
+			    <groupId>joda-time</groupId>
+			    <artifactId>joda-time</artifactId>
+			  </exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -464,11 +470,6 @@
 				    <artifactId>jts</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>1.6</version>
 		</dependency>
 		<dependency>
 			<groupId>it.geosolutions.imageio-ext</groupId>

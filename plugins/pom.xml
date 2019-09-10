@@ -132,6 +132,7 @@
         <module>org.locationtech.udig.libs.oracle</module>
         <module>org.locationtech.udig.location</module>
         <module>org.locationtech.udig.mapgraphic</module>
+        <module>org.locationtech.udig.org.joda.time</module>
         <module>org.locationtech.udig.printing.model</module>
         <module>org.locationtech.udig.printing.model.edit</module>
         <module>org.locationtech.udig.printing.ui</module>

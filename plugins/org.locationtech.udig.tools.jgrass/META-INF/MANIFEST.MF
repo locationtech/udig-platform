@@ -24,4 +24,7 @@ Import-Package: javax.media.jai,
  javax.media.jai.registry,
  javax.media.jai.remote,
  javax.media.jai.tilecodec,
- javax.media.jai.util
+ javax.media.jai.util,
+ org.joda.time;version="2.8.1",
+ org.joda.time.base;version="2.8.1",
+ org.joda.time.format;version="2.8.1"

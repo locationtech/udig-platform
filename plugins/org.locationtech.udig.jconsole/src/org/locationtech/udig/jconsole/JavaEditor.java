@@ -74,7 +74,7 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.TextOperationAction;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.joda.time.DateTime;
-
+import org.joda.time.format.DateTimeFormatter;
 import org.locationtech.udig.jconsole.util.ImageCache;
 import org.locationtech.udig.jconsole.util.Keywords;
 import org.locationtech.udig.omsbox.OmsBoxPlugin;

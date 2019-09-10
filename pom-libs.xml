@@ -40,6 +40,7 @@
        <module>plugins/org.locationtech.udig.libs.db2/pom-libs.xml</module>
        <module>plugins/org.locationtech.udig.libs.oracle/pom-libs.xml</module>
        <module>plugins/net.sf.opencsv/pom-libs.xml</module>
+       <module>plugins/org.locationtech.udig.org.joda.time/pom-libs.xml</module>
     </modules>
 
     <properties>

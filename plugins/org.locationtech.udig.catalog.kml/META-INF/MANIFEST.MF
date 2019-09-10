@@ -12,3 +12,4 @@ Require-Bundle: org.locationtech.udig.ui,
  org.locationtech.udig.catalog,
  org.locationtech.udig.project.ui
 Bundle-Vendor: udig.refractions.net
+Import-Package: org.joda.time.format

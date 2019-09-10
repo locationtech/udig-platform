@@ -29,4 +29,7 @@ Eclipse-BuddyPolicy: global
 Eclipse-AutoStart: true 
 Bundle-ClassPath: .
 Export-Package: .
+Import-Package: org.joda.time,
+ org.joda.time.base;version="2.8.1",
+ org.joda.time.format;version="2.8.1"
 
