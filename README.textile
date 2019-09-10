@@ -1,5 +1,7 @@
 h1. uDig Overview
 
+!https://travis-ci.org/locationtech/udig-platform.svg?branch=master!:https://travis-ci.org/locationtech/udig-platform
+
 The User-friendly Desktop Internet GIS (uDig) is an open source ("EPL":http://www.eclipse.org/legal/epl-v10.html + "BSD":http://udig.refractions.net/files/bsd3-v10.html) desktop application framework, built with the Eclipse Rich Client (RCP) technology.
 
 * uDig can be used as a stand-alone application
