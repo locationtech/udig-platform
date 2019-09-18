@@ -11,6 +11,7 @@ package org.locationtech.udig.ui;
 
 import java.util.Comparator;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
@@ -67,4 +68,44 @@ public class SelectionComparator implements Comparator<SimpleFeature> {
         return subComparator.compare(o1, o2);
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + direction;
+        result = prime * result + ((filter == null) ? 0 : filter.toString().hashCode());
+        result = prime * result + ((subComparator == null) ? 0 : subComparator.hashCode());
+        return result;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        SelectionComparator other = (SelectionComparator) obj;
+        if (direction != other.direction)
+            return false;
+        if (filter == null) {
+            if (other.filter != null)
+                return false;
+        } else if (!StringUtils.equals(filter.toString(), other.filter.toString()))
+            return false;
+        if (subComparator == null) {
+            if (other.subComparator != null)
+                return false;
+        } else if (!subComparator.equals(other.subComparator))
+            return false;
+        return true;
+    }
 }
