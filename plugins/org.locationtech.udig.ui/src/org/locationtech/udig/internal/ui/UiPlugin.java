@@ -450,7 +450,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         File iniFile = getIniFile();
         
         if (iniFile == null) {
-                String message = ".ini file does not exist. Changes will not be saved."; //$NON-NLS-1$
+                String message = "Proxy settings will not be saved in .ini file since it does not exist."; //$NON-NLS-1$
                 MessageDialog.openWarning(null, null, message);
                 return;
         }
@@ -504,9 +504,18 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         Properties properties = new Properties();
         File iniFile = getIniFile();
         if (iniFile == null) {
-            properties.put(RuntimeFieldEditor.PROXYHOST, System.getProperty(RuntimeFieldEditor.PROXYHOST));
-            properties.put(RuntimeFieldEditor.PROXYPORT, System.getProperty(RuntimeFieldEditor.PROXYPORT));
-            properties.put(RuntimeFieldEditor.PROXYNONHOSTS, System.getProperty(RuntimeFieldEditor.PROXYNONHOSTS));
+        	String host = System.getProperty(RuntimeFieldEditor.PROXYHOST);
+            if (host != null) {
+            	properties.put(RuntimeFieldEditor.PROXYHOST, host);
+            }
+            String port = System.getProperty(RuntimeFieldEditor.PROXYPORT);
+            if (port != null) {
+            	properties.put(RuntimeFieldEditor.PROXYPORT, port);
+            }
+            String nonHosts = System.getProperty(RuntimeFieldEditor.PROXYNONHOSTS);
+            if (nonHosts != null) {
+            	properties.put(RuntimeFieldEditor.PROXYNONHOSTS, nonHosts);
+            }
         } else {
             BufferedReader bR = new BufferedReader(new FileReader(iniFile));
             String line = null;
