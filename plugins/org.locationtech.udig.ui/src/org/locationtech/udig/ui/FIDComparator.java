@@ -28,13 +28,13 @@ public class FIDComparator implements Comparator<SimpleFeature>, Serializable {
     private int dir;
 
     /**
-     * @param dir SWT.UP or SWT.DOWN.  If SWT.UP then the largest fids are at the top (sorted top to bottom).
+     * @param dir SWT.UP or SWT.DOWN.  If SWT.UP then the largest fids are at the bottom (sorted top to bottom).
      */
     public FIDComparator(int dir) {
         if( dir==SWT.UP ){
-            this.dir=-1;
-        }else if( dir==SWT.DOWN ){
             this.dir=1;
+        }else if( dir==SWT.DOWN ){
+            this.dir=-1;
         }else
             throw new IllegalArgumentException("dir must be SWT.UP or SWT.DOWN was: "+dir); //$NON-NLS-1$
     }

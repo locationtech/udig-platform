@@ -52,13 +52,13 @@ public class FIDComparatorTest {
 
         Collections.sort(features, new FIDComparator(SWT.UP));
 
-        assertEquals(feature2, features.get(0));
-        assertEquals(feature1, features.get(1));
+        assertEquals(feature1, features.get(0));
+        assertEquals(feature2, features.get(1));
 
         Collections.sort(features, new FIDComparator(SWT.DOWN));
 
-        assertEquals(feature1, features.get(0));
-        assertEquals(feature2, features.get(1));
+        assertEquals(feature2, features.get(0));
+        assertEquals(feature1, features.get(1));
         
 
         SimpleFeature feature11 = SimpleFeatureBuilder.build(type, new Object[]{fac.createPoint(new Coordinate(10, 10)), name2,
@@ -68,15 +68,15 @@ public class FIDComparatorTest {
 
         Collections.sort(features, new FIDComparator(SWT.UP));
 
-        assertEquals(feature11, features.get(0));
+        assertEquals(feature1, features.get(0));
         assertEquals(feature2, features.get(1));
-        assertEquals(feature1, features.get(2));
+        assertEquals(feature11, features.get(2));
 
         Collections.sort(features, new FIDComparator(SWT.DOWN));
 
-        assertEquals(feature11, features.get(2));
+        assertEquals(feature1, features.get(2));
         assertEquals(feature2, features.get(1));
-        assertEquals(feature1, features.get(0));
+        assertEquals(feature11, features.get(0));
         
         features.clear();
 
@@ -84,8 +84,8 @@ public class FIDComparatorTest {
         features.add( feature1 );
         
         Collections.sort(features, new FIDComparator(SWT.DOWN));
-        assertEquals(feature1, features.get(0));
-        assertEquals(feature11, features.get(1));
+        assertEquals(feature1, features.get(1));
+        assertEquals(feature11, features.get(0));
 
         features.clear();
 
@@ -94,8 +94,8 @@ public class FIDComparatorTest {
                 11}, "Blarg2"); //$NON-NLS-1$
         features.add(featureStrange);
         Collections.sort(features, new FIDComparator(SWT.DOWN));
-        assertEquals(featureStrange, features.get(0));
-        assertEquals(feature1, features.get(1));
+        assertEquals(featureStrange, features.get(1));
+        assertEquals(feature1, features.get(0));
         
     }
 

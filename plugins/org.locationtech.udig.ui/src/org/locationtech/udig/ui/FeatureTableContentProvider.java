@@ -274,8 +274,10 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
             owningFeatureTableControl.getViewer().replace(FeatureTableControl.LOADING, 0);
         } else {
             int resolvedIndex=index;
-            if( owningFeatureTableControl.getViewer().getTable().getSortDirection()==SWT.UP )
-                resolvedIndex=features.size()-index-1;
+            //commented fragment below not needed since features list 
+            //is already sorted using Collections.sort 
+            //if( owningFeatureTableControl.getViewer().getTable().getSortDirection()==SWT.UP )
+            //    resolvedIndex=features.size()-index-1;
             SimpleFeature feature = features.get(resolvedIndex);
             owningFeatureTableControl.getViewer().replace(feature, index);
         }

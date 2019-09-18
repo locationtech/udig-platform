@@ -44,10 +44,10 @@ class AttributeColumnSortListener implements Listener {
         if (sortColumn == selectedColumn) {
             dir = dir == SWT.UP ? SWT.DOWN : SWT.UP;
         } else {
-            dir = SWT.DOWN;
+            dir = SWT.UP;
         }
         // sort the data based on column and direction
-        Comparator<SimpleFeature> comparator = getComparator(selectedColumn, SWT.DOWN);
+        Comparator<SimpleFeature> comparator = getComparator(selectedColumn, dir);
         featureTable.sort( comparator, dir, selectedColumn );
         // update data displayed in tree
     }

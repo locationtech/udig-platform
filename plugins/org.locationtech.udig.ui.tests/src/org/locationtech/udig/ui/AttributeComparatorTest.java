@@ -70,13 +70,13 @@ public class AttributeComparatorTest {
     private void sort( ArrayList<SimpleFeature> features, SimpleFeature feature1, SimpleFeature feature2, String xpath ) {
         Collections.sort(features, new AttributeComparator(SWT.UP, xpath));
 
-        assertEquals(feature2, features.get(0));
-        assertEquals(feature1, features.get(1));
+        assertEquals(feature1, features.get(0));
+        assertEquals(feature2, features.get(1));
 
         Collections.sort(features, new AttributeComparator(SWT.DOWN, xpath));
 
-        assertEquals(feature1, features.get(0));
-        assertEquals(feature2, features.get(1));
+        assertEquals(feature2, features.get(0));
+        assertEquals(feature1, features.get(1));
     }
 
     /**
@@ -86,24 +86,24 @@ public class AttributeComparatorTest {
     public void testCompareNullWithNonNullStringAttribute() {
 
         AttributeComparator nameUpComparator = new AttributeComparator(SWT.UP, "name");
-        assertEquals(-1, nameUpComparator.compare(featureNameNullIdOne, featureNameNotNullIdTwo));
-        assertEquals(1, nameUpComparator.compare(featureNameNotNullIdTwo, featureNameNullIdOne));
+        assertEquals(1, nameUpComparator.compare(featureNameNullIdOne, featureNameNotNullIdTwo));
+        assertEquals(-1, nameUpComparator.compare(featureNameNotNullIdTwo, featureNameNullIdOne));
 
         AttributeComparator nameDownComparator = new AttributeComparator(SWT.DOWN, "name");
-        assertEquals(1, nameDownComparator.compare(featureNameNullIdOne, featureNameNotNullIdTwo));
-        assertEquals(-1, nameDownComparator.compare(featureNameNotNullIdTwo, featureNameNullIdOne));
+        assertEquals(-1, nameDownComparator.compare(featureNameNullIdOne, featureNameNotNullIdTwo));
+        assertEquals(1, nameDownComparator.compare(featureNameNotNullIdTwo, featureNameNullIdOne));
     }
 
     @Test
     public void testCompareNullWithNonNullIntAttribute() {
 
         AttributeComparator nameUpComparator = new AttributeComparator(SWT.UP, "id");
-        assertEquals(1, nameUpComparator.compare(featureNameNullIdOne, featureNameNotNullIdTwo));
-        assertEquals(-1, nameUpComparator.compare(featureNameNotNullIdTwo, featureNameNullIdOne));
+        assertEquals(-1, nameUpComparator.compare(featureNameNullIdOne, featureNameNotNullIdTwo));
+        assertEquals(1, nameUpComparator.compare(featureNameNotNullIdTwo, featureNameNullIdOne));
 
         AttributeComparator nameDownComparator = new AttributeComparator(SWT.DOWN, "id");
-        assertEquals(-1, nameDownComparator.compare(featureNameNullIdOne, featureNameNotNullIdTwo));
-        assertEquals(1, nameDownComparator.compare(featureNameNotNullIdTwo, featureNameNullIdOne));
+        assertEquals(1, nameDownComparator.compare(featureNameNullIdOne, featureNameNotNullIdTwo));
+        assertEquals(-1, nameDownComparator.compare(featureNameNotNullIdTwo, featureNameNullIdOne));
     }
 
     @Test
