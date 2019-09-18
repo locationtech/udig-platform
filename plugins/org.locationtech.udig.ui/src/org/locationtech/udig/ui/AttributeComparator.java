@@ -23,9 +23,9 @@ public class AttributeComparator implements Comparator<SimpleFeature>, Serializa
 
     public AttributeComparator( int dir, String xpath ) {
         if( dir==SWT.UP ){
-            this.sortDir=-1;
-        }else if( dir==SWT.DOWN ){
             this.sortDir=1;
+        }else if( dir==SWT.DOWN ){
+            this.sortDir=-1;
         }else
             throw new IllegalArgumentException("dir must be SWT.UP or SWT.DOWN was: "+dir); //$NON-NLS-1$
         this.xpath=xpath;

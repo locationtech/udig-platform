@@ -94,19 +94,19 @@ public class SelectionComparatorTest {
         Collections.sort(features, new SelectionComparator(fidFilter, SWT.UP, new FIDComparator(SWT.UP)));
         
         assertEquals( feature3, features.get(0));
-        assertEquals( feature4, features.get(1));
+        assertEquals( feature1, features.get(1));
         assertEquals( feature2, features.get(2));
-        assertEquals( feature1, features.get(3));
+        assertEquals( feature4, features.get(3));
 
         fids.add(ff.featureId("ID1")); //$NON-NLS-1$
         
         fidFilter = ff.id(fids);
         Collections.sort(features, new SelectionComparator(fidFilter, SWT.UP, new FIDComparator(SWT.UP)));
         
-        assertEquals( feature3, features.get(0));
-        assertEquals( feature1, features.get(1));
-        assertEquals( feature4, features.get(2));
-        assertEquals( feature2, features.get(3));
+        assertEquals( feature1, features.get(0));
+        assertEquals( feature3, features.get(1));
+        assertEquals( feature2, features.get(2));
+        assertEquals( feature4, features.get(3));
     }
 
 }

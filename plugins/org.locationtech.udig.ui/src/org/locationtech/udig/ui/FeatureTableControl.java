@@ -800,7 +800,7 @@ public class FeatureTableControl implements ISelectionProvider {
 
         Id filter = selectionProvider.getId();
 
-        sort(new SelectionComparator(filter, SWT.UP, new FIDComparator(SWT.DOWN)), SWT.UP, null);
+        sort(new SelectionComparator(filter, SWT.UP, new FIDComparator(SWT.UP)), SWT.UP, null);
         table.setTopIndex(0);
     }
 
