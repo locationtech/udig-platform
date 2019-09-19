@@ -83,6 +83,11 @@ public class AdapterUtil {
      * @return true if the object is an instanceof or can adapt to
      */
     public boolean canAdaptTo( Object obj, Class< ? > target ) {
+        
+        if (obj == null) {
+            return false;
+        }
+        
         //see if platform can adapt the object
         if (Platform.getAdapterManager().hasAdapter(obj, target.getName()) )
             return true;

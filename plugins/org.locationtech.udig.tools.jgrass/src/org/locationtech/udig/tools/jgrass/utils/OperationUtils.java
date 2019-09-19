@@ -95,11 +95,16 @@ public class OperationUtils {
         SimpleFeatureType toSchema = toLayer.getSchema();
         SimpleFeatureType selectedSchema = selectedLayer.getSchema();
         int compare = DataUtilities.compare(toSchema, selectedSchema);
-        if (compare != 0) {
+        boolean needsReOrder = false;
+        if (compare == -1) {
             showMessage(display,
                     Messages.getString("OperationUtils_warning"), Messages.getString("OperationUtils_sametypeproblem"), //$NON-NLS-1$ //$NON-NLS-2$
                     MSGTYPE.WARNING);
             return;
+        } else if (compare == 1){
+            showMessage(display,
+                    Messages.getString("OperationUtils_warning"), "featureType match but needs reordering", MSGTYPE.INFO); //$NON-NLS-1$ //$NON-NLS-2$
+                needsReOrder = true;
         }
 
         SimpleFeatureCollection featureCollection = featureSource.getFeatures(selectedLayer.getQuery(true));
@@ -117,7 +122,8 @@ public class OperationUtils {
         int count = 0;
         while( featureIterator.hasNext() ) {
             SimpleFeature feature = featureIterator.next();
-            UndoableMapCommand addFeatureCmd = cmdFactory.createAddFeatureCommand(feature, toLayer);
+            UndoableMapCommand addFeatureCmd = cmdFactory.createAddFeatureCommand(
+                    needsReOrder ? DataUtilities.reType(toSchema, feature, true) : feature, toLayer);
             copyOverList.add(addFeatureCmd);
             UndoableMapCommand deleteFeatureCmd = cmdFactory.createDeleteFeature(feature, selectedLayer);
             deleteOldList.add(deleteFeatureCmd);

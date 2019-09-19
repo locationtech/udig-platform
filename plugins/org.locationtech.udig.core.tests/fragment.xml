@@ -1,4 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <fragment>
+   <extension
+         point="org.eclipse.core.runtime.adapters">
+		<factory
+            adaptableType="java.lang.Number"
+            class="org.locationtech.udig.core.NumberAdaptableFactory">
+         <adapter
+               type="java.lang.Long">
+         </adapter>
+         <adapter
+               type="java.lang.Integer">
+         </adapter>
+         <adapter
+               type="java.lang.Short">
+         </adapter>
+         <adapter
+               type="java.lang.Double">
+         </adapter>
+         <adapter
+               type="java.lang.Float">
+         </adapter>
+         <adapter
+               type="java.math.BigDecimal">
+         </adapter>
+         <adapter
+               type="java.math.BigInteger">
+         </adapter>
+      </factory>
+   </extension>
 </fragment>
