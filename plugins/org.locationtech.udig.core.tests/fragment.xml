@@ -22,10 +22,10 @@
                type="java.lang.Float">
          </adapter>
          <adapter
-               type="java.lang.BigDecimal">
+               type="java.math.BigDecimal">
          </adapter>
          <adapter
-               type="java.lang.BigInteger">
+               type="java.math.BigInteger">
          </adapter>
       </factory>
    </extension>

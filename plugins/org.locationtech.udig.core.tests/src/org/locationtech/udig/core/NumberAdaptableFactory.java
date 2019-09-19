@@ -2,8 +2,6 @@ package org.locationtech.udig.core;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.sql.Date;
-import java.sql.Timestamp;
 
 import org.eclipse.core.runtime.IAdapterFactory;
 

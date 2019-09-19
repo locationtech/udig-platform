@@ -363,7 +363,7 @@ public class FeatureUtils {
                                     destSchema.getDescriptor(i).getType().getBinding(), 
                                     source.getAttribute(sourceAttributeName), mon);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                        	CorePlugin.log("", e);
                         }
                     } else {
                         attributes[i] = destSchema.getDescriptor(i).getDefaultValue();
