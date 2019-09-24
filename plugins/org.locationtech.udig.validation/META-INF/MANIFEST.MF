@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Validation Plug-in
 Bundle-SymbolicName: org.locationtech.udig.validation; singleton:=true
-Bundle-Version: 2.1.0.qualifier
+Bundle-Version: 2.1.0.RC1
 Bundle-Activator: org.locationtech.udig.validation.ValidationPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin

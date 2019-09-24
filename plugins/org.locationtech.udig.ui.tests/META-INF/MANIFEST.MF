@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: UI Tests Plug-in
 Bundle-SymbolicName: org.locationtech.udig.ui.tests;singleton:=true
-Bundle-Version: 2.1.0.qualifier
+Bundle-Version: 2.1.0.RC1
 Bundle-Activator: org.locationtech.udig.ui.tests.TestsPlugin
 Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.ui,

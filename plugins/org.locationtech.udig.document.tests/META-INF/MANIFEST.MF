@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Document Plug-in Tests
 Bundle-SymbolicName: org.locationtech.udig.document.tests;singleton:=true
-Bundle-Version: 2.1.0.qualifier
+Bundle-Version: 2.1.0.RC1
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.locationtech.udig.document,
  org.locationtech.udig.catalog,
