@@ -16,12 +16,15 @@ import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Text;
 
 /**
  * This object is used when creating tool options, it provide access to the preference store so that
@@ -78,6 +81,25 @@ public abstract class ToolOptionContributionItem extends ContributionItem
         public void widgetDefaultSelected( SelectionEvent e ) {
         }
     };
+    
+    private FocusListener focusListener = new FocusListener(){
+        @Override
+        public void focusGained(FocusEvent e) { }
+
+        @Override
+        public void focusLost(FocusEvent e) {
+            String preferenceString = (String) fields.get(e.widget);
+            if (e.widget instanceof Text) {
+                Text text = (Text) e.widget;
+                String txt = text.getText();
+                String txtPref = getPreferenceStore().getString(preferenceString);
+                if (!txtPref.equals(txt)) {
+                    getPreferenceStore().setValue(preferenceString, txt);
+                }
+            }
+        }
+    };
+    
     private String[] behaviour;
 
     protected void setPreferenceStore( IPreferenceStore store ) {
@@ -107,6 +129,12 @@ public abstract class ToolOptionContributionItem extends ContributionItem
                 if (control instanceof Button) {
                     ((Button) control).addSelectionListener(selectionListener);
                 }
+                else if( control instanceof Combo) {
+                    ((Combo) control).addSelectionListener(selectionListener);
+                }
+                else if( control instanceof Text) {
+                    ((Text) control).addFocusListener(focusListener);
+                }
             }
         } else {
             for( Control control : fields.keySet() ) {
@@ -115,6 +143,12 @@ public abstract class ToolOptionContributionItem extends ContributionItem
                 }
                 if (control instanceof Button) {
                     ((Button) control).removeSelectionListener(selectionListener);
+                }
+                else if( control instanceof Combo) {
+                    ((Combo) control).removeSelectionListener(selectionListener);
+                }
+                else if( control instanceof Text) {
+                    ((Text) control).removeFocusListener(focusListener);
                 }
             }
         }
@@ -139,6 +173,16 @@ public abstract class ToolOptionContributionItem extends ContributionItem
         combo.addSelectionListener(selectionListener);
         
     }
+    
+    public void addField( String preferenceString, Text text ) {
+        if (preferenceString == null) {
+            throw new NullPointerException("PreferenceString required");
+        }
+
+        fields.put(text, preferenceString);
+        // normally we would use button.setData but ContributionItems gets stored there
+        text.addFocusListener(focusListener);
+    }
 
     /**
      * The default implementation of this <code>IContributionItem</code> Subclasses must override to
@@ -149,7 +193,7 @@ public abstract class ToolOptionContributionItem extends ContributionItem
         setPreferenceStore(store);
         update(store);
         store.addPropertyChangeListener(this);
-        listen(true);
+        //listen(true); --> already done with addFields, else we got double Listeners and get the events twice
     }
     /**
      * Used to fill in the fields displayed in the tool option area.
@@ -219,7 +263,12 @@ public abstract class ToolOptionContributionItem extends ContributionItem
                             combo.select(i);
                     }
                // }
+            } else if (control instanceof Text) {
+                Text text = (Text) control;
+                String txtPref = getPreferenceStore().getString(preferenceString);
+                text.setText(txtPref);
             }
+            
         }
     }
 
