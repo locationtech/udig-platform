@@ -17,7 +17,7 @@ import org.locationtech.udig.project.command.factory.EditCommandFactory;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.ui.internal.Messages;
 import org.locationtech.udig.ui.IDropAction;
-
+import org.apache.commons.lang.ObjectUtils;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.factory.CommonFactoryFinder;
@@ -44,14 +44,17 @@ public class DropFilterAction extends IDropAction {
 
     @Override
     public boolean accept( ) {
-        return true;
+        //allow drop only if destination Layer different than source layer
+        ILayer destinationLayer = getDestinationLayer();
+        ILayer sourceLayer = ((IAdaptable)getData()).getAdapter(ILayer.class);
+        return ObjectUtils.notEqual(destinationLayer, sourceLayer);
     }
 
     @Override
     public void perform( IProgressMonitor monitor ) {
         Layer destinationLayer;
         IMap destinationMap;
-        
+
         if( getDestination() instanceof IMap ){
             destinationMap=(IMap) getDestination();
             destinationLayer=(Layer) destinationMap.getEditManager().getSelectedLayer();
@@ -61,22 +64,22 @@ public class DropFilterAction extends IDropAction {
         }else {
             return;
         }
-        
+
         if( getData() instanceof IAdaptable ){
             ILayer layer=(ILayer) ((IAdaptable)getData()).getAdapter(ILayer.class);
             Filter filter=(Filter) ((IAdaptable)getData()).getAdapter(Filter.class);
-            
+
             if (filter == null) {
-            	SimpleFeature feature = (SimpleFeature) ((IAdaptable) getData()).getAdapter(SimpleFeature.class);
-            	FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-				if (feature != null) {
-					filter = filterFactory.id(FeatureUtils.stringToId(
-							filterFactory, feature.getID()));
-				} else {
-					return;
-				}
+                SimpleFeature feature = (SimpleFeature) ((IAdaptable) getData()).getAdapter(SimpleFeature.class);
+                FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
+                if (feature != null) {
+                    filter = filterFactory.id(FeatureUtils.stringToId(
+                            filterFactory, feature.getID()));
+                } else {
+                    return;
+                }
             }
-            
+
             if( layer==null){
                 setSelection(filter==null?(Filter)getData():filter, destinationLayer, monitor);
             }else{
@@ -95,5 +98,14 @@ public class DropFilterAction extends IDropAction {
         monitor.done();
     }
 
- 
+
+    private ILayer getDestinationLayer() {
+        Layer destinationLayer = null;
+        if( getDestination() instanceof IMap ){
+            destinationLayer=(Layer)((IMap)getDestination()).getEditManager().getSelectedLayer();
+        } else if( getDestination() instanceof Layer ){
+            destinationLayer=(Layer)getDestination();
+        }
+        return destinationLayer;
+    }
 }
