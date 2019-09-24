@@ -14,6 +14,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,9 +65,43 @@ public class BehaviourCommandTest {
         
     }
     
+    @Test
+    public void testInOrderRunAndRollback() throws Exception {
+
+        TestHandler handler=new TestHandler();
+        
+        RunBehaviour runBehaviour = new RunBehaviour();
+        RunBehaviour runBehaviour2 = new RunBehaviour();
+        List<Behaviour> list=new ArrayList<Behaviour>();
+        
+        list.add( runBehaviour);
+        list.add( runBehaviour2);
+                
+        
+        BehaviourCommand command=new BehaviourCommand(list, handler );
+        command.setMap( (Map) handler.getContext().getMap());
+        assertFalse( runBehaviour.ran );
+        assertFalse( runBehaviour2.ran );
+        
+        NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
+        command.execute(nullProgressMonitor);
+        
+        assertTrue( runBehaviour.ran );
+        assertTrue( runBehaviour2.ran );
+        assertTrue( runBehaviour2.time.getTime() > runBehaviour.time.getTime());
+        
+        nullProgressMonitor = new NullProgressMonitor();
+        command.rollback(nullProgressMonitor);
+        assertFalse( runBehaviour.ran );
+        assertFalse( runBehaviour2.ran );
+        assertFalse( runBehaviour2.time.getTime() > runBehaviour.time.getTime());
+        
+    }
+    
     class RunBehaviour implements Behaviour{
         int id=0;
         boolean ran;
+        Timestamp time;
         public boolean isValid( EditToolHandler handler ) {
             return true;
         }
@@ -90,6 +125,8 @@ public class BehaviourCommandTest {
                 public void run( IProgressMonitor monitor ) throws Exception {
                     if( ran )
                         fail();
+                    Thread.sleep(10);
+                    time = new Timestamp(System.currentTimeMillis());
                     ran=true;
                 }
 
@@ -104,6 +141,8 @@ public class BehaviourCommandTest {
                 public void rollback( IProgressMonitor monitor ) throws Exception {
                     if( !ran )
                         fail();
+                    Thread.sleep(10);
+                    time = new Timestamp(System.currentTimeMillis());
                     ran=false;
                 }
                 
