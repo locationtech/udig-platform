@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="uDig" uid="org.locationtech.udig-product" id="org.locationtech.udig.product" application="org.locationtech.udig.ui.application" version="2.1.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="uDig" uid="org.locationtech.udig-product" id="org.locationtech.udig.product" application="org.locationtech.udig.ui.application" version="2.2.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="./icons/about.png"/>

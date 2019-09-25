@@ -2,7 +2,7 @@
 <feature
       id="org.locationtech.udig.rcp-feature"
       label="uDig RCP Feature"
-      version="2.1.0.qualifier"
+      version="2.2.0.qualifier"
       provider-name="udig.refractions.net">
 
    <description url="http://udig.github.com/docs/dev/getting_started.html">
