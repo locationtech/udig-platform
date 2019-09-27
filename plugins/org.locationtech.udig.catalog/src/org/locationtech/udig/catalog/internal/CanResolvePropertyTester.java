@@ -15,7 +15,7 @@ import org.eclipse.core.expressions.PropertyTester;
 import org.geotools.data.DataStore;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.data.simple.SimpleFeatureStore;
-import org.geotools.data.wms.WebMapServer;
+import org.geotools.ows.wms.WebMapServer;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.style.Style;
 
@@ -61,7 +61,7 @@ public class CanResolvePropertyTester extends PropertyTester {
             return resolve.canResolve( WebMapServer.class );            
         }
         else if( PROPERTY_WMS_LAYER.equals(property)){
-            return resolve.canResolve( org.geotools.data.ows.Layer.class );            
+            return resolve.canResolve( org.geotools.ows.wms.Layer.class );            
         }
         else if( PROPERTY_SCHEMA.equals(property)){
             return resolve.canResolve( SimpleFeatureType.class );            

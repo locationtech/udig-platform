@@ -13,10 +13,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
-import java.util.Map.Entry;
 
+import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.MultiLineString;
+import org.locationtech.jts.geom.MultiPoint;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.Polygon;
 import org.locationtech.udig.core.IBlockingProvider;
 import org.locationtech.udig.core.StaticBlockingProvider;
 import org.locationtech.udig.project.ILayer;
@@ -29,9 +38,6 @@ import org.locationtech.udig.project.internal.commands.edit.SetGeometryCommand;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 import org.locationtech.udig.project.ui.IAnimation;
 import org.locationtech.udig.project.ui.commands.DrawCommandFactory;
-import org.locationtech.udig.project.ui.feature.FeaturePanelEntry;
-import org.locationtech.udig.project.ui.feature.FeaturePanelProcessor;
-import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 import org.locationtech.udig.tool.edit.internal.Messages;
 import org.locationtech.udig.tools.edit.Behaviour;
 import org.locationtech.udig.tools.edit.EditPlugin;
@@ -40,7 +46,6 @@ import org.locationtech.udig.tools.edit.EditToolHandler;
 import org.locationtech.udig.tools.edit.animation.GeometryOperationAnimation;
 import org.locationtech.udig.tools.edit.commands.AddVertexCommand;
 import org.locationtech.udig.tools.edit.commands.CreateAndSelectNewFeature;
-import org.locationtech.udig.tools.edit.commands.CreateDialogAndSelectNewFeature;
 import org.locationtech.udig.tools.edit.commands.CreateNewOrSelectExitingFeatureCommand;
 import org.locationtech.udig.tools.edit.commands.SetEditGeomChangedStateCommand;
 import org.locationtech.udig.tools.edit.commands.SetEditStateCommand;
@@ -50,20 +55,9 @@ import org.locationtech.udig.tools.edit.support.GeometryCreationUtil;
 import org.locationtech.udig.tools.edit.support.IsBusyStateProvider;
 import org.locationtech.udig.tools.edit.support.PrimitiveShape;
 import org.locationtech.udig.tools.edit.support.ShapeType;
-
-import org.geotools.feature.IllegalAttributeException;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.opengis.feature.IllegalAttributeException;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
-
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.LinearRing;
-import com.vividsolutions.jts.geom.MultiLineString;
-import com.vividsolutions.jts.geom.MultiPoint;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Creates a geometry from the currentGeom in the {@link EditToolHandler}.

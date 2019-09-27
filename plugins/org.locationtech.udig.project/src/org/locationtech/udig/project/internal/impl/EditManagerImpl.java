@@ -48,9 +48,10 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Transaction;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.util.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -58,7 +59,7 @@ import org.opengis.filter.FilterFactory;
 import org.opengis.filter.Id;
 import org.opengis.filter.identity.Identifier;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * The default implementation of the EditManager interface.
@@ -434,14 +435,13 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
                         // The reason for this is that otherwise I would have to make the entire
                         // viewport re-render on a rollback. 
                         // TODO This is a workaround to get around that.
-                        Envelope envelope = new Envelope();
+                        ReferencedEnvelope envelope = new ReferencedEnvelope();
                         for (FeatureEvent event : changes) {
                             envelope.expandToInclude(event.getBounds());
                         }
                         FeatureSource<SimpleFeatureType, SimpleFeature> source = layer.getResource(
                                 FeatureSource.class, null);
-                        FeatureEvent event = new FeatureEvent(source,
-                                FeatureEvent.FEATURES_CHANGED, envelope);
+                        FeatureEvent event = new FeatureEvent(source,FeatureEvent.Type.CHANGED, envelope);
 
                         modified.put(changes, event);
                     }

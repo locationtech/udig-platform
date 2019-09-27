@@ -34,9 +34,9 @@ import org.locationtech.udig.tools.edit.behaviour.StartEditingBehaviour;
 import org.locationtech.udig.tools.edit.enablement.ValidToolDetectionActivator;
 import org.locationtech.udig.tools.edit.support.ShapeType;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.MultiLineString;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.MultiLineString;
 
 import org.locationtech.udig.tools.trim.internal.TrimGeometryBehaviour;
 import org.locationtech.udig.tools.internal.i18n.Messages;

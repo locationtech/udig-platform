@@ -10,11 +10,6 @@
  */
 package org.locationtech.udig.style.sld.editor;
 
-import org.locationtech.udig.filter.ComboExpressionViewer;
-import org.locationtech.udig.style.sld.SLD;
-import org.locationtech.udig.style.sld.SLDPlugin;
-import org.locationtech.udig.style.sld.internal.Messages;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -38,6 +33,10 @@ import org.geotools.styling.Graphic;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Symbolizer;
+import org.locationtech.udig.filter.ComboExpressionViewer;
+import org.locationtech.udig.style.sld.SLD;
+import org.locationtech.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.style.sld.internal.Messages;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.AnchorPoint;
 

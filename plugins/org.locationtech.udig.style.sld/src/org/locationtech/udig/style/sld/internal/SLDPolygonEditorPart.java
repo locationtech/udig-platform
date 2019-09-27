@@ -13,10 +13,6 @@ package org.locationtech.udig.style.sld.internal;
 
 import java.awt.Color;
 
-import org.locationtech.udig.style.sld.SLDEditorPart;
-import org.locationtech.udig.ui.ColorEditor;
-import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -32,6 +28,9 @@ import org.geotools.styling.Fill;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.StyleBuilder;
+import org.locationtech.udig.style.sld.SLDEditorPart;
+import org.locationtech.udig.ui.ColorEditor;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 /**
  * Editor for polygon symbolizer

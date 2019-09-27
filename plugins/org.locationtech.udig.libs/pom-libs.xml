@@ -25,12 +25,12 @@
 
 	<properties>
 		<!-- see geotools root pom for details -->
-		<geotools.version>19.4</geotools.version>
+		<geotools.version>22.0</geotools.version>
 		<imageio-ext.version>1.1.25</imageio-ext.version>
 		<jaiext.version>1.0.26</jaiext.version>
 		<jfreechart.version>1.0.13</jfreechart.version>
 		<jt.version>1.4.0</jt.version>
-		<jts.version>1.14.0</jts.version>
+		<!--<jts.version>1.14.0</jts.version>-->
 		<solrj.version>7.2.1</solrj.version>
 		<lib.dir>${basedir}/lib</lib.dir>
 		<lib.source.dir>${basedir}/lib-src</lib.source.dir>
@@ -652,7 +652,8 @@
 			<artifactId>ejml-ddense</artifactId>
 			<version>0.32</version>
 		</dependency>
-		<dependency>
+		
+		<!--<dependency>
 			<groupId>com.vividsolutions</groupId>
 			<artifactId>jts-core</artifactId>
 			<version>${jts.version}</version>
@@ -673,7 +674,7 @@
 					<artifactId>xercesImpl</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>org.wkb4j</groupId>
 			<artifactId>wkb4j</artifactId>

@@ -29,7 +29,7 @@ import org.locationtech.udig.catalog.internal.wms.WMSServiceImpl;
 import org.locationtech.udig.catalog.ui.UDIGConnectionFactory;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.data.wms.WebMapServer;
+import org.geotools.ows.wms.WebMapServer;
 
 public class WMSConnectionFactory extends UDIGConnectionFactory {
 

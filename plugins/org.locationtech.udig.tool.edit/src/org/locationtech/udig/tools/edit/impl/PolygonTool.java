@@ -50,9 +50,9 @@ import org.locationtech.udig.tools.edit.validator.PolygonCreationValidator;
 import org.eclipse.swt.SWT;
 import org.opengis.filter.spatial.Intersects;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Polygon;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Polygon;
 
 /**
  * Creates and edits Polygons

@@ -23,7 +23,7 @@ import org.locationtech.udig.project.internal.Messages;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.opengis.filter.Filter;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * A MapCommand that selects all features in the bounding box encapsulated by the class.

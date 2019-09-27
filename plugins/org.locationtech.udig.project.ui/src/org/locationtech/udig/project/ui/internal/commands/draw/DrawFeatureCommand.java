@@ -19,6 +19,15 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.CRS;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.geotools.styling.Symbolizer;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
@@ -28,23 +37,12 @@ import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.graphics.AWTGraphics;
 import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 import org.locationtech.udig.ui.graphics.SWTGraphics;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.CRS;
-import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.geotools.styling.Symbolizer;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.geometry.MismatchedDimensionException;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
-
-import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * Draws a feature on the screen.

@@ -15,11 +15,10 @@ import java.util.Arrays;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.locationtech.udig.project.internal.render.impl.ScaleUtils;
-
-import org.geotools.data.ows.CRSEnvelope;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.ows.wms.CRSEnvelope;
 import org.junit.Test;
+import org.locationtech.udig.project.internal.render.impl.ScaleUtils;
 
 public class ScaleUtilsTest {
 	private static SortedSet<Double> SCALES = new TreeSet<Double>(Arrays.asList(10.0,100.0,1000.0,10000.0,100000.0,1000000.0));

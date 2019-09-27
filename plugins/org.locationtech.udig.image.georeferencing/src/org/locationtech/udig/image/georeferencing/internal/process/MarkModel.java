@@ -17,7 +17,7 @@ import java.util.Observer;
 
 import org.eclipse.swt.graphics.Point;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 /**
  * Stores valuable info about each mark and its associated coordinates.

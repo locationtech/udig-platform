@@ -12,11 +12,10 @@ package org.locationtech.udig.style.sld.editor;
 
 import java.awt.Color;
 
-import org.locationtech.udig.ui.graphics.Glyph;
-
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.geotools.brewer.color.BrewerPalette;
+import org.locationtech.udig.ui.graphics.Glyph;
 
 public class BrewerPaletteLabelProvider extends LabelProvider {
 	public Image getImage(Object element) {

@@ -14,7 +14,7 @@ import org.locationtech.udig.catalog.util.GeoToolsAdapters;
 import org.locationtech.udig.ui.ProgressMonitorTaskNamer;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.util.ProgressListener;
+import org.opengis.util.ProgressListener;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -62,7 +62,7 @@ public class GeoToolsAdaptersTest {
         Monitor monitor = new Monitor();
         
         ProgressListener progress = GeoToolsAdapters.progress(monitor);
-        progress.setDescription("go");
+//        progress.setDescription("go");
         progress.started();
         
         assertEquals("test started", 0.0, monitor.work, 0.01 );

@@ -11,11 +11,10 @@
  */
 package org.locationtech.udig.project.ui;
 
-import org.locationtech.udig.project.ui.tool.IToolContext;
-
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.locationtech.udig.project.ui.tool.IToolContext;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**

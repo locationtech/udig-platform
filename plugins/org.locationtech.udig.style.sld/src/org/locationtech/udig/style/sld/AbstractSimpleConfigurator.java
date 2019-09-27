@@ -11,9 +11,6 @@
  */
 package org.locationtech.udig.style.sld;
 
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.style.IStyleConfigurator;
-
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -27,6 +24,8 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleBuilder;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.IStyleConfigurator;
 
 /**
  * This is here to save me some typing and ensure that the simple raster and 

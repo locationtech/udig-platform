@@ -16,14 +16,13 @@ import java.awt.Paint;
 import java.awt.Rectangle;
 import java.awt.geom.PathIterator;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.swt.graphics.Device;
+import org.eclipse.swt.graphics.Path;
 import org.locationtech.udig.project.command.MapCommand;
 import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
 import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 import org.locationtech.udig.ui.graphics.ViewportGraphics;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.swt.graphics.Device;
-import org.eclipse.swt.graphics.Path;
 
 /**
  * Draws the outline of a shape on the Acetate layer.

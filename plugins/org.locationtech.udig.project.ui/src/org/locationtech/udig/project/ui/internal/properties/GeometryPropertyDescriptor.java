@@ -11,12 +11,6 @@
  */
 package org.locationtech.udig.project.ui.internal.properties;
 
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
-import org.locationtech.udig.project.ui.internal.MapEditorPart;
-import org.locationtech.udig.project.ui.internal.Messages;
-import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
-
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -34,9 +28,13 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.geotools.geometry.jts.JTS;
-
-import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 /**
  * @author jones

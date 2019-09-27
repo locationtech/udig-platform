@@ -75,19 +75,19 @@ import org.eclipse.ui.internal.UIPlugin;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
-import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureEvent;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.Schema;
 import org.geotools.filter.FilterAttributeExtractor;
 import org.geotools.filter.IllegalFilterException;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.CRS;
+import org.geotools.util.factory.GeoTools;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.udig.aoi.AOIListener;
 import org.locationtech.udig.aoi.IAOIService;
 import org.locationtech.udig.core.IBlockingProvider;
@@ -143,9 +143,6 @@ import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
-
-import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * Table view for selected Layer, may choose
@@ -896,8 +893,8 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
             synchronized (updates) {
                 for( FeatureEvent event : updates ) {
                     Envelope bounds = event.getBounds();
-                    switch( event.getEventType() ) {
-                    case FeatureEvent.FEATURES_ADDED:
+                    switch( event.getType() ) {
+                    case ADDED:
                         if( bounds != null ){
                             if( addedBounds==null ){
                                 addedBounds=new Envelope(bounds);
@@ -906,14 +903,14 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
                             }
                         }
                         break;
-                    case FeatureEvent.FEATURES_REMOVED:
+                    case REMOVED:
                         // With current Event API there is no way to know what was removed
                         reloadNeeded=true;
                         if( active )
                             reloadFeatures(notifierLayer);
                         return;
                         
-                    case FeatureEvent.FEATURES_CHANGED:
+                    case CHANGED:
                         if (event.getBounds() == null) {
                             return;
                         }
@@ -946,7 +943,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
             
             FilterFactory fac=CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
             final List<String> queryAtts = obtainQueryAttributesForFeatureTable(schema);
-            final DefaultQuery query=new DefaultQuery(schema.getName().getLocalPart(), Filter.EXCLUDE, queryAtts.toArray(new String[0]));
+            final Query query=new Query(schema.getName().getLocalPart(), Filter.EXCLUDE, queryAtts.toArray(new String[0]));
 
             String name = schema.getGeometryDescriptor().getName().getLocalPart();
 			// add new features
@@ -1054,8 +1051,9 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
                 //    return;
                 //}
                 TableItem tableItem=(TableItem) item;
-                Schema schema = new Schema();
-                int columnIndex = schema.getIndexOf( feature.getFeatureType(), property );
+                int columnIndex = feature.getFeatureType().indexOf(property);
+//                Schema schema = new Schema();
+//                int columnIndex = schema.getIndexOf( feature.getFeatureType(), property );
                 tableItem.setText(columnIndex+1, value != null ? value.toString() : "");
                 
                 UndoableComposite composite = new UndoableComposite();
@@ -1077,7 +1075,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         if(isAOIFilter()){
             filter = addAOIFilter(filter, schema.getCoordinateReferenceSystem());
         }
-        final Query query = new DefaultQuery(schema.getName().getLocalPart(), filter, queryAtts.toArray(new String[0]));
+        final Query query = new Query(schema.getName().getLocalPart(), filter, queryAtts.toArray(new String[0]));
         FeatureCollection<SimpleFeatureType, SimpleFeature>  featuresF = featureSource.getFeatures(query);        
         final FeatureCollection<SimpleFeatureType, SimpleFeature>  features = featuresF;
         
@@ -1422,7 +1420,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
                     
                     Set<String> required = (Set<String>) filter.accept( new FilterAttributeExtractor(), null );
                     String[] names = required.toArray( new String[ required.size()]);
-                    final DefaultQuery query=new DefaultQuery(schema.getName().getLocalPart(), filter, names );
+                    final Query query=new Query(schema.getName().getLocalPart(), filter, names );
                     
                     FeatureCollection<SimpleFeatureType, SimpleFeature> features;
                     features = source.getFeatures( query ); // we just want the FeatureID no attributes needed

@@ -16,7 +16,6 @@ import java.util.List;
 import org.locationtech.udig.project.ProjectBlackboardConstants;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.render.SelectionLayer;
-
 import org.opengis.filter.Filter;
 
 /**

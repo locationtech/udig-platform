@@ -16,6 +16,20 @@ import static org.junit.Assert.assertTrue;
 import java.awt.Dimension;
 import java.io.IOException;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.data.DataUtilities;
+import org.geotools.data.FeatureSource;
+import org.geotools.data.Query;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.util.factory.GeoTools;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.core.filter.AdaptingFilter;
@@ -28,26 +42,10 @@ import org.locationtech.udig.project.ui.internal.dragdrop.DropFilterAction;
 import org.locationtech.udig.ui.ViewerDropLocation;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.data.DataUtilities;
-import org.geotools.data.FeatureSource;
-import org.geotools.data.Query;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
 
 /**
  * Tests what happens when a filter is dropped on a layer

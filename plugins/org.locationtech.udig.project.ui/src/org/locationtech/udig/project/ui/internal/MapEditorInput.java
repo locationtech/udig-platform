@@ -11,17 +11,15 @@
  */
 package org.locationtech.udig.project.ui.internal;
 
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.render.IViewportModel;
-import org.locationtech.udig.project.ui.UDIGEditorInput;
-
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IPersistableElement;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.ui.UDIGEditorInput;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Provides access for editing maps in uDig

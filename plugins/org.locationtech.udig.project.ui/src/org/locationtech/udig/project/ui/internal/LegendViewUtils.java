@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.IGeoResource;
@@ -24,10 +27,6 @@ import org.locationtech.udig.project.Interaction;
 import org.locationtech.udig.project.internal.Folder;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.LayerLegendItem;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 
 /**
  * The utility class of the Legend View. This contains static helper methods for Legend View

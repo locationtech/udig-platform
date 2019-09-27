@@ -12,7 +12,7 @@ package org.locationtech.udig.ui;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.widgets.Composite;
 

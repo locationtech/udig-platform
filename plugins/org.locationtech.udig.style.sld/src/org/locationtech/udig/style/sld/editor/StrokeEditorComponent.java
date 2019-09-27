@@ -10,14 +10,12 @@
  */
 package org.locationtech.udig.style.sld.editor;
 
-import org.locationtech.udig.filter.ComboExpressionViewer;
-
-import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.locationtech.udig.filter.ComboExpressionViewer;
 
 public class StrokeEditorComponent {
     // One of graphic fill, graphic stroke or solid

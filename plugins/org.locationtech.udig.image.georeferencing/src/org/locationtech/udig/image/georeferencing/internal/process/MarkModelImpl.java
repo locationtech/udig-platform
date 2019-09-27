@@ -18,7 +18,7 @@ import java.util.Observer;
 
 import org.eclipse.swt.graphics.Point;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 /**
  * Stores valuable info about each mark or dot.
@@ -139,7 +139,7 @@ final class MarkModelImpl extends Observable implements Serializable, MarkModel 
 	}
 
 	/* (non-Javadoc)
-	 * @see org.locationtech.udig.image.georeferencing.internal.process.Mark#updateCoordinatePosition(com.vividsolutions.jts.geom.Coordinate)
+	 * @see org.locationtech.udig.image.georeferencing.internal.process.Mark#updateCoordinatePosition(org.locationtech.jts.geom.Coordinate)
 	 */
 	public void updateCoordinatePosition(Coordinate coord) {
 

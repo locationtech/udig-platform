@@ -12,7 +12,7 @@
  */
 package org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 /**
  * This listener will be used to broadcast which coordinate has been captured or

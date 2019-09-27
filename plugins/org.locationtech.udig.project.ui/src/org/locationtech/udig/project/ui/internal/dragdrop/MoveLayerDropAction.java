@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.internal.Layer;
@@ -21,11 +22,8 @@ import org.locationtech.udig.project.internal.commands.AddLayersCommand;
 import org.locationtech.udig.project.internal.commands.DeleteLayersCommand;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.LayersView;
-import org.locationtech.udig.project.ui.internal.MapEditor;
 import org.locationtech.udig.project.ui.internal.MapEditorPart;
 import org.locationtech.udig.ui.IDropAction;
-
-import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  *  Moves layers from one map to another when destination is a map or LayersView or MapEditor.

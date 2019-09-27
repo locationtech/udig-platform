@@ -15,7 +15,7 @@ import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 
 import org.eclipse.emf.ecore.EObject;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * 

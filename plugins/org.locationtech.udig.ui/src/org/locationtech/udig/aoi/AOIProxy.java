@@ -19,7 +19,7 @@ import org.eclipse.ui.part.IPageBookViewPage;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * Allows lazy loading of IAOIStrategy (Area of Interest)

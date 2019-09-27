@@ -10,6 +10,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.geotools.data.FeatureEvent;
+import org.geotools.geometry.jts.JTS;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.ContextModel;
 import org.locationtech.udig.project.internal.ContextModelListenerAdapter;
@@ -31,19 +38,10 @@ import org.locationtech.udig.project.preferences.PreferenceConstants;
 import org.locationtech.udig.project.render.RenderException;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
-
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.geotools.data.FeatureEvent;
-import org.geotools.geometry.jts.JTS;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.filter.Filter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
-
-import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Provides factory methods for various Listeners used by RenderManagerDynamic.

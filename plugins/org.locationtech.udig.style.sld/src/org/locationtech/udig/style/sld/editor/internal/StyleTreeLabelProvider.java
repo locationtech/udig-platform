@@ -13,10 +13,6 @@ package org.locationtech.udig.style.sld.editor.internal;
 import java.awt.Color;
 import java.util.List;
 
-import org.locationtech.udig.style.sld.SLDPlugin;
-import org.locationtech.udig.ui.graphics.Glyph;
-import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -28,6 +24,9 @@ import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.Symbolizer;
+import org.locationtech.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.ui.graphics.Glyph;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 public class StyleTreeLabelProvider extends LabelProvider implements ITableLabelProvider {
     public Image getImage( Object element ) {
@@ -50,13 +49,13 @@ public class StyleTreeLabelProvider extends LabelProvider implements ITableLabel
         if (element instanceof Style) {
             // shouldn't be called, as the root object is hidden
             Style style = (Style) element;
-            return style.getTitle();
+            return style.getDescription().getTitle().toString();
         } else if (element instanceof Rule) {
             Rule rule = (Rule) element;
             if (rule.getName().startsWith("rule")) //$NON-NLS-1$
                 return StyleGenerator.toStyleExpression(rule.getFilter());
             else
-                return rule.getTitle();
+                return rule.getDescription().getTitle().toString();
         }
         return super.getText(element); // unknown type
     }
@@ -100,7 +99,7 @@ public class StyleTreeLabelProvider extends LabelProvider implements ITableLabel
                 return (String) element;
             } else if (element instanceof Rule) {
                 Rule rule = (Rule) element;
-                return rule.getTitle();
+                return rule.getDescription().getTitle().toString();
             }
         } else if (columnIndex == 2) { // style expression
             if (element instanceof Rule) {

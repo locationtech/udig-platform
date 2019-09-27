@@ -16,10 +16,14 @@ import java.awt.geom.Point2D;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.measure.converter.UnitConverter;
-import javax.measure.unit.SI;
-import javax.measure.unit.Unit;
+import javax.measure.Unit;
+import javax.measure.UnitConverter;
 
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.GeodeticCalculator;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.core.Pair;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IMap;
@@ -30,17 +34,11 @@ import org.locationtech.udig.project.internal.render.ViewportModel;
 import org.locationtech.udig.project.preferences.PreferenceConstants;
 import org.locationtech.udig.project.render.IRenderManager;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
-
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.CRS;
-import org.geotools.referencing.GeodeticCalculator;
-import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.TransformException;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
+import si.uom.SI;
 
 /**
  * Methods for calculating the ScaleDenominator
@@ -88,16 +86,24 @@ public final class ScaleUtils {
 
 	public static double fromMeterToCrs(double value,
 			CoordinateReferenceSystem crs) {
-		Unit<?> unit = getUnit(crs);
-		UnitConverter converter = SI.METER.getConverterTo(unit);
-		return converter.convert(value);
+		try{
+			Unit<?> unit = getUnit(crs);
+			UnitConverter converter = SI.METRE.getConverterToAny(unit);
+			return converter.convert(value);
+		}catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
 	}
 
 	public static double fromCrsToMeter(double value,
 			CoordinateReferenceSystem crs) {
-		Unit<?> unit = getUnit(crs);
-		UnitConverter converter = unit.getConverterTo(javax.measure.unit.SI.METER);
-		return converter.convert(value);
+		try {
+			Unit<?> unit = getUnit(crs);
+			UnitConverter converter = unit.getConverterToAny(SI.METRE);
+			return converter.convert(value);
+		}catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
 	}
 
 	/**
@@ -107,7 +113,7 @@ public final class ScaleUtils {
 	 */
 	public static boolean isLatLong(CoordinateReferenceSystem crs) {
 		Unit<?> unit = getUnit(crs);
-		boolean isLatLong = unit.getStandardUnit().equals(javax.measure.unit.SI.RADIAN);
+		boolean isLatLong = unit.getSystemUnit().equals(SI.RADIAN);
 		return isLatLong;
 	}
 

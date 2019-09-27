@@ -18,7 +18,7 @@ import org.geotools.referencing.operation.matrix.GeneralMatrix;
 import org.junit.Test;
 import org.opengis.referencing.operation.MathTransform;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 /**
  * Test LazyCoord class

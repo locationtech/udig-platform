@@ -20,8 +20,8 @@ import org.locationtech.udig.project.StyleContent;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
-import org.geotools.data.ows.Layer;
-import org.geotools.data.ows.StyleImpl;
+import org.geotools.ows.wms.Layer;
+import org.geotools.ows.wms.StyleImpl;
 
 public class WMSStyleContent extends StyleContent {
 

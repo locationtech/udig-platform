@@ -43,7 +43,7 @@ import org.locationtech.udig.bookmarks.internal.MapWrapper;
 import org.locationtech.udig.bookmarks.internal.Messages;
 import org.locationtech.udig.bookmarks.internal.ui.BookmarksView;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * The action delegate the provides all of the actions for working with

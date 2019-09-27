@@ -28,16 +28,14 @@ import org.geotools.kml.KML;
 import org.geotools.kml.KMLConfiguration;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.geotools.xml.Encoder;
-import org.geotools.xml.PullParser;
-import org.geotools.xml.StreamingParser;
+import org.geotools.xsd.Encoder;
+import org.geotools.xsd.PullParser;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.udig.catalog.kml.internal.Messages;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
-
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * Utilities to convert kml to features and back (taken from geotools testcases).

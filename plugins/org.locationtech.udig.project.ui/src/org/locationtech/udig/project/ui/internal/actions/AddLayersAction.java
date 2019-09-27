@@ -11,21 +11,18 @@
  */
 package org.locationtech.udig.project.ui.internal.actions;
 
-import org.locationtech.udig.project.ui.internal.wizard.MapImport;
-
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuCreator;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.HelpListener;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.actions.ActionDelegate;
+import org.locationtech.udig.project.ui.internal.wizard.MapImport;
 
 /**
  * Performs the open action from the file menu of uDig. It is responsible for creating new maps

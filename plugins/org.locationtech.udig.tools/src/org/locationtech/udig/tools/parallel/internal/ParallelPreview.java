@@ -29,8 +29,8 @@ import org.locationtech.udig.tools.edit.support.EditUtils;
 import org.locationtech.udig.tools.edit.support.PrimitiveShape;
 import org.locationtech.udig.tools.edit.support.ShapeType;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
 
 //import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsContext;
 //import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsMode;

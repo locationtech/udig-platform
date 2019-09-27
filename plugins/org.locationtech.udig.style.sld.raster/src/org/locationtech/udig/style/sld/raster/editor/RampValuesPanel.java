@@ -12,13 +12,13 @@ package org.locationtech.udig.style.sld.raster.editor;
 
 import java.io.IOException;
 
-import org.locationtech.udig.style.sld.raster.SLDRasterPlugin;
-import org.locationtech.udig.style.sld.raster.internal.Messages;
 import org.eclipse.jface.window.Window;
+import org.geotools.brewer.styling.builder.ColorMapEntryBuilder;
 import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapEntry;
 import org.geotools.styling.ColorMapImpl;
-import org.geotools.styling.builder.ColorMapEntryBuilder;
+import org.locationtech.udig.style.sld.raster.SLDRasterPlugin;
+import org.locationtech.udig.style.sld.raster.internal.Messages;
 import org.opengis.coverage.grid.GridCoverageReader;
 
 /**

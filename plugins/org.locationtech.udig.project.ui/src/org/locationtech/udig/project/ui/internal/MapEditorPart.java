@@ -10,10 +10,9 @@
  */
 package org.locationtech.udig.project.ui.internal;
 
-import org.locationtech.udig.internal.ui.UDIGDropHandler;
-
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorPart;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
 
 /**
  * interface for map editor related map parts

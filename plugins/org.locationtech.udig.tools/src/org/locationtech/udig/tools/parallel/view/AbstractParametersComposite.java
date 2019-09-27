@@ -13,24 +13,15 @@ package org.locationtech.udig.tools.parallel.view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.Map.Entry;
 
-import javax.measure.unit.Unit;
+import javax.measure.Unit;
 
-import org.locationtech.udig.project.EditManagerEvent;
-import org.locationtech.udig.project.IEditManager;
-import org.locationtech.udig.project.IEditManagerListener;
-import org.locationtech.udig.project.command.UndoableComposite;
-import org.locationtech.udig.project.command.UndoableMapCommand;
-import org.locationtech.udig.project.ui.tool.IToolContext;
-import org.locationtech.udig.tools.edit.EditToolHandler;
-
-import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
@@ -39,16 +30,22 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-
+import org.locationtech.udig.project.EditManagerEvent;
+import org.locationtech.udig.project.IEditManager;
+import org.locationtech.udig.project.IEditManagerListener;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.tools.edit.EditToolHandler;
 //import es.axios.geotools.util.UnitList;
 import org.locationtech.udig.tools.feature.util.UnitList;
-//import es.axios.udig.ui.commons.message.InfoMessage;
-import org.locationtech.udig.tools.parallel.internal.InfoMessage;
-import org.locationtech.udig.tools.parallel.internal.PrecisionToolsContext;
-import org.locationtech.udig.tools.parallel.internal.InfoMessage.Type;
 //import es.axios.udig.ui.commons.message.InfoMessage.Type;
 //import es.axios.udig.ui.editingtools.internal.i18n.Messages;
 import org.locationtech.udig.tools.internal.i18n.Messages;
+//import es.axios.udig.ui.commons.message.InfoMessage;
+import org.locationtech.udig.tools.parallel.internal.InfoMessage;
+import org.locationtech.udig.tools.parallel.internal.InfoMessage.Type;
+import org.locationtech.udig.tools.parallel.internal.PrecisionToolsContext;
 //import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsMode;
 
 /**

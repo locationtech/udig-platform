@@ -21,7 +21,7 @@ import org.locationtech.udig.catalog.wmsc.server.WMSCSchema.WMSCAttribute;
 import org.locationtech.udig.catalog.wmsc.server.WMSCSchema.WMSCComplexType;
 import org.locationtech.udig.catalog.wmsc.server.WMSCSchema.WMSCElement;
 
-import org.geotools.data.ows.CRSEnvelope;
+import org.geotools.ows.wms.CRSEnvelope;
 import org.geotools.data.ows.Service;
 import org.geotools.xml.PrintHandler;
 import org.geotools.xml.schema.Attribute;

@@ -30,7 +30,7 @@ import org.geotools.geometry.GeneralEnvelope;
 import org.opengis.coverage.grid.GridCoverage;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 public class ArcSDERasterGeoResource extends IGeoResource {
 

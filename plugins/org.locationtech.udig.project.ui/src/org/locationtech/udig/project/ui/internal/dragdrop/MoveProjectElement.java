@@ -15,15 +15,14 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import org.locationtech.udig.project.internal.Project;
-import org.locationtech.udig.project.internal.ProjectElement;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.ui.IDropAction;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.ui.IDropAction;
 
 /**
  * Move Project elements between projects

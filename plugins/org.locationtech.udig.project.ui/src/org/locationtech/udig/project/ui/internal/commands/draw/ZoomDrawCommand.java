@@ -14,12 +14,11 @@ package org.locationtech.udig.project.ui.internal.commands.draw;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
 import org.locationtech.udig.project.ui.commands.IMapTransformCommand;
 import org.locationtech.udig.project.ui.commands.IPreMapDrawCommand;
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
-
-import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Sets the affine transform of the graphics to a zoom level.

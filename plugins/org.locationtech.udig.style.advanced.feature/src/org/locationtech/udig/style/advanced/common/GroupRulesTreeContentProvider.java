@@ -13,7 +13,6 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.FeatureTypeStyleWrapper;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 

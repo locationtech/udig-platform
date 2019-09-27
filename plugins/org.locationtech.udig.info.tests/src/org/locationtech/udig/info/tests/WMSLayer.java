@@ -19,15 +19,15 @@ import org.locationtech.udig.project.Interaction;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.data.Query;
-import org.geotools.data.ows.Layer;
-import org.geotools.data.wms.WebMapServer;
+import org.geotools.ows.wms.Layer;
+import org.geotools.ows.wms.WebMapServer;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 public class WMSLayer implements ILayer {;
 

@@ -9,14 +9,13 @@
  */
 package org.locationtech.udig.project.ui.tool.selection.provider;
 
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.locationtech.udig.project.AdaptableFeature;
 import org.locationtech.udig.project.EditManagerEvent;
 import org.locationtech.udig.project.IEditManagerListener;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
-
-import org.eclipse.jface.viewers.StructuredSelection;
 
 /**
  * A selection provider that provides as the current selection the currently selected feature.

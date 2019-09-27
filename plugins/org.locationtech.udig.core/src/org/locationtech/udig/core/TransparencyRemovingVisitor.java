@@ -11,7 +11,6 @@
 package org.locationtech.udig.core;
 
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
 import org.geotools.styling.AnchorPoint;
 import org.geotools.styling.ChannelSelection;
 import org.geotools.styling.ColorMap;
@@ -44,6 +43,7 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.UserLayer;
+import org.geotools.util.factory.GeoTools;
 import org.opengis.filter.FilterFactory;
 
 /**
@@ -70,7 +70,7 @@ public class TransparencyRemovingVisitor implements StyleVisitor {
     }
 
     public void visit( Style arg0 ) {
-        for( FeatureTypeStyle fts : arg0.getFeatureTypeStyles() ) {
+        for( FeatureTypeStyle fts : arg0.featureTypeStyles() ) {
             fts.accept(this);
         }
     }
@@ -82,7 +82,7 @@ public class TransparencyRemovingVisitor implements StyleVisitor {
     }
 
     public void visit( FeatureTypeStyle arg0 ) {
-        for( Rule s : arg0.getRules() ) {
+        for( Rule s : arg0.rules() ) {
             s.accept(this);
         }
     }

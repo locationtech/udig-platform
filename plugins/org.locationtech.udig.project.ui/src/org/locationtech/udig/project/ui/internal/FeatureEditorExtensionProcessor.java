@@ -15,18 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.locationtech.udig.core.internal.ExtensionPointList;
-import org.locationtech.udig.internal.ui.UiPlugin;
-import org.locationtech.udig.project.internal.EditManager;
-import org.locationtech.udig.project.internal.ProjectPackage;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.preferences.PreferenceConstants;
-import org.locationtech.udig.project.ui.IUDIGDialogPage;
-import org.locationtech.udig.project.ui.IUDIGView;
-import org.locationtech.udig.project.ui.internal.tool.ToolContext;
-import org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl;
-import org.locationtech.udig.ui.PlatformGIS;
-
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
@@ -52,6 +40,17 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.ui.IUDIGDialogPage;
+import org.locationtech.udig.project.ui.IUDIGView;
+import org.locationtech.udig.project.ui.internal.tool.ToolContext;
+import org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl;
+import org.locationtech.udig.ui.PlatformGIS;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 

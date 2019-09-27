@@ -11,9 +11,8 @@ package org.locationtech.udig.project.ui.render.displayAdapter;
 
 import java.awt.Point;
 
-import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
-
 import org.eclipse.swt.SWT;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 
 /**
  * Encapsulates a mouse event. MapMouseListeners receive MapMouse events.

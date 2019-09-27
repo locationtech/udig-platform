@@ -15,8 +15,8 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.LineString;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineString;
 
 /**
  * Test using closed split Line

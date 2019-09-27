@@ -12,6 +12,9 @@ package org.locationtech.udig.project.ui.internal.actions;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.swt.dnd.DropTargetEvent;
 import org.locationtech.udig.project.ILegendItem;
 import org.locationtech.udig.project.internal.Folder;
 import org.locationtech.udig.project.internal.LayerLegendItem;
@@ -19,10 +22,6 @@ import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.ui.IDropAction;
 import org.locationtech.udig.ui.ViewerDropLocation;
-
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.swt.dnd.DropTargetEvent;
 
 /**
  * Action that moves legend items within the legend items list. This moves layers in and out of

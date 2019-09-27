@@ -31,7 +31,7 @@ import org.opengis.filter.spatial.Intersects;
 import org.opengis.referencing.operation.OperationNotFoundException;
 import org.opengis.referencing.operation.TransformException;
 
-import com.vividsolutions.jts.geom.LineString;
+import org.locationtech.jts.geom.LineString;
 
 import org.locationtech.udig.tools.internal.i18n.Messages;
 import org.locationtech.udig.tools.internal.ui.util.DialogUtil;

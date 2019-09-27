@@ -9,14 +9,13 @@
  */
 package org.locationtech.udig.project.ui.internal;
 
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.LayerLegendItem;
-import org.locationtech.udig.project.internal.Map;
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerLegendItem;
+import org.locationtech.udig.project.internal.Map;
 
 /**
  * The Filters Handler of the Legend View. This class is designed to handle the maintenance of the

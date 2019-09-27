@@ -13,7 +13,7 @@ import java.util.EventObject;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * Quick listener to <code>AOIService</code> (Area of Interest) providing notification

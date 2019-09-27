@@ -14,6 +14,15 @@ import static org.junit.Assert.assertTrue;
 
 import java.awt.Dimension;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.geotools.data.FeatureStore;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.util.factory.GeoTools;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.core.internal.FeatureUtils;
 import org.locationtech.udig.project.internal.Map;
@@ -23,16 +32,6 @@ import org.locationtech.udig.project.render.IRenderer;
 import org.locationtech.udig.project.tests.support.MapTests;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.geotools.data.FeatureStore;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
@@ -84,7 +83,7 @@ public class EditReRenderTest extends AbstractProjectUITestCase {
         
         listener.rendered=false;
         
-        store.modifyFeatures(features[0].getFeatureType().getDescriptor("name"),"changed",  //$NON-NLS-1$ //$NON-NLS-2$
+        store.modifyFeatures(features[0].getFeatureType().getDescriptor("name").getName(),"changed",  //$NON-NLS-1$ //$NON-NLS-2$
         		fac.id( FeatureUtils.stringToId(fac, features[1].getID() )));
 
         UDIGTestUtil.inDisplayThreadWait(5000, new WaitCondition(){
@@ -113,7 +112,7 @@ public class EditReRenderTest extends AbstractProjectUITestCase {
         
         listener.rendered=false;
         
-        store.modifyFeatures(features[0].getFeatureType().getDescriptor("name"),"changed",   //$NON-NLS-1$//$NON-NLS-2$
+        store.modifyFeatures(features[0].getFeatureType().getDescriptor("name").getName(),"changed",   //$NON-NLS-1$//$NON-NLS-2$
         		fac.id( FeatureUtils.stringToId(fac, features[1].getID() )));
         UDIGTestUtil.inDisplayThreadWait(5000, new WaitCondition(){
 

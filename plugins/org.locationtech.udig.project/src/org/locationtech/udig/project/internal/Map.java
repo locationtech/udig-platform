@@ -28,7 +28,7 @@ import org.geotools.brewer.color.BrewerPalette;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.filter.Filter;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * TODO Purpose of org.locationtech.udig.project.internal

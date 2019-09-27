@@ -9,7 +9,7 @@
  */
 package org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 /**
  * A point representing a position in a raster profile.

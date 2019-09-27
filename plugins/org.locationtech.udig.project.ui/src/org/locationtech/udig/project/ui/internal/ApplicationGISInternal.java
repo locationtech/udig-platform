@@ -14,6 +14,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.Project;
@@ -22,14 +29,6 @@ import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.UDIGEditorInput;
 import org.locationtech.udig.project.ui.internal.tool.ToolContext;
 import org.locationtech.udig.ui.PlatformGIS;
-
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorReference;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**

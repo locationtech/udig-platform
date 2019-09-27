@@ -15,7 +15,7 @@ import org.locationtech.udig.project.ILayer;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
-import org.geotools.data.DefaultQuery;
+import org.geotools.data.Query;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.geotools.feature.FeatureCollection;
@@ -44,7 +44,7 @@ public class GetSelectedFeaturesFromLayer {
         SimpleFeatureType schema = layer.getSchema();
 		String typeName = schema.getTypeName();
 		Filter selected = layer.getFilter();
-		Query query = new DefaultQuery(typeName, selected, Query.ALL_NAMES );
+		Query query = new Query(typeName, selected, Query.ALL_NAMES );
         
         FeatureSource<SimpleFeatureType,SimpleFeature> featureSource =
         	layer.getResource(FeatureSource.class, new SubProgressMonitor(monitor, 1));

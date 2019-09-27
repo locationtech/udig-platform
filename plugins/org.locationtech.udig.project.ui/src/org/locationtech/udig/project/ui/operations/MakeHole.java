@@ -11,6 +11,15 @@
  */
 package org.locationtech.udig.project.ui.operations;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.swt.widgets.Display;
+import org.geotools.data.FeatureSource;
+import org.geotools.data.Query;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.feature.FeatureCollection;
+import org.geotools.util.factory.GeoTools;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.udig.catalog.util.GeoToolsAdapters;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IMap;
@@ -21,24 +30,12 @@ import org.locationtech.udig.project.command.Command;
 import org.locationtech.udig.project.command.MapCommand;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.ui.operations.IOp;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.swt.widgets.Display;
-import org.geotools.data.DefaultQuery;
-import org.geotools.data.FeatureSource;
-import org.geotools.data.Query;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.geotools.feature.FeatureCollection;
 import org.opengis.feature.Feature;
 import org.opengis.feature.FeatureVisitor;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory2;
-
-import com.vividsolutions.jts.geom.Geometry;
 
 
 public class MakeHole implements IOp {
@@ -52,7 +49,7 @@ public class MakeHole implements IOp {
         final IMap map = layer.getMap();
 
         //get all selected features
-        Query query = new DefaultQuery(layer.getSchema().getTypeName(), layer.getFilter());
+        Query query = new Query(layer.getSchema().getTypeName(), layer.getFilter());
         
         FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = layer.getResource(FeatureSource.class, new SubProgressMonitor(monitor, 1)); 
         FeatureCollection<SimpleFeatureType, SimpleFeature>  features = featureSource.getFeatures(query);

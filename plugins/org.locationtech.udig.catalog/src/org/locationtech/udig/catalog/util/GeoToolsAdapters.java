@@ -21,7 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.ResourceInfo;
 import org.geotools.data.ServiceInfo;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.util.ProgressListener;
+import org.opengis.util.ProgressListener;
 import org.geotools.util.SimpleInternationalString;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.util.InternationalString;
@@ -175,45 +175,6 @@ public class GeoToolsAdapters {
             }
             public void subTask( String name ) {
                 monitor.setTask( new SimpleInternationalString( name ));
-            }
-            public void worked( int work ) {
-                amount += total;
-            }
-        };
-    }
-	
-    static public IProgressMonitor progress(final ProgressListener monitor) {
-        if( monitor == null ) return null;
-        return new IProgressMonitor(){
-            int total;
-            int amount;
-			public void beginTask( String name, int totalWork ) {
-                amount = 0;
-                total = totalWork;
-                monitor.setDescription( name );
-                monitor.progress( work() );
-            }
-            float work(){
-                return (float) amount / (float) total;
-            }
-            public void done() {
-                amount = total;
-                monitor.complete();
-                monitor.dispose();
-            }
-            public void internalWorked( double work ) {
-            }
-            public boolean isCanceled() {
-                return monitor.isCanceled();
-            }
-            public void setCanceled( boolean cancel ) {
-                monitor.setCanceled( cancel );
-            }
-            public void setTaskName( String name ) {
-                monitor.setDescription( name );
-            }
-            public void subTask( String name ) {
-                monitor.setDescription( name );
             }
             public void worked( int work ) {
                 amount += total;

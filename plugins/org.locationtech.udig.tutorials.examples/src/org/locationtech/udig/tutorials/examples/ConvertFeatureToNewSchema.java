@@ -12,17 +12,16 @@ package org.locationtech.udig.tutorials.examples;
 import java.io.IOException;
 import java.util.Iterator;
 
-import org.locationtech.udig.project.IMap;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
-import org.geotools.feature.IllegalAttributeException;
 import org.geotools.feature.collection.AdaptorFeatureCollection;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.locationtech.udig.project.IMap;
+import org.opengis.feature.IllegalAttributeException;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;

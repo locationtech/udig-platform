@@ -12,19 +12,8 @@ package org.locationtech.udig.project.ui.internal.wizard.url;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.internal.ServiceFactoryImpl;
-import org.locationtech.udig.catalog.ui.AbstractUDIGImportPage;
-import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
-import org.locationtech.udig.core.RecentHistory;
-import org.locationtech.udig.project.ui.internal.Messages;
-import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -38,6 +27,14 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.ServiceFactoryImpl;
+import org.locationtech.udig.catalog.ui.AbstractUDIGImportPage;
+import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
+import org.locationtech.udig.core.RecentHistory;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 /**
  * @author Amr Alam TODO To change the template for this generated type comment go to Window -

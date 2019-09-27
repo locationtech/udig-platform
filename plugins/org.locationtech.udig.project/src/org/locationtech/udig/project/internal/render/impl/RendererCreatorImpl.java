@@ -599,7 +599,7 @@ public class RendererCreatorImpl implements RendererCreator {
         }
 
         /**
-         * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#render(com.vividsolutions.jts.geom.Envelope,
+         * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#render(org.locationtech.jts.geom.Envelope,
          *      org.eclipse.core.runtime.IProgressMonitor)
          */
         public void render(IProgressMonitor monitor ) {

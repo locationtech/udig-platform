@@ -12,13 +12,6 @@ package org.locationtech.udig.project.ui.internal.property.pages;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.ui.internal.Messages;
-import org.locationtech.udig.project.ui.summary.SummaryControl;
-import org.locationtech.udig.project.ui.summary.SummaryData;
-import org.locationtech.udig.ui.ProgressManager;
-
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -27,12 +20,17 @@ import org.eclipse.ui.IWorkbenchPropertyPage;
 import org.eclipse.ui.dialogs.PropertyPage;
 import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.summary.SummaryControl;
+import org.locationtech.udig.project.ui.summary.SummaryData;
+import org.locationtech.udig.ui.ProgressManager;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.filter.Filter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Shows a summary of the layer

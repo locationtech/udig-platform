@@ -21,7 +21,7 @@ import org.locationtech.udig.ui.operations.IOp;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.type.Name;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 public class CalculateLengthOp implements IOp {
 

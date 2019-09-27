@@ -19,10 +19,6 @@ import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
 import java.util.List;
 
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.ui.Drawing;
-import org.locationtech.udig.ui.graphics.ViewportGraphics;
-
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -30,10 +26,13 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.widgets.Display;
 import org.geotools.data.FeatureSource;
-import org.geotools.data.wms.WebMapServer;
-import org.geotools.data.wms.request.GetLegendGraphicRequest;
 import org.geotools.feature.FeatureIterator;
+import org.geotools.ows.wms.WebMapServer;
+import org.geotools.ows.wms.request.GetLegendGraphicRequest;
 import org.geotools.styling.Style;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.ui.Drawing;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**
@@ -114,8 +113,8 @@ public class GlyphBuilder {
             return null;
         try {
             WebMapServer wms = target.getResource(WebMapServer.class, null);
-            org.geotools.data.ows.Layer layer = target.getResource(
-                    org.geotools.data.ows.Layer.class, null);
+            org.geotools.ows.wms.Layer layer = target.getResource(
+                    org.geotools.ows.wms.Layer.class, null);
 
             if (wms.getCapabilities().getRequest().getGetLegendGraphic() != null) {
 

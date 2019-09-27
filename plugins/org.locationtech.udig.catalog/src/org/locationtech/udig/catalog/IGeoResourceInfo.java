@@ -26,7 +26,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * Represents a bean style metadata ancestor for metadata about a geoResource.

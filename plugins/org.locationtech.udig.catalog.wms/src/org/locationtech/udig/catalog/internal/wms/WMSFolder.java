@@ -27,8 +27,8 @@ import org.locationtech.udig.catalog.ui.ISharedImages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.geotools.data.ows.Layer;
-import org.geotools.data.wms.WebMapServer;
+import org.geotools.ows.wms.Layer;
+import org.geotools.ows.wms.WebMapServer;
 
 /**
  * Since WMSFolder is not a IGeoResource but it shares most of its code with
@@ -55,7 +55,7 @@ public class WMSFolder implements IResolveFolder {
      * @param parent the parent Georesource may be null if parent is the service.
      * @param layer
      */
-    public WMSFolder( WMSServiceImpl service, IResolve parent, org.geotools.data.ows.Layer layer ) {
+    public WMSFolder( WMSServiceImpl service, IResolve parent, org.geotools.ows.wms.Layer layer ) {
         this.service = service;
         if (parent == null) {
             this.parent = service;
@@ -94,7 +94,7 @@ public class WMSFolder implements IResolveFolder {
 
         if (adaptee.isAssignableFrom(WMSFolder.class)
                 || adaptee.isAssignableFrom(WebMapServer.class)
-                || adaptee.isAssignableFrom(org.geotools.data.ows.Layer.class)
+                || adaptee.isAssignableFrom(org.geotools.ows.wms.Layer.class)
                 || adaptee.isAssignableFrom(ImageDescriptor.class)
                 || adaptee.isAssignableFrom(IService.class)) {
             return true;
@@ -141,7 +141,7 @@ public class WMSFolder implements IResolveFolder {
             return adaptee.cast(service.getWMS(monitor));
         }
 
-        if (adaptee.isAssignableFrom(org.geotools.data.ows.Layer.class)) {
+        if (adaptee.isAssignableFrom(org.geotools.ows.wms.Layer.class)) {
             return adaptee.cast(layer);
         }
         if (adaptee.isAssignableFrom(ImageDescriptor.class)) {

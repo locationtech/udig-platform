@@ -17,6 +17,17 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.eclipse.core.commands.IHandler;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.ISafeRunnable;
+import org.eclipse.jface.action.ContributionItem;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.custom.BusyIndicator;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.locationtech.udig.internal.ui.UiPlugin;
 import org.locationtech.udig.internal.ui.operations.OperationCategory;
 import org.locationtech.udig.project.ui.ApplicationGIS;
@@ -36,18 +47,6 @@ import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.operations.EnablementUtil;
 import org.locationtech.udig.ui.operations.LazyOpFilter;
 import org.locationtech.udig.ui.operations.OpFilter;
-
-import org.eclipse.core.commands.IHandler;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.ISafeRunnable;
-import org.eclipse.jface.action.ContributionItem;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.custom.BusyIndicator;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * The tool proxy allows tools to be loaded lazily. It acts as a proxy for a tool as far as the Map

@@ -29,7 +29,7 @@ import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 import org.locationtech.udig.bookmarks.internal.MapReference;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * Plugin callback object for the bookmark plugin.

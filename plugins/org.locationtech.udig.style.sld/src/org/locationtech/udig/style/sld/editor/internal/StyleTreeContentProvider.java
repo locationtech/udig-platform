@@ -12,13 +12,12 @@ package org.locationtech.udig.style.sld.editor.internal;
 
 import java.util.List;
 
-import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 /**
  * Adapt a GeoTools Style (or FeatureTypeStyle) into a tree of Rules.

@@ -1343,7 +1343,7 @@ public interface ProjectPackage extends EPackage {
      * The meta object id for the '<em>Coordinate</em>' data type.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * @see com.vividsolutions.jts.geom.Coordinate
+     * @see org.locationtech.jts.geom.Coordinate
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCoordinate()
      * @generated
      */
@@ -1513,7 +1513,7 @@ public interface ProjectPackage extends EPackage {
      * The meta object id for the '<em>Envelope</em>' data type.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * @see com.vividsolutions.jts.geom.Envelope
+     * @see org.locationtech.jts.geom.Envelope
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getEnvelope()
      * @generated
      */
@@ -2679,11 +2679,11 @@ public interface ProjectPackage extends EPackage {
     EReference getLayerLegendItem_Layer();
 
     /**
-     * Returns the meta object for data type '{@link com.vividsolutions.jts.geom.Coordinate <em>Coordinate</em>}'.
+     * Returns the meta object for data type '{@link org.locationtech.jts.geom.Coordinate <em>Coordinate</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Coordinate</em>'.
-     * @see com.vividsolutions.jts.geom.Coordinate
-     * @model instanceClass="com.vividsolutions.jts.geom.Coordinate"
+     * @see org.locationtech.jts.geom.Coordinate
+     * @model instanceClass="org.locationtech.jts.geom.Coordinate"
      * @generated
      */
     EDataType getCoordinate();
@@ -2852,11 +2852,11 @@ public interface ProjectPackage extends EPackage {
     EDataType getNavCommand();
 
     /**
-     * Returns the meta object for data type '{@link com.vividsolutions.jts.geom.Envelope <em>Envelope</em>}'.
+     * Returns the meta object for data type '{@link org.locationtech.jts.geom.Envelope <em>Envelope</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Envelope</em>'.
-     * @see com.vividsolutions.jts.geom.Envelope
-     * @model instanceClass="com.vividsolutions.jts.geom.Envelope"
+     * @see org.locationtech.jts.geom.Envelope
+     * @model instanceClass="org.locationtech.jts.geom.Envelope"
      * @generated
      */
     EDataType getEnvelope();
@@ -3908,7 +3908,7 @@ public interface ProjectPackage extends EPackage {
          * The meta object literal for the '<em>Coordinate</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see com.vividsolutions.jts.geom.Coordinate
+         * @see org.locationtech.jts.geom.Coordinate
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCoordinate()
          * @generated
          */
@@ -4078,7 +4078,7 @@ public interface ProjectPackage extends EPackage {
          * The meta object literal for the '<em>Envelope</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see com.vividsolutions.jts.geom.Envelope
+         * @see org.locationtech.jts.geom.Envelope
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getEnvelope()
          * @generated
          */

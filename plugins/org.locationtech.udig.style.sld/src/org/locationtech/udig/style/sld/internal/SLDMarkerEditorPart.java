@@ -182,7 +182,8 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
         } else {
             mark[0].setStroke(null);
         }
-        g.setMarks(mark);
+        g.graphicalSymbols().clear();
+        for (Mark m : mark) g.graphicalSymbols().add(m);
     }
 
     /**

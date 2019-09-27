@@ -22,7 +22,7 @@ import org.locationtech.udig.tools.edit.EventType;
 import org.locationtech.udig.tools.edit.support.Point;
 import org.opengis.feature.simple.SimpleFeature;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * Test the freehand tool

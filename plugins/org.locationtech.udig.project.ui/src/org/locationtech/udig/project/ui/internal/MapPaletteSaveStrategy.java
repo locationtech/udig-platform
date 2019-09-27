@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.URLUtils;
 import org.locationtech.udig.catalog.ui.export.CatalogExport;
@@ -27,9 +29,6 @@ import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.LayerFactory;
 import org.locationtech.udig.project.internal.StyleBlackboard;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.dialogs.MessageDialog;
 
 /**
  * Save strategy for Map Palette

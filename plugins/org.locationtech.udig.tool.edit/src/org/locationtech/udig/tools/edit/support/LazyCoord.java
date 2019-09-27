@@ -9,7 +9,7 @@
  */
 package org.locationtech.udig.tools.edit.support;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 /**
  * Wraps a Coordinate and calculates its position only requested. This allows the point it maps to

@@ -37,8 +37,8 @@ import org.eclipse.ui.PlatformUI;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 
 import org.locationtech.udig.tools.internal.i18n.Messages;
 import org.locationtech.udig.tools.internal.ui.util.StatusBar;

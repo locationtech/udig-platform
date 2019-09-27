@@ -15,6 +15,16 @@ import static org.junit.Assert.assertEquals;
 import java.awt.Dimension;
 import java.io.IOException;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.geotools.data.FeatureSource;
+import org.geotools.data.Query;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.core.filter.AdaptingFilter;
@@ -26,17 +36,6 @@ import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.geotools.data.FeatureSource;
-import org.geotools.data.Query;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 

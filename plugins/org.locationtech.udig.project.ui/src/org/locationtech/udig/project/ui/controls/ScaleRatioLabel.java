@@ -12,20 +12,10 @@ package org.locationtech.udig.project.ui.controls;
 
 import java.text.NumberFormat;
 
-import org.locationtech.udig.project.internal.commands.SetScaleCommand;
-import org.locationtech.udig.project.render.IViewportModel;
-import org.locationtech.udig.project.render.IViewportModelListener;
-import org.locationtech.udig.project.render.ViewportModelEvent;
-import org.locationtech.udig.project.render.ViewportModelEvent.EventType;
-import org.locationtech.udig.project.ui.internal.MapEditorPart;
-import org.locationtech.udig.project.ui.internal.Messages;
-import org.locationtech.udig.ui.ZoomingDialog;
-
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.StatusLineLayoutData;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyEvent;
@@ -40,6 +30,14 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.PlatformUI;
+import org.locationtech.udig.project.internal.commands.SetScaleCommand;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.render.IViewportModelListener;
+import org.locationtech.udig.project.render.ViewportModelEvent;
+import org.locationtech.udig.project.render.ViewportModelEvent.EventType;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.ui.ZoomingDialog;
 
 /**
  * Displays the current scale ratio on the status bar.

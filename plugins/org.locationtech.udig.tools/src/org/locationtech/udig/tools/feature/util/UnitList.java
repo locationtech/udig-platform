@@ -26,20 +26,22 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.measure.converter.UnitConverter;
-import javax.measure.quantity.Quantity;
-import javax.measure.unit.BaseUnit;
-import javax.measure.unit.Unit;
+import javax.measure.Unit;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.geotools.referencing.ReferencingFactoryFinder;
+import org.locationtech.udig.tools.Activator;
+import org.locationtech.udig.tools.internal.i18n.Messages;
 import org.opengis.referencing.crs.CRSAuthorityFactory;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.osgi.framework.Bundle;
 
-import org.locationtech.udig.tools.Activator;
-import org.locationtech.udig.tools.internal.i18n.Messages;
+import si.uom.NonSI;
+import si.uom.SI;
+import systems.uom.common.USCustomary;
+import tec.uom.se.quantity.Quantities;
+import tec.uom.se.unit.MetricPrefix;
 
 
 /**
@@ -58,17 +60,17 @@ public final class UnitList {
 	 */
 	private static Map<Unit<?>, String>	LENGTH_UNITS= new java.util.HashMap<Unit<?>, String> ();
 
-	private static final String[][]		DEFAULT_LENGTH_UNITS	= { 
-	        { "km", Messages.GeoToolsUtils_unitName_kilometers }, //$NON-NLS-1$ 
-			{ "pixel", Messages.GeoToolsUtils_unitName_pixels }, //$NON-NLS-1$ 
-			{ "ft", Messages.GeoToolsUtils_unitName_feet }, //$NON-NLS-1$ 
-			{ "yd", Messages.GeoToolsUtils_unitName_yards }, //$NON-NLS-1$
-			{ "in", Messages.GeoToolsUtils_unitName_inches }, //$NON-NLS-1$ 
-			{ "cm", Messages.GeoToolsUtils_unitName_centimeters }, //$NON-NLS-1$ 
-			{ "m", Messages.GeoToolsUtils_unitName_meters }, //$NON-NLS-1$ 
-			{ "\u00B0", Messages.GeoToolsUtils_unitName_degrees } };//$NON-NLS-1$ 
+	private static final Object[][]		DEFAULT_LENGTH_UNITS	= { 
+	        { MetricPrefix.KILO(SI.METRE), Messages.GeoToolsUtils_unitName_kilometers }, //$NON-NLS-1$ 
+			//{ "pixel", Messages.GeoToolsUtils_unitName_pixels }, //$NON-NLS-1$ 
+			{ USCustomary.FOOT, Messages.GeoToolsUtils_unitName_feet }, //$NON-NLS-1$ 
+			{ USCustomary.YARD, Messages.GeoToolsUtils_unitName_yards }, //$NON-NLS-1$
+			{ USCustomary.INCH, Messages.GeoToolsUtils_unitName_inches }, //$NON-NLS-1$ 
+			{ MetricPrefix.CENTI(SI.METRE), Messages.GeoToolsUtils_unitName_centimeters }, //$NON-NLS-1$ 
+			{ SI.METRE, Messages.GeoToolsUtils_unitName_meters }, //$NON-NLS-1$ 
+			{ NonSI.DEGREE_ANGLE, Messages.GeoToolsUtils_unitName_degrees } };//$NON-NLS-1$ 
 
-	public static final Unit<?>			PIXEL_UNITS			= Unit.valueOf("pixel");//$NON-NLS-1$
+//	public static final Unit<?>			PIXEL_UNITS			= Unit.valueOf("pixel");//$NON-NLS-1$
 
 	protected static final Logger		LOGGER				= Logger.getLogger(UnitList.class.getName());
 
@@ -94,8 +96,8 @@ public final class UnitList {
 		try {
 
 			for (int i = 0; i < DEFAULT_LENGTH_UNITS.length; i++) {
-				Unit<?> unit = Unit.valueOf(DEFAULT_LENGTH_UNITS[i][0]);
-				String unitName = DEFAULT_LENGTH_UNITS[i][1];
+				Unit<?> unit = (Unit<?>)DEFAULT_LENGTH_UNITS[i][0];
+				String unitName = (String)DEFAULT_LENGTH_UNITS[i][1];
 				LENGTH_UNITS.put(unit, unitName);
 			}
 			File crsFile = getCRSfile();
@@ -167,8 +169,8 @@ public final class UnitList {
 	private static void loadFromProperties(List<String> crsList) throws Exception {
 
 		for (String crsUnit : crsList) {
-
-			Unit<?> unit = new BaseUnit<Quantity>(crsUnit);
+			Unit<?> unit = Quantities.getQuantity(crsUnit).getUnit();
+//			Unit<?> unit = new BaseUnit<Quantity>(crsUnit);
 
 			if (!LENGTH_UNITS.containsKey(unit)) {
 				LENGTH_UNITS.put(unit, unit.toString());
@@ -223,9 +225,8 @@ public final class UnitList {
 						if (!LENGTH_UNITS.containsKey(unit)) {
 							LENGTH_UNITS.put(unit, unit.toString());
 
-							Unit<?> baseUnit = unit.getStandardUnit();
-
-							UnitConverter multiply = unit.toStandardUnit();
+//							Unit<?> baseUnit = unit.getSystemUnit();
+//							UnitConverter multiply = unit.getSystemUnit();
 							crsSequence.append("|" + unit.toString()); //$NON-NLS-1$
 						}
 					} catch (Exception e) {

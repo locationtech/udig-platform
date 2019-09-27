@@ -24,7 +24,7 @@ import org.locationtech.udig.project.render.IRenderContext;
 
 import org.eclipse.emf.common.notify.Notification;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * A RenderExecutor that runs MultiLayerRenderers such as WMSRenderer and MapGraphic Renderers.

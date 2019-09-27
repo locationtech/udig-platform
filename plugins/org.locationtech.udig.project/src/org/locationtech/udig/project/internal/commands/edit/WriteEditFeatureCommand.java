@@ -9,6 +9,15 @@
  */
 package org.locationtech.udig.project.internal.commands.edit;
 
+import java.util.stream.Collectors;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.data.FeatureStore;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
+import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.util.factory.GeoTools;
 import org.locationtech.udig.core.internal.FeatureUtils;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.command.MapCommand;
@@ -16,17 +25,10 @@ import org.locationtech.udig.project.command.UndoableMapCommand;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Messages;
 import org.locationtech.udig.project.internal.ProjectPlugin;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.data.FeatureStore;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureIterator;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
+import org.opengis.feature.type.Name;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
 
@@ -50,7 +52,6 @@ public class WriteEditFeatureCommand extends AbstractEditCommand implements Undo
     /**
      * @see org.locationtech.udig.project.internal.command.MapCommand#run()
      */
-    @SuppressWarnings("deprecation") 
     public void run( IProgressMonitor monitor ) throws Exception {
         monitor.beginTask(Messages.WriteEditFeatureCommand_runTask, IProgressMonitor.UNKNOWN); 
 
@@ -69,11 +70,12 @@ public class WriteEditFeatureCommand extends AbstractEditCommand implements Undo
         Filter filter = factory.id(FeatureUtils.stringToId(factory, editFeature.getID()));
         FeatureCollection<SimpleFeatureType, SimpleFeature>  results = store.getFeatures(filter);
 
+        Name[] names = featureType.getAttributeDescriptors().stream().map(e->e.getName()).toArray(Name[]::new);
         FeatureIterator<SimpleFeature> reader = results.features();
         try {
             if (reader.hasNext()) {
                 try {
-                    store.modifyFeatures(featureType.getAttributeDescriptors().toArray(new AttributeDescriptor[0]), editFeature
+                    store.modifyFeatures(names, editFeature
                             .getAttributes().toArray(), filter);
                 } catch (Exception e) {
                     ProjectPlugin.log("",e); //$NON-NLS-1$
@@ -122,7 +124,9 @@ public class WriteEditFeatureCommand extends AbstractEditCommand implements Undo
             getMap().getEditManagerInternal().setEditFeature(null,null);
         }else{
             SimpleFeatureType featureType = old.getFeatureType();
-            store.modifyFeatures(featureType.getAttributeDescriptors().toArray(new AttributeDescriptor[0]), old
+            
+            Name[] names = featureType.getAttributeDescriptors().stream().map(e->e.getName()).toArray(Name[]::new);
+            store.modifyFeatures(names, old
                     .getAttributes().toArray(), filter);            
         }
         monitor.done();

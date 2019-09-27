@@ -9,11 +9,10 @@
  */
 package org.locationtech.udig.project.ui.internal;
 
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.locationtech.udig.project.IFolder;
 import org.locationtech.udig.project.internal.Folder;
 import org.locationtech.udig.project.internal.Map;
-
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 
 /**
  * Provides content control for the LegendView's tree viewer.

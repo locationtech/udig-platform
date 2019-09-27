@@ -11,8 +11,6 @@
  */
 package org.locationtech.udig.style.sld.simple;
 
-import org.locationtech.udig.style.sld.internal.Messages;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -25,6 +23,7 @@ import org.eclipse.swt.widgets.Group;
 import org.geotools.styling.ChannelSelection;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.SelectedChannelType;
+import org.locationtech.udig.style.sld.internal.Messages;
 
 /**
  * Allows editing/viewing of a Red/Green/Blue Raster Channels. 

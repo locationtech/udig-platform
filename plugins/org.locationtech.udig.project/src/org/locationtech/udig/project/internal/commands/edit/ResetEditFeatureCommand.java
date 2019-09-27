@@ -20,7 +20,7 @@ import org.locationtech.udig.project.internal.Messages;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.util.factory.GeoTools;
 import org.geotools.feature.FeatureIterator;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;

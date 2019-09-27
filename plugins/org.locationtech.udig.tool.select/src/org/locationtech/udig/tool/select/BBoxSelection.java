@@ -22,8 +22,8 @@ import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.project.ui.tool.ModalTool;
 import org.locationtech.udig.project.ui.tool.SimpleTool;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * A tool that puts a BBOX Filter on the layer's Filter

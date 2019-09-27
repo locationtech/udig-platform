@@ -15,18 +15,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IRepository;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.LayerFactory;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.tool.edit.internal.Messages;
-import org.locationtech.udig.ui.PlatformGIS;
-import org.locationtech.udig.ui.operations.IOp;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -50,18 +38,27 @@ import org.geotools.data.FeatureStore;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.FeatureTypes;
-import org.geotools.feature.IllegalAttributeException;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.Polygon;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IRepository;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerFactory;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.tool.edit.internal.Messages;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.operations.IOp;
+import org.opengis.feature.IllegalAttributeException;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.GeometryDescriptor;
-
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Cuts the polygons in layer 1 out of the polygons in layer 2.
@@ -299,6 +296,6 @@ public class DifferenceOp implements IOp {
     // this is lifted from Geometry, where it's a protected method.
     protected boolean isGeometryCollection(GeometryDescriptor g) {
         // Don't use instanceof because we want to allow subclasses
-        return g.getClass().getName().equals("com.vividsolutions.jts.geom.GeometryCollection"); //$NON-NLS-1$
+        return g.getClass().getName().equals("org.locationtech.jts.geom.GeometryCollection"); //$NON-NLS-1$
     }
 }

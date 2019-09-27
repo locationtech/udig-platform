@@ -38,8 +38,8 @@ import org.locationtech.udig.project.internal.commands.selection.CommitCommand;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * Creates Edit commands which must be used to modify editable feature data. API internal classes

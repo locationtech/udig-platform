@@ -11,18 +11,17 @@ package org.locationtech.udig.project.ui;
 
 import java.util.ArrayList;
 
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.preferences.PreferenceConstants;
-import org.locationtech.udig.project.ui.internal.FeatureEditorLoader;
-import org.locationtech.udig.project.ui.internal.Messages;
-import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
-
 import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.ui.internal.FeatureEditorLoader;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 /**
  * Editor for modifying the default SimpleFeature Editor

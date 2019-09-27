@@ -10,9 +10,6 @@
  */
 package org.locationtech.udig.project.ui.preferences;
 
-import org.locationtech.udig.ui.PlatformGIS;
-import org.locationtech.udig.ui.graphics.Glyph;
-
 import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ISelection;
@@ -32,6 +29,8 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.geotools.brewer.color.BrewerPalette;
 import org.geotools.brewer.color.ColorBrewer;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.graphics.Glyph;
 
 /**
  * Used to allow the MapPreferencePage to select a palette to draw on when assigning colours to

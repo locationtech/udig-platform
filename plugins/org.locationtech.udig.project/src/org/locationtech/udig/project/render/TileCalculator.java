@@ -12,8 +12,8 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * A helper class which divides an area into tiles or a minimum size. Provides a

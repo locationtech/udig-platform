@@ -46,6 +46,7 @@ import org.eclipse.swt.widgets.Text;
 import org.geotools.data.DataAccessFactory;
 import org.geotools.data.DataAccessFactory.Param;
 import org.geotools.data.DataUtilities;
+import org.geotools.util.URLs;
 
 public class DataStoreParameterPage extends AbstractUDIGImportPage implements UDIGConnectionPage {
 
@@ -361,7 +362,7 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
                 text = path;
             } else if (URL.class.isAssignableFrom(targetClass)) {
                 File file = new File(path);
-                URL url = DataUtilities.fileToURL(file);
+                URL url = URLs.fileToUrl(file);
                 text = url.toString();
             }
 

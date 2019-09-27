@@ -38,8 +38,8 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.geotools.data.ows.StyleImpl;
-import org.geotools.data.wms.WebMapServer;
+import org.geotools.ows.wms.StyleImpl;
+import org.geotools.ows.wms.WebMapServer;
 import org.geotools.styling.FeatureTypeStyle;
 
 public class WMSStyleConfigurator extends IStyleConfigurator {
@@ -66,7 +66,7 @@ public class WMSStyleConfigurator extends IStyleConfigurator {
             return;
 		layer = getLayer();
 		
-		List<StyleImpl> allStyles = getStyles(layer.findGeoResource(org.geotools.data.ows.Layer.class));	
+		List<StyleImpl> allStyles = getStyles(layer.findGeoResource(org.geotools.ows.wms.Layer.class));	
         styles.clear();
         styleCombo.setItems(new String[0]);
         // Map<DisplayName,wmsStyle>
@@ -125,16 +125,16 @@ public class WMSStyleConfigurator extends IStyleConfigurator {
 	}
 
     /**
-     * Returns all the style in the resource if the resource can resolve to an {@link org.geotools.data.ows.Layer}.
+     * Returns all the style in the resource if the resource can resolve to an {@link org.geotools.ows.wms.Layer}.
      *
      * @param wmsResource resource to search.
      * @return all named styles.
      */
     @SuppressWarnings("unchecked")
     static List<StyleImpl> getStyles(IGeoResource wmsResource) {
-        org.geotools.data.ows.Layer wmsLayer = null;
+        org.geotools.ows.wms.Layer wmsLayer = null;
 		try {
-			wmsLayer = wmsResource.resolve(org.geotools.data.ows.Layer.class, null);
+			wmsLayer = wmsResource.resolve(org.geotools.ows.wms.Layer.class, null);
 		} 
 		catch (IOException e) {
 			IStatus status = 
@@ -228,8 +228,8 @@ public class WMSStyleConfigurator extends IStyleConfigurator {
         	List<FeatureTypeStyle > fts = wmsStyle.getFeatureStyles();
             for( FeatureTypeStyle style : fts ) {
                 String name = style.getName();
-                if( style.getTitle()!=null )
-                    name = style.getTitle();                    
+                if( style.getDescription().getTitle().toString()!=null )
+                    name = style.getDescription().getTitle().toString();                    
                 buff.append( name );
                 buff.append("\n"); //$NON-NLS-1$
             }

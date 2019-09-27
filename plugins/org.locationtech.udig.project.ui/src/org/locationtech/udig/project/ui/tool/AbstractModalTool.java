@@ -12,12 +12,8 @@
 package org.locationtech.udig.project.ui.tool;
 
 
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
-import org.locationtech.udig.project.ui.preferences.PreferenceConstants;
-
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.IStatusLineManager;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 /**
  * An abstract super class that modal tools can extend.

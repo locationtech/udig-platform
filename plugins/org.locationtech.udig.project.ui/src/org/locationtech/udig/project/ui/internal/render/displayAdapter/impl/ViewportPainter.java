@@ -16,6 +16,10 @@ import java.awt.image.RenderedImage;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.swt.graphics.GC;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.udig.project.internal.render.ViewportModel;
 import org.locationtech.udig.project.render.Tile;
 import org.locationtech.udig.project.ui.commands.IDrawCommand;
@@ -26,12 +30,6 @@ import org.locationtech.udig.project.ui.internal.commands.draw.DrawEditFeatureCo
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 import org.locationtech.udig.project.ui.render.glass.GlassPane;
 import org.locationtech.udig.ui.graphics.ViewportGraphics;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.swt.graphics.GC;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-
-import com.vividsolutions.jts.geom.Coordinate;
 
 /**
  * Draws to the Viewport. Handles command processing.

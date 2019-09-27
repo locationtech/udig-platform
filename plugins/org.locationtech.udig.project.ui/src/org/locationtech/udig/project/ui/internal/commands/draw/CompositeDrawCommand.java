@@ -14,13 +14,12 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
 import org.locationtech.udig.project.ui.commands.IDrawCommand;
 import org.locationtech.udig.ui.graphics.ViewportGraphics;
-
-import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Composite drawing command.

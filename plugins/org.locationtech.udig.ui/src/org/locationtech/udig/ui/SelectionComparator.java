@@ -11,7 +11,7 @@ package org.locationtech.udig.ui;
 
 import java.util.Comparator;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.swt.SWT;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
