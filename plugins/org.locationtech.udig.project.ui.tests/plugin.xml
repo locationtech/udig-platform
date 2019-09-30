@@ -70,7 +70,7 @@
              name="MatchAnyGeom">
           <featureType>
              <attribute
-                   type="com.vividsolutions.jts.geom.Geometry"/>
+                   type="org.locationtech.jts.geom.Geometry"/>
           </featureType>
        </editor>
 	      <editor
@@ -85,7 +85,7 @@
           <featureType>
              <attribute
                    name="geo"
-                   type="com.vividsolutions.jts.geom.Geometry"/>
+                   type="org.locationtech.jts.geom.Geometry"/>
           </featureType>
        </editor>
             point="org.locationtech.udig.project.ui.featureEditor">
