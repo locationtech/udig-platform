@@ -92,7 +92,6 @@ public class GeoToolsAdapters {
 	static public ProgressListener progress(final IProgressMonitor monitor) {
 		if( monitor == null ) return null;
 		return new ProgressListener(){
-			private String description;
 			private int progress;
 			private InternationalString task;
 			
@@ -100,12 +99,9 @@ public class GeoToolsAdapters {
 				monitor.done();
 			}
 			public void dispose() {
-				description = null;
+				task = null;
 			}
 			public void exceptionOccurred(Throwable arg0) {				
-			}
-			public String getDescription() {
-				return description;
 			}
 			public boolean isCanceled() {
 				return monitor.isCanceled();
@@ -120,12 +116,8 @@ public class GeoToolsAdapters {
 				monitor.setCanceled(true);
 			}
 
-			public void setDescription(String text) {
-				description = text;
-			}
-
 			public void started() {
-				monitor.beginTask( description, 100);
+				monitor.beginTask( task != null ? task.toString() : null, 100);
 			}
 
 			public void warningOccurred(String arg0, String arg1, String arg2) {				

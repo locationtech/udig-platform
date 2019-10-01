@@ -26,9 +26,9 @@
                         <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
 	                        <property
-                               expectedValue="com.vividsolutions.jts.geom.MultiPolygon"
+                               expectedValue="org.locationtech.jts.geom.MultiPolygon"
                                propertyId="GeometryType"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.Polygon"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -56,8 +56,8 @@
                         <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
                         <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.LineString"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -85,10 +85,10 @@
                         <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
                         <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.Polygon"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -113,8 +113,8 @@
                         <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
                         <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiPoint"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.Point"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -138,12 +138,12 @@
                         <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
                         <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiPoint"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.Point"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -167,11 +167,11 @@
                         <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
                         <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiPoint"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -195,11 +195,11 @@
                         <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
                         <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiPoint"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -223,8 +223,8 @@
                         <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
                         <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.Polygon"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -252,8 +252,8 @@
                         <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
                         <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.Polygon"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -281,10 +281,10 @@
                         <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
                         <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.Polygon"/>
 	                     </or>
 					</and>
                   </enablement>
@@ -312,10 +312,10 @@
                         <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
                         <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.Polygon"/>
 	                     </or>
                      </and>
                   </enablement>
@@ -344,12 +344,12 @@
                         <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
                         <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	                     <or>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiPoint"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.Point"/>
 	                     </or>
                      </and>
                   </enablement>

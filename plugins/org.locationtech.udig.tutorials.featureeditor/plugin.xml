@@ -19,7 +19,7 @@
             viewId="org.locationtech.udig.tutorials.featureeditor.views.country">
          <featureType>
             <attribute
-                  type="com.vividsolutions.jts.geom.MultiPolygon">
+                  type="org.locationtech.jts.geom.MultiPolygon">
             </attribute>
             <attribute
                   name="CNTRY_NAME"
@@ -48,7 +48,7 @@
             title="Country Feature">
          <featureType>
             <attribute
-                  type="com.vividsolutions.jts.geom.MultiPolygon">
+                  type="org.locationtech.jts.geom.MultiPolygon">
             </attribute>
             <attribute
                   name="CNTRY_NAME"
@@ -71,7 +71,7 @@
             title="Statistics">
          <featureType>
             <attribute
-                  type="com.vividsolutions.jts.geom.MultiPolygon">
+                  type="org.locationtech.jts.geom.MultiPolygon">
             </attribute>
             <attribute
                   name="CNTRY_NAME"

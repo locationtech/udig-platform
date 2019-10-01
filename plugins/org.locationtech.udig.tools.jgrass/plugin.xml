@@ -86,8 +86,8 @@
              <and>
                <property propertyId="org.locationtech.udig.project.FeatureStoreResourceProperty" expectedValue=""/>  
                <or>
-                    <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-                    <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+                    <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiLineString"/>
+                    <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.LineString"/>
                </or>
              </and>
             </enablement>
@@ -104,10 +104,10 @@
              <and>
                <property propertyId="org.locationtech.udig.project.FeatureStoreResourceProperty" expectedValue=""/>  
                <or>
-                    <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-                    <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-                    <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-                    <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+                    <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiLineString"/>
+                    <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.LineString"/>
+                    <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiPolygon"/>
+                    <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.Polygon"/>
                </or>
              </and>
             </enablement>
