@@ -30,6 +30,7 @@ import javax.measure.Unit;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
+import org.geotools.measure.Units;
 import org.geotools.referencing.ReferencingFactoryFinder;
 import org.locationtech.udig.tools.Activator;
 import org.locationtech.udig.tools.internal.i18n.Messages;
@@ -55,6 +56,11 @@ public final class UnitList {
 
 	
 	private static UnitList THIS = null;
+	
+	public static final Unit<?>			PIXEL_UNITS			= Units.PIXEL;
+	
+	protected static final Logger		LOGGER				= Logger.getLogger(UnitList.class.getName());
+	
 	/**
 	 * Commonly used units of length measure
 	 */
@@ -62,7 +68,7 @@ public final class UnitList {
 
 	private static final Object[][]		DEFAULT_LENGTH_UNITS	= { 
 	        { MetricPrefix.KILO(SI.METRE), Messages.GeoToolsUtils_unitName_kilometers }, //$NON-NLS-1$ 
-			//{ "pixel", Messages.GeoToolsUtils_unitName_pixels }, //$NON-NLS-1$ 
+			{ PIXEL_UNITS, Messages.GeoToolsUtils_unitName_pixels }, //$NON-NLS-1$ 
 			{ USCustomary.FOOT, Messages.GeoToolsUtils_unitName_feet }, //$NON-NLS-1$ 
 			{ USCustomary.YARD, Messages.GeoToolsUtils_unitName_yards }, //$NON-NLS-1$
 			{ USCustomary.INCH, Messages.GeoToolsUtils_unitName_inches }, //$NON-NLS-1$ 
@@ -70,12 +76,6 @@ public final class UnitList {
 			{ SI.METRE, Messages.GeoToolsUtils_unitName_meters }, //$NON-NLS-1$ 
 			{ NonSI.DEGREE_ANGLE, Messages.GeoToolsUtils_unitName_degrees } };//$NON-NLS-1$ 
 
-//	public static final Unit<?>			PIXEL_UNITS			= Unit.valueOf("pixel");//$NON-NLS-1$
-
-	protected static final Logger		LOGGER				= Logger.getLogger(UnitList.class.getName());
-
-
-	
 	private UnitList(){
 		// singleton 
 	}
