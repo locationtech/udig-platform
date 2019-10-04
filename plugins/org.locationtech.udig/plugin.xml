@@ -7,7 +7,7 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="org.locationtech.udig.ui.application"
-            name="%product.name">
+            name="uDig">
          <property
                name="startupForegroundColor"
                value="FFFFFF">
@@ -22,15 +22,11 @@
          </property>
          <property
                name="appName"
-               value="%product.name">
-         </property>
-         <property
-               name="preferenceCustomization"
-               value="plugin_customization.ini">
+               value="uDig">
          </property>
          <property
                name="aboutImage"
-               value="icons/about.png">
+               value="./icons/about.png">
          </property>
          <property
                name="aboutText"
@@ -38,7 +34,11 @@
          </property>
          <property
                name="windowImages"
-               value="icons/icon16.gif,icons/icon32.gif,icons/icon48.gif,icons/icon64.gif,icons/icon128.gif">
+               value="./icons/icon16.gif,./icons/icon32.gif,./icons/icon48.gif,./icons/icon64.gif,./icons/icon128.gif">
+         </property>
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini">
          </property>
       </product>
    </extension>

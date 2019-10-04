@@ -21,29 +21,20 @@ import java.net.URLEncoder;
 
 import javax.xml.transform.TransformerException;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.ui.IMemento;
+import org.geotools.data.FeatureSource;
+import org.geotools.data.Query;
+import org.geotools.gml.GMLFilterDocument;
+import org.geotools.gml.GMLFilterGeometry;
+import org.geotools.xml.filter.FilterFilter;
+import org.geotools.xml.filter.FilterTransformer;
 import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IResolve;
-import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.internal.ui.FilterTextTransfer.SimpleFilterHandler;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IResourceInterceptor;
-import org.locationtech.udig.project.ProjectBlackboardConstants;
 import org.locationtech.udig.project.StyleContent;
 import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.ui.ProgressManager;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.ui.IMemento;
-import org.geotools.data.CachingFeatureSource;
-import org.geotools.data.DataStore;
-import org.geotools.data.Query;
-import org.geotools.data.FeatureSource;
-import org.geotools.data.Query;
-import org.geotools.feature.SchemaException;
-import org.geotools.xml.filter.FilterFilter;
-import org.geotools.xml.filter.FilterTransformer;
-import org.geotools.gml.GMLFilterDocument;
-import org.geotools.gml.GMLFilterGeometry;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
