@@ -86,7 +86,7 @@
 <unit id="org.apache.xerces" version="2.9.0.v201101211617"/>
 <unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
 <unit id="org.apache.commons.logging" version="1.1.1.v201101211721"/>
-<unit id="org.apache.commons.codec"/>
+<unit id="org.apache.commons.codec" version="1.9.0.v20170208-1614"/>
 <unit id="org.apache.batik.xml" version="1.7.0.v201011041433"/>
 <unit id="org.apache.batik.util.gui" version="1.7.0.v200903091627"/>
 <unit id="org.apache.batik.util" version="1.7.0.v201011041433"/>
