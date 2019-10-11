@@ -15,6 +15,7 @@ import org.locationtech.udig.project.internal.command.navigation.SetViewportBBox
 import org.locationtech.udig.project.internal.render.RenderManager;
 import org.locationtech.udig.project.internal.render.ViewportModel;
 import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.NextGenRenderManager;
 import org.locationtech.udig.project.ui.internal.RenderManagerDynamic;
 import org.locationtech.udig.project.ui.internal.TiledRenderManagerDynamic;
 import org.locationtech.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneSWT;
@@ -203,12 +204,17 @@ public class MapViewer implements MapPart {
         
         // add the new map
         this.map = map;
+
+        if(this.map == null)
+            return;
+        
         if (map.getRenderManager() == null) {
         	if( viewport instanceof ViewportPaneTiledSWT) {
         		map.setRenderManagerInternal(new TiledRenderManagerDynamic());
         	}
             else {
-                map.setRenderManagerInternal(new RenderManagerDynamic());
+//                map.setRenderManagerInternal(new RenderManagerDynamic());
+                map.setRenderManagerInternal(new NextGenRenderManager());
             }
         }
         renderManager = map.getRenderManagerInternal();
@@ -335,10 +341,14 @@ public class MapViewer implements MapPart {
         }
     }
     public void dispose() {
-        if (viewport != null && getMap() != null) {
-            viewport .removePaneListener(getMap().getViewportModelInternal());
-            viewport = null;
-            map = null;
+        if (this.viewport != null && getMap() != null) {
+            this.viewport .removePaneListener(getMap().getViewportModelInternal());
+            this.viewport.dispose();
+            this.viewport = null;
+            this.map = null;
+            this.renderManager = null;
+            this.part = null;
+            this.menu = null;
         }
     }
     

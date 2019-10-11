@@ -65,6 +65,15 @@
             %default.multiLayer.description
          </Description>
       </RenderExecutor>
+
+      <RenderExecutor
+            executorClass="org.locationtech.udig.project.internal.render.impl.RootCompositeRenderExecutor"
+            name="Next Generation composite render executor"
+            rendererClass="org.locationtech.udig.project.internal.render.impl.CompositeRendererImpl">
+         <Description>
+            Description body text
+         </Description>
+      </RenderExecutor>
       <RenderExecutor
             executorClass="org.locationtech.udig.project.internal.render.impl.RenderExecutorComposite"
             name="%composite.name"
