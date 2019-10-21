@@ -28,7 +28,7 @@ import org.locationtech.udig.catalog.wmsc.server.TileSet;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 public abstract class WMTTile implements Tile{
     private final static boolean testing = false;  // for testing output

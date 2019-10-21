@@ -42,8 +42,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * Runs a renderer in its own thread. Is responsible for stopping the thread. Does not do composite
@@ -516,7 +516,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     }
 
     /**
-     * @see org.locationtech.udig.project.internal.render.Renderer#render(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.internal.render.Renderer#render(org.locationtech.jts.geom.Envelope)
      */
     public synchronized void render() {
         if (getState() == DISPOSED || !getRenderer().getContext().isVisible()) {
@@ -535,7 +535,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     }
 
     /**
-     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#render(com.vividsolutions.jts.geom.Envelope,
+     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#render(org.locationtech.jts.geom.Envelope,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
     public void render(IProgressMonitor monitor) {

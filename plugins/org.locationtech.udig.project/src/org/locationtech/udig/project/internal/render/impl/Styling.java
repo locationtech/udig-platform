@@ -23,9 +23,10 @@ import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Messages;
 import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.locationtech.udig.ui.graphics.SLDs;
-
-import org.geotools.data.ows.StyleImpl;
-import org.geotools.data.wms.WebMapServer;
+import org.opengis.style.SemanticType;
+import org.geotools.ows.wms.StyleImpl;
+import org.geotools.ows.wms.WebMapServer;
+import org.geotools.feature.NameImpl;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.PointSymbolizer;
@@ -122,13 +123,16 @@ public class Styling {
         Style linestyle = sb.createStyle();
 
         LineSymbolizer line = sb.createLineSymbolizer(color);
-        linestyle.addFeatureTypeStyle(sb.createFeatureTypeStyle(line));
+        linestyle.featureTypeStyles().add(sb.createFeatureTypeStyle(line));
 
-        FeatureTypeStyle fts = linestyle.getFeatureTypeStyles()[0];
+        FeatureTypeStyle fts = linestyle.featureTypeStyles().get(0);
         fts.setName(Messages.Styling_name); //tag as simple 
-        fts.setFeatureTypeName(SLDs.GENERIC_FEATURE_TYPENAME);
-        fts.setSemanticTypeIdentifiers(new String[] {"generic:geometry", "simple"}); //$NON-NLS-1$ //$NON-NLS-2$
-
+        fts.featureTypeNames().add(new NameImpl(SLDs.GENERIC_FEATURE_TYPENAME));
+        
+        fts.semanticTypeIdentifiers().clear();
+        fts.semanticTypeIdentifiers().add(new SemanticType("generic:geometry")); //$NON-NLS-1$ 
+        fts.semanticTypeIdentifiers().add(new SemanticType("simple")); //$NON-NLS-1$ 
+        
         return linestyle;
     }
 
@@ -155,9 +159,9 @@ public class Styling {
         Style polystyle = sb.createStyle();
 
         PolygonSymbolizer poly = sb.createPolygonSymbolizer(fill, line, 1);
-        polystyle.addFeatureTypeStyle(sb.createFeatureTypeStyle(poly));
+        polystyle.featureTypeStyles().add(sb.createFeatureTypeStyle(poly));
 
-        polystyle.getFeatureTypeStyles()[0].setFeatureTypeName(SLDs.GENERIC_FEATURE_TYPENAME);
+        polystyle.featureTypeStyles().get(0).featureTypeNames().add(new NameImpl(SLDs.GENERIC_FEATURE_TYPENAME));
         return polystyle;
     }
 
@@ -172,9 +176,9 @@ public class Styling {
         Style pointstyle = sb.createStyle();
         PointSymbolizer point = sb.createPointSymbolizer(sb.createGraphic());
 
-        pointstyle.addFeatureTypeStyle(sb.createFeatureTypeStyle(point));
+        pointstyle.featureTypeStyles().add(sb.createFeatureTypeStyle(point));
+        pointstyle.featureTypeStyles().get(0).featureTypeNames().add(new NameImpl(SLDs.GENERIC_FEATURE_TYPENAME) );
 
-        pointstyle.getFeatureTypeStyles()[0].setFeatureTypeName(SLDs.GENERIC_FEATURE_TYPENAME);
         return pointstyle;
     }
 
@@ -189,8 +193,8 @@ public class Styling {
         Style rasterstyle = sb.createStyle();
         RasterSymbolizer raster = sb.createRasterSymbolizer();
 
-        rasterstyle.addFeatureTypeStyle(sb.createFeatureTypeStyle(raster));
-        rasterstyle.getFeatureTypeStyles()[0].setFeatureTypeName(SLDs.GENERIC_FEATURE_TYPENAME);
+        rasterstyle.featureTypeStyles().add(sb.createFeatureTypeStyle(raster));
+        rasterstyle.featureTypeStyles().get(0).featureTypeNames().add(new NameImpl(SLDs.GENERIC_FEATURE_TYPENAME));
         return rasterstyle;
     }
 
@@ -208,7 +212,7 @@ public class Styling {
 
             List<String> l = new LinkedList<String>();
             try {
-            	for (Iterator<StyleImpl> iterator = currentLayer.getResource(org.geotools.data.ows.Layer.class, null).getStyles().iterator(); iterator.hasNext();) {
+            	for (Iterator<StyleImpl> iterator = currentLayer.getResource(org.geotools.ows.wms.Layer.class, null).getStyles().iterator(); iterator.hasNext();) {
             		StyleImpl style = (StyleImpl) iterator.next();
             		l.add(style.getName());
 				}

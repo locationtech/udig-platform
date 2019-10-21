@@ -12,27 +12,23 @@ package org.locationtech.udig.style.sld.editor;
 
 import java.util.EventObject;
 
-import net.miginfocom.swt.MigLayout;
-import org.locationtech.udig.filter.ExpressionViewer;
-import org.locationtech.udig.style.sld.IStyleEditorPageContainer;
-import org.locationtech.udig.style.sld.SLDContentManager;
-import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.LineSymbolizer;
-import org.geotools.styling.Rule;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleBuilder;
+import org.locationtech.udig.filter.ExpressionViewer;
+import org.locationtech.udig.style.sld.IStyleEditorPageContainer;
+import org.locationtech.udig.style.sld.SLDContentManager;
+import org.locationtech.udig.ui.graphics.SLDs;
 import org.opengis.filter.expression.Expression;
+
+import net.miginfocom.swt.MigLayout;
 
 
 /**

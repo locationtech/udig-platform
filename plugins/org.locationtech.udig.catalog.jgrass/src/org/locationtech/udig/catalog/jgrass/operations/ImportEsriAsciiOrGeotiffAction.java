@@ -111,13 +111,13 @@ public class ImportEsriAsciiOrGeotiffAction
                                         ArcGridReader arcGridReader = new ArcGridReader(mapFile);
                                         geodata = arcGridReader.read(null);
                                         geodata = JGrassCatalogUtilities.removeNovalues(geodata);
-                                        fileCrs = arcGridReader.getCrs();
+                                        fileCrs = arcGridReader.getCoordinateReferenceSystem();
                                     } else if (mapFile.getName().toLowerCase().endsWith(".tif")
                                             || mapFile.getName().toLowerCase().endsWith(".tiff")) {
                                         GeoTiffReader geotiffGridReader = new GeoTiffReader(mapFile);
                                         geodata = geotiffGridReader.read(null);
                                         geodata = JGrassCatalogUtilities.removeNovalues(geodata);
-                                        fileCrs = geotiffGridReader.getCrs();
+                                        fileCrs = geotiffGridReader.getCoordinateReferenceSystem();
                                     }
 
                                     // if required, reproject

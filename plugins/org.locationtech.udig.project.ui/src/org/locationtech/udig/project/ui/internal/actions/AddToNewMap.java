@@ -20,22 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.internal.ui.ResourceSelectionPage;
-import org.locationtech.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
-import org.locationtech.udig.catalog.ui.workflow.ResourceSelectionState;
-import org.locationtech.udig.catalog.ui.workflow.State;
-import org.locationtech.udig.catalog.ui.workflow.Workflow;
-import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
-import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardDialog;
-import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.Messages;
-import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
-import org.locationtech.udig.ui.PlatformGIS;
-import org.locationtech.udig.ui.ProgressManager;
-
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -52,6 +36,21 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.IWorkbenchWindowPulldownDelegate;
 import org.eclipse.ui.PlatformUI;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.ui.ResourceSelectionPage;
+import org.locationtech.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
+import org.locationtech.udig.catalog.ui.workflow.ResourceSelectionState;
+import org.locationtech.udig.catalog.ui.workflow.State;
+import org.locationtech.udig.catalog.ui.workflow.Workflow;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardDialog;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.ProgressManager;
 
 /**
  * Quickly create a new empty map with a default name.

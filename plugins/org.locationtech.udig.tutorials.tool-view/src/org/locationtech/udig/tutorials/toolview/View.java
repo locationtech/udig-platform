@@ -14,17 +14,16 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.action.IStatusLineManager;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.ui.PlatformUI;
+import org.geotools.util.URLs;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
 import org.locationtech.udig.project.ui.internal.DefaultMapViewPart;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.action.IStatusLineManager;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.ui.PlatformUI;
-import org.geotools.data.DataUtilities;
 
 /**
  * The main view port.  Adds a shapefile to the View and configures the view with the tools and context menu 
@@ -43,7 +42,7 @@ public class View extends DefaultMapViewPart {
 		dialog.setFilterExtensions(new String[]{"*.shp"});
 		String path = dialog.open();
 		File file = new File( path );
-		URL url = DataUtilities.fileToURL(file);
+		URL url = URLs.fileToUrl(file);
 		
 		addShpService(url,resources,monitor);
 	}

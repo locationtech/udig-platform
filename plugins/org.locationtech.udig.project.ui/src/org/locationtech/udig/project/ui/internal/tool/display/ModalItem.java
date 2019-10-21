@@ -18,6 +18,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.eclipse.core.commands.IHandler;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gef.ui.palette.PaletteViewer;
+import org.eclipse.jface.action.ContributionItem;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.swt.graphics.Image;
 import org.locationtech.udig.internal.ui.operations.OperationCategory;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
@@ -29,14 +36,6 @@ import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.graphics.Glyph;
 import org.locationtech.udig.ui.operations.ILazyOpListener;
 import org.locationtech.udig.ui.operations.OpFilter;
-
-import org.eclipse.core.commands.IHandler;
-import org.eclipse.gef.EditPart;
-import org.eclipse.gef.ui.palette.PaletteViewer;
-import org.eclipse.jface.action.ContributionItem;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.resource.ImageRegistry;
-import org.eclipse.swt.graphics.Image;
 
 /**
  * Item used to represent one mode in a group.

@@ -10,13 +10,12 @@
  */
 package org.locationtech.udig.style.sld;
 
-import org.locationtech.udig.core.AbstractUdigUIPlugin;
-
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.locationtech.udig.core.AbstractUdigUIPlugin;
 
 /**
  * The main plugin class to be used in the desktop.

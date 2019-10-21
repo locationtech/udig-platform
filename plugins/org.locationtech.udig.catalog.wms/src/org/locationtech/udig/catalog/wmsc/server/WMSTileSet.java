@@ -15,14 +15,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.geotools.data.ows.AbstractOpenWebService;
-import org.geotools.data.ows.CRSEnvelope;
+import org.geotools.ows.wms.CRSEnvelope;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.geotools.util.ObjectCache;
 import org.geotools.util.ObjectCaches;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * Class represents a WMSC tile set.  See: 
@@ -231,7 +231,7 @@ public class WMSTileSet implements TileSet {
     }
 
     /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getTilesFromViewportScale(com.vividsolutions.jts.geom.Envelope, double)
+	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getTilesFromViewportScale(org.locationtech.jts.geom.Envelope, double)
 	 */
     public Map<String, Tile> getTilesFromViewportScale( Envelope bounds, double viewportScale ) {
         double scale = findAppropriateZoomLevel(viewportScale);
@@ -239,7 +239,7 @@ public class WMSTileSet implements TileSet {
     }
     
     /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getTilesFromZoom(com.vividsolutions.jts.geom.Envelope, double)
+	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getTilesFromZoom(org.locationtech.jts.geom.Envelope, double)
 	 */
     public Map<String, Tile> getTilesFromZoom( Envelope bounds, double zoom ) {
 
@@ -324,7 +324,7 @@ public class WMSTileSet implements TileSet {
      *  Break up the bounds for this zoom level into a list of bounds so that no single
      *  bounds has more than 1024 tiles in it.
      *  
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getBoundsListForZoom(com.vividsolutions.jts.geom.Envelope, double)
+	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getBoundsListForZoom(org.locationtech.jts.geom.Envelope, double)
 	 */
     public List<Envelope> getBoundsListForZoom( Envelope bounds, double zoom ) {
 
@@ -378,7 +378,7 @@ public class WMSTileSet implements TileSet {
     }
     
     /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getTileCount((com.vividsolutions.jts.geom.Envelope, double))
+	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getTileCount((org.locationtech.jts.geom.Envelope, double))
 	 */
     public long getTileCount( Envelope bounds, double zoom ) {
         double xscale = width * zoom;

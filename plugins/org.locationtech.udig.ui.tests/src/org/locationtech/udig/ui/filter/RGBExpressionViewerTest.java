@@ -14,14 +14,13 @@ import static org.junit.Assert.fail;
 
 import java.awt.Color;
 
-import org.locationtech.udig.ui.filter.ViewerFactory.Appropriate;
-
 import org.eclipse.swt.SWT;
-import org.geotools.filter.expression.LiteralBuilder;
+import org.geotools.brewer.styling.filter.expression.LiteralBuilder;
 import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.ui.filter.ViewerFactory.Appropriate;
 
 /**
  * Test class for {@link RGBExpressionViewer}.

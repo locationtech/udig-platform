@@ -45,10 +45,10 @@ import org.opengis.referencing.operation.MathTransform2D;
 import org.opengis.referencing.operation.MathTransformFactory;
 import org.opengis.referencing.operation.TransformException;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
 
 /**
  * Default implementation 
@@ -211,7 +211,7 @@ public abstract class AbstractContextImpl implements AbstractContext {
             MathTransform toScreen = factory.createAffineTransform(new GeneralMatrix(
                     worldToScreenTransform()));
             transform = factory.createConcatenatedTransform(transform, toScreen);
-            return new LiteShape2(geometry, transform, new Decimator(transform), false);
+            return new LiteShape2(geometry, transform, new Decimator(transform, new Rectangle()), false);
         } catch (FactoryException e) {
             return null;
         } catch( TransformException e){

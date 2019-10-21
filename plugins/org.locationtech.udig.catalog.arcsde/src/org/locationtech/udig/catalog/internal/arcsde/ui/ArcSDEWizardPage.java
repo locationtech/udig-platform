@@ -25,7 +25,7 @@ import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryJarPrefer
 import org.locationtech.udig.catalog.ui.wizard.DataBaseConnInfo;
 
 import org.eclipse.swt.widgets.Composite;
-import org.geotools.arcsde.ArcSDEDataStoreFactory;
+import org.geotools.arcsde.data.ArcSDEDataStoreFactory;
 import org.geotools.data.DataAccessFactory.Param;
 import org.geotools.data.DataStoreFactorySpi;
 

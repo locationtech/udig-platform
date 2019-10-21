@@ -11,14 +11,13 @@
 package org.locationtech.udig.feature.editor;
 
 
-import org.locationtech.udig.project.ui.IUDIGDialogPage;
-import org.locationtech.udig.project.ui.tool.IToolContext;
-
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.views.properties.PropertySheetEntry;
 import org.eclipse.ui.views.properties.PropertySheetPage;
+import org.locationtech.udig.project.ui.IUDIGDialogPage;
+import org.locationtech.udig.project.ui.tool.IToolContext;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**

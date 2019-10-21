@@ -18,7 +18,7 @@ import org.locationtech.udig.catalog.wmsc.server.WMSTileSet;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 public class WMTTileSetWrapper extends WMSTileSet {
     private WMTSource wmtSource;

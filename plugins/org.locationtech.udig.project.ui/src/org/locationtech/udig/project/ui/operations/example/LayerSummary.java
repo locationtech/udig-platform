@@ -15,17 +15,15 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.swt.widgets.Display;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.ui.internal.Messages;
 import org.locationtech.udig.project.ui.summary.SummaryData;
 import org.locationtech.udig.project.ui.summary.SummaryDialog;
 import org.locationtech.udig.ui.operations.IOp;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.swt.widgets.Display;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Displays a summary of the layer in a dialog.

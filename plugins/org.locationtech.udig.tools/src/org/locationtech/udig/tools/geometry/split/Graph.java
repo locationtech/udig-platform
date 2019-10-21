@@ -12,11 +12,11 @@ package org.locationtech.udig.tools.geometry.split;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geomgraph.Edge;
-import com.vividsolutions.jts.geomgraph.NodeFactory;
-import com.vividsolutions.jts.geomgraph.PlanarGraph;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geomgraph.Edge;
+import org.locationtech.jts.geomgraph.NodeFactory;
+import org.locationtech.jts.geomgraph.PlanarGraph;
 
 /**
  * This graph is built using the polygon to split and ths split line.

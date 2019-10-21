@@ -60,7 +60,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Id;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 public class FeatureIssueTest extends AbstractProjectUITestCase {
 

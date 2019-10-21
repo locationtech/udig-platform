@@ -19,9 +19,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import org.locationtech.udig.style.sld.raster.SLDRasterPlugin;
-import org.locationtech.udig.style.sld.editor.CustomDynamicPalette;
-import org.locationtech.udig.style.sld.raster.internal.Messages;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CellLabelProvider;
@@ -45,10 +42,13 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.geotools.brewer.color.BrewerPalette;
+import org.geotools.brewer.styling.builder.ColorMapEntryBuilder;
 import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapEntry;
 import org.geotools.styling.ColorMapImpl;
-import org.geotools.styling.builder.ColorMapEntryBuilder;
+import org.locationtech.udig.style.sld.editor.CustomDynamicPalette;
+import org.locationtech.udig.style.sld.raster.SLDRasterPlugin;
+import org.locationtech.udig.style.sld.raster.internal.Messages;
 import org.opengis.coverage.grid.GridCoverageReader;
 
 /**

@@ -26,7 +26,7 @@ import org.locationtech.udig.mapgraphic.MapGraphicContext;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 import org.locationtech.udig.image.georeferencing.internal.process.MarkModel;
 import org.locationtech.udig.image.georeferencing.internal.ui.InputEvent;

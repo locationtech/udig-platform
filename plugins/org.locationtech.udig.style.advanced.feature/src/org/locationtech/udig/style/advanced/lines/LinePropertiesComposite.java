@@ -15,7 +15,6 @@ import java.net.MalformedURLException;
 import java.util.Collections;
 import java.util.List;
 
-import org.locationtech.udig.style.sld.SLD;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.ModifyEvent;
@@ -30,7 +29,6 @@ import org.geotools.filter.text.ecql.ECQL;
 import org.geotools.styling.Font;
 import org.geotools.styling.Graphic;
 import org.geotools.styling.TextSymbolizer;
-import org.opengis.filter.Filter;
 import org.locationtech.udig.style.advanced.common.BoderParametersComposite;
 import org.locationtech.udig.style.advanced.common.FiltersComposite;
 import org.locationtech.udig.style.advanced.common.IStyleChangesListener;
@@ -41,6 +39,8 @@ import org.locationtech.udig.style.advanced.internal.Messages;
 import org.locationtech.udig.style.advanced.lines.widgets.LineGeneralParametersComposite;
 import org.locationtech.udig.style.advanced.lines.widgets.LineLabelsParametersComposite;
 import org.locationtech.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.style.sld.SLD;
+import org.opengis.filter.Filter;
 
 /**
  * The line properties composite.

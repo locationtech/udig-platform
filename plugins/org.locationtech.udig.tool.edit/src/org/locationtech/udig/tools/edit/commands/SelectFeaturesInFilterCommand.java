@@ -11,19 +11,17 @@ package org.locationtech.udig.tools.edit.commands;
 
 import java.util.ArrayList;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
+import org.geotools.data.FeatureStore;
+import org.geotools.data.Query;
+import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.command.AbstractCommand;
 import org.locationtech.udig.project.command.UndoableMapCommand;
 import org.locationtech.udig.tool.edit.internal.Messages;
 import org.locationtech.udig.tools.edit.support.EditBlackboard;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.geotools.data.DefaultQuery;
-import org.geotools.data.FeatureStore;
-import org.geotools.data.Query;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureIterator;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -62,7 +60,7 @@ public class SelectFeaturesInFilterCommand extends AbstractCommand implements Un
         FeatureStore<SimpleFeatureType, SimpleFeature> store=layer.getResource(FeatureStore.class, new SubProgressMonitor(monitor, 2));
         String geomAttributeName = layer.getSchema().getGeometryDescriptor().getLocalName();
         String[] desiredProperties = new String[]{geomAttributeName};
-        Query query=new DefaultQuery(layer.getSchema().getTypeName(), filter, 
+        Query query=new Query(layer.getSchema().getTypeName(), filter, 
                 desiredProperties);
         FeatureCollection<SimpleFeatureType, SimpleFeature>  features = store.getFeatures(query);
 

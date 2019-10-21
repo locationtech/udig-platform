@@ -13,16 +13,15 @@ import java.io.StringReader;
 
 import javax.xml.transform.TransformerException;
 
-import org.locationtech.udig.ui.AbstractTextStrategizedTransfer;
-
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.TransferData;
-import org.geotools.filter.FilterFilter;
 import org.geotools.filter.FilterHandler;
-import org.geotools.filter.FilterTransformer;
 import org.geotools.gml.GMLFilterDocument;
 import org.geotools.gml.GMLFilterGeometry;
+import org.geotools.xml.filter.FilterFilter;
+import org.geotools.xml.filter.FilterTransformer;
+import org.locationtech.udig.ui.AbstractTextStrategizedTransfer;
 import org.opengis.filter.Filter;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;

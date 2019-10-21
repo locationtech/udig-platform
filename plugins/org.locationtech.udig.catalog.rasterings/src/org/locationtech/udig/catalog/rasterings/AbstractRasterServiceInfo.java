@@ -75,7 +75,7 @@ public class AbstractRasterServiceInfo extends IServiceInfo {
             
             reader = service.getReader(monitor);
 
-            CoordinateReferenceSystem CRS = reader.getCrs();
+            CoordinateReferenceSystem CRS = reader.getCoordinateReferenceSystem();
 
             if (!(CRS instanceof DefaultEngineeringCRS))
                 numberOfAvailableInfoFields++;

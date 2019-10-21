@@ -18,8 +18,8 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.measure.unit.SI;
-import javax.measure.unit.Unit;
+import si.uom.SI;
+import javax.measure.Unit;
 
 import org.locationtech.udig.mapgraphic.MapGraphic;
 import org.locationtech.udig.mapgraphic.MapGraphicContext;
@@ -40,7 +40,7 @@ import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.grid.Grids;
 import org.geotools.referencing.CRS;
-import org.geotools.resources.CRSUtilities;
+import org.geotools.referencing.util.CRSUtilities;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.geometry.DirectPosition;
@@ -49,8 +49,8 @@ import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * <b>Graticule Graphic class</b>
@@ -106,7 +106,7 @@ public class GraticuleGraphic implements MapGraphic {
             return;
         }
         Unit<?> unit = CRSUtilities.getUnit(graticule.getCRS().getCoordinateSystem());
-        if (!(unit==null || SI.METER.equals(unit))) {
+        if (!(unit==null || SI.METRE.equals(unit))) {
 //        if (!(unit==null || SI.METER.equals(unit) || SI.RADIAN.equals(unit.getStandardUnit()))) { // $NON-NLS-1$
             graticule.setStatus(ILayer.ERROR);
             graticule.setStatusMessage(Messages.GraticuleGraphic_Illegal_CRS);

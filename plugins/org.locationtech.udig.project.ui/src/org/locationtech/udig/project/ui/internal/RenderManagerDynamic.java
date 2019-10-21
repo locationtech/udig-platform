@@ -16,6 +16,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.ContextModelListenerAdapter;
 import org.locationtech.udig.project.internal.Layer;
@@ -40,15 +47,6 @@ import org.locationtech.udig.project.render.IRenderer;
 import org.locationtech.udig.project.render.RenderException;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
-
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-
-import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * A IRenderManager that is reacts to events such as viewport model changes.
@@ -167,7 +165,7 @@ public class RenderManagerDynamic extends RenderManagerImpl {
     }
 
 	/**
-	 * @see org.locationtech.udig.project.render.impl.RenderManagerImpl#refreshSelection(com.vividsolutions.jts.geom.Envelope)
+	 * @see org.locationtech.udig.project.render.impl.RenderManagerImpl#refreshSelection(org.locationtech.jts.geom.Envelope)
 	 */
 	public void refreshSelection(final ILayer layer, final Envelope bounds) {
 		checkState();

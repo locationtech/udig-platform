@@ -5,16 +5,15 @@ package org.locationtech.udig.project.ui.internal.render.displayAdapter.impl;
 
 import java.awt.Dimension;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent;
 import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 import org.locationtech.udig.project.ui.internal.Trace;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelEvent;
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 
 public class EventHandler implements Listener {
     EventJob eventJob;

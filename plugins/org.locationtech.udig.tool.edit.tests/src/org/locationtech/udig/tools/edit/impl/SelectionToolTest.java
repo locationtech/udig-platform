@@ -13,6 +13,16 @@ import static org.junit.Assert.assertEquals;
 
 import java.awt.Dimension;
 
+import org.geotools.data.FeatureStore;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.feature.FeatureIterator;
+import org.geotools.util.factory.GeoTools;
+import org.junit.Before;
+import org.junit.Test;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.udig.TestViewportPane;
 import org.locationtech.udig.core.internal.FeatureUtils;
 import org.locationtech.udig.project.ILayer;
@@ -23,21 +33,9 @@ import org.locationtech.udig.tools.edit.AbstractEditTool;
 import org.locationtech.udig.tools.edit.EditToolConfigurationHelper;
 import org.locationtech.udig.tools.edit.support.Point;
 import org.locationtech.udig.tools.edit.support.TestHandler;
-
-import org.geotools.data.FeatureStore;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.geotools.feature.FeatureIterator;
-import org.junit.Before;
-import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.LinearRing;
 
 /**
  * Test the SelectionToolTest 
@@ -56,7 +54,7 @@ public class SelectionToolTest extends AbstractToolTest{
         int i=0;
         for( FeatureIterator<SimpleFeature> iter = source.getFeatures().features(); iter.hasNext(); ){
             SimpleFeature feature = iter.next();
-            source.modifyFeatures(feature.getFeatureType().getDescriptor("name"), "feature"+i, filterFac.id(FeatureUtils.stringToId(filterFac, feature.getID())));  //$NON-NLS-1$//$NON-NLS-2$
+            source.modifyFeatures(feature.getFeatureType().getDescriptor("name").getName(), "feature"+i, filterFac.id(FeatureUtils.stringToId(filterFac, feature.getID())));  //$NON-NLS-1$//$NON-NLS-2$
             Geometry geom;
             if( i==0 ){
                 geom=geomFac.createPoint(new Coordinate(0,10));
@@ -74,7 +72,7 @@ public class SelectionToolTest extends AbstractToolTest{
                 );
                 geom=geomFac.createPolygon((LinearRing) geom, new LinearRing[0]);
             }
-            source.modifyFeatures(feature.getFeatureType().getGeometryDescriptor(), geom, filterFac.id(FeatureUtils.stringToId(filterFac, feature.getID())));
+            source.modifyFeatures(feature.getFeatureType().getGeometryDescriptor().getName(), geom, filterFac.id(FeatureUtils.stringToId(filterFac, feature.getID())));
             i++;
         }
         ((EditManager) handler.getContext().getEditManager()).commitTransaction();

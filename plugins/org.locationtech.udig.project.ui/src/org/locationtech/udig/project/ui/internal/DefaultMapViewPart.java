@@ -7,19 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.internal.ui.IDropTargetProvider;
-import org.locationtech.udig.project.IProject;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.commands.CreateMapCommand;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
-import org.locationtech.udig.project.ui.tool.IToolManager;
-import org.locationtech.udig.project.ui.viewers.MapEditDomain;
-import org.locationtech.udig.project.ui.viewers.MapViewer;
-import org.locationtech.udig.ui.UDIGDragDropUtilities;
-import org.locationtech.udig.ui.UDIGDragDropUtilities.DropTargetDescriptor;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -34,6 +21,18 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.part.ViewPart;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.internal.ui.IDropTargetProvider;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.commands.CreateMapCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
+import org.locationtech.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.project.ui.viewers.MapEditDomain;
+import org.locationtech.udig.project.ui.viewers.MapViewer;
+import org.locationtech.udig.ui.UDIGDragDropUtilities;
+import org.locationtech.udig.ui.UDIGDragDropUtilities.DropTargetDescriptor;
 
 /**
  * An viewpart for easily including a map in a view. To use, override getResources to configure the layers in the map.  Also override acquireToolbar if the

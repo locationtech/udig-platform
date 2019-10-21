@@ -10,8 +10,6 @@
  */
 package org.locationtech.udig.project.ui;
 
-import org.locationtech.udig.project.ui.feature.EditFeature;
-
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.PartInitException;

@@ -16,8 +16,8 @@ import org.locationtech.udig.project.IStyleBlackboard;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
 
 import org.locationtech.udig.omsbox.OmsBoxPlugin;
 

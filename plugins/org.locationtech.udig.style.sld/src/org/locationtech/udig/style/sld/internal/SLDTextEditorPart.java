@@ -29,10 +29,10 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.geotools.data.FeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
 import org.geotools.styling.HaloImpl;
 import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.TextSymbolizer;
+import org.geotools.util.factory.GeoTools;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.style.sld.SLDEditorPart;
 import org.locationtech.udig.style.sld.editor.FontEditor;
@@ -324,7 +324,8 @@ public class SLDTextEditorPart extends SLDEditorPart {
             double fontSize = fd[0].getHeight();
             org.geotools.styling.Font[] font = new org.geotools.styling.Font[1];
             font[0] = styleBuilder.createFont(fontName, fontItalic, fontBold, fontSize);
-            textSymbolizer.setFonts(font);
+            textSymbolizer.fonts().clear();
+            for (org.geotools.styling.Font f : font) textSymbolizer.fonts().add(f);
 
             if (labelHaloEnabled.getSelection()) {
                 RGB haloColor = labelHaloColorEditor.getColorValue();

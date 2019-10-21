@@ -22,10 +22,10 @@ import java.util.Collections;
 import java.util.List;
 
 import org.geotools.data.ows.HTTPResponse;
-import org.geotools.data.ows.Layer;
-import org.geotools.data.wms.WebMapServer;
-import org.geotools.data.wms.request.GetFeatureInfoRequest;
-import org.geotools.data.wms.response.GetFeatureInfoResponse;
+import org.geotools.ows.wms.Layer;
+import org.geotools.ows.wms.WebMapServer;
+import org.geotools.ows.wms.request.GetFeatureInfoRequest;
+import org.geotools.ows.wms.response.GetFeatureInfoResponse;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.ows.ServiceException;
 import org.geotools.referencing.CRS;
@@ -44,7 +44,7 @@ import org.locationtech.udig.tool.info.LayerPointInfo;
 import org.locationtech.udig.tool.info.internal.WMSDescribeLayer;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 public class WMSBasicTest {
 

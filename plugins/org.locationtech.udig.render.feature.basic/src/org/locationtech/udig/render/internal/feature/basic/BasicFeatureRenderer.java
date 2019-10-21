@@ -22,29 +22,11 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.locationtech.udig.core.TransparencyRemovingVisitor;
-import org.locationtech.udig.core.jts.ReferencedEnvelopeCache;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.ProjectBlackboardConstants;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.StyleBlackboard;
-import org.locationtech.udig.project.internal.render.SelectionLayer;
-import org.locationtech.udig.project.internal.render.impl.RendererImpl;
-import org.locationtech.udig.project.internal.render.impl.Styling;
-import org.locationtech.udig.project.preferences.PreferenceConstants;
-import org.locationtech.udig.project.render.ILabelPainter;
-import org.locationtech.udig.project.render.IRenderContext;
-import org.locationtech.udig.project.render.RenderException;
-import org.locationtech.udig.render.feature.basic.internal.Messages;
-import org.locationtech.udig.style.filter.FilterStyle;
-import org.locationtech.udig.ui.ProgressManager;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.geotools.data.FeatureSource;
-import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
 import org.geotools.data.crs.ForceCoordinateSystemFeatureResults;
 import org.geotools.data.simple.SimpleFeatureSource;
@@ -65,6 +47,24 @@ import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.visitor.DuplicatingStyleVisitor;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.TopologyException;
+import org.locationtech.udig.core.TransparencyRemovingVisitor;
+import org.locationtech.udig.core.jts.ReferencedEnvelopeCache;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.render.SelectionLayer;
+import org.locationtech.udig.project.internal.render.impl.RendererImpl;
+import org.locationtech.udig.project.internal.render.impl.Styling;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.render.ILabelPainter;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.render.feature.basic.internal.Messages;
+import org.locationtech.udig.style.filter.FilterStyle;
+import org.locationtech.udig.ui.ProgressManager;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -73,9 +73,6 @@ import org.opengis.geometry.BoundingBox;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.TransformException;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.TopologyException;
 
 /**
  * The default victim renderer. Based on the Lite-Renderer from Geotools.
@@ -272,13 +269,8 @@ public class BasicFeatureRenderer extends RendererImpl {
 
     private int getExpandSizeFromStyle( Style style ) {
         MetaBufferEstimator rbe = new MetaBufferEstimator();
-        FeatureTypeStyle[] styles = style.getFeatureTypeStyles();
-        for (int t=0; t<styles.length; t++) {
-            final FeatureTypeStyle lfts = styles[t];
-            Rule[] rules = lfts.getRules();
-            for (int j = 0; j < rules.length; j++) {
-                rbe.visit(rules[j]);
-            }
+        for (FeatureTypeStyle lfts : style.featureTypeStyles()) {
+        	for (Rule r : lfts.rules()) rbe.visit(r);
         }
 
         if(!rbe.isEstimateAccurate())
@@ -310,7 +302,7 @@ public class BasicFeatureRenderer extends RendererImpl {
     }
 
     /**
-     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#render(com.vividsolutions.jts.geom.Envelope,
+     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#render(org.locationtech.jts.geom.Envelope,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
     public void render( IProgressMonitor monitor ) throws RenderException {

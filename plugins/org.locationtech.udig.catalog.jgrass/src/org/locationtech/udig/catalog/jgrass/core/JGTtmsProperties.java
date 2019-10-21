@@ -9,7 +9,7 @@
  */
 package org.locationtech.udig.catalog.jgrass.core;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 public class JGTtmsProperties {
 

@@ -20,7 +20,7 @@ import org.locationtech.udig.project.IBlackboard;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 public class CoordinateGraphic implements MapGraphic {
 

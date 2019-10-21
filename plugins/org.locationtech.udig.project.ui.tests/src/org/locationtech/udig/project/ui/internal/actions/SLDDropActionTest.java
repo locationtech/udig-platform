@@ -16,6 +16,12 @@ import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.styling.Style;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.internal.ui.UDIGDropHandler;
 import org.locationtech.udig.project.ILayer;
@@ -27,13 +33,6 @@ import org.locationtech.udig.project.ui.TestsUIPlugin;
 import org.locationtech.udig.ui.ViewerDropLocation;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.styling.Style;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 /**
  * TODO Purpose of 

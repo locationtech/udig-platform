@@ -33,7 +33,7 @@ import org.osgi.framework.Bundle;
 
 import au.com.bytecode.opencsv.CSVReader;
 
-import com.vividsolutions.jts.geom.Point;
+import org.locationtech.jts.geom.Point;
 
 @SuppressWarnings("nls")
 public class CSVServiceTest {

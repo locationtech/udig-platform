@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.ILayerListener;
 import org.locationtech.udig.project.LayerEvent;
@@ -20,10 +23,6 @@ import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.LayerLegendItem;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.commands.AddLayersCommand;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IAction;
 
 /**
  * 

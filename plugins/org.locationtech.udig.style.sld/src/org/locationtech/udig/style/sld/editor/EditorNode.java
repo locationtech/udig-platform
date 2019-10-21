@@ -16,13 +16,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import org.locationtech.udig.style.IStyleConfigurator;
-import org.locationtech.udig.style.sld.IEditorPage;
-import org.locationtech.udig.style.sld.IEditorPageContainer;
-import org.locationtech.udig.style.sld.IStyleEditorPage;
-import org.locationtech.udig.style.sld.SLDPlugin;
-import org.locationtech.udig.style.sld.editor.internal.IEditorNode;
-
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -39,6 +32,12 @@ import org.eclipse.ui.internal.WorkbenchMessages;
 import org.eclipse.ui.internal.registry.KeywordRegistry;
 import org.eclipse.ui.internal.util.BundleUtility;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.locationtech.udig.style.IStyleConfigurator;
+import org.locationtech.udig.style.sld.IEditorPage;
+import org.locationtech.udig.style.sld.IEditorPageContainer;
+import org.locationtech.udig.style.sld.IStyleEditorPage;
+import org.locationtech.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.style.sld.editor.internal.IEditorNode;
 
 /**
  * Abstract IEditorNode used as the abstract class for all page nodes.

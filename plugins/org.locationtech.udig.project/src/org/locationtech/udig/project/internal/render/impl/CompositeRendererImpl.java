@@ -434,7 +434,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
 
     /**
      * @throws RenderException
-     * @see org.locationtech.udig.project.internal.render.Renderer#render(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.internal.render.Renderer#render(org.locationtech.jts.geom.Envelope)
      */
     public void render( IProgressMonitor monitor ) throws RenderException {
         if (getRenderExecutors().size() == 0)

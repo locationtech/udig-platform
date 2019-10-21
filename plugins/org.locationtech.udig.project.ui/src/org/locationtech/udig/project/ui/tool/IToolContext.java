@@ -11,6 +11,9 @@
  */
 package org.locationtech.udig.project.ui.tool;
 
+import org.eclipse.jface.action.IStatusLineManager;
+import org.eclipse.ui.IActionBars2;
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.udig.project.IAbstractContext;
 import org.locationtech.udig.project.command.Command;
 import org.locationtech.udig.project.command.MapCommand;
@@ -20,11 +23,6 @@ import org.locationtech.udig.project.command.factory.NavigationCommandFactory;
 import org.locationtech.udig.project.command.factory.SelectionCommandFactory;
 import org.locationtech.udig.project.ui.commands.DrawCommandFactory;
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
-
-import org.eclipse.jface.action.IStatusLineManager;
-import org.eclipse.ui.IActionBars2;
-
-import com.vividsolutions.jts.geom.Coordinate;
 
 /**
  * A set of tools that is provided to Tool extensions.

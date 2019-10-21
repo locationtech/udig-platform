@@ -10,11 +10,7 @@
  */
 package org.locationtech.udig.style.sld.editor;
 
-import org.locationtech.udig.filter.ComboExpressionViewer;
-import org.locationtech.udig.filter.ExpressionViewer;
-
 import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -23,10 +19,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
-import org.eclipse.ui.forms.widgets.Twistie;
 import org.eclipse.ui.part.Page;
-import org.geotools.filter.FilterFactoryImpl;
-import org.opengis.filter.expression.Expression;
+import org.locationtech.udig.filter.ComboExpressionViewer;
 
 /**
  * 

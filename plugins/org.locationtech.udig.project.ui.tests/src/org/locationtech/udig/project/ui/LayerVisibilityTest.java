@@ -20,6 +20,12 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.List;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.catalog.internal.shp.ShpServiceImpl;
 import org.locationtech.udig.catalog.tests.ui.CatalogTestsUIPlugin;
@@ -37,13 +43,6 @@ import org.locationtech.udig.project.internal.render.impl.RenderExecutorMultiLay
 import org.locationtech.udig.project.render.IRenderer;
 import org.locationtech.udig.project.tests.support.MapTests;
 import org.locationtech.udig.project.ui.internal.LayersView;
-
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
-import org.junit.Ignore;
-import org.junit.Test;
 
 public class LayerVisibilityTest extends AbstractProjectUITestCase {
     

@@ -9,11 +9,10 @@
  */
 package org.locationtech.udig.style.sld.editor.internal;
 
-import org.locationtech.udig.style.sld.IEditorPage;
-import org.locationtech.udig.style.sld.IEditorPageContainer;
-
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.locationtech.udig.style.sld.IEditorPage;
+import org.locationtech.udig.style.sld.IEditorPageContainer;
 
 /**
  * Node forming a tree structure allowing the user to select

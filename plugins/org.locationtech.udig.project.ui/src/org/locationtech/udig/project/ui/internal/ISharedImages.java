@@ -15,6 +15,7 @@ import static org.locationtech.udig.core.internal.Icons.DLOCALTOOL;
 import static org.locationtech.udig.core.internal.Icons.ELOCALTOOL;
 import static org.locationtech.udig.core.internal.Icons.ETOOL;
 import static org.locationtech.udig.core.internal.Icons.OBJECT;
+
 import org.locationtech.udig.core.internal.Icons;
 
 /**

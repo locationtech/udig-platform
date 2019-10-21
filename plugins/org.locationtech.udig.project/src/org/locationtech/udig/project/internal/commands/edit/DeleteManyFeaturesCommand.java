@@ -11,20 +11,18 @@ package org.locationtech.udig.project.internal.commands.edit;
 
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.data.FeatureEvent;
+import org.geotools.data.FeatureStore;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.locationtech.udig.project.IEditManager;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.command.AbstractCommand;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Messages;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.data.FeatureEvent;
-import org.geotools.data.FeatureStore;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
-
-import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Deletes a set of features based on a filter.
@@ -70,16 +68,16 @@ public class DeleteManyFeaturesCommand extends AbstractCommand {
             layer.eSetDeliver(true);
             List<FeatureEvent> tmp=layer.getFeatureChanges();
             List<FeatureEvent> eventList=tmp.subList(events, tmp.size());
-            Envelope bounds=new Envelope();
+            ReferencedEnvelope bounds=new ReferencedEnvelope();
             for( FeatureEvent event : eventList ) {
                 if( bounds.isNull() )
-                    bounds.init(event.getBounds());
+                    bounds.init(event.getBounds().getMinX(), event.getBounds().getMaxX(), event.getBounds().getMinY(), event.getBounds().getMaxY());
                 else
                     bounds.expandToInclude(event.getBounds());
             }
             if( !eventList.isEmpty()){
                 FeatureEvent event=eventList.get(0);
-                tmp.add(new FeatureEvent(event.getFeatureSource(), event.getEventType(), bounds));
+                tmp.add(new FeatureEvent(event.getFeatureSource(), event.getType(), bounds));
             }
         }
     }

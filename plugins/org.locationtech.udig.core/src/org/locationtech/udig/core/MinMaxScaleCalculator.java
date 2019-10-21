@@ -90,8 +90,7 @@ public class MinMaxScaleCalculator implements StyleVisitor {
     }
 
     public void visit( Style style ) {
-        FeatureTypeStyle[] featureTypeStyles = style.getFeatureTypeStyles();
-        for( FeatureTypeStyle featureTypeStyle : featureTypeStyles ) {
+        for( FeatureTypeStyle featureTypeStyle : style.featureTypeStyles() ) {
             featureTypeStyle.accept(this);
         }
     }
@@ -105,8 +104,7 @@ public class MinMaxScaleCalculator implements StyleVisitor {
     }
 
     public void visit( FeatureTypeStyle fts ) {
-        Rule[] rules = fts.getRules();
-        for( Rule rule : rules ) {
+        for( Rule rule : fts.rules() ) {
             rule.accept(this);
         }
     }

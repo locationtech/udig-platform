@@ -23,7 +23,7 @@ import org.opengis.feature.type.Name;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * Reprojects the features that as they are read from the collection.  The features are read only so don't try to attempt to 

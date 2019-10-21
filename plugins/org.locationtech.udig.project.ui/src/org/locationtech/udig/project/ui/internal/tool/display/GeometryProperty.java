@@ -9,47 +9,44 @@
  */
 package org.locationtech.udig.project.ui.internal.tool.display;
 
-import java.net.URL;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.geotools.data.FeatureStore;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryCollection;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.MultiLineString;
+import org.locationtech.jts.geom.MultiPoint;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.Polygon;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.objectproperty.ObjectPropertyCatalogListener;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.ui.operations.AbstractPropertyValue;
 import org.locationtech.udig.ui.operations.PropertyValue;
-
-import org.geotools.data.FeatureStore;
 import org.opengis.feature.simple.SimpleFeatureType;
-
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryCollection;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.LinearRing;
-import com.vividsolutions.jts.geom.MultiLineString;
-import com.vividsolutions.jts.geom.MultiPoint;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Returns true if the value is a subclass of the layer's schema's default geometry. If the layer
  * does not have a schema false is returned.
  * <p>
- * The value must be a Geometry class fully qualified (com.vividsolutions.jts.geom.Geometry) unless
+ * The value must be a Geometry class fully qualified (org.locationtech.jts.geom.Geometry) unless
  * it is one of the following abbreviations (case is unimportant):
  * <ul>
- * <li>Geometry = com.vividsolutions.jts.geom.Geometry</li>
- * <li>Polygon = com.vividsolutions.jts.geom.Polygon</li>
- * <li>Point = com.vividsolutions.jts.geom.Point</li>
- * <li>MultiPolygon = com.vividsolutions.jts.geom.MultiPolygon</li>
- * <li>MultiPoint = com.vividsolutions.jts.geom.MultiPoint</li>
- * <li>MultiLineString, MultiLine = com.vividsolutions.jts.geom.MultiLineString</li>
- * <li>LinearRing = com.vividsolutions.jts.geom.LinearRing</li>
- * <li>Line, LineString = com.vividsolutions.jts.geom.LineString</li>
- * <li>GeometryCollection = com.vividsolutions.jts.geom.GeometryCollection</li>
+ * <li>Geometry = org.locationtech.jts.geom.Geometry</li>
+ * <li>Polygon = org.locationtech.jts.geom.Polygon</li>
+ * <li>Point = org.locationtech.jts.geom.Point</li>
+ * <li>MultiPolygon = org.locationtech.jts.geom.MultiPolygon</li>
+ * <li>MultiPoint = org.locationtech.jts.geom.MultiPoint</li>
+ * <li>MultiLineString, MultiLine = org.locationtech.jts.geom.MultiLineString</li>
+ * <li>LinearRing = org.locationtech.jts.geom.LinearRing</li>
+ * <li>Line, LineString = org.locationtech.jts.geom.LineString</li>
+ * <li>GeometryCollection = org.locationtech.jts.geom.GeometryCollection</li>
  * </ul>
  * </p>
  * 

@@ -13,35 +13,31 @@ package org.locationtech.udig.render.gridcoverage.tool.info.internal;
 
 import java.util.List;
 
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.render.gridcoverage.basic.internal.Messages;
-import org.locationtech.udig.render.internal.gridcoverage.basic.RendererPlugin;
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IViewReference;
-import org.eclipse.ui.internal.WorkbenchPage;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.ViewPart;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.data.FeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.util.factory.GeoTools;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.render.gridcoverage.basic.internal.Messages;
+import org.locationtech.udig.render.internal.gridcoverage.basic.RendererPlugin;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.spatial.Intersects;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
 
 /**
  * A view for displaying information about a specific image mosaic tile.

@@ -11,10 +11,6 @@ package org.locationtech.udig.project.ui.internal.tool.display;
 
 import java.util.Collection;
 
-import org.locationtech.udig.project.ui.internal.Messages;
-import org.locationtech.udig.project.ui.tool.IToolManager;
-import org.locationtech.udig.ui.Constants;
-
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.action.GroupMarker;
@@ -30,6 +26,9 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.contexts.IContextService;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.ui.Constants;
 
 /**
  * A category object that contributes to a menu.

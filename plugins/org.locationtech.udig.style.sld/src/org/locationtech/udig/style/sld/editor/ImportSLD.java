@@ -12,14 +12,13 @@ package org.locationtech.udig.style.sld.editor;
 import java.io.File;
 import java.io.IOException;
 
-import org.locationtech.udig.style.sld.SLDPlugin;
-import org.locationtech.udig.style.sld.internal.Messages;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.styling.SLDParser;
 import org.geotools.styling.StyleFactory;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.xml.styling.SLDParser;
+import org.locationtech.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.style.sld.internal.Messages;
 
 /**
  * "ImportFrom" and SLD file.

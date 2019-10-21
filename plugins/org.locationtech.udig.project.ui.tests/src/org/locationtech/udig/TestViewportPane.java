@@ -12,6 +12,9 @@ package org.locationtech.udig;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
+import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.widgets.Control;
+import org.junit.Ignore;
 import org.locationtech.udig.project.internal.render.RenderManager;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
 import org.locationtech.udig.project.tests.support.TestMapDisplay;
@@ -22,10 +25,6 @@ import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseMotionList
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 import org.locationtech.udig.project.ui.render.glass.GlassPane;
-
-import org.eclipse.swt.graphics.Cursor;
-import org.eclipse.swt.widgets.Control;
-import org.junit.Ignore;
 
 /**
  * A dummy object for testing

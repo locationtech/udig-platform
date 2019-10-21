@@ -11,12 +11,12 @@
 package org.locationtech.udig.project.ui.internal.render.displayAdapter.impl;
 
 import static org.junit.Assert.assertEquals;
-import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.junit.Before;
 import org.junit.Test;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 
 public class EventHandlerTest {
 

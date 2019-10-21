@@ -40,9 +40,9 @@ import org.locationtech.udig.tools.edit.validator.ValidHoleValidator;
 import org.eclipse.swt.SWT;
 import org.opengis.filter.spatial.BBOX;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Polygon;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Polygon;
 
 /**
  * Edits and creates holes in Polygons

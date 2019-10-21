@@ -11,16 +11,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.locationtech.udig.internal.ui.UDIGDropHandler;
-import org.locationtech.udig.project.IProjectElement;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.commands.OpenProjectElementCommand;
-import org.locationtech.udig.project.ui.preferences.PreferenceConstants;
-import org.locationtech.udig.ui.IDropAction;
-import org.locationtech.udig.ui.IDropHandlerListener;
-import org.locationtech.udig.ui.PlatformGIS;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
@@ -38,6 +28,15 @@ import org.eclipse.ui.intro.IIntroManager;
 import org.eclipse.ui.intro.IIntroPart;
 import org.eclipse.ui.part.EditorPart;
 import org.geotools.referencing.CRS;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.commands.OpenProjectElementCommand;
+import org.locationtech.udig.project.ui.preferences.PreferenceConstants;
+import org.locationtech.udig.ui.IDropAction;
+import org.locationtech.udig.ui.IDropHandlerListener;
+import org.locationtech.udig.ui.PlatformGIS;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 

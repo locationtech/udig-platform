@@ -10,15 +10,14 @@
  */
 package org.locationtech.udig.project.ui.internal;
 
+import org.eclipse.gef.palette.PaletteContainer;
+import org.eclipse.gef.palette.PaletteEntry;
+import org.eclipse.gef.palette.ToolEntry;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.tool.display.ModalItem;
 import org.locationtech.udig.project.ui.internal.tool.display.ToolProxy;
 import org.locationtech.udig.project.ui.tool.IToolManager;
 import org.locationtech.udig.project.ui.tool.ModalTool;
-
-import org.eclipse.gef.palette.PaletteContainer;
-import org.eclipse.gef.palette.PaletteEntry;
-import org.eclipse.gef.palette.ToolEntry;
 
 /**
  * Descriptor class for a tool entry specifically made for the map.

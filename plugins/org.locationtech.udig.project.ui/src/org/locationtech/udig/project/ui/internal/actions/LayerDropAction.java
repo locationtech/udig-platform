@@ -14,11 +14,10 @@ import static org.locationtech.udig.project.ui.internal.dragdrop.MoveLayerDropAc
 
 import java.util.Collection;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.ui.IDropAction;
 import org.locationtech.udig.ui.ViewerDropLocation;
-
-import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Action that moves layers when a layer within a map is dropped on a layer within the same map.

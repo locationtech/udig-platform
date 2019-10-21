@@ -12,9 +12,6 @@ package org.locationtech.udig.project.ui.internal;
 import java.awt.Color;
 import java.util.HashMap;
 
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.ui.palette.ColourScheme;
-
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -30,6 +27,8 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.ui.palette.ColourScheme;
 
 /**
  * @author ptozer TODO To change the template for this generated type comment go to Window -

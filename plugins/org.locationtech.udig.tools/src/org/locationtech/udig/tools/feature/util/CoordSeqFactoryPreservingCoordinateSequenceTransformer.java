@@ -16,8 +16,8 @@ import org.geotools.geometry.jts.DefaultCoordinateSequenceTransformer;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
-import com.vividsolutions.jts.geom.CoordinateSequence;
-import com.vividsolutions.jts.geom.CoordinateSequenceFactory;
+import org.locationtech.jts.geom.CoordinateSequence;
+import org.locationtech.jts.geom.CoordinateSequenceFactory;
 
 /**
  * Coordinate Sequence preserving the Coordinate Sequence Transformer

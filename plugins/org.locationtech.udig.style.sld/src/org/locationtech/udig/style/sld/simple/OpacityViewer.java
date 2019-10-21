@@ -13,9 +13,6 @@ package org.locationtech.udig.style.sld.simple;
 
 import java.text.MessageFormat;
 
-import org.locationtech.udig.style.sld.AbstractSimpleConfigurator;
-import org.locationtech.udig.style.sld.internal.Messages;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
@@ -27,6 +24,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.SLD;
 import org.geotools.styling.StyleBuilder;
+import org.locationtech.udig.style.sld.AbstractSimpleConfigurator;
+import org.locationtech.udig.style.sld.internal.Messages;
 
 /**
  * Allows editing/viewing of Opacity Element.

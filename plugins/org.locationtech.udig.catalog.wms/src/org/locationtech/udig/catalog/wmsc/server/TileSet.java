@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.geotools.data.ows.AbstractOpenWebService;
-import org.geotools.data.ows.CRSEnvelope;
+import org.geotools.ows.wms.CRSEnvelope;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * A TileSet represents a group of tiles that belong together (ie: they are all from

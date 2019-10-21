@@ -10,14 +10,12 @@
  */
 package org.locationtech.udig.style.sld.editor;
 
-import org.locationtech.udig.filter.ComboExpressionViewer;
-import org.locationtech.udig.filter.ExpressionViewer;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.locationtech.udig.filter.ComboExpressionViewer;
 
 public class FillEditorComponent {
     private ComboExpressionViewer fillTypeViewer;

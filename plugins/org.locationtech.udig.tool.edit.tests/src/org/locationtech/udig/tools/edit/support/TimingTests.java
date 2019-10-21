@@ -16,12 +16,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Random;
 
-import org.locationtech.udig.project.internal.render.impl.ScaleUtils;
-import org.locationtech.udig.tool.edit.tests.TestsPlugin;
-
-import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.feature.DefaultFeatureCollection;
-import org.geotools.feature.FeatureCollections;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.gml.GMLFilterDocument;
 import org.geotools.gml.GMLFilterFeature;
@@ -30,14 +25,15 @@ import org.geotools.gml.GMLReceiver;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.junit.Test;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.udig.project.internal.render.impl.ScaleUtils;
+import org.locationtech.udig.tool.edit.tests.TestsPlugin;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.MathTransform;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
-
-import com.vividsolutions.jts.geom.Geometry;
 
 public class TimingTests {
     

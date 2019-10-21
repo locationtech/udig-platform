@@ -14,6 +14,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.ui.PlatformUI;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.ServiceMover;
 import org.locationtech.udig.project.ILayer;
@@ -22,10 +25,6 @@ import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Project;
 import org.locationtech.udig.project.internal.impl.MapImpl;
 import org.locationtech.udig.project.ui.UDIGGenericAction;
-
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * @author Andrea Antonello - www.hydrologis.com

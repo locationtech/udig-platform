@@ -22,6 +22,23 @@ import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
+import org.geotools.coverage.grid.GridCoverage2D;
+import org.geotools.coverage.grid.GridCoverageFactory;
+import org.geotools.data.ows.AbstractOpenWebService;
+import org.geotools.geometry.Envelope2D;
+import org.geotools.geometry.jts.JTS;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.ows.wms.WebMapServer;
+import org.geotools.referencing.CRS;
+import org.geotools.renderer.lite.RendererUtilities;
+import org.geotools.renderer.lite.gridcoverage2d.GridCoverageRenderer;
+import org.geotools.styling.RasterSymbolizer;
+import org.geotools.styling.StyleBuilder;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.internal.PreferenceConstants;
@@ -39,29 +56,10 @@ import org.locationtech.udig.project.internal.render.impl.RendererImpl;
 import org.locationtech.udig.project.render.IRenderer;
 import org.locationtech.udig.project.render.RenderException;
 import org.locationtech.udig.render.wms.basic.WMSPlugin;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.geotools.coverage.grid.GridCoverage2D;
-import org.geotools.coverage.grid.GridCoverageFactory;
-import org.geotools.data.ows.AbstractOpenWebService;
-import org.geotools.data.wms.WebMapServer;
-import org.geotools.geometry.Envelope2D;
-import org.geotools.geometry.jts.JTS;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.CRS;
-import org.geotools.renderer.lite.RendererUtilities;
-import org.geotools.renderer.lite.gridcoverage2d.GridCoverageRenderer;
-import org.geotools.styling.RasterSymbolizer;
-import org.geotools.styling.StyleBuilder;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Basic WMS-C Renderer. Determines what tiles from which zoom level need to be retrieved from the
@@ -141,7 +139,7 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
                     / getContext().getMapDisplay().getWidth();
 
             // create a TileRange to handle loading the tiles
-            com.vividsolutions.jts.geom.Envelope bnds = new com.vividsolutions.jts.geom.Envelope(
+            org.locationtech.jts.geom.Envelope bnds = new org.locationtech.jts.geom.Envelope(
                     bounds.getMinX(), bounds.getMaxX(), bounds.getMinY(), bounds.getMaxY());
 
             Map<String, Tile> tilesInRange = tileset.getTilesFromViewportScale(bnds, scaleFactor);

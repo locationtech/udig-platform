@@ -17,6 +17,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.swt.widgets.Display;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
 import org.locationtech.udig.project.ui.internal.MapEditorPart;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
@@ -24,9 +26,6 @@ import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseListener;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelEvent;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
-
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.swt.widgets.Display;
 
 /**
  * The Abstract base class for items. Provides support for enabling and disabling modal items.

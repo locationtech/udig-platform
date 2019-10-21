@@ -14,7 +14,7 @@ import org.locationtech.udig.aoi.IAOIStrategy;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * Returns an empty ReferencedEnvelope so that zoom to extent goes to all

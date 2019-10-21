@@ -20,7 +20,7 @@ import org.locationtech.udig.catalog.ui.ISharedImages;
 import org.locationtech.udig.catalog.wmsc.server.TileSet;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.data.wms.xml.WMSSchema;
+import org.geotools.ows.wms.xml.WMSSchema;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**

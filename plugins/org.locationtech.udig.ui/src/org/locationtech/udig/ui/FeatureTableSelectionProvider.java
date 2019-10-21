@@ -38,11 +38,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
-import org.geotools.data.DefaultQuery;
+import org.geotools.data.Query;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.util.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.filter.FilterAttributeExtractor;
@@ -375,7 +375,7 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
                             fids.add(feature.getID());
                     }
             } else {
-                DefaultQuery defaultQuery = new DefaultQuery(source.getSchema().getName().getLocalPart(),
+                Query defaultQuery = new Query(source.getSchema().getName().getLocalPart(),
                         filter, new String[0]);
                 // TODO: Remove this workaround in 2.6.1 (note this has no performance impact)
                 Set<String> required = (Set) filter.accept( new FilterAttributeExtractor(), null );                

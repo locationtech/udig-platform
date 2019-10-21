@@ -79,7 +79,7 @@ import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * Local Catalog implementation (tracking known services, persisted by XML currently).
@@ -666,7 +666,7 @@ public class CatalogImpl extends ICatalog {
      * in Lat - Long, or null if the search is not to be contained within a specified area.
      * 
      * @see org.locationtech.udig.catalog.ICatalog#search(java.lang.String,
-     *      com.vividsolutions.jts.geom.Envelope)
+     *      org.locationtech.jts.geom.Envelope)
      * @param pattern
      * @param bbox used for an intersection test
      * @return

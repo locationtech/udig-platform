@@ -14,11 +14,10 @@ package org.locationtech.udig.project.ui.internal;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.locationtech.udig.project.IProjectElement;
-import org.locationtech.udig.project.ui.UDIGEditorInput;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.ui.UDIGEditorInput;
 
 /**
  * UDIGEditorInputDescriptor objects create IEditorInput objects that wrap IProjectElements objects.

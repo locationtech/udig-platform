@@ -15,7 +15,7 @@ import java.net.URL;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 import org.locationtech.udig.catalog.internal.wmt.Trace;
 import org.locationtech.udig.catalog.internal.wmt.WMTPlugin;

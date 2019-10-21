@@ -11,10 +11,10 @@
 package org.locationtech.udig.project.ui.internal;
 
 import static org.junit.Assert.assertEquals;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.MapTests;
 
 import org.junit.Test;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.tests.support.MapTests;
 
 public class ViewerLayerSorterTest {
 

@@ -19,7 +19,7 @@ import org.locationtech.udig.project.internal.command.navigation.ZoomCommand;
 import org.locationtech.udig.project.ui.commands.TransformDrawCommand;
 import org.locationtech.udig.project.ui.tool.IToolContext;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 /**
  * Waits 1 second after the most recent request before running operation.

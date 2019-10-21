@@ -16,21 +16,19 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.swt.dnd.DropTarget;
+import org.eclipse.swt.widgets.Control;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IProjectElement;
 import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.LayersView;
-import org.locationtech.udig.project.ui.internal.MapEditor;
 import org.locationtech.udig.project.ui.internal.MapEditorPart;
 import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 import org.locationtech.udig.ui.IDropAction;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.swt.dnd.DropTarget;
-import org.eclipse.swt.widgets.Control;
 
 /**
  * Opens a map when dropped on an IEditorPart

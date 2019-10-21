@@ -21,10 +21,9 @@ import java.io.PrintWriter;
 
 import javax.imageio.ImageIO;
 
-import org.locationtech.udig.project.IMap;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.locationtech.udig.project.IMap;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.TransformException;
 

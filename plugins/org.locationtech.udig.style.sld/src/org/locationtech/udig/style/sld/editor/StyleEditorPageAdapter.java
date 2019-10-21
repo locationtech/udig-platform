@@ -10,13 +10,12 @@
  */
 package org.locationtech.udig.style.sld.editor;
 
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.style.IStyleConfigurator;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.IStyleConfigurator;
 
 /**
  * Adapter used to place a StyleConfigurator into the StyleEditor.

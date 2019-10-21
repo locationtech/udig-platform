@@ -15,14 +15,13 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.Shape;
 
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.preferences.PreferenceConstants;
-import org.locationtech.udig.ui.graphics.ViewportGraphics;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.swt.graphics.RGB;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 /**
  * A command that draws the indicated shape onto the viewport in the correct "selection" style.  The default Shape is 

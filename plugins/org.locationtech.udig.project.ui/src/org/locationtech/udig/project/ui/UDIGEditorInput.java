@@ -11,12 +11,11 @@
  */
 package org.locationtech.udig.project.ui;
 
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IPersistableElement;
 import org.locationtech.udig.project.IProjectElement;
 import org.locationtech.udig.project.element.IGenericProjectElement;
 import org.locationtech.udig.project.element.ProjectElementAdapter;
-
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IPersistableElement;
 
 /**
  * So the project explorer could generically open any editor.

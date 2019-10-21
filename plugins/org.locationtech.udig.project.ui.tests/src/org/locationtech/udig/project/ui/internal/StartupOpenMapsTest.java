@@ -15,16 +15,15 @@ import static org.junit.Assert.assertNotSame;
 
 import java.net.URL;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.swt.widgets.Display;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.catalog.tests.ui.CatalogTestsUIPlugin;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.swt.widgets.Display;
-import org.junit.Ignore;
-import org.junit.Test;
 
 public class StartupOpenMapsTest extends AbstractProjectUITestCase {
 

@@ -17,7 +17,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * 

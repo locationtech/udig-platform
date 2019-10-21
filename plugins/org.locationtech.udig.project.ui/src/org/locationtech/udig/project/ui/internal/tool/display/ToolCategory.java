@@ -15,9 +15,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.locationtech.udig.project.ui.internal.Messages;
-import org.locationtech.udig.project.ui.tool.IToolManager;
-
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -25,6 +22,8 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.tool.IToolManager;
 
 /**
  * Representation of a category, this is a UI construct.

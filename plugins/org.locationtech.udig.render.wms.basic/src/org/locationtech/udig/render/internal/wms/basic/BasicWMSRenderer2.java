@@ -69,12 +69,12 @@ import org.eclipse.swt.widgets.Shell;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridCoverageFactory;
 import org.geotools.data.Query;
-import org.geotools.data.ows.Layer;
+import org.geotools.ows.wms.Layer;
 import org.geotools.data.ows.Service;
-import org.geotools.data.ows.StyleImpl;
-import org.geotools.data.ows.WMSCapabilities;
-import org.geotools.data.wms.WebMapServer;
-import org.geotools.data.wms.request.GetMapRequest;
+import org.geotools.ows.wms.StyleImpl;
+import org.geotools.ows.wms.WMSCapabilities;
+import org.geotools.ows.wms.WebMapServer;
+import org.geotools.ows.wms.request.GetMapRequest;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.geometry.GeneralEnvelope;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -84,7 +84,7 @@ import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.renderer.lite.RendererUtilities;
 import org.geotools.renderer.lite.gridcoverage2d.GridCoverageRenderer;
-import org.geotools.resources.image.ImageUtilities;
+import org.geotools.image.util.ImageUtilities;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
@@ -98,8 +98,8 @@ import org.opengis.referencing.ReferenceIdentifier;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.TransformException;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * The basic renderer for a WMS Layer
@@ -201,12 +201,12 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
                 Layer layer;
                 double minScale = 0;
                 double maxScale = Double.MAX_VALUE;
-                layer = ilayer.getResource(org.geotools.data.ows.Layer.class, null);
+                layer = ilayer.getResource(org.geotools.ows.wms.Layer.class, null);
                 // check if there are min/max scale rules
                 StyleBlackboard sb = (StyleBlackboard) ilayer.getStyleBlackboard();
                 Style style = (Style) sb.lookup(Style.class);
                 if (style != null) {
-                    Rule rule = style.getFeatureTypeStyles()[0].getRules()[0];
+                    Rule rule = style.featureTypeStyles().get(0).rules().get(0);
                     minScale = rule.getMinScaleDenominator();
                     maxScale = rule.getMaxScaleDenominator();
                 }

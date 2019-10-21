@@ -9,11 +9,10 @@
  */
 package org.locationtech.udig.project.ui.internal.property.pages;
 
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.ui.internal.CRSPropertyPage;
-
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.ui.IWorkbenchPropertyPage;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.ui.internal.CRSPropertyPage;
 
 /**
  * A PropertyPage for setting the CRS on a map.

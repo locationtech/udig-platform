@@ -10,9 +10,8 @@
  */
 package org.locationtech.udig.project.ui;
 
-import org.locationtech.udig.project.ui.commands.IDrawCommand;
-
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.locationtech.udig.project.ui.commands.IDrawCommand;
 
 /**
  * This Commands manages the timing of a short animation being drawn on the ViewportPane.

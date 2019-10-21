@@ -15,13 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.locationtech.udig.core.AdapterUtil;
-import org.locationtech.udig.core.internal.ExtensionPointProcessor;
-import org.locationtech.udig.core.internal.ExtensionPointUtil;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.style.IStyleConfigurator;
-import org.locationtech.udig.style.sld.SLDPlugin;
-
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -35,6 +28,12 @@ import org.eclipse.core.runtime.dynamichelpers.IExtensionChangeHandler;
 import org.eclipse.core.runtime.dynamichelpers.IExtensionTracker;
 import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.ui.PlatformUI;
+import org.locationtech.udig.core.AdapterUtil;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.style.IStyleConfigurator;
+import org.locationtech.udig.style.sld.SLDPlugin;
 
 public class EditorPageManager implements IExtensionChangeHandler {
 

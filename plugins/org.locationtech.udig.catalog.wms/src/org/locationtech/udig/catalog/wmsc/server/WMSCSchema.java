@@ -21,7 +21,7 @@ import org.locationtech.udig.catalog.wmsc.server.WMSCComplexTypes._TileSetType;
 import org.locationtech.udig.catalog.wmsc.server.WMSCComplexTypes._VendorSpecificCapabilitiesType;
 import org.locationtech.udig.catalog.wmsc.server.WMSCComplexTypes._WMT_MS_CapabilitiesType;
 
-import org.geotools.data.wms.xml.WMSSchema;
+import org.geotools.ows.wms.xml.WMSSchema;
 import org.geotools.xml.schema.Attribute;
 import org.geotools.xml.schema.AttributeGroup;
 import org.geotools.xml.schema.ComplexType;

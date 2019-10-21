@@ -21,7 +21,7 @@ import org.locationtech.udig.catalog.IGeoResourceInfo;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.geotools.arcsde.ArcSDERasterFormatFactory;
+import org.geotools.arcsde.data.ArcSDERasterFormatFactory;
 import org.geotools.arcsde.raster.gce.ArcSDERasterFormat;
 import org.geotools.arcsde.session.ArcSDEConnectionConfig;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
@@ -30,7 +30,7 @@ import org.geotools.geometry.GeneralEnvelope;
 import org.opengis.coverage.grid.GridCoverage;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 public class ArcSDERasterGeoResource extends IGeoResource {
 
@@ -63,7 +63,7 @@ public class ArcSDERasterGeoResource extends IGeoResource {
             GeneralEnvelope env = reader.getOriginalEnvelope();
             Envelope bounds = new Envelope(env.getMinimum(0), env.getMaximum(0), env.getMinimum(1),
                     env.getMaximum(1));
-            CoordinateReferenceSystem crs = reader.getCrs();
+            CoordinateReferenceSystem crs = reader.getCoordinateReferenceSystem();
             ImageDescriptor icon = null;
             IGeoResourceInfo rasterInfo = new IGeoResourceInfo(title, name, description, schema,
                     bounds, crs, keywords, icon);

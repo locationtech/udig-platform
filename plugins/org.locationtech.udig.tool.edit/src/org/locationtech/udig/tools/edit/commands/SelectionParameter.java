@@ -18,7 +18,7 @@ import org.locationtech.udig.tools.edit.EditToolHandler;
 
 import org.opengis.filter.Filter;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * Gathers up all the parameters need to define how selection works.

@@ -57,8 +57,8 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * TODO Purpose of org.locationtech.udig.project.internal.render.impl
@@ -923,7 +923,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * @see org.locationtech.udig.project.internal.render.ViewportModel#zoomToBox(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.internal.render.ViewportModel#zoomToBox(org.locationtech.jts.geom.Envelope)
      */
     public void zoomToBox(Envelope newbbox) {
         setInitialized(true);

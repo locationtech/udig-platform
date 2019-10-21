@@ -11,16 +11,15 @@
  */
 package org.locationtech.udig.project.ui.operations;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.swt.widgets.Display;
+import org.geotools.data.FeatureSource;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.ProjectBlackboardConstants;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.commands.AddLayerCommand;
 import org.locationtech.udig.ui.operations.IOp;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.swt.widgets.Display;
-import org.geotools.data.FeatureSource;
 
 /**
  * Creates a layer that is a view based on the selection of the currently selected layer.

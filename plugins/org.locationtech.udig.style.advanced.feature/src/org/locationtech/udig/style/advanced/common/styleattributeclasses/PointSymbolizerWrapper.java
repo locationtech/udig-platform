@@ -21,8 +21,6 @@ import static org.locationtech.udig.style.advanced.utils.Utilities.sf;
 import java.awt.geom.Point2D;
 import java.util.List;
 
-import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.geotools.styling.ExternalGraphic;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Graphic;
@@ -30,9 +28,9 @@ import org.geotools.styling.Mark;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.Symbolizer;
-import org.opengis.filter.expression.Expression;
-
 import org.locationtech.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.ui.graphics.SLDs;
+import org.opengis.filter.expression.Expression;
 
 /**
  * A wrapper for a {@link PointSymbolizer} to ease interaction with gui.

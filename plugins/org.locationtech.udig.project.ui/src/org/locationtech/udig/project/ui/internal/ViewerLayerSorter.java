@@ -9,10 +9,9 @@
  */
 package org.locationtech.udig.project.ui.internal;
 
-import org.locationtech.udig.project.internal.Layer;
-
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
+import org.locationtech.udig.project.internal.Layer;
 /**
  * Sorts the layers for display in a view.  So the first layer drawn is at the bottom.
  * 

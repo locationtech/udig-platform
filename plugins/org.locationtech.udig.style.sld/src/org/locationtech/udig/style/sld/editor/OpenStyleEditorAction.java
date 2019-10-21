@@ -11,15 +11,10 @@
 package org.locationtech.udig.style.sld.editor;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.locationtech.udig.catalog.IGeoResourceInfo;
-import org.locationtech.udig.core.internal.ExtensionPointUtil;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.style.sld.SLD;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jface.action.Action;
@@ -32,6 +27,9 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.sld.SLD;
 
 /**
  * Open the style editor dialog and add its pages

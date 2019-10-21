@@ -20,6 +20,8 @@ import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.visitor.DuplicatingStyleVisitor;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.Polygon;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.FeatureTypeStyleWrapper;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
@@ -28,9 +30,6 @@ import org.locationtech.udig.style.advanced.utils.Utilities;
 import org.locationtech.udig.style.sld.SLD;
 import org.locationtech.udig.ui.graphics.SLDs;
 import org.opengis.filter.expression.Expression;
-
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.Polygon;
 
 public final class WrapperUtilities {
 

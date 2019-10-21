@@ -21,7 +21,7 @@ import org.locationtech.udig.project.ui.internal.commands.draw.DrawShapeCommand;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.project.ui.tool.AbstractModalTool;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 public class CoordinateTool extends AbstractModalTool  {
     

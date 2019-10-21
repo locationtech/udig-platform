@@ -17,18 +17,18 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.locationtech.udig.catalog.URLUtils;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.ExternalGraphic;
 import org.geotools.styling.Graphic;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
+import org.geotools.util.factory.GeoTools;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.style.advanced.utils.Utilities;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.PropertyName;
-import org.locationtech.udig.style.advanced.utils.Utilities;
 
 /**
  * An abstract wrapper for a {@link Symbolizer} to ease interaction with gui.

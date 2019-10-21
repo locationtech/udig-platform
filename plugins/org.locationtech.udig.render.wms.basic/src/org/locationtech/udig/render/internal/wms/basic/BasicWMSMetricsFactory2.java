@@ -18,13 +18,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.geotools.ows.wms.Layer;
+import org.geotools.ows.wms.WebMapServer;
+import org.geotools.referencing.CRS;
 import org.locationtech.udig.project.render.AbstractRenderMetrics;
 import org.locationtech.udig.project.render.IRenderContext;
 import org.locationtech.udig.project.render.IRenderMetricsFactory;
-
-import org.geotools.data.ows.Layer;
-import org.geotools.data.wms.WebMapServer;
-import org.geotools.referencing.CRS;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -49,9 +48,9 @@ public class BasicWMSMetricsFactory2 implements IRenderMetricsFactory {
         if( crs == null ) {
             return true; // we will assume our default            
         }        
-        org.geotools.data.ows.Layer layer;
+        org.geotools.ows.wms.Layer layer;
         try {
-            layer = toolkit.getLayer().getResource(org.geotools.data.ows.Layer.class, null);
+            layer = toolkit.getLayer().getResource(org.geotools.ows.wms.Layer.class, null);
         } catch (IOException e) {
             return false;
         }
@@ -73,7 +72,7 @@ public class BasicWMSMetricsFactory2 implements IRenderMetricsFactory {
         return false;
     }
 
-    private boolean searchForCRSMatch( CoordinateReferenceSystem crs, org.geotools.data.ows.Layer layer ) {
+    private boolean searchForCRSMatch( CoordinateReferenceSystem crs, org.geotools.ows.wms.Layer layer ) {
         Set srs =  layer.getSrs();
         for( Iterator i=srs.iterator(); i.hasNext();) {
             try {

@@ -15,7 +15,7 @@ import java.util.List;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * Service for the AOI (Area of Interest) extent with events to indicate when this value is updated by the user.

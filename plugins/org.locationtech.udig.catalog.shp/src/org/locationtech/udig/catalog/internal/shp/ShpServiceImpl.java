@@ -22,9 +22,6 @@ import java.util.concurrent.locks.Lock;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.data.DefaultQuery;
-import org.geotools.data.FeatureReader;
-import org.geotools.data.Transaction;
 import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 import org.locationtech.udig.catalog.ICatalog;
@@ -38,9 +35,6 @@ import org.locationtech.udig.catalog.internal.CatalogImpl;
 import org.locationtech.udig.catalog.internal.ResolveChangeEvent;
 import org.locationtech.udig.catalog.internal.ResolveDelta;
 import org.locationtech.udig.ui.UDIGDisplaySafeLock;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
 
 /**
  * Connect to a shapefile
@@ -281,23 +275,23 @@ public class ShpServiceImpl extends IService {
 //        }
 //
 //    }
-
-    private void index( final ShapefileDataStore ds, final String typename ) {
-        FeatureReader<SimpleFeatureType, SimpleFeature> reader = null;
-        try {
-            // smack Datastore to generate indices
-            reader = ds.getFeatureReader(new DefaultQuery(typename, Filter.INCLUDE, new String[0]), Transaction.AUTO_COMMIT);
-        } catch (Exception e) {
-            ShpPlugin.log("", e); //$NON-NLS-1$
-        } finally {
-            if (reader != null)
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    ShpPlugin.log("", e); //$NON-NLS-1$
-                }
-        }
-    }
+//
+//    private void index( final ShapefileDataStore ds, final String typename ) {
+//        FeatureReader<SimpleFeatureType, SimpleFeature> reader = null;
+//        try {
+//            // smack Datastore to generate indices
+//            reader = ds.getFeatureReader(new Query(typename, Filter.INCLUDE, new String[0]), Transaction.AUTO_COMMIT);
+//        } catch (Exception e) {
+//            ShpPlugin.log("", e); //$NON-NLS-1$
+//        } finally {
+//            if (reader != null)
+//                try {
+//                    reader.close();
+//                } catch (IOException e) {
+//                    ShpPlugin.log("", e); //$NON-NLS-1$
+//                }
+//        }
+//    }
 
     /*
      * @see org.locationtech.udig.catalog.IResolve#getStatus()

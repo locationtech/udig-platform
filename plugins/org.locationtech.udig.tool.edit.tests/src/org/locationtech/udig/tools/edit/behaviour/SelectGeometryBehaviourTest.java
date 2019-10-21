@@ -21,6 +21,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.geotools.data.FeatureStore;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
+import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.util.factory.GeoTools;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.MultiLineString;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.Polygon;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.project.BlackboardEvent;
 import org.locationtech.udig.project.IBlackboard;
@@ -38,30 +54,12 @@ import org.locationtech.udig.tools.edit.support.EditBlackboardEvent;
 import org.locationtech.udig.tools.edit.support.EditGeom;
 import org.locationtech.udig.tools.edit.support.PrimitiveShape;
 import org.locationtech.udig.tools.edit.support.TestHandler;
-
-import org.geotools.data.FeatureStore;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureIterator;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.identity.Identifier;
 import org.opengis.filter.spatial.BBOX;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.MultiLineString;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.Polygon;
 
 public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
     final int none=MapMouseEvent.NONE;
@@ -91,7 +89,7 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
 			Set<Identifier> ids = new HashSet<Identifier>();
 			ids.add(filterFactory.featureId(feature.getID()));
 			GeometryDescriptor defaultGeometry = feature.getFeatureType().getGeometryDescriptor();
-			resource.modifyFeatures(defaultGeometry, fac.createPoint(c),
+			resource.modifyFeatures(defaultGeometry.getName(), fac.createPoint(c),
                     filterFactory.id(ids));
         }
         ((EditManager)map.getEditManager()).commitTransaction();
@@ -224,7 +222,7 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
         Set<Identifier> ids = new HashSet<Identifier>();
         FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
         ids.add(filterFactory.featureId(features.features().next().getID()));
-		resource.modifyFeatures(feature.getFeatureType().getGeometryDescriptor(), multiline,
+		resource.modifyFeatures(feature.getFeatureType().getGeometryDescriptor().getName(), multiline,
                 filterFactory.id(ids));
     
         

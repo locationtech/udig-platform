@@ -7,28 +7,6 @@
 package org.locationtech.udig.project.ui.internal.tool.impl;
 
 import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import org.locationtech.udig.project.command.Command;
-import org.locationtech.udig.project.command.EditCommand;
-import org.locationtech.udig.project.command.MapCommand;
-import org.locationtech.udig.project.command.NavCommand;
-import org.locationtech.udig.project.command.factory.BasicCommandFactory;
-import org.locationtech.udig.project.command.factory.EditCommandFactory;
-import org.locationtech.udig.project.command.factory.NavigationCommandFactory;
-import org.locationtech.udig.project.command.factory.SelectionCommandFactory;
-import org.locationtech.udig.project.internal.impl.AbstractContextImpl;
-import org.locationtech.udig.project.internal.render.RenderManager;
-import org.locationtech.udig.project.internal.render.ViewportModel;
-import org.locationtech.udig.project.internal.render.impl.ScaleUtils;
-import org.locationtech.udig.project.internal.render.impl.ScaleUtils.CalculateZoomLevelParameter;
-import org.locationtech.udig.project.ui.commands.DrawCommandFactory;
-import org.locationtech.udig.project.ui.commands.IDrawCommand;
-import org.locationtech.udig.project.ui.internal.MapPart;
-import org.locationtech.udig.project.ui.internal.tool.ToolContext;
-import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
@@ -49,9 +27,24 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.services.IServiceLocator;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.udig.project.command.Command;
+import org.locationtech.udig.project.command.EditCommand;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.NavCommand;
+import org.locationtech.udig.project.command.factory.BasicCommandFactory;
+import org.locationtech.udig.project.command.factory.EditCommandFactory;
+import org.locationtech.udig.project.command.factory.NavigationCommandFactory;
+import org.locationtech.udig.project.command.factory.SelectionCommandFactory;
+import org.locationtech.udig.project.internal.impl.AbstractContextImpl;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.impl.ScaleUtils;
+import org.locationtech.udig.project.internal.render.impl.ScaleUtils.CalculateZoomLevelParameter;
+import org.locationtech.udig.project.ui.commands.DrawCommandFactory;
+import org.locationtech.udig.project.ui.commands.IDrawCommand;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.tool.ToolContext;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 
 /**
  * <p>
