@@ -2,7 +2,7 @@
 <feature
       id="org.locationtech.udig.tutorials.rcp-feature"
       label="Rcp_feature Feature"
-      version="2.1.0.qualifier"
+      version="2.2.0.qualifier"
       provider-name="student">
 
    <description url="http://udig.github.com/docs/dev/tracking_animation.html">

@@ -43,79 +43,79 @@
 	<classpathentry exported="true" kind="lib" path="lib/geoscript-groovy-1.10.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/groovy-2.4.14.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/groovy-all-2.4.12.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-app-schema-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-app-schema-resolver-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-arcgrid-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-common-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-brewer-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-charts-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-complex-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-coverage-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-coverage-api-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-cql-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-css-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-extension-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-hsql-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-feature-pregeneralized-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-geobuf-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-geojson-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-geojsondatastore-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-geometry-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-geopkg-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-geotiff-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-graph-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-grassraster-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-grid-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-gtopo30-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-image-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-imageio-ext-gdal-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-imagemosaic-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-imagemosaic-jdbc-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-imagepyramid-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-db2-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-h2-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-mysql-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-oracle-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-postgis-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-sqlserver-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-teradata-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-main-22.0.jar" sourcepath="C:/data/udig/source/udig-platform/plugins/org.locationtech.udig.libs/lib-src/gt-main-22.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-mbstyle-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-mbtiles-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-metadata-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-netcdf-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-opengis-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-process-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-process-feature-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-process-geometry-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-process-raster-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-property-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-referencing-22.0.jar" sourcepath="C:/data/udig/source/udig-platform/plugins/org.locationtech.udig.libs/lib-src/gt-referencing-22.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-render-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-svg-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-swing-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-tile-client-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-transform-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-validation-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-wfs-ng-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-wms-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-wmts-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-wps-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xml-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-core-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-fes-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-filter-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-gml2-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-gml3-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-kml-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-ows-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-sld-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wfs-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wmts-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wps-22.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-app-schema-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-app-schema-resolver-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-arcgrid-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-common-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-brewer-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-charts-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-complex-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-coverage-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-coverage-api-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-cql-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-css-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-extension-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-hsql-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-feature-pregeneralized-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-geobuf-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-geojson-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-geojsondatastore-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-geometry-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-geopkg-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-geotiff-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-graph-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-grassraster-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-grid-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-gtopo30-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-image-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-imageio-ext-gdal-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-imagemosaic-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-imagemosaic-jdbc-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-imagepyramid-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-db2-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-h2-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-mysql-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-oracle-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-postgis-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-sqlserver-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-teradata-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-main-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-mbstyle-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-mbtiles-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-metadata-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-netcdf-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-opengis-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-process-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-process-feature-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-process-geometry-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-process-raster-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-property-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-referencing-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-render-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-svg-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-swing-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-tile-client-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-transform-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-validation-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-wfs-ng-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-wms-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-wmts-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-wps-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xml-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-core-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-fes-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-filter-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-gml2-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-gml3-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-kml-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-ows-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-sld-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wfs-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wmts-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wps-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/guava-18.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/h2-1.1.119.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hatbox-1.0.b10.jar"/>
@@ -227,20 +227,20 @@
 	<classpathentry exported="true" kind="lib" path="lib/jt-zonal-1.1.12.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jt-zonalstats-1.5.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jtds-1.3.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jts-core-1.16.1.jar" sourcepath="C:/data/udig/source/udig-platform/plugins/org.locationtech.udig.libs/lib-src/jts-core-1.16.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jts-core-1.16.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/miglayout-3.7-swing.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/mysql-connector-java-5.1.46.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/net.opengis.fes-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/net.opengis.ows-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wfs-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wmts-22.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wps-22.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/net.opengis.fes-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/net.opengis.ows-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wfs-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wmts-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wps-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/netcdf-java-4.0.41.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/netcdf4-4.6.11.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/opencsv-3.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/opendap-2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.eclipse.xsd-2.12.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/org.w3.xlink-22.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.w3.xlink-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/oro-2.0.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/parboiled-core-1.2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/parboiled-java-1.2.0.jar"/>
@@ -251,7 +251,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/quartz-2.2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/scannotation-1.0.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/si-quantity-0.7.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/si-units-java8-0.7.1.jar" sourcepath="C:/data/udig/source/udig-platform/plugins/org.locationtech.udig.libs/lib-src/si-units-java8-0.7.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/si-units-java8-0.7.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/slf4j-api-1.6.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/slf4j-log4j12-1.6.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/spotbugs-annotations-4.0.0-beta4.jar"/>
@@ -264,7 +264,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/udunits-4.6.11.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/unit-api-1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/uom-lib-common-1.0.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/uom-se-1.0.8.jar" sourcepath="C:/data/udig/source/udig-platform/plugins/org.locationtech.udig.libs/lib-src/uom-se-1.0.8-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/uom-se-1.0.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/wkb4j-1.0-RC1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/ws-commons-util-1.0.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xml-commons-resolver-1.2.jar"/>
