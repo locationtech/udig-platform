@@ -1555,14 +1555,19 @@ public class LayerImpl extends EObjectImpl implements Layer {
                     ProjectPackage.LAYER__FEATURE_CHANGES) {
                 @Override
                 public void add(int index, Object object) {
+                    checkAndClear();
+                    super.add(index, object);
+                }
+
+                private void checkAndClear() {
                     if (size() > 10) {
                         clear();
                     }
-                    super.add(index, object);
                 }
 
                 @Override
                 public boolean add(Object arg0) {
+                    checkAndClear();
                     return super.add(arg0);
                 }
             };
