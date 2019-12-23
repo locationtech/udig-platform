@@ -7,6 +7,7 @@ Bundle-Activator: org.locationtech.udig.tool.measure.internal.MeasurementToolPlu
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.locationtech.udig.project.ui;bundle-version="2.0.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
+

@@ -8,7 +8,7 @@ Bundle-ClassPath: libs/tdgssconfig.jar,
  libs/terajdbc4.jar
 Require-Bundle: net.refractions.udig.libs;visibility:=reexport
 Eclipse-RegisterBuddy: net.refractions.udig.libs
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: .,
  com.ncr.teradata,
  com.teradata.jdbc,
@@ -38,3 +38,4 @@ Export-Package: .,
  com.teradata.tdgss.jgssp2td2,
  com.teradata.tdgss.jgssspi,
  com.teradata.tdgss.jtdgss
+
