@@ -19,7 +19,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <java-version>1.7</java-version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
         <tycho-version>1.4.0</tycho-version>
         <tycho-extras-version>1.4.0</tycho-extras-version>
         <!-- necessary for e.g. hudson proxy settings
@@ -41,7 +43,7 @@
         <pomDependencies>consider</pomDependencies>
 
         Our maven tests require a bit more memory:
-           export MAVEN_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
+           export MAVEN_OPTS="-Xmx1024m"
 
         Once that is done you can run a full build on the command line:
            mvn install -Dall
@@ -255,11 +257,6 @@
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>tycho-compiler-plugin</artifactId>
                 <version>${tycho-version}</version>
-                <configuration>
-                    <source>${java-version}</source>
-                    <target>${java-version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
             </plugin>
 
             <plugin>
@@ -328,7 +325,7 @@
                         <useUIHarness>true</useUIHarness>
                         <runOrder>alphabetical</runOrder>
                         <product>org.locationtech.udig-product</product>
-                        <argLine>-Xmx1024m -XX:MaxPermSize=256m -Dlauncher.suppressErrors -Dsdtcore.headless ${tycho.test.OSspecific} ${tycho.test.envSettings}</argLine>
+                        <argLine>-Xmx1024m -Dlauncher.suppressErrors -Dsdtcore.headless ${tycho.test.OSspecific} ${tycho.test.envSettings}</argLine>
                     </configuration>
                 </plugin>
 
