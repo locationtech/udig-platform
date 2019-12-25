@@ -6,14 +6,11 @@
     <artifactId>udig-tycho</artifactId>
     <version>2.2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    
+
     <description>
         This is the base uDig pom that controls the version numbers
         used by the nightly build process.
     </description>
-    <prerequisites>
-        <maven>3.0</maven>
-    </prerequisites>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -33,11 +30,11 @@
     <!--
         We need to ask you to download some libs prior to doing a full build:
         simply run here at the same level the following commend to download libraries:
-       
+
            mvn clean package -f pom-libs.xml
 
-        In addition its required to build some bundles (JAI/ImageIO) before building this project. 
-        Bundles will be installed into the maven repository and will be resolved because of the 
+        In addition its required to build some bundles (JAI/ImageIO) before building this project.
+        Bundles will be installed into the maven repository and will be resolved because of the
         following option for target-platform-configuration:
 
         <pomDependencies>consider</pomDependencies>
@@ -49,7 +46,7 @@
            mvn install -Dall
 
         If you run into any problems (to list debug and stack trace)
-           mvn install -Dall -e -X 
+           mvn install -Dall -e -X
 
         Please note the Tycho maven plugin used to build RCP projects is a a work in progress; you
         will do better to review the stack trace with a checkout of the Tycho code in hand as the
@@ -68,17 +65,17 @@
 
         To run a full build with tests:
           mvn install -Dall -Ptest
-          
+
         To profile the tests you will need:
           mvn install -Ptest -Pprofile
 
-        Gathers the plugins that are not included in the default product 
+        Gathers the plugins that are not included in the default product
           mvn install -Ppending (included by -Dall)
-          
+
         Includes the udig and community sites:
            -Psite
 
-        Includes the ossim feaure (this may be dead code) 
+        Includes the ossim feaure (this may be dead code)
           -Possim
     -->
 
@@ -210,7 +207,7 @@
                           <id>org.eclipse.ui.ide</id>
                           <removeAll/>
                        </filter>
-                    </filters> 
+                    </filters>
                     -->
                     <!-- example 3: work around Equinox bug 348045 -->
                     <filters>
@@ -257,6 +254,9 @@
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>tycho-compiler-plugin</artifactId>
                 <version>${tycho-version}</version>
+                <configuration>
+                    <useProjectSettings>false</useProjectSettings>
+                </configuration>
             </plugin>
 
             <plugin>
@@ -287,10 +287,46 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-java</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireJavaVersion>
+                                    <version>1.8</version>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>enforce-maven</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>3.0</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
 
         <pluginManagement>
             <plugins>
+                <plugin>
+                   <artifactId>maven-enforcer-plugin</artifactId>
+                   <version>3.0.0-M3</version>
+                </plugin>
+
                 <plugin>
                    <groupId>org.codehaus.mojo</groupId>
                    <artifactId>build-helper-maven-plugin</artifactId>
@@ -333,7 +369,7 @@
                     <groupId>org.eclipse.tycho</groupId>
                     <artifactId>tycho-versions-plugin</artifactId>
                     <version>${tycho-version}</version>
-		</plugin>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
