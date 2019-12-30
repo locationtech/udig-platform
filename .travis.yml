@@ -36,7 +36,7 @@ install:
   - "mvn install -B -f pom-libs.xml -DskipTests=true" #download dependencies
 
 script: 
-  - "mvn install -B -Pproduct -Psdk -T4"
+  - "mvn install -B -Pproduct -Psdk -Ptest --fail-at-end"
 
 notifications:
   email:
