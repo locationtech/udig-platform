@@ -12,11 +12,12 @@ package org.locationtech.udig.catalog.tests.internal;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.commons.lang.SystemUtils;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Platform;
-import org.junit.Ignore;
+import org.junit.Assume;
 import org.junit.Test;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
@@ -30,24 +31,23 @@ import org.locationtech.udig.catalog.URLUtils;
  * @since 1.1.0
  */
 public class CatalogImplTest {
-    
+
     public static String SERVICE_COMPARISON_TEST_URL = "http://www.randomurl.com"; //$NON-NLS-1$
 
-    @Ignore
+    @Test
+    public void testUrlEqualsWindows() throws MalformedURLException {
+        Assume.assumeTrue(SystemUtils.IS_OS_WINDOWS);
+
+        assertTrue(URLUtils.urlEquals(new URL("file://c:\\java/udig/"), //$NON-NLS-1$
+                new URL("file:/C:\\java\\udig"), false)); //$NON-NLS-1$
+        assertFalse(URLUtils.urlEquals(new URL("file://d:\\java/udig/"), //$NON-NLS-1$
+                new URL("file:/C:\\java\\udig"), false)); //$NON-NLS-1$
+        assertTrue(URLUtils.urlEquals(new URL("file:///C:/java/udig"), //$NON-NLS-1$
+                new URL("file:/C:\\java\\udig"), false)); //$NON-NLS-1$
+    }
+
     @Test
     public void testUrlEquals() throws Exception {
-        if (Platform.getOS() == Platform.OS_WIN32) {
-            assertTrue(URLUtils.urlEquals(new URL("file://c:\\java/udig/"), //$NON-NLS-1$
-                    new URL("file:/C:\\java\\udig"), false)); //$NON-NLS-1$
-        }
-        if (Platform.getOS() == Platform.OS_WIN32) {
-            assertFalse(URLUtils.urlEquals(new URL("file://d:\\java/udig/"), //$NON-NLS-1$
-                    new URL("file:/C:\\java\\udig"), false)); //$NON-NLS-1$
-        }
-        if (Platform.getOS() == Platform.OS_WIN32) {
-            assertTrue(URLUtils.urlEquals(new URL("file:///C:/java/udig"), //$NON-NLS-1$
-                    new URL("file:/C:\\java\\udig"), false)); //$NON-NLS-1$
-        }
         assertTrue(URLUtils.urlEquals(new URL("file:///java/udig"), //$NON-NLS-1$
                 new URL("file:/java/udig"), false)); //$NON-NLS-1$
         assertFalse(URLUtils.urlEquals(new URL("file:///Java/udig"), //$NON-NLS-1$
@@ -57,16 +57,12 @@ public class CatalogImplTest {
         assertTrue(URLUtils.urlEquals(new URL("file:///java/udig"), //$NON-NLS-1$
                 new URL("file:/java/udig#ResourceName"), true)); //$NON-NLS-1$
     }
-    
-    @Test
-    public void testAquire() {
-        
-    }
-    
+
     @Test
     public void testServiceComparison() throws Exception {
         ICatalog ci = CatalogPlugin.getDefault().getLocalCatalog();
-        IService service = ci.acquire(new URL(SERVICE_COMPARISON_TEST_URL), new NullProgressMonitor());
+        IService service = ci.acquire(new URL(SERVICE_COMPARISON_TEST_URL),
+                new NullProgressMonitor());
         assertTrue(service instanceof MoreInterestingService.MoreInterestingServiceImpl);
     }
 }
