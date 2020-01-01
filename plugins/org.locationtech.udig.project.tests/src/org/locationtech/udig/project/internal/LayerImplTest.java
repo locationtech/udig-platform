@@ -23,6 +23,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.data.FeatureEvent;
+import org.geotools.data.FeatureEvent.Type;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Transaction;
@@ -50,6 +52,7 @@ import org.locationtech.udig.project.tests.TestInterceptorPost;
 import org.locationtech.udig.project.tests.TestInterceptorPre;
 import org.locationtech.udig.project.tests.support.MapTests;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -351,4 +354,33 @@ public class LayerImplTest {
         
     }
 
+    private void addFeatureEvents(List<FeatureEvent> featureChanges, int quantity, boolean useIndex) throws IOException {
+        final NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
+        final ReferencedEnvelope envelop = new ReferencedEnvelope(0, 0.1, 0, 0.1, DefaultGeographicCRS.WGS84);
+        for (int i=0; i<quantity; i++) {
+            FeatureEvent featureEvent = new FeatureEvent(layer.getResource(FeatureSource.class, nullProgressMonitor), Type.CHANGED, envelop);
+
+            if (useIndex) {
+                featureChanges.add(0, featureEvent);
+            } else {
+                featureChanges.add(featureEvent);
+            }
+        }
+    }
+
+    @Test
+    public void testFeatureSourceCacheCleanupAddWithoutIndex() throws IOException {
+        List<FeatureEvent> featureChanges = layer.getFeatureChanges();
+        featureChanges.clear();
+        addFeatureEvents(featureChanges, 42, false);
+        assertTrue(featureChanges.size() <= 10);
+    }
+
+    @Test
+    public void testFeatureSourceCacheCleanupAddWithIndex() throws IOException {
+        List<FeatureEvent> featureChanges = layer.getFeatureChanges();
+        featureChanges.clear();
+        addFeatureEvents(featureChanges, 42, true);
+        assertTrue(featureChanges.size() <= 10);
+    }
 }

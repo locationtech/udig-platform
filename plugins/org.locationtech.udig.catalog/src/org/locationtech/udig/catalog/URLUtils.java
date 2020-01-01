@@ -14,7 +14,6 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
 
@@ -221,6 +220,12 @@ public class URLUtils {
 		}
 	}
 
+
+    /**
+     * @param file
+     * @return null in case of relative path, otherwise the root element of a path
+     */
+    @Deprecated
     public static String getPrefix( File file ) {
         if (!file.isAbsolute()) {
             // only if C:\ or D:\ or / is in the path
