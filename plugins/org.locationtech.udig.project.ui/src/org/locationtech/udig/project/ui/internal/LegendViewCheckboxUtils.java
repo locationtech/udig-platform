@@ -12,14 +12,13 @@ package org.locationtech.udig.project.ui.internal;
 import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.jface.viewers.CheckboxTreeViewer;
+import org.eclipse.ui.PlatformUI;
 import org.locationtech.udig.project.ILegendItem;
 import org.locationtech.udig.project.internal.Folder;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.LayerLegendItem;
 import org.locationtech.udig.ui.PlatformGIS;
-
-import org.eclipse.jface.viewers.CheckboxTreeViewer;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * Contains utility methods to manage the checkboxes of the LegendView tree viewer.

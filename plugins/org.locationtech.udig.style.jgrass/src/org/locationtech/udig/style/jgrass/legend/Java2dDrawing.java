@@ -11,7 +11,6 @@ package org.locationtech.udig.style.jgrass.legend;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
@@ -23,13 +22,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.eclipse.swt.widgets.Display;
 import org.geotools.data.DataUtilities;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.geotools.feature.IllegalAttributeException;
 import org.geotools.feature.SchemaException;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.geometry.jts.JTS;
@@ -50,23 +44,23 @@ import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.util.NumberRange;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.MultiLineString;
+import org.locationtech.jts.geom.MultiPoint;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.Polygon;
+import org.locationtech.udig.ui.graphics.SLDs;
+import org.opengis.feature.IllegalAttributeException;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
-import org.opengis.filter.expression.Expression;
 import org.opengis.geometry.BoundingBox;
 import org.opengis.referencing.operation.MathTransform;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.LinearRing;
-import com.vividsolutions.jts.geom.MultiLineString;
-import com.vividsolutions.jts.geom.MultiPoint;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Drawing utility package - make your own previews and glyphs with java 2d.
@@ -123,12 +117,12 @@ public final class Java2dDrawing {
     @SuppressWarnings("deprecation")
     Symbolizer[] getSymbolizers( Style style ) {
         List<Symbolizer> symbs = new ArrayList<Symbolizer>();
-        FeatureTypeStyle[] styles = style.getFeatureTypeStyles();
-        for( int i = 0; i < styles.length; i++ ) {
-            FeatureTypeStyle fstyle = styles[i];
-            Rule[] rules = fstyle.getRules();
-            for( int j = 0; j < rules.length; j++ ) {
-                Rule rule = rules[j];
+        List<FeatureTypeStyle> styles = style.featureTypeStyles();
+        for( int i = 0; i < styles.size(); i++ ) {
+            FeatureTypeStyle fstyle = styles.get(i);
+            List<Rule> rules = fstyle.rules();
+            for( int j = 0; j < rules.size(); j++ ) {
+                Rule rule = rules.get(j);
                 symbs.addAll(Arrays.asList(rule.getSymbolizers()));
             }
         }
@@ -338,14 +332,14 @@ public final class Java2dDrawing {
      * @return The geometry requested in the symbolizer, or the default geometry if none is
      *         specified
      */
-    private com.vividsolutions.jts.geom.Geometry findGeometry( SimpleFeature feature, Symbolizer symbolizer ) {
+    private org.locationtech.jts.geom.Geometry findGeometry( SimpleFeature feature, Symbolizer symbolizer ) {
         String geomName = getGeometryPropertyName(symbolizer);
         // get the geometry
-        com.vividsolutions.jts.geom.Geometry geometry;
+        org.locationtech.jts.geom.Geometry geometry;
         if (geomName == null || feature.getType().getDescriptor(geomName) == null) {
             geometry = (Geometry) feature.getDefaultGeometry();
         } else {
-            geometry = (com.vividsolutions.jts.geom.Geometry) feature.getAttribute(geomName);
+            geometry = (org.locationtech.jts.geom.Geometry) feature.getAttribute(geomName);
         }
         if (geometry == null) {
             return null; // nothing to see here

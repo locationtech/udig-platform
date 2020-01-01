@@ -11,11 +11,10 @@
  */
 package org.locationtech.udig.project.ui.render.glass;
 
+import org.eclipse.swt.graphics.GC;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.render.RenderManager;
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
-
-import org.eclipse.swt.graphics.GC;
 
 /**
  * A glass pane that draws onto the image drawn on the screen.

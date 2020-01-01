@@ -17,8 +17,6 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.ui.PlatformUI;
-import org.geotools.brewer.color.StyleGenerator;
-import org.geotools.styling.StyleBuilder;
 
 /**
  * Listens to the BorderColor Listener and lets the user choose the outline color of the theme's polygons.

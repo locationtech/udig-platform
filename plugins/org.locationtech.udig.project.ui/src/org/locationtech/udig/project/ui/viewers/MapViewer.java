@@ -10,18 +10,6 @@
  */
 package org.locationtech.udig.project.ui.viewers;
 
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
-import org.locationtech.udig.project.internal.render.RenderManager;
-import org.locationtech.udig.project.internal.render.ViewportModel;
-import org.locationtech.udig.project.ui.internal.MapPart;
-import org.locationtech.udig.project.ui.internal.RenderManagerDynamic;
-import org.locationtech.udig.project.ui.internal.TiledRenderManagerDynamic;
-import org.locationtech.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneSWT;
-import org.locationtech.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneTiledSWT;
-import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
-import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
-
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.swt.SWT;
@@ -37,6 +25,17 @@ import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.RenderManagerDynamic;
+import org.locationtech.udig.project.ui.internal.TiledRenderManagerDynamic;
+import org.locationtech.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneSWT;
+import org.locationtech.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneTiledSWT;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
 
 /**
  * A concrete viewer based on a ViewportPane widget.

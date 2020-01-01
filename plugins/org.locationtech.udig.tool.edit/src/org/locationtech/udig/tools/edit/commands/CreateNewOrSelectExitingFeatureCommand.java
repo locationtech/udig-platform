@@ -9,24 +9,22 @@
  */
 package org.locationtech.udig.tools.edit.commands;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
+import org.geotools.data.FeatureStore;
+import org.geotools.data.Query;
+import org.geotools.feature.FeatureIterator;
+import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.udig.core.internal.FeatureUtils;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.command.AbstractCommand;
 import org.locationtech.udig.project.command.UndoableMapCommand;
 import org.locationtech.udig.project.command.factory.EditCommandFactory;
 import org.locationtech.udig.tool.edit.internal.Messages;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.geotools.data.DefaultQuery;
-import org.geotools.data.FeatureStore;
-import org.geotools.feature.FeatureIterator;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
-
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * If there is no feature with the Feature ID in the layer then a new feature will be
@@ -57,7 +55,7 @@ public class CreateNewOrSelectExitingFeatureCommand extends AbstractCommand impl
         FeatureStore<SimpleFeatureType, SimpleFeature> store = layer.getResource(FeatureStore.class, new SubProgressMonitor(monitor,2));
         Filter id = FeatureUtils.id(fid);
         String typeName = store.getSchema().getTypeName();
-        DefaultQuery query = new DefaultQuery(typeName, id);
+        Query query = new Query(typeName, id);
         FeatureIterator<SimpleFeature> iter=store.getFeatures( query ).features();
         try{
             createFeature=!iter.hasNext();

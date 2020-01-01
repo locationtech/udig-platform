@@ -11,9 +11,8 @@
  */
 package org.locationtech.udig.project.ui;
 
-import org.locationtech.udig.project.ui.tool.IToolContext;
-
 import org.eclipse.ui.IViewPart;
+import org.locationtech.udig.project.ui.tool.IToolContext;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**

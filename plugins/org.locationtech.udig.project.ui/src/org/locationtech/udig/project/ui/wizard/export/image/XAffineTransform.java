@@ -8,7 +8,7 @@ import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import org.geotools.resources.XMath;
+import org.geotools.metadata.math.XMath;
 
 /**
  * This is a class in Geotools but it has different package name in GT 2.2 vs trunk and therefore until I abandon 2.2 I need
@@ -422,7 +422,7 @@ public class XAffineTransform extends AffineTransform{
      * <IMG src="{@docRoot}/org/geotools/display/canvas/doc-files/scaleX0.png">.
      */
     public static double getScaleX0(final AffineTransform tr) {
-        return XMath.hypot(tr.getScaleX(), tr.getShearX());
+        return Math.hypot(tr.getScaleX(), tr.getShearX());
     }
 
     /**
@@ -431,7 +431,7 @@ public class XAffineTransform extends AffineTransform{
      * <IMG src="{@docRoot}/org/geotools/display/canvas/doc-files/scaleY0.png">.
      */
     public static double getScaleY0(final AffineTransform tr) {
-        return XMath.hypot(tr.getScaleY(), tr.getShearY());
+        return Math.hypot(tr.getScaleY(), tr.getShearY());
     }
 
     /**

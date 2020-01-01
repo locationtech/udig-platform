@@ -23,7 +23,7 @@ import org.geotools.data.ResourceInfo;
 import org.geotools.data.ServiceInfo;
 import org.geotools.data.ows.AbstractOpenWebService;
 import org.geotools.data.ows.Specification;
-import org.geotools.data.wms.WMS1_1_1;
+import org.geotools.ows.wms.WMS1_1_1;
 import org.geotools.ows.ServiceException;
 import org.junit.BeforeClass;
 import org.junit.Test;

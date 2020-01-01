@@ -13,9 +13,6 @@ package org.locationtech.udig.style.sld.simple;
 
 import java.awt.Color;
 
-import org.locationtech.udig.style.sld.AbstractSimpleConfigurator;
-import org.locationtech.udig.style.sld.internal.Messages;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -34,6 +31,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.geotools.styling.SelectedChannelType;
+import org.locationtech.udig.style.sld.AbstractSimpleConfigurator;
+import org.locationtech.udig.style.sld.internal.Messages;
 import org.opengis.filter.expression.Literal;
 
 /**
@@ -175,7 +174,7 @@ public class ChannelViewer {
         try {
             int channelindex = -1;
             if (channel != null) {
-                String channelname = channel.getChannelName();
+                String channelname = channel.getChannelName().evaluate(channel, String.class);
                 try {
                     channelindex = Integer.parseInt(channelname);
                     channelindex--; // get the 0 based index

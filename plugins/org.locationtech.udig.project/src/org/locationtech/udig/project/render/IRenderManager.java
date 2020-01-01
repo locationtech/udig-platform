@@ -20,7 +20,7 @@ import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * Used by the map viewers/editors to manage the rendering process. Responsibilities:

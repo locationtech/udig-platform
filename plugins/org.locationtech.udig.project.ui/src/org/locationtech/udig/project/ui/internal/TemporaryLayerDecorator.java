@@ -9,12 +9,11 @@
  */
 package org.locationtech.udig.project.ui.internal;
 
-import org.locationtech.udig.catalog.ITransientResolve;
-import org.locationtech.udig.project.ILayer;
-
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
+import org.locationtech.udig.catalog.ITransientResolve;
+import org.locationtech.udig.project.ILayer;
 
 /**
  * Indicates that the layer is a temporary layer by putting a start on the icon.

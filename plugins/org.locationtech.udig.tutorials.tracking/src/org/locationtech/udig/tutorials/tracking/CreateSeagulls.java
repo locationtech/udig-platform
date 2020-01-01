@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.Display;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.util.SimpleInternationalString;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 import org.locationtech.udig.project.IBlackboard;
 import org.locationtech.udig.project.ILayer;

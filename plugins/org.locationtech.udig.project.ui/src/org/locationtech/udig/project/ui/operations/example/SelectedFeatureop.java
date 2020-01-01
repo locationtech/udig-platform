@@ -13,9 +13,6 @@ package org.locationtech.udig.project.ui.operations.example;
 
 import java.text.MessageFormat;
 
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.ui.operations.IOp;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -25,10 +22,11 @@ import org.geotools.data.Query;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.filter.FilterAttributeExtractor;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.ui.operations.IOp;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
-import org.opengis.filter.FilterVisitor;
 
 /**
  * Counts the selected and non selected features on the layer

@@ -10,10 +10,9 @@
  */
 package org.locationtech.udig.project.ui;
 
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.locationtech.udig.project.internal.render.ViewportModel;
 import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
-
-import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.TransformException;
 

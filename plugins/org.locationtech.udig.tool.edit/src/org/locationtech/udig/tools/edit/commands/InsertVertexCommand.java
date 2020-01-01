@@ -29,7 +29,7 @@ import org.locationtech.udig.tools.edit.support.Selection;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 /**
  * Command for inserting a Vertex to a {@link org.locationtech.udig.tools.edit.support.EditGeom}

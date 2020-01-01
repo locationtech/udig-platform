@@ -32,9 +32,9 @@ import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 import org.opengis.feature.simple.SimpleFeature;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.Point;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
 
 @Ignore("in setUp() : MismatchedReferenceSystemException: The coordinate reference system must be the same for all objects ")
 public class WithinLegalLayerBoundsBehaviourTest extends AbstractProjectUITestCase {

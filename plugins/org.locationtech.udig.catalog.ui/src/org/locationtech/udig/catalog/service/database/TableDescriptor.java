@@ -10,7 +10,7 @@
  */
 package org.locationtech.udig.catalog.service.database;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * Data structure that contains the information about a Table in a database.

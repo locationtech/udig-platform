@@ -9,33 +9,22 @@
  */
 package org.locationtech.udig.project.ui.tool.options;
 
-import java.awt.SystemColor;
-
-import org.locationtech.udig.project.ui.controls.ScaleRatioLabel;
-import org.locationtech.udig.project.ui.internal.tool.display.ToolProxy;
-
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.StatusLineLayoutData;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.FontMetrics;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowData;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
+import org.locationtech.udig.project.ui.controls.ScaleRatioLabel;
+import org.locationtech.udig.project.ui.internal.tool.display.ToolProxy;
 
 /**
  * Adds a button to the status bar that allows quick access to the active modal tool preference

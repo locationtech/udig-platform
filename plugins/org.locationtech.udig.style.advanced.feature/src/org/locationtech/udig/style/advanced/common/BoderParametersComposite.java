@@ -11,6 +11,7 @@ package org.locationtech.udig.style.advanced.common;
 
 
 import static org.locationtech.udig.style.advanced.utils.Utilities.ff;
+
 import java.awt.Color;
 import java.io.File;
 import java.net.MalformedURLException;

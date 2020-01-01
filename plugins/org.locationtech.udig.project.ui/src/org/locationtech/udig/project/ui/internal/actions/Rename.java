@@ -11,15 +11,14 @@
  */
 package org.locationtech.udig.project.ui.internal.actions;
 
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.swt.widgets.Display;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Project;
 import org.locationtech.udig.project.internal.ProjectElement;
 import org.locationtech.udig.project.ui.UDIGGenericAction;
 import org.locationtech.udig.project.ui.internal.Messages;
-
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.swt.widgets.Display;
 
 /**
  * An action for renaming objects in UDIG

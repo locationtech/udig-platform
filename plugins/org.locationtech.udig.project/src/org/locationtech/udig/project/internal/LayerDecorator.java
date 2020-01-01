@@ -52,7 +52,7 @@ import org.opengis.filter.Filter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * Wraps a layer and delegates all the method calls to that layer. See the gang of four decorator
@@ -346,7 +346,7 @@ public class LayerDecorator implements Layer, InternalEObject {
     }
 
     /*
-     * @see org.locationtech.udig.project.Layer#refresh(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.Layer#refresh(org.locationtech.jts.geom.Envelope)
      */
     public void refresh( Envelope bounds ) {
         layer.refresh(bounds);
@@ -368,7 +368,7 @@ public class LayerDecorator implements Layer, InternalEObject {
     }
 
     /*
-     * @see org.locationtech.udig.project.Layer#createBBoxFilter(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.Layer#createBBoxFilter(org.locationtech.jts.geom.Envelope)
      */
     public Filter createBBoxFilter( Envelope boundingBox, IProgressMonitor monitor ) {
         return layer.createBBoxFilter(boundingBox, monitor);

@@ -13,14 +13,13 @@ package org.locationtech.udig.project.ui.internal.tool.display;
 
 import java.util.List;
 
-import org.locationtech.udig.project.ui.tool.IToolManager;
-
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.locationtech.udig.project.ui.tool.IToolManager;
 
 /**
  * All Fire and forget actions are in this category.

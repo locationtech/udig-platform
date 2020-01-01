@@ -21,7 +21,7 @@ import org.locationtech.udig.tools.edit.EventType;
 import org.locationtech.udig.tools.edit.support.EditBlackboard;
 import org.locationtech.udig.tools.edit.support.Point;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 //TOTO remove old imports
 //import es.axios.udig.ui.editingtools.precisionparallels.internal.ParallelContext;

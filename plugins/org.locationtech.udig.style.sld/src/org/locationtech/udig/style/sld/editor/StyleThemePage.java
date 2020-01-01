@@ -66,8 +66,8 @@ import org.geotools.brewer.color.PaletteType;
 import org.geotools.brewer.color.SampleScheme;
 import org.geotools.brewer.color.StyleGenerator;
 import org.geotools.data.FeatureSource;
+import org.geotools.data.util.NullProgressListener;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.NameImpl;
 import org.geotools.feature.visitor.UniqueVisitor;
@@ -91,7 +91,10 @@ import org.geotools.styling.Style;
 import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
-import org.geotools.util.NullProgressListener;
+import org.geotools.util.factory.GeoTools;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.MultiLineString;
 import org.locationtech.udig.project.internal.StyleBlackboard;
 import org.locationtech.udig.style.internal.StyleLayer;
 import org.locationtech.udig.style.sld.ImageConstants;
@@ -117,11 +120,8 @@ import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Divide;
 import org.opengis.filter.expression.Expression;
+import org.opengis.style.GraphicalSymbol;
 import org.opengis.util.ProgressListener;
-
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.LinearRing;
-import com.vividsolutions.jts.geom.MultiLineString;
 
 /**
  * Page for editing a style Theme.
@@ -993,12 +993,10 @@ public class StyleThemePage extends StyleEditorPage {
 	}
     private boolean removeRule(Rule rule) {
         Style style = getStyle();
-        FeatureTypeStyle[] featureTypeStyles = style.getFeatureTypeStyles();
-        if( featureTypeStyles == null ){
-            return false;
-        }
-        for( int i=0; i<featureTypeStyles.length; i++ ){
-            FeatureTypeStyle featureTypeStyle = featureTypeStyles[i];
+        
+        if (style.featureTypeStyles().isEmpty()) return false;
+        
+        for(FeatureTypeStyle featureTypeStyle: style.featureTypeStyles()) {
             if( featureTypeStyle == null ) continue;
             boolean removed = featureTypeStyle.rules().remove( rule );
             if( removed ){
@@ -1026,9 +1024,13 @@ public class StyleThemePage extends StyleEditorPage {
                 ((PolygonSymbolizer) symb1[i]).getFill().setColor(((PolygonSymbolizer) symb2[i]).getFill().getColor());
                 ((PolygonSymbolizer) symb2[i]).getFill().setColor(tempColour);
             } else if (symb1[i] instanceof PointSymbolizer) {
-                tempColour = ((PointSymbolizer) symb1[i]).getGraphic().getMarks()[0].getFill().getColor();
-                ((PointSymbolizer) symb1[i]).getGraphic().getMarks()[0].getFill().setColor(((PointSymbolizer) symb2[i]).getGraphic().getMarks()[0].getFill().getColor());
-                ((PointSymbolizer) symb2[i]).getGraphic().getMarks()[0].getFill().setColor(tempColour);
+            	GraphicalSymbol g1 = ((PointSymbolizer)symb1[i]).getGraphic().graphicalSymbols().get(0);
+            	GraphicalSymbol g2 = ((PointSymbolizer)symb2[i]).getGraphic().graphicalSymbols().get(0);
+            	if (g1 instanceof Mark && g2 instanceof Mark) {
+            		tempColour = ((Mark)g1).getFill().getColor();
+            		((Mark)g1).getFill().setColor( ((Mark)g2).getFill().getColor() );
+            		((Mark)g2).getFill().setColor( tempColour );
+            	}
             } else if (symb1[i] instanceof LineSymbolizer) {
                 tempColour = ((LineSymbolizer) symb1[i]).getStroke().getColor();
                 ((LineSymbolizer) symb1[i]).getStroke().setColor(((LineSymbolizer) symb2[i]).getStroke().getColor());
@@ -1344,7 +1346,7 @@ public class StyleThemePage extends StyleEditorPage {
 						function = (ClassificationFunction) ff.function(fn.getFunctionName(), new Expression[fn.getArgumentCount()]);
 						
 						ProgressListener cancelProgress = ((StyleEditorDialog) getContainer()).getProgressListener();
-						function.setProgressListener((org.geotools.util.ProgressListener) cancelProgress);
+						function.setProgressListener(cancelProgress);
 						numClasses = new Integer(getCombo(COMBO_CLASSES).getText()).intValue();
 
 						if (getCombo(COMBO_ELSE).getSelectionIndex() == 0) {
@@ -1572,27 +1574,26 @@ public class StyleThemePage extends StyleEditorPage {
     private void addThemedFTStoStyle(Style style, FeatureTypeStyle fts) {
         //determine what symbolizers exist in the fts
         Set<Object> symbs = new HashSet<Object>();
-        Rule[] newRules = fts.getRules();
-        for (int i = 0; i < newRules.length; i++) {
-            Symbolizer[] newSymbs = newRules[i].getSymbolizers();
+        List<Rule> newRules = fts.rules();
+        for (int i = 0; i < newRules.size(); i++) {
+            Symbolizer[] newSymbs = newRules.get(i).getSymbolizers();
             for (int j = 0; j < newSymbs.length; j++) {
                 symbs.add(newSymbs[j].getClass());
             }
         }
         
-        FeatureTypeStyle[] FTSs = style.getFeatureTypeStyles();
         //search for a match, and replace if found
         boolean found = false;
-        for (int i = 0; i < FTSs.length; i++) {
-            if (SLDs.isSemanticTypeMatch(FTSs[i], "colorbrewer:.*")) { //$NON-NLS-1$
-                FTSs[i] = fts;
+        for (int i = 0; i < style.featureTypeStyles().size(); i ++) {
+            if (SLDs.isSemanticTypeMatch(style.featureTypeStyles().get(i), "colorbrewer:.*")) { //$NON-NLS-1$
+            	style.featureTypeStyles().set(i, fts);
                 found = true;
             } else {
                 //purge any conflicting Symbolizers (same class)
                 //TODO: add conditions under which other Symbolizers might live
-                Rule[] rule = FTSs[i].getRules();
-                for (int j = 0; j < rule.length; j++) {
-                    Symbolizer[] symb = rule[j].getSymbolizers();
+                List<Rule> rule = style.featureTypeStyles().get(i).rules();
+                for (int j = 0; j < rule.size(); j++) {
+                    Symbolizer[] symb = rule.get(j).getSymbolizers();
                     Symbolizer[] newSymb = (Symbolizer[]) symb.clone();
                     int deletedElements = 0;
                     for (int k = 0; k < symb.length; k++) {
@@ -1610,56 +1611,68 @@ public class StyleThemePage extends StyleEditorPage {
                         }
                     }
                     if (deletedElements > 0) {
-                        rule[j].setSymbolizers(newSymb);
+                        rule.get(j).symbolizers().clear();
+                        for (Symbolizer s : newSymb) rule.get(j).symbolizers().add(s);
                     }
                 }
             }
         }
         //delete any rules with zero symbolizers
-        for (int i = 0; i < FTSs.length; i++) {
+        for (int i = 0; i < style.featureTypeStyles().size(); i++) {
             boolean changed = false;
-            Rule[] rule = FTSs[i].getRules();
-            for (int j = 0; j < rule.length; j++) {
-                if (rule[j].getSymbolizers().length == 0) {
-                    if (rule.length > 1) {
+            List<Rule> rule = style.featureTypeStyles().get(i).rules();
+            for (int j = 0; j < rule.size(); j++) {
+                if (rule.get(j).getSymbolizers().length == 0) {
+                    if (rule.size() > 1) {
                         Object[] temp = removeElement(rule, j);
-                        rule = new Rule[temp.length];
+                        rule = new ArrayList<>(temp.length);
                         for (int k = 0; k < temp.length; k++) {
-                            rule[k] = (Rule) temp[k];
+                            rule.set(k, (Rule)temp[k]);
                         }
                     } else {
-                        rule = new Rule[0];
+                        rule = new ArrayList<>();
                     }
                     changed = true;
                     j--;
                 }
             }
             if (changed) {
-                FTSs[i].setRules(rule);
+            	style.featureTypeStyles().get(i).rules().clear();
+            	style.featureTypeStyles().get(i).rules().addAll(rule);
             }
         }
         //delete any FTSs with zero rules
-        for (int i = 0; i < FTSs.length; i++) {
-            if (FTSs[i].getRules().length == 0) {
-                Object[] temp = removeElement(FTSs, i);
-                FTSs = new FeatureTypeStyle[temp.length];
+        List<FeatureTypeStyle> items = new ArrayList<>();
+        for (int i = 0; i < style.featureTypeStyles().size(); i++) {
+            if (style.featureTypeStyles().get(i).rules().size() == 0) {
+                Object[] temp = removeElement(style.featureTypeStyles(), i);
                 for (int j = 0; j < temp.length; j++) {
-                    FTSs[j] = (FeatureTypeStyle) temp[j];
+                	items.add((FeatureTypeStyle)temp[j]);
                 }
             }
         }
         //create a FTS if needed
+    	style.featureTypeStyles().clear();
+
         if (!found) {
+        	style.featureTypeStyles().add(fts);
             //match was not found, so add the FTS
-            FeatureTypeStyle[] newFTSList = new FeatureTypeStyle[FTSs.length+1];
-            newFTSList[0] = fts; //add the new fts to the START of the array
-            System.arraycopy(FTSs, 0, newFTSList, 1, FTSs.length);
-            style.setFeatureTypeStyles(newFTSList);
-        } else {
-            style.setFeatureTypeStyles(FTSs);
         }
+        style.featureTypeStyles().addAll(items);
     }
     
+    private Object[] removeElement(List<?> array, int indexToRemove) {
+        if (array.size() == 1) return new Object[0];
+        Object[] newArray = new Object[array.size()-1];
+        if (indexToRemove > 0) {
+            System.arraycopy(array, 0, newArray, 0, indexToRemove);
+        }
+        if (indexToRemove < array.size()-1) {
+            System.arraycopy(array, indexToRemove+1, newArray, indexToRemove, array.size()-indexToRemove-1);
+        }
+        return newArray;
+    }
+        
     private Object[] removeElement(Object[] array, int indexToRemove) {
         if (array.length == 1) return new Object[0];
         Object[] newArray = new Object[array.length-1];
@@ -1671,7 +1684,6 @@ public class StyleThemePage extends StyleEditorPage {
         }
         return newArray;
     }
-        
     private AttributeDescriptor getAttributeType(String attributeTypeName) {
         SimpleFeatureType featureType = getSelectedLayer().getSchema();
         for (int i = 0; i < featureType.getAttributeCount(); i++) {

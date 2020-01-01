@@ -39,7 +39,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 public class GoogleCatalog extends ISearch {
 
@@ -132,7 +132,7 @@ public class GoogleCatalog extends ISearch {
     /*
      * hits the server using soap ...
      * 
-     * @see org.locationtech.udig.catalog.ICatalog#search(java.lang.String, com.vividsolutions.jts.geom.Envelope, org.eclipse.core.runtime.IProgressMonitor)
+     * @see org.locationtech.udig.catalog.ICatalog#search(java.lang.String, org.locationtech.jts.geom.Envelope, org.eclipse.core.runtime.IProgressMonitor)
      */
     public List<IResolve> search( String pattern, Envelope bbox, IProgressMonitor monitor ) throws IOException{
         

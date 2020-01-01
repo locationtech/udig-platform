@@ -35,17 +35,17 @@ import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
 import org.geotools.data.ResourceInfo;
 import org.geotools.data.ServiceInfo;
-import org.geotools.data.ows.Layer;
-import org.geotools.data.ows.StyleImpl;
-import org.geotools.data.ows.WMSCapabilities;
+import org.geotools.ows.wms.Layer;
+import org.geotools.ows.wms.StyleImpl;
+import org.geotools.ows.wms.WMSCapabilities;
 import org.geotools.data.wfs.WFSDataStore;
 
-import org.geotools.data.wms.WebMapServer;
+import org.geotools.ows.wms.WebMapServer;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.metadata.Identifier;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 public class ContextExportWizard extends Wizard implements IExportWizard {
 
@@ -166,10 +166,10 @@ System.out.println(get); if (get.endsWith("&")) get = get.substring(0,get.length
         append( 6, out,   "</Server>" ); //$NON-NLS-1$
         append( 6, out,   "<Name>"+wmsLayer.getName()+"</Name>"); //$NON-NLS-1$ //$NON-NLS-2$
         append( 6, out,   "<Title>"+wmsLayer.getTitle()+"</Title>");                //$NON-NLS-1$ //$NON-NLS-2$
-        if( !Double.isNaN( wmsLayer.getScaleHintMin() ))
-            append( 6, out,   "<sld:MinScaleDenominator>"+wmsLayer.getScaleHintMin()+"</sld:MinScaleDenominator>");         //$NON-NLS-1$ //$NON-NLS-2$
-        if( !Double.isNaN( wmsLayer.getScaleHintMax() ))
-            append( 6, out,   "<sld:MaxScaleDenominator>"+wmsLayer.getScaleHintMax()+"</sld:MaxScaleDenominator>");         //$NON-NLS-1$ //$NON-NLS-2$
+        if( !Double.isNaN( wmsLayer.getScaleDenominatorMin() ))
+            append( 6, out,   "<sld:MinScaleDenominator>"+wmsLayer.getScaleDenominatorMin()+"</sld:MinScaleDenominator>");         //$NON-NLS-1$ //$NON-NLS-2$
+        if( !Double.isNaN( wmsLayer.getScaleDenominatorMax() ))
+            append( 6, out,   "<sld:MaxScaleDenominator>"+wmsLayer.getScaleDenominatorMax()+"</sld:MaxScaleDenominator>");         //$NON-NLS-1$ //$NON-NLS-2$
         for( String srs : (Set<String>) wmsLayer.getSrs() ){
             append( 6, out,   "<SRS>"+srs+"</SRS>"); //$NON-NLS-1$ //$NON-NLS-2$
         }

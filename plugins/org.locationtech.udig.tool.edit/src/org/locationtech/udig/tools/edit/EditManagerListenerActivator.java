@@ -12,7 +12,7 @@ import org.locationtech.udig.tools.edit.support.EditGeom;
 
 import org.opengis.feature.simple.SimpleFeature;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * Activator that listens to the EditManager's selected feature. 

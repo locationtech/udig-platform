@@ -20,7 +20,7 @@ import org.geotools.referencing.crs.DefaultGeographicCRS;
 
 import au.com.bytecode.opencsv.CSVReader;
 
-import com.vividsolutions.jts.geom.Point;
+import org.locationtech.jts.geom.Point;
 
 public class CSVGeoResourceInfo extends IGeoResourceInfo {
     CSVGeoResource handle;

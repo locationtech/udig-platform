@@ -11,12 +11,12 @@
  */
 package org.locationtech.udig.catalog.internal.arcsde;
 
-import static org.geotools.arcsde.ArcSDEDataStoreFactory.DBTYPE_PARAM;
-import static org.geotools.arcsde.ArcSDEDataStoreFactory.INSTANCE_PARAM;
-import static org.geotools.arcsde.ArcSDEDataStoreFactory.PASSWORD_PARAM;
-import static org.geotools.arcsde.ArcSDEDataStoreFactory.PORT_PARAM;
-import static org.geotools.arcsde.ArcSDEDataStoreFactory.SERVER_PARAM;
-import static org.geotools.arcsde.ArcSDEDataStoreFactory.USER_PARAM;
+import static org.geotools.arcsde.data.ArcSDEDataStoreFactory.DBTYPE_PARAM;
+import static org.geotools.arcsde.data.ArcSDEDataStoreFactory.INSTANCE_PARAM;
+import static org.geotools.arcsde.data.ArcSDEDataStoreFactory.PASSWORD_PARAM;
+import static org.geotools.arcsde.data.ArcSDEDataStoreFactory.PORT_PARAM;
+import static org.geotools.arcsde.data.ArcSDEDataStoreFactory.SERVER_PARAM;
+import static org.geotools.arcsde.data.ArcSDEDataStoreFactory.USER_PARAM;
 
 import java.io.Serializable;
 import java.net.MalformedURLException;
@@ -29,7 +29,7 @@ import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.ServiceExtension;
 import org.locationtech.udig.catalog.arcsde.internal.Messages;
 
-import org.geotools.arcsde.ArcSDEDataStoreFactory;
+import org.geotools.arcsde.data.ArcSDEDataStoreFactory;
 import org.geotools.data.DataStoreFactorySpi;
 
 /**

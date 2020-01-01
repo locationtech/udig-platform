@@ -9,12 +9,11 @@
  */
 package org.locationtech.udig;
 
+import org.eclipse.jface.action.IAction;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.tool.ActionTool;
 import org.locationtech.udig.project.ui.tool.IToolContext;
 import org.locationtech.udig.project.ui.tool.ToolLifecycleListener;
-
-import org.eclipse.jface.action.IAction;
 
 /**
  * Tests activating a modal tool from another tool.

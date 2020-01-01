@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * Represents one tile in a tileset.  Has a unique id, bounds, scale and

@@ -23,15 +23,6 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IGeoResourceInfo;
-import org.locationtech.udig.catalog.IResolve;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.internal.wmsc.WMSCServiceImpl;
-import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
-import org.locationtech.udig.catalog.ui.ISharedImages;
-import org.locationtech.udig.catalog.wms.internal.Messages;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
@@ -42,23 +33,29 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Rectangle;
-import org.geotools.data.ows.CRSEnvelope;
-import org.geotools.data.ows.Layer;
-import org.geotools.data.ows.WMSCapabilities;
-import org.geotools.data.wms.WebMapServer;
-import org.geotools.data.wms.request.GetLegendGraphicRequest;
-import org.geotools.data.wms.response.GetLegendGraphicResponse;
-import org.geotools.data.wms.xml.WMSSchema;
 import org.geotools.geometry.GeneralEnvelope;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.ows.ServiceException;
+import org.geotools.ows.wms.CRSEnvelope;
+import org.geotools.ows.wms.Layer;
+import org.geotools.ows.wms.WMSCapabilities;
+import org.geotools.ows.wms.WebMapServer;
+import org.geotools.ows.wms.request.GetLegendGraphicRequest;
+import org.geotools.ows.wms.response.GetLegendGraphicResponse;
+import org.geotools.ows.wms.xml.WMSSchema;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.ISharedImages;
+import org.locationtech.udig.catalog.wms.internal.Messages;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * SimpleFeatureType provided by WFS. </p>
@@ -68,7 +65,7 @@ import com.vividsolutions.jts.geom.Envelope;
  */
 public class WMSGeoResourceImpl extends IGeoResource {
 
-    org.geotools.data.ows.Layer layer;
+    org.geotools.ows.wms.Layer layer;
     private ImageDescriptor icon;
     private URL identifier;
     private ArrayList<IResolve> members;
@@ -83,7 +80,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
      * @param layer
      */
     public WMSGeoResourceImpl( WMSServiceImpl service, IResolve parent,
-            org.geotools.data.ows.Layer layer ) {
+            org.geotools.ows.wms.Layer layer ) {
         this.service = service;
         if (parent == null) {
             this.parent = service;
@@ -180,7 +177,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
             return adaptee.cast(service(monitor).getWMS(monitor));
         }
 
-        if (adaptee.isAssignableFrom(org.geotools.data.ows.Layer.class)) {
+        if (adaptee.isAssignableFrom(org.geotools.ows.wms.Layer.class)) {
             return adaptee.cast(layer);
         }
         if (adaptee.isAssignableFrom(ImageDescriptor.class)) {
@@ -509,7 +506,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
 
         if (adaptee.isAssignableFrom(IGeoResource.class)
                 || adaptee.isAssignableFrom(WebMapServer.class)
-                || adaptee.isAssignableFrom(org.geotools.data.ows.Layer.class)
+                || adaptee.isAssignableFrom(org.geotools.ows.wms.Layer.class)
                 || adaptee.isAssignableFrom(ImageDescriptor.class)
                 || adaptee.isAssignableFrom(IService.class) || super.canResolve(adaptee)) {
             return true;

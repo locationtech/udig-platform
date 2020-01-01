@@ -11,9 +11,9 @@
  */
 package org.locationtech.udig.tools.geometry.split;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geomgraph.Node;
-import com.vividsolutions.jts.geomgraph.NodeFactory;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geomgraph.Node;
+import org.locationtech.jts.geomgraph.NodeFactory;
 
 /**
  * Custom node factory to create {@link SplitGraphNode}s initialized with an

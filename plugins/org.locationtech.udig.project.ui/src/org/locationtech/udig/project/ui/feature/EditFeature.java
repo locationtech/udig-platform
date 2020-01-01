@@ -17,14 +17,14 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.Platform;
+import org.geotools.feature.DecoratingFeature;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.udig.project.IEditManager;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.commands.edit.SetAttributeCommand;
 import org.locationtech.udig.project.internal.commands.edit.SetAttributesCommand;
-
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.Platform;
-import org.geotools.feature.DecoratingFeature;
 import org.opengis.feature.GeometryAttribute;
 import org.opengis.feature.IllegalAttributeException;
 import org.opengis.feature.Property;
@@ -34,8 +34,6 @@ import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.feature.type.Name;
 import org.opengis.feature.type.PropertyDescriptor;
-
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * A SimpleFeature can handle setAttribute in a threadsafe way.

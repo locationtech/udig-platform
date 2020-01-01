@@ -17,14 +17,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.locationtech.udig.project.ui.internal.MapFactory;
-import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
-
 import org.eclipse.emf.common.ui.action.WorkbenchWindowActionDelegate;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
+import org.locationtech.udig.project.ui.internal.MapFactory;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 /**
  * Performs the open action from the file menu of uDig. It is responseible for creating new maps

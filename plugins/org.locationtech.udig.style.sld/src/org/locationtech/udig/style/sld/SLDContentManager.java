@@ -14,17 +14,15 @@ package org.locationtech.udig.style.sld;
 import java.awt.Color;
 import java.util.List;
 
-import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleBuilder;
-import org.geotools.styling.StyleFactory2;
 import org.geotools.styling.Symbolizer;
 import org.geotools.util.Utilities;
+import org.locationtech.udig.ui.graphics.SLDs;
 import org.opengis.style.StyleFactory;
 
 /**
@@ -235,7 +233,7 @@ public class SLDContentManager {
      */
     public FeatureTypeStyle createFeatureTypeStyle( String name ) {
         FeatureTypeStyle ftStyle = styleBuilder.createFeatureTypeStyle(name, new Rule[]{});
-        style.addFeatureTypeStyle(ftStyle);
+        style.featureTypeStyles().add(ftStyle);
         return ftStyle;
     }
 
@@ -258,7 +256,7 @@ public class SLDContentManager {
      */
     public Rule createRule( FeatureTypeStyle ftStyle ) {
         Rule rule = createRule();
-        ftStyle.addRule(rule);
+        ftStyle.rules().add(rule);
 
         return rule;
     }
@@ -326,7 +324,8 @@ public class SLDContentManager {
             syms = newSyms;
         }
 
-        rule.setSymbolizers(syms);
+        rule.symbolizers().clear();
+        for (Symbolizer s : syms) rule.symbolizers().add(s);
     }
 
     /**
@@ -368,7 +367,9 @@ public class SLDContentManager {
             Symbolizer[] newSymbolizers = new Symbolizer[symbolizers.length - 1];
             System.arraycopy(symbolizers, 0, newSymbolizers, 0, i);
             System.arraycopy(symbolizers, i + 1, newSymbolizers, i, symbolizers.length - (i + 1));
-            getDefaultRule().setSymbolizers(newSymbolizers);
+            Rule r = getDefaultRule();
+            r.symbolizers().clear();
+            for (Symbolizer s : newSymbolizers) r.symbolizers().add(s);
         }
     }
 
@@ -392,7 +393,9 @@ public class SLDContentManager {
             Symbolizer[] newSymbolizers = new Symbolizer[symbolizers.length - 1];
             System.arraycopy(symbolizers, 0, newSymbolizers, 0, i);
             System.arraycopy(symbolizers, i + 1, newSymbolizers, i, symbolizers.length - (i + 1));
-            getDefaultRule().setSymbolizers(newSymbolizers);
+            Rule r = getDefaultRule();
+            r.symbolizers().clear();
+            for (Symbolizer s : newSymbolizers) r.symbolizers().add(s);
         }
     }
 

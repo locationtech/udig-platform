@@ -9,11 +9,10 @@
  */
 package org.locationtech.udig.project.tests.ui;
 
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.ui.operations.IOp;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.ui.operations.IOp;
 
 /**
  * Throws an exception if target is not an array of 2 layer objects

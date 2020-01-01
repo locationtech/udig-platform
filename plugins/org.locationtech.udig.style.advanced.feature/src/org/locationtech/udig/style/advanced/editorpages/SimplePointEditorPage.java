@@ -11,14 +11,6 @@ package org.locationtech.udig.style.advanced.editorpages;
 
 import java.util.List;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.StyleBlackboard;
-import org.locationtech.udig.style.internal.StyleLayer;
-import org.locationtech.udig.style.sld.SLDContent;
-import org.locationtech.udig.style.sld.editor.StyleEditorDialog;
-import org.locationtech.udig.style.sld.editor.StyleEditorPage;
-import org.locationtech.udig.ui.graphics.SLDs;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -34,9 +26,17 @@ import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.Style;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.visitor.DuplicatingStyleVisitor;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.StyleBlackboard;
 import org.locationtech.udig.style.advanced.internal.Messages;
 import org.locationtech.udig.style.advanced.points.PointPropertiesEditor;
 import org.locationtech.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.sld.SLDContent;
+import org.locationtech.udig.style.sld.editor.StyleEditorDialog;
+import org.locationtech.udig.style.sld.editor.StyleEditorPage;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 /**
  * Style editor for simple points.

@@ -11,6 +11,7 @@ package org.locationtech.udig.project.ui.internal.render.displayAdapter.impl;
 
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import org.eclipse.swt.widgets.Display;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
 import org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent;
 import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
@@ -19,8 +20,6 @@ import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseListener;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelEvent;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
-
-import org.eclipse.swt.widgets.Display;
 
 public class EventJob {
 

@@ -25,6 +25,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.renderer.label.LabelCacheImpl;
+import org.geotools.util.ObjectCache;
+import org.geotools.util.ObjectCaches;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.ContextModelListenerAdapter;
 import org.locationtech.udig.project.internal.Layer;
@@ -47,7 +62,6 @@ import org.locationtech.udig.project.internal.render.impl.RenderManagerImpl;
 import org.locationtech.udig.project.internal.render.impl.TiledCompositeRendererImpl;
 import org.locationtech.udig.project.internal.render.impl.TiledRendererCreatorImpl;
 import org.locationtech.udig.project.internal.render.impl.UDIGLabelCache;
-import org.locationtech.udig.project.internal.render.impl.TiledCompositeRendererImpl.RenderInfo;
 import org.locationtech.udig.project.render.AbstractRenderMetrics;
 import org.locationtech.udig.project.render.ILabelPainter;
 import org.locationtech.udig.project.render.IRenderContext;
@@ -58,23 +72,6 @@ import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneTiledSWT;
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.renderer.label.LabelCacheImpl;
-import org.geotools.util.ObjectCache;
-import org.geotools.util.ObjectCaches;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
 
 
 /**
@@ -383,7 +380,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
     /**
      * 
      * Called when a selection layer is refreshed.
-     * @see org.locationtech.udig.project.render.impl.RenderManagerImpl#refreshSelection(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.render.impl.RenderManagerImpl#refreshSelection(org.locationtech.jts.geom.Envelope)
      */
     public void refreshSelection(final ILayer layer, final Envelope bounds) {
         

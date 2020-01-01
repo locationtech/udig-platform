@@ -22,7 +22,7 @@ import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.ui.commands.SelectionBoxCommand;
 import org.locationtech.udig.project.ui.tool.IToolContext;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 import org.locationtech.udig.tools.merge.internal.view.MergeView;
 

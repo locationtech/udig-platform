@@ -12,10 +12,6 @@ package org.locationtech.udig.style.sld.internal;
 
 import java.awt.Color;
 
-import org.locationtech.udig.style.sld.SLDEditorPart;
-import org.locationtech.udig.ui.ColorEditor;
-import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -31,6 +27,9 @@ import org.eclipse.swt.widgets.Spinner;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.StyleBuilder;
+import org.locationtech.udig.style.sld.SLDEditorPart;
+import org.locationtech.udig.ui.ColorEditor;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 /**
  * Edit a line symbolizer.

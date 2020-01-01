@@ -11,12 +11,11 @@ package org.locationtech.udig.project.ui.internal.dragdrop;
 
 import java.util.Collection;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.commands.AddLayersCommand;
 import org.locationtech.udig.project.internal.commands.DeleteLayersCommand;
 import org.locationtech.udig.ui.IDropAction;
-
-import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Moves layers from one map to another when destination is a layer.

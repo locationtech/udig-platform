@@ -12,12 +12,11 @@ package org.locationtech.udig.style.sld.editor;
 
 import java.util.Iterator;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
 import org.locationtech.udig.core.internal.ExtensionPointProcessor;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.style.sld.SLDPlugin;
-
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
 
 /**
  * Processes the org.locationtech.udig.style.sld.SimpleStyleConfigurator extension points and adds the 

@@ -8,12 +8,12 @@ import java.rmi.server.UID;
 import java.util.Iterator;
 import java.util.Set;
 
-import javax.measure.unit.SI;
-
 import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.ShutdownTaskList;
 import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 import org.locationtech.udig.ui.internal.Messages;
+
+import si.uom.SI;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -90,10 +90,9 @@ public class UDIGStartup implements IStartup {
         new UID(); // seed the random number generator
         
         @SuppressWarnings("unused")
-        Object o = SI.BIT;
-        o = SI.GRAM;
+        Object o = SI.GRAM; //SI.BIT
         o = SI.KILOGRAM;
-        o = SI.METER;
+        o = SI.METRE;
         o = SI.RADIAN;
         o = SI.SECOND;
         o = SI.STERADIAN;

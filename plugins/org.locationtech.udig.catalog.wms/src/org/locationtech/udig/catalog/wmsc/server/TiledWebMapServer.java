@@ -31,8 +31,8 @@ import org.geotools.data.ows.AbstractOpenWebService;
 import org.geotools.data.ows.HTTPResponse;
 import org.geotools.data.ows.Response;
 import org.geotools.data.ows.Specification;
-import org.geotools.data.wms.WMS1_1_1;
-import org.geotools.data.wms.WebMapServer;
+import org.geotools.ows.wms.WMS1_1_1;
+import org.geotools.ows.wms.WebMapServer;
 import org.geotools.ows.ServiceException;
 
 /**

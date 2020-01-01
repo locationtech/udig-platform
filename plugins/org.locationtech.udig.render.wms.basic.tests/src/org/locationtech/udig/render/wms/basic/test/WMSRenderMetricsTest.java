@@ -29,8 +29,8 @@ import org.locationtech.udig.project.tests.support.MapTests;
 import org.locationtech.udig.render.internal.wms.basic.BasicWMSMetricsFactory2;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.data.ows.CRSEnvelope;
-import org.geotools.data.ows.Layer;
+import org.geotools.ows.wms.CRSEnvelope;
+import org.geotools.ows.wms.Layer;
 import org.junit.Before;
 import org.junit.Test;
 

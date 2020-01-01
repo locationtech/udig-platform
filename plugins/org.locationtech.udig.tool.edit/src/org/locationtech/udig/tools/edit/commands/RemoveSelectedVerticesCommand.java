@@ -36,7 +36,7 @@ import org.locationtech.udig.ui.WaitCondition;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 /**
  * Removes the set of selected vertices from the blackboard.

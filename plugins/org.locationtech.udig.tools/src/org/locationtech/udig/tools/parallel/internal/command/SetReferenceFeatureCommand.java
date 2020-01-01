@@ -15,30 +15,10 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.measure.unit.Unit;
+import javax.measure.Unit;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import com.vividsolutions.jts.geom.Coordinate;
-
-//import es.axios.geotools.util.GeoToolsUtils;
-import org.locationtech.udig.tools.feature.util.GeoToolsUtils;
-//import es.axios.udig.ui.commons.util.MapUtil;
-import org.locationtech.udig.tools.internal.ui.util.MapUtil;
-//import es.axios.udig.ui.editingtools.internal.i18n.Messages;
-import org.locationtech.udig.tools.internal.i18n.Messages;
-//import es.axios.udig.ui.editingtools.precisionparallels.internal.ParallelContext;
-import org.locationtech.udig.tools.parallel.internal.FeatureHighLight;
-import org.locationtech.udig.tools.parallel.internal.ParallelContext;
-import org.locationtech.udig.tools.parallel.internal.PrecisionToolsMode;
-import org.locationtech.udig.tools.parallel.internal.PrecisionToolsUtil;
-//import es.axios.udig.ui.editingtools.precisiontools.commons.internal.FeatureHighLight;
-//import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsMode;
-//import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsUtil;
-
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.command.AbstractCommand;
 import org.locationtech.udig.project.command.UndoableMapCommand;
@@ -49,6 +29,22 @@ import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.tools.edit.EditToolHandler;
 import org.locationtech.udig.tools.edit.support.EditBlackboard;
 import org.locationtech.udig.tools.edit.support.Point;
+//import es.axios.geotools.util.GeoToolsUtils;
+import org.locationtech.udig.tools.feature.util.GeoToolsUtils;
+//import es.axios.udig.ui.editingtools.internal.i18n.Messages;
+import org.locationtech.udig.tools.internal.i18n.Messages;
+//import es.axios.udig.ui.commons.util.MapUtil;
+import org.locationtech.udig.tools.internal.ui.util.MapUtil;
+//import es.axios.udig.ui.editingtools.precisionparallels.internal.ParallelContext;
+import org.locationtech.udig.tools.parallel.internal.FeatureHighLight;
+import org.locationtech.udig.tools.parallel.internal.ParallelContext;
+import org.locationtech.udig.tools.parallel.internal.PrecisionToolsMode;
+import org.locationtech.udig.tools.parallel.internal.PrecisionToolsUtil;
+//import es.axios.udig.ui.editingtools.precisiontools.commons.internal.FeatureHighLight;
+//import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsMode;
+//import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsUtil;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * <p>

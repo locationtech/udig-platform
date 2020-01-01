@@ -44,7 +44,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * An unresponsive implementation of IRenderManager.  It will not rerender if the viewport model changes.  
@@ -605,7 +605,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * @see org.locationtech.udig.project.internal.render.RenderManager#refresh(org.locationtech.udig.project.Layer,
-     *      com.vividsolutions.jts.geom.Envelope)
+     *      org.locationtech.jts.geom.Envelope)
      */
     public void refresh(ILayer layer, Envelope bounds) {
         throw new UnsupportedOperationException();
@@ -613,7 +613,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     }
 
     /**
-     * @see org.locationtech.udig.project.internal.render.RenderManager#refresh(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.internal.render.RenderManager#refresh(org.locationtech.jts.geom.Envelope)
      */
     public void refresh(Envelope bounds) {
         throw new UnsupportedOperationException();
@@ -627,7 +627,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     }
 
     /**
-     * @see org.locationtech.udig.project.internal.render.RenderManager#refreshSelection(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.internal.render.RenderManager#refreshSelection(org.locationtech.jts.geom.Envelope)
      */
     public void refreshSelection(ILayer layer, Envelope bounds) {
         throw new UnsupportedOperationException();

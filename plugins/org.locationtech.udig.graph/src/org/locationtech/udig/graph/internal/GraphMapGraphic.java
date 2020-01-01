@@ -24,8 +24,8 @@ import org.geotools.graph.structure.Edge;
 import org.geotools.graph.structure.Graph;
 import org.geotools.graph.structure.Node;
 
-import com.vividsolutions.jts.algorithm.Angle;
-import com.vividsolutions.jts.geom.Point;
+import org.locationtech.jts.algorithm.Angle;
+import org.locationtech.jts.geom.Point;
 
 public class GraphMapGraphic implements MapGraphic {
     public static final String ID = "mapgraphic:/localhost/mapgraphic#org.locationtech.udig.tutorials.tracking.graphics.graph";

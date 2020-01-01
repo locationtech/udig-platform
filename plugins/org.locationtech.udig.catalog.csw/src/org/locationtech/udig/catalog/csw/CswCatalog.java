@@ -24,7 +24,7 @@ import org.locationtech.udig.catalog.ISearch;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 public class CswCatalog extends ISearch {
 

@@ -22,8 +22,8 @@ import org.locationtech.udig.tools.edit.EventType;
 
 import org.opengis.referencing.operation.MathTransform;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * Sets the EditState to illegal if the Mouse moves into an area of the map where the layer is no

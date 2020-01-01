@@ -13,8 +13,6 @@ package org.locationtech.udig.project.ui.controls;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
-
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -32,6 +30,7 @@ import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.SchemaException;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;

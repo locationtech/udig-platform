@@ -34,10 +34,10 @@ import org.locationtech.udig.tools.edit.behaviour.StartEditingBehaviour;
 import org.locationtech.udig.tools.edit.enablement.ValidToolDetectionActivator;
 import org.locationtech.udig.tools.edit.support.ShapeType;
 
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.MultiLineString;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Polygon;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.MultiLineString;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Polygon;
 
 import org.locationtech.udig.tools.internal.i18n.Messages;
 import org.locationtech.udig.tools.internal.ui.util.StatusBar;

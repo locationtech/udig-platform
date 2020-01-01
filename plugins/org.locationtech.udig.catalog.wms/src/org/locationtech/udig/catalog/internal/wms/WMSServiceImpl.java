@@ -23,38 +23,31 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
-import org.locationtech.udig.catalog.CatalogPlugin;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.geotools.data.ows.GetCapabilitiesRequest;
+import org.geotools.data.ows.GetCapabilitiesResponse;
+import org.geotools.data.ows.Specification;
+import org.geotools.ows.ServiceException;
+import org.geotools.ows.wms.Layer;
+import org.geotools.ows.wms.WMS1_0_0;
+import org.geotools.ows.wms.WMS1_1_0;
+import org.geotools.ows.wms.WMS1_1_1;
+import org.geotools.ows.wms.WMS1_3_0;
+import org.geotools.ows.wms.WMSCapabilities;
+import org.geotools.ows.wms.WebMapServer;
+import org.geotools.ows.wms.request.GetFeatureInfoRequest;
+import org.geotools.ows.wms.request.GetMapRequest;
+import org.geotools.ows.wms.response.GetFeatureInfoResponse;
+import org.geotools.ows.wms.response.GetMapResponse;
+import org.geotools.ows.wms.xml.WMSSchema;
 import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.IServiceInfo;
-import org.locationtech.udig.catalog.IResolve.Status;
 import org.locationtech.udig.catalog.wms.internal.Messages;
 import org.locationtech.udig.catalog.wms.preferences.WmsPreferenceConstants;
-import org.locationtech.udig.catalog.wms.preferences.WmsPreferencePage;
-import org.locationtech.udig.ui.ErrorManager;
 import org.locationtech.udig.ui.UDIGDisplaySafeLock;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
-
-import org.geotools.data.ows.GetCapabilitiesRequest;
-import org.geotools.data.ows.GetCapabilitiesResponse;
-import org.geotools.data.ows.Layer;
-import org.geotools.data.ows.Specification;
-import org.geotools.data.ows.WMSCapabilities;
-import org.geotools.data.wms.WMS1_0_0;
-import org.geotools.data.wms.WMS1_1_0;
-import org.geotools.data.wms.WMS1_1_1;
-import org.geotools.data.wms.WMS1_3_0;
-import org.geotools.data.wms.WebMapServer;
-import org.geotools.data.wms.request.GetFeatureInfoRequest;
-import org.geotools.data.wms.request.GetMapRequest;
-import org.geotools.data.wms.response.GetFeatureInfoResponse;
-import org.geotools.data.wms.response.GetMapResponse;
-import org.geotools.data.wms.xml.WMSSchema;
-import org.geotools.ows.ServiceException;
 import org.xml.sax.SAXException;
 
 /**

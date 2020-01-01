@@ -5,12 +5,6 @@ package org.locationtech.udig.project.ui.wizard.export.image;
 
 import java.util.Collection;
 
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.ui.AdapterFactoryLabelProviderDecorator;
-import org.locationtech.udig.project.ui.internal.Messages;
-import org.locationtech.udig.project.ui.internal.ProjectExplorer;
-import org.locationtech.udig.project.ui.wizard.export.MapSelectorPage;
-
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
@@ -36,6 +30,11 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.AdapterFactoryLabelProviderDecorator;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectExplorer;
+import org.locationtech.udig.project.ui.wizard.export.MapSelectorPage;
 
 /**
  * Adds a column where the user can set the scale at which to export the map

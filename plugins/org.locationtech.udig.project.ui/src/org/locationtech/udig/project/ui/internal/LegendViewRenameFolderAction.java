@@ -9,8 +9,6 @@
  */
 package org.locationtech.udig.project.ui.internal;
 
-import org.locationtech.udig.project.internal.Folder;
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.InputDialog;
@@ -20,6 +18,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Display;
+import org.locationtech.udig.project.internal.Folder;
 
 /**
  * Action that processes the renaming of folder items in the LegendView.

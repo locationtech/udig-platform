@@ -9,6 +9,9 @@
  */
 package org.locationtech.udig.project.ui.internal.aoi;
 
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.udig.aoi.AOIListener;
 import org.locationtech.udig.aoi.IAOIStrategy;
 import org.locationtech.udig.project.IMap;
@@ -16,14 +19,7 @@ import org.locationtech.udig.project.render.IViewportModel;
 import org.locationtech.udig.project.render.IViewportModelListener;
 import org.locationtech.udig.project.render.ViewportModelEvent;
 import org.locationtech.udig.project.ui.ApplicationGIS;
-
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
 
 /**
  * Returns an empty ReferencedEnvelope so that zoom to extent goes to all

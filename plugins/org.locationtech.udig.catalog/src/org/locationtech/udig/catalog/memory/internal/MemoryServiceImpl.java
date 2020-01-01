@@ -95,7 +95,7 @@ public class MemoryServiceImpl extends IService implements ITransientResolve {
 
                     buffer.append(type.getName().getLocalPart());
                     buffer.append("_SPLIT_"); //$NON-NLS-1$
-                    buffer.append(DataUtilities.spec(type));
+                    buffer.append(DataUtilities.encodeType(type));
                 } catch (IOException e) {
                     CatalogPlugin.log("", e); //$NON-NLS-1$
                 }

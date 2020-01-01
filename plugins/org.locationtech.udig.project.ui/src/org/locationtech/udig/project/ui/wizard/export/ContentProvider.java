@@ -5,11 +5,10 @@ package org.locationtech.udig.project.ui.wizard.export;
 
 import java.util.Collection;
 
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.IProject;
-
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IProject;
 
 public final class ContentProvider implements ITreeContentProvider {
 	@SuppressWarnings("unchecked")

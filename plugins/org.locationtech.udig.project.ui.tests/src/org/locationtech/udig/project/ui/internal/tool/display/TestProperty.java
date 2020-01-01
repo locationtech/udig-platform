@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Ignore;
-
 import org.locationtech.udig.ui.operations.IOpFilterListener;
 import org.locationtech.udig.ui.operations.PropertyValue;
 

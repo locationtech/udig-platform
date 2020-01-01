@@ -48,7 +48,7 @@ import org.geotools.data.DataStore;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.opengis.coverage.grid.GridCoverage;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 import org.locationtech.udig.catalog.jgrass.activeregion.dialogs.FeatureChooserDialog;
 import org.locationtech.udig.omsbox.ui.CoverageChooserDialog;

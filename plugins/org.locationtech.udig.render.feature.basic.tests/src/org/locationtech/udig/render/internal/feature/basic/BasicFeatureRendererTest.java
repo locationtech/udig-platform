@@ -34,11 +34,11 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.referencing.crs.CRSFactory;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.LineString;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineString;
 
 /**
  * Test BasicFeatureRenderer
@@ -77,7 +77,7 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
     }
 
     /**
-     * Test method for {@link org.locationtech.udig.render.internal.feature.basic.BasicFeatureRenderer#validateBounds(com.vividsolutions.jts.geom.Envelope, org.eclipse.core.runtime.IProgressMonitor, org.locationtech.udig.project.render.IRenderContext)}.
+     * Test method for {@link org.locationtech.udig.render.internal.feature.basic.BasicFeatureRenderer#validateBounds(org.locationtech.jts.geom.Envelope, org.eclipse.core.runtime.IProgressMonitor, org.locationtech.udig.project.render.IRenderContext)}.
      */
     @Ignore
     @Test

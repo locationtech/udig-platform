@@ -15,11 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.Messages;
-import org.locationtech.udig.project.ui.preferences.PreferenceConstants;
-
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
@@ -30,6 +25,10 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.preferences.PreferenceConstants;
 
 /**
  * A control that create a TileSet definition list

@@ -12,8 +12,8 @@ package org.locationtech.udig.style.sld.editor;
 
 import javax.xml.transform.TransformerException;
 
-import org.geotools.styling.SLDTransformer;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.xml.styling.SLDTransformer;
 
 /**
  * StyleEditor facade.

@@ -28,7 +28,7 @@ import org.eclipse.swt.graphics.GC;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 /**
  * Another example of the GlassPane. This tool when activated causes the seagulls to follow the

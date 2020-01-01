@@ -10,12 +10,10 @@
  */
 package org.locationtech.udig.project.ui.internal;
 
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
-
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.IWorkbenchPart;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
 
 /**
  * WorkbenchPart that supports map editing (for an example a IViewpart or IEditorPart that has a map in it).

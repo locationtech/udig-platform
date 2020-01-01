@@ -12,12 +12,6 @@ package org.locationtech.udig.project.ui.tool;
 
 import java.util.List;
 
-import org.locationtech.udig.project.ui.internal.MapPart;
-import org.locationtech.udig.project.ui.internal.tool.display.ActionToolCategory;
-import org.locationtech.udig.project.ui.internal.tool.display.MenuToolCategory;
-import org.locationtech.udig.project.ui.internal.tool.display.ModalToolCategory;
-import org.locationtech.udig.project.ui.internal.tool.display.ToolCategory;
-import org.locationtech.udig.project.ui.internal.tool.display.ToolProxy;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -27,6 +21,12 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchPart;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.tool.display.ActionToolCategory;
+import org.locationtech.udig.project.ui.internal.tool.display.MenuToolCategory;
+import org.locationtech.udig.project.ui.internal.tool.display.ModalToolCategory;
+import org.locationtech.udig.project.ui.internal.tool.display.ToolCategory;
+import org.locationtech.udig.project.ui.internal.tool.display.ToolProxy;
 
 public interface IToolManager {
     

@@ -15,8 +15,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 
-import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
-
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -35,7 +33,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.styling.Style;
-
 import org.locationtech.udig.style.advanced.StylePlugin;
 import org.locationtech.udig.style.advanced.common.StyleFilter;
 import org.locationtech.udig.style.advanced.common.StyleManager;
@@ -44,6 +41,7 @@ import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWra
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
 import org.locationtech.udig.style.advanced.internal.WrapperUtilities;
 import org.locationtech.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 
 /**
  * A style viewer that manages {@link Style}s.

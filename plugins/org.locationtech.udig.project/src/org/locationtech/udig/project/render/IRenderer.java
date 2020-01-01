@@ -16,7 +16,7 @@ import java.awt.Rectangle;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * Responsible for rendering a layer using AWT Graphics2D - this class is

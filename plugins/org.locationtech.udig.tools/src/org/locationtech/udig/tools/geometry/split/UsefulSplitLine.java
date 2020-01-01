@@ -11,8 +11,8 @@ package org.locationtech.udig.tools.geometry.split;
 
 import java.util.List;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * Maintains the result of {@link UsefulSplitLineBuilder} process. 

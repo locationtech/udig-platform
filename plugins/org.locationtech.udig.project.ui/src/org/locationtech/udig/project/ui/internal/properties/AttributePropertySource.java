@@ -12,11 +12,10 @@
 package org.locationtech.udig.project.ui.internal.properties;
 
 
-import org.locationtech.udig.project.ui.internal.Messages;
-
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource2;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
+import org.locationtech.udig.project.ui.internal.Messages;
 import org.opengis.feature.type.AttributeDescriptor;
 
 /**

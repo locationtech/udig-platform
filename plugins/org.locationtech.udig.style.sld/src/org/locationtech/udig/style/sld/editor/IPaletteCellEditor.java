@@ -10,16 +10,10 @@
 package org.locationtech.udig.style.sld.editor;
 
 import java.awt.Color;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
-import org.locationtech.udig.style.sld.SLDPlugin;
-import org.locationtech.udig.style.sld.internal.Messages;
-import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -42,7 +36,11 @@ import org.geotools.styling.Rule;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.Symbolizer;
+import org.locationtech.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.style.sld.internal.Messages;
+import org.locationtech.udig.ui.graphics.SLDs;
 import org.opengis.filter.expression.Expression;
+import org.opengis.style.GraphicalSymbol;
 
 /**
  * Display a colour in a table, when used for editing
@@ -67,7 +65,7 @@ final class IPaletteCellEditor implements ICellModifier {
 		        if (element instanceof Rule) {
 		            Rule rule = (Rule) element;
 		            if (rule.getName().startsWith("rule")) { //$NON-NLS-1$
-		                if (rule.hasElseFilter()) {
+		                if (rule.isElseFilter()) {
 		                    return false;
 		                }
 		                return true;
@@ -87,7 +85,7 @@ final class IPaletteCellEditor implements ICellModifier {
 		    if (property.equals("styleExpr")) { //$NON-NLS-1$
 		        if (element instanceof Rule) {
 		            Rule rule = (Rule) element;
-		            if (rule.hasElseFilter()) {
+		            if (rule.isElseFilter()) {
 		                return "else"; //$NON-NLS-1$
 		            } else {
 		                return StyleGenerator.toStyleExpression(rule.getFilter());
@@ -97,7 +95,7 @@ final class IPaletteCellEditor implements ICellModifier {
 		        if (element instanceof Rule) {
 		            Rule rule = (Rule) element;
 		            //the title contains the same value, but we'll obtain it from the rule anyways
-		            return rule.getTitle();
+		            return rule.getDescription().getTitle().toString();
 		        }
 		    } else if (property.equals("colour")) { //$NON-NLS-1$
 		        if (element instanceof Rule) {
@@ -202,8 +200,8 @@ final class IPaletteCellEditor implements ICellModifier {
 		            Object data = item.getData();
 		            if (data instanceof Rule) {
 		                Rule rule = (Rule) data;
-		                if (rule.getTitle().equals(value)) return; //don't bother -- value is the same
-		                rule.setTitle(value.toString());
+		                if (rule.getDescription().getTitle().toString().equals(value)) return; //don't bother -- value is the same
+		                rule.getDescription().setTitle(value.toString());
 		            }
 		            this.styleThemePage.treeViewer.refresh();
 		        }
@@ -240,10 +238,12 @@ final class IPaletteCellEditor implements ICellModifier {
                         fill.setColor(newColorExpr);
                     }else if (symb[0] instanceof PointSymbolizer) {
                         PointSymbolizer ps = (PointSymbolizer) symb[0];
-                        Mark[] marks = ps.getGraphic().getMarks();
-                        if(marks!=null && marks.length>0){
-                            oldColorExpr = marks[0].getFill().getColor();
-                            marks[0].getFill().setColor(newColorExpr);
+                        List<GraphicalSymbol> marks = ps.getGraphic().graphicalSymbols();
+                        if(marks!=null && marks.size()>0){
+                        	if (marks.get(0) instanceof Mark) {
+                        		oldColorExpr = ((Mark)marks.get(0)).getFill().getColor();
+                        		((Mark)marks.get(0)).getFill().setColor(newColorExpr);
+                        	}
                         }
                     }else if (symb[0] instanceof LineSymbolizer) {
                         LineSymbolizer ps = (LineSymbolizer) symb[0];

@@ -44,9 +44,9 @@ import org.locationtech.udig.tools.edit.support.ShapeType;
 import org.eclipse.swt.SWT;
 import org.opengis.filter.spatial.BBOX;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.MultiPoint;
-import com.vividsolutions.jts.geom.Point;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.MultiPoint;
+import org.locationtech.jts.geom.Point;
 
 /**
  * Creates and edits points. 

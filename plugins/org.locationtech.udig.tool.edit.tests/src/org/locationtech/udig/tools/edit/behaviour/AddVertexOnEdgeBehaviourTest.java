@@ -23,7 +23,7 @@ import org.locationtech.udig.tools.edit.support.TestHandler;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 public class AddVertexOnEdgeBehaviourTest {
 

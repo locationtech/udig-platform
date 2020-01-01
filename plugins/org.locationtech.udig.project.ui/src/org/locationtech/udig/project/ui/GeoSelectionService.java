@@ -14,14 +14,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.locationtech.udig.core.internal.ExtensionPointList;
 import org.locationtech.udig.project.geoselection.IGeoSelectionChangedListener;
 import org.locationtech.udig.project.geoselection.IGeoSelectionManager;
 import org.locationtech.udig.project.geoselection.IGeoSelectionService;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.InvalidRegistryObjectException;
 
 
 /**

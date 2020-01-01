@@ -20,8 +20,8 @@ import org.eclipse.jface.action.IStatusLineManager;
 import org.geotools.graph.structure.Graph;
 import org.geotools.graph.structure.Node;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Point;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Point;
 
 /**
  * This tool makes use of the <b>graph</b> on the map blackboard

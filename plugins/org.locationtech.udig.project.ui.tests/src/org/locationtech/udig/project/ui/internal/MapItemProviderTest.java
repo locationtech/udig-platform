@@ -15,15 +15,6 @@ import static org.junit.Assert.assertTrue;
 import java.awt.Dimension;
 import java.util.Iterator;
 
-import org.locationtech.udig.AbstractProjectUITestCase;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.ProjectFactory;
-import org.locationtech.udig.project.internal.provider.ContextModelItemProvider;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.ui.PlatformGIS;
-import org.locationtech.udig.ui.WaitCondition;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Control;
@@ -33,6 +24,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.provider.ContextModelItemProvider;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 /**
  * Test cases for map and project item providers to ensure that when a map or layer is added then the item provider

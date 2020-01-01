@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.IExtension;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * This is the default implementation of AOIService; it delegates to the internal strategy

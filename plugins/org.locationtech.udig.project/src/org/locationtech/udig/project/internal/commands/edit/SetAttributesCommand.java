@@ -13,6 +13,11 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.Validate;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.data.FeatureStore;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.util.factory.GeoTools;
 import org.locationtech.udig.core.IBlockingProvider;
 import org.locationtech.udig.core.internal.FeatureUtils;
 import org.locationtech.udig.project.ILayer;
@@ -21,14 +26,10 @@ import org.locationtech.udig.project.command.UndoableMapCommand;
 import org.locationtech.udig.project.command.provider.EditFeatureProvider;
 import org.locationtech.udig.project.command.provider.EditLayerProvider;
 import org.locationtech.udig.project.internal.Messages;
-import org.apache.commons.lang.Validate;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.data.FeatureStore;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
+import org.opengis.feature.type.Name;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.Id;
 
@@ -113,12 +114,12 @@ public class SetAttributesCommand extends AbstractEditCommand implements Undoabl
 		    feature2.setAttribute(xpath[i],value[i]);
 		}
         
-        List<AttributeDescriptor> attributeList = new ArrayList<AttributeDescriptor>();
+        List<Name> attributeList = new ArrayList<>();
         SimpleFeatureType schema = layer.getSchema();
         for( String name : xpath ){
-            attributeList.add( schema.getDescriptor( name ));
+            attributeList.add( schema.getDescriptor( name ).getName() );
         }
-        AttributeDescriptor[] array = attributeList.toArray( new AttributeDescriptor[attributeList.size()]);
+        Name[] array = attributeList.toArray( new Name[attributeList.size()]);
         resource.modifyFeatures(array, value, fidFilter);
     }
 
@@ -137,12 +138,12 @@ public class SetAttributesCommand extends AbstractEditCommand implements Undoabl
         
         // need another for loop
         
-        List<AttributeDescriptor> attributeList = new ArrayList<AttributeDescriptor>();
+        List<Name> attributeList = new ArrayList<Name>();
         SimpleFeatureType schema = layer.getSchema();
         for( String name : xpath ){
-            attributeList.add( schema.getDescriptor( name ));
+            attributeList.add( schema.getDescriptor( name ).getName());
         }
-        AttributeDescriptor[] array = attributeList.toArray( new AttributeDescriptor[attributeList.size()]);
+        Name[] array = attributeList.toArray( new Name[attributeList.size()]);
         
         FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
         Id id = filterFactory.id(FeatureUtils.stringToId(filterFactory, feature.getID()));

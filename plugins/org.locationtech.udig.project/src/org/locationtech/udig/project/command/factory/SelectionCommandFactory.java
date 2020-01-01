@@ -24,7 +24,7 @@ import org.locationtech.udig.project.internal.commands.selection.SelectCommand;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * A factory which can be used to create all the standard selection commands.

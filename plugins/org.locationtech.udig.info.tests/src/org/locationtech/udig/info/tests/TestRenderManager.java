@@ -17,7 +17,7 @@ import org.locationtech.udig.project.render.IRenderer;
 import org.locationtech.udig.project.render.Tile;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 public class TestRenderManager implements IRenderManager {
 

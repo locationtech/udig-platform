@@ -16,11 +16,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.tool.display.ModalItem;
-import org.locationtech.udig.project.ui.internal.tool.display.ModalToolCategory;
-import org.locationtech.udig.project.ui.tool.IToolManager;
-
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteDrawer;
@@ -32,6 +27,10 @@ import org.eclipse.gef.palette.ToolEntry;
 import org.eclipse.gef.tools.SelectionTool;
 import org.eclipse.gef.ui.palette.FlyoutPaletteComposite.FlyoutPreferences;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.tool.display.ModalItem;
+import org.locationtech.udig.project.ui.internal.tool.display.ModalToolCategory;
+import org.locationtech.udig.project.ui.tool.IToolManager;
 
 /**
  * Factory for the Tool Palette

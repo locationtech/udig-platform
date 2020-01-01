@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.command.AbstractCommand;
 import org.locationtech.udig.project.command.Command;
@@ -46,8 +47,6 @@ import org.locationtech.udig.project.ui.commands.IDrawCommand;
 import org.locationtech.udig.project.ui.internal.FeatureAnimation;
 import org.locationtech.udig.project.ui.internal.commands.draw.DrawCoordinateCommand;
 import org.locationtech.udig.tools.internal.CursorPosition;
-
-import com.vividsolutions.jts.geom.Coordinate;
 
 /**
  * Test for DraWCoordinateCommand. 

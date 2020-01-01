@@ -38,7 +38,7 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.util.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.collection.AdaptorFeatureCollection;
@@ -56,7 +56,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * Copies features selected by the filter from the source layer to the destination layer. Then sets
@@ -382,7 +382,7 @@ public class CopyFeaturesCommand extends AbstractCommand implements UndoableMapC
                             next = copiedFeatures.next();
                             ReferencedEnvelope newbounds = new ReferencedEnvelope(next.getBounds());
                             try {
-                                newbounds = newbounds.transform(env.crs(), true);
+                                newbounds = newbounds.transform(env.getCoordinateReferenceSystem(), true);
                                 env.expandToInclude(newbounds);
                             } catch (TransformException e) {
                                 ProjectPlugin.log("", e); //$NON-NLS-1$
