@@ -14,14 +14,13 @@ package org.locationtech.udig.project.ui.internal.properties;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.locationtech.udig.project.ui.internal.Messages;
-
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.geotools.data.FeatureSource;
+import org.locationtech.udig.project.ui.internal.Messages;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;

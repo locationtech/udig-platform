@@ -49,8 +49,8 @@ import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.Id;
 import org.opengis.filter.identity.FeatureId;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.io.WKTWriter;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.io.WKTWriter;
 
 /**
  * A SimpleFeatureStore decorator that does not allow the transaction to be set more than once.
@@ -101,7 +101,9 @@ public class UDIGSimpleFeatureStore implements SimpleFeatureStore, UDIGStore {
     public void modifyFeatures( AttributeDescriptor[] descriptors, Object[] values, Filter filter )
             throws IOException {
         setTransactionInternal();
-        wrapped.modifyFeatures(descriptors, values, filter);
+        Name[] names = new Name[descriptors.length];
+        for (int i = 0; i < names.length; i ++) names[i] = descriptors[i].getName();
+        wrapped.modifyFeatures(names, values, filter);
         fireLayerEditEvent( FeatureEvent.Type.CHANGED, null, filter );
     }
     
@@ -147,7 +149,7 @@ public class UDIGSimpleFeatureStore implements SimpleFeatureStore, UDIGStore {
                 throw new IOException(msg);
             }
         }
-        wrapped.modifyFeatures(attribute, value, selectFilter);
+        wrapped.modifyFeatures(attribute.getName(), value, selectFilter);
         fireLayerEditEvent( FeatureEvent.Type.CHANGED, null, selectFilter );
     }
     /**

@@ -10,14 +10,12 @@
  */
 package org.locationtech.udig.project.ui.feature;
 
-import org.opengis.feature.simple.SimpleFeature;
-
-import org.locationtech.udig.project.IEditManager;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.ui.IFeatureSite;
 import org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl;
+import org.opengis.feature.simple.SimpleFeature;
 
 /**
  * Facilitate editing of feature content.

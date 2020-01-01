@@ -30,8 +30,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.locationtech.udig.tools.edit.EditPlugin;
 import org.locationtech.udig.tools.edit.preferences.PreferenceUtil;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * Represents the simplest shape. EditGeoms are made up of PrimitiveShapes.

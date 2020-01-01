@@ -25,11 +25,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.locationtech.udig.style.StylePlugin;
-import org.locationtech.udig.style.sld.IEditorPage;
-import org.locationtech.udig.style.sld.editor.EditorPageManager;
-import org.locationtech.udig.style.sld.internal.Messages;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
@@ -55,6 +50,10 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.activities.WorkbenchActivityHelper;
 import org.eclipse.ui.preferences.IWorkingCopyManager;
 import org.eclipse.ui.preferences.WorkingCopyManager;
+import org.locationtech.udig.style.StylePlugin;
+import org.locationtech.udig.style.sld.IEditorPage;
+import org.locationtech.udig.style.sld.editor.EditorPageManager;
+import org.locationtech.udig.style.sld.internal.Messages;
 import org.osgi.service.prefs.BackingStoreException;
 
 /**

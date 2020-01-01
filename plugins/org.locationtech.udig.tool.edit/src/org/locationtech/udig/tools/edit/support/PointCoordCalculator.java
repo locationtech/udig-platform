@@ -15,7 +15,7 @@ import org.locationtech.udig.tools.edit.EditPlugin;
 
 import org.opengis.referencing.operation.MathTransform;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 /**
  * Transforms between points and coordinates

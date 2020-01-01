@@ -37,7 +37,7 @@ import org.geotools.styling.RasterSymbolizer;
 import org.opengis.geometry.BoundingBox;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 import org.locationtech.udig.catalog.jgrass.core.JGTtmsGeoResource;
 import org.locationtech.udig.catalog.jgrass.core.JGTtmsProperties;

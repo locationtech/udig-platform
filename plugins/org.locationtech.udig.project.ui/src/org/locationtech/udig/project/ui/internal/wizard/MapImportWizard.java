@@ -14,22 +14,18 @@ package org.locationtech.udig.project.ui.internal.wizard;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.ui.wizard.CatalogImportWizard;
 import org.locationtech.udig.catalog.ui.workflow.EndConnectionState;
-import org.locationtech.udig.catalog.ui.workflow.ResourceSearchState;
 import org.locationtech.udig.catalog.ui.workflow.ResourceSelectionState;
 import org.locationtech.udig.catalog.ui.workflow.State;
 import org.locationtech.udig.catalog.ui.workflow.Workflow;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.Messages;
-
-import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Provided workflow is used to add Data to the map.

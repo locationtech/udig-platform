@@ -25,7 +25,7 @@ import org.locationtech.udig.tools.edit.support.SnapBehaviour;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 /**
  * This class manages the movement of a vertex. Once a vertex has been moved this command determines

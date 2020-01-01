@@ -20,23 +20,23 @@ import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.SchemaException;
+import org.geotools.util.factory.GeoTools;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Polygon;
 import org.locationtech.udig.issues.IIssue;
 import org.locationtech.udig.issues.IListStrategy;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
+import org.opengis.feature.type.Name;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.PropertyIsEqualTo;
 import org.opengis.filter.expression.Expression;
-
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Polygon;
 
 public abstract class AbstractDatastoreStrategy implements IListStrategy{
 
@@ -147,18 +147,19 @@ public abstract class AbstractDatastoreStrategy implements IListStrategy{
 
     public void modifyIssue( final IIssue issue ) throws IOException {
           SimpleFeatureType schema = getFeatureStore().getSchema();
-          AttributeDescriptor[] attributeType=new AttributeDescriptor[9];
+          Name[] attributeType=new Name[9];
           Object[] newValues=new Object[9];
           
-          attributeType[0]=schema.getDescriptor(getAttributeMapper().getBounds());
-          attributeType[1]=schema.getDescriptor(getAttributeMapper().getDescription());
-          attributeType[2]=schema.getDescriptor(getAttributeMapper().getExtensionId());
-          attributeType[3]=schema.getDescriptor(getAttributeMapper().getGroupId());
-          attributeType[4]=schema.getDescriptor(getAttributeMapper().getId());
-          attributeType[5]=schema.getDescriptor(getAttributeMapper().getMemento());
-          attributeType[6]=schema.getDescriptor(getAttributeMapper().getPriority());
-          attributeType[7]=schema.getDescriptor(getAttributeMapper().getResolution());
-          attributeType[8]=schema.getDescriptor(getAttributeMapper().getViewMemento());
+          AttributeDescriptor desc = schema.getDescriptor(getAttributeMapper().getBounds());
+          attributeType[0]=schema.getDescriptor(getAttributeMapper().getBounds()).getName();
+          attributeType[1]=schema.getDescriptor(getAttributeMapper().getDescription()).getName();
+          attributeType[2]=schema.getDescriptor(getAttributeMapper().getExtensionId()).getName();
+          attributeType[3]=schema.getDescriptor(getAttributeMapper().getGroupId()).getName();
+          attributeType[4]=schema.getDescriptor(getAttributeMapper().getId()).getName();
+          attributeType[5]=schema.getDescriptor(getAttributeMapper().getMemento()).getName();
+          attributeType[6]=schema.getDescriptor(getAttributeMapper().getPriority()).getName();
+          attributeType[7]=schema.getDescriptor(getAttributeMapper().getResolution()).getName();
+          attributeType[8]=schema.getDescriptor(getAttributeMapper().getViewMemento()).getName();
           
           XMLMemento memento=XMLMemento.createWriteRoot("memento"); //$NON-NLS-1$
           XMLMemento viewMemento=XMLMemento.createWriteRoot("viewMemento"); //$NON-NLS-1$
@@ -170,10 +171,10 @@ public abstract class AbstractDatastoreStrategy implements IListStrategy{
           Geometry bounds=null;
           if( issue.getBounds()!=null )
           bounds = geometryFactory.toGeometry(issue.getBounds());
-          if( bounds instanceof Polygon && MultiPolygon.class.isAssignableFrom(attributeType[0].getType().getBinding()) ){
+          if( bounds instanceof Polygon && MultiPolygon.class.isAssignableFrom(desc.getType().getBinding()) ){
               bounds=geometryFactory.createMultiPolygon(new Polygon[]{ (Polygon)bounds});
           }
-          if( bounds instanceof MultiPolygon && Polygon.class.isAssignableFrom(attributeType[0].getType().getBinding()) ){
+          if( bounds instanceof MultiPolygon && Polygon.class.isAssignableFrom(desc.getType().getBinding()) ){
               bounds=((MultiPolygon)bounds).getGeometryN(0);
           }
           

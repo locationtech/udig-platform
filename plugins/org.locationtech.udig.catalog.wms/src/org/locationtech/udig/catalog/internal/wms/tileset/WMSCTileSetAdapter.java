@@ -24,7 +24,7 @@ import org.locationtech.udig.project.ui.preferences.PreferenceConstants;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.ows.AbstractOpenWebService;
-import org.geotools.data.wms.WebMapServer;
+import org.geotools.ows.wms.WebMapServer;
 
 /**
  * Allow any WebMapServer to supply a TileSet definition under user control (allowing it to

@@ -38,9 +38,9 @@ import org.locationtech.udig.tools.edit.support.Selection;
 import org.locationtech.udig.tools.edit.support.SnapBehaviour;
 import org.locationtech.udig.tools.edit.validator.LegalShapeValidator;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.Polygon;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.Polygon;
 
 /**
  * Mode that moves Vertices
@@ -271,7 +271,7 @@ public class MoveVertexBehaviour implements EventBehaviour, LockingBehaviour {
             case LINE:
                 return LineString.class;
             case POINT:
-                return com.vividsolutions.jts.geom.Point.class;            
+                return org.locationtech.jts.geom.Point.class;            
             case POLYGON:
                 return Polygon.class;
             default:

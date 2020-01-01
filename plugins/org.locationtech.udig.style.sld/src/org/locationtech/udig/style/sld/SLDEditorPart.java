@@ -10,8 +10,6 @@
  */
 package org.locationtech.udig.style.sld;
 
-import org.locationtech.udig.project.internal.Layer;
-
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -19,6 +17,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.part.PageBook;
 import org.geotools.styling.StyleBuilder;
+import org.locationtech.udig.project.internal.Layer;
 
 /**
  * Provides a user interface to edit a component of an Style Layer Descriptor (SLD) style object.

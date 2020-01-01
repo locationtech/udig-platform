@@ -19,15 +19,14 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.swt.graphics.Path;
+import org.eclipse.swt.widgets.Display;
 import org.locationtech.udig.project.command.MapCommand;
 import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
 import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 import org.locationtech.udig.ui.graphics.SWTGraphics;
 import org.locationtech.udig.ui.graphics.ViewportGraphics;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.swt.graphics.Path;
-import org.eclipse.swt.widgets.Display;
 
 /**
  * Draws the outline of a shape on the Acetate layer.

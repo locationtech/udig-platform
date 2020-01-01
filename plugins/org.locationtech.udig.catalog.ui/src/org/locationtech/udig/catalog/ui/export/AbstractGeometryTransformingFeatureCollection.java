@@ -21,7 +21,7 @@ import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * Takes a FeatureCollection with features with MultiPolygons and Polygons and converts them all to 

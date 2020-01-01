@@ -15,15 +15,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 
-import org.locationtech.udig.project.internal.Project;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
-
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 /**
  * Wizard to create a new project.

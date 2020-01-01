@@ -14,11 +14,6 @@ package org.locationtech.udig.project.ui.internal;
 import java.util.Iterator;
 import java.util.List;
 
-import org.locationtech.udig.project.Interaction;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.tool.display.ModalToolCategory;
-
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -27,6 +22,10 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.ui.PlatformUI;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.tool.display.ModalToolCategory;
 
 /**
  * Creates a sub menu that permits the applicability of a layer to be set.

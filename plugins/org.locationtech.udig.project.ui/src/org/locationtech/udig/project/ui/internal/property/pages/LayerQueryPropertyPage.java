@@ -9,15 +9,6 @@
  */
 package org.locationtech.udig.project.ui.internal.property.pages;
 
-import net.miginfocom.swt.MigLayout;
-import org.locationtech.udig.project.ProjectBlackboardConstants;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.StyleBlackboard;
-import org.locationtech.udig.ui.filter.FilterInput;
-import org.locationtech.udig.ui.filter.FilterViewer;
-import org.locationtech.udig.ui.filter.IFilterViewer;
-import org.locationtech.udig.ui.properties.UDIGPropertyPage;
-
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -27,8 +18,17 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbenchPropertyPage;
 import org.geotools.data.Query;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.ui.filter.FilterInput;
+import org.locationtech.udig.ui.filter.FilterViewer;
+import org.locationtech.udig.ui.filter.IFilterViewer;
+import org.locationtech.udig.ui.properties.UDIGPropertyPage;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
+
+import net.miginfocom.swt.MigLayout;
 
 /**
  * Preference page for defining the query the layer uses to access data.

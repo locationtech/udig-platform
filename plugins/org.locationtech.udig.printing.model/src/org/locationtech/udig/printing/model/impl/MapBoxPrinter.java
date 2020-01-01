@@ -47,7 +47,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.ui.IMemento;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * Box Printer for MapBox objects.

@@ -17,27 +17,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
-
-import org.locationtech.udig.internal.ui.UiPlugin;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.render.RenderManager;
-import org.locationtech.udig.project.preferences.PreferenceConstants;
-import org.locationtech.udig.project.render.Tile;
-import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
-import org.locationtech.udig.project.ui.commands.IDrawCommand;
-import org.locationtech.udig.project.ui.internal.MapPart;
-import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
-import org.locationtech.udig.project.ui.internal.Trace;
-import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseListener;
-import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
-import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
-import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
-import org.locationtech.udig.project.ui.render.glass.GlassPane;
-import org.locationtech.udig.ui.graphics.NonAdvancedSWTGraphics;
-import org.locationtech.udig.ui.graphics.SWTGraphics;
-import org.locationtech.udig.ui.graphics.ViewportGraphics;
+import java.util.Set;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -56,6 +37,24 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.PlatformUI;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.render.Tile;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
+import org.locationtech.udig.project.ui.commands.IDrawCommand;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.internal.Trace;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseListener;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.render.glass.GlassPane;
+import org.locationtech.udig.ui.graphics.NonAdvancedSWTGraphics;
+import org.locationtech.udig.ui.graphics.SWTGraphics;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 /**
  * The ViewportPaneImpl is a java.awt.Panel that is the display 

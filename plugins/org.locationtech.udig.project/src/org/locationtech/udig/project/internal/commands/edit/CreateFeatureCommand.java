@@ -34,7 +34,7 @@ import org.eclipse.swt.widgets.Display;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Transaction;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.util.factory.GeoTools;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.referencing.CRS;
 import org.opengis.feature.Feature;
@@ -45,8 +45,8 @@ import org.opengis.filter.FilterFactory;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.util.CodeList;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * Creates a new feature in the current edit layer.

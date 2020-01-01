@@ -13,8 +13,6 @@ package org.locationtech.udig.style.sld;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.locationtech.udig.project.ILayer;
-
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.geotools.styling.LineSymbolizer;
@@ -22,15 +20,15 @@ import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.TextSymbolizer;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.MultiLineString;
+import org.locationtech.jts.geom.MultiPoint;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.Polygon;
+import org.locationtech.udig.project.ILayer;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.GeometryDescriptor;
-
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.MultiLineString;
-import com.vividsolutions.jts.geom.MultiPoint;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * The different kinds of content that can be rendered with Style Layer Descriptor.
@@ -124,7 +122,7 @@ public enum SLD {
         }
         
         public boolean supports( ILayer layer ) {
-            return layer.hasResource(org.geotools.data.ows.Layer.class);
+            return layer.hasResource(org.geotools.ows.wms.Layer.class);
         }
     };
 

@@ -18,10 +18,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.locationtech.udig.style.advanced.internal.VendorOptions;
-import org.locationtech.udig.style.sld.SLD;
-import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.eclipse.swt.graphics.FontData;
 import org.geotools.styling.AnchorPoint;
 import org.geotools.styling.Displacement;
@@ -33,6 +29,9 @@ import org.geotools.styling.LinePlacement;
 import org.geotools.styling.PointPlacement;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
+import org.locationtech.udig.style.advanced.internal.VendorOptions;
+import org.locationtech.udig.style.sld.SLD;
+import org.locationtech.udig.ui.graphics.SLDs;
 import org.opengis.filter.expression.Expression;
 
 /**

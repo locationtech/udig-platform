@@ -11,23 +11,13 @@
  */
 package org.locationtech.udig.project.ui.internal.wizard;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import org.locationtech.udig.catalog.internal.ui.ConnectionPageDecorator;
-import org.locationtech.udig.catalog.internal.ui.ReflectionWorkflowWizardPageProvider;
 import org.locationtech.udig.catalog.internal.ui.ResourceSelectionPage;
-import org.locationtech.udig.catalog.ui.ConnectionErrorPage;
-import org.locationtech.udig.catalog.ui.DataSourceSelectionPage;
 import org.locationtech.udig.catalog.ui.wizard.CatalogImport;
 import org.locationtech.udig.catalog.ui.wizard.ResourceSearchPage;
 import org.locationtech.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
-import org.locationtech.udig.catalog.ui.workflow.ConnectionErrorState;
-import org.locationtech.udig.catalog.ui.workflow.ConnectionFailurePage;
-import org.locationtech.udig.catalog.ui.workflow.ConnectionFailureState;
 import org.locationtech.udig.catalog.ui.workflow.DataSourceSelectionState;
-import org.locationtech.udig.catalog.ui.workflow.EndConnectionState;
-import org.locationtech.udig.catalog.ui.workflow.IntermediateState;
 import org.locationtech.udig.catalog.ui.workflow.ResourceSearchState;
 import org.locationtech.udig.catalog.ui.workflow.ResourceSelectionState;
 import org.locationtech.udig.catalog.ui.workflow.State;

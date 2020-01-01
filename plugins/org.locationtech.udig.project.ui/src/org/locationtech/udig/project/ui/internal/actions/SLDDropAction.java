@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.styling.Style;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.ui.internal.Messages;
@@ -22,9 +24,6 @@ import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 import org.locationtech.udig.style.sld.SLDContent;
 import org.locationtech.udig.ui.IDropAction;
 import org.locationtech.udig.ui.ViewerDropLocation;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.styling.Style;
 
 public class SLDDropAction extends IDropAction {
 

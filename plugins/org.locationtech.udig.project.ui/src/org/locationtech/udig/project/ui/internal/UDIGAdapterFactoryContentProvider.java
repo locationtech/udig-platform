@@ -11,12 +11,11 @@ package org.locationtech.udig.project.ui.internal;
 
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import org.locationtech.udig.project.internal.Map;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.ui.PlatformUI;
+import org.locationtech.udig.project.internal.Map;
 
 /**
  * This AdapterFactory guarantees that it will not update its listeners if the workbench has been

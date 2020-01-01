@@ -27,7 +27,6 @@ import java.util.Set;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Spinner;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
 import org.geotools.filter.function.FilterFunction_offset;
 import org.geotools.styling.ExternalGraphic;
 import org.geotools.styling.FeatureTypeConstraint;
@@ -41,8 +40,6 @@ import org.geotools.styling.Mark;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.Rule;
-import org.geotools.styling.SLDParser;
-import org.geotools.styling.SLDTransformer;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleBuilder;
@@ -52,6 +49,10 @@ import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.UserLayer;
 import org.geotools.styling.visitor.DuplicatingStyleVisitor;
+import org.geotools.util.factory.GeoTools;
+import org.geotools.xml.styling.SLDParser;
+import org.geotools.xml.styling.SLDTransformer;
+import org.locationtech.jts.geom.LineString;
 import org.locationtech.udig.style.sld.SLD;
 import org.locationtech.udig.ui.graphics.SLDs;
 import org.opengis.filter.FilterFactory;
@@ -61,7 +62,6 @@ import org.opengis.style.GraphicalSymbol;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.vividsolutions.jts.geom.LineString;
 
 /**
  * Style related utilities.

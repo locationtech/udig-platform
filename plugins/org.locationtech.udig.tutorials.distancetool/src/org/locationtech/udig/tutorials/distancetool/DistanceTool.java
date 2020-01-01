@@ -16,7 +16,7 @@ import org.locationtech.udig.project.ui.tool.SimpleTool;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.geotools.geometry.jts.JTS;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 public class DistanceTool extends SimpleTool {
 	public DistanceTool(){

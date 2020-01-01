@@ -33,7 +33,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.junit.Before;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * @author dzwiers

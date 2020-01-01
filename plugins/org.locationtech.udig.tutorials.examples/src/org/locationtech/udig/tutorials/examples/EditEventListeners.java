@@ -32,14 +32,14 @@ public class EditEventListeners {
         source.addFeatureListener(new FeatureListener(){
 
             public void changed( FeatureEvent featureEvent ) {
-                switch( featureEvent.getEventType() ) {
-                case FeatureEvent.FEATURES_ADDED:
+                switch( featureEvent.getType() ) {
+                case ADDED:
                     // do something
                     break;
-                case FeatureEvent.FEATURES_REMOVED:
+                case REMOVED:
                     // do something
                     break;
-                case FeatureEvent.FEATURES_CHANGED:
+                case CHANGED:
                     // do something
                     break;
 

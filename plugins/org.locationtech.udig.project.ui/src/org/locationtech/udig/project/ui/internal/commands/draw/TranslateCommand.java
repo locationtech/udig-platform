@@ -14,11 +14,10 @@ package org.locationtech.udig.project.ui.internal.commands.draw;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
 import org.locationtech.udig.project.ui.commands.IMapTransformCommand;
 import org.locationtech.udig.project.ui.commands.IPreMapDrawCommand;
-
-import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Sets the ViewportGraphics object translate its 0,0 coordinate by -x,-y. IE. shapes are drawn down

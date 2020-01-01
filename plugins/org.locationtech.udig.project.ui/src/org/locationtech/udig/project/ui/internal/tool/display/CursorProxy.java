@@ -10,8 +10,6 @@
  */
 package org.locationtech.udig.project.ui.internal.tool.display;
 
-import org.locationtech.udig.project.ui.tool.ModalTool;
-
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
@@ -19,6 +17,7 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.locationtech.udig.project.ui.tool.ModalTool;
 
 /**
  * The cursor proxy allows for tool cursor images  to be loaded lazily. It acts as a proxy

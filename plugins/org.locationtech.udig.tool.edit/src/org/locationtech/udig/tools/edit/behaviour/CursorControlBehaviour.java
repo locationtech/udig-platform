@@ -28,8 +28,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IActionBars2;
 import org.eclipse.ui.PlatformUI;
 
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Polygon;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Polygon;
 
 /**
  * Sets the cursor to indicate what action can be done.

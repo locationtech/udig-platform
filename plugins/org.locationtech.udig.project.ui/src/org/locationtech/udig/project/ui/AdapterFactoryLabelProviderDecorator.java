@@ -11,8 +11,6 @@
  */
 package org.locationtech.udig.project.ui;
 
-import org.locationtech.udig.project.internal.provider.LoadingPlaceHolder;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -24,6 +22,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IDecoratorManager;
 import org.eclipse.ui.PlatformUI;
+import org.locationtech.udig.project.internal.provider.LoadingPlaceHolder;
 
 /**
  * Connects Layers with the usual workbench decorators.

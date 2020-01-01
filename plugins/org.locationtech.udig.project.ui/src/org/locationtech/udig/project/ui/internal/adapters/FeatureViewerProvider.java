@@ -14,14 +14,13 @@ package org.locationtech.udig.project.ui.internal.adapters;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.locationtech.udig.project.ui.internal.Messages;
-
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
+import org.locationtech.udig.project.ui.internal.Messages;
 
 /**
  * Present a feature as a tree for JFace use.

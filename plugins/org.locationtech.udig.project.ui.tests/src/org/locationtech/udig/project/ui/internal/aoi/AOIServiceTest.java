@@ -13,12 +13,12 @@ package org.locationtech.udig.project.ui.internal.aoi;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import org.locationtech.udig.aoi.AOIProxy;
-import org.locationtech.udig.aoi.IAOIService;
-import org.locationtech.udig.internal.aoi.AOIServiceFactory;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.locationtech.udig.aoi.AOIProxy;
+import org.locationtech.udig.aoi.IAOIService;
+import org.locationtech.udig.internal.aoi.AOIServiceFactory;
 
 
 public class AOIServiceTest {

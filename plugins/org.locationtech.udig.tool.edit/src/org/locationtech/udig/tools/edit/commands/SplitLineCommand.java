@@ -17,6 +17,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
+import org.geotools.data.FeatureStore;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.feature.collection.AdaptorFeatureCollection;
+import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.util.factory.GeoTools;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.MultiLineString;
 import org.locationtech.udig.core.IBlockingProvider;
 import org.locationtech.udig.core.internal.FeatureUtils;
 import org.locationtech.udig.project.ILayer;
@@ -31,15 +43,7 @@ import org.locationtech.udig.tools.edit.support.GeometryCreationUtil;
 import org.locationtech.udig.tools.edit.support.Point;
 import org.locationtech.udig.tools.edit.support.PrimitiveShape;
 import org.locationtech.udig.tools.edit.support.ShapeType;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.geotools.data.FeatureStore;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.geotools.feature.IllegalAttributeException;
-import org.geotools.feature.collection.AdaptorFeatureCollection;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.opengis.feature.IllegalAttributeException;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.GeometryDescriptor;
@@ -47,12 +51,6 @@ import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.Id;
 import org.opengis.filter.identity.FeatureId;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.MultiLineString;
 
 /**
  * Splits a line at the selected Vertices.
@@ -147,7 +145,7 @@ public class SplitLineCommand extends AbstractCommand implements MapCommand, Und
                 .isAssignableFrom(MultiLineString.class))
             g = new GeometryFactory().createMultiLineString(new LineString[]{(LineString) g});
 
-        store.modifyFeatures(store.getSchema().getGeometryDescriptor(), g, filter);
+        store.modifyFeatures(store.getSchema().getGeometryDescriptor().getName(), g, filter);
         oldFeature.setDefaultGeometry(g);
     }
 
@@ -251,7 +249,7 @@ public class SplitLineCommand extends AbstractCommand implements MapCommand, Und
         store.removeFeatures(filter);
         Geometry oldType = (Geometry) oldFeature.getDefaultGeometry();
 		GeometryDescriptor newType = store.getSchema().getGeometryDescriptor();
-		store.modifyFeatures(newType, oldType, factory.id(FeatureUtils.stringToId(factory, oldFeature.getID())));
+		store.modifyFeatures(newType.getName(), oldType, factory.id(FeatureUtils.stringToId(factory, oldFeature.getID())));
         oldFeature.setDefaultGeometry(oldGeometry);
         newFids.clear();
     }

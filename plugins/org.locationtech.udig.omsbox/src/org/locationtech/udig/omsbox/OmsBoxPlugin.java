@@ -36,6 +36,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.data.DataUtilities;
+import org.geotools.util.URLs;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
@@ -326,7 +327,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
         }
         
         Location installLocation = Platform.getInstallLocation();
-        File installFolder = DataUtilities.urlToFile(installLocation.getURL());
+        File installFolder = URLs.urlToFile(installLocation.getURL());
         if (installFolder != null && installFolder.exists()) {
             File pluginsFolder = new File(installFolder, "plugins");
             if (pluginsFolder.exists()) {
@@ -362,7 +363,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
      */
     public static File getExtraSpatialtoolboxLibsFolder() {
         Location installLocation = Platform.getInstallLocation();
-        File installFolder = DataUtilities.urlToFile(installLocation.getURL());
+        File installFolder = URLs.urlToFile(installLocation.getURL());
         if (installFolder != null && installFolder.exists()) {
             File omsboxLibsFolder = new File(installFolder, "spatialtoolbox");
             if (omsboxLibsFolder.exists()) {
@@ -378,7 +379,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
     public static String getUdigJava() {
         String[] possibleJava = {"javaw.exe", "java.exe", "java"};
         Location installLocation = Platform.getInstallLocation();
-        File installFolder = DataUtilities.urlToFile(installLocation.getURL());
+        File installFolder = URLs.urlToFile(installLocation.getURL());
         if (installFolder != null && installFolder.exists()) {
             File jreFolder = new File(installFolder, "jre/bin");
             if (jreFolder.exists()) {

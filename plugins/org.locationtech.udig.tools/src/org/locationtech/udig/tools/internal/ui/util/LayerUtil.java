@@ -30,8 +30,8 @@ import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureCollections;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.GeometryDescriptor;
@@ -41,8 +41,8 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
 
 import org.locationtech.udig.tools.feature.util.FeatureUtil;
 
@@ -190,7 +190,7 @@ public final class LayerUtil {
 					.instance().get());
 
 		if (source == null) {
-			return FeatureCollections.newCollection();
+			return new DefaultFeatureCollection(null,null);
 		}
 
 		FeatureCollection<SimpleFeatureType, SimpleFeature> features;

@@ -368,7 +368,7 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
      * 
      * Kicks all the children renderers to render.
      * @throws RenderException
-     * @see org.locationtech.udig.project.internal.render.Renderer#render(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.internal.render.Renderer#render(org.locationtech.jts.geom.Envelope)
      */
     public void render( IProgressMonitor monitor ) throws RenderException {
         if (this.childrenRenderers.size() == 0)

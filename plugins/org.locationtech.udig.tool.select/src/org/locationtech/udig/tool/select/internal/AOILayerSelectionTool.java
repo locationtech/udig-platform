@@ -39,8 +39,8 @@ import org.locationtech.udig.tool.select.commands.SetAOILayerCommand;
 import org.locationtech.udig.tool.select.preferences.SelectionToolPreferencePage;
 import org.locationtech.udig.ui.PlatformGIS;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * Provides AOI Navigation functionality for MapViewport, allows the selection and navigation

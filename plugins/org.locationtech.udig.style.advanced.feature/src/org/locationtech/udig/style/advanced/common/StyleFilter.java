@@ -10,7 +10,6 @@
 package org.locationtech.udig.style.advanced.common;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
-
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
 
 /**

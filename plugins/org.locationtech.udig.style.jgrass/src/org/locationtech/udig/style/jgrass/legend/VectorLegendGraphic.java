@@ -17,11 +17,27 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.widgets.Display;
+import org.geotools.data.FeatureSource;
+import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.PointSymbolizer;
+import org.geotools.styling.Rule;
+import org.geotools.styling.Style;
+import org.geotools.styling.Symbolizer;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryCollection;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.MultiLineString;
+import org.locationtech.jts.geom.MultiPoint;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.Polygon;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.mapgraphic.MapGraphic;
 import org.locationtech.udig.mapgraphic.MapGraphicContext;
@@ -38,28 +54,10 @@ import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.graphics.SLDs;
 import org.locationtech.udig.ui.graphics.ViewportGraphics;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.widgets.Display;
-import org.geotools.data.FeatureSource;
-import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.PointSymbolizer;
-import org.geotools.styling.Rule;
-import org.geotools.styling.Style;
-import org.geotools.styling.Symbolizer;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.GeometryDescriptor;
-
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryCollection;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.MultiLineString;
-import com.vividsolutions.jts.geom.MultiPoint;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.Polygon;
+import org.opengis.feature.type.Name;
 
 /**
  * Draw a legend based on looking at the current list layer list.
@@ -358,7 +356,7 @@ public class VectorLegendGraphic implements MapGraphic {
     private List<Rule> rules( FeatureTypeStyle[] styles ) {
         List<Rule> rules = new ArrayList<Rule>();
         for( FeatureTypeStyle featureTypeStyle : styles ) {
-            rules.addAll(Arrays.asList(featureTypeStyle.getRules()));
+        	rules.addAll(featureTypeStyle.rules());
         }
 
         return rules;
@@ -366,8 +364,9 @@ public class VectorLegendGraphic implements MapGraphic {
 
     private String getText( Rule rule ) {
         String text = ""; //$NON-NLS-1$
-        if (rule.getTitle() != null && !"".equals(rule.getTitle())) { //$NON-NLS-1$
-            text = rule.getTitle();
+        String title = rule.getDescription().getTitle().toString();
+        if (title != null && !"".equals(title)) { //$NON-NLS-1$
+            text = title;
         } else if (rule.getName() != null && !"".equals(rule.getName())) { //$NON-NLS-1$
             text = rule.getName();
         } else if (rule.getFilter() != null) {
@@ -430,18 +429,33 @@ public class VectorLegendGraphic implements MapGraphic {
         }
 
         List<FeatureTypeStyle> styles = new ArrayList<FeatureTypeStyle>();
-        for( FeatureTypeStyle style : sld.getFeatureTypeStyles() ) {
-            if (style.getFeatureTypeName() == null
-                    || style.getFeatureTypeName().equals(SLDs.GENERIC_FEATURE_TYPENAME)) {
-                styles.add(style);
-            } else {
-                if (layer.getSchema() != null && layer.getSchema().getTypeName() != null) {
-                    if (layer.getSchema().getTypeName().equals(style.getFeatureTypeName())) {
-                        // Direct match!
-                        styles.add(style);
+        for( FeatureTypeStyle style : sld.featureTypeStyles() ) {
+        	
+            if (style.featureTypeNames() == null) {
+            	styles.add(style);
+            }else {
+            	boolean found = false;
+            	for (Name n : style.featureTypeNames()) {
+            		if (n.getLocalPart().equals(SLDs.GENERIC_FEATURE_TYPENAME)) {
+            			found = true;
+            		}
+            	}
+            	if (found) {
+            		styles.add(style);
+            	}else {
+            		if (layer.getSchema() != null && layer.getSchema().getTypeName() != null) {
+            			found = false;
+            			for (Name n : style.featureTypeNames()) {
+                    		if (n.getLocalPart().equals(layer.getSchema().getTypeName())) {
+                                // Direct match!
+                    			found = true;
+                    		}
+                    	}
+                        if (found) styles.add(style);
                     }
-                }
+            	}
             }
+               
         }
         return styles.toArray(new FeatureTypeStyle[0]);
     }
@@ -680,8 +694,8 @@ public class VectorLegendGraphic implements MapGraphic {
         Rule rule = null;
         int size = 0;
 
-        for( FeatureTypeStyle style : sld.getFeatureTypeStyles() ) {
-            for( Rule potentialRule : style.getRules() ) {
+        for( FeatureTypeStyle style : sld.featureTypeStyles() ) {
+            for( Rule potentialRule : style.rules() ) {
                 if (potentialRule != null) {
                     Symbolizer[] symbs = potentialRule.getSymbolizers();
                     for( int m = 0; m < symbs.length; m++ ) {

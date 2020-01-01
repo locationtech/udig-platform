@@ -88,14 +88,14 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 import org.eclipse.ui.model.WorkbenchAdapter;
-import org.geotools.data.DefaultQuery;
+import org.geotools.data.Query;
 import org.geotools.data.FeatureEvent;
 import org.geotools.data.FeatureListener;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.util.factory.GeoTools;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
@@ -111,8 +111,8 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
-import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.GeometryFactory;
 
 /**
  * Standard implementation of a Layer.
@@ -281,8 +281,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 ProjectPlugin.log("", e); //$NON-NLS-1$
             }
             if (featureEvent.getBounds() != null) {
-                if (featureEvent.getEventType() == FeatureEvent.FEATURES_ADDED
-                        || featureEvent.getEventType() == FeatureEvent.FEATURES_CHANGED) {
+                if (featureEvent.getType() == FeatureEvent.Type.ADDED
+                        || featureEvent.getType() == FeatureEvent.Type.CHANGED) {
                     if (bounds == null) {
                         ReferencedEnvelope bounds2 = getInfo(getGeoResource(),
                                 new NullProgressMonitor()).getBounds();

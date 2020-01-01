@@ -14,27 +14,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.locationtech.udig.core.internal.GeometryBuilder;
-import org.locationtech.udig.tool.edit.internal.Messages;
-import org.locationtech.udig.tools.edit.EditPlugin;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.widgets.Display;
 import org.geotools.data.shapefile.shp.JTSUtilities;
+import org.locationtech.jts.algorithm.Orientation;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryCollection;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.Polygon;
+import org.locationtech.udig.core.internal.GeometryBuilder;
+import org.locationtech.udig.tool.edit.internal.Messages;
+import org.locationtech.udig.tools.edit.EditPlugin;
 import org.opengis.feature.type.GeometryDescriptor;
-
-import com.vividsolutions.jts.algorithm.CGAlgorithms;
-import com.vividsolutions.jts.algorithm.RobustCGAlgorithms;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryCollection;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.LinearRing;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Some helper methods for creating geometries.
@@ -219,8 +216,6 @@ public class GeometryCreationUtil {
         return geomToCreate.cast(geom);
     }
 
-    public final static RobustCGAlgorithms cga = new RobustCGAlgorithms();
-
     /**
      * Create JTS Geometry from the provided EditGeom.
      * 
@@ -232,7 +227,7 @@ public class GeometryCreationUtil {
         LinearRing shell = GeometryBuilder.create().safeCreateLinearRing(shellCoords);
 
         try {
-            if (CGAlgorithms.isCCW(shell.getCoordinates())) {
+            if (Orientation.isCCW(shell.getCoordinates())) {
                 shell = JTSUtilities.reverseRing(shell);
             }
         } catch (Exception e) {
@@ -248,7 +243,7 @@ public class GeometryCreationUtil {
             }
             LinearRing hole = GeometryBuilder.create().safeCreateLinearRing(coordArray);
             // FIXME test when the hole has only one coordinate.
-            if (!(coordArray.length <= 2) && !CGAlgorithms.isCCW(hole.getCoordinates())) {
+            if (!(coordArray.length <= 2) && !Orientation.isCCW(hole.getCoordinates())) {
                 hole = JTSUtilities.reverseRing((LinearRing) hole);
             }
             currentHoles.add(hole);

@@ -59,7 +59,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 import org.locationtech.udig.image.georeferencing.internal.i18n.Messages;
 import org.locationtech.udig.image.georeferencing.internal.process.MarkModel;

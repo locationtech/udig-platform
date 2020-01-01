@@ -12,12 +12,6 @@ package org.locationtech.udig.style.sld.editor;
 import java.io.File;
 import java.text.MessageFormat;
 
-import org.locationtech.udig.project.internal.SetDefaultStyleProcessor;
-import org.locationtech.udig.style.internal.StyleLayer;
-import org.locationtech.udig.style.sld.SLDContent;
-import org.locationtech.udig.style.sld.internal.Messages;
-import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -25,6 +19,11 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.locationtech.udig.project.internal.SetDefaultStyleProcessor;
+import org.locationtech.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.sld.SLDContent;
+import org.locationtech.udig.style.sld.internal.Messages;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 /**
  * Listen to the style editor workflow.

@@ -9,10 +9,6 @@
  */
 package org.locationtech.udig.style.sld.simple;
 
-import org.locationtech.udig.style.sld.AbstractSimpleConfigurator;
-import org.locationtech.udig.style.sld.SLDPlugin;
-import org.locationtech.udig.style.sld.internal.Messages;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
@@ -22,6 +18,10 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.locationtech.udig.style.sld.AbstractSimpleConfigurator;
+import org.locationtech.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.style.sld.SimpleStyleConfigurator;
+import org.locationtech.udig.style.sld.internal.Messages;
 
 /**
  * Allows editing/viewing of a scale. Used to build the min/max scale editors for a rule.  

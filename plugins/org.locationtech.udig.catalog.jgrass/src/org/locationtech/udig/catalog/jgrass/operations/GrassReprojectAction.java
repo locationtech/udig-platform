@@ -70,7 +70,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.datum.PixelInCell;
 import org.opengis.referencing.operation.MathTransform;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
 import org.locationtech.udig.catalog.jgrass.core.ChooseCoordinateReferenceSystemDialog;
@@ -282,9 +282,9 @@ public class GrassReprojectAction
                          */
                         JGrassRegion sourceRegion = jgMEnv.getActiveRegion();
                         CoordinateReferenceSystem sourceCrs = jgMEnv.getCoordinateReferenceSystem();
-                        com.vividsolutions.jts.geom.Envelope sourceEnvelope = sourceRegion.getEnvelope();
+                        org.locationtech.jts.geom.Envelope sourceEnvelope = sourceRegion.getEnvelope();
                         MathTransform tr = CRS.findMathTransform(sourceCrs, crs);
-                        com.vividsolutions.jts.geom.Envelope outputEnvelope = JTS.transform(sourceEnvelope, tr);
+                        org.locationtech.jts.geom.Envelope outputEnvelope = JTS.transform(sourceEnvelope, tr);
 
                         double west = outputEnvelope.getMinX();
                         double east = outputEnvelope.getMaxX();

@@ -39,7 +39,7 @@ import org.locationtech.udig.tools.edit.preferences.PreferenceConstants;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * Deletes a feature from the currently selected layer or the top layer.

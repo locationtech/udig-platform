@@ -9,13 +9,6 @@
  */
 package org.locationtech.udig.project.ui.internal.actions;
 
-import org.locationtech.udig.project.EditManagerEvent;
-import org.locationtech.udig.project.IEditManagerListener;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.render.RenderManager;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Event;
@@ -24,6 +17,12 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.actions.ActionDelegate;
+import org.locationtech.udig.project.EditManagerEvent;
+import org.locationtech.udig.project.IEditManagerListener;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 /**
  * Turns on/off the Mylar effect

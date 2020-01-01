@@ -17,7 +17,7 @@ import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryJarPrefer
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.geotools.arcsde.ArcSDEDataStoreFactory;
+import org.geotools.arcsde.data.ArcSDEDataStoreFactory;
 
 /**
  * @author Jesse

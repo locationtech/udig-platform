@@ -14,9 +14,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.locationtech.udig.style.sld.internal.Messages;
-import org.locationtech.udig.ui.operations.IOp;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -29,6 +26,8 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.locationtech.udig.style.sld.internal.Messages;
+import org.locationtech.udig.ui.operations.IOp;
 
 /**
  * Abstract class can be used to implement your ow "export to" operations.

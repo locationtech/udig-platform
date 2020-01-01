@@ -9,11 +9,10 @@
  */
 package org.locationtech.udig.project.ui;
 
-import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
-import org.locationtech.udig.ui.PlatformGIS;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.ui.PlatformGIS;
 
 /**
  * 

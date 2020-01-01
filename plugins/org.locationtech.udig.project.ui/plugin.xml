@@ -298,7 +298,7 @@
      </factory>
      <factory
            class="org.locationtech.udig.project.ui.internal.adapters.FeatureAdapterFactory"
-           adaptableType="com.vividsolutions.jts.geom.Geometry">
+           adaptableType="org.locationtech.jts.geom.Geometry">
         <adapter type="org.eclipse.ui.views.properties.IPropertySource"/>
         <adapter type="org.eclipse.ui.views.properties.IPropertySource2"/>
         <adapter type="org.eclipse.jface.viewers.ITreeContentProvider"/>
@@ -311,7 +311,7 @@
 	</factory>
      <factory
            class="org.locationtech.udig.project.ui.internal.adapters.FeatureAdapterFactory"
-           adaptableType="com.vividsolutions.jts.geom.Coordinate">
+           adaptableType="org.locationtech.jts.geom.Coordinate">
         <adapter type="org.eclipse.ui.views.properties.IPropertySource"/>
         <adapter type="org.eclipse.ui.views.properties.IPropertySource2"/>
         <adapter type="org.eclipse.jface.viewers.ITreeContentProvider"/>
@@ -324,7 +324,7 @@
      </factory>
      <factory
            class="org.locationtech.udig.project.ui.internal.adapters.FeatureAdapterFactory"
-           adaptableType="com.vividsolutions.jts.geom.Coordinate">
+           adaptableType="org.locationtech.jts.geom.Coordinate">
         <adapter type="org.eclipse.jface.viewers.ITreeContentProvider"/>
         <adapter type="org.eclipse.jface.viewers.IStructuredContentProvider"/>
         <adapter type="org.eclipse.jface.viewers.IContentProvider"/>

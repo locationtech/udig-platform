@@ -18,13 +18,14 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.memory.MemoryDataStore;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
+import org.geotools.util.factory.GeoTools;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IService;
@@ -38,8 +39,6 @@ import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
-
-import com.vividsolutions.jts.geom.Geometry;
 
 public class EditFeatureTest extends AbstractProjectTestCase {
 
@@ -76,7 +75,7 @@ public class EditFeatureTest extends AbstractProjectTestCase {
         FeatureIterator<SimpleFeature> iter = collection.features();
         assertEquals(ORIGINAL_VALUE, iter.next().getAttribute(1));
         iter.close();
-        store.modifyFeatures(store.getSchema().getDescriptor(1), MODIFIED_VALUE, fac.id(FeatureUtils.stringToId(fac, features[1].getID()) )); 
+        store.modifyFeatures(store.getSchema().getDescriptor(1).getName(), MODIFIED_VALUE, fac.id(FeatureUtils.stringToId(fac, features[1].getID()) )); 
 
         //not committed so other featurestores should not get modified value
         FeatureSource<SimpleFeatureType, SimpleFeature> dsSource= ds.getFeatureSource("testType"); //$NON-NLS-1$
@@ -112,7 +111,7 @@ public class EditFeatureTest extends AbstractProjectTestCase {
         FeatureIterator<SimpleFeature> iter = collection.features();
         assertEquals(ORIGINAL_VALUE, iter.next().getAttribute(1));
         iter.close();
-        store.modifyFeatures(store.getSchema().getDescriptor(1), MODIFIED_VALUE, fac.id(FeatureUtils.stringToId(fac, id)) ); 
+        store.modifyFeatures(store.getSchema().getDescriptor(1).getName(), MODIFIED_VALUE, fac.id(FeatureUtils.stringToId(fac, id)) ); 
 
         //not committed so other featurestores should not get modified value
         FeatureSource<SimpleFeatureType, SimpleFeature> dsSource= ds.getFeatureSource("testType"); //$NON-NLS-1$

@@ -33,8 +33,8 @@ import org.opengis.referencing.operation.TransformException;
 
 import au.com.bytecode.opencsv.CSVReader;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Point;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Point;
 
 public class ColorCSVRenderer extends RendererImpl {
 

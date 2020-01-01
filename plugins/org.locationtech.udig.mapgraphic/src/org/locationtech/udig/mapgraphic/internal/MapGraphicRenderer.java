@@ -154,7 +154,7 @@ public class MapGraphicRenderer extends RendererImpl implements IMultiLayerRende
     /*
      * (non-Javadoc)
      * 
-     * @see org.locationtech.udig.project.render.Renderer#render(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.render.Renderer#render(org.locationtech.jts.geom.Envelope)
      */
     @Override
     public void render( IProgressMonitor monitor ) {

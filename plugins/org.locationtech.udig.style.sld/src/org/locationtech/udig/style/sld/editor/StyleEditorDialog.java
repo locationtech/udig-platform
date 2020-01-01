@@ -10,15 +10,6 @@
  */
 package org.locationtech.udig.style.sld.editor;
 
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.StyleBlackboard;
-import org.locationtech.udig.style.internal.StyleLayer;
-import org.locationtech.udig.style.sld.IStyleEditorPageContainer;
-import org.locationtech.udig.style.sld.SLDContent;
-import org.locationtech.udig.style.sld.editor.internal.FilteredEditorDialog;
-import org.locationtech.udig.style.sld.editor.internal.IEditorNode;
-import org.locationtech.udig.style.sld.internal.Messages;
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -36,8 +27,16 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayerDescriptor;
-import org.geotools.util.NullProgressListener;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.sld.IStyleEditorPageContainer;
+import org.locationtech.udig.style.sld.SLDContent;
+import org.locationtech.udig.style.sld.editor.internal.FilteredEditorDialog;
+import org.locationtech.udig.style.sld.editor.internal.IEditorNode;
+import org.locationtech.udig.style.sld.internal.Messages;
 import org.opengis.util.ProgressListener;
+import org.geotools.data.util.NullProgressListener;
 
 /**
  * Preference dialog for the workbench including the ability to load/save preferences.

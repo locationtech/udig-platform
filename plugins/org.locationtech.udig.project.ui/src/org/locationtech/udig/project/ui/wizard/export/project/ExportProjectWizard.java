@@ -13,12 +13,6 @@ package org.locationtech.udig.project.ui.wizard.export.project;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.locationtech.udig.project.IProject;
-import org.locationtech.udig.project.internal.Messages;
-import org.locationtech.udig.project.internal.Project;
-import org.locationtech.udig.project.internal.impl.MapImpl;
-import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -26,6 +20,11 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.impl.MapImpl;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 /**
  * Wizard for exporting a project, its maps and all associated data to a project.

@@ -23,11 +23,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.locationtech.udig.internal.ui.UiPlugin;
-
 import org.eclipse.swt.graphics.FontData;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
 import org.geotools.feature.NameImpl;
 import org.geotools.filter.Filters;
 import org.geotools.sld.v1_1.SLDConfiguration;
@@ -43,7 +40,6 @@ import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.SLD;
-import org.geotools.styling.SLDParser;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleFactory;
@@ -51,7 +47,10 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.UserLayer;
-import org.geotools.xml.Parser;
+import org.geotools.util.factory.GeoTools;
+import org.geotools.xml.styling.SLDParser;
+import org.geotools.xsd.Parser;
+import org.locationtech.udig.internal.ui.UiPlugin;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Add;
 import org.opengis.filter.expression.Divide;
@@ -65,6 +64,7 @@ import org.opengis.filter.expression.PropertyName;
 import org.opengis.filter.expression.Subtract;
 import org.opengis.style.Graphic;
 import org.opengis.style.GraphicalSymbol;
+import org.opengis.style.SemanticType;
 
 /**
  * Utility class for working with Geotools SLD objects.
@@ -358,11 +358,9 @@ public class SLDs extends SLD {
     }
 
     public static boolean isSemanticTypeMatch( FeatureTypeStyle fts, String regex ) {
-        String[] identifiers = fts.getSemanticTypeIdentifiers();
-        for( int i = 0; i < identifiers.length; i++ ) {
-            if (identifiers[i].matches(regex))
-                return true;
-        }
+    	for (SemanticType type : fts.semanticTypeIdentifiers()) {
+    		if (type.name().matches(regex)) return true;
+    	}
         return false;
     }
 

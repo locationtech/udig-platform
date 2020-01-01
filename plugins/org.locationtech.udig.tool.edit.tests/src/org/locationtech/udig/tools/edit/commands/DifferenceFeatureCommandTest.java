@@ -23,13 +23,20 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureIterator;
+import org.geotools.util.factory.GeoTools;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Polygon;
 import org.locationtech.udig.TestViewportPane;
-import org.locationtech.udig.catalog.tests.CatalogTests;
 import org.locationtech.udig.core.internal.FeatureUtils;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.render.impl.ViewportModelImpl;
@@ -44,15 +51,6 @@ import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.LinearRing;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Test the split SimpleFeature command
@@ -205,7 +203,7 @@ public class DifferenceFeatureCommandTest {
         Polygon polygon = fac.createPolygon(ring, new LinearRing[0]);
         FeatureStore<SimpleFeatureType, SimpleFeature> store = map.getMapLayers().get(0).getResource(FeatureStore.class, new NullProgressMonitor());        
         FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-		store.modifyFeatures(features[0].getFeatureType().getGeometryDescriptor(), polygon, 
+		store.modifyFeatures(features[0].getFeatureType().getGeometryDescriptor().getName(), polygon, 
                 filterFactory.id(FeatureUtils.stringToId(filterFactory, features[0].getID())));
 		
         EditBlackboard bb = handler.getEditBlackboard();
@@ -284,7 +282,7 @@ public class DifferenceFeatureCommandTest {
         FeatureStore<SimpleFeatureType, SimpleFeature> store = map.getMapLayers().get(0).getResource(FeatureStore.class, new NullProgressMonitor());
         FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
 		store.removeFeatures(filterFactory.id(FeatureUtils.stringToId(filterFactory, features[1].getID())));
-        store.modifyFeatures(features[0].getFeatureType().getGeometryDescriptor(), geom, 
+        store.modifyFeatures(features[0].getFeatureType().getGeometryDescriptor().getName(), geom, 
                 filterFactory.id(FeatureUtils.stringToId(filterFactory, features[0].getID())));
         EditBlackboard bb = handler.getEditBlackboard();
         

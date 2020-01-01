@@ -18,10 +18,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.measure.Measure;
+import javax.measure.Quantity;
 import javax.measure.quantity.Length;
-import javax.measure.unit.NonSI;
-import javax.measure.unit.SI;
+import si.uom.SI;
+import systems.uom.common.USCustomary;
+
+import tec.uom.se.quantity.Quantities;
+import tec.uom.se.unit.MetricPrefix;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -41,7 +44,7 @@ import org.locationtech.udig.tool.measure.internal.MeasurementToolPlugin;
 import org.locationtech.udig.tool.measure.internal.Messages;
 import org.opengis.referencing.operation.TransformException;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 public class DistanceTool extends SimpleTool implements KeyListener {
     public DistanceTool() {
@@ -187,66 +190,68 @@ public class DistanceTool extends SimpleTool implements KeyListener {
             units = org.locationtech.udig.ui.preferences.PreferenceConstants.IMPERIAL_UNITS;
         }
 
-        final Measure<Double, Length> distanceInMeter = Measure.valueOf(distance, SI.METER);
-        final Measure<Double, Length> lastSegmentInMeter = Measure.valueOf(lastSegmentDistance, SI.METER);
+        final Quantity<Length> distanceInMeter = Quantities.getQuantity(distance, SI.METRE);
+        final Quantity<Length> lastSegmentInMeter = Quantities.getQuantity(lastSegmentDistance, SI.METRE);
         
-        Measure<Double, Length> result = null;
-        Measure<Double, Length> resultLastSegment = null;
+        Quantity<Length> result = null;
+        Quantity<Length> resultLastSegment = null;
         if (units.equals( org.locationtech.udig.ui.preferences.PreferenceConstants.IMPERIAL_UNITS)){
-            Measure<Double, Length> distanceInMiles = distanceInMeter.to(NonSI.MILE);
-            Measure<Double, Length> lastSegmentInMiles = lastSegmentInMeter.to(NonSI.MILE);
+        	Quantity<Length> distanceInMiles = distanceInMeter.to(USCustomary.MILE);
+        	Quantity<Length> lastSegmentInMiles = lastSegmentInMeter.to(USCustomary.MILE);
             double distInMilesValue = distanceInMiles.getValue().doubleValue();
             double lastSegmentInMilesValue = lastSegmentInMiles.getValue().doubleValue();
 
-            if (distInMilesValue > Measure.valueOf(1, NonSI.MILE).doubleValue(NonSI.MILE)) {
+            if (distInMilesValue >  Quantities.getQuantity(1, USCustomary.MILE).getValue().doubleValue()) {
                 // everything longer than a mile
                 result = distanceInMiles;
-            } else if (distInMilesValue > Measure.valueOf(1, NonSI.FOOT).doubleValue(NonSI.MILE)) {
+            } else if (distInMilesValue > Quantities.getQuantity(1, USCustomary.FOOT).to(USCustomary.MILE).getValue().doubleValue()) {
                 // everything longer that a foot
-                result = distanceInMiles.to(NonSI.FOOT);
+                result = distanceInMiles.to(USCustomary.FOOT);
             } else {
                 // shorter than a foot
-                result = distanceInMiles.to(NonSI.INCH);
+                result = distanceInMiles.to(USCustomary.INCH);
             }
             
-            if (lastSegmentInMilesValue > Measure.valueOf(1, NonSI.MILE).doubleValue(NonSI.MILE)) {
+            if (lastSegmentInMilesValue >  Quantities.getQuantity(1, USCustomary.MILE).getValue().doubleValue()) {
                 // everything longer than a mile
             	resultLastSegment = lastSegmentInMiles;
-            } else if (lastSegmentInMilesValue > Measure.valueOf(1, NonSI.FOOT).doubleValue(NonSI.MILE)) {
+            } else if (lastSegmentInMilesValue > Quantities.getQuantity(1, USCustomary.FOOT).to(USCustomary.MILE).getValue().doubleValue()) {
                 // everything longer that a foot
-            	resultLastSegment = lastSegmentInMiles.to(NonSI.FOOT);
+            	resultLastSegment = lastSegmentInMiles.to(USCustomary.FOOT);
             } else {
                 // shorter than a foot
-            	resultLastSegment = lastSegmentInMiles.to(NonSI.INCH);
+            	resultLastSegment = lastSegmentInMiles.to(USCustomary.INCH);
             }
         } else {
             double distanceInMeterValue = distanceInMeter.getValue().doubleValue();
             double lastSegmentInMeterValue = lastSegmentInMeter.getValue().doubleValue();
             
-            if (distanceInMeterValue > Measure.valueOf(1000, SI.METER).doubleValue(SI.METER)) {
-                result = distanceInMeter.to(SI.KILOMETER);
-            } else if (distanceInMeterValue > Measure.valueOf(1, SI.METER).doubleValue(SI.METER)) {
-                result = distanceInMeter.to(SI.METER);
-            } else if (distanceInMeterValue > Measure.valueOf(1, SI.CENTIMETER).doubleValue(SI.METER)) {
-                result = distanceInMeter.to(SI.CENTIMETER);
+            if (distanceInMeterValue >  Quantities.getQuantity(1000, SI.METRE).to(SI.METRE).getValue().doubleValue()) {
+                result = distanceInMeter.to(MetricPrefix.KILO(SI.METRE));
+            } else if (distanceInMeterValue > Quantities.getQuantity(1, SI.METRE).to(SI.METRE).getValue().doubleValue()) {
+                result = distanceInMeter.to(SI.METRE);
+            } else if (distanceInMeterValue > Quantities.getQuantity(1, MetricPrefix.CENTI(SI.METRE)).to(SI.METRE).getValue().doubleValue()) {
+                result = distanceInMeter.to(MetricPrefix.CENTI(SI.METRE));
             } else {
-                result = distanceInMeter.to(SI.MILLIMETER);
+                result = distanceInMeter.to(MetricPrefix.MILLI(SI.METRE));
             }
             
-            if (lastSegmentInMeterValue > Measure.valueOf(1000, SI.METER).doubleValue(SI.METER)) {
-            	resultLastSegment = lastSegmentInMeter.to(SI.KILOMETER);
-            } else if (lastSegmentInMeterValue > Measure.valueOf(1, SI.METER).doubleValue(SI.METER)) {
-            	resultLastSegment = lastSegmentInMeter.to(SI.METER);
-            } else if (lastSegmentInMeterValue > Measure.valueOf(1, SI.CENTIMETER).doubleValue(SI.METER)) {
-            	resultLastSegment = lastSegmentInMeter.to(SI.CENTIMETER);
+            
+            if (lastSegmentInMeterValue >  Quantities.getQuantity(1000, SI.METRE).to(SI.METRE).getValue().doubleValue()) {
+            	resultLastSegment = lastSegmentInMeter.to(MetricPrefix.KILO(SI.METRE));
+            } else if (lastSegmentInMeterValue > Quantities.getQuantity(1, SI.METRE).to(SI.METRE).getValue().doubleValue()) {
+            	resultLastSegment = lastSegmentInMeter.to(SI.METRE);
+            } else if (lastSegmentInMeterValue > Quantities.getQuantity(1, MetricPrefix.CENTI(SI.METRE)).to(SI.METRE).getValue().doubleValue()) {
+            	resultLastSegment = lastSegmentInMeter.to(MetricPrefix.CENTI(SI.METRE));
             } else {
-            	resultLastSegment = lastSegmentInMeter.to(SI.MILLIMETER);
+            	resultLastSegment = lastSegmentInMeter.to(MetricPrefix.MILLI(SI.METRE));
             }
+
         }
 
         final String message = MessageFormat.format(Messages.DistanceTool_distance, 
-        		round(result.getValue(), 2) + " " + result.getUnit(), 
-        		round(resultLastSegment.getValue(), 2) + " " + resultLastSegment.getUnit());
+        		round(result.getValue().doubleValue(), 2) + " " + result.getUnit(), 
+        		round(resultLastSegment.getValue().doubleValue(), 2) + " " + resultLastSegment.getUnit());
 
         getContext().updateUI(new Runnable(){
             public void run() {

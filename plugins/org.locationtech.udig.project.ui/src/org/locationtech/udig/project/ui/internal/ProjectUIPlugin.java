@@ -13,9 +13,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.locationtech.udig.core.AbstractUdigUIPlugin;
-import org.locationtech.udig.project.ui.feature.FeaturePanelProcessor;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -37,6 +34,8 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheetPage;
+import org.locationtech.udig.core.AbstractUdigUIPlugin;
+import org.locationtech.udig.project.ui.feature.FeaturePanelProcessor;
 import org.osgi.framework.BundleContext;
 
 /**

@@ -20,11 +20,10 @@
  *******************************************************************************/
 package org.locationtech.udig.style.sld.editor.internal;
 
-import org.locationtech.udig.style.sld.editor.EditorPageManager;
-
 import org.eclipse.jface.preference.PreferenceContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.locationtech.udig.style.sld.editor.EditorPageManager;
 
 /**
  * Provides a tree model for <code>EditorPageManager</code> content.

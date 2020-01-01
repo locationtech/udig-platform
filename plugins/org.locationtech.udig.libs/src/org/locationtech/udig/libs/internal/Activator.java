@@ -18,9 +18,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.ConsoleHandler;
-import java.util.logging.Filter;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import javax.imageio.spi.ImageReaderSpi;
@@ -35,21 +33,21 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.osgi.service.debug.DebugOptions;
-import org.geotools.data.DataUtilities;
-import org.geotools.factory.GeoTools;
-import org.geotools.factory.Hints;
-import org.geotools.factory.Hints.Key;
 import org.geotools.geometry.DirectPosition2D;
 import org.geotools.geometry.GeneralDirectPosition;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.image.io.ImageIOExt;
 import org.geotools.metadata.iso.citation.Citations;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.ReferencingFactoryFinder;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.referencing.factory.PropertyAuthorityFactory;
 import org.geotools.referencing.factory.ReferencingFactoryContainer;
-import org.geotools.referencing.factory.epsg.ThreadedHsqlEpsgFactory;
-import org.geotools.image.io.ImageIOExt;
+import org.geotools.referencing.factory.epsg.hsql.ThreadedHsqlEpsgFactory;
+import org.geotools.util.URLs;
+import org.geotools.util.factory.GeoTools;
+import org.geotools.util.factory.Hints;
+import org.geotools.util.factory.Hints.Key;
 import org.geotools.util.logging.LoggerFactory;
 import org.geotools.util.logging.Logging;
 import org.opengis.geometry.DirectPosition;
@@ -88,7 +86,6 @@ public class Activator implements BundleActivator {
     private static final String DATABASES_FOLDER_NAME = "databases";
     private static final String EPSG_DATABASEFOLDER_PREFIX = "epsg_v";
 
-    @SuppressWarnings("deprecation")
     public void start( final BundleContext context ) throws Exception {
         if (Platform.getOS().equals(Platform.OS_WIN32)) {
             try {
@@ -271,10 +268,10 @@ public class Activator implements BundleActivator {
     }
     
     private static File doEpsg(Location configLocation) throws MalformedURLException{
-        File config = DataUtilities.urlToFile( configLocation.getURL() );
+        File config = URLs.urlToFile( configLocation.getURL() );
         if( config.canWrite() ){
             URL databaseDirectoryUrl = new URL( configLocation.getURL(), DATABASES_FOLDER_NAME );
-            File directory = DataUtilities.urlToFile( databaseDirectoryUrl );
+            File directory = URLs.urlToFile( databaseDirectoryUrl );
             File epsgDirectory = new File( directory, EPSG_DATABASEFOLDER_PREFIX + ThreadedHsqlEpsgFactory.VERSION );
             
             return epsgDirectory;

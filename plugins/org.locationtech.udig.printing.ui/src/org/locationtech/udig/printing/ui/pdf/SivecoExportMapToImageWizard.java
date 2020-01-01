@@ -45,11 +45,12 @@ import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.XMLMemento;
 import org.geotools.data.DataUtilities;
-import org.geotools.data.DefaultQuery;
+import org.geotools.data.Query;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
+import org.geotools.util.URLs;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.ID;
@@ -411,7 +412,7 @@ public class SivecoExportMapToImageWizard extends Wizard implements IExportWizar
 
             //get title from selected feature of farm layer            
             Filter farmParcelFilter = farmParcelLayer.getFilter();
-            Query query = new DefaultQuery(farmParcelLayer.getSchema().getTypeName(), 
+            Query query = new Query(farmParcelLayer.getSchema().getTypeName(), 
                                            farmParcelFilter, 
                                            new String[0]  ); //{"nume_com", "fbid"}
             
@@ -453,7 +454,7 @@ public class SivecoExportMapToImageWizard extends Wizard implements IExportWizar
      */
 	private void addToCatalog(File destination) throws MalformedURLException {
 		IServiceFactory serviceFactory = CatalogPlugin.getDefault().getServiceFactory();
-		URL url = DataUtilities.fileToURL( destination );
+		URL url = URLs.fileToUrl( destination );
         List<IService> services = serviceFactory.createService(url);
 		ICatalog localCatalog = CatalogPlugin.getDefault().getLocalCatalog();;
 		for (IService service : services) {

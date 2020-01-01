@@ -7,14 +7,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.ITransientResolve;
 import org.locationtech.udig.catalog.ui.export.CatalogExport;
 import org.locationtech.udig.catalog.ui.export.ExportResourceSelectionState;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.EditManager;
-
-import org.eclipse.jface.viewers.StructuredSelection;
 
 /**
  * Save strategy for Map Palette

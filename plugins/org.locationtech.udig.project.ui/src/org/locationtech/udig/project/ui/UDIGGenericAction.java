@@ -14,6 +14,10 @@ package org.locationtech.udig.project.ui;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.eclipse.emf.common.ui.action.WorkbenchWindowActionDelegate;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.locationtech.udig.core.filter.AdaptingFilter;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IProjectElement;
@@ -21,11 +25,6 @@ import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Project;
 import org.locationtech.udig.project.internal.ProjectElement;
 import org.locationtech.udig.project.ui.internal.actions.Rename;
-
-import org.eclipse.emf.common.ui.action.WorkbenchWindowActionDelegate;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**

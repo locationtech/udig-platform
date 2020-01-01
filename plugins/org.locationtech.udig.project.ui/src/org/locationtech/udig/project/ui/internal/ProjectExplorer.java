@@ -17,28 +17,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.internal.ui.IDropTargetProvider;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.IProject;
-import org.locationtech.udig.project.IProjectElement;
-import org.locationtech.udig.project.element.ProjectElementAdapter;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.Project;
-import org.locationtech.udig.project.internal.ProjectElement;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.ProjectRegistry;
-import org.locationtech.udig.project.internal.provider.LoadingPlaceHolder;
-import org.locationtech.udig.project.ui.AdapterFactoryLabelProviderDecorator;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.UDIGAdapterFactoryContentProvider.InputChangedListener;
-import org.locationtech.udig.project.ui.internal.actions.Delete;
-import org.locationtech.udig.project.ui.internal.actions.OpenProject;
-import org.locationtech.udig.project.ui.tool.IToolManager;
-import org.locationtech.udig.ui.UDIGDragDropUtilities;
-import org.locationtech.udig.ui.ZoomingDialog;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.jface.action.Action;
@@ -90,6 +68,27 @@ import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheetPage;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.internal.ui.IDropTargetProvider;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.element.ProjectElementAdapter;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.ProjectRegistry;
+import org.locationtech.udig.project.internal.provider.LoadingPlaceHolder;
+import org.locationtech.udig.project.ui.AdapterFactoryLabelProviderDecorator;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.UDIGAdapterFactoryContentProvider.InputChangedListener;
+import org.locationtech.udig.project.ui.internal.actions.Delete;
+import org.locationtech.udig.project.ui.internal.actions.OpenProject;
+import org.locationtech.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.ui.UDIGDragDropUtilities;
+import org.locationtech.udig.ui.ZoomingDialog;
 
 /**
  * Displays the Projects and their contents

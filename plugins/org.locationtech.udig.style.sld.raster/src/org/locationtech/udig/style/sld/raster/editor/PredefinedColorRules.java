@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.locationtech.udig.style.sld.raster.SLDRasterPlugin;
-
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -28,10 +26,11 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.geotools.filter.expression.ExpressionBuilder;
+import org.geotools.brewer.styling.filter.expression.ExpressionBuilder;
 import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapEntryImpl;
 import org.geotools.styling.ColorMapImpl;
+import org.locationtech.udig.style.sld.raster.SLDRasterPlugin;
 import org.opengis.coverage.grid.GridCoverageReader;
 import org.opengis.filter.expression.Expression;
 import org.osgi.framework.Bundle;

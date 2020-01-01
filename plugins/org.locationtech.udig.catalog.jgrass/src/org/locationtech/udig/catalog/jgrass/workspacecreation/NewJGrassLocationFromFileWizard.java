@@ -68,12 +68,12 @@ public class NewJGrassLocationFromFileWizard extends Wizard implements INewWizar
                 ArcGridReader arcGridReader = new ArcGridReader(mapFile);
                 geodata = arcGridReader.read(null);
                 geodata = JGrassCatalogUtilities.removeNovalues(geodata);
-                fileCrs = arcGridReader.getCrs();
+                fileCrs = arcGridReader.getCoordinateReferenceSystem();
             } else if (mapFile.getName().endsWith(".tif") || mapFile.getName().endsWith(".tiff")) {
                 GeoTiffReader geotiffGridReader = new GeoTiffReader(mapFile);
                 geodata = geotiffGridReader.read(null);
                 geodata = JGrassCatalogUtilities.removeNovalues(geodata);
-                fileCrs = geotiffGridReader.getCrs();
+                fileCrs = geotiffGridReader.getCoordinateReferenceSystem();
             }
 
             HashMap<String, Double> regionParams = JGrassCatalogUtilities.getRegionParamsFromGridCoverage(geodata);

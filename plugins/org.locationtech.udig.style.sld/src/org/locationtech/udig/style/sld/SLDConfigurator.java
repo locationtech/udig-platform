@@ -17,13 +17,6 @@ import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.locationtech.udig.core.internal.ExtensionPointProcessor;
-import org.locationtech.udig.core.internal.ExtensionPointUtil;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.style.IStyleConfigurator;
-import org.locationtech.udig.style.sld.internal.Messages;
-import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.jface.action.Action;
@@ -38,8 +31,15 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.part.PageBook;
 import org.geotools.data.FeatureSource;
+import org.geotools.feature.NameImpl;
 import org.geotools.styling.Style;
 import org.geotools.styling.Symbolizer;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.IStyleConfigurator;
+import org.locationtech.udig.style.sld.internal.Messages;
+import org.locationtech.udig.ui.graphics.SLDs;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
@@ -81,7 +81,7 @@ public class SLDConfigurator extends IStyleConfigurator {
     public boolean canStyle( Layer layer ) {
         if (layer.hasResource(FeatureSource.class))
             return true;
-        if (layer.hasResource(org.geotools.data.ows.Layer.class))
+        if (layer.hasResource(org.geotools.ows.wms.Layer.class))
             return true;
         return false; // TODO: check for wms supporting sld
     }
@@ -179,7 +179,8 @@ public class SLDConfigurator extends IStyleConfigurator {
         
             //set the name of the feature type style for the feature renderer
             String name = featureType.getName().getLocalPart();
-            sldContentManager.getDefaultFeatureTypeStyle().setFeatureTypeName(SLDs.GENERIC_FEATURE_TYPENAME);
+            sldContentManager.getDefaultFeatureTypeStyle().featureTypeNames().clear();
+            sldContentManager.getDefaultFeatureTypeStyle().featureTypeNames().add(new NameImpl(SLDs.GENERIC_FEATURE_TYPENAME));
         }
         
         // force the toolbar to refresh

@@ -17,6 +17,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.ows.wms.Layer;
+import org.geotools.ows.wms.StyleImpl;
+import org.geotools.styling.Style;
+import org.geotools.util.Range;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.ProjectBlackboardConstants;
@@ -30,12 +35,6 @@ import org.locationtech.udig.style.sld.SLDContent;
 import org.locationtech.udig.style.wms.WMSStyleContent;
 import org.locationtech.udig.ui.ProgressManager;
 import org.locationtech.udig.ui.graphics.SLDs;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.data.ows.Layer;
-import org.geotools.data.ows.StyleImpl;
-import org.geotools.styling.Style;
-import org.geotools.util.Range;
 
 
 /**

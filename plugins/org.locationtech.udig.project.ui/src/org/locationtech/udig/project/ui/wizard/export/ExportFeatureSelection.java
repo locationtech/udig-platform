@@ -15,6 +15,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.geotools.data.FeatureSource;
+import org.geotools.data.Query;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.ui.export.CatalogExport;
 import org.locationtech.udig.catalog.ui.export.Data;
@@ -29,9 +31,6 @@ import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.ui.ProgressManager;
-
-import org.geotools.data.DefaultQuery;
-import org.geotools.data.FeatureSource;
 import org.opengis.filter.Filter;
 
 /**
@@ -74,7 +73,7 @@ public class ExportFeatureSelection extends CatalogExport {
                         // no selection provided; so lets do everything
                         filter = Filter.INCLUDE;
                     }
-                    DefaultQuery query = new DefaultQuery(layer.getSchema().getTypeName(), filter);
+                    Query query = new Query(layer.getSchema().getTypeName(), filter);
                     Data data2 = new Data(resource, query);
                     data2.setChecked(layer.isVisible());
                     data.add(data2);

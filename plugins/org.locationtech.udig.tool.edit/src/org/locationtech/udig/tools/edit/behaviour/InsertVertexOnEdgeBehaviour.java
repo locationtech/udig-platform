@@ -23,8 +23,8 @@ import org.locationtech.udig.tools.edit.support.ClosestEdge;
 import org.locationtech.udig.tools.edit.support.EditBlackboard;
 import org.locationtech.udig.tools.edit.support.Point;
 
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Polygon;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Polygon;
 
 /**
  * Inserts a vertex at the location where the mouse event occurred

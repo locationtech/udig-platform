@@ -10,20 +10,18 @@
  */
 package org.locationtech.udig.project.ui.feature;
 
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.ui.IFeaturePanel;
-import org.locationtech.udig.project.ui.IFeaturePanelCheck;
-import org.locationtech.udig.project.ui.IFeatureSite;
-import org.locationtech.udig.project.ui.internal.FeatureTypeMatch;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.ui.IFeaturePanel;
+import org.locationtech.udig.project.ui.IFeaturePanelCheck;
+import org.locationtech.udig.project.ui.IFeatureSite;
+import org.locationtech.udig.project.ui.internal.FeatureTypeMatch;
 
 /**
  * Represents an feature panel entry configured from the extension point.

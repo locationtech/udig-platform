@@ -11,11 +11,11 @@
  */
 package org.locationtech.udig.tools.geometry.split;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Location;
-import com.vividsolutions.jts.geomgraph.Edge;
-import com.vividsolutions.jts.geomgraph.Label;
-import com.vividsolutions.jts.geomgraph.Position;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Location;
+import org.locationtech.jts.geomgraph.Edge;
+import org.locationtech.jts.geomgraph.Label;
+import org.locationtech.jts.geomgraph.Position;
 
 /**
  * A custom edge class that knows if its an edge from the shell of the polygon

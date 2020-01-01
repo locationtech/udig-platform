@@ -21,29 +21,20 @@ import java.net.URLEncoder;
 
 import javax.xml.transform.TransformerException;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.ui.IMemento;
+import org.geotools.data.FeatureSource;
+import org.geotools.data.Query;
+import org.geotools.gml.GMLFilterDocument;
+import org.geotools.gml.GMLFilterGeometry;
+import org.geotools.xml.filter.FilterFilter;
+import org.geotools.xml.filter.FilterTransformer;
 import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IResolve;
-import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.internal.ui.FilterTextTransfer.SimpleFilterHandler;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IResourceInterceptor;
-import org.locationtech.udig.project.ProjectBlackboardConstants;
 import org.locationtech.udig.project.StyleContent;
 import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.ui.ProgressManager;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.ui.IMemento;
-import org.geotools.data.CachingFeatureSource;
-import org.geotools.data.DataStore;
-import org.geotools.data.DefaultQuery;
-import org.geotools.data.FeatureSource;
-import org.geotools.data.Query;
-import org.geotools.feature.SchemaException;
-import org.geotools.filter.FilterFilter;
-import org.geotools.filter.FilterTransformer;
-import org.geotools.gml.GMLFilterDocument;
-import org.geotools.gml.GMLFilterGeometry;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -96,12 +87,12 @@ public class CacheInterceptor
         return resource; // no wrapper needed
     }
 
-    private static DefaultQuery createQuery( Filter filter, CoordinateReferenceSystem crs,
+    private static Query createQuery( Filter filter, CoordinateReferenceSystem crs,
             CoordinateReferenceSystem reproject, String handle, Integer maxFeature, URI namespace,
             String[] propertyNames, String typeName ) {
-        DefaultQuery query = new DefaultQuery();
+    	Query query = new Query();
         if (namespace != null) {
-            query = new DefaultQuery(typeName, namespace, filter, maxFeature, propertyNames, handle);
+            query = new Query(typeName, namespace, filter, maxFeature, propertyNames, handle);
         }
         if (crs != null) {
             query.setCoordinateSystem(crs);
@@ -186,11 +177,11 @@ public class CacheInterceptor
             if (propNameString != null) {
                 propertyNames = propNameString.split(",");
             } else {
-                propertyNames = DefaultQuery.ALL_NAMES;
+                propertyNames = Query.ALL_NAMES;
             }
             String typeName = decode(memento.getString(TYPENAME));
 
-            DefaultQuery query = createQuery(filter, crs, reproject, handle, maxFeature, namespace,
+            Query query = createQuery(filter, crs, reproject, handle, maxFeature, namespace,
                     propertyNames, typeName);
             return query;
         }
@@ -235,7 +226,7 @@ public class CacheInterceptor
             Query viewRestriction;
             if (value instanceof Filter) {
                 Filter filter = (Filter) value;
-                viewRestriction = new DefaultQuery("Feature", filter);
+                viewRestriction = new Query("Feature", filter);
             } else {
                 viewRestriction = (Query) value;
             }
