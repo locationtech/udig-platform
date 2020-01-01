@@ -19,43 +19,41 @@ public class DataUtilitiesTest {
     
     @Test
     public void testCompareEquality() throws Exception{
-    	SimpleFeatureType featureType = DataUtilities.createType("testType",
-    			"geometry:Point,Name:String,timestamp:java.util.Date,val:Double");
+        SimpleFeatureType featureType = DataUtilities.createType("testType",
+                "geometry:Point,Name:String,timestamp:java.util.Date,val:Integer");
 
-    	SimpleFeatureType targetFeatureType = DataUtilities.createType("testType",
-    			"geometry:Point,Name:String,timestamp:java.util.Date,val:Integer");
+        SimpleFeatureType targetFeatureType = DataUtilities.createType("testType",
+                "geometry:Point,Name:String,timestamp:java.util.Date,val:Integer");
 
-    	int compare = DataUtilities.compare(featureType, targetFeatureType);
-    	
-    	assertEquals(0, compare);
+        int compare = DataUtilities.compare(featureType, targetFeatureType);
+
+        assertEquals(0, compare);
     }
-    
-    
+
     @Test
-    public void testCompareEqualReorder() throws Exception{
-    	SimpleFeatureType featureType = DataUtilities.createType("testType",
-    			"geometry:Point,Name:String,val:Double,timestamp:java.util.Date");
+    public void testCompareEqualReorder() throws Exception {
+        SimpleFeatureType featureType = DataUtilities.createType("testType",
+                "geometry:Point,Name:String,val:Double,timestamp:java.util.Date");
 
-    	SimpleFeatureType targetFeatureType = DataUtilities.createType("testType",
-    			"geometry:Point,Name:String,timestamp:java.util.Date,val:Double");
+        SimpleFeatureType targetFeatureType = DataUtilities.createType("testType",
+                "geometry:Point,Name:String,timestamp:java.util.Date,val:Double");
 
-    	int compare = DataUtilities.compare(featureType, targetFeatureType);
-    	
-    	assertEquals(1, compare);
+        int compare = DataUtilities.compare(featureType, targetFeatureType);
+
+        assertEquals(1, compare);
     }
-    
-    
+
     @Test
-    public void testCompareNotEqual2() throws Exception{
-       	SimpleFeatureType featureType = DataUtilities.createType("testType",
-    			"geometry:Point,Name:String,timestamp:java.util.Date,val:Double");
+    public void testCompareNotEqual2() throws Exception {
+        SimpleFeatureType featureType = DataUtilities.createType("testType",
+                "geometry:Point,Name:String,timestamp:java.util.Date,val:Double");
 
-    	SimpleFeatureType targetFeatureType = DataUtilities.createType("testType",
-    			"geometry:Point,Name:String,timestamp:java.util.Date,val1:Integer");
+        SimpleFeatureType targetFeatureType = DataUtilities.createType("testType",
+                "geometry:Point,Name:String,timestamp:java.util.Date,val1:Integer");
 
-    	int compare = DataUtilities.compare(featureType, targetFeatureType);
-    	
-    	assertEquals(-1, compare);
+        int compare = DataUtilities.compare(featureType, targetFeatureType);
+
+        assertEquals(-1, compare);
     }
-    
+
 }
