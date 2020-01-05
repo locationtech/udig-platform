@@ -9,19 +9,10 @@
  */
 package org.locationtech.udig.render.internal.feature.basic;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.Dimension;
-import java.io.IOException;
-
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.render.impl.RenderContextImpl;
-import org.locationtech.udig.project.render.RenderException;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.project.tests.support.TestMapDisplay;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.geometry.jts.JTS;
@@ -32,17 +23,21 @@ import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.geometry.MismatchedDimensionException;
-import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.crs.CRSFactory;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineString;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.render.impl.RenderContextImpl;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.tests.support.TestMapDisplay;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.referencing.crs.CRSFactory;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * Test BasicFeatureRenderer
@@ -94,39 +89,6 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
        
     }
 
-    @Test
-    public void testRequestedIsLargerThenRequested() throws MismatchedDimensionException, IOException, FactoryException, RenderException {
-        Envelope result = BasicFeatureRenderer.validateBounds(
-                new ReferencedEnvelope(0, 300, 0, 200, DefaultGeographicCRS.WGS84),
-                new NullProgressMonitor(), context);
-        assertEquals(new ReferencedEnvelope(0, 180, 0, 90, DefaultGeographicCRS.WGS84), result);
-    }
-
-    @Test
-    public void testValidateBoundsWGS84refEnvelope() throws Exception {
-        Envelope result = BasicFeatureRenderer.validateBounds(
-                new ReferencedEnvelope(0, 50, 0, 10, DefaultGeographicCRS.WGS84),
-                new NullProgressMonitor(), context);
-        assertEquals(new ReferencedEnvelope(0, 50, 0, 10, DefaultGeographicCRS.WGS84), result);
-    }
-
-    @Test
-    public void testValidateBoundsWGS84refEnvelope2() throws Exception {
-        Envelope result = BasicFeatureRenderer.validateBounds(
-                new ReferencedEnvelope(0, 170, 0, 10, DefaultGeographicCRS.WGS84),
-                new NullProgressMonitor(), context);
-        assertEquals(new ReferencedEnvelope(0, 170, 0, 10, DefaultGeographicCRS.WGS84), result);
-    }
-
-
-    @Test
-    @Ignore("Looks like a TransformationException occurs -> same envelope as given")
-    public void testEvelopeOutsideOfMapRefEnvelope() throws Exception {
-        Envelope result = BasicFeatureRenderer.validateBounds(
-                new ReferencedEnvelope(-100, -80, -70, -50, DefaultGeographicCRS.WGS84),
-                new NullProgressMonitor(), context);
-        assertTrue(result.isNull());
-    }
 
     @Test
     @Ignore
@@ -201,7 +163,6 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
         
         Envelope result = BasicFeatureRenderer.validateBounds(
                 new ReferencedEnvelope(0, 20, 0, 20, crs), new NullProgressMonitor(), myContext);
-        System.out.println("XXX " + result + " null? " + result.isNull());
         assertTrue(result.isNull());
     }
 
