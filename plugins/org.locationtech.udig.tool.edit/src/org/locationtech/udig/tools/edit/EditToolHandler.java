@@ -128,13 +128,14 @@ public class EditToolHandler {
             enableListeners();
 
         } else {
-            basicDisablement();
-            disableListeners();
 
             List<Behaviour> list = acceptBehaviours;
 
             BehaviourCommand command = getCommand(list);
-            getContext().sendASyncCommand(command);
+            getContext().sendSyncCommand(command);
+            
+            basicDisablement();
+            disableListeners();
             setCurrentState(EditState.NONE);
         }
     }
