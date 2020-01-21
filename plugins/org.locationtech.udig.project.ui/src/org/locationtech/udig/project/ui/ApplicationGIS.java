@@ -368,8 +368,20 @@ public class ApplicationGIS {
             }
         }
         return toolManager;
-   }
+    }
 
+    
+    /**
+     * Set the ToolManager singleton.
+     *
+     * @param toolManager the new tool manager
+     */
+    public static void setToolManager(IToolManager toolManager) {
+        synchronized (IToolManager.class) {
+            ApplicationGIS.toolManager = toolManager;
+        }
+    }
+    
     /**
      * Returns the IEditorInput instance that wraps the element argument.
      * 
@@ -974,9 +986,9 @@ public class ApplicationGIS {
      * @param activeMapTracker the tracker that managers
      */
     public static void setActiveMapTracker( ActiveMapTracker activeMapTrackerToSet ) {
-        if (activeMapTracker != null ){
+        /*if (activeMapTracker != null ){
             throw new Error("This method has already been called! It is an error for non-uDig code to call this method");
-        }
+        }*/
         activeMapTracker = activeMapTrackerToSet;
     }
 
@@ -1053,5 +1065,7 @@ public class ApplicationGIS {
             IProject project, String elementName, Class< ? extends IGenericProjectElement> typeToCreate, String extensionId ) throws IllegalArgumentException{
         return ElementFactory.eINSTANCE.createProjectElementAdapter(project, elementName, typeToCreate, extensionId);
     }
+    
+    
 
 }
