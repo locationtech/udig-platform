@@ -499,12 +499,14 @@ public class RendererCreatorImpl implements RendererCreator {
         } catch (IOException e) {
             return null;
         }
-        for( Layer layer : getLayers() )
-            if (layer instanceof SelectionLayer)
-                if (((SelectionLayer) layer).getWrappedLayer() == targetLayer)
-                    return (SelectionLayer) layer;
+        synchronized (getLayers()) {
+            for (Layer layer : getLayers())
+                if (layer instanceof SelectionLayer)
+                    if (((SelectionLayer) layer).getWrappedLayer() == targetLayer)
+                        return (SelectionLayer) layer;
 
-        return null;
+            return null;
+        }
     }
 
     /**
