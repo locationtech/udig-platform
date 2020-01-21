@@ -608,10 +608,17 @@ public class EditBlackboardUtil {
     }
     @SuppressWarnings("unchecked")
     private synchronized static void enableViewportListener( ViewportModel model ) {
-        disableViewportListener();
-        listener = new ViewportModelListener(model);
+        if(listener != null && !model.equals(listener.model))
+        {
+            disableViewportListener();
+        }
+        //only if not there or disabled
+        if(listener == null)
+        {
+            listener = new ViewportModelListener(model);
 
-        listener.model.eAdapters().add(listener);
+            listener.model.eAdapters().add(listener);
+        }
 
     }
 
