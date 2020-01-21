@@ -9,22 +9,24 @@
  */
 package org.locationtech.udig.tools.edit.activator;
 
-import org.locationtech.udig.project.ui.internal.MapPart;
-import org.locationtech.udig.tools.edit.Activator;
-import org.locationtech.udig.tools.edit.BehaviourCommand;
-import org.locationtech.udig.tools.edit.EditPlugin;
-import org.locationtech.udig.tools.edit.EditToolHandler;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.IPageListener;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneSWT;
+import org.locationtech.udig.tools.edit.Activator;
+import org.locationtech.udig.tools.edit.BehaviourCommand;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.EditToolHandler;
 
 /**
  * Enables the
@@ -46,7 +48,7 @@ public class EnableAcceptEditCommandHandlerActivator implements Activator {
 		EditToolHandler handler;
 
 		public Object execute(ExecutionEvent arg0) throws ExecutionException {
-			if (handler != null) {
+			if (handler != null && ((Event) arg0.getTrigger()).widget instanceof ViewportPaneSWT && ((Event) arg0.getTrigger()).type == SWT.KeyDown) {
 				BehaviourCommand acceptCommands = handler.getCommand(handler
 						.getAcceptBehaviours());
 				handler.getContext().sendASyncCommand(acceptCommands);
