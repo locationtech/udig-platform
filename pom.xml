@@ -19,8 +19,8 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <tycho-version>1.4.0</tycho-version>
-        <tycho-extras-version>1.4.0</tycho-extras-version>
+        <tycho-version>1.6.0</tycho-version>
+        <tycho-extras-version>1.6.0</tycho-extras-version>
         <!-- necessary for e.g. hudson proxy settings
              see https://locationtech.org/bugs/show_bug.cgi?id=51
         -->
