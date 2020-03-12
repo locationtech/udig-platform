@@ -32,7 +32,6 @@ before_script:
 install:
   - "sudo pip install 'requests[security]'"
   - "sudo pip install -q sphinx==1.1.3"
-  - "mvn install -B -f docs/pom.xml -Dtycho.mode=maven -Pdocs" #build documentation using sphinx
   - "mvn install -B -f pom-libs.xml -DskipTests=true" #download dependencies
 
 script: 
