@@ -18,8 +18,6 @@ import java.net.URL;
 
 import javax.swing.Icon;
 
-import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
-import org.apache.batik.util.XMLResourceDescriptor;
 import org.eclipse.core.runtime.Platform;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.renderer.style.svg.SVGGraphicFactory;
@@ -74,13 +72,13 @@ public class GeoToolsTest {
         
     }
 
-    @Ignore("FIXME: due to migration to batik bundle from Orbit")
-    @Test
-    public void testParseSVG() throws Exception {
-        URL url = GeoToolsTest.class.getResource("example.svg");
-        String parser = XMLResourceDescriptor.getXMLParserClassName();
-        System.out.println("used parser : " + parser);
-        SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
-        f.createDocument(url.toString());
-    }
+//    @Ignore("FIXME: due to migration to batik bundle from Orbit")
+//    @Test
+//    public void testParseSVG() throws Exception {
+//        URL url = GeoToolsTest.class.getResource("example.svg");
+//        String parser = XMLResourceDescriptor.getXMLParserClassName();
+//        System.out.println("used parser : " + parser);
+//        SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
+//        f.createDocument(url.toString());
+//    }
 }

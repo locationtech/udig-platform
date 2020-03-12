@@ -28,7 +28,6 @@
    <launcher name="udig_internal">
       <linux icon="./icons/udig.xpm"/>
       <macosx icon="./icons/icon128.icns"/>
-      <solaris/>
       <win useIco="true">
          <ico path="./icons/udig.ico"/>
          <bmp/>
@@ -64,9 +63,6 @@ Content and such source code may be obtained at http://github.com/udig .
    <features>
       <feature id="org.locationtech.udig_base-feature"/>
       <feature id="org.locationtech.udig-feature"/>
-<!--
-      <feature id="org.locationtech.udig_language-feature"/>
--->
       <feature id="javax.media.jai_imageio-feature"/>
       <feature id="org.locationtech.udig_application-feature"/>
       <feature id="org.eclipse.rcp"/>
@@ -81,8 +77,8 @@ Content and such source code may be obtained at http://github.com/udig .
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.p2.reconciler.dropins" autoStart="true" startLevel="5" />
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
-      <property name="org.eclipse.update.reconcile" value="false"/>
       <property name="osgi.configuration.area.default" value="$LOCALAPPDATA$/uDig/configuration" os="win32" />
+      <property name="org.eclipse.update.reconcile" value="false" />
       <property name="osgi.instance.area.default" value="$LOCALAPPDATA$/uDig/workspace" os="win32" />
    </configurations>
 
