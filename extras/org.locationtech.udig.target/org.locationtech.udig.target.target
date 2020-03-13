@@ -46,7 +46,6 @@
 <unit id="org.eclipse.equinox.security" version="0.0.0"/>
 <unit id="org.eclipse.equinox.simpleconfigurator" version="0.0.0"/>
 <unit id="org.eclipse.equinox.simpleconfigurator.manipulator" version="0.0.0"/>
-<!-- <unit id="org.eclipse.equinox.util" version="0.0.0"/> -->
 <unit id="org.eclipse.gef.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.help.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.help.source.feature.group" version="0.0.0"/>

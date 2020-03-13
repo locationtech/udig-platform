@@ -29,8 +29,6 @@
                                 <plugin id="org.locationtech.udig.libs.db2"/>
                                 <plugin id="org.locationtech.udig.libs.oracle"/>
                                 <plugin id="javax.media.jai_imageio"/>
-                                <!-- <plugin id="javax.media.jai_imageio.win32.win32.x86"/> -->
-                                <plugin id="javax.media.jai_imageio.linux.gtk.x86"/>
                                 <plugin id="javax.media.jai_imageio.linux.gtk.x86_64"/>
                             </excludes>
                         </configuration>
