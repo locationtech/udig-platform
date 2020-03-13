@@ -3,8 +3,9 @@ dist: trusty
 language: java
 
 jdk:
-  - openjdk11
   - oraclejdk8
+  - oraclejdk11
+  - openjdk11
 
 cache:
   directories:
@@ -37,7 +38,7 @@ install:
   - "mvn install -B -f pom-libs.xml -DskipTests=true" #download dependencies
 
 script: 
-  - "mvn verify -B -Pproduct -Psdk -Ptest --fail-at-end -T2"
+  - "mvn verify -B -Pproduct -Psdk -Ptest --fail-at-end"
 
 
 notifications:
