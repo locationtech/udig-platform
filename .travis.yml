@@ -14,7 +14,7 @@ cache:
 env:
   global:
     - MVN_VERSION="3.5.4"
-    - MAVEN_OPTS="-Xmx8g -XX:-UseGCOverheadLimit"
+    - MAVEN_OPTS="-Xmx12g -XX:-UseGCOverheadLimit"
 
 before_install:
   - rm ~/.m2/settings.xml
@@ -39,7 +39,7 @@ install:
   - "mvn install -B -f pom-libs.xml -DskipTests=true" #download dependencies
 
 script: 
-  - "mvn verify -B -Pproduct -Psdk -Ptest --fail-at-end"
+  - "mvn verify -B -Pproduct -Psdk -Ptest --fail-at-end -T4"
 
 
 notifications:
