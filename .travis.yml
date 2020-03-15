@@ -33,6 +33,7 @@ before_script:
 matrix:
   allow_failures:
     - jdk: openjdk11
+    - jdk: oraclejdk11
 
 install:
   - "mvn install -B -f pom-libs.xml -DskipTests=true" #download dependencies
