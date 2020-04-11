@@ -348,17 +348,17 @@ public class FeatureUtils {
             //if an attribute match exists set its value
             if (name != null) {                 
                 if (destSchema.getDescriptor(sourceAttributeName).getType().getBinding().isAssignableFrom(
-                        source.getFeatureType().getDescriptor(sourceAttributeName).getType().getBinding())) {
+                        source.getFeatureType().getDescriptor(name).getType().getBinding())) {
                     attributes[i] = source.getAttribute(name);
                 } else {
                     //if not directly assignable then check for an adapter
                     if (AdapterUtil.instance.canAdaptTo(
-                            source.getAttribute(sourceAttributeName), 
+                            source.getAttribute(name), 
                             destSchema.getDescriptor(i).getType().getBinding())) {
                         try {
                             attributes[i] = AdapterUtil.instance.adaptTo(
                                     destSchema.getDescriptor(i).getType().getBinding(), 
-                                    source.getAttribute(sourceAttributeName), mon);
+                                    source.getAttribute(name), mon);
                         } catch (Exception e) {
                         	CorePlugin.log("", e);
                         }
@@ -379,7 +379,7 @@ public class FeatureUtils {
                     Iterator< ? extends Geometry> giter = geom.iterator();
                     attributes[i] = giter.next();
                     if (giter.hasNext())
-                        geometries.put(sourceAttributeName, giter);
+                        geometries.put(name, giter);
                 }
                 attributes[i] = transformGeom((Geometry) attributes[i], mt);
             }
