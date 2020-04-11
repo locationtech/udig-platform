@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
@@ -119,9 +119,7 @@ public class BasicFeatureRenderer extends RendererImpl {
         render(destination, getContext().getImageBounds(), monitor, false);
     }
 
-    private final static int NOT_INITIALIZED = -2;
-
-    int count = NOT_INITIALIZED;
+    int count = 0;
 
     private int expandSizePaintArea = 0;
 
@@ -152,9 +150,9 @@ public class BasicFeatureRenderer extends RendererImpl {
         ILayer layer = getContext().getLayer();
         StyleBlackboard styleBlackboard = (StyleBlackboard) layer.getStyleBlackboard();
         SimpleFeatureSource featureSource;
-        featureSource = layer.getResource(SimpleFeatureStore.class, new SubProgressMonitor(monitor, 0));
+        featureSource = layer.getResource(SimpleFeatureStore.class, SubMonitor.convert(monitor, 0));
         if (featureSource == null) {
-            featureSource = layer.getResource(SimpleFeatureSource.class, new SubProgressMonitor(monitor,
+            featureSource = layer.getResource(SimpleFeatureSource.class, SubMonitor.convert(monitor,
                     0));
         }
         Style style = getStyle(styleBlackboard, featureSource);
@@ -346,13 +344,13 @@ public class BasicFeatureRenderer extends RendererImpl {
                 return;
             }
 
-            prepareDraw( new SubProgressMonitor(monitor, 2));
+            prepareDraw( SubMonitor.convert(monitor, 2));
 
             if (monitor.isCanceled()){
                 return;
             }
             // setFeatureLoading(monitor);
-            ReferencedEnvelope validBounds = validateBounds(bounds, new SubProgressMonitor(monitor, 3), getContext());
+            ReferencedEnvelope validBounds = validateBounds(bounds, SubMonitor.convert(monitor, 3), getContext());
 
             if (validBounds.isNull()){
                 return;
@@ -375,7 +373,7 @@ public class BasicFeatureRenderer extends RendererImpl {
                 throw (RenderException) new RenderException().initCause(e);
             }
 
-            listener.init( new SubProgressMonitor( monitor,90) );
+            listener.init( SubMonitor.convert( monitor,90) );
             setQueries();
 
             monitor.worked(5);
@@ -602,10 +600,9 @@ public class BasicFeatureRenderer extends RendererImpl {
         int exceptionCount = 0;
 
         boolean featureRendered = false;
-        int count = 0;
         long lastUpdate;
 
-        private static final int UPDATE_INTERVAL = 3000;
+        private static final int UPDATE_INTERVAL_MS = 3000;
 
         /**
          * @see org.geotools.renderer.lite.RenderListener#featureRenderer(org.geotools.feature.SimpleFeature)
@@ -620,7 +617,7 @@ public class BasicFeatureRenderer extends RendererImpl {
                     getRenderer().stopRendering();
             }
             long current = System.currentTimeMillis();
-            if (current - lastUpdate > UPDATE_INTERVAL) {
+            if (current - lastUpdate > UPDATE_INTERVAL_MS) {
                 lastUpdate = current;
                 setState(RENDERING);
             }

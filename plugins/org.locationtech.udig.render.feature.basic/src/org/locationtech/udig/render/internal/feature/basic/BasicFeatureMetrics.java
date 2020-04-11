@@ -16,21 +16,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.geotools.styling.Style;
+import org.geotools.util.Range;
 import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.core.MinMaxScaleCalculator;
-import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.ProjectBlackboardConstants;
 import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.locationtech.udig.project.internal.render.Renderer;
 import org.locationtech.udig.project.preferences.PreferenceConstants;
 import org.locationtech.udig.project.render.AbstractRenderMetrics;
 import org.locationtech.udig.project.render.IRenderContext;
-import org.locationtech.udig.project.render.IRenderMetricsFactory;
 import org.locationtech.udig.style.sld.SLDContent;
-
-import org.eclipse.jface.preference.IPreferenceStore;
-import org.geotools.styling.Style;
-import org.geotools.util.Range;
 
 /**
  * The metrics object for the BasicFeatureRenderer
