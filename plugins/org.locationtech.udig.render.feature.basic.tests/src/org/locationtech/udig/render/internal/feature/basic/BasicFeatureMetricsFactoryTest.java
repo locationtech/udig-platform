@@ -55,6 +55,7 @@ public class BasicFeatureMetricsFactoryTest {
     }
 
     @Test
+
     public void giveCoveragePriorityOverShapefile() throws Exception {
         IRenderContext mockedRenderContext = EasyMock.createNiceMock(IRenderContext.class);
         IResolve mockedGeoResource = EasyMock.createNiceMock(IResolve.class);
@@ -66,7 +67,6 @@ public class BasicFeatureMetricsFactoryTest {
         assertFalse(new BasicFeatureMetricsFactory().canRender(mockedRenderContext));
         
         EasyMock.verify(mockedGeoResource, mockedRenderContext);
-        
     }
 
     @Test
@@ -80,7 +80,6 @@ public class BasicFeatureMetricsFactoryTest {
         
         assertTrue(new BasicFeatureMetricsFactory().canRender(mockedRenderContext));
         
-        EasyMock.verify(mockedGeoResource, mockedRenderContext);
-        
+        EasyMock.verify(mockedGeoResource, mockedRenderContext);     
     }
 }

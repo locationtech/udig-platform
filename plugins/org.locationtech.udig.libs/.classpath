@@ -13,7 +13,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-core-1.11.236.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-kms-1.11.236.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-s3-1.11.236.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/axis-1.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/bigint-0.7.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/bufr-4.6.11.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/c3p0-0.9.1.1.jar"/>
@@ -151,7 +150,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/ion-java-1.0.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/istack-commons-runtime-3.0.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jackson-annotations-2.7.9.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jackson-core-2.9.9.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jackson-core-2.10.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jackson-databind-2.7.9.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jackson-dataformat-cbor-2.6.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/janino-2.5.16.jar"/>
@@ -171,7 +170,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/jfreechart-1.0.13.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jfreechart-experimental-1.0.13.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jfreechart-swt-1.0.13.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jgridshift-1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jgridshift-core-1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jgt-oms3-0.7.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jline-0.9.94.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jmespath-java-1.11.236.jar"/>
@@ -254,7 +253,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/si-units-java8-0.7.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/slf4j-api-1.6.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/slf4j-log4j12-1.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/spotbugs-annotations-4.0.0-beta4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/sqlite-jdbc-3.27.2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/sqlite-jdbc-spatialite-3.7.2-2.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/stax-ex-1.8.jar"/>
