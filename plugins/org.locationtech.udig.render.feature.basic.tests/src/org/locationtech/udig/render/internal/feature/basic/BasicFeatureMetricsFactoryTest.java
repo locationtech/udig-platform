@@ -27,25 +27,21 @@ public class BasicFeatureMetricsFactoryTest {
         
         @Override
         public Status getStatus() {
-            // TODO Auto-generated method stub
             return null;
         }
 
         @Override
         public Throwable getMessage() {
-            // TODO Auto-generated method stub
             return null;
         }
 
         @Override
         protected IGeoResourceInfo createInfo(IProgressMonitor monitor) throws IOException {
-            // TODO Auto-generated method stub
             return null;
         }
 
         @Override
         public URL getIdentifier() {
-            // TODO Auto-generated method stub
             return null;
         }
         
@@ -59,32 +55,31 @@ public class BasicFeatureMetricsFactoryTest {
     }
 
     @Test
-    public void giveImageMoasicPriorityOverShapefile() throws Exception {
-        IRenderContext mockedRenderContect = EasyMock.createNiceMock(IRenderContext.class);
+
+    public void giveCoveragePriorityOverShapefile() throws Exception {
+        IRenderContext mockedRenderContext = EasyMock.createNiceMock(IRenderContext.class);
         IResolve mockedGeoResource = EasyMock.createNiceMock(IResolve.class);
         
         TestGeoResource testGeoResource = new TestGeoResource(AbstractGridCoverage2DReader.class);
-        EasyMock.expect(mockedRenderContect.getGeoResource()).andReturn(testGeoResource).anyTimes();
-        EasyMock.replay(mockedGeoResource, mockedRenderContect);
+        EasyMock.expect(mockedRenderContext.getGeoResource()).andReturn(testGeoResource).anyTimes();
+        EasyMock.replay(mockedGeoResource, mockedRenderContext);
         
-        assertFalse(new BasicFeatureMetricsFactory().canRender(mockedRenderContect));
+        assertFalse(new BasicFeatureMetricsFactory().canRender(mockedRenderContext));
         
-        EasyMock.verify(mockedGeoResource, mockedRenderContect);
-        
+        EasyMock.verify(mockedGeoResource, mockedRenderContext);
     }
 
     @Test
     public void acceptOnFeatureSource() throws Exception {
-        IRenderContext mockedRenderContect = EasyMock.createNiceMock(IRenderContext.class);
+        IRenderContext mockedRenderContext = EasyMock.createNiceMock(IRenderContext.class);
         IResolve mockedGeoResource = EasyMock.createNiceMock(IResolve.class);
         
         TestGeoResource testGeoResource = new TestGeoResource(FeatureSource.class);
-        EasyMock.expect(mockedRenderContect.getGeoResource()).andReturn(testGeoResource).anyTimes();
-        EasyMock.replay(mockedGeoResource, mockedRenderContect);
+        EasyMock.expect(mockedRenderContext.getGeoResource()).andReturn(testGeoResource).anyTimes();
+        EasyMock.replay(mockedGeoResource, mockedRenderContext);
         
-        assertTrue(new BasicFeatureMetricsFactory().canRender(mockedRenderContect));
+        assertTrue(new BasicFeatureMetricsFactory().canRender(mockedRenderContext));
         
-        EasyMock.verify(mockedGeoResource, mockedRenderContect);
-        
+        EasyMock.verify(mockedGeoResource, mockedRenderContext);     
     }
 }
