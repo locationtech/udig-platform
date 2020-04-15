@@ -11,18 +11,6 @@ package org.locationtech.udig.project.ui.internal;
 
 import java.util.List;
 
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.command.MapCommand;
-import org.locationtech.udig.project.command.UndoableComposite;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
-import org.locationtech.udig.project.internal.commands.ChangeCRSCommand;
-import org.locationtech.udig.project.ui.internal.commands.SetLayerCRSCommand;
-import org.locationtech.udig.ui.CRSChooser;
-import org.locationtech.udig.ui.Controller;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
@@ -34,6 +22,17 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PropertyPage;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import org.locationtech.udig.project.internal.commands.ChangeCRSCommand;
+import org.locationtech.udig.project.ui.internal.commands.SetLayerCRSCommand;
+import org.locationtech.udig.ui.CRSChooser;
+import org.locationtech.udig.ui.Controller;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**

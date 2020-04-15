@@ -13,6 +13,7 @@ package org.locationtech.udig.render.internal.wmsc.basic;
 
 import java.io.IOException;
 
+import org.geotools.ows.wms.WebMapServer;
 import org.locationtech.udig.catalog.wmsc.server.TileSet;
 import org.locationtech.udig.catalog.wmsc.server.TiledWebMapServer;
 import org.locationtech.udig.project.render.AbstractRenderMetrics;
@@ -20,8 +21,6 @@ import org.locationtech.udig.project.render.IRenderContext;
 import org.locationtech.udig.project.render.IRenderMetricsFactory;
 import org.locationtech.udig.project.render.IRenderer;
 import org.locationtech.udig.render.wms.basic.WMSPlugin;
-
-import org.geotools.data.wms.WebMapServer;
 
 /**
  * Creates metrics for WMS-C renderer.

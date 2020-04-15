@@ -10,11 +10,6 @@
  */
 package org.locationtech.udig.style.sld.editor;
 
-import org.locationtech.udig.style.internal.StyleLayer;
-import org.locationtech.udig.style.sld.IEditorPageContainer;
-import org.locationtech.udig.style.sld.IStyleEditorPage;
-import org.locationtech.udig.style.sld.IStyleEditorPageContainer;
-
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.DialogPage;
 import org.eclipse.jface.dialogs.IPageChangedListener;
@@ -29,6 +24,10 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.locationtech.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.sld.IEditorPageContainer;
+import org.locationtech.udig.style.sld.IStyleEditorPage;
+import org.locationtech.udig.style.sld.IStyleEditorPageContainer;
 
 /**
  * Provides a user interface (by extension point) for pages in the SLD Editor

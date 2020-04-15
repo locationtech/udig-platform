@@ -32,11 +32,11 @@ import org.locationtech.udig.catalog.internal.ResolveDelta;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.data.wfs.WFSDataStore;
-import org.geotools.data.wms.WebMapServer;
-import org.geotools.data.wms.xml.WMSSchema;
+import org.geotools.ows.wms.WebMapServer;
+import org.geotools.ows.wms.xml.WMSSchema;
 import org.geotools.wfs.WFS;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * A Georesource that lazily loads the "real" WFS or WMS resource.  GetInfo will return a placeholder until
@@ -176,7 +176,7 @@ static class CswWMSResource extends CswResource{
             return false;
         return super.canResolve(adaptee) ||
             adaptee.isAssignableFrom(WebMapServer.class) ||
-            adaptee.isAssignableFrom(org.geotools.data.ows.Layer.class)||
+            adaptee.isAssignableFrom(org.geotools.ows.wms.Layer.class)||
             super.canResolve(adaptee);
         
     }

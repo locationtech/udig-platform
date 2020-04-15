@@ -16,16 +16,15 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.locationtech.udig.core.internal.FeatureUtils;
-import org.locationtech.udig.tools.edit.support.EditGeom;
-import org.locationtech.udig.tools.edit.support.TestHandler;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.util.factory.GeoTools;
 import org.junit.Before;
 import org.junit.Test;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.tools.edit.support.EditGeom;
+import org.locationtech.udig.tools.edit.support.TestHandler;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.Id;

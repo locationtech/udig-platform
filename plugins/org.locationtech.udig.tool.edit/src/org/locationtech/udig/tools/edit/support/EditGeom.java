@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.locationtech.udig.tools.edit.EditPlugin;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * Holds onto an geometry for editing, offering up PrimitiveShapes.

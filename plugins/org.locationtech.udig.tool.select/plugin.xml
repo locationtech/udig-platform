@@ -47,12 +47,12 @@
                   	<and>
                         <property propertyId="FeatureSourceResourceProperty" expectedValue=""/>                  	
 	                     <or>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
-	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.MultiPoint"/>
+	                        <property propertyId="GeometryType" expectedValue="org.locationtech.jts.geom.Point"/>
 	                     </or>
                       <property
                             expectedValue="SELECT"

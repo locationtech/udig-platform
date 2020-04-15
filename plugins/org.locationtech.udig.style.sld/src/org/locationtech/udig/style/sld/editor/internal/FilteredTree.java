@@ -11,8 +11,6 @@
 package org.locationtech.udig.style.sld.editor.internal;
 
 
-import org.locationtech.udig.style.sld.internal.Messages;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -44,6 +42,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.progress.WorkbenchJob;
+import org.locationtech.udig.style.sld.internal.Messages;
 
 /**
  * A simple control that provides a text widget and a tree viewer. The contents

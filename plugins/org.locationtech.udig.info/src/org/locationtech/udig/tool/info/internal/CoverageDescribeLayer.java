@@ -41,7 +41,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 /**
  * Coverage click info gathering class.
@@ -68,7 +68,7 @@ public class CoverageDescribeLayer {
         if (geoResource.canResolve(AbstractGridCoverage2DReader.class)) {
             AbstractGridCoverage2DReader reader = geoResource.resolve(AbstractGridCoverage2DReader.class, monitor);
             GeneralEnvelope originalEnvelope = reader.getOriginalEnvelope();
-            CoordinateReferenceSystem targetCrs = reader.getCrs();
+            CoordinateReferenceSystem targetCrs = reader.getCoordinateReferenceSystem();
 
             if (targetCrs != null) {
                 evaluateCoord = transform(sourceCRS, targetCrs, envelopeCenterOrig);

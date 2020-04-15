@@ -21,7 +21,7 @@ import java.util.Observable;
 import org.locationtech.udig.mapgraphic.MapGraphicContext;
 import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 import org.locationtech.udig.image.georeferencing.internal.process.MarkModel;
 import org.locationtech.udig.image.georeferencing.internal.process.MarkModel.MarkModelChange;

@@ -10,7 +10,7 @@
  */
 package org.locationtech.udig.tools.edit.support;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 /**
  * Describes the relationship between an arbitrary point to an edge in a {@link EditGeom}

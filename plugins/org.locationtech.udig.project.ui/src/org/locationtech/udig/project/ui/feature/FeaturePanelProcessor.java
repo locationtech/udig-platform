@@ -14,15 +14,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.locationtech.udig.core.internal.ExtensionPointProcessor;
-import org.locationtech.udig.core.internal.ExtensionPointUtil;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.ui.IFeatureSite;
-
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
-import org.opengis.feature.simple.SimpleFeatureType;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.ui.IFeatureSite;
 
 /**
  * Utility class assisting in processing the feature panel extension point.

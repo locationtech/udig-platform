@@ -9,8 +9,6 @@
  */
 package org.locationtech.udig.project.ui.internal;
 
-import org.locationtech.udig.project.internal.Map;
-
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IconAndMessageDialog;
 import org.eclipse.swt.graphics.Image;
@@ -18,6 +16,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.locationtech.udig.project.internal.Map;
 
 /**
  * Queries user if they want to save. Return values are: {@link IDialogConstants#CANCEL_ID}

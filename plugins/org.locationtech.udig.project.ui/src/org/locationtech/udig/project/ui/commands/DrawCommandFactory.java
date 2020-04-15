@@ -17,6 +17,7 @@ import java.awt.Shape;
 import java.io.IOException;
 import java.util.List;
 
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.command.UndoableMapCommand;
@@ -33,11 +34,8 @@ import org.locationtech.udig.project.ui.internal.commands.draw.StopAnimationComm
 import org.locationtech.udig.project.ui.internal.commands.draw.TranslateCommand;
 import org.locationtech.udig.project.ui.internal.commands.draw.ZoomDrawCommand;
 import org.locationtech.udig.ui.graphics.ViewportGraphics;
-
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import com.vividsolutions.jts.geom.Coordinate;
 
 /**
  * Creates draw commands.

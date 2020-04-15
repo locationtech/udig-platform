@@ -11,13 +11,16 @@
 package org.locationtech.udig.catalog;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.commons.lang.SystemUtils;
+import org.junit.Assume;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -54,131 +57,140 @@ public class URLUtilsTest {
 
     }
 
-    @Ignore
     @Test
-    public void testPrefix() throws Exception {
-        File file;
-        String prefix;
-        String os = System.getProperty("os.name");
-        if (os.toUpperCase().contains("WINDOWS")) {
-            file = new File("C:\\foo\\bar");
-            assertEquals("C", "C:", URLUtils.getPrefix(file));
+    public void testPrefixWindows() {
+        Assume.assumeTrue(SystemUtils.IS_OS_WINDOWS);
+        
+        File file = new File("C:\\foo\\bar");
+        assertEquals("C", "C:", URLUtils.getPrefix(file));
 
-            file = new File("D:\\foo\\bar");
-            assertEquals("D", "D:", URLUtils.getPrefix(file));
-
-            file = new File("\\\\machine\\share\\foo.txt");
-            prefix = URLUtils.getPrefix(file);
-            assertEquals("\\\\machine\\share", prefix);
-        }
-        file = new File(System.getProperty("user.home"));
-        prefix = URLUtils.getPrefix(file);
-        assertNull("none", prefix);
-
-        file = new File(System.getProperty("user.dir"));
-        prefix = URLUtils.getPrefix(file);
-        assertNull("none", prefix);
-
-        file = new File("foo.bar");
-        prefix = URLUtils.getPrefix(file);
-        assertNull("none", prefix);
+        file = new File("D:\\foo\\bar");
+        assertEquals("D", "D:", URLUtils.getPrefix(file));
     }
 
-    @Ignore
     @Test
+    @Ignore("prefix is '\\\\' but exprected is '\\\\machine\\share'")
+    public void testUNCPrefix() {
+        File file = new File("\\\\machine\\share\\foo.txt");
+        assertEquals("\\\\machine\\share", URLUtils.getPrefix(file));
+    }
+
+    @Test
+    @Ignore("expected:<file:/[..]/bar> but was:<file:/[C:/foo]/bar>")
+    public void testRelativeSameLevelWin() throws MalformedURLException {
+        Assume.assumeTrue(SystemUtils.IS_OS_WINDOWS);
+        URL url = new File("C:\\foo\\bar").toURI().toURL(); //$NON-NLS-1$
+        File reference = new File("C:/foo/bork/dooda"); //$NON-NLS-1$
+        assertEquals("file:/../bar", URLUtils.toRelativePath(reference, url).toString());
+    }
+
+    @Test
+    @Ignore("expected:<file:/.[./bar]> but was:<file:/.[/]>")
+    public void testRelativeFromHereWin() throws MalformedURLException {
+        Assume.assumeTrue(SystemUtils.IS_OS_WINDOWS);
+        URL url = new File("C:/foo/bork/dooda").toURI().toURL(); //$NON-NLS-1$
+        File reference = new File("C:/foo/bork/dooda"); //$NON-NLS-1$
+        assertEquals("file:/../bar", URLUtils.toRelativePath(reference, url).toString());
+    }
+
+    @Test
+    @Ignore("expected:<file:/BLEEP> but was:<file:/C:/foo/bork/BLEEP>")
+    public void testRelativeFromBeep() throws MalformedURLException {
+        Assume.assumeTrue(SystemUtils.IS_OS_WINDOWS);
+        URL url = new File("C:/foo/bork/BLEEP").toURI().toURL(); //$NON-NLS-1$
+        File reference = new File("C:/foo/bork/dooda"); //$NON-NLS-1$
+        assertEquals("file:/BLEEP", URLUtils.toRelativePath(reference, url)); //$NON-NLS-1$
+    }
+
+    @Test
+    @Ignore("not supported (yet)")
     public void testToRelativePath() throws Exception {
-        URL url;
-        File reference = new File(System.getProperty("user.home"));
-
-        URL result;
-
-        String os = System.getProperty("os.name");
-        if (os.toUpperCase().contains("WINDOWS")) {
-
-            url = new File("C:\\foo\\bar").toURI().toURL(); //$NON-NLS-1$
-            reference = new File("C:/foo/bork/dooda"); //$NON-NLS-1$
-
-            result = URLUtils.toRelativePath(reference, url);
-            assertEquals("file:/../bar", result.toString()); //$NON-NLS-1$
-
-            url = new File("C:/foo/bork/dooda").toURI().toURL(); //$NON-NLS-1$
-            result = URLUtils.toRelativePath(reference, url);
-            assertEquals("file:/./", result.toString()); //$NON-NLS-1$
-
-            url = new File("C:/foo/bork/BLEEP").toURI().toURL(); //$NON-NLS-1$
-            result = URLUtils.toRelativePath(reference, url);
-            assertEquals("file:/BLEEP", result.toString()); //$NON-NLS-1$
-
-            try {
-                url = new URL("file:/C:/Users/Jody/Desktop/raster/norway/trond50geor.jpg");
-                reference = new File("C:\\java\\udig\\runtime-udig.product\\.localCatalog");
-                result = URLUtils.toRelativePath(reference, url);
-                fail("we do not allow this right now");
-            } catch (Exception e) {
-                // expected
-            }
+        Assume.assumeTrue(SystemUtils.IS_OS_WINDOWS);
+        try {
+            URL url = new URL("file:/C:/Users/Jody/Desktop/raster/norway/trond50geor.jpg");
+            File reference = new File("C:\\java\\udig\\runtime-udig.product\\.localCatalog");
+            URLUtils.toRelativePath(reference, url);
+            fail("we do not allow this right now");
+        } catch (Exception e) {
+            // expected
         }
-        url = new URL("http://someurl.com"); //$NON-NLS-1$
-        result = URLUtils.toRelativePath(reference, url);
-        assertSame(url, result);
-
-        url = new URL("file://C:/foo/bar#hi"); //$NON-NLS-1$
-        result = URLUtils.toRelativePath(reference, url);
-        assertSame(url, result);
-
     }
 
-    @Ignore
+    @Test
+    public void testPathWithSharp() throws MalformedURLException {
+        Assume.assumeTrue(SystemUtils.IS_OS_WINDOWS);
+        File reference = new File(System.getProperty("user.home"));
+        URL url = new URL("file://C:/foo/bar#hi"); //$NON-NLS-1$
+        Object result = URLUtils.toRelativePath(reference, url);
+        assertSame(url, result);
+    }
+
+    @Test
+    public void testSameUrlRelativePathHttpURL() throws MalformedURLException {
+        File reference = new File(System.getProperty("user.home"));
+        URL url = new URL("http://someurl.com"); //$NON-NLS-1$
+        URL result = URLUtils.toRelativePath(reference, url);
+        assertSame(url, result);
+    }
+
+    @Test
+    @Ignore("expected:<file:/[..]/bar> but was:<file:/[C:/Users/Razer/foo]/bar>")
+    public void testConstructRaleativeBarToBork() throws MalformedURLException {
+        File home = new File(System.getProperty("user.home"));
+//        URL expected = new File(new File(home, "foo"), "bar").toURI().toURL();
+        File reference = new File(new File(new File(home, "foo"), "bork"), "dooda");
+        assertEquals("file:/../bar", URLUtils.constructURL(reference, "file:/../bar").toString());
+    }
+
+    @Test
+    public void testConstructUrl() throws MalformedURLException {
+        File home = new File(System.getProperty("user.home"));
+        File reference = new File(new File(new File(home, "foo"), "bork"), "dooda");
+        URL expected = new URL("http://someurl.com");
+        assertEquals(expected.toString(), URLUtils.constructURL(reference, "http://someurl.com").toString());
+    }
+
+    @Test
+    public void testConstructURLrelativePath() throws IOException {
+        File home = new File(System.getProperty("user.home"));
+        File reference = new File(new File(new File(home, "foo"), "bork"), "dooda");
+        File file = new File(".");
+        String path = file.getCanonicalPath().replace('\\', '/');
+        URL expected = new URL("file:/" + path);
+        assertEquals(expected.toString(), URLUtils.constructURL(reference, "file:/" + path).toString());
+    }
+
     @Test
     public void testConstructURL() throws Exception {
-        File home = new File(System.getProperty("user.home"));
+        Assume.assumeTrue(SystemUtils.IS_OS_WINDOWS);
 
-        URL expected = new File(new File(home, "foo"), "bar").toURI().toURL();
-        File reference = new File(new File(new File(home, "foo"), "bork"), "dooda");
+        URL expected = new File("C:/foo/bar").toURL(); //$NON-NLS-1$
+        File reference = new File("C:/foo/bork/dooda"); //$NON-NLS-1$
 
-        URL result;
-
-        result = URLUtils.constructURL(reference, "file:/../bar");
-        assertEquals("file:/../bar", result.toString());
-
-        File file = new File(".");
-        expected = new URL("http://someurl.com");
-        result = URLUtils.constructURL(reference, "http://someurl.com");
+        expected = new File("C:/foo/bork").toURL();
+        URL result = URLUtils.constructURL(reference, "file:/./");
         assertEquals(expected.toString(), result.toString());
 
-        String path = file.getCanonicalPath().replace('\\', '/');
-        expected = new URL("file:/" + path);
-        result = URLUtils.constructURL(reference, "file:/" + path);
-
+        expected = new File("C:/foo/bork/BLEEP").toURL();
+        result = URLUtils.constructURL(reference, "file:/BLEEP");
         assertEquals(expected.toString(), result.toString());
 
-        String os = System.getProperty("os.name");
-        if (os.toUpperCase().contains("WINDOWS")) {
-            expected = new File("C:/foo/bar").toURL(); //$NON-NLS-1$
-            reference = new File("C:/foo/bork/dooda"); //$NON-NLS-1$
+        expected = new URL("file:/C:/foo/bar#hi");
+        result = URLUtils.constructURL(reference, "file:/C:/foo/bar#hi");
+        assertEquals(expected.toString(), result.toString());
 
-            expected = new File("C:/foo/bork").toURL();
-            result = URLUtils.constructURL(reference, "file:/./");
-            assertEquals(expected.toString(), result.toString());
+        expected = new URL("file:/D:/foo/bar#hi");
+        result = URLUtils.constructURL(reference, "file:/D:/foo/bar#hi");
+        assertEquals(expected.toString(), result.toString());
+    }
 
-            expected = new File("C:/foo/bork/BLEEP").toURL();
-            result = URLUtils.constructURL(reference, "file:/BLEEP");
-            assertEquals(expected.toString(), result.toString());
-
-            expected = new URL("file:/C:/foo/bar#hi");
-            result = URLUtils.constructURL(reference, "file:/C:/foo/bar#hi");
-            assertEquals(expected.toString(), result.toString());
-
-            expected = new URL("file:/D:/foo/bar#hi");
-            result = URLUtils.constructURL(reference, "file:/D:/foo/bar#hi");
-            assertEquals(expected.toString(), result.toString());
-
-            file = new File("E:/Rahul/d a t a/uDigSampleData/bc_border.shp");
-            result = URLUtils.fileToURL(file);
-            File file2 = URLUtils.urlToFile(result);
-            assertEquals(file, file2);
-        }
-
+    @Test
+    public void testUrl2FileAndBackWithSpacesInPath() {
+        Assume.assumeTrue(SystemUtils.IS_OS_WINDOWS);
+        File file = new File("E:/Rahul/d a t a/uDigSampleData/bc_border.shp");
+        URL result = URLUtils.fileToURL(file);
+        File file2 = URLUtils.urlToFile(result);
+        assertEquals(file, file2);
     }
 
 }

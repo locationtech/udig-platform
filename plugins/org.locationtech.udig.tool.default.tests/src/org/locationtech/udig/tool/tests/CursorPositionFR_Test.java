@@ -18,7 +18,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.locationtech.udig.tools.internal.CursorPosition;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 public class CursorPositionFR_Test extends CursorPositionTest {
 

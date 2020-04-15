@@ -13,7 +13,7 @@ import org.geotools.validation.FeatureValidation;
 import org.geotools.validation.spatial.LineNoSelfOverlappingValidation;
 import org.opengis.feature.simple.SimpleFeatureType;
 
-import com.vividsolutions.jts.geom.LineString;
+import org.locationtech.jts.geom.LineString;
 
 /**
  * Overrides the FeatureValidationOp abstract class and returns the appropriate validation method for the

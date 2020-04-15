@@ -13,14 +13,13 @@ package org.locationtech.udig.project.ui.render.displayAdapter;
 
 import java.awt.image.BufferedImage;
 
+import org.eclipse.swt.widgets.Control;
 import org.locationtech.udig.project.internal.render.RenderManager;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
 import org.locationtech.udig.project.ui.commands.IDrawCommand;
 import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.project.ui.render.glass.GlassPane;
-
-import org.eclipse.swt.widgets.Control;
 
 /**
  * The ViewportPane is the display area for a Map.

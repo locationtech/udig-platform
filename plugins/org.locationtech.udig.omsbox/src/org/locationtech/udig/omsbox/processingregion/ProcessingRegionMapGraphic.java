@@ -24,7 +24,7 @@ import org.locationtech.udig.project.IStyleBlackboard;
 import org.locationtech.udig.ui.graphics.AWTGraphics;
 import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 /**
  * <p>

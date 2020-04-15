@@ -12,8 +12,8 @@ package org.locationtech.udig.tools.geometry.split;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.LineString;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineString;
 
 /**
  * Split builder is responsible of doing the split operation and the add vertex

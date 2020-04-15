@@ -13,11 +13,10 @@ package org.locationtech.udig.project.ui.internal;
 import java.awt.Rectangle;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.locationtech.udig.project.ui.IAnimation;
 import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
 import org.locationtech.udig.project.ui.commands.IDrawCommand;
-
-import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Creates an animation that flashes 3 times

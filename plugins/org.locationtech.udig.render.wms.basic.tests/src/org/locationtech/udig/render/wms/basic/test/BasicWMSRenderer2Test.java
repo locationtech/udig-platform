@@ -26,7 +26,7 @@ import org.locationtech.udig.project.tests.support.MapTests;
 import org.locationtech.udig.render.internal.wms.basic.BasicWMSRenderer2;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.data.ows.Layer;
+import org.geotools.ows.wms.Layer;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
@@ -34,7 +34,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 public class BasicWMSRenderer2Test extends AbstractProjectUITestCase {
 

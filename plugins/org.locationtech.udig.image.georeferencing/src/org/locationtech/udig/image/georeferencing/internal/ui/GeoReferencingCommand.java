@@ -27,7 +27,7 @@ import org.locationtech.udig.project.IMap;
 import org.eclipse.swt.graphics.ImageData;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 import org.locationtech.udig.image.georeferencing.internal.i18n.Messages;
 import org.locationtech.udig.image.georeferencing.internal.process.GeoReferencingProcess;

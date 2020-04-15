@@ -9,13 +9,15 @@
  */
 package org.locationtech.udig.style.advanced.points;
 
+import static org.locationtech.udig.style.advanced.utils.Utilities.sb;
+import static org.locationtech.udig.style.advanced.utils.Utilities.wkMarkNames;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
-import org.locationtech.udig.style.sld.SLD;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
@@ -37,7 +39,6 @@ import org.eclipse.swt.widgets.Text;
 import org.geotools.filter.text.ecql.ECQL;
 import org.geotools.styling.Font;
 import org.geotools.styling.TextSymbolizer;
-import org.opengis.filter.Filter;
 import org.locationtech.udig.style.advanced.StylePlugin;
 import org.locationtech.udig.style.advanced.common.FiltersComposite;
 import org.locationtech.udig.style.advanced.common.IStyleChangesListener;
@@ -47,13 +48,13 @@ import org.locationtech.udig.style.advanced.common.styleattributeclasses.Symboli
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
 import org.locationtech.udig.style.advanced.internal.Messages;
 import org.locationtech.udig.style.advanced.points.widgets.PointBoderParametersComposite;
-import org.locationtech.udig.style.advanced.points.widgets.PointFillParametersComposite;
 import org.locationtech.udig.style.advanced.points.widgets.PointCharacterChooserComposite;
+import org.locationtech.udig.style.advanced.points.widgets.PointFillParametersComposite;
 import org.locationtech.udig.style.advanced.points.widgets.PointGeneralParametersComposite;
 import org.locationtech.udig.style.advanced.points.widgets.PointLabelsParametersComposite;
 import org.locationtech.udig.style.advanced.utils.Utilities;
-
-import static org.locationtech.udig.style.advanced.utils.Utilities.*;
+import org.locationtech.udig.style.sld.SLD;
+import org.opengis.filter.Filter;
 
 public class PointPropertiesComposite extends SelectionAdapter implements ModifyListener, IStyleChangesListener {
 

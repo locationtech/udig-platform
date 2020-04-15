@@ -17,6 +17,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.internal.ui.actions.CatalogImportDropAction;
@@ -35,9 +37,6 @@ import org.locationtech.udig.project.ui.internal.Trace;
 import org.locationtech.udig.project.ui.internal.wizard.MapImport;
 import org.locationtech.udig.project.ui.internal.wizard.MapImportWizard;
 import org.locationtech.udig.ui.ViewerDropLocation;
-
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IProgressMonitor;
 
 public class MapDropAction extends CatalogImportDropAction {
 

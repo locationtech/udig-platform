@@ -29,7 +29,7 @@ import org.opengis.filter.FilterFactory;
 import org.opengis.filter.Id;
 import org.opengis.filter.identity.FeatureId;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 import org.locationtech.udig.tools.geometry.internal.util.GeometryUtil;
 /**
@@ -147,7 +147,7 @@ final class ModifyGeometryFeatureCommand extends AbstractEditCommand
         ids.add(fid);
         Id filter = ff.id(ids);
 
-        store.modifyFeatures(geomAttr, adaptedGeom, filter);
+        store.modifyFeatures(geomAttr.getName(), adaptedGeom, filter);
     }
 
     

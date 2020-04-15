@@ -21,6 +21,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.data.FeatureSource;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
+import org.geotools.geometry.jts.JTS;
+import org.geotools.util.factory.GeoTools;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.udig.core.IBlockingProvider;
 import org.locationtech.udig.core.internal.FeatureUtils;
 import org.locationtech.udig.mapgraphic.grid.GridMapGraphic;
@@ -43,14 +54,6 @@ import org.locationtech.udig.tools.edit.commands.AddVertexCommand;
 import org.locationtech.udig.tools.edit.commands.CreateAndSelectHoleCommand;
 import org.locationtech.udig.tools.edit.preferences.PreferenceUtil;
 import org.locationtech.udig.ui.ProgressManager;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.data.FeatureSource;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureIterator;
-import org.geotools.geometry.jts.JTS;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -60,11 +63,6 @@ import org.opengis.filter.identity.Identifier;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.LinearRing;
 
 /**
  * Methods for determining spatial relationships between points. 

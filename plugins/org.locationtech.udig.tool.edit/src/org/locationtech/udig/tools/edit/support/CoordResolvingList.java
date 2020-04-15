@@ -12,7 +12,7 @@ package org.locationtech.udig.tools.edit.support;
 import java.util.AbstractList;
 import java.util.List;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 /**
  * A list that will wraps a List<LazyCoord> and resolves the LazyCoords into coordinate when

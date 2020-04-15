@@ -22,6 +22,23 @@ import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.data.FeatureEvent;
+import org.geotools.data.FeatureEvent.Type;
+import org.geotools.data.FeatureSource;
+import org.geotools.data.FeatureStore;
+import org.geotools.data.Transaction;
+import org.geotools.feature.DefaultFeatureCollection;
+import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.CRS;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.ITransientResolve;
 import org.locationtech.udig.catalog.tests.CatalogTests;
@@ -35,29 +52,11 @@ import org.locationtech.udig.project.tests.TestInterceptorPost;
 import org.locationtech.udig.project.tests.TestInterceptorPre;
 import org.locationtech.udig.project.tests.support.MapTests;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.data.FeatureSource;
-import org.geotools.data.FeatureStore;
-import org.geotools.data.Transaction;
-import org.geotools.feature.DefaultFeatureCollection;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureCollections;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.CRS;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.Point;
 
 /**
  * Tests LayerImpl
@@ -243,7 +242,7 @@ public class LayerImplTest {
     }
 
     /**
-     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#refresh(com.vividsolutions.jts.geom.Envelope)}.
+     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#refresh(org.locationtech.jts.geom.Envelope)}.
      */
     @Test
     public void testRefresh() {
@@ -267,7 +266,7 @@ public class LayerImplTest {
     }
 
     /**
-     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#createBBoxFilter(com.vividsolutions.jts.geom.Envelope, org.eclipse.core.runtime.IProgressMonitor)}.
+     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#createBBoxFilter(org.locationtech.jts.geom.Envelope, org.eclipse.core.runtime.IProgressMonitor)}.
      */
     @Test
     public void testCreateBBoxFilter() {
@@ -355,4 +354,33 @@ public class LayerImplTest {
         
     }
 
+    private void addFeatureEvents(List<FeatureEvent> featureChanges, int quantity, boolean useIndex) throws IOException {
+        final NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
+        final ReferencedEnvelope envelop = new ReferencedEnvelope(0, 0.1, 0, 0.1, DefaultGeographicCRS.WGS84);
+        for (int i=0; i<quantity; i++) {
+            FeatureEvent featureEvent = new FeatureEvent(layer.getResource(FeatureSource.class, nullProgressMonitor), Type.CHANGED, envelop);
+
+            if (useIndex) {
+                featureChanges.add(0, featureEvent);
+            } else {
+                featureChanges.add(featureEvent);
+            }
+        }
+    }
+
+    @Test
+    public void testFeatureSourceCacheCleanupAddWithoutIndex() throws IOException {
+        List<FeatureEvent> featureChanges = layer.getFeatureChanges();
+        featureChanges.clear();
+        addFeatureEvents(featureChanges, 42, false);
+        assertTrue(featureChanges.size() <= 10);
+    }
+
+    @Test
+    public void testFeatureSourceCacheCleanupAddWithIndex() throws IOException {
+        List<FeatureEvent> featureChanges = layer.getFeatureChanges();
+        featureChanges.clear();
+        addFeatureEvents(featureChanges, 42, true);
+        assertTrue(featureChanges.size() <= 10);
+    }
 }

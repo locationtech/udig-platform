@@ -13,12 +13,11 @@ package org.locationtech.udig.tools.parallel.internal;
 
 import java.util.Observable;
 
-import javax.measure.unit.Unit;
+import javax.measure.Unit;
 
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.udig.tools.edit.EditToolHandler;
 import org.locationtech.udig.tools.edit.support.EditBlackboard;
-
-import com.vividsolutions.jts.geom.Coordinate;
 
 /**
  * Abstract class for store the data of the precision tools.

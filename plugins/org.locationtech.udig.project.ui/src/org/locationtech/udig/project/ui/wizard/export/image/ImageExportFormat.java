@@ -13,10 +13,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import org.locationtech.udig.project.IMap;
-
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.locationtech.udig.project.IMap;
 
 /**
  * An interface for the different ways that Images can be exported from {@link ExportMapToImageWizard} 

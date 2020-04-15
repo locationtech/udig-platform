@@ -17,8 +17,8 @@ import org.locationtech.udig.catalog.wms.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.geotools.data.ows.WMSCapabilities;
-import org.geotools.data.wms.xml.WMSSchema;
+import org.geotools.ows.wms.WMSCapabilities;
+import org.geotools.ows.wms.xml.WMSSchema;
 
 class WMSServiceInfo extends IServiceInfo {
     private WMSCapabilities caps = null;

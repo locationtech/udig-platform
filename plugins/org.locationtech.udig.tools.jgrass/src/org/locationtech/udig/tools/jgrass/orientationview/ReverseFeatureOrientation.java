@@ -29,7 +29,7 @@ import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.opengis.feature.simple.SimpleFeature;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 import org.locationtech.udig.tools.jgrass.i18n.Messages;
 import org.locationtech.udig.tools.jgrass.utils.OperationUtils;

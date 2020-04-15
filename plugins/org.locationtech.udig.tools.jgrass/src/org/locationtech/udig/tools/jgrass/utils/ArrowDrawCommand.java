@@ -21,8 +21,8 @@ import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.LineSegment;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.LineSegment;
 
 /**
  * Arrow drawing class. Adapted from udig's MessageBubble class.

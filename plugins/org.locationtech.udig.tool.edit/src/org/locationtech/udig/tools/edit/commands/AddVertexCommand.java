@@ -26,7 +26,7 @@ import org.locationtech.udig.tools.edit.support.PrimitiveShape;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 /**
  * Command for adding a vertext to a {@link org.locationtech.udig.tools.edit.support.EditGeom}

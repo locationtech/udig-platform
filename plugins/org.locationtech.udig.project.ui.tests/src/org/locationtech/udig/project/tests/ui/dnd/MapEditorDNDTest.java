@@ -20,6 +20,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.geotools.data.memory.MemoryDataStore;
+import org.geotools.data.shapefile.ShapefileDataStore;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.tests.ui.CatalogTestsUIPlugin;
@@ -42,13 +48,6 @@ import org.locationtech.udig.ui.UDIGDragDropUtilities;
 import org.locationtech.udig.ui.ViewerDropLocation;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.eclipse.core.runtime.FileLocator;
-import org.geotools.data.memory.MemoryDataStore;
-import org.geotools.data.shapefile.ShapefileDataStore;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 public class MapEditorDNDTest extends AbstractProjectUITestCase {
 	

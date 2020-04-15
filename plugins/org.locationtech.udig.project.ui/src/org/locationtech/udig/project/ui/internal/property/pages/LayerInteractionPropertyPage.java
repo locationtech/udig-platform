@@ -9,10 +9,6 @@
  */
 package org.locationtech.udig.project.ui.internal.property.pages;
 
-import org.locationtech.udig.project.Interaction;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.ui.internal.Messages;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -25,10 +21,12 @@ import org.eclipse.ui.IWorkbenchPropertyPage;
 import org.eclipse.ui.dialogs.PropertyPage;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.geometry.jts.Geometries;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.ui.internal.Messages;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.GeometryDescriptor;
-
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * Preference page for controlling Layer interaction with user.

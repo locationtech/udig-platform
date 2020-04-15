@@ -33,12 +33,12 @@ import org.locationtech.udig.tools.edit.enablement.ValidToolDetectionActivator;
 import org.locationtech.udig.tools.edit.enablement.WithinLegalLayerBoundsBehaviour;
 import org.locationtech.udig.tools.edit.support.ShapeType;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.LinearRing;
-import com.vividsolutions.jts.geom.MultiLineString;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Polygon;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.MultiLineString;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Polygon;
 
 /**
  * Tool for drawing and resizing rectangles.

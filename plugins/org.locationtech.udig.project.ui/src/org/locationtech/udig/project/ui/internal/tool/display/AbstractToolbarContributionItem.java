@@ -14,8 +14,6 @@ package org.locationtech.udig.project.ui.internal.tool.display;
 import java.text.MessageFormat;
 import java.util.List;
 
-import org.locationtech.udig.project.ui.internal.Messages;
-
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -26,6 +24,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.locationtech.udig.project.ui.internal.Messages;
 
 
 /**

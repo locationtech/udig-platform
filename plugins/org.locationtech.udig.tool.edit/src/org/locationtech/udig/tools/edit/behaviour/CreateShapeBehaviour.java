@@ -34,9 +34,9 @@ import org.locationtech.udig.tools.edit.support.EditBlackboard;
 import org.locationtech.udig.tools.edit.support.EditUtils;
 import org.locationtech.udig.tools.edit.support.ShapeType;
 
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.LinearRing;
-import com.vividsolutions.jts.geom.MultiLineString;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.MultiLineString;
 
 /**
  * <p>Requirements: * <ul> * <li>Mouse Dragged</li>

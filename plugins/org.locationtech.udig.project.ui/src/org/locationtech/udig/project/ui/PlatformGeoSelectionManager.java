@@ -19,6 +19,12 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPartReference;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.locationtech.udig.project.geoselection.AbstractGeoSelectionManager;
 import org.locationtech.udig.project.geoselection.GeoSelectionChangedEvent;
 import org.locationtech.udig.project.geoselection.GeoSelectionEntry;
@@ -28,13 +34,6 @@ import org.locationtech.udig.project.geoselection.IGeoSelectionEntry;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
 import org.locationtech.udig.project.ui.internal.MapEditorPart;
-
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IPartListener2;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPartReference;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * 

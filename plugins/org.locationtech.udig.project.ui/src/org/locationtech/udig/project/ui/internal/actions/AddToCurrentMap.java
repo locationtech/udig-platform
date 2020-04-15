@@ -12,14 +12,13 @@ package org.locationtech.udig.project.ui.internal.actions;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 /**
  * This class is a ActionDelegate for AbstractContext menus with RegistryEntry objects When the

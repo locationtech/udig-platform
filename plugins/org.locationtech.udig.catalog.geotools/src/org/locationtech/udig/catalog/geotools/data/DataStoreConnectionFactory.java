@@ -14,14 +14,14 @@ import java.io.Serializable;
 import java.net.URL;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.geotools.data.DataUtilities;
+import org.geotools.util.URLs;
 import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.geotools.Activator;
 import org.locationtech.udig.catalog.ui.UDIGConnectionFactory;
-
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.geotools.data.DataUtilities;
 
 /**
  * Try and connect to any GeoTools DataStore
@@ -42,7 +42,7 @@ public class DataStoreConnectionFactory extends UDIGConnectionFactory {
             }
             if (context instanceof File) {
                 File file = (File) context;
-                URL url = DataUtilities.fileToURL(file);
+                URL url = URLs.fileToUrl(file);
 
                 Map<String, Serializable> params = DataStoreServiceExtension
                         .createDataAcessParameters(url);
@@ -80,7 +80,7 @@ public class DataStoreConnectionFactory extends UDIGConnectionFactory {
             }
             if (context instanceof File) {
                 File file = (File) context;
-                URL url = DataUtilities.fileToURL(file);
+                URL url = URLs.fileToUrl(file);
 
                 Map<String, Serializable> params = DataStoreServiceExtension
                         .createDataAcessParameters(url);

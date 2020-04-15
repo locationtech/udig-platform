@@ -25,14 +25,14 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.util.factory.GeoTools;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.Id;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * This command modifies an attribute of the current editFeature(the victim that is currently
@@ -112,7 +112,7 @@ public class SetAttributeCommand extends AbstractEditCommand implements Undoable
         feature2.setAttribute(xpath, value);
 
         AttributeDescriptor attributeType = layer.getSchema().getDescriptor(xpath);
-        resource.modifyFeatures(attributeType, value, fidFilter);
+        resource.modifyFeatures(attributeType.getName(), value, fidFilter);
     }
 
     /**
@@ -127,7 +127,7 @@ public class SetAttributeCommand extends AbstractEditCommand implements Undoable
         FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
 		Id id = filterFactory.id(
                 FeatureUtils.stringToId(filterFactory, feature.getID()));
-        resource.modifyFeatures(attributeType, oldValue, id);
+        resource.modifyFeatures(attributeType.getName(), oldValue, id);
     }
 
     /**

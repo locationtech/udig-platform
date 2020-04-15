@@ -15,12 +15,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.vividsolutions.jts.algorithm.Angle;
-import com.vividsolutions.jts.algorithm.CGAlgorithms;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geomgraph.DirectedEdge;
-import com.vividsolutions.jts.geomgraph.DirectedEdgeStar;
-import com.vividsolutions.jts.geomgraph.EdgeEnd;
+import org.locationtech.jts.algorithm.Angle;
+import org.locationtech.jts.algorithm.CGAlgorithms;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geomgraph.DirectedEdge;
+import org.locationtech.jts.geomgraph.DirectedEdgeStar;
+import org.locationtech.jts.geomgraph.EdgeEnd;
 
 /**
  * A {@link DirectedEdgeStar} for the {@link SplitGraphNode nodes} in a

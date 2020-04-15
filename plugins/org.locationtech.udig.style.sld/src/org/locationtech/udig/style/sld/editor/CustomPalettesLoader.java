@@ -24,8 +24,6 @@ import java.util.StringTokenizer;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.locationtech.udig.style.sld.SLDPlugin;
-
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.IStartup;
@@ -34,6 +32,7 @@ import org.geotools.brewer.color.ColorBrewer;
 import org.geotools.brewer.color.PaletteSuitability;
 import org.geotools.brewer.color.PaletteType;
 import org.geotools.brewer.color.SampleScheme;
+import org.locationtech.udig.style.sld.SLDPlugin;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

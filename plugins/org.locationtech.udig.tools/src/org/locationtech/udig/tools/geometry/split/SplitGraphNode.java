@@ -11,10 +11,10 @@
  */
 package org.locationtech.udig.tools.geometry.split;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geomgraph.DirectedEdge;
-import com.vividsolutions.jts.geomgraph.EdgeEnd;
-import com.vividsolutions.jts.geomgraph.Node;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geomgraph.DirectedEdge;
+import org.locationtech.jts.geomgraph.EdgeEnd;
+import org.locationtech.jts.geomgraph.Node;
 
 /**
  * Custom node type. Does nothing special by now but to force the use of

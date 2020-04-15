@@ -18,6 +18,29 @@ import static org.junit.Assert.assertTrue;
 import java.awt.Dimension;
 import java.io.IOException;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.data.DataUtilities;
+import org.geotools.data.FeatureSource;
+import org.geotools.data.FeatureStore;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
+import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.util.factory.GeoTools;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.MultiLineString;
+import org.locationtech.jts.geom.MultiPoint;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.Polygon;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.tests.CatalogTests;
 import org.locationtech.udig.core.internal.FeatureUtils;
@@ -26,35 +49,10 @@ import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.tests.support.MapTests;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.data.DataUtilities;
-import org.geotools.data.FeatureSource;
-import org.geotools.data.FeatureStore;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureIterator;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.LinearRing;
-import com.vividsolutions.jts.geom.MultiLineString;
-import com.vividsolutions.jts.geom.MultiPoint;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.Polygon;
 
 public class CopyFeaturesCommandTest {
 
@@ -257,7 +255,7 @@ public class CopyFeaturesCommandTest {
     @Test
     public void testPoint2LinearRing() throws Exception {
 
-        setTarget("name2", "com.vividsolutions.jts.geom.LinearRing", builder.safeCreateGeometry(LinearRing.class, new Coordinate[]{new Coordinate(10,10)}));
+        setTarget("name2", "org.locationtech.jts.geom.LinearRing", builder.safeCreateGeometry(LinearRing.class, new Coordinate[]{new Coordinate(10,10)}));
 
         copyFeatures(LinearRing.class, 1);
     }
@@ -266,7 +264,7 @@ public class CopyFeaturesCommandTest {
     @Ignore
     @Test
     public void testPolygon2LinearRing() throws Exception {
-        setTarget("target2", "com.vividsolutions.jts.geom.LinearRing", builder.safeCreateGeometry(LinearRing.class, new Coordinate[]{new Coordinate(10,10)}));
+        setTarget("target2", "org.locationtech.jts.geom.LinearRing", builder.safeCreateGeometry(LinearRing.class, new Coordinate[]{new Coordinate(10,10)}));
         LinearRing r1 = builder.safeCreateGeometry(LinearRing.class, new Coordinate[]{
             new Coordinate(0,0), new Coordinate(10,0), new Coordinate(10,10), new Coordinate(0,10), new Coordinate(0,0)
         });

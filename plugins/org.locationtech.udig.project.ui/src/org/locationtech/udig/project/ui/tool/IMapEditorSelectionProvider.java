@@ -11,11 +11,10 @@ package org.locationtech.udig.project.ui.tool;
 
 import java.util.Set;
 
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.ui.internal.MapPart;
-
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.internal.MapPart;
 
 /**
  * Modal tools are responsible for providing the selection for the MapEditor.  In order to do so they

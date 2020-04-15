@@ -11,16 +11,15 @@ package org.locationtech.udig.project.tests.ui;
 
 import java.util.List;
 
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.render.IRenderer;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-
 import org.eclipse.jface.action.IAction;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.actions.ActionDelegate;
 import org.junit.Ignore;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 /**
  * Test RenderManager getRenderer

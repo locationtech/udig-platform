@@ -82,14 +82,25 @@ public class MessageBubble extends AbstractDrawCommand implements IAnimation {
     public void nextFrame() {
     }
 
+    @Override
+    public void setGraphics(ViewportGraphics graphics, IMapDisplay mapDisplay) {
+        super.setGraphics(graphics, mapDisplay);
+
+        if (display != null) {
+            display.addMouseListener(mouseListener);
+            display.addMouseWheelListener(wheelListener);
+        }
+    }
+
     public void run( IProgressMonitor monitor ) throws Exception {
+        if (display == null) {
+            return;
+        }
+
         if (myFont != null){
             graphics.setFont(myFont);
         }
-        
-        display.addMouseListener(mouseListener);
-        display.addMouseWheelListener(wheelListener);
-        
+
         Rectangle2D messageBounds=new Rectangle(0,0);
         
         for( String part : message ) {
@@ -221,8 +232,10 @@ public class MessageBubble extends AbstractDrawCommand implements IAnimation {
     @Override
     public void setValid( boolean valid ) {
         super.setValid(valid);
-        display.removeMouseListener(mouseListener);
-        display.removeMouseWheelListener(wheelListener);
+        if (display != null) {
+            display.removeMouseListener(mouseListener);
+            display.removeMouseWheelListener(wheelListener);
+        }
     }
     
     private MapMouseListener mouseListener=new MapMouseListener(){

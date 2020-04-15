@@ -12,14 +12,13 @@ package org.locationtech.udig.project.ui.tool.selection.provider;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
-
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Display;
+import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
 
 /**
  * Implements the basic functionality of a MapEditorSelectionProvider.

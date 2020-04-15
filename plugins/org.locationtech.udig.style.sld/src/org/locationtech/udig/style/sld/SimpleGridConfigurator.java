@@ -9,20 +9,15 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.style.sld;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.StyleBlackboard;
-import org.locationtech.udig.style.sld.simple.ScaleViewer;
-import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
-import org.geotools.data.wms.WebMapServer;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
+import org.geotools.feature.NameImpl;
+import org.geotools.ows.wms.WebMapServer;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
@@ -30,8 +25,13 @@ import org.geotools.styling.SLD;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.StyleFactory;
-import org.geotools.styling.Symbolizer;
+import org.geotools.util.factory.GeoTools;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.style.sld.simple.ScaleViewer;
+import org.locationtech.udig.ui.graphics.SLDs;
 import org.opengis.coverage.grid.GridCoverage;
+import org.opengis.style.SemanticType;
 
 /**
  * Allow editing of a RasterSymbolizaer.
@@ -80,9 +80,8 @@ public class SimpleGridConfigurator extends AbstractSimpleConfigurator {
     @Override
     protected void refresh() {
         Style style = getStyle();
-        RasterSymbolizer sym = SLD.rasterSymbolizer(style);
-        
-        Rule r = style.getFeatureTypeStyles()[0].getRules()[0];
+        SLD.rasterSymbolizer(style);
+        Rule r = style.featureTypeStyles().get(0).rules().get(0);
         double minScaleDen=r.getMinScaleDenominator();
         double maxScaleDen=r.getMaxScaleDenominator();
         this.minScale.setScale(minScaleDen, Math.round(getLayer().getMap().getViewportModel().getScaleDenominator()));            
@@ -143,7 +142,8 @@ public class SimpleGridConfigurator extends AbstractSimpleConfigurator {
         
         RasterSymbolizer rasterSymbolizer = styleFactory.createRasterSymbolizer();
         Rule rule = styleFactory.createRule();
-        rule.setSymbolizers(new Symbolizer[]{ rasterSymbolizer });
+        rule.symbolizers().clear();
+        rule.symbolizers().add(rasterSymbolizer);
         
         Style style = styleBuilder.createStyle();
         SLDContentManager sldContentManager = new SLDContentManager(styleBuilder, style);
@@ -151,12 +151,14 @@ public class SimpleGridConfigurator extends AbstractSimpleConfigurator {
         
         //set the feature type name
         FeatureTypeStyle fts = sldContentManager.getDefaultFeatureTypeStyle();
-        fts.setFeatureTypeName(SLDs.GENERIC_FEATURE_TYPENAME);
+        fts.featureTypeNames().add(new NameImpl(SLDs.GENERIC_FEATURE_TYPENAME));
         fts.setName("simple"); //$NON-NLS-1$
-        fts.setSemanticTypeIdentifiers(new String[] {"generic:geometry", "simple"}); //$NON-NLS-1$ //$NON-NLS-2$
+        fts.semanticTypeIdentifiers().add(new SemanticType("generic:geometry"));  //$NON-NLS-1$
+        fts.semanticTypeIdentifiers().add(new SemanticType("simple"));  //$NON-NLS-1$
         
-        fts.addRule(rule);
-        style.addFeatureTypeStyle(fts);
+        fts.rules().add(rule);
+        style.featureTypeStyles().add(fts);
+        
         style.setName("simpleStyle");        
         
         return style;

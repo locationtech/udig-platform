@@ -11,12 +11,6 @@
  */
 package org.locationtech.udig.project.ui.internal.adapters;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.AdaptableFeature;
-import org.locationtech.udig.project.ui.internal.properties.FeaturePropertySource;
-import org.locationtech.udig.project.ui.internal.properties.GeomPropertySource;
-import org.locationtech.udig.project.ui.internal.properties.IGeoResourcePropertySource;
-
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.jface.viewers.IContentProvider;
@@ -27,10 +21,14 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySource2;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.AdaptableFeature;
+import org.locationtech.udig.project.ui.internal.properties.FeaturePropertySource;
+import org.locationtech.udig.project.ui.internal.properties.GeomPropertySource;
+import org.locationtech.udig.project.ui.internal.properties.IGeoResourcePropertySource;
 import org.opengis.feature.simple.SimpleFeature;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * Adapts Geotools objects to Eclipse objects, such as Adaptable objects, property sources, etc...

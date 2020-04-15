@@ -30,7 +30,7 @@ import org.locationtech.udig.tools.edit.behaviour.SelectFeatureBehaviour;
 import org.eclipse.swt.SWT;
 import org.opengis.filter.spatial.Intersects;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * A Tool that adds vertices to EditGeoms and selects features.

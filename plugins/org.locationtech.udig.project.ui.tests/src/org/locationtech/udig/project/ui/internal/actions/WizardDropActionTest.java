@@ -14,14 +14,13 @@ import static org.junit.Assert.assertTrue;
 
 import java.net.URL;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.ui.PlatformUI;
+import org.junit.Test;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.catalog.tests.ui.CatalogTestsUIPlugin;
 import org.locationtech.udig.project.ui.internal.LayersView;
 import org.locationtech.udig.ui.ViewerDropLocation;
-
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.ui.PlatformUI;
-import org.junit.Test;
 
 public class WizardDropActionTest extends AbstractProjectUITestCase{
 

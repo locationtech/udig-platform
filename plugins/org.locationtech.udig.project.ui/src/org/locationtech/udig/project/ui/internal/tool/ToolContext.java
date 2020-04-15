@@ -11,6 +11,9 @@
  */
 package org.locationtech.udig.project.ui.internal.tool;
 
+import org.eclipse.core.runtime.Plugin;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IWorkbench;
 import org.locationtech.udig.project.command.factory.EditCommandFactory;
 import org.locationtech.udig.project.command.factory.NavigationCommandFactory;
 import org.locationtech.udig.project.command.factory.SelectionCommandFactory;
@@ -18,10 +21,6 @@ import org.locationtech.udig.project.internal.AbstractContext;
 import org.locationtech.udig.project.ui.commands.DrawCommandFactory;
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 import org.locationtech.udig.project.ui.tool.IToolContext;
-
-import org.eclipse.core.runtime.Plugin;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IWorkbench;
 
 /**
  * Context used by a tool to access the model and issue commands.

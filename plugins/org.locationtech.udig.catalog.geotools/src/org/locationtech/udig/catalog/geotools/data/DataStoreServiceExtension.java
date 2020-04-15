@@ -16,11 +16,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.locationtech.udig.catalog.ID;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.IServiceExtension;
-import org.locationtech.udig.catalog.geotools.Activator;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.geotools.data.DataAccessFactory;
@@ -28,9 +23,13 @@ import org.geotools.data.DataAccessFactory.Param;
 import org.geotools.data.DataAccessFinder;
 import org.geotools.data.DataStoreFactorySpi;
 import org.geotools.data.DataStoreFinder;
-import org.geotools.data.DataUtilities;
 import org.geotools.data.FileDataStoreFactorySpi;
 import org.geotools.jdbc.JDBCDataStoreFactory;
+import org.geotools.util.URLs;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceExtension;
+import org.locationtech.udig.catalog.geotools.Activator;
 
 /**
  * ServiceExtension willing to place any GeoTools DataStore into the udig catalog.
@@ -126,7 +125,7 @@ public class DataStoreServiceExtension extends IServiceExtension {
                     params.put(param.key, url);
                 } else if (File.class.isAssignableFrom(param.type)
                         && "file".equalsIgnoreCase(url.getProtocol())) {
-                    File file = DataUtilities.urlToFile(url);
+                    File file = URLs.urlToFile(url);
                     params.put(param.key, file);
 
                 } else if (param.sample != null) {

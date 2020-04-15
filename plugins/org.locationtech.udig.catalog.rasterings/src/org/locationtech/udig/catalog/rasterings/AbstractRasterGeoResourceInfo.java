@@ -22,7 +22,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 public class AbstractRasterGeoResourceInfo extends IGeoResourceInfo {
     protected final AbstractRasterGeoResource resource;
@@ -66,7 +66,7 @@ public class AbstractRasterGeoResourceInfo extends IGeoResourceInfo {
                 Envelope env = new Envelope(ptBounds.getMinimum(0), ptBounds.getMaximum(0),
                         ptBounds.getMinimum(1), ptBounds.getMaximum(1));
 
-                CoordinateReferenceSystem geomcrs = source.getCrs();
+                CoordinateReferenceSystem geomcrs = source.getCoordinateReferenceSystem();
                 if (geomcrs == null) {
                     geomcrs = DefaultEngineeringCRS.GENERIC_2D;
                 }

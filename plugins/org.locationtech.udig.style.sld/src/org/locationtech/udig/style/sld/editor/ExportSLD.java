@@ -13,13 +13,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.xml.styling.SLDTransformer;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.style.sld.SLDPlugin;
 import org.locationtech.udig.style.sld.internal.Messages;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.styling.SLDTransformer;
-import org.geotools.styling.StyledLayerDescriptor;
 
 public class ExportSLD extends ExportTo {
 

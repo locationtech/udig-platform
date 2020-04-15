@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IResolveFolder;
 import org.locationtech.udig.catalog.IService;
@@ -21,8 +22,6 @@ import org.locationtech.udig.project.internal.Project;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.ui.IDropAction;
 import org.locationtech.udig.ui.ViewerDropLocation;
-
-import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Handles Layers and IGeoResources being dropped on a Project.  It will create a map and add the layer/resource to the

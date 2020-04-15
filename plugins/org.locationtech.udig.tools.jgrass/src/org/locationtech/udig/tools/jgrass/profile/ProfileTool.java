@@ -49,7 +49,7 @@ import org.locationtech.udig.ui.PlatformGIS;
 import org.opengis.coverage.grid.GridCoverage;
 import org.opengis.referencing.operation.TransformException;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 /**
  * <p>

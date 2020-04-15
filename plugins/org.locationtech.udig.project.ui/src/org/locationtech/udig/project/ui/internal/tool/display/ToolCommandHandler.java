@@ -11,18 +11,10 @@
  */
 package org.locationtech.udig.project.ui.internal.tool.display;
 
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.MapToolEntry;
-import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
-import org.locationtech.udig.project.ui.tool.IToolContext;
-import org.locationtech.udig.project.ui.tool.IToolManager;
-import org.locationtech.udig.project.ui.tool.ModalTool;
-import org.locationtech.udig.project.ui.tool.Tool;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.gef.palette.PaletteContainer;
-import org.eclipse.swt.graphics.Cursor;
+import org.locationtech.udig.project.ui.internal.MapToolEntry;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 /**
  * The handler for tool commands.

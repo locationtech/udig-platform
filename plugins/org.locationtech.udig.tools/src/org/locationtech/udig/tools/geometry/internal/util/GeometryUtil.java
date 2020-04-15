@@ -22,22 +22,22 @@ import org.geotools.feature.FeatureIterator;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
-import com.vividsolutions.jts.algorithm.CentralEndpointIntersector;
-import com.vividsolutions.jts.algorithm.HCoordinate;
-import com.vividsolutions.jts.algorithm.NotRepresentableException;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryCollection;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.LinearRing;
-import com.vividsolutions.jts.geom.MultiLineString;
-import com.vividsolutions.jts.geom.MultiPoint;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.Polygon;
-import com.vividsolutions.jts.operation.linemerge.LineMerger;
-import com.vividsolutions.jts.operation.polygonize.Polygonizer;
+import org.locationtech.jts.algorithm.HCoordinate;
+import org.locationtech.jts.algorithm.NotRepresentableException;
+import org.locationtech.jts.algorithm.RobustLineIntersector;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryCollection;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.MultiLineString;
+import org.locationtech.jts.geom.MultiPoint;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.operation.linemerge.LineMerger;
+import org.locationtech.jts.operation.polygonize.Polygonizer;
 
 import org.locationtech.udig.tools.geometry.merge.MergeStrategy;
 import org.locationtech.udig.tools.internal.i18n.Messages;
@@ -635,7 +635,11 @@ public class GeometryUtil {
 			intPt = HCoordinate.intersection(p1, p2, q1, q2);
 		} catch (NotRepresentableException e) {
 			// compute an approximate result
-			intPt = CentralEndpointIntersector.getIntersection(p1, p2, q1, q2);
+			//TODO: TEST THIS
+			RobustLineIntersector i = new RobustLineIntersector();
+			i.computeIntersection(p1, p2, q1, q2);
+			intPt = i.getIntersection(0);
+//			intPt = CentralEndpointIntersector.getIntersection(p1, p2, q1, q2);
 		}
 		return intPt;
 	}

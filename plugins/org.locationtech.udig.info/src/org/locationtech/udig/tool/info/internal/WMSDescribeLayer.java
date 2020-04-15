@@ -34,12 +34,12 @@ import org.locationtech.udig.tool.info.InfoPlugin;
 import org.locationtech.udig.tool.info.LayerPointInfo;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.data.ows.Layer;
-import org.geotools.data.ows.StyleImpl;
-import org.geotools.data.wms.WebMapServer;
-import org.geotools.data.wms.request.GetFeatureInfoRequest;
-import org.geotools.data.wms.request.GetMapRequest;
-import org.geotools.data.wms.response.GetFeatureInfoResponse;
+import org.geotools.ows.wms.Layer;
+import org.geotools.ows.wms.StyleImpl;
+import org.geotools.ows.wms.WebMapServer;
+import org.geotools.ows.wms.request.GetFeatureInfoRequest;
+import org.geotools.ows.wms.request.GetMapRequest;
+import org.geotools.ows.wms.response.GetFeatureInfoResponse;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
@@ -49,7 +49,7 @@ import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.xml.sax.SAXException;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 public class WMSDescribeLayer {
     
@@ -80,7 +80,7 @@ public class WMSDescribeLayer {
             if( layer.isVisible()
                 // && layer.isApplicable("information")
                     ) {
-                Layer wmslayer = layer.getResource( org.geotools.data.ows.Layer.class, null );                
+                Layer wmslayer = layer.getResource( org.geotools.ows.wms.Layer.class, null );                
                 layers.add( wmslayer );
             }            
         }    

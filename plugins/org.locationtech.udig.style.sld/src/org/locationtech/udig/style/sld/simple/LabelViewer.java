@@ -25,7 +25,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.factory.GeoTools;
 import org.geotools.styling.AnchorPoint;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Font;
@@ -34,6 +33,7 @@ import org.geotools.styling.LinePlacement;
 import org.geotools.styling.PointPlacement;
 import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.TextSymbolizer;
+import org.geotools.util.factory.GeoTools;
 import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.locationtech.udig.project.preferences.PreferenceConstants;
 import org.locationtech.udig.style.sld.AbstractSimpleConfigurator;
@@ -255,9 +255,9 @@ public class LabelViewer {
         TextSymbolizer text = build.createTextSymbolizer(fill, new Font[] {gtFont},
                 null, exp, placement, null);
         if (SLD.isLine(this.schema)) {
-            text.addToOptions("group", "yes"); //$NON-NLS-1$ //$NON-NLS-2$
+            text.getOptions().put("group", "yes"); //$NON-NLS-1$ //$NON-NLS-2$
         }
-        text.addToOptions("spaceAround", "2"); //$NON-NLS-1$ //$NON-NLS-2$
+        text.getOptions().put("spaceAround", "2"); //$NON-NLS-1$ //$NON-NLS-2$
         return text; 
     }
     

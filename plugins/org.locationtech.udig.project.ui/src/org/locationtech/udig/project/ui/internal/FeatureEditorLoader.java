@@ -9,12 +9,6 @@
  */
 package org.locationtech.udig.project.ui.internal;
 
-import org.locationtech.udig.internal.ui.UiPlugin;
-import org.locationtech.udig.project.ui.IUDIGDialogPage;
-import org.locationtech.udig.project.ui.IUDIGView;
-import org.locationtech.udig.project.ui.internal.FeatureEditorExtensionProcessor.EditActionContribution;
-import org.locationtech.udig.project.ui.internal.tool.ToolContext;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.action.Action;
@@ -30,6 +24,11 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.project.ui.IUDIGDialogPage;
+import org.locationtech.udig.project.ui.IUDIGView;
+import org.locationtech.udig.project.ui.internal.FeatureEditorExtensionProcessor.EditActionContribution;
+import org.locationtech.udig.project.ui.internal.tool.ToolContext;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**

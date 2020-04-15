@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Document Plug-in Tests
 Bundle-SymbolicName: org.locationtech.udig.document.tests;singleton:=true
 Bundle-Version: 2.2.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.locationtech.udig.document,
  org.locationtech.udig.catalog,
  org.junit,
@@ -12,3 +12,4 @@ Require-Bundle: org.locationtech.udig.document,
 Eclipse-BundleShape: dir
 Bundle-Activator: org.locationtech.udig.document.tests.Activator
 Bundle-ActivationPolicy: lazy
+

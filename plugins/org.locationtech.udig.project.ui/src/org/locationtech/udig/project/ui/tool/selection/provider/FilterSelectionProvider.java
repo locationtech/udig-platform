@@ -9,6 +9,7 @@
  */
 package org.locationtech.udig.project.ui.tool.selection.provider;
 
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.locationtech.udig.core.filter.AdaptingFilter;
 import org.locationtech.udig.core.filter.AdaptingFilterFactory;
 import org.locationtech.udig.project.EditManagerEvent;
@@ -20,8 +21,6 @@ import org.locationtech.udig.project.LayerEvent;
 import org.locationtech.udig.project.LayerEvent.EventType;
 import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
-
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.opengis.filter.Filter;
 
 /**

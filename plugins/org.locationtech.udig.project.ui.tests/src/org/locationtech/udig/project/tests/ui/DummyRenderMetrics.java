@@ -14,13 +14,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.geotools.util.Range;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.render.Renderer;
 import org.locationtech.udig.project.render.AbstractRenderMetrics;
 import org.locationtech.udig.project.render.IRenderContext;
 import org.locationtech.udig.project.render.IRenderMetricsFactory;
-
-import org.geotools.util.Range;
 
 public class DummyRenderMetrics extends AbstractRenderMetrics {
 

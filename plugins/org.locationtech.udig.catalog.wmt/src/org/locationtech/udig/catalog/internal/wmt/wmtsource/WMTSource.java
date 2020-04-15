@@ -35,7 +35,7 @@ import org.geotools.util.ObjectCache;
 import org.geotools.util.ObjectCaches;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  *

@@ -11,15 +11,14 @@
  */
 package org.locationtech.udig.project.ui.internal.tool.display;
 
-import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
-import org.locationtech.udig.project.ui.tool.IToolHandler;
-import org.locationtech.udig.project.ui.tool.Tool;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.tool.IToolHandler;
+import org.locationtech.udig.project.ui.tool.Tool;
 
 /**
  * Proxy to allow lazy loading of ToolCommandHandlers

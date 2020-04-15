@@ -20,7 +20,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.geotools.data.DataUtilities;
-
+import org.geotools.util.URLs;
 import org.locationtech.udig.core.internal.CorePlugin;
 
 /**
@@ -58,7 +58,7 @@ public class ID implements Serializable {
             this.uri = url.toURI();
         } catch (URISyntaxException e) {
         }
-        this.file = DataUtilities.urlToFile(url);
+        this.file = URLs.urlToFile(url);
         this.typeQualifier = qualifier;
     }
     /**
@@ -118,7 +118,7 @@ public class ID implements Serializable {
             this.uri = url.toURI();
         } catch (URISyntaxException e) {
         }
-        file = DataUtilities.urlToFile(url);
+        file = URLs.urlToFile(url);
         if (file != null) {
 			if (uri != null && uri.isAbsolute()
 					&& "file".equals(uri.getScheme())) { //$NON-NLS-1$

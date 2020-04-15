@@ -23,7 +23,7 @@ import org.locationtech.udig.tools.edit.support.Point;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.opengis.feature.simple.SimpleFeature;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * A strategy for adding the features to the edit blackboard if no modifiers are down.  The first feature

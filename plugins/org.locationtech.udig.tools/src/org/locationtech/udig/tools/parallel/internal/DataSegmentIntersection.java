@@ -11,7 +11,7 @@
  */
 package org.locationtech.udig.tools.parallel.internal;
 
-import com.vividsolutions.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Coordinate;
 
 /**
  * Stores information about segments that intersects with others segments. It

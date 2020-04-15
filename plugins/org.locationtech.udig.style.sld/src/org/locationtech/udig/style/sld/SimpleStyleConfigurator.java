@@ -15,17 +15,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.StyleBlackboard;
-import org.locationtech.udig.style.sld.internal.Messages;
-import org.locationtech.udig.style.sld.simple.FillViewer;
-import org.locationtech.udig.style.sld.simple.GraphicViewer;
-import org.locationtech.udig.style.sld.simple.LabelViewer;
-import org.locationtech.udig.style.sld.simple.Mode;
-import org.locationtech.udig.style.sld.simple.ScaleViewer;
-import org.locationtech.udig.style.sld.simple.StrokeViewer;
-import org.locationtech.udig.ui.graphics.SLDs;
-
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -50,10 +39,21 @@ import org.geotools.styling.Stroke;
 import org.geotools.styling.Style;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.style.sld.internal.Messages;
+import org.locationtech.udig.style.sld.simple.FillViewer;
+import org.locationtech.udig.style.sld.simple.GraphicViewer;
+import org.locationtech.udig.style.sld.simple.LabelViewer;
+import org.locationtech.udig.style.sld.simple.Mode;
+import org.locationtech.udig.style.sld.simple.ScaleViewer;
+import org.locationtech.udig.style.sld.simple.StrokeViewer;
+import org.locationtech.udig.ui.graphics.SLDs;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.FeatureType;
 import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.feature.type.PropertyDescriptor;
+import org.opengis.style.SemanticType;
 
 /**
  * Defines a "simple" StyleConfigurator for working with SLD documents.
@@ -388,7 +388,8 @@ public class SimpleStyleConfigurator extends AbstractSimpleConfigurator {
         FeatureTypeStyle featureTypeStyle = this.build.createFeatureTypeStyle(
                 SLDs.GENERIC_FEATURE_TYPENAME, rule);
         featureTypeStyle.setName("simple"); //$NON-NLS-1$
-        featureTypeStyle.setSemanticTypeIdentifiers(new String[]{"generic:geometry", "simple"}); //$NON-NLS-1$ //$NON-NLS-2$
+        featureTypeStyle.semanticTypeIdentifiers().add(new SemanticType("generic:geometry")); //$NON-NLS-1$
+        featureTypeStyle.semanticTypeIdentifiers().add(new SemanticType("simple")); //$NON-NLS-1$
 
         Style style = (Style) getStyleBlackboard().get(SLDContent.ID);
         style.setDefault(true);
