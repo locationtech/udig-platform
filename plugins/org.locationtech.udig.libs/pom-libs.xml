@@ -624,19 +624,6 @@
 	      <artifactId>postgresql</artifactId>
 	      <version>42.1.1</version>
 	    </dependency -->
-				
-		<!-- We get this from the base RCP as such they are already provided by 
-			our org.locationtech.udig.libs dependencies in the MANIFEST.MF and we don't 
-			need to ask for them to be downloaded now. -->
-		<!--<dependency> <groupId>org.apache</groupId> <artifactId>xerces</artifactId> 
-			<version>2.7.1</version> <scope>provided</scope> </dependency> -->
-
-		<dependency>
-			<groupId>xerces</groupId>
-			<artifactId>xercesImpl</artifactId>
-			<version>2.4.0</version>
-			<scope>provided</scope>
-		</dependency>
 
 		<!-- the following is provided by the eclipse modeling target platform -->
 		<dependency>
@@ -652,29 +639,7 @@
 			<artifactId>ejml-ddense</artifactId>
 			<version>0.32</version>
 		</dependency>
-		
-		<!--<dependency>
-			<groupId>com.vividsolutions</groupId>
-			<artifactId>jts-core</artifactId>
-			<version>${jts.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>xerces</groupId>
-					<artifactId>xercesImpl</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>com.vividsolutions</groupId>
-			<artifactId>jts-example</artifactId>
-			<version>${jts.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>xerces</groupId>
-					<artifactId>xercesImpl</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>-->
+
 		<dependency>
 			<groupId>org.wkb4j</groupId>
 			<artifactId>wkb4j</artifactId>
