@@ -1,3 +1,4 @@
+package org.locationtech.udig.log4j.appender;
 /*******************************************************************************
 Copyright (c) 2005 John J. Franey
 All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@ which accompanies distribution, and is available at
 http://www.eclipse.org/legal/epl-v10.html
 *
 *******************************************************************************/
-package org.locationtech.udig.libs.internal;
+
 
 import java.text.MessageFormat;
 import org.apache.log4j.AppenderSkeleton;

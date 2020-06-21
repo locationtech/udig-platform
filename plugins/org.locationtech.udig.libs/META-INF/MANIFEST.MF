@@ -8,7 +8,6 @@ Bundle-Localization: plugin
 Eclipse-BundleShape: dir
 Eclipse-BuddyPolicy: registered,
  ext
-Eclipse-RegisterBuddy: org.apache.log4j
 Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
  org.apache.xerces;visibility:=reexport,
  org.apache.log4j;visibility:=reexport,
