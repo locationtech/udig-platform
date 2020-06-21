@@ -52,21 +52,9 @@
         the GeoTools project for stable releases - use this repository when
         using an official GeoTools numbered release -->
         <repository>
-            <id>geotools-release</id>
-            <name>Geotools Release</name>
-            <url>http://download.osgeo.org/webdav/geotools</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-
-        <!-- The OpenGeo company offers a SNAPSHOT repository populated by GeoTools
-        nightly builds - in general it is much faster then the official repository
-        above -->
-        <repository>
-            <id>boundless</id>
-            <name>Boundless Maven Repository</name>
-            <url>https://repo.boundlessgeo.com/main/</url>
+            <id>OSGeo</id>
+            <name>OSGeo Maven Release Repository</name>
+            <url>https://repo.osgeo.org/repository/release/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -85,7 +73,7 @@
             </releases>
         </repository>
 
-	<repository>
+        <repository>
             <id>ecc</id>
             <name>ECC Repository</name>
             <url>https://github.com/ElectronicChartCentre/ecc-mvn-repo/raw/master/releases</url>

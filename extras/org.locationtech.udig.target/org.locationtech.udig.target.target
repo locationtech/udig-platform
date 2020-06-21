@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><?pde version="3.8"?><target name="Eclipse Oxygen Target Platform for uDIG" sequenceNumber="35">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?>
+<target name="Eclipse Target Platform for uDIG" sequenceNumber="35">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.apache.ant" version="0.0.0"/>
@@ -44,7 +46,6 @@
 <unit id="org.eclipse.equinox.security" version="0.0.0"/>
 <unit id="org.eclipse.equinox.simpleconfigurator" version="0.0.0"/>
 <unit id="org.eclipse.equinox.simpleconfigurator.manipulator" version="0.0.0"/>
-<unit id="org.eclipse.equinox.util" version="0.0.0"/>
 <unit id="org.eclipse.gef.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.help.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.help.source.feature.group" version="0.0.0"/>
@@ -70,7 +71,7 @@
 <unit id="org.eclipse.xsd.source.feature.group" version="0.0.0"/>
 <unit id="org.sat4j.core" version="0.0.0"/>
 <unit id="org.sat4j.pb" version="0.0.0"/>
-<repository location="http://download.eclipse.org/releases/oxygen/"/>
+<repository location="http://download.eclipse.org/releases/2019-03/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="javax.media.jai_imageio-feature.feature.group" version="1.1.3"/>
