@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Log4J Appender Plugin
+Bundle-Name: log4j Appender Plugin
 Bundle-SymbolicName: org.locationtech.udig.log4j.appender;singleton:=true
 Bundle-Version: 2.2.0.qualifier
 Bundle-Vendor: udig.refraction.net
