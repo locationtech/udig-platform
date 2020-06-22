@@ -24,7 +24,7 @@ import org.junit.Test;
  */
 public abstract class AbstractResolveTest {
     
-    public static final int BLOCK = 150; // number of acceptable milliseconds for a run
+    public static final int BLOCK = 1000; // number of acceptable milliseconds for a run
     
     public static final class FakeProgress implements IProgressMonitor {
 
