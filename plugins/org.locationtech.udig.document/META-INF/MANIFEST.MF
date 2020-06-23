@@ -4,7 +4,7 @@ Bundle-Name: %plugin.name
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Bundle-SymbolicName: org.locationtech.udig.document;singleton:=true
-Bundle-Version: 2.2.0.RC1
+Bundle-Version: 2.3.0.qualifier
 Bundle-Activator: org.locationtech.udig.document.DocumentPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

@@ -2,7 +2,7 @@
 <feature
       id="org.locationtech.udig_tutorials-feature"
       label="org.locationtech.udig_tutorials-feature"
-      version="2.2.0.RC1"
+      version="2.3.0.qualifier"
       provider-name="Refractions Research">
 
    <description url="http://udig.refractions.net/confluence/display/DEV/1+Getting+Started">

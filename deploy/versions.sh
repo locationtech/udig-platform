@@ -8,8 +8,8 @@ export BASE=`dirname $0`
 export INSTALLER="${BASE}/installer"
 #export TARGET=${BASE}/target
 #export TARGET=${BASE}/../features/org.locationtech.udig-product/target/products/
-export SERIES=2.2
-export VERSION=2.2.0.RC1
+export SERIES=2.3
+export VERSION=2.3.0.RC1
 export BUILD="${BASE}/build"
 
 # Tycho Build
