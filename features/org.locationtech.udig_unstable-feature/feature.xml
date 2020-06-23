@@ -2,7 +2,7 @@
 <feature
       id="org.locationtech.udig_unstable-feature"
       label="%feature.name"
-      version="2.2.0.qualifier"
+      version="2.2.0.RC1"
       provider-name="udig.refractions.net">
 
    <description url="http://udig.refractions.net/">

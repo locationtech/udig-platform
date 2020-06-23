@@ -2,7 +2,7 @@
 <feature
       id="org.locationtech.udig_printing-feature"
       label="org.locationtech.udig_printing-feature"
-      version="2.2.0.qualifier"
+      version="2.2.0.RC1"
       provider-name="Refractions Research"
       plugin="org.locationtech.udig.printing.ui">
 

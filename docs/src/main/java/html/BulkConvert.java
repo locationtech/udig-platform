@@ -591,7 +591,7 @@ public class BulkConvert {
         }
     }
 
-    // From http://java.dzone.com/articles/file-copy-java-Ð-benchmark
+    // From http://java.dzone.com/articles/file-copy-java-D-benchmark
     private void bufferedStreamsCopy(InputStream fin, OutputStream fout) throws IOException {
         try {
             int data;

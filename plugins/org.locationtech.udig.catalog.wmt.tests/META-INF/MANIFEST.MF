@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Test WMT Plug-in
 Bundle-SymbolicName: org.locationtech.udig.catalog.wmt.tests
-Bundle-Version: 2.2.0.qualifier
+Bundle-Version: 2.2.0.RC1
 Bundle-Vendor: udig.refractions.net
 Bundle-Activator: org.locationtech.udig.tests.catalog.wmt.Activator
 Require-Bundle: org.eclipse.ui,

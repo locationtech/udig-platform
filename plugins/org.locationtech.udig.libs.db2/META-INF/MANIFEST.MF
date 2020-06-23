@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: DB2 Plug-in
 Bundle-SymbolicName: org.locationtech.udig.libs.db2
-Bundle-Version: 2.2.0.qualifier
+Bundle-Version: 2.2.0.RC1
 Bundle-Vendor: udig.refractions.net
 Bundle-ClassPath: .,libs/db2jcc_license_cu.jar,
  libs/db2jcc.jar
