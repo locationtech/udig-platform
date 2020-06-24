@@ -14,7 +14,7 @@ cache:
 env:
   global:
     - MVN_VERSION="3.5.4"
-    - MAVEN_OPTS="-Xmx12g -XX:-UseGCOverheadLimit"
+    - MAVEN_OPTS="-Xmx8g -XX:-UseGCOverheadLimit"
 
 before_install:
   - rm ~/.m2/settings.xml
