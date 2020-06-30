@@ -29,6 +29,8 @@ before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
+  - "sudo pip install 'requests[security]'"
+  - "sudo pip install -q sphinx==1.8.5"
 
 matrix:
   allow_failures:
@@ -39,7 +41,8 @@ install:
   - "mvn install -B -f pom-libs.xml -DskipTests=true" #download dependencies
 
 script: 
-  - "mvn verify -B -Pproduct -Psdk -Ptest --fail-at-end -T4"
+  - "mvn install -B -f docs/pom.xml -Dtycho.mode=maven -Pdocs"
+  - "mvn verify -B -Pproduct -Pdocs -Psdk -Ptest --fail-at-end -T4"
 
 
 notifications:

@@ -28,7 +28,7 @@ Install Python:
    
    Optionally you could install a specific version of sphinx (although we try and use the latest)::
     
-        easy_install sphinx==1.1.3
+        easy_install sphinx==1.8.5
 
 rst2pdf Optional Install
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -69,7 +69,7 @@ is for macports.
    
    Optionally you could ask for a specific version (we try and use the latest)::
      
-      sudo easy_install sphinx==1.1.3
+      sudo easy_install sphinx==1.8.5
  
 4. To build the PDF targets you will also need rst2pdf.::
      
@@ -95,5 +95,5 @@ Use apt-get and easy install.
   
   Optionally you can install a specifc version::
   
-     easy_install sphinx==1.1.3
+     easy_install sphinx==1.8.5
  
