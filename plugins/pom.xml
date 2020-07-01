@@ -156,6 +156,7 @@
         <module>org.locationtech.udig.ui</module>
         <module>org.locationtech.udig.validation</module>
         <module>org.locationtech.udig.bookmarks</module>
+        <module>org.locationtech.udig.cheatsheets</module>
     </modules>
 
 </project>

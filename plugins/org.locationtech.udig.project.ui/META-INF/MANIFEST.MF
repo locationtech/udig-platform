@@ -51,7 +51,6 @@ Require-Bundle: org.locationtech.udig.style.sld,
  org.eclipse.emf.edit.ui,
  org.locationtech.udig.catalog.ui,
  org.locationtech.udig.project.edit,
- org.eclipse.ui.cheatsheets,
  org.eclipse.core.expressions,
  com.lowagie.text
 Bundle-ActivationPolicy: lazy

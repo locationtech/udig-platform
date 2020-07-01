@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Cheat Sheets
+Bundle-SymbolicName: org.locationtech.udig.cheatsheets;singleton:=true
+Bundle-Version: 2.3.0.qualifier
+Bundle-Vendor: udig.refractions.net
+Automatic-Module-Name: org.locationtech.udig.cheatsheets
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.ui.cheatsheets;bundle-version="3.5.400",
+ org.eclipse.ui;bundle-version="3.112.0"
