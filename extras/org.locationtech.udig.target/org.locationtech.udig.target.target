@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><?pde version="3.8"?><target name="Eclipse Oxygen Target Platform for uDIG" sequenceNumber="35">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?><target name="Eclipse Target Platform for uDIG" sequenceNumber="37">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.apache.ant" version="0.0.0"/>
@@ -44,7 +45,6 @@
 <unit id="org.eclipse.equinox.security" version="0.0.0"/>
 <unit id="org.eclipse.equinox.simpleconfigurator" version="0.0.0"/>
 <unit id="org.eclipse.equinox.simpleconfigurator.manipulator" version="0.0.0"/>
-<unit id="org.eclipse.equinox.util" version="0.0.0"/>
 <unit id="org.eclipse.gef.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.help.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.help.source.feature.group" version="0.0.0"/>
@@ -64,47 +64,48 @@
 <unit id="org.eclipse.ui.intro" version="0.0.0"/>
 <unit id="org.eclipse.ui.intro.universal" version="0.0.0"/>
 <unit id="org.eclipse.ui.views" version="0.0.0"/>
+<unit id="org.eclipse.ui.views.log" version="0.0.0"/>
 <unit id="org.eclipse.ui.views.properties.tabbed" version="0.0.0"/>
 <unit id="org.eclipse.ui.workbench.texteditor" version="0.0.0"/>
 <unit id="org.eclipse.xsd.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.xsd.source.feature.group" version="0.0.0"/>
 <unit id="org.sat4j.core" version="0.0.0"/>
 <unit id="org.sat4j.pb" version="0.0.0"/>
-<repository location="http://download.eclipse.org/releases/oxygen/"/>
+<repository location="http://download.eclipse.org/releases/2019-03/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="javax.media.jai_imageio-feature.feature.group" version="1.1.3"/>
 <repository location="http://udig.refractions.net/files/update-jai/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.junit" version="4.12.0.v201504281640"/>
-<unit id="org.hamcrest.library" version="1.3.0.v201505072020"/>
-<unit id="org.hamcrest.core" version="1.3.0.v201303031735"/>
-<unit id="org.easymock" version="2.4.0.v20090202-0900"/>
-<unit id="org.apache.xml.serializer" version="2.7.1.v201005080400"/>
-<unit id="org.apache.xml.resolver" version="1.2.0.v201005080400"/>
-<unit id="org.apache.xerces" version="2.9.0.v201101211617"/>
-<unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
+<unit id="com.google.guava" version="15.0.0.v201403281430"/>
+<unit id="com.lowagie.text" version="2.1.7.v201004222200"/>
+<unit id="javax.xml" version="1.3.4.v201005080400"/>
+<unit id="net.miginfocom.layout" version="3.7.1.v200911230030"/>
+<unit id="net.miginfocom.layout.swing" version="3.7.1.v200911230030"/>
+<unit id="net.miginfocom.layout.swt" version="3.7.1.v201505121915"/>
+<unit id="org.apache.batik.bridge" version="1.7.0.v201011041433"/>
+<unit id="org.apache.batik.css" version="1.7.0.v201011041433"/>
+<unit id="org.apache.batik.dom" version="1.7.1.v201505191845"/>
+<unit id="org.apache.batik.dom.svg" version="1.7.0.v201011041433"/>
+<unit id="org.apache.batik.ext.awt" version="1.7.0.v201011041433"/>
+<unit id="org.apache.batik.parser" version="1.7.0.v201011041433"/>
+<unit id="org.apache.batik.svggen" version="1.7.0.v201011041433"/>
+<unit id="org.apache.batik.transcoder" version="1.7.0.v201011041433"/>
+<unit id="org.apache.batik.util" version="1.7.0.v201011041433"/>
+<unit id="org.apache.batik.util.gui" version="1.7.0.v200903091627"/>
+<unit id="org.apache.batik.xml" version="1.7.0.v201011041433"/>
+<unit id="org.apache.commons.codec" version="0.0.0"/>
 <unit id="org.apache.commons.lang" version="0.0.0"/>
 <unit id="org.apache.commons.logging" version="1.1.1.v201101211721"/>
-<unit id="org.apache.commons.codec" version="0.0.0"/>
-<unit id="org.apache.batik.xml" version="1.7.0.v201011041433"/>
-<unit id="org.apache.batik.util.gui" version="1.7.0.v200903091627"/>
-<unit id="org.apache.batik.util" version="1.7.0.v201011041433"/>
-<unit id="org.apache.batik.transcoder" version="1.7.0.v201011041433"/>
-<unit id="org.apache.batik.svggen" version="1.7.0.v201011041433"/>
-<unit id="org.apache.batik.parser" version="1.7.0.v201011041433"/>
-<unit id="org.apache.batik.ext.awt" version="1.7.0.v201011041433"/>
-<unit id="org.apache.batik.dom.svg" version="1.7.0.v201011041433"/>
-<unit id="org.apache.batik.dom" version="1.7.1.v201505191845"/>
-<unit id="org.apache.batik.css" version="1.7.0.v201011041433"/>
-<unit id="org.apache.batik.bridge" version="1.7.0.v201011041433"/>
-<unit id="net.miginfocom.layout.swt" version="3.7.1.v201505121915"/>
-<unit id="net.miginfocom.layout.swing" version="3.7.1.v200911230030"/>
-<unit id="net.miginfocom.layout" version="3.7.1.v200911230030"/>
-<unit id="javax.xml" version="1.3.4.v201005080400"/>
-<unit id="com.lowagie.text" version="2.1.7.v201004222200"/>
-<unit id="com.google.guava" version="15.0.0.v201403281430"/>
+<unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
+<unit id="org.apache.xerces" version="2.9.0.v201101211617"/>
+<unit id="org.apache.xml.resolver" version="1.2.0.v201005080400"/>
+<unit id="org.apache.xml.serializer" version="2.7.1.v201005080400"/>
+<unit id="org.easymock" version="2.4.0.v20090202-0900"/>
+<unit id="org.hamcrest.core" version="1.3.0.v201303031735"/>
+<unit id="org.hamcrest.library" version="1.3.0.v201505072020"/>
+<unit id="org.junit" version="4.12.0.v201504281640"/>
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180330011457/repository/"/>
 </location>
 </locations>

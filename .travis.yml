@@ -3,8 +3,9 @@ dist: trusty
 language: java
 
 jdk:
-  - openjdk11
   - oraclejdk8
+  - oraclejdk11
+  - openjdk11
 
 cache:
   directories:
@@ -13,7 +14,7 @@ cache:
 env:
   global:
     - MVN_VERSION="3.5.4"
-    - MAVEN_OPTS="-Xmx8g -XX:-UseGCOverheadLimit"
+    - MAVEN_OPTS="-Xmx12g -XX:-UseGCOverheadLimit"
 
 before_install:
   - rm ~/.m2/settings.xml
@@ -32,12 +33,13 @@ before_script:
 matrix:
   allow_failures:
     - jdk: openjdk11
+    - jdk: oraclejdk11
 
 install:
   - "mvn install -B -f pom-libs.xml -DskipTests=true" #download dependencies
 
 script: 
-  - "mvn verify -B -Pproduct -Psdk -Ptest --fail-at-end"
+  - "mvn verify -B -Pproduct -Psdk -Ptest --fail-at-end -T4"
 
 
 notifications:

@@ -171,6 +171,114 @@
                 <tycho.test.OSspecific />
             </properties>
         </profile>
+        
+        <!-- following profiles (target-platform-XXX) configure tycho target platform in correct os-secific order -->
+        <profile>
+          <id>target-platform-win</id>
+          <activation>
+            <os>
+              <family>Windows</family>
+            </os>
+          </activation>
+          <build>
+            <plugins>
+              <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>target-platform-configuration</artifactId>
+                <configuration>
+                  <environments>
+                    <environment>
+                      <os>win32</os>
+                      <ws>win32</ws>
+                      <arch>x86_64</arch>
+                    </environment>
+                    <environment>
+                      <os>linux</os>
+                      <ws>gtk</ws>
+                      <arch>x86_64</arch>
+                    </environment>
+                    <environment>
+                        <os>macosx</os>
+                        <ws>cocoa</ws>
+                        <arch>x86_64</arch>
+                    </environment>
+                  </environments>
+                </configuration>
+              </plugin>
+            </plugins>
+          </build>
+        </profile>
+
+        <profile>
+          <id>target-platform-lin</id>
+          <activation>
+            <os>
+              <family>unix</family>
+            </os>
+          </activation>
+          <build>
+            <plugins>
+              <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>target-platform-configuration</artifactId>
+                <configuration>
+                  <environments>
+                    <environment>
+                      <os>linux</os>
+                      <ws>gtk</ws>
+                      <arch>x86_64</arch>
+                    </environment>
+                    <environment>
+                        <os>macosx</os>
+                        <ws>cocoa</ws>
+                        <arch>x86_64</arch>
+                    </environment>
+                    <environment>
+                      <os>win32</os>
+                      <ws>win32</ws>
+                      <arch>x86_64</arch>
+                    </environment>
+                  </environments>
+                </configuration>
+              </plugin>
+            </plugins>
+          </build>
+        </profile>
+        <profile>
+          <id>target-platform-mac</id>
+          <activation>
+            <os>
+              <family>mac</family>
+            </os>
+          </activation>
+          <build>
+            <plugins>
+              <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>target-platform-configuration</artifactId>
+                <configuration>
+                  <environments>
+                    <environment>
+                        <os>macosx</os>
+                        <ws>cocoa</ws>
+                        <arch>x86_64</arch>
+                    </environment>
+                    <environment>
+                      <os>linux</os>
+                      <ws>gtk</ws>
+                      <arch>x86_64</arch>
+                    </environment>
+                    <environment>
+                      <os>win32</os>
+                      <ws>win32</ws>
+                      <arch>x86_64</arch>
+                    </environment>
+                  </environments>
+                </configuration>
+              </plugin>
+            </plugins>
+          </build>
+        </profile>
     </profiles>
 
     <build>
@@ -219,34 +327,6 @@
                     </filters>
 
                     <pomDependencies>consider</pomDependencies>
-
-                    <environments>
-                        <environment>
-                            <os>win32</os>
-                            <ws>win32</ws>
-                            <arch>x86</arch>
-                        </environment>
-                        <environment>
-                            <os>win32</os>
-                            <ws>win32</ws>
-                            <arch>x86_64</arch>
-                        </environment>
-                        <environment>
-                            <os>linux</os>
-                            <ws>gtk</ws>
-                            <arch>x86</arch>
-                        </environment>
-                        <environment>
-                            <os>linux</os>
-                            <ws>gtk</ws>
-                            <arch>x86_64</arch>
-                        </environment>
-                        <environment>
-                            <os>macosx</os>
-                            <ws>cocoa</ws>
-                            <arch>x86_64</arch>
-                        </environment>
-                    </environments>
                 </configuration>
             </plugin>
 
