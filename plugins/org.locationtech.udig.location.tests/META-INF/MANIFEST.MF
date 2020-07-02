@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Test Plug-in
 Bundle-SymbolicName: org.locationtech.udig.location.tests
-Bundle-Version: 2.2.0.qualifier
+Bundle-Version: 2.3.0.qualifier
 Bundle-Vendor: udig.refractions.net
 Bundle-Activator: org.locationtech.udig.location.test.TestPlugin
 Require-Bundle: org.eclipse.core.runtime,

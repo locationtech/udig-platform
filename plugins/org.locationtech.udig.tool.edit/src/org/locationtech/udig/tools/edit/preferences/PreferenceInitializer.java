@@ -43,6 +43,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
                 PreferenceConstants.P_DEFAULT_DELETE_SEARCH_SCALEFACTOR);
         store.setDefault(PreferenceConstants.P_FILL_OPACITY, 35);
         store.setDefault(PreferenceConstants.P_VERTEX_OPACITY, 35);
+        store.setDefault(PreferenceConstants.P_MESSAGE_DISPLAY_DELAY, 2000);
     }
 
 }

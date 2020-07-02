@@ -85,6 +85,7 @@ public class Messages extends NLS {
 	public static String EditToolPreferences_behaviour;
 	public static String EditToolPreferences_snapRadius;
 	public static String EditToolPreferences_description;
+	public static String EditToolPreferences_messageDisplayDelay;
 	public static String DeleteGlobalActionSetterActivator_tooltip;
 	public static String DeleteGlobalActionSetterActivator_title;
 	public static String DifferenceFeatureCommand_name;
