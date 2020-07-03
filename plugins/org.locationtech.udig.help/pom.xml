@@ -11,64 +11,61 @@
   <packaging>eclipse-plugin</packaging>
 
   <profiles>
-     <profile>
-         <id>docs</id>
+    <profile>
+      <id>docs</id>
 
-         <dependencies>
-            <dependency>
-               <groupId>org.locationtech.udig</groupId>
-               <artifactId>udig-docs</artifactId>
-               <version>${project.version}</version>
-            </dependency>
-         </dependencies>
+      <dependencies>
+         <dependency>
+            <groupId>org.locationtech.udig</groupId>
+            <artifactId>udig-docs</artifactId>
+            <version>${project.version}</version>
+         </dependency>
+      </dependencies>
 
-  <build>
-    <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-clean-plugin</artifactId>
+            <configuration>
+              <filesets>
+                <fileset>
+                  <directory>${project.basedir}/EN</directory>
+                  <includes>
+                    <include>*.*</include>
+                  </includes>
+                  <followSymlinks>false</followSymlinks>
+                </fileset>
+              </filesets>
+            </configuration>
+          </plugin>
+          <plugin>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>unpack</id>
+                <phase>validate</phase>
+                <goals>
+                  <goal>unpack</goal>
+                </goals>
                 <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>${project.basedir}/EN</directory>
-                            <includes>
-                                <include>*.*</include>
-                            </includes>
-                            <followSymlinks>false</followSymlinks>
-                        </fileset>
-                    </filesets>
+                  <artifactItems>
+                    <artifactItem>
+                      <groupId>org.locationtech.udig</groupId>
+                      <artifactId>udig-docs</artifactId>
+                      <version>${project.version}</version>
+                      <classifier>udig-eclipse-help</classifier>
+                      <type>zip</type>
+                    </artifactItem>
+                  </artifactItems>
+                  <outputDirectory>${project.basedir}</outputDirectory>
+                  <overWriteReleases>true</overWriteReleases>
+                  <overWriteSnapshots>true</overWriteSnapshots>
                 </configuration>
-            </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-           <execution>
-             <id>unpack</id>
-             <phase>validate</phase>
-             <goals>
-               <goal>unpack</goal>
-             </goals>
-             <configuration>
-           <artifactItems>
-             <artifactItem>
-                <groupId>org.locationtech.udig</groupId>
-                <artifactId>udig-docs</artifactId>
-                <version>${project.version}</version>
-                <classifier>udig-eclipse-help</classifier>
-                <type>zip</type>
-             </artifactItem>
-           </artifactItems>
-           <outputDirectory>${project.basedir}</outputDirectory>
-           <overWriteReleases>true</overWriteReleases>
-           <overWriteSnapshots>true</overWriteSnapshots>
-         </configuration>
-         </execution>
-         </executions>
-      </plugin>
-    </plugins>
-  </build>
-     </profile>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 </project>

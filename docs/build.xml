@@ -104,7 +104,7 @@
     <target name="sphinx-simple" if="sphinx.available">
         <echo message="Running sphinx-build -D release=${project.version} -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/> 
         <exec executable="sphinx-build" failonerror="true" dir="${basedir}/${id}">
-            <arg line="-D release=${project.version} -D html_theme='simple' -D html_title='User Guide' -Dhtml_show_sourcelink=False -D html_copy_source=False -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/simple&quot;"/>
+            <arg line="-D release=${project.version} -D html_theme='simple' -D html_title='User Guide' -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/simple&quot;"/>
         </exec>
     </target>
     
