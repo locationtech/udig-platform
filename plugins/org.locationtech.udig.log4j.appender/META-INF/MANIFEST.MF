@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: log4j Appender Plugin
+Bundle-SymbolicName: org.locationtech.udig.log4j.appender;singleton:=true
+Bundle-Version: 2.3.0.qualifier
+Bundle-Vendor: udig.refraction.net
+Automatic-Module-Name: org.locationtech.udig.log4j.apender
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Fragment-Host: org.apache.log4j;bundle-version="1.2.15"
+Bundle-ClassPath: .
+Require-Bundle: org.eclipse.core.runtime

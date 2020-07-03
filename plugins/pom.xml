@@ -131,6 +131,7 @@
         <module>org.locationtech.udig.libs.db2</module>
         <module>org.locationtech.udig.libs.oracle</module>
         <module>org.locationtech.udig.location</module>
+        <module>org.locationtech.udig.log4j.appender</module>
         <module>org.locationtech.udig.mapgraphic</module>
         <module>org.locationtech.udig.printing.model</module>
         <module>org.locationtech.udig.printing.model.edit</module>
