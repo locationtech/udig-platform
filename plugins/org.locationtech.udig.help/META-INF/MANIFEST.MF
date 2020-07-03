@@ -7,7 +7,6 @@ Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.help.base,
  org.eclipse.help.ui,
- org.eclipse.ui.cheatsheets,
  org.locationtech.udig.style.sld,
  org.locationtech.udig.project.ui,
  org.locationtech.udig.project.ui.editor,

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+  <extension point="org.eclipse.ui.actionSets">
+	    <actionSet id="org.eclipse.ui.cheatsheets.actionSet" label="Cheat Sheets" visible="true">
+	        <action class="org.eclipse.ui.cheatsheets.CheatSheetExtensionFactory:helpMenuAction"
+	            id="org.eclipse.ui.cheatsheets.actions.CheatSheetHelpMenuAction"
+	            label="Cheat Sheet..."
+	            menubarPath="help/helpStart"
+	            style="push"/>
+	    </actionSet>
+  </extension>
+  <extension point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+    <category
+          id="org.locationtech.udig.help.cheatsheet.categoty.project"
+          name="Projects">
+    </category>
+    <category
+          id="org.locationtech.udig.help.sheatsheet.category.layers"
+          name="Layers">
+    </category>
+    <category
+          id="org.locationtech.udig.help.category.workbench"
+          name="Workbench">
+    </category>
+    <category
+          id="org.locationtech.udig.help.sheatsheet.category.gettingstarted"
+          name="Getting Started">
+    </category>
+    <category
+          id="org.locationtech.udig.help.category.tools"
+          name="Tools">
+    </category>
+    <cheatsheet
+        category="org.locationtech.udig.help.cheatsheet.categoty.project"
+        composite="false"
+        contentFile="cheatsheets/newProjectWizard.xml"
+        id="org.locationtech.udig.help.cheatsheet.newprojectwizard"
+        name="New Project">
+    </cheatsheet>
+    <cheatsheet
+       category="org.locationtech.udig.help.category.workbench"
+       composite="false"
+       contentFile="cheatsheets/workbench.xml"
+       id="org.locationtech.udig.help.cheatsheet.workbench"
+       name="Workbench">
+    </cheatsheet>
+    <cheatsheet
+       category="org.locationtech.udig.help.sheatsheet.category.layers"
+       composite="false"
+       contentFile="cheatsheets/layerFromFileSystem.xml"
+       id="org.locationtech.udig.help.cheatsheet.dragFromFileSystem"
+       name="Layer from File System">
+    </cheatsheet>
+    <cheatsheet
+       category="org.locationtech.udig.help.sheatsheet.category.layers"
+       composite="false"
+       contentFile="cheatsheets/layerFromShapeFile.xml"
+       id="org.locationtech.udig.help.cheatsheet.loadShapeFile"
+       name="Layer from Shape File">
+    </cheatsheet>
+    <cheatsheet
+       category="org.locationtech.udig.help.sheatsheet.category.layers"
+       composite="false"
+       contentFile="cheatsheets/layerChangeStyle.xml"
+       id="org.locationtech.udig.help.cheatsheet.stylelayer"
+       name="Style Layer">
+    </cheatsheet>
+    <cheatsheet
+       category="org.locationtech.udig.help.category.tools"
+       composite="false"
+       contentFile="cheatsheets/mapNavigation.xml"
+       id="org.locationtech.udig.help.cheatsheet.mapnavigation"
+       name="Map Navigation">
+    </cheatsheet>
+    <cheatsheet
+       category="org.locationtech.udig.help.sheatsheet.category.layers"
+       composite="false"
+       contentFile="cheatsheets/layerFromWebMapServer.xml"
+       id="org.locationtech.udig.help.cheatsheet.webmapservice"
+       name="Layer from Web Map Service">
+    </cheatsheet>
+    <cheatsheet
+       category="org.locationtech.udig.help.sheatsheet.category.layers"
+       composite="false"
+       contentFile="cheatsheets/layerOrder.xml"
+       id="org.locationtech.udig.help.cheatsheet.layerorder"
+       name="Order Layers">
+    </cheatsheet>
+    <cheatsheet
+      category="org.locationtech.udig.help.sheatsheet.category.gettingstarted"
+      composite="true"
+      contentFile="cheatsheets/quickstart.xml"
+      id="org.locationtech.udig.help.cheatsheet.quickstart"
+      name="Quickstart">
+    </cheatsheet>
+  </extension>
+</plugin>
