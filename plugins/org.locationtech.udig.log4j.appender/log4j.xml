@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration
+	xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- For layout pattern, see doc at http://jakarta.apache.org/log4j/docs/api/org/apache/log4j/PatternLayout.html -->
+	<!-- The RCP appender -->
+	<appender name="RCPAppender" class="org.locationtech.udig.log4j.appender.PluginLogAppender">
+		<param name="Threshold" value="info" />
+		<param name="SymbolicName" value="org.locationtech.udig.log4j.appender" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %c{1} %x - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+		<param name="Threshold" value="debug" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-5p %c{1} - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- Set here specific level for classes -->
+	<logger name="org.locationtech.udig" additivity="true">
+		<level value="info" />
+	</logger>
+
+
+	<root>
+		<priority value="warn" />
+		<!-- scorreia: put here your appenders -->
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="RCPAppender" />
+	</root>
+
+</log4j:configuration>
