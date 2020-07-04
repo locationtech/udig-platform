@@ -9,14 +9,12 @@
  */
 package org.locationtech.udig.tools.merge;
 
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IStartup;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-
 import org.locationtech.udig.tools.merge.internal.view.MergeView;
 
 /**
@@ -37,13 +35,6 @@ import org.locationtech.udig.tools.merge.internal.view.MergeView;
  */
 public class MergeStartup implements IStartup {
 
-    /**
-     * 
-     */
-    public MergeStartup() {
-        // TODO Auto-generated constructor stub
-    }
-
     /*
      * (non-Javadoc)
      * 
@@ -51,20 +42,22 @@ public class MergeStartup implements IStartup {
      */
     @Override
     public void earlyStartup() {
-        IWorkbench wb = PlatformUI.getWorkbench();
-        // IWorkbenchWindow win = wb.getActiveWorkbenchWindow();
-        IWorkbenchWindow[] winArray = wb.getWorkbenchWindows();
-        final IWorkbenchPage page = winArray[0].getActivePage();
-        // IWorkbenchPage page = win.getActivePage();
-        final IViewReference viewRef = page.findViewReference(MergeView.ID);
-        // If there is an opened MergeView then close it!
-        if (viewRef != null) {
-            Display.getDefault().asyncExec(new Runnable() {
-                @Override
-                public void run() {
-                    page.hideView(viewRef.getView(false));
+        final IWorkbench workbench = PlatformUI.getWorkbench();
+        workbench.getDisplay().asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+                if (window != null && window.getActivePage() != null) {
+                    IViewReference viewRef = window.getActivePage().findViewReference(MergeView.ID);
+                    if (viewRef != null) {
+                        IViewPart mergeViewPart = viewRef.getView(false);
+                        if (mergeViewPart != null) {
+                            // If there is an opened MergeView then close it!
+                            window.getActivePage().hideView(mergeViewPart);
+                        }
+                    }
                 }
-            });
-        }
+            }
+        });
     }
 }
