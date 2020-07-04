@@ -58,20 +58,26 @@ public abstract class PropertiesEditor {
     protected SLD type;
 
     protected Name geometryPropertyName;
+
     protected List<String> stringAttributeNames = new ArrayList<String>();
+
     protected List<String> numericAttributeNames = new ArrayList<String>();
+
     protected List<String> allAttributeNames = new ArrayList<String>();
 
     protected Composite mainComposite;
+
     protected Canvas previewCanvas;
 
     protected static final int PREVIEWWIDTH = 150;
+
     protected static final int PREVIEWHEIGHT = 150;
 
     protected Color white = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
+
     protected Color gray = Display.getDefault().getSystemColor(SWT.COLOR_GRAY);
 
-    public PropertiesEditor( StyleLayer layer ) {
+    public PropertiesEditor(StyleLayer layer) {
         this.layer = layer;
         loadWithAttributeTypes(layer);
 
@@ -86,10 +92,10 @@ public abstract class PropertiesEditor {
 
     }
 
-    public void open( Composite parent, Style style ) {
+    public void open(Composite parent, Style style) {
 
         if (style == null) {
-            switch( type ) {
+            switch (type) {
             case POINT:
                 style = Utilities.createDefaultPointStyle();
                 break;
@@ -108,7 +114,7 @@ public abstract class PropertiesEditor {
         createGui(parent);
     }
 
-    protected abstract void createGui( Composite parent );
+    protected abstract void createGui(Composite parent);
 
     public Composite getControl() {
         return mainComposite;
@@ -125,7 +131,7 @@ public abstract class PropertiesEditor {
         }
     }
 
-    public void updateStyle( Style style ) {
+    public void updateStyle(Style style) {
         if (style == null) {
             style = Utilities.createDefaultPointStyle();
         }
@@ -145,7 +151,8 @@ public abstract class PropertiesEditor {
      * Reloads the list of all rules currently available.
      */
     public void reloadGroupsAndRules() {
-        List<FeatureTypeStyleWrapper> featureTypeStylesWrapperList = styleWrapper.getFeatureTypeStylesWrapperList();
+        List<FeatureTypeStyleWrapper> featureTypeStylesWrapperList = styleWrapper
+                .getFeatureTypeStylesWrapperList();
         if (featureTypeStylesWrapperList.size() > 0) {
             groupRulesTreeViewer.setInput(featureTypeStylesWrapperList);
         } else {
@@ -156,7 +163,7 @@ public abstract class PropertiesEditor {
     /**
      * Refreshes the name/label of the supplied rule.
      */
-    public void refreshTreeViewer( RuleWrapper rule ) {
+    public void refreshTreeViewer(RuleWrapper rule) {
         groupRulesTreeViewer.update(rule.getParent(), null);
         groupRulesTreeViewer.update(rule, null);
     }
@@ -181,19 +188,23 @@ public abstract class PropertiesEditor {
         gc.setBackground(white);
         gc.fillRectangle(clientArea);
 
-        List<FeatureTypeStyleWrapper> featureTypeStylesWrapperList = styleWrapper.getFeatureTypeStylesWrapperList();
-        for( FeatureTypeStyleWrapper featureTypeStyleWrapper : featureTypeStylesWrapperList ) {
-            List<RuleWrapper> rulesWrapperList = featureTypeStyleWrapper.getRulesWrapperList();
-            BufferedImage tmpImage = WrapperUtilities.rulesWrapperToImage(rulesWrapperList, PREVIEWWIDTH, PREVIEWHEIGHT, type);
-            Image convertToSWTImage = AWTSWTImageUtils.convertToSWTImage(tmpImage);
-            gc.drawImage(convertToSWTImage, 0, 0);
-            convertToSWTImage.dispose();
+        List<FeatureTypeStyleWrapper> featureTypeStylesWrapperList = styleWrapper
+                .getFeatureTypeStylesWrapperList();
+        if (type != null) {
+            for (FeatureTypeStyleWrapper featureTypeStyleWrapper : featureTypeStylesWrapperList) {
+                List<RuleWrapper> rulesWrapperList = featureTypeStyleWrapper.getRulesWrapperList();
+                BufferedImage tmpImage = WrapperUtilities.rulesWrapperToImage(rulesWrapperList,
+                        PREVIEWWIDTH, PREVIEWHEIGHT, type);
+                Image convertToSWTImage = AWTSWTImageUtils.convertToSWTImage(tmpImage);
+                gc.drawImage(convertToSWTImage, 0, 0);
+                convertToSWTImage.dispose();
+            }
         }
         gc.dispose();
         previewCanvas.redraw();
     }
 
-    protected void setRuleToSelected( RuleWrapper ruleWrapper ) {
+    protected void setRuleToSelected(RuleWrapper ruleWrapper) {
         IStructuredSelection sel = new StructuredSelection(ruleWrapper);
         groupRulesTreeViewer.setSelection(sel, true);
         // rulesTableViewer.refresh(rule, true, true);
@@ -220,7 +231,7 @@ public abstract class PropertiesEditor {
         return null;
     }
 
-    protected void swap( boolean doUp ) {
+    protected void swap(boolean doUp) {
         FeatureTypeStyleWrapper selectedFtsw = getSelectedFtsw();
         RuleWrapper selectedRule = getSelectedRule();
         if (selectedFtsw != null) {
@@ -264,15 +275,16 @@ public abstract class PropertiesEditor {
                 }
             }
         } else {
-            MessageDialog.openWarning(mainComposite.getShell(), Messages.PropertiesEditor_0, Messages.PropertiesEditor_1);
+            MessageDialog.openWarning(mainComposite.getShell(), Messages.PropertiesEditor_0,
+                    Messages.PropertiesEditor_1);
             return;
         }
     }
 
-    private void loadWithAttributeTypes( StyleLayer selectedLayer ) {
+    private void loadWithAttributeTypes(StyleLayer selectedLayer) {
         SimpleFeatureType featureType = selectedLayer.getSchema();
         if (featureType != null) {
-            for( int i = 0; i < featureType.getAttributeCount(); i++ ) {
+            for (int i = 0; i < featureType.getAttributeCount(); i++) {
                 AttributeDescriptor attributeType = featureType.getDescriptor(i);
                 if (!(attributeType instanceof GeometryDescriptor)) { // don't include the geometry
                     if (isNumber(attributeType)) {
@@ -292,14 +304,14 @@ public abstract class PropertiesEditor {
         }
     }
 
-    private boolean isNumber( AttributeDescriptor attributeType ) {
+    private boolean isNumber(AttributeDescriptor attributeType) {
         if (Number.class.isAssignableFrom(attributeType.getType().getBinding())) {
             return true;
         }
         return false;
     }
 
-    private boolean isString( AttributeDescriptor attributeType ) {
+    private boolean isString(AttributeDescriptor attributeType) {
         if (String.class.isAssignableFrom(attributeType.getType().getBinding())) {
             return true;
         }
@@ -317,72 +329,8 @@ public abstract class PropertiesEditor {
     public List<String> getAllAttributeNames() {
         return allAttributeNames;
     }
-    
+
     public List<String> getStringAttributeNames() {
         return stringAttributeNames;
     }
-
-    // /**
-    // * Switch to write a {@link FeatureTypeStyle} per {@link Rule} in the output SLD file.
-    // */
-    // protected boolean doOneFeaturestyletypePerRule = false;
-    //
-    // /**
-    // * Gather one {@link FeatureTypeStyle} with all the rules of the style in it.
-    // *
-    // * <p>
-    // * Currently there is support for only one
-    // * {@link FeatureTypeStyle} in reading. Even if this is
-    // * so we will collect all the rules from all the
-    // * FeatureTypeStyle so that they are at least there.
-    // * In writing there is the possibility to either
-    // * create a FeatureTypeStyle per rule or have a single
-    // * FeatureTypeStyle with all the rules in it.
-    // *
-    // * @param style teh style from which to extract the {@link FeatureTypeStyle}s and {@link
-    // Rule}s.
-    // * @return the first {@link FeatureTypeStyle} with all the rules of the style in it, in case
-    // flattened.
-    // */
-    // protected FeatureTypeStyle collectFeatureTypeStyle( Style style ) {
-    // List<FeatureTypeStyle> featureTypeStyles = style.featureTypeStyles();
-    // // keep only the first (see javadoc)
-    // FeatureTypeStyle featureTypeStyle = null;
-    // for( FeatureTypeStyle fts : featureTypeStyles ) {
-    // if (featureTypeStyle == null) {
-    // featureTypeStyle = fts;
-    // } else {
-    // List<Rule> otherRules = fts.rules();
-    // featureTypeStyle.rules().addAll(otherRules);
-    // }
-    // }
-    // featureTypeStyles.clear();
-    // featureTypeStyles.add(featureTypeStyle);
-    // return featureTypeStyle;
-    // }
-    //
-    // /**
-    // * Write a {@link FeatureTypeStyle} per {@link Rule} if the {@link
-    // #doOneFeaturestyletypePerRule} is set to <code>true</code>.
-    // *
-    // * @param style the style to change.
-    // */
-    // public void doOneFeaturestyletypePerRule(Style style){
-    // FeatureTypeStyle uniqueFeatureTypeStyle = null;
-    // List<FeatureTypeStyle> featureTypeStyles = style.featureTypeStyles();
-    // if (featureTypeStyles.size() > 1) {
-    // uniqueFeatureTypeStyle = collectFeatureTypeStyle(style);
-    // }else{
-    // uniqueFeatureTypeStyle = featureTypeStyles.get(0);
-    // }
-    // if(doOneFeaturestyletypePerRule){
-    // List<Rule> rules = uniqueFeatureTypeStyle.rules();
-    // style.featureTypeStyles().clear();
-    // for( Rule rule : rules ) {
-    // FeatureTypeStyle tmpFeatureTypeStyle = Utilities.sf.createFeatureTypeStyle(new Rule[]{rule});
-    // style.featureTypeStyles().add(tmpFeatureTypeStyle);
-    // }
-    // }
-    // }
-
 }
