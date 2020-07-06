@@ -18,15 +18,14 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.geotools.data.DataStore;
+import org.geotools.data.DataStoreFactorySpi;
+import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 import org.locationtech.udig.catalog.AbstractDataStoreServiceExtension;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.ServiceExtension;
 import org.locationtech.udig.catalog.URLUtils;
 import org.locationtech.udig.catalog.shp.internal.Messages;
-
-import org.geotools.data.DataStore;
-import org.geotools.data.DataStoreFactorySpi;
-import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 
 /**
  * Service Extension implementation for Shapefiles.

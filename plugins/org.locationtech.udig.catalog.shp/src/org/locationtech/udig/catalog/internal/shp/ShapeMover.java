@@ -16,6 +16,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
+import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.ID;
@@ -24,8 +25,6 @@ import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.IServiceFactory;
 import org.locationtech.udig.catalog.ServiceMover;
 import org.locationtech.udig.catalog.URLUtils;
-
-import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 
 /**
  * This class represents a Shapefile that is known to be on disk.

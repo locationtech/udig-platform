@@ -17,15 +17,13 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.locationtech.udig.catalog.shp.preferences.PreferenceConstants;
-import org.locationtech.udig.internal.ui.UiPlugin;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 import org.geotools.util.logging.Logging;
+import org.locationtech.udig.catalog.shp.preferences.PreferenceConstants;
+import org.locationtech.udig.internal.ui.UiPlugin;
 import org.osgi.framework.BundleContext;
 
 /**

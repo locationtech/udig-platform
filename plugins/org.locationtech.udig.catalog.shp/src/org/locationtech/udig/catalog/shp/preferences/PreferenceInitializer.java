@@ -10,10 +10,9 @@
  */
 package org.locationtech.udig.catalog.shp.preferences;
 
-import org.locationtech.udig.catalog.internal.shp.ShpPlugin;
-
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.locationtech.udig.catalog.internal.shp.ShpPlugin;
 
 /**
  * Class used to initialize default preference values.

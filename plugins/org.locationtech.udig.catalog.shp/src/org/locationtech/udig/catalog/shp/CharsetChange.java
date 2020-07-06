@@ -18,6 +18,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
+import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IService;
@@ -26,13 +32,6 @@ import org.locationtech.udig.catalog.internal.shp.ShpServiceExtension;
 import org.locationtech.udig.ui.CharsetSelectionDialog;
 import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.operations.IOp;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
-import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 
 /**
  * An Operation for changing the charset of a shapefile datastore. Operations on
