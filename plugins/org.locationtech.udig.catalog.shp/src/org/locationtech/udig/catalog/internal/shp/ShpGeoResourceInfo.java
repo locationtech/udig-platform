@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.locationtech.udig.catalog.internal.shp;
 
@@ -7,27 +7,18 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import javax.swing.Icon;
-
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.IGeoResourceInfo;
-import org.locationtech.udig.catalog.shp.internal.Messages;
-import org.locationtech.udig.catalog.util.GeotoolsResourceInfoAdapter;
-import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
-import org.locationtech.udig.ui.graphics.Glyph;
-
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.ResourceInfo;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.shp.internal.Messages;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import org.locationtech.jts.geom.Envelope;
 
 class ShpGeoResourceInfo extends IGeoResourceInfo {
 	private final ShpGeoResourceImpl shpResource;

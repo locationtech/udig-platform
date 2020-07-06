@@ -10,14 +10,13 @@
  */
 package org.locationtech.udig.catalog.shp.preferences;
 
-import org.locationtech.udig.catalog.internal.shp.ShpPlugin;
-import org.locationtech.udig.catalog.shp.internal.Messages;
-
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.RadioGroupFieldEditor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.locationtech.udig.catalog.internal.shp.ShpPlugin;
+import org.locationtech.udig.catalog.shp.internal.Messages;
 
 /**
  * This class represents a preference page that

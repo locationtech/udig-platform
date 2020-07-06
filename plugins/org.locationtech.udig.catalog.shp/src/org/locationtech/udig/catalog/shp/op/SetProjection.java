@@ -14,6 +14,13 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Display;
+import org.geotools.data.shapefile.ShapefileDataStore;
+import org.geotools.referencing.CRS;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.IResolve;
@@ -23,14 +30,6 @@ import org.locationtech.udig.catalog.internal.shp.ShpServiceExtension;
 import org.locationtech.udig.core.AdapterUtil;
 import org.locationtech.udig.ui.CRSChooserDialog;
 import org.locationtech.udig.ui.operations.IOp;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.window.Window;
-import org.eclipse.swt.widgets.Display;
-import org.geotools.data.shapefile.ShapefileDataStore;
-import org.geotools.referencing.CRS;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
