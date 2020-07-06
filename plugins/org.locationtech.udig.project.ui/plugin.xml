@@ -765,8 +765,8 @@
          point="org.locationtech.udig.ui.objectProperty">
       <object targetClass="org.locationtech.udig.project.ILayer">
          <property
-               id="GeometryType"
-               class="org.locationtech.udig.project.ui.internal.tool.display.GeometryProperty"/>
+               class="org.locationtech.udig.project.ui.internal.tool.display.GeometryProperty"
+               id="GeometryType"/>
          <property
                class="org.locationtech.udig.project.ui.operations.LayerSelectionProperty"
                id="hasSelection"/>

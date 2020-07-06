@@ -88,8 +88,8 @@
                      tooltip="%zoom.select.tooltip">
                   <enablement>
                      <property
-                           expectedValue="unimportant"
-                           propertyId="layerHasSelectionProperty"/>
+                           expectedValue="true"
+                           propertyId="hasSelection" />
                   </enablement>
                </actionTool>
                <toolCursor
@@ -137,14 +137,6 @@
          <viewShortcut id="org.locationtech.udig.tool.select.TableView"/>
       </perspectiveExtension>
    </extension>
-      <extension
-            point="org.locationtech.udig.ui.objectProperty">
-         <object targetClass="org.locationtech.udig.project.ILayer">
-            <property
-                  id="layerHasSelectionProperty"
-                  class="org.locationtech.udig.tool.select.internal.LayerHasSelectionProperty"/>
-         </object>
-      </extension>
       <extension
             point="org.locationtech.udig.project.ui.featureEditor">
          <editor
