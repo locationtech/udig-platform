@@ -565,19 +565,21 @@ public class LayersView extends ViewPart
                 }
 
                 if (viewer != null) {
-                    // viewer.refresh(false);
                     viewer.setCheckedElements(checkedLayers.toArray());
                     ILayer selectedLayer = currentMap.getEditManager().getSelectedLayer();
-                    if (selectedLayer != null)
+                    if (selectedLayer != null) {
                         viewer.setSelection(new StructuredSelection(selectedLayer), true);
+                    }
+                    viewer.refresh(false);
                 }
+
             }
 
         }, true);
     }
 
     protected boolean requiresCheckboxUpdate(final ICheckable viewer, final Layer layer) {
-        return !(layer.isVisible() == viewer.getChecked(layer));
+        return layer.isVisible() != viewer.getChecked(layer);
     }
 
     protected boolean requiresCheckboxUpdate(final ICheckable viewer, List<Layer> layers) {
@@ -610,14 +612,12 @@ public class LayersView extends ViewPart
             public void run() {
                 if (PlatformUI.getWorkbench().isClosing())
                     return;
-                // viewer.refresh(false);
                 viewer.setChecked(layer, layer.isVisible());
             }
         }, true);
     }
 
     Adapter checkboxContextListener = new AdapterImpl(){
-        @SuppressWarnings("unchecked")
         public void notifyChanged( final Notification msg ) {
 
             if (msg.getNotifier() instanceof ContextModel) {
