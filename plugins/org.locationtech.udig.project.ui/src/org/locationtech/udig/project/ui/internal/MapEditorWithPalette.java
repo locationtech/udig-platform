@@ -490,7 +490,6 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
             if (value.length() > MAX_LENGTH) {
                 int start2 = value.length() - 6;
                 value = value.substring(0, 6) + "..." + value.substring(start2, value.length()); //$NON-NLS-1$
-                System.out.println(value.length());
             }
             if (button != null && !button.isDisposed()) {
                 button.setText(value);
@@ -733,10 +732,13 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
             return;
         }
 
+        final IWorkbenchPage page = getSite().getPage();
+
+        page.removePostSelectionListener(layerSelectionListener);
         runMapClosingInterceptors();
 
         deregisterFeatureFlasher();
-        getSite().getPage().removePartListener(partlistener);
+        page.removePartListener(partlistener);
         if( viewer != null ){
         	viewer.getViewport().removePaneListener(getMap().getViewportModelInternal());
         }
@@ -745,8 +747,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         selectFeatureListener = null;
         partlistener = null;
 
-        if (statusLineManager != null)
-            statusLineManager.dispose();
+        statusLineManager.dispose();
         
         MapToolPaletteFactory.dispose( paletteRoot );
         paletteRoot = null;
@@ -1059,11 +1060,13 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         layerSelectionListener = new LayerSelectionListener(new LayerSelectionListener.Callback(){
 
             public void callback( List<Layer> layers ) {
-                if (composite.isDisposed()) {
-                    getSite().getPage().removePostSelectionListener(layerSelectionListener);
+                if (composite == null || composite.isDisposed()) {
                     return; // component.isVisible cannot be called on a disposed component
-                } else if (!composite.isVisible())
-                    return;
+                }
+
+                if (!composite.isVisible()) {
+                    return; // nothing to do
+                }
                 Layer layer = layers.get(0);
                 // Second condition excludes unnecessary UI call
                 if (layer.getMap() == getMap()
