@@ -1060,7 +1060,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         layerSelectionListener = new LayerSelectionListener(new LayerSelectionListener.Callback(){
 
             public void callback( List<Layer> layers ) {
-                if (composite == null || composite.isDisposed()) {
+                if (composite == null || composite.isDisposed() || !composite.isVisible()) {
                     return; // component.isVisible cannot be called on a disposed component
                 }
 
