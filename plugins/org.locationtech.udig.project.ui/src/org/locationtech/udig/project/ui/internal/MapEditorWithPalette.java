@@ -95,7 +95,6 @@ import org.locationtech.udig.project.IMapListener;
 import org.locationtech.udig.project.LayerEvent;
 import org.locationtech.udig.project.MapCompositionEvent;
 import org.locationtech.udig.project.MapEvent;
-import org.locationtech.udig.project.command.UndoRedoCommand;
 import org.locationtech.udig.project.interceptor.MapInterceptor;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
@@ -103,7 +102,6 @@ import org.locationtech.udig.project.internal.Project;
 import org.locationtech.udig.project.internal.ProjectPackage;
 import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.locationtech.udig.project.internal.commands.ChangeCRSCommand;
-import org.locationtech.udig.project.internal.commands.selection.SelectLayerCommand;
 import org.locationtech.udig.project.internal.render.RenderManager;
 import org.locationtech.udig.project.render.IViewportModelListener;
 import org.locationtech.udig.project.render.ViewportModelEvent;
@@ -124,7 +122,6 @@ import org.locationtech.udig.ui.CRSChooserDialog;
 import org.locationtech.udig.ui.IBlockingSelection;
 import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.PreShutdownTask;
-import org.locationtech.udig.ui.ProgressManager;
 import org.locationtech.udig.ui.ShutdownTaskList;
 import org.locationtech.udig.ui.UDIGDragDropUtilities;
 import org.locationtech.udig.ui.UDIGDragDropUtilities.DragSourceDescriptor;
@@ -1057,32 +1054,11 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         registerFeatureFlasher();
         viewer.getViewport().addPaneListener(getMap().getViewportModelInternal());
 
-        layerSelectionListener = new LayerSelectionListener(new LayerSelectionListener.Callback(){
-
-            public void callback( List<Layer> layers ) {
-                if (composite == null || composite.isDisposed() || !composite.isVisible()) {
-                    return; // component.isVisible cannot be called on a disposed component
-                }
-
+        layerSelectionListener = new LayerSelectionListener(
+                new MapLayerSelectionCallback(getMap(), composite));
                 if (!composite.isVisible()) {
                     return; // nothing to do
                 }
-                Layer layer = layers.get(0);
-                // Second condition excludes unnecessary UI call
-                if (layer.getMap() == getMap()
-                        && getMap().getEditManager().getSelectedLayer() != layer) {
-                    SelectLayerCommand selectLayerCommand = new SelectLayerCommand(layer);
-                    selectLayerCommand.setMap(getMap());
-                    try {
-                        selectLayerCommand.run(ProgressManager.instance().get());
-                    } catch (Exception e) {
-                        throw (RuntimeException) new RuntimeException().initCause(e);
-                    }
-                    getMap().sendCommandSync(new UndoRedoCommand(selectLayerCommand));
-                }
-            }
-
-        });
         getSite().getPage().addPostSelectionListener(layerSelectionListener);
 
         for( Layer layer : getMap().getLayersInternal() ) {
