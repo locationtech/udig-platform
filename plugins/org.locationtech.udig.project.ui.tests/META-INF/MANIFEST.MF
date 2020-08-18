@@ -45,11 +45,11 @@ Export-Package: org.locationtech.udig; uses:="org.locationtech.udig.pr
 Require-Bundle: org.eclipse.gef;bundle-version="3.7.0",
  org.locationtech.udig.catalog.shp,
  org.locationtech.udig.catalog.ui,
- org.locationtech.udig.issues,
  org.locationtech.udig.mapgraphic,
  org.locationtech.udig.project.edit,
  org.locationtech.udig.project.tests;visibility:=reexport,
  org.locationtech.udig.catalog.ui.tests;visibility:=reexport,
- org.locationtech.udig.tool.default
+ org.locationtech.udig.tool.default,
+ org.easymock
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
