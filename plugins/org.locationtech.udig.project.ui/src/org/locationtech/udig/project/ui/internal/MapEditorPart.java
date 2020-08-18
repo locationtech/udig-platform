@@ -22,17 +22,25 @@ import org.locationtech.udig.internal.ui.UDIGDropHandler;
  */
 public interface MapEditorPart extends MapPart, IEditorPart {
 
-    public abstract MapEditorSite getMapEditorSite();
+    /**
+     * Key to indicate on the Blackboard that Map(Editor) has changed.
+     */
+    static final String LAYER_DIRTY_KEY = "DIRTY"; //$NON-NLS-1$
+
+    MapEditorSite getMapEditorSite();
     
     // helper methods for tools
-    public boolean isTesting();
-    public void setTesting( boolean isTesting );
+    boolean isTesting();
 
-    public UDIGDropHandler getDropHandler();
-    public boolean isDragging();
-    public void setDragging( boolean isDragging);
+    void setTesting(boolean isTesting);
 
-    public Composite getComposite();
+    UDIGDropHandler getDropHandler();
 
-    public void setDirty( boolean b );
+    boolean isDragging();
+
+    void setDragging(boolean isDragging);
+
+    Composite getComposite();
+
+    void setDirty(boolean b);
 }
