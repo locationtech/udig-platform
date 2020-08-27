@@ -13,6 +13,9 @@ package org.locationtech.udig.project.internal.render.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.core.internal.ExtensionPointProcessor;
 import org.locationtech.udig.project.internal.Layer;
@@ -22,10 +25,6 @@ import org.locationtech.udig.project.internal.render.SelectionLayer;
 import org.locationtech.udig.project.internal.render.impl.InternalRenderMetricsFactory.InternalRenderMetrics;
 import org.locationtech.udig.project.render.IMultiLayerRenderer;
 import org.locationtech.udig.project.render.IRenderMetricsFactory;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
 
 /**
  * Processes the org.locationtech.udig.project.renderer extension point adding the RendererMetricsFactories that apply to the layer to 
@@ -37,7 +36,7 @@ import org.eclipse.core.runtime.IExtension;
 public class RendererExtensionProcessor implements ExtensionPointProcessor {
     Layer layer;
 
-    List<InternalRenderMetrics> rFactories = new ArrayList<InternalRenderMetrics>();
+    List<InternalRenderMetrics> rFactories = new ArrayList<>();
 
     private org.locationtech.udig.project.internal.Map map;
 
@@ -55,10 +54,7 @@ public class RendererExtensionProcessor implements ExtensionPointProcessor {
         this.map=map;
     }
 
-    /**
-     * @see org.locationtech.udig.core.internal.ExtensionPointProcessor#process(org.eclipse.core.runtime.IExtension,
-     *      org.eclipse.core.runtime.IConfigurationElement)
-     */
+    @Override
     public void process( IExtension extension, IConfigurationElement element ) {
 
         try {
@@ -80,7 +76,7 @@ public class RendererExtensionProcessor implements ExtensionPointProcessor {
                         context = new RenderContextImpl(layer instanceof SelectionLayer);
                     }
                 }catch(Throwable e){
-                    context = new RenderContextImpl(layer instanceof SelectionLayer);                    
+                    context = new RenderContextImpl(layer instanceof SelectionLayer);
                 }
                 
                 context.setMapInternal(map);
