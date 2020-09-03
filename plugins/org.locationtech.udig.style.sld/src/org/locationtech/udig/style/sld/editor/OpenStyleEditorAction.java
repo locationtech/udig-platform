@@ -34,12 +34,9 @@ import org.locationtech.udig.style.sld.SLD;
 /**
  * Open the style editor dialog and add its pages
  */
-public class OpenStyleEditorAction extends Action implements IWorkbenchWindowActionDelegate, IViewActionDelegate {
+public class OpenStyleEditorAction extends Action
+        implements IWorkbenchWindowActionDelegate, IViewActionDelegate {
 
-    public static final String ATT_ID = "id"; //$NON-NLS-1$
-    public static final String ATT_CLASS = "class"; //$NON-NLS-1$
-    public static final String ATT_LABEL = "label"; //$NON-NLS-1$
-    public static final String ATT_REQUIRES = "requires"; //$NON-NLS-1$
     public static final String STYLE_ID = "org.locationtech.udig.style.sld"; //$NON-NLS-1$
 
     private Layer selectedLayer;
@@ -47,25 +44,25 @@ public class OpenStyleEditorAction extends Action implements IWorkbenchWindowAct
     private Plugin plugin;
 
     /**
-     * The workbench window; or <code>null</code> if this
-     * action has been <code>dispose</code>d.
+     * The workbench window; or <code>null</code> if this action has been <code>dispose</code>d.
      */
     private IWorkbenchWindow workbenchWindow;
 
     /**
-     * Create a new <code>OpenPreferenceAction</code>
-     * This default constructor allows the the action to be called from the welcome page.
+     * Create a new <code>OpenPreferenceAction</code> This default constructor allows the the action
+     * to be called from the welcome page.
      */
     public OpenStyleEditorAction() {
         this(PlatformUI.getWorkbench().getActiveWorkbenchWindow());
     }
 
     /**
-     * Create a new <code>OpenPreferenceAction</code> and initialize it 
-     * from the given resource bundle.
+     * Create a new <code>OpenPreferenceAction</code> and initialize it from the given resource
+     * bundle.
+     * 
      * @param window
      */
-    public OpenStyleEditorAction( IWorkbenchWindow window ) {
+    public OpenStyleEditorAction(IWorkbenchWindow window) {
         super();
         if (window == null) {
             throw new IllegalArgumentException();
@@ -77,7 +74,7 @@ public class OpenStyleEditorAction extends Action implements IWorkbenchWindowAct
         // IWorkbenchHelpContextIds.OPEN_PREFERENCES_ACTION);
     }
 
-    public void run( IAction action ) {
+    public void run(IAction action) {
         if (workbenchWindow == null) {
             return; // action has been disposed
         }
@@ -91,42 +88,46 @@ public class OpenStyleEditorAction extends Action implements IWorkbenchWindowAct
         final EditorPageManager manager = EditorPageManager.loadManager(plugin, selectedLayer);
         List<?> elements = manager.getElements(EditorPageManager.PRE_ORDER);
         Set<String> ids = new HashSet<String>();
-        for(Object element : elements) {
-        	ids.add(((EditorNode)element).getId());
+        for (Object element : elements) {
+            ids.add(((EditorNode) element).getId());
         }
-		try {
-	        if (SLD.POINT.supports(selectedLayer)) {
-	            if(ids.contains("org.locationtech.udig.style.advanced.editorpages.SimplePointEditorPage")) {//$NON-NLS-1$
-	            	pageId = "org.locationtech.udig.style.advanced.editorpages.SimplePointEditorPage";//$NON-NLS-1$
-	            }
-	        } else if (SLD.LINE.supports(selectedLayer)) {
-	            if(ids.contains("org.locationtech.udig.style.advanced.editorpages.SimpleLineEditorPage")) {//$NON-NLS-1$
-	            	pageId = "org.locationtech.udig.style.advanced.editorpages.SimpleLineEditorPage";//$NON-NLS-1$
-	            }
-	        } else if (SLD.POLYGON.supports(selectedLayer)) {
-	        	if(ids.contains("org.locationtech.udig.style.advanced.editorpages.SimplePolygonEditorPage")) {//$NON-NLS-1$
-	            	pageId = "org.locationtech.udig.style.advanced.editorpages.SimplePolygonEditorPage";//$NON-NLS-1$
-	            }
-	        } else {
-                    IGeoResourceInfo resourceInfo = selectedLayer.getGeoResource()
-                            .getInfo(new NullProgressMonitor());
-                    if (resourceInfo != null && resourceInfo.getDescription() != null
-                            && resourceInfo.getDescription().equals("grassbinaryraster")) { //$NON-NLS-1$
-                        if (ids.contains(
-                                "org.locationtech.udig.style.jgrass.colors.JGrassRasterStyleEditorPage")) {//$NON-NLS-1$
-                            pageId = "org.locationtech.udig.style.jgrass.colors.JGrassRasterStyleEditorPage";//$NON-NLS-1$
-                        }
+        try {
+            if (SLD.POINT.supports(selectedLayer)) {
+                if (ids.contains(
+                        "org.locationtech.udig.style.advanced.editorpages.SimplePointEditorPage")) {//$NON-NLS-1$
+                    pageId = "org.locationtech.udig.style.advanced.editorpages.SimplePointEditorPage";//$NON-NLS-1$
+                }
+            } else if (SLD.LINE.supports(selectedLayer)) {
+                if (ids.contains(
+                        "org.locationtech.udig.style.advanced.editorpages.SimpleLineEditorPage")) {//$NON-NLS-1$
+                    pageId = "org.locationtech.udig.style.advanced.editorpages.SimpleLineEditorPage";//$NON-NLS-1$
+                }
+            } else if (SLD.POLYGON.supports(selectedLayer)) {
+                if (ids.contains(
+                        "org.locationtech.udig.style.advanced.editorpages.SimplePolygonEditorPage")) {//$NON-NLS-1$
+                    pageId = "org.locationtech.udig.style.advanced.editorpages.SimplePolygonEditorPage";//$NON-NLS-1$
+                }
+            } else {
+                IGeoResourceInfo resourceInfo = selectedLayer.getGeoResource()
+                        .getInfo(new NullProgressMonitor());
+                if (resourceInfo != null && resourceInfo.getDescription() != null
+                        && resourceInfo.getDescription().equals("grassbinaryraster")) { //$NON-NLS-1$
+                    if (ids.contains(
+                            "org.locationtech.udig.style.jgrass.colors.JGrassRasterStyleEditorPage")) {//$NON-NLS-1$
+                        pageId = "org.locationtech.udig.style.jgrass.colors.JGrassRasterStyleEditorPage";//$NON-NLS-1$
                     }
-	        }
-		} catch (IOException e) {
-			pageId = "simple";//$NON-NLS-1$
-		}
+                }
+            }
+        } catch (IOException e) {
+            pageId = "simple";//$NON-NLS-1$
+        }
 
-        StyleEditorDialog dialog = StyleEditorDialog.createDialogOn(shell, pageId, selectedLayer, manager);
+        StyleEditorDialog dialog = StyleEditorDialog.createDialogOn(shell, pageId, selectedLayer,
+                manager);
         dialog.open();
     }
 
-    public void selectionChanged( IAction action, ISelection selection ) {
+    public void selectionChanged(IAction action, ISelection selection) {
         if (selection.isEmpty() || !(selection instanceof IStructuredSelection))
             return;
 
@@ -141,10 +142,10 @@ public class OpenStyleEditorAction extends Action implements IWorkbenchWindowAct
         workbenchWindow = null;
     }
 
-    public void init( IWorkbenchWindow window ) {
+    public void init(IWorkbenchWindow window) {
     }
 
-    public void init( IViewPart view ) {
+    public void init(IViewPart view) {
     }
 
 }
