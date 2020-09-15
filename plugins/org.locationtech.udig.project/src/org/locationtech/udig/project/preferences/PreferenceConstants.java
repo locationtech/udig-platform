@@ -68,6 +68,13 @@ public final class PreferenceConstants {
     public static final String P_HIDE_RENDER_JOB = "HIDE_RENDER_JOB"; //$NON-NLS-1$
 
     /**
+     * Constant to allow to disable Map CRS Selection Contribution Item.
+     * <p>
+     * If the property is <code>true</code> the user cannot change the CRS for the map.
+     */
+    public static final String P_DISABLE_CRS_SELECTION = "DISABLE_CRS_SELECTION"; //$NON-NLS-1$
+
+    /**
      * The property value for the preferred scale to ZOOM IN when extents of the layer
      * are not really correct or too small to be zoomed and displayed.
      * <p>
