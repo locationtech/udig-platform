@@ -20,7 +20,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.locationtech.udig.project.internal.commands.ChangeCRSCommand;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
 import org.locationtech.udig.project.render.IViewportModelListener;
 import org.locationtech.udig.project.render.ViewportModelEvent.EventType;
 import org.locationtech.udig.ui.CRSChooserDialog;
@@ -59,6 +61,10 @@ public final class CRSContributionItem extends ContributionItem {
         this.mapEditor.getMap().getViewportModel().addViewportModelListener(viewportModelListener);
     }
 
+    public static boolean isCRSSelectionDisabled() {
+        return ProjectPlugin.getPlugin().getPreferenceStore()
+                .getBoolean(PreferenceConstants.P_DISABLE_CRS_SELECTION);
+    }
     @Override
     public boolean isDynamic() {
         return true;
@@ -102,7 +108,11 @@ public final class CRSContributionItem extends ContributionItem {
         data.widthHint = MINIMUM_WIDTH;
         button.setLayoutData(data);
 
-        button.addListener(SWT.Selection, (listener -> promptForCRS()));
+        boolean disableCRSSelection = isCRSSelectionDisabled();
+
+        if (!disableCRSSelection) {
+           button.addListener(SWT.Selection, (listener -> promptForCRS()));
+        }
 
         update();
     }
