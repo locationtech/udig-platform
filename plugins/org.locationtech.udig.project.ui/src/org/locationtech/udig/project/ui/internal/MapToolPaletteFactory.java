@@ -10,15 +10,19 @@
  */
 package org.locationtech.udig.project.ui.internal;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteDrawer;
+import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.palette.PaletteGroup;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.palette.PaletteToolbar;
@@ -52,6 +56,44 @@ public class MapToolPaletteFactory {
      */
     private static final String DEFAULT_ID = "org.locationtech.udig.tools.Zoom"; //$NON-NLS-1$
 
+    static final Comparator<PaletteContainer> PALETTE_COMPARATOR = new Comparator<PaletteContainer>() {
+        final List<String> preferredOrder = Arrays.asList(
+                "org.locationtech.udig.tool.category.zoom",
+                "org.locationtech.udig.tool.category.pan",
+                "org.locationtech.udig.tool.category.info",
+                "org.locationtech.udig.tool.category.measure",
+                "org.locationtech.udig.tool.category.selection");
+
+        int order(String id) {
+            int index = preferredOrder.indexOf(id);
+            if ("Other".equals(id)) {
+                // Other will be -2 after everything else
+                return -2;
+            } else if (index == -1) {
+                return -1;
+            } else {
+                // make this a positive experience with "zoom" showing up first
+                return 100 - index;
+            }
+        }
+
+        @Override
+        public int compare(PaletteContainer o1, PaletteContainer o2) {
+            String s1 = o1.getId();
+            String s2 = o2.getId();
+            int order1 = order(s1);
+            int order2 = order(s2);
+
+            if (order1 == order2) {
+                return 0;
+            } else if (order1 < order2) {
+                return 1;
+            } else {
+                return -1;
+            }
+            // return order1-order2; // is this the fast way? I am not good a C
+        }
+    };
     /**
      * Create a map tool palette bridging from from uDig ToolManager to the GEF ToolEntry model.
      * 
@@ -63,44 +105,38 @@ public class MapToolPaletteFactory {
         PaletteRoot root = new PaletteRoot();
         IToolManager toolManager = ApplicationGIS.getToolManager();
 
-        List<PaletteContainer> categories = new ArrayList<PaletteContainer>();
+        List<PaletteContainer> categories = new ArrayList<>();
 
         // Normal GEF Tools (SelectionTool etc...)
         // PaletteContainer controlGroup = createControlGroup(root);
         // categories.add(controlGroup);
         PaletteToolbar navigation = new PaletteToolbar("Navigation");
-//        navigation.setInitialState(PaletteDrawer.INITIAL_STATE_OPEN);
-//        navigation.setDrawerType(ToolEntry.PALETTE_TYPE_TOOL);
-        navigation.setUserModificationPermission(PaletteContainer.PERMISSION_NO_MODIFICATION);
-//        navigation.setShowDefaultIcon(false);
+        navigation.setUserModificationPermission(PaletteEntry.PERMISSION_NO_MODIFICATION);
         
+        int othersCounter = 1;
         for( ModalToolCategory category : toolManager.getModalToolCategories() ) {
-
-            // Simple PaletteDrawer (no icon for the tool category at this time)
-            String shortcut = shortcut(category.getName());
-            String name = fixLabel(category.getName());
-            
             PaletteContainer container;
             if( category.getId().equals("org.locationtech.udig.tool.category.zoom") ||
-                    category.getId().equals("org.locationtech.udig.tool.category.pan")){
+                    category.getId().equals("org.locationtech.udig.tool.category.pan")) {
                 container = navigation;
-            }
-            else {
-                PaletteDrawer drawer = new PaletteDrawer(name);
-                drawer.setId( category.getId() );
-                if( category == toolManager.getActiveCategory()){
-                    drawer.setInitialState(PaletteDrawer.INITIAL_STATE_OPEN);
+            } else {
+                String categoryName = category.getName();
+                if (categoryName == null || categoryName.trim().isEmpty()) {
+                    categoryName = MessageFormat.format(Messages.MapToolPaletteCategoryNameFallback,
+                            othersCounter++);
+                    ProjectUIPlugin.getDefault().getLog().log(new Status(IStatus.WARNING,
+                            ProjectUIPlugin.ID,
+                            MessageFormat.format(
+                                    "'name' attribute for Tool Category extension with id {0} not set.", ////$NON-NLS-1$
+                                    category.getId())));
                 }
-                else {
-                    drawer.setInitialState(PaletteDrawer.INITIAL_STATE_CLOSED);
+
+                int initialState = PaletteDrawer.INITIAL_STATE_CLOSED;
+                if (category == toolManager.getActiveCategory()) {
+                    initialState = PaletteDrawer.INITIAL_STATE_OPEN;
                 }
-                drawer.setDrawerType(ToolEntry.PALETTE_TYPE_TOOL);
-                drawer.setUserModificationPermission(PaletteContainer.PERMISSION_NO_MODIFICATION);
-                drawer.setShowDefaultIcon(false);
-                if( shortcut != null ){
-                    drawer.setDescription( "("+shortcut+")" );
-                }
-                container = drawer;
+                container = createPaletteContainer(category.getId(), fixLabel(categoryName),
+                        shortcut(categoryName), initialState);
             }
             category.container( container ); // hook up so container can cycle tools on keypress
             for( ModalItem modalItem : category ) {
@@ -114,61 +150,35 @@ public class MapToolPaletteFactory {
                 }         
                 container.add(tool);
             }
-            if( container == navigation){
+            if (container == navigation) {
                 continue; // don't add navigation container multiple times
             }
             categories.add(container);
         }
 
-        Comparator<PaletteContainer> sorter = new Comparator<PaletteContainer>(){
-            List<String> preferredOrder = Arrays.asList(new String[]{
-                    "org.locationtech.udig.tool.category.zoom",
-                    "org.locationtech.udig.tool.category.pan",
-                    "org.locationtech.udig.tool.category.info",
-                    "org.locationtech.udig.tool.category.measure",
-                    "org.locationtech.udig.tool.category.selection"
-            });
-            int order( String id ){
-                int index = preferredOrder.indexOf(id);
-                if ("Other".equals(id)) {
-                    // Other will be -2 after everything else
-                    return -2;
-                }
-                else if (index == -1 ){
-                    return -1;
-                }
-                else {
-                    // make this a positive experience with "zoom" showing up first
-                    return 100-index;
-                }
-            }
-            
-            public int compare( PaletteContainer o1, PaletteContainer o2 ) {
-                String s1 = o1.getId();
-                String s2 = o2.getId();
-                int order1 = order(s1);
-                int order2 = order(s2);
-                
-                if ( order1 == order2){
-                    return 0;
-                }
-                else if (order1 < order2){
-                    return 1;
-                }
-                else {
-                    return -1;
-                }
-                // return order1-order2; // is this the fast way? I am not good a C
-            }
-        };
-        Collections.sort(categories,sorter );
+        Collections.sort(categories, PALETTE_COMPARATOR);
         categories.add(0,navigation);
         // try and prevent tool category order from changing
-        root.setUserModificationPermission( PaletteContainer.PERMISSION_NO_MODIFICATION );
+        root.setUserModificationPermission(PaletteEntry.PERMISSION_NO_MODIFICATION);
         root.setChildren(categories);
         return root;
     }
     
+    private static PaletteContainer createPaletteContainer(String categoryId, String label,
+            String shortcut, int initialState) {
+        // Simple PaletteDrawer (no icon for the tool category at this time)
+        PaletteDrawer drawer = new PaletteDrawer(label);
+        drawer.setId(categoryId);
+        drawer.setInitialState(initialState);
+        drawer.setDrawerType(ToolEntry.PALETTE_TYPE_TOOL);
+        drawer.setUserModificationPermission(PaletteEntry.PERMISSION_NO_MODIFICATION);
+        drawer.setShowDefaultIcon(false);
+        if (shortcut != null) {
+            drawer.setDescription("(" + shortcut + ")");
+        }
+        return drawer;
+    }
+
     static String shortcut( String label ){
         int cut = label.indexOf("&");
         String shortcut = cut == -1 ? null : label.substring(cut+1,cut+2);
@@ -221,26 +231,32 @@ public class MapToolPaletteFactory {
         getPreferenceStore().setDefault(PALETTE_SIZE, DEFAULT_PALETTE_SIZE);
 
         return new FlyoutPreferences(){
+            @Override
             public int getDockLocation() {
                 return getPreferenceStore().getInt(PALETTE_DOCK_LOCATION);
             }
 
+            @Override
             public int getPaletteState() {
                 return getPreferenceStore().getInt(PALETTE_STATE);
             }
 
+            @Override
             public int getPaletteWidth() {
                 return getPreferenceStore().getInt(PALETTE_SIZE);
             }
 
+            @Override
             public void setDockLocation( int location ) {
                 getPreferenceStore().setValue(PALETTE_DOCK_LOCATION, location);
             }
 
+            @Override
             public void setPaletteState( int state ) {
                 getPreferenceStore().setValue(PALETTE_STATE, state);
             }
 
+            @Override
             public void setPaletteWidth( int width ) {
                 getPreferenceStore().setValue(PALETTE_SIZE, width);
             }
