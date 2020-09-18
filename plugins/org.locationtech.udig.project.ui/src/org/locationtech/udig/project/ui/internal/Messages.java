@@ -676,6 +676,7 @@ public class Messages extends NLS {
 
     public static String PREFERENCES_LINK_TO_GENERAL_PAGE;
 
+    public static String MapToolPaletteCategoryNameFallback;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);
