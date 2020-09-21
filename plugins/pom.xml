@@ -34,6 +34,7 @@
                 <module>org.locationtech.udig.project.ui.tests</module>
                 <module>org.locationtech.udig.render.feature.basic.tests</module>
                 <module>org.locationtech.udig.render.wms.basic.tests</module>
+                <module>org.locationtech.udig.socket.tests</module>
                 <module>org.locationtech.udig.style.tests</module>
                 <module>org.locationtech.udig.tool.default.tests</module>
                 <module>org.locationtech.udig.tool.edit.tests</module>

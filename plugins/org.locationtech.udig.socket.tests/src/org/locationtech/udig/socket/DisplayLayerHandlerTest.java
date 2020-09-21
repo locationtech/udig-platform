@@ -1,3 +1,4 @@
+package org.locationtech.udig.socket;
 /*
  *    uDig - User Friendly Desktop Internet GIS client
  *    http://udig.refractions.net
@@ -8,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.locationtech.udig.socket;
+
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,9 +19,8 @@ import java.io.StringReader;
 import java.net.URL;
 import java.util.Map;
 
-import org.locationtech.udig.core.Pair;
-
 import org.junit.Test;
+import org.locationtech.udig.core.Pair;
 
 public class DisplayLayerHandlerTest {
 
