@@ -21,6 +21,37 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.locks.Lock;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.model.IWorkbenchAdapter;
+import org.eclipse.ui.model.WorkbenchAdapter;
+import org.geotools.brewer.color.BrewerPalette;
+import org.geotools.data.FeatureSource;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.filter.visitor.DuplicatingFilterVisitor;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.geotools.util.factory.GeoTools;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.project.IBlackboard;
 import org.locationtech.udig.project.IEditManager;
 import org.locationtech.udig.project.ILayer;
@@ -59,37 +90,6 @@ import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.ProgressManager;
 import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 import org.locationtech.udig.ui.palette.ColourScheme;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.model.IWorkbenchAdapter;
-import org.eclipse.ui.model.WorkbenchAdapter;
-import org.geotools.brewer.color.BrewerPalette;
-import org.geotools.data.FeatureSource;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.util.factory.GeoTools;
-import org.geotools.filter.visitor.DuplicatingFilterVisitor;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.And;
@@ -107,8 +107,6 @@ import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.TransformException;
 
-import org.locationtech.jts.geom.Envelope;
-
 /**
  * Project element used by MapEditorInput.
  * <p>
@@ -119,6 +117,9 @@ import org.locationtech.jts.geom.Envelope;
  * @generated
  */
 public class MapImpl extends EObjectImpl implements Map {
+
+    private static final String ERROR_EXECUTING_COMMAND = "Error executing command: ";
+
     /**
      * The default value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc
@@ -312,6 +313,7 @@ public class MapImpl extends EObjectImpl implements Map {
          *
          * @param commandType
          */
+        @Override
         public void commandExecuted(int commandType) {
             switch (commandType) {
             case COMMAND:
@@ -323,7 +325,7 @@ public class MapImpl extends EObjectImpl implements Map {
             }
         }
 
-    };
+    }
 
     private volatile CommandManager commandManager;
 
@@ -344,7 +346,6 @@ public class MapImpl extends EObjectImpl implements Map {
     /**
      * Adds an adapter that fires the events to IMapListeners
      */
-    @SuppressWarnings("unchecked")
     private void addMapListenerAdapter() {
         eAdapters().add(new EMFEventListenerToMapEvents(this));
     }
@@ -364,6 +365,7 @@ public class MapImpl extends EObjectImpl implements Map {
      *
      * @uml.property name="projectInternal"
      */
+    @Override
     public Project getProjectInternal() {
         Project genResult = getProjectInternalGen();
         if (genResult == null) {
@@ -428,6 +430,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated NOT
      */
+    @Override
     public void setProjectInternal(Project newProjectInternal) {
         if (newProjectInternal != projectInternal) {
             NotificationChain msgs = null;
@@ -453,6 +456,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @uml.property name="contextModel"
      * @generated NOT
      */
+    @Override
     @SuppressWarnings("deprecation")
     public ContextModel getContextModel() {
         if (contextModel == null) {
@@ -493,7 +497,8 @@ public class MapImpl extends EObjectImpl implements Map {
     /**
      * @see org.locationtech.udig.project.internal.Map#setContextModel(org.locationtech.udig.project.ContextModel)
      */
-    @SuppressWarnings({ "unchecked", "deprecation" })
+    @Override
+    @SuppressWarnings({ "deprecation" })
     public void setContextModel(ContextModel newContextModel) {
         if (contextModel != null)
             contextModel.eAdapters().remove(contextModelListener);
@@ -530,6 +535,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @uml.property name="viewportModelInternal"
      * @generated NOT
      */
+    @Override
     public ViewportModel getViewportModelInternal() {
         if (viewportModelInternal == null)
             setViewportModelInternalGen(RenderFactory.eINSTANCE.createViewportModel());
@@ -561,7 +567,7 @@ public class MapImpl extends EObjectImpl implements Map {
      *
      * @uml.property name="viewportModelInternal"
      */
-    @SuppressWarnings("unchecked")
+    @Override
     public void setViewportModelInternal(ViewportModel newViewportModelInternal) {
         setViewportModelInternalGen(newViewportModelInternal);
         if (getRenderManager() != null) {
@@ -596,6 +602,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated NOT
      */
+    @Override
     public BrewerPalette getColorPalette() {
         if (colorPalette == null) {
             String defaultPalette = ProjectPlugin.getPlugin().getPreferenceStore()
@@ -611,6 +618,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setColorPalette(BrewerPalette newColorPalette) {
         BrewerPalette oldColorPalette = colorPalette;
         colorPalette = newColorPalette;
@@ -623,6 +631,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getAbstract() {
         return abstract_;
     }
@@ -631,6 +640,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setAbstract(String newAbstract) {
         String oldAbstract = abstract_;
         abstract_ = newAbstract;
@@ -643,6 +653,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -651,6 +662,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -659,6 +671,7 @@ public class MapImpl extends EObjectImpl implements Map {
                     oldName, name));
     }
 
+    @Override
     public URI getID() {
         if (eResource() == null)
             return URI.createFileURI(getName());
@@ -671,11 +684,12 @@ public class MapImpl extends EObjectImpl implements Map {
      * @throws IOException
      * @generated NOT
      */
+    @Override
     public ReferencedEnvelope getBounds(IProgressMonitor monitor) {
         if (getLayersInternal() != null) {
             ReferencedEnvelope bounds = new ReferencedEnvelope(getViewportModel().getCRS());
             bounds.setToNull();
-            List<Layer> layers = new ArrayList<Layer>(getLayersInternal());
+            List<Layer> layers = new ArrayList<>(getLayersInternal());
             for (Layer layer : layers) {
                 ReferencedEnvelope bbox;
                 bbox = layer.getBounds(ProgressManager.instance().get(), getViewportModel()
@@ -687,29 +701,20 @@ public class MapImpl extends EObjectImpl implements Map {
                         bounds.expandToInclude(bbox);
                 }
             }
-            if (getLayersInternal() != EMPTY_LIST) {
-                if (bounds.isNull())
-                    return getDefaultBounds();
-
+            if (getLayersInternal() != EMPTY_LIST && bounds.isNull()) {
+                return getDefaultBounds();
             }
             return bounds;
         } else {
             return getDefaultBounds();
         }
-
     }
 
     private ReferencedEnvelope getDefaultBounds() {
-        if (getViewportModel().getCRS().getDomainOfValidity() != null) {
-            Extent extent = getViewportModel().getCRS().getDomainOfValidity();
-            ReferencedEnvelope env = toReferencedEnvelope(extent, getViewportModel().getCRS());
-            if (env != null) {
-                ProjectPlugin
-                        .log("MapImpl#getDefaultBounds(): Returning valid area of " + env.getCoordinateReferenceSystem().getName().toString()); //$NON-NLS-1$
-                return env;
-            }
+        final Extent extent = getViewportModel().getCRS().getDomainOfValidity();
+        if (extent != null) {
+            return toReferencedEnvelope(extent, getViewportModel().getCRS());
         }
-        ProjectPlugin.log("MapImpl#getDefaultBounds(): Returning Default bounds (entire world)"); //$NON-NLS-1$
         return new ReferencedEnvelope(new Envelope(-180, 180, -90, 90), DefaultGeographicCRS.WGS84);
     }
 
@@ -766,6 +771,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * 
      * @generated NOT
      */
+    @Override
     public double getAspectRatio(IProgressMonitor monitor) {
         ReferencedEnvelope bounds = getBounds(monitor);
         return bounds.getWidth() / bounds.getHeight();
@@ -776,6 +782,7 @@ public class MapImpl extends EObjectImpl implements Map {
      *
      * @generated NOT
      */
+    @Override
     public NavCommandStack getNavCommandStack() {
         synchronized (CommandManager.class) {
             if (this.navCommandManager == null) {
@@ -793,6 +800,7 @@ public class MapImpl extends EObjectImpl implements Map {
      *
      * @generated NOT
      */
+    @Override
     public CommandStack getCommandStack() {
         synchronized (CommandManager.class) {
             if (this.commandManager == null) {
@@ -810,6 +818,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @uml.property name="layerFactory"
      * @generated NOT
      */
+    @Override
     public LayerFactory getLayerFactory() {
         if (layerFactory == null)
             setLayerFactory(ProjectFactory.eINSTANCE.createLayerFactory());
@@ -839,6 +848,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setLayerFactory(LayerFactory newLayerFactory) {
         if (newLayerFactory != layerFactory) {
             NotificationChain msgs = null;
@@ -965,6 +975,7 @@ public class MapImpl extends EObjectImpl implements Map {
         /**
          * @see org.eclipse.emf.common.notify.impl.NotificationImpl#add(org.eclipse.emf.common.notify.Notification)
          */
+        @Override
         public boolean add(Notification newNotification) {
             if (notifications.contains(newNotification))
                 return false;
@@ -972,6 +983,7 @@ public class MapImpl extends EObjectImpl implements Map {
             notifications.add(newNotification);
             Collections.sort(notifications, new Comparator<Notification>() {
 
+                @Override
                 public int compare(Notification o1, Notification o2) {
                     Layer layer1 = (Layer) o1.getNotifier();
                     Layer layer2 = (Layer) o2.getNotifier();
@@ -985,6 +997,7 @@ public class MapImpl extends EObjectImpl implements Map {
         /**
          * @see java.lang.Iterable#iterator()
          */
+        @Override
         public Iterator<Notification> iterator() {
             return notifications.iterator();
         }
@@ -996,6 +1009,7 @@ public class MapImpl extends EObjectImpl implements Map {
      *
      * @generated NOT
      */
+    @Override
     public void redo() {
         if (commandManager == null || !commandManager.hasForwardHistory())
             return;
@@ -1008,6 +1022,7 @@ public class MapImpl extends EObjectImpl implements Map {
      *
      * @generated NOT
      */
+    @Override
     public void undo() {
         if (commandManager == null || !commandManager.hasBackHistory())
             return;
@@ -1020,6 +1035,7 @@ public class MapImpl extends EObjectImpl implements Map {
      *
      * @generated NOT
      */
+    @Override
     public void backwardHistory() {
         if (navCommandManager == null || !navCommandManager.hasBackHistory())
             return;
@@ -1031,6 +1047,7 @@ public class MapImpl extends EObjectImpl implements Map {
      *
      * @generated NOT
      */
+    @Override
     public void forwardHistory() {
         if (navCommandManager == null || !navCommandManager.hasForwardHistory())
             return;
@@ -1304,6 +1321,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @uml.property name="editManagerInternal"
      * @generated NOT
      */
+    @Override
     public EditManager getEditManagerInternal() {
         if (editManagerInternal == null) {
             setEditManagerInternal(ProjectFactory.eINSTANCE.createEditManager());
@@ -1335,6 +1353,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setEditManagerInternal(EditManager newEditManagerInternal) {
         if (newEditManagerInternal != editManagerInternal) {
             NotificationChain msgs = null;
@@ -1357,6 +1376,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public RenderManager getRenderManagerInternal() {
         if (renderManagerInternal != null && renderManagerInternal.eIsProxy()) {
             InternalEObject oldRenderManagerInternal = (InternalEObject) renderManagerInternal;
@@ -1425,6 +1445,7 @@ public class MapImpl extends EObjectImpl implements Map {
         /**
          * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
          */
+        @Override
         public void notifyChanged(Notification msg) {
             switch (msg.getFeatureID(RenderManager.class)) {
             case RenderPackage.RENDER_MANAGER__VIEWPORT_MODEL_INTERNAL: {
@@ -1449,7 +1470,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @see org.locationtech.udig.project.internal.Map#setRenderManager(org.locationtech.udig.project.render.RenderManager)
      * @uml.property name="renderManagerInternal"
      */
-    @SuppressWarnings("unchecked")
+    @Override
     public void setRenderManagerInternal(RenderManager newRenderManager) {
         setRenderManagerInternalGen(newRenderManager);
         if (newRenderManager != null)
@@ -1463,6 +1484,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ColourScheme getColourScheme() {
         if (colourScheme == null) {
             colourScheme = ColourScheme.getDefault(getColorPalette());
@@ -1474,6 +1496,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setColourScheme(ColourScheme newColourScheme) {
         ColourScheme oldColourScheme = colourScheme;
         colourScheme = newColourScheme;
@@ -1487,6 +1510,7 @@ public class MapImpl extends EObjectImpl implements Map {
      *
      * @see org.locationtech.udig.project.IMap#getBlackboard()
      */
+    @Override
     public IBlackboard getBlackboard() {
         return getBlackBoardInternal();
     }
@@ -1495,6 +1519,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Blackboard getBlackBoardInternal() {
         return blackBoardInternal;
     }
@@ -1523,6 +1548,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setBlackBoardInternal(Blackboard newBlackBoardInternal) {
         if (newBlackBoardInternal != blackBoardInternal) {
             NotificationChain msgs = null;
@@ -1548,6 +1574,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public List<ILegendItem> getLegend() {
         if (legend == null) {
             legend = new EObjectContainmentEList<ILegendItem>(ILegendItem.class, this,
@@ -1581,6 +1608,7 @@ public class MapImpl extends EObjectImpl implements Map {
     /**
      * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
      */
+    @Override
     @SuppressWarnings("unchecked")
     public Object getAdapter(Class adapter) {
         for (Iterator i = eAdapters().iterator(); i.hasNext();) {
@@ -1611,6 +1639,7 @@ public class MapImpl extends EObjectImpl implements Map {
     /**
      * @see org.locationtech.udig.project.IProjectElement#getProject()
      */
+    @Override
     public IProject getProject() {
         return getProjectInternal();
     }
@@ -1618,6 +1647,7 @@ public class MapImpl extends EObjectImpl implements Map {
     /**
      * @see org.locationtech.udig.project.IMap#getViewportModel()
      */
+    @Override
     public IViewportModel getViewportModel() {
         return getViewportModelInternal();
     }
@@ -1625,6 +1655,7 @@ public class MapImpl extends EObjectImpl implements Map {
     /**
      * @see org.locationtech.udig.project.IMap#getEditManager()
      */
+    @Override
     public IEditManager getEditManager() {
         return getEditManagerInternal();
     }
@@ -1632,6 +1663,7 @@ public class MapImpl extends EObjectImpl implements Map {
     /**
      * @see org.locationtech.udig.project.IMap#getRenderManager()
      */
+    @Override
     public IRenderManager getRenderManager() {
         return getRenderManagerInternal();
     }
@@ -1639,18 +1671,20 @@ public class MapImpl extends EObjectImpl implements Map {
     /**
      * @see org.locationtech.udig.project.IMap#getMapLayers()
      */
+    @Override
     @SuppressWarnings("unchecked")
     public List getMapLayers() {
         return Collections.unmodifiableList(getLayersInternal());
     }
 
-    @SuppressWarnings("unchecked")
+    @Override
     public List<Layer> getLayersInternal() {
         if (getContextModel() == null)
             return EMPTY_LIST;
         return getContextModel().getLayers();
     }
 
+    @Override
     public void sendCommandSync(MapCommand command) {
         if (command instanceof NavCommand)
             sendCommand((NavCommand) command, false);
@@ -1660,6 +1694,7 @@ public class MapImpl extends EObjectImpl implements Map {
             sendCommand(command, false);
     }
 
+    @Override
     public void sendCommandASync(MapCommand command) {
         if (command instanceof NavCommand)
             sendCommand((NavCommand) command, true);
@@ -1669,6 +1704,7 @@ public class MapImpl extends EObjectImpl implements Map {
             sendCommand(command, true);
     }
 
+    @Override
     public void executeSyncWithoutUndo(final MapCommand command) {
         command.setMap(this);
         if (Display.getCurrent() != null) {
@@ -1678,45 +1714,49 @@ public class MapImpl extends EObjectImpl implements Map {
             try {
                 dialog.run(false, false, new IRunnableWithProgress() {
 
+                    @Override
                     public void run(IProgressMonitor monitor) throws InvocationTargetException,
                             InterruptedException {
                         try {
                             command.run(monitor);
                         } catch (Exception e) {
-                            ProjectPlugin.log("Error executing command: " + command.getName(), e); //$NON-NLS-1$
+                            ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); //$NON-NLS-1$
                         }
                     }
 
                 });
             } catch (InvocationTargetException e) {
-                ProjectPlugin.log("Error executing command: " + command.getName(), e); //$NON-NLS-1$
+                ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); //$NON-NLS-1$
             } catch (InterruptedException e) {
-                ProjectPlugin.log("Error executing command: " + command.getName(), e); //$NON-NLS-1$
+                ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); //$NON-NLS-1$
             }
         } else {
             try {
                 command.run(new NullProgressMonitor());
             } catch (Exception e) {
-                ProjectPlugin.log("Error executing command: " + command.getName(), e); //$NON-NLS-1$
+                ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); //$NON-NLS-1$
             }
         }
     }
 
+    @Override
     public void executeASyncWithoutUndo(final MapCommand command) {
         PlatformGIS.run(new IRunnableWithProgress() {
 
+            @Override
             public void run(IProgressMonitor monitor) throws InvocationTargetException,
                     InterruptedException {
                 try {
                     command.run(monitor);
                 } catch (Exception e) {
-                    ProjectPlugin.log("Error executing command: " + command.getName(), e); //$NON-NLS-1$
+                    ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); //$NON-NLS-1$
                 }
             }
 
         });
     }
 
+    @Override
     public String getFileExtension() {
         return "umap"; //$NON-NLS-1$
     }
@@ -1725,22 +1765,27 @@ public class MapImpl extends EObjectImpl implements Map {
 
     CopyOnWriteArraySet<IMapCompositionListener> compositionListeners = new CopyOnWriteArraySet<IMapCompositionListener>();
 
+    @Override
     public void addMapListener(IMapListener listener) {
         mapListeners.add(listener);
     }
 
+    @Override
     public void removeMapListener(IMapListener listener) {
         mapListeners.remove(listener);
     }
 
+    @Override
     public void addMapCompositionListener(IMapCompositionListener listener) {
         compositionListeners.add(listener);
     }
 
+    @Override
     public void removeMapCompositionListener(IMapCompositionListener listener) {
         compositionListeners.remove(listener);
     }
 
+    @Override
     public List<Color> getMapDefaultColours() {
         List<Layer> layers = getLayersInternal();
         List<Color> colours = new ArrayList<Color>();
@@ -1753,14 +1798,17 @@ public class MapImpl extends EObjectImpl implements Map {
         return colours;
     }
 
+    @Override
     public void addDeepAdapter(Adapter adapter) {
         ((LayersList2) getLayersInternal()).addDeepAdapter(adapter);
     }
 
+    @Override
     public void removeDeepAdapter(Adapter adapter) {
         ((LayersList2) getLayersInternal()).removeDeepAdapter(adapter);
     }
 
+    @Override
     public void lowerLayer(Layer layer) {
         int index = getLayersInternal().indexOf(layer);
         if (index == 0)
@@ -1768,6 +1816,7 @@ public class MapImpl extends EObjectImpl implements Map {
         ((LayersList2) getLayersInternal()).move(index--, index);
     }
 
+    @Override
     public void raiseLayer(Layer layer) {
         int index = getLayersInternal().indexOf(layer);
         if (index > getLayersInternal().size() - 2)
@@ -1775,16 +1824,19 @@ public class MapImpl extends EObjectImpl implements Map {
         ((LayersList2) getLayersInternal()).move(index++, index);
     }
 
+    @Override
     public void sendToFrontLayer(Layer layer) {
         int index = getLayersInternal().indexOf(layer);
         ((LayersList2) getLayersInternal()).move(getLayersInternal().size() - 1, index);
     }
 
+    @Override
     public void sendToBackLayer(Layer layer) {
         int index = getLayersInternal().indexOf(layer);
         ((LayersList2) getLayersInternal()).move(0, index);
     }
 
+    @Override
     public void sendToIndexLayer(Layer layer, int index) {
         int currentIndex = getLayersInternal().indexOf(layer);
         ((LayersList2) getLayersInternal()).move(index, currentIndex);
@@ -1827,6 +1879,7 @@ public class MapImpl extends EObjectImpl implements Map {
         }
     }
 
+    @Override
     public void select(Envelope boundingBox) {
         Layer selected = getEditManagerInternal().getSelectedLayer();
         LAYERS: for (Layer layer : getLayersInternal()) {
@@ -1842,15 +1895,13 @@ public class MapImpl extends EObjectImpl implements Map {
         notifyBatchNotification(ProjectPackage.LAYER__FILTER, Notification.SET);
     }
 
+    @Override
     public void select(Envelope boundingBox, boolean add) {
         Layer selected = getEditManagerInternal().getSelectedLayer();
         LAYERS: for (Layer layer : getLayersInternal()) {
             if (layer == selected) {
                 Filter oldFilter = layer.getFilter();
-                Filter newFilter = null;
-                Filter newFilterCopy = null;
-                newFilter = layer.createBBoxFilter(boundingBox, null);
-                newFilterCopy = layer.createBBoxFilter(boundingBox, null);
+                Filter newFilter = layer.createBBoxFilter(boundingBox, null);
 
                 if (newFilter == null)
                     continue LAYERS;
@@ -1882,6 +1933,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @see org.locationtech.udig.project.internal.ContextModel#select(Filter)
      * @generated NOT
      */
+    @Override
     public void select(Filter filter) {
         Layer selected = getEditManagerInternal().getSelectedLayer();
         for (Layer layer : getLayersInternal()) {
@@ -1897,6 +1949,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @see org.locationtech.udig.project.internal.ContextModel#select(Filter, boolean)
      * @generated NOT
      */
+    @Override
     public void select(Filter filter, boolean and) {
         Layer selected = getEditManagerInternal().getSelectedLayer();
         for (Layer layer : getLayersInternal()) {
@@ -1927,6 +1980,7 @@ public class MapImpl extends EObjectImpl implements Map {
         }
     }
 
+    @Override
     public void select(Filter filter, ILayer layerObj) {
 
         Layer layer = (Layer) layerObj;
@@ -1941,6 +1995,7 @@ public class MapImpl extends EObjectImpl implements Map {
         }
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public List getElements(Class type) {
         List lists = new ArrayList();
@@ -1952,6 +2007,7 @@ public class MapImpl extends EObjectImpl implements Map {
         return lists;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public List getElements() {
         return getLayersInternal();
