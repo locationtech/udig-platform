@@ -12,6 +12,13 @@ package org.locationtech.udig.project.internal.render.impl;
 import java.text.MessageFormat;
 import java.util.Collection;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.common.notify.Notification;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.Messages;
 import org.locationtech.udig.project.internal.ProjectPlugin;
@@ -19,18 +26,10 @@ import org.locationtech.udig.project.internal.Trace;
 import org.locationtech.udig.project.internal.render.ExecutorVisitor;
 import org.locationtech.udig.project.internal.render.RenderExecutor;
 import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
 import org.locationtech.udig.project.render.IRenderContext;
 import org.locationtech.udig.project.render.IRenderer;
 import org.locationtech.udig.project.render.RenderException;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.common.notify.Notification;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-
-import org.locationtech.jts.geom.Envelope;
 
 /**
  * An Executor specifically for executing CompositeRenderers.
@@ -75,6 +74,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
         /**
          * @see org.locationtech.udig.project.internal.render.impl.RenderJob#getExecutor()
          */
+        @Override
         public RenderExecutorComposite getExecutor() {
             return (RenderExecutorComposite) executor;
         }
@@ -126,6 +126,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
 
         @Override
         protected void init() {
+            updateSystemState(this);
         }
 
         @Override
@@ -136,6 +137,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
         /**
          * @see org.locationtech.udig.project.internal.render.impl.RenderJob#postRendering()
          */
+        @Override
         protected void postRendering() {
 
             if (monitor.isCanceled()) {
@@ -157,6 +159,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
         /**
          * @see org.locationtech.udig.project.internal.render.impl.RenderJob#startRendering()
          */
+        @Override
         protected void startRendering( Envelope bounds, IProgressMonitor monitor ) throws Throwable {
             // need to show that we are in update just in case a renderer triggers a state event
             // in the RenderExecutor.render() method.
@@ -196,6 +199,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
         /**
          * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorMultiLayer.MultiLayerRendererListener#stateChanged(org.eclipse.emf.common.notify.Notification)
          */
+        @Override
         protected void stateChanged( Notification msg ) {
             switch( msg.getNewIntValue() ) {
             case Renderer.RENDERING:
@@ -258,6 +262,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
 
         ReferencedEnvelope bounds;
 
+        @Override
         public void run() {
 
             stopRendering();
@@ -329,6 +334,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
     /**
      * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl#getRenderer()
      */
+    @Override
     public CompositeRendererImpl getRenderer() {
         return (CompositeRendererImpl) renderer;
     }
@@ -395,6 +401,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
     protected synchronized void resetTimeout() {
         timeout = 0;
     }
+    @Override
     protected void resyncState( Renderer renderer ) {
 
         // FIXME sync sub renderers, witness composite renderer
@@ -405,14 +412,16 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
     /**
      * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl#setRenderer(org.locationtech.udig.project.render.Renderer)
      */
+    @Override
     public void setRenderer( Renderer newRenderer ) {
-        renderJob.setSystem(false);
+        updateSystemState(renderJob);
         super.setRendererInternal(newRenderer);
     }
 
     /**
      * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl#stopRendering()
      */
+    @Override
     public void stopRendering() {
         for( RenderExecutor executor : getRenderer().getRenderExecutors() ) {
             executor.stopRendering();
@@ -423,7 +432,20 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
     /**
      * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl#visit(org.locationtech.udig.project.render.ExecutorVisitor)
      */
+    @Override
     public void visit( ExecutorVisitor visitor ) {
         visitor.visit(this);
-    };
+    }
+
+    /**
+     * Sets the system state of the provided job. The setting is read from the preference store
+     * using the {@link PreferenceConstants#P_HIDE_RENDER_JOB} constant.
+     * 
+     * @param job the job whose system state should be updated
+     */
+    private static void updateSystemState(Job job) {
+        boolean hideRenderJob = ProjectPlugin.getPlugin().getPreferenceStore()
+                .getBoolean(PreferenceConstants.P_HIDE_RENDER_JOB);
+        job.setSystem(hideRenderJob);
+    }
 }
