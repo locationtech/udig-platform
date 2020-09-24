@@ -21,6 +21,12 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.PreferenceConverter;
+import org.eclipse.swt.graphics.RGB;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.ProjectBlackboardConstants;
 import org.locationtech.udig.project.internal.ProjectPlugin;
@@ -39,13 +45,6 @@ import org.locationtech.udig.project.render.ILabelPainter;
 import org.locationtech.udig.project.render.IRenderContext;
 import org.locationtech.udig.project.render.RenderException;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.preference.PreferenceConverter;
-import org.eclipse.swt.graphics.RGB;
-
 /**
  * <ul>
  * <li>Combines the output from several renderer into a single image.</li>
@@ -58,6 +57,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
 
     private final static Comparator<? super RenderExecutor> comparator = new Comparator<RenderExecutor>(){
         
+        @Override
         public int compare(RenderExecutor e1,RenderExecutor e2){
             
             return e1.getContext().getLayer().compareTo(
@@ -66,21 +66,6 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
         }
     };
 
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated NOT
-     */
-    public static final String copyright = 
-          "uDig - User Friendly Desktop Internet GIS client\n"
-        + "http://udig.refractions.net\n"
-        + "(C) 2004-2012, Refractions Research Inc.\n"
-        + "\n\n"
-        + "All rights reserved. This program and the accompanying materials\n"
-        + "are made available under the terms of the Eclipse Public License v1.0\n"
-        + "(http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD\n"
-        + "License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).\n";
-    
     static final AffineTransform IDENTITY = new AffineTransform();
     CompositeContextListener contextListener = new CompositeContextListener(){
    
@@ -97,6 +82,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
             }
         }
 
+        @Override
         public void notifyChanged( CompositeRenderContext context, List<RenderContext> contexts, boolean added ) {
             if( added ){
                 add(contexts);
@@ -158,6 +144,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
             /**
              * @see org.locationtech.udig.project.internal.render.RenderListenerAdapter#renderDisposed(org.eclipse.emf.common.notify.Notification)
              */
+            @Override
             protected void renderDisposed( Notification msg ) {
                 EObject obj = (EObject) getTarget();
                 obj.eAdapters().remove(this);
@@ -166,10 +153,12 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
             /**
              * @see org.locationtech.udig.project.internal.render.RenderListenerAdapter#renderDone()
              */
+            @Override
             protected void renderDone() {
                setState(DONE);
             }
 
+            @Override
             protected void renderRequest() {
                 setRenderBounds(executor.getRenderBounds());
                 setState(RENDER_REQUEST);
@@ -183,6 +172,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
             /**
              * @see org.locationtech.udig.project.internal.render.RenderListenerAdapter#renderUpdate()
              */
+            @Override
             protected void renderUpdate() {
                 synchronized (CompositeRendererImpl.this) {
 //                    try {
@@ -200,6 +190,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
     /**
      * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#dispose()
      */
+    @Override
     public synchronized void dispose() {
         for (RenderExecutor renderer : getRenderExecutors()) {
             renderer.dispose();
@@ -214,7 +205,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
      */
     protected RenderExecutor findExecutor( IRenderContext context ) {
         for( Iterator<RenderExecutor> eIter = getRenderExecutors().iterator(); eIter.hasNext(); ) {
-            RenderExecutor executor = (RenderExecutor) eIter.next();
+            RenderExecutor executor = eIter.next();
             if (executor.getRenderer().getContext().equals(context))
                 return executor;
         }
@@ -224,6 +215,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
     /**
      * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#getContext()
      */
+    @Override
     public CompositeRenderContext getContext() {
         return (CompositeRenderContext) super.getContext();
     }
@@ -301,6 +293,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
      * @throws RenderException
      * @generated NOT
      */
+    @Override
     public void refreshImage() throws RenderException {
         refreshImage(true);
     }
@@ -413,6 +406,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
      * @throws RenderException
      * @generated NOT
      */
+    @Override
     public void render( Graphics2D destination, IProgressMonitor monitor ) throws RenderException {
         // notify that they are starting
         for( RenderExecutor executor : renderExecutors ) {
@@ -436,6 +430,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
      * @throws RenderException
      * @see org.locationtech.udig.project.internal.render.Renderer#render(org.locationtech.jts.geom.Envelope)
      */
+    @Override
     public void render( IProgressMonitor monitor ) throws RenderException {
         if (getRenderExecutors().size() == 0)
             setState(DONE);
@@ -448,6 +443,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
     /**
      * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#setContext(org.locationtech.udig.project.render.RenderContext)
      */
+    @Override
     @SuppressWarnings("unchecked")
     public void setContext( IRenderContext newContext ) {
         if (context != null) {
