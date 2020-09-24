@@ -23,9 +23,6 @@ General Preferences
 -  Render transparencies - When unchecked transparencies in the styles will be ignored.
    Transparencies take slightly longer to render.
    Default is on.
--  Tiling layer rendering (experimental) - Currently this is not quite a tiling system. When panning
-   a read-only layer the tiler will only request the required areas as opposed to requesting a full
-   rendering of the viewport.
 
 .. _preferences-page-rendering-wms:
    

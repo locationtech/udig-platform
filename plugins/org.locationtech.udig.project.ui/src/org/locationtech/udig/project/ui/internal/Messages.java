@@ -330,10 +330,6 @@ public class Messages extends NLS {
 
     public static String MapPreferences_defaultCRS;
 
-    public static String RenderPreferences_tiledRendering;
-
-    public static String RenderPreferences_tilingRendererPref;
-
     public static String RenderPreferences_transparencies;
 
     public static String RenderPreferences_antialiasing;

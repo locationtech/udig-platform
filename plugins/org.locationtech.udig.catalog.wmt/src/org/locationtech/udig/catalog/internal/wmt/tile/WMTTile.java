@@ -20,15 +20,13 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.catalog.internal.wmt.WMTPlugin;
 import org.locationtech.udig.catalog.internal.wmt.wmtsource.WMTSource;
 import org.locationtech.udig.catalog.wmsc.server.Tile;
 import org.locationtech.udig.catalog.wmsc.server.TileSet;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-
-import org.locationtech.jts.geom.Envelope;
 
 public abstract class WMTTile implements Tile{
     private final static boolean testing = false;  // for testing output
@@ -60,10 +58,12 @@ public abstract class WMTTile implements Tile{
         return extent;
     }
     
+    @Override
     public BufferedImage getBufferedImage() {
         return image;
     }
     
+    @Override
     public String getId() {
         return tileName.getId();
     }
@@ -75,22 +75,27 @@ public abstract class WMTTile implements Tile{
     public abstract WMTTile getRightNeighbour();
     public abstract WMTTile getLowerNeighbour();
        
+    @Override
     public Envelope getBounds() {
         return extent;
     }
 
+    @Override
     public String getPosition() {
         return getId();
     }
 
+    @Override
     public double getScale() {
         return tileName.getZoomLevel();
     }
 
+    @Override
     public Object getTileLock() {
         return imageLock;
     }
 
+    @Override
     public TileSet getTileSet() {
         return null;
     }
@@ -98,6 +103,7 @@ public abstract class WMTTile implements Tile{
     /* (non-Javadoc)
      * @see org.locationtech.udig.catalog.wmsc.server.Tile#getTileState()
      */
+    @Override
     public int getTileState(){
         return this.state;
     }
@@ -105,10 +111,12 @@ public abstract class WMTTile implements Tile{
     /* (non-Javadoc)
      * @see org.locationtech.udig.catalog.wmsc.server.Tile#setTileState(int)
      */
+    @Override
     public void setTileState(int state){
         this.state = state;
     }
 
+    @Override
     public boolean loadTile(IProgressMonitor monitor) {
         if (tileName == null) {
             WMTPlugin.log("error, no tilename", null); //$NON-NLS-1$
@@ -144,7 +152,7 @@ public abstract class WMTTile implements Tile{
                     Thread.sleep(delay);  // simulate latency
                 }
                 URL url = getUrl();
-                WMTPlugin.log("WMT GetTile: "+ url, null);  //$NON-NLS-1$
+                WMTPlugin.debug("WMT GetTile: " + url, null); //$NON-NLS-1$
                 
                 URLConnection openConnection = url.openConnection();
                 if (openConnection!=null) {
@@ -209,6 +217,7 @@ public abstract class WMTTile implements Tile{
         return bf;
     }
     
+    @Override
     public void setBufferedImage(BufferedImage im) {
         Object lock = getTileLock();
         synchronized (lock) {       
@@ -229,6 +238,7 @@ public abstract class WMTTile implements Tile{
         this.image = im;
     }
     
+    @Override
     public void setPosition(String pos)  {
         throw new UnsupportedOperationException();
     }
@@ -243,11 +253,13 @@ public abstract class WMTTile implements Tile{
         return this.maxCacheAge;
     }
 
+    @Override
     public int compareTo(Tile other) {
         // id contains scale and bounds so compare with that
         return getId().compareTo( other.getId() );
     }
     
+    @Override
     public boolean equals(Object arg0) {
         if (arg0 instanceof Tile) {
             Tile tile = (Tile) arg0;

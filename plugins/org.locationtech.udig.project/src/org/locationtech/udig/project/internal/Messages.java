@@ -52,7 +52,6 @@ public class Messages extends NLS {
 	public static String UDIGTransaction_closeException;
 	public static String UDIGTransaction_rollbackException;
 	public static String UDIGTransaction_commitException;
-	public static String TilingRenderer_disposedError;
 	public static String StopRenderCommand_0;
 	public static String UDIGFeatureStore_1;
 	public static String UDIGFeatureStore_0;
