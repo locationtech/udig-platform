@@ -168,6 +168,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         ProjectUIPlugin.getDefault().getFeatureEditProcessor();
     }
 
+    @Override
     public Composite getComposite() {
         return composite;
     }
@@ -178,6 +179,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
      */
     ILayerListener layerListener = new ILayerListener(){
 
+        @Override
         public void refresh( LayerEvent event ) {
             if (event.getType() == LayerEvent.EventType.EDIT_EVENT) {
                 setDirty(true);
@@ -194,6 +196,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
      */
     IMapCompositionListener mapCompositionListener = new IMapCompositionListener(){
 
+        @Override
         @SuppressWarnings("unchecked")
         public void changed( MapCompositionEvent event ) {
             switch( event.getType() ) {
@@ -242,6 +245,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
      */
     IMapListener mapListener = new IMapListener(){
 
+        @Override
         public void changed( final MapEvent event ) {
             if (composite == null)
                 return; // the composite hasn't been created so chill out
@@ -251,6 +255,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
             }
 
             MapEditor.this.composite.getDisplay().asyncExec(new Runnable(){
+                @Override
                 public void run() {
                     switch( event.getType() ) {
                     case NAME:
@@ -279,6 +284,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
      */
     IEditManagerListener editListener = new IEditManagerListener(){
 
+        @Override
         public void changed( EditManagerEvent event ) {
             switch( event.getType() ) {
             case EditManagerEvent.POST_COMMIT:
@@ -316,15 +322,18 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     private ReplaceableSelectionProvider replaceableSelectionProvider;
     private PreShutdownTask shutdownTask = new PreShutdownTask(){
 
+        @Override
         public int getProgressMonitorSteps() {
             return 3;
         }
 
+        @Override
         public boolean handlePreShutdownException( Throwable t, boolean forced ) {
             ProjectUIPlugin.log("error prepping map editors for shutdown", t); //$NON-NLS-1$
             return true;
         }
 
+        @Override
         public boolean preShutdown( IProgressMonitor monitor, IWorkbench workbench, boolean forced )
                 throws Exception {
             monitor.beginTask("Saving Map Editor", 3); //$NON-NLS-1$
@@ -367,6 +376,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         private void save( final IProgressMonitor monitor ) {
             if (dirty) {
                 PlatformGIS.syncInDisplayThread(new Runnable(){
+                    @Override
                     public void run() {
                         IconAndMessageDialog d = new SaveDialog(Display.getCurrent()
                                 .getActiveShell(), getMap());
@@ -384,6 +394,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
 
     };
 
+    @Override
     public Object getAdapter( Class adaptee ) {
         if (adaptee.isAssignableFrom(Map.class)) {
             return getMap();
@@ -401,6 +412,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         }
     }
 
+    @Override
     public void setFont( Control control ) {
         viewer.setFont(control);
     }
@@ -468,12 +480,14 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
             button.setText(value);
             button.addListener(SWT.Selection, new Listener(){
 
+                @Override
                 public void handleEvent( Event event ) {
                     promptForCRS();
                 }
 
             });
             button.addListener(SWT.MouseEnter, new Listener(){
+                @Override
                 public void handleEvent( final Event event ) {
                     showFullText();
                 }
@@ -524,6 +538,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
             popup.setVisible(true);
             popup.pack(true);
             display.timerExec(500, new Runnable(){
+                @Override
                 public void run() {
                     checkforMouseOver(display);
                 }
@@ -533,6 +548,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         private void checkforMouseOver( final Display display ) {
             if (display.getCursorControl() == button) {
                 display.timerExec(500, new Runnable(){
+                    @Override
                     public void run() {
                         if (display.getCursorControl() == button) {
                             checkforMouseOver(display);
@@ -578,6 +594,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
             display = Display.getDefault();
 
         display.asyncExec(new Runnable(){
+            @Override
             public void run() {
 
                 IContributionManager bar = mapEditorSite.getActionBars().getStatusLineManager();
@@ -611,6 +628,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         if (display == null)
             display = Display.getDefault();
         display.asyncExec(new Runnable(){
+            @Override
             public void run() {
                 doUpdateScaleLabel();
             }
@@ -646,6 +664,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     /**
      * @see org.eclipse.ui.IWorkbenchPart#dispose()
      */
+    @Override
     public void dispose() {
 
         if (isTesting)
@@ -849,6 +868,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
             /**
              * @see java.lang.Runnable#run()
              */
+            @Override
             @SuppressWarnings("synthetic-access")
             public void run() {
                 firePropertyChange(PROP_DIRTY);
@@ -864,6 +884,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     /**
      * @see org.eclipse.ui.IWorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
      */
+    @Override
     public void createPartControl( final Composite parent ) {
 
         ShutdownTaskList.instance().addPreShutdownTask(shutdownTask);
@@ -877,16 +898,8 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         setTitleToolTip(Messages.MapEditor_titleToolTip);
         setTitleImage(ProjectUIPlugin.getDefault().getImage(ISharedImages.MAP_OBJ));
 
-        final IPreferenceStore preferenceStore = ProjectPlugin.getPlugin().getPreferenceStore();
-        boolean istiled = preferenceStore
-                .getBoolean(org.locationtech.udig.project.preferences.PreferenceConstants.P_TILED_RENDERING);
-
-        if (!istiled) {
-            viewer = new MapViewer(composite, SWT.DOUBLE_BUFFERED);
-        } else {
-            viewer = new MapViewer(composite, SWT.MULTI | SWT.NO_BACKGROUND);
-        }
-        // allow the viewer to open our context menu; work with our selection proivder etc
+        viewer = new MapViewer(composite, SWT.DOUBLE_BUFFERED);
+        // allow the viewer to open our context menu; work with our selection provider etc
         viewer.init(this);
         // if a map was provided as input we can ask the viewer to use it
         Map input = (Map) ((UDIGEditorInput) getEditorInput()).getProjectElement();
@@ -914,19 +927,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
 
         getSite().getPage().addPartListener(partlistener);
         registerFeatureFlasher();
-        /*
-        if (getMap().getRenderManager() == null){
-            if (!istiled) {
-                getMap().setRenderManagerInternal(new RenderManagerDynamic());
-            } else {
-                getMap().setRenderManagerInternal(new TiledRenderManagerDynamic());
-            }
-        }
 
-        setRenderManager(getMap().getRenderManagerInternal());
-        viewer.getViewport().setRenderManager(getRenderManager());
-        getRenderManager().setMapDisplay(viewer.getViewport());
-        */
         viewer.getViewport().addPaneListener(getMap().getViewportModelInternal());
 
         layerSelectionListener = new LayerSelectionListener(
@@ -948,6 +949,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
 
         getMap().getViewportModel().addViewportModelListener(new IViewportModelListener(){
 
+            @Override
             public void changed( ViewportModelEvent event ) {
                 if (getMap() == null) {
                     event.getSource().removeViewportModelListener(this);
@@ -1006,6 +1008,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
             final MenuManager contextMenu = new MenuManager();
             contextMenu.setRemoveAllWhenShown(true);
             contextMenu.addMenuListener(new IMenuListener(){
+                @Override
                 public void menuAboutToShow( IMenuManager mgr ) {
                     IToolManager tm = ApplicationGIS.getToolManager();
                     
@@ -1060,17 +1063,21 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
             final PropertyDialogAction tmp = new PropertyDialogAction(new SameShellProvider(shell),
                     new ISelectionProvider(){
 
+                        @Override
                         public void addSelectionChangedListener( ISelectionChangedListener listener ) {
                         }
 
+                        @Override
                         public ISelection getSelection() {
                             return new StructuredSelection(getMap());
                         }
 
+                        @Override
                         public void removeSelectionChangedListener(
                                 ISelectionChangedListener listener ) {
                         }
 
+                        @Override
                         public void setSelection( ISelection selection ) {
                         }
 
@@ -1099,6 +1106,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     /**
      * @see org.eclipse.ui.IWorkbenchPart#setFocus()
      */
+    @Override
     public void setFocus() {
         composite.setFocus();
         updateCRS();
@@ -1110,6 +1118,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
      * 
      * @return Returns the map that this editor edits
      */
+    @Override
     public Map getMap() {
         // return viewer.getMap();
         UDIGEditorInput editorInput = (UDIGEditorInput) getEditorInput();
@@ -1189,6 +1198,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     /**
      * Opens the map's context menu.
      */
+    @Override
     public void openContextMenu() {
         viewer.openContextMenu();
         /*getEditorSite().getShell().getDisplay().asyncExec(new Runnable(){
@@ -1199,10 +1209,12 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         */
     }
 
+    @Override
     public UDIGDropHandler getDropHandler() {
         return ((UDIGControlDropListener) dropTarget.listener).getHandler();
     }
 
+    @Override
     public Object getTarget( DropTargetEvent event ) {
         return this;
     }
@@ -1210,6 +1222,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     /**
      * Enables or disables dragging (drag and drop) from the map editor.
      */
+    @Override
     public void setDragging( boolean enable ) {
         if (draggingEnabled == enable)
             return;
@@ -1222,6 +1235,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         draggingEnabled = enable;
     }
 
+    @Override
     public boolean isDragging() {
         return draggingEnabled;
     }
@@ -1231,6 +1245,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         return getTitle();
     }
 
+    @Override
     public void setSelectionProvider( IMapEditorSelectionProvider selectionProvider ) {
         if (selectionProvider == null) {
             throw new NullPointerException("selection provider must not be null!"); //$NON-NLS-1$
@@ -1242,24 +1257,26 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         createContextMenu();
     }
 
+    @Override
     public MapEditorSite getMapEditorSite() {
         return mapEditorSite;
     }
 
     private class FlashFeatureListener implements ISelectionListener {
 
-        public void selectionChanged( IWorkbenchPart part, final ISelection selection ) {
+        @Override
+        public void selectionChanged(IWorkbenchPart part, final ISelection selection) {
             if (part == MapEditor.this || getSite().getPage().getActivePart() != part
                     || selection instanceof IBlockingSelection)
                 return;
 
-            ISafeRunnable sendAnimation = new ISafeRunnable(){
+            ISafeRunnable sendAnimation = new ISafeRunnable() {
                 @Override
                 public void run() {
                     if (selection instanceof IStructuredSelection) {
                         IStructuredSelection s = (IStructuredSelection) selection;
                         List<SimpleFeature> features = new ArrayList<SimpleFeature>();
-                        for( Iterator iter = s.iterator(); iter.hasNext(); ) {
+                        for (Iterator iter = s.iterator(); iter.hasNext();) {
                             Object element = iter.next();
 
                             if (element instanceof SimpleFeature) {
@@ -1273,14 +1290,14 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
                         if (!getRenderManager().isDisposed()) {
                             IAnimation anim = createAnimation(features);
                             if (anim != null)
-                                AnimationUpdater.runTimer(getMap().getRenderManager()
-                                        .getMapDisplay(), anim);
+                                AnimationUpdater.runTimer(
+                                        getMap().getRenderManager().getMapDisplay(), anim);
                         }
                     }
                 }
 
                 @Override
-                public void handleException( Throwable exception ) {
+                public void handleException(Throwable exception) {
                     ProjectUIPlugin.log("Exception preparing animation", exception); //$NON-NLS-1$
                 }
             };
@@ -1293,14 +1310,14 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
             // PlatformGIS.run(sendAnimation);
         }
 
-        private IAnimation createAnimation( List<SimpleFeature> current ) {
+        private IAnimation createAnimation(List<SimpleFeature> current) {
             final List<IDrawCommand> commands = new ArrayList<IDrawCommand>();
-            for( SimpleFeature feature : current ) {
+            for (SimpleFeature feature : current) {
                 if (feature == null || feature.getFeatureType().getGeometryDescriptor() == null)
                     continue;
                 DrawFeatureCommand command = null;
                 if (feature instanceof IAdaptable) {
-                    Layer layer = (Layer) ((IAdaptable) feature).getAdapter(Layer.class);
+                    Layer layer = ((IAdaptable) feature).getAdapter(Layer.class);
                     if (layer != null)
                         try {
                             command = new DrawFeatureCommand(feature, layer);
@@ -1332,6 +1349,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     RenderManager getRenderManager() {
         return viewer.getRenderManager();
     }
+    @Override
     public IStatusLineManager getStatusLineManager() {
     	return statusLineManager;
     }

@@ -33,8 +33,6 @@ public final class PreferenceConstants {
 
     public static final String P_BACKGROUND = "backgroundColor"; //$NON-NLS-1$
 
-    public static final String P_TILING_RENDERER = "tilingRendererActivated"; //$NON-NLS-1$
-    
     public static final String P_SELECTION_COLOR = "P_SELECTION_COLOR"; //$NON-NLS-1$
     public static final String P_SELECTION2_COLOR = "P_SELECTION2_COLOR"; //$NON-NLS-1$
 
@@ -69,11 +67,6 @@ public final class PreferenceConstants {
      */
     public static final String P_HIDE_RENDER_JOB = "HIDE_RENDER_JOB"; //$NON-NLS-1$
 
-    /**
-     * The on/off switch for using tiled rendering
-     */
-    public static final String P_TILED_RENDERING = "P_TILED_RENDERING";  //$NON-NLS-1$
-    
     /**
      * The property value for the preferred scale to ZOOM IN when extents of the layer
      * are not really correct or too small to be zoomed and displayed.

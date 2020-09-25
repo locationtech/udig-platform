@@ -32,7 +32,6 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
         store.setDefault(PreferenceConstants.P_ANTI_ALIASING, true);
         store.setDefault(PreferenceConstants.P_DEFAULT_CRS, -1);
         store.setDefault(PreferenceConstants.P_TRANSPARENCY, true);
-        store.setDefault(PreferenceConstants.P_TILING_RENDERER, false);
         store.setDefault(PreferenceConstants.P_HIGHLIGHT, PreferenceConstants.P_HIGHLIGHT_NONE);
         store.setDefault(PreferenceConstants.P_DEFAULT_PALETTE, "Dark2"); //$NON-NLS-1$
         store.setDefault(PreferenceConstants.P_STYLE_DEFAULT_PERPENDICULAR_OFFSET, "10"); //$NON-NLS-1$
