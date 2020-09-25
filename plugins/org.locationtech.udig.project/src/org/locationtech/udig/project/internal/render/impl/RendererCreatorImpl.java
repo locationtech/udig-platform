@@ -3,7 +3,6 @@
  */
 package org.locationtech.udig.project.internal.render.impl;
 
-import java.awt.Graphics2D;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,7 +16,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.geotools.data.FeatureSource;
 import org.locationtech.udig.core.internal.ExtensionPointUtil;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.ContextModel;
@@ -35,11 +37,6 @@ import org.locationtech.udig.project.render.AbstractRenderMetrics;
 import org.locationtech.udig.project.render.IRenderContext;
 import org.locationtech.udig.project.render.IRenderMetricsFactory;
 import org.locationtech.udig.project.render.IRenderer;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.common.notify.Notification;
-import org.geotools.data.FeatureSource;
-import org.geotools.util.Range;
 
 /**
  * Default implementation
@@ -76,10 +73,12 @@ public class RendererCreatorImpl implements RendererCreator {
         super();
     }
 
+    @Override
     public RenderContext getContext() {
         return context;
     }
 
+    @Override
     public void setContext( RenderContext newContext ) {
         context = newContext;
     }
@@ -90,7 +89,7 @@ public class RendererCreatorImpl implements RendererCreator {
      * @uml.property name="layers"
      * @generated NOT
      */
-    @SuppressWarnings("unchecked")
+    @Override
     public SortedSet<Layer> getLayers() {
         return layers;
     }
@@ -101,10 +100,11 @@ public class RendererCreatorImpl implements RendererCreator {
      * @uml.property name="metrics"
      * @uml.associationEnd qualifier="key:java.lang.Object java.util.SortedSet<IRenderMetrics>"
      */
-    Map<Layer, List<InternalRenderMetrics>> layerToMetricsFactoryMap = new HashMap<Layer, List<InternalRenderMetrics>>();
+    Map<Layer, List<InternalRenderMetrics>> layerToMetricsFactoryMap = new HashMap<>();
 
+    @Override
     public Map<String, String> getAvailableRenderersInfo(Layer layer) {
-        Map<String, String> renderers = new HashMap<String, String>();
+        Map<String, String> renderers = new HashMap<>();
         
         List<InternalRenderMetrics> availableRenderers = layerToMetricsFactoryMap.get(layer);
         
@@ -122,8 +122,9 @@ public class RendererCreatorImpl implements RendererCreator {
      * @param layer
      * @return
      */
+    @Override
     public Collection<String> getAvailableRendererIds(Layer layer) {
-        List<String> idsList = new ArrayList<String>();
+        List<String> idsList = new ArrayList<>();
         
         List<InternalRenderMetrics> availableRenderers = layerToMetricsFactoryMap.get(layer);
         
@@ -135,8 +136,9 @@ public class RendererCreatorImpl implements RendererCreator {
     }
 
     
+    @Override
     public Collection<AbstractRenderMetrics> getAvailableRendererMetrics(Layer layer) {
-        List<AbstractRenderMetrics> metrics = new ArrayList<AbstractRenderMetrics>();
+        List<AbstractRenderMetrics> metrics = new ArrayList<>();
         
         List<InternalRenderMetrics> availableRenderers = layerToMetricsFactoryMap.get(layer);
         
@@ -163,6 +165,7 @@ public class RendererCreatorImpl implements RendererCreator {
      * 
      * @generated NOT
      */
+    @Override
     public Renderer getRenderer( RenderContext context ) {
 
         // Part 1 of decision goes here
@@ -226,24 +229,24 @@ public class RendererCreatorImpl implements RendererCreator {
         
             initRenderMetrics();
     
-            Set<Layer> configured = new HashSet<Layer>();
-            List<Layer> layers = new ArrayList<Layer>();
+            Set<Layer> configured = new HashSet<>();
+            List<Layer> currentLayers = new ArrayList<>();
             
             synchronized (this.layers) {
-                layers.addAll(this.layers);
+                currentLayers.addAll(this.layers);
             }
     
-            Map<Layer, RenderContext> configuration = new HashMap<Layer, RenderContext>();
+            Map<Layer, RenderContext> configuration = new HashMap<>();
             
-            LAYERS: for( int i = 0; i < layers.size(); i++ ) {
-                Layer layer = layers.get(i);
+            LAYERS: for (int i = 0; i < currentLayers.size(); i++) {
+                Layer layer = currentLayers.get(i);
     
                 if (configured.contains(layer)) {
                     continue LAYERS;
                 }
     
                 List<InternalRenderMetrics> layerfactories = layerToMetricsFactoryMap.get(layer);
-                Collections.sort(layerfactories, new RenderMetricsSorter(layers));
+                Collections.sort(layerfactories, new RenderMetricsSorter(currentLayers));
     
                 if (layerfactories.isEmpty()) {
                     // nobody loves this layer
@@ -255,7 +258,8 @@ public class RendererCreatorImpl implements RendererCreator {
                     if( metrics!=null ){
                         RenderContext renderContext = (RenderContext) metrics.getRenderContext();
                         if (renderContext instanceof CompositeRenderContext) {
-                            constructCompositeContext(configured, layers, configuration, i, metrics, 
+                            constructCompositeContext(configured, currentLayers, configuration, i,
+                                    metrics,
                                     (CompositeRenderContext) renderContext);
                         }
                         configuration.put(layer, renderContext);
@@ -264,15 +268,11 @@ public class RendererCreatorImpl implements RendererCreator {
             }
     
             synchronized (this.layers) {
-                Iterator<Layer> iter1=layers.iterator();
+                Iterator<Layer> iter1 = currentLayers.iterator();
                 Iterator<Layer> iter2 = this.layers.iterator();
                 boolean failed=false;
                 while (iter1.hasNext() ){
-                    if( !iter2.hasNext() ){
-                        failed=true;
-                        break;
-                    }
-                    if( !iter1.next().equals(iter2.next()) ){
+                    if (!iter2.hasNext() || !iter1.next().equals(iter2.next())) {
                         failed=true;
                         break;
                     }
@@ -335,12 +335,14 @@ public class RendererCreatorImpl implements RendererCreator {
      * 
      * @generated NOT
      */
+    @Override
     public RenderContext getRenderContext( Layer layer ) {
         if (configuration == null)
             createConfiguration();
         return configuration.get(layer);
     }
 
+    @Override
     public void changed( Notification event ) {
             if (((event.getNotifier() instanceof ContextModel || event.getNotifier() instanceof RenderManager) && event
                     .getFeatureID(ContextModel.class) == ProjectPackage.CONTEXT_MODEL__LAYERS))  {
@@ -353,25 +355,25 @@ public class RendererCreatorImpl implements RendererCreator {
         switch( event.getEventType() ) {
         case Notification.ADD: {
             Layer layer = (Layer) event.getNewValue();
-            List<Layer> layers=new ArrayList<Layer>();
-            layers.add(layer);
+            List<Layer> currentLayers = new ArrayList<>();
+            currentLayers.add(layer);
             if (layer.hasResource(FeatureSource.class))
-                 layers.add(new SelectionLayer(layer));
+                 currentLayers.add(new SelectionLayer(layer));
             synchronized (this.layers){
-                this.layers.addAll(layers);
+                this.layers.addAll(currentLayers);
             }
             break;
         }
         case Notification.ADD_MANY: {
-            List<Layer> layers = new ArrayList<Layer>();
+            List<Layer> currentLayers = new ArrayList<>();
             for( Layer layer : (Collection< ? extends Layer>) event.getNewValue() ) {
-                layers.add(layer);
+                currentLayers.add(layer);
                 if (layer.hasResource(FeatureSource.class)
                         && findSelectionLayer(layer) == null)
-                    layers.add(new SelectionLayer(layer));
+                    currentLayers.add(new SelectionLayer(layer));
             }
             synchronized (this.layers){
-                this.layers.addAll(layers);
+                this.layers.addAll(currentLayers);
             }
             break;
         }
@@ -393,8 +395,8 @@ public class RendererCreatorImpl implements RendererCreator {
             	
             	Layer removedLayer = (Layer) event.getOldValue();
 
-                for ( Iterator iter = layers.iterator(); iter.hasNext(); ) {
-                    Layer l = (Layer) iter.next();
+                for (Iterator<Layer> iter = layers.iterator(); iter.hasNext();) {
+                    Layer l = iter.next();
                     if(removedLayer==l)
                         iter.remove();
                     else if( l instanceof SelectionLayer ){
@@ -412,8 +414,8 @@ public class RendererCreatorImpl implements RendererCreator {
             synchronized (layers) {
             	Collection<Layer> removedLayers = (Collection<Layer>) event.getOldValue();
 
-                for ( Iterator iter = layers.iterator(); iter.hasNext(); ) {
-                    Layer l = (Layer) iter.next();
+                for (Iterator<Layer> iter = layers.iterator(); iter.hasNext();) {
+                    Layer l = iter.next();
                     if( removedLayers.contains(l))
                         iter.remove();
                     else if( l instanceof SelectionLayer ){
@@ -433,8 +435,8 @@ public class RendererCreatorImpl implements RendererCreator {
             // remove then add the layers to fix ordering of layers.
             synchronized (layers) {
                 SelectionLayer selectionLayer=null;
-                for( Iterator iter = layers.iterator(); iter.hasNext(); ) {
-                    Layer l = (Layer) iter.next();
+                for (Iterator<Layer> iter = layers.iterator(); iter.hasNext();) {
+                    Layer l = iter.next();
                     if(newV==l)
                         iter.remove();
                     else if( l instanceof SelectionLayer ){
@@ -462,8 +464,8 @@ public class RendererCreatorImpl implements RendererCreator {
 
             // remove then add the layers to fix ordering of layers.
             synchronized (layers) {
-                for( Iterator iter = layers.iterator(); iter.hasNext(); ) {
-                    Layer l = (Layer) iter.next();
+                for (Iterator<Layer> iter = layers.iterator(); iter.hasNext();) {
+                    Layer l = iter.next();
                     if(oldV==l)
                         iter.remove();
                     else if( l instanceof SelectionLayer ){
@@ -492,6 +494,7 @@ public class RendererCreatorImpl implements RendererCreator {
      * 
      * @return the selection layer for layer or returns null;
      */
+    @Override
     public SelectionLayer findSelectionLayer( ILayer targetLayer ) {
         try {
             if (targetLayer.getResource(FeatureSource.class, null) == null)
@@ -500,123 +503,21 @@ public class RendererCreatorImpl implements RendererCreator {
             return null;
         }
         for( Layer layer : getLayers() )
-            if (layer instanceof SelectionLayer)
-                if (((SelectionLayer) layer).getWrappedLayer() == targetLayer)
-                    return (SelectionLayer) layer;
+            if (layer instanceof SelectionLayer
+                    && ((SelectionLayer) layer).getWrappedLayer() == targetLayer) {
+                return (SelectionLayer) layer;
+            }
 
         return null;
     }
 
-    /**
-     * @author Jesse
-     * @since 1.0.0
-     */
-    static class DumbRendererMetrics extends AbstractRenderMetrics {
-
-        private RenderContext context;
-
-        /**
-         * @param layer
-         */
-        public DumbRendererMetrics( Layer layer, IRenderContext context ) {
-            super(context, null, new ArrayList<String>());
-            this.context = (RenderContext) context;
-        }
-
-        /**
-         * @see org.locationtech.udig.project.render.IRenderMetrics#createRenderer()
-         */
-        public Renderer createRenderer() {
-            return new DumbRenderer();
-        }
-
-        /**
-         * @see org.locationtech.udig.project.render.IRenderMetrics#getRenderContext()
-         */
-        public RenderContext getRenderContext() {
-            return context;
-        }
-
-        /**
-         * @see org.locationtech.udig.project.render.IRenderMetrics#setRenderContext(org.locationtech.udig.project.render.RenderContext)
-         */
-        public void setRenderContext( IRenderContext context ) {
-            // do nothing;
-        }
-
-        /**
-         * @see org.locationtech.udig.project.render.IRenderMetrics#getRenderMetricsFactory()
-         */
-        public IRenderMetricsFactory getRenderMetricsFactory() {
-            return null;
-        }
-
-        public boolean canAddLayer( ILayer layer ) {
-            return false;
-        }
-
-        public boolean canStyle( String SyleID, Object value ) {
-            return false;
-        }
-
-        public boolean isOptimized() {
-            return false;
-        }
-
-        @SuppressWarnings("unchecked")
-        public Set<Range<Double>> getValidScaleRanges() {
-            return new HashSet<Range<Double>>();
-        }
-
-    }
-
-    static class DumbRenderer extends RendererImpl {
-
-        /**
-         * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#render(java.awt.Graphics2D)
-         */
-        public void render( Graphics2D destination, IProgressMonitor monitor ) {
-            // do nothing
-        }
-
-        /**
-         * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#getInfo(java.awt.Point)
-         *      public InfoList getInfo( Point screenLocation ) { // do nothing return null; }
-         */
-
-        /**
-         * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#stopRendering()
-         */
-        public void stopRendering() {
-            // do nothing
-        }
-
-        /**
-         * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#dispose()
-         */
-        public void dispose() {
-            // do nothing
-        }
-
-        /**
-         * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#render(org.locationtech.jts.geom.Envelope,
-         *      org.eclipse.core.runtime.IProgressMonitor)
-         */
-        public void render(IProgressMonitor monitor ) {
-            // do nothing
-        }
-
-    }
-
     private void initFactories( Layer layer ) {
-        
         RendererExtensionProcessor p = new RendererExtensionProcessor(layer, 
                 getContext().getMapInternal(), 
                 getContext().getRenderManagerInternal());
 
         ExtensionPointUtil.process(ProjectPlugin.getPlugin(), IRenderer.RENDER_EXT, p);
-        layerToMetricsFactoryMap.put(layer, p.rFactories);
-
+        layerToMetricsFactoryMap.put(layer, new CopyOnWriteArrayList<>(p.rFactories));
     }
 
     Collection<RenderContext> contexts = Collections.synchronizedSet(new TreeSet<RenderContext>());
@@ -624,12 +525,13 @@ public class RendererCreatorImpl implements RendererCreator {
     /**
      * @see org.locationtech.udig.project.internal.render.RendererCreator#getConfiguration()
      */
+    @Override
     public Collection<RenderContext> getConfiguration() {
 
         if( configuration==null )
             createConfiguration();
 
-        Collection<RenderContext> uniqueValues =  new LinkedList<RenderContext>();
+        Collection<RenderContext> uniqueValues = new LinkedList<>();
         
         synchronized (configuration) {
             Collection<RenderContext> values = configuration.values();
@@ -642,7 +544,7 @@ public class RendererCreatorImpl implements RendererCreator {
                     }
                 }
                 if(!found)
-                    uniqueValues.add((RenderContext)renderCtx);
+                    uniqueValues.add(renderCtx);
             }
         }
         synchronized (contexts) {
@@ -651,9 +553,10 @@ public class RendererCreatorImpl implements RendererCreator {
                 contexts.add(context);
             }
         }
-        return new ArrayList<RenderContext>(contexts);
+        return new ArrayList<>(contexts);
     }
 
+    @Override
     public void reset() {
         configuration=null;
         contexts.clear();
