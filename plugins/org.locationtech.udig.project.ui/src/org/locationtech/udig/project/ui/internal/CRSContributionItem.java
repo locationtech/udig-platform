@@ -1,0 +1,144 @@
+package org.locationtech.udig.project.ui.internal;
+
+import org.eclipse.jface.action.ContributionItem;
+import org.eclipse.jface.action.StatusLineLayoutData;
+import org.eclipse.jface.window.Window;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.ui.PlatformUI;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.commands.ChangeCRSCommand;
+import org.locationtech.udig.project.render.IViewportModelListener;
+import org.locationtech.udig.project.render.ViewportModelEvent.EventType;
+import org.locationtech.udig.ui.CRSChooserDialog;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
+
+/**
+ * Displays a the current CRS and allows to change it
+ */
+public final class CRSContributionItem extends ContributionItem {
+
+    private static final int MINIMUM_WIDTH = 120;
+
+    private static final String CRS_ITEM_ID = "CRS Display"; //$NON-NLS-1$
+
+    private static final int MAX_LENGTH = 12;
+
+    private final MapEditorPart mapEditor;
+
+    private Button button;
+
+    private IViewportModelListener viewportModelListener = event -> {
+        if (event.getType() == EventType.CRS) {
+            Display display = PlatformUI.getWorkbench().getDisplay();
+            if (display != null && !display.isDisposed()) {
+                display.asyncExec(this::update);
+            }
+        }
+    };
+
+    /**
+     * Create new StatusBarLabel object
+     */
+    public CRSContributionItem(MapEditorPart mapEditor) {
+        super(CRS_ITEM_ID);
+        this.mapEditor = mapEditor;
+        this.mapEditor.getMap().getViewportModel().addViewportModelListener(viewportModelListener);
+    }
+
+    @Override
+    public boolean isDynamic() {
+        return true;
+    }
+
+    @Override
+    public void dispose() {
+        this.mapEditor.getMap().getViewportModel()
+                .removeViewportModelListener(viewportModelListener);
+    }
+
+    /**
+     * Updates the crs label in the statusbar.
+     */
+    @Override
+    public void update() {
+        if (mapEditor == null) {
+            return;
+        }
+        final Map map = mapEditor.getMap();
+        if (map == null) {
+            mapEditor.getSite().getPage().closeEditor(mapEditor, false);
+            return;
+        }
+
+        final CoordinateReferenceSystem crs = map.getViewportModel().getCRS();
+        if (crs == null || crs.getName() == null) {
+            return;
+        }
+
+        setCRS(crs);
+    }
+
+    @Override
+    public void fill(Composite parent) {
+        new Label(parent, SWT.SEPARATOR);
+
+        button = new Button(parent, SWT.PUSH | SWT.FLAT);
+
+        StatusLineLayoutData data = new StatusLineLayoutData();
+        data.widthHint = MINIMUM_WIDTH;
+        button.setLayoutData(data);
+
+        button.addListener(SWT.Selection, (listener -> promptForCRS()));
+
+        update();
+    }
+
+    private void promptForCRS() {
+        final CoordinateReferenceSystem crs = this.mapEditor.getMap().getViewportModel().getCRS();
+        final CRSChooserDialog dialog = new CRSChooserDialog(this.mapEditor.getSite().getShell(),
+                crs);
+        final int code = dialog.open();
+        if (Window.OK == code) {
+            final CoordinateReferenceSystem result = dialog.getResult();
+            if (!result.equals(crs)) {
+                update();
+                this.mapEditor.getMap().sendCommandSync(new ChangeCRSCommand(result));
+            }
+        }
+    }
+
+    private void setCRS(CoordinateReferenceSystem crs) {
+        if (crs == null || crs.getName() == null) {
+            return;
+        }
+
+        final String crsCode = crs.getName().getCode();
+        if (crsCode == null) {
+            return;
+        }
+
+        if (button == null || button.isDisposed()) {
+            return;
+        }
+        String buttonLabel = crsCode;
+
+        if (buttonLabel.length() > MAX_LENGTH) {
+            final int start2 = buttonLabel.length() - MAX_LENGTH / 2;
+            buttonLabel = buttonLabel.substring(0, MAX_LENGTH / 2)
+                    + "..." //$NON-NLS-1$
+                    + buttonLabel.substring(start2, buttonLabel.length());
+        }
+        button.setText(buttonLabel);
+        button.update();
+        try {
+            button.setToolTipText(crs.toWKT());
+        } catch (Exception e) {
+            // ignore any exception creating readable string for CRS
+            button.setToolTipText("");
+        }
+    }
+}

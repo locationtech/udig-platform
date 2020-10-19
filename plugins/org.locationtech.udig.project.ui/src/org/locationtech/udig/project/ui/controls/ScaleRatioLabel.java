@@ -12,7 +12,6 @@ package org.locationtech.udig.project.ui.controls;
 
 import java.text.NumberFormat;
 
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.StatusLineLayoutData;
 import org.eclipse.swt.SWT;
@@ -26,14 +25,11 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.PlatformUI;
 import org.locationtech.udig.project.internal.commands.SetScaleCommand;
 import org.locationtech.udig.project.render.IViewportModel;
 import org.locationtech.udig.project.render.IViewportModelListener;
-import org.locationtech.udig.project.render.ViewportModelEvent;
 import org.locationtech.udig.project.render.ViewportModelEvent.EventType;
 import org.locationtech.udig.project.ui.internal.MapEditorPart;
 import org.locationtech.udig.project.ui.internal.Messages;
@@ -45,225 +41,194 @@ import org.locationtech.udig.ui.ZoomingDialog;
  * @author Andrea Aime
  */
 public class ScaleRatioLabel extends ContributionItem implements KeyListener, FocusListener {
-    public final static int STATUS_LINE_HEIGHT;
-    static {
-        if (Platform.getWS().equals(Platform.WS_WIN32)) {
-            STATUS_LINE_HEIGHT = 24;
-        } else {
-            STATUS_LINE_HEIGHT = 32;
-        }
-    }
     /** ScaleRatioLabel editor field */
     private final MapEditorPart mapPart;
-    public static final String SCALE_ITEM_ID = "Current scale"; //$NON-NLS-1$
-    NumberFormat nf = NumberFormat.getIntegerInstance();
-    
-    Combo combo;    
-    IViewportModel viewportModel;
-    
+
+    private static final int MINIMUM_WIDTH = 80;
+
+    private static final String SCALE_ITEM_ID = "Current scale"; //$NON-NLS-1$
+
+    private NumberFormat nf = NumberFormat.getIntegerInstance();
+
+    private Combo combo;
+
+    private IViewportModel viewportModel;
+
     /** Listens to viewport changes and updates the displayed scale accordingly */
-    IViewportModelListener listener = new IViewportModelListener(){
-        public void changed( ViewportModelEvent event ) {
-            if (event.getType() == EventType.CRS || event.getType() == EventType.BOUNDS) {
-                Display display = PlatformUI.getWorkbench().getDisplay();
-                if (display == null)
-                    display = Display.getDefault();
-
-                display.asyncExec(new Runnable(){
-
-                    public void run() {
-                        updateScale();
-                    }
-                });
+    IViewportModelListener listener = event -> {
+        if (event.getType() == EventType.CRS || event.getType() == EventType.BOUNDS) {
+            Display display = PlatformUI.getWorkbench().getDisplay();
+            if (display != null && !display.isDisposed()) {
+                display.asyncExec(this::update);
             }
         }
-    };    
+    };
 
     public ScaleRatioLabel(MapEditorPart editor) {
         super(SCALE_ITEM_ID);
         this.mapPart = editor;
-    }
 
-    /**
-     * Sets the current viewport model. Should be called every time the map changes in order
-     * update the shared ratio label
-     */
-    public void setViewportModel( IViewportModel newViewportModel ) {
-        // if(newViewportModel != null)
-        // System.out.println(System.currentTimeMillis() + " - changing viewport model - map " +
-        // newViewportModel.getMap().getName()); //$NON-NLS-1$
-        if (newViewportModel != this.viewportModel) {
-            if (viewportModel != null) {
-                viewportModel.removeViewportModelListener(listener);
-            }
-            viewportModel = newViewportModel;
-            viewportModel.addViewportModelListener(listener);
-            updateScale();
+        if (editor.getMap() != null) {
+            setViewportModel(editor.getMap().getViewportModel());
         }
     }
 
-    /**
-     * @see org.eclipse.jface.action.IContributionItem#isDynamic()
-     */
+    @Override
     public boolean isDynamic() {
         return true;
     }
 
-    /**
-     * @see org.eclipse.jface.action.ContributionItem#dispose()
-     */
+    @Override
     public void dispose() {
-        if (combo != null)
-            combo.dispose();
         if (viewportModel != null) {
             viewportModel.removeViewportModelListener(listener);
             viewportModel = null;
         }
     }
 
-    /**
-     * @see org.eclipse.jface.action.ContributionItem#fill(org.eclipse.swt.widgets.Composite)
-     */
     @Override
-    public void fill( Composite c ) {
-        Label separator = new Label(c, SWT.SEPARATOR);
-        StatusLineLayoutData data = new StatusLineLayoutData();
-        separator.setLayoutData(data);
-        data.widthHint = 1;
-        data.heightHint = STATUS_LINE_HEIGHT;
-        
-        combo = new Combo(c, SWT.BORDER|SWT.CENTER);
-        
-        combo.addKeyListener(this);
-        combo.addFocusListener(this);
-        combo.addListener(SWT.MouseDown, new Listener(){
-           public void handleEvent(Event e){
-               if( combo.getText().contains(":") ) //$NON-NLS-1$
-                   formatForEditing();
-           }
-        });
-        combo.addSelectionListener( new SelectionListener(){            
-            public void widgetSelected( SelectionEvent e ) {
-                if( combo.getText().contains(":") ) //$NON-NLS-1$
-                    formatForEditing();
-                go();
-            }
-            public void widgetDefaultSelected( SelectionEvent e ) {
-            }
-        });
-        data = new StatusLineLayoutData();
-        combo.setLayoutData(data);
-        updateScale();
-        data.widthHint = 80;
-        data.heightHint = STATUS_LINE_HEIGHT;
-        this.mapPart.setFont(combo);
-        
-    }
-
     public void keyPressed(KeyEvent e) {
-        if( combo.getText().contains(":") ) //$NON-NLS-1$
+        if (combo.getText().contains(":")) //$NON-NLS-1$
             formatForEditing();
-        if( !isLegalKey(e) ){
-            e.doit=false;
+        if (!isLegalKey(e)) {
+            e.doit = false;
         }
-    }
-    
-    public boolean isLegalKey(KeyEvent e){
-        char c=e.character;
-        
-        if( c == '0' ||
-                c == '1' ||
-                c == '2' ||
-                c == '3' ||
-                c == '4' ||
-                c == '5' ||
-                c == '6' ||
-                c == '7' ||
-                c == '8' ||
-                c == '9' ||
-                c == SWT.DEL ||
-                c == SWT.BS ){
-            return true;
-        }
-        
-        if( e.keyCode == SWT.ARROW_LEFT ||
-                e.keyCode == SWT.ARROW_RIGHT ||
-                e.keyCode == SWT.HOME ||
-                e.keyCode == SWT.END ||
-                e.keyCode == SWT.OK)
-            return true;
-        
-        return false;
-            
     }
 
+    @Override
     public void keyReleased(KeyEvent e) {
         if (e.character == SWT.Selection) {
             go();
         } else if (e.character == SWT.ESC) {
-            updateScale();
+            update();
         }
-        
+
     }
 
-    private void go() {
-        String newScale=combo.getText().trim();
-        try{
-        	double d = nf.parse(newScale.replace(" ","")).doubleValue();
-            SetScaleCommand command=new SetScaleCommand(d);
-            this.mapPart.getMap().sendCommandASync(command);
-        }catch(Exception e){
-            org.eclipse.swt.graphics.Rectangle start=ZoomingDialog.calculateBounds(combo);
-            
-            ZoomingDialog.openErrorMessage(start, this.mapPart
-					.getMapEditorSite().getShell(),
-					Messages.MapEditor_illegalScaleTitle,
-					Messages.MapEditor_illegalScaleMessage);
-        }
-    }
-
+    @Override
     public void focusGained(FocusEvent e) {
         formatForEditing();
     }
 
-    private void formatForEditing(){
-        String text=combo.getText();
-        if( text.contains(":")) //$NON-NLS-1$
-            text=text.substring(2);
-        StringBuilder builder=new StringBuilder();
-        for( int i=0; i<text.length(); i++ ){
-            char c=text.charAt(i);
-            if( c!=',' )
-                builder.append(c);
-        }
-        combo.setText(builder.toString());
-        int end = combo.getText().length();
-        combo.setSelection( new Point(0, end));
-    }
-    
+    @Override
     public void focusLost(FocusEvent e) {
-        updateScale();
+        update();
     }
-    
-    String toLabel( double scaleDenominator ){
-        return "1:" + nf.format( scaleDenominator );
-    }
-    
-    private void updateScale() {
+
+    @Override
+    public void update() {
         if (combo == null || combo.isDisposed())
             return;
 
         if (viewportModel != null) {
             combo.removeAll();
-            for( double scaleDenominator : viewportModel.getPreferredScaleDenominators() ){
-                String item = toLabel( scaleDenominator );
-                combo.add( item );
+            for (double scaleDenominator : viewportModel.getPreferredScaleDenominators()) {
+                String item = toLabel(scaleDenominator);
+                combo.add(item);
             }
-            combo.setText( toLabel(viewportModel.getScaleDenominator())); //$NON-NLS-1$
+            combo.setText(toLabel(viewportModel.getScaleDenominator())); // $NON-NLS-1$
             combo.setToolTipText(combo.getText());
         } else {
             combo.setText(""); //$NON-NLS-1$
         }
     }
 
+    @Override
+    public void fill(Composite parent) {
+        new Label(parent, SWT.SEPARATOR);
+        combo = new Combo(parent, SWT.BORDER | SWT.CENTER);
+
+        combo.addKeyListener(this);
+        combo.addFocusListener(this);
+        combo.addListener(SWT.MouseDown, e -> {
+            if (combo.getText().contains(":")) //$NON-NLS-1$
+                formatForEditing();
+        });
+        combo.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                if (combo.getText().contains(":")) //$NON-NLS-1$
+                    formatForEditing();
+                go();
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+                // do nothing here
+            }
+        });
+        StatusLineLayoutData data = new StatusLineLayoutData();
+        data.widthHint = MINIMUM_WIDTH;
+        combo.setLayoutData(data);
+        update();
+    }
+
+    /**
+     * Sets the current viewport model. Should be called every time the map changes in order update
+     * the shared ratio label
+     */
+    private void setViewportModel(IViewportModel newViewportModel) {
+        if (newViewportModel != this.viewportModel) {
+            if (viewportModel != null) {
+                viewportModel.removeViewportModelListener(listener);
+            }
+            viewportModel = newViewportModel;
+            viewportModel.addViewportModelListener(listener);
+            update();
+        }
+    }
+
+    private String toLabel(double scaleDenominator) {
+        return "1:" + nf.format(scaleDenominator);
+    }
+
+    private boolean isLegalKey(KeyEvent e) {
+        char c = e.character;
+
+        if (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6'
+                || c == '7' || c == '8' || c == '9' || c == SWT.DEL || c == SWT.BS) {
+            return true;
+        }
+
+        switch (e.keyCode) {
+        case SWT.ARROW_LEFT:
+        case SWT.ARROW_RIGHT:
+        case SWT.HOME:
+        case SWT.END:
+        case SWT.OK:
+            return true;
+        default:
+            return false;
+        }
+    }
+
+    private void go() {
+        String newScale = combo.getText().trim();
+        try {
+            double d = nf.parse(newScale.replace(" ", "")).doubleValue();
+            SetScaleCommand command = new SetScaleCommand(d);
+            this.mapPart.getMap().sendCommandASync(command);
+        } catch (Exception e) {
+            org.eclipse.swt.graphics.Rectangle start = ZoomingDialog.calculateBounds(combo);
+
+            ZoomingDialog.openErrorMessage(start, this.mapPart.getMapEditorSite().getShell(),
+                    Messages.MapEditor_illegalScaleTitle, Messages.MapEditor_illegalScaleMessage);
+        }
+    }
+
+    private void formatForEditing() {
+        String text = combo.getText();
+        if (text.contains(":")) //$NON-NLS-1$
+            text = text.substring(2);
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            if (c != ',') { // isn'tis language specific and would NumberFormat help here?
+                builder.append(c);
+            }
+        }
+        combo.setText(builder.toString());
+        int end = combo.getText().length();
+        combo.setSelection(new Point(0, end));
+    }
 }

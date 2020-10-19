@@ -21,22 +21,22 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.action.StatusLineLayoutData;
 import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IconAndMessageDialog;
@@ -50,18 +50,13 @@ import org.eclipse.jface.window.SameShellProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DropTargetEvent;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
@@ -99,11 +94,9 @@ import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.Project;
 import org.locationtech.udig.project.internal.ProjectPackage;
 import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.commands.ChangeCRSCommand;
 import org.locationtech.udig.project.internal.render.RenderManager;
 import org.locationtech.udig.project.render.IViewportModelListener;
 import org.locationtech.udig.project.render.ViewportModelEvent;
-import org.locationtech.udig.project.render.ViewportModelEvent.EventType;
 import org.locationtech.udig.project.ui.AnimationUpdater;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.IAnimation;
@@ -116,7 +109,6 @@ import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
 import org.locationtech.udig.project.ui.tool.IToolManager;
 import org.locationtech.udig.project.ui.viewers.MapEditDomain;
 import org.locationtech.udig.project.ui.viewers.MapViewer;
-import org.locationtech.udig.ui.CRSChooserDialog;
 import org.locationtech.udig.ui.IBlockingSelection;
 import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.PreShutdownTask;
@@ -125,21 +117,38 @@ import org.locationtech.udig.ui.UDIGDragDropUtilities;
 import org.locationtech.udig.ui.UDIGDragDropUtilities.DragSourceDescriptor;
 import org.locationtech.udig.ui.UDIGDragDropUtilities.DropTargetDescriptor;
 import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * This class is the Eclipse editor Part in which a ViewportPane is embedded. The ViewportPane
  * displays and edits Maps. MapViewport is used to intialize ViewportPane and the RenderManager.
- * 
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
-public class MapEditor extends EditorPart implements IDropTargetProvider, IAdaptable, MapEditorPart {
+public class MapEditor extends EditorPart
+        implements IDropTargetProvider, IAdaptable, MapEditorPart {
     /** The id of the MapViewport View */
     public static final String ID = "org.locationtech.udig.project.ui.mapEditorOld"; //$NON-NLS-1$
+
+    private static final int STATUS_LINE_HEIGHT;
+    static {
+        if (Platform.getWS().equals(Platform.WS_WIN32)) {
+            STATUS_LINE_HEIGHT = 24;
+        } else {
+            STATUS_LINE_HEIGHT = 32;
+        }
+    }
+
     final MapEditor editor = this;
+
     final StatusLineManager statusLineManager = new StatusLineManager();
+
     private MapEditorSite mapEditorSite;
+
+    private IContributionItem scaleContributionItem;
+
+    private IContributionItem crsContributionItem;
+
     private boolean dirty = false;
 
     // Menu menu;
@@ -174,13 +183,13 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     }
 
     /**
-     * The layer listener will listen for edit events and mark the
-     * map as dirty if the layer is modified.
+     * The layer listener will listen for edit events and mark the map as dirty if the layer is
+     * modified.
      */
-    ILayerListener layerListener = new ILayerListener(){
+    ILayerListener layerListener = new ILayerListener() {
 
         @Override
-        public void refresh( LayerEvent event ) {
+        public void refresh(final LayerEvent event) {
             if (event.getType() == LayerEvent.EventType.EDIT_EVENT) {
                 setDirty(true);
                 event.getSource().getBlackboard().put(LAYER_DIRTY_KEY, "true"); //$NON-NLS-1$
@@ -188,27 +197,28 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         }
 
     };
+
     /**
      * This listener is called when layers are added and removed.
      * <p>
      * This method will add the layerListener to each layer on the map.
      * </p>
      */
-    IMapCompositionListener mapCompositionListener = new IMapCompositionListener(){
+    IMapCompositionListener mapCompositionListener = new IMapCompositionListener() {
 
         @Override
         @SuppressWarnings("unchecked")
-        public void changed( MapCompositionEvent event ) {
-            switch( event.getType() ) {
+        public void changed(final MapCompositionEvent event) {
+            switch (event.getType()) {
             case MANY_ADDED:
-                Collection<ILayer> added = (Collection<ILayer>) event.getNewValue();
-                for( ILayer layer : added ) {
+                final Collection<ILayer> added = (Collection<ILayer>) event.getNewValue();
+                for (final ILayer layer : added) {
                     layer.addListener(layerListener);
                 }
                 break;
             case MANY_REMOVED:
-                Collection<ILayer> removed = (Collection<ILayer>) event.getOldValue();
-                for( ILayer layer : removed ) {
+                final Collection<ILayer> removed = (Collection<ILayer>) event.getOldValue();
+                for (final ILayer layer : removed) {
                     removeListenerFromLayer(event, layer);
                 }
                 break;
@@ -218,7 +228,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
                 break;
             case REMOVED:
 
-                ILayer removedLayer = ((ILayer) event.getOldValue());
+                final ILayer removedLayer = ((ILayer) event.getOldValue());
                 removeListenerFromLayer(event, removedLayer);
                 break;
             default:
@@ -232,37 +242,39 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
             }
         }
 
-        private void removeListenerFromLayer( MapCompositionEvent event, ILayer removedLayer ) {
+        private void removeListenerFromLayer(final MapCompositionEvent event,
+                final ILayer removedLayer) {
             removedLayer.removeListener(layerListener);
             setDirty(isMapDirty());
         }
 
     };
+
     /**
-     * Listens to the Map and will change the editor title if the map name
-     * is changed. Also marks a layer as ditry if the edit manager has
-     * some kind of event.
+     * Listens to the Map and will change the editor title if the map name is changed. Also marks a
+     * layer as ditry if the edit manager has some kind of event.
      */
-    IMapListener mapListener = new IMapListener(){
+    IMapListener mapListener = new IMapListener() {
 
         @Override
-        public void changed( final MapEvent event ) {
-            if (composite == null)
+        public void changed(final MapEvent event) {
+            if (composite == null) {
                 return; // the composite hasn't been created so chill out
+            }
             if (getMap() == null || composite.isDisposed()) {
                 event.getSource().removeMapListener(this);
                 return;
             }
 
-            MapEditor.this.composite.getDisplay().asyncExec(new Runnable(){
+            MapEditor.this.composite.getDisplay().asyncExec(new Runnable() {
                 @Override
                 public void run() {
-                    switch( event.getType() ) {
+                    switch (event.getType()) {
                     case NAME:
                         setPartName((String) event.getNewValue()); // rename the map
                         break;
                     case EDIT_MANAGER:
-                        for( ILayer layer : event.getSource().getMapLayers() ) {
+                        for (final ILayer layer : event.getSource().getMapLayers()) {
                             if (layer.hasResource(ITransientResolve.class)) {
                                 setDirty(true);
                                 break;
@@ -279,14 +291,14 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     };
 
     /**
-     * Listens to the edito manager; will clear the dirty status after a commit or
-     * after a rollback (as long as a map does not have temporary layers).
+     * Listens to the edito manager; will clear the dirty status after a commit or after a rollback
+     * (as long as a map does not have temporary layers).
      */
-    IEditManagerListener editListener = new IEditManagerListener(){
+    IEditManagerListener editListener = new IEditManagerListener() {
 
         @Override
-        public void changed( EditManagerEvent event ) {
-            switch( event.getType() ) {
+        public void changed(final EditManagerEvent event) {
+            switch (event.getType()) {
             case EditManagerEvent.POST_COMMIT:
                 if (!hasTemporaryLayers()) {
                     setDirty(false);
@@ -303,12 +315,14 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         }
 
         private boolean hasTemporaryLayers() {
-            if (getMap() == null)
+            if (getMap() == null) {
                 return false;
-            List<Layer> layers = getMap().getLayersInternal();
-            if (layers == null)
+            }
+            final List<Layer> layers = getMap().getLayersInternal();
+            if (layers == null) {
                 return false;
-            for( Layer layer : layers ) {
+            }
+            for (final Layer layer : layers) {
                 if (layer.hasResource(ITransientResolve.class)) {
                     return true;
                 }
@@ -320,7 +334,8 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     private LayerSelectionListener layerSelectionListener;
 
     private ReplaceableSelectionProvider replaceableSelectionProvider;
-    private PreShutdownTask shutdownTask = new PreShutdownTask(){
+
+    private final PreShutdownTask shutdownTask = new PreShutdownTask() {
 
         @Override
         public int getProgressMonitorSteps() {
@@ -328,14 +343,14 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         }
 
         @Override
-        public boolean handlePreShutdownException( Throwable t, boolean forced ) {
+        public boolean handlePreShutdownException(final Throwable t, final boolean forced) {
             ProjectUIPlugin.log("error prepping map editors for shutdown", t); //$NON-NLS-1$
             return true;
         }
 
         @Override
-        public boolean preShutdown( IProgressMonitor monitor, IWorkbench workbench, boolean forced )
-                throws Exception {
+        public boolean preShutdown(final IProgressMonitor monitor, final IWorkbench workbench,
+                final boolean forced) throws Exception {
             monitor.beginTask("Saving Map Editor", 3); //$NON-NLS-1$
             save(new SubProgressMonitor(monitor, 1));
             if (dirty) {
@@ -350,19 +365,19 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
 
             // save the map's URI in the preferences so that it will be loaded the next time udig is
             // run.
-            Resource resource = getMap().eResource();
+            final Resource resource = getMap().eResource();
             if (resource != null) {
                 // save editor
                 try {
-                    IPreferenceStore p = ProjectUIPlugin.getDefault().getPreferenceStore();
+                    final IPreferenceStore p = ProjectUIPlugin.getDefault().getPreferenceStore();
                     int numEditors = p.getInt(ID);
-                    String id = ID + ":" + numEditors; //$NON-NLS-1$
+                    final String id = ID + ":" + numEditors; //$NON-NLS-1$
                     numEditors++;
                     p.setValue(ID, numEditors);
-                    String value = resource.getURI().toString();
+                    final String value = resource.getURI().toString();
                     p.setDefault(id, ""); //$NON-NLS-1$
                     p.setValue(id, value);
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     ProjectUIPlugin.log("Failure saving which maps are open", e); //$NON-NLS-1$
                 }
             }
@@ -373,18 +388,18 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
             return true;
         }
 
-        private void save( final IProgressMonitor monitor ) {
+        private void save(final IProgressMonitor monitor) {
             if (dirty) {
-                PlatformGIS.syncInDisplayThread(new Runnable(){
+                PlatformGIS.syncInDisplayThread(new Runnable() {
                     @Override
                     public void run() {
-                        IconAndMessageDialog d = new SaveDialog(Display.getCurrent()
-                                .getActiveShell(), getMap());
-                        int result = d.open();
+                        final IconAndMessageDialog d = new SaveDialog(
+                                Display.getCurrent().getActiveShell(), getMap());
+                        final int result = d.open();
 
-                        if (result == IDialogConstants.YES_ID)
+                        if (result == IDialogConstants.YES_ID) {
                             doSave(monitor);
-                        else if (result != Window.CANCEL) {
+                        } else if (result != Window.CANCEL) {
                             setDirty(false);
                         }
                     }
@@ -395,7 +410,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     };
 
     @Override
-    public Object getAdapter( Class adaptee ) {
+    public Object getAdapter(final Class adaptee) {
         if (adaptee.isAssignableFrom(Map.class)) {
             return getMap();
         }
@@ -406,259 +421,15 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     }
 
     private void clearLayerDirtyFlag() {
-        List<ILayer> layers = getMap().getMapLayers();
-        for( ILayer layer : layers ) {
+        final List<ILayer> layers = getMap().getMapLayers();
+        for (final ILayer layer : layers) {
             layer.getBlackboard().put(LAYER_DIRTY_KEY, null);
         }
     }
 
     @Override
-    public void setFont( Control control ) {
+    public void setFont(final Control control) {
         viewer.setFont(control);
-    }
-
-    /**
-     * Displays a the current CRS and allows to change it
-     */
-    class StatusBarButton extends ContributionItem {
-        static final String CRS_ITEM_ID = "CRS Display"; //$NON-NLS-1$
-
-        static final String BOUNDS_ITEM_ID = "Bounds Display"; //$NON-NLS-1$
-        static final int MAX_LENGTH = 12;
-        private Button button;
-        private String value;
-
-        private String full;
-
-        /**
-         * Create new StatusBarLabel object
-         */
-        public StatusBarButton( String id, String initialValue ) {
-            super(id);
-            setText(initialValue);
-        }
-
-        /**
-         * sets the current text.
-         */
-        public void setText( String text ) {
-            value = text;
-            full = value;
-            if (value.length() > MAX_LENGTH) {
-                int start2 = value.length() - 6;
-                value = value.substring(0, 6) + "..." + value.substring(start2, value.length()); //$NON-NLS-1$
-            }
-            if (button != null && !button.isDisposed()) {
-                button.setText(value);
-            }
-        }
-
-        @Override
-        public boolean isDynamic() {
-            return true;
-        }
-
-        @Override
-        public void dispose() {
-            if (button != null)
-                button.dispose();
-            if (popup != null)
-                popup.dispose();
-        }
-
-        @Override
-        public void fill( Composite c ) {
-            Label separator = new Label(c, SWT.SEPARATOR);
-            StatusLineLayoutData data = new StatusLineLayoutData();
-            separator.setLayoutData(data);
-            data.widthHint = 1;
-            data.heightHint = ScaleRatioLabel.STATUS_LINE_HEIGHT;
-            button = new Button(c, SWT.PUSH | SWT.FLAT);
-            setFont(button);
-            data = new StatusLineLayoutData();
-            button.setLayoutData(data);
-            button.setText(value);
-            button.addListener(SWT.Selection, new Listener(){
-
-                @Override
-                public void handleEvent( Event event ) {
-                    promptForCRS();
-                }
-
-            });
-            button.addListener(SWT.MouseEnter, new Listener(){
-                @Override
-                public void handleEvent( final Event event ) {
-                    showFullText();
-                }
-            });
-            data.widthHint = 132;
-            data.heightHint = ScaleRatioLabel.STATUS_LINE_HEIGHT;
-        }
-        Label textLabel;
-        Shell popup;
-
-        private void promptForCRS() {
-            CoordinateReferenceSystem crs = getMap().getViewportModel().getCRS();            
-            CRSChooserDialog dialog = new CRSChooserDialog( getSite().getShell(), crs );
-            int code = dialog.open();
-            if( Window.OK == code ){
-                CoordinateReferenceSystem result = dialog.getResult();
-                if( !result.equals(crs)){
-                    getMap().sendCommandSync(new ChangeCRSCommand(result));
-                    updateCRS();
-                }
-            }
-        }
-
-        void showFullText() {
-            final Display display = button.getDisplay();
-            if (popup == null) {
-                popup = new Shell(display.getActiveShell(), SWT.NO_FOCUS | SWT.ON_TOP);
-                popup.setForeground(display.getSystemColor(SWT.COLOR_INFO_FOREGROUND));
-                popup.setBackground(display.getSystemColor(SWT.COLOR_INFO_BACKGROUND));
-                popup.setLayout(new RowLayout());
-                Composite composite = new Composite(popup, SWT.NONE);
-                composite.setForeground(display.getSystemColor(SWT.COLOR_INFO_FOREGROUND));
-                composite.setBackground(display.getSystemColor(SWT.COLOR_INFO_BACKGROUND));
-                composite.setLayout(new RowLayout());
-                textLabel = new Label(popup, SWT.NONE);
-                textLabel.setForeground(display.getSystemColor(SWT.COLOR_INFO_FOREGROUND));
-                textLabel.setBackground(display.getSystemColor(SWT.COLOR_INFO_BACKGROUND));
-                textLabel.setFont(button.getFont());
-
-            }
-            Point location = statusLineManager.getControl().toDisplay(button.getLocation());
-            location.y = location.y - ScaleRatioLabel.STATUS_LINE_HEIGHT;
-            if (popup.isDisposed()) {
-                return;
-            }
-            popup.setLocation(location);
-            textLabel.setText(full);
-            popup.setVisible(true);
-            popup.pack(true);
-            display.timerExec(500, new Runnable(){
-                @Override
-                public void run() {
-                    checkforMouseOver(display);
-                }
-            });
-        }
-
-        private void checkforMouseOver( final Display display ) {
-            if (display.getCursorControl() == button) {
-                display.timerExec(500, new Runnable(){
-                    @Override
-                    public void run() {
-                        if (display.getCursorControl() == button) {
-                            checkforMouseOver(display);
-                        } else {
-                            popup.setVisible(false);
-                        }
-                    }
-                });
-            } else {
-                popup.setVisible(false);
-            }
-
-        }
-
-        /**
-         * Get current text.
-         */
-        public String getText() {
-            return full;
-        }
-    }
-
-    /**
-     * Updates the crs label in the statusbar.
-     */
-    protected void updateCRS() {
-        Map map = getMap();
-        if (map == null) {
-            getSite().getPage().closeEditor(this, false);
-            return;
-        }
-        CoordinateReferenceSystem crs = map.getViewportModel().getCRS();
-        if (crs == null || crs.getName() == null) {
-            return;
-        }
-
-        final String full = crs.getName().getCode();
-        if (full == null || isSame(full))
-            return;
-
-        Display display = PlatformUI.getWorkbench().getDisplay();
-        if (display == null)
-            display = Display.getDefault();
-
-        display.asyncExec(new Runnable(){
-            @Override
-            public void run() {
-
-                IContributionManager bar = mapEditorSite.getActionBars().getStatusLineManager();
-                if (bar == null)
-                    return;
-                StatusBarButton label = (StatusBarButton) bar.find(StatusBarButton.CRS_ITEM_ID);
-                if (label == null) {
-                    label = new StatusBarButton(StatusBarButton.CRS_ITEM_ID, full);
-                    bar.appendToGroup(StatusLineManager.MIDDLE_GROUP, label);
-                    label.setVisible(true);
-                    bar.update(true);
-                    return;
-                }
-                label.setText(full);
-            }
-        });
-
-    }
-
-    /**
-     * Makes sure the scale is displayed
-     */
-    protected void updateScaleLabel() {
-        if (composite.isDisposed())
-            return;
-        if (Display.getCurrent() != null) {
-            doUpdateScaleLabel();
-            return;
-        }
-        Display display = PlatformUI.getWorkbench().getDisplay();
-        if (display == null)
-            display = Display.getDefault();
-        display.asyncExec(new Runnable(){
-            @Override
-            public void run() {
-                doUpdateScaleLabel();
-            }
-
-        });
-
-    }
-    void doUpdateScaleLabel() {
-        IContributionManager bar = mapEditorSite.getActionBars().getStatusLineManager();
-        if (bar == null)
-            return;
-        ScaleRatioLabel label = (ScaleRatioLabel) bar.find(ScaleRatioLabel.SCALE_ITEM_ID);
-        if (label == null) {
-            label = new ScaleRatioLabel(this);
-            bar.appendToGroup(StatusLineManager.MIDDLE_GROUP, label);
-            label.setVisible(true);
-            bar.update(true);
-        }
-        label.setViewportModel(getMap().getViewportModel());
-    }
-
-    private boolean isSame( String crs ) {
-        IContributionManager bar = getActionbar().getStatusLineManager();
-
-        if (bar != null) {
-            StatusBarButton label = (StatusBarButton) bar.find(StatusBarButton.CRS_ITEM_ID);
-            if (label != null && crs.equals(label.getText()))
-                return true;
-        }
-        return false;
     }
 
     /**
@@ -667,8 +438,9 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     @Override
     public void dispose() {
 
-        if (isTesting)
+        if (isTesting) {
             return;
+        }
         if (getSite() == null || getSite().getPage() == null) {
             // Exception occurred before instantiating editor
             return;
@@ -677,7 +449,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         runMapClosingInterceptors();
 
         deregisterFeatureFlasher();
-        IWorkbenchPage page = getSite().getPage();
+        final IWorkbenchPage page = getSite().getPage();
         page.removePostSelectionListener(layerSelectionListener);
         page.removePartListener(partlistener);
 
@@ -687,8 +459,9 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         selectFeatureListener = null;
         partlistener = null;
 
-        if (statusLineManager != null)
+        if (statusLineManager != null) {
             statusLineManager.dispose();
+        }
 
         final ScopedPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
         if (!PlatformUI.getWorkbench().isClosing()) {
@@ -696,15 +469,15 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
             try {
                 // kill rending now - even if it is moving
                 getRenderManager().dispose();
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 ProjectUIPlugin.log("Shutting down rendering - " + t, null);
             }
             getMap().getEditManagerInternal().setEditFeature(null, null);
             try {
-                PlatformGIS.run(new ISafeRunnable(){
+                PlatformGIS.run(new ISafeRunnable() {
 
                     @Override
-                    public void handleException( Throwable exception ) {
+                    public void handleException(final Throwable exception) {
                         ProjectUIPlugin.log("error saving map: " + getMap().getName(), exception); //$NON-NLS-1$
                     }
 
@@ -712,7 +485,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
                     public void run() throws Exception {
 
                         removeTemporaryLayers(store);
-                        Project p = getMap().getProjectInternal();
+                        final Project p = getMap().getProjectInternal();
                         if (p != null) {
                             if (p.eResource() != null && p.eResource().isModified()) {
                                 p.eResource().save(ProjectPlugin.getPlugin().saveOptions);
@@ -727,15 +500,16 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
 
                         } else {
                             final Resource resource = getMap().eResource();
-                            if (resource != null)
+                            if (resource != null) {
                                 resource.save(ProjectPlugin.getPlugin().saveOptions);
+                            }
                         }
                         viewer.dispose();
                         // setMap(null);
                     }
 
                 });
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 ProjectPlugin.log("Exception while saving Map", e); //$NON-NLS-1$
             }
         }
@@ -745,43 +519,45 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     }
 
     private void runMapClosingInterceptors() {
-        List<IConfigurationElement> interceptors = ExtensionPointList
+        final List<IConfigurationElement> interceptors = ExtensionPointList
                 .getExtensionPointList(MapInterceptor.MAP_INTERCEPTOR_EXTENSIONPOINT);
-        for( IConfigurationElement element : interceptors ) {
-            if (!MapInterceptor.CLOSING_ID.equals(element.getName())) //$NON-NLS-1$
+        for (final IConfigurationElement element : interceptors) {
+            if (!MapInterceptor.CLOSING_ID.equals(element.getName())) {
                 continue;
+            }
             try {
-                MapInterceptor interceptor = (MapInterceptor) element
+                final MapInterceptor interceptor = (MapInterceptor) element
                         .createExecutableExtension("class"); //$NON-NLS-1$
                 interceptor.run(getMap());
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 ProjectPlugin.log("", e); //$NON-NLS-1$
             }
         }
     }
 
-    private void removeTemporaryLayers( IPreferenceStore store ) {
-        if (store
-                .getBoolean(org.locationtech.udig.project.preferences.PreferenceConstants.P_REMOVE_LAYERS)) {
-            List<Layer> layers = getMap().getLayersInternal();
-            List<Layer> layersToRemove = new ArrayList<Layer>();
-            for( Layer layer : layers ) {
+    private void removeTemporaryLayers(final IPreferenceStore store) {
+        if (store.getBoolean(
+                org.locationtech.udig.project.preferences.PreferenceConstants.P_REMOVE_LAYERS)) {
+            final List<Layer> layers = getMap().getLayersInternal();
+            final List<Layer> layersToRemove = new ArrayList<>();
+            for (final Layer layer : layers) {
                 if (layer.getGeoResources().get(0).canResolve(ITransientResolve.class)) {
                     layersToRemove.add(layer);
                 }
             }
 
             if (!layers.isEmpty()) {
-                if (getMap().eResource() != null)
+                if (getMap().eResource() != null) {
                     getMap().eResource().setModified(true);
+                }
                 layers.removeAll(layersToRemove);
             }
         }
     }
 
     @Override
-    public void doSave( IProgressMonitor monitor ) {
-        final boolean[] success = new boolean[]{false};
+    public void doSave(final IProgressMonitor monitor) {
+        final boolean[] success = new boolean[] { false };
 
         PlatformGIS.syncInDisplayThread(new SaveMapRunnable(this, success));
 
@@ -799,7 +575,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     }
 
     @Override
-    public void init( IEditorSite site, IEditorInput input ) {
+    public void init(final IEditorSite site, final IEditorInput input) {
         setSite(site);
         setInput(input);
         // initialize ToolManager
@@ -807,9 +583,9 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     }
 
     @Override
-    protected void setInput( IEditorInput input ) {
+    protected void setInput(final IEditorInput input) {
         if (getEditorInput() != null) {
-            Map map = (Map) ((UDIGEditorInput) getEditorInput()).getProjectElement();
+            final Map map = (Map) ((UDIGEditorInput) getEditorInput()).getProjectElement();
             if (viewer != null) {
                 viewer.setMap(null);
             }
@@ -836,11 +612,11 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
 
     private boolean isMapDirty() {
         boolean mapIsDirty = false;
-        for( ILayer layer : getMap().getMapLayers() ) {
+        for (final ILayer layer : getMap().getMapLayers()) {
             if (layer.hasResource(ITransientResolve.class)) {
                 mapIsDirty = true;
             }
-            boolean layerIsDirty = layer.getBlackboard().get(LAYER_DIRTY_KEY) != null;
+            final boolean layerIsDirty = layer.getBlackboard().get(LAYER_DIRTY_KEY) != null;
             if (layerIsDirty) {
                 mapIsDirty = true;
             }
@@ -854,9 +630,10 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     }
 
     @Override
-    public void setDirty( boolean dirty ) {
-        if (dirty == this.dirty)
+    public void setDirty(final boolean dirty) {
+        if (dirty == this.dirty) {
             return;
+        }
 
         this.dirty = dirty;
 
@@ -864,7 +641,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
             clearLayerDirtyFlag();
         }
 
-        Display.getDefault().asyncExec(new Runnable(){
+        Display.getDefault().asyncExec(new Runnable() {
             /**
              * @see java.lang.Runnable#run()
              */
@@ -885,7 +662,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
      * @see org.eclipse.ui.IWorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
      */
     @Override
-    public void createPartControl( final Composite parent ) {
+    public void createPartControl(final Composite parent) {
 
         ShutdownTaskList.instance().addPreShutdownTask(shutdownTask);
 
@@ -902,14 +679,14 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         // allow the viewer to open our context menu; work with our selection provider etc
         viewer.init(this);
         // if a map was provided as input we can ask the viewer to use it
-        Map input = (Map) ((UDIGEditorInput) getEditorInput()).getProjectElement();
+        final Map input = (Map) ((UDIGEditorInput) getEditorInput()).getProjectElement();
         if (input != null) {
             viewer.setMap(input);
         }
 
         FormData formdata = new FormData();
         formdata.top = new FormAttachment(0);
-        formdata.bottom = new FormAttachment(100, -ScaleRatioLabel.STATUS_LINE_HEIGHT);
+        formdata.bottom = new FormAttachment(100, -STATUS_LINE_HEIGHT);
         formdata.left = new FormAttachment(0);
         formdata.right = new FormAttachment(100);
         viewer.getViewport().getControl().setLayoutData(formdata);
@@ -927,7 +704,6 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
 
         getSite().getPage().addPartListener(partlistener);
         registerFeatureFlasher();
-
         viewer.getViewport().addPaneListener(getMap().getViewportModelInternal());
 
         layerSelectionListener = new LayerSelectionListener(
@@ -935,7 +711,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
 
         getSite().getPage().addPostSelectionListener(layerSelectionListener);
 
-        for( Layer layer : getMap().getLayersInternal() ) {
+        for (final Layer layer : getMap().getLayersInternal()) {
             layer.addListener(layerListener);
         }
 
@@ -944,46 +720,55 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         getSite().setSelectionProvider(replaceableSelectionProvider);
         runMapOpeningInterceptor(getMap());
         mapEditorSite = new MapEditorSite(super.getSite(), this);
-        updateCRS();
-        updateScaleLabel();
 
-        getMap().getViewportModel().addViewportModelListener(new IViewportModelListener(){
+        final IContributionManager statusBar = mapEditorSite.getActionBars().getStatusLineManager();
+
+        scaleContributionItem = new ScaleRatioLabel(this);
+        scaleContributionItem.setVisible(true);
+        statusBar.appendToGroup(StatusLineManager.MIDDLE_GROUP, crsContributionItem);
+
+        crsContributionItem = new CRSContributionItem(this);
+        crsContributionItem.setVisible(true);
+        statusBar.appendToGroup(StatusLineManager.MIDDLE_GROUP, crsContributionItem);
+        scaleContributionItem.update();
+        crsContributionItem.update();
+
+        getMap().getViewportModel().addViewportModelListener(new IViewportModelListener() {
 
             @Override
-            public void changed( ViewportModelEvent event ) {
+            public void changed(final ViewportModelEvent event) {
                 if (getMap() == null) {
                     event.getSource().removeViewportModelListener(this);
-                    return;
-                }
-                if (event.getType() == EventType.CRS) {
-                    updateCRS();
                 }
             }
-
         });
 
         setDirty(isMapDirty());
     }
 
-    private void runMapOpeningInterceptor( Map map ) {
-        List<IConfigurationElement> interceptors = ExtensionPointList
+    private void runMapOpeningInterceptor(final Map map) {
+        final List<IConfigurationElement> interceptors = ExtensionPointList
                 .getExtensionPointList(MapInterceptor.MAP_INTERCEPTOR_EXTENSIONPOINT);
-        for( IConfigurationElement element : interceptors ) {
-            if (!MapInterceptor.OPENING_ID.equals(element.getName())) //$NON-NLS-1$
+        for (final IConfigurationElement element : interceptors) {
+            if (!MapInterceptor.OPENING_ID.equals(element.getName())) {
                 continue;
+            }
             try {
-                MapInterceptor interceptor = (MapInterceptor) element
+                final MapInterceptor interceptor = (MapInterceptor) element
                         .createExecutableExtension("class"); //$NON-NLS-1$
                 interceptor.run(map);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 ProjectPlugin.log("", e); //$NON-NLS-1$
             }
         }
     }
 
     private FlashFeatureListener selectFeatureListener = new FlashFeatureListener();
+
     private boolean flashFeatureRegistered = false;
+
     private Action propertiesAction;
+
     /**
      * registers a listener with the current page that flashes a feature each time the current
      * selected feature changes.
@@ -991,7 +776,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     protected synchronized void registerFeatureFlasher() {
         if (!flashFeatureRegistered) {
             flashFeatureRegistered = true;
-            IWorkbenchPage page = getSite().getPage();
+            final IWorkbenchPage page = getSite().getPage();
             page.addPostSelectionListener(selectFeatureListener);
         }
     }
@@ -1007,14 +792,14 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         if (menu == null) {
             final MenuManager contextMenu = new MenuManager();
             contextMenu.setRemoveAllWhenShown(true);
-            contextMenu.addMenuListener(new IMenuListener(){
+            contextMenu.addMenuListener(new IMenuListener() {
                 @Override
-                public void menuAboutToShow( IMenuManager mgr ) {
-                    IToolManager tm = ApplicationGIS.getToolManager();
-                    
+                public void menuAboutToShow(final IMenuManager mgr) {
+                    final IToolManager tm = ApplicationGIS.getToolManager();
+
                     contextMenu.add(tm.getENTERAction());
                     contextMenu.add(new Separator());
-                    
+
                     contextMenu.add(tm.getZOOMTOSELECTEDAction());
                     contextMenu.add(new Separator());
                     contextMenu.add(tm.getBACKWARD_HISTORYAction());
@@ -1061,10 +846,11 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         if (propertiesAction == null) {
             final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
             final PropertyDialogAction tmp = new PropertyDialogAction(new SameShellProvider(shell),
-                    new ISelectionProvider(){
+                    new ISelectionProvider() {
 
                         @Override
-                        public void addSelectionChangedListener( ISelectionChangedListener listener ) {
+                        public void addSelectionChangedListener(
+                                final ISelectionChangedListener listener) {
                         }
 
                         @Override
@@ -1074,18 +860,18 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
 
                         @Override
                         public void removeSelectionChangedListener(
-                                ISelectionChangedListener listener ) {
+                                final ISelectionChangedListener listener) {
                         }
 
                         @Override
-                        public void setSelection( ISelection selection ) {
+                        public void setSelection(final ISelection selection) {
                         }
 
                     });
 
-            propertiesAction = new Action(){
+            propertiesAction = new Action() {
                 @Override
-                public void runWithEvent( Event event ) {
+                public void runWithEvent(final Event event) {
                     tmp.createDialog().open();
                 }
             };
@@ -1109,19 +895,23 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     @Override
     public void setFocus() {
         composite.setFocus();
-        updateCRS();
-        updateScaleLabel();
+        if (crsContributionItem != null) {
+            crsContributionItem.update();
+        }
+        if (scaleContributionItem != null) {
+            scaleContributionItem.update();
+        }
     }
 
     /**
      * Returns the map that this editor edits
-     * 
+     *
      * @return Returns the map that this editor edits
      */
     @Override
     public Map getMap() {
         // return viewer.getMap();
-        UDIGEditorInput editorInput = (UDIGEditorInput) getEditorInput();
+        final UDIGEditorInput editorInput = (UDIGEditorInput) getEditorInput();
         if (editorInput != null) {
             return (Map) editorInput.getProjectElement();
         } else {
@@ -1131,16 +921,16 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
 
     /**
      * Returns the ActionbarContributor for the Editor.
-     * 
+     *
      * @return the ActionbarContributor for the Editor.
      */
     public SubActionBars2 getActionbar() {
         return (SubActionBars2) getEditorSite().getActionBars();
     }
 
-    IPartListener2 partlistener = new IPartListener2(){
+    IPartListener2 partlistener = new IPartListener2() {
         @Override
-        public void partActivated( IWorkbenchPartReference partRef ) {
+        public void partActivated(final IWorkbenchPartReference partRef) {
             if (partRef.getPart(false) == MapEditor.this) {
                 registerFeatureFlasher();
                 ApplicationGIS.getToolManager().setCurrentEditor(editor);
@@ -1148,11 +938,11 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         }
 
         @Override
-        public void partBroughtToTop( IWorkbenchPartReference partRef ) {
+        public void partBroughtToTop(final IWorkbenchPartReference partRef) {
         }
 
         @Override
-        public void partClosed( IWorkbenchPartReference partRef ) {
+        public void partClosed(final IWorkbenchPartReference partRef) {
             if (partRef.getPart(false) == MapEditor.this) {
                 deregisterFeatureFlasher();
                 visible = false;
@@ -1160,17 +950,17 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         }
 
         @Override
-        public void partDeactivated( IWorkbenchPartReference partRef ) {
+        public void partDeactivated(final IWorkbenchPartReference partRef) {
             // do nothing
         }
 
         @Override
-        public void partOpened( IWorkbenchPartReference partRef ) {
+        public void partOpened(final IWorkbenchPartReference partRef) {
             // do nothing
         }
 
         @Override
-        public void partHidden( IWorkbenchPartReference partRef ) {
+        public void partHidden(final IWorkbenchPartReference partRef) {
             if (partRef.getPart(false) == MapEditor.this) {
                 deregisterFeatureFlasher();
                 visible = false;
@@ -1178,7 +968,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         }
 
         @Override
-        public void partVisible( IWorkbenchPartReference partRef ) {
+        public void partVisible(final IWorkbenchPartReference partRef) {
             if (partRef.getPart(false) == MapEditor.this) {
                 registerFeatureFlasher();
                 visible = true;
@@ -1186,14 +976,16 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         }
 
         @Override
-        public void partInputChanged( IWorkbenchPartReference partRef ) {
+        public void partInputChanged(final IWorkbenchPartReference partRef) {
         }
 
     };
 
     private boolean draggingEnabled;
+
     private volatile boolean visible = false;
-	private MapEditDomain editDomain;
+
+    private MapEditDomain editDomain;
 
     /**
      * Opens the map's context menu.
@@ -1201,12 +993,10 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     @Override
     public void openContextMenu() {
         viewer.openContextMenu();
-        /*getEditorSite().getShell().getDisplay().asyncExec(new Runnable(){
-            public void run() {
-                menu.setVisible(true);
-            }
-        });
-        */
+        /*
+         * getEditorSite().getShell().getDisplay().asyncExec(new Runnable(){ public void run() {
+         * menu.setVisible(true); } });
+         */
     }
 
     @Override
@@ -1215,7 +1005,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     }
 
     @Override
-    public Object getTarget( DropTargetEvent event ) {
+    public Object getTarget(final DropTargetEvent event) {
         return this;
     }
 
@@ -1223,9 +1013,10 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
      * Enables or disables dragging (drag and drop) from the map editor.
      */
     @Override
-    public void setDragging( boolean enable ) {
-        if (draggingEnabled == enable)
+    public void setDragging(final boolean enable) {
+        if (draggingEnabled == enable) {
             return;
+        }
         if (enable) {
             dragSource = UDIGDragDropUtilities.addDragSupport(viewer.getViewport().getControl(),
                     getSite().getSelectionProvider());
@@ -1246,7 +1037,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     }
 
     @Override
-    public void setSelectionProvider( IMapEditorSelectionProvider selectionProvider ) {
+    public void setSelectionProvider(final IMapEditorSelectionProvider selectionProvider) {
         if (selectionProvider == null) {
             throw new NullPointerException("selection provider must not be null!"); //$NON-NLS-1$
         }
@@ -1267,20 +1058,21 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
         @Override
         public void selectionChanged(IWorkbenchPart part, final ISelection selection) {
             if (part == MapEditor.this || getSite().getPage().getActivePart() != part
-                    || selection instanceof IBlockingSelection)
+                    || selection instanceof IBlockingSelection) {
                 return;
+            }
 
             ISafeRunnable sendAnimation = new ISafeRunnable() {
                 @Override
                 public void run() {
                     if (selection instanceof IStructuredSelection) {
-                        IStructuredSelection s = (IStructuredSelection) selection;
-                        List<SimpleFeature> features = new ArrayList<SimpleFeature>();
+                        final IStructuredSelection s = (IStructuredSelection) selection;
+                        final List<SimpleFeature> features = new ArrayList<>();
                         for (Iterator iter = s.iterator(); iter.hasNext();) {
-                            Object element = iter.next();
+                            final Object element = iter.next();
 
                             if (element instanceof SimpleFeature) {
-                                SimpleFeature feature = (SimpleFeature) element;
+                                final SimpleFeature feature = (SimpleFeature) element;
                                 features.add(feature);
                             }
                         }
@@ -1288,10 +1080,11 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
                             return;
                         }
                         if (!getRenderManager().isDisposed()) {
-                            IAnimation anim = createAnimation(features);
-                            if (anim != null)
+                            final IAnimation anim = createAnimation(features);
+                            if (anim != null) {
                                 AnimationUpdater.runTimer(
                                         getMap().getRenderManager().getMapDisplay(), anim);
+                            }
                         }
                     }
                 }
@@ -1304,26 +1097,28 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
 
             try {
                 sendAnimation.run();
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 ProjectUIPlugin.log("", e); //$NON-NLS-1$
             }
             // PlatformGIS.run(sendAnimation);
         }
 
         private IAnimation createAnimation(List<SimpleFeature> current) {
-            final List<IDrawCommand> commands = new ArrayList<IDrawCommand>();
+            final List<IDrawCommand> commands = new ArrayList<>();
             for (SimpleFeature feature : current) {
-                if (feature == null || feature.getFeatureType().getGeometryDescriptor() == null)
+                if (feature == null || feature.getFeatureType().getGeometryDescriptor() == null) {
                     continue;
+                }
                 DrawFeatureCommand command = null;
                 if (feature instanceof IAdaptable) {
                     Layer layer = ((IAdaptable) feature).getAdapter(Layer.class);
-                    if (layer != null)
+                    if (layer != null) {
                         try {
                             command = new DrawFeatureCommand(feature, layer);
-                        } catch (IOException e) {
+                        } catch (final IOException e) {
                             // do nothing... thats life
                         }
+                    }
                 }
                 if (command == null) {
                     command = new DrawFeatureCommand(feature);
@@ -1332,7 +1127,7 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
                 command.preRender();
                 commands.add(command);
             }
-            Rectangle2D rect = new Rectangle();
+            final Rectangle2D rect = new Rectangle();
             // for( IDrawCommand command : commands ) {
             // rect=rect.createUnion(command.getValidArea());
             // }
@@ -1349,16 +1144,19 @@ public class MapEditor extends EditorPart implements IDropTargetProvider, IAdapt
     RenderManager getRenderManager() {
         return viewer.getRenderManager();
     }
+
     @Override
     public IStatusLineManager getStatusLineManager() {
-    	return statusLineManager;
+        return statusLineManager;
     }
+
     //
     // helper method for ToolManager
     @Override
     public boolean isTesting() {
         return this.isTesting;
     }
+
     @Override
     public void setTesting( boolean testing ) {
         this.isTesting = testing;

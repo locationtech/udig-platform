@@ -23,7 +23,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
-import org.locationtech.udig.project.ui.controls.ScaleRatioLabel;
 import org.locationtech.udig.project.ui.internal.tool.display.ToolProxy;
 
 /**
@@ -35,9 +34,9 @@ import org.locationtech.udig.project.ui.internal.tool.display.ToolProxy;
  * @since 1.2.0
  */
 public class PreferencesShortcutToolOptionsContributionItem extends ContributionItem {
-    final IHandlerService handlerService = (IHandlerService) PlatformUI.getWorkbench().getService(
+    final IHandlerService handlerService = PlatformUI.getWorkbench().getService(
             IHandlerService.class);
-    final ICommandService commandService = (ICommandService) PlatformUI.getWorkbench().getService(
+    final ICommandService commandService = PlatformUI.getWorkbench().getService(
             ICommandService.class);
 
     final String defultPreferencePage = "org.locationtech.udig.tools.edit.preferences";
@@ -80,7 +79,6 @@ public class PreferencesShortcutToolOptionsContributionItem extends Contribution
         // group.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_BLUE));
         StatusLineLayoutData statusLineLayoutData = new StatusLineLayoutData();
         statusLineLayoutData.widthHint = SWT.DEFAULT;
-        statusLineLayoutData.heightHint = ScaleRatioLabel.STATUS_LINE_HEIGHT;
         group.setLayoutData(statusLineLayoutData);
 
         GridLayout gridLayout = new GridLayout(2,false);

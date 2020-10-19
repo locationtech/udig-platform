@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -30,16 +31,15 @@ import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.ui.palette.FlyoutPaletteComposite.FlyoutPreferences;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.action.StatusLineLayoutData;
 import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IconAndMessageDialog;
@@ -53,18 +53,13 @@ import org.eclipse.jface.window.SameShellProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DropTargetEvent;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
@@ -101,11 +96,9 @@ import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.Project;
 import org.locationtech.udig.project.internal.ProjectPackage;
 import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.commands.ChangeCRSCommand;
 import org.locationtech.udig.project.internal.render.RenderManager;
 import org.locationtech.udig.project.render.IViewportModelListener;
 import org.locationtech.udig.project.render.ViewportModelEvent;
-import org.locationtech.udig.project.render.ViewportModelEvent.EventType;
 import org.locationtech.udig.project.ui.AnimationUpdater;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.IAnimation;
@@ -118,7 +111,6 @@ import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
 import org.locationtech.udig.project.ui.tool.IToolManager;
 import org.locationtech.udig.project.ui.viewers.MapEditDomain;
 import org.locationtech.udig.project.ui.viewers.MapViewer;
-import org.locationtech.udig.ui.CRSChooserDialog;
 import org.locationtech.udig.ui.IBlockingSelection;
 import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.PreShutdownTask;
@@ -127,7 +119,6 @@ import org.locationtech.udig.ui.UDIGDragDropUtilities;
 import org.locationtech.udig.ui.UDIGDragDropUtilities.DragSourceDescriptor;
 import org.locationtech.udig.ui.UDIGDragDropUtilities.DropTargetDescriptor;
 import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * This class is the Eclipse editor Part in which a ViewportPane is embedded. The ViewportPane
@@ -146,11 +137,18 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 // TODO: Rename this to MapEditor to prevent code bloat / code duplication
 public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette implements IDropTargetProvider, IAdaptable, MapEditorPart {
 
+    public static final int STATUS_LINE_HEIGHT;
+    static {
+        if (Platform.getWS().equals(Platform.WS_WIN32)) {
+            STATUS_LINE_HEIGHT = 24;
+        } else {
+            STATUS_LINE_HEIGHT = 32;
+        }
+    }
+
     /** The id of the MapViewport View */
     public static final String ID = "org.locationtech.udig.project.ui.mapEditor"; //$NON-NLS-1$
-    
-    //final MapEditorWithPalette editor = this;
-    
+
     /**
      * This is responsible for tracking the active tool; it is a facility provided
      * by GEF. We are not using GEF tools directly; simply borrowing some of their
@@ -169,9 +167,11 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     
     private PaletteRoot paletteRoot;
     
-    // private ViewportPane viewportPane;
     private MapViewer viewer = null;
 
+    private IContributionItem crsContributionItem;
+
+    private IContributionItem scaleContributionItem;
     /**
      * This composite is used to hold the view; and the status line.
      */
@@ -456,255 +456,6 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     }
 
     /**
-     * Displays a the current CRS and allows to change it
-     */
-    class StatusBarButton extends ContributionItem {
-        static final String CRS_ITEM_ID = "CRS Display"; //$NON-NLS-1$
-
-        static final String BOUNDS_ITEM_ID = "Bounds Display"; //$NON-NLS-1$
-        static final int MAX_LENGTH = 12;
-        private Button button;
-        private String value;
-
-        private String full;
-
-        /**
-         * Create new StatusBarLabel object
-         */
-        public StatusBarButton( String id, String initialValue ) {
-            super(id);
-            setText(initialValue);
-        }
-
-        /**
-         * sets the current text.
-         */
-        public void setText( String text ) {
-            value = text;
-            full = value;
-            if (value.length() > MAX_LENGTH) {
-                int start2 = value.length() - 6;
-                value = value.substring(0, 6) + "..." + value.substring(start2, value.length()); //$NON-NLS-1$
-            }
-            if (button != null && !button.isDisposed()) {
-                button.setText(value);
-            }
-        }
-
-        @Override
-        public boolean isDynamic() {
-            return true;
-        }
-
-        @Override
-        public void dispose() {
-            if (button != null)
-                button.dispose();
-            if (popup != null)
-                popup.dispose();
-        }
-
-        @Override
-        public void fill( Composite c ) {
-            Label separator = new Label(c, SWT.SEPARATOR);
-            StatusLineLayoutData data = new StatusLineLayoutData();
-            separator.setLayoutData(data);
-            data.widthHint = 1;
-            data.heightHint = ScaleRatioLabel.STATUS_LINE_HEIGHT;
-            button = new Button(c, SWT.PUSH | SWT.FLAT);
-            setFont(button);
-            data = new StatusLineLayoutData();
-            button.setLayoutData(data);
-            button.setText(value);
-            button.addListener(SWT.Selection, new Listener(){
-
-                @Override
-                public void handleEvent( Event event ) {
-                    promptForCRS();
-                }
-
-            });
-            button.addListener(SWT.MouseEnter, new Listener(){
-                @Override
-                public void handleEvent( final Event event ) {
-                    showFullText();
-                }
-            });
-            data.widthHint = 132;
-            data.heightHint = ScaleRatioLabel.STATUS_LINE_HEIGHT;
-        }
-        Label textLabel;
-        Shell popup;
-
-        private void promptForCRS() {
-            CoordinateReferenceSystem crs = getMap().getViewportModel().getCRS();            
-            CRSChooserDialog dialog = new CRSChooserDialog( getSite().getShell(), crs );
-            int code = dialog.open();
-            if( Window.OK == code ){
-                CoordinateReferenceSystem result = dialog.getResult();
-                if( !result.equals(crs)){
-                    getMap().sendCommandSync(new ChangeCRSCommand(result));
-                    updateCRS();
-                }
-            }
-        }
-
-        void showFullText() {
-            final Display display = button.getDisplay();
-            if (popup == null) {
-                popup = new Shell(display.getActiveShell(), SWT.NO_FOCUS | SWT.ON_TOP);
-                popup.setForeground(display.getSystemColor(SWT.COLOR_INFO_FOREGROUND));
-                popup.setBackground(display.getSystemColor(SWT.COLOR_INFO_BACKGROUND));
-                popup.setLayout(new RowLayout());
-                Composite composite = new Composite(popup, SWT.NONE);
-                composite.setForeground(display.getSystemColor(SWT.COLOR_INFO_FOREGROUND));
-                composite.setBackground(display.getSystemColor(SWT.COLOR_INFO_BACKGROUND));
-                composite.setLayout(new RowLayout());
-                textLabel = new Label(popup, SWT.NONE);
-                textLabel.setForeground(display.getSystemColor(SWT.COLOR_INFO_FOREGROUND));
-                textLabel.setBackground(display.getSystemColor(SWT.COLOR_INFO_BACKGROUND));
-                textLabel.setFont(button.getFont());
-
-            }
-            Point location = statusLineManager.getControl().toDisplay(button.getLocation());
-            location.y = location.y - ScaleRatioLabel.STATUS_LINE_HEIGHT;
-            if (popup.isDisposed()) {
-                return;
-            }
-            popup.setLocation(location);
-            textLabel.setText(full);
-            popup.setVisible(true);
-            popup.pack(true);
-            display.timerExec(500, new Runnable(){
-                @Override
-                public void run() {
-                    checkforMouseOver(display);
-                }
-            });
-        }
-
-        private void checkforMouseOver( final Display display ) {
-            if (display.getCursorControl() == button) {
-                display.timerExec(500, new Runnable(){
-                    @Override
-                    public void run() {
-                        if (display.getCursorControl() == button) {
-                            checkforMouseOver(display);
-                        } else {
-                            popup.setVisible(false);
-                        }
-                    }
-                });
-            } else {
-                popup.setVisible(false);
-            }
-
-        }
-
-        /**
-         * Get current text.
-         */
-        public String getText() {
-            return full;
-        }
-    }
-
-    /**
-     * Updates the crs label in the statusbar.
-     */
-    protected void updateCRS() {
-        Map map = getMap();
-        if (map == null) {
-            getSite().getPage().closeEditor(this, false);
-            return;
-        }
-        CoordinateReferenceSystem crs = map.getViewportModel().getCRS();
-        if (crs == null || crs.getName() == null) {
-            return;
-        }
-
-        final String full = crs.getName().getCode();
-        if (full == null || isSame(full))
-            return;
-
-        Display display = PlatformUI.getWorkbench().getDisplay();
-        if (display == null)
-            display = Display.getDefault();
-
-        display.asyncExec(new Runnable(){
-            @Override
-            public void run() {
-
-                IContributionManager bar = mapEditorSite.getActionBars().getStatusLineManager();
-                if (bar == null)
-                    return;
-                StatusBarButton label = (StatusBarButton) bar.find(StatusBarButton.CRS_ITEM_ID);
-                if (label == null) {
-                    label = new StatusBarButton(StatusBarButton.CRS_ITEM_ID, full);
-                    bar.appendToGroup(StatusLineManager.MIDDLE_GROUP, label);
-                    label.setVisible(true);
-                    
-//                    StatusBarToolOptionsPage label2 = new StatusBarToolOptionsPage("An Id",editor);
-//                    bar.appendToGroup(StatusLineManager.BEGIN_GROUP, label2);
-//                    label2.setVisible(true);
-                    
-                    bar.update(true);
-                    return;
-                }
-                label.setText(full);
-            }
-        });
-
-    }
-
-    /**
-     * Makes sure the scale is displayed
-     */
-    protected void updateScaleLabel() {
-        if (composite.isDisposed())
-            return;
-        if (Display.getCurrent() != null) {
-            doUpdateScaleLabel();
-            return;
-        }
-        Display display = PlatformUI.getWorkbench().getDisplay();
-        if (display == null)
-            display = Display.getDefault();
-        display.asyncExec(new Runnable(){
-            @Override
-            public void run() {
-                doUpdateScaleLabel();
-            }
-
-        });
-
-    }
-    void doUpdateScaleLabel() {
-        IContributionManager bar = mapEditorSite.getActionBars().getStatusLineManager();
-        if (bar == null)
-            return;
-        ScaleRatioLabel label = (ScaleRatioLabel) bar.find(ScaleRatioLabel.SCALE_ITEM_ID);
-        if (label == null) {
-            label = new ScaleRatioLabel(this);
-            bar.appendToGroup(StatusLineManager.MIDDLE_GROUP, label);
-            label.setVisible(true);
-            bar.update(true);
-        }
-        label.setViewportModel(getMap().getViewportModel());
-    }
-
-    private boolean isSame( String crs ) {
-        IContributionManager bar = getActionbar().getStatusLineManager();
-
-        if (bar != null) {
-            StatusBarButton label = (StatusBarButton) bar.find(StatusBarButton.CRS_ITEM_ID);
-            if (label != null && crs.equals(label.getText()))
-                return true;
-        }
-        return false;
-    }
-
-    /**
      * @see org.eclipse.ui.IWorkbenchPart#dispose()
      */
     @Override
@@ -924,7 +675,6 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
              * @see java.lang.Runnable#run()
              */
             @Override
-            @SuppressWarnings("synthetic-access")
             public void run() {
                 firePropertyChange(PROP_DIRTY);
             }
@@ -998,7 +748,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
         FormData formdata = new FormData();
         formdata.top = new FormAttachment(0);
-        formdata.bottom = new FormAttachment(100, -ScaleRatioLabel.STATUS_LINE_HEIGHT);
+        formdata.bottom = new FormAttachment(100, -STATUS_LINE_HEIGHT);
         formdata.left = new FormAttachment(0);
         formdata.right = new FormAttachment(100);
         viewer.getViewport().getControl().setLayoutData(formdata);
@@ -1032,8 +782,20 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         getSite().setSelectionProvider(replaceableSelectionProvider);
         runMapOpeningInterceptor(getMap());
         mapEditorSite = new MapEditorSite(super.getSite(), this);
-        updateCRS();
-        updateScaleLabel();
+        final IContributionManager statusBar = mapEditorSite.getActionBars().getStatusLineManager();
+
+
+        scaleContributionItem = new ScaleRatioLabel(this);
+        scaleContributionItem.setVisible(true);
+        statusBar.appendToGroup(StatusLineManager.END_GROUP, scaleContributionItem);
+
+        crsContributionItem = new CRSContributionItem(this);
+        crsContributionItem.setVisible(true);
+        statusBar.appendToGroup(StatusLineManager.END_GROUP, crsContributionItem);
+
+        scaleContributionItem.update();
+        crsContributionItem.update();
+        statusBar.update(true);
 
         getMap().getViewportModel().addViewportModelListener(new IViewportModelListener(){
 
@@ -1042,9 +804,6 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
                 if (getMap() == null) {
                     event.getSource().removeViewportModelListener(this);
                     return;
-                }
-                if (event.getType() == EventType.CRS) {
-                    updateCRS();
                 }
             }
 
@@ -1197,8 +956,13 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     @Override
     public void setFocus() {
         composite.setFocus();
-        updateCRS();
-        updateScaleLabel();
+        if (crsContributionItem != null) {
+            crsContributionItem.update();
+        }
+        if (scaleContributionItem != null) {
+            scaleContributionItem.update();
+        }
+
     }
 
     /**
