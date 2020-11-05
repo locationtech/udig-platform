@@ -725,7 +725,7 @@ public class MapEditor extends EditorPart
 
         scaleContributionItem = new ScaleRatioLabel(this);
         scaleContributionItem.setVisible(true);
-        statusBar.appendToGroup(StatusLineManager.MIDDLE_GROUP, crsContributionItem);
+        statusBar.appendToGroup(StatusLineManager.MIDDLE_GROUP, scaleContributionItem);
 
         crsContributionItem = new CRSContributionItem(this);
         crsContributionItem.setVisible(true);
