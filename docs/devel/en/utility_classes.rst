@@ -93,30 +93,6 @@ complete.
 The above code example uses a final array to "hold" the value between the runnable and your code;
 you could also do this using a Class field.
 
-Accessing the Boundary Service
-''''''''''''''''''''''''''''''
-
-The Boundary Service provides access to the boundary that the user has selected via the Boundary
-View. This boundary is then be used to restrict functionality such as zoom to extent and catalog
-search results.
-
-::
-
-    IBoundaryService service = PlatformGIS.getBoundaryService();
-
-This service then provides methods to return the extent or an actual geometry of the current
-boundary.
-
-::
-
-    ReferencedEnvelope extent = service.getExtent();
-
-or
-
-::
-
-    Geometry boundingGeom = service.getGeometry();
-
 org.locationtech.udig.core
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 

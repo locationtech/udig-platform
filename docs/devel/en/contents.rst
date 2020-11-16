@@ -5,11 +5,9 @@ Contents
 
 * :doc:`getting_started`
 
-
    * :doc:`custom_application_tutorial`
 
    * :doc:`disk_to_screen_tutorials`
-
 
       * :doc:`csv_renderer_tutorial`
 
@@ -19,9 +17,7 @@ Contents
 
       * :doc:`testing_tutorial`
 
-
    * :doc:`examples`
-
 
       * :doc:`code_examples`
 
@@ -39,40 +35,31 @@ Contents
 
       * :doc:`view_extension_point_example`
 
-
    * :doc:`featuresourceop_example`
 
    * :doc:`gis_application_tutorials`
-
 
       * :doc:`feature_editor_tutorial`
 
       * :doc:`map_decorator_tutorial`
 
-
    * :doc:`gis_platform_tutorials`
-
 
       * :doc:`iadaptable_and_operations_tutorial`
 
       * :doc:`shapefile_export_tutorial`
 
-
    * :doc:`other_tutorials`
-
 
       * :doc:`coverage_tool`
 
       * :doc:`tracking_animation`
 
-
    * :doc:`rcp_tutorials`
-
 
       * :doc:`preferred_zoom_level_application`
 
       * :doc:`tool_view_application`
-
 
    * :doc:`SDKQuickstart/SDKQuickstart`
 
@@ -87,9 +74,7 @@ Contents
 
 * :doc:`programmer_guide`
 
-
    * :doc:`guidelines_and_rules`
-
 
       * :doc:`coding_conventions`
 
@@ -101,12 +86,9 @@ Contents
 
       * :doc:`user_interface_guidelines`
 
-
    * :doc:`platform_architecture`
 
-
       * :doc:`key_components`
-
 
          * :doc:`drag_and_drop_design`
 
@@ -116,14 +98,12 @@ Contents
 
          * :doc:`shutdown_tasks`
 
-
    * :doc:`welcome_to_the_programmer's_guide`
 
    * :doc:`why_a_platform`
 
 
 * :doc:`reference`
-
 
    * :doc:`adding_new_format`
 
@@ -227,7 +207,6 @@ Contents
 
 * :doc:`working_with_gis_application`
 
-
    * :doc:`commands`
 
    * :doc:`composite_commands`
@@ -265,7 +244,6 @@ Contents
 
 * :doc:`working_with_the_gis_platform`
 
-
    * :doc:`catalog`
 
    * :doc:`catalog_notifications`
@@ -283,8 +261,3 @@ Contents
    * :doc:`service_and_georesource_interceptors`
 
    * :doc:`utility_classes`
-
-   * :doc:`workbench_services`
-
-
-

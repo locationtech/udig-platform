@@ -15,5 +15,3 @@ Using the local catalog as a repository to manage your spatial data
    utility_classes
    connect_to_a_service_on_startup
    service_and_georesource_interceptors
-   workbench_services
-
