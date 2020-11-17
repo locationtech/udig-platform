@@ -50,15 +50,16 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="Progress View"
             category="org.eclipse.ui"
             class="org.eclipse.ui.ExtensionFactory:progressView"
-            id="org.eclipse.ui.views.ProgressView">
+            icon="$nl$/icons/eview16/pview.png"
+            id="org.eclipse.ui.views.ProgressView"
+            name="%Views.Progress">
       </view>
       <view
             category="catalog"
             class="org.locationtech.udig.ui.aoi.AOIView"
-            icon="icons/eview16/aoi_view.png"
+            icon="$nl$/icons/eview16/aoi_view.png"
             id="org.locationtech.udig.ui.aoiView"
             name="%aoi.name"
             restorable="true">
