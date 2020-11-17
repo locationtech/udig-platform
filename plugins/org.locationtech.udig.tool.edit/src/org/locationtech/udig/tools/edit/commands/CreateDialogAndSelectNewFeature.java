@@ -12,14 +12,18 @@ package org.locationtech.udig.tools.edit.commands;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
+import org.geotools.data.FeatureEvent;
 import org.locationtech.udig.core.internal.FeatureUtils;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.command.AbstractCommand;
 import org.locationtech.udig.project.command.UndoableMapCommand;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.commands.edit.AddFeatureCommand;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.PlatformGIS;
 import org.locationtech.udig.project.ui.feature.FeaturePanelEntry;
 import org.locationtech.udig.tool.edit.internal.Messages;
 import org.locationtech.udig.tools.edit.support.EditBlackboard;
@@ -27,15 +31,6 @@ import org.locationtech.udig.tools.edit.support.EditGeom;
 import org.locationtech.udig.tools.edit.support.EditUtils;
 import org.locationtech.udig.tools.edit.support.Point;
 import org.locationtech.udig.tools.edit.support.PrimitiveShape;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.ISafeRunnable;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.PlatformUI;
-import org.geotools.data.FeatureEvent;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
 
@@ -78,12 +73,14 @@ public class CreateDialogAndSelectNewFeature extends AbstractCommand implements 
         this.deselectCreatedFeature = deselectCreatedFeature;
     }
 
+    @Override
     public void run( IProgressMonitor monitor ) throws Exception {
         final boolean create[] = new boolean[1];
         create[0] = false;
         
         Display display = PlatformUI.getWorkbench().getDisplay();
         display.syncExec( new Runnable(){            
+            @Override
             public void run() {
                 boolean yes = MessageDialog.openConfirm(null, "New Feature", "Panels available "+panels.size() );
                 create[0] = yes;
@@ -145,10 +142,12 @@ public class CreateDialogAndSelectNewFeature extends AbstractCommand implements 
         featureChanges.set(index, featureEvent);
     }
 
+    @Override
     public String getName() {
         return Messages.CreateAndSetNewFeature_name;
     }
 
+    @Override
     public void rollback( IProgressMonitor monitor ) throws Exception {
         monitor.beginTask(getName(), 14);
         monitor.worked(2);
