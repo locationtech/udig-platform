@@ -165,11 +165,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/jaxen-1.1.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jcip-annotations-1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jcommander-1.35.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jcommon-1.0.16.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jdom2-2.0.6.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jfreechart-1.0.13.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jfreechart-experimental-1.0.13.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jfreechart-swt-1.0.13.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jgridshift-core-1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jgt-oms3-0.7.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jline-0.9.94.jar"/>

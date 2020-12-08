@@ -506,50 +506,6 @@
 			<artifactId>gt-grassraster</artifactId>
 			<version>${geotools.version}</version>
 		</dependency>
-		<!--<dependency> <groupId>org.geotools</groupId> <artifactId>gt-coverage-api</artifactId> 
-			<version>${geotools.version}</version> </dependency> <dependency> <groupId>eu.hydrologis.jgrass</groupId> 
-			<artifactId>jgrassgears</artifactId> <version>0.1-SNAPSHOT</version> </dependency> -->
-
-		<!-- jfreechart -->
-		<dependency>
-			<groupId>jfree</groupId>
-			<artifactId>jfreechart</artifactId>
-			<version>${jfreechart.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>jfree</groupId>
-					<artifactId>jcommon</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>jfree</groupId>
-			<artifactId>jfreechart-swt</artifactId>
-			<version>${jfreechart.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>jfree</groupId>
-			<artifactId>jfreechart-experimental</artifactId>
-			<version>${jfreechart.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>jfree</groupId>
-			<artifactId>jcommon</artifactId>
-			<version>1.0.16</version>
-		</dependency>
-
-		<!-- these may already be accounted for by the above plug-ins -->
-		<!--<dependency> <groupId>org.geotools.xsd</groupId> <artifactId>gt-gml2</artifactId> 
-			<version>${geotools.version}</version> </dependency> <dependency> <groupId>org.geotools.xsd</groupId> 
-			<artifactId>gt-gml3</artifactId> <version>${geotools.version}</version> </dependency> 
-			<dependency> <groupId>org.geotools.xsd</groupId> <artifactId>gt-core</artifactId> 
-			<version>${geotools.version}</version> </dependency> <dependency> <groupId>org.geotools.xsd</groupId> 
-			<artifactId>gt-xsd-wfs</artifactId> <version>${geotools.version}</version> 
-			</dependency> <dependency> <groupId>org.geotools.xsd</groupId> <artifactId>gt-xsd-wps</artifactId> 
-			<version>${geotools.version}</version> </dependency> <dependency> <groupId>org.geotools.xsd</groupId> 
-			<artifactId>gt-ows</artifactId> <version>${geotools.version}</version> </dependency> 
-			<dependency> <groupId>org.geotools.xsd</groupId> <artifactId>gt-filter</artifactId> 
-			<version>${geotools.version}</version> </dependency> -->
 
 		<!-- Java Advanced Imaging is bundled into our JRE - as such we don't need 
 			them to be downloaded now; however we must run with: -Dosgi.parentClassloader=ext -->

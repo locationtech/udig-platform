@@ -13,7 +13,8 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.catalog.rasterings,
  org.locationtech.udig.style.sld,
  org.locationtech.udig.catalog.jgrass,
- org.eclipse.xsd;bundle-version="2.7.0"
+ org.eclipse.xsd;bundle-version="2.7.0",
+ org.locationtech.udig.libs.jfreechart
 Eclipse-LazyStart: true
 Bundle-ClassPath: .
 Export-Package: org.locationtech.udig.tools.jgrass.profile.borrowedfro
