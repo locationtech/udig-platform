@@ -21,9 +21,9 @@ import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.command.UndoableComposite;
-import org.locationtech.udig.project.command.factory.BasicCommandFactory;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.commands.AddLayerCommand;
 import org.locationtech.udig.project.internal.commands.DeleteLayerCommand;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
@@ -39,8 +39,8 @@ import org.eclipse.ui.actions.ActionDelegate;
  * This is a helper class for MapGraphics that should be toggled on and off. Some good candidates
  * are: Scalebar and legend.
  * <p>
- * This Example is the adding a Toggle action for LegendGraphic. 
- * 
+ * This Example is the adding a Toggle action for LegendGraphic.
+ *
  * <p> The following xml snippet must be added to the plugin.xml</p>
  * <p>
  * <pre>
@@ -72,10 +72,10 @@ import org.eclipse.ui.actions.ActionDelegate;
  *   protected String getExtensionID() {
  *       return "legend"; //$NON-NLS-1$
  *   }
- *   
+ *
  *   public void init( IWorkbenchWindow window ) {
  *   }
- * 
+ *
  * }
  * </pre>
  * </p>
@@ -151,7 +151,7 @@ public abstract class AbstractToggleMapGraphicAction extends ActionDelegate
             if (legendResource == null)
                 return;
             Layer layer = map.getLayerFactory().createLayer(legendResource);
-            map.sendCommandSync(BasicCommandFactory.getInstance().createAddLayer(layer));
+            map.sendCommandSync(new AddLayerCommand(layer));
         } catch (MalformedURLException e) {
             MapGraphicPlugin.log("", e); //$NON-NLS-1$
         } catch (IOException e) {
@@ -164,6 +164,7 @@ public abstract class AbstractToggleMapGraphicAction extends ActionDelegate
 
     protected abstract String getExtensionID();
 
+    @Override
     public void init( IWorkbenchWindow window ) {
     }
 

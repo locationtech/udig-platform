@@ -10,6 +10,7 @@
  */
 package org.locationtech.udig.tutorials.rcp;
 
+import org.locationtech.udig.project.command.navigation.SetViewportBBoxCommand;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;

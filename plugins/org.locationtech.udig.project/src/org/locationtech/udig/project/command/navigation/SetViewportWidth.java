@@ -7,14 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.locationtech.udig.project.internal.command.navigation;
+package org.locationtech.udig.project.command.navigation;
 
 import java.text.MessageFormat;
 
-import org.locationtech.udig.project.command.MapCommand;
 import org.locationtech.udig.project.command.NavCommand;
 import org.locationtech.udig.project.internal.Messages;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
@@ -39,22 +37,17 @@ public class SetViewportWidth extends AbstractNavCommand implements NavCommand {
     }
 
     /**
-     * @see org.locationtech.udig.project.internal.command.navigation.AbstractNavCommand#runImpl()
+     * @see org.locationtech.udig.project.command.navigation.AbstractNavCommand#runImpl()
      */
+    @Override
     protected void runImpl( IProgressMonitor monitor ) throws Exception {
         model.setWidth(width);
     }
 
     /**
-     * @see org.locationtech.udig.project.internal.command.MapCommand#copy()
-     */
-    public MapCommand copy() {
-        return new SetViewportWidth(width);
-    }
-
-    /**
      * @see org.locationtech.udig.project.command.MapCommand#getName()
      */
+    @Override
     public String getName() {
         return MessageFormat.format(
                 Messages.SetViewportWidth_setViewWidth, new Object[]{width}); 

@@ -27,7 +27,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
-import org.locationtech.udig.project.internal.commands.SetScaleCommand;
+import org.locationtech.udig.project.command.navigation.SetScaleCommand;
 import org.locationtech.udig.project.render.IViewportModel;
 import org.locationtech.udig.project.render.IViewportModelListener;
 import org.locationtech.udig.project.render.ViewportModelEvent.EventType;

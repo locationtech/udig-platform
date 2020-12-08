@@ -458,7 +458,8 @@ public class CommandManager implements CommandStack, NavCommandStack {
                     @Override
                     public void run() {
                         String string = Messages.CommandManager_warning + command.getName();
-                        if (command instanceof RollbackCommand || command instanceof CommitCommand)
+                        if ( command instanceof RollbackCommand ||
+                                command instanceof CommitCommand )
                             string += "?"; //$NON-NLS-1$
                         else
                             string += Messages.CommandManager_warning2;
@@ -467,9 +468,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
                                         PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                                                 .getShell(),
                                         Messages.CommandManager_warningTitle, string,
-                                        Messages.CommandManager_toggleMessage, false,
-                                        preferenceStore,
-                                        PreferenceConstants.P_WARN_IRREVERSIBLE_COMMAND);
+                                        Messages.CommandManager_toggleMessage, false, preferenceStore, PreferenceConstants.P_WARN_IRREVERSIBLE_COMMAND);
                         runCommand[0] = dialog.getReturnCode() == IDialogConstants.OK_ID;
                         if (dialog.getToggleState()) {
                             preferenceStore.setValue(
@@ -488,8 +487,10 @@ public class CommandManager implements CommandStack, NavCommandStack {
          * Notifies the owner that the command has been executed.
          */
         private void notifyOwner(Command command) {
+
             for (CommandListener listener : completionHandlers) {
                 listener.commandExecuted(command);
+
             }
         }
 

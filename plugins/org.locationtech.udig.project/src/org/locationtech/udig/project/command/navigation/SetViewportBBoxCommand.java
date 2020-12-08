@@ -1,5 +1,4 @@
-/**
- * uDig - User Friendly Desktop Internet GIS client
+/* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -8,24 +7,25 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.locationtech.udig.project.internal.command.navigation;
+package org.locationtech.udig.project.command.navigation;
 
 import java.text.MessageFormat;
+
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.ViewportModel;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
-import org.locationtech.jts.geom.Envelope;
-import org.locationtech.udig.project.command.MapCommand;
-import org.locationtech.udig.project.internal.Messages;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.render.ViewportModel;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 
+import org.locationtech.jts.geom.Envelope;
+
 /**
- * Sets the viewport's bounding box. The BBox have a positive width and height and must have a
+ * Sets the viewport's bounding box. The bbox have a positive width and height and must have a
  * aspect ratio within 0.0000001 units of the value returned by
  * {@linkplain ViewportModel#getViewportAspectRatio()}.
  *
@@ -41,15 +41,14 @@ public class SetViewportBBoxCommand extends AbstractNavCommand {
     private boolean forceContainBBoxZoom;
 
     /**
-     * Creates a new instance of SetViewportBBoxCommand. The BBox is expected to be the same as the
+     * Creates a new instance of SetViewportBBoxCommand. The bbox is expected to be the same as the
      * viewport model.
      *
-     * @param bbox the new bounding box. The new BBox must have a positive width and height and must
+     * @param bbox the new bounding box. The new bbox must have a positive width and height and must
      *        have a aspect ratio within 0.0000001 units of the value returned by
      *        {@linkplain ViewportModel#getViewportAspectRatio()}.
      * @deprecated Please use a ReferencedEnvelope
      */
-    @Deprecated
     public SetViewportBBoxCommand(Envelope bbox) {
         this.newbbox = bbox;
         if (bbox instanceof ReferencedEnvelope)
@@ -57,10 +56,10 @@ public class SetViewportBBoxCommand extends AbstractNavCommand {
     }
 
     /**
-     * Creates a new instance of SetViewportBBoxCommand. The BBox is expected to be the same as the
+     * Creates a new instance of SetViewportBBoxCommand. The bbox is expected to be the same as the
      * viewport model.
      *
-     * @param bbox the new bounding box. The new BBox must have a positive width and height and must
+     * @param bbox the new bounding box. The new bbox must have a positive width and height and must
      *        have a aspect ratio within 0.0000001 units of the value returned by
      *        {@linkplain ViewportModel#getViewportAspectRatio()}.
      */
@@ -69,11 +68,11 @@ public class SetViewportBBoxCommand extends AbstractNavCommand {
     }
 
     /**
-     * Sets the bounds of the viewport model to the bounds. The CRS parameter indications the CRS of
+     * Sets the bounds of the viewport model to the bounds. The crs parameter indications the crs of
      * the provided bounds. The appropriate transformation will take place.
      *
      * @param bounds the bounds to apply to the viewport model
-     * @param crs The CRS of the provided bounds.
+     * @param crs The crs of the provided bounds.
      */
     public SetViewportBBoxCommand(Envelope bounds, CoordinateReferenceSystem crs) {
         this(new ReferencedEnvelope(bounds, crs));
@@ -86,15 +85,7 @@ public class SetViewportBBoxCommand extends AbstractNavCommand {
     }
 
     /**
-     * @see org.locationtech.udig.project.internal.command.MapCommand#copy()
-     */
-    @Override
-    public MapCommand copy() {
-        return new SetViewportBBoxCommand(newbbox, crs);
-    }
-
-    /**
-     * @see org.locationtech.udig.project.internal.command.navigation.AbstractNavCommand#runImpl()
+     * @see org.locationtech.udig.project.command.navigation.AbstractNavCommand#runImpl()
      */
     @Override
     protected void runImpl(IProgressMonitor monitor) {

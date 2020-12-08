@@ -39,7 +39,6 @@ import org.locationtech.udig.internal.ui.UDIGDropHandler;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.ProjectFactory;
-import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
 import org.locationtech.udig.project.internal.commands.AddLayersCommand;
 import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.project.ui.internal.MapSite;

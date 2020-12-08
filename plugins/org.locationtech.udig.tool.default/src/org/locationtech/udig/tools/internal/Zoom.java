@@ -16,7 +16,6 @@ import java.awt.Rectangle;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.udig.project.internal.command.navigation.ZoomCommand;
 import org.locationtech.udig.project.render.IViewportModel;
 import org.locationtech.udig.project.ui.commands.DrawCommandFactory;
 import org.locationtech.udig.project.ui.commands.SelectionBoxCommand;

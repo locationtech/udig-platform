@@ -30,8 +30,8 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 
 import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.navigation.SetViewportCenterCommand;
 import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.command.navigation.SetViewportCenterCommand;
 import org.locationtech.udig.project.internal.render.ViewportModel;
 import org.locationtech.udig.project.internal.render.impl.ViewportModelImpl;
 import org.locationtech.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneTiledSWT;
