@@ -7,9 +7,8 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.locationtech.udig.project.internal.command.navigation;
+package org.locationtech.udig.project.command.navigation;
 
-import org.locationtech.udig.project.command.MapCommand;
 import org.locationtech.udig.project.command.NavCommand;
 import org.locationtech.udig.project.internal.Messages;
 
@@ -57,8 +56,9 @@ public class PanCommand extends AbstractNavCommand implements NavCommand {
     }
 
     /**
-     * @see org.locationtech.udig.project.internal.command.navigation.AbstractNavCommand#runImpl()
+     * @see org.locationtech.udig.project.command.navigation.AbstractNavCommand#runImpl()
      */
+    @Override
     protected void runImpl( IProgressMonitor monitor ) throws Exception {
         if (inPixel)
             model.panUsingScreenCoords(pixelx, pixely);
@@ -67,18 +67,9 @@ public class PanCommand extends AbstractNavCommand implements NavCommand {
     }
 
     /**
-     * @see org.locationtech.udig.project.internal.command.MapCommand#copy()
-     */
-    public MapCommand copy() {
-        if (inPixel)
-            return new PanCommand(pixelx, pixely);
-
-        return new PanCommand(worldx, worldy);
-    }
-
-    /**
      * @see org.locationtech.udig.project.command.MapCommand#getName()
      */
+    @Override
     public String getName() {
         return Messages.PanCommand_pan; 
     }

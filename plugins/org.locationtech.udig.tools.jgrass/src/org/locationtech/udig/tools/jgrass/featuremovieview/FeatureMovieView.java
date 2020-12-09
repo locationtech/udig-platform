@@ -17,7 +17,7 @@ import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.command.UndoableMapCommand;
 import org.locationtech.udig.project.command.factory.SelectionCommandFactory;
-import org.locationtech.udig.project.internal.command.navigation.ZoomCommand;
+import org.locationtech.udig.project.command.navigation.ZoomCommand;
 import org.locationtech.udig.project.internal.commands.selection.SelectCommand;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 

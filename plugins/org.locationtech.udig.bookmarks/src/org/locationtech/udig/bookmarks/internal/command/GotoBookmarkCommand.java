@@ -10,9 +10,8 @@
 package org.locationtech.udig.bookmarks.internal.command;
 
 import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.command.Command;
+import org.locationtech.udig.project.command.navigation.AbstractNavCommand;
 import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.command.navigation.AbstractNavCommand;
 import org.locationtech.udig.project.render.IViewportModel;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 
@@ -47,7 +46,7 @@ public class GotoBookmarkCommand extends AbstractNavCommand {
                  .getResourceSet().getResource(mapID, true).getContents().get(0));
          ApplicationGIS.openMap(map);
          IViewportModel v = map.getViewportModel();
-         
+
          final ReferencedEnvelope bookmarkEnvelope = target.getEnvelope();
          final Envelope viewportBounds = v.getBounds();
 
@@ -55,7 +54,7 @@ public class GotoBookmarkCommand extends AbstractNavCommand {
          final CoordinateReferenceSystem bookmarkCrs = bookmarkEnvelope.getCoordinateReferenceSystem();
 
          final ReferencedEnvelope bookmarkedEnvelopeInVieportCRS;
-         
+
          if(bookmarkCrs.equals(viewportCrs)){
          	bookmarkedEnvelopeInVieportCRS = bookmarkEnvelope;
          }else{
@@ -71,12 +70,9 @@ public class GotoBookmarkCommand extends AbstractNavCommand {
          }
     }
 
-    public Command copy() {
-        return null;
-    }
-
+    @Override
     public String getName() {
-        return null;
+        return null; // TODO NLS
     }
 
 }

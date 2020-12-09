@@ -19,18 +19,17 @@ import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.IServiceFactory;
+import org.locationtech.udig.project.command.navigation.SetViewportBBoxCommand;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.ProjectFactory;
-import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
 import org.locationtech.udig.project.internal.commands.AddLayersCommand;
 import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.project.ui.internal.wizard.MapImport;
 import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
 import org.locationtech.udig.project.ui.tool.ModalTool;
 import org.locationtech.udig.project.ui.viewers.MapViewer;
-import org.locationtech.udig.tools.internal.FixedScalePan;
+import org.locationtech.udig.tools.internal.PanTool;
 import org.locationtech.udig.tools.internal.Zoom;
 import org.locationtech.udig.tutorials.tracking.glasspane.SeagullGlassPaneOp;
 
@@ -52,7 +51,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 
 /**
  * A map view.
- * 
+ *
  * @author Emily Gouge, Graham Davis (Refractions Research, Inc.)
  * @since 1.1.0
  * @version 1.3.0
@@ -80,8 +79,8 @@ public class MapView extends ViewPart implements MapPart {
         // create a new empty map
         // if you are going to add layers do so now
         // prior to adding to the mapviewer
-        // 
-        map = (Map) ProjectFactory.eINSTANCE.createMap();
+        //
+        map = ProjectFactory.eINSTANCE.createMap();
         mapviewer.setMap(map);
 
         IMenuManager viewMenu = getViewSite().getActionBars().getMenuManager();
@@ -121,7 +120,7 @@ public class MapView extends ViewPart implements MapPart {
     // }
     // }
     // }
-    //    
+    //
     // class SetPrintTilesVPToolAction extends Action {
     // public SetPrintTilesVPToolAction() {
     //  	      super("Print VP Tiles"); //$NON-NLS-1$
@@ -149,6 +148,7 @@ public class MapView extends ViewPart implements MapPart {
         public SetPrintMapLayersToolAction() {
             super("Print Map Layers"); //$NON-NLS-1$
         }
+        @Override
         public void run() {
             if (map != null) {
                 for( Layer layer : map.getLayersInternal() ) {
@@ -163,7 +163,8 @@ public class MapView extends ViewPart implements MapPart {
             super("Pan"); //$NON-NLS-1$
         }
 
-        private FixedScalePan tool = new FixedScalePan();
+        private PanTool tool = new PanTool();
+        @Override
         public void run() {
             setActive(tool);
         }
@@ -174,6 +175,7 @@ public class MapView extends ViewPart implements MapPart {
         public SetZoomExtentToolAction() {
             super("Zoom"); //$NON-NLS-1$
         }
+        @Override
         public void run() {
             setActive(tool);
         }
@@ -183,6 +185,7 @@ public class MapView extends ViewPart implements MapPart {
         public SetZoomToMapToolAction() {
             super("Zoom to Map"); //$NON-NLS-1$
         }
+        @Override
         public void run() {
             ReferencedEnvelope bounds = map.getBounds(new NullProgressMonitor());
             map.sendCommandASync(new SetViewportBBoxCommand(bounds));
@@ -193,6 +196,7 @@ public class MapView extends ViewPart implements MapPart {
         public SetRefreshToolAction() {
             super("Refresh Map"); //$NON-NLS-1$
         }
+        @Override
         public void run() {
             mapviewer.getRenderManager().refresh(null);
         }
@@ -202,11 +206,13 @@ public class MapView extends ViewPart implements MapPart {
         public SetBackgroundFileAction() {
             super("Add Background layer from file..."); //$NON-NLS-1$
         }
+        @Override
         @SuppressWarnings("unchecked")
         public void run() {
             Display display = Display.getCurrent();
             final ArrayList<File> files = new ArrayList<File>();
             display.syncExec(new Runnable(){
+                @Override
                 public void run() {
                     FileDialog openDialog = new FileDialog(getSite().getShell(), SWT.OPEN
                             | SWT.MULTI);
@@ -222,7 +228,7 @@ public class MapView extends ViewPart implements MapPart {
                 return;
             List<IGeoResource> dataHandles = new ArrayList<IGeoResource>();
             ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
-            
+
             for( File file : files ) {
                 try {
                     URL url = file.toURI().toURL();
@@ -252,6 +258,7 @@ public class MapView extends ViewPart implements MapPart {
         public SetGlassSeagullsAction() {
             super("Add Glass Seagulls layer"); //$NON-NLS-1$
         }
+        @Override
         public void run() {
             Display display = Display.getCurrent();
             if (seagullOp == null) {
@@ -271,10 +278,12 @@ public class MapView extends ViewPart implements MapPart {
         public SetBackgroundWMSCAction() {
             super("Add Background layer..."); //$NON-NLS-1$
         }
+        @Override
         public void run() {
             Display display = Display.getCurrent();
             // final ArrayList<File> files = new ArrayList<File>();
             display.syncExec(new Runnable(){
+                @Override
                 public void run() {
                     MapImport mapImport = new MapImport();
                     mapImport.getDialog().open();
@@ -291,6 +300,7 @@ public class MapView extends ViewPart implements MapPart {
     public void setModalTool( ModalTool tool ) {
         tool.setActive(true);
     }
+    @Override
     public Map getMap() {
         return mapviewer.getMap();
     }
@@ -302,14 +312,17 @@ public class MapView extends ViewPart implements MapPart {
         }
     }
 
+    @Override
     public void openContextMenu() {
         mapviewer.openContextMenu();
     }
 
+    @Override
     public void setFont( Control control ) {
         mapviewer.setFont(control);
     }
 
+    @Override
     public void setSelectionProvider( IMapEditorSelectionProvider selectionProvider ) {
         mapviewer.setSelectionProvider(selectionProvider);
     }

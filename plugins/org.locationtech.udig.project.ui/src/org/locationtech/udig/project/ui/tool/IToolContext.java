@@ -17,9 +17,7 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.udig.project.IAbstractContext;
 import org.locationtech.udig.project.command.Command;
 import org.locationtech.udig.project.command.MapCommand;
-import org.locationtech.udig.project.command.factory.BasicCommandFactory;
 import org.locationtech.udig.project.command.factory.EditCommandFactory;
-import org.locationtech.udig.project.command.factory.NavigationCommandFactory;
 import org.locationtech.udig.project.command.factory.SelectionCommandFactory;
 import org.locationtech.udig.project.ui.commands.DrawCommandFactory;
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
@@ -69,28 +67,12 @@ public interface IToolContext extends IAbstractContext {
     public EditCommandFactory getEditFactory();
 
     /**
-     * Returns a NavigationCommandFactory. Used to create commands that change the current view of
-     * the map.
-     * 
-     * @return a NavigationCommandFactory
-     * @see NavigationCommandFactory
-     * @deprecated Please use navigation commands directly
-     */
-    public NavigationCommandFactory getNavigationFactory();
-
-    /**
      * Returns a SelectionCommandFactory. Used to create commands that changes the current
      * selection.
      * 
      * @return a SelectionCommandFactory
      */
     public SelectionCommandFactory getSelectionFactory();
-    /**
-     * Returns a BasicCommandFactory. 
-     * 
-     * @return a BasicCommandFactory
-     */
-    public BasicCommandFactory getBasicCommandFactory();
 
     /**
      * Dispatches a command.  If the command is a IDrawCommand the command will

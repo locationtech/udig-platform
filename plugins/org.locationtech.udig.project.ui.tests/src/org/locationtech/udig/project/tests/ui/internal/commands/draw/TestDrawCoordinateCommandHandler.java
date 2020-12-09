@@ -38,7 +38,7 @@ import org.locationtech.udig.project.command.AbstractCommand;
 import org.locationtech.udig.project.command.Command;
 import org.locationtech.udig.project.command.CompositeCommand;
 import org.locationtech.udig.project.command.MapCommand;
-import org.locationtech.udig.project.internal.command.navigation.SetViewportCenterCommand;
+import org.locationtech.udig.project.command.navigation.SetViewportCenterCommand;
 import org.locationtech.udig.project.ui.AnimationUpdater;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.IAnimation;

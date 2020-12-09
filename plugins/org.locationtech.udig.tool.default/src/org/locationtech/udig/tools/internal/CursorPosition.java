@@ -17,7 +17,7 @@ import java.text.ParseException;
 import java.util.Locale;
 
 import org.locationtech.udig.project.command.Command;
-import org.locationtech.udig.project.internal.command.navigation.SetViewportCenterCommand;
+import org.locationtech.udig.project.command.navigation.SetViewportCenterCommand;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.project.ui.tool.AbstractTool;
 import org.locationtech.udig.project.ui.tool.IToolContext;

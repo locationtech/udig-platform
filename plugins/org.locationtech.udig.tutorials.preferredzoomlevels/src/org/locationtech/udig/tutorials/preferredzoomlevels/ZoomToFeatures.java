@@ -12,7 +12,7 @@ package org.locationtech.udig.tutorials.preferredzoomlevels;
 import java.io.IOException;
 
 import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import org.locationtech.udig.project.command.navigation.SetViewportBBoxCommand;
 import org.locationtech.udig.project.ui.tool.AbstractActionTool;
 import org.locationtech.udig.ui.ProgressManager;
 

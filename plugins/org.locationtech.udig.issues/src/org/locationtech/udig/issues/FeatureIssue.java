@@ -34,6 +34,7 @@ import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.IProject;
 import org.locationtech.udig.project.command.NavCommand;
 import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.command.navigation.SetViewportBBoxCommand;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
 import org.locationtech.udig.project.ui.internal.FeatureEditorLoader;
@@ -50,7 +51,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 /**
  * Represents a problem or issue with a feature. The map containing the feature and the
  * FeatureEditor will both be show. The map will be zoomed to show the feature.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
@@ -60,7 +61,7 @@ public class FeatureIssue extends AbstractIssue {
     private static final String LAYER_KEY = "layer"; //$NON-NLS-1$
     private static final String PROJECT_KEY = "project"; //$NON-NLS-1$
     private static final String FEATURE_KEY = "feature"; //$NON-NLS-1$
-    
+
     private SimpleFeature feature;
     private String viewid;
     private FeatureEditorLoader featureEditorLoader;
@@ -75,33 +76,33 @@ public class FeatureIssue extends AbstractIssue {
     private static boolean testing=false;
 
     public FeatureIssue( ){
-        
+
     }
-    
+
     public FeatureIssue( Priority priority, String description, ILayer containingLayer, SimpleFeature feature, String groupId ) {
     	assert groupId!=null && priority!=null && containingLayer!=null && feature!=null;
-    	
+
         setPriority(priority);
         setDescription(description);
         this.layer=containingLayer;
         this.feature = feature;
 		featureEditorLoader = ApplicationGISInternal.getFeatureEditorLoader(feature);
 		viewid = featureEditorLoader.getViewId();
-        
+
 		setGroupId(groupId);
         setBounds(new ReferencedEnvelope(feature.getBounds()));
     }
-    
+
     @Override
     public void setId( String id ) {
         super.setId(id);
     }
-    
+
     @Override
     public String getEditorID() {
     	return MapEditorWithPalette.ID;
     }
-    
+
     @Override
     public IEditorInput getEditorInput() {
         return new MapEditorInput(getLayer().getMap());
@@ -110,11 +111,12 @@ public class FeatureIssue extends AbstractIssue {
     @Override
     public String getViewPartId() {
         if( viewid==null ){
-            
+
         }
         return viewid;
     }
 
+    @Override
     public String getProblemObject() {
     	SimpleFeature feature = getFeature();
     	SimpleFeatureType featureType = feature.getFeatureType();
@@ -135,7 +137,7 @@ public class FeatureIssue extends AbstractIssue {
 
 	private String getAttribute(SimpleFeature feature, SimpleFeatureType featureType,
 			String attName) {
-		int attributeIndex = featureType.indexOf(attName); 
+		int attributeIndex = featureType.indexOf(attName);
     	if ( attributeIndex!=-1 ){
     		Object attribute = feature.getAttribute(attributeIndex);
 			return attribute.toString();
@@ -143,15 +145,17 @@ public class FeatureIssue extends AbstractIssue {
     	return null;
 	}
 
+    @Override
     public void fixIssue( IViewPart part, IEditorPart editor ) {
     	if( getLayer() == null ){
     		Display.getDefault().asyncExec(new Runnable() {
-				public void run() {
+				@Override
+                public void run() {
 					Shell parent = Display.getCurrent().getActiveShell();
 					String title = Messages.FeatureIssue_DialogText;
 					String message = Messages.FeatureIssue_DialogMessage;
 					MessageDialog.openInformation(parent, title, message);
-					
+
 				}
 			});
     		return;
@@ -169,7 +173,7 @@ public class FeatureIssue extends AbstractIssue {
         if( tool !=null ){
         	tool.run();
         }
-        NavCommand zoom = context.getNavigationFactory().createSetViewportBBoxCommand(
+        NavCommand zoom = new SetViewportBBoxCommand(
                 bounds, crs);
         context.sendASyncCommand(zoom);
         composite.getCommands().add(context.getSelectionFactory().createFIDSelectCommand(getLayer(),getFeature()));
@@ -177,10 +181,12 @@ public class FeatureIssue extends AbstractIssue {
         context.sendASyncCommand(composite);
     }
 
-	public String getExtensionID() {
+	@Override
+    public String getExtensionID() {
 		return EXT_ID;
 	}
 
+    @Override
     public void init( IMemento memento, IMemento viewMemento, String issueId, String groupId, ReferencedEnvelope bounds ) {
         if( !testing || memento!=null ){
             mapID=memento.getString(MAP_KEY);
@@ -194,6 +200,7 @@ public class FeatureIssue extends AbstractIssue {
         setBounds(bounds);
     }
 
+    @Override
     public void save( IMemento memento ) {
         memento.putString(MAP_KEY, getLayer().getMap().getID().toString());
         memento.putString(LAYER_KEY, getLayer().getID().toString());
@@ -248,7 +255,7 @@ public class FeatureIssue extends AbstractIssue {
             }
             if( foundMap==null )
                 throw new IllegalStateException("This issue is not legal for this uDig instance because the map:"+mapID+" cannot be found.");  //$NON-NLS-1$//$NON-NLS-2$
-    
+
             List<ILayer> layers= foundMap.getMapLayers();
             for( ILayer layer : layers ) {
                 if( layer.getID().toString().equals(layerID) ){
@@ -268,5 +275,5 @@ public class FeatureIssue extends AbstractIssue {
         testing=b;
     }
 
-	
+
 }

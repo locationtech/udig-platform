@@ -13,12 +13,9 @@ package org.locationtech.udig.tools.internal;
 
 import java.awt.Point;
 
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.command.Command;
 import org.locationtech.udig.project.command.NavCommand;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.command.navigation.AbstractNavCommand;
-import org.locationtech.udig.project.internal.command.navigation.PanCommand;
+import org.locationtech.udig.project.command.navigation.PanCommand;
+import org.locationtech.udig.project.command.navigation.SetBoundsCommand;
 import org.locationtech.udig.project.internal.render.ViewportModel;
 import org.locationtech.udig.project.internal.render.impl.ViewportModelImpl;
 import org.locationtech.udig.project.ui.internal.commands.draw.TranslateCommand;
@@ -27,8 +24,7 @@ import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 import org.locationtech.udig.project.ui.tool.AbstractModalTool;
 import org.locationtech.udig.project.ui.tool.ModalTool;
 import org.locationtech.udig.project.ui.tool.options.ToolOptionContributionItem;
-
-import org.eclipse.core.runtime.IProgressMonitor;
+import org.locationtech.udig.tools.internal.commands.PanAndInvalidate;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
@@ -47,24 +43,25 @@ import org.locationtech.jts.geom.Envelope;
  * preferences.
  * <p>
  * There are three strateies avaialble {@link Pan}, {@link Scroll}, {@link FixedScale}.
- * 
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
 public class PanTool extends AbstractModalTool implements ModalTool {
     public static class OptionContribtionItem extends ToolOptionContributionItem {
+        @Override
         public IPreferenceStore fillFields( Composite parent ) {
             Button check = new Button(parent,  SWT.CHECK );
             check.setText("Scale");
             addField( NavigationToolPreferencePage.SCALE, check );
-         
+
             Button tiled = new Button(parent,  SWT.CHECK );
             tiled.setText("Tiled");
             addField( NavigationToolPreferencePage.TILED, tiled );
-            
+
             return ToolsPlugin.getDefault().getPreferenceStore();
         }
-    };
+    }
     /**
      * Delegate used to control how the PanTool functions; configured using Preference.
      * @author Jody Garnett (LISAsoft)
@@ -79,9 +76,10 @@ public class PanTool extends AbstractModalTool implements ModalTool {
         }
         public void dispose() {
         }
-    };
+    }
     private ScrollStrategy strategy;
     IPropertyChangeListener prefListener = new IPropertyChangeListener(){
+        @Override
         public void propertyChange( PropertyChangeEvent event ) {
             String property = event.getProperty();
             if( NavigationToolPreferencePage.SCALE.equals( property ) ||
@@ -112,14 +110,14 @@ public class PanTool extends AbstractModalTool implements ModalTool {
         else {
             strategy = new Pan();
         }
-        
+
     }
     /**
      * Used to recognise a mouse event and pan accodingly.
      * <p>
      * This functionality is overridden by PanMiddleMouse in order to allow the middle mouse button
      * to provide the Pan functionality for any ModalTool.
-     * 
+     *
      * @param e
      */
     protected boolean validModifierButtonCombo( MapMouseEvent e ) {
@@ -128,6 +126,7 @@ public class PanTool extends AbstractModalTool implements ModalTool {
     /**
      * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseDragged(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
+    @Override
     public void mouseDragged( MapMouseEvent e ) {
         strategy.mouseDragged(e);
     }
@@ -135,6 +134,7 @@ public class PanTool extends AbstractModalTool implements ModalTool {
     /**
      * @see org.locationtech.udig.project.ui.tool.AbstractTool#mousePressed(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
+    @Override
     public void mousePressed( MapMouseEvent e ) {
         strategy.mousePressed(e);
     }
@@ -142,12 +142,14 @@ public class PanTool extends AbstractModalTool implements ModalTool {
     /**
      * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseReleased(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
+    @Override
     public void mouseReleased( MapMouseEvent e ) {
         strategy.mouseReleased(e);
     }
     /**
      * @see org.locationtech.udig.project.ui.tool.Tool#dispose()
      */
+    @Override
     public void dispose() {
         if (strategy != null) {
             strategy.dispose();
@@ -156,57 +158,12 @@ public class PanTool extends AbstractModalTool implements ModalTool {
         super.dispose();
     }
 
-    /**
-     * Executes the specified pan command, and only after it is executed, expires the last translate
-     * command
-     */
-    private class PanAndInvalidate implements Command, NavCommand {
-        private NavCommand command;
-        private TranslateCommand expire;
-        PanAndInvalidate( NavCommand command, TranslateCommand expire ) {
-            this.command = command;
-            this.expire = expire;
-        }
-
-        public Command copy() {
-            return new PanAndInvalidate(command, expire);
-        }
-
-        public String getName() {
-            return "PanAndDiscard";
-        }
-
-        public void run( IProgressMonitor monitor ) throws Exception {
-            // we need to expire the translate command first otherwise
-            // the image gets drawn in the wrong spot the first time
-            // and we see weird affects
-            expire.setValid(false);
-
-            command.run(monitor);
-        }
-
-        public void setViewportModel( ViewportModel model ) {
-            command.setViewportModel(model);
-        }
-
-        public Map getMap() {
-            return command.getMap();
-        }
-
-        public void setMap( IMap map ) {
-            command.setMap(map);
-        }
-
-        public void rollback( IProgressMonitor monitor ) throws Exception {
-            command.rollback(monitor);
-        }
-    }
-
     /** Basic Pan Functionality for MapViewport */
     public class Pan extends ScrollStrategy {
         private boolean dragging = false;
         private Point start = null;
         private TranslateCommand command;
+        @Override
         public void mouseDragged( MapMouseEvent e ) {
             if (dragging) {
                 command.setTranslation(e.x - start.x, e.y - start.y);
@@ -217,6 +174,7 @@ public class PanTool extends AbstractModalTool implements ModalTool {
         /**
          * @see org.locationtech.udig.project.ui.tool.AbstractTool#mousePressed(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
          */
+        @Override
         public void mousePressed( MapMouseEvent e ) {
             if (validModifierButtonCombo(e)) {
                 ((ViewportPane) context.getMapDisplay()).enableDrawCommands(false);
@@ -230,6 +188,7 @@ public class PanTool extends AbstractModalTool implements ModalTool {
         /**
          * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseReleased(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
          */
+        @Override
         public void mouseReleased( MapMouseEvent e ) {
             if (dragging) {
                 ((ViewportPane) context.getMapDisplay()).enableDrawCommands(true);
@@ -270,6 +229,7 @@ public class PanTool extends AbstractModalTool implements ModalTool {
         /**
          * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseDragged(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
          */
+        @Override
         public void mouseDragged( MapMouseEvent e ) {
             if (dragging) {
                 org.eclipse.swt.graphics.Point p = Display.getCurrent().map(
@@ -297,6 +257,7 @@ public class PanTool extends AbstractModalTool implements ModalTool {
         /**
          * @see org.locationtech.udig.project.ui.tool.AbstractTool#mousePressed(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
          */
+        @Override
         public void mousePressed( MapMouseEvent e ) {
             if (validModifierButtonCombo(e)) {
                 ((ViewportPane) context.getMapDisplay()).enableDrawCommands(false);
@@ -306,6 +267,7 @@ public class PanTool extends AbstractModalTool implements ModalTool {
                         .map((Canvas) context.getViewportPane(), null, e.x, e.y);
             }
         }
+        @Override
         public void mouseReleased( MapMouseEvent e ) {
             if (dragging) {
 
@@ -337,6 +299,7 @@ public class PanTool extends AbstractModalTool implements ModalTool {
                 ((ViewportModelImpl) context.getViewportModel()).setBounds(newbounds);
             }
         }
+        @Override
         public void dispose() {
             super.dispose();
         }
@@ -351,7 +314,7 @@ public class PanTool extends AbstractModalTool implements ModalTool {
      * change resolution as the MapViewport tries to maintain the current scale (as you move north
      * and south). Emily reports that the strategy does not actually do this properly.
      * </p>
-     * 
+     *
      * @author Emily Gouge
      * @since 1.2.0
      */
@@ -365,6 +328,7 @@ public class PanTool extends AbstractModalTool implements ModalTool {
         /**
          * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseDragged(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
          */
+        @Override
         public void mouseDragged( MapMouseEvent e ) {
             if (dragging) {
                 command.setTranslation(e.x - start.x, e.y - start.y);
@@ -375,6 +339,7 @@ public class PanTool extends AbstractModalTool implements ModalTool {
         /**
          * @see org.locationtech.udig.project.ui.tool.AbstractTool#mousePressed(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
          */
+        @Override
         public void mousePressed( MapMouseEvent e ) {
 
             if (validModifierButtonCombo(e)) {
@@ -389,6 +354,7 @@ public class PanTool extends AbstractModalTool implements ModalTool {
         /**
          * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseReleased(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
          */
+        @Override
         public void mouseReleased( MapMouseEvent e ) {
             if (dragging) {
 
@@ -430,24 +396,9 @@ public class PanTool extends AbstractModalTool implements ModalTool {
                 // }
 
                 // compute new bbox for
-                NavCommand setFinal = new AbstractNavCommand(){
-
-                    @Override
-                    protected void runImpl( IProgressMonitor monitor ) throws Exception {
-                        model.setBounds(newbounds);
-                    }
-
-                    public Command copy() {
-                        return null;
-                    }
-
-                    public String getName() {
-                        return "Fixed Scale Pan"; //$NON-NLS-1$
-                    }
-                };
-
                 ((ViewportPane) getContext().getMapDisplay()).update();
-                context.sendASyncCommand(new PanAndInvalidate(setFinal, command));
+                context.sendASyncCommand(
+                        new PanAndInvalidate(new SetBoundsCommand(newbounds), command));
 
                 dragging = false;
                 // System.out.println("pan done.");
@@ -456,6 +407,7 @@ public class PanTool extends AbstractModalTool implements ModalTool {
         /**
          * @see org.locationtech.udig.project.ui.tool.Tool#dispose()
          */
+        @Override
         public void dispose() {
             super.dispose();
         }

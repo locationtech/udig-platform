@@ -46,25 +46,9 @@ public interface Command {
     public void run( IProgressMonitor monitor ) throws Exception;
 
     /**
-     * Instantiates a new copy of the command that will operate in the same manner as the original
-     * command. API isn't this cloneable?
-     * 
-     * @return A copy of the current command. The new command must run the same way as the current
-     *         object.
-     *         <p>
-     *         If the current command has already executed it cannot be used again, but a copy may
-     *         because a copy should contain none of the state side-effect that execution has on a
-     *         command
-     *         </p>
-     * @deprecated
-     */
-    public Command copy();
-
-    /**
      * Each command has a name that is displayed with the undo/redo buttons.
      * </p>
      * @return The name of the command (often translated)
      */
     public String getName();
-
 }

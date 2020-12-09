@@ -12,18 +12,18 @@ package org.locationtech.udig.project.command;
 import org.locationtech.udig.project.internal.render.ViewportModel;
 
 /**
- * All implementations of NavCommand are used to manipulate the viewport model of the map.  
+ * All implementations of NavCommand are used to manipulate the viewport model of the map.
  * In addition they are send to the Navigation Command Stack rather than the normal command stack
  * for execution.
- * 
+ *
  * @author Jesse
  * @since 0.5
  */
-public interface NavCommand extends UndoableMapCommand, MapCommand {
+public interface NavCommand extends MapCommand {
 
     /**
      * Set the viewport model that the command operates on.
-     * 
+     *
      * @param model
      * @see ViewportModel
      */

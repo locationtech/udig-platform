@@ -14,7 +14,7 @@ package org.locationtech.udig.tools.internal;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import org.locationtech.udig.project.internal.command.navigation.ZoomCommand;
+import org.locationtech.udig.project.command.navigation.ZoomCommand;
 import org.locationtech.udig.project.render.IViewportModel;
 import org.locationtech.udig.project.ui.commands.DrawCommandFactory;
 import org.locationtech.udig.project.ui.commands.SelectionBoxCommand;

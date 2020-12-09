@@ -32,9 +32,7 @@ import org.locationtech.udig.project.command.Command;
 import org.locationtech.udig.project.command.EditCommand;
 import org.locationtech.udig.project.command.MapCommand;
 import org.locationtech.udig.project.command.NavCommand;
-import org.locationtech.udig.project.command.factory.BasicCommandFactory;
 import org.locationtech.udig.project.command.factory.EditCommandFactory;
-import org.locationtech.udig.project.command.factory.NavigationCommandFactory;
 import org.locationtech.udig.project.command.factory.SelectionCommandFactory;
 import org.locationtech.udig.project.internal.impl.AbstractContextImpl;
 import org.locationtech.udig.project.internal.render.RenderManager;
@@ -61,7 +59,6 @@ import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
  * <li>{@link org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl#getViewportPane <em>Viewport Pane</em>}</li>
  * <li>{@link org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl#getDrawFactory <em>Draw Factory</em>}</li>
  * <li>{@link org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl#getEditFactory <em>Edit Factory</em>}</li>
- * <li>{@link org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl#getNavigationFactory <em>Navigation Factory</em>}</li>
  * <li>{@link org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl#getSelectionFactory <em>Selection Factory</em>}</li>
  * </ul>
  * </p>
@@ -130,15 +127,6 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
             .getInstance();
 
     /**
-     * The cached value of the '{@link #getNavigationFactory() <em>Navigation Factory</em>}'
-     * attribute.
-     * 
-     * @see #getNavigationFactory()
-     */
-    private final NavigationCommandFactory navigationFactory = NavigationCommandFactory
-            .getInstance();
-
-    /**
      * The cached value of the '{@link #getSelectionFactory() <em>Selection Factory</em>}'
      * attribute. 
      * 
@@ -146,8 +134,6 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
      */
     private final SelectionCommandFactory selectionFactory = SelectionCommandFactory
             .getInstance();
-
-    private final BasicCommandFactory basicCommandFactory=BasicCommandFactory.getInstance();
 
     public ToolContextImpl( ) {
         super();
@@ -161,9 +147,7 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
     public EditCommandFactory getEditFactory() {
         return editFactory;
     }
-    public NavigationCommandFactory getNavigationFactory() {
-        return navigationFactory;
-    }
+
     public SelectionCommandFactory getSelectionFactory() {
         return selectionFactory;
     }
@@ -295,9 +279,6 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
             display = Display.getDefault();
 
         display.asyncExec(runnable);
-    }
-    public BasicCommandFactory getBasicCommandFactory() {
-        return this.basicCommandFactory;
     }
 
     public ToolContextImpl copy() {

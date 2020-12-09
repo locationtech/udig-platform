@@ -13,9 +13,9 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import org.locationtech.udig.project.command.NavCommand;
-import org.locationtech.udig.project.internal.command.navigation.NavComposite;
-import org.locationtech.udig.project.internal.command.navigation.PanCommand;
-import org.locationtech.udig.project.internal.command.navigation.ZoomCommand;
+import org.locationtech.udig.project.command.navigation.NavComposite;
+import org.locationtech.udig.project.command.navigation.PanCommand;
+import org.locationtech.udig.project.command.navigation.ZoomCommand;
 import org.locationtech.udig.project.ui.commands.TransformDrawCommand;
 import org.locationtech.udig.project.ui.tool.IToolContext;
 

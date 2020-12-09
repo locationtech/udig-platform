@@ -21,7 +21,7 @@ import org.locationtech.udig.location.internal.ImageConstants;
 import org.locationtech.udig.location.internal.Messages;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.command.NavCommand;
-import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import org.locationtech.udig.project.command.navigation.SetViewportBBoxCommand;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.ui.SearchPart;
 

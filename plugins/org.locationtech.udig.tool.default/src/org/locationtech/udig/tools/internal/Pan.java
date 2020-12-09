@@ -13,19 +13,14 @@ package org.locationtech.udig.tools.internal;
 
 import java.awt.Point;
 
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.command.Command;
 import org.locationtech.udig.project.command.NavCommand;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.command.navigation.PanCommand;
-import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.command.navigation.PanCommand;
 import org.locationtech.udig.project.ui.internal.commands.draw.TranslateCommand;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 import org.locationtech.udig.project.ui.tool.AbstractModalTool;
 import org.locationtech.udig.project.ui.tool.ModalTool;
-
-import org.eclipse.core.runtime.IProgressMonitor;
+import org.locationtech.udig.tools.internal.commands.PanAndInvalidate;
 
 
 /**
@@ -50,6 +45,7 @@ public class Pan extends AbstractModalTool implements ModalTool {
     /**
      * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseDragged(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
+    @Override
     public void mouseDragged(MapMouseEvent e) {
         if (dragging) {
             command.setTranslation(e.x- start.x, e.y - start.y);
@@ -60,6 +56,7 @@ public class Pan extends AbstractModalTool implements ModalTool {
     /**
      * @see org.locationtech.udig.project.ui.tool.AbstractTool#mousePressed(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
+    @Override
     public void mousePressed(MapMouseEvent e) {
     	
         if (validModifierButtonCombo(e)) {
@@ -87,6 +84,7 @@ public class Pan extends AbstractModalTool implements ModalTool {
     /**
      * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseReleased(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
+    @Override
     public void mouseReleased(MapMouseEvent e) {
         if (dragging) {
         	((ViewportPane)context.getMapDisplay()).enableDrawCommands(true);
@@ -106,56 +104,8 @@ public class Pan extends AbstractModalTool implements ModalTool {
     /**
      * @see org.locationtech.udig.project.ui.tool.Tool#dispose()
      */
+    @Override
     public void dispose() {
         super.dispose();
-    }
-
-    /**
-     * Executes the specified pan command, and only after it is executed, expires the last translate command
-     */
-    private class PanAndInvalidate implements Command, NavCommand {
-
-        private NavCommand command;
-        private TranslateCommand expire;
-
-        PanAndInvalidate(NavCommand command, TranslateCommand expire) {
-            this.command = command;
-            this.expire = expire;
-        }
-
-        public Command copy() {
-            return new PanAndInvalidate(command, expire);
-        }
-
-        public String getName() {
-            return "PanAndDiscard";
-        }
-
-        public void run( IProgressMonitor monitor ) throws Exception {
-            //we need to expire the translate command first otherwise
-            //the image gets drawn in the wrong spot the first time
-            // and we see weird affects
-            expire.setValid(false);
-
-            command.run(monitor);
-           
-        }
-
-        public void setViewportModel( ViewportModel model ) {
-            command.setViewportModel(model);
-        }
-
-        public Map getMap() {
-            return command.getMap();
-        }
-
-        public void setMap( IMap map ) {
-            command.setMap(map);
-        }
-
-        public void rollback( IProgressMonitor monitor ) throws Exception {
-            command.rollback(monitor);
-        }
-
     }
 }

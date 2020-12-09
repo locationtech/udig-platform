@@ -15,7 +15,6 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.locationtech.udig.project.command.factory.EditCommandFactory;
-import org.locationtech.udig.project.command.factory.NavigationCommandFactory;
 import org.locationtech.udig.project.command.factory.SelectionCommandFactory;
 import org.locationtech.udig.project.internal.AbstractContext;
 import org.locationtech.udig.project.ui.commands.DrawCommandFactory;
@@ -61,13 +60,6 @@ public interface ToolContext extends IToolContext, AbstractContext {
      */
     EditCommandFactory getEditFactory();
 
-    /**
-     * Returns a NavigationCommandFactory
-     * 
-     * @return a NavigationCommandFactory
-     * @deprecated Please use navigation commands directly
-     */
-    NavigationCommandFactory getNavigationFactory();
     /**
      * Returns the current workbench.
      * <p>

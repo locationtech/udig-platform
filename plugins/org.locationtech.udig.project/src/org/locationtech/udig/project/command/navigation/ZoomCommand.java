@@ -7,11 +7,8 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.locationtech.udig.project.internal.command.navigation;
+package org.locationtech.udig.project.command.navigation;
 
-import java.awt.Rectangle;
-
-import org.locationtech.udig.project.command.MapCommand;
 import org.locationtech.udig.project.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -23,9 +20,9 @@ import org.locationtech.jts.geom.Envelope;
  * Increases or decreases the size of the viewport(in world space) by a constant factor, zoom. The
  * zoom is equal in both directions. The function used is: bbox.height=bbox.height/divisor
  * bbox.width=bbox.width/divisor
- * 
+ *
  * @author jeichar
- * @since TODO provide version
+ * @since 1.2.0
  */
 public class ZoomCommand extends AbstractNavCommand {
 
@@ -35,7 +32,7 @@ public class ZoomCommand extends AbstractNavCommand {
 
     /**
      * Creates a new instance of ZoomCommand
-     * 
+     *
      * @param zoomfactor the amount to zoom
      *        <ul>
      *        <li>A zoom must be greater than 1.</li>
@@ -49,7 +46,7 @@ public class ZoomCommand extends AbstractNavCommand {
 
     /**
      * Creates a {@link ZoomCommand} that zooms to a given {@link Envelope}.
-     * 
+     *
      * @param envelope the {@link Envelope} to zoom to.
      */
     public ZoomCommand( Envelope envelope ) {
@@ -57,8 +54,8 @@ public class ZoomCommand extends AbstractNavCommand {
     }
 
     /**
-     * @param fixedPoint the point that will remain fixed after zoom. 
-     *              If set it will be considered together with the 
+     * @param fixedPoint the point that will remain fixed after zoom.
+     *              If set it will be considered together with the
      *              zoomfactor set in the constructor.
      */
     public void setFixedPoint( Coordinate fixedPoint ) {
@@ -66,15 +63,9 @@ public class ZoomCommand extends AbstractNavCommand {
     }
 
     /**
-     * @see org.locationtech.udig.project.internal.command.MapCommand#copy()
+     * @see org.locationtech.udig.project.command.navigation.AbstractNavCommand#runImpl()
      */
-    public MapCommand copy() {
-        return new ZoomCommand(zoomfactor);
-    }
-
-    /**
-     * @see org.locationtech.udig.project.internal.command.navigation.AbstractNavCommand#runImpl()
-     */
+    @Override
     protected void runImpl( IProgressMonitor monitor ) {
         if (envelope!=null) {
             model.zoomToBox(envelope);
@@ -86,8 +77,9 @@ public class ZoomCommand extends AbstractNavCommand {
     /**
      * @see org.locationtech.udig.project.command.MapCommand#getName()
      */
+    @Override
     public String getName() {
-        return Messages.ZoomCommand_zoom; 
+        return Messages.ZoomCommand_zoom;
     }
 
 }

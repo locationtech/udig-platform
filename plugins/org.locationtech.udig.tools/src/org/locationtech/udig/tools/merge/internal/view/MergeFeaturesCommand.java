@@ -102,10 +102,6 @@ final class MergeFeaturesCommand implements UndoableMapCommand {
 		this.compositeCmd.rollback(monitor);
 	}
 
-	public MapCommand copy() {
-		return this.compositeCmd.copy();
-	}
-
 	public String getName() {
 		return "Merge Features Command"; //$NON-NLS-1$
 	}
