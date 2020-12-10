@@ -73,8 +73,12 @@ public class PrintAction extends Action implements IEditorActionDelegate {
             outFile = new File(path);
         }
 
+        // When the outFile exists, then
         // Workaround for Windows systems to check, if there is a lock
-        boolean fileIsLocked = !outFile.renameTo(outFile);
+        boolean fileIsLocked = false;
+        if (outFile.exists()) {
+            fileIsLocked = !outFile.renameTo(outFile);
+        }
         
         if (fileIsLocked) {
             MessageDialog.open(MessageDialog.ERROR, workbenchWindow.getShell(), Messages.PrintAction_errorDialogTitle, 
