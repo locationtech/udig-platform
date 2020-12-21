@@ -66,4 +66,4 @@ Export-Package: com.keypoint;version="1.0.23",
  org.jfree.ui.action;version="1.0.23",
  org.jfree.ui.tabbedui;version="1.0.23",
  org.jfree.util;version="1.0.23"
-Require-Bundle: org.eclipse.swt;bundle-version="3.110.0"
+Require-Bundle: org.eclipse.swt;bundle-version="3.0.0"
