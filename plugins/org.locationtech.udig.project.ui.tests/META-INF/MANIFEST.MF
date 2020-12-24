@@ -50,6 +50,8 @@ Require-Bundle: org.eclipse.gef;bundle-version="3.7.0",
  org.locationtech.udig.project.tests;visibility:=reexport,
  org.locationtech.udig.catalog.ui.tests;visibility:=reexport,
  org.locationtech.udig.tool.default,
- org.easymock
+ org.mockito;bundle-version="2.23.0",
+ org.objenesis;bundle-version="2.6.0",
+ net.bytebuddy.byte-buddy;bundle-version="1.9.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

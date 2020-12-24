@@ -93,7 +93,7 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
     @Test
     @Ignore
     public void testBC_ALBERS_Viewport() throws Exception {
-        CRSFactory fac = (CRSFactory) ReferencingFactoryFinder.getCRSFactories(null).iterator().next();
+        CRSFactory fac = ReferencingFactoryFinder.getCRSFactories(null).iterator().next();
         CoordinateReferenceSystem crs = fac.createFromWKT(BC_ALBERS_WKT);
         
         GeometryFactory gfac = new GeometryFactory();
