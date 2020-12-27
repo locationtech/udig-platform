@@ -1,30 +1,44 @@
 package org.locationtech.udig.render.internal.feature.basic;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.net.URL;
 
-import org.easymock.EasyMock;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.data.FeatureSource;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IGeoResourceInfo;
 import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.project.render.IRenderContext;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
+@RunWith(MockitoJUnitRunner.class)
 public class BasicFeatureMetricsFactoryTest {
+
+    @Mock
+    IRenderContext mockedRenderContext;
+
+    @Mock
+    IResolve mockedGeoResource;
 
     class TestGeoResource extends IGeoResource {
 
         Class resolveClass;
-        
+
         TestGeoResource(Class resolveClass) {
             this.resolveClass = resolveClass;
         }
-        
+
         @Override
         public Status getStatus() {
             return null;
@@ -44,10 +58,11 @@ public class BasicFeatureMetricsFactoryTest {
         public URL getIdentifier() {
             return null;
         }
-        
+
         @Override
         public <T> boolean canResolve(Class<T> adaptee) {
-            if (resolveClass!=null && adaptee != null && adaptee.getName().equals(resolveClass.getName())) {
+            if (resolveClass != null && adaptee != null
+                    && adaptee.getName().equals(resolveClass.getName())) {
                 return true;
             }
             return false;
@@ -55,31 +70,24 @@ public class BasicFeatureMetricsFactoryTest {
     }
 
     @Test
-
     public void giveCoveragePriorityOverShapefile() throws Exception {
-        IRenderContext mockedRenderContext = EasyMock.createNiceMock(IRenderContext.class);
-        IResolve mockedGeoResource = EasyMock.createNiceMock(IResolve.class);
-        
         TestGeoResource testGeoResource = new TestGeoResource(AbstractGridCoverage2DReader.class);
-        EasyMock.expect(mockedRenderContext.getGeoResource()).andReturn(testGeoResource).anyTimes();
-        EasyMock.replay(mockedGeoResource, mockedRenderContext);
-        
+        when(mockedRenderContext.getGeoResource()).thenReturn(testGeoResource);
+
         assertFalse(new BasicFeatureMetricsFactory().canRender(mockedRenderContext));
-        
-        EasyMock.verify(mockedGeoResource, mockedRenderContext);
+
+        verify(mockedRenderContext, atLeastOnce()).getGeoResource();
+        verifyNoMoreInteractions(mockedGeoResource, mockedRenderContext);
     }
 
     @Test
     public void acceptOnFeatureSource() throws Exception {
-        IRenderContext mockedRenderContext = EasyMock.createNiceMock(IRenderContext.class);
-        IResolve mockedGeoResource = EasyMock.createNiceMock(IResolve.class);
-        
         TestGeoResource testGeoResource = new TestGeoResource(FeatureSource.class);
-        EasyMock.expect(mockedRenderContext.getGeoResource()).andReturn(testGeoResource).anyTimes();
-        EasyMock.replay(mockedGeoResource, mockedRenderContext);
-        
+        when(mockedRenderContext.getGeoResource()).thenReturn(testGeoResource);
+
         assertTrue(new BasicFeatureMetricsFactory().canRender(mockedRenderContext));
-        
-        EasyMock.verify(mockedGeoResource, mockedRenderContext);     
+
+        verify(mockedRenderContext, atLeastOnce()).getGeoResource();
+        verifyNoMoreInteractions(mockedGeoResource, mockedRenderContext);
     }
 }

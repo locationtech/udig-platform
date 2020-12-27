@@ -1,54 +1,69 @@
 package org.locationtech.udig.project.ui.internal;
 
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.only;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
 import java.util.List;
 
-import org.easymock.EasyMock;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.locationtech.udig.project.internal.EditManager;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.ui.tests.support.DisplayRule;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
+@SuppressWarnings("unchecked")
+@RunWith(MockitoJUnitRunner.class)
 public class MapLayerSelectionCallbackTest {
 
     @Rule
     public DisplayRule displayRule = new DisplayRule();
 
     @SuppressWarnings("rawtypes")
-    private final List listMock = EasyMock.createStrictMock(List.class);
+    @Mock
+    private List listMock;
 
-    private final EditManager editManagerMock = EasyMock.createMock(EditManager.class);
+    @Mock
+    private EditManager editManagerMock;
 
-    private final Layer layerMock = EasyMock.createNiceMock(Layer.class);
+    @Mock
+    private Layer layerMock;
 
-    private final Map mapMock = EasyMock.createNiceMock("mapMock", Map.class);
+    @Mock
+    private Map mapMock;
 
     @Test
     public void doNothingIfMapIsNull() {
-        EasyMock.replay(mapMock, editManagerMock, listMock);
         new MapLayerSelectionCallback(null, null).callback(listMock);
-        EasyMock.verify(mapMock, editManagerMock);
     }
 
     @Test
     public void doNothingIfMapEditManagerIsNull() {
-        EasyMock.expect(mapMock.getEditManager()).andReturn(null).once();
-        EasyMock.replay(mapMock, editManagerMock, listMock);
+        when(mapMock.getEditManager()).thenReturn(null);
         new MapLayerSelectionCallback(mapMock, null).callback(listMock);
-        EasyMock.verify(mapMock, editManagerMock);
+        verify(mapMock, only()).getEditManager();
+        verifyNoMoreInteractions(mapMock, editManagerMock, listMock);
     }
 
     @Test
     public void doNothingIfCompositeIsNull() {
-        EasyMock.expect(mapMock.getEditManager()).andReturn(editManagerMock).once();
-        EasyMock.replay(mapMock, editManagerMock, listMock);
+        when(mapMock.getEditManager()).thenReturn(editManagerMock);
         new MapLayerSelectionCallback(mapMock, null).callback(listMock);
-        EasyMock.verify(mapMock, editManagerMock, listMock);
+        verify(mapMock, only()).getEditManager();
+        verifyNoMoreInteractions(mapMock, editManagerMock, listMock);
     }
 
     @Test
@@ -56,10 +71,11 @@ public class MapLayerSelectionCallbackTest {
         final Display display = displayRule.getDisplay();
         final Composite composite = new Composite(new Shell(display), SWT.NONE);
         composite.dispose();
-        EasyMock.expect(mapMock.getEditManager()).andReturn(editManagerMock).once();
-        EasyMock.replay(mapMock, editManagerMock, listMock);
+        when(mapMock.getEditManager()).thenReturn(editManagerMock);
         new MapLayerSelectionCallback(mapMock, composite).callback(listMock);
-        EasyMock.verify(mapMock, editManagerMock, listMock);
+
+        verify(mapMock, only()).getEditManager();
+        verifyNoMoreInteractions(mapMock, editManagerMock, listMock);
     }
 
     @Test
@@ -67,10 +83,12 @@ public class MapLayerSelectionCallbackTest {
         final Display display = displayRule.getDisplay();
         final Composite composite = new Composite(new Shell(display), SWT.NONE);
         composite.setVisible(false);
-        EasyMock.expect(mapMock.getEditManager()).andReturn(editManagerMock).once();
-        EasyMock.replay(mapMock, editManagerMock, listMock);
+        when(mapMock.getEditManager()).thenReturn(editManagerMock);
+
         new MapLayerSelectionCallback(mapMock, composite).callback(listMock);
-        EasyMock.verify(mapMock, editManagerMock, listMock);
+
+        verify(mapMock, only()).getEditManager();
+        verifyNoMoreInteractions(editManagerMock, listMock);
     }
 
     @Test
@@ -80,16 +98,18 @@ public class MapLayerSelectionCallbackTest {
         shell.setVisible(true);
         final Composite composite = new Composite(shell, SWT.NONE);
 
-        final Map differentMap = EasyMock.createNiceMock(Map.class);
-        EasyMock.expect(mapMock.getEditManager()).andReturn(editManagerMock).once();
+        final Map differentMap = mock(Map.class);
 
-        EasyMock.expect(listMock.get(0)).andReturn(layerMock).once();
+        when(mapMock.getEditManager()).thenReturn(editManagerMock);
+        when(listMock.get(0)).thenReturn(layerMock);
+        when(layerMock.getMap()).thenReturn(differentMap);
 
-        EasyMock.expect(layerMock.getMap()).andReturn(differentMap);
-
-        EasyMock.replay(mapMock, editManagerMock, listMock, layerMock, differentMap);
         new MapLayerSelectionCallback(mapMock, composite).callback(listMock);
-        EasyMock.verify(mapMock, editManagerMock, listMock, layerMock, differentMap);
+
+        verify(mapMock, only()).getEditManager();
+        verify(layerMock, only()).getMap();
+        verify(listMock, only()).get(0);
+        verifyNoMoreInteractions(mapMock, editManagerMock, listMock, layerMock, differentMap);
     }
 
     @Test
@@ -99,14 +119,18 @@ public class MapLayerSelectionCallbackTest {
         shell.setVisible(true);
         final Composite composite = new Composite(shell, SWT.NONE);
 
-        EasyMock.expect(mapMock.getEditManager()).andReturn(editManagerMock).times(2);
-        EasyMock.expect(listMock.get(0)).andReturn(layerMock).once();
-        EasyMock.expect(editManagerMock.getSelectedLayer()).andReturn(layerMock).once();
-        EasyMock.expect(layerMock.getMap()).andReturn(mapMock);
+        when(mapMock.getEditManager()).thenReturn(editManagerMock);
+        when(listMock.get(0)).thenReturn(layerMock);
+        when(editManagerMock.getSelectedLayer()).thenReturn(layerMock);
+        when(layerMock.getMap()).thenReturn(mapMock);
 
-        EasyMock.replay(mapMock, editManagerMock, listMock, layerMock);
         new MapLayerSelectionCallback(mapMock, composite).callback(listMock);
-        EasyMock.verify(mapMock, editManagerMock, listMock, layerMock);
+
+        verify(mapMock, times(2)).getEditManager();
+        verify(listMock, only()).get(0);
+        verify(editManagerMock, only()).getSelectedLayer();
+        verify(layerMock, only()).getMap();
+        verifyNoMoreInteractions(mapMock, editManagerMock, listMock, layerMock);
     }
 
     @Test
@@ -116,19 +140,24 @@ public class MapLayerSelectionCallbackTest {
         shell.setVisible(true);
         final Composite composite = new Composite(shell, SWT.NONE);
 
-        final Layer anotherLayer = EasyMock.createNiceMock(Layer.class);
+        final Layer anotherLayer = mock(Layer.class);
 
-        EasyMock.expect(listMock.get(0)).andReturn(layerMock).once();
-        EasyMock.expect(mapMock.getEditManager()).andReturn(editManagerMock).times(2);
-        EasyMock.expect(mapMock.getEditManagerInternal()).andReturn(editManagerMock).times(1);
-        EasyMock.expect(editManagerMock.getSelectedLayer()).andReturn(anotherLayer).times(2);
-        EasyMock.expect(layerMock.getMap()).andReturn(mapMock);
+        when(listMock.get(0)).thenReturn(layerMock);
+        when(mapMock.getEditManager()).thenReturn(editManagerMock);
+        when(mapMock.getEditManagerInternal()).thenReturn(editManagerMock);
+        when(editManagerMock.getSelectedLayer()).thenReturn(anotherLayer);
+        when(layerMock.getMap()).thenReturn(mapMock);
 
-        editManagerMock.setSelectedLayer(layerMock);
-        EasyMock.expectLastCall().once();
-
-        EasyMock.replay(mapMock, editManagerMock, listMock, layerMock, anotherLayer);
         new MapLayerSelectionCallback(mapMock, composite).callback(listMock);
-        EasyMock.verify(mapMock, editManagerMock, listMock, layerMock, anotherLayer);
+
+        verify(listMock, only()).get(0);
+        verify(mapMock, times(2)).getEditManager();
+        verify(mapMock, atLeastOnce()).getEditManagerInternal();
+        verify(mapMock, atLeastOnce()).sendCommandSync(Mockito.any());
+        verify(editManagerMock, atLeastOnce()).setSelectedLayer(layerMock);
+        verify(editManagerMock, times(2)).getSelectedLayer();
+        verify(layerMock, only()).getMap();
+
+        verifyNoMoreInteractions(mapMock, editManagerMock, listMock, layerMock, anotherLayer);
     }
 }

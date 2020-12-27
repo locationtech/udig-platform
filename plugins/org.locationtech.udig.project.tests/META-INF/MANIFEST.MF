@@ -21,6 +21,8 @@ Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
  org.locationtech.udig.ui.tests,
  org.locationtech.udig.ui,
  org.locationtech.udig.project.edit,
- org.easymock
+ org.mockito,
+ net.bytebuddy.byte-buddy;bundle-version="1.9.0",
+ org.objenesis;bundle-version="2.6.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
