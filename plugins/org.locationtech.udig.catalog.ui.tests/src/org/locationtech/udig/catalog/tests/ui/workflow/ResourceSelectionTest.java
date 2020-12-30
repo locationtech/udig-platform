@@ -12,11 +12,19 @@ package org.locationtech.udig.catalog.tests.ui.workflow;
 
 import static org.junit.Assert.assertFalse;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.locationtech.udig.catalog.internal.ui.ConnectionPageDecorator;
 import org.locationtech.udig.catalog.internal.ui.ResourceSelectionPage;
 import org.locationtech.udig.catalog.tests.ui.CatalogTestsUIPlugin;
@@ -31,14 +39,9 @@ import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardDialog;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
 import org.locationtech.udig.catalog.util.CatalogTestUtils;
-import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 public class ResourceSelectionTest {
+    
     Shell shell;
 
     WorkflowWizard wizard;
@@ -55,9 +58,15 @@ public class ResourceSelectionTest {
 
     private Workflow workflow;
 
+    @BeforeClass
+    public static void beforeClass() throws MalformedURLException {
+        // check, if service is available, otherwise skip tests
+        URL url = new URL(CatalogTestsUIPlugin.WMSTestCapabilitiesURL);
+        CatalogTestUtils.assumeNoConnectionException(url, 3000);
+    }
+
     @Before
     public void setUp() throws Exception {
-
         ArrayList<String> l = new ArrayList<String>();
         l.add("org.locationtech.udig.catalog.ui.WMS"); //$NON-NLS-1$
 
@@ -93,9 +102,9 @@ public class ResourceSelectionTest {
 
     @Test
     public void testNormal() throws Exception {
-        // create a context
         URL url = new URL(CatalogTestsUIPlugin.WMSTestCapabilitiesURL);
         CatalogTestUtils.assumeNoConnectionException(url, 3000);
+
         workflow.setContext(url);
 
         Assertion a1 = new Assertion() {
