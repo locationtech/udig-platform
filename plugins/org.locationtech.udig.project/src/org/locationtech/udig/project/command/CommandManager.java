@@ -16,25 +16,23 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import org.locationtech.udig.project.internal.Messages;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.commands.edit.RollbackCommand;
-import org.locationtech.udig.project.internal.commands.selection.CommitCommand;
-import org.locationtech.udig.project.internal.impl.MapImpl.MapCommandListener;
-import org.locationtech.udig.project.preferences.PreferenceConstants;
-import org.locationtech.udig.ui.PlatformGIS;
-import org.locationtech.udig.ui.ProgressMonitorTaskNamer;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.commands.edit.RollbackCommand;
+import org.locationtech.udig.project.internal.commands.selection.CommitCommand;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.ProgressMonitorTaskNamer;
 
 /**
  * A commands Manager executes commands in a seperate thread, either synchronously or a
@@ -52,8 +50,8 @@ public class CommandManager implements CommandStack, NavCommandStack {
      */
     private long timeout = -1;
 
-    Set<ErrorHandler> handlers = new CopyOnWriteArraySet<ErrorHandler>();
-    Set<CommandListener> completionHandlers = new CopyOnWriteArraySet<CommandListener>();
+    Set<ErrorHandler> handlers = new CopyOnWriteArraySet<>();
+    Set<CommandListener> completionHandlers = new CopyOnWriteArraySet<>();
 
     Executor commandExecutor;
     private final String managerName;
@@ -234,13 +232,14 @@ public class CommandManager implements CommandStack, NavCommandStack {
     /**
      * @see org.locationtech.udig.project.command.CommandStack#canUndo()
      */
+    @Override
     public boolean canUndo() {
         if( commandExecutor ==null )
             return false;
         
         Command c;
         if (!commandExecutor.history.isEmpty()) {
-            c = (Command) commandExecutor.history.peek();
+            c = commandExecutor.history.peek();
             if (c instanceof UndoableCommand)
                 return true;
         }
@@ -250,6 +249,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
     /**
      * @see org.locationtech.udig.project.command.CommandStack#canRedo()
      */
+    @Override
     public boolean canRedo() {
         if (commandExecutor!=null && !commandExecutor.undone.isEmpty()) {
             return true;
@@ -260,6 +260,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
     /**
      * @see org.locationtech.udig.project.command.NavCommandStack#hasBackHistory()
      */
+    @Override
     public boolean hasBackHistory() {
         return canUndo();
     }
@@ -267,6 +268,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
     /**
      * @see org.locationtech.udig.project.command.NavCommandStack#hasForwardHistory()
      */
+    @Override
     public boolean hasForwardHistory() {
         return canRedo();
     }
@@ -392,13 +394,13 @@ public class CommandManager implements CommandStack, NavCommandStack {
                 if (command instanceof PostDeterminedEffectCommand) {
 
                     PostDeterminedEffectCommand c = (PostDeterminedEffectCommand) command;
-                    if (c.execute(new SubProgressMonitor(monitor, 1000))) {
+                    if (c.execute(SubMonitor.convert(monitor, 1000))) {
                         undone.clear();
                         addToHistory(command);
                     }
 
                 } else {
-                    command.run(new SubProgressMonitor(monitor, 1000));
+                    command.run(SubMonitor.convert(monitor, 1000));
 
                     undone.clear();
                     addToHistory(command);
@@ -438,6 +440,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
                             .getBoolean(PreferenceConstants.P_IRREVERSIBLE_COMMAND_VALUE);
                 }
                 PlatformGIS.syncInDisplayThread(new Runnable(){
+                    @Override
                     public void run() {
                         String string = Messages.CommandManager_warning + command.getName();
                         if ( command instanceof RollbackCommand || 
@@ -469,16 +472,9 @@ public class CommandManager implements CommandStack, NavCommandStack {
          * Notifies the owner that the command has been executed.
          */
         private void notifyOwner( Command command ) {
-            
             for( CommandListener listener : completionHandlers ) {
-                if (command instanceof NavCommand) {
-                    listener.commandExecuted(MapCommandListener.NAV_COMMAND);
-                } else {
-                    listener.commandExecuted(MapCommandListener.COMMAND);
-                }
-                
+                listener.commandExecuted(command);
             }
-
         }
 
         /**
@@ -492,9 +488,9 @@ public class CommandManager implements CommandStack, NavCommandStack {
             try {
                 if (command instanceof PostDeterminedEffectCommand) {
                     PostDeterminedEffectCommand post = (PostDeterminedEffectCommand) command;
-                    post.execute(new SubProgressMonitor(monitor, 1000));
+                    post.execute(SubMonitor.convert(monitor, 1000));
                 } else {
-                    command.run(new SubProgressMonitor(monitor, 1000));
+                    command.run(SubMonitor.convert(monitor, 1000));
                 }
                 addToHistory(command);
                 notifyOwner(command);
@@ -535,7 +531,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
                     UndoableCommand command = (UndoableCommand) c;
                     monitor.beginTask(Messages.CommandManager_undo + command.getName(), 1000); 
                     try {
-                        command.rollback(new SubProgressMonitor(monitor, 1000));
+                        command.rollback(SubMonitor.convert(monitor, 1000));
                         addToUndone(command);
                     } catch (Throwable e) {
                         handleRollbackError(command, e);
@@ -574,7 +570,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
             Queue<Command> q = history;
             history = new LinkedList<Command>();
             for( Iterator<Command> iter = q.iterator(); iter.hasNext(); ) {
-                Command command = (Command) iter.next();
+                Command command = iter.next();
                 execute(command, monitor);
             }
         }

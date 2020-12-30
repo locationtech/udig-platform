@@ -19,7 +19,8 @@ public interface CommandListener {
     /**
      * CommandManager will call this function once a command is completed.
      * 
-     * @param commandType
+     * @param command executed command.
      */
-    public void commandExecuted( int commandType );
+
+    void commandExecuted(Command command);
 }
