@@ -14,7 +14,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,7 +31,7 @@ import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 public abstract class CatalogImportTest {
 
-	CatalogImport catalogImport;
+    CatalogImport catalogImport;
 
     @Before
     public void setUp() throws Exception {
@@ -41,46 +40,46 @@ public abstract class CatalogImportTest {
     }
 
     @Test
-	public void testNormal() throws Exception{
-			URL context = getContext();
-			final ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
+    public void testNormal() throws Exception {
+        URL context = getContext();
+        final ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
 
-			List<IResolve> members = catalog.members(new DummyMonitor());
-			if (!members.isEmpty()) {
-				//clear the catalog
-				for (Iterator<IResolve> itr = members.iterator(); itr.hasNext();) {
-					IService service = (IService)itr.next();
-					catalog.remove(service);
-				}
-			}
-			members = catalog.members(new DummyMonitor());
-			assertTrue(members.isEmpty());
+        List<IResolve> members = catalog.members(new DummyMonitor());
+        if (!members.isEmpty()) {
+            // clear the catalog
+            for (Iterator<IResolve> itr = members.iterator(); itr.hasNext();) {
+                IService service = (IService) itr.next();
+                catalog.remove(service);
+            }
+        }
+        members = catalog.members(new DummyMonitor());
+        assertTrue(members.isEmpty());
 
-			catalogImport.getDialog().getWorkflowWizard().getWorkflow()
-				.setContext(context);
-			catalogImport.run(new DummyMonitor(),context);
+        catalogImport.getDialog().getWorkflowWizard().getWorkflow().setContext(context);
+        catalogImport.run(new DummyMonitor(), context);
 
-            //sleep for 10 seconds, if dialog still active by then kill it
-            UDIGTestUtil.inDisplayThreadWait(10000, new WaitCondition(){
+        // sleep for 10 seconds, if dialog still active by then kill it
+        UDIGTestUtil.inDisplayThreadWait(10000, new WaitCondition() {
 
-                public boolean isTrue() {
-                    try {
-                        return !catalog.members(new DummyMonitor()).isEmpty();
-                    } catch (IOException e) {
-                        return false;
-                    }
+            @Override
+            public boolean isTrue() {
+                try {
+                    return !catalog.members(new DummyMonitor()).isEmpty();
+                } catch (IOException e) {
+                    return false;
                 }
+            }
 
-            }, true);
+        }, true);
 
-			members = catalog.members(new DummyMonitor());
-			assertTrue(!members.isEmpty());
-			for (Iterator<IResolve> itr = members.iterator(); itr.hasNext();) {
-				assertServiceType((IService)itr.next());
-			}
-	}
+        members = catalog.members(new DummyMonitor());
+        assertTrue(!members.isEmpty());
+        for (Iterator<IResolve> itr = members.iterator(); itr.hasNext();) {
+            assertServiceType((IService) itr.next());
+        }
+    }
 
-	abstract URL getContext() throws Exception;
+    abstract URL getContext() throws Exception;
 
-	abstract void assertServiceType(IService service);
+    abstract void assertServiceType(IService service);
 }

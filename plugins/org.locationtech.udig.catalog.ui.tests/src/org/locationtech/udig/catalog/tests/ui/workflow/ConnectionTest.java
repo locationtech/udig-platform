@@ -40,19 +40,19 @@ import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
 import org.locationtech.udig.catalog.util.CatalogTestUtils;
 
 public class ConnectionTest {
-	Shell shell;
+    Shell shell;
 
-	private static URL capabilitiesRequestURL = null;
-	WorkflowWizard wizard;
+    private static URL capabilitiesRequestURL = null;
 
-	WorkflowWizardDialog dialog;
+    WorkflowWizard wizard;
 
-	EndConnectionState state;
+    WorkflowWizardDialog dialog;
 
-	ConnectionPageDecorator page;
+    EndConnectionState state;
 
-	private Workflow workflow;
+    ConnectionPageDecorator page;
 
+    private Workflow workflow;
 
     @BeforeClass
     public static void beforeClass() throws Exception {
@@ -61,113 +61,112 @@ public class ConnectionTest {
         CatalogTestUtils.assumeNoConnectionException(capabilitiesRequestURL, 1000);
     }
 
-    private void init( String urlString ) {
+    private void init(String urlString) {
         ArrayList<String> l = new ArrayList<String>();
-		l.add(urlString); 
-		
-		UDIGConnectionFactoryDescriptor d = ConnectionFactoryManager.instance().getConnectionFactoryDescriptors(l).get(0);
-		state = new EndConnectionState(d,true);
-		page = new ConnectionPageDecorator();
+        l.add(urlString);
 
-		Map<Class<? extends State>, WorkflowWizardPageProvider> map = new HashMap<Class<? extends State>, WorkflowWizardPageProvider>();
-		map.put(state.getClass(), new BasicWorkflowWizardPageFactory(page));
-		map.put(SimpleState.class, new SimplePage());
+        UDIGConnectionFactoryDescriptor d = ConnectionFactoryManager.instance()
+                .getConnectionFactoryDescriptors(l).get(0);
+        state = new EndConnectionState(d, true);
+        page = new ConnectionPageDecorator();
 
-		workflow = new Workflow();
-		workflow.setStates(new State[] { state, new SimpleState() });
-		wizard = new WorkflowWizard(workflow, map);
+        Map<Class<? extends State>, WorkflowWizardPageProvider> map = new HashMap<Class<? extends State>, WorkflowWizardPageProvider>();
+        map.put(state.getClass(), new BasicWorkflowWizardPageFactory(page));
+        map.put(SimpleState.class, new SimplePage());
 
-		shell = new Shell(Display.getDefault());
-		dialog = new WorkflowWizardDialog(shell, wizard);
-		dialog.setBlockOnOpen(true);
+        workflow = new Workflow();
+        workflow.setStates(new State[] { state, new SimpleState() });
+        wizard = new WorkflowWizard(workflow, map);
+
+        shell = new Shell(Display.getDefault());
+        dialog = new WorkflowWizardDialog(shell, wizard);
+        dialog.setBlockOnOpen(true);
     }
 
-	@After
-	public void tearDown() throws Exception {
-		if (!shell.isDisposed())
-			shell.dispose();
-	}
-	
-	@Ignore // fails when running from maven
-	@Test
-	public void testButtonState() {
+    @After
+    public void tearDown() throws Exception {
+        if (!shell.isDisposed())
+            shell.dispose();
+    }
+
+    @Ignore // fails when running from maven
+    @Test
+    public void testButtonState() {
         init("org.locationtech.udig.catalog.ui.WMS"); //$NON-NLS-1$
 
-		Assertion a1 = new Assertion() {
-			@Override
-			public void run() {
-				Button next = DialogDriver.findButton(dialog,IDialogConstants.NEXT_ID);
-				fail = !next.isEnabled();
-			}
-		};
-		Object[] actions = new Object[]{a1,IDialogConstants.CANCEL_ID};
-		
-		DialogDriver driver = new DialogDriver(dialog,actions);
-		driver.schedule();
-		
-		dialog.open();
-		
-		assertFalse(a1.fail);
-		driver.cancel();
-	}
-	
-	@Test
-	public void testWorkbenchSelection() {
+        Assertion a1 = new Assertion() {
+            @Override
+            public void run() {
+                Button next = DialogDriver.findButton(dialog, IDialogConstants.NEXT_ID);
+                fail = !next.isEnabled();
+            }
+        };
+        Object[] actions = new Object[] { a1, IDialogConstants.CANCEL_ID };
+
+        DialogDriver driver = new DialogDriver(dialog, actions);
+        driver.schedule();
+
+        dialog.open();
+
+        assertFalse(a1.fail);
+        driver.cancel();
+    }
+
+    @Test
+    public void testWorkbenchSelection() {
         init("org.locationtech.udig.catalog.ui.WMS"); //$NON-NLS-1$
 
-		// create a workbench selection
-		try {
-			
-			workflow.setContext(capabilitiesRequestURL);
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
-		
-		Assertion a1 = new Assertion() {
-			@Override
-			public void run() {
-				Button next = DialogDriver.findButton(dialog,IDialogConstants.NEXT_ID);
-				fail = !next.isEnabled();
-			}
-		};
-		Object[] actions = new Object[]{a1,IDialogConstants.CANCEL_ID};
-		
-		DialogDriver driver = new DialogDriver(dialog,actions);
-		driver.schedule();
-		
-		dialog.open();
-		
-		assertFalse(a1.fail);
-		driver.cancel();
-	}
-	
-	@Test
-	public void testConnection() {
-	    init("org.locationtech.udig.catalog.ui.WMS"); //$NON-NLS-1$
+        // create a workbench selection
+        try {
 
-		//create a workbench selection
-		try {
-			
-			workflow.setContext(capabilitiesRequestURL);
-			
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
-		
-		Object[] actions = new Object[]{IDialogConstants.NEXT_ID,IDialogConstants.CANCEL_ID};
-		
-		DialogDriver driver = new DialogDriver(dialog,actions);
-		driver.schedule();
-		
-		dialog.open();
-		driver.cancel();
-		
-		assertNotNull(state.getServices());
-		assertFalse(state.getServices().isEmpty());
-		
-	}
+            workflow.setContext(capabilitiesRequestURL);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+
+        Assertion a1 = new Assertion() {
+            @Override
+            public void run() {
+                Button next = DialogDriver.findButton(dialog, IDialogConstants.NEXT_ID);
+                fail = !next.isEnabled();
+            }
+        };
+        Object[] actions = new Object[] { a1, IDialogConstants.CANCEL_ID };
+
+        DialogDriver driver = new DialogDriver(dialog, actions);
+        driver.schedule();
+
+        dialog.open();
+
+        assertFalse(a1.fail);
+        driver.cancel();
+    }
+
+    @Test
+    public void testConnection() {
+        init("org.locationtech.udig.catalog.ui.WMS"); //$NON-NLS-1$
+
+        // create a workbench selection
+        try {
+
+            workflow.setContext(capabilitiesRequestURL);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+
+        Object[] actions = new Object[] { IDialogConstants.NEXT_ID, IDialogConstants.CANCEL_ID };
+
+        DialogDriver driver = new DialogDriver(dialog, actions);
+        driver.schedule();
+
+        dialog.open();
+        driver.cancel();
+
+        assertNotNull(state.getServices());
+        assertFalse(state.getServices().isEmpty());
+
+    }
 }

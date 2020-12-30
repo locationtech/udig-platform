@@ -12,47 +12,39 @@ package org.locationtech.udig.catalog.tests.internal.wfs;
 
 import java.net.URL;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.junit.BeforeClass;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.internal.wfs.WFSServiceExtension;
 import org.locationtech.udig.catalog.tests.AbstractGeoResourceTest;
 import org.locationtech.udig.catalog.util.CatalogTestUtils;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.junit.Before;
 
 /**
  * @author dzwiers
  */
 public class WFSGeoResourceTest extends AbstractGeoResourceTest {
 
-    private IService service = null;
-    private IGeoResource resource = null;
+    private static IService service = null;
 
-    @Before
-    public void setUp() throws Exception {
+    private static IGeoResource resource = null;
+
+    @BeforeClass
+    public static void beforeClass() throws Exception {
         WFSServiceExtension fac = new WFSServiceExtension();
         URL url = new URL("https://demo.geo-solutions.it/geoserver/wfs?"); //$NON-NLS-1$
         CatalogTestUtils.assumeNoConnectionException(url, 3000);
         service = fac.createService(url, fac.createParams(url));
         resource = service.resources((IProgressMonitor) null).get(0);
     }
-    
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.catalog.tests.AbstractGeoResourceTest#getResolve()
-     */
+
+    @Override
     protected IGeoResource getResolve() {
         return resource;
     }
-    
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.catalog.tests.AbstractResolveTest#hasParent()
-     */
+
+    @Override
     protected boolean hasParent() {
         return true;
     }
-    
 }
