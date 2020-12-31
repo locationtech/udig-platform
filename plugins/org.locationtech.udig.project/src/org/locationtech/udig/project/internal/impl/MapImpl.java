@@ -59,6 +59,7 @@ import org.locationtech.udig.project.ILegendItem;
 import org.locationtech.udig.project.IMapCompositionListener;
 import org.locationtech.udig.project.IMapListener;
 import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.command.Command;
 import org.locationtech.udig.project.command.CommandListener;
 import org.locationtech.udig.project.command.CommandManager;
 import org.locationtech.udig.project.command.CommandStack;
@@ -292,40 +293,6 @@ public class MapImpl extends EObjectImpl implements Map {
      * @ordered
      */
     protected EList<ILegendItem> legend;
-
-    /**
-     * <p>
-     * A Listener to be passed on to the command manager. Will be notified of command completion.
-     * </p>
-     *
-     * @author aalam
-     * @since 0.6.0
-     */
-    public class MapCommandListener implements CommandListener {
-        /** <code>COMMAND</code> field */
-        public static final int COMMAND = 0;
-
-        /** <code>NAV_COMMAND</code> field */
-        public static final int NAV_COMMAND = 1;
-
-        /**
-         * CommandManager will call this function once the command is completed.
-         *
-         * @param commandType
-         */
-        @Override
-        public void commandExecuted(int commandType) {
-            switch (commandType) {
-            case COMMAND:
-                notifyCommandDone();
-                break;
-            case NAV_COMMAND:
-                notifyNavCommandDone();
-                break;
-            }
-        }
-
-    }
 
     private volatile CommandManager commandManager;
 
@@ -788,7 +755,14 @@ public class MapImpl extends EObjectImpl implements Map {
             if (this.navCommandManager == null) {
                 this.navCommandManager = new CommandManager(
                         Messages.MapImpl_NavigationCommandStack, new DefaultErrorHandler(),
-                        new MapCommandListener());
+                        new CommandListener() {
+                            @Override
+                            public void commandExecuted(Command command) {
+                                if (command instanceof NavCommand) {
+                                    notifyNavCommandStackChange();
+                                }
+                            }
+                        });
 
             }
         }
@@ -805,8 +779,15 @@ public class MapImpl extends EObjectImpl implements Map {
         synchronized (CommandManager.class) {
             if (this.commandManager == null) {
                 this.commandManager = new CommandManager(Messages.MapImpl_CommandStack,
-                        new DefaultErrorHandler(), new MapCommandListener());
-
+                        new DefaultErrorHandler(), 
+                        new CommandListener() {
+                            @Override
+                            public void commandExecuted(Command command) {
+                                if (!(command instanceof NavCommand)) {
+                                    notifyCommandStackChange();
+                                }
+                            }
+                        });
             }
         }
         return commandManager;
@@ -921,21 +902,7 @@ public class MapImpl extends EObjectImpl implements Map {
     private void notifyNavCommandStackChange() {
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
-                    ProjectPackage.MAP__NAV_COMMAND_STACK, null, commandManager));
-    }
-
-    /**
-     * notifyNavCommandDone is called by the CommandManager when a nav command is finished running.
-     */
-    public void notifyNavCommandDone() {
-        notifyNavCommandStackChange();
-    }
-
-    /**
-     * notifyCommandDone is called by the CommandManager when a non-nav command is finished running.
-     */
-    public void notifyCommandDone() {
-        notifyCommandStackChange();
+                    ProjectPackage.MAP__NAV_COMMAND_STACK, null, navCommandManager));
     }
 
     /**
