@@ -93,8 +93,6 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
      */
     public void start( BundleContext context ) throws Exception {
         super.start(context);
-        
-        new ActiveMapTracker().startup();
     }
 
     /**

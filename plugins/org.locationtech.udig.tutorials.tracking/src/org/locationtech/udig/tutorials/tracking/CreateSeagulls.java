@@ -27,8 +27,6 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.udig.project.IBlackboard;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.ActiveMapTracker;
 import org.locationtech.udig.tutorials.tracking.trackingitem.Seagull;
 import org.locationtech.udig.tutorials.tracking.trackingitem.SeagullFlock;
 import org.locationtech.udig.tutorials.tracking.trackingitem.TrackingItem;
@@ -36,6 +34,7 @@ import org.locationtech.udig.ui.operations.IOp;
 
 public class CreateSeagulls implements IOp {
 
+    @Override
     public void op( Display display, Object target, IProgressMonitor monitor ) throws Exception {
         
         //System.out.println("create seagulls called"); //$NON-NLS-1$
@@ -118,6 +117,7 @@ public class CreateSeagulls implements IOp {
             this.delay = delay;
         }
 
+        @Override
         protected IStatus run(IProgressMonitor monitor) {
             // check the blackboard of the given map for a current flock
             //System.out.println("update job called for map: " + map.getID()); //$NON-NLS-1$

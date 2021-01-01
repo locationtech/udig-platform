@@ -100,7 +100,7 @@ import org.opengis.coverage.grid.GridCoverage;
  */
 public class ApplicationGIS {
 
-    private static IToolManager                                          toolManager;
+    private static IToolManager toolManager;
     private static ActiveMapTracker activeMapTracker;
 
     /**
@@ -137,23 +137,33 @@ public class ApplicationGIS {
      *         editor.
      */
     public static IMap getActiveMap() {
+        if (activeMapTracker == null) {
+            return ApplicationGIS.NO_MAP;
+        }
         return activeMapTracker.getActiveMap();
     }
+
     /**
      * Returns all open maps.
-     * 
+     *
      * @return a Collection of maps contained.
      */
-    public static Collection< ? extends IMap> getOpenMaps() {
+    public static Collection<? extends IMap> getOpenMaps() {
+        if (activeMapTracker == null) {
+            return Collections.emptyList();
+        }
         return activeMapTracker.getOpenMaps();
     }
 
     /**
      * Returns all visible maps.
-     * 
+     *
      * @return a Collection of maps contained.
      */
-    public static Collection< ? extends IMap> getVisibleMaps() {
+    public static Collection<? extends IMap> getVisibleMaps() {
+        if (activeMapTracker == null) {
+            return Collections.emptyList();
+        }
         return activeMapTracker.getVisibleMaps();
     }
 
@@ -969,13 +979,15 @@ public class ApplicationGIS {
     }
 
     /**
-     * This method should only be called by uDig.  If it is called by any one else an exception will be thrown.
+     * This method should only be called by uDig. If it is called by any one else an exception will
+     * be thrown.
      *
      * @param activeMapTracker the tracker that managers
      */
-    public static void setActiveMapTracker( ActiveMapTracker activeMapTrackerToSet ) {
-        if (activeMapTracker != null ){
-            throw new Error("This method has already been called! It is an error for non-uDig code to call this method");
+    public static void setActiveMapTracker(ActiveMapTracker activeMapTrackerToSet) {
+        if (activeMapTracker != null && activeMapTrackerToSet != null) {
+            throw new Error(
+                    "This method has already been called! It is an error for non-uDig code to call this method");
         }
         activeMapTracker = activeMapTrackerToSet;
     }
