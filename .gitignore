@@ -1,7 +1,8 @@
 .DS_Store
 Thumbs.db
-plugins/org.locationtech.udig.libs/lib-src/
-plugins/org.locationtech.udig.libs/lib/
+# see pom-libs.xml for osgi-fied 3rd-party dependencies
+plugins/*.libs*/lib/
+plugins/*.libs*/lib-src/
 plugins/org.locationtech.udig.*/.settings
 features/org.locationtech.udig-site.community/artifacts.jar
 features/org.locationtech.udig-site.community/content.jar
@@ -11,3 +12,4 @@ javaCompiler...args
 build.xml
 workspace
 runtime-udig.product
+.sts4-cache/

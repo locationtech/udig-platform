@@ -201,4 +201,10 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
          version="0.0.0"
          fragment="true"/>
 
+   <plugin
+         id="org.locationtech.udig.libs.jfreechart"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
 </feature>
