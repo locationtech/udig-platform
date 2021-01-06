@@ -9,8 +9,13 @@
    <extension-point id="toolManagers" name="toolManagers" schema="schema/toolManagers.exsd"/>
    <extension-point id="pdfTemplates" name="PDF Templates" schema="schema/pdfTemplates.exsd"/>
    <extension-point id="featurePanel" name="%featurePanel.point" schema="schema/featurePanel.exsd"/>
-   
- 	<extension
+
+   <extension point="org.eclipse.ui.startup">
+     <startup
+          class="org.locationtech.udig.project.ui.internal.ActiveMapTracker">
+     </startup>
+   </extension>
+   <extension
          point="org.eclipse.ui.popupMenus">
       <objectContribution
             objectClass="org.locationtech.udig.catalog.IGeoResource"
