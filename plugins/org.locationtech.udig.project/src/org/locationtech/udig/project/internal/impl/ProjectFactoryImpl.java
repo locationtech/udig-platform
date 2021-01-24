@@ -46,7 +46,6 @@ import org.locationtech.udig.project.internal.StyleEntry;
 import org.locationtech.udig.project.internal.render.RenderFactory;
 import org.locationtech.udig.project.internal.render.impl.ViewportModelImpl;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
-import org.locationtech.udig.ui.palette.ColourPalette;
 import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.palette.ColourScheme;
 
@@ -94,7 +93,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
     public static ProjectFactory init() {
         try {
             ProjectFactory theProjectFactory = (ProjectFactory) EPackage.Registry.INSTANCE
-                    .getEFactory("http:///net/refractions/udig/project/internal.ecore"); //$NON-NLS-1$ 
+                    .getEFactory(ProjectPackage.eNS_URI);
             if (theProjectFactory != null) {
                 return theProjectFactory;
             }
@@ -326,6 +325,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ContextModel createContextModel() {
         ContextModelImpl contextModel = new ContextModelImpl();
         return contextModel;
@@ -335,6 +335,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Layer createLayer() {
         LayerImpl layer = new LayerImpl();
         return layer;
@@ -344,6 +345,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Project createProject() {
         ProjectImpl project = new ProjectImpl();
         return project;
@@ -353,6 +355,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ProjectRegistry createProjectRegistry() {
         ProjectRegistryImpl projectRegistry = new ProjectRegistryImpl();
         return projectRegistry;
@@ -362,6 +365,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public StyleBlackboard createStyleBlackboard() {
         StyleBlackboardImpl styleBlackboard = new StyleBlackboardImpl();
         return styleBlackboard;
@@ -371,6 +375,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public StyleEntry createStyleEntry() {
         StyleEntryImpl styleEntry = new StyleEntryImpl();
         return styleEntry;
@@ -380,6 +385,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public LayerFactory createLayerFactory() {
         LayerFactoryImpl layerFactory = new LayerFactoryImpl();
         return layerFactory;
@@ -389,6 +395,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Blackboard createBlackboard() {
         BlackboardImpl blackboard = new BlackboardImpl();
         return blackboard;
@@ -398,6 +405,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public BlackboardEntry createBlackboardEntry() {
         BlackboardEntryImpl blackboardEntry = new BlackboardEntryImpl();
         return blackboardEntry;
@@ -408,7 +416,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public java.util.Map.Entry<Interaction, Boolean> createInteractionToEBooleanObjectMapEntry() {
+    public Entry<Interaction, Boolean> createInteractionToEBooleanObjectMapEntry() {
         InteractionToEBooleanObjectMapEntryImpl interactionToEBooleanObjectMapEntry = new InteractionToEBooleanObjectMapEntryImpl();
         return interactionToEBooleanObjectMapEntry;
     }
@@ -418,6 +426,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Folder createFolder() {
         FolderImpl folder = new FolderImpl();
         return folder;
@@ -428,6 +437,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public LegendItem createLegendItem() {
         LegendItemImpl legendItem = new LegendItemImpl();
         return legendItem;
@@ -438,6 +448,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public LayerLegendItem createLayerLegendItem() {
         LayerLegendItemImpl layerLegendItem = new LayerLegendItemImpl();
         return layerLegendItem;
@@ -447,6 +458,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EditManager createEditManager() {
         EditManagerImpl editManager = new EditManagerImpl();
         return editManager;
@@ -532,7 +544,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public ImageDescriptor createImageDescriptorFromString(EDataType eDataType, String initialValue) {
+    public ImageDescriptor createImageDescriptorFromString(EDataType eDataType,
+            String initialValue) {
         return (ImageDescriptor) super.createFromString(eDataType, initialValue);
     }
 
@@ -548,7 +561,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public AffineTransform createAffineTransformFromString(EDataType eDataType, String initialValue) {
+    public AffineTransform createAffineTransformFromString(EDataType eDataType,
+            String initialValue) {
         return (AffineTransform) super.createFromString(eDataType, initialValue);
     }
 
@@ -564,7 +578,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public NavCommandStack createNavCommandStackFromString(EDataType eDataType, String initialValue) {
+    public NavCommandStack createNavCommandStackFromString(EDataType eDataType,
+            String initialValue) {
         return (NavCommandStack) super.createFromString(eDataType, initialValue);
     }
 
@@ -605,7 +620,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * 
      * @generated NOT
      */
-    public String convertCoordinateReferenceSystemToString(EDataType eDataType, Object instanceValue) {
+    public String convertCoordinateReferenceSystemToString(EDataType eDataType,
+            Object instanceValue) {
         try {
             if (instanceValue == DefaultEngineeringCRS.CARTESIAN_2D) {
                 return CARTESIAN_2D;
@@ -679,7 +695,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
         try {
             return new URL(null, initialValue, CorePlugin.RELAXED_HANDLER);
         } catch (MalformedURLException e) {
-            throw (RuntimeException) new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -986,9 +1002,9 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
             return new Envelope();
 
         String[] coords = initialValue.split(","); //$NON-NLS-1$
-        return new Envelope(new Envelope(Double.parseDouble(coords[0]),
-                Double.parseDouble(coords[1]), Double.parseDouble(coords[2]),
-                Double.parseDouble(coords[3])));
+        return new Envelope(
+                new Envelope(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]),
+                        Double.parseDouble(coords[2]), Double.parseDouble(coords[3])));
 
     }
 
@@ -1018,8 +1034,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
         if (env.isNull())
             return ""; //$NON-NLS-1$
 
-        String envString = env.getMinX()
-                + "," + env.getMaxX() + "," + env.getMinY() + "," + env.getMaxY(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        String envString = env.getMinX() + "," + env.getMaxX() + "," + env.getMinY() + "," //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+                + env.getMaxY();
 
         if (env instanceof ReferencedEnvelope) {
             String crs = convertCoordinateReferenceSystemToString(
@@ -1081,7 +1097,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String convertIllegalArgumentExceptionToString(EDataType eDataType, Object instanceValue) {
+    public String convertIllegalArgumentExceptionToString(EDataType eDataType,
+            Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -1140,7 +1157,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public String convertEditManagerControlCommandToString(EDataType eDataType, Object instanceValue) {
+    public String convertEditManagerControlCommandToString(EDataType eDataType,
+            Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -1148,6 +1166,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ProjectPackage getProjectPackage() {
         return (ProjectPackage) getEPackage();
     }
@@ -1167,6 +1186,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * 
      * @generated NOT
      */
+    @Override
     public Map createMap() {
         MapImpl map = new MapImpl();
         map.setLayerFactory(createLayerFactory());
@@ -1176,7 +1196,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
 
     private void runMapCreationInterceptors(Map map) {
         List<IConfigurationElement> interceptors = ExtensionPointList
-                .getExtensionPointList(MapInterceptor.MAP_INTERCEPTOR_EXTENSIONPOINT); //$NON-NLS-1$
+                .getExtensionPointList(MapInterceptor.MAP_INTERCEPTOR_EXTENSIONPOINT); 
         for (IConfigurationElement element : interceptors) {
             if (!"mapCreation".equals(element.getName())) //$NON-NLS-1$
                 continue;
@@ -1194,7 +1214,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      * @see org.locationtech.udig.project.ProjectFactory#createMap(org.locationtech.udig.project.Project,
      *      java.lang.String, java.util.List)
      */
-    @SuppressWarnings("unchecked")//$NON-NLS-1$
+    @Override
+    @SuppressWarnings("unchecked") 
     public Map createMap(Project owner, String name, List layers) {
         Map map = createMap();
 

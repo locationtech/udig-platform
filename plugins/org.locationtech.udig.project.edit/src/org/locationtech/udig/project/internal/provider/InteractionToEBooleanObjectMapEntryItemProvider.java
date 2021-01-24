@@ -38,9 +38,9 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * @generated
  */
-public class InteractionToEBooleanObjectMapEntryItemProvider extends ItemProviderAdapter implements
-        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
-        IItemLabelProvider, IItemPropertySource {
+public class InteractionToEBooleanObjectMapEntryItemProvider extends ItemProviderAdapter
+        implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+        ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc -->
@@ -75,15 +75,15 @@ public class InteractionToEBooleanObjectMapEntryItemProvider extends ItemProvide
      * @generated
      */
     protected void addKeyPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_InteractionToEBooleanObjectMapEntry_key_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_InteractionToEBooleanObjectMapEntry_key_feature", "_UI_InteractionToEBooleanObjectMapEntry_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__KEY,
-                        true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(),
+                getString("_UI_InteractionToEBooleanObjectMapEntry_key_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_InteractionToEBooleanObjectMapEntry_key_feature", //$NON-NLS-1$
+                        "_UI_InteractionToEBooleanObjectMapEntry_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__KEY, true, false,
+                false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -93,15 +93,15 @@ public class InteractionToEBooleanObjectMapEntryItemProvider extends ItemProvide
      * @generated
      */
     protected void addValuePropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_InteractionToEBooleanObjectMapEntry_value_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_InteractionToEBooleanObjectMapEntry_value_feature", "_UI_InteractionToEBooleanObjectMapEntry_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__VALUE,
-                        true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(),
+                getString("_UI_InteractionToEBooleanObjectMapEntry_value_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_InteractionToEBooleanObjectMapEntry_value_feature", //$NON-NLS-1$
+                        "_UI_InteractionToEBooleanObjectMapEntry_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__VALUE, true,
+                false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -135,7 +135,8 @@ public class InteractionToEBooleanObjectMapEntryItemProvider extends ItemProvide
     @Override
     public String getText(Object object) {
         Map.Entry<?, ?> interactionToEBooleanObjectMapEntry = (Map.Entry<?, ?>) object;
-        return "" + interactionToEBooleanObjectMapEntry.getKey() + " -> " + interactionToEBooleanObjectMapEntry.getValue(); //$NON-NLS-1$ //$NON-NLS-2$
+        return "" + interactionToEBooleanObjectMapEntry.getKey() + " -> " //$NON-NLS-1$//$NON-NLS-2$
+                + interactionToEBooleanObjectMapEntry.getValue();
     }
 
     /**
@@ -152,8 +153,8 @@ public class InteractionToEBooleanObjectMapEntryItemProvider extends ItemProvide
         switch (notification.getFeatureID(Map.Entry.class)) {
         case ProjectPackage.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__KEY:
         case ProjectPackage.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__VALUE:
-            fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
-                    false, true));
+            fireNotifyChanged(
+                    new ViewerNotification(notification, notification.getNotifier(), false, true));
             return;
         }
         super.notifyChanged(notification);

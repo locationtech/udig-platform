@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.opengis.filter.Filter;
@@ -175,6 +174,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated not
      */
+    @Override
     public List<Layer> getLayers() {
         return layers;
 
@@ -186,6 +186,8 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * @return
      * @deprecated
      */
+    @Deprecated
+    @Override
     public List<Layer> layers() {
         return getLayers();
     }
@@ -194,10 +196,11 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Map getMap() {
         if (eContainerFeatureID() != ProjectPackage.CONTEXT_MODEL__MAP)
             return null;
-        return (Map) eContainer();
+        return (Map) eInternalContainer();
     }
 
     /**
@@ -206,7 +209,8 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * @generated
      */
     public NotificationChain basicSetMap(Map newMap, NotificationChain msgs) {
-        msgs = eBasicSetContainer((InternalEObject) newMap, ProjectPackage.CONTEXT_MODEL__MAP, msgs);
+        msgs = eBasicSetContainer((InternalEObject) newMap, ProjectPackage.CONTEXT_MODEL__MAP,
+                msgs);
         return msgs;
     }
 
@@ -214,6 +218,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setMap(Map newMap) {
         if (newMap != eInternalContainer()
                 || (eContainerFeatureID() != ProjectPackage.CONTEXT_MODEL__MAP && newMap != null)) {
@@ -230,8 +235,8 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
             if (msgs != null)
                 msgs.dispatch();
         } else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET,
-                    ProjectPackage.CONTEXT_MODEL__MAP, newMap, newMap));
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.CONTEXT_MODEL__MAP,
+                    newMap, newMap));
     }
 
     /**
@@ -245,8 +250,8 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
             NotificationChain msgs) {
         switch (featureID) {
         case ProjectPackage.CONTEXT_MODEL__LAYERS:
-            return ((InternalEList<InternalEObject>) (InternalEList<?>) getLayers()).basicAdd(
-                    otherEnd, msgs);
+            return ((InternalEList<InternalEObject>) (InternalEList<?>) getLayers())
+                    .basicAdd(otherEnd, msgs);
         case ProjectPackage.CONTEXT_MODEL__MAP:
             if (eInternalContainer() != null)
                 msgs = eBasicRemoveFromContainer(msgs);
@@ -357,10 +362,12 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
         return super.eIsSet(featureID);
     }
 
+    @Override
     public void addDeepAdapter(Adapter adapter) {
         getMap().addDeepAdapter(adapter);
     }
 
+    @Override
     public void removeDeepAdapter(Adapter adapter) {
         getMap().removeDeepAdapter(adapter);
     }
@@ -370,6 +377,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * 
      * @generated NOT
      */
+    @Override
     public void lowerLayer(Layer layer) {
         getMap().lowerLayer(layer);
     }
@@ -379,6 +387,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * 
      * @generated NOT
      */
+    @Override
     public void raiseLayer(Layer layer) {
         getMap().raiseLayer(layer);
     }
@@ -387,6 +396,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated NOT
      */
+    @Override
     public boolean eIsSet(EStructuralFeature eFeature) {
         switch (eDerivedStructuralFeatureID(eFeature)) {
         case ProjectPackage.CONTEXT_MODEL__LAYERS:
@@ -409,18 +419,22 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
             eFlags = eFlags & (~EDELIVER);
     }
 
+    @Override
     public void select(Envelope boundingBox) {
         getMap().select(boundingBox);
     }
 
+    @Override
     public void select(Envelope boundingBox, boolean and) {
         getMap().select(boundingBox, and);
     }
 
+    @Override
     public void select(Filter filter) {
         getMap().select(filter);
     }
 
+    @Override
     public void select(Filter filter, boolean and) {
         getMap().select(filter, and);
     }

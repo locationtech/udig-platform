@@ -14,8 +14,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IGeoResourceInfo;
 import org.locationtech.udig.catalog.IResolveChangeListener;
@@ -42,8 +40,8 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
  * @since 1.0.0
  * @model
  */
-public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
-        IResolveChangeListener {
+public interface Layer
+        extends EObject, ILayer, IAdaptable, IBlockingAdaptable, IResolveChangeListener {
 
     /**
      * Returns the owning ContextModel object
@@ -81,6 +79,7 @@ public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
      * @uml.property name="filter"
      * @model transient="true" dataType="org.opengis.filter.Filter"
      */
+    @Override
     Filter getFilter();
 
     /**
@@ -112,6 +111,7 @@ public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
      * @see style();
      * @model many="false" containment="true"
      */
+    @Override
     public StyleBlackboard getStyleBlackboard();
 
     /**
@@ -131,6 +131,7 @@ public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
      * 
      * @model
      */
+    @Override
     public int getZorder();
 
     /**
@@ -152,6 +153,7 @@ public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
      * @uml.property name="status"
      * @model transient='true' default='0'
      */
+    @Override
     public int getStatus();
 
     /**
@@ -173,6 +175,7 @@ public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
      * @see #getStatus()
      * @generated
      */
+    @Override
     void setStatus(int value);
 
     /**
@@ -180,6 +183,7 @@ public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
      * 
      * @param message the status message
      */
+    @Override
     void setStatusMessage(String message);
 
     /**
@@ -201,6 +205,7 @@ public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
      * @model
      * @generated
      */
+    @Override
     boolean isShown();
 
     /**
@@ -238,6 +243,7 @@ public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
      * @return <code>true</code> if layer is selectable, <code>false</code> otherwise.
      * @deprecated use getInteraction(Interaction.SELECT)
      */
+    @Deprecated
     public boolean isSelectable();
 
     /**
@@ -248,6 +254,7 @@ public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
      * @see #isSelectable()
      * @deprecated use setInteraction(Interaction.SELECT, value)
      */
+    @Deprecated
     void setSelectable(boolean value);
 
     /**
@@ -257,6 +264,7 @@ public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
      * @uml.property name="name"
      * @model
      */
+    @Override
     public String getName();
 
     /**
@@ -291,6 +299,7 @@ public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
      * @uml.property name="iD"
      * @model id="true"
      */
+    @Override
     public URL getID();
 
     /**
@@ -309,6 +318,7 @@ public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
      * @uml.property name="visible"
      * @model
      */
+    @Override
     public boolean isVisible();
 
     /**
@@ -325,6 +335,7 @@ public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
      * 
      * @model transient="true" changeable="true"
      */
+    @Override
     public IGeoResource getGeoResource();
 
     /**
@@ -343,6 +354,7 @@ public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
      * @return IGeoResources that can used to obtain layer data
      * @model transient="true" changeable="false"
      */
+    @Override
     public List<IGeoResource> getGeoResources();
 
     /**
@@ -354,6 +366,7 @@ public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
      * @uml.property name="glyph"
      * @model transient="true"
      */
+    @Override
     public ImageDescriptor getIcon();
 
     /**
@@ -382,6 +395,7 @@ public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
      *         a query that selects all the selected features is returned.
      * @model volatile="true"
      */
+    @Override
     public Query getQuery(boolean selection);
 
     /**
@@ -392,6 +406,7 @@ public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
      *         current map's CRS will be returned, or if this fails the CRS will be WGS84.
      * @model
      */
+    @Override
     CoordinateReferenceSystem getCRS(IProgressMonitor monitor);
 
     /**
@@ -404,6 +419,7 @@ public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
      * @return the CoordinateReferenceSystem of the layer or if the CRS cannot be determined.
      * @model transient="true" changeable="true"
      */
+    @Override
     CoordinateReferenceSystem getCRS();
 
     /**
@@ -432,6 +448,7 @@ public interface Layer extends EObject, ILayer, IAdaptable, IBlockingAdaptable,
      * @return Blackboard used for lightweight collaboration.
      * @model changeable="false" transient="true" resolveProxies="false"
      */
+    @Override
     IBlackboard getProperties();
 
     /**

@@ -34,9 +34,9 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * --> <!-- end-user-doc -->
  * @generated
  */
-public class RenderManagerItemProvider extends ItemProviderAdapter implements
-        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
-        IItemLabelProvider, IItemPropertySource {
+public class RenderManagerItemProvider extends ItemProviderAdapter
+        implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+        ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc --> <!--
@@ -73,15 +73,13 @@ public class RenderManagerItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addMapDisplayPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_RenderManager_mapDisplay_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_RenderManager_mapDisplay_feature", "_UI_RenderManager_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        RenderPackage.Literals.RENDER_MANAGER__MAP_DISPLAY, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_RenderManager_mapDisplay_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_RenderManager_mapDisplay_feature", "_UI_RenderManager_type"), //$NON-NLS-1$ //$NON-NLS-2$
+                RenderPackage.Literals.RENDER_MANAGER__MAP_DISPLAY, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -91,15 +89,13 @@ public class RenderManagerItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addMapInternalPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_RenderManager_mapInternal_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_RenderManager_mapInternal_feature", "_UI_RenderManager_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        RenderPackage.Literals.RENDER_MANAGER__MAP_INTERNAL, true, false, true,
-                        null, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_RenderManager_mapInternal_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_RenderManager_mapInternal_feature", "_UI_RenderManager_type"), //$NON-NLS-1$ //$NON-NLS-2$
+                RenderPackage.Literals.RENDER_MANAGER__MAP_INTERNAL, true, false, true, null, null,
+                null));
     }
 
     /**
@@ -109,15 +105,14 @@ public class RenderManagerItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addViewportModelInternalPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_RenderManager_viewportModelInternal_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_RenderManager_viewportModelInternal_feature", "_UI_RenderManager_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        RenderPackage.Literals.RENDER_MANAGER__VIEWPORT_MODEL_INTERNAL, true,
-                        false, true, null, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_RenderManager_viewportModelInternal_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_RenderManager_viewportModelInternal_feature", //$NON-NLS-1$
+                        "_UI_RenderManager_type"), //$NON-NLS-1$
+                RenderPackage.Literals.RENDER_MANAGER__VIEWPORT_MODEL_INTERNAL, true, false, true,
+                null, null, null));
     }
 
     /**
@@ -127,15 +122,13 @@ public class RenderManagerItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addRenderExecutorPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_RenderManager_renderExecutor_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_RenderManager_renderExecutor_feature", "_UI_RenderManager_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        RenderPackage.Literals.RENDER_MANAGER__RENDER_EXECUTOR, true, false, true,
-                        null, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_RenderManager_renderExecutor_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_RenderManager_renderExecutor_feature", "_UI_RenderManager_type"), //$NON-NLS-1$ //$NON-NLS-2$
+                RenderPackage.Literals.RENDER_MANAGER__RENDER_EXECUTOR, true, false, true, null,
+                null, null));
     }
 
     /**
@@ -164,6 +157,7 @@ public class RenderManagerItemProvider extends ItemProviderAdapter implements
      * 
      * @generated NOT
      */
+    @Override
     public String getText(Object object) {
         IMapDisplay labelValue = ((RenderManager) object).getMapDisplay();
         String label = labelValue == null ? null : labelValue.toString();
@@ -182,8 +176,8 @@ public class RenderManagerItemProvider extends ItemProviderAdapter implements
 
         switch (notification.getFeatureID(RenderManager.class)) {
         case RenderPackage.RENDER_MANAGER__MAP_DISPLAY:
-            fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
-                    false, true));
+            fireNotifyChanged(
+                    new ViewerNotification(notification, notification.getNotifier(), false, true));
             return;
         }
         super.notifyChanged(notification);
@@ -196,6 +190,7 @@ public class RenderManagerItemProvider extends ItemProviderAdapter implements
      * 
      * @generated NOT
      */
+    @Override
     protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
         super.collectNewChildDescriptors(newChildDescriptors, object);
     }

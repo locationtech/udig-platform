@@ -24,7 +24,6 @@ import org.locationtech.udig.project.IProject;
 import org.locationtech.udig.project.IProjectElement;
 import org.locationtech.udig.project.IStyleBlackboard;
 import org.locationtech.udig.project.Interaction;
-import org.locationtech.udig.project.internal.AbstractContext;
 import org.locationtech.udig.project.internal.Blackboard;
 import org.locationtech.udig.project.internal.BlackboardEntry;
 import org.locationtech.udig.project.internal.ContextModel;

@@ -37,8 +37,8 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * end-user-doc -->
  * @generated
  */
-public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory implements
-        ComposeableAdapterFactory, IChangeNotifier, IDisposable {
+public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
+        implements ComposeableAdapterFactory, IChangeNotifier, IDisposable {
     /**
      * This keeps track of the root adapter factory that delegates to this adapter factory. <!--
      * begin-user-doc --> <!-- end-user-doc -->
@@ -105,10 +105,21 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory imp
      */
     @Override
     public Adapter createLayerAdapter() {
-        return new LayerItemProvider(this);
+        if (layerItemProvider == null) {
+            layerItemProvider = new LayerItemProvider(this);
+        }
+
+        return layerItemProvider;
     }
 
- 
+    /**
+     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Map} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected MapItemProvider mapItemProvider;
+
     /**
      * This creates an adapter for a {@link org.locationtech.udig.project.internal.Map}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
@@ -117,8 +128,20 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory imp
      */
     @Override
     public Adapter createMapAdapter() {
-        return new MapItemProvider(this);
+        if (mapItemProvider == null) {
+            mapItemProvider = new MapItemProvider(this);
+        }
+
+        return mapItemProvider;
     }
+
+    /**
+     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Project} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ProjectItemProvider projectItemProvider;
 
     /**
      * This creates an adapter for a {@link org.locationtech.udig.project.internal.Project}. <!--
@@ -128,7 +151,11 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory imp
      */
     @Override
     public Adapter createProjectAdapter() {
-        return new ProjectItemProvider(this);
+        if (projectItemProvider == null) {
+            projectItemProvider = new ProjectItemProvider(this);
+        }
+
+        return projectItemProvider;
     }
 
     /**
@@ -381,11 +408,20 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory imp
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Layer} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected LayerItemProvider layerItemProvider;
+
+    /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ComposeableAdapterFactory getRootAdapterFactory() {
         return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
     }
@@ -396,6 +432,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory imp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
         this.parentAdapterFactory = parentAdapterFactory;
     }
@@ -415,6 +452,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory imp
      * 
      * @generated NOT
      */
+    @Override
     public Adapter adapt(Notifier notifier, Object type) {
         EList<Adapter> adapters = notifier.eAdapters();
         if (adapters instanceof SynchronizedEList) {
@@ -453,6 +491,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory imp
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void addListener(INotifyChangedListener notifyChangedListener) {
         changeNotifier.addListener(notifyChangedListener);
     }
@@ -462,6 +501,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory imp
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void removeListener(INotifyChangedListener notifyChangedListener) {
         changeNotifier.removeListener(notifyChangedListener);
     }
@@ -472,6 +512,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory imp
      * 
      * @generated
      */
+    @Override
     public void fireNotifyChanged(Notification notification) {
         changeNotifier.fireNotifyChanged(notification);
 
@@ -486,11 +527,18 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory imp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void dispose() {
         if (contextModelItemProvider != null)
             contextModelItemProvider.dispose();
         if (editManagerItemProvider != null)
             editManagerItemProvider.dispose();
+        if (layerItemProvider != null)
+            layerItemProvider.dispose();
+        if (mapItemProvider != null)
+            mapItemProvider.dispose();
+        if (projectItemProvider != null)
+            projectItemProvider.dispose();
         if (projectRegistryItemProvider != null)
             projectRegistryItemProvider.dispose();
         if (styleBlackboardItemProvider != null)

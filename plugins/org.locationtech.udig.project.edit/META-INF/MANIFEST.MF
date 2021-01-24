@@ -1,20 +1,24 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
-Bundle-SymbolicName: org.locationtech.udig.project.edit; singleton:=true
+Bundle-SymbolicName: org.locationtech.udig.project.edit;singleton:=true
 Bundle-Version: 2.3.0.qualifier
+Bundle-ClassPath: .
 Bundle-Activator: org.locationtech.udig.project.internal.provider.ProjectEditPlugin$Implementation
-Bundle-Vendor: udig.refractions.net
+Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: org.locationtech.udig.project.internal.provider,org.lo
- cationtech.udig.project.internal.render.provider
+Export-Package: org.locationtech.udig.project.element.provider,
+ org.locationtech.udig.project.internal.provider,
+ org.locationtech.udig.project.internal.render.provider
 Require-Bundle: org.locationtech.udig.project;visibility:=reexport,
+ org.eclipse.emf.edit;visibility:=reexport,
+ org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.jface,
  org.locationtech.udig.catalog,
  org.locationtech.udig.ui,
  org.eclipse.emf.edit.ui;visibility:=reexport,
  org.eclipse.core.runtime,
  org.locationtech.udig.catalog.ui,
- org.eclipse.emf.ecore.edit
+ org.eclipse.emf.ecore.edit;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

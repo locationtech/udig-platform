@@ -44,9 +44,6 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.geotools.data.Query;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.joda.time.DateTime;
-import org.geotools.referencing.ReferencingFactoryFinder;
-import org.geotools.referencing.crs.DefaultEngineeringCRS;
-import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.osgi.framework.Bundle;
 
@@ -68,7 +65,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
     public static RenderFactory init() {
         try {
             RenderFactory theRenderFactory = (RenderFactory) EPackage.Registry.INSTANCE
-                    .getEFactory("http:///net/refractions/udig/project/internal/render.ecore"); //$NON-NLS-1$ 
+                    .getEFactory(RenderPackage.eNS_URI);
             if (theRenderFactory != null) {
                 return theRenderFactory;
             }
@@ -110,6 +107,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
     /**
      * @see org.locationtech.udig.project.internal.render.RenderFactory#createRenderExecutor()
      */
+    @Override
     public RenderExecutor createRenderExecutor() {
         return new RenderExecutorImpl();
     }
@@ -216,6 +214,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public RenderManager createRenderManager() {
         RenderManagerImpl renderManager = new RenderManagerImpl();
         return renderManager;
@@ -224,6 +223,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      */
+    @Override
     public RenderManager createRenderManagerViewer() {
         RenderManagerImpl renderManager = new RenderManagerImpl();
         renderManager.setViewer(true);
@@ -234,6 +234,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ViewportModel createViewportModel() {
         ViewportModelImpl viewportModel = new ViewportModelImpl();
         return viewportModel;
@@ -242,6 +243,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      */
+    @Override
     public ViewportModel createViewportModelViewer() {
         ViewportModelImpl viewportModel = new ViewportModelImpl();
         viewportModel.setViewer(true);
@@ -254,6 +256,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * 
      * @generated NOT
      */
+    @Override
     public RenderExecutor createRenderExecutor(Renderer renderer) {
 
         RenderExecutor executor = locateMatch(renderer);
@@ -278,13 +281,13 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
         }
         final Renderer renderer = ofInterest;
         List<IConfigurationElement> list = new ArrayList<IConfigurationElement>();
-        for (Iterator<IConfigurationElement> iter = ExtensionPointList.getExtensionPointList(
-                RenderExecutor.EXTENSION_ID).iterator(); iter.hasNext();) {
+        for (Iterator<IConfigurationElement> iter = ExtensionPointList
+                .getExtensionPointList(RenderExecutor.EXTENSION_ID).iterator(); iter.hasNext();) {
             IConfigurationElement elem = iter.next();
             try {
                 Bundle bundle = Platform.getBundle(elem.getNamespaceIdentifier());
-                Class<?> rendererClass = bundle.loadClass(elem
-                        .getAttribute(RenderExecutor.RENDERER_ATTR));
+                Class<?> rendererClass = bundle
+                        .loadClass(elem.getAttribute(RenderExecutor.RENDERER_ATTR));
                 if (rendererClass.isAssignableFrom(renderer.getClass()))
                     list.add(elem);
             } catch (Exception e) {
@@ -295,15 +298,16 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
         if (!list.isEmpty()) {
             Collections.sort(list, new Comparator<IConfigurationElement>() {
 
+                @Override
                 public int compare(IConfigurationElement o1, IConfigurationElement o2) {
                     try {
                         Bundle bundle = Platform.getBundle(o1.getNamespaceIdentifier());
-                        Class clazz1 = bundle.loadClass(o1
-                                .getAttribute(RenderExecutor.RENDERER_ATTR));
+                        Class clazz1 = bundle
+                                .loadClass(o1.getAttribute(RenderExecutor.RENDERER_ATTR));
 
                         bundle = Platform.getBundle(o2.getNamespaceIdentifier());
-                        Class clazz2 = bundle.loadClass(o2
-                                .getAttribute(RenderExecutor.RENDERER_ATTR));
+                        Class clazz2 = bundle
+                                .loadClass(o2.getAttribute(RenderExecutor.RENDERER_ATTR));
 
                         int dist1 = getDistance(renderer.getClass(), clazz1);
                         int dist2 = getDistance(renderer.getClass(), clazz2);
@@ -337,8 +341,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
             });
 
             try {
-                return (RenderExecutor) list.get(0).createExecutableExtension(
-                        RenderExecutor.EXECUTOR_ATTR);
+                return (RenderExecutor) list.get(0)
+                        .createExecutableExtension(RenderExecutor.EXECUTOR_ATTR);
             } catch (CoreException e) {
                 ProjectPlugin.log(null, e);
             }
@@ -359,19 +363,19 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
             ofInterest = ((RendererDecorator) renderer).getRenderer();
         }
         List<IConfigurationElement> list = new ArrayList<IConfigurationElement>();
-        for (Iterator<IConfigurationElement> iter = ExtensionPointList.getExtensionPointList(
-                RenderExecutor.EXTENSION_ID).iterator(); iter.hasNext();) {
+        for (Iterator<IConfigurationElement> iter = ExtensionPointList
+                .getExtensionPointList(RenderExecutor.EXTENSION_ID).iterator(); iter.hasNext();) {
             IConfigurationElement elem = iter.next();
-            if (elem.getAttribute(RenderExecutor.RENDERER_ATTR).equals(
-                    ofInterest.getClass().getName()))
+            if (elem.getAttribute(RenderExecutor.RENDERER_ATTR)
+                    .equals(ofInterest.getClass().getName()))
                 list.add(elem);
         }
 
         if (!list.isEmpty()) {
             // TODO if list has more than one element determine which is best.
             try {
-                return (RenderExecutor) list.get(0).createExecutableExtension(
-                        RenderExecutor.EXECUTOR_ATTR);
+                return (RenderExecutor) list.get(0)
+                        .createExecutableExtension(RenderExecutor.EXECUTOR_ATTR);
             } catch (CoreException e) {
                 ProjectPlugin.log(null, e);
             }
@@ -415,7 +419,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public AffineTransform createAffineTransformFromString(EDataType eDataType, String initialValue) {
+    public AffineTransform createAffineTransformFromString(EDataType eDataType,
+            String initialValue) {
         return (AffineTransform) super.createFromString(eDataType, initialValue);
     }
 
@@ -489,7 +494,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public RenderException createRenderExceptionFromString(EDataType eDataType, String initialValue) {
+    public RenderException createRenderExceptionFromString(EDataType eDataType,
+            String initialValue) {
         return (RenderException) super.createFromString(eDataType, initialValue);
     }
 
@@ -569,7 +575,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * 
      * @generated NOT
      */
-    public String convertCoordinateReferenceSystemToString(EDataType eDataType, Object instanceValue) {
+    public String convertCoordinateReferenceSystemToString(EDataType eDataType,
+            Object instanceValue) {
         return ProjectFactory.eINSTANCE.convertToString(
                 ProjectPackage.eINSTANCE.getCoordinateReferenceSystem(), instanceValue);
     }
@@ -580,8 +587,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * @generated NOT
      */
     public Envelope createEnvelopeFromString(EDataType eDataType, String initialValue) {
-        return (Envelope) ProjectFactory.eINSTANCE.createFromString(
-                ProjectPackage.eINSTANCE.getEnvelope(), initialValue);
+        return (Envelope) ProjectFactory.eINSTANCE
+                .createFromString(ProjectPackage.eINSTANCE.getEnvelope(), initialValue);
     }
 
     /**
@@ -600,8 +607,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      */
     public ReferencedEnvelope createReferencedEnvelopeFromString(EDataType eDataType,
             String initialValue) {
-        return (ReferencedEnvelope) ProjectFactory.eINSTANCE.createFromString(
-                ProjectPackage.eINSTANCE.getReferencedEnvelope(), initialValue);
+        return (ReferencedEnvelope) ProjectFactory.eINSTANCE
+                .createFromString(ProjectPackage.eINSTANCE.getReferencedEnvelope(), initialValue);
     }
 
     /**
@@ -609,8 +616,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * @generated NOT
      */
     public String convertReferencedEnvelopeToString(EDataType eDataType, Object instanceValue) {
-        return ProjectFactory.eINSTANCE.convertToString(
-                ProjectPackage.eINSTANCE.getReferencedEnvelope(), instanceValue);
+        return ProjectFactory.eINSTANCE
+                .convertToString(ProjectPackage.eINSTANCE.getReferencedEnvelope(), instanceValue);
     }
 
     /**
@@ -646,7 +653,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String convertIllegalArgumentExceptionToString(EDataType eDataType, Object instanceValue) {
+    public String convertIllegalArgumentExceptionToString(EDataType eDataType,
+            Object instanceValue) {
         return super.convertToString(eDataType, instanceValue);
     }
 
@@ -714,6 +722,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
         return super.convertToString(eDataType, instanceValue);
     }
 
+    @Override
     public TiledCompositeRendererImpl createTiledCompositeRenderer() {
         return new TiledCompositeRendererImpl();
     }
@@ -722,6 +731,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public RenderPackage getRenderPackage() {
         return (RenderPackage) getEPackage();
     }
@@ -739,6 +749,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
     /**
      * @see org.locationtech.udig.project.internal.render.RenderFactory#createCompositeRenderer()
      */
+    @Override
     public MultiLayerRenderer createCompositeRenderer() {
         return new CompositeRendererImpl();
     }

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="internal"
-    nsURI="http:///net/refractions/udig/project/internal.ecore" nsPrefix="org.locationtech.udig.project.internal">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="internal" nsURI="http:///net/refractions/udig/project/internal.ecore"
+    nsPrefix="org.locationtech.udig.project.internal">
   <eClassifiers xsi:type="ecore:EClass" name="Comparable" instanceTypeName="Comparable"
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="IMap" instanceClassName="org.locationtech.udig.project.IMap"
@@ -231,7 +230,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="LayerLegendItem" eSuperTypes="#//LegendItem #//ILayerLegendItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="layer" lowerBound="1" eType="#//Layer"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="Coordinate" instanceClassName="com.vividsolutions.jts.geom.Coordinate"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Coordinate" instanceClassName="org.locationtech.jts.geom.Coordinate"/>
   <eClassifiers xsi:type="ecore:EDataType" name="MapDisplay" instanceClassName="org.locationtech.udig.project.render.displayAdapter.IMapDisplay"/>
   <eClassifiers xsi:type="ecore:EDataType" name="List" instanceClassName="java.util.List"/>
   <eClassifiers xsi:type="ecore:EDataType" name="AffineTransform" instanceClassName="java.awt.geom.AffineTransform"/>
@@ -248,7 +247,7 @@
   <eClassifiers xsi:type="ecore:EDataType" name="ImageDescriptor" instanceClassName="org.eclipse.jface.resource.ImageDescriptor"/>
   <eClassifiers xsi:type="ecore:EDataType" name="EditCommand" instanceClassName="org.locationtech.udig.project.command.EditCommand"/>
   <eClassifiers xsi:type="ecore:EDataType" name="NavCommand" instanceClassName="org.locationtech.udig.project.command.NavCommand"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="Envelope" instanceClassName="com.vividsolutions.jts.geom.Envelope"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Envelope" instanceClassName="org.locationtech.jts.geom.Envelope"/>
   <eClassifiers xsi:type="ecore:EDataType" name="EditManagerControlCommand" instanceClassName="org.locationtech.udig.project.command.EditManagerControlCommand"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Command" instanceClassName="org.locationtech.udig.project.command.MapCommand"/>
   <eClassifiers xsi:type="ecore:EDataType" name="URI" instanceClassName="org.eclipse.emf.common.util.URI"/>

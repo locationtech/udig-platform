@@ -15,8 +15,6 @@ import java.util.List;
 import org.locationtech.udig.project.IFolder;
 
 import org.locationtech.udig.project.ILegendItem;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.jface.resource.ImageDescriptor;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,10 +23,10 @@ import org.eclipse.jface.resource.ImageDescriptor;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.locationtech.udig.project.internal.Folder#getItems <em>Items</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.locationtech.udig.project.internal.ProjectPackage#getFolder()
  * @model superTypes="org.locationtech.udig.project.internal.IFolder org.locationtech.udig.project.internal.LegendItem"
@@ -50,5 +48,6 @@ public interface Folder extends IFolder, LegendItem {
      * @model type="org.locationtech.udig.project.internal.ILegendItem" containment="true"
      * @generated
      */
+    @Override
     List<ILegendItem> getItems();
 } // Folder

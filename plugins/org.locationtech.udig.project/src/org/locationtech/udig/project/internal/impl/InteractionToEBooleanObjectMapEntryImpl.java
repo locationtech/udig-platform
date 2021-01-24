@@ -32,16 +32,16 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.locationtech.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl#getTypedKey <em>Key</em>}</li>
  *   <li>{@link org.locationtech.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl#getTypedValue <em>Value</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl implements
-        BasicEMap.Entry<Interaction, Boolean> {
+public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl
+        implements BasicEMap.Entry<Interaction, Boolean> {
     /**
      * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -142,7 +142,8 @@ public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl impleme
         value = newValue;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
-                    ProjectPackage.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__VALUE, oldValue, value));
+                    ProjectPackage.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__VALUE, oldValue,
+                    value));
     }
 
     /**
@@ -223,7 +224,7 @@ public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl impleme
         if (eIsProxy())
             return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (key: "); //$NON-NLS-1$
         result.append(key);
         result.append(", value: "); //$NON-NLS-1$
@@ -244,6 +245,7 @@ public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public int getHash() {
         if (hash == -1) {
             Object theKey = getKey();
@@ -257,6 +259,7 @@ public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setHash(int hash) {
         this.hash = hash;
     }
@@ -266,6 +269,7 @@ public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Interaction getKey() {
         return getTypedKey();
     }
@@ -275,6 +279,7 @@ public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setKey(Interaction key) {
         setTypedKey(key);
     }
@@ -284,6 +289,7 @@ public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Boolean getValue() {
         return getTypedValue();
     }
@@ -293,6 +299,7 @@ public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Boolean setValue(Boolean value) {
         Boolean oldValue = getValue();
         setTypedValue(value);
@@ -307,8 +314,8 @@ public class InteractionToEBooleanObjectMapEntryImpl extends EObjectImpl impleme
     @SuppressWarnings("unchecked")
     public EMap<Interaction, Boolean> getEMap() {
         EObject container = eContainer();
-        return container == null ? null : (EMap<Interaction, Boolean>) container
-                .eGet(eContainmentFeature());
+        return container == null ? null
+                : (EMap<Interaction, Boolean>) container.eGet(eContainmentFeature());
     }
 
 } //InteractionToEBooleanObjectMapEntryImpl

@@ -20,12 +20,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 /**
  * This is the item provider adapter for a {@link org.locationtech.udig.project.internal.LayerLegendItem} object.
@@ -33,9 +28,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * <!-- end-user-doc -->
  * @generated
  */
-public class LayerLegendItemItemProvider extends LegendItemItemProvider implements
-        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
-        IItemLabelProvider, IItemPropertySource {
+public class LayerLegendItemItemProvider extends LegendItemItemProvider {
 
     private LayerItemProvider layerItemProvider;
 
@@ -72,15 +65,13 @@ public class LayerLegendItemItemProvider extends LegendItemItemProvider implemen
      * @generated
      */
     protected void addLayerPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_LayerLegendItem_layer_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_LayerLegendItem_layer_feature", "_UI_LayerLegendItem_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER_LEGEND_ITEM__LAYER, true, false, true, null,
-                        null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_LayerLegendItem_layer_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_LayerLegendItem_layer_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_LayerLegendItem_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.LAYER_LEGEND_ITEM__LAYER, true, false, true, null, null,
+                null));
     }
 
     /**

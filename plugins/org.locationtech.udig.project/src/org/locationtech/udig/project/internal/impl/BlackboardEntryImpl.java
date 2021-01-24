@@ -11,7 +11,6 @@ import org.locationtech.udig.project.internal.ProjectPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
@@ -102,6 +101,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getKey() {
         return key;
     }
@@ -110,6 +110,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setKey(String newKey) {
         String oldKey = key;
         key = newKey;
@@ -122,6 +123,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getMemento() {
         return memento;
     }
@@ -130,6 +132,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setMemento(String newMemento) {
         String oldMemento = memento;
         memento = newMemento;
@@ -144,6 +147,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      * @uml.property name="objectClass"
      * @generated NOT
      */
+    @Override
     public Class getObjectClass() {
         return objectClass;
     }
@@ -154,6 +158,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      * @uml.property name="objectClass"
      * @generated NOT
      */
+    @Override
     public void setObjectClass(Class newObjectClass) {
         objectClass = newObjectClass;
     }
@@ -163,6 +168,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      * 
      * @generated NOT
      */
+    @Override
     public Object getObject() {
         return ref;
     }
@@ -172,6 +178,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      * 
      * @generated NOT
      */
+    @Override
     public void setObject(Object newObject) {
         ref = newObject;
     }
@@ -259,8 +266,8 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
         case ProjectPackage.BLACKBOARD_ENTRY__OBJECT_CLASS:
             return getObjectClass() != null;
         case ProjectPackage.BLACKBOARD_ENTRY__OBJECT:
-            return OBJECT_EDEFAULT == null ? getObject() != null : !OBJECT_EDEFAULT
-                    .equals(getObject());
+            return OBJECT_EDEFAULT == null ? getObject() != null
+                    : !OBJECT_EDEFAULT.equals(getObject());
         }
         return super.eIsSet(featureID);
     }
@@ -274,7 +281,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
         if (eIsProxy())
             return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (key: "); //$NON-NLS-1$
         result.append(key);
         result.append(", memento: "); //$NON-NLS-1$

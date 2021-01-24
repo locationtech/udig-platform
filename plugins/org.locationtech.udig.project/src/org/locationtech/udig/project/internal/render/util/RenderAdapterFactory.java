@@ -3,19 +3,13 @@
  */
 package org.locationtech.udig.project.internal.render.util;
 
-import org.locationtech.udig.project.IAbstractContext;
 import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.internal.AbstractContext;
-import org.locationtech.udig.project.internal.render.CompositeRenderContext;
 import org.locationtech.udig.project.internal.render.MultiLayerRenderer;
-import org.locationtech.udig.project.internal.render.RenderContext;
 import org.locationtech.udig.project.internal.render.RenderExecutor;
 import org.locationtech.udig.project.internal.render.RenderManager;
 import org.locationtech.udig.project.internal.render.RenderPackage;
 import org.locationtech.udig.project.internal.render.Renderer;
-import org.locationtech.udig.project.internal.render.RendererCreator;
 import org.locationtech.udig.project.internal.render.ViewportModel;
-import org.locationtech.udig.project.render.ICompositeRenderContext;
 import org.locationtech.udig.project.render.IMultiLayerRenderer;
 import org.locationtech.udig.project.render.IRenderContext;
 import org.locationtech.udig.project.render.IRenderManager;

@@ -35,8 +35,8 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * end-user-doc -->
  * @generated
  */
-public class RenderItemProviderAdapterFactory extends RenderAdapterFactory implements
-        ComposeableAdapterFactory, IChangeNotifier, IDisposable {
+public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
+        implements ComposeableAdapterFactory, IChangeNotifier, IDisposable {
     /**
      * This keeps track of the root adapter factory that delegates to this adapter factory. <!--
      * begin-user-doc --> <!-- end-user-doc -->
@@ -151,6 +151,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ComposeableAdapterFactory getRootAdapterFactory() {
         return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
     }
@@ -161,6 +162,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
         this.parentAdapterFactory = parentAdapterFactory;
     }
@@ -206,6 +208,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory imple
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void addListener(INotifyChangedListener notifyChangedListener) {
         changeNotifier.addListener(notifyChangedListener);
     }
@@ -215,6 +218,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory imple
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void removeListener(INotifyChangedListener notifyChangedListener) {
         changeNotifier.removeListener(notifyChangedListener);
     }
@@ -225,6 +229,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory imple
      * 
      * @generated
      */
+    @Override
     public void fireNotifyChanged(Notification notification) {
         changeNotifier.fireNotifyChanged(notification);
 
@@ -239,6 +244,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void dispose() {
         if (renderExecutorItemProvider != null)
             renderExecutorItemProvider.dispose();

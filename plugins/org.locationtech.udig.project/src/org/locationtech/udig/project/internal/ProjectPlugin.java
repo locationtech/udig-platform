@@ -3,17 +3,12 @@
  */
 package org.locationtech.udig.project.internal;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import org.locationtech.udig.project.internal.impl.ProjectRegistryImpl;
-import org.locationtech.udig.ui.PostShutdownTask;
-import org.locationtech.udig.ui.ShutdownTaskList;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -28,12 +23,15 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
+import org.locationtech.udig.project.internal.impl.ProjectRegistryImpl;
+import org.locationtech.udig.ui.PostShutdownTask;
+import org.locationtech.udig.ui.ShutdownTaskList;
 import org.osgi.framework.BundleContext;
 
 /**
- * This is the central singleton for the Project model plugin.
- * <!-- begin-user-doc --> <!--
+ * This is the central singleton for the Project model plugin. <!-- begin-user-doc --> <!--
  * end-user-doc -->
+ *
  * @generated
  */
 public final class ProjectPlugin extends EMFPlugin {
@@ -41,22 +39,22 @@ public final class ProjectPlugin extends EMFPlugin {
     public final static String ID = "org.locationtech.udig.project"; //$NON-NLS-1$
 
     /**
-     * Keep track of the singleton.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Keep track of the singleton. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public static final ProjectPlugin INSTANCE = new ProjectPlugin();
 
     /**
      * Keep track of the singleton. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     static Implementation plugin;
 
     /**
-     * Create the instance.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Create the instance. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public ProjectPlugin() {
@@ -64,9 +62,9 @@ public final class ProjectPlugin extends EMFPlugin {
     }
 
     /**
-     * Returns the singleton instance of the Eclipse plugin.
-     * <!-- begin-user-doc --> <!--
+     * Returns the singleton instance of the Eclipse plugin. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     *
      * @return the singleton instance.
      * @generated
      */
@@ -82,7 +80,7 @@ public final class ProjectPlugin extends EMFPlugin {
      * @return Collection of error messages or empty collection
      */
     public static Collection<String> saveProjects(Collection<Project> projects) {
-        ArrayList<String> errors = new ArrayList<String>();
+        ArrayList<String> errors = new ArrayList<>();
         for (Project project : projects) {
             try {
                 Resource eResource = project.eResource();
@@ -103,9 +101,9 @@ public final class ProjectPlugin extends EMFPlugin {
     }
 
     /**
-     * Returns the singleton instance of the Eclipse plugin.
-     * <!-- begin-user-doc --> <!--
+     * Returns the singleton instance of the Eclipse plugin. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     *
      * @return the singleton instance.
      * @generated
      */
@@ -114,16 +112,19 @@ public final class ProjectPlugin extends EMFPlugin {
     }
 
     /**
-     * TODO Purpose of org.locationtech.udig.project.internal <p> </p>
-     * @author   Jesse
-     * @since   1.0.0
+     * TODO Purpose of org.locationtech.udig.project.internal
+     * <p>
+     * </p>
+     *
+     * @author Jesse
+     * @since 1.0.0
      * @generated
      */
     public static class Implementation extends EclipsePlugin {
 
         /**
-         * Creates an instance.
-         * <!-- begin-user-doc --> <!-- end-user-doc -->
+         * Creates an instance. <!-- begin-user-doc --> <!-- end-user-doc -->
+         *
          * @generated
          */
         public Implementation() {
@@ -136,8 +137,10 @@ public final class ProjectPlugin extends EMFPlugin {
 
         /**
          * Controls whether the warning message of non-undoable commands is shown.
+         *
          * @deprecated Use the getter and setter methods.
          */
+        @Deprecated
         public boolean undoableCommandWarning = true;
 
         public void setUndoableCommandWarning(boolean value) {
@@ -151,20 +154,24 @@ public final class ProjectPlugin extends EMFPlugin {
         /**
          * @see org.eclipse.core.runtime.Plugin#start(org.osgi.framework.BundleContext)
          */
+        @Override
         public void start(BundleContext context) throws Exception {
             super.start(context);
             ShutdownTaskList.instance().addPostShutdownTask(new PostShutdownTask() {
 
+                @Override
                 public int getProgressMonitorSteps() {
                     List<Resource> resources = getProjectRegistry().eResource().getResourceSet()
                             .getResources();
                     return resources.size();
                 }
 
+                @Override
                 public void handlePostShutdownException(Throwable t) {
                     ProjectPlugin.log("", t); //$NON-NLS-1$
                 }
 
+                @Override
                 public void postShutdown(IProgressMonitor monitor, IWorkbench workbench)
                         throws Exception {
                     monitor.beginTask(Messages.ProjectPlugin_saving_task_name, 0);
@@ -172,10 +179,10 @@ public final class ProjectPlugin extends EMFPlugin {
                     List<Resource> resources = getProjectRegistry().eResource().getResourceSet()
                             .getResources();
                     for (Iterator<Resource> iter = resources.iterator(); iter.hasNext();) {
-                        Resource resource = (Resource) iter.next();
+                        Resource resource = iter.next();
                         if (resource.getContents().isEmpty()) {
                             ProjectPlugin
-                                    .log("Not saving " + resource.getURI() + " empty contents"); //$NON-NLS-1$
+                            .log("Not saving " + resource.getURI() + " empty contents"); //$NON-NLS-1$
                             continue;
                         }
                         Object next = resource.getAllContents().next();
@@ -191,17 +198,19 @@ public final class ProjectPlugin extends EMFPlugin {
                 }
 
             });
-            undoableCommandWarning = "true".equals(getString("org.locationtech.udig.project.undoableCommandWarning")); //$NON-NLS-1$//$NON-NLS-2$
+            undoableCommandWarning = "true" //$NON-NLS-1$
+                    .equals(getString("org.locationtech.udig.project.undoableCommandWarning")); //$NON-NLS-1$
         }
 
         protected static final String ENCODING = "UTF-8"; //$NON-NLS-1$
 
         /**
          * EMF save parameters.
-         * @uml.property   name="saveOptions"
-         * @uml.associationEnd   qualifier="key:java.lang.Object java.lang.String"
+         *
+         * @uml.property name="saveOptions"
+         * @uml.associationEnd qualifier="key:java.lang.Object java.lang.String"
          */
-        public Map<String, String> saveOptions = new HashMap<String, String>();
+        public Map<String, String> saveOptions = new HashMap<>();
 
         private ScopedPreferenceStore preferenceStore;
 
@@ -212,13 +221,14 @@ public final class ProjectPlugin extends EMFPlugin {
         /**
          * @see org.eclipse.core.runtime.Plugin#stop(org.osgi.framework.BundleContext)
          */
+        @Override
         public void stop(BundleContext context) throws Exception {
             super.stop(context);
         }
 
         /**
          * @see org.locationtech.udig.project.internal.ProjectFactory#getProjectRegistry()
-         * @uml.property   name="projectRegistry"
+         * @uml.property name="projectRegistry"
          */
         public ProjectRegistry getProjectRegistry() {
             return ProjectRegistryImpl.getProjectRegistry();
@@ -236,28 +246,28 @@ public final class ProjectPlugin extends EMFPlugin {
         }
 
         /**
-         * Returns the preference store for this UI plug-in.
-         * This preference store is used to hold persistent settings for this plug-in in
-         * the context of a workbench. Some of these settings will be user controlled, 
-         * whereas others may be internal setting that are never exposed to the user.
+         * Returns the preference store for this UI plug-in. This preference store is used to hold
+         * persistent settings for this plug-in in the context of a workbench. Some of these
+         * settings will be user controlled, whereas others may be internal setting that are never
+         * exposed to the user.
          * <p>
-         * If an error occurs reading the preference store, an empty preference store is
-         * quietly created, initialized with defaults, and returned.
+         * If an error occurs reading the preference store, an empty preference store is quietly
+         * created, initialized with defaults, and returned.
          * </p>
          * <p>
-         * <strong>NOTE:</strong> As of Eclipse 3.1 this method is
-         * no longer referring to the core runtime compatibility layer and so
-         * plug-ins relying on Plugin#initializeDefaultPreferences
-         * will have to access the compatibility layer themselves.
+         * <strong>NOTE:</strong> As of Eclipse 3.1 this method is no longer referring to the core
+         * runtime compatibility layer and so plug-ins relying on
+         * Plugin#initializeDefaultPreferences will have to access the compatibility layer
+         * themselves.
          * </p>
          *
-         * @return the preference store 
+         * @return the preference store
          */
         public synchronized ScopedPreferenceStore getPreferenceStore() {
             // Create the preference store lazily.
             if (preferenceStore == null) {
-                preferenceStore = new ScopedPreferenceStore(new InstanceScope(), getBundle()
-                        .getSymbolicName());
+                preferenceStore = new ScopedPreferenceStore(new InstanceScope(),
+                        getBundle().getSymbolicName());
 
             }
             return preferenceStore;
@@ -266,6 +276,7 @@ public final class ProjectPlugin extends EMFPlugin {
 
     /**
      * Writes an info log in the plugin's log.
+     *
      * @param message
      */
     public static void log(String message) {
@@ -280,17 +291,19 @@ public final class ProjectPlugin extends EMFPlugin {
      */
     public static void log(String message, Throwable e) {
         getPlugin().getLog()
-                .log(new Status(IStatus.INFO, ID, 0, message == null ? "" : message, e)); //$NON-NLS-1$
+        .log(new Status(IStatus.INFO, ID, 0, message == null ? "" : message, e)); //$NON-NLS-1$
     }
 
     /**
      * Messages that only engage if getDefault().isDebugging()
      * <p>
-     * It is much prefered to do this:<pre><code>
-     * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
+     * It is much prefered to do this:
+     *
+     * <pre>
+     * <code> private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
-     *      System.out.println( "your message here" );
-     * 
+     * System.out.println( "your message here" );
+     *
      */
     private static void trace(String message, Throwable e) {
         if (getPlugin().isDebugging()) {
@@ -305,7 +318,8 @@ public final class ProjectPlugin extends EMFPlugin {
 
     /**
      * Messages that only engage if getDefault().isDebugging() and the trace option traceID is true.
-     * Available trace options can be found in the Trace class.  (They must also be part of the .options file) 
+     * Available trace options can be found in the Trace class. (They must also be part of the
+     * .options file)
      */
     public static void trace(String traceID, Class caller, String message, Throwable e) {
         if (isDebugging(traceID)) {
@@ -314,14 +328,14 @@ public final class ProjectPlugin extends EMFPlugin {
     }
 
     /**
-     * Adds the name of the caller class to the message. 
+     * Adds the name of the caller class to the message.
      *
      * @param caller class of the object doing the trace.
      * @param message tracing message, may be null.
      * @param e exception, may be null.
      */
     public static void trace(Class caller, String message, Throwable e) {
-        trace(caller.getSimpleName() + ": " + message, e); //$NON-NLS-1$ //$NON-NLS-2$
+        trace(caller.getSimpleName() + ": " + message, e); //$NON-NLS-1$
     }
 
     /**
@@ -332,7 +346,7 @@ public final class ProjectPlugin extends EMFPlugin {
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
      * </p>
-     * 
+     *
      * @param trace currently only RENDER is defined
      */
     public static boolean isDebugging(final String trace) {

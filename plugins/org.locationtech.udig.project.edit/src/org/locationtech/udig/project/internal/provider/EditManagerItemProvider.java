@@ -31,9 +31,9 @@ import org.opengis.feature.simple.SimpleFeature;
  * <!-- begin-user-doc --> <!-- end-user-doc -->
  * @generated
  */
-public class EditManagerItemProvider extends ItemProviderAdapter implements
-        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
-        IItemLabelProvider, IItemPropertySource {
+public class EditManagerItemProvider extends ItemProviderAdapter
+        implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+        ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc --> <!--
@@ -71,15 +71,13 @@ public class EditManagerItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addEditFeaturePropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_EditManager_editFeature_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_EditManager_editFeature_feature", "_UI_EditManager_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.EDIT_MANAGER__EDIT_FEATURE, false, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_EditManager_editFeature_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_EditManager_editFeature_feature", "_UI_EditManager_type"), //$NON-NLS-1$ //$NON-NLS-2$
+                ProjectPackage.Literals.EDIT_MANAGER__EDIT_FEATURE, false, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -89,15 +87,13 @@ public class EditManagerItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addEditLayerInternalPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_EditManager_editLayerInternal_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_EditManager_editLayerInternal_feature", "_UI_EditManager_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.EDIT_MANAGER__EDIT_LAYER_INTERNAL, false, false,
-                        false, null, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_EditManager_editLayerInternal_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_EditManager_editLayerInternal_feature", "_UI_EditManager_type"), //$NON-NLS-1$ //$NON-NLS-2$
+                ProjectPackage.Literals.EDIT_MANAGER__EDIT_LAYER_INTERNAL, false, false, false,
+                null, null, null));
     }
 
     /**
@@ -107,15 +103,13 @@ public class EditManagerItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addTransactionTypePropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_EditManager_transactionType_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_EditManager_transactionType_feature", "_UI_EditManager_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.EDIT_MANAGER__TRANSACTION_TYPE, false, false,
-                        false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_EditManager_transactionType_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_EditManager_transactionType_feature", "_UI_EditManager_type"), //$NON-NLS-1$ //$NON-NLS-2$
+                ProjectPackage.Literals.EDIT_MANAGER__TRANSACTION_TYPE, false, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -125,15 +119,13 @@ public class EditManagerItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addEditLayerLockedPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_EditManager_editLayerLocked_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_EditManager_editLayerLocked_feature", "_UI_EditManager_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.EDIT_MANAGER__EDIT_LAYER_LOCKED, true, false,
-                        false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_EditManager_editLayerLocked_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_EditManager_editLayerLocked_feature", "_UI_EditManager_type"), //$NON-NLS-1$ //$NON-NLS-2$
+                ProjectPackage.Literals.EDIT_MANAGER__EDIT_LAYER_LOCKED, true, false, false,
+                ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -143,15 +135,13 @@ public class EditManagerItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addSelectedLayerPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_EditManager_selectedLayer_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_EditManager_selectedLayer_feature", "_UI_EditManager_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.EDIT_MANAGER__SELECTED_LAYER, true, false, true,
-                        null, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_EditManager_selectedLayer_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_EditManager_selectedLayer_feature", "_UI_EditManager_type"), //$NON-NLS-1$ //$NON-NLS-2$
+                ProjectPackage.Literals.EDIT_MANAGER__SELECTED_LAYER, true, false, true, null, null,
+                null));
     }
 
     /**
@@ -180,6 +170,7 @@ public class EditManagerItemProvider extends ItemProviderAdapter implements
      * 
      * @generated NOT
      */
+    @Override
     public String getText(Object object) {
         SimpleFeature labelValue = ((EditManager) object).getEditFeature();
         String label = labelValue == null ? null : labelValue.toString();
@@ -200,8 +191,8 @@ public class EditManagerItemProvider extends ItemProviderAdapter implements
         case ProjectPackage.EDIT_MANAGER__EDIT_FEATURE:
         case ProjectPackage.EDIT_MANAGER__TRANSACTION_TYPE:
         case ProjectPackage.EDIT_MANAGER__EDIT_LAYER_LOCKED:
-            fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
-                    false, true));
+            fireNotifyChanged(
+                    new ViewerNotification(notification, notification.getNotifier(), false, true));
             return;
         }
         super.notifyChanged(notification);

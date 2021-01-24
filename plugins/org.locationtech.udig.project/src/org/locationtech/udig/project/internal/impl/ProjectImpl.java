@@ -28,11 +28,9 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -78,6 +76,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
         /**
          * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
          */
+        @Override
         public void notifyChanged(Notification msg) {
             switch (msg.getFeatureID(Project.class)) {
             case ProjectPackage.PROJECT__ELEMENTS_INTERNAL:
@@ -112,6 +111,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -120,6 +120,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -132,6 +133,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated not
      */
+    @Override
     public List<ProjectElement> getElementsInternal() {
         if (elementsInternal == null) {
             elementsInternal = new SynchronizedEObjectWithInverseResolvingEList<ProjectElement>(
@@ -143,13 +145,14 @@ public class ProjectImpl extends EObjectImpl implements Project {
 
                 @Override
                 protected void didAdd(int index, ProjectElement newObject) {
-                    createResourceAndAddElement(ProjectImpl.this, (ProjectElement) newObject);
+                    createResourceAndAddElement(ProjectImpl.this, newObject);
                     super.didAdd(index, newObject);
                 }
 
                 @Override
-                protected void didSet(int index, ProjectElement newObject, ProjectElement oldObject) {
-                    createResourceAndAddElement(ProjectImpl.this, (ProjectElement) newObject);
+                protected void didSet(int index, ProjectElement newObject,
+                        ProjectElement oldObject) {
+                    createResourceAndAddElement(ProjectImpl.this, newObject);
                     super.didSet(index, newObject, oldObject);
                 }
             };
@@ -264,6 +267,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
      *
      * @generated NOT
      */
+    @Override
     @SuppressWarnings("unchecked")
     public List getElements(Class type) {
         List lists = new ArrayList();
@@ -284,7 +288,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
         if (eIsProxy())
             return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: "); //$NON-NLS-1$
         result.append(name);
         result.append(')');
@@ -296,6 +300,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
     /**
      * @see org.locationtech.udig.project.IProject#getElements()
      */
+    @Override
     @SuppressWarnings("unchecked")
     public List getElements() {
         return Collections.unmodifiableList(getElementsInternal());
@@ -311,11 +316,13 @@ public class ProjectImpl extends EObjectImpl implements Project {
         }
     }
 
+    @Override
     public void sendASync(Command command) {
         initCommandManager();
         commandManager.aSyncExecute(command);
     }
 
+    @Override
     public void sendSync(Command command) {
         initCommandManager();
         commandManager.syncExecute(command);
@@ -421,9 +428,11 @@ public class ProjectImpl extends EObjectImpl implements Project {
         return uri;
     }
 
-    private static URI generateResourceName(String projectPath, ProjectElement projectElement, int i) {
+    private static URI generateResourceName(String projectPath, ProjectElement projectElement,
+            int i) {
         URI uri;
-        String resourceName = (projectElement.getName() == null ? "element" : projectElement.getName()) + i; //$NON-NLS-1$
+        String resourceName = (projectElement.getName() == null ? "element" //$NON-NLS-1$
+                : projectElement.getName()) + i;
         resourceName = resourceName.replaceAll("[/\\\\]", ""); //$NON-NLS-1$ //$NON-NLS-2$
         resourceName = resourceName.replaceAll("\\s", "_"); //$NON-NLS-1$ //$NON-NLS-2$
         resourceName = resourceName.replaceAll("_+", "_"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -436,6 +445,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
         return uri;
     }
 
+    @Override
     public URI getID() {
         if (eResource() == null)
             return URI.createFileURI(getName());

@@ -3,8 +3,6 @@
  */
 package org.locationtech.udig.project.internal.util;
 
-import java.util.List;
-
 import org.locationtech.udig.catalog.IResolveChangeListener;
 import org.locationtech.udig.core.IBlockingAdaptable;
 import org.locationtech.udig.project.IAbstractContext;
@@ -19,7 +17,6 @@ import org.locationtech.udig.project.IProject;
 import org.locationtech.udig.project.IProjectElement;
 import org.locationtech.udig.project.IStyleBlackboard;
 import org.locationtech.udig.project.Interaction;
-import org.locationtech.udig.project.internal.AbstractContext;
 import org.locationtech.udig.project.internal.Blackboard;
 import org.locationtech.udig.project.internal.BlackboardEntry;
 import org.locationtech.udig.project.internal.ContextModel;
@@ -40,7 +37,6 @@ import org.locationtech.udig.project.render.IRenderManager;
 import org.locationtech.udig.project.render.IViewportModel;
 
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
@@ -78,7 +74,7 @@ public class ProjectSwitch<T> extends Switch<T> {
      * Checks whether this is a switch for the given package.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @parameter ePackage the package in question.
+     * @param ePackage the package in question.
      * @return whether this is a switch for the given package.
      * @generated
      */
@@ -96,6 +92,76 @@ public class ProjectSwitch<T> extends Switch<T> {
     @Override
     protected T doSwitch(int classifierID, EObject theEObject) {
         switch (classifierID) {
+        case ProjectPackage.COMPARABLE: {
+            Comparable comparable = (Comparable) theEObject;
+            T result = caseComparable(comparable);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case ProjectPackage.IMAP: {
+            IMap iMap = (IMap) theEObject;
+            T result = caseIMap(iMap);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case ProjectPackage.ILAYER: {
+            ILayer iLayer = (ILayer) theEObject;
+            T result = caseILayer(iLayer);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case ProjectPackage.IEDIT_MANAGER: {
+            IEditManager iEditManager = (IEditManager) theEObject;
+            T result = caseIEditManager(iEditManager);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case ProjectPackage.IPROJECT: {
+            IProject iProject = (IProject) theEObject;
+            T result = caseIProject(iProject);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case ProjectPackage.IABSTRACT_CONTEXT: {
+            IAbstractContext iAbstractContext = (IAbstractContext) theEObject;
+            T result = caseIAbstractContext(iAbstractContext);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case ProjectPackage.IBLACKBOARD: {
+            IBlackboard iBlackboard = (IBlackboard) theEObject;
+            T result = caseIBlackboard(iBlackboard);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case ProjectPackage.IPROJECT_ELEMENT: {
+            IProjectElement iProjectElement = (IProjectElement) theEObject;
+            T result = caseIProjectElement(iProjectElement);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case ProjectPackage.IRENDER_MANAGER: {
+            IRenderManager iRenderManager = (IRenderManager) theEObject;
+            T result = caseIRenderManager(iRenderManager);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case ProjectPackage.IVIEWPORT_MODEL: {
+            IViewportModel iViewportModel = (IViewportModel) theEObject;
+            T result = caseIViewportModel(iViewportModel);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
         case ProjectPackage.CONTEXT_MODEL: {
             ContextModel contextModel = (ContextModel) theEObject;
             T result = caseContextModel(contextModel);
@@ -187,9 +253,30 @@ public class ProjectSwitch<T> extends Switch<T> {
                 result = defaultCase(theEObject);
             return result;
         }
+        case ProjectPackage.CLONEABLE: {
+            Cloneable cloneable = (Cloneable) theEObject;
+            T result = caseCloneable(cloneable);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
         case ProjectPackage.LAYER_FACTORY: {
             LayerFactory layerFactory = (LayerFactory) theEObject;
             T result = caseLayerFactory(layerFactory);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case ProjectPackage.IADAPTABLE: {
+            IAdaptable iAdaptable = (IAdaptable) theEObject;
+            T result = caseIAdaptable(iAdaptable);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case ProjectPackage.IBLOCKING_ADAPTABLE: {
+            IBlockingAdaptable iBlockingAdaptable = (IBlockingAdaptable) theEObject;
+            T result = caseIBlockingAdaptable(iBlockingAdaptable);
             if (result == null)
                 result = defaultCase(theEObject);
             return result;
@@ -210,10 +297,31 @@ public class ProjectSwitch<T> extends Switch<T> {
                 result = defaultCase(theEObject);
             return result;
         }
+        case ProjectPackage.IRESOLVE_CHANGE_LISTENER: {
+            IResolveChangeListener iResolveChangeListener = (IResolveChangeListener) theEObject;
+            T result = caseIResolveChangeListener(iResolveChangeListener);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case ProjectPackage.ISTYLE_BLACKBOARD: {
+            IStyleBlackboard iStyleBlackboard = (IStyleBlackboard) theEObject;
+            T result = caseIStyleBlackboard(iStyleBlackboard);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
         case ProjectPackage.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY: {
             @SuppressWarnings("unchecked")
             java.util.Map.Entry<Interaction, Boolean> interactionToEBooleanObjectMapEntry = (java.util.Map.Entry<Interaction, Boolean>) theEObject;
             T result = caseInteractionToEBooleanObjectMapEntry(interactionToEBooleanObjectMapEntry);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case ProjectPackage.IFOLDER: {
+            IFolder iFolder = (IFolder) theEObject;
+            T result = caseIFolder(iFolder);
             if (result == null)
                 result = defaultCase(theEObject);
             return result;
@@ -231,11 +339,25 @@ public class ProjectSwitch<T> extends Switch<T> {
                 result = defaultCase(theEObject);
             return result;
         }
+        case ProjectPackage.ILAYER_LEGEND_ITEM: {
+            ILayerLegendItem iLayerLegendItem = (ILayerLegendItem) theEObject;
+            T result = caseILayerLegendItem(iLayerLegendItem);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
         case ProjectPackage.LEGEND_ITEM: {
             LegendItem legendItem = (LegendItem) theEObject;
             T result = caseLegendItem(legendItem);
             if (result == null)
                 result = caseILegendItem(legendItem);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case ProjectPackage.ILEGEND_ITEM: {
+            ILegendItem iLegendItem = (ILegendItem) theEObject;
+            T result = caseILegendItem(iLegendItem);
             if (result == null)
                 result = defaultCase(theEObject);
             return result;

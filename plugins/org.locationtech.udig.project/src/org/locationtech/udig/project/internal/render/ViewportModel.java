@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.SortedSet;
 
 import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.render.impl.ViewportModelImpl;
 import org.locationtech.udig.project.render.IViewportModel;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
 
@@ -53,6 +52,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @uml.property name="cRS"
      * @model unsettable='true'
      */
+    @Override
     public CoordinateReferenceSystem getCRS();
 
     /**
@@ -81,6 +81,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @return Unmodifiable Set of preferred scale denominator values for the map
      * @model 
      */
+    @Override
     public SortedSet<Double> getPreferredScaleDenominators();
 
     /**
@@ -126,6 +127,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @uml.property name="bounds"
      * @model default=""
      */
+    @Override
     public ReferencedEnvelope getBounds();
 
     /**
@@ -191,6 +193,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @uml.property name="center"
      * @model volatile="true" transient="true"
      */
+    @Override
     public Coordinate getCenter();
 
     /**
@@ -209,6 +212,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @uml.property name="height"
      * @model volatile="true" transient="true"
      */
+    @Override
     public double getHeight();
 
     /**
@@ -227,6 +231,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @uml.property name="width"
      * @model volatile="true" transient="true"
      */
+    @Override
     public double getWidth();
 
     /**
@@ -244,6 +249,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @return The aspect ratio of the viewport.
      * @model volatile="true" changeable="false" transient="true"
      */
+    @Override
     public double getAspectRatio();
 
     /**
@@ -297,6 +303,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @return a transform that maps from real world coordinates to the screen
      * @model
      */
+    @Override
     public AffineTransform worldToScreenTransform();
 
     /**
@@ -306,6 +313,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @return The pixel on the screen that the world coordinate is drawn on.
      * @model
      */
+    @Override
     public Point worldToPixel(Coordinate coord);
 
     /**
@@ -316,6 +324,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @return The correspondent real world coordinate
      * @model
      */
+    @Override
     public Coordinate pixelToWorld(int x, int y);
 
     /**
@@ -326,6 +335,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @return the size of a pixel in world units. 
      * @model volatile="true" changeable="false" transient="true"
      */
+    @Override
     public Coordinate getPixelSize();
 
     /**

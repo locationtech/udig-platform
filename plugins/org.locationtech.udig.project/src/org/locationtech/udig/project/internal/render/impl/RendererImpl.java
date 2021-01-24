@@ -20,7 +20,6 @@ import org.locationtech.udig.project.render.RenderException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -112,6 +111,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
      * @see org.locationtech.udig.project.internal.render.Renderer#getName()
      * @uml.property name="name"
      */
+    @Override
     public String getName() {
         if (name == null) {
             ILayer layer = getContext().getLayer();
@@ -130,6 +130,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -142,6 +143,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public int getState() {
         return state;
     }
@@ -150,6 +152,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setState(int newState) {
         int oldState = state;
         state = newState;
@@ -158,10 +161,12 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
                     oldState, state));
     }
 
+    @Override
     public IRenderContext getContext() {
         return context;
     }
 
+    @Override
     public void setContext(IRenderContext newContext) {
         ProjectPlugin.trace(Trace.RENDER, getClass(),
                 "RenderContext changed. \nOld:" + context + "\nNew:" + newContext, null); //$NON-NLS-1$ //$NON-NLS-2$
@@ -175,9 +180,11 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
      * @throws RenderException
      * @generated NOT
      */
+    @Override
     public abstract void render(Graphics2D destination, IProgressMonitor monitor)
             throws RenderException;
 
+    @Override
     public abstract void render(IProgressMonitor monitor) throws RenderException;
 
     /**
@@ -194,6 +201,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
      * 
      * @generated NOT
      */
+    @Override
     public void dispose() {
         // do nothing
     }
@@ -285,7 +293,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
         if (eIsProxy())
             return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (state: "); //$NON-NLS-1$
         result.append(state);
         result.append(", name: "); //$NON-NLS-1$
@@ -297,6 +305,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
     /**
      * Default renderer may be cached.
      */
+    @Override
     public boolean isCacheable() {
         return true;
     }
@@ -307,6 +316,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
      * If a ReferencedEnvelope is provided it would be best; if not the context CoordinateReferenceSystem (ie world crs) will be assumed.
      * </p>
      */
+    @Override
     public synchronized void setRenderBounds(Envelope boundsToRender) {
         if (boundsToRender == null) {
             renderbounds = null;
@@ -333,6 +343,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
     /**
      * Set the bounds to the indicated screenArea (by using the pixelToWorld method to produced a ReferencedEnvelope.
      */
+    @Override
     public synchronized void setRenderBounds(Rectangle screenArea) {
         Coordinate min = getContext().pixelToWorld(screenArea.x, screenArea.y);
         Coordinate max = getContext().pixelToWorld(screenArea.width + screenArea.x,
@@ -349,6 +360,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
      * should always transform this bounds into your data crs.
      * @return area of the world to draw
      */
+    @Override
     public synchronized ReferencedEnvelope getRenderBounds() {
         return renderbounds;
     }
