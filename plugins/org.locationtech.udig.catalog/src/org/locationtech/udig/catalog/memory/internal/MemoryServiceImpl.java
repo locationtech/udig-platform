@@ -18,15 +18,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.data.DataUtilities;
+import org.geotools.data.FeatureSource;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.IResolveChangeEvent;
 import org.locationtech.udig.catalog.IResolveDelta;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.IServiceInfo;
 import org.locationtech.udig.catalog.ITransientResolve;
-import org.locationtech.udig.catalog.IResolve.Status;
 import org.locationtech.udig.catalog.internal.CatalogImpl;
 import org.locationtech.udig.catalog.internal.Messages;
 import org.locationtech.udig.catalog.internal.ResolveChangeEvent;
@@ -34,14 +36,7 @@ import org.locationtech.udig.catalog.internal.ResolveDelta;
 import org.locationtech.udig.catalog.memory.ActiveMemoryDataStore;
 import org.locationtech.udig.catalog.memory.MemoryDSFactory;
 import org.locationtech.udig.catalog.memory.MemoryServiceExtensionImpl;
-import org.locationtech.udig.ui.ErrorManager;
 import org.locationtech.udig.ui.UDIGDisplaySafeLock;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.geotools.data.DataUtilities;
-import org.geotools.data.FeatureSource;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 public class MemoryServiceImpl extends IService implements ITransientResolve {
@@ -106,6 +101,7 @@ public class MemoryServiceImpl extends IService implements ITransientResolve {
         return params;
     }
 
+    @Override
     public <T> boolean canResolve( Class<T> adaptee ) {
         if (adaptee == null)
             return false;
@@ -143,15 +139,13 @@ public class MemoryServiceImpl extends IService implements ITransientResolve {
     public List< ? extends IGeoResource> resources( IProgressMonitor monitor ) throws IOException {
         ActiveMemoryDataStore ds = getDS();
         String[] types = ds.getTypeNames();
-        if (memberList == null) {
+        if (memberList == null || (types != null && types.length != memberList.size())) {
             rLock.lock();
             try {
-                if (memberList == null) {
-                    this.memberList = new ArrayList<MemoryGeoResourceImpl>();
-                    for( String type : types ) {
-                        if (!found(type))
-                            this.memberList.add(new MemoryGeoResourceImpl(type, this));
-                    }
+                this.memberList = new ArrayList<>();
+                for( String type : types ) {
+                    if (!found(type))
+                        this.memberList.add(new MemoryGeoResourceImpl(type, this));
                 }
             } finally {
                 rLock.unlock();
@@ -168,6 +162,7 @@ public class MemoryServiceImpl extends IService implements ITransientResolve {
         return false;
     }
 
+    @Override
     public Status getStatus() {
         if( isDisposed ){
             return Status.DISPOSED;
@@ -175,10 +170,12 @@ public class MemoryServiceImpl extends IService implements ITransientResolve {
         return Status.CONNECTED;
     }
 
+    @Override
     public Throwable getMessage() {
         return null;
     }
 
+    @Override
     public URL getIdentifier() {
         return id;
     }
@@ -192,13 +189,14 @@ public class MemoryServiceImpl extends IService implements ITransientResolve {
                     ds = createNewDS();
                     changed = true;
                     ds.addListener(new MemoryServiceListener(){
+                        @Override
                         public void schemaChanged() {
                             MemoryServiceImpl.this.memberList = null;
                             IResolveDelta delta = new ResolveDelta(MemoryServiceImpl.this,
                                     IResolveDelta.Kind.CHANGED);
                             ((CatalogImpl) CatalogPlugin.getDefault().getLocalCatalog())
-                                    .fire(new ResolveChangeEvent(MemoryServiceImpl.this,
-                                            IResolveChangeEvent.Type.POST_CHANGE, delta));
+                            .fire(new ResolveChangeEvent(MemoryServiceImpl.this,
+                                    IResolveChangeEvent.Type.POST_CHANGE, delta));
                         }
                     });
                 }
@@ -208,8 +206,8 @@ public class MemoryServiceImpl extends IService implements ITransientResolve {
             if (changed) {
                 IResolveDelta delta = new ResolveDelta(this, IResolveDelta.Kind.CHANGED);
                 ((CatalogImpl) CatalogPlugin.getDefault().getLocalCatalog())
-                        .fire(new ResolveChangeEvent(this, IResolveChangeEvent.Type.POST_CHANGE,
-                                delta));
+                .fire(new ResolveChangeEvent(this, IResolveChangeEvent.Type.POST_CHANGE,
+                        delta));
             }
         }
 
@@ -223,13 +221,14 @@ public class MemoryServiceImpl extends IService implements ITransientResolve {
                 return ds;
             } else {
                 CatalogPlugin
-                        .log(
-                                "MemoryDSFactory '" + this.factory.getClass() + "' returned invalid ActiveMemoryDataStore", null); //$NON-NLS-1$//$NON-NLS-2$
+                .log(
+                        "MemoryDSFactory '" + this.factory.getClass() + "' returned invalid ActiveMemoryDataStore", null); //$NON-NLS-1$//$NON-NLS-2$
             }
         }
         return new ActiveMemoryDataStore();
     }
 
+    @Override
     public void dispose( IProgressMonitor monitor ) {
         super.dispose(monitor);
         if( memberList != null ){
@@ -241,6 +240,7 @@ public class MemoryServiceImpl extends IService implements ITransientResolve {
         /*
          * @see org.locationtech.udig.catalog.IServiceInfo#getTitle()
          */
+        @Override
         public String getTitle() {
             return Messages.catalog_memory_service_title;
         }

@@ -107,7 +107,7 @@ public final class UDIGTestUtil {
 		    crs = DefaultGeographicCRS.WGS84;
 		}
 		SimpleFeatureTypeBuilder builder = new SimpleFeatureTypeBuilder();
-		builder.setName("test");
+		builder.setName(typename);
 		builder.crs(crs).add("geom", Geometry.class);
 		builder.setCRS(crs);
 		builder.add("name", String.class);

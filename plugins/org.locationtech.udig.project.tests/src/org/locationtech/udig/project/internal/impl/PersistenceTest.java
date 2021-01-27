@@ -15,166 +15,126 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.awt.Dimension;
 import java.io.File;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.Project;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.ProjectRegistry;
-import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
-import org.junit.After;
+import org.geotools.feature.SchemaException;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.tests.CatalogTests;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.ProjectRegistry;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 public class PersistenceTest extends AbstractProjectTestCase {
 
-    final String firstMapName = "FirstMap"; //$NON-NLS-1$
-    final String firstMapLayerName = "FirstMapLayer"; //$NON-NLS-1$
-    final String secondMapName = "SecondMap"; //$NON-NLS-1$
-    final String secondMapLayerName = "SecondMapLayer"; //$NON-NLS-1$
-    final String type1Name="type1"; //$NON-NLS-1$
-    final String type2Name="type2"; //$NON-NLS-1$
+    private static final int EXPECTED_FEAT_CNT_LAYER1 = 4;
+
+    private static final int EXPECTED_FEAT_CNT_LAYER2 = 6;
+
+    private static final String FIRST_MAP_NAME = "PersistenceTestFirstMap"; //$NON-NLS-1$
+
+    private static final String FIRST_MAP_LAYERNAME = "PersistenceTestFirstMapLayer"; //$NON-NLS-1$
+
+    private static final String SECOND_MAP_NAME = "PersistenceTestSecondMap"; //$NON-NLS-1$
+
+    private static final String SECOND_MAP_LAYERNAME = "PersistenceTestSecondMapLayer"; //$NON-NLS-1$
+
+    private static final String TYPE_NAME_1 = "PersistenceTestType1"; //$NON-NLS-1$
+
+    private static final String TYPE_NAME_2 = "PersistenceTestType2"; //$NON-NLS-1$
+
+    private static final String PROJECT_NAME = "PersistenceTestProject";
 
     private Project project;
-	private File file;
-	private IGeoResource resource1;
-	private IGeoResource resource2;
 
-	@SuppressWarnings("unchecked")
-	@Before
+    @Before
     public void setUp() throws Exception {
         ProjectRegistry registry = ProjectPlugin.getPlugin().getProjectRegistry();
-        List<Project> projects = registry.getProjects();
-        registry.getProjects().removeAll(projects);
-        
-        EList list=registry.eResource().getResourceSet().getResources();
-        Set<Resource> toRemove=new HashSet<Resource>();
-        for (Iterator iter = list.iterator(); iter.hasNext();) {
-            Resource element = (Resource) iter.next();
-            if( element!=registry.eResource() ){
-                element.unload();
-                toRemove.add(element);
-            }
-        }
-        
-        project=registry.getDefaultProject();
-		file = new File(project.eResource().getURI().toFileString());
-		if( file.exists() ){
-			if( file.isFile() ){
-				file.delete();
-				File parent=file.getParentFile();
-				File[] files=parent.listFiles();
-				for (File file : files) {
-					file.delete();
-				}
-				parent.delete();
-			}
-			file.delete();
-		}
+        String projectPath = Platform.getLocation().toString() + File.separatorChar + PROJECT_NAME;
+        project = registry.getProject(projectPath);
 
-        registry.eResource().getResourceSet().getResources().removeAll(toRemove);
-        
-        project=registry.getProject(FileLocator.toFileURL(Platform.getInstanceLocation().getURL()).getFile());
+        assertNotNull(project);
 
-		resource1 = MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures(type1Name,4),false);
-		Map map = MapTests.createNonDynamicMapAndRenderer(resource1, new Dimension(512,512));
-        map.setName(firstMapName); 
-		map.getLayersInternal().get(0).setName(firstMapLayerName); 
-		
-		resource2 = MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures(type2Name,6),false); 
-		map=MapTests.createNonDynamicMapAndRenderer(resource2, new Dimension(512,512));
-		map.setName(secondMapName); 
-		map.getLayersInternal().get(0).setName(secondMapLayerName); 
-	}
+        createMapResourceAndLayer(project, FIRST_MAP_NAME, FIRST_MAP_LAYERNAME, TYPE_NAME_1,
+                EXPECTED_FEAT_CNT_LAYER1);
+        createMapResourceAndLayer(project, SECOND_MAP_NAME, SECOND_MAP_LAYERNAME, TYPE_NAME_2,
+                EXPECTED_FEAT_CNT_LAYER2);
 
-	@After
-	public void tearDown() throws Exception {
-		if( file.exists() ){
-			if( file.isFile() ){
-				file.delete();
-				File parent=file.getParentFile();
-				File[] files=parent.listFiles();
-				for (File file : files) {
-					file.delete();
-				}
-				parent.delete();
-			}
-			file.delete();
-		}
-	}
-	
-	@Ignore
-	@Test
+        assertEquals(2, project.getElements().size());
+    }
+
+    private void createMapResourceAndLayer(Project project, String mapName, String layerName,
+            String typeName, int featureQuantity) throws IOException, SchemaException {
+        Map map = ProjectFactory.eINSTANCE.createMap(project, mapName, null);
+        IGeoResource resource = CatalogTests.createGeoResource(
+                UDIGTestUtil.createDefaultTestFeatures(typeName, featureQuantity), false);
+        Layer createdLayer = map.getLayerFactory().createLayer(resource);
+        createdLayer.setName(layerName);
+        map.getLayersInternal().add(createdLayer);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @Test
     public void testSaveAndLoad() throws Exception {
-		EList list=project.eResource().getResourceSet().getResources();
-		
-		for (Iterator iter = list.iterator(); iter.hasNext();) {
-			Resource element = (Resource) iter.next();
-            try{
-                element.save(null);
-            }catch (Exception e) {
+        Collection<String> errorMessages = ProjectPlugin
+                .saveProjects(Collections.singletonList(project));
+        assertTrue(errorMessages.isEmpty());
+
+        ResourceSet set = new ResourceSetImpl();
+        Project loadedProject = (Project) set.getResource(project.eResource().getURI(), true)
+                .getAllContents().next();
+        assertFalse(loadedProject.eIsProxy());
+        assertNotNull(loadedProject);
+        int maps = 0;
+        boolean foundFirstMap = false;
+        boolean foundSecondMap = false;
+
+        List<IProjectElement> resources = loadedProject.getElements();
+        for (IProjectElement projectElement : resources) {
+            Map map = (Map) projectElement;
+
+            assertFalse(map.eIsProxy());
+            assertEquals(1, map.getMapLayers().size());
+            assertNotNull(map.getMapLayers().get(0).getGeoResources().get(0));
+            FeatureSource resource = map.getMapLayers().get(0).getResource(FeatureSource.class,
+                    new NullProgressMonitor());
+            int featureCount = resource.getCount(Query.ALL);
+            String featureTypeName = resource.getName().getLocalPart();
+
+            String layerName = map.getLayersInternal().get(0).getName();
+            if (map.getName().equals(FIRST_MAP_NAME)) {
+                foundFirstMap = true;
+                assertEquals(FIRST_MAP_LAYERNAME, layerName);
+                assertEquals(TYPE_NAME_1, featureTypeName);
+                assertEquals(EXPECTED_FEAT_CNT_LAYER1, featureCount);
             }
-            if( !element.getContents().contains(ProjectPlugin.getPlugin().getProjectRegistry()) )
-                element.unload();
-		}
-		
-		ResourceSet set=new ResourceSetImpl();
-		Project project=(Project) set.getResource(URI.createURI("file://"+file.getAbsolutePath()), true).getAllContents().next(); //$NON-NLS-1$
-		assertFalse(project.eIsProxy());
-		assertNotNull(project);
-		int maps=0;
-		boolean foundFirstMap=false;
-		boolean foundSecondMap=false;
-		
-		List resources=project.getElements();
-		for (Iterator iter = resources.iterator(); iter.hasNext();) {
-			Map map=(Map) iter.next();
-	
-			assertFalse(map.eIsProxy());
-			assertEquals(1, map.getLayersInternal().size());
-			assertNotNull(map.getLayersInternal().get(0).getGeoResources().get(0));
-			assertNotNull(map.getLayersInternal().get(0).getResource(FeatureSource.class, new NullProgressMonitor()));
-	
-			if( map.getName().equals(firstMapName)){ 
-				foundFirstMap=true;
-				assertEquals( firstMapLayerName, map.getLayersInternal().get(0).getName()); 
-				FeatureSource<SimpleFeatureType, SimpleFeature> source=map.getLayersInternal().get(0).getResource(FeatureSource.class, null);				
-				assertEquals( 4, source.getCount(Query.ALL));
-				assertEquals( firstMapLayerName, map.getLayersInternal().get(0).getName()); 
-			}
-			if( map.getName().equals(secondMapName)){ 
-				foundSecondMap=true;
-				assertEquals( secondMapLayerName, map.getLayersInternal().get(0).getName()); 
-				FeatureSource<SimpleFeatureType, SimpleFeature> source=map.getLayersInternal().get(0).getResource(FeatureSource.class, null);				
-				assertEquals( 6, source.getCount(Query.ALL));
-				assertEquals( secondMapLayerName, map.getLayersInternal().get(0).getName());
-			}
-			maps++;
-		}
-		assertEquals(2,maps);
-		assertTrue(foundFirstMap);
-		assertTrue(foundSecondMap);
-	}
+            if (map.getName().equals(SECOND_MAP_NAME)) {
+                foundSecondMap = true;
+                assertEquals(SECOND_MAP_LAYERNAME, layerName);
+                assertEquals(TYPE_NAME_2, featureTypeName);
+                assertEquals(EXPECTED_FEAT_CNT_LAYER2, featureCount);
+            }
+            maps++;
+        }
+        assertEquals(2, maps);
+        assertTrue("First map not loaded correctly", foundFirstMap);
+        assertTrue("Second map not loaded correctly", foundSecondMap);
+    }
 }
