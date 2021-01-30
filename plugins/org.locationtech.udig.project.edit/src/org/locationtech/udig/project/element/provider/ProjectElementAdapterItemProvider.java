@@ -50,9 +50,9 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ProjectElementAdapterItemProvider extends ItemProviderAdapter implements
-        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
-        IItemLabelProvider, IItemPropertySource {
+public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
+        implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+        ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
     private static final String LABEL_PROVIDER_ATT = "labelProvider";
 
     private static final String LABEL_ATT = "label";
@@ -113,15 +113,13 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter imple
      * @generated
      */
     protected void addProjectInternalPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_ProjectElement_projectInternal_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_ProjectElement_projectInternal_feature", "_UI_ProjectElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.PROJECT_ELEMENT__PROJECT_INTERNAL, true, false,
-                        true, null, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_ProjectElement_projectInternal_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_ProjectElement_projectInternal_feature", "_UI_ProjectElement_type"), //$NON-NLS-1$ //$NON-NLS-2$
+                ProjectPackage.Literals.PROJECT_ELEMENT__PROJECT_INTERNAL, true, false, true, null,
+                null, null));
     }
 
     /**
@@ -131,15 +129,14 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter imple
      * @generated
      */
     protected void addBackingObjectPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_ProjectElementAdapter_backingObject_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_ProjectElementAdapter_backingObject_feature", "_UI_ProjectElementAdapter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ElementPackage.Literals.PROJECT_ELEMENT_ADAPTER__BACKING_OBJECT, true,
-                        false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_ProjectElementAdapter_backingObject_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_ProjectElementAdapter_backingObject_feature", //$NON-NLS-1$
+                        "_UI_ProjectElementAdapter_type"), //$NON-NLS-1$
+                ElementPackage.Literals.PROJECT_ELEMENT_ADAPTER__BACKING_OBJECT, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     private IConfigurationElement findExtension(String extensionId) {
@@ -159,6 +156,7 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter imple
      * IColorProvider interface the foreground color from the provider is
      * returned otherwise null is returned
      */
+    @Override
     public Color getForeground(Object object) {
         ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
         IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
@@ -179,8 +177,8 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter imple
                 }
             } catch (CoreException e) {
                 // not good log this
-                ProjectEditPlugin.log("Unable to load the LabelProvider for Element: "
-                        + extensionId, e);
+                ProjectEditPlugin
+                        .log("Unable to load the LabelProvider for Element: " + extensionId, e);
             }
         }
         return color;
@@ -191,6 +189,7 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter imple
      * IColorProvider interface the background color from the provider is
      * returned otherwise null is returned
      */
+    @Override
     public Color getBackground(Object object) {
         ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
         IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
@@ -211,8 +210,8 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter imple
                 }
             } catch (CoreException e) {
                 // not good log this
-                ProjectEditPlugin.log("Unable to load the LabelProvider for Element: "
-                        + extensionId, e);
+                ProjectEditPlugin
+                        .log("Unable to load the LabelProvider for Element: " + extensionId, e);
             }
         }
         return color;
@@ -223,6 +222,7 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter imple
      * IFontProvider interface the font from the provider is returned otherwise
      * null is returned
      */
+    @Override
     public Font getFont(Object object) {
         ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
         IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
@@ -243,8 +243,8 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter imple
                 }
             } catch (CoreException e) {
                 // not good log this
-                ProjectEditPlugin.log("Unable to load the LabelProvider for Element: "
-                        + extensionId, e);
+                ProjectEditPlugin
+                        .log("Unable to load the LabelProvider for Element: " + extensionId, e);
             }
         }
         return font;
@@ -258,6 +258,7 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter imple
      * 
      * @generated NOT
      */
+    @Override
     public Object getImage(Object object) {
         ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
         IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
@@ -278,8 +279,8 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter imple
                 }
             } catch (CoreException e) {
                 // not good log this
-                ProjectEditPlugin.log("Unable to load the LabelProvider for Element: "
-                        + extensionId, e);
+                ProjectEditPlugin
+                        .log("Unable to load the LabelProvider for Element: " + extensionId, e);
             }
         }
         String iconPath = extension.getAttribute(ICON_ATT);
@@ -308,6 +309,7 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter imple
      * 
      * @generated NOT
      */
+    @Override
     public String getText(Object object) {
         ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
         IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
@@ -328,8 +330,8 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter imple
                 }
             } catch (CoreException e) {
                 // not good log this
-                ProjectEditPlugin.log("Unable to load the LabelProvider for Element: "
-                        + extensionId, e);
+                ProjectEditPlugin
+                        .log("Unable to load the LabelProvider for Element: " + extensionId, e);
             }
         }
         if (text == null) {
@@ -352,8 +354,8 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter imple
         switch (notification.getFeatureID(ProjectElementAdapter.class)) {
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__NAME:
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__BACKING_OBJECT:
-            fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
-                    false, true));
+            fireNotifyChanged(
+                    new ViewerNotification(notification, notification.getNotifier(), false, true));
             return;
         }
         super.notifyChanged(notification);

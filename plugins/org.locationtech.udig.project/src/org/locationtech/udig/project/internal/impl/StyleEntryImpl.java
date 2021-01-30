@@ -9,7 +9,6 @@ import org.locationtech.udig.project.internal.StyleEntry;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
@@ -113,6 +112,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getID() {
         return iD;
     }
@@ -121,6 +121,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setID(String newID) {
         String oldID = iD;
         iD = newID;
@@ -133,6 +134,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getMemento() {
         return memento;
     }
@@ -141,6 +143,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setMemento(String newMemento) {
         String oldMemento = memento;
         memento = newMemento;
@@ -155,6 +158,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * @uml.property name="style"
      * @generated NOT
      */
+    @Override
     public Object getStyle() {
         return style;
     }
@@ -165,6 +169,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * @uml.property name="style"
      * @generated NOT
      */
+    @Override
     public void setStyle(Object newStyle) {
         style = newStyle;
     }
@@ -175,6 +180,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * @uml.property name="styleClass"
      * @generated NOT
      */
+    @Override
     public Class getStyleClass() {
         return styleClass;
     }
@@ -185,6 +191,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * @uml.property name="styleClass"
      * @generated NOT
      */
+    @Override
     public void setStyleClass(Class newStyleClass) {
         styleClass = newStyleClass;
     }
@@ -281,6 +288,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated NOT
      */
+    @Override
     public String toString() {
         if (eIsProxy())
             return super.toString();
@@ -296,10 +304,12 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
         return result.toString();
     }
 
+    @Override
     public boolean isSelected() {
         return selected;
     }
 
+    @Override
     public void setSelected(boolean selected) {
         this.selected = selected;
     }

@@ -6,7 +6,6 @@
  */
 package org.locationtech.udig.project.internal.render.provider;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.locationtech.udig.project.internal.provider.ProjectEditPlugin;
@@ -33,9 +32,9 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * @generated
  */
-public class RendererItemProvider extends ItemProviderAdapter implements
-        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
-        IItemLabelProvider, IItemPropertySource {
+public class RendererItemProvider extends ItemProviderAdapter
+        implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+        ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc --> <!--
@@ -71,15 +70,13 @@ public class RendererItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addNamePropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Renderer_name_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Renderer_name_feature", "_UI_Renderer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        RenderPackage.Literals.RENDERER__NAME, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Renderer_name_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Renderer_name_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Renderer_type"), //$NON-NLS-1$
+                RenderPackage.Literals.RENDERER__NAME, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -89,15 +86,13 @@ public class RendererItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addStatePropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Renderer_state_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Renderer_state_feature", "_UI_Renderer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        RenderPackage.Literals.RENDERER__STATE, true, false, false,
-                        ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Renderer_state_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Renderer_state_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Renderer_type"), //$NON-NLS-1$
+                RenderPackage.Literals.RENDERER__STATE, true, false, false,
+                ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -107,15 +102,12 @@ public class RendererItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addContextPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Renderer_context_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Renderer_context_feature", "_UI_Renderer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        RenderPackage.Literals.RENDERER__CONTEXT, true, false, true, null, null,
-                        null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Renderer_context_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Renderer_context_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Renderer_type"), //$NON-NLS-1$
+                RenderPackage.Literals.RENDERER__CONTEXT, true, false, true, null, null, null));
     }
 
     /**
@@ -134,6 +126,7 @@ public class RendererItemProvider extends ItemProviderAdapter implements
      * 
      * @generated NOT
      */
+    @Override
     public String getText(Object object) {
         String label = ((Renderer) object).getName();
         return label == null || label.length() == 0 ? "Renderer" : label;
@@ -152,8 +145,8 @@ public class RendererItemProvider extends ItemProviderAdapter implements
         switch (notification.getFeatureID(Renderer.class)) {
         case RenderPackage.RENDERER__STATE:
         case RenderPackage.RENDERER__NAME:
-            fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
-                    false, true));
+            fireNotifyChanged(
+                    new ViewerNotification(notification, notification.getNotifier(), false, true));
             return;
         }
         super.notifyChanged(notification);

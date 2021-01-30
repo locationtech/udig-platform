@@ -28,10 +28,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.locationtech.udig.project.internal.impl.LayerLegendItemImpl#getLayer <em>Layer</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -70,6 +70,7 @@ public class LayerLegendItemImpl extends LegendItemImpl implements LayerLegendIt
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Layer getLayer() {
         if (layer != null && layer.eIsProxy()) {
             InternalEObject oldLayer = (InternalEObject) layer;
@@ -97,6 +98,7 @@ public class LayerLegendItemImpl extends LegendItemImpl implements LayerLegendIt
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setLayer(Layer newLayer) {
         Layer oldLayer = layer;
         layer = newLayer;

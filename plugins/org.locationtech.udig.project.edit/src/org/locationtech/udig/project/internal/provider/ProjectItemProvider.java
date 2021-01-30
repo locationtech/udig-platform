@@ -33,9 +33,9 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * 
  * @generated NOT
  */
-public class ProjectItemProvider extends AbstractLazyLoadingItemProvider implements
-        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
-        IItemLabelProvider, IItemPropertySource {
+public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
+        implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+        ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
@@ -64,6 +64,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider impleme
      * 
      * @generated
      */
+    @Override
     public List getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
@@ -80,15 +81,13 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider impleme
      * @generated
      */
     protected void addNamePropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Project_name_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Project_name_feature", "_UI_Project_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getProject_Name(), true,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Project_name_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Project_name_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Project_type"), //$NON-NLS-1$
+                ProjectPackage.eINSTANCE.getProject_Name(), true,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -100,6 +99,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider impleme
      * 
      * @generated
      */
+    @Override
     public Collection getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
@@ -119,6 +119,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider impleme
      * 
      * @generated
      */
+    @Override
     public Object getImage(Object object) {
         return getResourceLocator().getImage("full/obj16/Project"); //$NON-NLS-1$
     }
@@ -129,6 +130,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider impleme
      * 
      * @generated NOT
      */
+    @Override
     public String getText(Object object) {
         String label = ((Project) object).getName();
         return label == null || label.length() == 0 ? "Project" : //$NON-NLS-1$
@@ -138,6 +140,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider impleme
     /**
      * @see org.eclipse.emf.edit.provider.ITreeItemContentProvider#hasChildren(java.lang.Object)
      */
+    @Override
     public boolean hasChildren(Object object) {
         return true;
     }
@@ -149,22 +152,24 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider impleme
      * 
      * @generated
      */
+    @Override
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
         switch (notification.getFeatureID(Project.class)) {
         case ProjectPackage.PROJECT__NAME:
-            fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
-                    false, true));
+            fireNotifyChanged(
+                    new ViewerNotification(notification, notification.getNotifier(), false, true));
             return;
         case ProjectPackage.PROJECT__ELEMENTS_INTERNAL:
-            fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
-                    true, false));
+            fireNotifyChanged(
+                    new ViewerNotification(notification, notification.getNotifier(), true, false));
             return;
         }
         super.notifyChanged(notification);
     }
 
+    @Override
     public ResourceLocator getResourceLocator() {
         return ProjectEditPlugin.INSTANCE;
     }

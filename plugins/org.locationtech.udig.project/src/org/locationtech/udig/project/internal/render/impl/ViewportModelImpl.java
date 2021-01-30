@@ -99,6 +99,17 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     protected boolean cRSESet = false;
 
     /**
+     * The default value of the '{@link #getBounds() <em>Bounds</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getBounds()
+     * @generated
+     * @ordered
+     */
+    protected static final ReferencedEnvelope BOUNDS_EDEFAULT = (ReferencedEnvelope) RenderFactory.eINSTANCE
+            .createFromString(RenderPackage.eINSTANCE.getReferencedEnvelope(), ""); //$NON-NLS-1$
+
+    /**
      * The cached value of the '{@link #getBounds() <em>Bounds</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
@@ -260,10 +271,12 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public CoordinateReferenceSystem getCRS() {
         return cRS;
     }
 
+    @Override
     public void setCRS(CoordinateReferenceSystem newCRS) {
         double scale = getScaleDenominator();
         if (newCRS == null)
@@ -286,8 +299,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
                         && oldCRS != DefaultEngineeringCRS.CARTESIAN_2D
                         && oldCRS != DefaultEngineeringCRS.CARTESIAN_3D) {
                     MathTransform transform = CRS.findMathTransform(oldCRS, newCRS, true);
-                    DirectPosition newCenter = transform
-                            .transform(position, new DirectPosition2D());
+                    DirectPosition newCenter = transform.transform(position,
+                            new DirectPosition2D());
                     setCenter(new Coordinate(newCenter.getOrdinate(0), newCenter.getOrdinate(1)));
                     setScale(scale);
                 }
@@ -317,8 +330,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         boolean oldCRSESet = cRSESet;
         cRSESet = true;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET,
-                    RenderPackage.VIEWPORT_MODEL__CRS, oldCRS, cRS, !oldCRSESet));
+            eNotify(new ENotificationImpl(this, Notification.SET, RenderPackage.VIEWPORT_MODEL__CRS,
+                    oldCRS, cRS, !oldCRSESet));
     }
 
     /**
@@ -326,6 +339,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
+    @Override
     public void unsetCRS() {
         CoordinateReferenceSystem oldCRS = cRS;
         boolean oldCRSESet = cRSESet;
@@ -340,6 +354,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isSetCRS() {
         return cRSESet;
     }
@@ -349,6 +364,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
+    @Override
     public synchronized ReferencedEnvelope getBounds() {
         if (bounds == null) {
             return getMapInternal().getBounds(ProgressManager.instance().get());
@@ -357,15 +373,18 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         return bounds;
     }
 
+    @Override
     public void setBounds(ReferencedEnvelope newBounds) {
         setBounds(newBounds, false);
     }
 
+    @Override
     public void setBounds(ReferencedEnvelope newBounds, boolean forceContainBBoxZoom) {
         setCRS(newBounds.getCoordinateReferenceSystem());
         setBoundsInternal(newBounds, forceContainBBoxZoom);
     }
 
+    @Override
     public void setBounds(Envelope newBounds) {
         setBoundsInternal(newBounds, false);
     }
@@ -402,7 +421,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
         Envelope oldBounds = bounds == null ? new Envelope() : bounds;
         if (!getBounds().isNull() && !Double.isNaN(getAspectRatio())
-                && !Double.isNaN(finalBounds.getWidth()) && !Double.isNaN(finalBounds.getHeight())) {
+                && !Double.isNaN(finalBounds.getWidth())
+                && !Double.isNaN(finalBounds.getHeight())) {
             double nRatio = finalBounds.getWidth() / finalBounds.getHeight();
             if (Double.isNaN(nRatio))
                 nRatio = 0.0;
@@ -430,9 +450,10 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
+    @Override
     public Coordinate getCenter() {
-        return new Coordinate(bounds.getMinX() + bounds.getWidth() / 2, bounds.getMinY()
-                + bounds.getHeight() / 2);
+        return new Coordinate(bounds.getMinX() + bounds.getWidth() / 2,
+                bounds.getMinY() + bounds.getHeight() / 2);
     }
 
     /**
@@ -440,11 +461,12 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
+    @Override
     public void setCenter(Coordinate newCenter) {
         // Coordinate center=getCenter();
         double dw = getBounds().getWidth() / 2, dh = getBounds().getHeight() / 2;
-        setBounds(new Envelope(newCenter.x - dw, newCenter.x + dw, newCenter.y - dh, newCenter.y
-                + dh));
+        setBounds(new Envelope(newCenter.x - dw, newCenter.x + dw, newCenter.y - dh,
+                newCenter.y + dh));
     }
 
     /**
@@ -452,6 +474,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
+    @Override
     public double getHeight() {
         return bounds.getHeight();
     }
@@ -461,6 +484,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
+    @Override
     public void setHeight(double newHeight) {
         zoom(getHeight() / newHeight);
     }
@@ -470,6 +494,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
+    @Override
     public double getWidth() {
         return getBounds().getWidth();
     }
@@ -479,6 +504,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
+    @Override
     public void setWidth(double newWidth) {
         zoom(getWidth() / newWidth);
     }
@@ -488,6 +514,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
+    @Override
     public double getAspectRatio() {
         if (!validState())
             return Double.NaN;
@@ -512,10 +539,11 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Map getMapInternal() {
         if (eContainerFeatureID() != RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL)
             return null;
-        return (Map) eContainer();
+        return (Map) eInternalContainer();
     }
 
     /**
@@ -535,7 +563,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      */
     public void setMapInternalGen(Map newMapInternal) {
         if (newMapInternal != eInternalContainer()
-                || (eContainerFeatureID() != RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL && newMapInternal != null)) {
+                || (eContainerFeatureID() != RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL
+                        && newMapInternal != null)) {
             if (EcoreUtil.isAncestor(this, newMapInternal))
                 throw new IllegalArgumentException(
                         "Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -579,9 +608,11 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * @see org.locationtech.udig.project.internal.render.RenderManager#setMap(IMap)
      */
+    @Override
     public void setMapInternal(Map newMap) {
         if (isViewer()) {
-            eBasicSetContainer((InternalEObject) newMap, RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL);
+            eBasicSetContainer((InternalEObject) newMap,
+                    RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL);
         } else
             setMapInternalGen(newMap);
     }
@@ -590,6 +621,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public RenderManager getRenderManagerInternal() {
         return renderManagerInternal;
     }
@@ -604,8 +636,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         renderManagerInternal = newRenderManagerInternal;
         if (eNotificationRequired()) {
             ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-                    RenderPackage.VIEWPORT_MODEL__RENDER_MANAGER_INTERNAL,
-                    oldRenderManagerInternal, newRenderManagerInternal);
+                    RenderPackage.VIEWPORT_MODEL__RENDER_MANAGER_INTERNAL, oldRenderManagerInternal,
+                    newRenderManagerInternal);
             if (msgs == null)
                 msgs = notification;
             else
@@ -618,6 +650,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setRenderManagerInternal(RenderManager newRenderManagerInternal) {
         if (newRenderManagerInternal != renderManagerInternal) {
             NotificationChain msgs = null;
@@ -634,8 +667,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
                 msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
-                    RenderPackage.VIEWPORT_MODEL__RENDER_MANAGER_INTERNAL,
-                    newRenderManagerInternal, newRenderManagerInternal));
+                    RenderPackage.VIEWPORT_MODEL__RENDER_MANAGER_INTERNAL, newRenderManagerInternal,
+                    newRenderManagerInternal));
     }
 
     /**
@@ -643,6 +676,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
+    @Override
     public Coordinate getPixelSize() {
         return new Coordinate(getXPixelToWorldScale(), getYPixelToWorldScale());
     }
@@ -664,6 +698,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
+    @Override
     public void setBounds(double minx, double maxx, double miny, double maxy) {
         setBounds(new Envelope(minx, maxx, miny, maxy));
     }
@@ -673,17 +708,19 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
+    @Override
     public AffineTransform worldToScreenTransform() {
         if (!validState())
             return new AffineTransform(); //Identity (screen-space is arbitrary here.)
         // set up the affine transform and calculate scale values
-        return worldToScreenTransform(getBounds(), getRenderManagerInternal().getMapDisplay()
-                .getDisplaySize());
+        return worldToScreenTransform(getBounds(),
+                getRenderManagerInternal().getMapDisplay().getDisplaySize());
     }
 
     /**
      * @see ViewportModel#worldToScreenTransform(Envelope, Dimension)
      */
+    @Override
     public AffineTransform worldToScreenTransform(Envelope mapExtent, Dimension screenSize) {
         if (!validState())
             return null;
@@ -691,19 +728,21 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         return ScaleUtils.worldToScreenTransform(mapExtent, screenSize);
     }
 
+    @Override
     public Point worldToPixel(Coordinate coord) {
         if (!validState())
             return null;
-        return ScaleUtils.worldToPixel(coord, getBounds(), getRenderManagerInternal()
-                .getMapDisplay().getDisplaySize());
+        return ScaleUtils.worldToPixel(coord, getBounds(),
+                getRenderManagerInternal().getMapDisplay().getDisplaySize());
     }
 
+    @Override
     public Coordinate pixelToWorld(int x, int y) {
         if (!validState())
             return null;
 
-        return ScaleUtils.pixelToWorld(x, y, getBounds(), getRenderManagerInternal()
-                .getMapDisplay().getDisplaySize());
+        return ScaleUtils.pixelToWorld(x, y, getBounds(),
+                getRenderManagerInternal().getMapDisplay().getDisplaySize());
     }
 
     /**
@@ -711,6 +750,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
+    @Override
     public ViewportModel panUsingScreenCoords(int xpixels, int ypixels) {
         if (!validState())
             return this;
@@ -723,6 +763,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
+    @Override
     public ViewportModel panUsingWorldCoords(double x, double y) {
         Envelope bounds = getBounds();
         setBounds(bounds.getMinX() + x, bounds.getMaxX() + x, bounds.getMinY() + y,
@@ -735,12 +776,14 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
+    @Override
     public ViewportModel zoom(double zoom) {
         Coordinate center = getCenter();
         zoom(zoom, center);
         return this;
     }
 
+    @Override
     public ViewportModel zoom(double zoom, Coordinate fixedPoint) {
         if (fixedPoint == null) {
             fixedPoint = getCenter();
@@ -759,6 +802,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * 
      * @generated NOT
      */
+    @Override
     public void zoomToExtent() {
         try {
             if (!validState())
@@ -778,8 +822,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
                 // otherwise default to what the map's extent is.
                 List<ILayer> layers = getMap().getMapLayers();
                 for (ILayer layer : layers) {
-                    ReferencedEnvelope layerBounds = layer.getBounds(ProgressManager.instance()
-                            .get(), getCRS());
+                    ReferencedEnvelope layerBounds = layer
+                            .getBounds(ProgressManager.instance().get(), getCRS());
                     if (layer.isVisible() && !layerBounds.isNull()) {
                         hasVisibleLayer = true;
                         // consider zooming in (or zooming out) to a scale the layer is visible
@@ -830,7 +874,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         if (eIsProxy())
             return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (cRS: "); //$NON-NLS-1$
         if (cRSESet)
             result.append(cRS);
@@ -855,11 +899,13 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener#sizeChanged(org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent)
      */
+    @Override
     public void sizeChanged(final MapDisplayEvent event) {
         if (event.getSize().width < 1 || event.getSize().height < 1)
             return;
 
         Runnable handler = new Runnable() {
+            @Override
             public void run() {
                 Envelope oldBounds = getBounds();
 
@@ -925,6 +971,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * @see org.locationtech.udig.project.internal.render.ViewportModel#zoomToBox(org.locationtech.jts.geom.Envelope)
      */
+    @Override
     public void zoomToBox(Envelope newbbox) {
         setInitialized(true);
         if (Math.abs(newbbox.getWidth() / newbbox.getHeight() - this.getAspectRatio()) > ACCURACY) {
@@ -1107,7 +1154,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
             unsetCRS();
             return;
         case RenderPackage.VIEWPORT_MODEL__BOUNDS:
-            setBounds(getDefaultReferencedEnvelope());
+            setBounds(BOUNDS_EDEFAULT);
             return;
         case RenderPackage.VIEWPORT_MODEL__CENTER:
             setCenter(CENTER_EDEFAULT);
@@ -1154,10 +1201,10 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         case RenderPackage.VIEWPORT_MODEL__CRS:
             return isSetCRS();
         case RenderPackage.VIEWPORT_MODEL__BOUNDS:
-            return getDefaultReferencedEnvelope() == null ? bounds != null : !getDefaultReferencedEnvelope().equals(bounds);
+            return BOUNDS_EDEFAULT == null ? bounds != null : !BOUNDS_EDEFAULT.equals(bounds);
         case RenderPackage.VIEWPORT_MODEL__CENTER:
-            return CENTER_EDEFAULT == null ? getCenter() != null : !CENTER_EDEFAULT
-                    .equals(getCenter());
+            return CENTER_EDEFAULT == null ? getCenter() != null
+                    : !CENTER_EDEFAULT.equals(getCenter());
         case RenderPackage.VIEWPORT_MODEL__HEIGHT:
             return getHeight() != HEIGHT_EDEFAULT;
         case RenderPackage.VIEWPORT_MODEL__WIDTH:
@@ -1165,8 +1212,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         case RenderPackage.VIEWPORT_MODEL__ASPECT_RATIO:
             return getAspectRatio() != ASPECT_RATIO_EDEFAULT;
         case RenderPackage.VIEWPORT_MODEL__PIXEL_SIZE:
-            return PIXEL_SIZE_EDEFAULT == null ? getPixelSize() != null : !PIXEL_SIZE_EDEFAULT
-                    .equals(getPixelSize());
+            return PIXEL_SIZE_EDEFAULT == null ? getPixelSize() != null
+                    : !PIXEL_SIZE_EDEFAULT.equals(getPixelSize());
         case RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL:
             return getMapInternal() != null;
         case RenderPackage.VIEWPORT_MODEL__RENDER_MANAGER_INTERNAL:
@@ -1207,9 +1254,9 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @return
      */
     public static ReferencedEnvelope getDefaultReferencedEnvelope() {
-    	return new ReferencedEnvelope(0, 0, 0, 0, ViewportModelImpl.getDefaultCRS());
+        return new ReferencedEnvelope(0, 0, 0, 0, ViewportModelImpl.getDefaultCRS());
     }
-    
+
     /**
      * FIXME, This method was added as a work around for the fact that we do not have the ability to
      * chain or batch commands.
@@ -1229,6 +1276,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @see org.locationtech.udig.project.internal.render.ViewportModel#isInitialized()
      * @uml.property name="initialized"
      */
+    @Override
     public boolean isInitialized() {
         return initialized;
     }
@@ -1237,6 +1285,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @param initialized The initialized to set.
      * @uml.property name="initialized"
      */
+    @Override
     public void setInitialized(boolean initialized) {
         this.initialized = initialized;
     }
@@ -1244,10 +1293,12 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * @see org.locationtech.udig.project.render.IViewportModel#getMap()
      */
+    @Override
     public IMap getMap() {
         return getMapInternal();
     }
 
+    @Override
     public double getScaleDenominator() {
         if (!validState()) {
             return -1;
@@ -1263,6 +1314,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     }
 
+    @Override
     public synchronized SortedSet<Double> getDefaultPreferredScaleDenominators() {
         if (defaultScaleDenominators == null) {
             TreeSet<Double> scales = new TreeSet<Double>();
@@ -1280,6 +1332,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         return defaultScaleDenominators;
     }
 
+    @Override
     public SortedSet<Double> getPreferredScaleDenominators() {
         if (preferredScaleDenominators == null) {
             return getDefaultPreferredScaleDenominators();
@@ -1287,13 +1340,14 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         return preferredScaleDenominators;
     }
 
+    @Override
     public void setPreferredScaleDenominators(SortedSet<Double> newPreferredScaleDenominators) {
         SortedSet<Double> oldPreferredScaleDenominators = preferredScaleDenominators;
         if (newPreferredScaleDenominators == getDefaultPreferredScaleDenominators()) {
             preferredScaleDenominators = null;
         } else {
-            preferredScaleDenominators = Collections.unmodifiableSortedSet(new TreeSet<Double>(
-                    newPreferredScaleDenominators));
+            preferredScaleDenominators = Collections
+                    .unmodifiableSortedSet(new TreeSet<Double>(newPreferredScaleDenominators));
         }
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
@@ -1306,6 +1360,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public List<DateTime> getAvailableTimesteps() {
         if (availableTimesteps == null) {
             availableTimesteps = new EDataTypeUniqueEList<DateTime>(DateTime.class, this,
@@ -1319,6 +1374,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DateTime getCurrentTimestep() {
         return currentTimestep;
     }
@@ -1328,6 +1384,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCurrentTimestep(DateTime newCurrentTimestep) {
         DateTime oldCurrentTimestep = currentTimestep;
         currentTimestep = newCurrentTimestep;
@@ -1342,6 +1399,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public List<Double> getAvailableElevation() {
         if (availableElevation == null) {
             availableElevation = new EDataTypeUniqueEList<Double>(Double.class, this,
@@ -1355,6 +1413,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Double getCurrentElevation() {
         return currentElevation;
     }
@@ -1364,6 +1423,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCurrentElevation(Double newCurrentElevation) {
         Double oldCurrentElevation = currentElevation;
         currentElevation = newCurrentElevation;
@@ -1377,6 +1437,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * This method will calculate the current width based on ScaleUtils and 
      * the current RenderManager.
      */
+    @Override
     public void setScale(double scaleDenominator) {
         RenderManager rm = getRenderManagerInternal();
         IMapDisplay display = rm.getMapDisplay();
@@ -1388,6 +1449,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * Calculates new map bounds according to the given scale, DPI, and display dimensions
      */
+    @Override
     public void setScale(double scaleDenominator, int dpi, int displayWidth, int displayHeight) {
 
         ReferencedEnvelope newExtents = ScaleUtils.calculateBoundsFromScale(scaleDenominator,
@@ -1397,10 +1459,12 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     CopyOnWriteArraySet<IViewportModelListener> listeners = new CopyOnWriteArraySet<IViewportModelListener>();
 
+    @Override
     public void addViewportModelListener(IViewportModelListener listener) {
         listeners.add(listener);
     }
 
+    @Override
     public void removeViewportModelListener(IViewportModelListener listener) {
         listeners.remove(listener);
     }
@@ -1417,10 +1481,12 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     private boolean boundsChanging = false;
 
+    @Override
     public void setIsBoundsChanging(boolean changing) {
         this.boundsChanging = changing;
     }
 
+    @Override
     public boolean isBoundsChanging() {
         return this.boundsChanging;
     }

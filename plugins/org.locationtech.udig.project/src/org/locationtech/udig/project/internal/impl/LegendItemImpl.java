@@ -27,12 +27,12 @@ import org.eclipse.jface.resource.ImageDescriptor;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.locationtech.udig.project.internal.impl.LegendItemImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.locationtech.udig.project.internal.impl.LegendItemImpl#isShown <em>Shown</em>}</li>
  *   <li>{@link org.locationtech.udig.project.internal.impl.LegendItemImpl#getIcon <em>Icon</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -121,6 +121,7 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -130,6 +131,7 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -143,6 +145,7 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ImageDescriptor getIcon() {
         return icon;
     }
@@ -152,6 +155,7 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setIcon(ImageDescriptor newIcon) {
         ImageDescriptor oldIcon = icon;
         icon = newIcon;
@@ -165,6 +169,7 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isShown() {
         return shown;
     }
@@ -174,12 +179,13 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setShown(boolean newShown) {
         boolean oldShown = shown;
         shown = newShown;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET,
-                    ProjectPackage.LEGEND_ITEM__SHOWN, oldShown, shown));
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LEGEND_ITEM__SHOWN,
+                    oldShown, shown));
     }
 
     /**
@@ -270,7 +276,7 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
         if (eIsProxy())
             return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: "); //$NON-NLS-1$
         result.append(name);
         result.append(", shown: "); //$NON-NLS-1$

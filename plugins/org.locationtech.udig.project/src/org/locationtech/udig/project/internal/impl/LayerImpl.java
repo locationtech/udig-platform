@@ -93,7 +93,6 @@ import org.geotools.data.FeatureEvent;
 import org.geotools.data.FeatureListener;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
-import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.util.factory.GeoTools;
 import org.geotools.geometry.jts.JTS;
@@ -194,6 +193,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
         /**
          * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
          */
+        @Override
         @SuppressWarnings("unchecked")
         public void notifyChanged(Notification msg) {
             registerWithContainers(msg);
@@ -263,10 +263,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     FeatureListener featureListener = new FeatureListener() {
 
+        @Override
         @SuppressWarnings("unchecked")
         public void changed(FeatureEvent featureEvent) {
             try {
-                FeatureSource<?, ?> featureSource = (FeatureSource<?, ?>) featureEvent
+                FeatureSource<?, ?> featureSource = featureEvent
                         .getFeatureSource();
                 FeatureSource<?, ?> resource = getResource(FeatureSource.class,
                         new NullProgressMonitor());
@@ -298,17 +299,15 @@ public class LayerImpl extends EObjectImpl implements Layer {
                     // if bounds are still null event is probably a commit
                     if (bounds != null) {
                         ReferencedEnvelope delta = featureEvent.getBounds();
-                        if( bounds.isEmpty() ){
+                        if (bounds.isEmpty()) {
                             bounds = delta;
-                        }
-                        else if (CRS.equalsIgnoreMetadata(delta.getCoordinateReferenceSystem(), bounds.getCoordinateReferenceSystem())){
+                        } else if (CRS.equalsIgnoreMetadata(delta.getCoordinateReferenceSystem(),
+                                bounds.getCoordinateReferenceSystem())) {
                             bounds.expandToInclude(delta);
-                        }
-                        else {
+                        } else {
                             try {
-                                bounds.expandToInclude(
-                                        delta.transform( bounds.getCoordinateReferenceSystem(), true )
-                                );
+                                bounds.expandToInclude(delta
+                                        .transform(bounds.getCoordinateReferenceSystem(), true));
                             } catch (TransformException e) {
                                 // reproject or give up and copy ...
                                 bounds = delta;
@@ -391,6 +390,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @see
      * org.locationtech.udig.project.Layer#addListener(org.locationtech.udig.project.LayerListener)
      */
+    @Override
     public void addListener(final ILayerListener listener) {
         listeners.add(listener);
     }
@@ -399,6 +399,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @see
      * org.locationtech.udig.project.Layer#removeListener(org.locationtech.udig.project.LayerListener)
      */
+    @Override
     public void removeListener(final ILayerListener listener) {
         listeners.remove(listener);
     }
@@ -435,10 +436,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ContextModel getContextModel() {
         if (eContainerFeatureID() != ProjectPackage.LAYER__CONTEXT_MODEL)
             return null;
-        return (ContextModel) eContainer();
+        return (ContextModel) eInternalContainer();
     }
 
     /**
@@ -456,9 +458,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setContextModel(ContextModel newContextModel) {
         if (newContextModel != eInternalContainer()
-                || (eContainerFeatureID() != ProjectPackage.LAYER__CONTEXT_MODEL && newContextModel != null)) {
+                || (eContainerFeatureID() != ProjectPackage.LAYER__CONTEXT_MODEL
+                        && newContextModel != null)) {
             if (EcoreUtil.isAncestor(this, newContextModel))
                 throw new IllegalArgumentException(
                         "Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -481,6 +485,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * 
      * @model
      */
+    @Override
     public int getZorder() {
         if (getContextModel() == null)
             return Integer.MAX_VALUE;
@@ -492,6 +497,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * 
      * @generated NOT
      */
+    @Override
     @SuppressWarnings("unchecked")
     public void setZorder(int newZorder) {
         if (getContextModel() == null || getMapInternal().getLayersInternal() == null) {
@@ -499,18 +505,19 @@ public class LayerImpl extends EObjectImpl implements Layer {
         }
 
         if (newZorder >= getMapInternal().getLayersInternal().size())
-            ((EList) getMapInternal().getLayersInternal()).move(getMapInternal()
-                    .getLayersInternal().size() - 1,
+            ((EList) getMapInternal().getLayersInternal()).move(
+                    getMapInternal().getLayersInternal().size() - 1,
                     getMapInternal().getLayersInternal().indexOf(this));
         else
-            ((EList) getMapInternal().getLayersInternal()).move(newZorder, getMapInternal()
-                    .getLayersInternal().indexOf(this));
+            ((EList) getMapInternal().getLayersInternal()).move(newZorder,
+                    getMapInternal().getLayersInternal().indexOf(this));
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -519,6 +526,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -531,6 +539,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public URL getID() {
         return iD;
     }
@@ -539,6 +548,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setID(URL newID) {
         URL oldID = iD;
         iD = newID;
@@ -592,6 +602,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isVisible() {
         return visible;
     }
@@ -600,6 +611,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setVisible(boolean newVisible) {
         boolean oldVisible = visible;
         visible = newVisible;
@@ -627,6 +639,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @uml.property name="geoResources"
      * @generated NOT
      */
+    @Override
     @SuppressWarnings("unchecked")
     public List<IGeoResource> getGeoResources() {
 
@@ -661,6 +674,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 IProgressMonitor monitor = new NullProgressMonitor();
 
                 IRunnableWithProgress object = new IRunnableWithProgress() {
+                    @Override
                     public void run(IProgressMonitor monitor) throws InvocationTargetException {
                         try {
                             List<IResolve> resources = connections.find(id.toURL(), monitor);
@@ -694,8 +708,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
             if (resourceList.size() == 0) {
                 if (!warned) {
-                    ProjectPlugin
-                            .log("Layer: " + getName() + " could not find a GeoResource with id:" + getID()); //$NON-NLS-1$//$NON-NLS-2$
+                    ProjectPlugin.log("Layer: " + getName() //$NON-NLS-1$
+                            + " could not find a GeoResource with id:" + getID()); //$NON-NLS-1$
                     warned = true;
                 }
                 setStatus(ERROR);
@@ -740,6 +754,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @see org.locationtech.udig.project.internal.Layer#getGeoResources(int)
      * @deprecated
      */
+    @Deprecated
+    @Override
     public <T> IGeoResource getGeoResource(Class<T> clazz) {
         List<IGeoResource> resources = getGeoResources();
         for (IGeoResource resource : resources) {
@@ -750,6 +766,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
         return null;
     }
 
+    @Override
     public IGeoResource getGeoResource() {
         if (geoResource == null) {
             geoResourceCacheLock.lock();
@@ -758,7 +775,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
                     if (getGeoResources() != NULL && getGeoResources().size() > 0)
                         geoResource = getGeoResources().get(0);
                     else {
-                        return (IGeoResource) NULL.get(0);
+                        return NULL.get(0);
                     }
                 }
             } finally {
@@ -774,6 +791,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @uml.property name="geoResource"
      * @generated NOT
      */
+    @Override
     public void setGeoResource(IGeoResource newPreferredGeoResource) {
         IGeoResource oldPreferredGeoResource = geoResource;
         geoResource = newPreferredGeoResource;
@@ -782,6 +800,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
                     ProjectPackage.LAYER__GEO_RESOURCE, oldPreferredGeoResource, geoResource));
     }
 
+    @Override
     public <E> E getResource(Class<E> resourceType, IProgressMonitor monitor) throws IOException {
 
         IProgressMonitor monitor2 = monitor;
@@ -805,12 +824,14 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @uml.property name="catalogRef"
      * @generated NOT
      */
+    @Override
     public CatalogRef getCatalogRef() {
         if (catalogRef.getLayer() != this)
             catalogRef.setLayer(this);
         return catalogRef;
     }
 
+    @Override
     public void setCatalogRef(CatalogRef newCatalogRef) {
         newCatalogRef.setLayer(this);
         setCatalogRefGen(newCatalogRef);
@@ -824,14 +845,15 @@ public class LayerImpl extends EObjectImpl implements Layer {
         CatalogRef oldCatalogRef = catalogRef;
         catalogRef = newCatalogRef;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET,
-                    ProjectPackage.LAYER__CATALOG_REF, oldCatalogRef, catalogRef));
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER__CATALOG_REF,
+                    oldCatalogRef, catalogRef));
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public StyleBlackboard getStyleBlackboard() {
         return styleBlackboard;
     }
@@ -861,29 +883,32 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @uml.property name="styleBlackboard"
      * @generated NOT
      */
+    @Override
     public void setStyleBlackboard(StyleBlackboard newStyleBlackboard) {
         if (newStyleBlackboard != styleBlackboard) {
             NotificationChain msgs = null;
             if (styleBlackboard != null)
-                msgs = ((InternalEObject) styleBlackboard)
-                        .eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-                                - ProjectPackage.LAYER__STYLE_BLACKBOARD, null, msgs);
+                msgs = ((InternalEObject) styleBlackboard).eInverseRemove(this,
+                        EOPPOSITE_FEATURE_BASE - ProjectPackage.LAYER__STYLE_BLACKBOARD, null,
+                        msgs);
             if (newStyleBlackboard != null)
-                msgs = ((InternalEObject) newStyleBlackboard)
-                        .eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-                                - ProjectPackage.LAYER__STYLE_BLACKBOARD, null, msgs);
+                msgs = ((InternalEObject) newStyleBlackboard).eInverseAdd(this,
+                        EOPPOSITE_FEATURE_BASE - ProjectPackage.LAYER__STYLE_BLACKBOARD, null,
+                        msgs);
             msgs = basicSetStyleBlackboard(newStyleBlackboard, msgs);
             if (msgs != null)
                 msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
-                    ProjectPackage.LAYER__STYLE_BLACKBOARD, newStyleBlackboard, newStyleBlackboard));
+                    ProjectPackage.LAYER__STYLE_BLACKBOARD, newStyleBlackboard,
+                    newStyleBlackboard));
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Filter getFilter() {
         return filter;
     }
@@ -892,6 +917,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setFilter(Filter newFilter) {
         Filter oldFilter = filter;
         filter = newFilter;
@@ -905,6 +931,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * 
      * @generated NOT
      */
+    @Override
     public int getStatus() {
         if (geoResources == NULL || status == ILayer.ERROR)
             return status;
@@ -921,10 +948,12 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 if (crsLoader == null) {
                     crsLoader = new ISafeRunnable() {
 
+                        @Override
                         public void handleException(Throwable exception) {
                             ProjectPlugin.log("", exception); //$NON-NLS-1$
                         }
 
+                        @Override
                         public void run() throws Exception {
                             if (getCRS() == UNKNOWN_CRS) {
                                 synchronized (LayerImpl.this) {
@@ -955,6 +984,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * 
      * @generated NOT
      */
+    @Override
     public void setStatus(int newStatus) {
         int oldStatus = status;
         status = newStatus;
@@ -963,6 +993,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
                     oldStatus, status));
     }
 
+    @Override
     public <T> IGeoResource findGeoResource(Class<T> resourceType) {
         for (IGeoResource resource : getGeoResources()) {
             if (resource.canResolve(resourceType)) {
@@ -975,10 +1006,13 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * @deprecated
      */
+    @Deprecated
+    @Override
     public <T> boolean isType(Class<T> resourceType) {
         return hasResource(resourceType);
     }
 
+    @Override
     public <T> boolean hasResource(Class<T> resourceType) {
         for (IGeoResource resource : getGeoResources()) {
             if (resource.canResolve(resourceType))
@@ -991,6 +1025,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ImageDescriptor getIcon() {
         return icon;
     }
@@ -1000,6 +1035,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @deprecated
      * @generated NOT
      */
+    @Deprecated
     public ImageDescriptor getGlyph() {
         return getIcon();
     }
@@ -1009,6 +1045,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setIcon(ImageDescriptor newIcon) {
         ImageDescriptor oldIcon = icon;
         icon = newIcon;
@@ -1022,6 +1059,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @deprecated
      * @generated NOT
      */
+    @Deprecated
     public void setGlyph(ImageDescriptor icon) {
         setIcon(icon);
     }
@@ -1029,6 +1067,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * @deprecated use getInteraction(Interaction.SELECT)
      */
+    @Deprecated
+    @Override
     public boolean isSelectable() {
         return getInteraction(Interaction.SELECT);
     }
@@ -1036,6 +1076,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * @deprecated use setInteraction(Interaction.SELECT, value)
      */
+    @Deprecated
+    @Override
     public void setSelectable(boolean newSelectable) {
         setInteraction(Interaction.SELECT, newSelectable);
     }
@@ -1045,6 +1087,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * 
      * @generated NOT
      */
+    @Override
     public String toString() {
         if (eIsProxy()) {
             return super.toString();
@@ -1061,6 +1104,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      *      boolean)
      * @generated NOT
      */
+    @Override
     public Query getQuery(boolean selection) {
         try {
             if (selection) {
@@ -1366,6 +1410,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * @see org.locationtech.udig.project.internal.Layer#getSchema()
      */
+    @Override
     public SimpleFeatureType getSchema() {
         FeatureSource<SimpleFeatureType, SimpleFeature> data;
         try {
@@ -1403,6 +1448,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
+    @Override
     public int compareTo(ILayer arg0) {
         return doComparison(this, arg0);
     }
@@ -1410,6 +1456,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * @see org.locationtech.udig.project.internal.Layer#getInteraction(java.lang.String)
      */
+    @Override
     public boolean getInteraction(Interaction interaction) {
         // special cases handled as fields
         if (Interaction.VISIBLE.equals(interaction)) {
@@ -1445,6 +1492,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * @see org.locationtech.udig.project.internal.Layer#setInteraction(java.lang.String, boolean)
      */
+    @Override
     public void setInteraction(Interaction interaction, boolean applicable) {
         if (Interaction.VISIBLE.equals(interaction)) {
             setVisible(applicable);
@@ -1458,6 +1506,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * 
      * @generated NOT
      */
+    @Override
     public CoordinateReferenceSystem getCRS() {
         return getCRS(null);
     }
@@ -1465,6 +1514,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      */
+    @Override
     public void setCRS(CoordinateReferenceSystem newCRS) {
 
         setCRSGen(newCRS);
@@ -1489,17 +1539,19 @@ public class LayerImpl extends EObjectImpl implements Layer {
         CoordinateReferenceSystem oldCRS = cRS;
         cRS = newCRS;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER__CRS,
-                    oldCRS, cRS));
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER__CRS, oldCRS,
+                    cRS));
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      */
+    @Override
     public IBlackboard getProperties() {
         return properties;
     }
 
+    @Override
     public IBlackboard getBlackboard() {
         return properties;
     }
@@ -1508,6 +1560,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ColourScheme getColourScheme() {
         return colourScheme;
     }
@@ -1516,6 +1569,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setColourScheme(ColourScheme newColourScheme) {
         ColourScheme oldColourScheme = colourScheme;
         colourScheme = newColourScheme;
@@ -1528,6 +1582,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Color getDefaultColor() {
         return defaultColor;
     }
@@ -1536,6 +1591,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDefaultColor(Color newDefaultColor) {
         Color oldDefaultColor = defaultColor;
         defaultColor = newDefaultColor;
@@ -1549,6 +1605,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * 
      * @generated not
      */
+    @Override
     public List<FeatureEvent> getFeatureChanges() {
         if (featureChanges == null) {
             featureChanges = new EDataTypeUniqueEList(FeatureEvent.class, this,
@@ -1578,6 +1635,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      */
+    @Override
     public double getMinScaleDenominator() {
         if (Double.isNaN(minScaleDenominator) || minScaleDenominator <= 0) {
             return getMinMaxScaleDenominatorFromMetrics().getLeft();
@@ -1618,6 +1676,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * @generated
      */
+    @Override
     public void setMinScaleDenominator(double newMinScaleDenominator) {
         double oldMinScaleDenominator = minScaleDenominator;
         minScaleDenominator = newMinScaleDenominator;
@@ -1630,6 +1689,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      */
+    @Override
     public double getMaxScaleDenominator() {
         if (Double.isNaN(maxScaleDenominator) || maxScaleDenominator <= 0) {
             return getMinMaxScaleDenominatorFromMetrics().getRight();
@@ -1642,6 +1702,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setMaxScaleDenominator(double newMaxScaleDenominator) {
         double oldMaxScaleDenominator = maxScaleDenominator;
         maxScaleDenominator = newMaxScaleDenominator;
@@ -1655,6 +1716,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Map<Interaction, Boolean> getInteractionMap() {
         if (interactionMap == null) {
             interactionMap = new EcoreEMap<Interaction, Boolean>(
@@ -1670,6 +1732,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isShown() {
         return shown;
     }
@@ -1679,6 +1742,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setShown(boolean newShown) {
         boolean oldShown = shown;
         shown = newShown;
@@ -1690,6 +1754,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
      */
+    @Override
     @SuppressWarnings("unchecked")
     public Object getAdapter(final Class adapter) {
         // Used to allow workbench selection to adapt an
@@ -1754,6 +1819,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
         return Platform.getAdapterManager().getAdapter(this, adapter);
     }
 
+    @Override
     public CoordinateReferenceSystem getCRS(IProgressMonitor monitor) {
 
         if (cRS != null)
@@ -2025,15 +2091,15 @@ public class LayerImpl extends EObjectImpl implements Layer {
         case ProjectPackage.LAYER__NAME:
             return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
         case ProjectPackage.LAYER__CATALOG_REF:
-            return CATALOG_REF_EDEFAULT == null ? catalogRef != null : !CATALOG_REF_EDEFAULT
-                    .equals(catalogRef);
+            return CATALOG_REF_EDEFAULT == null ? catalogRef != null
+                    : !CATALOG_REF_EDEFAULT.equals(catalogRef);
         case ProjectPackage.LAYER__ID:
             return ID_EDEFAULT == null ? iD != null : !ID_EDEFAULT.equals(iD);
         case ProjectPackage.LAYER__VISIBLE:
             return visible != VISIBLE_EDEFAULT;
         case ProjectPackage.LAYER__GEO_RESOURCE:
-            return GEO_RESOURCE_EDEFAULT == null ? geoResource != null : !GEO_RESOURCE_EDEFAULT
-                    .equals(geoResource);
+            return GEO_RESOURCE_EDEFAULT == null ? geoResource != null
+                    : !GEO_RESOURCE_EDEFAULT.equals(geoResource);
         case ProjectPackage.LAYER__GEO_RESOURCES:
             return geoResources != null && !geoResources.isEmpty();
         case ProjectPackage.LAYER__CRS:
@@ -2041,11 +2107,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
         case ProjectPackage.LAYER__PROPERTIES:
             return properties != null;
         case ProjectPackage.LAYER__COLOUR_SCHEME:
-            return COLOUR_SCHEME_EDEFAULT == null ? colourScheme != null : !COLOUR_SCHEME_EDEFAULT
-                    .equals(colourScheme);
+            return COLOUR_SCHEME_EDEFAULT == null ? colourScheme != null
+                    : !COLOUR_SCHEME_EDEFAULT.equals(colourScheme);
         case ProjectPackage.LAYER__DEFAULT_COLOR:
-            return DEFAULT_COLOR_EDEFAULT == null ? defaultColor != null : !DEFAULT_COLOR_EDEFAULT
-                    .equals(defaultColor);
+            return DEFAULT_COLOR_EDEFAULT == null ? defaultColor != null
+                    : !DEFAULT_COLOR_EDEFAULT.equals(defaultColor);
         case ProjectPackage.LAYER__FEATURE_CHANGES:
             return featureChanges != null && !featureChanges.isEmpty();
         case ProjectPackage.LAYER__MIN_SCALE_DENOMINATOR:
@@ -2090,6 +2156,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
         return UNKNOWN_CRS;
     }
 
+    @Override
     public void refresh(Envelope bounds) {
         if (!isVisible())
             return;
@@ -2113,17 +2180,19 @@ public class LayerImpl extends EObjectImpl implements Layer {
      */
     private volatile ReferencedEnvelope bounds;
 
+    @Override
     public MathTransform layerToMapTransform() {
         MathTransform layerToMapTransform;
         try {
-            layerToMapTransform = CRS.findMathTransform(getCRS(), getMap().getViewportModel()
-                    .getCRS(), true);
+            layerToMapTransform = CRS.findMathTransform(getCRS(),
+                    getMap().getViewportModel().getCRS(), true);
         } catch (Exception e) {
             layerToMapTransform = IdentityTransform.create(2);
         }
         return layerToMapTransform;
     }
 
+    @Override
     public MathTransform mapToLayerTransform() {
         MathTransform mapToLayerTransform;
         try {
@@ -2135,10 +2204,12 @@ public class LayerImpl extends EObjectImpl implements Layer {
         return mapToLayerTransform;
     }
 
+    @Override
     public void setBounds(ReferencedEnvelope bounds) {
         this.bounds = bounds;
     }
 
+    @Override
     public ReferencedEnvelope getBounds(IProgressMonitor monitor, CoordinateReferenceSystem crs) {
         if (crs == null) {
             crs = getCRS();
@@ -2221,9 +2292,10 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @param boundingBox in the same crs as the viewport model.
      * @return a Geometry filter in the correct CRS or null if an exception occurs.
      */
+    @Override
     public Filter createBBoxFilter(Envelope boundingBox, IProgressMonitor monitor) {
-        FilterFactory2 factory = (FilterFactory2) CommonFactoryFinder.getFilterFactory(GeoTools
-                .getDefaultHints());
+        FilterFactory2 factory = (FilterFactory2) CommonFactoryFinder
+                .getFilterFactory(GeoTools.getDefaultHints());
         Filter bboxFilter = null;
         if (!hasResource(FeatureSource.class))
             return Filter.EXCLUDE;
@@ -2249,6 +2321,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * @see org.locationtech.udig.project.internal.Layer#getMap()
      */
+    @Override
     public org.locationtech.udig.project.internal.Map getMapInternal() {
         ContextModel context = getContextModel();
         if (context == null)
@@ -2259,6 +2332,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * @see org.locationtech.udig.project.ILayer#getMap()
      */
+    @Override
     public IMap getMap() {
         return getMapInternal();
     }
@@ -2267,6 +2341,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @see org.locationtech.udig.core.IBlockingAdaptable#getAdapter(java.lang.Class,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
+    @Override
     public <T> T getAdapter(final Class<T> adapter, IProgressMonitor monitor) throws IOException {
         if (hasResource(adapter)) {
             final List<T> list = new ArrayList<T>();
@@ -2283,6 +2358,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * @see org.locationtech.udig.core.IBlockingAdaptable#canAdaptTo(java.lang.Class)
      */
+    @Override
     public <T> boolean canAdaptTo(Class<T> adapter) {
         return hasResource(adapter) || adapter.isAssignableFrom(CoordinateReferenceSystem.class);
     }
@@ -2291,6 +2367,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @see org.locationtech.udig.project.internal.LayerDecorator#setStatusMessage(java.lang.String)
      * @uml.property name="statusMessage"
      */
+    @Override
     public void setStatusMessage(String message) {
         if (message == null) {
             this.statusMessage = ""; //$NON-NLS-1$
@@ -2302,6 +2379,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @see org.locationtech.udig.project.internal.LayerDecorator#getStatusMessage()
      * @uml.property name="statusMessage"
      */
+    @Override
     public String getStatusMessage() {
         if (geoResources == NULL || status == ILayer.ERROR)
             return statusMessage;
@@ -2394,6 +2472,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
         }
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public void changed(IResolveChangeEvent event) {
         if (eIsProxy()) {
@@ -2460,6 +2539,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
         return i1 < i2 ? -1 : 1;
     }
 
+    @Override
     public Set<Range> getScaleRange() {
         org.locationtech.udig.project.internal.Map mapInternal = getMapInternal();
         if (mapInternal == null) {

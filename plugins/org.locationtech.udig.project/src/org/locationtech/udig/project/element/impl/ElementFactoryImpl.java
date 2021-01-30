@@ -12,7 +12,6 @@
  */
 package org.locationtech.udig.project.element.impl;
 
-import org.locationtech.udig.project.element.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -53,7 +52,7 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
     public static ElementFactory init() {
         try {
             ElementFactory theElementFactory = (ElementFactory) EPackage.Registry.INSTANCE
-                    .getEFactory("http:///net/refractions/udig/project/element.ecore"); //$NON-NLS-1$ 
+                    .getEFactory(ElementPackage.eNS_URI);
             if (theElementFactory != null) {
                 return theElementFactory;
             }
@@ -126,6 +125,7 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ProjectElementAdapter createProjectElementAdapter() {
         ProjectElementAdapterImpl projectElementAdapter = new ProjectElementAdapterImpl();
         return projectElementAdapter;
@@ -167,6 +167,7 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ElementPackage getElementPackage() {
         return (ElementPackage) getEPackage();
     }
@@ -182,6 +183,7 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
         return ElementPackage.eINSTANCE;
     }
 
+    @Override
     public ProjectElementAdapter createProjectElementAdapter(IProject project,
             Class<? extends IGenericProjectElement> typeToCreate, String extensionId) {
         ProjectElementAdapter adapter = createProjectElementAdapter();
@@ -194,6 +196,7 @@ public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
         return adapter;
     }
 
+    @Override
     public ProjectElementAdapter createProjectElementAdapter(IProject project, String elemName,
             Class<? extends IGenericProjectElement> typeToCreate, String extensionId) {
         ProjectElementAdapter adapter = createProjectElementAdapter();

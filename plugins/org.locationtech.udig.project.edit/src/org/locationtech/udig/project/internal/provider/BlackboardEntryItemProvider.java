@@ -31,9 +31,9 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * @generated
  */
-public class BlackboardEntryItemProvider extends ItemProviderAdapter implements
-        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
-        IItemLabelProvider, IItemPropertySource {
+public class BlackboardEntryItemProvider extends ItemProviderAdapter
+        implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+        ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc --> <!--
@@ -70,15 +70,13 @@ public class BlackboardEntryItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addKeyPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_BlackboardEntry_key_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_BlackboardEntry_key_feature", "_UI_BlackboardEntry_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.BLACKBOARD_ENTRY__KEY, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_BlackboardEntry_key_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_BlackboardEntry_key_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_BlackboardEntry_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.BLACKBOARD_ENTRY__KEY, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -88,15 +86,13 @@ public class BlackboardEntryItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addMementoPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_BlackboardEntry_memento_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_BlackboardEntry_memento_feature", "_UI_BlackboardEntry_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.BLACKBOARD_ENTRY__MEMENTO, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_BlackboardEntry_memento_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_BlackboardEntry_memento_feature", "_UI_BlackboardEntry_type"), //$NON-NLS-1$ //$NON-NLS-2$
+                ProjectPackage.Literals.BLACKBOARD_ENTRY__MEMENTO, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -106,15 +102,13 @@ public class BlackboardEntryItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addObjectClassPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_BlackboardEntry_objectClass_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_BlackboardEntry_objectClass_feature", "_UI_BlackboardEntry_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.BLACKBOARD_ENTRY__OBJECT_CLASS, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_BlackboardEntry_objectClass_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_BlackboardEntry_objectClass_feature", "_UI_BlackboardEntry_type"), //$NON-NLS-1$ //$NON-NLS-2$
+                ProjectPackage.Literals.BLACKBOARD_ENTRY__OBJECT_CLASS, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -124,15 +118,13 @@ public class BlackboardEntryItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addObjectPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_BlackboardEntry_object_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_BlackboardEntry_object_feature", "_UI_BlackboardEntry_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.BLACKBOARD_ENTRY__OBJECT, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_BlackboardEntry_object_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_BlackboardEntry_object_feature", "_UI_BlackboardEntry_type"), //$NON-NLS-1$ //$NON-NLS-2$
+                ProjectPackage.Literals.BLACKBOARD_ENTRY__OBJECT, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -161,6 +153,7 @@ public class BlackboardEntryItemProvider extends ItemProviderAdapter implements
      * 
      * @generated NOT
      */
+    @Override
     public String getText(Object object) {
         String label = ((BlackboardEntry) object).getKey();
         return label == null || label.length() == 0 ? "Blackboard Entry" : label;
@@ -181,8 +174,8 @@ public class BlackboardEntryItemProvider extends ItemProviderAdapter implements
         case ProjectPackage.BLACKBOARD_ENTRY__MEMENTO:
         case ProjectPackage.BLACKBOARD_ENTRY__OBJECT_CLASS:
         case ProjectPackage.BLACKBOARD_ENTRY__OBJECT:
-            fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
-                    false, true));
+            fireNotifyChanged(
+                    new ViewerNotification(notification, notification.getNotifier(), false, true));
             return;
         }
         super.notifyChanged(notification);

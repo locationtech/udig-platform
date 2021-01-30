@@ -53,9 +53,9 @@ import org.osgi.framework.Bundle;
  * 
  * @generated NOT
  */
-public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
-        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
-        IItemLabelProvider, IItemPropertySource {
+public class MapItemProvider extends AbstractLazyLoadingItemProvider
+        implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+        ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
 
     /**
      * Placeholder that will be placed in viewers while layers are being loaded.
@@ -63,21 +63,24 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
      * @author Jesse
      * @since 1.1.0
      */
-    public static class LayerLoadingPlaceHolder extends LayerDecorator implements
-            LoadingPlaceHolder {
+    public static class LayerLoadingPlaceHolder extends LayerDecorator
+            implements LoadingPlaceHolder {
 
         public LayerLoadingPlaceHolder(Layer layer) {
             super(layer);
         }
 
+        @Override
         public Image getImage() {
             return getIcon().createImage();
         }
 
+        @Override
         public String getText() {
             return getName();
         }
 
+        @Override
         public int getZorder() {
             return Integer.MAX_VALUE;
         }
@@ -110,6 +113,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
         /**
          * @see org.eclipse.emf.edit.provider.IItemPropertyDescriptor#getPropertyValue(java.lang.Object)
          */
+        @Override
         public Object getPropertyValue(Object object) {
             return element.getPropertyValue(getModel(object));
         }
@@ -117,6 +121,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
         /**
          * @see org.eclipse.emf.edit.provider.IItemPropertyDescriptor#isPropertySet(java.lang.Object)
          */
+        @Override
         public boolean isPropertySet(Object object) {
             return element.isPropertySet(getModel(object));
         }
@@ -124,6 +129,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
         /**
          * @see org.eclipse.emf.edit.provider.IItemPropertyDescriptor#canSetProperty(java.lang.Object)
          */
+        @Override
         public boolean canSetProperty(Object object) {
             return element.canSetProperty(getModel(object));
         }
@@ -131,6 +137,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
         /**
          * @see org.eclipse.emf.edit.provider.IItemPropertyDescriptor#resetPropertyValue(java.lang.Object)
          */
+        @Override
         public void resetPropertyValue(Object object) {
             element.resetPropertyValue(getModel(object));
         }
@@ -139,6 +146,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
          * @see org.eclipse.emf.edit.provider.IItemPropertyDescriptor#setPropertyValue(java.lang.Object,
          *      java.lang.Object)
          */
+        @Override
         public void setPropertyValue(Object object, Object value) {
             element.setPropertyValue(getModel(object), value);
         }
@@ -146,6 +154,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
         /**
          * @see org.eclipse.emf.edit.provider.IItemPropertyDescriptor#getCategory(java.lang.Object)
          */
+        @Override
         public String getCategory(Object object) {
             return element.getCategory(getModel(object));
         }
@@ -153,6 +162,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
         /**
          * @see org.eclipse.emf.edit.provider.IItemPropertyDescriptor#getDescription(java.lang.Object)
          */
+        @Override
         public String getDescription(Object object) {
             return element.getDescription(getModel(object));
         }
@@ -160,6 +170,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
         /**
          * @see org.eclipse.emf.edit.provider.IItemPropertyDescriptor#getDisplayName(java.lang.Object)
          */
+        @Override
         public String getDisplayName(Object object) {
             return element.getDisplayName(getModel(object));
         }
@@ -167,6 +178,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
         /**
          * @see org.eclipse.emf.edit.provider.IItemPropertyDescriptor#getFilterFlags(java.lang.Object)
          */
+        @Override
         public String[] getFilterFlags(Object object) {
             return element.getFilterFlags(getModel(object));
         }
@@ -174,6 +186,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
         /**
          * @see org.eclipse.emf.edit.provider.IItemPropertyDescriptor#getHelpContextIds(java.lang.Object)
          */
+        @Override
         public Object getHelpContextIds(Object object) {
             return element.getHelpContextIds(getModel(object));
         }
@@ -181,6 +194,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
         /**
          * @see org.eclipse.emf.edit.provider.IItemPropertyDescriptor#getId(java.lang.Object)
          */
+        @Override
         public String getId(Object object) {
             return element.getId(getModel(object));
         }
@@ -188,6 +202,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
         /**
          * @see org.eclipse.emf.edit.provider.IItemPropertyDescriptor#getLabelProvider(java.lang.Object)
          */
+        @Override
         public IItemLabelProvider getLabelProvider(Object object) {
             return element.getLabelProvider(getModel(object));
         }
@@ -196,6 +211,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
          * @see org.eclipse.emf.edit.provider.IItemPropertyDescriptor#isCompatibleWith(java.lang.Object,
          *      java.lang.Object, org.eclipse.emf.edit.provider.IItemPropertyDescriptor)
          */
+        @Override
         public boolean isCompatibleWith(Object object, Object anotherObject,
                 IItemPropertyDescriptor anotherPropertyDescriptor) {
             return element.isCompatibleWith(getModel(object), anotherObject,
@@ -205,6 +221,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
         /**
          * @see org.eclipse.emf.edit.provider.IItemPropertyDescriptor#getFeature(java.lang.Object)
          */
+        @Override
         public Object getFeature(Object object) {
             return element.getFeature(getModel(object));
         }
@@ -212,18 +229,22 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
         /**
          * @see org.eclipse.emf.edit.provider.IItemPropertyDescriptor#getChoiceOfValues(java.lang.Object)
          */
+        @Override
         public Collection getChoiceOfValues(Object object) {
             return element.getChoiceOfValues(getModel(object));
         }
 
+        @Override
         public boolean isMany(Object arg0) {
             return element.isMany(arg0);
         }
 
+        @Override
         public boolean isMultiLine(Object arg0) {
             return element.isMultiLine(arg0);
         }
 
+        @Override
         public boolean isSortChoices(Object arg0) {
             return element.isSortChoices(arg0);
         }
@@ -260,6 +281,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
      * 
      * @generated NOT
      */
+    @Override
     public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
@@ -287,15 +309,13 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
      */
     @SuppressWarnings("unchecked")
     protected void addAbstractPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Map_abstract_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Map_abstract_feature", "_UI_Map_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getMap_Abstract(), true,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Map_abstract_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Map_abstract_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Map_type"), //$NON-NLS-1$
+                ProjectPackage.eINSTANCE.getMap_Abstract(), true,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -306,15 +326,13 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
      */
     @SuppressWarnings("unchecked")
     protected void addNamePropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_ProjectElement_name_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_ProjectElement_name_feature", "_UI_ProjectElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getProjectElement_Name(), true,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_ProjectElement_name_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_ProjectElement_name_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_ProjectElement_type"), //$NON-NLS-1$
+                ProjectPackage.eINSTANCE.getProjectElement_Name(), true,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -325,15 +343,13 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
      */
     @SuppressWarnings("unchecked")
     protected void addNavCommandStackPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Map_navCommandStack_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Map_navCommandStack_feature", "_UI_Map_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getMap_NavCommandStack(), false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Map_navCommandStack_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Map_navCommandStack_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Map_type"), //$NON-NLS-1$
+                ProjectPackage.eINSTANCE.getMap_NavCommandStack(), false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -344,15 +360,13 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
      */
     @SuppressWarnings("unchecked")
     protected void addCommandStackPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Map_commandStack_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Map_commandStack_feature", "_UI_Map_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getMap_CommandStack(), false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Map_commandStack_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Map_commandStack_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Map_type"), //$NON-NLS-1$
+                ProjectPackage.eINSTANCE.getMap_CommandStack(), false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -363,15 +377,13 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
      */
     @SuppressWarnings("unchecked")
     protected void addColorPalettePropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Map_colorPalette_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Map_colorPalette_feature", "_UI_Map_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getMap_ColorPalette(), true,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Map_colorPalette_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Map_colorPalette_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Map_type"), //$NON-NLS-1$
+                ProjectPackage.eINSTANCE.getMap_ColorPalette(), true,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -381,15 +393,12 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
      * @generated
      */
     protected void addRenderManagerInternalPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Map_renderManagerInternal_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Map_renderManagerInternal_feature", "_UI_Map_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getMap_RenderManagerInternal(), true, null, null,
-                        null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Map_renderManagerInternal_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_Map_renderManagerInternal_feature", "_UI_Map_type"), //$NON-NLS-1$ //$NON-NLS-2$
+                ProjectPackage.eINSTANCE.getMap_RenderManagerInternal(), true, null, null, null));
     }
 
     /**
@@ -399,15 +408,13 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
      * @generated
      */
     protected void addColourSchemePropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Map_colourScheme_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Map_colourScheme_feature", "_UI_Map_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getMap_ColourScheme(), true,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Map_colourScheme_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Map_colourScheme_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Map_type"), //$NON-NLS-1$
+                ProjectPackage.eINSTANCE.getMap_ColourScheme(), true,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -432,6 +439,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
      * 
      * @generated NOT
      */
+    @Override
     public Collection getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
@@ -445,6 +453,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
      * 
      * @generated
      */
+    @Override
     protected EStructuralFeature getChildFeature(Object object, Object child) {
         // Check the type of the specified child object and return the proper feature to use for
         // adding (see {@link AddCommand}) it as a child.
@@ -457,6 +466,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
      * 
      * @generated
      */
+    @Override
     public Object getImage(Object object) {
         return getResourceLocator().getImage("full/obj16/Map"); //$NON-NLS-1$
     }
@@ -473,13 +483,16 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
         LOADING_LAYER.setVisible(true);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     protected org.locationtech.udig.project.internal.provider.LoadingPlaceHolder getLoadingItem() {
         return LOADING_LAYER;
     };
 
+    @Override
     protected ChildFetcher createChildFetcher() {
         return new ChildFetcher(this) {
+            @Override
             protected void notifyChanged() {
                 MapItemProvider.this.notifyChanged(new ENotificationImpl((InternalEObject) parent,
                         Notification.SET, ProjectPackage.MAP__CONTEXT_MODEL, LOADING_LAYER, null));
@@ -498,7 +511,8 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
                         for (Iterator<Adapter> iter = adapters.iterator(); iter.hasNext();) {
                             Adapter next = iter.next();
                             if (next instanceof ContextModelItemProvider
-                                    && ((ContextModelItemProvider) next).getAdapterFactory() == getAdapterFactory())
+                                    && ((ContextModelItemProvider) next)
+                                            .getAdapterFactory() == getAdapterFactory())
                                 found = true;
                         }
                     } finally {
@@ -543,6 +557,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
      * 
      * @generated NOT
      */
+    @Override
     public String getText(Object object) {
         Map map = ((Map) object);
         String label = map.getName();
@@ -566,12 +581,13 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
      * 
      * @generated NOT
      */
+    @Override
     public void notifyChanged(Notification notification) {
         if (notification.getNewValue() == notification.getOldValue()
-                || (notification.getNewValue() != null && notification.getNewValue().equals(
-                        notification.getOldValue()))
-                || (notification.getOldValue() != null && notification.getOldValue().equals(
-                        notification.getNewValue())))
+                || (notification.getNewValue() != null
+                        && notification.getNewValue().equals(notification.getOldValue()))
+                || (notification.getOldValue() != null
+                        && notification.getOldValue().equals(notification.getNewValue())))
             return;
 
         switch (notification.getFeatureID(Map.class)) {
@@ -581,15 +597,15 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
             //        case ProjectPackage.MAP__COMMAND_STACK:
         case ProjectPackage.MAP__COLOR_PALETTE:
         case ProjectPackage.MAP__COLOUR_SCHEME:
-            fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
-                    false, true));
+            fireNotifyChanged(
+                    new ViewerNotification(notification, notification.getNotifier(), false, true));
             return;
         case ProjectPackage.MAP__CONTEXT_MODEL:
         case ProjectPackage.MAP__LAYER_FACTORY:
         case ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL:
         case ProjectPackage.MAP__EDIT_MANAGER_INTERNAL:
-            fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
-                    true, false));
+            fireNotifyChanged(
+                    new ViewerNotification(notification, notification.getNotifier(), true, false));
             return;
         }
         super.notifyChanged(notification);
@@ -601,6 +617,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider implements
      * 
      * @generated
      */
+    @Override
     public ResourceLocator getResourceLocator() {
         return ProjectEditPlugin.INSTANCE;
     }

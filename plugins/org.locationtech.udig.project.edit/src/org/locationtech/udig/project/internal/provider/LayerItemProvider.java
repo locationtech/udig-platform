@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -35,7 +34,6 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -55,9 +53,9 @@ import org.geotools.util.Range;
  * <!-- end-user-doc -->
  * @generated
  */
-public class LayerItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-        IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
-        IItemPropertySource {
+public class LayerItemProvider extends ItemProviderAdapter
+        implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+        ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
 
     /** Properties Key used to cache generated name in layer.getProperties() */
     public static final String GENERATED_NAME = "generated title"; //$NON-NLS-1$
@@ -81,6 +79,7 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * 
      * @generated NOT
      */
+    @Override
     @SuppressWarnings("unchecked")
     public List getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
@@ -105,15 +104,13 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      */
     @SuppressWarnings("unchecked")
     protected void addZorderPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_zorder_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_zorder_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getLayer_Zorder(), true,
-                        ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Layer_zorder_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Layer_zorder_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Layer_type"), //$NON-NLS-1$
+                ProjectPackage.eINSTANCE.getLayer_Zorder(), true,
+                ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -123,15 +120,13 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * @generated
      */
     protected void addNamePropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_name_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_name_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__NAME, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Layer_name_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Layer_name_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Layer_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.LAYER__NAME, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -141,15 +136,13 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * @generated
      */
     protected void addIDPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_iD_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_iD_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__ID, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Layer_iD_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Layer_iD_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Layer_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.LAYER__ID, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -159,15 +152,13 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * @generated
      */
     protected void addVisiblePropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_visible_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_visible_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__VISIBLE, true, false, false,
-                        ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Layer_visible_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Layer_visible_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Layer_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.LAYER__VISIBLE, true, false, false,
+                ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -177,15 +168,13 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * @generated
      */
     protected void addGeoResourcePropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_geoResource_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_geoResource_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__GEO_RESOURCE, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Layer_geoResource_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Layer_geoResource_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Layer_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.LAYER__GEO_RESOURCE, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -195,15 +184,13 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * @generated
      */
     protected void addGeoResourcesPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_geoResources_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_geoResources_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__GEO_RESOURCES, false, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Layer_geoResources_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Layer_geoResources_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Layer_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.LAYER__GEO_RESOURCES, false, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -213,15 +200,13 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * @generated
      */
     protected void addCatalogRefPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_catalogRef_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_catalogRef_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__CATALOG_REF, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Layer_catalogRef_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Layer_catalogRef_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Layer_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.LAYER__CATALOG_REF, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -231,15 +216,13 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * @generated
      */
     protected void addFilterPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_filter_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_filter_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__FILTER, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Layer_filter_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Layer_filter_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Layer_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.LAYER__FILTER, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -249,15 +232,13 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * @generated
      */
     protected void addStatusPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_status_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_status_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__STATUS, true, false, false,
-                        ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Layer_status_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Layer_status_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Layer_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.LAYER__STATUS, true, false, false,
+                ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -267,15 +248,13 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * @generated
      */
     protected void addCRSPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_cRS_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_cRS_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__CRS, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Layer_cRS_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Layer_cRS_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Layer_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.LAYER__CRS, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -285,15 +264,12 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * @generated
      */
     protected void addPropertiesPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_properties_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_properties_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__PROPERTIES, false, false, false, null, null,
-                        null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Layer_properties_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Layer_properties_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Layer_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.LAYER__PROPERTIES, false, false, false, null, null, null));
     }
 
     /**
@@ -303,15 +279,13 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * @generated
      */
     protected void addColourSchemePropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_colourScheme_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_colourScheme_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__COLOUR_SCHEME, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Layer_colourScheme_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Layer_colourScheme_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Layer_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.LAYER__COLOUR_SCHEME, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -321,15 +295,13 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * @generated
      */
     protected void addDefaultColorPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_defaultColor_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_defaultColor_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__DEFAULT_COLOR, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Layer_defaultColor_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Layer_defaultColor_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Layer_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.LAYER__DEFAULT_COLOR, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -339,15 +311,13 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * @generated
      */
     protected void addFeatureChangesPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_featureChanges_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_featureChanges_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__FEATURE_CHANGES, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Layer_featureChanges_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Layer_featureChanges_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Layer_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.LAYER__FEATURE_CHANGES, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -357,15 +327,13 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * @generated
      */
     protected void addMinScaleDenominatorPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_minScaleDenominator_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_minScaleDenominator_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__MIN_SCALE_DENOMINATOR, true, false, false,
-                        ItemPropertyDescriptor.REAL_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Layer_minScaleDenominator_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_Layer_minScaleDenominator_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$
+                ProjectPackage.Literals.LAYER__MIN_SCALE_DENOMINATOR, true, false, false,
+                ItemPropertyDescriptor.REAL_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -375,15 +343,13 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * @generated
      */
     protected void addMaxScaleDenominatorPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_maxScaleDenominator_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_maxScaleDenominator_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__MAX_SCALE_DENOMINATOR, true, false, false,
-                        ItemPropertyDescriptor.REAL_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Layer_maxScaleDenominator_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_Layer_maxScaleDenominator_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$
+                ProjectPackage.Literals.LAYER__MAX_SCALE_DENOMINATOR, true, false, false,
+                ItemPropertyDescriptor.REAL_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -393,15 +359,13 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * @generated
      */
     protected void addShownPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_shown_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_shown_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__SHOWN, true, false, false,
-                        ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Layer_shown_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Layer_shown_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Layer_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.LAYER__SHOWN, true, false, false,
+                ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -411,15 +375,13 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * @generated
      */
     protected void addIconPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_icon_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_icon_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__ICON, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Layer_icon_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Layer_icon_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_Layer_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.LAYER__ICON, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -431,6 +393,7 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * 
      * @generated NOT
      */
+    @Override
     public Collection getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
@@ -497,6 +460,7 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * 
      * @generated NOT
      */
+    @Override
     public Object getImage(Object object) {
         Layer layer = (Layer) object;
 
@@ -531,7 +495,7 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
             image = ImageDescriptor.createWithFlags(image, outOfScaleModifier);
         }
 
-        return image; //$NON-NLS-1$
+        return image; 
     }
 
     /**
@@ -567,6 +531,7 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * 
      * @generated NOT
      */
+    @Override
     public String getText(Object object) {
         Layer layer = (Layer) object;
         String label = layer.getName();
@@ -591,6 +556,7 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
      * 
      * @generated NOT
      */
+    @Override
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
@@ -601,16 +567,16 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
         case ProjectPackage.LAYER__PROPERTIES:
         case ProjectPackage.LAYER__STATUS:
         case ProjectPackage.LAYER__ICON:
-            fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
-                    false, true));
+            fireNotifyChanged(
+                    new ViewerNotification(notification, notification.getNotifier(), false, true));
             return;
         case ProjectPackage.LAYER__ZORDER:
             fireNotifyChanged(new ViewerNotification(notification,
                     ((ILayer) notification.getNotifier()).getMap(), true, false));
             return;
         case ProjectPackage.LAYER__STYLE_BLACKBOARD:
-            fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
-                    true, false));
+            fireNotifyChanged(
+                    new ViewerNotification(notification, notification.getNotifier(), true, false));
             return;
         }
         super.notifyChanged(notification);
@@ -627,6 +593,7 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
         return ProjectEditPlugin.INSTANCE;
     }
 
+    @Override
     public Color getBackground(Object element) {
         if (element instanceof LayerImpl) {
             ScopedPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
@@ -648,6 +615,7 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
         return null;
     }
 
+    @Override
     public Color getForeground(Object element) {
         if (element instanceof LayerImpl) {
 
@@ -676,8 +644,9 @@ public class LayerItemProvider extends ItemProviderAdapter implements IEditingDo
             if (awtColor == null)
                 return null;
             if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_FOREGROUND)) {
-                return new Color(PlatformUI.getWorkbench().getDisplay(), (int) mylarEffect
-                        * awtColor.getRed(), (int) mylarEffect * awtColor.getGreen(),
+                return new Color(PlatformUI.getWorkbench().getDisplay(),
+                        (int) mylarEffect * awtColor.getRed(),
+                        (int) mylarEffect * awtColor.getGreen(),
                         (int) mylarEffect * awtColor.getBlue());
             } else if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_BACKGROUND)) {
                 if (awtColor.getRed() + awtColor.getGreen() + awtColor.getBlue() > 512) {

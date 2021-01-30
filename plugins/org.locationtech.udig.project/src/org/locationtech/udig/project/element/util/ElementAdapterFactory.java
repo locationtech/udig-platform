@@ -13,7 +13,6 @@
 package org.locationtech.udig.project.element.util;
 
 import org.locationtech.udig.project.IProjectElement;
-import org.locationtech.udig.project.element.*;
 import org.locationtech.udig.project.element.ElementPackage;
 import org.locationtech.udig.project.element.ProjectElementAdapter;
 import org.locationtech.udig.project.internal.ProjectElement;

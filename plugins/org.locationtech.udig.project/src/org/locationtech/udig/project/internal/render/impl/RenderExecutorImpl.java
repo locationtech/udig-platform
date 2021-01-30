@@ -39,7 +39,6 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -70,6 +69,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         /**
          * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
          */
+        @Override
         public void notifyChanged(Notification msg) {
             Layer layer = (Layer) msg.getNotifier();
             switch (msg.getFeatureID(Layer.class)) {
@@ -159,6 +159,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         /**
          * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
          */
+        @Override
         public void notifyChanged(Notification msg) {
             if (msg.getNotifier() instanceof Renderer) {
                 if (msg.getFeatureID(Renderer.class) == RenderPackage.RENDERER__STATE) {
@@ -188,10 +189,10 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     protected static void clearImage(Envelope bounds2, RenderExecutor executor) {
         if (bounds2 != null
                 && !bounds2.contains(executor.getContext().getViewportModel().getBounds())) {
-            Point min = executor.getContext().worldToPixel(
-                    new Coordinate(bounds2.getMinX(), bounds2.getMinY()));
-            Point max = executor.getContext().worldToPixel(
-                    new Coordinate(bounds2.getMaxX(), bounds2.getMaxY()));
+            Point min = executor.getContext()
+                    .worldToPixel(new Coordinate(bounds2.getMinX(), bounds2.getMinY()));
+            Point max = executor.getContext()
+                    .worldToPixel(new Coordinate(bounds2.getMaxX(), bounds2.getMaxY()));
             int width = Math.abs(max.x - min.x);
             int height = Math.abs(max.y - min.y);
             Rectangle paintArea = new Rectangle(Math.min(min.x, max.x), Math.min(min.y, max.y),
@@ -248,6 +249,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      * 
      * @generated NOT
      */
+    @Override
     public void dispose() {
         while (getRenderer().eAdapters().remove(renderListener))
             ;
@@ -278,6 +280,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     /**
      * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#setState(int)
      */
+    @Override
     public void setState(int newState) {
         super.setState(newState);
     }
@@ -287,6 +290,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      * 
      * @generated NOT
      */
+    @Override
     public void stopRendering() {
         if (renderJob.cancel())
             return;
@@ -313,8 +317,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
                     }
                 }
             if (!done.get() && !renderJob.cancel()) {
-                ProjectPlugin
-                        .log("After 2 seconds unable to cancel " + getRenderer().getName() + " Renderer"); //$NON-NLS-1$ //$NON-NLS-2$
+                ProjectPlugin.log("After 2 seconds unable to cancel " + getRenderer().getName() //$NON-NLS-1$
+                        + " Renderer"); //$NON-NLS-1$
             }
         } finally {
             renderJob.removeJobChangeListener(listener);
@@ -328,6 +332,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      * @throws RenderException
      * @generated NOT
      */
+    @Override
     public void render(Graphics2D destination, IProgressMonitor monitor) throws RenderException {
 
         if (getState() == DISPOSED)
@@ -345,6 +350,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     /**
      * @see org.locationtech.udig.project.internal.render.Renderer#getContext()
      */
+    @Override
     public RenderContext getContext() {
         if (getRenderer() == null)
             return null;
@@ -355,30 +361,32 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Renderer getRenderer() {
         return renderer;
     }
 
     protected String getRenderJobName() {
-        return MessageFormat
-                .format(Messages.RenderExecutorImpl_message, new Object[] { getName() });
+        return MessageFormat.format(Messages.RenderExecutorImpl_message,
+                new Object[] { getName() });
     }
 
     /**
      * @see org.locationtech.udig.project.internal.render.RenderExecutor#setRenderer(org.locationtech.udig.project.render.Renderer)
      * @uml.property name="renderer"
      */
+    @Override
     @SuppressWarnings("unchecked")
     public void setRenderer(Renderer newRenderer) {
         if (getRenderer() != null) {
             getRenderer().eAdapters().remove(renderListener);
-            removeLayerListener((RenderContext) getRenderer().getContext());
+            removeLayerListener(getRenderer().getContext());
         }
         setRendererGen(newRenderer);
         // registerFeatureListener();
         if (newRenderer != null) {
             newRenderer.eAdapters().add(renderListener);
-            addLayerListener((RenderContext) newRenderer.getContext());
+            addLayerListener(newRenderer.getContext());
         }
     }
 
@@ -499,6 +507,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     /**
      * @see org.locationtech.udig.project.internal.render.RenderExecutor#visit(org.locationtech.udig.project.render.ExecutorVisitor)
      */
+    @Override
     public void visit(ExecutorVisitor visitor) {
         visitor.visit(this);
     }
@@ -518,6 +527,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     /**
      * @see org.locationtech.udig.project.internal.render.Renderer#render(org.locationtech.jts.geom.Envelope)
      */
+    @Override
     public synchronized void render() {
         if (getState() == DISPOSED || !getRenderer().getContext().isVisible()) {
             dirty = true;
@@ -538,6 +548,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#render(org.locationtech.jts.geom.Envelope,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
+    @Override
     public void render(IProgressMonitor monitor) {
         render();
     }
@@ -547,8 +558,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         String selection = ""; //$NON-NLS-1$
         if (getContext().getLayer() instanceof SelectionLayer)
             selection = "Selection "; //$NON-NLS-1$
-        return getContext().getMap().getName()
-                + ":" + selection + (getRenderer() != null ? getRenderer().getName() : "null"); //$NON-NLS-1$ //$NON-NLS-2$
+        return getContext().getMap().getName() + ":" + selection //$NON-NLS-1$
+                + (getRenderer() != null ? getRenderer().getName() : "null"); //$NON-NLS-1$
     }
 
 } // RenderExecutorImpl

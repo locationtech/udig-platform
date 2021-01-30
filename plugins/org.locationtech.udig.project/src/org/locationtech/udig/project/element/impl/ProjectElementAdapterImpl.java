@@ -36,12 +36,12 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.locationtech.udig.project.element.impl.ProjectElementAdapterImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.locationtech.udig.project.element.impl.ProjectElementAdapterImpl#getProjectInternal <em>Project Internal</em>}</li>
  *   <li>{@link org.locationtech.udig.project.element.impl.ProjectElementAdapterImpl#getBackingObject <em>Backing Object</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -120,6 +120,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -129,6 +130,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -142,6 +144,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Project getProjectInternal() {
         if (projectInternal != null && projectInternal.eIsProxy()) {
             InternalEObject oldProjectInternal = (InternalEObject) projectInternal;
@@ -191,6 +194,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setProjectInternal(Project newProjectInternal) {
         if (newProjectInternal != projectInternal) {
             NotificationChain msgs = null;
@@ -214,6 +218,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IGenericProjectElement getBackingObject() {
         return backingObject;
     }
@@ -223,6 +228,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      * <!-- end-user-doc -->
      * @generated NOT
      */
+    @Override
     public synchronized void setBackingObject(IGenericProjectElement newBackingObject) {
         IGenericProjectElement oldBackingObject = backingObject;
         backingObject = newBackingObject;
@@ -357,7 +363,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
         if (eIsProxy())
             return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: "); //$NON-NLS-1$
         result.append(name);
         result.append(", backingObject: "); //$NON-NLS-1$
@@ -366,6 +372,7 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
         return result.toString();
     }
 
+    @Override
     public String getFileExtension() {
         List<IConfigurationElement> list = ExtensionPointList
                 .getExtensionPointList(ProjectElementAdapter.EXT_ID);
@@ -379,10 +386,12 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
         throw new IllegalArgumentException(extensionId + " was not a valid extension id"); //$NON-NLS-1$
     }
 
+    @Override
     public IProject getProject() {
         return getProjectInternal();
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public Object getAdapter(Class adapter) {
         if (getBackingObject() != null && adapter.isAssignableFrom(getBackingObject().getClass())) {
@@ -391,11 +400,13 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
         return null;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public List getElements(Class type) {
         return getBackingObject().getElements(type);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public List getElements() {
         return getBackingObject().getElements();

@@ -31,9 +31,9 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * @generated
  */
-public class StyleBlackboardItemProvider extends ItemProviderAdapter implements
-        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
-        IItemLabelProvider, IItemPropertySource {
+public class StyleBlackboardItemProvider extends ItemProviderAdapter
+        implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+        ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc --> <!--
@@ -116,6 +116,7 @@ public class StyleBlackboardItemProvider extends ItemProviderAdapter implements
      * 
      * @generated NOT
      */
+    @Override
     public String getText(Object object) {
         return "StyleBlackboard";
     }
@@ -132,8 +133,8 @@ public class StyleBlackboardItemProvider extends ItemProviderAdapter implements
 
         switch (notification.getFeatureID(StyleBlackboard.class)) {
         case ProjectPackage.STYLE_BLACKBOARD__CONTENT:
-            fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
-                    true, false));
+            fireNotifyChanged(
+                    new ViewerNotification(notification, notification.getNotifier(), true, false));
             return;
         }
         super.notifyChanged(notification);

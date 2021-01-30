@@ -15,7 +15,6 @@ import org.locationtech.udig.catalog.URLUtils;
 import org.locationtech.udig.project.IProject;
 import org.locationtech.udig.project.internal.Messages;
 import org.locationtech.udig.project.internal.Project;
-import org.locationtech.udig.project.internal.ProjectElement;
 import org.locationtech.udig.project.internal.ProjectFactory;
 import org.locationtech.udig.project.internal.ProjectPackage;
 import org.locationtech.udig.project.internal.ProjectPlugin;
@@ -32,7 +31,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
@@ -94,6 +92,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
      * 
      * @generated NOT
      */
+    @Override
     @SuppressWarnings("unchecked")
     public List<Project> getProjects() {
         if (projects == null) {
@@ -113,6 +112,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     /**
      * @see org.locationtech.udig.project.internal.ProjectRegistry#getDefaultProject()
      */
+    @Override
     public Project getDefaultProject() {
         String projectName = Messages.ProjectRegistry_defaultName;
         String path = new File(Platform.getLocation().toString() + File.separatorChar + projectName)
@@ -125,6 +125,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
      * @see org.locationtech.udig.project.internal.ProjectRegistry#getCurrentProject()
      * @uml.property name="currentProject"
      */
+    @Override
     public Project getCurrentProject() {
         Project p = getCurrentProjectGen();
         if (p == null && getProjects().size() > 0)
@@ -164,6 +165,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCurrentProject(Project newCurrentProject) {
         Project oldCurrentProject = currentProject;
         currentProject = newCurrentProject;
@@ -185,6 +187,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
      * 
      * @generated NOT
      */
+    @Override
     public Project getProject(URI uri) {
         // There is a sporatic bug here. Remove this try/catch when it is fixed.
         try {
@@ -221,8 +224,8 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
                     File file = new File(projectURI.toFileString());
                     if (file.exists()) {
                         if (!file.delete())
-                            throw new NullPointerException("Unable to load " + uri
-                                    + " file was empty");
+                            throw new NullPointerException(
+                                    "Unable to load " + uri + " file was empty");
                     }
                 }
                 // creating a new project from the new project wizard
@@ -240,8 +243,8 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
                 if (incomingProject == null) {
                     // this project was not saved with a project file?
                     // (does it represent an individial map? we are not sure)
-                    throw new NullPointerException("Unable to load " + uri
-                            + " - does not contain a project");
+                    throw new NullPointerException(
+                            "Unable to load " + uri + " - does not contain a project");
                 }
                 //                if (incomingProject == null) {
                 //                    incomingProject = createProject(uri, resource);
@@ -257,6 +260,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
 
             final Project newProject = incomingProject;
             PlatformGIS.syncInDisplayThread(new Runnable() {
+                @Override
                 public void run() {
                     try {
                         setCurrentProject(newProject);
@@ -327,6 +331,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     /**
      * Convert projectPath into a URI and call getProject( uri ).
      */
+    @Override
     public Project getProject(String projectPath) {
         URL url;
         if (projectPath.startsWith("file:")) { //$NON-NLS-1$
@@ -343,7 +348,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
         }
 
         final String uriText = url.toExternalForm() + File.separatorChar
-                + ProjectRegistry.PROJECT_FILE; //$NON-NLS-1$
+                + ProjectRegistry.PROJECT_FILE; 
         final URI uri = URI.createURI(uriText);
 
         Project project = getProject(uri);
@@ -510,8 +515,10 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
                 /**
                  * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
                  */
+                @Override
                 public void notifyChanged(Notification msg) {
-                    if (msg.getFeatureID(ProjectRegistry.class) == ProjectPackage.PROJECT_REGISTRY__PROJECTS) {
+                    if (msg.getFeatureID(
+                            ProjectRegistry.class) == ProjectPackage.PROJECT_REGISTRY__PROJECTS) {
                         registry.eResource().setModified(true);
                     }
                 }

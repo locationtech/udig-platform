@@ -105,6 +105,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     @SuppressWarnings("unchecked")
     public List<StyleEntry> getContent() {
         if (content == null) {
@@ -119,6 +120,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
      * 
      * @generated NOT
      */
+    @Override
     public Object get(String styleId) {
         StyleEntry entry = getEntry(styleId);
         if (entry == null)
@@ -148,6 +150,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
      * 
      * @generated NOT
      */
+    @Override
     public Object lookup(Class<?> theClass) {
         StyleEntry entry = null;
         contentLock.lock();
@@ -226,6 +229,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
      * 
      * @generated NOT
      */
+    @Override
     public boolean contains(String styleId) {
         return get(styleId) != null;
     }
@@ -235,6 +239,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
      * 
      * @generated NOT
      */
+    @Override
     @SuppressWarnings("unchecked")
     public void put(String styleId, Object style) {
         Object oldValue = remove(styleId);
@@ -281,6 +286,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
      * 
      * @generated NOT
      */
+    @Override
     public void put(URL url, IProgressMonitor monitor) {
         createStyleEntry(url, monitor);
     }
@@ -306,6 +312,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
         ExtensionPointProcessor p = new ExtensionPointProcessor() {
             boolean found = false;
 
+            @Override
             public void process(IExtension extension, IConfigurationElement element)
                     throws Exception {
                 if (!found && element.getAttribute("id").equals(styleId)) { //$NON-NLS-1$
@@ -340,6 +347,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
          * org.locationtech.udig.core.internal.ExtensionPointProcessor#process(org.eclipse.core.runtime
          * .IExtension, org.eclipse.core.runtime.IConfigurationElement)
          */
+        @Override
         public void process(IExtension extension, IConfigurationElement element) throws Exception {
             if (found)
                 return;
@@ -373,6 +381,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
      * 
      * @generated NOT
      */
+    @Override
     public Object remove(String styleId) {
         Object style = null;
         contentLock.lock();
@@ -398,6 +407,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
      * @throws CloneNotSupportedException
      * @generated NOT
      */
+    @Override
     public Object clone() {
         // clone the entire blackboard
         StyleBlackboardImpl clone;
@@ -442,14 +452,14 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
                         styleEntryClone.setStyle(copy);
                     } catch (Throwable t) {
-                        ProjectPlugin.trace(StyleBlackboardImpl.class, "Unable to copy style " + ID
-                                + ":" + style, t);
+                        ProjectPlugin.trace(StyleBlackboardImpl.class,
+                                "Unable to copy style " + ID + ":" + style, t);
                     }
                 } else {
                     // unable to preserve independence of this style object
                     styleEntryClone.setStyle(style); // warning!
-                    ProjectPlugin.trace(StyleBlackboardImpl.class, "Unable to copy style " + ID
-                            + ":" + style, null);
+                    ProjectPlugin.trace(StyleBlackboardImpl.class,
+                            "Unable to copy style " + ID + ":" + style, null);
                 }
                 clone.getContent().add(styleEntryClone);
             }
@@ -537,6 +547,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     /**
      * @see org.locationtech.udig.project.IBlackboard#getFloat(java.lang.String)
      */
+    @Override
     public Float getFloat(String key) {
         if (contains(key)) {
             Object value = get(key);
@@ -547,6 +558,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
         return null;
     }
 
+    @Override
     public Integer getInteger(String key) {
         if (contains(key)) {
             Object value = get(key);
@@ -557,6 +569,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
         return null;
     }
 
+    @Override
     public String getString(String key) {
         if (contains(key)) {
             Object value = get(key);
@@ -567,18 +580,22 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
         return null;
     }
 
+    @Override
     public void putFloat(String key, float value) {
         put(key, value);
     }
 
+    @Override
     public void putInteger(String key, int value) {
         put(key, value);
     }
 
+    @Override
     public void putString(String key, String value) {
         put(key, value);
     }
 
+    @Override
     public void clear() {
         if (content == null) {
             return;
@@ -594,20 +611,24 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
         }
     }
 
+    @Override
     public void flush() {
 
     }
 
     CopyOnWriteArraySet<IBlackboardListener> listeners = new CopyOnWriteArraySet<IBlackboardListener>();
 
+    @Override
     public boolean addListener(IBlackboardListener listener) {
         return listeners.add(listener);
     }
 
+    @Override
     public boolean removeListener(IBlackboardListener listener) {
         return listeners.remove(listener);
     }
 
+    @Override
     public void setSelected(String[] ids) {
         List<String> idList = Arrays.asList(ids);
         contentLock.lock();
@@ -625,6 +646,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     }
 
+    @Override
     public boolean isSelected(String styleId) {
         StyleEntry entry = getEntry(styleId);
 
@@ -633,6 +655,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
         return false;
     }
 
+    @Override
     public void addAll(IBlackboard blackboard) {
         Set<String> keySet = blackboard.keySet();
 
@@ -641,6 +664,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
         }
     }
 
+    @Override
     public Set<String> keySet() {
         Set<String> keys = new HashSet<String>();
         for (StyleEntry entry : content) {

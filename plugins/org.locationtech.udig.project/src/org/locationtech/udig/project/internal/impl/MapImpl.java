@@ -492,8 +492,8 @@ public class MapImpl extends EObjectImpl implements Map {
             if (msgs != null)
                 msgs.dispatch();
         } else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET,
-                    ProjectPackage.MAP__CONTEXT_MODEL, newContextModel, newContextModel));
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.MAP__CONTEXT_MODEL,
+                    newContextModel, newContextModel));
     }
 
     /**
@@ -590,8 +590,8 @@ public class MapImpl extends EObjectImpl implements Map {
         BrewerPalette oldColorPalette = colorPalette;
         colorPalette = newColorPalette;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET,
-                    ProjectPackage.MAP__COLOR_PALETTE, oldColorPalette, colorPalette));
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.MAP__COLOR_PALETTE,
+                    oldColorPalette, colorPalette));
     }
 
     /**
@@ -634,8 +634,8 @@ public class MapImpl extends EObjectImpl implements Map {
         String oldName = name;
         name = newName;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.MAP__NAME,
-                    oldName, name));
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.MAP__NAME, oldName,
+                    name));
     }
 
     @Override
@@ -659,8 +659,8 @@ public class MapImpl extends EObjectImpl implements Map {
             List<Layer> layers = new ArrayList<>(getLayersInternal());
             for (Layer layer : layers) {
                 ReferencedEnvelope bbox;
-                bbox = layer.getBounds(ProgressManager.instance().get(), getViewportModel()
-                        .getCRS());
+                bbox = layer.getBounds(ProgressManager.instance().get(),
+                        getViewportModel().getCRS());
                 if (!bbox.isNull()) {
                     if (bounds.isNull())
                         bounds.init(((Envelope) bbox));
@@ -711,8 +711,8 @@ public class MapImpl extends EObjectImpl implements Map {
                     Polygon poly = (Polygon) geometry;
                     org.opengis.geometry.Envelope envelope = poly.getBoundary().getEnvelope();
                     env = new ReferencedEnvelope(envelope.getMinimum(0), envelope.getMaximum(0),
-                            envelope.getMinimum(1), envelope.getMaximum(1), envelope
-                                    .getLowerCorner().getCoordinateReferenceSystem());
+                            envelope.getMinimum(1), envelope.getMaximum(1),
+                            envelope.getLowerCorner().getCoordinateReferenceSystem());
                     break;
                 }
             }
@@ -753,9 +753,8 @@ public class MapImpl extends EObjectImpl implements Map {
     public NavCommandStack getNavCommandStack() {
         synchronized (CommandManager.class) {
             if (this.navCommandManager == null) {
-                this.navCommandManager = new CommandManager(
-                        Messages.MapImpl_NavigationCommandStack, new DefaultErrorHandler(),
-                        new CommandListener() {
+                this.navCommandManager = new CommandManager(Messages.MapImpl_NavigationCommandStack,
+                        new DefaultErrorHandler(), new CommandListener() {
                             @Override
                             public void commandExecuted(Command command) {
                                 if (command instanceof NavCommand) {
@@ -779,8 +778,7 @@ public class MapImpl extends EObjectImpl implements Map {
         synchronized (CommandManager.class) {
             if (this.commandManager == null) {
                 this.commandManager = new CommandManager(Messages.MapImpl_CommandStack,
-                        new DefaultErrorHandler(), 
-                        new CommandListener() {
+                        new DefaultErrorHandler(), new CommandListener() {
                             @Override
                             public void commandExecuted(Command command) {
                                 if (!(command instanceof NavCommand)) {
@@ -843,8 +841,8 @@ public class MapImpl extends EObjectImpl implements Map {
             if (msgs != null)
                 msgs.dispatch();
         } else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET,
-                    ProjectPackage.MAP__LAYER_FACTORY, newLayerFactory, newLayerFactory));
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.MAP__LAYER_FACTORY,
+                    newLayerFactory, newLayerFactory));
     }
 
     /**
@@ -895,8 +893,8 @@ public class MapImpl extends EObjectImpl implements Map {
 
     private void notifyCommandStackChange() {
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET,
-                    ProjectPackage.MAP__COMMAND_STACK, null, commandManager));
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.MAP__COMMAND_STACK,
+                    null, commandManager));
     }
 
     private void notifyNavCommandStackChange() {
@@ -927,8 +925,8 @@ public class MapImpl extends EObjectImpl implements Map {
         }
     }
 
-    private static class BatchNotification extends ENotificationImpl implements
-            Iterable<Notification> {
+    private static class BatchNotification extends ENotificationImpl
+            implements Iterable<Notification> {
 
         /**
          * Construct <code>BatchNotification</code>.
@@ -1037,13 +1035,13 @@ public class MapImpl extends EObjectImpl implements Map {
             return basicSetProjectInternal((Project) otherEnd, msgs);
         case ProjectPackage.MAP__CONTEXT_MODEL:
             if (contextModel != null)
-                msgs = ((InternalEObject) contextModel).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-                        - ProjectPackage.MAP__CONTEXT_MODEL, null, msgs);
+                msgs = ((InternalEObject) contextModel).eInverseRemove(this,
+                        EOPPOSITE_FEATURE_BASE - ProjectPackage.MAP__CONTEXT_MODEL, null, msgs);
             return basicSetContextModel((ContextModel) otherEnd, msgs);
         case ProjectPackage.MAP__LAYER_FACTORY:
             if (layerFactory != null)
-                msgs = ((InternalEObject) layerFactory).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-                        - ProjectPackage.MAP__LAYER_FACTORY, null, msgs);
+                msgs = ((InternalEObject) layerFactory).eInverseRemove(this,
+                        EOPPOSITE_FEATURE_BASE - ProjectPackage.MAP__LAYER_FACTORY, null, msgs);
             return basicSetLayerFactory((LayerFactory) otherEnd, msgs);
         case ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL:
             if (viewportModelInternal != null)
@@ -1252,8 +1250,8 @@ public class MapImpl extends EObjectImpl implements Map {
         case ProjectPackage.MAP__CONTEXT_MODEL:
             return contextModel != null;
         case ProjectPackage.MAP__ABSTRACT:
-            return ABSTRACT_EDEFAULT == null ? abstract_ != null : !ABSTRACT_EDEFAULT
-                    .equals(abstract_);
+            return ABSTRACT_EDEFAULT == null ? abstract_ != null
+                    : !ABSTRACT_EDEFAULT.equals(abstract_);
         case ProjectPackage.MAP__NAV_COMMAND_STACK:
             return NAV_COMMAND_STACK_EDEFAULT == null ? getNavCommandStack() != null
                     : !NAV_COMMAND_STACK_EDEFAULT.equals(getNavCommandStack());
@@ -1265,15 +1263,15 @@ public class MapImpl extends EObjectImpl implements Map {
         case ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL:
             return viewportModelInternal != null;
         case ProjectPackage.MAP__COLOR_PALETTE:
-            return COLOR_PALETTE_EDEFAULT == null ? colorPalette != null : !COLOR_PALETTE_EDEFAULT
-                    .equals(colorPalette);
+            return COLOR_PALETTE_EDEFAULT == null ? colorPalette != null
+                    : !COLOR_PALETTE_EDEFAULT.equals(colorPalette);
         case ProjectPackage.MAP__EDIT_MANAGER_INTERNAL:
             return editManagerInternal != null;
         case ProjectPackage.MAP__RENDER_MANAGER_INTERNAL:
             return renderManagerInternal != null;
         case ProjectPackage.MAP__COLOUR_SCHEME:
-            return COLOUR_SCHEME_EDEFAULT == null ? colourScheme != null : !COLOUR_SCHEME_EDEFAULT
-                    .equals(colourScheme);
+            return COLOUR_SCHEME_EDEFAULT == null ? colourScheme != null
+                    : !COLOUR_SCHEME_EDEFAULT.equals(colourScheme);
         case ProjectPackage.MAP__BLACK_BOARD_INTERNAL:
             return blackBoardInternal != null;
         case ProjectPackage.MAP__LEGEND:
@@ -1449,7 +1447,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
+     * @generated NOT
      */
     @Override
     public ColourScheme getColourScheme() {
@@ -1468,8 +1466,8 @@ public class MapImpl extends EObjectImpl implements Map {
         ColourScheme oldColourScheme = colourScheme;
         colourScheme = newColourScheme;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET,
-                    ProjectPackage.MAP__COLOUR_SCHEME, oldColourScheme, colourScheme));
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.MAP__COLOUR_SCHEME,
+                    oldColourScheme, colourScheme));
     }
 
     /*
@@ -1559,7 +1557,7 @@ public class MapImpl extends EObjectImpl implements Map {
         if (eIsProxy())
             return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: "); //$NON-NLS-1$
         result.append(name);
         result.append(", abstract: "); //$NON-NLS-1$
@@ -1675,33 +1673,33 @@ public class MapImpl extends EObjectImpl implements Map {
     public void executeSyncWithoutUndo(final MapCommand command) {
         command.setMap(this);
         if (Display.getCurrent() != null) {
-            ProgressMonitorDialog dialog = new ProgressMonitorDialog(PlatformUI.getWorkbench()
-                    .getActiveWorkbenchWindow().getShell());
+            ProgressMonitorDialog dialog = new ProgressMonitorDialog(
+                    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
             dialog.setOpenOnRun(true);
             try {
                 dialog.run(false, false, new IRunnableWithProgress() {
 
                     @Override
-                    public void run(IProgressMonitor monitor) throws InvocationTargetException,
-                            InterruptedException {
+                    public void run(IProgressMonitor monitor)
+                            throws InvocationTargetException, InterruptedException {
                         try {
                             command.run(monitor);
                         } catch (Exception e) {
-                            ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); //$NON-NLS-1$
+                            ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); 
                         }
                     }
 
                 });
             } catch (InvocationTargetException e) {
-                ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); //$NON-NLS-1$
+                ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); 
             } catch (InterruptedException e) {
-                ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); //$NON-NLS-1$
+                ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); 
             }
         } else {
             try {
                 command.run(new NullProgressMonitor());
             } catch (Exception e) {
-                ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); //$NON-NLS-1$
+                ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); 
             }
         }
     }
@@ -1711,12 +1709,12 @@ public class MapImpl extends EObjectImpl implements Map {
         PlatformGIS.run(new IRunnableWithProgress() {
 
             @Override
-            public void run(IProgressMonitor monitor) throws InvocationTargetException,
-                    InterruptedException {
+            public void run(IProgressMonitor monitor)
+                    throws InvocationTargetException, InterruptedException {
                 try {
                     command.run(monitor);
                 } catch (Exception e) {
-                    ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); //$NON-NLS-1$
+                    ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); 
                 }
             }
 
@@ -1822,8 +1820,8 @@ public class MapImpl extends EObjectImpl implements Map {
             return Filter.INCLUDE;
         }
         try {
-            FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = layer.getResource(
-                    FeatureSource.class, null);
+            FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = layer
+                    .getResource(FeatureSource.class, null);
             if (featureSource == null) {
                 return Filter.INCLUDE;
             }

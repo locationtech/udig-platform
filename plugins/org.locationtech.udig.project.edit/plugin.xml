@@ -19,5 +19,43 @@
          <itemProviderAdapterFactory class="org.locationtech.udig.project.internal.render.provider.RenderItemProviderAdapterFactory"/>
          <itemProviderAdapterFactory class="org.locationtech.udig.project.element.provider.ElementItemProviderAdapterFactory"/>
       </extension>
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated Project -->
+      <factory
+            uri="http:///net/refractions/udig/project/element.ecore"
+            class="org.locationtech.udig.project.element.provider.ElementItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated Project -->
+      <factory
+            uri="http:///net/refractions/udig/project/internal.ecore"
+            class="org.locationtech.udig.project.internal.provider.ProjectItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated Project -->
+      <factory
+            uri="http:///net/refractions/udig/project/internal/render.ecore"
+            class="org.locationtech.udig.project.internal.render.provider.RenderItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>
 </plugin>
 

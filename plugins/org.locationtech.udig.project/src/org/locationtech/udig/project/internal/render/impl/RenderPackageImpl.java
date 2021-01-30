@@ -275,7 +275,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
 
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link RenderPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -289,9 +289,10 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
             return (RenderPackage) EPackage.Registry.INSTANCE.getEPackage(RenderPackage.eNS_URI);
 
         // Obtain or create and register package
-        RenderPackageImpl theRenderPackage = (RenderPackageImpl) (EPackage.Registry.INSTANCE
-                .get(eNS_URI) instanceof RenderPackageImpl ? EPackage.Registry.INSTANCE
-                .get(eNS_URI) : new RenderPackageImpl());
+        Object registeredRenderPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        RenderPackageImpl theRenderPackage = registeredRenderPackage instanceof RenderPackageImpl
+                ? (RenderPackageImpl) registeredRenderPackage
+                : new RenderPackageImpl();
 
         isInited = true;
 
@@ -299,12 +300,14 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
         EcorePackage.eINSTANCE.eClass();
 
         // Obtain or create and register interdependencies
-        ElementPackageImpl theElementPackage = (ElementPackageImpl) (EPackage.Registry.INSTANCE
-                .getEPackage(ElementPackage.eNS_URI) instanceof ElementPackageImpl ? EPackage.Registry.INSTANCE
-                .getEPackage(ElementPackage.eNS_URI) : ElementPackage.eINSTANCE);
-        ProjectPackageImpl theProjectPackage = (ProjectPackageImpl) (EPackage.Registry.INSTANCE
-                .getEPackage(ProjectPackage.eNS_URI) instanceof ProjectPackageImpl ? EPackage.Registry.INSTANCE
-                .getEPackage(ProjectPackage.eNS_URI) : ProjectPackage.eINSTANCE);
+        Object registeredPackage = EPackage.Registry.INSTANCE.getEPackage(ElementPackage.eNS_URI);
+        ElementPackageImpl theElementPackage = (ElementPackageImpl) (registeredPackage instanceof ElementPackageImpl
+                ? registeredPackage
+                : ElementPackage.eINSTANCE);
+        registeredPackage = EPackage.Registry.INSTANCE.getEPackage(ProjectPackage.eNS_URI);
+        ProjectPackageImpl theProjectPackage = (ProjectPackageImpl) (registeredPackage instanceof ProjectPackageImpl
+                ? registeredPackage
+                : ProjectPackage.eINSTANCE);
 
         // Create package meta-data objects
         theRenderPackage.createPackageContents();
@@ -328,6 +331,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIRenderManager() {
         return iRenderManagerEClass;
     }
@@ -336,6 +340,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIViewportModel() {
         return iViewportModelEClass;
     }
@@ -344,6 +349,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIMultiLayerRenderer() {
         return iMultiLayerRendererEClass;
     }
@@ -352,6 +358,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIRenderer() {
         return iRendererEClass;
     }
@@ -360,6 +367,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getILayer() {
         return iLayerEClass;
     }
@@ -368,6 +376,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getMultiLayerRenderer() {
         return multiLayerRendererEClass;
     }
@@ -376,6 +385,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getRenderExecutor() {
         return renderExecutorEClass;
     }
@@ -384,6 +394,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getRenderExecutor_Renderer() {
         return (EReference) renderExecutorEClass.getEStructuralFeatures().get(0);
     }
@@ -392,6 +403,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getRenderManager() {
         return renderManagerEClass;
     }
@@ -400,6 +412,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getRenderManager_RenderExecutor() {
         return (EReference) renderManagerEClass.getEStructuralFeatures().get(0);
     }
@@ -408,6 +421,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getRenderManager_MapDisplay() {
         return (EAttribute) renderManagerEClass.getEStructuralFeatures().get(1);
     }
@@ -416,6 +430,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getRenderManager_MapInternal() {
         return (EReference) renderManagerEClass.getEStructuralFeatures().get(2);
     }
@@ -424,6 +439,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getRenderManager_ViewportModelInternal() {
         return (EReference) renderManagerEClass.getEStructuralFeatures().get(3);
     }
@@ -432,6 +448,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getRenderer() {
         return rendererEClass;
     }
@@ -440,6 +457,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getRenderer_State() {
         return (EAttribute) rendererEClass.getEStructuralFeatures().get(0);
     }
@@ -448,6 +466,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getRenderer_Name() {
         return (EAttribute) rendererEClass.getEStructuralFeatures().get(1);
     }
@@ -456,6 +475,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getRenderer_Context() {
         return (EReference) rendererEClass.getEStructuralFeatures().get(2);
     }
@@ -464,6 +484,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIMapDisplayListener() {
         return iMapDisplayListenerEClass;
     }
@@ -473,6 +494,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIRenderContext() {
         return iRenderContextEClass;
     }
@@ -481,6 +503,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getViewportModel() {
         return viewportModelEClass;
     }
@@ -489,6 +512,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getViewportModel_CRS() {
         return (EAttribute) viewportModelEClass.getEStructuralFeatures().get(0);
     }
@@ -497,6 +521,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getViewportModel_Bounds() {
         return (EAttribute) viewportModelEClass.getEStructuralFeatures().get(1);
     }
@@ -505,6 +530,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getViewportModel_Center() {
         return (EAttribute) viewportModelEClass.getEStructuralFeatures().get(2);
     }
@@ -513,6 +539,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getViewportModel_Height() {
         return (EAttribute) viewportModelEClass.getEStructuralFeatures().get(3);
     }
@@ -521,6 +548,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getViewportModel_Width() {
         return (EAttribute) viewportModelEClass.getEStructuralFeatures().get(4);
     }
@@ -529,6 +557,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getViewportModel_AspectRatio() {
         return (EAttribute) viewportModelEClass.getEStructuralFeatures().get(5);
     }
@@ -537,6 +566,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getViewportModel_PixelSize() {
         return (EAttribute) viewportModelEClass.getEStructuralFeatures().get(6);
     }
@@ -545,6 +575,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getViewportModel_MapInternal() {
         return (EReference) viewportModelEClass.getEStructuralFeatures().get(7);
     }
@@ -553,6 +584,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getViewportModel_RenderManagerInternal() {
         return (EReference) viewportModelEClass.getEStructuralFeatures().get(8);
     }
@@ -562,6 +594,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getViewportModel_PreferredScaleDenominators() {
         return (EAttribute) viewportModelEClass.getEStructuralFeatures().get(9);
     }
@@ -571,6 +604,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getViewportModel_AvailableTimesteps() {
         return (EAttribute) viewportModelEClass.getEStructuralFeatures().get(10);
     }
@@ -580,6 +614,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getViewportModel_CurrentTimestep() {
         return (EAttribute) viewportModelEClass.getEStructuralFeatures().get(11);
     }
@@ -589,6 +624,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getViewportModel_AvailableElevation() {
         return (EAttribute) viewportModelEClass.getEStructuralFeatures().get(12);
     }
@@ -598,6 +634,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getViewportModel_CurrentElevation() {
         return (EAttribute) viewportModelEClass.getEStructuralFeatures().get(13);
     }
@@ -606,6 +643,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getComparable() {
         return comparableEClass;
     }
@@ -614,6 +652,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getCoordinateReferenceSystem() {
         return coordinateReferenceSystemEDataType;
     }
@@ -622,6 +661,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getEnvelope() {
         return envelopeEDataType;
     }
@@ -630,6 +670,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getIGeoResource() {
         return iGeoResourceEDataType;
     }
@@ -638,6 +679,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getBufferedImage() {
         return bufferedImageEDataType;
     }
@@ -646,6 +688,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getRectangle() {
         return rectangleEDataType;
     }
@@ -654,6 +697,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getQuery() {
         return queryEDataType;
     }
@@ -662,6 +706,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getGraphics2D() {
         return graphics2DEDataType;
     }
@@ -670,6 +715,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getList() {
         return listEDataType;
     }
@@ -678,6 +724,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getCoordinate() {
         return coordinateEDataType;
     }
@@ -686,6 +733,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getPoint() {
         return pointEDataType;
     }
@@ -694,6 +742,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getAffineTransform() {
         return affineTransformEDataType;
     }
@@ -702,6 +751,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getMapDisplay() {
         return mapDisplayEDataType;
     }
@@ -710,6 +760,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getIProgressMonitor() {
         return iProgressMonitorEDataType;
     }
@@ -719,6 +770,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getRenderException() {
         return renderExceptionEDataType;
     }
@@ -728,6 +780,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getSortedSet() {
         return sortedSetEDataType;
     }
@@ -737,6 +790,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getReferencedEnvelope() {
         return referencedEnvelopeEDataType;
     }
@@ -746,6 +800,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getDateTime() {
         return dateTimeEDataType;
     }
@@ -755,6 +810,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getIllegalArgumentException() {
         return illegalArgumentExceptionEDataType;
     }
@@ -769,6 +825,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public RenderFactory getRenderFactory() {
         return (RenderFactory) getEFactoryInstance();
     }
@@ -902,126 +959,107 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
         rendererEClass.getESuperTypes().add(this.getIRenderer());
 
         // Initialize classes and features; add operations and parameters
-        initEClass(iRenderManagerEClass, IRenderManager.class,
-                "IRenderManager", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEClass(iRenderManagerEClass, IRenderManager.class, "IRenderManager", IS_ABSTRACT, //$NON-NLS-1$
+                IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(iViewportModelEClass, IViewportModel.class,
-                "IViewportModel", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEClass(iViewportModelEClass, IViewportModel.class, "IViewportModel", IS_ABSTRACT, //$NON-NLS-1$
+                IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(iMultiLayerRendererEClass, IMultiLayerRenderer.class,
-                "IMultiLayerRenderer", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEClass(iMultiLayerRendererEClass, IMultiLayerRenderer.class, "IMultiLayerRenderer", //$NON-NLS-1$
+                IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(iRendererEClass, IRenderer.class,
-                "IRenderer", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEClass(iRendererEClass, IRenderer.class, "IRenderer", IS_ABSTRACT, IS_INTERFACE, //$NON-NLS-1$
+                !IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(iLayerEClass, ILayer.class,
-                "ILayer", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEClass(iLayerEClass, ILayer.class, "ILayer", IS_ABSTRACT, IS_INTERFACE, //$NON-NLS-1$
+                !IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(multiLayerRendererEClass, MultiLayerRenderer.class,
-                "MultiLayerRenderer", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEClass(multiLayerRendererEClass, MultiLayerRenderer.class, "MultiLayerRenderer", //$NON-NLS-1$
+                IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        EOperation op = addEOperation(multiLayerRendererEClass, null,
-                "refreshImage", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        EOperation op = addEOperation(multiLayerRendererEClass, null, "refreshImage", 0, 1, //$NON-NLS-1$
+                IS_UNIQUE, IS_ORDERED);
         addEException(op, this.getRenderException());
 
-        initEClass(renderExecutorEClass, RenderExecutor.class,
-                "RenderExecutor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEReference(
-                getRenderExecutor_Renderer(),
-                this.getRenderer(),
-                null,
-                "renderer", null, 1, 1, RenderExecutor.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEClass(renderExecutorEClass, RenderExecutor.class, "RenderExecutor", !IS_ABSTRACT, //$NON-NLS-1$
+                !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getRenderExecutor_Renderer(), this.getRenderer(), null, "renderer", null, 1, //$NON-NLS-1$
+                1, RenderExecutor.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(renderManagerEClass, RenderManager.class,
-                "RenderManager", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEReference(
-                getRenderManager_RenderExecutor(),
-                this.getRenderExecutor(),
-                null,
-                "renderExecutor", null, 0, 1, RenderManager.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
-                getRenderManager_MapDisplay(),
-                this.getMapDisplay(),
-                "mapDisplay", null, 0, 1, RenderManager.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEReference(
-                getRenderManager_MapInternal(),
-                theProjectPackage.getMap(),
-                theProjectPackage.getMap_RenderManagerInternal(),
-                "mapInternal", null, 0, 1, RenderManager.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEReference(
-                getRenderManager_ViewportModelInternal(),
-                this.getViewportModel(),
-                this.getViewportModel_RenderManagerInternal(),
-                "viewportModelInternal", null, 0, 1, RenderManager.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEClass(renderManagerEClass, RenderManager.class, "RenderManager", !IS_ABSTRACT, //$NON-NLS-1$
+                !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getRenderManager_RenderExecutor(), this.getRenderExecutor(), null,
+                "renderExecutor", null, 0, 1, RenderManager.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+                IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+                !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getRenderManager_MapDisplay(), this.getMapDisplay(), "mapDisplay", null, 0, //$NON-NLS-1$
+                1, RenderManager.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+                !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getRenderManager_MapInternal(), theProjectPackage.getMap(),
+                theProjectPackage.getMap_RenderManagerInternal(), "mapInternal", null, 0, 1, //$NON-NLS-1$
+                RenderManager.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+                IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getRenderManager_ViewportModelInternal(), this.getViewportModel(),
+                this.getViewportModel_RenderManagerInternal(), "viewportModelInternal", null, 0, 1, //$NON-NLS-1$
+                RenderManager.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         op = addEOperation(renderManagerEClass, null, "refresh", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, this.getEnvelope(), "bounds", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
         addEOperation(renderManagerEClass, null, "dispose", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        initEClass(viewportModelEClass, ViewportModel.class,
-                "ViewportModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEAttribute(
-                getViewportModel_CRS(),
-                this.getCoordinateReferenceSystem(),
-                "cRS", null, 0, 1, ViewportModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
-                getViewportModel_Bounds(),
-                this.getReferencedEnvelope(),
-                "bounds", "", 0, 1, ViewportModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-        initEAttribute(
-                getViewportModel_Center(),
-                this.getCoordinate(),
-                "center", null, 0, 1, ViewportModel.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
-                getViewportModel_Height(),
-                ecorePackage.getEDouble(),
-                "height", null, 0, 1, ViewportModel.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
-                getViewportModel_Width(),
-                ecorePackage.getEDouble(),
-                "width", null, 0, 1, ViewportModel.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
-                getViewportModel_AspectRatio(),
-                ecorePackage.getEDouble(),
-                "aspectRatio", null, 0, 1, ViewportModel.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
-                getViewportModel_PixelSize(),
-                this.getCoordinate(),
-                "pixelSize", null, 0, 1, ViewportModel.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEReference(
-                getViewportModel_MapInternal(),
-                theProjectPackage.getMap(),
-                theProjectPackage.getMap_ViewportModelInternal(),
-                "mapInternal", null, 0, 1, ViewportModel.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEReference(
-                getViewportModel_RenderManagerInternal(),
-                this.getRenderManager(),
-                this.getRenderManager_ViewportModelInternal(),
-                "renderManagerInternal", null, 0, 1, ViewportModel.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEClass(viewportModelEClass, ViewportModel.class, "ViewportModel", !IS_ABSTRACT, //$NON-NLS-1$
+                !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getViewportModel_CRS(), this.getCoordinateReferenceSystem(), "cRS", null, 0, //$NON-NLS-1$
+                1, ViewportModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE,
+                !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getViewportModel_Bounds(), this.getReferencedEnvelope(), "bounds", "", 0, 1, //$NON-NLS-1$//$NON-NLS-2$
+                ViewportModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+                !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getViewportModel_Center(), this.getCoordinate(), "center", null, 0, 1, //$NON-NLS-1$
+                ViewportModel.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+                !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getViewportModel_Height(), ecorePackage.getEDouble(), "height", null, 0, 1, //$NON-NLS-1$
+                ViewportModel.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+                !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getViewportModel_Width(), ecorePackage.getEDouble(), "width", null, 0, 1, //$NON-NLS-1$
+                ViewportModel.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+                !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getViewportModel_AspectRatio(), ecorePackage.getEDouble(), "aspectRatio", //$NON-NLS-1$
+                null, 0, 1, ViewportModel.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE,
+                !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getViewportModel_PixelSize(), this.getCoordinate(), "pixelSize", null, 0, 1, //$NON-NLS-1$
+                ViewportModel.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE,
+                !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getViewportModel_MapInternal(), theProjectPackage.getMap(),
+                theProjectPackage.getMap_ViewportModelInternal(), "mapInternal", null, 0, 1, //$NON-NLS-1$
+                ViewportModel.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getViewportModel_RenderManagerInternal(), this.getRenderManager(),
+                this.getRenderManager_ViewportModelInternal(), "renderManagerInternal", null, 0, 1, //$NON-NLS-1$
+                ViewportModel.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         EGenericType g1 = createEGenericType(this.getSortedSet());
         EGenericType g2 = createEGenericType(ecorePackage.getEDoubleObject());
         g1.getETypeArguments().add(g2);
-        initEAttribute(
-                getViewportModel_PreferredScaleDenominators(),
-                g1,
-                "preferredScaleDenominators", null, 0, 1, ViewportModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
-                getViewportModel_AvailableTimesteps(),
-                this.getDateTime(),
-                "availableTimesteps", null, 0, -1, ViewportModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
-                getViewportModel_CurrentTimestep(),
-                this.getDateTime(),
-                "currentTimestep", null, 0, 1, ViewportModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
-                getViewportModel_AvailableElevation(),
-                ecorePackage.getEDoubleObject(),
-                "availableElevation", null, 0, -1, ViewportModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
-                getViewportModel_CurrentElevation(),
-                ecorePackage.getEDoubleObject(),
-                "currentElevation", null, 0, 1, ViewportModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(getViewportModel_PreferredScaleDenominators(), g1,
+                "preferredScaleDenominators", null, 0, 1, ViewportModel.class, !IS_TRANSIENT, //$NON-NLS-1$
+                !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+                IS_ORDERED);
+        initEAttribute(getViewportModel_AvailableTimesteps(), this.getDateTime(),
+                "availableTimesteps", null, 0, -1, ViewportModel.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+                IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getViewportModel_CurrentTimestep(), this.getDateTime(), "currentTimestep", //$NON-NLS-1$
+                null, 0, 1, ViewportModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+                !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getViewportModel_AvailableElevation(), ecorePackage.getEDoubleObject(),
+                "availableElevation", null, 0, -1, ViewportModel.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+                IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getViewportModel_CurrentElevation(), ecorePackage.getEDoubleObject(),
+                "currentElevation", null, 0, 1, ViewportModel.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+                IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         op = addEOperation(viewportModelEClass, null, "setBounds", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, ecorePackage.getEDouble(), "minx", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -1030,34 +1068,34 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
         addEParameter(op, ecorePackage.getEDouble(), "maxy", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEException(op, this.getIllegalArgumentException());
 
-        addEOperation(viewportModelEClass, this.getAffineTransform(),
-                "worldToScreenTransform", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEOperation(viewportModelEClass, this.getAffineTransform(), "worldToScreenTransform", 0, //$NON-NLS-1$
+                1, IS_UNIQUE, IS_ORDERED);
 
-        op = addEOperation(viewportModelEClass, this.getPoint(),
-                "worldToPixel", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        op = addEOperation(viewportModelEClass, this.getPoint(), "worldToPixel", 0, 1, IS_UNIQUE, //$NON-NLS-1$
+                IS_ORDERED);
         addEParameter(op, this.getCoordinate(), "coord", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        op = addEOperation(viewportModelEClass, this.getCoordinate(),
-                "pixelToWorld", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        op = addEOperation(viewportModelEClass, this.getCoordinate(), "pixelToWorld", 0, 1, //$NON-NLS-1$
+                IS_UNIQUE, IS_ORDERED);
         addEParameter(op, ecorePackage.getEInt(), "x", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, ecorePackage.getEInt(), "y", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        op = addEOperation(viewportModelEClass, this.getViewportModel(),
-                "panUsingScreenCoords", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        op = addEOperation(viewportModelEClass, this.getViewportModel(), "panUsingScreenCoords", 0, //$NON-NLS-1$
+                1, IS_UNIQUE, IS_ORDERED);
         addEParameter(op, ecorePackage.getEInt(), "xpixels", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, ecorePackage.getEInt(), "ypixels", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        op = addEOperation(viewportModelEClass, this.getViewportModel(),
-                "panUsingWorldCoords", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        op = addEOperation(viewportModelEClass, this.getViewportModel(), "panUsingWorldCoords", 0, //$NON-NLS-1$
+                1, IS_UNIQUE, IS_ORDERED);
         addEParameter(op, ecorePackage.getEDouble(), "x", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, ecorePackage.getEDouble(), "y", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        op = addEOperation(viewportModelEClass, this.getViewportModel(),
-                "zoom", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        op = addEOperation(viewportModelEClass, this.getViewportModel(), "zoom", 0, 1, IS_UNIQUE, //$NON-NLS-1$
+                IS_ORDERED);
         addEParameter(op, ecorePackage.getEDouble(), "zoom", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        op = addEOperation(viewportModelEClass, this.getViewportModel(),
-                "zoom", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        op = addEOperation(viewportModelEClass, this.getViewportModel(), "zoom", 0, 1, IS_UNIQUE, //$NON-NLS-1$
+                IS_ORDERED);
         addEParameter(op, ecorePackage.getEDouble(), "zoom", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, this.getCoordinate(), "fixedPoint", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
@@ -1066,68 +1104,64 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
         op = addEOperation(viewportModelEClass, null, "zoomToBox", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, this.getEnvelope(), "box", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        initEClass(comparableEClass, Object.class,
-                "Comparable", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEClass(comparableEClass, Object.class, "Comparable", IS_ABSTRACT, IS_INTERFACE, //$NON-NLS-1$
+                !IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(rendererEClass, Renderer.class,
-                "Renderer", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEAttribute(
-                getRenderer_State(),
-                ecorePackage.getEInt(),
-                "state", "0", 0, 1, Renderer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-        initEAttribute(
-                getRenderer_Name(),
-                ecorePackage.getEString(),
-                "name", null, 0, 1, Renderer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEReference(
-                getRenderer_Context(),
-                this.getIRenderContext(),
-                null,
-                "context", null, 0, 1, Renderer.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEClass(rendererEClass, Renderer.class, "Renderer", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
+                IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getRenderer_State(), ecorePackage.getEInt(), "state", "0", 0, 1, //$NON-NLS-1$//$NON-NLS-2$
+                Renderer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+                IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getRenderer_Name(), ecorePackage.getEString(), "name", null, 0, 1, //$NON-NLS-1$
+                Renderer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID,
+                IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getRenderer_Context(), this.getIRenderContext(), null, "context", null, 0, 1, //$NON-NLS-1$
+                Renderer.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         addEOperation(rendererEClass, null, "dispose", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-        initEClass(iMapDisplayListenerEClass, IMapDisplayListener.class,
-                "IMapDisplayListener", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEClass(iMapDisplayListenerEClass, IMapDisplayListener.class, "IMapDisplayListener", //$NON-NLS-1$
+                IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(iRenderContextEClass, IRenderContext.class,
-                "IRenderContext", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEClass(iRenderContextEClass, IRenderContext.class, "IRenderContext", IS_ABSTRACT, //$NON-NLS-1$
+                IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize data types
         initEDataType(coordinateReferenceSystemEDataType, CoordinateReferenceSystem.class,
                 "CoordinateReferenceSystem", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(envelopeEDataType, Envelope.class,
-                "Envelope", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(iGeoResourceEDataType, IGeoResource.class,
-                "IGeoResource", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(bufferedImageEDataType, BufferedImage.class,
-                "BufferedImage", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(rectangleEDataType, Rectangle.class,
-                "Rectangle", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(queryEDataType, Query.class,
-                "Query", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(graphics2DEDataType, Graphics2D.class,
-                "Graphics2D", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(listEDataType, List.class,
-                "List", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(coordinateEDataType, Coordinate.class,
-                "Coordinate", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(pointEDataType, Point.class,
-                "Point", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(affineTransformEDataType, AffineTransform.class,
-                "AffineTransform", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(mapDisplayEDataType, IMapDisplay.class,
-                "MapDisplay", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(iProgressMonitorEDataType, IProgressMonitor.class,
-                "IProgressMonitor", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(renderExceptionEDataType, RenderException.class,
-                "RenderException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(sortedSetEDataType, SortedSet.class,
-                "SortedSet", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(referencedEnvelopeEDataType, ReferencedEnvelope.class,
-                "ReferencedEnvelope", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEDataType(dateTimeEDataType, DateTime.class,
-                "DateTime", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEDataType(envelopeEDataType, Envelope.class, "Envelope", IS_SERIALIZABLE, //$NON-NLS-1$
+                !IS_GENERATED_INSTANCE_CLASS);
+        initEDataType(iGeoResourceEDataType, IGeoResource.class, "IGeoResource", IS_SERIALIZABLE, //$NON-NLS-1$
+                !IS_GENERATED_INSTANCE_CLASS);
+        initEDataType(bufferedImageEDataType, BufferedImage.class, "BufferedImage", IS_SERIALIZABLE, //$NON-NLS-1$
+                !IS_GENERATED_INSTANCE_CLASS);
+        initEDataType(rectangleEDataType, Rectangle.class, "Rectangle", IS_SERIALIZABLE, //$NON-NLS-1$
+                !IS_GENERATED_INSTANCE_CLASS);
+        initEDataType(queryEDataType, Query.class, "Query", IS_SERIALIZABLE, //$NON-NLS-1$
+                !IS_GENERATED_INSTANCE_CLASS);
+        initEDataType(graphics2DEDataType, Graphics2D.class, "Graphics2D", IS_SERIALIZABLE, //$NON-NLS-1$
+                !IS_GENERATED_INSTANCE_CLASS);
+        initEDataType(listEDataType, List.class, "List", IS_SERIALIZABLE, //$NON-NLS-1$
+                !IS_GENERATED_INSTANCE_CLASS);
+        initEDataType(coordinateEDataType, Coordinate.class, "Coordinate", IS_SERIALIZABLE, //$NON-NLS-1$
+                !IS_GENERATED_INSTANCE_CLASS);
+        initEDataType(pointEDataType, Point.class, "Point", IS_SERIALIZABLE, //$NON-NLS-1$
+                !IS_GENERATED_INSTANCE_CLASS);
+        initEDataType(affineTransformEDataType, AffineTransform.class, "AffineTransform", //$NON-NLS-1$
+                IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+        initEDataType(mapDisplayEDataType, IMapDisplay.class, "MapDisplay", IS_SERIALIZABLE, //$NON-NLS-1$
+                !IS_GENERATED_INSTANCE_CLASS);
+        initEDataType(iProgressMonitorEDataType, IProgressMonitor.class, "IProgressMonitor", //$NON-NLS-1$
+                IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+        initEDataType(renderExceptionEDataType, RenderException.class, "RenderException", //$NON-NLS-1$
+                IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+        initEDataType(sortedSetEDataType, SortedSet.class, "SortedSet", IS_SERIALIZABLE, //$NON-NLS-1$
+                !IS_GENERATED_INSTANCE_CLASS);
+        initEDataType(referencedEnvelopeEDataType, ReferencedEnvelope.class, "ReferencedEnvelope", //$NON-NLS-1$
+                IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+        initEDataType(dateTimeEDataType, DateTime.class, "DateTime", IS_SERIALIZABLE, //$NON-NLS-1$
+                !IS_GENERATED_INSTANCE_CLASS);
         initEDataType(illegalArgumentExceptionEDataType, IllegalArgumentException.class,
                 "IllegalArgumentException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="render"
-    nsURI="http:///net/refractions/udig/project/internal/render.ecore" nsPrefix="org.locationtech.udig.project.internal.render">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="render" nsURI="http:///net/refractions/udig/project/internal/render.ecore"
+    nsPrefix="org.locationtech.udig.project.internal.render">
   <eClassifiers xsi:type="ecore:EClass" name="IRenderManager" instanceClassName="org.locationtech.udig.project.render.IRenderManager"
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="IViewportModel" instanceClassName="org.locationtech.udig.project.render.IViewportModel"
@@ -114,14 +113,14 @@
   <eClassifiers xsi:type="ecore:EClass" name="IRenderContext" instanceClassName="org.locationtech.udig.project.render.IRenderContext"
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EDataType" name="CoordinateReferenceSystem" instanceClassName="org.opengis.referencing.crs.CoordinateReferenceSystem"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="Envelope" instanceClassName="com.vividsolutions.jts.geom.Envelope"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Envelope" instanceClassName="org.locationtech.jts.geom.Envelope"/>
   <eClassifiers xsi:type="ecore:EDataType" name="IGeoResource" instanceClassName="org.locationtech.udig.catalog.IGeoResource"/>
   <eClassifiers xsi:type="ecore:EDataType" name="BufferedImage" instanceClassName="java.awt.image.BufferedImage"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Rectangle" instanceClassName="java.awt.Rectangle"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Query" instanceClassName="org.geotools.data.Query"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Graphics2D" instanceClassName="java.awt.Graphics2D"/>
   <eClassifiers xsi:type="ecore:EDataType" name="List" instanceClassName="java.util.List"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="Coordinate" instanceClassName="com.vividsolutions.jts.geom.Coordinate"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Coordinate" instanceClassName="org.locationtech.jts.geom.Coordinate"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Point" instanceClassName="java.awt.Point"/>
   <eClassifiers xsi:type="ecore:EDataType" name="AffineTransform" instanceClassName="java.awt.geom.AffineTransform"/>
   <eClassifiers xsi:type="ecore:EDataType" name="MapDisplay" instanceClassName="org.locationtech.udig.project.render.displayAdapter.IMapDisplay"/>

@@ -23,12 +23,12 @@ import org.eclipse.jface.resource.ImageDescriptor;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.locationtech.udig.project.internal.LegendItem#getName <em>Name</em>}</li>
  *   <li>{@link org.locationtech.udig.project.internal.LegendItem#isShown <em>Shown</em>}</li>
  *   <li>{@link org.locationtech.udig.project.internal.LegendItem#getIcon <em>Icon</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.locationtech.udig.project.internal.ProjectPackage#getLegendItem()
  * @model superTypes="org.locationtech.udig.project.internal.ILegendItem"
@@ -50,6 +50,7 @@ public interface LegendItem extends EObject, ILegendItem {
      * @model
      * @generated
      */
+    @Override
     String getName();
 
     /**
@@ -76,6 +77,7 @@ public interface LegendItem extends EObject, ILegendItem {
      * @model dataType="org.locationtech.udig.project.internal.ImageDescriptor"
      * @generated
      */
+    @Override
     ImageDescriptor getIcon();
 
     /**
@@ -102,6 +104,7 @@ public interface LegendItem extends EObject, ILegendItem {
      * @model
      * @generated
      */
+    @Override
     boolean isShown();
 
     /**

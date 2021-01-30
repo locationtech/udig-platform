@@ -38,8 +38,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
@@ -51,10 +49,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.locationtech.udig.project.internal.impl.LayerFactoryImpl#getMap <em>Map</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -92,10 +90,11 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Map getMap() {
         if (eContainerFeatureID() != ProjectPackage.LAYER_FACTORY__MAP)
             return null;
-        return (Map) eContainer();
+        return (Map) eInternalContainer();
     }
 
     /**
@@ -104,7 +103,8 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
      * @generated
      */
     public NotificationChain basicSetMap(Map newMap, NotificationChain msgs) {
-        msgs = eBasicSetContainer((InternalEObject) newMap, ProjectPackage.LAYER_FACTORY__MAP, msgs);
+        msgs = eBasicSetContainer((InternalEObject) newMap, ProjectPackage.LAYER_FACTORY__MAP,
+                msgs);
         return msgs;
     }
 
@@ -112,6 +112,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setMap(Map newMap) {
         if (newMap != eInternalContainer()
                 || (eContainerFeatureID() != ProjectPackage.LAYER_FACTORY__MAP && newMap != null)) {
@@ -128,8 +129,8 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
             if (msgs != null)
                 msgs.dispatch();
         } else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET,
-                    ProjectPackage.LAYER_FACTORY__MAP, newMap, newMap));
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER_FACTORY__MAP,
+                    newMap, newMap));
     }
 
     /**
@@ -245,6 +246,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
      * @return a list of {@linkplain Layer}objects from the provided selection.
      * @throws IOException
      */
+    @Override
     @SuppressWarnings("unchecked")
     public List<Layer> getLayers(List selection) throws IOException {
         List<Layer> layers = new LinkedList<Layer>();
@@ -263,6 +265,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
         return layers;
     }
 
+    @Override
     public List<Layer> getLayers(IService service) throws IOException {
         Layer ref = null;
         List<Layer> layers = new LinkedList<Layer>();
@@ -341,6 +344,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
      * @return
      * @throws IOException
      */
+    @Override
     @SuppressWarnings("unchecked")
     public Layer createLayer(IGeoResource resource) throws IOException {
         IService service = resource.service(ProgressManager.instance().get());
@@ -383,7 +387,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
         LayerResource preferredResource = null;
         for (IResolve resolve : resolves) {
             if (resolve instanceof IGeoResource) {
-                LayerResource layerResource = new LayerResource((LayerImpl) layer,
+                LayerResource layerResource = new LayerResource(layer,
                         (IGeoResource) resolve);
                 if (resolve.getID().equals(layerResourceID)) {
                     resources.add(0, layerResource);
@@ -396,7 +400,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
             }
         }
         // This is the total list of resources capable of providing information
-        ((LayerImpl) layer).geoResources = resources;
+        layer.geoResources = resources;
 
         // This is the "best" match; usually the one the user supplied
         layer.setGeoResource(preferredResource);
@@ -429,8 +433,8 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
                             .createExecutableExtension("class"); //$NON-NLS-1$
                     interceptor.run(layer);
                 } catch (CoreException e) {
-                    ProjectPlugin
-                            .log("Error creating class: " + element.getAttribute("class") + " part of layer interceptor: " + attribute, e); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+                    ProjectPlugin.log("Error creating class: " + element.getAttribute("class") //$NON-NLS-1$//$NON-NLS-2$
+                            + " part of layer interceptor: " + attribute, e); //$NON-NLS-1$
                 } catch (Throwable t) {
                     ProjectPlugin.log("Error running interceptor: " + attribute, t); //$NON-NLS-1$
                 }

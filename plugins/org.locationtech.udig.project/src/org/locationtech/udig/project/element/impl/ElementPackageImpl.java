@@ -77,7 +77,7 @@ public class ElementPackageImpl extends EPackageImpl implements ElementPackage {
 
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link ElementPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
@@ -92,9 +92,10 @@ public class ElementPackageImpl extends EPackageImpl implements ElementPackage {
             return (ElementPackage) EPackage.Registry.INSTANCE.getEPackage(ElementPackage.eNS_URI);
 
         // Obtain or create and register package
-        ElementPackageImpl theElementPackage = (ElementPackageImpl) (EPackage.Registry.INSTANCE
-                .get(eNS_URI) instanceof ElementPackageImpl ? EPackage.Registry.INSTANCE
-                .get(eNS_URI) : new ElementPackageImpl());
+        Object registeredElementPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        ElementPackageImpl theElementPackage = registeredElementPackage instanceof ElementPackageImpl
+                ? (ElementPackageImpl) registeredElementPackage
+                : new ElementPackageImpl();
 
         isInited = true;
 
@@ -102,12 +103,14 @@ public class ElementPackageImpl extends EPackageImpl implements ElementPackage {
         EcorePackage.eINSTANCE.eClass();
 
         // Obtain or create and register interdependencies
-        ProjectPackageImpl theProjectPackage = (ProjectPackageImpl) (EPackage.Registry.INSTANCE
-                .getEPackage(ProjectPackage.eNS_URI) instanceof ProjectPackageImpl ? EPackage.Registry.INSTANCE
-                .getEPackage(ProjectPackage.eNS_URI) : ProjectPackage.eINSTANCE);
-        RenderPackageImpl theRenderPackage = (RenderPackageImpl) (EPackage.Registry.INSTANCE
-                .getEPackage(RenderPackage.eNS_URI) instanceof RenderPackageImpl ? EPackage.Registry.INSTANCE
-                .getEPackage(RenderPackage.eNS_URI) : RenderPackage.eINSTANCE);
+        Object registeredPackage = EPackage.Registry.INSTANCE.getEPackage(ProjectPackage.eNS_URI);
+        ProjectPackageImpl theProjectPackage = (ProjectPackageImpl) (registeredPackage instanceof ProjectPackageImpl
+                ? registeredPackage
+                : ProjectPackage.eINSTANCE);
+        registeredPackage = EPackage.Registry.INSTANCE.getEPackage(RenderPackage.eNS_URI);
+        RenderPackageImpl theRenderPackage = (RenderPackageImpl) (registeredPackage instanceof RenderPackageImpl
+                ? registeredPackage
+                : RenderPackage.eINSTANCE);
 
         // Create package meta-data objects
         theElementPackage.createPackageContents();
@@ -132,6 +135,7 @@ public class ElementPackageImpl extends EPackageImpl implements ElementPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getProjectElementAdapter() {
         return projectElementAdapterEClass;
     }
@@ -141,6 +145,7 @@ public class ElementPackageImpl extends EPackageImpl implements ElementPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getProjectElementAdapter_BackingObject() {
         return (EAttribute) projectElementAdapterEClass.getEStructuralFeatures().get(0);
     }
@@ -150,6 +155,7 @@ public class ElementPackageImpl extends EPackageImpl implements ElementPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getIGenericProjectElement() {
         return iGenericProjectElementEDataType;
     }
@@ -159,6 +165,7 @@ public class ElementPackageImpl extends EPackageImpl implements ElementPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ElementFactory getElementFactory() {
         return (ElementFactory) getEFactoryInstance();
     }
@@ -228,10 +235,10 @@ public class ElementPackageImpl extends EPackageImpl implements ElementPackage {
         // Initialize classes and features; add operations and parameters
         initEClass(projectElementAdapterEClass, ProjectElementAdapter.class,
                 "ProjectElementAdapter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEAttribute(
-                getProjectElementAdapter_BackingObject(),
-                this.getIGenericProjectElement(),
-                "backingObject", null, 0, 1, ProjectElementAdapter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(getProjectElementAdapter_BackingObject(), this.getIGenericProjectElement(),
+                "backingObject", null, 0, 1, ProjectElementAdapter.class, !IS_TRANSIENT, //$NON-NLS-1$
+                !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+                IS_ORDERED);
 
         // Initialize data types
         initEDataType(iGenericProjectElementEDataType, IGenericProjectElement.class,

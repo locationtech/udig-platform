@@ -18,7 +18,6 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -31,9 +30,9 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ProjectRegistryItemProvider extends ItemProviderAdapter implements
-        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
-        IItemLabelProvider, IItemPropertySource {
+public class ProjectRegistryItemProvider extends ItemProviderAdapter
+        implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+        ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc --> <!--
@@ -50,6 +49,7 @@ public class ProjectRegistryItemProvider extends ItemProviderAdapter implements
      * 
      * @generated NOT
      */
+    @Override
     public List getPropertyDescriptors(Object object) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
@@ -60,6 +60,7 @@ public class ProjectRegistryItemProvider extends ItemProviderAdapter implements
         return itemPropertyDescriptors;
     }
 
+    @Override
     public Collection getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
@@ -71,6 +72,7 @@ public class ProjectRegistryItemProvider extends ItemProviderAdapter implements
     /**
      * @see org.eclipse.emf.edit.provider.ITreeItemContentProvider#hasChildren(java.lang.Object)
      */
+    @Override
     public boolean hasChildren(Object object) {
         return true;
     }
@@ -82,15 +84,13 @@ public class ProjectRegistryItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addProjectsPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_ProjectRegistry_projects_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_ProjectRegistry_projects_feature", "_UI_ProjectRegistry_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.PROJECT_REGISTRY__PROJECTS, true, false, true,
-                        null, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_ProjectRegistry_projects_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_ProjectRegistry_projects_feature", "_UI_ProjectRegistry_type"), //$NON-NLS-1$ //$NON-NLS-2$
+                ProjectPackage.Literals.PROJECT_REGISTRY__PROJECTS, true, false, true, null, null,
+                null));
     }
 
     /**
@@ -100,15 +100,13 @@ public class ProjectRegistryItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addCurrentProjectPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_ProjectRegistry_currentProject_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_ProjectRegistry_currentProject_feature", "_UI_ProjectRegistry_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.PROJECT_REGISTRY__CURRENT_PROJECT, true, false,
-                        true, null, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_ProjectRegistry_currentProject_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_ProjectRegistry_currentProject_feature", "_UI_ProjectRegistry_type"), //$NON-NLS-1$ //$NON-NLS-2$
+                ProjectPackage.Literals.PROJECT_REGISTRY__CURRENT_PROJECT, true, false, true, null,
+                null, null));
     }
 
     /**
@@ -137,6 +135,7 @@ public class ProjectRegistryItemProvider extends ItemProviderAdapter implements
      * 
      * @generated NOT
      */
+    @Override
     public String getText(Object object) {
         return "ProjectRegistry";
     }
@@ -148,13 +147,14 @@ public class ProjectRegistryItemProvider extends ItemProviderAdapter implements
      * 
      * @generated NOT
      */
+    @Override
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
         switch (notification.getFeatureID(ProjectRegistry.class)) {
         case ProjectPackage.PROJECT_REGISTRY__PROJECTS:
-            fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
-                    true, true));
+            fireNotifyChanged(
+                    new ViewerNotification(notification, notification.getNotifier(), true, true));
             return;
         }
         super.notifyChanged(notification);

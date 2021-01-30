@@ -10,6 +10,14 @@
   </extension>
 
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated Project -->
+      <package
+            uri="http:///net/refractions/udig/project/element.ecore"
+            class="org.locationtech.udig.project.element.ElementPackage"
+            genModel="emf/Project.genmodel"/>
+   </extension>
+
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
        uri = "http:///net/refractions/udig/project/internal.ecore" 

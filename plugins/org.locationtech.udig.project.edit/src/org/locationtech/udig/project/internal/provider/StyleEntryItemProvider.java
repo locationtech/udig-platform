@@ -30,9 +30,9 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- begin-user-doc --> <!-- end-user-doc -->
  * @generated
  */
-public class StyleEntryItemProvider extends ItemProviderAdapter implements
-        IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
-        IItemLabelProvider, IItemPropertySource {
+public class StyleEntryItemProvider extends ItemProviderAdapter
+        implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+        ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc --> <!--
@@ -69,15 +69,13 @@ public class StyleEntryItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addIDPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_StyleEntry_iD_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_StyleEntry_iD_feature", "_UI_StyleEntry_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.STYLE_ENTRY__ID, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_StyleEntry_iD_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_StyleEntry_iD_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_StyleEntry_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.STYLE_ENTRY__ID, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -87,15 +85,13 @@ public class StyleEntryItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addMementoPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_StyleEntry_memento_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_StyleEntry_memento_feature", "_UI_StyleEntry_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.STYLE_ENTRY__MEMENTO, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_StyleEntry_memento_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_StyleEntry_memento_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_StyleEntry_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.STYLE_ENTRY__MEMENTO, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -105,15 +101,13 @@ public class StyleEntryItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addStylePropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_StyleEntry_style_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_StyleEntry_style_feature", "_UI_StyleEntry_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.STYLE_ENTRY__STYLE, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_StyleEntry_style_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_StyleEntry_style_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_StyleEntry_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.STYLE_ENTRY__STYLE, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -123,15 +117,13 @@ public class StyleEntryItemProvider extends ItemProviderAdapter implements
      * @generated
      */
     protected void addStyleClassPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_StyleEntry_styleClass_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_StyleEntry_styleClass_feature", "_UI_StyleEntry_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.STYLE_ENTRY__STYLE_CLASS, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_StyleEntry_styleClass_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_StyleEntry_styleClass_feature", //$NON-NLS-1$//$NON-NLS-2$
+                        "_UI_StyleEntry_type"), //$NON-NLS-1$
+                ProjectPackage.Literals.STYLE_ENTRY__STYLE_CLASS, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -160,6 +152,7 @@ public class StyleEntryItemProvider extends ItemProviderAdapter implements
      * 
      * @generated NOT
      */
+    @Override
     public String getText(Object object) {
         String label = ((StyleEntry) object).getID();
         return label == null || label.length() == 0 ? "StyleEntry" : label;
@@ -180,8 +173,8 @@ public class StyleEntryItemProvider extends ItemProviderAdapter implements
         case ProjectPackage.STYLE_ENTRY__MEMENTO:
         case ProjectPackage.STYLE_ENTRY__STYLE:
         case ProjectPackage.STYLE_ENTRY__STYLE_CLASS:
-            fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
-                    false, true));
+            fireNotifyChanged(
+                    new ViewerNotification(notification, notification.getNotifier(), false, true));
             return;
         }
         super.notifyChanged(notification);

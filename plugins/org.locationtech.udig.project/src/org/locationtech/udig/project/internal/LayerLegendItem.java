@@ -20,10 +20,10 @@ import org.locationtech.udig.project.ILayerLegendItem;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.locationtech.udig.project.internal.LayerLegendItem#getLayer <em>Layer</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.locationtech.udig.project.internal.ProjectPackage#getLayerLegendItem()
  * @model superTypes="org.locationtech.udig.project.internal.LegendItem org.locationtech.udig.project.internal.ILayerLegendItem"
@@ -44,6 +44,7 @@ public interface LayerLegendItem extends LegendItem, ILayerLegendItem {
      * @model required="true"
      * @generated
      */
+    @Override
     Layer getLayer();
 
     /**

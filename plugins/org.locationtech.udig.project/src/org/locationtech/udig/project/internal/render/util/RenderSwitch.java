@@ -3,29 +3,19 @@
  */
 package org.locationtech.udig.project.internal.render.util;
 
-import java.util.List;
-
-import org.locationtech.udig.project.IAbstractContext;
 import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.internal.AbstractContext;
-import org.locationtech.udig.project.internal.render.CompositeRenderContext;
 import org.locationtech.udig.project.internal.render.MultiLayerRenderer;
-import org.locationtech.udig.project.internal.render.RenderContext;
 import org.locationtech.udig.project.internal.render.RenderExecutor;
 import org.locationtech.udig.project.internal.render.RenderManager;
 import org.locationtech.udig.project.internal.render.RenderPackage;
 import org.locationtech.udig.project.internal.render.Renderer;
-import org.locationtech.udig.project.internal.render.RendererCreator;
 import org.locationtech.udig.project.internal.render.ViewportModel;
-import org.locationtech.udig.project.render.ICompositeRenderContext;
 import org.locationtech.udig.project.render.IMultiLayerRenderer;
 import org.locationtech.udig.project.render.IRenderContext;
 import org.locationtech.udig.project.render.IRenderManager;
 import org.locationtech.udig.project.render.IRenderer;
 import org.locationtech.udig.project.render.IViewportModel;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
-
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
@@ -62,7 +52,7 @@ public class RenderSwitch<T> extends Switch<T> {
      * Checks whether this is a switch for the given package.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @parameter ePackage the package in question.
+     * @param ePackage the package in question.
      * @return whether this is a switch for the given package.
      * @generated
      */
@@ -80,6 +70,41 @@ public class RenderSwitch<T> extends Switch<T> {
     @Override
     protected T doSwitch(int classifierID, EObject theEObject) {
         switch (classifierID) {
+        case RenderPackage.IRENDER_MANAGER: {
+            IRenderManager iRenderManager = (IRenderManager) theEObject;
+            T result = caseIRenderManager(iRenderManager);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case RenderPackage.IVIEWPORT_MODEL: {
+            IViewportModel iViewportModel = (IViewportModel) theEObject;
+            T result = caseIViewportModel(iViewportModel);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case RenderPackage.IMULTI_LAYER_RENDERER: {
+            IMultiLayerRenderer iMultiLayerRenderer = (IMultiLayerRenderer) theEObject;
+            T result = caseIMultiLayerRenderer(iMultiLayerRenderer);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case RenderPackage.IRENDERER: {
+            IRenderer iRenderer = (IRenderer) theEObject;
+            T result = caseIRenderer(iRenderer);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case RenderPackage.ILAYER: {
+            ILayer iLayer = (ILayer) theEObject;
+            T result = caseILayer(iLayer);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
         case RenderPackage.MULTI_LAYER_RENDERER: {
             MultiLayerRenderer multiLayerRenderer = (MultiLayerRenderer) theEObject;
             T result = caseMultiLayerRenderer(multiLayerRenderer);
@@ -124,11 +149,32 @@ public class RenderSwitch<T> extends Switch<T> {
                 result = defaultCase(theEObject);
             return result;
         }
+        case RenderPackage.COMPARABLE: {
+            Comparable comparable = (Comparable) theEObject;
+            T result = caseComparable(comparable);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
         case RenderPackage.RENDERER: {
             Renderer renderer = (Renderer) theEObject;
             T result = caseRenderer(renderer);
             if (result == null)
                 result = caseIRenderer(renderer);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case RenderPackage.IMAP_DISPLAY_LISTENER: {
+            IMapDisplayListener iMapDisplayListener = (IMapDisplayListener) theEObject;
+            T result = caseIMapDisplayListener(iMapDisplayListener);
+            if (result == null)
+                result = defaultCase(theEObject);
+            return result;
+        }
+        case RenderPackage.IRENDER_CONTEXT: {
+            IRenderContext iRenderContext = (IRenderContext) theEObject;
+            T result = caseIRenderContext(iRenderContext);
             if (result == null)
                 result = defaultCase(theEObject);
             return result;
