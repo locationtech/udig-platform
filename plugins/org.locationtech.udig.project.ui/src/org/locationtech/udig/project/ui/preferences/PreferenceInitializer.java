@@ -24,7 +24,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
         store.setDefault(PreferenceConstants.P_OPEN_MAPS_ON_STARTUP, true);
         store.setDefault(PreferenceConstants.MOUSE_SPEED,
                 ProjectUIPlugin.DEFAULT_DOUBLECLICK_SPEED_MILLIS);
-        store.setDefault(MapEditorWithPalette.ID, 0);
+        store.setDefault(PreferenceConstants.P_OPEN_MAPS_PREFIX_ID, 0);
         store.setDefault("Test", 0);
 
         //added for finer control of certain map actions

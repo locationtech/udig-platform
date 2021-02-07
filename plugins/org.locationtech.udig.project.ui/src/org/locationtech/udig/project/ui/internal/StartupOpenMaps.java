@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.locationtech.udig.project.ui.internal;
 
 import java.io.File;
@@ -290,7 +287,53 @@ public class StartupOpenMaps implements IStartup {
                 lock.notify();
             }
         }
-
     }
 
+    /**
+     * Stores open maps as references in preferences store. This allows the Startup implementation
+     * to restore Maps if {@link PreferenceConstants#P_OPEN_MAPS_ON_STARTUP} is true.
+     *
+     * @param mapResourceURIToStore URI of map resource
+     */
+    public static void persistInfoForOpenMap(URI mapResourceURIToStore) {
+        persistInfoForOpenMap(ProjectUIPlugin.getDefault().getPreferenceStore(),
+                mapResourceURIToStore);
+    }
+
+    /**
+     * Same as {@link #persistInfoForOpenMap(URI)} but with given PrefStore.
+     *
+     * @param preferenceStore PreferenceStore to save preferences.
+     * @param mapResourceURIToStore URI of map resource
+     */
+    public static void persistInfoForOpenMap(IPreferenceStore preferenceStore,
+            URI mapResourceURIToStore) {
+        int numEditors = getNumberOfOpenMaps(preferenceStore, false);
+        String id = getMapIdForPrefStore(numEditors++);
+        preferenceStore.setValue(PreferenceConstants.P_OPEN_MAPS_PREFIX_ID, numEditors);
+        preferenceStore.setDefault(id, ""); //$NON-NLS-1$
+        preferenceStore.setValue(id, mapResourceURIToStore.toString());
+    }
+
+    public static int getNumberOfOpenMaps(IPreferenceStore preferenceStore, boolean reset) {
+        int result = preferenceStore.getInt(PreferenceConstants.P_OPEN_MAPS_PREFIX_ID);
+        if (reset) {
+            preferenceStore.setValue(PreferenceConstants.P_OPEN_MAPS_PREFIX_ID, 0);
+        }
+        return result;
+    }
+
+    public static String getMapEditorForIndex(IPreferenceStore preferenceStore, int index,
+            boolean clear) {
+        String id = getMapIdForPrefStore(index);
+        String openMapFromLastSession = preferenceStore.getString(id);
+        if (clear) {
+            preferenceStore.setValue(id, ""); //$NON-NLS-1$
+        }
+        return openMapFromLastSession;
+    }
+
+    private static String getMapIdForPrefStore(int index) {
+        return PreferenceConstants.P_OPEN_MAPS_PREFIX_ID + ":" + index;
+    }
 }
