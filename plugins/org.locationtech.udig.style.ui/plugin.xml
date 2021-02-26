@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            icon="icons/style_tsk.gif"
+            class="org.locationtech.udig.style.ui.views.StyleView"
+            category="org.locationtech.udig.project.ui.project"
+            name="%styleViewName"
+            id="org.locationtech.udig.style.styleView"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="org.locationtech.udig.ui.mapPerspective">
+         <viewShortcut id="org.locationtech.udig.style.styleView"/>
+         <perspectiveShortcut
+               id="org.locationtech.udig.ui.stylePerspective">
+         </perspectiveShortcut>
+      </perspectiveExtension>
+      <perspectiveExtension targetID="org.locationtech.udig.ui.stylePerspective">
+         <actionSet id="org.locationtech.udig.helpMenuItems"/>
+      </perspectiveExtension>
+   </extension>
+	<extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.locationtech.udig.style.ui.StylePerspective"
+            fixed="false"
+            icon="icons/obj16/map_obj.gif"
+            id="org.locationtech.udig.ui.stylePerspective"
+            name="%style.perspective.name"/>
+   </extension>
+
+</plugin>

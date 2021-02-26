@@ -38,14 +38,17 @@ import org.locationtech.udig.style.sld.SLDPlugin;
 public class EditorPageManager implements IExtensionChangeHandler {
 
     public static final String ATT_ID = "id"; //$NON-NLS-1$
+
     public static final String ATT_CLASS = "class"; //$NON-NLS-1$
+
     public static final String ATT_NAME = "name"; //$NON-NLS-1$
+
     public static final String ATT_LABEL = "label"; //$NON-NLS-1$
+
     public static final String PL_KEYWORDS = "keywords"; //$NON-NLS-1$
-    
+
     /**
-     * Pre-order traversal means visit the root first,
-     * then the children.
+     * Pre-order traversal means visit the root first, then the children.
      */
     public static final int PRE_ORDER = 0;
 
@@ -55,10 +58,8 @@ public class EditorPageManager implements IExtensionChangeHandler {
     public static final int POST_ORDER = 1;
 
     /**
-     * The root node.
-     * Note that the root node is a special internal node
-     * that is used to collect together all the nodes that
-     * have no parent; it is not given out to clients.
+     * The root node. Note that the root node is a special internal node that is used to collect
+     * together all the nodes that have no parent; it is not given out to clients.
      */
     EditorNode root = new EditorNode("");//$NON-NLS-1$
 
@@ -73,7 +74,7 @@ public class EditorPageManager implements IExtensionChangeHandler {
     public EditorPageManager() {
         this('.');
     }
-    
+
     /**
      * Create a new instance of the receiver with the specified seperatorChar
      * 
@@ -81,25 +82,23 @@ public class EditorPageManager implements IExtensionChangeHandler {
      */
     public EditorPageManager(char separatorChar) {
         separator = new String(new char[] { separatorChar });
-        
+
         IExtensionTracker tracker = PlatformUI.getWorkbench().getExtensionTracker();
-        tracker.registerHandler(this, ExtensionTracker.createExtensionPointFilter(getExtensionPointFilter()));
+        tracker.registerHandler(this,
+                ExtensionTracker.createExtensionPointFilter(getExtensionPointFilter()));
 
         // add a listener for keyword deltas. If any occur clear all page caches
-        Platform.getExtensionRegistry().addRegistryChangeListener(
-                new IRegistryChangeListener() {
+        Platform.getExtensionRegistry().addRegistryChangeListener(new IRegistryChangeListener() {
 
-                    public void registryChanged(IRegistryChangeEvent event) {
-                        if (event.getExtensionDeltas(StyleEditorPage.XPID, PL_KEYWORDS).length > 0) {
-                            for (Iterator<?> j = getElements(
-                                    PreferenceManager.POST_ORDER).iterator(); j
-                                    .hasNext();) {
-                                ((EditorNode) j.next())
-                                        .clearKeywords();
-                            }
-                        }
+            public void registryChanged(IRegistryChangeEvent event) {
+                if (event.getExtensionDeltas(StyleEditorPage.XPID, PL_KEYWORDS).length > 0) {
+                    for (Iterator<?> j = getElements(PreferenceManager.POST_ORDER).iterator(); j
+                            .hasNext();) {
+                        ((EditorNode) j.next()).clearKeywords();
                     }
-                });
+                }
+            }
+        });
     }
 
     /**
@@ -125,9 +124,7 @@ public class EditorPageManager implements IExtensionChangeHandler {
     /**
      * Register a node with the extension tracker.
      * 
-     * @param node
-     *            register the given node and its subnodes with the extension
-     *            tracker
+     * @param node register the given node and its subnodes with the extension tracker
      */
     public void registerNode(EditorNode node) {
         PlatformUI.getWorkbench().getExtensionTracker().registerObject(
@@ -140,24 +137,27 @@ public class EditorPageManager implements IExtensionChangeHandler {
 
     }
 
-    /* (non-Javadoc)
-     * @see org.eclipse.core.runtime.dynamicHelpers.IExtensionChangeHandler#addExtension(org.eclipse.core.runtime.dynamicHelpers.IExtensionTracker, org.eclipse.core.runtime.IExtension)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.core.runtime.dynamicHelpers.IExtensionChangeHandler#addExtension(org.eclipse.core
+     * .runtime.dynamicHelpers.IExtensionTracker, org.eclipse.core.runtime.IExtension)
      */
     public void addExtension(IExtensionTracker tracker, IExtension extension) {
-        
+
         IConfigurationElement[] elements = extension.getConfigurationElements();
         for (int i = 0; i < elements.length; i++) {
             EditorNode node = null;
-            
+
             boolean nameMissing = elements[i].getAttribute(ATT_NAME) == null;
-            String id = elements[i].getAttribute(ATT_ID);       
+            String id = elements[i].getAttribute(ATT_ID);
             boolean classMissing = getClassValue(elements[i], ATT_CLASS) == null;
 
-            //System.out.println(elements[i].id+","+nameMissing+","+classMissing);
             if (!(nameMissing || id == null || classMissing)) {
                 node = new EditorNode(id, elements[i]);
             }
-            
+
             if (node == null)
                 continue;
             registerNode(node);
@@ -166,8 +166,8 @@ public class EditorPageManager implements IExtensionChangeHandler {
                 addToRoot(node);
             } else {
                 EditorNode parent = null;
-                for (Iterator<?> j = getElements(PreferenceManager.POST_ORDER)
-                        .iterator(); j.hasNext();) {
+                for (Iterator<?> j = getElements(PreferenceManager.POST_ORDER).iterator(); j
+                        .hasNext();) {
                     EditorNode element = (EditorNode) j.next();
                     if (category.equals(element.getId())) {
                         parent = element;
@@ -175,10 +175,10 @@ public class EditorPageManager implements IExtensionChangeHandler {
                     }
                 }
                 if (parent == null) {
-                    //TODO: log error
+                    // TODO: log error
                     // Could not find the parent - log
-//                    WorkbenchPlugin
-//                            .log("Invalid preference page path: " + category); //$NON-NLS-1$
+                    // WorkbenchPlugin
+                    // .log("Invalid preference page path: " + category); //$NON-NLS-1$
                     addToRoot(node);
                 } else {
                     parent.add(node);
@@ -186,30 +186,34 @@ public class EditorPageManager implements IExtensionChangeHandler {
             }
         }
     }
-    
+
     public String getClassValue(IConfigurationElement configElement, String classAttributeName) {
         String className = configElement.getAttribute(classAttributeName);
-        if (className != null) 
+        if (className != null)
             return className;
-        IConfigurationElement [] candidateChildren = configElement.getChildren(classAttributeName);
-        if (candidateChildren.length == 0) 
+        IConfigurationElement[] candidateChildren = configElement.getChildren(classAttributeName);
+        if (candidateChildren.length == 0)
             return null;
-    
+
         return candidateChildren[0].getAttribute(ATT_CLASS);
     }
-
 
     /*
      * (non-Javadoc)
      * 
-     * @see org.eclipse.core.runtime.dynamicHelpers.IExtensionAdditionHandler#getExtensionPointFilter()
+     * @see
+     * org.eclipse.core.runtime.dynamicHelpers.IExtensionAdditionHandler#getExtensionPointFilter()
      */
     private IExtensionPoint getExtensionPointFilter() {
         return Platform.getExtensionRegistry().getExtensionPoint(StyleEditorPage.XPID);
     }
 
-    /* (non-Javadoc)
-     * @see org.eclipse.core.runtime.dynamicHelpers.IExtensionChangeHandler#removeExtension(org.eclipse.core.runtime.IExtension, java.lang.Object[])
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.core.runtime.dynamicHelpers.IExtensionChangeHandler#removeExtension(org.eclipse.
+     * core.runtime.IExtension, java.lang.Object[])
      */
     public void removeExtension(IExtension extension, Object[] objects) {
         for (int i = 0; i < objects.length; i++) {
@@ -224,14 +228,11 @@ public class EditorPageManager implements IExtensionChangeHandler {
     /**
      * Removes the node from the manager, searching through all subnodes.
      * 
-     * @param parent
-     *            the node to search
-     * @param nodeToRemove
-     *            the node to remove
+     * @param parent the node to search
+     * @param nodeToRemove the node to remove
      * @return whether the node was removed
      */
-    private boolean deepRemove(EditorNode parent,
-            EditorNode nodeToRemove) {
+    private boolean deepRemove(EditorNode parent, EditorNode nodeToRemove) {
         if (parent == nodeToRemove)
             if (parent == getRoot()) {
                 removeAll(); // we're removing the root
@@ -248,17 +249,14 @@ public class EditorPageManager implements IExtensionChangeHandler {
         }
         return false;
     }
-    
 
     /**
-     * Adds the given preference node as a subnode of the
-     * node at the given path.
+     * Adds the given preference node as a subnode of the node at the given path.
      *
      * @param path the path
      * @param node the node to add
-     * @return <code>true</code> if the add was successful,
-     *  and <code>false</code> if there is no contribution at
-     *  the given path
+     * @return <code>true</code> if the add was successful, and <code>false</code> if there is no
+     *         contribution at the given path
      */
     public boolean addTo(String path, EditorNode node) {
         EditorNode target = find(path);
@@ -269,11 +267,9 @@ public class EditorPageManager implements IExtensionChangeHandler {
     }
 
     /**
-     * Adds the given preference node as a subnode of the
-     * root.
+     * Adds the given preference node as a subnode of the root.
      *
-     * @param node the node to add, which must implement 
-     *   <code>SLDEditorPageNode</code>
+     * @param node the node to add, which must implement <code>SLDEditorPageNode</code>
      */
     public void addToRoot(EditorNode node) {
         Assert.isNotNull(node);
@@ -281,15 +277,13 @@ public class EditorPageManager implements IExtensionChangeHandler {
     }
 
     /**
-     * Recursively enumerates all nodes at or below the given node
-     * and adds them to the given list in the given order.
+     * Recursively enumerates all nodes at or below the given node and adds them to the given list
+     * in the given order.
      * 
      * @param node the starting node
-     * @param sequence a read-write list of preference nodes
-     *  (element type: <code>SLDEditorPageNode</code>)
-     *  in the given order
-     * @param order the traversal order, one of 
-     *	<code>PRE_ORDER</code> and <code>POST_ORDER</code>
+     * @param sequence a read-write list of preference nodes (element type:
+     *        <code>SLDEditorPageNode</code>) in the given order
+     * @param order the traversal order, one of <code>PRE_ORDER</code> and <code>POST_ORDER</code>
      */
     protected void buildSequence(EditorNode node, List<EditorNode> sequence, int order) {
         if (order == PRE_ORDER)
@@ -309,46 +303,41 @@ public class EditorPageManager implements IExtensionChangeHandler {
      * @return the node, or <code>null</code> if none
      */
     public EditorNode find(String path) {
-       return find(path,root);
+        return find(path, root);
     }
-    
+
     /**
-     * Finds and returns the preference node directly
-     * below the top at the given path.
+     * Finds and returns the preference node directly below the top at the given path.
      *
      * @param path the path
      * @return the node, or <code>null</code> if none
      * 
      * @since 3.1
      */
-    protected EditorNode find(String path, EditorNode top){
-    	 Assert.isNotNull(path);
-         StringTokenizer stok = new StringTokenizer(path, separator);
-         EditorNode node = top;
-         while (stok.hasMoreTokens()) {
-             String id = stok.nextToken();
-             node = node.findSubNode(id);
-             if (node == null)
-                 return null;
-         }
-         if (node == top)
-             return null;
-         return node;
+    protected EditorNode find(String path, EditorNode top) {
+        Assert.isNotNull(path);
+        StringTokenizer stok = new StringTokenizer(path, separator);
+        EditorNode node = top;
+        while (stok.hasMoreTokens()) {
+            String id = stok.nextToken();
+            node = node.findSubNode(id);
+            if (node == null)
+                return null;
+        }
+        if (node == top)
+            return null;
+        return node;
     }
 
     /**
-     * Returns all preference nodes managed by this
-     * manager.
+     * Returns all preference nodes managed by this manager.
      *
-     * @param order the traversal order, one of 
-     *	<code>PRE_ORDER</code> and <code>POST_ORDER</code>
-     * @return a list of preference nodes
-     *  (element type: <code>SLDEditorPageNode</code>)
-     *  in the given order
+     * @param order the traversal order, one of <code>PRE_ORDER</code> and <code>POST_ORDER</code>
+     * @return a list of preference nodes (element type: <code>SLDEditorPageNode</code>) in the
+     *         given order
      */
     public List<?> getElements(int order) {
-        Assert.isTrue(order == PRE_ORDER || order == POST_ORDER,
-                "invalid traversal order");//$NON-NLS-1$
+        Assert.isTrue(order == PRE_ORDER || order == POST_ORDER, "invalid traversal order");//$NON-NLS-1$
         ArrayList<EditorNode> sequence = new ArrayList<EditorNode>();
         EditorNode[] subnodes = getRoot().getSubNodes();
         for (int i = 0; i < subnodes.length; i++)
@@ -357,10 +346,8 @@ public class EditorPageManager implements IExtensionChangeHandler {
     }
 
     /**
-     * Returns the root node.
-     * Note that the root node is a special internal node
-     * that is used to collect together all the nodes that
-     * have no parent; it is not given out to clients.
+     * Returns the root node. Note that the root node is a special internal node that is used to
+     * collect together all the nodes that have no parent; it is not given out to clients.
      *
      * @return the root node
      */
@@ -372,8 +359,8 @@ public class EditorPageManager implements IExtensionChangeHandler {
      * Removes the prefernece node at the given path.
      *
      * @param path the path
-     * @return the node that was removed, or <code>null</code>
-     *  if there was no node at the given path
+     * @return the node that was removed, or <code>null</code> if there was no node at the given
+     *         path
      */
     public EditorNode remove(String path) {
         Assert.isNotNull(path);
@@ -391,12 +378,10 @@ public class EditorPageManager implements IExtensionChangeHandler {
     }
 
     /**
-     * Removes the given prefreence node if it is managed by
-     * this contribution manager.
+     * Removes the given prefreence node if it is managed by this contribution manager.
      *
      * @param node the node to remove
-     * @return <code>true</code> if the node was removed,
-     *  and <code>false</code> otherwise
+     * @return <code>true</code> if the node was removed, and <code>false</code> otherwise
      */
     public boolean remove(EditorNode node) {
         Assert.isNotNull(node);
@@ -410,11 +395,11 @@ public class EditorPageManager implements IExtensionChangeHandler {
     public void removeAll() {
         root = new EditorNode("");//$NON-NLS-1$
     }
-    
+
     public EditorNode[] getRootSubNodes() {
-    	return getRoot().getSubNodes();
+        return getRoot().getSubNodes();
     }
-    
+
     /**
      * Returns true if the specified node exists in the manager.
      *
@@ -430,52 +415,58 @@ public class EditorPageManager implements IExtensionChangeHandler {
         return false;
     }
 
-    static boolean meetsRequirement(ILayer selectedLayer, String id, IConfigurationElement element, EditorNode node ) {
-        String requires = element.getAttribute(OpenStyleEditorAction.ATT_REQUIRES);
+    static boolean meetsRequirement(ILayer selectedLayer, String id, IConfigurationElement element,
+            EditorNode node) {
+        String requires = element.getAttribute(IStyleConfigurator.EXTENSION_ATTR_REQUIRES);
         try {
             Object classInstance = EditorNode.createExtension(element, EditorNode.ATT_CLASS);
-            // first try creating required class using extension classloading 
+            // first try creating required class using extension classloading
             // if this fails use the same classloader as the configurator
-         
+
             // Failed trying to recover by using the configurators class's class loader
-            if (AdapterUtil.instance.canAdaptTo(requires, selectedLayer, classInstance.getClass().getClassLoader())) {
-                SLDPlugin.trace("skipped "+id, null); //$NON-NLS-1$
+            if (AdapterUtil.instance.canAdaptTo(requires, selectedLayer,
+                    classInstance.getClass().getClassLoader())) {
+                SLDPlugin.trace("skipped " + id, null); //$NON-NLS-1$
                 return true;
             }
-            try{
-                Object requiredClass = element.createExecutableExtension(OpenStyleEditorAction.ATT_REQUIRES);
-                if ( AdapterUtil.instance.canAdaptTo(requires, selectedLayer, requiredClass.getClass().getClassLoader())) {
+            try {
+                Object requiredClass = element
+                        .createExecutableExtension(IStyleConfigurator.EXTENSION_ATTR_REQUIRES);
+                if (AdapterUtil.instance.canAdaptTo(requires, selectedLayer,
+                        requiredClass.getClass().getClassLoader())) {
                     return true;
                 }
-                
-            }catch( Exception ce ){
-                SLDPlugin.trace("skipped "+id, null); //$NON-NLS-1$
-                
+
+            } catch (Exception ce) {
+                SLDPlugin.trace("skipped " + id, null); //$NON-NLS-1$
+
             }
         } catch (Exception e) {
             SLDPlugin.log("extProcConfigurator skipped " //$NON-NLS-1$
-                          + id + " (couldn't find " //$NON-NLS-1$
-                          + requires + ")", null); //$NON-NLS-1$
+                    + id + " (couldn't find " //$NON-NLS-1$
+                    + requires + ")", null); //$NON-NLS-1$
         }
         return false;
     }
 
     /**
-     * Creates the default {@link EditorPageManager} implementation and loads the style pages for the layer into
-     * the manager.
+     * Creates the default {@link EditorPageManager} implementation and loads the style pages for
+     * the layer into the manager.
      * 
      * @param plugin the plug-in to send error messages to.
-     * @param selectedLayer the layer to use to filter the style pages 
-     * @return the default {@link EditorPageManager} implementation and loads the style pages for the layer into
-     * the manager.
+     * @param selectedLayer the layer to use to filter the style pages
+     * @return the default {@link EditorPageManager} implementation and loads the style pages for
+     *         the layer into the manager.
      */
     public static EditorPageManager loadManager(Plugin plugin, ILayer selectedLayer) {
-        final EditorPageManager[] manager = new EditorPageManager[] {new EditorPageManager('.')};
-        
-        ExtensionPointProcessor extProcPage = new StyleEditorPageExtensionProcessor(manager, selectedLayer);
+        final EditorPageManager[] manager = new EditorPageManager[] { new EditorPageManager('.') };
+
+        ExtensionPointProcessor extProcPage = new StyleEditorPageExtensionProcessor(manager,
+                selectedLayer);
         ExtensionPointUtil.process(plugin, StyleEditorPage.XPID, extProcPage);
-    
-        ExtensionPointProcessor extProcConfigurator = new StyleConfiguratorExtensionProcessor(manager, selectedLayer);
+
+        ExtensionPointProcessor extProcConfigurator = new StyleConfiguratorExtensionProcessor(
+                manager, selectedLayer);
         ExtensionPointUtil.process(plugin, IStyleConfigurator.XPID, extProcConfigurator);
         return manager[0];
     }

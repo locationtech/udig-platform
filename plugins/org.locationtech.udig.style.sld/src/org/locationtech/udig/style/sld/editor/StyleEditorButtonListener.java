@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.locationtech.udig.project.internal.SetDefaultStyleProcessor;
-import org.locationtech.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.StyleLayer;
 import org.locationtech.udig.style.sld.SLDContent;
 import org.locationtech.udig.style.sld.internal.Messages;
 import org.locationtech.udig.ui.graphics.SLDs;

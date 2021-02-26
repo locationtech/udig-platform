@@ -13,7 +13,7 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.ui,
  org.locationtech.udig.catalog.ui,
  org.locationtech.udig.project.ui;visibility:=reexport,
- org.locationtech.udig.style;visibility:=reexport,
+ org.locationtech.udig.style,
  org.locationtech.udig.style.sld
 Bundle-ActivationPolicy: lazy
 Export-Package: org.locationtech.udig.mapgraphic,

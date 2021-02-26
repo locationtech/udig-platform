@@ -96,7 +96,7 @@ import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.MultiLineString;
 import org.locationtech.udig.project.internal.StyleBlackboard;
-import org.locationtech.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.StyleLayer;
 import org.locationtech.udig.style.sld.ImageConstants;
 import org.locationtech.udig.style.sld.SLDContent;
 import org.locationtech.udig.style.sld.SLDPlugin;

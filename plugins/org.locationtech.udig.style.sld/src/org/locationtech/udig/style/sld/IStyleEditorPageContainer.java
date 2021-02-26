@@ -14,7 +14,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.IPageChangeProvider;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayerDescriptor;
-import org.locationtech.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.StyleLayer;
 
 /**
  * Context used to advertise what is available to a StyleEditorPage.

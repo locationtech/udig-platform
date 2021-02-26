@@ -1,14 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>net.refractions.udig.style</title>
+<title>org.locationtech.udig.style</title>
 <style type="text/css">@import url("file:/Users/jody/eclipse/372/eclipse-modeling/configuration/org.eclipse.osgi/bundles/396/1/.cp/book.css");</style>
 <style type="text/css">@import url("file:/Users/jody/eclipse/372/eclipse-modeling/configuration/org.eclipse.osgi/bundles/408/1/.cp/schema.css");</style>
 </HEAD>
 <BODY>
-<H1 style="text-align:center">net.refractions.udig.style</H1>
+<H1 style="text-align:center">org.locationtech.udig.style</H1>
 <p></p>
-<h6 class="CaptionFigColumn SchemaHeader">Identifier: </h6>net.refractions.udig.style.net.refractions.udig.style<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Identifier: </h6>org.locationtech.udig.style<p></p>
 <h6 class="CaptionFigColumn SchemaHeader">Since: </h6>1.0
 <p></p>
 
@@ -43,22 +43,22 @@ The user interface provided here will be shown in both the Style View and in the
 
 If defined, the selected layer must resolve this class in order for this configurator to be displayed</li>
 <li><b>class</b> - Aninstance of IStyleConfigurator providing a user interface for editing the indicated styleId.</li>
-<li><b>styleId</b> - The id of the style extension that the configurator is intended to work with. This extension point works in conjunction with the net.refractions.udig.project.style extension point. The "id" attribute of an extension of that type should match the "styleId" attribute of an extension of this type.</li>
+<li><b>styleId</b> - The id of the style extension that the configurator is intended to work with. This extension point works in conjunction with the org.locationtech.udig.project.style extension point. The "id" attribute of an extension of that type should match the "styleId" attribute of an extension of this type.</li>
 </ul>
 <br><h6 class="CaptionFigColumn SchemaHeader">Examples: </h6>Here is an example use from the uDig application:
 
 <extension
-         point="net.refractions.udig.style.styleConfigurator">
+         point="org.locationtech.udig.style.styleConfigurator">
       <styleConfigurator
-            class="net.refractions.udig.style.sld.SimpleStyleConfigurator"
+            class="org.locationtech.udig.style.sld.SimpleStyleConfigurator"
             id="simple"
             label="Feature"
             requires="org.geotools.data.FeatureSource"
-            styleId="net.refractions.udig.style.sld"/>
+            styleId="org.locationtech.udig.style.sld"/>
       ...
 </extension>
 
-There is a complete examples in net.refractions.udig.tutorials.style
+There is a complete examples in org.locationtech.udig.tutorials.style
 <p></p>
 
 <h6 class="CaptionFigColumn SchemaHeader">API Information: </h6>Implemententors must provide an implementation of IStyleConfigurator; this class is used to construct a user interface for display in the StyleEditor or in the StyleView. The class is expected to work directly with the contents of a layer style blackboard.

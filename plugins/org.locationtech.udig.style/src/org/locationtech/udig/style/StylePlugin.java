@@ -10,34 +10,24 @@
  */
 package org.locationtech.udig.style;
 
-import org.locationtech.udig.core.AbstractUdigUIPlugin;
+import org.eclipse.core.runtime.Plugin;
 
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
+public class StylePlugin extends Plugin {
 
-public class StylePlugin extends AbstractUdigUIPlugin {
-    
     /** The id of the plug-in */
-  	public static final String ID = "org.locationtech.udig.style"; //$NON-NLS-1$
-  	
-  	/** Icons path (value "icons/") */
-  	public final static String ICONS_PATH = "icons/";//$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.style"; //$NON-NLS-1$
 
-	private static StylePlugin INSTANCE;
-  	
+    private static StylePlugin instance;
+
     /**
      * The constructor.
      */
-  	public StylePlugin() {
-  	    super();
-  	    INSTANCE = this;
-  	}
-  	
-	public IPath getIconPath() {
-		return new Path(ICONS_PATH);
-	}
+    public StylePlugin() {
+        super();
+        instance = this;
+    }
 
-	public static StylePlugin getDefault() {
-		return INSTANCE;
-	}
+    public static StylePlugin getDefault() {
+        return instance;
+    }
 }

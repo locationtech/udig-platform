@@ -37,7 +37,7 @@ import org.geotools.styling.StyleFactory;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.xml.styling.SLDParser;
 import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.StyleLayer;
 import org.locationtech.udig.style.sld.SLDContent;
 import org.locationtech.udig.style.sld.internal.Messages;
 import org.locationtech.udig.ui.graphics.SLDs;

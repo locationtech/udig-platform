@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayerDescriptor;
-import org.locationtech.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.StyleLayer;
 import org.locationtech.udig.style.sld.IEditorPageContainer;
 import org.locationtech.udig.style.sld.IStyleEditorPage;
 import org.locationtech.udig.style.sld.IStyleEditorPageContainer;

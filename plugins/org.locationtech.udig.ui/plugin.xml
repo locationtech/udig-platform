@@ -28,12 +28,6 @@
             class="org.locationtech.udig.internal.ui.MapPerspective"
             id="org.locationtech.udig.ui.mapPerspective">
       </perspective>
-      <perspective
-            class="org.locationtech.udig.internal.ui.StylePerspective"
-            fixed="false"
-            icon="icons/obj16/map_obj.gif"
-            id="org.locationtech.udig.ui.stylePerspective"
-            name="%style.perspective.name"/>
    </extension>
    <extension
          id="application"
@@ -64,27 +58,29 @@
             name="%aoi.name"
             restorable="true">
       </view>
-   </extension>
-	<extension
-			point="org.eclipse.ui.actionSets">
-		<actionSet
-				label="%HelpActionSet.label"
-				visible="false"
-				id="org.locationtech.udig.helpMenuItems">
-				<menu
-         id="org.locationtech.udig.updateMenu"
-         label="%UpdateActionSet.menu.label"
-         path="help/helpEnd">
-			</menu>
-				<!-- Replaced with p2 default wizards -->
-				<!--action
-         class="org.locationtech.udig.InstallWizardAction"
-         disabledIcon="icons/dtool16/usearch_obj.gif"
-         icon="icons/etool16/usearch_obj.gif"
-         id="org.locationtech.udig.updateMenu.newUpdates"
-         label="%UpdateActionSet.updates.label"
-         menubarPath="help/helpEnd">
-			</action-->
+    </extension>
+    <extension
+          point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="%HelpActionSet.label"
+            visible="false"
+            id="org.locationtech.udig.helpMenuItems">
+         <menu
+            id="org.locationtech.udig.updateMenu"
+            label="%UpdateActionSet.menu.label"
+            path="help/helpEnd">
+         </menu>
+<!-- Replaced with p2 default wizards -->
+<!-- 
+         <action
+             class="org.locationtech.udig.InstallWizardAction"
+             disabledIcon="icons/dtool16/usearch_obj.gif"
+             icon="icons/etool16/usearch_obj.gif"
+             id="org.locationtech.udig.updateMenu.newUpdates"
+             label="%UpdateActionSet.updates.label"
+             menubarPath="help/helpEnd">
+         </action>
+-->
    <action
          class="org.locationtech.udig.internal.ui.ShowSubmitIssueAction"
          id="org.locationtech.udig.ui.submitIssueAction"
@@ -98,7 +94,7 @@
          label="%tips.action.name"
          menubarPath="help/helpEnd"
          style="push"/>
-		</actionSet>
+  </actionSet>
   <actionSet
         description="Default Actions"
         id="org.locationtech.udig.ui.default"
@@ -379,9 +375,9 @@
           point="org.eclipse.ui.perspectiveExtensions">
        <perspectiveExtension targetID="org.locationtech.udig.ui.mapPerspective">
           <actionSet id="org.locationtech.udig.helpMenuItems"/>
-       </perspectiveExtension>
-       <perspectiveExtension targetID="org.locationtech.udig.ui.stylePerspective">
-          <actionSet id="org.locationtech.udig.helpMenuItems"/>
+          <perspectiveShortcut
+                id="org.locationtech.udig.ui.stylePerspective">
+          </perspectiveShortcut>
        </perspectiveExtension>
     </extension>
     <extension

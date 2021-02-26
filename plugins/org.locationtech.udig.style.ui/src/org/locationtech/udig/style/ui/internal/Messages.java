@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package org.locationtech.udig.style.internal;
+package org.locationtech.udig.style.ui.internal;
 
 import org.eclipse.osgi.util.NLS;
 

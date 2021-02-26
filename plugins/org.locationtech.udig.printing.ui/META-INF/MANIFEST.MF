@@ -26,10 +26,10 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.project.ui,
  org.locationtech.udig.catalog.ui,
  org.locationtech.udig.catalog,
- org.locationtech.udig.style,
  org.locationtech.udig.ui,
  org.locationtech.udig.mapgraphic,
  org.locationtech.udig.legend,
+ org.locationtech.udig.style,
  org.locationtech.udig.style.sld,
  com.lowagie.text;bundle-version="[2.1.7,2.2.0)"
 Bundle-ActivationPolicy: lazy

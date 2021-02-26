@@ -13,14 +13,17 @@ package org.locationtech.udig.style;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
 import org.locationtech.udig.core.internal.ExtensionPointProcessor;
 import org.locationtech.udig.core.internal.ExtensionPointUtil;
 import org.locationtech.udig.project.internal.Layer;
 
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
-
 public class Styles {
+
+    private Styles() {
+    }
+
     /**
      * 
      * Returns the set of style id's which support a particular layer.
@@ -28,16 +31,18 @@ public class Styles {
      * @return A set of id's.
      */
     public static Set<String> getStyleIDs(final Layer layer) {
-        final Set<String> ids = new HashSet<String>();
-        ExtensionPointProcessor p = new ExtensionPointProcessor() {
-            public void process( IExtension extension, IConfigurationElement element ) throws Exception {
-                IStyleConfigurator sce = (IStyleConfigurator)element.createExecutableExtension("class"); //$NON-NLS-1$
-                if (sce.canStyle(layer)) {
-                    ids.add(sce.getStyleId());
-                }
-            }            
-        };        
-        ExtensionPointUtil.process( StylePlugin.getDefault(), IStyleConfigurator.XPID, p);
+        final Set<String> ids = new HashSet<>();
+        ExtensionPointUtil.process(StylePlugin.getDefault(), IStyleConfigurator.XPID,
+                new ExtensionPointProcessor() {
+                    public void process(IExtension extension, IConfigurationElement element)
+                            throws Exception {
+                        IStyleConfigurator sce = (IStyleConfigurator) element
+                                .createExecutableExtension(IStyleConfigurator.EXTENSION_ATTR_CLASS);
+                        if (sce.canStyle(layer)) {
+                            ids.add(sce.getStyleId());
+                        }
+                    }
+                });
         return ids;
     }
 }

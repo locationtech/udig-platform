@@ -31,12 +31,12 @@ import org.geotools.util.factory.GeoTools;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.style.StyleLayer;
 import org.locationtech.udig.style.advanced.raster.CoverageColorEditor;
 import org.locationtech.udig.style.advanced.raster.CoverageRule;
 import org.locationtech.udig.style.advanced.raster.CoverageRuleUtils;
 import org.locationtech.udig.style.advanced.raster.RasterStylePlugin;
 import org.locationtech.udig.style.advanced.raster.internal.Messages;
-import org.locationtech.udig.style.internal.StyleLayer;
 import org.locationtech.udig.style.sld.SLDContent;
 import org.locationtech.udig.style.sld.SLDContentManager;
 import org.locationtech.udig.style.sld.editor.StyleEditorPage;
@@ -52,7 +52,7 @@ import org.opengis.style.SemanticType;
  */
 public class CoverageStyleEditorPage extends StyleEditorPage {
 
-    public static String COVERAGERASTERSTYLEID = "eu.hydrologis.jgrass.coveragerasterstyle"; //$NON-NLS-1$
+    public static final String COVERAGERASTERSTYLEID = "eu.hydrologis.jgrass.coveragerasterstyle"; //$NON-NLS-1$
 
 
     private CoverageColorEditor colorRulesEditor = null;
@@ -172,7 +172,6 @@ public class CoverageStyleEditorPage extends StyleEditorPage {
                 styleBlackboard.setSelected(new String[]{SLDContent.ID});
             }
         } catch (Exception e) {
-            e.printStackTrace();
             String message = Messages.CoverageStyleEditorPage_2;
             ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, RasterStylePlugin.PLUGIN_ID, e);
             return false;

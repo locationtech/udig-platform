@@ -6,10 +6,4 @@ Bundle-Version: 2.3.0.qualifier
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.help.base,
- org.eclipse.help.ui,
- org.locationtech.udig.style.sld,
- org.locationtech.udig.project.ui,
- org.locationtech.udig.project.ui.editor,
- org.locationtech.udig.catalog.ui,
- org.locationtech.udig.tool.default
-Import-Package: org.locationtech.udig.project.ui.internal
+ org.eclipse.help.ui

@@ -29,7 +29,7 @@ import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.StyleBlackboard;
-import org.locationtech.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.StyleLayer;
 import org.locationtech.udig.style.sld.IStyleEditorPageContainer;
 import org.locationtech.udig.style.sld.SLDContent;
 import org.locationtech.udig.style.sld.editor.internal.FilteredEditorDialog;
