@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -84,7 +85,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
  */
 public class AcceptChangesBehaviour implements Behaviour {
 
-    private final Class< ? extends Geometry> geomToCreate;
+    private final Class<? extends Geometry> geomToCreate;
 
     /**
      * This is true if we need to check and close polgons on the blackboad.
@@ -114,9 +115,8 @@ public class AcceptChangesBehaviour implements Behaviour {
         EditGeom currentGeom = handler.getCurrentGeom();
 
         boolean currentGeomNotNull = currentGeom != null;
-        return currentGeomNotNull
-                && typeCanBeAssignedToLayer(handler.getEditLayer().getSchema()
-                        .getGeometryDescriptor().getType().getBinding());
+        return currentGeomNotNull && typeCanBeAssignedToLayer(
+                handler.getEditLayer().getSchema().getGeometryDescriptor().getType().getBinding());
     }
 
     /**
@@ -129,9 +129,11 @@ public class AcceptChangesBehaviour implements Behaviour {
             return true;
         if (geomToCreate == Polygon.class && type.isAssignableFrom(MultiPolygon.class)) {
             return true;
-        } else if (geomToCreate == LinearRing.class && type.isAssignableFrom(MultiLineString.class)) {
+        } else if (geomToCreate == LinearRing.class
+                && type.isAssignableFrom(MultiLineString.class)) {
             return true;
-        } else if (geomToCreate == LineString.class && type.isAssignableFrom(MultiLineString.class)) {
+        } else if (geomToCreate == LineString.class
+                && type.isAssignableFrom(MultiLineString.class)) {
             return true;
         } else if (geomToCreate == Point.class && type.isAssignableFrom(MultiPoint.class)) {
             return true;
@@ -157,7 +159,7 @@ public class AcceptChangesBehaviour implements Behaviour {
         EditState oldState = handler.getCurrentState();
 
         // This is the list of commands we are going to send off
-        List<UndoableMapCommand> commands = new ArrayList<UndoableMapCommand>();
+        List<UndoableMapCommand> commands = new ArrayList<>();
         commands.add(new SetEditStateCommand(handler, EditState.COMMITTING));
 
         ILayer layer = handler.getEditLayer();
@@ -203,14 +205,14 @@ public class AcceptChangesBehaviour implements Behaviour {
         Class<Geometry> binding = (Class<Geometry>) schema.getGeometryDescriptor().getType()
                 .getBinding();
 
-        List<UndoableMapCommand> commands = new ArrayList<UndoableMapCommand>();
+        List<UndoableMapCommand> commands = new ArrayList<>();
 
         EditGeom editGeom = entry.getValue().geom;
         List<Geometry> geoms = entry.getValue().jts;
         Geometry geom = GeometryCreationUtil.ceateGeometryCollection(geoms, binding);
 
         if (geom == null) { // null is used to mark things for delete?
-            IBlockingProvider<ILayer> layerProvider = new StaticBlockingProvider<ILayer>(layer);
+            IBlockingProvider<ILayer> layerProvider = new StaticBlockingProvider<>(layer);
             FIDFeatureProvider featureProvider = new FIDFeatureProvider(entry.getKey(),
                     layerProvider);
             DeleteFeatureCommand deleteFeatureCommand = new DeleteFeatureCommand(featureProvider,
@@ -236,8 +238,8 @@ public class AcceptChangesBehaviour implements Behaviour {
                     int attributeCount = schema.getAttributeCount();
                     SimpleFeature feature;
                     try {
-                        feature = SimpleFeatureBuilder.template(schema, "newFeature"
-                                + new Random().nextInt());
+                        feature = SimpleFeatureBuilder.template(schema,
+                                "newFeature" + new Random().nextInt());
                         // feature = SimpleFeatureBuilder.build(schema, new
                         // Object[attributeCount],"newFeature");
                         feature.setDefaultGeometry(geom);
@@ -263,20 +265,23 @@ public class AcceptChangesBehaviour implements Behaviour {
                     // commands.add(newFeatureCommand);
                     // }
                 } else {
-                    // not creating it so don't need to set it.
-                    UndoableMapCommand setGeometryCommand = new SetGeometryCommand(editGeom
-                            .getFeatureIDRef().get(), new StaticBlockingProvider<ILayer>(layer),
-                            SetGeometryCommand.DEFAULT, geom);
-                    commands.add(setGeometryCommand);
+                    String idRef = editGeom.getFeatureIDRef().get();
+                    if (idRef != null) {
+                        // not creating it so don't need to set it.
+                        UndoableMapCommand setGeometryCommand = new SetGeometryCommand(idRef,
+                                new StaticBlockingProvider<>(layer), SetGeometryCommand.DEFAULT,
+                                geom);
+                        commands.add(setGeometryCommand);
+                    }
                 }
             } else {
-                commands.add(new CreateNewOrSelectExitingFeatureCommand(editGeom.getFeatureIDRef()
-                        .get(), layer, geom));
+                commands.add(new CreateNewOrSelectExitingFeatureCommand(
+                        editGeom.getFeatureIDRef().get(), layer, geom));
 
             }
             commands.add(new SetEditGeomChangedStateCommand(editGeom, false));
-            commands.add(drawfactory.createStopAnimationCommand(display, Collections
-                    .singletonList((IAnimation) animation)));
+            commands.add(drawfactory.createStopAnimationCommand(display,
+                    Collections.singletonList((IAnimation) animation)));
         }
         return commands;
     }
@@ -306,8 +311,8 @@ public class AcceptChangesBehaviour implements Behaviour {
      * @param geom
      * @param commands
      */
-    private void updateBlackboardGeometry(EditToolHandler handler, EditGeom editGeom,
-            Geometry geom, List<UndoableMapCommand> commands) {
+    private void updateBlackboardGeometry(EditToolHandler handler, EditGeom editGeom, Geometry geom,
+            List<UndoableMapCommand> commands) {
         if (handler.getCurrentGeom() == editGeom) {
             if (Polygon.class.isAssignableFrom(geomToCreate)) {
                 for (PrimitiveShape shape : editGeom) {
@@ -319,9 +324,9 @@ public class AcceptChangesBehaviour implements Behaviour {
             }
         } else {
             if (editGeom.getShapeType() == ShapeType.POLYGON
-                    || (editGeom.getShapeType() == ShapeType.UNKNOWN && Polygon.class
-                            .isAssignableFrom(geomToCreate))) {
-                for(PrimitiveShape shape : editGeom) {
+                    || (editGeom.getShapeType() == ShapeType.UNKNOWN
+                            && Polygon.class.isAssignableFrom(geomToCreate))) {
+                for (PrimitiveShape shape : editGeom) {
                     if (shape.getNumPoints() > 0
                             && !shape.getPoint(0).equals(shape.getPoint(shape.getNumPoints() - 1)))
                         commands.add(new AddVertexCommand(handler, editGeom.getEditBlackboard(),
