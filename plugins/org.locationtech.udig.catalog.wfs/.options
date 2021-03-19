@@ -1,5 +1,5 @@
-net.refractions.udig.catalog.wfs/debug=true
-net.refractions.udig.catalog.wfs/debug/request=true
-net.refractions.udig.catalog.wfs/debug/wfs=true
-net.refractions.udig.catalog.wfs/debug/xml=true
-net.refractions.udig.catalog.wfs/debug/gml=true
+org.locationtech.udig.catalog.wfs/debug=true
+org.locationtech.udig.catalog.wfs/debug/request=true
+org.locationtech.udig.catalog.wfs/debug/wfs=true
+org.locationtech.udig.catalog.wfs/debug/xml=true
+org.locationtech.udig.catalog.wfs/debug/gml=true

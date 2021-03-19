@@ -1,4 +1,4 @@
-net.refractions.udig.ui/debug=true
-net.refractions.udig.ui/debug/dnd=true
-net.refractions.udig.ui/debug/udigdisplaysafelock=true
-net.refractions.udig.ui/debug/featuretable=true
+org.locationtech.udig.ui/debug=true
+org.locationtech.udig.ui/debug/dnd=true
+org.locationtech.udig.ui/debug/udigdisplaysafelock=true
+org.locationtech.udig.ui/debug/featuretable=true

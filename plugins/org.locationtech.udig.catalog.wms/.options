@@ -1,2 +1,2 @@
-net.refractions.udig.catalog.wms/debug=true
-net.refractions.udig.catalog.wms/debug/request=true
+org.locationtech.udig.catalog.wms/debug=true
+org.locationtech.udig.catalog.wms/debug/request=true

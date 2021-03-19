@@ -1,6 +1,6 @@
-net.refractions.udig.tools.edit/debug=true
-net.refractions.udig.tools.edit/selection=true
-net.refractions.udig.tools.edit/activator=true
-net.refractions.udig.tools.edit/behaviour=true
-net.refractions.udig.tools.edit/handler/lock=true
-net.refractions.udig.tools.edit/debug/assertions=true
+org.locationtech.udig.tools.edit/debug=true
+org.locationtech.udig.tools.edit/selection=true
+org.locationtech.udig.tools.edit/activator=true
+org.locationtech.udig.tools.edit/behaviour=true
+org.locationtech.udig.tools.edit/handler/lock=true
+org.locationtech.udig.tools.edit/debug/assertions=true
