@@ -1,1 +1,1 @@
-net.refractions.udig.catalog.ui/debug=true
+org.locationtech.udig.catalog.ui/debug=true

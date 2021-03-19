@@ -1,1 +1,1 @@
-net.refractions.udig.render.feature.basic/finest=false
+org.locationtech.udig.render.feature.basic/finest=false

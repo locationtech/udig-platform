@@ -1,2 +1,2 @@
-net.refractions.udig.render.wmt.basic/debug=true
-net.refractions.udig.render.wmt.basic/debug/render/trace=true
+org.locationtech.udig.render.wmt.basic/debug=true
+org.locationtech.udig.render.wmt.basic/debug/render/trace=true

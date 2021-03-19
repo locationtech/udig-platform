@@ -1,5 +1,5 @@
-net.refractions.udig.project.ui/debug=true
-net.refractions.udig.project.ui/debug/render/trace=true
-net.refractions.udig.project.ui/debug/render/timing=10s
-net.refractions.udig.project.ui/debug/dnd/trace=true
-net.refractions.udig.project.ui/debug/viewport/trace=true
+org.locationtech.udig.project.ui/debug=true
+org.locationtech.udig.project.ui/debug/render/trace=true
+org.locationtech.udig.project.ui/debug/render/timing=10s
+org.locationtech.udig.project.ui/debug/dnd/trace=true
+org.locationtech.udig.project.ui/debug/viewport/trace=true

@@ -1,2 +1,2 @@
-net.refractions.udig.render.feature.shapefile/debug=true
-net.refractions.udig.render.feature.shapefile/finest=true
+org.locationtech.udig.render.feature.shapefile/debug=true
+org.locationtech.udig.render.feature.shapefile/finest=true
