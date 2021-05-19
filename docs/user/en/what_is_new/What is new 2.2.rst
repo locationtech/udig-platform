@@ -10,15 +10,23 @@ This is a release candidate, prior to the creation of a stable 2.2.x series. Geo
 
 Improvements and Fixes
 ----------------------
-* `#314 <https://github.com/locationtech/udig-platform/issues/314>`_ Allows to configure display delay for edit tools
-* `#379 <https://github.com/locationtech/udig-platform/issues/379>`_ Improved copy behavior for feature attributes
-* `#367 <https://github.com/locationtech/udig-platform/issues/367>`_ Fixed Display access for Message Bubble
-* `#363 <https://github.com/locationtech/udig-platform/issues/363>`_ Fixed Layer Memory Leak on Feature Events
+* `#314 <https://github.com/locationtech/udig-platform/issues/314>`_ : Allows to configure display delay for edit tools
+* `#379 <https://github.com/locationtech/udig-platform/issues/379>`_ : Improved copy behavior for feature attributes
+* `#367 <https://github.com/locationtech/udig-platform/issues/367>`_ : Fixed Display access for Message Bubble
+* `#363 <https://github.com/locationtech/udig-platform/issues/363>`_ : Fixed Layer Memory Leak on Feature Events
+* `#385 <https://github.com/locationtech/udig-platform/issues/363>`_ : separated cheatsheets from help bundle
+* `#386 <https://github.com/locationtech/udig-platform/issues/366>`_ : removed outdated German User Help
+* `#388 <https://github.com/locationtech/udig-platform/issues/388>`_ : added English Help again, wasn't packaged anymore in help bundle
+* `#360 <https://github.com/locationtech/udig-platform/issues/360>`_ : new log4j Adapter with configuration and add Error Log View to product
+* fixes missing About-Menu Icon (`1e3ed71 <https://github.com/locationtech/udig-platform/commit/1e3ed7182a54e73af85a0f2ae6835db1c7e8c46d>`_)
 * Java 11 Support:
-  * `#354 <https://github.com/locationtech/udig-platform/issues/354>`_ Removed joda-time dependency
-  * `#378 <https://github.com/locationtech/udig-platform/issues/378>`_ Update Eclipse Platform to Release 2019-03
-  * `#361 <https://github.com/locationtech/udig-platform/issues/361>`_ Update GeoTools to 22.1 (with dependencies)
- 
+
+  * `#354 <https://github.com/locationtech/udig-platform/issues/354>`_ : Removed joda-time dependency
+  * `#378 <https://github.com/locationtech/udig-platform/issues/378>`_ : Update Eclipse Platform to Release 2019-03
+  * `#361 <https://github.com/locationtech/udig-platform/issues/361>`_ : Update GeoTools to 22.1 (with dependencies)
+  * `#375 <https://github.com/locationtech/udig-platform/issues/375>`_ : upgrade tycho to prepare Java 11 upgrade
+  * `#376 <https://github.com/locationtech/udig-platform/issues/376>`_ : fixed compile issues (missing spotbugs dependency)
+
 Updated 3rd-party Dependencies
 ------------------------------
 
