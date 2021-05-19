@@ -4,22 +4,18 @@
     <title style-id="intro-header">Welcome to uDig</title>
     <group id="links-background">
     <group id="page-links">
-
-      <link label="Overview" url="http://org.eclipse.ui.intro/showHelpTopic?id=/net.refractions.udig.help/EN/uDig%20Overview.html" id="overview" style-id="left">
+      <link label="Overview" url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.locationtech.udig.help/EN/uDig%20Overview.html" id="overview" style-id="left">
         <img id="overview_img" style-id="content-img" src="css/graphics/icons/etool/overview72.gif" alt="Overview"></img>
         <text>Get an overview of uDig.</text>
       </link>
-      
-      <link label="Tutorials" url="http://org.eclipse.ui.intro/showHelpTopic?id=/net.refractions.udig.help/EN/getting_started/index.html" id="tutorials" style-id="left">
+      <link label="Tutorials" url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.locationtech.udig.help/EN/getting_started/index.html" id="tutorials" style-id="left">
         <img id="tutorial_img" style-id="content-img" src="css/graphics/icons/etool/tutorials72.gif" alt="Tutorials"></img>
         <text>Go through the tutorials.</text>
       </link>
-
-      <link label="What is new" url="http://org.eclipse.ui.intro/showHelpTopic?id=/net.refractions.udig.help/EN/What%20is%20new.html" id="news" style-id="left">
+      <link label="What is new" url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.locationtech.udig.help/EN/what_is_new/index.html" id="news" style-id="left">
         <img id="tutorial_img" style-id="content-img" src="css/graphics/icons/etool/whatsnew72.gif" alt="What is new"></img>
         <text>Find what is new</text>
       </link>
-      
       <link label="Website" url="http://udig.refractions.net/" id="samples" style-id="left">
         <img id="site_img" style-id="content-img" src="css/graphics/icons/etool/samples72.gif" alt="Official Site"></img>
         <text>Check out the uDig website.</text>
@@ -41,13 +37,13 @@
             <group id="page-links">
                 <anchor id="beginAnchor"/>
 
-              <link label="Overview" url="http://org.eclipse.ui.intro/showHelpTopic?id=/net.refractions.udig.help/EN/uDig%20Overview.html" id="overview" style-id="left">
+              <link label="Overview" url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.locationtech.udig.help/EN/uDig%20Overview.html" id="overview" style-id="left">
                 <text>Get an overview of uDig.</text>
               </link>
-              <link label="Tutorials" url="http://org.eclipse.ui.intro/showHelpTopic?id=/net.refractions.udig.help/EN/getting_started/index.html" id="tutorials" style-id="left">
+              <link label="Tutorials" url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.locationtech.udig.help/EN/getting_started/index.html" id="tutorials" style-id="left">
                 <text>Go through the tutorials.</text>
               </link>
-              <link label="What is new" url="http://org.eclipse.ui.intro/showHelpTopic?id=/net.refractions.udig.help/EN/What%20is%20new.html" id="news" style-id="left">
+              <link label="What is new" url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.locationtech.udig.help/EN/what_is_new/index.html" id="news" style-id="left">
                 <text>Find what is new.</text>
               </link>
               <link label="Website" url="http://udig.refractions.net/" id="samples" style-id="left">

@@ -2,44 +2,58 @@
 <introContent>
   <page alt-style="css/root_swt.properties" style="css/root.css" id="root" style-id="page">
     <title style-id="intro-header">Willkommen zu uDig</title>
-	<group id="links-background">
-	<group id="page-links">
-	  <link label="Erste Schritte" url="http://org.eclipse.ui.intro/showHelpTopic?id=/net.refractions.udig.help/DE/3741.html" id="tutorials" style-id="left">
-        <img id="tutorial_img" style-id="content-img" src="css/graphics/icons/etool/tutorials72.gif" alt="Getting Started"></img>
-	    <text>Zum einführenden Tutorial.</text>
-	  </link>
-	  <link label="Offizielle Webseite" url="http://udig.refractions.net/" id="news" style-id="left">
-	    <img id="site_img" style-id="content-img" src="css/graphics/icons/etool/whatsnew72.gif" alt="Offizelle Webseite"></img>
-	    <text>Zur Webseite von uDig.</text>
-	  </link>
-	</group>
-	</group>
-	
-	<group id="action-links">
-	  <link url="http://org.eclipse.ui.intro/close" label="Arbeitsplatz" id="workbench" style-id="right">
-        <img id="workbench_img" style-id="content-img" src="css/graphics/icons/etool/wb48.gif" alt="Close Introduction"></img>
-        <text>Zum uDig-Arbeitsplatz</text>
+    <group id="links-background">
+    <group id="page-links">
+      <link label="&#220;bersicht" url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.locationtech.udig.help/EN/uDig%20Overview.html" id="overview" style-id="left">
+        <img id="overview_img" style-id="content-img" src="css/graphics/icons/etool/overview72.gif" alt="&#220;bersicht zu uDig."></img>
+        <text>&#220;bersicht zu uDig.</text>
       </link>
-	</group>
+      <link label="Erste Schritte" url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.locationtech.udig.help/EN/getting_started/index.html" id="tutorials" style-id="left">
+        <img id="tutorial_img" style-id="content-img" src="css/graphics/icons/etool/tutorials72.gif" alt="Erste Schritte, um uDig kennenzulernen."></img>
+        <text>Erste Schritte, um uDig kennenzulernen.</text>
+      </link>
+      <link label="&#196;nderungen" url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.locationtech.udig.help/EN/what_is_new/index.html" id="news" style-id="left">
+        <img id="tutorial_img" style-id="content-img" src="css/graphics/icons/etool/whatsnew72.gif" alt="&#196;nderungen und Neuigkeiten zu den Releases."></img>
+        <text>&#196;nderungen und Neuigkeiten zu den Releases.</text>
+      </link>
+      <link label="Website" url="http://udig.refractions.net/" id="samples" style-id="left">
+        <img id="site_img" style-id="content-img" src="css/graphics/icons/etool/samples72.gif" alt="Zur Webseite von uDig."></img>
+        <text>Zur Webseite von uDig.</text>
+      </link>
+    </group>
+    </group>
+    <group id="action-links">
+      <link url="http://org.eclipse.ui.intro/close" label="Arbeitsplatz" id="workbench" style-id="right">
+        <img id="workbench_img" style-id="content-img" src="css/graphics/icons/etool/wb48.gif" alt="Seite schlie&#223;en."></img>
+        <text>Diese Seite schlie&#223;en, um uDig zu verwenden.</text>
+      </link>
+    </group>
   </page>
-  
-    <!--  Hack to fix null pointer exception don't ask me why... Maybe the anchors? -->
+
+  <!--  Hack to fix null pointer exception don't ask me why... Maybe the anchors? -->
   <page alt-style="css/standby_swt.properties" style="css/standby_root.css" id="standby" style-id="page">
-        <title style-id="intro-header">Willkommen zu uDig</title>
-        <group id="links-background">
-            <group id="page-links">
-				<anchor id="beginAnchor"/>
-			  <link label="Erste Schritte" url="http://org.eclipse.ui.intro/showHelpTopic?id=/net.refractions.udig.help/DE/3741.html" id="tutorials" style-id="left">
-			    <text>Zum einführenden Tutorial.</text>
-			  </link>
-			  <!--link label="Walkthrough" url="http://udig.refractions.net/confluence/display/UDIG/Walkthrough+1" id="walkthrough" style-id="left">
-			    <text>View the first walkthrough.</text>
-			  </link-->
-			  <link label="Offizelle Webseite" url="http://udig.refractions.net/" id="news" style-id="left">
-			    <text>Zur Webseite von uDig.</text>
-			  </link>
-				<anchor id="endAnchor"/>
-            </group>
+    <title style-id="intro-header">Willkomen zu uDig</title>
+      <group id="links-background">
+        <group id="page-links">
+          <anchor id="beginAnchor"/>
+            <link label="&#220;bersicht" url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.locationtech.udig.help/EN/uDig%20Overview.html" id="overview" style-id="left">
+              <img id="overview_img" style-id="content-img" src="css/graphics/icons/etool/overview72.gif" alt="&#220;bersicht in Englisch"></img>
+              <text>Get an overview of uDig.</text>
+            </link>
+            <link label="Erste Schritte" url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.locationtech.udig.help/EN/getting_started/index.html" id="tutorials" style-id="left">
+              <img id="tutorial_img" style-id="content-img" src="css/graphics/icons/etool/tutorials72.gif" alt="Erste Schritte, um uDig kennenzulernen."></img>
+              <text>Erste Schritte, um uDig kennenzulernen.</text>
+            </link>
+            <link label="&#196;nderungen" url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.locationtech.udig.help/EN/what_is_new/index.html" id="news" style-id="left">
+              <img id="tutorial_img" style-id="content-img" src="css/graphics/icons/etool/whatsnew72.gif" alt="&#196;nderungen zu den Releases."></img>
+              <text>&#196;nderungen zu den Releases</text>
+            </link>
+            <link label="Website" url="http://udig.refractions.net/" id="samples" style-id="left">
+              <img id="site_img" style-id="content-img" src="css/graphics/icons/etool/samples72.gif" alt="Zur Webseite von uDig."></img>
+              <text>Zur Webseite von uDig.</text>
+            </link>
+          <anchor id="endAnchor"/>
         </group>
+      </group>
     </page>
 </introContent>
