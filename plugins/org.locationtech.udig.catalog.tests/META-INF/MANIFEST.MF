@@ -16,7 +16,9 @@ Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
  org.locationtech.udig.catalog.shp,
  org.locationtech.udig.ui.tests,
  org.locationtech.udig.catalog.rasterings,
- org.locationtech.udig.catalog.worldimage
+ org.mockito;bundle-version="2.23.0",
+ net.bytebuddy.byte-buddy;bundle-version="1.9.0",
+ org.objenesis;bundle-version="2.6.0"
 Bundle-Activator: org.locationtech.udig.catalog.tests.TestActivator
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

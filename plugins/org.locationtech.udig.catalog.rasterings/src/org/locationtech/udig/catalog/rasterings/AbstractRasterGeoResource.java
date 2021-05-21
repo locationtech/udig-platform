@@ -28,6 +28,7 @@ import org.geotools.coverage.grid.GridEnvelope2D;
 import org.geotools.coverage.grid.GridGeometry2D;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
+import org.geotools.coverage.grid.io.GridCoverage2DReader;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.parameter.DefaultParameterDescriptor;
@@ -54,69 +55,66 @@ import org.opengis.parameter.GeneralParameterValue;
 import org.opengis.parameter.ParameterDescriptor;
 
 /**
- * Provides a handle to a raster resource allowing the service to be lazily
- * loaded.
+ * Provides a handle to a raster resource allowing the service to be lazily loaded.
  * <p>
  * This class provides functionality common to GridCoverage based resources.
- * 
+ *
  * @author mleslie
  * @since 0.6.0
  */
-@SuppressWarnings("deprecation")
 public abstract class AbstractRasterGeoResource extends IGeoResource {
-	private volatile SoftReference<GridCoverage> coverage;
+    private volatile SoftReference<GridCoverage> coverage;
 
-	private ParameterGroup readParams;
+    private ParameterGroup readParams;
 
-	protected String fileName;
+    protected String fileName;
 
-	private Throwable msg;
+    private Throwable msg;
 
-	protected Lock lock = new UDIGDisplaySafeLock();
+    protected Lock lock = new UDIGDisplaySafeLock();
 
-	final protected ID id;
+    final protected ID id;
 
-	/**
-	 * Construct <code>AbstractRasterGeoResource</code>.
-	 * 
-	 * @param service
-	 *            The service creating this resource.
-	 * @param name
-	 *            Human readable name of this resource.
-	 */
-	public AbstractRasterGeoResource(AbstractRasterService service, String name) {
-	    this.service = service;
-		if (name == null) {
-			URL url = service.getIdentifier();
-			File file = URLUtils.urlToFile(url);
+    /**
+     * Construct <code>AbstractRasterGeoResource</code>.
+     *
+     * @param service The service creating this resource.
+     * @param name Human readable name of this resource.
+     */
+    public AbstractRasterGeoResource(AbstractRasterService service, String name) {
+        this.service = service;
+        if (name == null) {
+            URL url = service.getIdentifier();
+            File file = URLUtils.urlToFile(url);
             name = file.getAbsolutePath();
-			int slash = name.lastIndexOf('/');
-			name = name.substring((slash == -1 && slash < name.length() - 1 ? 0
-					: name.lastIndexOf('/')) + 1,
-					(name.lastIndexOf('.') == -1 ? name.length() : name
-							.lastIndexOf('.')));
+            int slash = name.lastIndexOf('/');
+            name = name.substring(
+                    (slash == -1 && slash < name.length() - 1 ? 0 : name.lastIndexOf('/')) + 1,
+                    (name.lastIndexOf('.') == -1 ? name.length() : name.lastIndexOf('.')));
 
-		}
-		this.fileName = name;
-		this.id = new ID(service.getID(), fileName);
-	}
+        }
+        this.fileName = name;
+        this.id = new ID(service.getID(), fileName);
+    }
 
-	public Status getStatus() {
-		return service.getStatus();
-	}
+    @Override
+    public Status getStatus() {
+        return service.getStatus();
+    }
 
-	public Throwable getMessage() {
-		if (msg != null) {
-			return msg;
-		} else {
-			return service.getMessage();
-		}
-	}
+    @Override
+    public Throwable getMessage() {
+        if (msg != null) {
+            return msg;
+        } else {
+            return service.getMessage();
+        }
+    }
 
     /**
      * Retrieves the parameters used to create the GridCoverageReader for this resource. This simply
      * delegates the creation of these parameters to a GridFormat.
-     * 
+     *
      * @return ParameterGroup describing the GeoResource
      */
     public synchronized ParameterGroup getReadParameters() {
@@ -138,39 +136,41 @@ public abstract class AbstractRasterGeoResource extends IGeoResource {
         return this.readParams;
     }
 
-	/**
-	 * Finds or creates the GridCoverage for this resource.
-	 * 
-	 * @return GridCoverage for this GeoResource
-	 * @throws IOException
-	 */
-	public final synchronized Object findResource() throws IOException {
-		lock.lock();
-		try {
-			if (this.coverage == null  || this.coverage.get()==null ) {
-				try {
-					GridCoverage gridCoverage = loadCoverage();
+    /**
+     * Finds or creates the GridCoverage for this resource.
+     *
+     * @return GridCoverage for this GeoResource
+     * @throws IOException
+     */
+    public final synchronized Object findResource() throws IOException {
+        lock.lock();
+        try {
+            if (this.coverage == null || this.coverage.get() == null) {
+                try {
+                    GridCoverage gridCoverage = loadCoverage();
                     this.coverage = new SoftReference<GridCoverage>(gridCoverage);
-				} catch (Throwable t) {
-					msg = t;
-					RasteringsPlugin.log("error reading coverage", t); //$NON-NLS-1$
-					return null;
-				}
-			}
-			return this.coverage.get();
-		} finally {
-			lock.unlock();
-		}
-	}
+                } catch (Throwable t) {
+                    msg = t;
+                    RasteringsPlugin.log("error reading coverage", t); //$NON-NLS-1$
+                    return null;
+                }
+            }
+            return this.coverage.get();
+        } finally {
+            lock.unlock();
+        }
+    }
 
     /**
-     * Template method called by findResource that is responsible for loading the coverage.  By default
-     * it loads a very small coverage for getting info from but not using as a real datasource
+     * Template method called by findResource that is responsible for loading the coverage. By
+     * default it loads a very small coverage for getting info from but not using as a real
+     * datasource
+     *
      * @return
      * @throws IOException
      */
     protected GridCoverage loadCoverage() throws IOException {
-        AbstractGridCoverage2DReader reader = this.service(new NullProgressMonitor()).getReader(null);
+        GridCoverage2DReader reader = this.service(new NullProgressMonitor()).getReader(null);
         ParameterGroup pvg = getReadParameters();
         List<GeneralParameterValue> list = pvg.values();
         GeneralParameterValue[] values = list.toArray(new GeneralParameterValue[0]);
@@ -182,13 +182,14 @@ public abstract class AbstractRasterGeoResource extends IGeoResource {
     public ID getID() {
         return id;
     }
-    
-	public URL getIdentifier() {
-		return getID().toURL();
-	}
 
-	public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor)
- throws IOException {
+    @Override
+    public URL getIdentifier() {
+        return getID().toURL();
+    }
+
+    @Override
+    public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor) throws IOException {
         if (monitor == null)
             monitor = ProgressManager.instance().get();
         try {
@@ -201,7 +202,7 @@ public abstract class AbstractRasterGeoResource extends IGeoResource {
                 return adaptee.cast(new GridCoverageLoader(this));
             }
             if (adaptee.isAssignableFrom(AbstractGridCoverage2DReader.class)) {
-                AbstractGridCoverage2DReader reader = service(monitor).getReader(monitor);
+                GridCoverage2DReader reader = service(monitor).getReader(monitor);
                 return adaptee.cast(reader);
             }
             if (adaptee.isAssignableFrom(GridCoverage.class)) {
@@ -220,10 +221,10 @@ public abstract class AbstractRasterGeoResource extends IGeoResource {
                     monitor.done();
                 return adaptee.cast(getReadParameters());
             }
-            if(adaptee.isAssignableFrom(Style.class)){
+            if (adaptee.isAssignableFrom(Style.class)) {
                 Style style = style(monitor);
-                if( style != null ){
-                    return adaptee.cast( style(monitor));
+                if (style != null) {
+                    return adaptee.cast(style(monitor));
                 }
             }
             return super.resolve(adaptee, monitor);
@@ -231,8 +232,8 @@ public abstract class AbstractRasterGeoResource extends IGeoResource {
             monitor.done();
         }
     }
-	
-	public Style style( IProgressMonitor monitor ) {
+
+    public Style style(IProgressMonitor monitor) {
         URL url = service.getIdentifier();
         File file = URLUtils.urlToFile(url);
         String mapFile = file.getAbsolutePath();
@@ -266,48 +267,52 @@ public abstract class AbstractRasterGeoResource extends IGeoResource {
         return null; // well nothing worked out; make your own style
     }
 
-	public <T> boolean canResolve(Class<T> adaptee) {
-		if (adaptee == null)
-			return false;
-		return adaptee.isAssignableFrom(IGeoResourceInfo.class)
-				|| adaptee.isAssignableFrom(IService.class)
-				|| adaptee.isAssignableFrom(GridCoverage.class)
+    @Override
+    public <T> boolean canResolve(Class<T> adaptee) {
+        if (adaptee == null)
+            return false;
+        return adaptee.isAssignableFrom(IGeoResourceInfo.class)
+                || adaptee.isAssignableFrom(IService.class)
+                || adaptee.isAssignableFrom(GridCoverage.class)
                 || adaptee.isAssignableFrom(AbstractGridCoverage2DReader.class)
                 || adaptee.isAssignableFrom(GridCoverageLoader.class)
-                || adaptee.isAssignableFrom(Style.class)
-				|| super.canResolve(adaptee);
-	}
+                || adaptee.isAssignableFrom(Style.class) || super.canResolve(adaptee);
+    }
 
-	@Override
-	public AbstractRasterGeoResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {
-	    return (AbstractRasterGeoResourceInfo) super.getInfo(monitor);
-	}
-	protected abstract AbstractRasterGeoResourceInfo createInfo(IProgressMonitor monitor)
-			throws IOException;
+    @Override
+    public AbstractRasterGeoResourceInfo getInfo(IProgressMonitor monitor) throws IOException {
+        return (AbstractRasterGeoResourceInfo) super.getInfo(monitor);
+    }
 
-	/**
-	 * Returns A recommended {@link ParameterDescriptor} for all {@link GridCoverageReader}s. 
-	 * This parameter requests an overview that is 100,100 of the image.
-	 * <p>
-	 * This is not intended to be overridden rather it is a useful method for getReadParamaters to call. 
-	 * </p>
-	 * 
-	 * @return parameter requesting an overview that is 100,100 of the image.
-	 */
-	protected DefaultParameterDescriptor<GridGeometry> getWorldGridGeomDescriptor() {
-		// this is a little dumb
-	    GridEnvelope2D gridRange = new GridEnvelope2D(new Rectangle(0,0,100,100));
-		ReferencedEnvelope env = new ReferencedEnvelope(-180.0, 180.0,-90.0, 90.0, DefaultGeographicCRS.WGS84);
-		GridGeometry2D world = new GridGeometry2D(gridRange, env);
-	
-		DefaultParameterDescriptor<GridGeometry> gridGeometryDescriptor = new DefaultParameterDescriptor<GridGeometry>(
-				AbstractGridFormat.READ_GRIDGEOMETRY2D.getName().toString(),
-				GridGeometry.class, null, world); 
-		return gridGeometryDescriptor;
-	}
+    @Override
+    protected abstract AbstractRasterGeoResourceInfo createInfo(IProgressMonitor monitor)
+            throws IOException;
 
-	@Override
-	public AbstractRasterService service(IProgressMonitor monitor) throws IOException {
-		return (AbstractRasterService) super.service(monitor);
-	}
+    /**
+     * Returns A recommended {@link ParameterDescriptor} for all {@link GridCoverageReader}s. This
+     * parameter requests an overview that is 100,100 of the image.
+     * <p>
+     * This is not intended to be overridden rather it is a useful method for getReadParamaters to
+     * call.
+     * </p>
+     *
+     * @return parameter requesting an overview that is 100,100 of the image.
+     */
+    protected DefaultParameterDescriptor<GridGeometry> getWorldGridGeomDescriptor() {
+        // this is a little dumb
+        GridEnvelope2D gridRange = new GridEnvelope2D(new Rectangle(0, 0, 100, 100));
+        ReferencedEnvelope env = new ReferencedEnvelope(-180.0, 180.0, -90.0, 90.0,
+                DefaultGeographicCRS.WGS84);
+        GridGeometry2D world = new GridGeometry2D(gridRange, env);
+
+        DefaultParameterDescriptor<GridGeometry> gridGeometryDescriptor = new DefaultParameterDescriptor<GridGeometry>(
+                AbstractGridFormat.READ_GRIDGEOMETRY2D.getName().toString(), GridGeometry.class,
+                null, world);
+        return gridGeometryDescriptor;
+    }
+
+    @Override
+    public AbstractRasterService service(IProgressMonitor monitor) throws IOException {
+        return (AbstractRasterService) super.service(monitor);
+    }
 }
