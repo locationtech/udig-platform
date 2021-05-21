@@ -13,7 +13,7 @@ Improvements and Fixes
 * `#398 <https://github.com/locationtech/udig-platform/issues/398>`_ : valid state for layer in Layers View as checked if visible
 * `#415 <https://github.com/locationtech/udig-platform/issues/415>`_ : fixed NullPointerExecption if tool category extension has name attribut not set
 * `#420 <https://github.com/locationtech/udig-platform/issues/420>`_ : allows to hide composite renderer jobs with preferences `org.locationtech.udig.project/HIDE_RENDER_JOB=true`
-* `#432 <https://github.com/locationtech/udig-platform/issues/420>`_ : allows it translate Progress View label and nl-specific icon
+* `#432 <https://github.com/locationtech/udig-platform/issues/432>`_ : allows translate Progress View label and nl-specific icon
 * `#439 <https://github.com/locationtech/udig-platform/issues/439>`_ : uses Mockito as Test-Mockup framework rather than EasyMock
 * `#443 <https://github.com/locationtech/udig-platform/issues/443>`_ : moved jfreechart libaries into seperate bundle, to allow to choose other/newer version for sdk-users
 * `#444 <https://github.com/locationtech/udig-platform/issues/444>`_ : ActiveMapTracker implemented as IStartup
