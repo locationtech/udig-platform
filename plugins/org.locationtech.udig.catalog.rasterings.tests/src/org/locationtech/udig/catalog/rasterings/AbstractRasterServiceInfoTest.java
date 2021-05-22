@@ -1,13 +1,13 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2004, Refractions Research Inc.
+ * (C) 2021, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.locationtech.udig.catalog.tests;
+package org.locationtech.udig.catalog.rasterings;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -29,9 +29,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.IServiceInfo;
-import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResource;
-import org.locationtech.udig.catalog.rasterings.AbstractRasterService;
-import org.locationtech.udig.catalog.rasterings.AbstractRasterServiceInfo;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
