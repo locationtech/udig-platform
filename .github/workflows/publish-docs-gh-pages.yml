@@ -48,7 +48,7 @@ jobs:
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
           SRC_FOLDER: docs/target/user/en/html
-          DEST_OWNER: uDig
+          DEST_OWNER: udig
           DEST_REPO: udig.github.io
           DEST_BRANCH: master
           DEST_FOLDER: docs/latest/user
