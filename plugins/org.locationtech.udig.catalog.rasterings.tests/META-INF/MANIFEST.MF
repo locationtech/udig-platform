@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Catalog Rastering Test Bundle
+Bundle-SymbolicName: org.locationtech.udig.catalog.rasterings.tests
+Bundle-Version: 2.3.0.qualifier
+Bundle-Vendor: udig.refractions.net
+Automatic-Module-Name: org.locationtech.udig.catalog.rasterings.tests
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Fragment-Host: org.locationtech.udig.catalog.rasterings
+Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
+ org.junit;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
+ org.locationtech.udig.catalog;visibility:=reexport,
+ org.locationtech.udig.catalog.rasterings,
+ org.mockito;bundle-version="2.23.0",
+ net.bytebuddy.byte-buddy;bundle-version="1.9.0",
+ org.objenesis;bundle-version="2.6.0"
