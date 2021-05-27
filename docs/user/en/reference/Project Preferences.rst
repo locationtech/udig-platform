@@ -29,6 +29,8 @@ Number of possible steps to undo
 
 Default is 10
 
+.. _pref_project_DISABLE_CRS_SELECTION:
+
 Disable CRS Chooser
 ```````````````````
 In the Map there is an option to choose different :ref:`Coordinate Reference System Display` for the Map. See
@@ -42,6 +44,8 @@ In case the organization would like to disallow to change CRS, the Preference Co
 
 can be used to disable CRS Chooser Dialog. If not set - this is the default (*false*) - the
 Application behaves like before. There is no option for this Prefenences in the Preferences Dialog to change behavior on demand.
+
+.. _pref_project_HIDE_RENDER_JOB:
 
 Hide Render Jobs in Progress View
 `````````````````````````````````
@@ -112,7 +116,7 @@ The default value is -1.
 
     org.locationtech.udig.project\defaultCRSPreference=<EPSG-Code>
 
-For <EPSG-Code> use the number such es 4326 for EPSG:4326 (WGS 84).
+For <EPSG-Code> use the number such es 4326 for EPSG:4326.
 
 Default map background color
 ````````````````````````````

@@ -12,8 +12,8 @@ Improvements and Fixes
 ----------------------
 * `#398 <https://github.com/locationtech/udig-platform/issues/398>`_ : valid state for layer in Layers View as checked if visible
 * `#415 <https://github.com/locationtech/udig-platform/issues/415>`_ : fixed NullPointerExecption if tool category extension has name attribut not set
-* `#420 <https://github.com/locationtech/udig-platform/issues/420>`_ : allows to hide composite renderer jobs shown in Progress View, see :ref:`Hide Render Jobs in Progress View`_
-* `#421 <https://github.com/locationtech/udig-platform/issues/421>`_ : Option to disable CRS Chooser in Map Editor, see :ref:`Disable CRS Chooser`_
+* `#420 <https://github.com/locationtech/udig-platform/issues/420>`_ : allows to hide composite renderer jobs shown in Progress View, see :ref:`pref_project_HIDE_RENDER_JOB`
+* `#421 <https://github.com/locationtech/udig-platform/issues/421>`_ : Option to disable CRS Chooser in Map Editor, see :ref:`pref_project_DISABLE_CRS_SELECTION`
 * `#432 <https://github.com/locationtech/udig-platform/issues/432>`_ : allows translate Progress View label and nl-specific icon
 * `#439 <https://github.com/locationtech/udig-platform/issues/439>`_ : uses Mockito as Test-Mockup framework rather than EasyMock
 * `#443 <https://github.com/locationtech/udig-platform/issues/443>`_ : moved jfreechart libaries into seperate bundle, to allow to choose other/newer version for sdk-users
