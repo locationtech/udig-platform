@@ -61,10 +61,14 @@ public final class CRSContributionItem extends ContributionItem {
         this.mapEditor.getMap().getViewportModel().addViewportModelListener(viewportModelListener);
     }
 
+    /**
+     * @return <code>true</code>, if the CRS selection should be disabled. Otherwise <code>false</code>.
+     */
     public static boolean isCRSSelectionDisabled() {
         return ProjectPlugin.getPlugin().getPreferenceStore()
                 .getBoolean(PreferenceConstants.P_DISABLE_CRS_SELECTION);
     }
+
     @Override
     public boolean isDynamic() {
         return true;
