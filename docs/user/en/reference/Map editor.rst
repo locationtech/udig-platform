@@ -71,6 +71,8 @@ Scale
 
 Shows the scale of the map. You can enter a new number here to change the scale to an exact value.
 
+.. _map_editor_crs_display:
+
 Coordinate Reference System Display
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
