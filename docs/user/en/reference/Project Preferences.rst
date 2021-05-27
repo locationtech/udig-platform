@@ -108,11 +108,11 @@ the same projection.
 
 The default value is -1.
 
-.. code-block::
+.. code-block:: python
 
     org.locationtech.udig.project\defaultCRSPreference=<EPSG-Code>
 
-For <EPSG-Code> use the number such es 4326 for EPSG:4326.
+For <EPSG-Code> use the number such es 4326 for EPSG:4326 (WGS 84).
 
 Default map background color
 ````````````````````````````
