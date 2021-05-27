@@ -33,7 +33,7 @@ Default is 10
 
 Disable CRS Chooser
 ```````````````````
-In the Map there is an option to choose different :ref:`Coordinate Reference System Display` for the Map. See
+In the Map Editor is an option to choose different :ref:`Coordinate Reference System <map_editor_crs_display>` for the Map. See
 `EPSG code of default CRS`_ how to set a different default Coordinate Reference System for maps using an EPSG code.
 
 In case the organization would like to disallow to change CRS, the Preference Constant
