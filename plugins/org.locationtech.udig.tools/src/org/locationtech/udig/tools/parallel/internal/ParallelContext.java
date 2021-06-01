@@ -32,7 +32,6 @@ import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.util.LineStringExtracter;
 import org.locationtech.jts.geomgraph.Position;
 
-//import es.axios.udig.ui.editingtools.precisionparallels.internal.OffsetBuilder.OffsetPosition;
 import org.locationtech.udig.tools.parallel.internal.OffsetBuilder.OffsetPosition;
 
 /**

@@ -32,9 +32,6 @@ import org.locationtech.udig.tools.edit.support.ShapeType;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 
-//import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsContext;
-//import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsMode;
-//import es.axios.udig.ui.editingtools.precisiontools.commons.internal.command.AddCustomVertexCommand;
 import org.locationtech.udig.tools.parallel.internal.command.AddCustomVertexCommand;
 
 /**

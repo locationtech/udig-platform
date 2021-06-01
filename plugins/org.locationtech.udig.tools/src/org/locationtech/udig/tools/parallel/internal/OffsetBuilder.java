@@ -31,7 +31,6 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geomgraph.Position;
 
-//import es.axios.lib.geometry.util.GeometryUtil;
 import org.locationtech.udig.tools.geometry.internal.util.GeometryUtil;
 
 /**

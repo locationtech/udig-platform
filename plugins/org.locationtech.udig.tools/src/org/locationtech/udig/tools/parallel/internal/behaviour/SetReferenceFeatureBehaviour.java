@@ -11,12 +11,9 @@
  */
 package org.locationtech.udig.tools.parallel.internal.behaviour;
 
-//import es.axios.udig.ui.editingtools.precisionparallels.internal.ParallelContext;
 import org.locationtech.udig.tools.parallel.internal.ParallelContext;
 import org.locationtech.udig.tools.parallel.internal.PrecisionToolsUtil;
 import org.locationtech.udig.tools.parallel.internal.command.SetReferenceFeatureCommand;
-//import es.axios.udig.ui.editingtools.precisionparallels.internal.command.SetReferenceFeatureCommand;
-//import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsUtil;
 import org.locationtech.udig.project.command.UndoableMapCommand;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.tools.edit.EditPlugin;

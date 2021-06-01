@@ -26,20 +26,12 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
-//import es.axios.udig.ui.commons.message.InfoMessage.Type;
-//import es.axios.udig.ui.editingtools.internal.i18n.Messages;
 import org.locationtech.udig.tools.internal.i18n.Messages;
-//TODO remove old imports
-//import es.axios.udig.ui.commons.message.InfoMessage;
 import org.locationtech.udig.tools.parallel.internal.InfoMessage;
 import org.locationtech.udig.tools.parallel.internal.InfoMessage.Type;
 import org.locationtech.udig.tools.parallel.internal.ParallelContext;
 import org.locationtech.udig.tools.parallel.internal.PrecisionToolsContext;
 import org.locationtech.udig.tools.parallel.internal.PrecisionToolsMode;
-//import es.axios.udig.ui.editingtools.precisionparallels.internal.ParallelContext;
-//import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsMode;
-//import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsMode;
-//import es.axios.udig.ui.editingtools.precisiontools.commons.view.AbstractParametersComposite;
 
 /**
  * 

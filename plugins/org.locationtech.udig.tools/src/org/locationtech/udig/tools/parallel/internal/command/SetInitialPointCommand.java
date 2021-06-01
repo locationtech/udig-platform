@@ -18,10 +18,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 import org.locationtech.jts.geom.Coordinate;
 
-//import es.axios.udig.ui.editingtools.internal.i18n.Messages;
 import org.locationtech.udig.tools.internal.i18n.Messages;
-//import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsContext;
-//import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsMode;
 import org.locationtech.udig.tools.parallel.internal.PrecisionToolsContext;
 import org.locationtech.udig.tools.parallel.internal.PrecisionToolsMode;
 

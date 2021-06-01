@@ -37,16 +37,11 @@ import org.locationtech.udig.project.command.UndoableComposite;
 import org.locationtech.udig.project.command.UndoableMapCommand;
 import org.locationtech.udig.project.ui.tool.IToolContext;
 import org.locationtech.udig.tools.edit.EditToolHandler;
-//import es.axios.geotools.util.UnitList;
 import org.locationtech.udig.tools.feature.util.UnitList;
-//import es.axios.udig.ui.commons.message.InfoMessage.Type;
-//import es.axios.udig.ui.editingtools.internal.i18n.Messages;
 import org.locationtech.udig.tools.internal.i18n.Messages;
-//import es.axios.udig.ui.commons.message.InfoMessage;
 import org.locationtech.udig.tools.parallel.internal.InfoMessage;
 import org.locationtech.udig.tools.parallel.internal.InfoMessage.Type;
 import org.locationtech.udig.tools.parallel.internal.PrecisionToolsContext;
-//import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsMode;
 
 /**
  * Abstract composite for the parameters view of the precision tools.

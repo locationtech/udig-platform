@@ -29,9 +29,7 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geomgraph.Quadrant;
 import org.locationtech.jts.operation.polygonize.Polygonizer;
 
-//import es.axios.lib.geometry.util.GeometryUtil;
 import org.locationtech.udig.tools.geometry.internal.util.GeometryUtil;
-//import es.axios.udig.ui.editingtools.precisionparallels.internal.QuadrantAnalyzer.AnalyzerPosition;
 import org.locationtech.udig.tools.parallel.internal.QuadrantAnalyzer.AnalyzerPosition;
 
 /**

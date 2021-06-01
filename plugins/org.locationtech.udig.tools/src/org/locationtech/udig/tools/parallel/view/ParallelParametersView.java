@@ -25,11 +25,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 import org.opengis.feature.simple.SimpleFeature;
 
-//import es.axios.udig.ui.editingtools.internal.i18n.Messages;
 import org.locationtech.udig.tools.internal.i18n.Messages;
-//import es.axios.udig.ui.editingtools.precisionparallels.PrecisionParallelTool;
-//import es.axios.udig.ui.editingtools.precisionparallels.internal.ParallelContext;
-//import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsMode;
 import org.locationtech.udig.tools.parallel.ParallelTool;
 import org.locationtech.udig.tools.parallel.internal.ParallelContext;
 import org.locationtech.udig.tools.parallel.internal.PrecisionToolsMode;

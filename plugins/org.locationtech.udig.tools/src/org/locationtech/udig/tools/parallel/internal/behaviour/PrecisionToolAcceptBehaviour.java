@@ -20,7 +20,6 @@ import org.locationtech.udig.tools.edit.Behaviour;
 import org.locationtech.udig.tools.edit.EditPlugin;
 import org.locationtech.udig.tools.edit.EditToolHandler;
 import org.locationtech.udig.tools.edit.support.EditGeom;
-//import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsContext;
 import org.locationtech.udig.tools.parallel.internal.PrecisionToolsContext;
 
 /**
