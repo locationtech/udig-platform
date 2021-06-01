@@ -20,7 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.Angle;
-import org.locationtech.jts.algorithm.CGAlgorithms;
+import org.locationtech.jts.algorithm.Orientation;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineSegment;
@@ -101,7 +101,7 @@ public class ArcBuilder {
 
         Arc2D.Double arc = new Arc2D.Double(rect, 0, 0, Arc2D.OPEN);
 
-        boolean ccw = CGAlgorithms.isCCW(ring);
+        boolean ccw = Orientation.isCCW(ring);
         Coordinate start, end;
         if (ccw) {
             start = point3;

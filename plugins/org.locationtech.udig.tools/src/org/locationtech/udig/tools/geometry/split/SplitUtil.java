@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.locationtech.jts.algorithm.CGAlgorithms;
+import org.locationtech.jts.algorithm.Orientation;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateArrays;
 import org.locationtech.jts.geom.Geometry;
@@ -384,11 +384,11 @@ public final class SplitUtil {
 
             // close the ring
             Coordinate[] closed = RingUtil.builRing(mergedArray);
-            if (!CGAlgorithms.isCCW(closed)) {
+            if (!Orientation.isCCW(closed)) {
 
                 Geometry reverse = reverseLineString(closed, gf);
 
-                assert CGAlgorithms.isCCW(reverse.getCoordinates()) : "It should be CCW. Actual SplitLine: " + reverse; //$NON-NLS-1$
+                assert Orientation.isCCW(reverse.getCoordinates()) : "It should be CCW. Actual SplitLine: " + reverse; //$NON-NLS-1$
 
                 reverse = reverseLineString(mergedArray, gf);
 
@@ -414,7 +414,7 @@ public final class SplitUtil {
         boolean isColinear = true;
         for (int i = 0; i < lineCoord.length - 2; i++) {
 
-            if (CGAlgorithms.computeOrientation(lineCoord[i], lineCoord[i + 1], lineCoord[i + 2]) != 0) {
+            if (Orientation.index(lineCoord[i], lineCoord[i + 1], lineCoord[i + 2]) != 0) {
                 isColinear = false;
                 break;
             }

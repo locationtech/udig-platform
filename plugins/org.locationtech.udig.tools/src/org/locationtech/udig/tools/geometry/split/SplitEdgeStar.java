@@ -16,7 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.Angle;
-import org.locationtech.jts.algorithm.CGAlgorithms;
+import org.locationtech.jts.algorithm.Orientation;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geomgraph.DirectedEdge;
 import org.locationtech.jts.geomgraph.DirectedEdgeStar;
@@ -170,7 +170,7 @@ class SplitEdgeStar extends DirectedEdgeStar {
 	 */
 	public double computeAngleInDirection(Coordinate tip1, Coordinate tail, Coordinate tip2, int direction) {
 
-		final int orientation = CGAlgorithms.computeOrientation(tail, tip1, tip2);
+		final int orientation = Orientation.index(tail, tip1, tip2);
 
 		// minimal angle (non oriented)
 		double angle = Angle.angleBetween(tip1, tail, tip2);

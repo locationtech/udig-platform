@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.locationtech.jts.algorithm.CGAlgorithms;
+import org.locationtech.jts.algorithm.Orientation;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateArrays;
 import org.locationtech.jts.geom.Geometry;
@@ -476,7 +476,7 @@ final class OffsetOrientationAnalyzer {
 
 		List<LinearRing> ringList = new ArrayList<LinearRing>();
 		// before create the ring, calculate the orientation of the input list.
-		boolean isCCWinputList = CGAlgorithms.isCCW(inputList.toArray(new Coordinate[inputList.size()]));
+		boolean isCCWinputList = Orientation.isCCW(inputList.toArray(new Coordinate[inputList.size()]));
 		// create the rings.
 		LineString inputLineString = gf.createLineString(inputList.toArray(new Coordinate[inputList.size()]));
 		Geometry multiLines = inputLineString.union();
@@ -488,7 +488,7 @@ final class OffsetOrientationAnalyzer {
 		for (Polygon pol : polyCollection) {
 
 			Coordinate[] polCoord = pol.getExteriorRing().getCoordinates();
-			boolean isCCWpolygon = CGAlgorithms.isCCW(polCoord);
+			boolean isCCWpolygon = Orientation.isCCW(polCoord);
 			// if they don't have the same orientation, reverse this ring.
 			if (isCCWinputList != isCCWpolygon) {
 
@@ -701,9 +701,9 @@ final class OffsetOrientationAnalyzer {
 				third = 0;
 			}
 		}
-		int offsetOrientation = CGAlgorithms.orientationIndex(inputList.get(i), inputList.get(second), inputList
+		int offsetOrientation = Orientation.index(inputList.get(i), inputList.get(second), inputList
 					.get(third));
-		int originalOrientation = CGAlgorithms.orientationIndex(sourceList.get(i), sourceList.get(second), sourceList
+		int originalOrientation = Orientation.index(sourceList.get(i), sourceList.get(second), sourceList
 					.get(third));
 
 		boolean result = offsetOrientation == originalOrientation;
@@ -759,9 +759,9 @@ final class OffsetOrientationAnalyzer {
 			}
 		}
 
-		int offsetOrientation = CGAlgorithms.orientationIndex(inputList.get(i), inputList.get(second), inputList
+		int offsetOrientation = Orientation.index(inputList.get(i), inputList.get(second), inputList
 					.get(third));
-		int originalOrientation = CGAlgorithms.orientationIndex(sourceList.get(i), sourceList.get(second), sourceList
+		int originalOrientation = Orientation.index(sourceList.get(i), sourceList.get(second), sourceList
 					.get(third));
 
 		boolean result = originalOrientation == offsetOrientation;

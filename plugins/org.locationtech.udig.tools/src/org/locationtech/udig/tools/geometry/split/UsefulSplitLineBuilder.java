@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.locationtech.jts.algorithm.CGAlgorithms;
+import org.locationtech.jts.algorithm.Orientation;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateArrays;
 import org.locationtech.jts.geom.Geometry;
@@ -210,11 +210,11 @@ class UsefulSplitLineBuilder {
 
                     // close the line to obtain a ring and check the CCW.
                     Coordinate[] closed = RingUtil.builRing(lineCoord);
-                    if (!CGAlgorithms.isCCW(closed)) {
+                    if (!Orientation.isCCW(closed)) {
 
                         actual = reverseLineString(closed);
 
-                        assert CGAlgorithms.isCCW(actual.getCoordinates()) : "It should be CCW. Actual SplitLine: " + actual + ". Geometry to split: " + polygon; //$NON-NLS-1$ //$NON-NLS-2$
+                        assert Orientation.isCCW(actual.getCoordinates()) : "It should be CCW. Actual SplitLine: " + actual + ". Geometry to split: " + polygon; //$NON-NLS-1$ //$NON-NLS-2$
 
                         actual = reverseLineString(lineCoord);
                     }
