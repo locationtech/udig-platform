@@ -46,18 +46,12 @@ import org.locationtech.jts.geom.MultiLineString;
 import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Polygon;
 
-//TODO remove older imports
-//import es.axios.udig.ui.editingtools.precisionparallels.internal.ParallelContext;
 import org.locationtech.udig.tools.parallel.internal.ParallelContext;
 import org.locationtech.udig.tools.parallel.internal.ParallelPreview;
 import org.locationtech.udig.tools.parallel.internal.behaviour.PrecisionToolAcceptBehaviour;
 import org.locationtech.udig.tools.parallel.internal.behaviour.SetInitialPointEventBehaviour;
 import org.locationtech.udig.tools.parallel.internal.behaviour.SetReferenceFeatureBehaviour;
 import org.locationtech.udig.tools.parallel.view.ParallelParametersView;
-//import es.axios.udig.ui.editingtools.precisionparallels.internal.ParallelPreview;
-//import es.axios.udig.ui.editingtools.precisionparallels.internal.behaviour.SetInitialPointEventBehaviour;
-//import es.axios.udig.ui.editingtools.precisionparallels.internal.behaviour.SetReferenceFeatureBehaviour;
-//import es.axios.udig.ui.editingtools.precisionparallels.view.ParallelParametersView;
 
 /**
  * Creates a precision parallel line.

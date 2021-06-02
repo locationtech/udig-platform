@@ -32,15 +32,10 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 
-//import org.locationtech.udig.tools.arc.es.axios.geotools.util.GeoToolsUtils;
 import org.locationtech.udig.tools.feature.util.GeoToolsUtils;
-//import org.locationtech.udig.tools.arc.es.axios.lib.geometry.util.GeometryUtil;
 import org.locationtech.udig.tools.geometry.internal.util.GeometryUtil;
-//import org.locationtech.udig.tools.arc.es.axios.udig.ui.commons.mediator.AppGISMediator;
 import org.locationtech.udig.tools.internal.mediator.AppGISAdapter;
-//import org.locationtech.udig.tools.arc.es.axios.udig.ui.commons.util.DialogUtil;
 import org.locationtech.udig.tools.internal.ui.util.DialogUtil;
-//import org.locationtech.udig.tools.arc.es.axios.udig.ui.commons.util.LayerUtil;
 import org.locationtech.udig.tools.internal.ui.util.LayerUtil;
 
 /**

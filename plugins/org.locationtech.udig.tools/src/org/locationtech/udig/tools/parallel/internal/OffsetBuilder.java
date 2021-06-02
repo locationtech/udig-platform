@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.locationtech.jts.algorithm.CGAlgorithms;
 import org.locationtech.jts.algorithm.LineIntersector;
+import org.locationtech.jts.algorithm.Orientation;
 import org.locationtech.jts.algorithm.RobustLineIntersector;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
@@ -31,7 +31,6 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geomgraph.Position;
 
-//import es.axios.lib.geometry.util.GeometryUtil;
 import org.locationtech.udig.tools.geometry.internal.util.GeometryUtil;
 
 /**
@@ -506,10 +505,10 @@ public class OffsetBuilder {
 		if (coord1.equals(coord2))
 			return;
 
-		int orientation = CGAlgorithms.computeOrientation(coord0, coord1, coord2);
+		int orientation = Orientation.index(coord0, coord1, coord2);
 
-		boolean outsideTurn = (orientation == CGAlgorithms.CLOCKWISE && side == Position.LEFT)
-					|| (orientation == CGAlgorithms.COUNTERCLOCKWISE && side == Position.RIGHT);
+		boolean outsideTurn = (orientation == Orientation.CLOCKWISE && side == Position.LEFT)
+					|| (orientation == Orientation.COUNTERCLOCKWISE && side == Position.RIGHT);
 		if (lastOutsideTurn == null) {
 			lastOutsideTurn = outsideTurn;
 		}

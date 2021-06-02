@@ -23,8 +23,6 @@ import org.locationtech.udig.tools.edit.support.Point;
 
 import org.locationtech.jts.geom.Coordinate;
 
-//TOTO remove old imports
-//import es.axios.udig.ui.editingtools.precisionparallels.internal.ParallelContext;
 import org.locationtech.udig.tools.parallel.internal.ParallelContext;
 import org.locationtech.udig.tools.parallel.internal.command.SetInitialPointCommand;
 

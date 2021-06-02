@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import org.locationtech.jts.algorithm.CGAlgorithms;
+import org.locationtech.jts.algorithm.Orientation;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryCollection;
@@ -517,7 +517,7 @@ class SplitGraphBuilder {
 
         Coordinate[] ringCoord = linearRing.getCoordinates();
 
-        return !CGAlgorithms.isCCW(ringCoord);
+        return !Orientation.isCCW(ringCoord);
     }
 
     private Geometry intersectionWithSegment(Coordinate[] holeCoords, int i,

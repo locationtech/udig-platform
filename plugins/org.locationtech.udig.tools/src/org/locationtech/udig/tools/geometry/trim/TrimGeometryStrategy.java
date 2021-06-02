@@ -13,7 +13,7 @@ package org.locationtech.udig.tools.geometry.trim;
 
 import java.text.MessageFormat;
 
-import org.locationtech.jts.algorithm.CGAlgorithms;
+import org.locationtech.jts.algorithm.Orientation;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -126,12 +126,12 @@ public class TrimGeometryStrategy {
 			firstLinePoint = splitLine1.getCoordinateN(1);
 		}
 
-		final int firstLineOrientation = CGAlgorithms.computeOrientation(lineFrom, lineTo, firstLinePoint);
+		final int firstLineOrientation = Orientation.index(lineFrom, lineTo, firstLinePoint);
 
 		LineString lineAtTheRight;
 
 		// return the segment at the left of the intersection point
-		if (CGAlgorithms.CLOCKWISE == firstLineOrientation) {
+		if (Orientation.CLOCKWISE == firstLineOrientation) {
 			lineAtTheRight = splitLine2;
 		} else {
 			lineAtTheRight = splitLine1;
@@ -157,7 +157,7 @@ public class TrimGeometryStrategy {
 		for (int i = 1; i < coordinates.length; i++) {
 			segment[0] = coordinates[i - 1];
 			segment[1] = coordinates[i];
-			// CGAlgorithms.isOnLine is too precise and due to round off errors
+			// PointLocation.isOnLine is too precise and due to round off errors
 			// almost
 			// never returns true, even though intersectionPoint should be
 			// guaranteed

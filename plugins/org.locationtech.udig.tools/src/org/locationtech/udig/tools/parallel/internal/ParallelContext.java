@@ -20,8 +20,8 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.locationtech.udig.tools.edit.preferences.PreferenceUtil;
 import org.locationtech.udig.tools.edit.support.EditGeom;
 import org.locationtech.udig.tools.edit.support.SnapBehaviour;
-
-import org.locationtech.jts.algorithm.CGAlgorithms;
+import org.locationtech.jts.algorithm.Distance;
+import org.locationtech.jts.algorithm.Orientation;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateArrays;
 import org.locationtech.jts.geom.Envelope;
@@ -32,7 +32,6 @@ import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.util.LineStringExtracter;
 import org.locationtech.jts.geomgraph.Position;
 
-//import es.axios.udig.ui.editingtools.precisionparallels.internal.OffsetBuilder.OffsetPosition;
 import org.locationtech.udig.tools.parallel.internal.OffsetBuilder.OffsetPosition;
 
 /**
@@ -364,14 +363,14 @@ public class ParallelContext extends PrecisionToolsContext {
 		// get the closest segment.
 		for (int i = 0; i < inputCoordinates.length - 1; i++) {
 			seg.setCoordinates(inputCoordinates[i], inputCoordinates[i + 1]);
-			distance = CGAlgorithms.distancePointLine(initialCoordinate, inputCoordinates[i], inputCoordinates[i + 1]);
+			distance =  Distance.pointToSegment(initialCoordinate, inputCoordinates[i], inputCoordinates[i + 1]);
 			if (distance < closestDistance) {
 				closestDistance = distance;
 				closestSeg = new LineSegment(inputCoordinates[i], inputCoordinates[i + 1]);
 			}
 		}
 		startPosition = Position.LEFT;
-		int segmentOrientation = CGAlgorithms.computeOrientation(closestSeg.p0, closestSeg.p1, initialCoordinate);
+		int segmentOrientation = Orientation.index(closestSeg.p0, closestSeg.p1, initialCoordinate);
 		// offset position respect the first segment and the initial point.
 		// Useful when is only one segment.
 		offsetPosition = (segmentOrientation == -1) ? OffsetPosition.POSITION_UNDER : OffsetPosition.POSITION_UPPER;
@@ -382,18 +381,18 @@ public class ParallelContext extends PrecisionToolsContext {
 		if (length > 2) {
 
 			if (segmentOrientation == 1) {
-				refLineOrientation = CGAlgorithms.computeOrientation(inputCoordinates[0], inputCoordinates[1],
+				refLineOrientation = Orientation.index(inputCoordinates[0], inputCoordinates[1],
 							inputCoordinates[2]);
-				outsideTurn = (refLineOrientation == CGAlgorithms.CLOCKWISE && 1 == Position.LEFT)
-							|| (refLineOrientation == CGAlgorithms.COUNTERCLOCKWISE && 1 == Position.RIGHT);
+				outsideTurn = (refLineOrientation == Orientation.CLOCKWISE && 1 == Position.LEFT)
+							|| (refLineOrientation == Orientation.COUNTERCLOCKWISE && 1 == Position.RIGHT);
 
 				offsetPosition = (outsideTurn) ? OffsetPosition.POSITION_UPPER : OffsetPosition.POSITION_UNDER;
 				startPosition = (outsideTurn) ? Position.LEFT : Position.RIGHT;
 			} else {
-				refLineOrientation = CGAlgorithms.computeOrientation(inputCoordinates[length - 1],
+				refLineOrientation = Orientation.index(inputCoordinates[length - 1],
 							inputCoordinates[length - 2], inputCoordinates[length - 3]);
-				outsideTurn = (refLineOrientation == CGAlgorithms.CLOCKWISE && 1 == Position.LEFT)
-							|| (refLineOrientation == CGAlgorithms.COUNTERCLOCKWISE && 1 == Position.RIGHT);
+				outsideTurn = (refLineOrientation == Orientation.CLOCKWISE && 1 == Position.LEFT)
+							|| (refLineOrientation == Orientation.COUNTERCLOCKWISE && 1 == Position.RIGHT);
 
 				offsetPosition = (outsideTurn) ? OffsetPosition.POSITION_UPPER : OffsetPosition.POSITION_UNDER;
 				startPosition = (outsideTurn) ? Position.RIGHT : Position.LEFT;

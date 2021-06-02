@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import org.locationtech.jts.algorithm.CGAlgorithms;
+import org.locationtech.jts.algorithm.Orientation;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateArrays;
 import org.locationtech.jts.geom.Geometry;
@@ -627,7 +627,7 @@ public class SplitStrategy {
                         continue;
                     }
 
-                    LinkedHashSet<SplitEdge> interiorRings = builtRing(startEdge, CGAlgorithms.COUNTERCLOCKWISE);
+                    LinkedHashSet<SplitEdge> interiorRings = builtRing(startEdge, Orientation.COUNTERCLOCKWISE);
                     this.interiorRings.add(interiorRings);
                 }
             }
@@ -652,7 +652,7 @@ public class SplitStrategy {
 		// Starts from a shell edge
 		if (!edge.isVisited() && edge.isShellEdge()) {
 		    edgeList.add(builtRing(startEdge,
-			    CGAlgorithms.COUNTERCLOCKWISE));
+			    Orientation.COUNTERCLOCKWISE));
 		}
 	    }
 	    return edgeList;
@@ -685,7 +685,7 @@ public class SplitStrategy {
 		    }
 		    // get the ring.
 		    LinkedHashSet<SplitEdge> result = builtRing(startEdge,
-			    CGAlgorithms.CLOCKWISE);
+			    Orientation.CLOCKWISE);
 		    // It will return null if while building the ring, not all
 		    // the edges are an intersection edges.
 		    if (result != null) {
@@ -785,7 +785,7 @@ public class SplitStrategy {
 			// get the right direction.
 			// test with CW direction
 			int direction = testDirection(startEdge,
-				CGAlgorithms.CLOCKWISE);
+				Orientation.CLOCKWISE);
 
 			edgeList.add(builtRing(startEdge, direction));
 		    }
@@ -940,8 +940,8 @@ public class SplitStrategy {
 		// if thats true, it means that ring already exist, so return
 		// the opposite direction.
 		if (currentEdge.isTwiceVisited()) {
-		    finalDirection = (direction == CGAlgorithms.CLOCKWISE) ? CGAlgorithms.COUNTERCLOCKWISE
-			    : CGAlgorithms.CLOCKWISE;
+		    finalDirection = (direction == Orientation.CLOCKWISE) ? Orientation.COUNTERCLOCKWISE
+			    : Orientation.CLOCKWISE;
 		    break;
 		}
 		DirectedEdge sym = currentDirectedEdge.getSym();

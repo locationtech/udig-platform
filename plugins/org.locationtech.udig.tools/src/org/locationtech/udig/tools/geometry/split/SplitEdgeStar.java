@@ -16,7 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.Angle;
-import org.locationtech.jts.algorithm.CGAlgorithms;
+import org.locationtech.jts.algorithm.Orientation;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geomgraph.DirectedEdge;
 import org.locationtech.jts.geomgraph.DirectedEdgeStar;
@@ -109,8 +109,8 @@ class SplitEdgeStar extends DirectedEdgeStar {
 	 * Finds the edge with less angle, seeking in the given direction.
 	 * 
 	 * @param searchDirection
-	 *            one of {@link CGAlgorithms#CLOCKWISE},
-	 *            {@link CGAlgorithms#COUNTERCLOCKWISE}
+	 *            one of {@link Orientation#CLOCKWISE},
+	 *            {@link Orientation#COUNTERCLOCKWISE}
 	 * @return the edge forming the acutest angle with <code>edge</code> in the
 	 *         <code>prefferredDirection</code> or <code>null</code> if there
 	 *         are no edges in the preferred direction.
@@ -163,14 +163,14 @@ class SplitEdgeStar extends DirectedEdgeStar {
 	 * @param tail
 	 * @param tip2
 	 * @param direction
-	 *            one of {@link CGAlgorithms#CLOCKWISE},
-	 *            {@link CGAlgorithms#COUNTERCLOCKWISE}
+	 *            one of {@link Orientation#CLOCKWISE},
+	 *            {@link Orientation#COUNTERCLOCKWISE}
 	 * @return the angle in radians defined by the vectors tail-tip1:tail-tip2
 	 *         calculated in the specified <code>direction</code> from tail-tip1
 	 */
 	public double computeAngleInDirection(Coordinate tip1, Coordinate tail, Coordinate tip2, int direction) {
 
-		final int orientation = CGAlgorithms.computeOrientation(tail, tip1, tip2);
+		final int orientation = Orientation.index(tail, tip1, tip2);
 
 		// minimal angle (non oriented)
 		double angle = Angle.angleBetween(tip1, tail, tip2);
