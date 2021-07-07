@@ -22,7 +22,7 @@ import java.util.Set;
 import org.locationtech.udig.internal.ui.UiPlugin;
 import org.locationtech.udig.ui.ExceptionDetailsDialog;
 import org.locationtech.udig.ui.internal.Messages;
-
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -84,6 +84,11 @@ public final class RuntimeFieldEditor extends FieldEditor {
     protected void doLoadDefault() {
         wkspaceText.setText(getWorkspacePath());
         memoryText.setText(String.valueOf(getCurrentHeap()));
+        
+        Properties proxyProps = getProxySettings();
+        proxyHostText.setText(StringUtils.trimToEmpty(proxyProps.getProperty(PROXYHOST)));
+        proxyPortText.setText(StringUtils.trimToEmpty(proxyProps.getProperty(PROXYPORT)));
+        proxyNonHostText.setText(StringUtils.trimToEmpty(proxyProps.getProperty(PROXYNONHOSTS)));
     }
 
     @Override
@@ -257,6 +262,16 @@ public final class RuntimeFieldEditor extends FieldEditor {
         }
     }
 
+    private Properties getProxySettings() {
+    	Properties props = new Properties();
+        try {
+        	props = UiPlugin.getProxySettings();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return props;
+    }
+    
     private boolean checkValues() {
         String wksPath = wkspaceText.getText();
         File f = new File(wksPath);
