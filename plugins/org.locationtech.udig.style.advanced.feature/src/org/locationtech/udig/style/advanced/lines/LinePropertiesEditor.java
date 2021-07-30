@@ -41,6 +41,7 @@ import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Style;
 import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.style.StyleLayer;
 import org.locationtech.udig.style.advanced.common.GroupRulesTreeContentProvider;
 import org.locationtech.udig.style.advanced.common.GroupRulesTreeLabelProvider;
 import org.locationtech.udig.style.advanced.common.PropertiesEditor;
@@ -52,7 +53,6 @@ import org.locationtech.udig.style.advanced.internal.Messages;
 import org.locationtech.udig.style.advanced.internal.WrapperUtilities;
 import org.locationtech.udig.style.advanced.utils.ImageCache;
 import org.locationtech.udig.style.advanced.utils.Utilities;
-import org.locationtech.udig.style.internal.StyleLayer;
 import org.locationtech.udig.style.sld.SLD;
 
 /**
@@ -63,23 +63,22 @@ import org.locationtech.udig.style.sld.SLD;
 public class LinePropertiesEditor extends PropertiesEditor {
 
     private Composite propertiesComposite;
+
     private StackLayout propertiesStackLayout;
 
     private LineStyleManager lineStyleManager;
 
-    public LinePropertiesEditor( StyleLayer layer ) {
+    public LinePropertiesEditor(StyleLayer layer) {
         super(layer);
     }
 
-    protected void createGui( Composite parent ) {
+    protected void createGui(Composite parent) {
         mainComposite = new Composite(parent, SWT.NONE);
         mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         mainComposite.setLayout(new GridLayout(2, true));
 
         /*
-         * ****************
-         * Left side, preview window and rules list
-         * ****************
+         * **************** Left side, preview window and rules list ****************
          */
 
         Composite leftComposite = new Composite(mainComposite, SWT.NONE);
@@ -106,8 +105,8 @@ public class LinePropertiesEditor extends PropertiesEditor {
         previewCanvas.setSize(PREVIEWWIDTH, PREVIEWHEIGHT);
         previewCanvas.setBackground(white);
         previewCanvas.setLayoutData(previewCanvasGD);
-        previewCanvas.addPaintListener(new PaintListener(){
-            public void paintControl( PaintEvent e ) {
+        previewCanvas.addPaintListener(new PaintListener() {
+            public void paintControl(PaintEvent e) {
                 if (previewImage == null) {
                     Display display = Display.getDefault();
                     previewImage = new Image(display, PREVIEWWIDTH, PREVIEWHEIGHT);
@@ -175,7 +174,7 @@ public class LinePropertiesEditor extends PropertiesEditor {
         }
     }
 
-    private TreeViewer createGroupRulesTableViewer( Composite rulesGroup ) {
+    private TreeViewer createGroupRulesTableViewer(Composite rulesGroup) {
         final TreeViewer rulesViewer = new TreeViewer(rulesGroup, SWT.SINGLE | SWT.BORDER);
         Control treeControl = rulesViewer.getControl();
         // table.setSize(PREVIEWWIDTH, -1);
@@ -188,11 +187,11 @@ public class LinePropertiesEditor extends PropertiesEditor {
 
         rulesViewer.setLabelProvider(new GroupRulesTreeLabelProvider(SLD.LINE));
 
-        rulesViewer.addSelectionChangedListener(new ISelectionChangedListener(){
+        rulesViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
             private LinePropertiesComposite linePropertieComposite;
 
-            public void selectionChanged( SelectionChangedEvent event ) {
+            public void selectionChanged(SelectionChangedEvent event) {
                 ISelection selection = event.getSelection();
                 if (!(selection instanceof IStructuredSelection)) {
                     return;
@@ -218,7 +217,8 @@ public class LinePropertiesEditor extends PropertiesEditor {
                     RuleWrapper currentSelectedRule = (RuleWrapper) selectedItem;
                     if (propertiesComposite != null) {
                         if (linePropertieComposite == null) {
-                            linePropertieComposite = new LinePropertiesComposite(LinePropertiesEditor.this, propertiesComposite);
+                            linePropertieComposite = new LinePropertiesComposite(
+                                    LinePropertiesEditor.this, propertiesComposite);
                         }
                         linePropertieComposite.setRule(currentSelectedRule);
                         propertiesStackLayout.topControl = linePropertieComposite.getComposite();
@@ -240,7 +240,7 @@ public class LinePropertiesEditor extends PropertiesEditor {
         return rulesViewer;
     }
 
-    private void createRulesButtons( Composite rulesGroup ) {
+    private void createRulesButtons(Composite rulesGroup) {
         Image addGroupImg = ImageCache.getInstance().getImage(ImageCache.ADDGROUP);
         Image addImg = ImageCache.getInstance().getImage(ImageCache.ADD);
         Image delImg = ImageCache.getInstance().getImage(ImageCache.DELETE);
@@ -252,13 +252,15 @@ public class LinePropertiesEditor extends PropertiesEditor {
         addGroupButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         addGroupButton.setImage(addGroupImg);
         addGroupButton.setToolTipText(Messages.LinePropertiesEditor_4);
-        addGroupButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        addGroupButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 FeatureTypeStyle featureTypeStyle = Utilities.sf.createFeatureTypeStyle();
-                FeatureTypeStyleWrapper addedFeatureTypeStyle = styleWrapper.addFeatureTypeStyle(featureTypeStyle);
+                FeatureTypeStyleWrapper addedFeatureTypeStyle = styleWrapper
+                        .addFeatureTypeStyle(featureTypeStyle);
 
                 String tmpName = Messages.LinePropertiesEditor_5;
-                tmpName = WrapperUtilities.checkSameNameFeatureTypeStyle(styleWrapper.getFeatureTypeStylesWrapperList(), tmpName);
+                tmpName = WrapperUtilities.checkSameNameFeatureTypeStyle(
+                        styleWrapper.getFeatureTypeStylesWrapperList(), tmpName);
                 addedFeatureTypeStyle.setName(tmpName);
 
                 reloadGroupsAndRules();
@@ -270,9 +272,9 @@ public class LinePropertiesEditor extends PropertiesEditor {
         addButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         addButton.setImage(addImg);
         addButton.setToolTipText(Messages.LinePropertiesEditor_6);
-        addButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
-            	Object[] elements = groupRulesTreeViewer.getExpandedElements();
+        addButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+                Object[] elements = groupRulesTreeViewer.getExpandedElements();
                 FeatureTypeStyleWrapper selectedFtsw = getSelectedFtsw();
                 if (selectedFtsw == null) {
                     RuleWrapper selectedRule = getSelectedRule();
@@ -285,9 +287,11 @@ public class LinePropertiesEditor extends PropertiesEditor {
                             Messages.LinePropertiesEditor_8);
                     return;
                 }
-                RuleWrapper addedRuleWrapper = selectedFtsw.addRule(null, LineSymbolizerWrapper.class);
+                RuleWrapper addedRuleWrapper = selectedFtsw.addRule(null,
+                        LineSymbolizerWrapper.class);
                 String tmpName = Messages.LinePropertiesEditor_9;
-                tmpName = WrapperUtilities.checkSameNameRule(addedRuleWrapper.getParent().getRulesWrapperList(), tmpName);
+                tmpName = WrapperUtilities.checkSameNameRule(
+                        addedRuleWrapper.getParent().getRulesWrapperList(), tmpName);
                 addedRuleWrapper.setName(tmpName);
 
                 reloadGroupsAndRules();
@@ -301,9 +305,9 @@ public class LinePropertiesEditor extends PropertiesEditor {
         deleteButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         deleteButton.setImage(delImg);
         deleteButton.setToolTipText(Messages.LinePropertiesEditor_10);
-        deleteButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
-            	Object[] elements = groupRulesTreeViewer.getExpandedElements();
+        deleteButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+                Object[] elements = groupRulesTreeViewer.getExpandedElements();
                 FeatureTypeStyleWrapper selectedFtsw = getSelectedFtsw();
                 RuleWrapper selectedRule = getSelectedRule();
                 if (selectedFtsw != null) {
@@ -311,13 +315,14 @@ public class LinePropertiesEditor extends PropertiesEditor {
                 } else if (selectedRule != null) {
                     selectedRule.getParent().removeRule(selectedRule);
                 } else {
-                    MessageDialog.openWarning(addButton.getShell(), Messages.LinePropertiesEditor_11, Messages.LinePropertiesEditor_12);
+                    MessageDialog.openWarning(addButton.getShell(),
+                            Messages.LinePropertiesEditor_11, Messages.LinePropertiesEditor_12);
                     return;
                 }
 
                 reloadGroupsAndRules();
                 refreshPreviewCanvasOnStyle();
-                
+
                 groupRulesTreeViewer.setExpandedElements(elements);
             }
         });
@@ -326,8 +331,8 @@ public class LinePropertiesEditor extends PropertiesEditor {
         deleteAllButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         deleteAllButton.setImage(delAllImg);
         deleteAllButton.setToolTipText(Messages.LinePropertiesEditor_13);
-        deleteAllButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        deleteAllButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 styleWrapper.clear();
                 reloadGroupsAndRules();
                 refreshPreviewCanvasOnStyle();
@@ -338,8 +343,8 @@ public class LinePropertiesEditor extends PropertiesEditor {
         upButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         upButton.setImage(upImg);
         upButton.setToolTipText(Messages.LinePropertiesEditor_14);
-        upButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        upButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 swap(true);
             }
         });
@@ -348,14 +353,14 @@ public class LinePropertiesEditor extends PropertiesEditor {
         downButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         downButton.setImage(downImg);
         downButton.setToolTipText(Messages.LinePropertiesEditor_15);
-        downButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        downButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 swap(false);
             }
         });
     }
 
-    private void createStyleButtons( Composite rulesGroup ) {
+    private void createStyleButtons(Composite rulesGroup) {
         Image saveImg = ImageCache.getInstance().getImage(ImageCache.SAVE);
         Image saveAllImg = ImageCache.getInstance().getImage(ImageCache.SAVEALL);
         Image delImg = ImageCache.getInstance().getImage(ImageCache.DELETE);
@@ -368,8 +373,8 @@ public class LinePropertiesEditor extends PropertiesEditor {
         saveButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         saveButton.setImage(saveImg);
         saveButton.setToolTipText(Messages.LinePropertiesEditor_16);
-        saveButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        saveButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 RuleWrapper selectedRule = getSelectedRule();
 
                 FeatureTypeStyle featureTypeStyle = Utilities.sf.createFeatureTypeStyle();
@@ -390,11 +395,12 @@ public class LinePropertiesEditor extends PropertiesEditor {
         saveAllButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         saveAllButton.setImage(saveAllImg);
         saveAllButton.setToolTipText(Messages.LinePropertiesEditor_17);
-        saveAllButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        saveAllButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 String newStyleName = Messages.LinePropertiesEditor_18;
-                InputDialog iDialog = new InputDialog(saveAllButton.getShell(), Messages.LinePropertiesEditor_19,
-                        Messages.LinePropertiesEditor_20, newStyleName, null);
+                InputDialog iDialog = new InputDialog(saveAllButton.getShell(),
+                        Messages.LinePropertiesEditor_19, Messages.LinePropertiesEditor_20,
+                        newStyleName, null);
                 iDialog.setBlockOnOpen(true);
                 int open = iDialog.open();
                 if (open == SWT.CANCEL) {
@@ -418,8 +424,8 @@ public class LinePropertiesEditor extends PropertiesEditor {
         deleteButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         deleteButton.setImage(delImg);
         deleteButton.setToolTipText(Messages.LinePropertiesEditor_21);
-        deleteButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        deleteButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 StyleWrapper styleWrapper = lineStyleManager.getCurrentSelectedStyle();
                 if (styleWrapper == null) {
                     return;
@@ -436,15 +442,16 @@ public class LinePropertiesEditor extends PropertiesEditor {
         loadButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         loadButton.setImage(loadImg);
         loadButton.setToolTipText(Messages.LinePropertiesEditor_22);
-        loadButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        loadButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 StyleWrapper styleWrapperToLoad = lineStyleManager.getCurrentSelectedStyle();
                 if (styleWrapperToLoad == null) {
                     return;
                 }
 
-                List<FeatureTypeStyleWrapper> featureTypeStylesWrapperList = styleWrapperToLoad.getFeatureTypeStylesWrapperList();
-                for( FeatureTypeStyleWrapper featureTypeStyleWrapper : featureTypeStylesWrapperList ) {
+                List<FeatureTypeStyleWrapper> featureTypeStylesWrapperList = styleWrapperToLoad
+                        .getFeatureTypeStylesWrapperList();
+                for (FeatureTypeStyleWrapper featureTypeStyleWrapper : featureTypeStylesWrapperList) {
                     styleWrapper.addFeatureTypeStyle(featureTypeStyleWrapper.getFeatureTypeStyle());
                 }
 
@@ -457,8 +464,8 @@ public class LinePropertiesEditor extends PropertiesEditor {
         exportButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         exportButton.setImage(exportImg);
         exportButton.setToolTipText(Messages.LinePropertiesEditor_23);
-        exportButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        exportButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 IGeoResource geoResource = layer.getGeoResource();
                 ID id = geoResource.getID();
                 if (id.isFile()) {
@@ -469,8 +476,8 @@ public class LinePropertiesEditor extends PropertiesEditor {
                         e1.printStackTrace();
                     }
                 } else {
-                    MessageDialog.openWarning(exportButton.getShell(), Messages.LinePropertiesEditor_24,
-                            Messages.LinePropertiesEditor_25);
+                    MessageDialog.openWarning(exportButton.getShell(),
+                            Messages.LinePropertiesEditor_24, Messages.LinePropertiesEditor_25);
                 }
             }
         });
@@ -479,8 +486,8 @@ public class LinePropertiesEditor extends PropertiesEditor {
         openFolderButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         openFolderButton.setImage(openImg);
         openFolderButton.setToolTipText(Messages.LinePropertiesEditor_26);
-        openFolderButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        openFolderButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 File styleFolderFile = lineStyleManager.getStyleFolderFile();
                 Program.launch(styleFolderFile.getAbsolutePath());
             }

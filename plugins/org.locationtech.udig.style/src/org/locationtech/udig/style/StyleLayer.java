@@ -9,20 +9,19 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package org.locationtech.udig.style.internal;
+package org.locationtech.udig.style;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.locationtech.udig.project.command.AbstractCommand;
 import org.locationtech.udig.project.command.UndoableCommand;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.LayerDecorator;
 import org.locationtech.udig.project.internal.StyleBlackboard;
 import org.locationtech.udig.project.internal.StyleEntry;
-
-import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Layer decorator that provides commit/revert on StyleBlackboard.
@@ -43,13 +42,11 @@ public class StyleLayer extends LayerDecorator {
      * 
      * @param layer
      */
-    public StyleLayer( Layer layer ) {
+    public StyleLayer(Layer layer) {
         super(layer);
     }
 
-    /*
-     * @see org.locationtech.udig.project.LayerDecorator#getStyleBlackboard()
-     */
+    @Override
     public synchronized StyleBlackboard getStyleBlackboard() {
         if (blackboard == null) {
             if (originalBlackboard == null) {
@@ -98,7 +95,9 @@ public class StyleLayer extends LayerDecorator {
  */
 class ApplyStyleCommand extends AbstractCommand implements UndoableCommand {
     StyleBlackboard oldStyleBlackboard;
+
     StyleBlackboard newStyleBlackboard;
+
     Layer layer;
 
     /**
@@ -108,8 +107,8 @@ class ApplyStyleCommand extends AbstractCommand implements UndoableCommand {
      * @param oldStyleBlackboard
      * @param newStyleBlackboard
      */
-    public ApplyStyleCommand( Layer layer, StyleBlackboard oldStyleBlackboard,
-            StyleBlackboard newStyleBlackboard ) {
+    public ApplyStyleCommand(Layer layer, StyleBlackboard oldStyleBlackboard,
+            StyleBlackboard newStyleBlackboard) {
         this.oldStyleBlackboard = oldStyleBlackboard;
         this.newStyleBlackboard = newStyleBlackboard;
         this.layer = layer;
@@ -117,18 +116,19 @@ class ApplyStyleCommand extends AbstractCommand implements UndoableCommand {
 
     /*
      * overwrite with the original blackboard
+     * 
      * @see org.locationtech.udig.project.command.UndoableCommand#rollback()
      */
-    public void rollback( IProgressMonitor monitor ) throws Exception {
+    public void rollback(IProgressMonitor monitor) throws Exception {
         layer.setStyleBlackboard(oldStyleBlackboard);
     }
 
     /** overwrite with new blackboard */
-    public void run( IProgressMonitor monitor ) throws Exception {
+    public void run(IProgressMonitor monitor) throws Exception {
         // FIXME: This is a temporary solution
-        List<StyleEntry> l = new ArrayList<StyleEntry>(newStyleBlackboard.getContent());
-        List<String> selected = new ArrayList<String>();
-        for( Iterator< ? > itr = l.iterator(); itr.hasNext(); ) {
+        List<StyleEntry> l = new ArrayList<>(newStyleBlackboard.getContent());
+        List<String> selected = new ArrayList<>();
+        for (Iterator<?> itr = l.iterator(); itr.hasNext();) {
             StyleEntry entry = (StyleEntry) itr.next();
             if (entry.getStyle() != null) {
                 newStyleBlackboard.put(entry.getID(), entry.getStyle());

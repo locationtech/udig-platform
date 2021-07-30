@@ -26,10 +26,10 @@ import org.geotools.styling.Symbolizer;
 import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.style.StyleLayer;
 import org.locationtech.udig.style.advanced.internal.Messages;
 import org.locationtech.udig.style.advanced.lines.LinePropertiesEditor;
 import org.locationtech.udig.style.advanced.utils.Utilities;
-import org.locationtech.udig.style.internal.StyleLayer;
 import org.locationtech.udig.style.sld.SLDContent;
 import org.locationtech.udig.style.sld.editor.StyleEditorDialog;
 import org.locationtech.udig.style.sld.editor.StyleEditorPage;
@@ -43,11 +43,15 @@ import org.locationtech.udig.ui.graphics.SLDs;
 public class SimpleLineEditorPage extends StyleEditorPage {
 
     private Style style = null;
+
     private LinePropertiesEditor linesEditor;
+
     private StackLayout stackLayout;
+
     private Label noFeatureLabel;
+
     private Composite mainComposite;
-    
+
     private Style oldStyle;
 
     public SimpleLineEditorPage() {
@@ -56,7 +60,7 @@ public class SimpleLineEditorPage extends StyleEditorPage {
     }
 
     @Override
-    public void createPageContent( Composite parent ) {
+    public void createPageContent(Composite parent) {
 
         mainComposite = new Composite(parent, SWT.NONE);
         mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -75,7 +79,7 @@ public class SimpleLineEditorPage extends StyleEditorPage {
             if (oldStyle == null) {
                 oldStyle = Utilities.createDefaultLineStyle();
             }
-            
+
             DuplicatingStyleVisitor dsv = new DuplicatingStyleVisitor();
             dsv.visit(oldStyle);
             style = (Style) dsv.getCopy();
@@ -93,9 +97,9 @@ public class SimpleLineEditorPage extends StyleEditorPage {
 
     }
 
-    private boolean isLineStyle( Style style ) {
+    private boolean isLineStyle(Style style) {
         Symbolizer[] symbolizers = SLDs.symbolizers(style);
-        for( Symbolizer symbolizer : symbolizers ) {
+        for (Symbolizer symbolizer : symbolizers) {
             if (symbolizer instanceof LineSymbolizer) {
                 return true;
             }
@@ -124,7 +128,7 @@ public class SimpleLineEditorPage extends StyleEditorPage {
     }
 
     @Override
-    public void styleChanged( Object source ) {
+    public void styleChanged(Object source) {
 
     }
 
@@ -140,23 +144,25 @@ public class SimpleLineEditorPage extends StyleEditorPage {
 
     private void applyStyle() {
         StyleLayer layer = getSelectedLayer();
-        if (linesEditor == null) return;
-        
+        if (linesEditor == null)
+            return;
+
         Style newStyle = linesEditor.getStyle();
         List<FeatureTypeStyle> featureTypeStyles = newStyle.featureTypeStyles();
         int ftsNum = featureTypeStyles.size();
         if (ftsNum < 1) {
-            MessageDialog.openWarning(getShell(), Messages.SimpleLineEditorPage_1, Messages.SimpleLineEditorPage_2);
+            MessageDialog.openWarning(getShell(), Messages.SimpleLineEditorPage_1,
+                    Messages.SimpleLineEditorPage_2);
             style = oldStyle;
             setStyle(oldStyle);
             layer.revertAll();
             layer.apply();
-            
+
             StyleEditorDialog dialog = (StyleEditorDialog) getContainer();
             dialog.getCurrentPage().refresh();
             return;
         }
-        
+
         newStyle.setName(layer.getName());
 
         setStyle(newStyle);
@@ -188,7 +194,7 @@ public class SimpleLineEditorPage extends StyleEditorPage {
         if (oldStyle == null) {
             oldStyle = Utilities.createDefaultLineStyle();
         }
-        
+
         DuplicatingStyleVisitor dsv = new DuplicatingStyleVisitor();
         dsv.visit(oldStyle);
         style = (Style) dsv.getCopy();
@@ -196,7 +202,7 @@ public class SimpleLineEditorPage extends StyleEditorPage {
         if (!isLineStyle(style)) {
             stackLayout.topControl = noFeatureLabel;
         } else {
-            if (linesEditor==null) {
+            if (linesEditor == null) {
                 linesEditor = new LinePropertiesEditor(layer);
                 linesEditor.open(mainComposite, style);
             }

@@ -42,6 +42,7 @@ import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Style;
 import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.style.StyleLayer;
 import org.locationtech.udig.style.advanced.common.GroupRulesTreeContentProvider;
 import org.locationtech.udig.style.advanced.common.GroupRulesTreeLabelProvider;
 import org.locationtech.udig.style.advanced.common.PropertiesEditor;
@@ -53,7 +54,6 @@ import org.locationtech.udig.style.advanced.internal.Messages;
 import org.locationtech.udig.style.advanced.internal.WrapperUtilities;
 import org.locationtech.udig.style.advanced.utils.ImageCache;
 import org.locationtech.udig.style.advanced.utils.Utilities;
-import org.locationtech.udig.style.internal.StyleLayer;
 import org.locationtech.udig.style.sld.SLD;
 
 /**
@@ -64,23 +64,22 @@ import org.locationtech.udig.style.sld.SLD;
 public class PointPropertiesEditor extends PropertiesEditor {
 
     private Composite propertiesComposite;
+
     private StackLayout propertiesStackLayout;
 
     private PointStyleManager pointStyleManager;
 
-    public PointPropertiesEditor( StyleLayer layer ) {
+    public PointPropertiesEditor(StyleLayer layer) {
         super(layer);
     }
 
-    protected void createGui( Composite parent ) {
+    protected void createGui(Composite parent) {
         mainComposite = new Composite(parent, SWT.NONE);
         mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         mainComposite.setLayout(new GridLayout(2, true));
 
         /*
-         * ****************
-         * Left side, preview window and rules list
-         * ****************
+         * **************** Left side, preview window and rules list ****************
          */
 
         Composite leftComposite = new Composite(mainComposite, SWT.NONE);
@@ -107,8 +106,8 @@ public class PointPropertiesEditor extends PropertiesEditor {
         previewCanvas.setSize(PREVIEWWIDTH, PREVIEWHEIGHT);
         previewCanvas.setBackground(white);
         previewCanvas.setLayoutData(previewCanvasGD);
-        previewCanvas.addPaintListener(new PaintListener(){
-            public void paintControl( PaintEvent e ) {
+        previewCanvas.addPaintListener(new PaintListener() {
+            public void paintControl(PaintEvent e) {
                 if (previewImage == null) {
                     Display display = Display.getDefault();
                     previewImage = new Image(display, PREVIEWWIDTH, PREVIEWHEIGHT);
@@ -177,7 +176,7 @@ public class PointPropertiesEditor extends PropertiesEditor {
 
     }
 
-    private TreeViewer createGroupRulesTreeViewer( Composite rulesGroup ) {
+    private TreeViewer createGroupRulesTreeViewer(Composite rulesGroup) {
         final TreeViewer rulesViewer = new TreeViewer(rulesGroup, SWT.SINGLE | SWT.BORDER);
         Control treeControl = rulesViewer.getControl();
         GridData treeGD = new GridData(SWT.FILL, SWT.TOP, true, false);
@@ -188,11 +187,11 @@ public class PointPropertiesEditor extends PropertiesEditor {
         rulesViewer.setContentProvider(new GroupRulesTreeContentProvider());
         rulesViewer.setLabelProvider(new GroupRulesTreeLabelProvider(SLD.POINT));
 
-        rulesViewer.addSelectionChangedListener(new ISelectionChangedListener(){
+        rulesViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
             private PointPropertiesComposite pointPropertieComposite;
 
-            public void selectionChanged( SelectionChangedEvent event ) {
+            public void selectionChanged(SelectionChangedEvent event) {
                 ISelection selection = event.getSelection();
                 if (!(selection instanceof IStructuredSelection)) {
                     return;
@@ -218,8 +217,8 @@ public class PointPropertiesEditor extends PropertiesEditor {
                     RuleWrapper currentSelectedRule = (RuleWrapper) selectedItem;
                     if (propertiesComposite != null) {
                         if (pointPropertieComposite == null) {
-                            pointPropertieComposite = new PointPropertiesComposite(PointPropertiesEditor.this,
-                                    propertiesComposite);
+                            pointPropertieComposite = new PointPropertiesComposite(
+                                    PointPropertiesEditor.this, propertiesComposite);
                         }
                         pointPropertieComposite.setRule(currentSelectedRule);
                         propertiesStackLayout.topControl = pointPropertieComposite.getComposite();
@@ -241,7 +240,7 @@ public class PointPropertiesEditor extends PropertiesEditor {
         return rulesViewer;
     }
 
-    private void createRulesButtons( Composite rulesGroup ) {
+    private void createRulesButtons(Composite rulesGroup) {
         Image addGroupImg = ImageCache.getInstance().getImage(ImageCache.ADDGROUP);
         Image addImg = ImageCache.getInstance().getImage(ImageCache.ADD);
         Image delImg = ImageCache.getInstance().getImage(ImageCache.DELETE);
@@ -253,13 +252,15 @@ public class PointPropertiesEditor extends PropertiesEditor {
         addGroupButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         addGroupButton.setImage(addGroupImg);
         addGroupButton.setToolTipText(Messages.PointPropertiesEditor_4);
-        addGroupButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        addGroupButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 FeatureTypeStyle featureTypeStyle = Utilities.sf.createFeatureTypeStyle();
-                FeatureTypeStyleWrapper addedFeatureTypeStyle = styleWrapper.addFeatureTypeStyle(featureTypeStyle);
+                FeatureTypeStyleWrapper addedFeatureTypeStyle = styleWrapper
+                        .addFeatureTypeStyle(featureTypeStyle);
 
                 String tmpName = Messages.PointPropertiesEditor_5;
-                tmpName = WrapperUtilities.checkSameNameFeatureTypeStyle(styleWrapper.getFeatureTypeStylesWrapperList(), tmpName);
+                tmpName = WrapperUtilities.checkSameNameFeatureTypeStyle(
+                        styleWrapper.getFeatureTypeStylesWrapperList(), tmpName);
                 addedFeatureTypeStyle.setName(tmpName);
 
                 reloadGroupsAndRules();
@@ -271,10 +272,10 @@ public class PointPropertiesEditor extends PropertiesEditor {
         addButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         addButton.setImage(addImg);
         addButton.setToolTipText(Messages.PointPropertiesEditor_6);
-        addButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
-            	Object[] parent = groupRulesTreeViewer.getExpandedElements();
-            	
+        addButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+                Object[] parent = groupRulesTreeViewer.getExpandedElements();
+
                 FeatureTypeStyleWrapper selectedFtsw = getSelectedFtsw();
                 if (selectedFtsw == null) {
                     RuleWrapper selectedRule = getSelectedRule();
@@ -283,21 +284,23 @@ public class PointPropertiesEditor extends PropertiesEditor {
                     }
                 }
                 if (selectedFtsw == null) {
-                    MessageDialog.openWarning(addButton.getShell(), Messages.PointPropertiesEditor_7,
-                            Messages.PointPropertiesEditor_8);
+                    MessageDialog.openWarning(addButton.getShell(),
+                            Messages.PointPropertiesEditor_7, Messages.PointPropertiesEditor_8);
                     return;
                 }
-                RuleWrapper addedRuleWrapper = selectedFtsw.addRule(null, PointSymbolizerWrapper.class);
+                RuleWrapper addedRuleWrapper = selectedFtsw.addRule(null,
+                        PointSymbolizerWrapper.class);
                 String tmpName = Messages.PointPropertiesEditor_9;
-                tmpName = WrapperUtilities.checkSameNameRule(addedRuleWrapper.getParent().getRulesWrapperList(), tmpName);
+                tmpName = WrapperUtilities.checkSameNameRule(
+                        addedRuleWrapper.getParent().getRulesWrapperList(), tmpName);
                 addedRuleWrapper.setName(tmpName);
 
                 reloadGroupsAndRules();
                 refreshPreviewCanvasOnStyle();
-                
-            	//maintain expanded states                
+
+                // maintain expanded states
                 groupRulesTreeViewer.setExpandedElements(parent);
-                
+
                 setRuleToSelected(addedRuleWrapper);
             }
         });
@@ -306,24 +309,25 @@ public class PointPropertiesEditor extends PropertiesEditor {
         deleteButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         deleteButton.setImage(delImg);
         deleteButton.setToolTipText(Messages.PointPropertiesEditor_10);
-        deleteButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
-            	Object[] parent = groupRulesTreeViewer.getExpandedElements();
+        deleteButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+                Object[] parent = groupRulesTreeViewer.getExpandedElements();
 
-            	FeatureTypeStyleWrapper selectedFtsw = getSelectedFtsw();
+                FeatureTypeStyleWrapper selectedFtsw = getSelectedFtsw();
                 RuleWrapper selectedRule = getSelectedRule();
                 if (selectedFtsw != null) {
                     styleWrapper.removeFeatureTypeStyle(selectedFtsw);
                 } else if (selectedRule != null) {
                     selectedRule.getParent().removeRule(selectedRule);
                 } else {
-                    MessageDialog.openWarning(addButton.getShell(), Messages.PointPropertiesEditor_11, Messages.PointPropertiesEditor_12);
+                    MessageDialog.openWarning(addButton.getShell(),
+                            Messages.PointPropertiesEditor_11, Messages.PointPropertiesEditor_12);
                     return;
                 }
 
                 reloadGroupsAndRules();
                 refreshPreviewCanvasOnStyle();
-            	//maintain expanded states                
+                // maintain expanded states
                 groupRulesTreeViewer.setExpandedElements(parent);
             }
         });
@@ -332,8 +336,8 @@ public class PointPropertiesEditor extends PropertiesEditor {
         deleteAllButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         deleteAllButton.setImage(delAllImg);
         deleteAllButton.setToolTipText(Messages.PointPropertiesEditor_13);
-        deleteAllButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        deleteAllButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 styleWrapper.clear();
                 reloadGroupsAndRules();
                 refreshPreviewCanvasOnStyle();
@@ -344,8 +348,8 @@ public class PointPropertiesEditor extends PropertiesEditor {
         upButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         upButton.setImage(upImg);
         upButton.setToolTipText(Messages.PointPropertiesEditor_14);
-        upButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        upButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 swap(true);
             }
 
@@ -355,16 +359,14 @@ public class PointPropertiesEditor extends PropertiesEditor {
         downButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         downButton.setImage(downImg);
         downButton.setToolTipText(Messages.PointPropertiesEditor_15);
-        downButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        downButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 swap(false);
             }
         });
     }
 
-
-
-    private void createStyleButtons( Composite rulesGroup ) {
+    private void createStyleButtons(Composite rulesGroup) {
         Image saveImg = ImageCache.getInstance().getImage(ImageCache.SAVE);
         Image saveAllImg = ImageCache.getInstance().getImage(ImageCache.SAVEALL);
         Image delImg = ImageCache.getInstance().getImage(ImageCache.DELETE);
@@ -377,8 +379,8 @@ public class PointPropertiesEditor extends PropertiesEditor {
         saveButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         saveButton.setImage(saveImg);
         saveButton.setToolTipText(Messages.PointPropertiesEditor_16);
-        saveButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        saveButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 RuleWrapper selectedRule = getSelectedRule();
 
                 FeatureTypeStyle featureTypeStyle = Utilities.sf.createFeatureTypeStyle();
@@ -399,11 +401,12 @@ public class PointPropertiesEditor extends PropertiesEditor {
         saveAllButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         saveAllButton.setImage(saveAllImg);
         saveAllButton.setToolTipText(Messages.PointPropertiesEditor_17);
-        saveAllButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        saveAllButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 String newStyleName = Messages.PointPropertiesEditor_18;
-                InputDialog iDialog = new InputDialog(saveAllButton.getShell(), Messages.PointPropertiesEditor_19,
-                        Messages.PointPropertiesEditor_20, newStyleName, null);
+                InputDialog iDialog = new InputDialog(saveAllButton.getShell(),
+                        Messages.PointPropertiesEditor_19, Messages.PointPropertiesEditor_20,
+                        newStyleName, null);
                 iDialog.setBlockOnOpen(true);
                 int open = iDialog.open();
                 if (open == SWT.CANCEL) {
@@ -427,8 +430,8 @@ public class PointPropertiesEditor extends PropertiesEditor {
         deleteButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         deleteButton.setImage(delImg);
         deleteButton.setToolTipText(Messages.PointPropertiesEditor_21);
-        deleteButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        deleteButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 StyleWrapper styleWrapper = pointStyleManager.getCurrentSelectedStyle();
                 if (styleWrapper == null) {
                     return;
@@ -445,15 +448,16 @@ public class PointPropertiesEditor extends PropertiesEditor {
         loadButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         loadButton.setImage(loadImg);
         loadButton.setToolTipText(Messages.PointPropertiesEditor_22);
-        loadButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        loadButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 StyleWrapper styleWrapperToLoad = pointStyleManager.getCurrentSelectedStyle();
                 if (styleWrapperToLoad == null) {
                     return;
                 }
 
-                List<FeatureTypeStyleWrapper> featureTypeStylesWrapperList = styleWrapperToLoad.getFeatureTypeStylesWrapperList();
-                for( FeatureTypeStyleWrapper featureTypeStyleWrapper : featureTypeStylesWrapperList ) {
+                List<FeatureTypeStyleWrapper> featureTypeStylesWrapperList = styleWrapperToLoad
+                        .getFeatureTypeStylesWrapperList();
+                for (FeatureTypeStyleWrapper featureTypeStyleWrapper : featureTypeStylesWrapperList) {
                     styleWrapper.addFeatureTypeStyle(featureTypeStyleWrapper.getFeatureTypeStyle());
                 }
 
@@ -466,9 +470,10 @@ public class PointPropertiesEditor extends PropertiesEditor {
         importButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         importButton.setImage(importImg);
         importButton.setToolTipText(Messages.PointPropertiesEditor_23);
-        importButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
-                FileDialog fileDialog = new FileDialog(importButton.getShell(), SWT.OPEN | SWT.MULTI);
+        importButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+                FileDialog fileDialog = new FileDialog(importButton.getShell(),
+                        SWT.OPEN | SWT.MULTI);
                 String path = fileDialog.open();
                 if (path == null || path.length() < 1) {
                     return;
@@ -480,7 +485,7 @@ public class PointPropertiesEditor extends PropertiesEditor {
                 File folder = firstFile.getParentFile();
                 String[] fileNames = fileDialog.getFileNames();
                 File[] files = new File[fileNames.length];
-                for( int i = 0; i < files.length; i++ ) {
+                for (int i = 0; i < files.length; i++) {
                     files[i] = new File(folder, fileNames[i]);
                 }
                 try {
@@ -495,8 +500,8 @@ public class PointPropertiesEditor extends PropertiesEditor {
         exportButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         exportButton.setImage(exportImg);
         exportButton.setToolTipText(Messages.PointPropertiesEditor_24);
-        exportButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        exportButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 IGeoResource geoResource = layer.getGeoResource();
                 ID id = geoResource.getID();
                 if (id.isFile()) {
@@ -507,8 +512,8 @@ public class PointPropertiesEditor extends PropertiesEditor {
                         e1.printStackTrace();
                     }
                 } else {
-                    MessageDialog.openWarning(exportButton.getShell(), Messages.PointPropertiesEditor_25,
-                            Messages.PointPropertiesEditor_26);
+                    MessageDialog.openWarning(exportButton.getShell(),
+                            Messages.PointPropertiesEditor_25, Messages.PointPropertiesEditor_26);
                 }
             }
         });
@@ -517,8 +522,8 @@ public class PointPropertiesEditor extends PropertiesEditor {
         openFolderButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         openFolderButton.setImage(openImg);
         openFolderButton.setToolTipText(Messages.PointPropertiesEditor_27);
-        openFolderButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        openFolderButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
                 File pointStyleFolderFile = pointStyleManager.getStyleFolderFile();
                 Program.launch(pointStyleFolderFile.getAbsolutePath());
             }

@@ -29,10 +29,10 @@ import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.style.StyleLayer;
 import org.locationtech.udig.style.advanced.internal.Messages;
 import org.locationtech.udig.style.advanced.points.PointPropertiesEditor;
 import org.locationtech.udig.style.advanced.utils.Utilities;
-import org.locationtech.udig.style.internal.StyleLayer;
 import org.locationtech.udig.style.sld.SLDContent;
 import org.locationtech.udig.style.sld.editor.StyleEditorDialog;
 import org.locationtech.udig.style.sld.editor.StyleEditorPage;
@@ -46,11 +46,15 @@ import org.locationtech.udig.ui.graphics.SLDs;
 public class SimplePointEditorPage extends StyleEditorPage {
 
     private Style style = null;
+
     private PointPropertiesEditor propertiesEditor;
+
     private StackLayout stackLayout;
+
     private Label noFeatureLabel;
+
     private Composite mainComposite;
-    
+
     private Style oldStyle;
 
     public SimplePointEditorPage() {
@@ -59,7 +63,7 @@ public class SimplePointEditorPage extends StyleEditorPage {
     }
 
     @Override
-    public void createPageContent( Composite parent ) {
+    public void createPageContent(Composite parent) {
 
         mainComposite = new Composite(parent, SWT.NONE);
         mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -78,11 +82,11 @@ public class SimplePointEditorPage extends StyleEditorPage {
             if (oldStyle == null) {
                 oldStyle = Utilities.createDefaultPointStyle();
             }
-            
+
             DuplicatingStyleVisitor dsv = new DuplicatingStyleVisitor();
             dsv.visit(oldStyle);
             style = (Style) dsv.getCopy();
-            
+
             if (isPointStyle(style)) {
                 propertiesEditor = new PointPropertiesEditor(layer);
                 propertiesEditor.open(mainComposite, style);
@@ -96,20 +100,20 @@ public class SimplePointEditorPage extends StyleEditorPage {
 
     }
 
-    private boolean isPointStyle( Style style ) {
+    private boolean isPointStyle(Style style) {
         Symbolizer[] symbolizers = SLDs.symbolizers(style);
         boolean pnt = false;
         boolean other = false;
-        for( Symbolizer symbolizer : symbolizers ) {
+        for (Symbolizer symbolizer : symbolizers) {
             if (symbolizer instanceof PointSymbolizer) {
                 pnt = true;
-            }else if (symbolizer instanceof PolygonSymbolizer || 
-            		symbolizer instanceof LineSymbolizer){
-            	//we don't want to use this style in these cases
-            	other = true;
+            } else if (symbolizer instanceof PolygonSymbolizer
+                    || symbolizer instanceof LineSymbolizer) {
+                // we don't want to use this style in these cases
+                other = true;
             }
         }
-        return pnt && !other;	//can only style if only point symbolizer
+        return pnt && !other; // can only style if only point symbolizer
     }
 
     @Override
@@ -133,7 +137,7 @@ public class SimplePointEditorPage extends StyleEditorPage {
     }
 
     @Override
-    public void styleChanged( Object source ) {
+    public void styleChanged(Object source) {
 
     }
 
@@ -149,22 +153,24 @@ public class SimplePointEditorPage extends StyleEditorPage {
 
     private void applyStyle() {
         StyleLayer layer = getSelectedLayer();
-        if (propertiesEditor == null) return;
+        if (propertiesEditor == null)
+            return;
         Style newStyle = propertiesEditor.getStyle();
         List<FeatureTypeStyle> featureTypeStyles = newStyle.featureTypeStyles();
         int ftsNum = featureTypeStyles.size();
         if (ftsNum < 1) {
-            MessageDialog.openWarning(getShell(), Messages.SimplePointEditorPage_1, Messages.SimplePointEditorPage_2);
+            MessageDialog.openWarning(getShell(), Messages.SimplePointEditorPage_1,
+                    Messages.SimplePointEditorPage_2);
             style = oldStyle;
             setStyle(oldStyle);
             layer.revertAll();
             layer.apply();
-            
+
             StyleEditorDialog dialog = (StyleEditorDialog) getContainer();
             dialog.getCurrentPage().refresh();
             return;
         }
-        
+
         newStyle.setName(layer.getName());
 
         setStyle(newStyle);

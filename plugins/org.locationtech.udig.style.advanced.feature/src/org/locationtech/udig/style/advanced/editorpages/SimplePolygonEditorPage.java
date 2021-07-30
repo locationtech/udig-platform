@@ -27,10 +27,10 @@ import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.style.StyleLayer;
 import org.locationtech.udig.style.advanced.internal.Messages;
 import org.locationtech.udig.style.advanced.polygons.PolygonPropertiesEditor;
 import org.locationtech.udig.style.advanced.utils.Utilities;
-import org.locationtech.udig.style.internal.StyleLayer;
 import org.locationtech.udig.style.sld.SLDContent;
 import org.locationtech.udig.style.sld.editor.StyleEditorDialog;
 import org.locationtech.udig.style.sld.editor.StyleEditorPage;
@@ -42,11 +42,15 @@ import org.locationtech.udig.ui.graphics.SLDs;
  * @author Andrea Antonello (www.hydrologis.com)
  */
 public class SimplePolygonEditorPage extends StyleEditorPage {
-    
+
     private Style style = null;
+
     private PolygonPropertiesEditor propertiesEditor;
+
     private StackLayout stackLayout;
+
     private Label noFeatureLabel;
+
     private Composite mainComposite;
 
     private Style oldStyleCopy;
@@ -57,7 +61,7 @@ public class SimplePolygonEditorPage extends StyleEditorPage {
     }
 
     @Override
-    public void createPageContent( Composite parent ) {
+    public void createPageContent(Composite parent) {
 
         mainComposite = new Composite(parent, SWT.NONE);
         mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -76,7 +80,7 @@ public class SimplePolygonEditorPage extends StyleEditorPage {
             if (style == null) {
                 style = Utilities.createDefaultPolygonStyle();
             }
-            
+
             DuplicatingStyleVisitor dsv = new DuplicatingStyleVisitor();
             dsv.visit(style);
             oldStyleCopy = (Style) dsv.getCopy();
@@ -94,9 +98,9 @@ public class SimplePolygonEditorPage extends StyleEditorPage {
 
     }
 
-    private boolean isPolygonStyle( Style style ) {
+    private boolean isPolygonStyle(Style style) {
         Symbolizer[] symbolizers = SLDs.symbolizers(style);
-        for( Symbolizer symbolizer : symbolizers ) {
+        for (Symbolizer symbolizer : symbolizers) {
             if (symbolizer instanceof PolygonSymbolizer) {
                 return true;
             }
@@ -125,7 +129,7 @@ public class SimplePolygonEditorPage extends StyleEditorPage {
     }
 
     @Override
-    public void styleChanged( Object source ) {
+    public void styleChanged(Object source) {
 
     }
 
@@ -140,23 +144,25 @@ public class SimplePolygonEditorPage extends StyleEditorPage {
     }
 
     private void applyStyle() {
-       StyleLayer layer = getSelectedLayer();
-        if (propertiesEditor == null) return;
+        StyleLayer layer = getSelectedLayer();
+        if (propertiesEditor == null)
+            return;
         Style newStyle = propertiesEditor.getStyle();
         List<FeatureTypeStyle> featureTypeStyles = newStyle.featureTypeStyles();
         int ftsNum = featureTypeStyles.size();
         if (ftsNum < 1) {
-            MessageDialog.openWarning(getShell(), Messages.SimplePolygonEditorPage_1, Messages.SimplePolygonEditorPage_2);
+            MessageDialog.openWarning(getShell(), Messages.SimplePolygonEditorPage_1,
+                    Messages.SimplePolygonEditorPage_2);
             style = oldStyleCopy;
             setStyle(oldStyleCopy);
             layer.revertAll();
             layer.apply();
-            
+
             StyleEditorDialog dialog = (StyleEditorDialog) getContainer();
             dialog.getCurrentPage().refresh();
             return;
         }
-        
+
         newStyle.setName(layer.getName());
 
         setStyle(newStyle);
@@ -199,7 +205,7 @@ public class SimplePolygonEditorPage extends StyleEditorPage {
             propertiesEditor.updateStyle(style);
         }
         mainComposite.layout();
-        
+
     }
 
 }
