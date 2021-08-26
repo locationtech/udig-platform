@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry exported="true" kind="lib" path="lib/activation-1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/ant-1.8.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/ant-launcher-1.8.1.jar"/>
@@ -117,7 +119,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wps-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/guava-18.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/h2-1.1.119.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/hatbox-1.0.b10.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/hatbox-1.0.b11.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hsqldb-2.4.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/httpclient-4.5.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/httpcore-4.4.4.jar"/>
@@ -265,8 +267,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-client-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-common-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xpp3_min-1.1.4c.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

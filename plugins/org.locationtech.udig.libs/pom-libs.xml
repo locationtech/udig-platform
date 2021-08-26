@@ -65,6 +65,12 @@
 				<artifactId>jsr-275</artifactId>
 				<version>1.0-beta-2</version>
 			</dependency>
+			<dependency>
+				<!-- make version explicit due to change https://github.com/jodygarnett/hatbox/issues/1 -->
+				<groupId>net.sourceforge.hatbox</groupId>
+				<artifactId>hatbox</artifactId>
+				<version>1.0.b11</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
