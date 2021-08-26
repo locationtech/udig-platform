@@ -15,27 +15,53 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.locationtech.udig.tool.select.internal.messages"; //$NON-NLS-1$
+
     public static String ArrowSelection_0;
+
     public static String TableView_0;
+
     public static String TableView_1;
+
     public static String TableView_allCheckText;
+
     public static String TableView_allToolTip;
+
     public static String TableView_compositeName;
+
     public static String TableView_deleteCommandName;
+
     public static String TableView_featureSelected;
+
     public static String TableView_noFeatureWarning;
+
     public static String TableView_promote_text;
+
     public static String TableView_promote_tooltip;
+
     public static String TableView_search;
+
     public static String TableView_search_any;
+
     public static String TableView_zoomToolText;
+
     public static String TableView_zoomToolToolTip;
+
+    public static String TableView_bboxSelectionText;
+
+    public static String TableView_bboxSelectionToolTip;
+
     public static String Select_Title;
+
     public static String Select_Description;
+
     public static String Zoom_To_Selection;
+
     public static String Group_AOI;
+
     public static String Navigate_Selection;
+
     public static String Feature_Selection_Radius;
+
     public static String Feature_Selection_Radius_tooltip;
 
     static {

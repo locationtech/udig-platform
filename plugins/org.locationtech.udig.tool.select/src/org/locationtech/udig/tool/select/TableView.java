@@ -578,6 +578,8 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
         select=ApplicationGIS.getToolManager().createToolAction(BBoxSelection.ID, ToolsConstants.SELECTION_CATEGORY);
         ImageDescriptor icon = AbstractUIPlugin.imageDescriptorFromPlugin( SelectPlugin.ID, "icons/eview16/select_view.gif"); //$NON-NLS-1$
         select.setImageDescriptor( icon );
+        select.setText(Messages.TableView_bboxSelectionText);
+        select.setToolTipText(Messages.TableView_bboxSelectionToolTip);
         
         this.promoteSelection=new PromoteSelectionAction();
         
