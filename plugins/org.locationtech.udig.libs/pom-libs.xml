@@ -341,13 +341,6 @@
 			only referenceing the initial gt release version (and not patches) | we have 
 			to manage these dependencies to have the same version like all other | gt-dependencies 
 			(geotools.version) -->
-
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-netcdf</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-
 		<dependency>
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-css</artifactId>
@@ -479,16 +472,6 @@
 		<dependency>
 			<groupId>it.geosolutions.imageio-ext</groupId>
 			<artifactId>imageio-ext-streams</artifactId>
-			<version>${imageio-ext.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>it.geosolutions.imageio-ext</groupId>
-			<artifactId>imageio-ext-netcdf-core</artifactId>
-			<version>${imageio-ext.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>it.geosolutions.imageio-ext</groupId>
-			<artifactId>imageio-ext-netcdf</artifactId>
 			<version>${imageio-ext.version}</version>
 		</dependency>
 		<dependency>
