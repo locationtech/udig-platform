@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry exported="true" kind="lib" path="lib/activation-1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/ant-1.8.1.jar"/>
@@ -12,15 +16,8 @@
 	<classpathentry exported="true" kind="lib" path="lib/asm-analysis-6.2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/asm-tree-6.2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/asm-util-6.2.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-core-1.11.236.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-kms-1.11.236.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-s3-1.11.236.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/bigint-0.7.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/bufr-4.6.11.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/c3p0-0.9.1.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/cdm-4.6.11.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-beanutils-1.9.2-noclassprop.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/commons-cli-1.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-collections-3.2.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-dbcp-1.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-digester-1.7.jar"/>
@@ -86,7 +83,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-mbstyle-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-mbtiles-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-metadata-22.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-netcdf-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-opengis-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-process-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-process-feature-22.1.jar"/>
@@ -117,14 +113,9 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wfs-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wmts-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wps-22.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/guava-18.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/h2-1.1.119.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hatbox-1.0.b11.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hsqldb-2.4.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/httpclient-4.5.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/httpcore-4.4.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/httpmime-4.5.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/httpservices-4.6.11.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-arcgrid-1.3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalarcbinarygrid-1.3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdaldted-1.3.2.jar"/>
@@ -144,17 +135,11 @@
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalvrt-1.3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-geocore-1.3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-imagereadmt-1.3.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-netcdf-1.3.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-netcdf-core-1.3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-streams-1.3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-tiff-1.3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-utilities-1.3.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/ion-java-1.0.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/istack-commons-runtime-3.0.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jackson-annotations-2.7.9.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jackson-core-2.10.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jackson-databind-2.7.9.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jackson-dataformat-cbor-2.6.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/janino-2.5.16.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jansi-1.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/java-vector-tile-1.1.2.jar"/>
@@ -164,16 +149,11 @@
 	<classpathentry exported="true" kind="lib" path="lib/javax.mail-1.5.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jaxb-api-2.4.0-b180830.0359.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jaxb-runtime-2.4.0-b180830.0438.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jaxen-1.1.6.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jcip-annotations-1.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jcommander-1.35.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jdom2-2.0.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jgridshift-core-1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jgt-oms3-0.7.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jline-0.9.94.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jmespath-java-1.11.236.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jna-3.0.9.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jna-4.2.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/joda-time-1.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/json-simple-1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jsqlparser-0.3.14.jar"/>
@@ -232,8 +212,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wfs-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wmts-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/net.opengis.wps-22.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/netcdf-java-4.0.41.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/netcdf4-4.6.11.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/opencsv-3.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/opendap-2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.eclipse.xsd-2.12.0.jar"/>
@@ -245,19 +223,16 @@
 	<classpathentry exported="true" kind="lib" path="lib/postgresql-42.2.5.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/protobuf-java-3.4.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/protobuf-javanano-3.0.0-alpha-2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/quartz-2.2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/scannotation-1.0.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/si-quantity-0.7.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/si-units-java8-0.7.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/slf4j-api-1.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/slf4j-log4j12-1.6.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/sqlite-jdbc-3.27.2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/sqlite-jdbc-spatialite-3.7.2-2.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/stax-ex-1.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/stringtemplate-3.2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/systems-common-java8-0.7.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/txw2-2.4.0-b180830.0438.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/udunits-4.6.11.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/unit-api-1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/uom-lib-common-1.0.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/uom-se-1.0.8.jar"/>
