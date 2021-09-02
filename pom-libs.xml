@@ -47,6 +47,12 @@
     <properties>
         <lib.dir>${basedir}/lib</lib.dir>
         <lib.source.dir>${basedir}/lib-src</lib.source.dir>
+
+        <!-- dependencies used of udig.libs (host-bundle) and udig.libs.xxx (fragments as extensions) -->
+        <geotools.version>22.1</geotools.version>
+        <imageio-ext.version>1.3.2</imageio-ext.version>
+        <jai.imageio.version>1.1</jai.imageio.version>
+        <jai.core.version>1.1.3</jai.core.version>
     </properties>
 
     <repositories>
@@ -82,6 +88,30 @@
         </repository>
 
     </repositories>
+
+    <dependencies>
+      <!-- globally excluded dependencies for udig.libs (host) bundle and udig.libs.xxx (extensions) using fragments -->
+      <!-- Java Advanced Imaging is bundled into our JRE - as such we don't need 
+           them to be downloaded now; however we must run with: -Dosgi.parentClassloader=ext -->
+      <dependency>
+        <groupId>javax.media</groupId>
+        <artifactId>jai_imageio</artifactId>
+        <version>${jai.imageio.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>javax.media</groupId>
+        <artifactId>jai_codec</artifactId>
+        <version>${jai.core.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>javax.media</groupId>
+        <artifactId>jai_core</artifactId>
+        <version>${jai.core.version}</version>
+        <scope>provided</scope>
+      </dependency>
+    </dependencies>
 
     <build>
         <pluginManagement>

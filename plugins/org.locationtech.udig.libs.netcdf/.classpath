@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/aws-java-sdk-core-1.11.236.jar"/>
 	<classpathentry kind="lib" path="lib/aws-java-sdk-kms-1.11.236.jar"/>
 	<classpathentry kind="lib" path="lib/aws-java-sdk-s3-1.11.236.jar"/>
@@ -44,5 +43,4 @@
 	<classpathentry kind="lib" path="lib/slf4j-api-1.7.22.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.6.4.jar"/>
 	<classpathentry kind="lib" path="lib/udunits-4.6.11.jar"/>
-	<classpathentry kind="output" path="bin"/>
 </classpath>
