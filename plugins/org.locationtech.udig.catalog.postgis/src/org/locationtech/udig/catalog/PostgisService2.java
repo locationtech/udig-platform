@@ -42,7 +42,7 @@ import com.google.common.collect.Multimap;
 /**
  * A postgis service that represents the database. Its children are "folders" that each resolve to a
  * PostGISDatastore. Each folder has georesources
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -60,7 +60,7 @@ public class PostgisService2 extends IService {
         this.params = new HashMap<String, Serializable>(map);
         status = Status.NOTCONNECTED;
     }
-    
+
     @Override
     public String getTitle() {
         URL id = getIdentifier();
@@ -124,8 +124,8 @@ public class PostgisService2 extends IService {
                         "looking up schemas", 1));
                 if (schemas == null) {
                     // couldn't look up schema so...
-                    String commaSeperated = (String) params.get(SCHEMA.key);
-                    String[] schemaNames = commaSeperated.split(","); //$NON-NLS-1$
+                    String commaSeparated = (String) params.get(SCHEMA.key);
+                    String[] schemaNames = commaSeparated.split(","); //$NON-NLS-1$
                     schemas = new HashMap<String, Collection<TableDescriptor>>();
                     for (String name : schemaNames) {
                         schemas.put(name, Collections.<TableDescriptor>emptyList());
