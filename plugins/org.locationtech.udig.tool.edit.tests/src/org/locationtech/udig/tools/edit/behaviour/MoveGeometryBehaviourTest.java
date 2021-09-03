@@ -15,6 +15,13 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.Polygon;
 import org.locationtech.udig.project.internal.render.ViewportModel;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.tools.edit.EventType;
@@ -25,15 +32,6 @@ import org.locationtech.udig.tools.edit.support.Point;
 import org.locationtech.udig.tools.edit.support.PrimitiveShape;
 import org.locationtech.udig.tools.edit.support.TestEditBlackboard;
 import org.locationtech.udig.tools.edit.support.TestHandler;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Envelope;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.LinearRing;
-import org.locationtech.jts.geom.Polygon;
 
 /**
  * Test MoveGeometryBehaviour.
@@ -191,7 +189,6 @@ public class MoveGeometryBehaviourTest {
         
         for( int i = 0; i < points.length; i++ ) {
             List<Coordinate> list = editBlackboard.getCoords(points[i].getX(), points[i].getY());
-            System.out.println(list.size());
             assertTrue(!list.isEmpty());
         }
         
@@ -225,13 +222,11 @@ public class MoveGeometryBehaviourTest {
 
         for( int i = 0; i < points.length; i++ ) {
             List<Coordinate> list = editBlackboard.getCoords(points[i].getX()+2, points[i].getY());
-            System.out.println(list.size());
             assertTrue(!list.isEmpty());
         }
 
         for( int i = 0; i < points.length; i++ ) {
             List<EditGeom> list = editBlackboard.getGeoms(points[i].getX()+2, points[i].getY());
-            System.out.println(list.size());
             assertTrue(!list.isEmpty()); 
         }
         
