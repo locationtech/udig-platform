@@ -1,3 +1,12 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * https://locationtech.org/projects/technology.udig
+ * (C) 2021, Eclipse Foundation
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Eclipse Distribution
+ * License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
+ */
 package org.locationtech.udig.internal.ui.operations;
 
 import static org.junit.Assert.assertEquals;
