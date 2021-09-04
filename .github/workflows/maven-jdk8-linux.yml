@@ -41,3 +41,13 @@ jobs:
       uses: GabrielBB/xvfb-action@v1
       with:
          run: mvn verify -B -Pproduct -Psdk -Ptest --fail-at-end -T4
+    - name: provide Windows product for download
+      uses: actions/upload-artifact@v2
+      with:
+        name: udig-platform.win32.win32.x86_64
+        path: ${{ github.workspace }}/features/org.locationtech.udig-product/target/products/*win32.win32.x86_64.zip
+    - name: provide Linux product for download
+      uses: actions/upload-artifact@v2
+      with:
+        name: udig-platform.linux.gtk.x86_64
+        path: ${{ github.workspace }}/features/org.locationtech.udig-product/target/products/*linux.gtk.x86_64.zip
