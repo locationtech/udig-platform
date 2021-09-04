@@ -51,7 +51,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: udig-product.linux.gtk.x86_64
-        path: ${{ github.workspace }}/features/org.locationtech.udig-product/target/products/*linux.gtk.x86_64.zi10
+        path: ${{ github.workspace }}/features/org.locationtech.udig-product/target/products/*linux.gtk.x86_64.zip
         retention-days: 10
     - name: provide MacOSX product for download
       uses: actions/upload-artifact@v2
