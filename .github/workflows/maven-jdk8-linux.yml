@@ -45,17 +45,17 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: udig-product.win32.win32.x86_64
-        path: ${{ github.workspace }}/features/org.locationtech.udig-product/target/products/*win32.win32.x86_64.zip
+        path: ${{ github.workspace }}/features/org.locationtech.udig-product/target/products/org.locationtech.udig-product/win32/win32/x86_64
         retention-days: 10
     - name: provide Linux product for download
       uses: actions/upload-artifact@v2
       with:
         name: udig-product.linux.gtk.x86_64
-        path: ${{ github.workspace }}/features/org.locationtech.udig-product/target/products/*linux.gtk.x86_64.zip
+        path: ${{ github.workspace }}/features/org.locationtech.udig-product/target/products/org.locationtech.udig-product/linux/gtk/x86_64
         retention-days: 10
     - name: provide MacOSX product for download
       uses: actions/upload-artifact@v2
       with:
         name: udig-product.macosx.cocoa.x86_64
-        path: ${{ github.workspace }}/features/org.locationtech.udig-product/target/products/*macosx.cocoa.x86_64.zip
+        path: ${{ github.workspace }}/features/org.locationtech.udig-product/target/products/org.locationtech.udig-product/macosx/cocoa/x86_64
         retention-days: 10
