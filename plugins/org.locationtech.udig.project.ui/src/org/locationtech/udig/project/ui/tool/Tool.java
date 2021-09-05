@@ -102,5 +102,18 @@ public interface Tool {
      */
     public void removeListener(ToolLifecycleListener listener);
     
-    
+    /**
+     * Indicates if the button has toggling behaviour.
+     * 
+     * @return toggling behaviour indicator of button.
+     */
+    public boolean isToggleButton();
+
+    /**
+     * Indicates if the button is toggled or not.
+     * If the button does not have toggling behaviour, it should always return false.
+     * 
+     * @return current button state.
+     */
+    public boolean isTogglingButtonEnabled();
 }

@@ -225,7 +225,7 @@ For internationalization you should consider using %toolName.tooltip%, where too
          <attribute name="commandIds" type="string">
             <annotation>
                <documentation>
-                  A comma seperated list of CommandIds that the tool wishes to handle.  The defined IHandler will be handed all the requests.
+                  A comma separated list of CommandIds that the tool wishes to handle.  The defined IHandler will be handed all the requests.
 See the command extension point.
                </documentation>
             </annotation>
@@ -325,7 +325,7 @@ If this attribute is not used then the selectionProvider attribute in the catego
          <attribute name="commandIds" type="string">
             <annotation>
                <documentation>
-                  A comma seperated list of CommandIds that the tool wishes to handle.  The defined IHandler will be handed all the requests.
+                  A comma separated list of CommandIds that the tool wishes to handle.  The defined IHandler will be handed all the requests.
 See the command extension point
                </documentation>
             </annotation>
@@ -414,7 +414,7 @@ See the command extension point
          <attribute name="commandIds" type="string">
             <annotation>
                <documentation>
-                  A comma seperated list of CommandIds that the tool wishes to handle.  The defined IHandler will be handed all the requests.
+                  A comma separated list of CommandIds that the tool wishes to handle.  The defined IHandler will be handed all the requests.
 See the command extension point
                </documentation>
             </annotation>
@@ -433,6 +433,13 @@ See the command extension point
             <annotation>
                <documentation>
                   The menu location that the action will be placed
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="isToggleButton" type="boolean" use="default" value="false">
+            <annotation>
+               <documentation>
+                  Flag indicating whether the toolbar button has toggling behaviour, i.e. behaves like a switch
                </documentation>
             </annotation>
          </attribute>
