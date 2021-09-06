@@ -206,7 +206,7 @@ public abstract class DatabaseServiceDialect {
      * </ul>
      * 
      * @param geomName The name of the geometry read from the database
-     * @return the vividsolutions class
+     * @return the jts geometry class
      */
     public Class<? extends Geometry> toGeomClass(String geomName) {
     	if(geomName.equalsIgnoreCase("GEOMETRYCOLLECTION") || geomName.equalsIgnoreCase("GEOMETRY")) return Geometry.class;
