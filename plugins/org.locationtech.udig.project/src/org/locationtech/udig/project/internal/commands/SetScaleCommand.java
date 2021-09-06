@@ -9,41 +9,66 @@
  */
 package org.locationtech.udig.project.internal.commands;
 
-import org.locationtech.udig.project.command.AbstractCommand;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.locationtech.udig.project.command.Command;
 import org.locationtech.udig.project.command.UndoableCommand;
 import org.locationtech.udig.project.internal.Messages;
-
-import org.eclipse.core.runtime.IProgressMonitor;
+import org.locationtech.udig.project.internal.command.navigation.AbstractNavCommand;
+import org.locationtech.udig.project.internal.render.ViewportModel;
 
 /**
  * Sets the scale denominator of the map.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
-public class SetScaleCommand extends AbstractCommand implements UndoableCommand {
+public class SetScaleCommand extends AbstractNavCommand implements UndoableCommand {
 
     private double oldScale;
+
     private double newScale;
+
     /**
-     * 
+     *
      * @param newScale Scale Denominator
      */
-    public SetScaleCommand( double newScale ) {
+    public SetScaleCommand(double newScale) {
         this.newScale = newScale;
     }
 
-    public void rollback( IProgressMonitor monitor ) throws Exception {
-        getMap().getViewportModelInternal().setScale(oldScale);
+    @Override
+    public void rollback(IProgressMonitor monitor) throws Exception {
+        if (model != null) {
+            model.setScale(oldScale);
+        } else {
+            getMap().getViewportModelInternal().setScale(oldScale);
+        }
     }
 
+    @Override
     public String getName() {
         return Messages.SetScaleCommand_name;
     }
 
-    public void run( IProgressMonitor monitor ) throws Exception {
-        this.oldScale=getMap().getViewportModel().getScaleDenominator();
-        getMap().getViewportModelInternal().setScale(newScale);
+    @Override
+    public void run(IProgressMonitor monitor) throws Exception {
+        if (model != null) {
+            oldScale = model.getScaleDenominator();
+            model.setScale(newScale);
+        } else {
+            ViewportModel viewportModel = getMap().getViewportModelInternal();
+            this.oldScale = viewportModel.getScaleDenominator();
+            viewportModel.setScale(newScale);
+        }
     }
 
+    @Override
+    public Command copy() {
+        return new SetScaleCommand(newScale);
+    }
+
+    @Override
+    protected void runImpl(IProgressMonitor monitor) throws Exception {
+        run(monitor);
+    }
 }

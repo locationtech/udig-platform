@@ -137,6 +137,7 @@
         <module>org.locationtech.udig.libs</module>
         <module>org.locationtech.udig.libs.db2</module>
         <module>org.locationtech.udig.libs.jfreechart</module>
+        <module>org.locationtech.udig.libs.netcdf</module> <!-- as an optional extension -->
         <module>org.locationtech.udig.libs.oracle</module>
         <module>org.locationtech.udig.location</module>
         <module>org.locationtech.udig.log4j.appender</module>

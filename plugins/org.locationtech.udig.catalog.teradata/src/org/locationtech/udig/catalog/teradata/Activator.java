@@ -11,6 +11,7 @@ package org.locationtech.udig.catalog.teradata;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.net.URL;
 import java.util.HashMap;
 
@@ -46,8 +47,6 @@ import org.locationtech.udig.catalog.teradata.internal.Messages;
 import org.locationtech.udig.ui.PlatformGIS;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-
-import ucar.unidata.io.RandomAccessFile;
 
 /**
  * The activator class controls the plug-in life cycle

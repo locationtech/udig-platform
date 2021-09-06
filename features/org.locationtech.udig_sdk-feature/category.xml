@@ -18,7 +18,7 @@
       <category name="org.locationtech.udig"/>
       <category name="org.locationtech.udig.sdk"/>
    </feature>
-   <feature url="features/org.locationtech.udig_application-platform.source_0.0.0.jar" id="org.locationtech.udig_platform-feature.source" version="0.0.0">
+   <feature url="features/org.locationtech.udig_platform-feature.source_0.0.0.jar" id="org.locationtech.udig_platform-feature.source" version="0.0.0">
       <category name="org.locationtech.udig.sdk.sources"/>
    </feature>
 <!--
