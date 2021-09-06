@@ -9,26 +9,17 @@
  */
 package org.locationtech.udig.project.ui.internal;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorReference;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.Project;
 import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.UDIGEditorInput;
 import org.locationtech.udig.project.ui.internal.tool.ToolContext;
-import org.locationtech.udig.ui.PlatformGIS;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**
@@ -63,7 +54,7 @@ public class ApplicationGISInternal {
 
     /**
      * May return null if the active editor is not a Map Editor.
-     * 
+     *
      * @return the map contained by the current MapEditor or null if the active editor is not a map
      *         editor.
      */
@@ -74,7 +65,7 @@ public class ApplicationGISInternal {
 
     /**
      * Returns all open maps. May return null if no Map Editors exist.
-     * 
+     *
      * @return a list of maps contained or null if no Map Editors exist.
      */
     @SuppressWarnings("unchecked")
@@ -84,7 +75,7 @@ public class ApplicationGISInternal {
 
     /**
      * Return a feature editor for the provided feature
-     * 
+     *
      * @return a feature editor for the provided feature
      */
     public static FeatureEditorLoader getFeatureEditorLoader( SimpleFeature feature ) {
@@ -94,72 +85,30 @@ public class ApplicationGISInternal {
                 new StructuredSelection(feature));
     }
 
-    public static MapEditorPart getActiveEditor() {
-        try {
-            final ArrayList<IEditorPart> editor = new ArrayList<IEditorPart>();
+    public static MapPart getActiveEditor() {
+        IMap map = ApplicationGIS.getActiveMap();
+        MapPart activeMapPart = ApplicationGIS.getActiveMapPart();
 
-            Runnable runnable = new Runnable(){
-                public void run() {
-                    try {
-                        IWorkbenchWindow window = PlatformUI.getWorkbench()
-                                .getActiveWorkbenchWindow();
-                        IEditorReference[] refs = window.getActivePage().getEditorReferences();
-                        IMap map = ApplicationGIS.getActiveMap();
-
-                        for( IEditorReference ref : refs ) {
-                            IEditorInput input = ref.getEditorInput();
-                            if (input instanceof UDIGEditorInput) {
-                                UDIGEditorInput in = (UDIGEditorInput) input;
-                                if (in.getProjectElement() == map) {
-                                    editor.add(ref.getEditor(false));
-                                    break;
-                                }
-                            }
-                        }
-                    } catch (Throwable t) {
-                        // do nothing
-                    }
-                }
-            };
-
-            PlatformGIS.syncInDisplayThread(runnable);
-
-            if (!editor.isEmpty() && editor.get(0) instanceof MapEditorPart) {
-                return (MapEditorPart) editor.get(0);
-            }
-        } catch (Exception e) {
-            return null;
+        if (activeMapPart != null && map != null && map.equals(activeMapPart.getMap())) {
+            return activeMapPart;
         }
-
         return null;
     }
-    public static MapEditorPart findMapEditor( final IMap map ) {
+
+    /**
+     * @param map the map to find the MapPart for.
+     * @return MapPart for given Map, if it has been opened already, otherwise null.
+     */
+    public static MapPart findMapPart( final IMap map ) {
         if (map == null)
             throw new NullPointerException("Map cannot be null"); //$NON-NLS-1$
-
-        final MapEditorPart[] result = new MapEditorPart[1];
-        PlatformGIS.syncInDisplayThread(new Runnable(){
-            public void run() {
-                IWorkbenchWindow win = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-                if (win == null)
-                    return;
-                IWorkbenchPage page = win.getActivePage();
-                if (page == null)
-                    return;
-                IEditorReference[] refs = page.getEditorReferences();
-                for( IEditorReference reference : refs ) {
-                    IEditorPart e = reference.getEditor(false);
-                    if (e instanceof MapEditorPart) {
-                        MapEditorPart me = (MapEditorPart) e;
-                        if (map.equals(me.getMap())) {
-                            result[0] = me;
-                            return;
-                        }
-                    }
-                }
+        Collection<MapPart> openMapParts = ApplicationGIS.getOpenMapParts();
+        for (MapPart mapPart : openMapParts) {
+            if (map.equals(mapPart.getMap())) {
+                return mapPart;
             }
-        });
-        return result[0];
+        }
+        return null;
     }
 
 }

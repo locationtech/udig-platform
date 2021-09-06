@@ -22,15 +22,19 @@ import org.locationtech.udig.tools.edit.EditBlackboardUtil;
  */
 public class DisposeBlackboardOnCloseInterceptor implements MapInterceptor {
 
+    @Override
     public void run( Map map ) {
-        for( ILayer layer : map.getMapLayers() ) {
-            EditBlackboard bb = (EditBlackboard) layer.getBlackboard().get(EditBlackboardUtil.EDIT_BLACKBOARD_KEY);
-            if( bb!=null ){
-                bb.getListeners().clear();
-                bb.selectionClear();
-                bb.clear();
+        if (map != null && map.getMapLayers() != null) {
+            for (ILayer layer : map.getMapLayers()) {
+                EditBlackboard bb = (EditBlackboard) layer.getBlackboard()
+                        .get(EditBlackboardUtil.EDIT_BLACKBOARD_KEY);
+                if (bb != null) {
+                    bb.getListeners().clear();
+                    bb.selectionClear();
+                    bb.clear();
+                }
+                layer.getBlackboard().put(EditBlackboardUtil.EDIT_BLACKBOARD_KEY, null);
             }
-            layer.getBlackboard().put(EditBlackboardUtil.EDIT_BLACKBOARD_KEY, null);
         }
     }
 

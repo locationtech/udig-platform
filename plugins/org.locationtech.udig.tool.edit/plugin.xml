@@ -437,6 +437,13 @@
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
+       <!-- MODIFIED START (FGA) added ESC key binding to default configuration -->
+       <key
+             commandId="org.locationtech.udig.tool.edit.clearAction"
+             contextId="org.eclipse.ui.contexts.window"
+             sequence="ESC"
+             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+       <!-- MODIFIED END -->
       <key
             commandId="org.locationtech.udig.tool.edit.clearAction"
             contextId="org.eclipse.ui.contexts.window"

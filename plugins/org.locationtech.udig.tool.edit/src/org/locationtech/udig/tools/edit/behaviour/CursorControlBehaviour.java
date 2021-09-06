@@ -9,6 +9,12 @@
  */
 package org.locationtech.udig.tools.edit.behaviour;
 
+import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.PlatformUI;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Polygon;
 import org.locationtech.udig.core.IProvider;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.command.UndoableMapCommand;
@@ -22,14 +28,6 @@ import org.locationtech.udig.tools.edit.support.ClosestEdge;
 import org.locationtech.udig.tools.edit.support.EditGeom;
 import org.locationtech.udig.tools.edit.support.Point;
 import org.locationtech.udig.ui.PlatformGIS;
-
-import org.eclipse.swt.graphics.Cursor;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IActionBars2;
-import org.eclipse.ui.PlatformUI;
-
-import org.locationtech.jts.geom.MultiPolygon;
-import org.locationtech.jts.geom.Polygon;
 
 /**
  * Sets the cursor to indicate what action can be done.
@@ -83,12 +81,14 @@ public class CursorControlBehaviour implements EventBehaviour {
             this.overEdgeMessage=overEdgeMessage;
     }
 
+    @Override
     public boolean isValid( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
         boolean isHover=eventType==EventType.HOVERED;
         boolean isMove=eventType==EventType.MOVED;
         return isHover || isMove;
     }
 
+    @Override
     public UndoableMapCommand getCommand( EditToolHandler handler, MapMouseEvent e,
             EventType eventType ) {
         if( overVertex(handler, e) ){
@@ -127,10 +127,11 @@ public class CursorControlBehaviour implements EventBehaviour {
 
     private void setCursorAndMessage(final Cursor cursor, final String string, final EditToolHandler handler) {
         Runnable runnable = new Runnable(){
+            @Override
             public void run() {
                 if( PlatformUI.getWorkbench().isClosing() )
                     return;
-                IActionBars2 bars = handler.getContext().getActionBars();
+                IActionBars bars = handler.getContext().getActionBars();
                 if (bars!=null){
                     bars.getStatusLineManager().setErrorMessage(null);
                     bars.getStatusLineManager().setMessage(string);
@@ -145,6 +146,7 @@ public class CursorControlBehaviour implements EventBehaviour {
             Display.getDefault().asyncExec(runnable);
     }
 
+    @Override
     public void handleError( EditToolHandler handler, Throwable error, UndoableMapCommand command ) {
         EditPlugin.log("", error); //$NON-NLS-1$
     }
@@ -158,9 +160,11 @@ public class CursorControlBehaviour implements EventBehaviour {
         public SystemCursorProvider(int swtCursorID){
             this.id=swtCursorID;
         }
+        @Override
         public Cursor get(Object... params) {
             final Cursor[] cursor = new Cursor[1];
             PlatformGIS.syncInDisplayThread(new Runnable(){
+                @Override
                 public void run() {
                     cursor[0] = Display.getDefault().getSystemCursor(id);
                 }
@@ -178,6 +182,7 @@ public class CursorControlBehaviour implements EventBehaviour {
             this.handler=handler;
         }
 
+        @Override
         public Cursor get(Object... params) {
             return handler.editCursor;
         }
@@ -186,6 +191,7 @@ public class CursorControlBehaviour implements EventBehaviour {
 
     public static class NullStringProvider implements IProvider<String> {
 
+        @Override
         public String get(Object... params) {
             return null;
         }

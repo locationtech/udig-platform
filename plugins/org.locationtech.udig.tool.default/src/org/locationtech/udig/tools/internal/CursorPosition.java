@@ -16,12 +16,6 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
-import org.locationtech.udig.project.command.Command;
-import org.locationtech.udig.project.internal.command.navigation.SetViewportCenterCommand;
-import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import org.locationtech.udig.project.ui.tool.AbstractTool;
-import org.locationtech.udig.project.ui.tool.IToolContext;
-import org.locationtech.udig.ui.PlatformGIS;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.ContributionItem;
@@ -43,9 +37,14 @@ import org.eclipse.swt.widgets.Text;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.udig.project.command.Command;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportCenterCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.tool.AbstractTool;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * A CursorPosition tool displays the current Cursor position in map coordinates on the Statusbar
@@ -70,12 +69,14 @@ public class CursorPosition extends AbstractTool {
             /**
              * @see java.lang.Runnable#run()
              */
+            @Override
             public void run() {
                 getLabel();
             }
         });
     }
 
+    @Override
     public void mouseMoved(final MapMouseEvent e) {
         final LineItem label = getLabel();
         if (label == null)
@@ -97,13 +98,14 @@ public class CursorPosition extends AbstractTool {
         LineItem item = (LineItem) bar.find(ID);
         if (item == null) {
             item = new LineItem(ID);
-            bar.appendToGroup(StatusLineManager.END_GROUP, item);
+            bar.appendToGroup(StatusLineManager.MIDDLE_GROUP, item);
             bar.update(true);
         }
 
         return item;
     }
 
+    @Override
     public void mouseDragged(MapMouseEvent e) {
         mouseMoved(e);
     }
@@ -122,6 +124,7 @@ public class CursorPosition extends AbstractTool {
         /**
          * @see org.eclipse.jface.action.IContributionItem#isDynamic()
          */
+        @Override
         public boolean isDynamic() {
             return true;
         }
@@ -174,10 +177,12 @@ public class CursorPosition extends AbstractTool {
             textArea2.setFont(new Font(textArea2.getDisplay(), data));
         }
 
+        @Override
         public void keyPressed(KeyEvent e) {
             // do nothing
         }
 
+        @Override
         public void keyReleased(KeyEvent e) {
             if (e.character == SWT.Selection) {
                 go();
@@ -197,11 +202,13 @@ public class CursorPosition extends AbstractTool {
             }
         }
 
+        @Override
         public void focusGained(FocusEvent e) {
             int end = textArea.getText().length();
             textArea.setSelection(0, end);
         }
 
+        @Override
         public void focusLost(FocusEvent e) {
             // do nada
         }

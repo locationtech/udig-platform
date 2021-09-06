@@ -14,9 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.geotools.data.shapefile.shp.JTSUtilities;
 import org.locationtech.jts.algorithm.Orientation;
@@ -35,7 +33,7 @@ import org.opengis.feature.type.GeometryDescriptor;
 
 /**
  * Some helper methods for creating geometries.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
@@ -47,7 +45,7 @@ public class GeometryCreationUtil {
      */
     public static class Bag {
         public EditGeom geom;
-        public List<Geometry> jts = new ArrayList<Geometry>();
+        public List<Geometry> jts = new ArrayList<>();
         public Bag( EditGeom geom ) {
             this.geom = geom;
         }
@@ -68,7 +66,7 @@ public class GeometryCreationUtil {
      * endpoints are not the same. In that case a Line will be created. Unless it is a single point.
      * </li>
      *</ul>
-     * 
+     *
      * @param currentGeom the shape that will be created as a geomToCreate type.
      * @param geomToCreate the type of geometry that will be created for the currentShape in the
      *        handler. Must be one of Point, LineString, LinearRing or Polygon.
@@ -83,7 +81,7 @@ public class GeometryCreationUtil {
             Class geomToCreate, GeometryDescriptor geomAttribute, boolean showErrors ) {
         EditBlackboard blackboard = currentGeom.getEditBlackboard();
         List<EditGeom> editGeoms = blackboard.getGeoms();
-        Map<String, GeometryCreationUtil.Bag> idToGeom = new HashMap<String, GeometryCreationUtil.Bag>();
+        Map<String, GeometryCreationUtil.Bag> idToGeom = new HashMap<>();
         for( EditGeom editGeom : editGeoms ) {
             if (editGeom.isChanged()) {
                 if (!idToGeom.containsKey(editGeom.getFeatureIDRef().get()))
@@ -121,7 +119,7 @@ public class GeometryCreationUtil {
      * endpoints are not the same. In that case a Line will be created. Unless it is a single point.
      * </li>
      *</ul>
-     * 
+     *
      * @param currentGeom the handler's current Geom. If == editGeom then geomToCreate will be
      *        returned
      * @param editGeom the editGeom that will be used to create a geometry.
@@ -153,8 +151,8 @@ public class GeometryCreationUtil {
         case POLYGON:
             return Polygon.class;
         case UNKNOWN:
-            if (geomAttribute.getType().getBinding() == Geometry.class
-                    || geomAttribute.getType().getBinding() == GeometryCollection.class) {
+            Class<?> binding = geomAttribute.getType().getBinding();
+            if (binding == Geometry.class || binding == GeometryCollection.class) {
                 PrimitiveShape shell = editGeom.getShell();
                 if (shell.getNumPoints() == 1)
                     return Point.class;
@@ -170,7 +168,7 @@ public class GeometryCreationUtil {
 
     /**
      * Creates a geometry for a primitive shape.
-     * 
+     *
      * @param geomToCreate the type of geometry to create. Must be one of Point, LineString,
      *        LinearRing or Polygon.
      * @param shape the shape to use. If type is Polygon the shapes EditGeom is used.
@@ -195,19 +193,12 @@ public class GeometryCreationUtil {
         if (!geom.isValid()) {
             final Display display = Display.getDefault();
             if (showError) {
-                display.asyncExec(new Runnable(){
-                    public void run() {
-                        IStatus errorStatus = new Status(IStatus.ERROR,
-                                EditPlugin.ID, IStatus.ERROR,
-                                Messages.GeometryCreationUtil_errorMsg, null);
-                        ErrorDialog
-                                .openError(
-                                        display.getActiveShell(),
-                                        Messages.GeometryCreationUtil_errorTitle,
-                                        Messages.GeometryCreationUtil_errorMsg,
-                                        errorStatus);
-                    }
+                display.asyncExec(() -> {
+                    MessageDialog.openError(display.getActiveShell(),
+                            Messages.GeometryCreationUtil_errorTitle,
+                            Messages.GeometryCreationUtil_errorMsg);
                 });
+
                 throw new IllegalStateException("Geometry constructed from EditGeom: " //$NON-NLS-1$
                         + shape.getEditGeom().getFeatureIDRef().get()
                         + " resulted in an invalid geometry"); //$NON-NLS-1$
@@ -218,7 +209,7 @@ public class GeometryCreationUtil {
 
     /**
      * Create JTS Geometry from the provided EditGeom.
-     * 
+     *
      * @param currentGeom
      * @return Polygon
      */
@@ -233,8 +224,8 @@ public class GeometryCreationUtil {
         } catch (Exception e) {
             EditPlugin.log("Not a critical problem, just an FYI", e); //$NON-NLS-1$
         }
-        List<LinearRing> currentHoles = new ArrayList<LinearRing>();
-        
+        List<LinearRing> currentHoles = new ArrayList<>();
+
         for( PrimitiveShape shape : currentGeom.getHoles() ) {
             Coordinate[] coordArray = shape.coordArray();
 
@@ -244,7 +235,7 @@ public class GeometryCreationUtil {
             LinearRing hole = GeometryBuilder.create().safeCreateLinearRing(coordArray);
             // FIXME test when the hole has only one coordinate.
             if (!(coordArray.length <= 2) && !Orientation.isCCW(hole.getCoordinates())) {
-                hole = JTSUtilities.reverseRing((LinearRing) hole);
+                hole = JTSUtilities.reverseRing(hole);
             }
             currentHoles.add(hole);
         }
@@ -256,7 +247,7 @@ public class GeometryCreationUtil {
     /**
      * Creates a GeometryCollection if the schemaDeclaredType is a subclass of GeometryCollection.
      * Otherwise it will just return the first of the list, or null if we are removing content.
-     * 
+     *
      * @param geoms list of goemtries that will be added to the GeometryCollection.
      * @param schemaDeclaredType The type that the resulting geometry has to be compatible with
      * @return geometry can be assigned to schemaDeclaredType, or null geoms is empty
