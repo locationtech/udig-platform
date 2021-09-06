@@ -1,6 +1,6 @@
 /*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -31,7 +31,7 @@ import org.geotools.gce.grassraster.core.color.JlsTokenizer;
  * <p>
  * Representation of a GRASS colortable for raster maps
  * </p>
- * 
+ *
  * @author Andrea Antonello - www.hydrologis.com
  * @since 1.1.0
  */
@@ -113,7 +113,7 @@ public class GrassColorTable extends ColorTable {
     }
 
     /**
-     * 
+     *
      */
     @SuppressWarnings("nls")
     private void processGrass3ColorRule( int lineNumber, String line ) {
@@ -153,7 +153,7 @@ public class GrassColorTable extends ColorTable {
     }
 
     /**
-     * 
+     *
      */
     @SuppressWarnings("nls")
     private void processGrass4ColorRule( String line ) {
@@ -168,7 +168,7 @@ public class GrassColorTable extends ColorTable {
         try {
             JlsTokenizer tk = new JlsTokenizer(line, " ");
             if (tk.hasMoreTokens()) {
-                /* Some lines may have two colors seperated by a space. */
+                /* Some lines may have two colors separated by a space. */
                 JlsTokenizer tk1 = new JlsTokenizer(tk.nextToken(), ":");
                 cat0 = Float.parseFloat(tk1.nextToken());
                 /* The next value(s) describe the color as R:G:B */
@@ -178,7 +178,7 @@ public class GrassColorTable extends ColorTable {
                 if (tk1.hasMoreTokens())
                     b0 = Integer.parseInt(tk1.nextToken());
                 if (tk.hasMoreTokens()) {
-                    /* Some lines may have two colors seperated by a space. */
+                    /* Some lines may have two colors separated by a space. */
                     tk1 = new JlsTokenizer(tk.nextToken(), ":");
                     cat1 = Float.parseFloat(tk1.nextToken());
                     /* The next value(s) describe the color as R:G:B */
@@ -203,9 +203,9 @@ public class GrassColorTable extends ColorTable {
     /**
      * create the default color table for a given dataRange for the case in which no hardcoded color
      * table is found
-     * 
+     *
      * @param dataRange the datarange for which the colortable is created
-     * @throws IOException 
+     * @throws IOException
      */
     @SuppressWarnings("nls")
     public void createDefaultColorTable( double[] dataRange ) throws IOException {
@@ -262,7 +262,7 @@ public class GrassColorTable extends ColorTable {
 
     /**
      * Sets the colortable from a predefined set of rules as defined in {@link PredefinedColorRules}.
-     * 
+     *
      * @param colrFile the color file to persist to.
      * @param dataRange the datarange or null.
      * @param colorRules the colorrules to apply.
@@ -278,7 +278,7 @@ public class GrassColorTable extends ColorTable {
         if (colorRules[0].length == 3) {
             /*
              * the colorrules are without values, so we ramp through them
-             * over the range. 
+             * over the range.
              */
             if (dataRange == null) {
                 // first try to read the range file
@@ -323,7 +323,7 @@ public class GrassColorTable extends ColorTable {
         } else {
             /*
              * in this case we have also the values for the range defined
-             * and the color rule has to be "v1 r1 g1 b1 v2 r2 g2 b2". 
+             * and the color rule has to be "v1 r1 g1 b1 v2 r2 g2 b2".
              */
             if (colorRules[0].length != 8) {
                 throw new IOException("The colortable can have records of 3 or 8 columns. Check your colortables.");
@@ -350,10 +350,10 @@ public class GrassColorTable extends ColorTable {
 
     /**
      * Create a default colorrules of the string format of the colorfile of the map.
-     * 
+     *
      * @param dataRange can be null
      * @return the string format of the colorfile of the map
-     * @throws Exception 
+     * @throws Exception
      */
     @SuppressWarnings("nls")
     public String createDefaultColorRulesString( double[] dataRange, boolean writeToDisk ) throws IOException {

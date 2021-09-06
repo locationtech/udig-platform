@@ -35,7 +35,7 @@ Improvements and Fixes
 * `#329 <https://github.com/locationtech/udig-platform/issues/329>`_ DrawCoordinate command added
 * `#277 <https://github.com/locationtech/udig-platform/issues/277>`_ Adds Perspective Switcher to Application
 * `#292 <https://github.com/locationtech/udig-platform/issues/292>`_ Disallow DropFilterAction between same layers
-* `#266 <https://github.com/locationtech/udig-platform/issues/266>`_ document bundle seperated to have more control creation Appliactions using SDK
+* `#266 <https://github.com/locationtech/udig-platform/issues/266>`_ document bundle separated to have more control creation applications using SDK
 * `#285 <https://github.com/locationtech/udig-platform/issues/285>`_ test bundles names using same pattern
 * `#356 <https://github.com/locationtech/udig-platform/issues/356>`_ Using latest Tycho Release (1.4.0) for build chain
 
@@ -43,4 +43,4 @@ Improvements and Fixes
 Updated 3rd-party Dependencies
 ------------------------------
 
-uDig Codebase has been updated to work with `GeoTools 19.4 <http://geotoolsnews.blogspot.com/2018/12/geotools-194-released.html>`_ series. This implies dependency updates for several other libraries as well. 
+uDig Codebase has been updated to work with `GeoTools 19.4 <http://geotoolsnews.blogspot.com/2018/12/geotools-194-released.html>`_ series. This implies dependency updates for several other libraries as well.

@@ -67,11 +67,11 @@ For internationalization you should consider using %toolName.tooltip%, where too
 <li><b>class</b> - The Tool implementation.  It is recommended that the AbstractTool class is exteneded for mouse tools.</li>
 <li><b>onToolbar</b> - Mark the tool as suitable for the toolbar or palette.</li>
 <li><b>categoryId</b> - The id of the category that the tool is a part of.  In the toolbar it will be part of the drop down menu.</li>
-<li><b>commandIds</b> - A comma seperated list of CommandIds that the tool wishes to handle.  The defined IHandler will be handed all the requests.
+<li><b>commandIds</b> - A comma separated list of CommandIds that the tool wishes to handle.  The defined IHandler will be handed all the requests.
 See the command extension point.</li>
 <li><b>toolCursorId</b> - </li>
 <li><b>commandHandler</b> - This handler will handle called when a command has been requested.  See the command extension point</li>
-<li><b>selectionProvider</b> - Tools are responsible for declaring the selection provider used by the MapEditor.  This attribute declares the IMapEditorSelectionProvider used.  
+<li><b>selectionProvider</b> - Tools are responsible for declaring the selection provider used by the MapEditor.  This attribute declares the IMapEditorSelectionProvider used.
 If this attribute is not used then the selectionProvider attribute in the category declaration is used.  If that is null then the default is used (MapEditorSelectionProvider)</li>
 <li><b>preferencePageId</b> - The id of the preference page used to conviger this tool, if null the parent tool preference page will be used.</li>
 </ul>
@@ -88,7 +88,7 @@ A background tool is a tool that runs the entire time an editor is active. Often
 <li><b>icon</b> - The icon that will be used as a display for the icon</li>
 <li><b>id</b> - A unique id for tool extension</li>
 <li><b>name</b> - The human readable, display, name of the tool</li>
-<li><b>commandIds</b> - A comma seperated list of CommandIds that the tool wishes to handle.  The defined IHandler will be handed all the requests.
+<li><b>commandIds</b> - A comma separated list of CommandIds that the tool wishes to handle.  The defined IHandler will be handed all the requests.
 See the command extension point</li>
 <li><b>commandHandler</b> - This handler will handle called when a command has been requested.  See the command extension point</li>
 </ul>
@@ -107,7 +107,7 @@ An action tool is a tool that is equivalent to a eclipse action.  The only diffe
 <li><b>name</b> - The human readable, display, name of the tool</li>
 <li><b>onToolbar</b> - True if the the tool will appear on the Toolbar.</li>
 <li><b>categoryId</b> - The id of the category that the tool is a part of.  In the toolbar it will be part of the drop down menu.</li>
-<li><b>commandIds</b> - A comma seperated list of CommandIds that the tool wishes to handle.  The defined IHandler will be handed all the requests.
+<li><b>commandIds</b> - A comma separated list of CommandIds that the tool wishes to handle.  The defined IHandler will be handed all the requests.
 See the command extension point</li>
 <li><b>commandHandler</b> - This handler will handle called when a command has been requested.</li>
 <li><b>menuPath</b> - The menu location that the action will be placed</li>

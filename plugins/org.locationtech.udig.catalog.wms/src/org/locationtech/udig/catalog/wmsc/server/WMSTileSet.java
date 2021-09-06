@@ -25,11 +25,11 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.locationtech.jts.geom.Envelope;
 
 /**
- * Class represents a WMSC tile set.  See: 
+ * Class represents a WMSC tile set.  See:
  * <p>
  * http://wiki.osgeo.org/wiki/WMS_Tiling_Client_Recommendation#GetCapabilities_Responses
  *  </p>
- *  
+ *
  * @author Emily Gouge, Graham Davis (Refractions Research, Inc.)
  * @since 1.2.0
  */
@@ -40,7 +40,7 @@ public class WMSTileSet implements TileSet {
 
     /** a unique identifies */
     private int id;
-    
+
     /** the AbstractOpenWebService **/
     private AbstractOpenWebService<?,?> server;
 
@@ -66,7 +66,7 @@ public class WMSTileSet implements TileSet {
     /** List of layers (separated by comma?) */
     private String layers;
 
-    /** Comma seperated list of resolutions in units per pixel */
+    /** Comma separated list of resolutions in units per pixel */
     private String resolutions;
 
     /** Parsed out resolutions - the strict values from resolutions */
@@ -81,12 +81,12 @@ public class WMSTileSet implements TileSet {
     /** styles */
     private String styles;
 
-    /** map of tiles 
+    /** map of tiles
      * NOTE:  This is a WEAKHashMap because we don't want to run out of
      * memory storing all the tiles.  The garbage collector should clean
-     * up less-used keys and their objects as necessary. 
+     * up less-used keys and their objects as necessary.
      **/
-    ObjectCache tiles = ObjectCaches.create("soft", 50); //Tiles that are on the screen //$NON-NLS-1$  
+    ObjectCache tiles = ObjectCaches.create("soft", 50); //Tiles that are on the screen //$NON-NLS-1$
 
     public WMSTileSet() {
         updateID();
@@ -195,7 +195,7 @@ public class WMSTileSet implements TileSet {
     /**
      * Given a scale factor for the resulting image it finds the zoom level that matches the scale
      * factor best.
-     * 
+     *
      * @param scale
      * @return resolution of the zoom level that best matches the scale factor
      */
@@ -218,7 +218,7 @@ public class WMSTileSet implements TileSet {
      * <p>
      * This string is *very* carefully constructed with the assumption that all the getFormat(),
      * getEPSG(), getLayers() methods return Strings that are valid , consistent and ready to go.
-     * 
+     *
      * @param tile
      * @return
      */
@@ -237,7 +237,7 @@ public class WMSTileSet implements TileSet {
         double scale = findAppropriateZoomLevel(viewportScale);
         return getTilesFromZoom(bounds, scale);
     }
-    
+
     /* (non-Javadoc)
 	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getTilesFromZoom(org.locationtech.jts.geom.Envelope, double)
 	 */
@@ -245,7 +245,7 @@ public class WMSTileSet implements TileSet {
 
         double xscale = width * zoom;
         double value = bounds.getMinX() - bboxSrs.getMinX();
-        
+
         double minx = Math.floor(value / xscale) * xscale + bboxSrs.getMinX();
         value = bounds.getMaxX() - bboxSrs.getMinX();
         double maxx = Math.ceil(value / xscale) * xscale + bboxSrs.getMinX();
@@ -256,7 +256,7 @@ public class WMSTileSet implements TileSet {
         value = bounds.getMaxY() - bboxSrs.getMinY();
         double maxy = Math.ceil(value / yscale) * yscale + bboxSrs.getMinY();
         Map<String, Tile> viewportTiles = new HashMap<String, Tile>();
-      
+
         int xNum = (int)Math.round((maxx- minx) / xscale);
         int yNum = (int)Math.round((maxy - miny) / yscale);
         for (int x = 0; x < xNum; x++){
@@ -300,12 +300,12 @@ public class WMSTileSet implements TileSet {
             }
         }
         return viewportTiles;
-    }    
-    
-    
+    }
+
+
     /**
-     * This function takes the last two digits (8 bits) of a double and 0's them. 
-     * 
+     * This function takes the last two digits (8 bits) of a double and 0's them.
+     *
      *
      * @param number
      * @return
@@ -316,14 +316,14 @@ public class WMSTileSet implements TileSet {
         int nBits = 8;
         long invMask = (1L << nBits) - 1L;
         long mask =~ invMask;
-        xBits &= mask;   
+        xBits &= mask;
         return Double.longBitsToDouble(xBits);
     }
-    
+
     /**
      *  Break up the bounds for this zoom level into a list of bounds so that no single
      *  bounds has more than 1024 tiles in it.
-     *  
+     *
 	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getBoundsListForZoom(org.locationtech.jts.geom.Envelope, double)
 	 */
     public List<Envelope> getBoundsListForZoom( Envelope bounds, double zoom ) {
@@ -333,7 +333,7 @@ public class WMSTileSet implements TileSet {
 
         double xscale = width * zoom;
         double value = bounds.getMinX() - bboxSrs.getMinX();
-        
+
         double minx = Math.floor(value / xscale) * xscale + bboxSrs.getMinX();
         value = bounds.getMaxX() - bboxSrs.getMinX();
         double maxx = Math.ceil(value / xscale) * xscale + bboxSrs.getMinX();
@@ -346,19 +346,19 @@ public class WMSTileSet implements TileSet {
         long tilesPerRow = Math.round((maxx-minx) / xscale);
         long tilesPerCol = Math.round((maxy-miny) / yscale);
         long totalTiles = tilesPerCol * tilesPerRow;
-    	
+
          // if there are not enough tiles to make 1024 for this zoom and bounds, then
         // return the single bounds
     	if ( totalTiles <=  maxTilesPerBound ) {
     		boundsList.add(bounds);
     		return boundsList;
     	}
-    	
+
     	// create the size of each bounds
     	double scaleDownFactor = Math.ceil(totalTiles / maxTilesPerBound);
     	double boundsWidth = Math.ceil(tilesPerRow / scaleDownFactor) * xscale;
     	double boundsHeight = Math.ceil(tilesPerCol / scaleDownFactor) * yscale;
-    	
+
     	// create each bounds
     	double x = minx;
     	while (x <= maxx) {
@@ -373,17 +373,17 @@ public class WMSTileSet implements TileSet {
     		}
     		x += boundsWidth;
     	}
-        
+
         return boundsList;
     }
-    
+
     /* (non-Javadoc)
 	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getTileCount((org.locationtech.jts.geom.Envelope, double))
 	 */
     public long getTileCount( Envelope bounds, double zoom ) {
         double xscale = width * zoom;
         double value = bounds.getMinX() - bboxSrs.getMinX();
-        
+
         double minx = Math.floor(value / xscale) * xscale + bboxSrs.getMinX();
         value = bounds.getMaxX() - bboxSrs.getMinX();
         double maxx = Math.ceil(value / xscale) * xscale + bboxSrs.getMinX();
@@ -449,7 +449,7 @@ public class WMSTileSet implements TileSet {
     public int getId() {
         return this.id;
     }
-    
+
     /* (non-Javadoc)
 	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getResolutions()
 	 */
@@ -461,23 +461,23 @@ public class WMSTileSet implements TileSet {
         System.arraycopy(dresolutions, 0, d, 0, d.length);
         return d;
     }
-    
+
     /**
      * Create a unique identifier for the tileset from the various strings that define the tile set.
      */
     private void updateID(){
         //compute a hashset from the attributes;
         StringBuffer sb = new StringBuffer();
-        
+
         if (this.epsgCode != null)
             sb.append(epsgCode);
-        
+
         if (this.format != null)
             sb.append(this.format);
-        
+
         if (this.layers != null)
             sb.append(layers);
-        
+
         if (this.resolutions != null)
             sb.append(this.resolutions);
         if (this.styles != null)
@@ -492,13 +492,13 @@ public class WMSTileSet implements TileSet {
         if (this.bboxSrs != null && this.bboxSrs.getCoordinateReferenceSystem() != null) {
             sb.append(this.bboxSrs.getCoordinateReferenceSystem().toString().hashCode());
         }
-        
+
         sb.append(this.width);
         sb.append(this.height);
-        
+
         this.id = sb.toString().hashCode();
     }
-    
+
     public AbstractOpenWebService<?,?> getServer() {
 		return server;
 	}

@@ -1,8 +1,9 @@
 .DS_Store
 Thumbs.db
 # see pom-libs.xml for osgi-fied 3rd-party dependencies
-plugins/*.libs*/lib/
 plugins/*.libs*/lib-src/
+plugins/*.libs*/lib/
+plugins/*.libs*/libs/
 plugins/org.locationtech.udig.*/.settings
 features/org.locationtech.udig-site.community/artifacts.jar
 features/org.locationtech.udig-site.community/content.jar
