@@ -80,6 +80,7 @@ import org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent;
 import org.locationtech.udig.project.ui.commands.OpenProjectElementCommand;
 import org.locationtech.udig.project.ui.internal.ActiveMapTracker;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.project.ui.internal.Messages;
 import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 import org.locationtech.udig.project.ui.internal.UDIGEditorInputDescriptor;
@@ -121,7 +122,7 @@ public class ApplicationGIS {
 
     /**
      * Return all Projects. The list is unmodifiable.
-     * 
+     *
      * @return all Projects.
      */
     public static List<? extends IProject> getProjects() {
@@ -132,7 +133,7 @@ public class ApplicationGIS {
 
     /**
      * Returns the active map.  Returns {@link #NO_MAP} if there is no open map.
-     * 
+     *
      * @return the map contained by the current MapEditor or null if the active editor is not a map
      *         editor.
      */
@@ -153,6 +154,18 @@ public class ApplicationGIS {
             return Collections.emptyList();
         }
         return activeMapTracker.getOpenMaps();
+    }
+
+    /**
+     * Returns all open maps.
+     *
+     * @return a Collection of maps contained.
+     */
+    public static Collection<MapPart> getOpenMapParts() {
+        if (activeMapTracker == null) {
+            return Collections.emptyList();
+        }
+        return activeMapTracker.getOpenMapParts();
     }
 
     /**

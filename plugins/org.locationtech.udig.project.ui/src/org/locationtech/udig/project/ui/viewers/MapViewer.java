@@ -405,4 +405,14 @@ public class MapViewer implements MapPart {
 //        return editDomain;
 //    }
 
+    @Override
+    public void setDragging(boolean isDragging) {
+        // ignore drag source
+    }
+
+    @Override
+    public boolean isDragging() {
+        return false;
+    }
+
 }

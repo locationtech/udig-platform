@@ -63,7 +63,7 @@ public class ApplicationGISInternal {
 
     /**
      * May return null if the active editor is not a Map Editor.
-     * 
+     *
      * @return the map contained by the current MapEditor or null if the active editor is not a map
      *         editor.
      */
@@ -74,7 +74,7 @@ public class ApplicationGISInternal {
 
     /**
      * Returns all open maps. May return null if no Map Editors exist.
-     * 
+     *
      * @return a list of maps contained or null if no Map Editors exist.
      */
     @SuppressWarnings("unchecked")
@@ -84,7 +84,7 @@ public class ApplicationGISInternal {
 
     /**
      * Return a feature editor for the provided feature
-     * 
+     *
      * @return a feature editor for the provided feature
      */
     public static FeatureEditorLoader getFeatureEditorLoader( SimpleFeature feature ) {
@@ -133,33 +133,22 @@ public class ApplicationGISInternal {
 
         return null;
     }
-    public static MapEditorPart findMapEditor( final IMap map ) {
+
+    /**
+     * @param map the map to find the MapPart for.
+     * @return MapPart for given Map, if it has been opened already, otherwise null.
+     */
+    public static MapPart findMapPart( final IMap map ) {
         if (map == null)
             throw new NullPointerException("Map cannot be null"); //$NON-NLS-1$
 
-        final MapEditorPart[] result = new MapEditorPart[1];
-        PlatformGIS.syncInDisplayThread(new Runnable(){
-            public void run() {
-                IWorkbenchWindow win = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-                if (win == null)
-                    return;
-                IWorkbenchPage page = win.getActivePage();
-                if (page == null)
-                    return;
-                IEditorReference[] refs = page.getEditorReferences();
-                for( IEditorReference reference : refs ) {
-                    IEditorPart e = reference.getEditor(false);
-                    if (e instanceof MapEditorPart) {
-                        MapEditorPart me = (MapEditorPart) e;
-                        if (map.equals(me.getMap())) {
-                            result[0] = me;
-                            return;
-                        }
-                    }
-                }
+        Collection<MapPart> openMapParts = ApplicationGIS.getOpenMapParts();
+        for (MapPart mapPart : openMapParts) {
+            if (map.equals(mapPart.getMap())) {
+                return mapPart;
             }
-        });
-        return result[0];
+        }
+        return null;
     }
 
 }

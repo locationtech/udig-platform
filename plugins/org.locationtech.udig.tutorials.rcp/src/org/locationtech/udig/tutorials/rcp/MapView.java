@@ -15,6 +15,21 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IStatusLineManager;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.ui.part.ViewPart;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.IGeoResource;
@@ -33,22 +48,6 @@ import org.locationtech.udig.project.ui.viewers.MapViewer;
 import org.locationtech.udig.tools.internal.FixedScalePan;
 import org.locationtech.udig.tools.internal.Zoom;
 import org.locationtech.udig.tutorials.tracking.glasspane.SeagullGlassPaneOp;
-
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IStatusLineManager;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.ui.part.ViewPart;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 
 /**
  * A map view.
@@ -205,7 +204,7 @@ public class MapView extends ViewPart implements MapPart {
         @SuppressWarnings("unchecked")
         public void run() {
             Display display = Display.getCurrent();
-            final ArrayList<File> files = new ArrayList<File>();
+            final ArrayList<File> files = new ArrayList<>();
             display.syncExec(new Runnable(){
                 public void run() {
                     FileDialog openDialog = new FileDialog(getSite().getShell(), SWT.OPEN
@@ -220,7 +219,7 @@ public class MapView extends ViewPart implements MapPart {
             });
             if (files.isEmpty())
                 return;
-            List<IGeoResource> dataHandles = new ArrayList<IGeoResource>();
+            List<IGeoResource> dataHandles = new ArrayList<>();
             ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
             
             for( File file : files ) {
@@ -330,5 +329,15 @@ public class MapView extends ViewPart implements MapPart {
         }
         tool.setActive(true);
         activeTool = tool;
+    }
+
+    @Override
+    public void setDragging(boolean isDragging) {
+        // ignore drag source
+    }
+
+    @Override
+    public boolean isDragging() {
+        return false;
     }
 }

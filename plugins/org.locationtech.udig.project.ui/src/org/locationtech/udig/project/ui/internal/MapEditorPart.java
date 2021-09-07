@@ -36,10 +36,6 @@ public interface MapEditorPart extends MapPart, IEditorPart {
 
     UDIGDropHandler getDropHandler();
 
-    boolean isDragging();
-
-    void setDragging(boolean isDragging);
-
     Composite getComposite();
 
     void setDirty(boolean b);

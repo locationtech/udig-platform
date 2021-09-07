@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.swt.widgets.Display;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
 import org.locationtech.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseListener;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
@@ -155,14 +156,13 @@ public abstract class AbstractTool
             final IToolContext context=this.context;
             display.asyncExec(new Runnable(){
                 public void run() {
-                    MapEditorPart editor = ApplicationGISInternal.findMapEditor(context.getMap());
+                    MapPart editor = ApplicationGISInternal.findMapPart(context.getMap());
                     if( editor !=null  && !editor.isDragging() ){
                         editor.setDragging(true);
                     }
                 }
             });
         }
-        
     }
 
     /**
@@ -191,7 +191,7 @@ public abstract class AbstractTool
             final IToolContext context=this.context;
             display.asyncExec(new Runnable(){
                 public void run() {
-                    MapEditorPart editor = ApplicationGISInternal.findMapEditor(context.getMap());
+                    MapPart editor = ApplicationGISInternal.findMapPart(context.getMap());
                     if( editor !=null  && editor.isDragging() ){
                         editor.setDragging(false);
                     }

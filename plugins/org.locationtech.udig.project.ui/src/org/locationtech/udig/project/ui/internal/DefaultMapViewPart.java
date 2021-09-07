@@ -203,4 +203,14 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
         }
     }
 
+
+    @Override
+    public void setDragging(boolean isDragging) {
+        // ignore drag source
+    }
+
+    @Override
+    public boolean isDragging() {
+        return false;
+    }
 }

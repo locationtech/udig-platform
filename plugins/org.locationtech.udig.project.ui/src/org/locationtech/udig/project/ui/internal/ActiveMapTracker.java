@@ -288,4 +288,11 @@ public class ActiveMapTracker implements IStartup, IPartListener2, IWindowListen
         }
     }
 
+    /**
+     * @return Collection of open MapParts.
+     */
+    public Collection<MapPart> getOpenMapParts() {
+        return Collections.unmodifiableCollection(openMaps);
+    }
+
 }

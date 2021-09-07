@@ -71,4 +71,8 @@ public interface MapPart {
 //	 */
 //	public abstract MapEditDomain getEditDomain();
 	
+
+    boolean isDragging();
+
+    void setDragging(boolean isDragging);
 }
