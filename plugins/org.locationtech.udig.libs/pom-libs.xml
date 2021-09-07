@@ -796,11 +796,7 @@
 			<version>1.6.0_25</version> <scope>provided</scope> </dependency> -->
 		<!-- <dependency> <groupId>org.codehaus.groovy</groupId> <artifactId>groovy-all</artifactId> 
 			<version>1.7.1</version> </dependency> -->
-		<dependency>
-			<groupId>com.sun.jna</groupId>
-			<artifactId>jna</artifactId>
-			<version>3.0.9</version>
-		</dependency>
+		
 		<dependency>
 			<groupId>org.jgrasstools</groupId>
 			<artifactId>jgt-oms3</artifactId>
