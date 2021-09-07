@@ -6,16 +6,13 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src/"/>
 	<classpathentry exported="true" kind="lib" path="lib/activation-1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/ant-1.8.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/ant-launcher-1.8.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/antlr-2.7.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/antlr-runtime-3.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/antlr4-runtime-4.7.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/asm-6.2.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/asm-analysis-6.2.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/asm-tree-6.2.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/asm-util-6.2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/bigint-0.7.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-beanutils-1.9.2-noclassprop.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-collections-3.2.2.jar"/>
@@ -52,7 +49,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-coverage-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-coverage-api-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-cql-22.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-css-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-extension-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-hsql-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-feature-pregeneralized-22.1.jar"/>
@@ -114,7 +110,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wmts-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-xsd-wps-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/h2-1.1.119.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/hatbox-1.0.b11.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hsqldb-2.4.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-arcgrid-1.3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalarcbinarygrid-1.3.2.jar"/>
@@ -150,6 +145,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/jaxb-api-2.4.0-b180830.0359.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jaxb-runtime-2.4.0-b180830.0438.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jdom2-2.0.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jfreechart-1.0.13.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jgridshift-core-1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jgt-oms3-0.7.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jline-0.9.94.jar"/>
@@ -217,8 +213,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/org.eclipse.xsd-2.12.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.w3.xlink-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/oro-2.0.8.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/parboiled-core-1.2.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/parboiled-java-1.2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/picocontainer-1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/postgresql-42.2.5.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/protobuf-java-3.4.0.jar"/>
@@ -242,6 +236,5 @@
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-client-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-common-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xpp3_min-1.1.4c.jar"/>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>
