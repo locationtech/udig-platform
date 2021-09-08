@@ -18,7 +18,11 @@ Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
 Bundle-Activator: org.locationtech.udig.libs.internal.Activator
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: com.sun.media.imageio.plugins.bmp,
+Import-Package: com.sun.jna;version="4.2.0",
+ com.sun.jna.platform;version="4.2.0",
+ com.sun.jna.ptr;version="4.2.0",
+ com.sun.jna.win32;version="4.2.0",
+ com.sun.media.imageio.plugins.bmp,
  com.sun.media.imageio.plugins.jpeg2000,
  com.sun.media.imageio.plugins.pnm,
  com.sun.media.imageio.plugins.tiff,
