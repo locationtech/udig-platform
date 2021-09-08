@@ -238,7 +238,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
                 SimpleFeatureType destinationFeatureType = createFeatureType(schema,
                         (Class< ? extends Geometry>) schema.getGeometryDescriptor().getType()
                                 .getBinding(), crs);
-                final SimpleFeatureType finalFeatureType = removeUnsupportedTypes(destinationFeatureType);
+                final SimpleFeatureType finalFeatureType = removeUnsupportedTypes(destinationFeatureType, true);
 
                 ShapefileDataStore shapefile = createShapefile(finalFeatureType, file, data.getCharset());
                 SimpleFeatureType targetFeatureType = shapefile.getSchema();
@@ -296,15 +296,18 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
         return true;
     }
 
-    private SimpleFeatureType removeUnsupportedTypes(final SimpleFeatureType destinationFeatureType) {
+    protected static SimpleFeatureType removeUnsupportedTypes(final SimpleFeatureType destinationFeatureType, boolean writeLog) {
         final List<AttributeDescriptor> attributeDescriptors = destinationFeatureType.getAttributeDescriptors();
         final SimpleFeatureTypeBuilder sftb = new SimpleFeatureTypeBuilder();
         sftb.setName(destinationFeatureType.getTypeName());
 
         for (final AttributeDescriptor at : attributeDescriptors) {
             if (at.getType().getBinding().equals(Object.class)) {
-                System.out.println(at.getName() + " is " + Object.class.getName());
-                // ignore
+                if (writeLog) {
+                    CatalogUIPlugin.log(MessageFormat.format(
+                        "Catalog Export : Ignoring attribute {0} (FeatureType {1}) which is of unsupported type Object.", ////$NON-NLS-1$
+                        at.getName(), destinationFeatureType.getName()), null);
+                }
             } else {
                 if (!(at instanceof GeometryDescriptor)) {
                     sftb.add(at);
