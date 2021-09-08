@@ -2,6 +2,7 @@
 <project
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -26,6 +27,7 @@
 	<properties>
 		<!-- see geotools root pom for details -->
 		<jaiext.version>1.0.26</jaiext.version>
+		<jfreechart.version>1.0.13</jfreechart.version>
 		<jt.version>1.4.0</jt.version>
 		<!--<jts.version>1.14.0</jts.version>-->
 		<solrj.version>7.2.1</solrj.version>
@@ -72,20 +74,6 @@
 	</dependencyManagement>
 
 	<dependencies>
-		<!-- see org.locationtech.udig.libs.jfreechart -->
-		<dependency>
-			<groupId>jfree</groupId>
-			<artifactId>jfreechart</artifactId>
-			<version>1.0.13</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>jfree</groupId>
-			<artifactId>jcommon</artifactId>
-			<version>1.0.13</version>
-			<scope>provided</scope>
-		</dependency>
-
 		<!-- uDig Specific Extras -->
 		<dependency>
 			<!-- scope provided means that it is excluded globally -->
@@ -803,11 +791,7 @@
 			<version>1.6.0_25</version> <scope>provided</scope> </dependency> -->
 		<!-- <dependency> <groupId>org.codehaus.groovy</groupId> <artifactId>groovy-all</artifactId> 
 			<version>1.7.1</version> </dependency> -->
-		<dependency>
-			<groupId>com.sun.jna</groupId>
-			<artifactId>jna</artifactId>
-			<version>3.0.9</version>
-		</dependency>
+		
 		<dependency>
 			<groupId>org.jgrasstools</groupId>
 			<artifactId>jgt-oms3</artifactId>
@@ -952,5 +936,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
