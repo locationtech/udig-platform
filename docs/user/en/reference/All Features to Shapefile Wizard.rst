@@ -1,5 +1,5 @@
 All Features to Shapefile Wizard
-############################
+################################
 
 Used to export a resource (often selected in the Catalog view) to a shapefile. This wizard is
 typically used to export contents from a remote WFS or Spatial database local storage.
