@@ -161,7 +161,7 @@ public class BasicFeatureRenderer extends RendererImpl {
         SimpleFeatureType schema = featureSource.getSchema();
 
         // Original Query provided by Layer.getFilter() as adjusted by selection and edit filter
-        Query query = getContext().getFeatureQuery();
+        Query query = new Query(getContext().getFeatureQuery());
         if( styleBlackboard.contains(ProjectBlackboardConstants.LAYER__STYLE_FILTER)){
             if( query == null ){
                 query = new Query( schema.getTypeName() );
