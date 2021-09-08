@@ -354,12 +354,6 @@
 			(geotools.version) -->
 		<dependency>
 			<groupId>org.geotools</groupId>
-			<artifactId>gt-css</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.geotools</groupId>
 			<artifactId>gt-mbtiles</artifactId>
 			<version>${geotools.version}</version>
 		</dependency>
