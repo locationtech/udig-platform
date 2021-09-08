@@ -37,7 +37,6 @@ public class DummyConnectionPage extends AbstractUDIGImportPage
 	}
 
 	public String getId() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -45,9 +44,9 @@ public class DummyConnectionPage extends AbstractUDIGImportPage
 		URL url = null;
 		try {
 			url = new URL("http://dummy.refractions.net"); //$NON-NLS-1$
-		} 
+		}
 		catch (MalformedURLException e) {}
-		
+
 		HashMap<String, Serializable> map = new HashMap<String, Serializable>();
 		map.put("dummy", url); //$NON-NLS-1$
 		return map;
@@ -58,7 +57,7 @@ public class DummyConnectionPage extends AbstractUDIGImportPage
 			ArrayList<URL> list = new ArrayList<URL>();
 			list.add(new URL("http://dummy.refractions.net")); //$NON-NLS-1$
 			return list;
-		} 
+		}
 		catch (MalformedURLException e) {
 			return null;
 		}

@@ -28,7 +28,7 @@ import org.opengis.feature.type.GeometryDescriptor;
 
 /**
  * A Descriptor for a SimpleFeatureType aka Schema for the properties view.
- * 
+ *
  * @author jeichar
  * @since 1.0.0
  */
@@ -39,7 +39,7 @@ public class SchemaDescriptor extends PropertyDescriptor implements IPropertySou
 
     /**
      * Creates a new instance of FeatureSourceDescriptor
-     * 
+     *
      * @param id
      * @param name
      * @param source
@@ -60,7 +60,6 @@ public class SchemaDescriptor extends PropertyDescriptor implements IPropertySou
      * @see org.eclipse.ui.views.properties.IPropertySource#getEditableValue()
      */
     public Object getEditableValue() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -76,10 +75,10 @@ public class SchemaDescriptor extends PropertyDescriptor implements IPropertySou
                 String name = attrs[i].getLocalName().toLowerCase();
                 name = name.substring(0, 1).toUpperCase() + name.substring(1);
                 d = new PropertyDescriptor(Integer.valueOf(i), name);
-                if ( attrs[i] instanceof GeometryDescriptor ) 
-                    d.setCategory(Messages.ScemaDescriptor_geometry); 
+                if ( attrs[i] instanceof GeometryDescriptor )
+                    d.setCategory(Messages.ScemaDescriptor_geometry);
                 else
-                    d.setCategory(Messages.ScemaDescriptor_attributeTypes); 
+                    d.setCategory(Messages.ScemaDescriptor_attributeTypes);
                 desc.add(d);
             }
             descriptors = new IPropertyDescriptor[desc.size()];
@@ -103,7 +102,6 @@ public class SchemaDescriptor extends PropertyDescriptor implements IPropertySou
      * @see org.eclipse.ui.views.properties.IPropertySource#isPropertySet(java.lang.Object)
      */
     public boolean isPropertySet( Object id ) {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -111,7 +109,6 @@ public class SchemaDescriptor extends PropertyDescriptor implements IPropertySou
      * @see org.eclipse.ui.views.properties.IPropertySource#resetPropertyValue(java.lang.Object)
      */
     public void resetPropertyValue( Object id ) {
-        // TODO Auto-generated method stub
 
     }
 
@@ -120,7 +117,6 @@ public class SchemaDescriptor extends PropertyDescriptor implements IPropertySou
      *      java.lang.Object)
      */
     public void setPropertyValue( Object id, Object value ) {
-        // TODO Auto-generated method stub
 
     }
 }

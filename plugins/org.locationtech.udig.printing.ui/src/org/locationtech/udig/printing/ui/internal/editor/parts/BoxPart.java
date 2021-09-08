@@ -50,7 +50,7 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * A part for all boxes.
- * 
+ *
  * @author Richard Gould
  * @author Jesse
  * @since 0.3
@@ -81,7 +81,7 @@ public class BoxPart extends AbstractGraphicalEditPart implements NodeEditPart, 
         box.eAdapters().remove(this.listener);
         box.removePropertyChangeListener(listener);
     }
-    
+
     @Override
 	public Object getAdapter(Class key) {
     	Box box = ((Box) getModel());
@@ -104,12 +104,12 @@ public class BoxPart extends AbstractGraphicalEditPart implements NodeEditPart, 
 
         ((GraphicalEditPart) getParent()).setLayoutConstraint(this, getFigure(), rectangle);
     }
-    
+
     public BoxPrinter getBoxPrinter(){
         return ((Box)getModel()).getBoxPrinter();
     }
 
-    
+
 
     public void performRequest( Request request ) {
         EditPolicy policy = getEditPolicy(request.getType());
@@ -130,9 +130,9 @@ public class BoxPart extends AbstractGraphicalEditPart implements NodeEditPart, 
             }
             if( !action.isDone() )
                 return;
-            
+
             Command command = action.getCommand();
-            
+
             if( command!=null && command.canExecute() ){
                 getViewer().getEditDomain().getCommandStack().execute(command);
             }
@@ -141,17 +141,16 @@ public class BoxPart extends AbstractGraphicalEditPart implements NodeEditPart, 
 
     @Override
     public void setModel( Object model ) {
-        // TODO Auto-generated method stub
         super.setModel(model);
     }
-    
+
 	protected List getModelSourceConnections() {
 		return ((Box) getModel()).getSourceConnections();
 	}
 	protected List getModelTargetConnections() {
 		return ((Box) getModel()).getTargetConnections();
 	}
-   
+
     protected void createEditPolicies() {
         installEditPolicy(EditPolicy.COMPONENT_ROLE, new PageElementEditPolicy());
         installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE, new GraphicalNodeEditPolicy(){
@@ -188,7 +187,7 @@ public class BoxPart extends AbstractGraphicalEditPart implements NodeEditPart, 
         });
 
         List<BoxFactory> boxes = PrintingPlugin.getDefault().getBoxes();
-        
+
         Box model = (Box) getModel();
         BoxPrinter printer = model.getBoxPrinter();
         String defaultActionID = null;
@@ -198,7 +197,7 @@ public class BoxPart extends AbstractGraphicalEditPart implements NodeEditPart, 
                 break;
             }
         }
-        
+
         Collection<BoxAction> actions = PrintingPlugin.getBoxExtensionActions(null);
         for( BoxAction element : actions ) {
             try {
@@ -210,7 +209,7 @@ public class BoxPart extends AbstractGraphicalEditPart implements NodeEditPart, 
                 } else {
                     isAcceptable = element.isAcceptableBoxPrinter(printer);
                 }
-                
+
                 if (isAcceptable) {
                     EditPolicy policyObj = element.getEditPolicy();
                     installEditPolicy(element.getRequest().getType(), policyObj);
@@ -225,7 +224,7 @@ public class BoxPart extends AbstractGraphicalEditPart implements NodeEditPart, 
     protected IFigure createFigure() {
         return new BoxFigure();
     }
-    
+
 	public ConnectionAnchor getSourceConnectionAnchor(
 			ConnectionEditPart connection) {
 		return new ChopboxAnchor(getFigure());
@@ -264,11 +263,11 @@ public class BoxPart extends AbstractGraphicalEditPart implements NodeEditPart, 
      * Returns the default action for the box.  See {@link BoxFactory#getDefaultActionID()} for more details
      *
      * @return the default action for the box
-     * 
+     *
      * @see BoxFactory#getDefaultActionID()
      */
     public BoxAction getDefaultAction() {
         return defaultAction;
     }
-    
+
 }

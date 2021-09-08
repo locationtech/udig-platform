@@ -40,7 +40,7 @@ import org.geotools.xml.xsi.XSISimpleTypes;
  * <p>
  * http://wiki.osgeo.org/wiki/WMS_Tiling_Client_Recommendation#GetCapabilities_Responses
  * </p>
- * 
+ *
  * @author Emily Gouge (Refractions Research, Inc)
  * @since 1.1.0
  */
@@ -70,8 +70,8 @@ public class WMSCSchema implements Schema {
             new WMSCElement("Format", XSISimpleTypes.String.getInstance()), //$NON-NLS-1$
             new WMSCElement("Layers", XSISimpleTypes.String.getInstance()), //$NON-NLS-1$
             new WMSCElement("Styles", XSISimpleTypes.String.getInstance()), //_StyleType.getInstance()) //$NON-NLS-1$
-            
-            
+
+
             new WMSCElement("Name", XSISimpleTypes.String.getInstance()),  //$NON-NLS-1$
             new WMSCElement("Title", XSISimpleTypes.String.getInstance()),  //$NON-NLS-1$
             new WMSCElement("OnlineResource", XSISimpleTypes.String.getInstance()) //$NON-NLS-1$
@@ -258,7 +258,6 @@ public class WMSCSchema implements Schema {
          * @see org.geotools.xml.schema.ElementGrouping#getGrouping()
          */
         public int getGrouping() {
-            // TODO Auto-generated method stub
             return ELEMENT;
         }
 

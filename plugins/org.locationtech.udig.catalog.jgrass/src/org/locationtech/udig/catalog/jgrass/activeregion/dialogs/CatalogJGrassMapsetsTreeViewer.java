@@ -1,6 +1,6 @@
 /*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -49,7 +49,7 @@ import org.locationtech.udig.catalog.jgrass.core.JGrassService;
  * This class supplies a tree viewer containing the JGrass mapsets that are in the catalog When a
  * mapset is selected it is passed to the WidgetObservers that are registered with this class.
  * </p>
- * 
+ *
  * @author Andrea Antonello - www.hydrologis.com
  * @since 1.1.0
  */
@@ -119,7 +119,7 @@ public class CatalogJGrassMapsetsTreeViewer extends Composite implements ISelect
     private class ContentProvider implements ITreeContentProvider {
         /**
          * Gets the children of the specified object
-         * 
+         *
          * @param arg0 the parent object
          * @return Object[]
          */
@@ -171,7 +171,7 @@ public class CatalogJGrassMapsetsTreeViewer extends Composite implements ISelect
         }
         /**
          * Gets the parent of the specified object
-         * 
+         *
          * @param arg0 the object
          * @return Object
          */
@@ -190,7 +190,7 @@ public class CatalogJGrassMapsetsTreeViewer extends Composite implements ISelect
 
         /**
          * Returns whether the passed object has children
-         * 
+         *
          * @param arg0 the parent object
          * @return boolean
          */
@@ -205,7 +205,7 @@ public class CatalogJGrassMapsetsTreeViewer extends Composite implements ISelect
 
         /**
          * Gets the root element(s) of the tree
-         * 
+         *
          * @param arg0 the input data
          * @return Object[]
          */
@@ -241,7 +241,7 @@ public class CatalogJGrassMapsetsTreeViewer extends Composite implements ISelect
 
         /**
          * Called when the input changes
-         * 
+         *
          * @param arg0 the viewer
          * @param arg1 the old input
          * @param arg2 the new input
@@ -297,7 +297,7 @@ public class CatalogJGrassMapsetsTreeViewer extends Composite implements ISelect
 
         /**
          * Gets the image to display for a node in the tree
-         * 
+         *
          * @param arg0 the node
          * @return Image
          */
@@ -313,7 +313,7 @@ public class CatalogJGrassMapsetsTreeViewer extends Composite implements ISelect
 
         /**
          * Gets the text to display for a node in the tree
-         * 
+         *
          * @param arg0 the node
          * @return String
          */
@@ -335,7 +335,7 @@ public class CatalogJGrassMapsetsTreeViewer extends Composite implements ISelect
 
         /**
          * Adds a listener to this label provider
-         * 
+         *
          * @param arg0 the listener
          */
         public void addListener( ILabelProviderListener arg0 ) {
@@ -354,7 +354,7 @@ public class CatalogJGrassMapsetsTreeViewer extends Composite implements ISelect
         /**
          * Returns whether changes to the specified property on the specified element would affect
          * the label for the element
-         * 
+         *
          * @param arg0 the element
          * @param arg1 the property
          * @return boolean
@@ -365,7 +365,7 @@ public class CatalogJGrassMapsetsTreeViewer extends Composite implements ISelect
 
         /**
          * Removes the listener
-         * 
+         *
          * @param arg0 the listener to remove
          */
         public void removeListener( ILabelProviderListener arg0 ) {
@@ -378,7 +378,6 @@ public class CatalogJGrassMapsetsTreeViewer extends Composite implements ISelect
     }
 
     public int getType() {
-        // TODO Auto-generated method stub
         return 0;
     }
 

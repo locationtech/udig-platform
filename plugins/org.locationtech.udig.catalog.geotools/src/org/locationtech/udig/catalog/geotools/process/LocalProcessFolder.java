@@ -39,7 +39,7 @@ public class LocalProcessFolder implements IResolve {
     /**
      * LocalProcessFolder constructor with package visibility as it should only be constructed by
      * LocalProcessService.
-     * 
+     *
      * @param service
      * @param factory
      */
@@ -48,7 +48,7 @@ public class LocalProcessFolder implements IResolve {
         this.factory = factory;
         this.id = new ID( service.getID() + "/" + factory.getClass().getSimpleName(), "local" );
     }
-    
+
     public ProcessFactory getFactory() {
         return factory;
     }
@@ -137,7 +137,6 @@ public class LocalProcessFolder implements IResolve {
     }
 
     public void dispose( IProgressMonitor monitor ) {
-        // TODO Auto-generated method stub
 
     }
 

@@ -53,7 +53,7 @@ public class URLWizardPage extends AbstractUDIGImportPage implements ModifyListe
      * Construct <code>URLWizardPage</code>.
      */
     public URLWizardPage() {
-        super(Messages.URLWizardPage_title); 
+        super(Messages.URLWizardPage_title);
 
         settings = ProjectUIPlugin.getDefault().getDialogSettings().getSection(URL_WIZARD);
         if (settings == null) {
@@ -62,9 +62,9 @@ public class URLWizardPage extends AbstractUDIGImportPage implements ModifyListe
     }
 
     public String getId() {
-        // TODO Auto-generated method stub
         return null;
     }
+
     public boolean canProcess( Object object ) {
         URL url = CatalogPlugin.locateURL(object);
         if (url == null) {
@@ -94,7 +94,7 @@ public class URLWizardPage extends AbstractUDIGImportPage implements ModifyListe
         gridData = new GridData();
 
         Label urlLabel = new Label(composite, SWT.NONE);
-        urlLabel.setText(Messages.URLWizardPage_label_url_text); 
+        urlLabel.setText(Messages.URLWizardPage_label_url_text);
         urlLabel.setLayoutData(gridData);
 
         gridData = new GridData(GridData.FILL_HORIZONTAL);
@@ -128,7 +128,7 @@ public class URLWizardPage extends AbstractUDIGImportPage implements ModifyListe
 
     /**
      * Double click in list, or return from url control.
-     * 
+     *
      * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
      * @param e
      */
@@ -158,7 +158,7 @@ public class URLWizardPage extends AbstractUDIGImportPage implements ModifyListe
             new URL(url.getText());
             setErrorMessage(null);
         } catch (MalformedURLException exception) {
-            setErrorMessage(Messages.URLWizardPage_error_invalidURL); 
+            setErrorMessage(Messages.URLWizardPage_error_invalidURL);
         }
         getWizard().getContainer().updateButtons();
     }
@@ -176,12 +176,10 @@ public class URLWizardPage extends AbstractUDIGImportPage implements ModifyListe
     }
 
     public Map<String, Serializable> getParams() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public List<URL> getURLs() {
-        // TODO Auto-generated method stub
         return null;
     }
 }
