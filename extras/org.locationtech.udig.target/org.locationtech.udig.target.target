@@ -95,7 +95,7 @@
 <unit id="org.apache.batik.util" version="1.7.0.v201011041433"/>
 <unit id="org.apache.batik.util.gui" version="1.7.0.v200903091627"/>
 <unit id="org.apache.batik.xml" version="1.7.0.v201011041433"/>
-<unit id="org.apache.commons.codec" version="0.0.0"/>
+<unit id="org.apache.commons.codec" version="1.9.0.v20170208-1614"/>
 <unit id="org.apache.commons.lang" version="0.0.0"/>
 <unit id="org.apache.commons.logging" version="1.1.1.v201101211721"/>
 <unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
@@ -112,6 +112,8 @@
 <unit id="net.bytebuddy.byte-buddy-agent" version="1.9.0.v20181106-1534"/>
 <unit id="org.mockito" version="2.23.0.v20200310-1642"/>
 <unit id="org.objenesis" version="2.6.0.v20180420-1519"/>
+<unit id="com.sun.jna" version="4.5.1.v20190425-1842"/>
+<unit id="com.sun.jna.platform" version="4.5.1.v20190425-1842"/>
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20201130205003/repository/"/>
 </location>
 </locations>

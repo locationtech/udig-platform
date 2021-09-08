@@ -111,6 +111,12 @@
         <version>${jai.core.version}</version>
         <scope>provided</scope>
       </dependency>
+      <dependency>
+        <groupId>commons-codec</groupId>
+        <artifactId>commons-codec</artifactId>
+        <version>1.9</version>
+        <scope>provided</scope>
+      </dependency>
     </dependencies>
 
     <build>
