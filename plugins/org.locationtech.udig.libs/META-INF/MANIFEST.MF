@@ -13,8 +13,7 @@ Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
  org.apache.xerces;visibility:=reexport,
  org.apache.log4j;visibility:=reexport,
  org.eclipse.xsd;visibility:=reexport,
- org.eclipse.swt;visibility:=reexport,
- org.apache.commons.codec;bundle-version="1.9.0";visibility:=reexport
+ org.eclipse.swt;visibility:=reexport
 Bundle-Activator: org.locationtech.udig.libs.internal.Activator
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -94,6 +93,12 @@ Import-Package: com.sun.jna;version="4.2.0",
  oracle.security.o3logon;resolution:=optional,
  oracle.sql;resolution:=optional,
  oracle.sql.converter;resolution:=optional,
+ org.apache.commons.codec;version="1.2.0",
+ org.apache.commons.codec.binary;version="1.2.0",
+ org.apache.commons.codec.digest;version="1.2.0",
+ org.apache.commons.codec.language;version="1.2.0",
+ org.apache.commons.codec.language.bm;version="1.2.0",
+ org.apache.commons.codec.net;version="1.2.0",
  org.jfree;version="1.0.13",
  org.jfree.base;version="1.0.13",
  org.jfree.base.config;version="1.0.13",
