@@ -2,6 +2,7 @@
 <project
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -339,12 +340,6 @@
 			only referenceing the initial gt release version (and not patches) | we have 
 			to manage these dependencies to have the same version like all other | gt-dependencies 
 			(geotools.version) -->
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-css</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-
 		<dependency>
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-mbtiles</artifactId>
@@ -796,11 +791,7 @@
 			<version>1.6.0_25</version> <scope>provided</scope> </dependency> -->
 		<!-- <dependency> <groupId>org.codehaus.groovy</groupId> <artifactId>groovy-all</artifactId> 
 			<version>1.7.1</version> </dependency> -->
-		<dependency>
-			<groupId>com.sun.jna</groupId>
-			<artifactId>jna</artifactId>
-			<version>3.0.9</version>
-		</dependency>
+		
 		<dependency>
 			<groupId>org.jgrasstools</groupId>
 			<artifactId>jgt-oms3</artifactId>
@@ -945,5 +936,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

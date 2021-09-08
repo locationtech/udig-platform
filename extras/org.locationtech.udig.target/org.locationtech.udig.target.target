@@ -112,6 +112,8 @@
 <unit id="net.bytebuddy.byte-buddy-agent" version="1.9.0.v20181106-1534"/>
 <unit id="org.mockito" version="2.23.0.v20200310-1642"/>
 <unit id="org.objenesis" version="2.6.0.v20180420-1519"/>
+<unit id="com.sun.jna" version="4.5.1.v20190425-1842"/>
+<unit id="com.sun.jna.platform" version="4.5.1.v20190425-1842"/>
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20201130205003/repository/"/>
 </location>
 </locations>
