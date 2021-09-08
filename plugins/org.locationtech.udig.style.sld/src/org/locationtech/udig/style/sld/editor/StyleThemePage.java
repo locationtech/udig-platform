@@ -1,13 +1,13 @@
 /*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
- * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
- */
+*    uDig - User Friendly Desktop Internet GIS client
+*    http://udig.refractions.net
+*    (C) 2012, Refractions Research Inc.
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+* License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
+*/
 package org.locationtech.udig.style.sld.editor;
 
 import java.awt.Color;
@@ -139,14 +139,14 @@ public class StyleThemePage extends StyleEditorPage {
 
     private static final int LABEL_SEPARATOR_BOTTOM = 12;
     private static final int LABEL_STATUSBAR = 13;
-    
+
     private static final int LABEL_ICON_COLORBLIND = 14;
     private static final int LABEL_ICON_PHOTOCOPY = 15;
     private static final int LABEL_ICON_PROJECTOR = 16;
     private static final int LABEL_ICON_LCD = 17;
     private static final int LABEL_ICON_CRT = 18;
     private static final int LABEL_ICON_PRINT = 19;
-    
+
     static final int BUTTON_COLORBLIND = 20;
     static final int BUTTON_PHOTOCOPY = 21;
     static final int BUTTON_PROJECTOR = 22;
@@ -154,14 +154,14 @@ public class StyleThemePage extends StyleEditorPage {
     static final int BUTTON_CRT = 24;
     static final int BUTTON_PRINT = 25;
     private static final int BUTTON_REMOVE = 26;
-    
+
     private static final int COMPOSITE_PARENT = 30;
     private static final int COMPOSITE_TOP = 31;
     private static final int COMPOSITE_MIDDLE = 32;
     private static final int COMPOSITE_BOTTOM = 33;
     private static final int COMPOSITE_BOTTOM_LEFT = 34;
-    
-    // Key for saving the opacity in the layer's blackboard.  String formatted 
+
+    // Key for saving the opacity in the layer's blackboard.  String formatted
     // red-green-blue
     private static final String BORDER_COLOR_KEY = "theme_page_border_color"; //$NON-NLS-1$
     // Key for saving the opacity in the layer's blackboard.  Integer
@@ -198,12 +198,12 @@ public class StyleThemePage extends StyleEditorPage {
 
     private HashMap<Integer,Control> pageControls = new HashMap<Integer,Control>();
     private List<String> numericAttr = new ArrayList<String>();
-    private double[] opacity;    
+    private double[] opacity;
 
     private HashMap<Integer, String> controlNames = new HashMap<Integer, String>();
     private HashMap<Integer, Integer> viewerQuality = new HashMap<Integer, Integer>();
     private HashMap<String, Integer> uniqueCounts = new HashMap<String, Integer>();
-    
+
     private ColorBrewer brewer;
     private boolean reverseColours = false;
     private StyleGenerator sg;
@@ -213,7 +213,7 @@ public class StyleThemePage extends StyleEditorPage {
     private Classifier classifier;
     private TableSettings tableSettings;
     private boolean elseSelection = true;
-    
+
     private FilterFactory2 ff;
     private FeatureCollection<SimpleFeatureType, SimpleFeature> collection;
     private  FeatureSource<SimpleFeatureType, SimpleFeature> source;
@@ -222,7 +222,7 @@ public class StyleThemePage extends StyleEditorPage {
     TableViewer paletteTable;
     TreeViewer treeViewer;
     BrewerPalette customPalette = null;
-    
+
     /**
      * Classifier is produced by running a classification function over a FeatureCollection.
      * <p>
@@ -231,27 +231,27 @@ public class StyleThemePage extends StyleEditorPage {
      */
     //ExplicitClassifier customBreak = null;
     Classifier customBreak = null;
-    
+
     public StyleThemePage() {
         //create factories
         ff = (FilterFactory2) CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
         sb = new StyleBuilder(ff);
-        
+
         //suitability icons
-        controlNames.put(LABEL_ICON_COLORBLIND, Messages.StyleEditor_theme_suitability_colour); 
-        controlNames.put(LABEL_ICON_CRT, Messages.StyleEditor_theme_suitability_crt); 
-        controlNames.put(LABEL_ICON_LCD, Messages.StyleEditor_theme_suitability_lcd); 
-        controlNames.put(LABEL_ICON_PHOTOCOPY, Messages.StyleEditor_theme_suitability_pcopy); 
-        controlNames.put(LABEL_ICON_PRINT, Messages.StyleEditor_theme_suitability_print); 
-        controlNames.put(LABEL_ICON_PROJECTOR, Messages.StyleEditor_theme_suitability_proj); 
+        controlNames.put(LABEL_ICON_COLORBLIND, Messages.StyleEditor_theme_suitability_colour);
+        controlNames.put(LABEL_ICON_CRT, Messages.StyleEditor_theme_suitability_crt);
+        controlNames.put(LABEL_ICON_LCD, Messages.StyleEditor_theme_suitability_lcd);
+        controlNames.put(LABEL_ICON_PHOTOCOPY, Messages.StyleEditor_theme_suitability_pcopy);
+        controlNames.put(LABEL_ICON_PRINT, Messages.StyleEditor_theme_suitability_print);
+        controlNames.put(LABEL_ICON_PROJECTOR, Messages.StyleEditor_theme_suitability_proj);
 
         //suitability toggle buttons
-        controlNames.put(BUTTON_COLORBLIND, Messages.StyleEditor_theme_suitability_colour); 
-        controlNames.put(BUTTON_CRT, Messages.StyleEditor_theme_suitability_crt); 
-        controlNames.put(BUTTON_LCD, Messages.StyleEditor_theme_suitability_lcd); 
-        controlNames.put(BUTTON_PHOTOCOPY, Messages.StyleEditor_theme_suitability_pcopy); 
-        controlNames.put(BUTTON_PRINT, Messages.StyleEditor_theme_suitability_print); 
-        controlNames.put(BUTTON_PROJECTOR, Messages.StyleEditor_theme_suitability_proj); 
+        controlNames.put(BUTTON_COLORBLIND, Messages.StyleEditor_theme_suitability_colour);
+        controlNames.put(BUTTON_CRT, Messages.StyleEditor_theme_suitability_crt);
+        controlNames.put(BUTTON_LCD, Messages.StyleEditor_theme_suitability_lcd);
+        controlNames.put(BUTTON_PHOTOCOPY, Messages.StyleEditor_theme_suitability_pcopy);
+        controlNames.put(BUTTON_PRINT, Messages.StyleEditor_theme_suitability_print);
+        controlNames.put(BUTTON_PROJECTOR, Messages.StyleEditor_theme_suitability_proj);
 
         //suitability icon - palette suitability lookup
         viewerQuality.put(PaletteSuitability.VIEWER_COLORBLIND, LABEL_ICON_COLORBLIND);
@@ -261,11 +261,11 @@ public class StyleThemePage extends StyleEditorPage {
         viewerQuality.put(PaletteSuitability.VIEWER_PRINT, LABEL_ICON_PRINT);
         viewerQuality.put(PaletteSuitability.VIEWER_PROJECTOR, LABEL_ICON_PROJECTOR);
     }
-    
+
     public Button getButton(int widgetID) {
         return (Button) getControl(widgetID);
     }
-    
+
     public Combo getCombo(int widgetID) {
         return (Combo) getControl(widgetID);
     }
@@ -273,7 +273,7 @@ public class StyleThemePage extends StyleEditorPage {
     public Composite getComposite(int widgetID) {
         return (Composite) getControl(widgetID);
     }
-    
+
     public Label getLabel(int widgetID) {
         return (Label) getControl(widgetID);
     }
@@ -287,15 +287,15 @@ public class StyleThemePage extends StyleEditorPage {
         if (layout instanceof GridData) return (GridData) layout;
         else return new GridData(); //return empty, or throw exception (null)?
     }
-    
+
     public Object getControl(int widgetID) {
         return pageControls.get(widgetID);
     }
-    
+
     private boolean isNumber(String attributeType) {
         return numericAttr.contains(attributeType);
     }
-    
+
     private boolean isNumber(AttributeDescriptor attributeType) {
         if (Number.class.isAssignableFrom(attributeType.getType().getBinding())) {
             return true;
@@ -338,7 +338,7 @@ public class StyleThemePage extends StyleEditorPage {
     public ColorBrewer getBrewer() {
         if (brewer == null) {
             createBrewer();
-            
+
             // add custom palettes
             List<BrewerPalette> palettesList = CustomPalettesLoader.PALETTESLIST;
             for( BrewerPalette brewerPalette : palettesList ) {
@@ -353,7 +353,7 @@ public class StyleThemePage extends StyleEditorPage {
         }
         return brewer;
     }
-    
+
     private void createToggleButton(Composite parent, int buttonId, Image image) {
         Button toggleButton = new Button(parent, SWT.TOGGLE);
         GridData gridData = new GridData(SWT.NONE, SWT.NONE, false, false);
@@ -364,18 +364,18 @@ public class StyleThemePage extends StyleEditorPage {
         pageControls.put(buttonId, toggleButton);
         updateToggleTooltip(buttonId);
     }
-    
+
     private void updateToggleTooltip(int buttonId) {
         Button toggle = getButton(buttonId);
         String tooltip;
         if (toggle.getSelection()) {
-            tooltip = Messages.StyleEditor_theme_suitability_show; 
+            tooltip = Messages.StyleEditor_theme_suitability_show;
         } else {
-            tooltip = Messages.StyleEditor_theme_suitability_hide; 
+            tooltip = Messages.StyleEditor_theme_suitability_hide;
         }
         toggle.setToolTipText(tooltip+" "+controlNames.get(buttonId)); //$NON-NLS-1$
     }
-    
+
     private void createSuitabilityIcon(Composite parent, int id, String tooltip, Image image) {
         Label suitabilityIcon = new Label(parent, SWT.NONE);
         GridData gridData = new GridData(SWT.NONE, SWT.NONE, false, false);
@@ -384,7 +384,7 @@ public class StyleThemePage extends StyleEditorPage {
         suitabilityIcon.setToolTipText(tooltip);
         pageControls.put(id, suitabilityIcon);
     }
-    
+
     @Override
     public void createPageContent( Composite parent2 ) {
         Composite parent = new Composite(parent2, SWT.NONE);
@@ -406,14 +406,14 @@ public class StyleThemePage extends StyleEditorPage {
         //create the content
         pageControls.put(COMPOSITE_PARENT, parent);
         Font font = getShell().getFont();
-        
-		createTopComponent(parent, font);
-        
+
+        createTopComponent(parent, font);
+
         Label separator = new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR);
         GridData gridData = new GridData(SWT.FILL, SWT.TOP, true, false);
         separator.setLayoutData(gridData);
         separator.setFont(font);
-        
+
         createPaletteChooserComposite(parent, font);
 
         separator = new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR);
@@ -435,13 +435,13 @@ public class StyleThemePage extends StyleEditorPage {
         pageControls.put(LABEL_STATUSBAR, status);
     }
 
-	/**
-	 * Creates the composite for modifying the palette
-	 */
-	private Composite createPaletteEditorComposite(Composite parent, Font font) {
-		GridLayout layout;
-		GridData gridData;
-		Composite compBottom = new Composite(parent, SWT.NONE);
+    /**
+     * Creates the composite for modifying the palette
+     */
+    private Composite createPaletteEditorComposite(Composite parent, Font font) {
+        GridLayout layout;
+        GridData gridData;
+        Composite compBottom = new Composite(parent, SWT.NONE);
         gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
         gridData.heightHint = 0;
         compBottom.setLayoutData(gridData);
@@ -452,7 +452,7 @@ public class StyleThemePage extends StyleEditorPage {
         compBottom.setVisible(false);
         compBottom.setFont(font);
         pageControls.put(COMPOSITE_BOTTOM, compBottom);
-        
+
         Composite compBottomLeft = new Composite(compBottom, SWT.NONE);
         compBottomLeft.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         layout = new GridLayout(1, false);
@@ -460,61 +460,61 @@ public class StyleThemePage extends StyleEditorPage {
         layout.marginWidth = 0;
         compBottomLeft.setLayout(layout);
         pageControls.put(COMPOSITE_BOTTOM_LEFT, compBottomLeft);
-        
+
         Composite compBottomLeftButtons = new Composite(compBottomLeft, SWT.NONE);
         compBottomLeftButtons.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
         layout = new GridLayout(4, true);
         layout.marginHeight = 0;
         layout.marginWidth = 0;
         compBottomLeftButtons.setLayout(layout);
-        
+
         createPaletteEditorControls(font, compBottomLeftButtons);
-        
-        createPaletteEditorTreeViewer(compBottomLeft, font); 
+
+        createPaletteEditorTreeViewer(compBottomLeft, font);
 
         CellEditor[] editors = createCellEditors();
-        
+
         treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
             public void selectionChanged( SelectionChangedEvent event ) {
-                
+
                 if (((StructuredSelection) event.getSelection()).isEmpty()) {
                     getButton(BUTTON_REMOVE).setEnabled(false);
                 } else {
                     getButton(BUTTON_REMOVE).setEnabled(true);
                 }
-                
+
             }
-            
+
         });
-        
+
         treeViewer.setCellModifier(new IPaletteCellEditor(this));
         treeViewer.setColumnProperties(new String[] {"colour", "title", "styleExpr"}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         treeViewer.setCellEditors(editors);
         //populate the tree
-        
+
         Composite compBottomRight = new Composite(compBottom, SWT.NONE);
         compBottomRight.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false));
         layout = new GridLayout(1, false);
         layout.marginHeight = 0;
         layout.marginWidth = 0;
         compBottomRight.setLayout(layout);
-        
-        createSuitabilityDisplay(compBottomRight); 
-        
-        
-		return compBottom;
-	}
 
-	/**
-	 * Creates the widgets that display the what situations the current palette is suitable for.
-	 */
-	private void createSuitabilityDisplay(Composite compBottomRight) {
-		GridLayout layout;
-		Label labelSuitability = new Label(compBottomRight, SWT.NONE);
+        createSuitabilityDisplay(compBottomRight);
+
+
+        return compBottom;
+    }
+
+    /**
+     * Creates the widgets that display the what situations the current palette is suitable for.
+     */
+    private void createSuitabilityDisplay(Composite compBottomRight) {
+        GridLayout layout;
+        Label labelSuitability = new Label(compBottomRight, SWT.NONE);
         labelSuitability.setLayoutData(new GridData(SWT.NONE, SWT.NONE, false, false));
-        labelSuitability.setText(Messages.StyleEditor_theme_suitability); 
-        
+        labelSuitability.setText(Messages.StyleEditor_theme_suitability);
+
         Composite icons = new Composite(compBottomRight, SWT.RIGHT);
         icons.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false));
         layout = new GridLayout(3, true);
@@ -522,35 +522,35 @@ public class StyleThemePage extends StyleEditorPage {
         layout.marginWidth = 0;
         icons.setLayout(layout);
 
-        createSuitabilityIcon(icons, LABEL_ICON_COLORBLIND, Messages.StyleEditor_theme_suitability_colour, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.COLORBLIND_ICON).createImage()); 
-        createSuitabilityIcon(icons, LABEL_ICON_CRT, Messages.StyleEditor_theme_suitability_crt, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.CRT_ICON).createImage()); 
-        createSuitabilityIcon(icons, LABEL_ICON_PROJECTOR, Messages.StyleEditor_theme_suitability_proj, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.PROJECTOR_ICON).createImage()); 
-        createSuitabilityIcon(icons, LABEL_ICON_LCD, Messages.StyleEditor_theme_suitability_lcd, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.LAPTOP_ICON).createImage()); 
-        createSuitabilityIcon(icons, LABEL_ICON_PRINT, Messages.StyleEditor_theme_suitability_print, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.PRINTER_ICON).createImage()); 
+        createSuitabilityIcon(icons, LABEL_ICON_COLORBLIND, Messages.StyleEditor_theme_suitability_colour, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.COLORBLIND_ICON).createImage());
+        createSuitabilityIcon(icons, LABEL_ICON_CRT, Messages.StyleEditor_theme_suitability_crt, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.CRT_ICON).createImage());
+        createSuitabilityIcon(icons, LABEL_ICON_PROJECTOR, Messages.StyleEditor_theme_suitability_proj, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.PROJECTOR_ICON).createImage());
+        createSuitabilityIcon(icons, LABEL_ICON_LCD, Messages.StyleEditor_theme_suitability_lcd, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.LAPTOP_ICON).createImage());
+        createSuitabilityIcon(icons, LABEL_ICON_PRINT, Messages.StyleEditor_theme_suitability_print, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.PRINTER_ICON).createImage());
         createSuitabilityIcon(icons, LABEL_ICON_PHOTOCOPY, Messages.StyleEditor_theme_suitability_pcopy, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.PHOTOCOPY_ICON).createImage());
-	}
+    }
 
-	private CellEditor[] createCellEditors() {
-		CellEditor[] editors = new CellEditor[3];
+    private CellEditor[] createCellEditors() {
+        CellEditor[] editors = new CellEditor[3];
 
         //TODO: create a nicer color chooser
         CellEditor celledit0 = new ColorCellEditor(treeViewer.getTree());
-        TextCellEditor celledit1 = new TextCellEditor(treeViewer.getTree()); 
-        TextCellEditor celledit2 = new TextCellEditor(treeViewer.getTree()); 
+        TextCellEditor celledit1 = new TextCellEditor(treeViewer.getTree());
+        TextCellEditor celledit2 = new TextCellEditor(treeViewer.getTree());
         editors[0] = celledit0;
         editors[1] = celledit1;
         editors[2] = celledit2;
-		return editors;
-	}
+        return editors;
+    }
 
-	/**
-	 * @param compBottomLeft
-	 * @param font 
-	 * @return
-	 */
-	private Tree createPaletteEditorTreeViewer(Composite compBottomLeft, Font font) {
-		GridData gridData;
-		treeViewer = new TreeViewer(compBottomLeft, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
+    /**
+     * @param compBottomLeft
+     * @param font
+     * @return
+     */
+    private Tree createPaletteEditorTreeViewer(Composite compBottomLeft, Font font) {
+        GridData gridData;
+        treeViewer = new TreeViewer(compBottomLeft, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
         Tree treeTable = treeViewer.getTree();
         treeTable.setHeaderVisible(true);
         treeTable.setLinesVisible(true);
@@ -558,27 +558,27 @@ public class StyleThemePage extends StyleEditorPage {
         gridData.widthHint = compBottomLeft.getBounds().x;
         gridData.heightHint = compBottomLeft.getBounds().y;
         treeTable.setLayoutData(gridData);
-        
+
         TreeColumn colImage = new TreeColumn(treeTable, SWT.LEFT);
-        colImage.setText(Messages.StyleEditor_theme_column_colour); 
+        colImage.setText(Messages.StyleEditor_theme_column_colour);
 
         TreeColumn colTitle = new TreeColumn(treeTable, SWT.LEFT);
-        colTitle.setText(Messages.StyleEditor_theme_column_label); 
-        
+        colTitle.setText(Messages.StyleEditor_theme_column_label);
+
         TreeColumn colExpr = new TreeColumn(treeTable, SWT.LEFT);
         colExpr.setText(Messages.StyleEditor_theme_column_expression);
 
         treeTable.layout();
-        
+
         tableSettings = new TableSettings(treeTable);
         tableSettings.setColumnMin(0, 40);
         tableSettings.setColumnMin(1, 100);
         tableSettings.setColumnMin(0, 50);
-        
+
         treeViewer.setLabelProvider(new StyleTreeLabelProvider());
         treeViewer.setSorter(new StyleTreeSorter());
         treeViewer.setContentProvider(new StyleTreeContentProvider());
-        
+
         treeViewer.setInput(getFTS());
         treeViewer.expandAll();
         Control treeControl = treeViewer.getControl();
@@ -587,28 +587,28 @@ public class StyleThemePage extends StyleEditorPage {
         treeControl.setLayoutData(gd);
         treeControl.setFont(font);
         treeControl.setVisible(false);
-		return treeTable;
-	}
+        return treeTable;
+    }
 
-	/**
-	 * Creates the Opacity Reverse and Remove controls
-	 */
-	private void createPaletteEditorControls(Font font,
-			Composite compBottomLeftButtons) {
+    /**
+     * Creates the Opacity Reverse and Remove controls
+     */
+    private void createPaletteEditorControls(Font font,
+            Composite compBottomLeftButtons) {
         Composite combos = new Composite(compBottomLeftButtons, SWT.NONE);
         combos.setLayout(new GridLayout(2,false));
         createOpacityControls(font, combos);
         createBorderControls(font, combos);
-		createReverseButton(compBottomLeftButtons);
-		createRemoveButton(compBottomLeftButtons);
-	}
+        createReverseButton(compBottomLeftButtons);
+        createRemoveButton(compBottomLeftButtons);
+    }
 
-	/**
-	 * @param compBottomLeftButtons
-	 */
-	private void createRemoveButton(Composite compBottomLeftButtons) {
-		Button removeButton = new Button(compBottomLeftButtons, SWT.RIGHT);
-        removeButton.setText(Messages.StyleEditor_theme_remove); 
+    /**
+     * @param compBottomLeftButtons
+     */
+    private void createRemoveButton(Composite compBottomLeftButtons) {
+        Button removeButton = new Button(compBottomLeftButtons, SWT.RIGHT);
+        removeButton.setText(Messages.StyleEditor_theme_remove);
         removeButton.setEnabled(false);
         removeButton.addSelectionListener(new SelectionListener() {
 
@@ -626,17 +626,17 @@ public class StyleThemePage extends StyleEditorPage {
             public void widgetDefaultSelected( SelectionEvent e ) {
                 widgetSelected(e);
             }
-        
+
         });
         pageControls.put(BUTTON_REMOVE, removeButton);
-	}
+    }
 
-	/**
-	 * @param compBottomLeftButtons
-	 */
-	private void createReverseButton(Composite compBottomLeftButtons) {
-		Button reverseButton = new Button(compBottomLeftButtons, SWT.RIGHT);
-        reverseButton.setText(Messages.StyleEditor_theme_reverse); 
+    /**
+     * @param compBottomLeftButtons
+     */
+    private void createReverseButton(Composite compBottomLeftButtons) {
+        Button reverseButton = new Button(compBottomLeftButtons, SWT.RIGHT);
+        reverseButton.setText(Messages.StyleEditor_theme_reverse);
         reverseButton.addSelectionListener(new SelectionListener() {
 
             public void widgetSelected( SelectionEvent e ) {
@@ -652,15 +652,15 @@ public class StyleThemePage extends StyleEditorPage {
             public void widgetDefaultSelected( SelectionEvent e ) {
                 widgetSelected(e);
             }
-        
+
         });
-	}
+    }
 
     private void createBorderControls( Font font, Composite compBottomLeftButtons ) {
         GridData gridData;
         Label opacityLabel = new Label(compBottomLeftButtons, SWT.NONE);
         opacityLabel.setFont(font);
-        opacityLabel.setText("Outline"); 
+        opacityLabel.setText("Outline");
         gridData = new GridData(SWT.LEFT, SWT.DEFAULT, false, false);
         opacityLabel.setLayoutData(gridData);
 
@@ -675,7 +675,7 @@ public class StyleThemePage extends StyleEditorPage {
             colorCombo.addSelectionListener(new BorderColorComboListener(this));
         }
     }
-    
+
     private boolean isPolygonCompatible() {
         Class<?> type = getSelectedLayer().getSchema().getGeometryDescriptor().getType().getBinding();
         if( LineString.class.isAssignableFrom(type) || MultiLineString.class.isAssignableFrom(type)
@@ -684,16 +684,16 @@ public class StyleThemePage extends StyleEditorPage {
         }
         return true;
     }
-	/**
-	 * @param font
-	 * @param compBottomLeftButtons
-	 */
-	private void createOpacityControls(Font font,
-			Composite compBottomLeftButtons) {
-		GridData gridData;
-		Label opacityLabel = new Label(compBottomLeftButtons, SWT.NONE);
+    /**
+     * @param font
+     * @param compBottomLeftButtons
+     */
+    private void createOpacityControls(Font font,
+            Composite compBottomLeftButtons) {
+        GridData gridData;
+        Label opacityLabel = new Label(compBottomLeftButtons, SWT.NONE);
         opacityLabel.setFont(font);
-        opacityLabel.setText(Messages.StyleEditor_theme_opacity); 
+        opacityLabel.setText(Messages.StyleEditor_theme_opacity);
         gridData = new GridData(SWT.LEFT, SWT.DEFAULT, false, false);
         opacityLabel.setLayoutData(gridData);
 
@@ -707,15 +707,15 @@ public class StyleThemePage extends StyleEditorPage {
         opacityCombo.select(5); //default 50%
         opacityCombo.setVisibleItemCount(8);
         opacityCombo.addSelectionListener(new SimpleComboListener());
-	}
+    }
 
     /**
      * Creates the composite that allows the user to choose the palette
      */
-	private Composite createPaletteChooserComposite(Composite parent, Font font) {
-		GridLayout layout;
-		
-		Composite compMiddle = new Composite(parent, SWT.NONE);
+    private Composite createPaletteChooserComposite(Composite parent, Font font) {
+        GridLayout layout;
+
+        Composite compMiddle = new Composite(parent, SWT.NONE);
         compMiddle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         layout = new GridLayout(1, false);
         layout.marginHeight = 0;
@@ -725,8 +725,8 @@ public class StyleThemePage extends StyleEditorPage {
         pageControls.put(COMPOSITE_MIDDLE, compMiddle);
 
         GridData gridData;
-		Composite compMiddle2 = createPaletteLabel(font, compMiddle);
-        
+        Composite compMiddle2 = createPaletteLabel(font, compMiddle);
+
         Composite compMiddle3 = new Composite(compMiddle2, SWT.NONE);
         compMiddle3.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, true, false));
         layout = new GridLayout(3, false);
@@ -735,7 +735,7 @@ public class StyleThemePage extends StyleEditorPage {
         compMiddle3.setLayout(layout);
 
         createPaletteFilterComposite(font, compMiddle3);
-        
+
         //list of matching palettes
         paletteTable = new TableViewer(new Table(compMiddle, SWT.BORDER | SWT.V_SCROLL | SWT.FULL_SELECTION));
         TableLayout tableLayout = new TableLayout();
@@ -754,35 +754,35 @@ public class StyleThemePage extends StyleEditorPage {
 
         paletteTable.addFilter(new BrewerPaletteViewerFilter(this));
         paletteTable.setSorter(new BrewerPaletteViewerSorter());
-        
+
         paletteTable.setInput(getBrewer());
         paletteTable.addSelectionChangedListener(new PalettesListener());
-        
-		return compMiddle;
-	}
 
-	/**
-	 * Creates the palette type chooser and the buttons to filter for parameters such as color blindness.
-	 */
-	private void createPaletteFilterComposite(Font font, Composite compMiddle3) {
-		GridLayout layout;
-		GridData gridData;
-		Label paletteFilterLabel = new Label(compMiddle3, SWT.LEFT);
+        return compMiddle;
+    }
+
+    /**
+     * Creates the palette type chooser and the buttons to filter for parameters such as color blindness.
+     */
+    private void createPaletteFilterComposite(Font font, Composite compMiddle3) {
+        GridLayout layout;
+        GridData gridData;
+        Label paletteFilterLabel = new Label(compMiddle3, SWT.LEFT);
         paletteFilterLabel.setFont(font);
-        paletteFilterLabel.setText(Messages.StyleEditor_theme_show); 
+        paletteFilterLabel.setText(Messages.StyleEditor_theme_show);
         gridData = new GridData(SWT.LEFT, SWT.FILL, false, true);
         gridData.verticalSpan = 2;
         paletteFilterLabel.setLayoutData(gridData);
-        
+
         Combo paletteFilter = new Combo(compMiddle3, SWT.BORDER | SWT.READ_ONLY);
         pageControls.put(COMBO_PALETTES, paletteFilter);
-        paletteFilter.add(Messages.StyleEditor_theme_palette_all, 0); 
-        paletteFilter.add(Messages.StyleEditor_theme_palette_num, 1); 
-        paletteFilter.add(Messages.StyleEditor_theme_palette_seq, 2); 
-        paletteFilter.add(Messages.StyleEditor_theme_palette_div, 3); 
-        paletteFilter.add(Messages.StyleEditor_theme_palette_cat, 4); 
+        paletteFilter.add(Messages.StyleEditor_theme_palette_all, 0);
+        paletteFilter.add(Messages.StyleEditor_theme_palette_num, 1);
+        paletteFilter.add(Messages.StyleEditor_theme_palette_seq, 2);
+        paletteFilter.add(Messages.StyleEditor_theme_palette_div, 3);
+        paletteFilter.add(Messages.StyleEditor_theme_palette_cat, 4);
         paletteFilter.select(0);
-        paletteFilter.setToolTipText(Messages.StyleEditor_theme_palette_tip); 
+        paletteFilter.setToolTipText(Messages.StyleEditor_theme_palette_tip);
         paletteFilter.addSelectionListener(new SelectionListener() {
 
             public void widgetSelected( SelectionEvent e ) {
@@ -792,7 +792,7 @@ public class StyleThemePage extends StyleEditorPage {
             public void widgetDefaultSelected( SelectionEvent e ) {
                 widgetSelected(e);
             }
-            
+
         });
 
         Composite compMiddle4 = new Composite(compMiddle3, SWT.NONE);
@@ -802,7 +802,7 @@ public class StyleThemePage extends StyleEditorPage {
         layout.marginWidth = 0;
         layout.horizontalSpacing = 0;
         compMiddle4.setLayout(layout);
-        
+
         //toggle buttons
         createToggleButton(compMiddle4, BUTTON_COLORBLIND, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.COLORBLIND_ICON).createImage());
         createToggleButton(compMiddle4, BUTTON_CRT, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.CRT_ICON).createImage());
@@ -810,11 +810,11 @@ public class StyleThemePage extends StyleEditorPage {
         createToggleButton(compMiddle4, BUTTON_LCD, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.LAPTOP_ICON).createImage());
         createToggleButton(compMiddle4, BUTTON_PRINT, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.PRINTER_ICON).createImage());
         createToggleButton(compMiddle4, BUTTON_PHOTOCOPY, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.PHOTOCOPY_ICON).createImage());
-	}
+    }
 
-	private Composite createPaletteLabel(Font font, Composite compMiddle) {
-		GridLayout layout;
-		Composite compMiddle2 = new Composite(compMiddle, SWT.NONE);
+    private Composite createPaletteLabel(Font font, Composite compMiddle) {
+        GridLayout layout;
+        Composite compMiddle2 = new Composite(compMiddle, SWT.NONE);
         compMiddle2.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
         layout = new GridLayout(2, false);
         layout.marginHeight = 0;
@@ -823,18 +823,18 @@ public class StyleThemePage extends StyleEditorPage {
 
         Label palettesLabel = new Label(compMiddle2, SWT.LEFT);
         palettesLabel.setFont(font);
-        palettesLabel.setText(Messages.StyleEditor_theme_palette); 
+        palettesLabel.setText(Messages.StyleEditor_theme_palette);
         GridData gridData = new GridData(SWT.LEFT, SWT.BOTTOM, true, false);
         palettesLabel.setLayoutData(gridData);
-		return compMiddle2;
-	}
+        return compMiddle2;
+    }
 
-	/**
-	 * Creates the composite that contains the information about what attributes to theme by
-	 * and the type of theme.
-	 */
-	private Composite createTopComponent(Composite parent, Font font) {
-		Composite compTop = new Composite(parent, SWT.NONE);
+    /**
+     * Creates the composite that contains the information about what attributes to theme by
+     * and the type of theme.
+     */
+    private Composite createTopComponent(Composite parent, Font font) {
+        Composite compTop = new Composite(parent, SWT.NONE);
         GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
         compTop.setLayoutData(gridData);
         GridLayout layout = new GridLayout(5, false);
@@ -844,56 +844,56 @@ public class StyleThemePage extends StyleEditorPage {
         compTop.setFont(font);
         pageControls.put(COMPOSITE_TOP, compTop);
         createAttributeLabels(font, compTop);
-        
-        createAttributeCombos(compTop);
-        
-        
-		return compTop;
-	}
 
-	/**
-	 * Creates all the labels for the Attribute composite 
-	 */
-	private void createAttributeLabels(Font font, Composite compTop) {
-		Label attributesLabel = new Label(compTop, SWT.NONE);
+        createAttributeCombos(compTop);
+
+
+        return compTop;
+    }
+
+    /**
+     * Creates all the labels for the Attribute composite
+     */
+    private void createAttributeLabels(Font font, Composite compTop) {
+        Label attributesLabel = new Label(compTop, SWT.NONE);
         attributesLabel.setFont(font);
-        attributesLabel.setText(Messages.StyleEditor_theme_attribute); 
+        attributesLabel.setText(Messages.StyleEditor_theme_attribute);
         attributesLabel.setLayoutData(createDefaultGridData());
 
         Label classesLabel = new Label(compTop, SWT.NONE);
         classesLabel.setFont(font);
-        classesLabel.setText(Messages.StyleEditor_theme_classes); 
+        classesLabel.setText(Messages.StyleEditor_theme_classes);
         classesLabel.setLayoutData(createDefaultGridData());
 
         Label breaksLabel = new Label(compTop, SWT.NONE);
         breaksLabel.setFont(font);
-        breaksLabel.setText(Messages.StyleEditor_theme_break); 
+        breaksLabel.setText(Messages.StyleEditor_theme_break);
         breaksLabel.setLayoutData(createDefaultGridData());
 
         Label normalizeLabel = new Label(compTop, SWT.LEFT);
         normalizeLabel.setFont(font);
-        normalizeLabel.setText(Messages.StyleEditor_theme_normalize); 
+        normalizeLabel.setText(Messages.StyleEditor_theme_normalize);
         normalizeLabel.setLayoutData(createDefaultGridData());
 
         Label elseLabel = new Label(compTop, SWT.LEFT);
         elseLabel.setFont(font);
-        elseLabel.setText(Messages.StyleEditor_theme_else); 
+        elseLabel.setText(Messages.StyleEditor_theme_else);
         elseLabel.setLayoutData(createDefaultGridData());
-	}
+    }
 
-	/**
-	 * @return
-	 */
-	private GridData createDefaultGridData() {
-		return new GridData(SWT.LEFT, SWT.DEFAULT, true, false);
-	}
+    /**
+     * @return
+     */
+    private GridData createDefaultGridData() {
+        return new GridData(SWT.LEFT, SWT.DEFAULT, true, false);
+    }
 
-	/**
-	 * Create the Combos for selecting and configuring how the themeing will work
-	 */
-	private void createAttributeCombos(Composite compTop) {
-		GridData gridData;
-		Combo attributeCombo = new Combo(compTop, SWT.BORDER | SWT.READ_ONLY);
+    /**
+     * Create the Combos for selecting and configuring how the themeing will work
+     */
+    private void createAttributeCombos(Composite compTop) {
+        GridData gridData;
+        Combo attributeCombo = new Combo(compTop, SWT.BORDER | SWT.READ_ONLY);
         pageControls.put(COMBO_ATTRIBUTES, attributeCombo);
         attributeCombo.setLayout(new GridLayout());
         gridData = createDefaultGridData();
@@ -905,18 +905,18 @@ public class StyleThemePage extends StyleEditorPage {
         }
         attributeCombo.setVisibleItemCount(16);
         attributeCombo.addListener(SWT.Modify, new AttributeComboListener());
-        
+
         Combo classesCombo = new Combo(compTop, SWT.BORDER);
         pageControls.put(COMBO_CLASSES, classesCombo);
         classesCombo.setLayout(new GridLayout(1, false));
         gridData = createDefaultGridData();
         classesCombo.setLayoutData(gridData);
-        
+
         for (int i = 2; i < 13; i++) {
             Integer j = (Integer) i;
             classesCombo.add(j.toString());
         }
-        
+
         classesCombo.select(3); //default is 5 classes
         classesCombo.setVisibleItemCount(16);
         classesCombo.addListener(SWT.Modify, new ClassesComboListener());
@@ -942,19 +942,19 @@ public class StyleThemePage extends StyleEditorPage {
         elseCombo.setLayout(new GridLayout(1, false));
         gridData = createDefaultGridData();
         elseCombo.setLayoutData(gridData);
-        elseCombo.add(Messages.StyleEditor_theme_else_hide); 
-        elseCombo.add(Messages.StyleEditor_theme_else_min); 
-        elseCombo.add(Messages.StyleEditor_theme_else_max); 
+        elseCombo.add(Messages.StyleEditor_theme_else_hide);
+        elseCombo.add(Messages.StyleEditor_theme_else_min);
+        elseCombo.add(Messages.StyleEditor_theme_else_max);
         elseCombo.select(0);
-        elseCombo.setToolTipText(Messages.StyleEditor_theme_else_tip); 
+        elseCombo.setToolTipText(Messages.StyleEditor_theme_else_tip);
         elseCombo.addSelectionListener(new ElseComboListener());
-	}
+    }
 
-	private void loadWithAttributeTypes(Combo attributeCombo,
-			StyleLayer selectedLayer) {
-		SimpleFeatureType featureType = selectedLayer.getSchema();
+    private void loadWithAttributeTypes(Combo attributeCombo,
+            StyleLayer selectedLayer) {
+        SimpleFeatureType featureType = selectedLayer.getSchema();
 
-		if (featureType != null) {
+        if (featureType != null) {
                     List<String> attributesList = new ArrayList<String>();
                     for (int i = 0; i < featureType.getAttributeCount(); i++) {
                         AttributeDescriptor attributeType = featureType.getDescriptor(i);
@@ -971,31 +971,31 @@ public class StyleThemePage extends StyleEditorPage {
                     attributeCombo.removeAll();
                     attributeCombo.setItems(attributesList.toArray(new String[] {}));
 
-		    //select the first numeric attribute that isn't ID
-		    int index = -1;
-		    if (numericAttr.size() > 1) {
-		        if (numericAttr.get(0).equalsIgnoreCase("id")) { //$NON-NLS-1$
-		            index = attributeCombo.indexOf(numericAttr.get(1));
-		        } else {
-		            index = attributeCombo.indexOf(numericAttr.get(0));
-		        }
-		    } else if (numericAttr.size() == 1) {
-		        index = attributeCombo.indexOf(numericAttr.get(0));
-		    }
-		    if (index > -1) attributeCombo.select(index);
-		    if (attributeCombo.getSelectionIndex() == -1) {
-		        //we couldn't find a desirable attribute, just grab the first one 
-		        if (featureType.getAttributeCount() > 0) {
-		            attributeCombo.select(0);
-		        }
-		    }
-		}
-	}
+            //select the first numeric attribute that isn't ID
+            int index = -1;
+            if (numericAttr.size() > 1) {
+                if (numericAttr.get(0).equalsIgnoreCase("id")) { //$NON-NLS-1$
+                    index = attributeCombo.indexOf(numericAttr.get(1));
+                } else {
+                    index = attributeCombo.indexOf(numericAttr.get(0));
+                }
+            } else if (numericAttr.size() == 1) {
+                index = attributeCombo.indexOf(numericAttr.get(0));
+            }
+            if (index > -1) attributeCombo.select(index);
+            if (attributeCombo.getSelectionIndex() == -1) {
+                //we couldn't find a desirable attribute, just grab the first one
+                if (featureType.getAttributeCount() > 0) {
+                    attributeCombo.select(0);
+                }
+            }
+        }
+    }
     private boolean removeRule(Rule rule) {
         Style style = getStyle();
-        
+
         if (style.featureTypeStyles().isEmpty()) return false;
-        
+
         for(FeatureTypeStyle featureTypeStyle: style.featureTypeStyles()) {
             if( featureTypeStyle == null ) continue;
             boolean removed = featureTypeStyle.rules().remove( rule );
@@ -1005,7 +1005,7 @@ public class StyleThemePage extends StyleEditorPage {
         }
         return false;
     }
-    
+
     @Override
     public void styleChanged( Object source ) {
         // ignore
@@ -1017,20 +1017,20 @@ public class StyleThemePage extends StyleEditorPage {
             SLDPlugin.log("StyleThemePage.swapColours(): Number of symbolizers each rule and not equal - aborting colour swap", null); //$NON-NLS-1$
             return;
         }
-        Expression tempColour; 
+        Expression tempColour;
         for (int i = 0; i < symb1.length; i++) {
             if (symb1[i] instanceof PolygonSymbolizer) {
                 tempColour = ((PolygonSymbolizer) symb1[i]).getFill().getColor();
                 ((PolygonSymbolizer) symb1[i]).getFill().setColor(((PolygonSymbolizer) symb2[i]).getFill().getColor());
                 ((PolygonSymbolizer) symb2[i]).getFill().setColor(tempColour);
             } else if (symb1[i] instanceof PointSymbolizer) {
-            	GraphicalSymbol g1 = ((PointSymbolizer)symb1[i]).getGraphic().graphicalSymbols().get(0);
-            	GraphicalSymbol g2 = ((PointSymbolizer)symb2[i]).getGraphic().graphicalSymbols().get(0);
-            	if (g1 instanceof Mark && g2 instanceof Mark) {
-            		tempColour = ((Mark)g1).getFill().getColor();
-            		((Mark)g1).getFill().setColor( ((Mark)g2).getFill().getColor() );
-            		((Mark)g2).getFill().setColor( tempColour );
-            	}
+                GraphicalSymbol g1 = ((PointSymbolizer)symb1[i]).getGraphic().graphicalSymbols().get(0);
+                GraphicalSymbol g2 = ((PointSymbolizer)symb2[i]).getGraphic().graphicalSymbols().get(0);
+                if (g1 instanceof Mark && g2 instanceof Mark) {
+                    tempColour = ((Mark)g1).getFill().getColor();
+                    ((Mark)g1).getFill().setColor( ((Mark)g2).getFill().getColor() );
+                    ((Mark)g2).getFill().setColor( tempColour );
+                }
             } else if (symb1[i] instanceof LineSymbolizer) {
                 tempColour = ((LineSymbolizer) symb1[i]).getStroke().getColor();
                 ((LineSymbolizer) symb1[i]).getStroke().setColor(((LineSymbolizer) symb2[i]).getStroke().getColor());
@@ -1038,16 +1038,16 @@ public class StyleThemePage extends StyleEditorPage {
             }
         }
     }
-    
+
     public void setStatusText(String text) {
         getLabel(LABEL_STATUSBAR).setText(text);
     }
-    
+
     @Override
     public String getLabel() {
         return null;
     }
-    
+
     private class AttributeComboListener implements Listener {
         public void handleEvent(Event e) {
             //record the attribute
@@ -1061,7 +1061,7 @@ public class StyleThemePage extends StyleEditorPage {
                 setStatusText(""); //$NON-NLS-1$
             } else {
                 //TODO: don't use strings to match break types
-                if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_uniques)) { 
+                if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_uniques)) {
                     //determine if we've already calculated the number of unique values
                     String attribute = selectedAttributeType.getName().getLocalPart();
                     if (uniqueCounts.containsKey(attribute)) {
@@ -1079,7 +1079,7 @@ public class StyleThemePage extends StyleEditorPage {
                         SLDPlugin.log("unique values calculation failed", e1); //$NON-NLS-1$
                     }
                     if (uniqueCount > -1) {
-                        updateUnique(attribute, uniqueCount);                    
+                        updateUnique(attribute, uniqueCount);
                     }
                 } else {
                     //clear the status label
@@ -1112,12 +1112,12 @@ public class StyleThemePage extends StyleEditorPage {
         public void selectionChanged(SelectionChangedEvent event) {
             if (inputsValid()) generateTheme();
         }
-        
+
     }
 
     private class SuitabilityToggleListener implements SelectionListener {
         private int id;
-        
+
         public SuitabilityToggleListener(int id) {
             super();
             this.id = id;
@@ -1131,9 +1131,9 @@ public class StyleThemePage extends StyleEditorPage {
         public void widgetDefaultSelected( SelectionEvent e ) {
             widgetSelected(e);
         }
-        
+
     }
-    
+
     private class ClassesComboListener implements Listener {
         public void handleEvent( Event event ) {
             updatePalettes();
@@ -1142,7 +1142,7 @@ public class StyleThemePage extends StyleEditorPage {
         }
 
     }
-    
+
     private class ElseComboListener implements SelectionListener {
         public void widgetSelected(SelectionEvent e) {
             int index = getCombo(COMBO_ELSE).getSelectionIndex();
@@ -1155,7 +1155,7 @@ public class StyleThemePage extends StyleEditorPage {
                 if (classesIndex < (getCombo(COMBO_CLASSES).getItemCount() - 1)) {
                     getCombo(COMBO_CLASSES).select(classesIndex + 1);
                 }
-            } 
+            }
             elseSelection = (index > 0);
             if (inputsValid()) generateTheme();
         }
@@ -1164,7 +1164,7 @@ public class StyleThemePage extends StyleEditorPage {
             widgetSelected(e);
         }
     }
-    
+
     private class SimpleComboListener implements SelectionListener {
         public void widgetSelected(SelectionEvent e) {
             if (inputsValid()) generateTheme();
@@ -1185,27 +1185,27 @@ public class StyleThemePage extends StyleEditorPage {
         String value = breaksCombo.getText();
         breaksCombo.removeAll();
         if (isNumber(currentAttr)) { //show numeric break types
-            breaksCombo.add(Messages.StyleEditor_theme_equalInterval); 
-            breaksCombo.add(Messages.StyleEditor_theme_quantile); 
-            breaksCombo.add(Messages.StyleEditor_theme_uniques); 
-            //breaksCombo.add(Messages.StyleEditor_theme_standardDeviation); 
+            breaksCombo.add(Messages.StyleEditor_theme_equalInterval);
+            breaksCombo.add(Messages.StyleEditor_theme_quantile);
+            breaksCombo.add(Messages.StyleEditor_theme_uniques);
+            //breaksCombo.add(Messages.StyleEditor_theme_standardDeviation);
             int index = breaksCombo.indexOf(value);
             if (index > -1) breaksCombo.select(index);
             else breaksCombo.select(1);
         } else { //show categorical break types
-            breaksCombo.add(Messages.StyleEditor_theme_uniques); 
+            breaksCombo.add(Messages.StyleEditor_theme_uniques);
             int index = breaksCombo.indexOf(value);
             if (index > -1) breaksCombo.select(index);
             else breaksCombo.select(0);
         }
     }
-    
+
     private void updateNormalize() {
         Combo normalizeCombo = getCombo(COMBO_NORMALIZE);
         String value = normalizeCombo.getText();
         String currentAttr = getCombo(COMBO_ATTRIBUTES).getText();
         normalizeCombo.removeAll();
-        normalizeCombo.add(Messages.StyleEditor_theme_none); 
+        normalizeCombo.add(Messages.StyleEditor_theme_none);
         if (isNumber(currentAttr)) {
             normalizeCombo.setEnabled(true);
             for (int i = 0; i < numericAttr.size(); i++) {
@@ -1221,7 +1221,7 @@ public class StyleThemePage extends StyleEditorPage {
             normalizeCombo.setEnabled(false);
         }
     }
-    
+
     boolean inputsValid() {
         if (getCombo(COMBO_ATTRIBUTES).getText().length() < 1) return false;
         else if (paletteTable.getSelection().isEmpty()) return false;
@@ -1239,21 +1239,21 @@ public class StyleThemePage extends StyleEditorPage {
         } else {
             normalize = getAttributeType(getCombo(COMBO_NORMALIZE).getText());
         }
-                
+
         //generate the defaults
         Runnable genDefault = new Runnable(){
             public void run() {
                 //generate the expression
                 Expression expr = null;
                 Expression attr = ff.property(selectedAttributeType.getName());
-                
+
                 if (normalize != null) {
                     Divide divide = ff.divide(attr, ff.property(normalize.getName()));
                     expr = divide;
                 } else {
                     expr = attr;
                 }
-                
+
                 StructuredSelection structuredSelection = (StructuredSelection) paletteTable.getSelection();
                 BrewerPalette pal = (BrewerPalette) structuredSelection.getFirstElement();
                 if (pal == null) {
@@ -1273,12 +1273,12 @@ public class StyleThemePage extends StyleEditorPage {
                 }catch (Exception e) {
                     suitability = CustomUnknownPaletteSuitability.getInstance().getSuitability(numClasses);
                 }
-                
+
                 //check for custom classifier
-                if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_custom)) { 
+                if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_custom)) {
                     classifier = customBreak;
                 }
-                
+
                 boolean classifierModified = false;
                 if (classifier == null) {
                     classifierModified = true;
@@ -1289,83 +1289,83 @@ public class StyleThemePage extends StyleEditorPage {
                         if (function.getClasses() != new Integer(getCombo(COMBO_CLASSES).getText()).intValue()-1)
                             classifierModified = true;
                     }
-                    if (getCombo(COMBO_ELSE).getSelectionIndex() > 0) 
+                    if (getCombo(COMBO_ELSE).getSelectionIndex() > 0)
                         classifierModified = true;
-                    else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_custom))  
+                    else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_custom))
                         classifierModified = true;
-                    else if ((getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_equalInterval)) && !(function instanceof EqualIntervalFunction)) 
+                    else if ((getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_equalInterval)) && !(function instanceof EqualIntervalFunction))
                         classifierModified = true;
-                    else if ((getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_quantile)) && !(function instanceof QuantileFunction)) 
+                    else if ((getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_quantile)) && !(function instanceof QuantileFunction))
                         classifierModified = true;
-                    else if ((getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_standardDeviation)) && !(function instanceof StandardDeviationFunction)) 
+                    else if ((getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_standardDeviation)) && !(function instanceof StandardDeviationFunction))
                         classifierModified = true;
-                    else if ((getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_uniques)) && !(function instanceof UniqueIntervalFunction)) 
+                    else if ((getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_uniques)) && !(function instanceof UniqueIntervalFunction))
                         classifierModified = true;
                     else if (!function.equals(expr))
                         classifierModified = true;
                 }
-                
+
                 String semanticTypeIdentifier;
                 //break type:palette
-                if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_uniques)) 
+                if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_uniques))
                     semanticTypeIdentifier = "unique:"; //$NON-NLS-1$
-                else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_equalInterval)) 
+                else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_equalInterval))
                     semanticTypeIdentifier = "equalinterval:"; //$NON-NLS-1$
-                else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_quantile)) 
+                else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_quantile))
                     semanticTypeIdentifier = "quantile:"; //$NON-NLS-1$
                 else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase("standard deviation")) //$NON-NLS-1$
                     semanticTypeIdentifier = "standarddeviation:"; //$NON-NLS-1$
-                else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_custom)) 
+                else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_custom))
                     semanticTypeIdentifier = "custom:"; //$NON-NLS-1$
                 else {
                     semanticTypeIdentifier = "default:"; //$NON-NLS-1$
                 }
                 semanticTypeIdentifier = semanticTypeIdentifier.concat(paletteName.toLowerCase());
-                
+
                 //create the classification function, if necessary
                 if (classifierModified) {
                     //TODO: add other classifiers
-                	FunctionName fn = null;
+                    FunctionName fn = null;
                     boolean createClassifier = true;
                     if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_uniques))
-                    	fn = UniqueIntervalFunction.NAME;
+                        fn = UniqueIntervalFunction.NAME;
                     else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_equalInterval))
-                    	fn = EqualIntervalFunction.NAME;
+                        fn = EqualIntervalFunction.NAME;
                     else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_quantile))
-                    	fn = QuantileFunction.NAME;
+                        fn = QuantileFunction.NAME;
                     else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_standardDeviation))
-                    	fn = StandardDeviationFunction.NAME;
-                    else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_custom)){ 
+                        fn = StandardDeviationFunction.NAME;
+                    else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_custom)){
                         classifier = customBreak;
                         createClassifier = false;
-                    }else{ 
+                    }else{
                         return;
                     }
-                    
-					if (createClassifier) {
-						function = (ClassificationFunction) ff.function(fn.getFunctionName(), new Expression[fn.getArgumentCount()]);
-						
-						ProgressListener cancelProgress = ((StyleEditorDialog) getContainer()).getProgressListener();
-						function.setProgressListener(cancelProgress);
-						numClasses = new Integer(getCombo(COMBO_CLASSES).getText()).intValue();
 
-						if (getCombo(COMBO_ELSE).getSelectionIndex() == 0) {
-							// function.setNumberOfClasses(numClasses);
-							function.setClasses(numClasses);
-						} else {
-							// function.setNumberOfClasses(numClasses-1);
-							function.setClasses(numClasses - 1);
-						}
-						// function.setCollection(collection);
-						function.getParameters().set(0, expr); // set the expression last, since it causes the calculation
-						// function.setExpression(expr);
-						classifier = (Classifier) function.evaluate(collection,Classifier.class);
-					}
+                    if (createClassifier) {
+                        function = (ClassificationFunction) ff.function(fn.getFunctionName(), new Expression[fn.getArgumentCount()]);
+
+                        ProgressListener cancelProgress = ((StyleEditorDialog) getContainer()).getProgressListener();
+                        function.setProgressListener(cancelProgress);
+                        numClasses = new Integer(getCombo(COMBO_CLASSES).getText()).intValue();
+
+                        if (getCombo(COMBO_ELSE).getSelectionIndex() == 0) {
+                            // function.setNumberOfClasses(numClasses);
+                            function.setClasses(numClasses);
+                        } else {
+                            // function.setNumberOfClasses(numClasses-1);
+                            function.setClasses(numClasses - 1);
+                        }
+                        // function.setCollection(collection);
+                        function.getParameters().set(0, expr); // set the expression last, since it causes the calculation
+                        // function.setExpression(expr);
+                        classifier = (Classifier) function.evaluate(collection,Classifier.class);
+                    }
                 }
 
                 //generate the style
                 BrewerPalette palette = getBrewer().getPalette(paletteName);
-                
+
                 Color[] colors = null;
                 try{
                     colors = palette.getColors(numClasses);
@@ -1382,7 +1382,7 @@ public class StyleThemePage extends StyleEditorPage {
                         colors[j] = tempColor;
                     }
                 }
-                
+
                 int elsemode = -1;
                 if (getCombo(COMBO_ELSE).getSelectionIndex() == 0) {
                     //sg.setElseMode(StyleGenerator.ELSEMODE_IGNORE);
@@ -1402,7 +1402,7 @@ public class StyleThemePage extends StyleEditorPage {
                     opac = 1;
                 }
                 Color borderColor = BorderColorComboListener.getBorder(getCombo(COMBO_BORDER_COLOR));
-                
+
                 FeatureTypeStyle newFTS = null;
                 try {
                     newFTS = StyleGenerator.createFeatureTypeStyle(classifier, (org.opengis.filter.expression.Expression) expr, colors, semanticTypeIdentifier, getSelectedLayer().getSchema().getGeometryDescriptor(), elsemode, opac, null);
@@ -1425,7 +1425,7 @@ public class StyleThemePage extends StyleEditorPage {
                     Style style = getStyle();
                     //ensure the style has an SLD
                     if (style == null) throw new RuntimeException("Style is null"); //$NON-NLS-1$
-                    
+
                     StyledLayerDescriptor sld = null; //SLDs.styledLayerDescriptor(style);
                     if (sld == null) {
                         SLDContent.createDefaultStyledLayerDescriptor(style);
@@ -1439,12 +1439,12 @@ public class StyleThemePage extends StyleEditorPage {
                         ErrorManager.get().displayException(e, msg, SLDPlugin.ID);
                         return;
                     }
-                    
+
                     //update the suitability icons
                     if (suitability != null) {
                         updateSuitabilities(suitability);
                     }
-                    
+
                     treeViewer.setInput(newFTS);
                 }
             }
@@ -1462,17 +1462,17 @@ public class StyleThemePage extends StyleEditorPage {
         displayBottomComposite();
         TableUtils.resizeColumns(treeViewer.getTree(), tableSettings, TableUtils.MODE_JUMP);
         //TODO: only the first time
-        
+
         treeViewer.getControl().setVisible(true);
     }
 
     /**
-     * This takes as much as possible from the old rules and applies them 
+     * This takes as much as possible from the old rules and applies them
      * to the new ones. In that way mark type, size and borders are properly kept.
-     * 
+     *
      * @param newFTS the new style to tweak.
      * @param opac an opacity value to apply to the fill.
-     * @param borderColor 
+     * @param borderColor
      */
     private void applyExistingRulesProperties( FeatureTypeStyle newFTS, double opac, Color borderColor ) {
         Style style = getStyle();
@@ -1527,10 +1527,10 @@ public class StyleThemePage extends StyleEditorPage {
                     for( Symbolizer newSymbolizer : newSymbolizers ) {
                         if (newSymbolizer instanceof PolygonSymbolizer) {
                             PolygonSymbolizer polygonSymbolizer = (PolygonSymbolizer ) newSymbolizer;
-                            
+
                             Fill previousFill = SLDs.fill(polygonSymbolizer);
                             previousFill.setOpacity(ff.literal(opac));
-                            
+
                             Stroke stroke = SLDs.stroke(polygonSymbolizer);
                             if (stroke != null) {
                                 if(borderColor!=null){
@@ -1539,14 +1539,14 @@ public class StyleThemePage extends StyleEditorPage {
                                     polygonSymbolizer.setStroke(null);
                                 }
                             }
-                            
+
                         }
                     }
                 }
             }
         }
     }
-    
+
     /**
      * Iterates through the style blackboard style and returns the ColorBrewer FeatureTypeStyle.
      *
@@ -1562,12 +1562,12 @@ public class StyleThemePage extends StyleEditorPage {
         }
         return null;
     }
-    
+
     /**
      * Given a Style object and a FeatureTypeStyle, this method scans the SemanticTypeIdentifiers of
      * each FTS inside the style. If a ColorBrewer themed identifier is found, the new FTS will
      * replace it.
-     * 
+     *
      * @param style future parent of the FTS
      * @param fts FTS to insert/replace with
      */
@@ -1581,12 +1581,12 @@ public class StyleThemePage extends StyleEditorPage {
                 symbs.add(newSymbs[j].getClass());
             }
         }
-        
+
         //search for a match, and replace if found
         boolean found = false;
         for (int i = 0; i < style.featureTypeStyles().size(); i ++) {
             if (SLDs.isSemanticTypeMatch(style.featureTypeStyles().get(i), "colorbrewer:.*")) { //$NON-NLS-1$
-            	style.featureTypeStyles().set(i, fts);
+                style.featureTypeStyles().set(i, fts);
                 found = true;
             } else {
                 //purge any conflicting Symbolizers (same class)
@@ -1599,7 +1599,7 @@ public class StyleThemePage extends StyleEditorPage {
                     for (int k = 0; k < symb.length; k++) {
                         if (symbs.contains(symb[k].getClass())) { //the Symbolizer class is a match
                             Object[] temp = removeElement(newSymb, k-deletedElements);
-                            if (temp.length > 0) { 
+                            if (temp.length > 0) {
                                 newSymb = new Symbolizer[temp.length];
                                 for (int l = 0; l < temp.length; l++) {
                                     newSymb[l] = (Symbolizer) temp[l];
@@ -1637,8 +1637,8 @@ public class StyleThemePage extends StyleEditorPage {
                 }
             }
             if (changed) {
-            	style.featureTypeStyles().get(i).rules().clear();
-            	style.featureTypeStyles().get(i).rules().addAll(rule);
+                style.featureTypeStyles().get(i).rules().clear();
+                style.featureTypeStyles().get(i).rules().addAll(rule);
             }
         }
         //delete any FTSs with zero rules
@@ -1647,20 +1647,20 @@ public class StyleThemePage extends StyleEditorPage {
             if (style.featureTypeStyles().get(i).rules().size() == 0) {
                 Object[] temp = removeElement(style.featureTypeStyles(), i);
                 for (int j = 0; j < temp.length; j++) {
-                	items.add((FeatureTypeStyle)temp[j]);
+                    items.add((FeatureTypeStyle)temp[j]);
                 }
             }
         }
         //create a FTS if needed
-    	style.featureTypeStyles().clear();
+        style.featureTypeStyles().clear();
 
         if (!found) {
-        	style.featureTypeStyles().add(fts);
+            style.featureTypeStyles().add(fts);
             //match was not found, so add the FTS
         }
         style.featureTypeStyles().addAll(items);
     }
-    
+
     private Object[] removeElement(List<?> array, int indexToRemove) {
         if (array.size() == 1) return new Object[0];
         Object[] newArray = new Object[array.size()-1];
@@ -1672,7 +1672,7 @@ public class StyleThemePage extends StyleEditorPage {
         }
         return newArray;
     }
-        
+
     private Object[] removeElement(Object[] array, int indexToRemove) {
         if (array.length == 1) return new Object[0];
         Object[] newArray = new Object[array.length-1];
@@ -1697,7 +1697,7 @@ public class StyleThemePage extends StyleEditorPage {
     private void createBrewer() {
         brewer = PlatformGIS.getColorBrewer();
     }
-    
+
     private void displayBottomComposite() {
         Object layout = paletteTable.getControl().getLayoutData();
         if (layout instanceof GridData) {
@@ -1710,12 +1710,12 @@ public class StyleThemePage extends StyleEditorPage {
         getComposite(COMPOSITE_BOTTOM).setVisible(true);
         getLayoutData(COMPOSITE_BOTTOM).grabExcessVerticalSpace = true;
         getLayoutData(COMPOSITE_BOTTOM_LEFT).grabExcessVerticalSpace = true;
-        
+
         getComposite(COMPOSITE_MIDDLE).layout();
         getComposite(COMPOSITE_BOTTOM).layout();
         getComposite(COMPOSITE_PARENT).layout();
     }
-    
+
     private void updateSuitabilities(int[] suitability) {
         for (Iterator<Integer> i = viewerQuality.keySet().iterator(); i.hasNext();) {
             Integer key = i.next();
@@ -1727,30 +1727,30 @@ public class StyleThemePage extends StyleEditorPage {
             if (quality == PaletteSuitability.QUALITY_GOOD) {
                 //getLabel(icon).setImage(getImageWithOverlay(icon, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.GOOD_OVERLAY)));
                 label.setImage(getImageWithOverlay(icon, null));
-                label.setToolTipText(viewer+Messages.StyleEditor_theme_suitability_good); 
+                label.setToolTipText(viewer+Messages.StyleEditor_theme_suitability_good);
             } else if (quality == PaletteSuitability.QUALITY_DOUBTFUL) {
                 getLabel(icon).setImage(getImageWithOverlay(icon, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.DOUBTFUL_OVERLAY)));
-                label.setToolTipText(viewer+Messages.StyleEditor_theme_suitability_doubtful); 
+                label.setToolTipText(viewer+Messages.StyleEditor_theme_suitability_doubtful);
             } else if (quality == PaletteSuitability.QUALITY_BAD) {
                 getLabel(icon).setImage(getImageWithOverlay(icon, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.BAD_OVERLAY)));
-                label.setToolTipText(viewer+Messages.StyleEditor_theme_suitability_bad); 
+                label.setToolTipText(viewer+Messages.StyleEditor_theme_suitability_bad);
             } else { //UNKNOWN
                 getLabel(icon).setImage(getImageWithOverlay(icon, SLDPlugin.getDefault().getImageDescriptor(ImageConstants.UNKNOWN_OVERLAY)));
-                label.setToolTipText(viewer+Messages.StyleEditor_theme_suitability_unknown); 
+                label.setToolTipText(viewer+Messages.StyleEditor_theme_suitability_unknown);
             }
         }
     }
-    
+
     private Image getImageWithOverlay(int iconLabelID, ImageDescriptor overlay) {
         //get the base image
         ImageDescriptor descriptor = null;
-    	Image base = null;
-        if (iconLabelID == LABEL_ICON_COLORBLIND) descriptor = SLDPlugin.getDefault().getImageDescriptor(ImageConstants.COLORBLIND_ICON); 
-        else if (iconLabelID == LABEL_ICON_CRT) descriptor = SLDPlugin.getDefault().getImageDescriptor(ImageConstants.CRT_ICON); 
-        else if (iconLabelID == LABEL_ICON_LCD) descriptor = SLDPlugin.getDefault().getImageDescriptor(ImageConstants.LAPTOP_ICON); 
-        else if (iconLabelID == LABEL_ICON_PHOTOCOPY) descriptor = SLDPlugin.getDefault().getImageDescriptor(ImageConstants.PHOTOCOPY_ICON); 
-        else if (iconLabelID == LABEL_ICON_PRINT) descriptor = SLDPlugin.getDefault().getImageDescriptor(ImageConstants.PRINTER_ICON); 
-        else if (iconLabelID == LABEL_ICON_PROJECTOR) descriptor = SLDPlugin.getDefault().getImageDescriptor(ImageConstants.PROJECTOR_ICON); 
+        Image base = null;
+        if (iconLabelID == LABEL_ICON_COLORBLIND) descriptor = SLDPlugin.getDefault().getImageDescriptor(ImageConstants.COLORBLIND_ICON);
+        else if (iconLabelID == LABEL_ICON_CRT) descriptor = SLDPlugin.getDefault().getImageDescriptor(ImageConstants.CRT_ICON);
+        else if (iconLabelID == LABEL_ICON_LCD) descriptor = SLDPlugin.getDefault().getImageDescriptor(ImageConstants.LAPTOP_ICON);
+        else if (iconLabelID == LABEL_ICON_PHOTOCOPY) descriptor = SLDPlugin.getDefault().getImageDescriptor(ImageConstants.PHOTOCOPY_ICON);
+        else if (iconLabelID == LABEL_ICON_PRINT) descriptor = SLDPlugin.getDefault().getImageDescriptor(ImageConstants.PRINTER_ICON);
+        else if (iconLabelID == LABEL_ICON_PROJECTOR) descriptor = SLDPlugin.getDefault().getImageDescriptor(ImageConstants.PROJECTOR_ICON);
         if (descriptor != null) base = descriptor.createImage();
         if (overlay == null) return base;
         //apply the overlay
@@ -1779,7 +1779,7 @@ public class StyleThemePage extends StyleEditorPage {
             setButtonSelection(memento, BUTTON_PRINT, PRINT_KEY);
             setButtonSelection(memento, BUTTON_PROJECTOR, PROJECTOR_KEY);
             setOutine(memento);
-            
+
             setPaletteSelection(memento);
             readCustomPalette(memento);
             readCustomBreak(memento);
@@ -1819,15 +1819,14 @@ public class StyleThemePage extends StyleEditorPage {
     }
 
     private void readCustomBreak(IMemento memento) {
-        // TODO Auto-generated method stub
-        
+
     }
 
     private void readCustomPalette(IMemento memento) {
         List<Color> colors = new ArrayList<Color>();
         int index = 1;
-        while(memento.getInteger(CUSTOM_PALETTE+index)!=null){ 
-            int rgb = memento.getInteger(CUSTOM_PALETTE+index); 
+        while(memento.getInteger(CUSTOM_PALETTE+index)!=null){
+            int rgb = memento.getInteger(CUSTOM_PALETTE+index);
             colors.add(new Color(rgb));
             index++;
         }
@@ -1840,11 +1839,11 @@ public class StyleThemePage extends StyleEditorPage {
         }else{
             customPalette = new BrewerPalette();
             PaletteSuitability suitability = new PaletteSuitability();
-    
+
             SampleScheme newScheme = new SampleScheme();
             String unknown = "?"; //$NON-NLS-1$
             for (int i = 0; i < colors.size(); i++) {
-                if (i > 0) { 
+                if (i > 0) {
                     //create a simple scheme
                     int[] scheme = new int[i+1];
                     for (int j = 0; j < i+1; j++) {
@@ -1865,8 +1864,8 @@ public class StyleThemePage extends StyleEditorPage {
             customPalette.setPaletteSuitability(suitability);
             customPalette.setColors(colors.toArray(new Color[0]));
             customPalette.setColorScheme(newScheme);
-            customPalette.setName(Messages.StyleEditor_theme_custom); 
-            customPalette.setDescription(Messages.StyleEditor_theme_custom_desc); 
+            customPalette.setName(Messages.StyleEditor_theme_custom);
+            customPalette.setDescription(Messages.StyleEditor_theme_custom_desc);
             customPalette.setType(new PaletteType());
             if (!getBrewer().hasPalette(Messages.StyleEditor_theme_custom)) {
                 getBrewer().registerPalette(customPalette);
@@ -1894,50 +1893,50 @@ public class StyleThemePage extends StyleEditorPage {
     }
 
     private void setButtonSelection(IMemento memento, int widgetID,
-			String mementoKey) {
-		if( memento.getInteger(mementoKey)!=null ){
-			Button button = getButton(widgetID);
-			boolean selected = memento.getInteger(mementoKey)>0;
-			button.setSelection(selected);
-		}
-	}
+            String mementoKey) {
+        if( memento.getInteger(mementoKey)!=null ){
+            Button button = getButton(widgetID);
+            boolean selected = memento.getInteger(mementoKey)>0;
+            button.setSelection(selected);
+        }
+    }
 
-	private void setComboSelectionString(IMemento memento, int widgetId, String key) {
-		Combo control = getCombo(widgetId);
-		if( memento.getString(key)!=null ){
-    		String string = memento.getString(key);
-    		String[] items = control.getItems();
-    		for (int i = 0; i < items.length; i++) {
-    			if( items[i].equals(string)){
-	    			control.select(i);
-	    			break;
-    			}
-			}
-    	}
-	};
-    
+    private void setComboSelectionString(IMemento memento, int widgetId, String key) {
+        Combo control = getCombo(widgetId);
+        if( memento.getString(key)!=null ){
+            String string = memento.getString(key);
+            String[] items = control.getItems();
+            for (int i = 0; i < items.length; i++) {
+                if( items[i].equals(string)){
+                    control.select(i);
+                    break;
+                }
+            }
+        }
+    };
 
-	private void setComboSelectionInt(IMemento memento, int widgetId, String key) {
-		Combo control = getCombo(widgetId);
-		if( memento.getInteger(key)!=null ){
-    		Integer integer = memento.getInteger(key);
-			control.select(integer);
-    	}
-	};
-    
+
+    private void setComboSelectionInt(IMemento memento, int widgetId, String key) {
+        Combo control = getCombo(widgetId);
+        if( memento.getInteger(key)!=null ){
+            Integer integer = memento.getInteger(key);
+            control.select(integer);
+        }
+    };
+
     public boolean performApply() {
-    	StyleBlackboard bb = getSelectedLayer().getStyleBlackboard();
-    	IMemento memento = (IMemento) bb.get(DialogSettingsStyleContent.EXTENSION_ID);
-    	if(memento == null ){
-    		memento = XMLMemento.createWriteRoot("ThemeingData");
-    	}
+        StyleBlackboard bb = getSelectedLayer().getStyleBlackboard();
+        IMemento memento = (IMemento) bb.get(DialogSettingsStyleContent.EXTENSION_ID);
+        if(memento == null ){
+            memento = XMLMemento.createWriteRoot("ThemeingData");
+        }
 
-    	putIntFromCombo(memento, OPACITY_KEY, COMBO_OPACITY);
-    	putStringFromCombo(memento, ATTRIBUTE_KEY, COMBO_ATTRIBUTES);
-    	putIntFromCombo(memento, CLASSES_KEY, COMBO_CLASSES);
-    	putStringFromCombo(memento, BREAK_KEY, COMBO_BREAKTYPE);
-    	putStringFromCombo(memento, NORMALIZE_KEY, COMBO_NORMALIZE);
-    	memento.putInteger(ELSE_KEY, getCombo(COMBO_ELSE).getSelectionIndex());
+        putIntFromCombo(memento, OPACITY_KEY, COMBO_OPACITY);
+        putStringFromCombo(memento, ATTRIBUTE_KEY, COMBO_ATTRIBUTES);
+        putIntFromCombo(memento, CLASSES_KEY, COMBO_CLASSES);
+        putStringFromCombo(memento, BREAK_KEY, COMBO_BREAKTYPE);
+        putStringFromCombo(memento, NORMALIZE_KEY, COMBO_NORMALIZE);
+        memento.putInteger(ELSE_KEY, getCombo(COMBO_ELSE).getSelectionIndex());
         putStringFromCombo(memento, PALETTE_CATEGORY_KEY, COMBO_PALETTES);
 
         putButton(memento, BUTTON_COLORBLIND, COLOR_BLIND_KEY);
@@ -1975,16 +1974,15 @@ public class StyleThemePage extends StyleEditorPage {
             memento.putString(BORDER_COLOR_KEY, ""); //$NON-NLS-1$
             return;
         }
-        
+
         String sep = "-"; //$NON-NLS-1$
         String stringVal = rgb.red+sep+rgb.green+sep+rgb.blue;
         memento.putString(BORDER_COLOR_KEY, stringVal);
     }
 
     private void storeCustomBreak(IMemento memento) {
-        // TODO Auto-generated method stub
         if( customBreak!=null ){
-            
+
         }
     }
 
@@ -2010,25 +2008,25 @@ public class StyleThemePage extends StyleEditorPage {
         }
     }
 
-	private void putButton(IMemento memento, int buttonId, String key) {
-		boolean selection;
-		selection = getButton(buttonId).getSelection();
-		memento.putInteger(key, selection?1:0);
-	}
+    private void putButton(IMemento memento, int buttonId, String key) {
+        boolean selection;
+        selection = getButton(buttonId).getSelection();
+        memento.putInteger(key, selection?1:0);
+    }
 
     private void putStringFromCombo(IMemento memento, String key,
-			int comboID) {
-    	Combo combo = getCombo(comboID);
-		int index = combo.getSelectionIndex();
-		memento.putString(key, combo.getItem(index));
-	}
+            int comboID) {
+        Combo combo = getCombo(comboID);
+        int index = combo.getSelectionIndex();
+        memento.putString(key, combo.getItem(index));
+    }
 
-	private void putIntFromCombo(IMemento memento, String key,
-			int comboID) {
-		memento.putInteger(key, getCombo(comboID).getSelectionIndex());
-	}
+    private void putIntFromCombo(IMemento memento, String key,
+            int comboID) {
+        memento.putInteger(key, getCombo(comboID).getSelectionIndex());
+    }
 
-	public void refresh() {
+    public void refresh() {
         //TODO: add refresh method
     }
 }

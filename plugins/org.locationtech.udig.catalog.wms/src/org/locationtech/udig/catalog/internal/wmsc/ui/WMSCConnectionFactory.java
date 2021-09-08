@@ -32,10 +32,10 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
  * Connection factory for a wmsc service.
- * 
+ *
  * Note the url must have "tiled=true" to be a wmsc service.
- * 
- * 
+ *
+ *
  * @author Emily Gouge (Refractions Research, Inc.)
  * @since 1.1.0
  */
@@ -52,9 +52,9 @@ public class WMSCConnectionFactory extends UDIGConnectionFactory {
           IResolve resolve = (IResolve) context;
           return resolve.canResolve( TiledWebMapServer.class );
       }
-      return toCapabilitiesURL(context) != null;        
+      return toCapabilitiesURL(context) != null;
    }
-   
+
     /**
      * Creates connection parameters from a given context
      */
@@ -92,7 +92,7 @@ public class WMSCConnectionFactory extends UDIGConnectionFactory {
                return wms.getConnectionParams();
            } catch (IOException e) {
                checkedURL( layer.getIdentifier() );
-           }                    
+           }
        }
        else if( handle.canResolve( TiledWebMapServer.class )){
            // must be some kind of handle from a search!
@@ -100,19 +100,19 @@ public class WMSCConnectionFactory extends UDIGConnectionFactory {
        }
        return Collections.emptyMap();
    }
-   
+
    /** 'Create' params given the provided url, no magic occurs */
    static public Map<String,Serializable> createParams( URL url ){
        WMSCServiceExtension factory = new WMSCServiceExtension();
        Map<String,Serializable> params = factory.createParams( url );
        if( params != null) return params;
-       
+
        Map<String,Serializable> params2 = new HashMap<String,Serializable>();
        params2.put(WMSCServiceImpl.WMSC_URL_KEY,url);
        return params2;
    }
 
-   
+
     /**
     * Convert "data" to a wmsc capabilities url.
     * <p>
@@ -142,58 +142,57 @@ public class WMSCConnectionFactory extends UDIGConnectionFactory {
                return toCapabilitiesURL( id.toURL() );
            }
        }
-       return null; // no idea what this should be       
+       return null; // no idea what this should be
    }
 
    static URL toCapabilitiesURL( IResolve resolve ){
        if( resolve instanceof IService ){
            return toCapabilitiesURL( (IService) resolve );
        }
-       return toCapabilitiesURL( resolve.getIdentifier() );        
+       return toCapabilitiesURL( resolve.getIdentifier() );
    }
 
    static URL toCapabilitiesURL( IService resolve ){
        if( resolve instanceof WMSCServiceImpl ){
            return toCapabilitiesURL( (WMSCServiceImpl) resolve );
        }
-       return toCapabilitiesURL( resolve.getIdentifier() );        
+       return toCapabilitiesURL( resolve.getIdentifier() );
    }
 
    /** No further QA checks needed - we know this one works */
    static URL toCapabilitiesURL( WMSCServiceImpl wms ){
-       return wms.getIdentifier();                
+       return wms.getIdentifier();
    }
 
-   /** 
+   /**
     * Quick sanity check to see if url is a WMSC url;
     * Must contain "tiled=true"
-    *  
+    *
     */
    static URL toCapabilitiesURL( URL url ){
        if (url == null) return null;
-   
+
        String query = url.getQuery() == null ? null : url.getQuery().toLowerCase();
        String protocol = url.getProtocol() == null ? null : url.getProtocol().toLowerCase();
-   
+
        if (!"http".equals(protocol) //$NON-NLS-1$
-               && !"https".equals(protocol)) { //$NON-NLS-1$ 
+               && !"https".equals(protocol)) { //$NON-NLS-1$
            return null;
        }
-       
+
        if( query != null && query.indexOf( "tiled=true" ) != -1){ //$NON-NLS-1$
            return checkedURL(url);
        }
        return null;
-       
-       
+
    }
-   
+
    /** Check that any trailing #layer is removed from the url */
    static public URL checkedURL( URL url ){
        String check = url.toExternalForm();
        int hash = check.indexOf('#');
        if ( hash == -1 ){
-           return url;            
+           return url;
        }
        try {
            return new URL( check.substring(0, hash ));
@@ -201,9 +200,8 @@ public class WMSCConnectionFactory extends UDIGConnectionFactory {
            return null;
        }
    }
-   
+
    public URL createConnectionURL(Object context) {
-       // TODO Auto-generated method stub
        return null;
    }
 

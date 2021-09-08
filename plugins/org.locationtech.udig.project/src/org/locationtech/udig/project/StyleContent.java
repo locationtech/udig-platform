@@ -31,7 +31,7 @@ import org.eclipse.ui.IMemento;
 
 /**
  * Provides a way to persist an arbitrary object placed on the style blackboard.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -94,7 +94,7 @@ public abstract class StyleContent {
                 }
                 try {
                     text = memento.getString("object");
-                    
+
                     ByteArrayInputStream bytes = new ByteArrayInputStream(text.getBytes());
                     ObjectInputStream restore = new ObjectInputStream(new BufferedInputStream(bytes));
                     Object value = restore.readObject();
@@ -115,7 +115,6 @@ public abstract class StyleContent {
         @Override
         public Object createDefaultStyle( IGeoResource resource, Color colour,
                 IProgressMonitor monitor ) throws IOException {
-            // TODO Auto-generated method stub
             return null;
         }
     };
@@ -131,7 +130,7 @@ public abstract class StyleContent {
      * This id is also used by Renderer and StyleConfigurator, often implementation will have a
      * <code>static final String ID</code> defined for programmers.
      * </p>
-     * 
+     *
      * @return The style id which identifies the style.
      * @uml.property name="id"
      */
@@ -142,7 +141,7 @@ public abstract class StyleContent {
     /**
      * Construct with ID supplied by subclass. This id must be the same as the id declared by the
      * extension point.
-     * 
+     *
      * @param id
      */
     public StyleContent( String id ) {
@@ -155,7 +154,7 @@ public abstract class StyleContent {
 
     /**
      * Returns the class of the object which does the actual styling work.
-     * 
+     *
      * @return the class of the style object.
      */
     public abstract Class< ? > getStyleClass();
@@ -166,7 +165,7 @@ public abstract class StyleContent {
      * (Currently used with XMLMemento to persist StyleEntry, it is hoped that an EMFMemento can be
      * writen).
      * </p>
-     * 
+     *
      * @param style the style object to persisit.
      * @param memento Momento used to store the style object state.
      */
@@ -178,7 +177,7 @@ public abstract class StyleContent {
      * (Currently used with XMLMemento to persist StyleEntry, it is hoped that an EMFMemento can be
      * writen).
      * </p>
-     * 
+     *
      * @param memento object which contains previously saved object state.
      * @return Loaded object and state.
      */
@@ -186,7 +185,7 @@ public abstract class StyleContent {
 
     /**
      * Loads a style object from a URL. This method is blocking.
-     * 
+     *
      * @param url the URL pointing to the style's location
      * @param monitor Progress monitor to report back to caller, allowed to be null.
      * @return a load style object, or null if it could not be loaded
@@ -196,7 +195,7 @@ public abstract class StyleContent {
 
     /**
      * Creates a default Style give a resource and color.
-     * 
+     *
      * @param resource to attempt to create a style for.
      * @param colour color to use while creating style.
      * @param monitor monitor used to show progress of style creation.

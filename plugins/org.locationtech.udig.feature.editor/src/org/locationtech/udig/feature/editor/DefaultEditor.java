@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.locationtech.udig.feature.editor;
 
@@ -23,7 +23,7 @@ import org.opengis.feature.simple.SimpleFeature;
 /**
  * This is the default FeatureEditor; making use of a PropertySheet page to show the attributes of a
  * feature and allow them to be edited.
- * 
+ *
  * @author Jesse
  */
 public class DefaultEditor extends ViewPart implements IUDIGView {
@@ -95,17 +95,14 @@ public class DefaultEditor extends ViewPart implements IUDIGView {
                 return new IPropertySource(){
 
                     public void setPropertyValue( Object id, Object value ) {
-                        // TODO Auto-generated method stub
 
                     }
 
                     public void resetPropertyValue( Object id ) {
-                        // TODO Auto-generated method stub
 
                     }
 
                     public boolean isPropertySet( Object id ) {
-                        // TODO Auto-generated method stub
                         return false;
                     }
 

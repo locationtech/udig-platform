@@ -82,32 +82,31 @@ public class Activator extends AbstractUIPlugin {
 			layout.verticalSpacing = 0;
 			comp.setLayout(layout);
 			Control msg;
-		    try {
+			try {
 				Browser browser = new Browser(comp, SWT.NONE);
 				browser.setText(String.format(htmlForm,Messages.GetHTMLDriverMsg));
-		        msg = browser;
-		        browser.addLocationListener(new LocationListener() {
-					
+				msg = browser;
+				browser.addLocationListener(new LocationListener() {
+
 					@Override
 					public void changing(LocationEvent event) {
 						event.doit = false;
 						org.eclipse.swt.program.Program.launch(event.location);
-						
+
 					}
-					
+
 					@Override
 					public void changed(LocationEvent event) {
-						// TODO Auto-generated method stub
-						
+
 					}
 				});
-		    } catch (SWTError e) {
+			} catch (SWTError e) {
 				Text text = new Text(comp, SWT.MULTI
 						| SWT.READ_ONLY | SWT.WRAP | SWT.BORDER
 						| SWT.SHADOW_IN);
 				text.setText(Messages.GetDriverMsg);
 				msg = text;
-		    }
+			}
 			GridDataFactory.fillDefaults().span(2, 1)
 					.hint(500, 200).applyTo(msg);
 			area(path, JDBC_FILE_NAME, comp);
@@ -124,7 +123,7 @@ public class Activator extends AbstractUIPlugin {
 
 				@Override
 				public void handleEvent(Event event) {
-					path = text1.getText(); 
+					path = text1.getText();
 					updateRestart();
 				}
 
@@ -204,7 +203,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
 	 * )
@@ -232,7 +231,7 @@ public class Activator extends AbstractUIPlugin {
 
 						File newPlugin;
 						boolean needUserCopy;
-						
+
 						File requiredPluginDir = new File(pluginsDir, pluginName);
 						try {
 							newPlugin = requiredPluginDir;
@@ -246,7 +245,7 @@ public class Activator extends AbstractUIPlugin {
 
 						final String dest = new File(newPlugin,"libs").getPath();
 						final File finalNewPlugin = newPlugin;
-						
+
 						transfer(dest, JDBC_FILE_NAME, dialog);
 						transfer(dest, CONFIG_FILE_NAME, dialog);
 
@@ -255,25 +254,25 @@ public class Activator extends AbstractUIPlugin {
 								Dialog dialog2 = new Dialog(shell) {
 									protected Control createDialogArea(Composite parent) {
 										Control comp;
-									    try {
-								    	Browser browser = new Browser(parent, SWT.NONE);
+										try {
+											Browser browser = new Browser(parent, SWT.NONE);
 
-								        String mainMessage = String.format(Messages.GetHTMLCopyPluginMsg,finalNewPlugin.getParentFile().getAbsolutePath(), finalNewPlugin.getAbsolutePath(), pluginsDir.getAbsolutePath());
-										browser.setText(mainMessage);
-										browser.addLocationListener(new LocationListener() {
-											
-											@Override
-											public void changing(LocationEvent event) {
-												event.doit = false;
-												org.eclipse.swt.program.Program.launch(event.location);												
-											}
-											
-											@Override
-											public void changed(LocationEvent event) {
-											}
-										});
-										comp = browser;
-									    } catch (SWTError e) {
+											String mainMessage = String.format(Messages.GetHTMLCopyPluginMsg,finalNewPlugin.getParentFile().getAbsolutePath(), finalNewPlugin.getAbsolutePath(), pluginsDir.getAbsolutePath());
+											browser.setText(mainMessage);
+											browser.addLocationListener(new LocationListener() {
+
+												@Override
+												public void changing(LocationEvent event) {
+													event.doit = false;
+													org.eclipse.swt.program.Program.launch(event.location);
+												}
+
+												@Override
+												public void changed(LocationEvent event) {
+												}
+											});
+											comp = browser;
+										} catch (SWTError e) {
 											Text text = new Text(parent, SWT.MULTI
 													| SWT.READ_ONLY | SWT.WRAP | SWT.BORDER
 													| SWT.SHADOW_IN);
@@ -282,24 +281,24 @@ public class Activator extends AbstractUIPlugin {
 											text.setText(mainMessage);
 											comp = text;
 									    }
-									    GridDataFactory.fillDefaults().hint(500, 200).applyTo(comp);
+										GridDataFactory.fillDefaults().hint(500, 200).applyTo(comp);
 
-									    return comp;
+										return comp;
 									};
 									@Override
 									protected Button createButton(Composite parent,
 											int id, String label, boolean defaultButton) {
 										Button button = super.createButton(parent, id,label, defaultButton);
 										if (id == Window.OK) button.setText("Restart");
-	
+
 										return button;
 									}
 								};
-								
+
 								if(dialog2.open() == Window.CANCEL) return;
 							}
 						}
-						
+
 						String cmd = buildCommandLine(shell);
 						if (cmd != null) {
 							System.setProperty(PROP_EXIT_CODE, Integer.toString(24));
@@ -315,7 +314,7 @@ public class Activator extends AbstractUIPlugin {
 
 				public File findPluginsDir() throws IOException {
 					Bundle bundle = Platform.getBundle(GEOTOOLS_LIBS_PLUGIN);
-					
+
 					String filePath = FileLocator.toFileURL(FileLocator.find(bundle, new Path("glib"), new HashMap<String, String>())).getFile();
 					return new File(filePath).getParentFile().getParentFile();
 				}
@@ -326,7 +325,7 @@ public class Activator extends AbstractUIPlugin {
 					RandomAccessFile in = null;
 					try {
 						String fromPath = new File(dialog.getPath(),driver).getPath();
-						
+
 						String toPath = new File(dest, driver).getPath();
 						out = new RandomAccessFile(toPath, "rw");
 						in = new RandomAccessFile(fromPath.trim(), "r");
@@ -385,7 +384,7 @@ public class Activator extends AbstractUIPlugin {
 	 * Create and return a string with command line options for eclipse.exe that
 	 * will launch a new workbench that is the same as the currently running
 	 * one, but using the argument directory as its workspace.
-	 * 
+	 *
 	 * @param workspace
 	 *            the directory to use as the new workspace
 	 * @return a string of command line options or null on error
@@ -437,7 +436,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Returns the shared instance
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static Activator getDefault() {

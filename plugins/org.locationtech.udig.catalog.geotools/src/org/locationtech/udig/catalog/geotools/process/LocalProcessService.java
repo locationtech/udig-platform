@@ -30,7 +30,7 @@ import org.geotools.process.Processors;
 
 /**
  * Gathers up all ProcessFactories findable by GeoTools into the local catalog.
- * 
+ *
  * @author Jody Garnett (LISAsoft)
  * @since 1.2.0
  */
@@ -40,7 +40,7 @@ public class LocalProcessService extends IService {
      * ID used for geotools processes
      */
     public final static String ID = "process:///localhost/geotools/process"; //$NON-NLS-1$
-    
+
     /** Service ID used for GeoTools processes */
     public final static ID SERVICE_ID = new ID(ID,"geotools");
 
@@ -55,7 +55,7 @@ public class LocalProcessService extends IService {
         params.put(LocalProcessServiceExtension.KEY, SERVICE_ID.toURL() );
         return params;
     }
-    
+
     public Status getStatus() {
         if( folders == null ){
             return super.getStatus();
@@ -71,7 +71,7 @@ public class LocalProcessService extends IService {
     public org.locationtech.udig.catalog.ID getID() {
         return SERVICE_ID;
     }
-    
+
     public URL getIdentifier() {
         return SERVICE_ID.toURL();
     }
@@ -83,11 +83,11 @@ public class LocalProcessService extends IService {
             for( ProcessFactory factory : Processors.getProcessFactories() ){
                 LocalProcessFolder folder = new LocalProcessFolder(this, factory );
                 folders.add( folder );
-            }            
+            }
         }
         return folders;
     }
-    
+
     /**
      * This service does not provide any spatial data.
      * @return null, as this service does not provide any spatial data
@@ -99,7 +99,6 @@ public class LocalProcessService extends IService {
 
     @Override
     protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
-        // TODO Auto-generated method stub
         return null;
     }
 

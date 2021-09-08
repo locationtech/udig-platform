@@ -25,14 +25,12 @@ public class ExtraParams implements Tab {
 
 	@Override
 	public boolean leavingPage() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public Either<String, Map<String, Serializable>> getParams(
 			Map<String, Serializable> params) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -43,18 +41,15 @@ public class ExtraParams implements Tab {
 
 	@Override
 	public void addListener(Listener modifyListener) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void init() {
-		// TODO Auto-generated method stub
 
 	}
 
 	public Control createControl(TabFolder tabFolder, int none) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
