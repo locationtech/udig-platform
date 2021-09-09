@@ -78,7 +78,6 @@
 <repository location="http://udig.refractions.net/files/update-jai/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="com.google.guava" version="15.0.0.v201403281430"/>
 <unit id="com.lowagie.text" version="2.1.7.v201004222200"/>
 <unit id="javax.xml" version="1.3.4.v201005080400"/>
 <unit id="net.miginfocom.layout" version="3.7.1.v200911230030"/>
@@ -114,6 +113,7 @@
 <unit id="org.objenesis" version="2.6.0.v20180420-1519"/>
 <unit id="com.sun.jna" version="4.5.1.v20190425-1842"/>
 <unit id="com.sun.jna.platform" version="4.5.1.v20190425-1842"/>
+<unit id="com.google.guava" version="27.1.0.v20190517-1946"/>
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20201130205003/repository/"/>
 </location>
 </locations>
