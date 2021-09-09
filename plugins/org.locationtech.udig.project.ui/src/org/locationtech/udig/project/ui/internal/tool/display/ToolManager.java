@@ -181,9 +181,9 @@ public class ToolManager implements IToolManager {
     protected java.util.Map<String, CursorProxy> cursorsCache = new HashMap<String, CursorProxy>();
 
     /**
-     * Proxy for the active tool (ie statue of the editor).
+     * Proxy for the active tool (ie state of the editor).
      * <p>
-     * The category of this tool will behave a little like a persepctive; since
+     * The category of this tool will behave a little like a perspective; since
      * the nature of the editor changes complety with the current tool. As such
      * the Edit menu may change what actions are available based on what subject
      * matter this tool is working on.
@@ -1389,9 +1389,6 @@ public class ToolManager implements IToolManager {
         createActionToolToolbar(cbmanager);
         createModalToolToolbar(cbmanager);
     }
-    
-    
-
 
     /* (non-Javadoc)
      * @see org.locationtech.udig.project.ui.tool.IToolManager#contributeActionTools(org.eclipse.jface.action.IToolBarManager, org.eclipse.ui.IActionBars)
@@ -1977,36 +1974,39 @@ public class ToolManager implements IToolManager {
 	 */
     private void setActiveModalTool( ModalTool modalTool ) {
         if (modalTool == null) {
-            // we cannot run with out a tool; so we will sue the default!
+            // we cannot run without a tool; so we will use the default tool!
             modalTool = defaultModalToolProxy.getModalTool();
+        }
+
+        if (activeTool == null) {
+            // the active tool was not set initially; so we will use the default tool!
+            activeTool = defaultModalToolProxy.getModalTool();
         }
 
         if (activeTool == modalTool) {
             return; // no change required!
         }
 
-        if (activeTool != null) {
-            // ask the current tool to stop listening etc...
-            activeTool.setActive(false);
-            activeTool = null;
-        }
-        
+        // ask the current tool to stop listening etc...
+        activeTool.setActive(false);
+        activeTool = null;
+
         if( modalTool.getContext() == null ){
             // the tool cannot be activated as it has not been connected to the map yet
             // Could we perform activeTool.setContext( toolContext )?
             return;
         }
-        
+
         try {
             activeTool = modalTool;
-            
+
             activeTool.setActive(true);// this should register itself with the tool manager
 
             // this was normally handled by the ToolProxy which we cannot get a hold of
             String currentCursorID = activeTool.getCursorID();
-			Cursor toolCursor = findToolCursor(currentCursorID);
-			
-			activeTool.getContext().getViewportPane().setCursor(toolCursor);
+            Cursor toolCursor = findToolCursor(currentCursorID);
+
+            activeTool.getContext().getViewportPane().setCursor(toolCursor);
         }
         catch (Throwable eek){
             System.err.println("Trouble activating "+modalTool+":"+eek);

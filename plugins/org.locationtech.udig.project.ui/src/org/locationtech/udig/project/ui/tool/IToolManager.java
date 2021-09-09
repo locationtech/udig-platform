@@ -162,7 +162,6 @@ public interface IToolManager {
      */
     void contributeToCoolBar( SubCoolBarManager cbmanager, IActionBars bars );
     
-    
     /**
      * Adds action tools contribution items to the toolbar.
      * <p>
@@ -173,16 +172,16 @@ public interface IToolManager {
      * @param bars
      */
     void contributeActionTools( IToolBarManager toolBarManager, IActionBars bars );
-    
+
     /**
-     * Adds modal tools contribution items to the toolbar.
-     * <p>
-     * The actual toolbar UI elements are created and managed by the framework, IToolManager
-     * just adds action tools as contributions to the specified <code>IToolBarManager</code>.
-     * 
-     * @param toolManager
-     * @param bars
-     */
+      * Adds modal tools contribution items to the toolbar.
+      * <p>
+      * The actual toolbar UI elements are created and managed by the framework, IToolManager
+      * just adds modal tools as contributions to the specified <code>IToolBarManager</code>.
+      * 
+      * @param toolManager
+      * @param bars
+      */
     void contributeModalTools( IToolBarManager toolBarManager, IActionBars bars );
 
     /**
