@@ -9,38 +9,42 @@
  */
 package org.locationtech.udig.tool.measure.internal;
 
-import org.locationtech.udig.project.ui.tool.IToolHandler;
-import org.locationtech.udig.project.ui.tool.Tool;
-import org.locationtech.udig.tool.measure.DistanceTool;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.action.IStatusLineManager;
-import org.eclipse.ui.IActionBars2;
+import org.eclipse.ui.IActionBars;
+import org.locationtech.udig.project.ui.tool.IToolHandler;
+import org.locationtech.udig.project.ui.tool.Tool;
+import org.locationtech.udig.tool.measure.DistanceTool;
 
 public class DistanceToolCommandHandler extends AbstractHandler implements IToolHandler {
 
     private DistanceTool tool;
     private String current;
     private final static String ID = "org.locationtech.udig.tool.edit.clearAction"; //$NON-NLS-1$
+    @Override
     public void setTool( Tool tool ) {
         this.tool = (DistanceTool) tool;
     }
 
+    @Override
     public void setCurrentCommandId( String currentCommandId ) {
         this.current = currentCommandId;
     }
 
+    @Override
     public Object execute( ExecutionEvent event ) throws ExecutionException {
         if (ID.equals(current)) {
             tool.reset();
-            IActionBars2 actionBars = tool.getContext().getActionBars();
+            IActionBars actionBars = tool.getContext().getActionBars();
             if (actionBars == null) {
                 return null;
             }
             final IStatusLineManager statusBar = actionBars.getStatusLineManager();
             if (statusBar != null) {
                 tool.getContext().updateUI(new Runnable(){
+                    @Override
                     public void run() {
                         statusBar.setErrorMessage(null);
                         statusBar.setMessage(null);
