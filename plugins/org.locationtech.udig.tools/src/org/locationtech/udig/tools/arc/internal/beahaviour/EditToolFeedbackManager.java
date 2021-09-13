@@ -3,7 +3,7 @@
  * (C) 2012, Refractions Research Inc.
  * (C) 2006, Axios Engineering S.L. (Axios)
  * (C) 2006, County Council of Gipuzkoa, Department of Environment and Planning
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
@@ -30,15 +30,15 @@ import org.locationtech.udig.tools.edit.EventType;
  * <p>
  * Thus, implementations of this interface allows a single access point to an specific tool set of
  * feedback actions by setting up {@link EditToolFeedbackBehaviour}s,
- * {@link CancelFeedbakBehaviour}s and {@link AcceptFeedbackBehaviour}s sharing a common
+ * {@link CancelFeedbackBehaviour}s and {@link AcceptFeedbackBehaviour}s sharing a common
  * EditToolFeedbackManager.
  * </p>
- * 
+ *
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
  * @since 0.1.0
  * @see EditToolFeedbackBehaviour
- * @see CancelFeedbakBehaviour
+ * @see CancelFeedbackBehaviour
  * @see AcceptFeedbackBehaviour
  */
 public interface EditToolFeedbackManager {
@@ -46,7 +46,7 @@ public interface EditToolFeedbackManager {
     /**
      * Implementations shall evaluate the current state of the editting tool in use and return
      * whether the feedback command shall be ran or not.
-     * 
+     *
      * @param handler the edit tool handler holding the edit state for the tool in use
      * @param event the mouse event that originates the call
      * @param eventType the type of mouse event being treated
@@ -65,7 +65,7 @@ public interface EditToolFeedbackManager {
      * returned <code>true</code> and the <code>handler</code>, <code>event</code>, and
      * <code>eventType</code> states have not changed.
      * </p>
-     * 
+     *
      * @param handler the edit tool handler holding the edit state for the tool in use
      * @param event the mouse event that originates the call
      * @param eventType the type of mouse event being treated
@@ -80,7 +80,7 @@ public interface EditToolFeedbackManager {
      * Most of the time it'll account just to clear the shape being drwan as the tool's feedback, or
      * any other resource being used, like the status bar or so.
      * </p>
-     * 
+     *
      * @param handler
      * @return
      */
@@ -88,7 +88,7 @@ public interface EditToolFeedbackManager {
 
     /**
      * Executes the feedback action to be ran when the edit tool in course has been cancelled.
-     * 
+     *
      * @param handler
      * @return
      */
