@@ -36,7 +36,7 @@ import org.osgi.framework.BundleContext;
  */
 public final class ProjectPlugin extends EMFPlugin {
     /** Plugin ID */
-    public final static String ID = "org.locationtech.udig.project"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.project"; //$NON-NLS-1$
 
     /**
      * Keep track of the singleton. <!-- begin-user-doc --> <!-- end-user-doc -->

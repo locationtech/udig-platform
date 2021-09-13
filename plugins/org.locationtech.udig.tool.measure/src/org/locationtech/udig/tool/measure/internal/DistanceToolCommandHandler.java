@@ -22,7 +22,7 @@ public class DistanceToolCommandHandler extends AbstractHandler implements ITool
 
     private DistanceTool tool;
     private String current;
-    private final static String ID = "org.locationtech.udig.tool.edit.clearAction"; //$NON-NLS-1$
+    private static final String ID = "org.locationtech.udig.tool.edit.clearAction"; //$NON-NLS-1$
     @Override
     public void setTool( Tool tool ) {
         this.tool = (DistanceTool) tool;

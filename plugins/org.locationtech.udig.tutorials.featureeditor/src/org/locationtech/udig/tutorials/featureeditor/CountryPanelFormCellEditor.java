@@ -61,7 +61,7 @@ import org.opengis.feature.simple.SimpleFeature;
  * <li>use CellEditors for the form's fields</li>
  * </ul>
  * </p>
- * 
+ *
  * @author Naz Chan
  */
 public class CountryPanelFormCellEditor
@@ -70,28 +70,28 @@ public class CountryPanelFormCellEditor
             ISelectionChangedListener {
 
     /** Attribute name for attribute NAME_FORMA */
-    public final static String NAME_FORMA = "NAME_FORMA";
-    public final static String NAME_FORMA_LBL = "Name (formal)";
+    public static final String NAME_FORMA = "NAME_FORMA";
+    public static final String NAME_FORMA_LBL = "Name (formal)";
 
     /** Attribute name for attribute NAME_SORT */
-    public final static String NAME_SORT = "NAME_SORT";
-    public final static String NAME_SORT_LBL = "Name (short)";
+    public static final String NAME_SORT = "NAME_SORT";
+    public static final String NAME_SORT_LBL = "Name (short)";
 
     /** Attribute name for attribute POP_EST */
-    public final static String POP_EST = "POP_EST";
-    public final static String POP_EST_LBL = "Population Estimate";
+    public static final String POP_EST = "POP_EST";
+    public static final String POP_EST_LBL = "Population Estimate";
 
     /** Attribute name for attribute TYPE */
-    public final static String TYPE = "TYPE";
-    public final static String TYPE_LBL = "Status";
-    public final static String TYPE_SOV_LBL = "Sovereign Country";
-    public final static String TYPE_COU_LBL = "Country";
-    public final static String[] TYPE_OPTS = new String[] {TYPE_SOV_LBL, TYPE_COU_LBL};
-    
+    public static final String TYPE = "TYPE";
+    public static final String TYPE_LBL = "Status";
+    public static final String TYPE_SOV_LBL = "Sovereign Country";
+    public static final String TYPE_COU_LBL = "Country";
+    public static final String[] TYPE_OPTS = new String[] {TYPE_SOV_LBL, TYPE_COU_LBL};
+
     /** Attribute name for attribute MAP_COLOR */
-    public final static String COLOR_MAP = "MAP_COLOR";
-    public final static String COLOR_MAP_LBL = "Map Color";
-    public final static Double[] COLOR_MAP_OPTS;
+    public static final String COLOR_MAP = "MAP_COLOR";
+    public static final String COLOR_MAP_LBL = "Map Color";
+    public static final Double[] COLOR_MAP_OPTS;
     static {
         COLOR_MAP_OPTS = new Double[13];
         for( int i = 0; i < COLOR_MAP_OPTS.length; i++ ) {
@@ -99,8 +99,8 @@ public class CountryPanelFormCellEditor
         }
     }
 
-    public final static String REMARKS_LBL = "Remarks";
-    
+    public static final String REMARKS_LBL = "Remarks";
+
     /**
      * Used to construct UI
      */
@@ -135,7 +135,7 @@ public class CountryPanelFormCellEditor
     private IToolContext context;
 
     public void createControl( Composite parent, FormToolkit toolkit ) {
-        
+
         this.toolkit = toolkit;
 
         form = toolkit.createScrolledForm(parent);
@@ -161,7 +161,7 @@ public class CountryPanelFormCellEditor
         layout.minNumColumns = MIN_COLS;
         form.getBody().setLayout(layout);
         toolkit.decorateFormHeading(form.getForm());
-        
+
         final Section section = toolkit.createSection(form.getBody(), SECTION_STYLE);
         section.setText("Country Details");
         section.setDescription("Update country details below.");
@@ -203,7 +203,7 @@ public class CountryPanelFormCellEditor
         layoutData = new GridData(GridData.FILL_HORIZONTAL);
         layoutData.horizontalSpan = 3;
         population.setLayoutData(layoutData);
-        
+
         label = toolkit.createLabel(client, TYPE_LBL, LABEL_STYLE);
         FormComboBoxCellEditor typeEditor = new FormComboBoxCellEditor(client, TYPE_OPTS, form.getMessageManager());
         type = (CCombo) typeEditor.getControl();
@@ -216,7 +216,7 @@ public class CountryPanelFormCellEditor
         layoutData = new GridData();
         layoutData.horizontalSpan = 3;
         type.setLayoutData(layoutData);
-        
+
         // JFace Viewer
         label = toolkit.createLabel(client, COLOR_MAP_LBL, LABEL_STYLE);
         FormComboBoxCellEditor colorEditor = new FormComboBoxCellEditor(client, new String[]{}, form.getMessageManager());

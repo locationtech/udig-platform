@@ -66,7 +66,7 @@ public class JavaContentOutlinePage extends ContentOutlinePage {
 	 */
 	protected class ContentProvider implements ITreeContentProvider {
 
-		protected final static String SEGMENTS= "__java_segments"; //$NON-NLS-1$
+		protected static final String SEGMENTS= "__java_segments"; //$NON-NLS-1$
 		protected IPositionUpdater fPositionUpdater= new DefaultPositionUpdater(SEGMENTS);
 		protected List fContent= new ArrayList(10);
 

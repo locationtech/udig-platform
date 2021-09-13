@@ -75,10 +75,10 @@ import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 
 
 /**
- * A IRenderManager that is reacts to events such as viewport model changes and renders 
+ * A IRenderManager that is reacts to events such as viewport model changes and renders
  * the screen in tiles.
- * 
- * 
+ *
+ *
  * <p>
  * These are the events we have found this class pays attention to:
  * <ul>
@@ -92,33 +92,33 @@ import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
  * </ul>
  * The Map owns one of these things; uses it to scribble on the screen to the
  * user.
- * 
+ *
  * <p>The tiling system used by this system is based on a tile size of 512x512 pixels and a "center" coordinate
  * of (0,0)</p>
- * 
+ *
  * @generated
  */
 public class TiledRenderManagerDynamic extends RenderManagerImpl {
-    
+
     /**
-     * 
+     *
      * The size of the tiles to use.
      */
-    private final static int TILE_SIZE = 512;
-       
+    private static final int TILE_SIZE = 512;
+
     /**
      * A "center" coordinate to use for the tile system.
      */
     private Coordinate tileCenter = new Coordinate(0,0);
-    
+
     /**
      * Watches the layer add / delete / change of zorder and style changes.
      */
     ContextModelListenerAdapter contextModelAdapter = RenderManagerAdapters.createContextModelListener(this);
-    
+
     /**
-     * Watches the viewport model and class refresh(null) (triggers redrawing of the layers). 
-     * Examples of viewport model events is the bounds and the crs changing; 
+     * Watches the viewport model and class refresh(null) (triggers redrawing of the layers).
+     * Examples of viewport model events is the bounds and the crs changing;
      * panning zooming swooshing and other assorted
      * user drive fun.
      */
@@ -127,7 +127,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
     /**
      * Listens to the viewport model (using the provided viewportListener)
      * and morphing the events into something for the map to be updated with?
-     * 
+     *
      */
     private Adapter viewportModelChangeListener = RenderManagerAdapters.createViewportModelChangeListener(this, viewportListener,contextModelAdapter);
 
@@ -136,7 +136,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
      * tile states accordingly.
      */
     private Adapter visibilityChangedListener = RenderManagerAdapters.createVisibilityChangedAdapater(this);
-    
+
     /**
      * Creates a new RenderExecutorListener which listens to render events
      * and kicks the viewport to updated.
@@ -145,11 +145,11 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
 
 
     Adapter selectionListener = RenderManagerAdapters.createLayerListener(this);
-    
+
 
     /**
      * This is a weak reference to all the tiles.
-     * 
+     *
      */
     ObjectCache tileCache = ObjectCaches.create("soft", 50); //Tiles that are on the screen //$NON-NLS-1$
 
@@ -158,29 +158,29 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
      * classified to be on screen or waiting to be on screen.
      */
     Set<Tile> importantTiles = Collections.synchronizedSet(new HashSet<Tile>());
-    
+
     /**
      * This is our tile state changed listener what is responsible for maintaining
      * the important tiles collections.
      */
     TileStateChangedListener tileStateListener = new TileStateChangedListener(){
-        
+
         public void screenStateChanged(Tile t){
             updateImportantTileList(t);
         }
-        
+
         public void validationStateChanged(Tile t){
             updateImportantTileList(t);
         }
-        
+
         public void renderStateChanged(Tile t){
             //this doesn't effect important tile list
         }
-        
+
         public void contextStateChanged(Tile t){
             //this doesn't affect important tile list
         }
-        
+
         /**
          * Updates the important tile list.  Either adds it or removes
          * it depending on the tile state.
@@ -196,11 +196,11 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
             }
         }
     };
-    
+
     /**
      * Creates a new TiledRenderManagerDynamice and sets the render creator to null.  The render creator will
      * be set to a TiledRenderCreatorImpl when first used.
-     * 
+     *
      * @generated NOT
      */
     public TiledRenderManagerDynamic() {
@@ -208,18 +208,18 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
         this.rendererCreator = null;
         eAdapters().add(viewportModelChangeListener);
     }
-    
+
     public RendererCreator getRendererCreator() {
         checkState();
         if (rendererCreator == null){
             initRenderCreator();
         }
         return rendererCreator;
-    } 
+    }
 
     /**
      * Creates a new render creator and initializes it with the current layers on the map.
-     * 
+     *
      */
     private void initRenderCreator() {
         this.rendererCreator = new TiledRendererCreatorImpl(getTileSize(), this);
@@ -231,20 +231,20 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
         getRendererCreator().changed(notification);
     }
 
-    
+
     /**
      * Gets a tile from the cached list.  If the tile
      * does not exist a new tile is created
      * and added to the cached list.
-     * 
+     *
 
-     * 
+     *
      *
      * @param env
      * @return
      */
     private Tile getOrCreateTile(ReferencedEnvelope env){
-        
+
         Tile tile = (Tile) tileCache.get(env);
         if (tile == null) {
             try {
@@ -252,7 +252,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
                 tile = (Tile) tileCache.peek(env);
                 if (tile == null) {
                     tile = createTile(env);
-                    tileCache.put(env, tile);           
+                    tileCache.put(env, tile);
                 }
             } finally {
                 tileCache.writeUnLock(env);
@@ -260,7 +260,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
         }
         return tile;
     }
-    
+
     /**
      * Creates a new tile adding the listeners and putting it in the important tiles list.
      *
@@ -275,10 +275,10 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
         ((RenderContextImpl)newRE.getContext()).setLabelPainterLocal(newRE.getContext().getLabelPainter());
         return tile;
     }
- 
-    /** 
+
+    /**
      * Refreshes all tiles within the given bounds for a particular layer.
-     * 
+     *
      * If refreshing this layer causes other layers to need refreshing then the other layers will be refreshed
      * too.  An example is that if a wms layer has been moved a refresh may result in multiple wms contexts in the rendering
      * stack; each which need to be refreshed.
@@ -293,10 +293,10 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
         if (getMapDisplay() == null || getMapDisplay().getWidth() < 1 || getMapDisplay().getHeight() < 1) {
             return; // we are not set up to renderer yet!
         }
-        
+
         final SelectionLayer selectionLayer = getRendererCreator().findSelectionLayer(layer);
-        
-        //get only the tile in the bounds in the area of interest 
+
+        //get only the tile in the bounds in the area of interest
         ReferencedEnvelope areaOfInterest = null;
         if (bounds == null){
             areaOfInterest = getMap().getViewportModel().getBounds();
@@ -305,11 +305,11 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
         }
         ReferencedEnvelope viewportbounds = getMap().getViewportModel().getBounds();
         double resolution = viewportbounds.getWidth() / getMapDisplay().getWidth();
-        
-        //get only the tile in the bounds in the area of interest 
+
+        //get only the tile in the bounds in the area of interest
         Collection<ReferencedEnvelope> tileBounds = computeTileBounds(areaOfInterest, resolution);
         setTileStateToOld(tileBounds);
-        
+
         for( ReferencedEnvelope env : tileBounds ) {
             //need to render the entire tile otherwise new additions to tile doesn't work properly
             final Envelope bbox = env;
@@ -318,21 +318,21 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
                 //this shouldn't occur but it does???  (maybe a double precision thing)
                 continue;
             }
-            
+
             Tile tile = getOrCreateTile(env);
-            
+
             tile.setTileState(Tile.ValidatedState.VALIDATED);
             tile.setRenderState(Tile.RenderState.RENDERED);
-            
+
             RenderExecutorComposite re = tile.getRenderExecutor();
-            
+
             //validate the context if necessary
             List<AbstractRenderMetrics> torefresh = new ArrayList<AbstractRenderMetrics>();
             if (tile.getContextState() == Tile.ContextState.INVALID){
                 torefresh = validateRendererConfiguration(tile);
                 tile.setContextState(Tile.ContextState.OKAY);
             }
-            
+
             //determine which layers need to be updated
             Collection<ILayer> layersToUpdate = new ArrayList<ILayer>();
             layersToUpdate.add(layer);
@@ -342,7 +342,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
                     layersToUpdate.add(metrics.getRenderContext().getLayer());
                 }
             }
-          
+
             for( final ILayer newlayer : layersToUpdate) {
                 re.visit(new ExecutorVisitor(){
                     public void visit( RenderExecutor executor ) {
@@ -374,16 +374,16 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
             }
         }
     }
-    
-    
+
+
 
     /**
-     * 
+     *
      * Called when a selection layer is refreshed.
      * @see org.locationtech.udig.project.render.impl.RenderManagerImpl#refreshSelection(org.locationtech.jts.geom.Envelope)
      */
     public void refreshSelection(final ILayer layer, final Envelope bounds) {
-        
+
         checkState();
         if (!renderingEnabled) {
             return;
@@ -392,11 +392,11 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
         if (getMapDisplay() == null || getMapDisplay().getWidth() < 1 || getMapDisplay().getHeight() < 1) {
             return; // we are not set up to renderer yet!
         }
-        
+
         //find selection layer
         final SelectionLayer selectionLayer = getRendererCreator().findSelectionLayer(layer);
         if (selectionLayer == null) return;
-                
+
         //redraw the ones we care about for now
         //determine area of interest
         ReferencedEnvelope areaOfInterest = null;
@@ -407,21 +407,21 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
         }
         ReferencedEnvelope viewportbounds = getMap().getViewportModel().getBounds();
         double resolution = viewportbounds.getWidth() / getMapDisplay().getWidth();
-        
+
         //we need to re-render all tiles
         invalidateAllTilesRenderState();
-        
-        //get only the tile in the bounds in the area of interest 
+
+        //get only the tile in the bounds in the area of interest
         Collection<ReferencedEnvelope> tileBounds = computeTileBounds(areaOfInterest, resolution);
         setTileStateToOld(tileBounds);
-        
+
         for( ReferencedEnvelope env : tileBounds ) {
             Tile tile = getOrCreateTile(env);
-            
+
             tile.setRenderState(Tile.RenderState.RENDERED);
             tile.setTileState(Tile.ValidatedState.VALIDATED);
             RenderExecutorComposite re = tile.getRenderExecutor();
-         
+
             // creates the contexts
             if (tile.getContextState() == Tile.ContextState.INVALID){
                 validateRendererConfiguration(tile);
@@ -460,10 +460,10 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
 
                 }
             });
-        }   
+        }
     }
 
-   
+
     /**
      * Clears the selection layer
      * @see org.locationtech.udig.project.render.IRenderManager#clearSelection(ILayer)
@@ -472,19 +472,19 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
         checkState();
         if (getMapDisplay() == null)
             return;
-        
+
         //find selection layer
         final Layer selectionLayer = getRendererCreator().findSelectionLayer(layer);
         if (selectionLayer == null)
-            return;      
-        
+            return;
+
         //tiles need to be re-rendered
         invalidateAllTilesRenderState();
-        
+
         // refresh image
         refreshImage();
     }
-    
+
     /**
      * Updates the validated state of all tiles whose key is not in the validTiles
      * list to ValidatedState.OLD.
@@ -504,7 +504,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
 
     /**
      * Renders the collection of tiles in a separate different thread.
-     * 
+     *
      * <p>Currently this is used by the scroll panning tool
      * to render tiles as we pan around.</p>
      *
@@ -529,7 +529,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
             tileRenderJob.cancel();
         }
     }
-    
+
     /**
      * Renders a specific tile in the calling thread.
      * <p>The tile is only rendered if necessary (determined by the render
@@ -570,7 +570,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
                 }
             }
         } else if (rendertile) {
-            // refresh all layers  
+            // refresh all layers
             re.setRenderBounds(tile.getReferencedEnvelope());
             re.render();
         }
@@ -605,19 +605,19 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
         } else {
             areaOfInterest = new ReferencedEnvelope(bounds, getMap().getViewportModel().getCRS());
         }
-        
+
         ReferencedEnvelope viewportbounds = getMap().getViewportModel().getBounds();
         double resolution = viewportbounds.getWidth() / getMapDisplay().getWidth();
 
         Collection<ReferencedEnvelope> tileBounds = computeTileBounds(areaOfInterest, resolution);
         //update tile states
-        setTileStateToOld(tileBounds); 
+        setTileStateToOld(tileBounds);
         for( Iterator<ReferencedEnvelope> iterator = tileBounds.iterator(); iterator.hasNext(); ) {
             ReferencedEnvelope referencedEnvelope = (ReferencedEnvelope) iterator.next();
-            
+
             Tile tile = getOrCreateTile(referencedEnvelope);
             boolean rendertile = (tile.getRenderState() == Tile.RenderState.INVALID || tile.getRenderState() == Tile.RenderState.NEW);
-           
+
             tile.setTileState(Tile.ValidatedState.VALIDATED);
             RenderExecutorComposite re = tile.getRenderExecutor();
 
@@ -631,11 +631,11 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
                     rendertile = true;
                 }
             }
-                        
+
             if (!rendertile && forrefresh != null ){
                 //only refresh the layers that have changed
                 for(AbstractRenderMetrics context : forrefresh){
-                    
+
                     //kick the child renderer that has been updated
                     List<TiledCompositeRendererImpl.RenderInfo> kids = ((TiledCompositeRendererImpl)re.getRenderer()).getChildren();
                     for (TiledCompositeRendererImpl.RenderInfo r : kids){
@@ -659,10 +659,10 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
                             r.getExecutor().getRenderer().setState(IRenderer.RENDER_REQUEST);
                     }
                     re.setState(IRenderer.RENDER_REQUEST);
-//                }                
+//                }
             }
         }
-        
+
         if (!getMapInternal().getContextModel().eAdapters().contains(contextModelAdapter)){
             getMapInternal().getContextModel().eAdapters().add(contextModelAdapter);
         }
@@ -672,12 +672,12 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
 
     /**
      * Performs a "hard refresh" - this removes any existing tiles then recreates them.
-     * 
+     *
      * @generated NOT
      */
     public void refresh(final Envelope bounds) {
         //clear and existing configurations
-        if (getRendererCreator() != null){ 
+        if (getRendererCreator() != null){
             ((TiledRendererCreatorImpl)getRendererCreator()).reset();
         }
 
@@ -688,32 +688,32 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
             tiledpane.clearCachedTiles();
             tiledpane.clearReadyTiles();
         }
-        
+
         //remove all existing images so everything will be recreated
         disposeAllTiles();
         tileCache.clear();
         importantTiles.clear();
-        
+
         //now recreate everything
         softRefresh(bounds);
     }
 
-    
+
     /**
-     * Re composes all the images of all the tiles in the viewport.  
+     * Re composes all the images of all the tiles in the viewport.
      * <p>
      * This function does not verify the rendering stack; however it
      * does verify that render state and re-render if necessary.
-     * 
+     *
      */
     @Override
-    public void refreshImage() {        
+    public void refreshImage() {
         //only worry about tiles in the area of interest as specified by the viewport
         ReferencedEnvelope areaOfInterest = getMap().getViewportModel().getBounds();
-        
+
         ReferencedEnvelope viewportbounds = getMap().getViewportModel().getBounds();
         double resolution = viewportbounds.getWidth() / getMapDisplay().getWidth();
-        
+
         Collection<ReferencedEnvelope> tileBounds = computeTileBounds(areaOfInterest, resolution);
 
         for( Iterator<ReferencedEnvelope> iterator = tileBounds.iterator(); iterator.hasNext(); ) {
@@ -733,7 +733,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
             tile.setRenderState(Tile.RenderState.RENDERED);
         }
     }
-    
+
 
     /**
      * Returns the size of the tiles
@@ -743,35 +743,35 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
     public int getTileSize(){
         return TILE_SIZE;
     }
-    
+
     /**
      * Computes the tiles associated with a bounds and resolution
      *
      * @param viewBounds                bounds to find tiles for
      * @param worldunitsperpixel        resolution
-     * 
+     *
      * @return  Collection of referenced envelopes that represent the tiles in the bounds
      */
     @Override
     public Collection<ReferencedEnvelope> computeTileBounds(ReferencedEnvelope viewBounds, double worldunitsperpixel){
-        
+
         double unittilesize = worldunitsperpixel * getTileSize();
         double minx = viewBounds.getMinX();
         double minxtile = Math.floor((minx - tileCenter.x) / unittilesize) * unittilesize + tileCenter.x;
-        
+
         double maxx = viewBounds.getMaxX();
         double maxxtile = (Math.floor((maxx - tileCenter.x) / unittilesize) + 1) * unittilesize + tileCenter.x;
-        
+
         double miny = viewBounds.getMinY();
         double minytile = Math.floor((miny - tileCenter.y) / unittilesize) * unittilesize + tileCenter.y;
-        
+
         double maxy = viewBounds.getMaxY();
         double maxytile = (Math.floor((maxy - tileCenter.y) / unittilesize) + 1) * unittilesize + tileCenter.y;
 
         ArrayList<ReferencedEnvelope> tileBounds = new ArrayList<ReferencedEnvelope>();
         int numberx = (int)Math.round( (maxxtile - minxtile)/unittilesize );
-        int numbery = (int)Math.round( (maxytile - minytile)/unittilesize); 
-        
+        int numbery = (int)Math.round( (maxytile - minytile)/unittilesize);
+
         for (int x = 0; x < numberx; x ++){
             double xvalue = x * unittilesize + minxtile;
             double xvaluemax = (x + 1) * unittilesize + minxtile;
@@ -782,39 +782,39 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
                 double yvaluemax = (y + 1) * unittilesize + minytile;
                 yvalue = roundDouble(yvalue);
                 yvaluemax = roundDouble(yvaluemax);
-                
+
                 ReferencedEnvelope env = new ReferencedEnvelope(xvalue, xvaluemax, yvalue, yvaluemax, viewBounds.getCoordinateReferenceSystem());
                 tileBounds.add(env);
             }
-        }        
+        }
         return tileBounds;
     }
-    
+
     /**
-     * This function takes the last two digits (8 bits) of a double and 0's them. 
-     * 
+     * This function takes the last two digits (8 bits) of a double and 0's them.
+     *
      *
      * @param number
      * @return
      */
     private static double roundDouble(double number){
-        
+
         Long xBits = Double.doubleToLongBits(number);
 
         //zeroLowerBits
         int nBits = 8;
         long invMask = (1L << nBits) - 1L;
-        
+
         long mask =~ invMask;
-        
-        xBits &= mask;   
+
+        xBits &= mask;
         return Double.longBitsToDouble(xBits);
     }
-    
-    
+
+
     /**
      * Disposes of this render manager and all associated tiles.
-     * 
+     *
      * @generated NOT
      */
     public void dispose() {
@@ -832,7 +832,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
         }
         //remove Adapters from all render executors
         ((ViewportPane) mapDisplay).setRenderManager(null);
-     
+
         //dispose of all tiles
         disposeAllTiles();
         tileCache.clear();
@@ -840,7 +840,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
 
         super.dispose();
     }
-    
+
     /**
      * Disposes all tiles
      */
@@ -852,9 +852,9 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
                 removeAdapters(t.getRenderExecutor());
                 t.dispose();
             }
-        }    
+        }
     }
-    
+
     /**
      * @param obj
      */
@@ -867,9 +867,9 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
     }
 
     /**
-     * 
+     *
      * Sets the map display to the new value.
-     * 
+     *
      * @generated
      */
     public void setDisplayGen(IMapDisplay newDisplay) {
@@ -882,10 +882,10 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
     }
 
     /**
-     * 
+     *
      * Sets the map display to the new value and updates
      * the render manager associated with the map display.
-     * 
+     *
      * @see org.locationtech.udig.project.render.RenderManager#setDisplay(org.locationtech.udig.project.render.displayAdapter.IMapDisplay)
      * @param value
      */
@@ -915,14 +915,14 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
         if (getMapInternal() != null){
             getMapInternal().addDeepAdapter(this.visibilityChangedListener);
         }
-        
+
         return change;
     }
 
-    
+
     /**
-     * Ensures that the current configuration of renderer is a valid choice. 
-     * 
+     * Ensures that the current configuration of renderer is a valid choice.
+     *
      * <p>This function takes the current "configuration" represented by the tile and compares it to a newly
      * created configuration that is created based on the current state of the system.  It then removes and contexts from the current
      * configuration that are not in the new configuration and adds any newly created configurations.
@@ -931,14 +931,14 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
      * The function will return null if the entire context is new; otherwise it will return a set of
      * render metrics that represent the newly created contexts.  These new contexts are the context that need to be re-rendered.
      * </p>
-     * 
-     * @return a list of added contexts; null if all contexts are new; 
-     * 
+     *
+     * @return a list of added contexts; null if all contexts are new;
+     *
      */
     private List<AbstractRenderMetrics> validateRendererConfiguration(Tile t){
-        
+
         checkState();
-    
+
         if (rendererCreator == null){
             initRenderCreator();
         }
@@ -950,7 +950,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
             ProjectPlugin.log("Error creating context for tile - Tile does not have a renderer.", ex); //$NON-NLS-1$
             return null;
         }
-        
+
         if (renderer == null){
             //the tile doesn't have a renderer there is some error;
             ProjectPlugin.log("Error creating context for tile - Tile does not have a renderer."); //$NON-NLS-1$
@@ -964,7 +964,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
                 currentconfiguration = renderer.getChildrenMetrics();
             }
         }
-       
+
        ArrayList<AbstractRenderMetrics> newcontexts = new ArrayList<AbstractRenderMetrics>();
        ILabelPainter tilelabelpainter = ((RenderContextImpl)t.getRenderExecutor().getContext()).getLabelPainter();
        if (currentconfiguration == null){
@@ -987,11 +987,11 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
             //we have an existing configuration; lets recycle as many of the contexts as possible
             //lets get the new configuration
             Collection <AbstractRenderMetrics> newconfig = ((TiledRendererCreatorImpl) getRendererCreator()).getConfiguration(t.getReferencedEnvelope());
-            
+
             //items to add/remove from the existing configuration
             List<AbstractRenderMetrics> removeList = new ArrayList<AbstractRenderMetrics>();
             List<AbstractRenderMetrics> addList = new ArrayList<AbstractRenderMetrics>();
-            
+
             for(AbstractRenderMetrics metric: currentconfiguration){
                 if (!newconfig.contains(metric)){
                     //this is an existing context the doesn't exist in the new set
@@ -1006,16 +1006,16 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
                     ((RenderContextImpl)metric.getRenderContext()).setLabelPainterLocal(tilelabelpainter);
                 }
             }
-            
+
             newcontexts.addAll(addList);
-            
+
             renderer.removeChildren(removeList);
-            
+
             if (!addList.isEmpty()){
                 renderer.removeChildren(addList);
             }
             renderer.addChildren(addList);
-            
+
             //let's properly dispose of anything in the remove List
             for( Iterator<AbstractRenderMetrics> iterator = removeList.iterator(); iterator.hasNext(); ) {
                 AbstractRenderMetrics metric = (AbstractRenderMetrics) iterator.next();
@@ -1027,12 +1027,12 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
 
     /**
      * Here we'll need a render executor and renderer for each tile.
-     * 
+     *
      * This creates a render executor composite.
      */
     private RenderExecutorComposite createRenderExecutor(ReferencedEnvelope bounds) {
         checkState();
-        
+
         CompositeRendererImpl renderer = (CompositeRendererImpl)RenderFactory.eINSTANCE.createTiledCompositeRenderer();
 
         CompositeRenderContext context = new CompositeRenderContextImpl() {
@@ -1063,28 +1063,28 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
             }
 
         };
-        
+
         context.setMapInternal(getMapInternal());
         context.setRenderManagerInternal(this);
         context.setImageBounds(bounds);
         context.setImageSize(new Dimension(getTileSize(), getTileSize()));
-        
+
         ((CompositeRenderContextImpl)context).setLabelPainterLocal(new UDIGLabelCache(new LabelCacheImpl()));
         renderer.setContext(context);
-        
+
         renderer.setName(Messages.RenderManagerDynamic_allLayers);
-        
+
         RenderExecutorComposite renderExecutor = (RenderExecutorComposite)RenderFactory.eINSTANCE.createRenderExecutor(renderer);
         renderExecutor.setName("Tiled (" + bounds.hashCode() + "): " + bounds.toString()); //$NON-NLS-1$ //$NON-NLS-2$
         renderExecutor.eAdapters().add(renderExecutorListener);
-        
+
         return renderExecutor;
     }
 
-   
-    
+
+
     /**
-     * 
+     *
      * Returns true if these two layers are related in any way.  Two layers are related if:
      * <ul>
      *   <li>They are the same (layer = contained)
@@ -1093,11 +1093,11 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
      *
      * @param layer
      * @param contained
-     * 
+     *
      * @returns true if the two layers are part of the same context
      */
     public boolean areLayersRelatedByContext(ILayer layer, ILayer contained){
-        
+
        if (tileCache.getKeys().size() == 0){
             //no contexts built to check against so return false;
             return false;
@@ -1105,8 +1105,8 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
 
         //they are the same; so they are related
         if (layer == contained) return true;
-        
-        
+
+
         Tile t = null;
         Iterator<Object> keys = tileCache.getKeys().iterator();
         while( t == null && keys.hasNext()){
@@ -1119,7 +1119,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
 
         RenderExecutorComposite parent  = t.getRenderExecutor();
         Collection<TiledCompositeRendererImpl.RenderInfo>  kids = ((TiledCompositeRendererImpl)parent.getRenderer()).getChildren();
-        
+
         for( Iterator<TiledCompositeRendererImpl.RenderInfo> iterator = kids.iterator(); iterator.hasNext(); ) {
             TiledCompositeRendererImpl.RenderInfo kid = iterator.next();
             IRenderContext childcontext = kid.getRenderer().getContext()
@@ -1138,23 +1138,23 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
                 }
             }else{
                 if (childcontext.getLayer() == layer){
-                    //layer is not part of a composite context and cannot be related in 
+                    //layer is not part of a composite context and cannot be related in
                     //any way to contained
                     return false;
                 }
             }
-            
+
         }
         return false;
     }
-    
+
     /**
      * @return null as there is no render executor for this; there are multiple render executors
      */
     public RenderExecutor getRenderExecutor() {
         return null;
     }
-    
+
     /**
      * @see org.locationtech.udig.project.render.impl.RenderManagerImpl#setRenderExecutor(org.locationtech.udig.project.render.RenderExecutor)
      */
@@ -1164,11 +1164,11 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
 
     /**
      * Throws an unsupported operation exception.
-     * 
+     *
      * <p>The tiled rendering system does not have
      * a single set of renderers.</p>
-     * 
-     * @returns 
+     *
+     * @returns
      */
     @Override
     public List<IRenderer> getRenderers(){
@@ -1176,14 +1176,14 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
     }
 
     /**
-     * Returns a list of tiles that match the given tile bounds.  If the given tile 
+     * Returns a list of tiles that match the given tile bounds.  If the given tile
      * bounds are null, they will be calculated from the viewport bounds.  The returned
      * list of tiles can then be cached for faster painting/panning.
-     * 
+     *
      * This is assumed to be called by the viewport.  As a result any tile withing the bounds provided
      * is marked as on-screen; others will be marked as offscreen; which means it is possible for them to be
      * removed.
-     * 
+     *
      */
     @Override
     public java.util.Map<ReferencedEnvelope, Tile> getTiles(
@@ -1193,7 +1193,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
     		ReferencedEnvelope viewportbounds = getViewportModelInternal().getBounds();
     		bounds = computeTileBounds(viewportbounds, viewportbounds.getWidth() / getMapDisplay().getWidth());
     	}
-    	
+
     	// loop through the tile bounds and return a tile for each
         java.util.Map<ReferencedEnvelope, Tile> newTiles = new HashMap<ReferencedEnvelope, Tile>();
         try {
@@ -1209,7 +1209,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
                 }
                 newTiles.put(env, tile);
             }
-            
+
             //update the other tiles to an offscreen state
             for( Iterator<Object> iterator = tileCache.getKeys().iterator(); iterator.hasNext(); ) {
                 ReferencedEnvelope referencedEnvelope = (ReferencedEnvelope) iterator.next();
@@ -1221,14 +1221,14 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+
         return newTiles;
-    }    
-    
+    }
+
     /**
      * Sets the rendered state on all tiles to invalid.  This means that next time
      * this tile is access it will be re-rendered.
-     * 
+     *
      */
     private void invalidateAllTilesRenderState(){
         for( Iterator<Object> iterator = tileCache.getKeys().iterator(); iterator.hasNext(); ) {
@@ -1239,7 +1239,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
             }
         }
     }
-    
+
     /**
      * Sets the context state on all tiles to be invalid.  This means next time this tile
      * is used for anything the context (rendering state) will be re-validated against the current stack
@@ -1255,33 +1255,33 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
         }
     }
 
-    
+
     /* The section below only exists for testing against a regular viewport */
 
     private BufferedImage screen = null;
-    
+
     /**
      * This is the image that is to be drawn on the screen.
-     * 
+     *
      * So for now we get the images necessary to form the tiles and compile into a single
      * image for the viewport.
      */
     @Override
     public RenderedImage getImage() {
         ReferencedEnvelope bounds = getViewportModelInternal().getBounds();
-        
+
         Collection<ReferencedEnvelope> tileBounds = computeTileBounds(bounds, bounds.getWidth() / getMapDisplay().getWidth());
-    
+
         if (screen == null || screen.getWidth() != getMapDisplay().getWidth() || screen.getHeight() != getMapDisplay().getHeight()){
-            screen = new BufferedImage(getMapDisplay().getWidth(), getMapDisplay().getHeight(), BufferedImage.TYPE_INT_ARGB);   
+            screen = new BufferedImage(getMapDisplay().getWidth(), getMapDisplay().getHeight(), BufferedImage.TYPE_INT_ARGB);
         }
-        
+
         Graphics2D g = screen.createGraphics();
 
         //clear existing image
         g.setBackground(new Color(0, 0, 0, 0));
         g.clearRect(0,0, getMapDisplay().getWidth(), getMapDisplay().getHeight());
-        
+
         //update screen tile states
         for( Iterator<Object> iterator = tileCache.getKeys().iterator(); iterator.hasNext(); ) {
             ReferencedEnvelope referencedEnvelope = (ReferencedEnvelope) iterator.next();
@@ -1290,7 +1290,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
                 t.setScreenState(Tile.ScreenState.OFFSCREEN);
             }
         }
-        
+
         try {
             for( Iterator<ReferencedEnvelope> iterator = tileBounds.iterator(); iterator.hasNext(); ) {
                 ReferencedEnvelope env = (ReferencedEnvelope) iterator.next();
@@ -1298,23 +1298,23 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
                 // get the tile image
                 Tile tile = getOrCreateTile(env);
                 tile.setScreenState(Tile.ScreenState.ONSCREEN);
-                
-                BufferedImage tileimage = tile.getBufferedImage(); 
+
+                BufferedImage tileimage = tile.getBufferedImage();
 
                 //write the image to the screen image
                 Point a = getViewportModelInternal().worldToPixel(new Coordinate(env.getMinX(), env.getMinY()));
                 Point b = getViewportModelInternal().worldToPixel(new Coordinate(env.getMaxX(), env.getMaxY()));
-                
+
                 g.drawImage(tileimage, a.x, b.y, b.x - a.x, a.y - b.y, null);
-                
+
                 //draw a border around the tile for debugging
                 g.setColor(Color.BLACK);
-                
+
                 g.drawLine(a.x, a.y, a.x, b.y);
                 g.drawLine(a.x, b.y, b.x, b.y);
                 g.drawLine(b.x, b.y, b.x, a.y);
                 g.drawLine(b.x, a.y, a.x, a.y);
-                
+
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -1323,34 +1323,34 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
 
         return screen;
     }
-    
-    
+
+
     /* The functions below are designed to handle events that affect the rendering system.
      * This includes such things as layers added/removed and zorder changes; crs changes.
-     * 
+     *
      * It does not include things such as viewport bounds changing as those such events
      * should not affect the rendering stack
      */
-    
+
     /**
      * To be called when the order of layers has changed
      * <p>
      * This function invalidates all tiles and contexts.  The
-     * contexts much be invalidated because the WMS layers may have been 
+     * contexts much be invalidated because the WMS layers may have been
      * split which means instead of a single context we now need two (or merged).
      * </p>
      */
     public void zorderChanged( Notification msg ){
         getRendererCreator().changed(msg);
-        
+
         invalidateAllTilesRenderState();
         invalidateAllTileContext();
-        
+
         //refresh this layer
         Layer newV=(Layer) msg.getNewValue();
         refresh(newV, null);
     }
-    
+
     /**
      * To be called when layers have been added.
      * <p>
@@ -1361,9 +1361,9 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
     @SuppressWarnings("unchecked")
     public void layersAdded(Notification msg){
         getRendererCreator().changed(msg);
-        
+
         invalidateAllTileContext();
-        
+
         //lets only call refresh on the added tiles
         ArrayList<Layer> addedLayers = new ArrayList<Layer>();
         switch( msg.getEventType() ) {
@@ -1382,43 +1382,43 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
             refresh(layer, null);
         }
     }
-    
+
     /**
      * To be called when layer(s) have been removed.
      * <p>
      * This function invalidates the context and render state of all tiles; then re-renders
      * the tiles in the current viewport.
-     * 
+     *
      */
     public void layersRemoved(Notification msg){
         getRendererCreator().changed(msg);
-        
+
         invalidateAllTileContext();
         invalidateAllTilesRenderState();
-        
+
         softRefresh(null);
     }
-    
-    
+
+
     /**
      * Called when the CRS has changed.
      * <p>
-     * This function removes all tiles and rebuilds the ones that are in the 
+     * This function removes all tiles and rebuilds the ones that are in the
      * current viewport.
-     * </p> 
+     * </p>
      */
     public void crsChanged(Notification msg){
         //remove all existing images so everything will be recreated
         disposeAllTiles();
         tileCache.clear();
         importantTiles.clear();
-        
+
         softRefresh(null);
     }
-    
+
     /**
      * Called when the viewport changes.
-     * 
+     *
      * <p>This function creates and renders the tiles for the new viewport</p>
      *
      * @param msg
@@ -1441,12 +1441,12 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
                 softRefresh(null);
             }
         }
-        
+
     }
-    
+
     /**
      * Called when a layer blackboard entry has been changed.
-     * 
+     *
      * <p>
      * If the layer is not a selection layer this function invalidates all tile render states and
      * class refresh(layer, null) to re-render the layer.
@@ -1463,9 +1463,9 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
         //mean a different renderer should be used?
         invalidateAllTilesRenderState();
         refresh(layer, null);
-    }  
-    
-    
+    }
+
+
     /**
      * This function should be called when a layer is made visible.
      * <p>
@@ -1474,7 +1474,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
      * </p>
      * <p>If layers are made invisible we don't need to call this as refreshImage() is called
      * and that will deal with re-composing the image and removing the hidden layer.</p>
-     * 
+     *
      */
     public void layerMadeVisible(Layer layer){
         //tiles on the screen can have there contexts invalidated
@@ -1482,7 +1482,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
         ReferencedEnvelope viewportbounds = getMap().getViewportModel().getBounds();
         double resolution = viewportbounds.getWidth() / getMapDisplay().getWidth();
         Collection<ReferencedEnvelope> tileBounds = computeTileBounds(areaOfInterest, resolution);
-        
+
         for( Iterator<Object> iterator = tileCache.getKeys().iterator(); iterator.hasNext(); ) {
             ReferencedEnvelope key = (ReferencedEnvelope)iterator.next();
             Tile t = (Tile)tileCache.get(key);
@@ -1493,10 +1493,10 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
             }
         }
     }
-    
+
     /**
      * This is job to render tiles in a separate thread.
-     * 
+     *
      * <p>This is currently used to render tiles outside the display thread
      * as we zoom around.
      * </p>
@@ -1507,7 +1507,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
 
         private List<Tile> tilestorender = new ArrayList<Tile>();
         private TiledRenderManagerDynamic manager;
-        
+
         /**
          * Creates a new job from a given manager
          * @param manager
@@ -1516,7 +1516,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
             super("Pan Tile Rendering Job"); //$NON-NLS-1$
             this.manager = manager;
         }
-        
+
         /**
          * Adds tiles to the list of tiles to be processed.
          *
@@ -1545,6 +1545,6 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
             }
             return Status.OK_STATUS;
         }
-        
-    }    
+
+    }
 }

@@ -1,6 +1,6 @@
 /*
  * uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,7 +15,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 /**
  * Constant values and novalues handling.
- * 
+ *
  * @author Andrea Antonello (www.hydrologis.com)
  */
 public class JGTConstants {
@@ -23,21 +23,21 @@ public class JGTConstants {
      * constants for models
      */
     /**
-     * The default double novalue. 
-     * 
-     * <p>Note: if this changes, also the checker methods like 
+     * The default double novalue.
+     *
+     * <p>Note: if this changes, also the checker methods like
      * {@link #isNovalue(double)} have to be changed.
      */
     public static final double doubleNovalue = Double.NaN;
 
     /**
      * Checker for default double novalue.
-     * 
+     *
      * <p>
      * This was done since with NaN the != check doesn't work.
      * This has to be strict in line with the {@link #doubleNovalue}.
      * </p>
-     * 
+     *
      * @param value the value to check.
      * @return true if the passed value is a novalue.
      */
@@ -47,10 +47,10 @@ public class JGTConstants {
 
     /**
      * Checker for a list of default double novalues.
-     * 
+     *
      * @param values the list of values to check.
      * @return true if one of the passes values is a novalue.
-     * 
+     *
      * @see #isNovalue(double)
      */
     public static boolean isOneNovalue( double... values ) {
@@ -62,18 +62,18 @@ public class JGTConstants {
     }
 
     /**
-     * The default float novalue. 
+     * The default float novalue.
      */
     public static final float floatNovalue = Float.NaN;
 
     /**
      * Checker for default float novalue.
-     * 
+     *
      * <p>
      * This was done since with NaN the != check doesn't work.
      * This has to be strict in line with the {@link #floatNovalue}.
      * </p>
-     * 
+     *
      * @param value the value to check.
      * @return true if the passed value is a novalue.
      */
@@ -82,18 +82,18 @@ public class JGTConstants {
     }
 
     /**
-     * The default int novalue. 
+     * The default int novalue.
      */
     public static final int intNovalue = Integer.MAX_VALUE;
 
     /**
      * Checker for default int novalue.
-     * 
+     *
      * <p>
      * This was done since with NaN the != check doesn't work.
      * This has to be strict in line with the {@link #intNovalue}.
      * </p>
-     * 
+     *
      * @param value the value to check.
      * @return true if the passed value is a novalue.
      */
@@ -103,7 +103,7 @@ public class JGTConstants {
 
     /**
      * Check if the width and height of a raster would lead to a numeric overflow.
-     * 
+     *
      * @param width width of the matrix or raster.
      * @param height height of the matrix or raster.
      * @return true if there is overfow.
@@ -156,55 +156,55 @@ public class JGTConstants {
     /**
      * Earth rotation [rad/h].
      */
-    public final static double omega = 0.261799388; /* velocita' di rotazione terrestre [rad/h] */
+    public static final double omega = 0.261799388; /* velocita' di rotazione terrestre [rad/h] */
     /**
      * Zero celsius degrees in Kelvin.
      */
-    public final static double tk = 273.15; /* =0 C in Kelvin */
+    public static final double tk = 273.15; /* =0 C in Kelvin */
     /**
      * Von Karman constant.
      */
-    public final static double ka = 0.41; /* costante di Von Karman */
+    public static final double ka = 0.41; /* costante di Von Karman */
     /**
      * Freezing temperature [C]
      */
-    public final static double Tf = 0.0; /* freezing temperature [C] */
+    public static final double Tf = 0.0; /* freezing temperature [C] */
     /**
      * Solar constant [W/m2].
      */
-    public final static double Isc = 1367.0; /* Costante solare [W/m2] */
+    public static final double Isc = 1367.0; /* Costante solare [W/m2] */
     /**
      * Water density [kg/m3].
      */
-    public final static double rho_w = 1000.0; /* densita' dell'acqua [kg/m3] */
+    public static final double rho_w = 1000.0; /* densita' dell'acqua [kg/m3] */
     /**
      * Ice density [kg/m3].
      */
-    public final static double rho_i = 917.0; /* densita' del ghiaccio [kg/m3] */
+    public static final double rho_i = 917.0; /* densita' del ghiaccio [kg/m3] */
     /**
      * Latent heat of melting [J/kg].
      */
-    public final static double Lf = 333700.00; /* calore latente di fusione [J/kg] */
+    public static final double Lf = 333700.00; /* calore latente di fusione [J/kg] */
     /**
      * Latent heat of sublimation [J/kg].
      */
-    public final static double Lv = 2834000.00; /* calore latente di sublimazione [J/kg] */
+    public static final double Lv = 2834000.00; /* calore latente di sublimazione [J/kg] */
     /**
      * Heat capacity of water [J/(kg/K)].
      */
-    public final static double C_liq = 4188.00; /* heat capacity of water       [J/(kg/K)] */
+    public static final double C_liq = 4188.00; /* heat capacity of water       [J/(kg/K)] */
     /**
      * Heat capacity of ice [J/(kg/K)].
      */
-    public final static double C_ice = 2117.27; /* heat capacity of ice     [J/(kg/K)] */
+    public static final double C_ice = 2117.27; /* heat capacity of ice     [J/(kg/K)] */
     /**
      * Adiabatic lapse rate [K/m].
      */
-    public final static double GAMMA = 0.006509; /* adiabatic lapse rate [K/m]*/
+    public static final double GAMMA = 0.006509; /* adiabatic lapse rate [K/m]*/
     /**
      * Costante di Stefan-Boltzmann [W/(m2 K4)].
      */
-    public final static double sigma = 5.67E-8; /* costante di Stefan-Boltzmann [W/(m2 K4)]*/
+    public static final double sigma = 5.67E-8; /* costante di Stefan-Boltzmann [W/(m2 K4)]*/
 
     /*
      * FILE EXTENTIONS

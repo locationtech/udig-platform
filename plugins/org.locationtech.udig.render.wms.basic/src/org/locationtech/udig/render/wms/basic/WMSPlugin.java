@@ -44,7 +44,7 @@ public class WMSPlugin extends AbstractUIPlugin {
     public static WMSPlugin getDefault(){
         return plugin;
     }
-    
+
     /**
      * This method is called upon plug-in activation
      */
@@ -63,7 +63,7 @@ public class WMSPlugin extends AbstractUIPlugin {
             Thread.currentThread().setContextClassLoader(current);
         }
     }
-    
+
     /**
      * This method is called when the plug-in is stopped
      */
@@ -71,16 +71,16 @@ public class WMSPlugin extends AbstractUIPlugin {
         super.stop(context);
         plugin = null;
     }
-    
+
     public static void log(String message) {
         log(message, null);
     }
-    
+
     public static void log(String message, Throwable exception) {
         WMSPlugin.getDefault().getLog().log(
-                new Status(IStatus.INFO, WMSPlugin.ID, IStatus.OK, 
+                new Status(IStatus.INFO, WMSPlugin.ID, IStatus.OK,
                         message, exception));
-    }    
+    }
     /**
      * Messages that only engage if getDefault().isDebugging()
      * <p>
@@ -90,7 +90,7 @@ public class WMSPlugin extends AbstractUIPlugin {
      *      System.out.println( "your message here" );
      * }
      */
-    public final static void trace( String message, Throwable e) {
+    public static final void trace( String message, Throwable e) {
         if( getDefault().isDebugging() ) {
             if( message != null ) System.out.println( message );
             if( e != null ) e.printStackTrace();
@@ -106,12 +106,12 @@ public class WMSPlugin extends AbstractUIPlugin {
      * <ul>
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
-     * </p> 
+     * </p>
      * @param trace currently only RENDER is defined
      */
     public static boolean isDebugging( final String trace ){
         return getDefault().isDebugging() &&
             "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
-    
+
     }
 }

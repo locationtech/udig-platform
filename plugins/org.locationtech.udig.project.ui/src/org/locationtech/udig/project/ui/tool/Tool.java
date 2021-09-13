@@ -16,7 +16,7 @@ package org.locationtech.udig.project.ui.tool;
  * <p>
  * Must have a public default constructor so that the plug-in frame work can instantiate the class.
  * </p>
- * 
+ *
  * @see org.locationtech.udig.project.ui.tool.AbstractTool
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
@@ -24,9 +24,9 @@ package org.locationtech.udig.project.ui.tool;
 public interface Tool {
 
     /** Tool category for tools that do not modify. Examples are Pan and Zoom */
-    public final static String VIEW = "view"; //$NON-NLS-1$
+    public static final String VIEW = "view"; //$NON-NLS-1$
     /** Tool category for tools that modify. Examples are Add Vertex and Add SimpleFeature */
-    public final static String EDIT = "edit"; //$NON-NLS-1$
+    public static final String EDIT = "edit"; //$NON-NLS-1$
     /** The extension point id for tools */
     public static final String EXTENSION_ID = "org.locationtech.udig.project.ui.tool"; //$NON-NLS-1$
 
@@ -40,7 +40,7 @@ public interface Tool {
      * that are associated with the newly actived Eclipse view. Intended to be used if something
      * other just changing the current state happens. if false the tool is set as inactive and
      * deregistered with the component.
-     * 
+     *
      * @param tools The tools that the tool can use in its operations
      * @see IToolContext
      */
@@ -48,63 +48,63 @@ public interface Tool {
 
     /**
      * Returns the AbstractContext that a tool can use in its operations.
-     * 
+     *
      * @return the AbstractContext that a tool can use in its operations.
      * @see IToolContext
      */
     public IToolContext getContext();
-    
-    
+
+
     /**
-     * Returns the property of the particular tool implementation. 
+     * Returns the property of the particular tool implementation.
      * <p>
-     * 
+     *
      * @param key the property key.
      * @return
      */
     public Object getProperty(String key);
-    
-    
+
+
     /**
      * Sets the tool's property value by key.
-     * 
+     *
      * @param key
      * @param value
      */
     public void setProperty(String key, Object value);
 
-    
+
     /**
      * Returns enablement statement of the tool.
-     * 
+     *
      * @return
      */
     public boolean isEnabled();
-    
+
     /**
      * Sets enablement of the tool.
-     * 
+     *
      * @param enable
      */
     public void setEnabled(boolean enable);
-    
+
     /**
      * Adds listener of tool's lifecycle.
-     * 
+     *
      * @param listener
      */
     public void addListener(ToolLifecycleListener listener);
-    
+
     /**
      * Removes a listener of tool's lifecycle.
-     * 
+     *
      * @param listener
      */
     public void removeListener(ToolLifecycleListener listener);
-    
+
     /**
      * Indicates if the button has toggling behaviour.
-     * 
+     *
      * @return toggling behaviour indicator of button.
      */
     public boolean isToggleButton();
@@ -112,7 +112,7 @@ public interface Tool {
     /**
      * Indicates if the button is toggled or not.
      * If the button does not have toggling behaviour, it should always return false.
-     * 
+     *
      * @return current button state.
      */
     public boolean isTogglingButtonEnabled();

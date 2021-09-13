@@ -1,6 +1,6 @@
 /*
  * uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -36,9 +36,9 @@ public class JConsolePlugin extends AbstractUIPlugin {
     // The plug-in ID
     public static final String PLUGIN_ID = "org.locationtech.udig.jconsole";
 
-    public final static String JAVA_PARTITIONING = "__java_example_partitioning"; //$NON-NLS-1$
+    public static final String JAVA_PARTITIONING = "__java_example_partitioning"; //$NON-NLS-1$
 
-    public final static String LAST_FOLDER_KEY = "LAST_FOLDER_KEY"; //$NON-NLS-1$
+    public static final String LAST_FOLDER_KEY = "LAST_FOLDER_KEY"; //$NON-NLS-1$
 
     private JavaPartitionScanner fPartitionScanner;
     private JavaColorProvider fColorProvider;

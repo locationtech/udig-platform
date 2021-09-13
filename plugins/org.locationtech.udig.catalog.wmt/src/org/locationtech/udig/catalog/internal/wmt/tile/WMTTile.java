@@ -29,52 +29,52 @@ import org.locationtech.udig.catalog.wmsc.server.Tile;
 import org.locationtech.udig.catalog.wmsc.server.TileSet;
 
 public abstract class WMTTile implements Tile{
-    private final static boolean testing = false;  // for testing output
-    
+    private static final boolean testing = false;  // for testing output
+
     public static final int INERROR = 1;
     public static final int OK = 0;
-    
+
     private WMTTileName tileName;
     private ReferencedEnvelope extent;
     private BufferedImage image; //imageObject of the downloaded/cached tile
     private Object imageLock = new Object();
     private int state;
-    
+
     /**
      * The time this Tile is allowed to be cached before being forced to refresh from the server
      */
     private String maxCacheAge;
-    
+
     public WMTTile(ReferencedEnvelope extent, WMTTileName tileName) {
         this.extent = extent;
         this.tileName = tileName;
     }
-    
+
     public URL getUrl(){
         return tileName.getTileUrl();
     }
-    
+
     public ReferencedEnvelope getExtent() {
         return extent;
     }
-    
+
     @Override
     public BufferedImage getBufferedImage() {
         return image;
     }
-    
+
     @Override
     public String getId() {
         return tileName.getId();
     }
-    
+
     public String getReleatedSourceId() {
         return tileName.getSource().getId();
     }
-    
+
     public abstract WMTTile getRightNeighbour();
     public abstract WMTTile getLowerNeighbour();
-       
+
     @Override
     public Envelope getBounds() {
         return extent;
@@ -107,7 +107,7 @@ public abstract class WMTTile implements Tile{
     public int getTileState(){
         return this.state;
     }
-    
+
     /* (non-Javadoc)
      * @see org.locationtech.udig.catalog.wmsc.server.Tile#setTileState(int)
      */
@@ -122,7 +122,7 @@ public abstract class WMTTile implements Tile{
             WMTPlugin.log("error, no tilename", null); //$NON-NLS-1$
             return false;
         }
-        
+
         // get a lock for this tile and only fetch a new image if
         // it does not have one set already when the lock is obtained.
         // TODO:  add support for re-fetching expired images too
@@ -140,31 +140,31 @@ public abstract class WMTTile implements Tile{
                 monitor.setCanceled(true);
                 if (testing) {
                     System.out.println("REQUEST CANCELLED - REMOVING lock: "+getId()); //$NON-NLS-1$
-                }                    
+                }
                 return true;
             }
            try {
                 // simulate latency if testing
                 if (testing) {
-                    Random rand = new Random(); 
+                    Random rand = new Random();
                     long delay = rand.nextInt(5000); // delay 1-5 secs
                     System.out.println("request delaying for: "+delay); //$NON-NLS-1$
                     Thread.sleep(delay);  // simulate latency
                 }
                 URL url = getUrl();
                 WMTPlugin.debug("WMT GetTile: " + url, null); //$NON-NLS-1$
-                
+
                 URLConnection openConnection = url.openConnection();
                 if (openConnection!=null) {
                     HttpURLConnection connection = null;
-                    connection = (HttpURLConnection) openConnection;  
+                    connection = (HttpURLConnection) openConnection;
                     setConnectionParams(connection);
-                    
+
                     bufImage = ImageIO.read(connection.getInputStream());
-                    
+
                     //bufImage = ImageIO.read(url);
                 }else{
-                    File file = new File(url.toExternalForm()); 
+                    File file = new File(url.toExternalForm());
                     if (file.exists()) {
                         bufImage = ImageIO.read(file);
                     }
@@ -177,7 +177,7 @@ public abstract class WMTTile implements Tile{
                     setBufferedImageInternal(createErrorImage());
                     setTileState(WMTTile.INERROR);
                 }
-                
+
             } catch (Exception e1) {
                 // create an error buffered image
                 setBufferedImageInternal(createErrorImage());
@@ -192,11 +192,11 @@ public abstract class WMTTile implements Tile{
                 // nothing?
             }
         } // end synchronized block
-        
+
         if (testing) {
             System.out.println("REMOVING lock: "+getId()); //$NON-NLS-1$
         }
-        
+
         // if we successfully set the buffered image to something, return true
         if (getBufferedImage() != null) {
             return true;
@@ -206,7 +206,7 @@ public abstract class WMTTile implements Tile{
         return false;
     }
 
-    protected void setConnectionParams(HttpURLConnection connection) {}    
+    protected void setConnectionParams(HttpURLConnection connection) {}
 
     private BufferedImage createErrorImage() {
         BufferedImage bf = new BufferedImage(tileName.getSource().getTileWidth(), tileName.getSource().getTileHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -216,11 +216,11 @@ public abstract class WMTTile implements Tile{
         g.drawLine(0, tileName.getSource().getTileHeight(), tileName.getSource().getTileWidth(), 0);
         return bf;
     }
-    
+
     @Override
     public void setBufferedImage(BufferedImage im) {
         Object lock = getTileLock();
-        synchronized (lock) {       
+        synchronized (lock) {
             setBufferedImageInternal(im);
             if (getBufferedImage() != null) {
                 setTileState(WMTTile.OK);
@@ -237,7 +237,7 @@ public abstract class WMTTile implements Tile{
     private void setBufferedImageInternal(BufferedImage im) {
         this.image = im;
     }
-    
+
     @Override
     public void setPosition(String pos)  {
         throw new UnsupportedOperationException();
@@ -258,7 +258,7 @@ public abstract class WMTTile implements Tile{
         // id contains scale and bounds so compare with that
         return getId().compareTo( other.getId() );
     }
-    
+
     @Override
     public boolean equals(Object arg0) {
         if (arg0 instanceof Tile) {
@@ -273,52 +273,52 @@ public abstract class WMTTile implements Tile{
         }
         return super.equals(arg0);
     }
-    
+
     /**
      * TileFactory is used inside WMTSource.cutExtentIntoTiles(..) to get
      * the tile which contains a coordinate.
-     * 
+     *
      * @author to.srwn
      * @since 1.1.0
      */
     public static abstract class WMTTileFactory {
-        public abstract WMTTile getTileFromCoordinate(double lat, double lon, 
+        public abstract WMTTile getTileFromCoordinate(double lat, double lon,
                 WMTZoomLevel zoomLevel, WMTSource wmtSource);
-        
+
         public abstract WMTZoomLevel getZoomLevel(int zoomLevel, WMTSource wmtSource);
-        
+
         /**
          * uDig may produce numbers like -210° for the longitude, but we need
          * a number in the range -180 to 180, so instead of -210 we want 150.
-         * 
+         *
          * @param value the number to normalize (e.g. -210)
          * @param maxValue the maximum value (e.g. 180 -> the range is: -180..180)
          * @return a number between (-maxvalue) and maxvalue
          */
         public static double normalizeDegreeValue(double value, int maxValue) {
             int range = 2 * maxValue;
-            
+
             if (value > 0) {
                 value = (value + maxValue - 1) % range;
-                
+
                 if (value < 0) {
                     value += range;
                 }
-                
+
                 return (value - maxValue + 1);
             } else {
                 value = (value + maxValue) % range;
-                
+
                 if (value < 0) {
                     value += range;
                 }
-                
-                return (value - maxValue);                
+
+                return (value - maxValue);
             }
         }
-        
+
         /**
-         * This method ensures that value is between min and max. 
+         * This method ensures that value is between min and max.
          * If value < min, min is returned.
          * If value > max, max is returned.
          * Otherwise value.
@@ -334,50 +334,50 @@ public abstract class WMTTile implements Tile{
             } else if(value > max) {
                 value = max;
             }
-            
+
             return value;
         }
     }
-    
+
     public static abstract class WMTZoomLevel {
         private int zoomLevel;
-        
+
         private int maxTilePerRowNumber;
         private int maxTilePerColNumber;
         private long maxTileNumber;
-        
+
         public WMTZoomLevel(int zoomLevel) {
-            setZoomLevel(zoomLevel);  
+            setZoomLevel(zoomLevel);
         }
-        
+
         public void setZoomLevel(int zoomLevel) {
             this.zoomLevel = zoomLevel;
-            
+
             this.maxTilePerRowNumber = calculateMaxTilePerRowNumber(zoomLevel);
             this.maxTilePerColNumber = calculateMaxTilePerColNumber(zoomLevel);
-            
+
             this.maxTileNumber = calculateMaxTileNumber();
         }
-        
+
         public abstract int calculateMaxTilePerRowNumber(int zoomLevel);
         public abstract int calculateMaxTilePerColNumber(int zoomLevel);
-        
+
         public long calculateMaxTileNumber() {
             return ((long) (maxTilePerColNumber)) * ((long) (maxTilePerRowNumber));
         }
-        
+
         public int getZoomLevel() {
             return zoomLevel;
         }
-        
+
         public int getMaxTilePerRowNumber() {
             return maxTilePerRowNumber;
         }
-        
+
         public int getMaxTilePerColNumber() {
             return maxTilePerColNumber;
         }
-        
+
         public long getMaxTileNumber() {
             return maxTileNumber;
         }
@@ -385,9 +385,9 @@ public abstract class WMTTile implements Tile{
         @Override
         public boolean equals(Object obj) {
             if (!(obj instanceof WMTZoomLevel)) return false;
-            
+
             WMTZoomLevel other = (WMTZoomLevel) obj;
-            
+
             return zoomLevel == other.zoomLevel;
         }
     }

@@ -26,8 +26,8 @@ public class LocationUIPlugin extends AbstractUdigUIPlugin {
 	private static LocationUIPlugin INSTANCE;
     public static String ID = "org.locationtech.udig.location"; //$NON-NLS-1$
     /** Icons path (value "icons/") */
-    public final static String ICONS_PATH = "icons/";//$NON-NLS-1$
-    
+    public static final String ICONS_PATH = "icons/";//$NON-NLS-1$
+
 	/**
 	 * The constructor.
 	 */
@@ -47,7 +47,7 @@ public class LocationUIPlugin extends AbstractUdigUIPlugin {
      * <li>t is an Exception (we are assuming it is human readable) or if a message is provided
      * </ul>
      * </p>
-     * 
+     *
      * @param message
      * @param t
      */
@@ -62,16 +62,16 @@ public class LocationUIPlugin extends AbstractUdigUIPlugin {
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:
-     * 
+     *
      * <pre><code>
      * private static final String RENDERING = &quot;org.locationtech.udig.project/render/trace&quot;;
      * if (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
      *     System.out.println(&quot;your message here&quot;);
      * }
      * </code></pre>
-     * 
+     *
      * </p>
-     * 
+     *
      * @param message
      * @param e
      */
@@ -97,13 +97,13 @@ public class LocationUIPlugin extends AbstractUdigUIPlugin {
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
      * </p>
-     * 
+     *
      * @param trace currently only RENDER is defined
      * @return true if -debug is on for this plugin
      */
     public static boolean isDebugging( final String trace ) {
         return getDefault().isDebugging()
-                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
+                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
 
 	/* (non-Javadoc)

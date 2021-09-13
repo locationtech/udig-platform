@@ -19,17 +19,17 @@ public interface PreferenceConstants {
      * Indicates whether previously open maps should be re-opened on startup.
      * Defaults to true.
      */
-    public final static String P_OPEN_MAPS_ON_STARTUP = "openMapsOnStartup";  //$NON-NLS-1$  
+    public static final String P_OPEN_MAPS_ON_STARTUP = "openMapsOnStartup";  //$NON-NLS-1$
 
     /**
      * Indicates the number of openMaps while closing application
      */
-    public final static String P_OPEN_MAPS_PREFIX_ID = "openMapsPrefix"; //$NON-NLS-1$
+    public static final String P_OPEN_MAPS_PREFIX_ID = "openMapsPrefix"; //$NON-NLS-1$
 
     /**
      * Indicates the variable to threat as double-click speed.
      */
-    public final static String MOUSE_SPEED = "mouseSpeed";  //$NON-NLS-1$  
+    public static final String MOUSE_SPEED = "mouseSpeed";  //$NON-NLS-1$
 
     /**
      * Preference to store the resolutions for this tileset
@@ -47,7 +47,7 @@ public interface PreferenceConstants {
     public static final String P_TILESET_HEIGHT = "tilesetHeight"; //$NON-NLS-1$
 
     /**
-     * Boolean preference to use the tilesets, or not 
+     * Boolean preference to use the tilesets, or not
      */
     public static final String P_TILESET_ON_OFF = "tilesetOnOff"; //$NON-NLS-1$
 

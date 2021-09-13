@@ -25,7 +25,7 @@ public class ValidationPlugin extends AbstractUdigUIPlugin {
 
     private static final String ID = "org.locationtech.udig.validation"; //$NON-NLS-1$
 
-    public final static String ICONS_PATH = "icons/";//$NON-NLS-1$
+    public static final String ICONS_PATH = "icons/";//$NON-NLS-1$
 
     private static ValidationPlugin INSTANCE;
 
@@ -41,7 +41,7 @@ public class ValidationPlugin extends AbstractUdigUIPlugin {
         super.start(context);
         INSTANCE = this;
     }
-    
+
     @Override
     public void stop(BundleContext context) throws Exception {
         super.stop(context);
@@ -49,7 +49,7 @@ public class ValidationPlugin extends AbstractUdigUIPlugin {
     }
     /**
      * Writes an info log in the plugin's log.
-     * 
+     *
      * @param message
      */
     public static void log(String message) {
@@ -71,12 +71,12 @@ public class ValidationPlugin extends AbstractUdigUIPlugin {
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:
-     * 
+     *
      * <pre><code>
      * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
-     * 
+     *
      */
     public static void trace(String message, Throwable e) {
         if (getDefault().isDebugging()) {
@@ -97,12 +97,12 @@ public class ValidationPlugin extends AbstractUdigUIPlugin {
      * .options file)
      * <p>
      * It is much prefered to do this:
-     * 
+     *
      * <pre><code>
      * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
-     * 
+     *
      */
     public static void trace(String traceID, String message, Throwable e) {
         if (getDefault().isDebugging()) {
@@ -123,7 +123,7 @@ public class ValidationPlugin extends AbstractUdigUIPlugin {
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
      * </p>
-     * 
+     *
      * @param trace currently only RENDER is defined
      */
     public static boolean isDebugging(final String trace) {
@@ -134,7 +134,7 @@ public class ValidationPlugin extends AbstractUdigUIPlugin {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.locationtech.udig.core.AbstractUdigUIPlugin#getIconPath()
      */
     public IPath getIconPath() {

@@ -64,7 +64,7 @@ import org.opengis.referencing.operation.TransformException;
 /**
  * Basic WMS-C Renderer. Determines what tiles from which zoom level need to be retrieved from the
  * service; retrieves these tiles; and draws them
- * 
+ *
  * @author Graham Davis, Emily Gouge, Refractions Research
  * @since 1.1.0
  */
@@ -73,7 +73,7 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
     private static StyleBuilder styleBuilder = new StyleBuilder();
     private TileListenerImpl listener = new TileListenerImpl();
 
-    private final static boolean testing = false; // for debugging
+    private static final boolean testing = false; // for debugging
     private static final boolean TESTING = WMSPlugin.getDefault().isDebugging();
 
     private static int staticid = 0; // for debugging
@@ -317,7 +317,7 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
         ReferencedEnvelope ref = new ReferencedEnvelope(bounds.getMinX(), bounds.getMaxX(),
                 bounds.getMinY(), bounds.getMaxY(), crs);
         GridCoverage2D coverage = (GridCoverage2D) factory.create(
-                "GridCoverage", tile.getBufferedImage(), ref); //$NON-NLS-1$        
+                "GridCoverage", tile.getBufferedImage(), ref); //$NON-NLS-1$
         Envelope2D coveragebounds = coverage.getEnvelope2D();
 
         // bounds of tile
@@ -372,7 +372,7 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
 
     /**
      * Clears the area of the tile on the graphics
-     * 
+     *
      * @param graphics graphics to draw onto
      * @param style raster symbolizer
      * @throws FactoryException
@@ -432,7 +432,7 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
 
     /**
      * TileListener implementation for rendering new tiles that are ready
-     * 
+     *
      * @author GDavis
      * @since 1.1.0
      */

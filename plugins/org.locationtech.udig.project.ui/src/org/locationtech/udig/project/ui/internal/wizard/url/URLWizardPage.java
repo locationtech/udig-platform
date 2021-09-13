@@ -42,7 +42,7 @@ import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
  */
 public class URLWizardPage extends AbstractUDIGImportPage implements ModifyListener, UDIGConnectionPage {
 
-    final static String[] types = {};
+    static final String[] types = {};
     /** <code>url</code> field */
     protected Combo url;
     private static final String URL_WIZARD = "URL_WIZARD"; //$NON-NLS-1$

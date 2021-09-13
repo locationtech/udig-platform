@@ -22,7 +22,7 @@ import org.opengis.feature.simple.SimpleFeature;
  * A user will always do an instance of check to see if it is a {@link Some} or {@link None}. This
  * class should not be further extended
  * </p>
- * 
+ *
  * @author jesse
  * @since 1.1.0
  * @see None
@@ -51,18 +51,18 @@ public abstract class Option<T> {
 	public static Option<SimpleFeature> some(SimpleFeature next) {
 		return new Some(next);
 	}
-    
+
     /**
      * Indicates a none or null value.
-     * 
+     *
      * @author jesse
      * @since 1.1.0
      * @param <V>
      */
-    private final static class None<V> extends Option<V> {
+    private static final class None<V> extends Option<V> {
     }
 
-    public final static class Some<V> extends Option<V> {
+    public static final class Some<V> extends Option<V> {
         private V value;
 
         public Some( V value ) {
@@ -70,7 +70,7 @@ public abstract class Option<T> {
         }
 
 
-        public boolean isDefined(){return true;}        
+        public boolean isDefined(){return true;}
 
         public V value() {
             return value;

@@ -56,15 +56,15 @@ public class CountryFeaturePanel extends IFeaturePanel {
     private static final String DIRTY = "DIRTY";
 
     /** Attribute name for attribute GMI_CNTRY */
-    public final static String GMI_CNTRY = "GMI_CNTRY";
+    public static final String GMI_CNTRY = "GMI_CNTRY";
 
     /** Attribute name for attribute REGION */
-    public final static String COLOR_MAP = "COLOR_MAP";
+    public static final String COLOR_MAP = "COLOR_MAP";
 
     /** Attribute name for attribute NAME */
-    public final static String NAME = "CNTRY_NAME";
+    public static final String NAME = "CNTRY_NAME";
 
-    public final static Object[] COLOR_MAP_OPTS = new Object[]{1, 2, 3, 4, 5, 6, 7, 8};
+    public static final Object[] COLOR_MAP_OPTS = new Object[]{1, 2, 3, 4, 5, 6, 7, 8};
 
     Text gmiCntry;
     Text name;
@@ -138,7 +138,7 @@ public class CountryFeaturePanel extends IFeaturePanel {
             return;
         }
         EditFeature feature = site.getEditFeature();
-        
+
         if (name != null && !name.isDisposed() && Boolean.TRUE.equals(name.getData(DIRTY))) {
             feature.setAttribute(this.NAME, name.getText());
         }
@@ -200,18 +200,18 @@ public class CountryFeaturePanel extends IFeaturePanel {
         });
         colorMap.setInput(COLOR_MAP_OPTS);
     }
-    
+
     @Override
     public void refresh() {
         SimpleFeature feature = null;
-        IFeatureSite site = getSite();        
+        IFeatureSite site = getSite();
         if( site != null ){
             IEditManager editManager = site.getEditManager();
             if( editManager != null ){
                 feature = editManager.getEditFeature();
             }
         }
-        
+
         listen( false );
         String nameText = "";
         if( feature != null ){
@@ -220,13 +220,13 @@ public class CountryFeaturePanel extends IFeaturePanel {
                 nameText = "";
             name.setText(nameText);
             name.setEnabled(true);
-    
+
             String gmiText = (String) feature.getAttribute(GMI_CNTRY);
             if (gmiText == null)
                 gmiText = "";
             gmiCntry.setText(gmiText);
             gmiCntry.setEnabled(true);
-            
+
             String colorText = (String) feature.getAttribute(COLOR_MAP);
             if (colorText != null) {
                 StructuredSelection selection = new StructuredSelection(new Integer(colorText));
@@ -242,7 +242,7 @@ public class CountryFeaturePanel extends IFeaturePanel {
             gmiCntry.setText("--");
             gmiCntry.setEnabled(false);
             colorMap.setSelection(new StructuredSelection());
-            colorMap.getControl().setEnabled(false);            
+            colorMap.getControl().setEnabled(false);
         }
     }
 

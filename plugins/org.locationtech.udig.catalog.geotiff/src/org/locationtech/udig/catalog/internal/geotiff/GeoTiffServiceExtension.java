@@ -34,13 +34,13 @@ import org.geotools.gce.geotiff.GeoTiffFormatFactorySpi;
  * This class is responsible for ensuring that only those services that the GeoTiff plug-in is
  * capable of processing are created.
  * </p>
- * 
+ *
  * @author mleslie
  * @since 0.6.0
  */
 public class GeoTiffServiceExtension implements ServiceExtension2 {
     /** <code>URL_PARAM</code> field */
-    public final static String URL_PARAM = "URL"; //$NON-NLS-1$
+    public static final String URL_PARAM = "URL"; //$NON-NLS-1$
 
     public static final String TYPE = "geotiff"; //$NON-NLS-1$
 
@@ -96,7 +96,7 @@ public class GeoTiffServiceExtension implements ServiceExtension2 {
 
     /**
      * Finds or creates a GeoTiffFormatFactorySpi.
-     * 
+     *
      * @return Default GeoTiffFormatFactorySpi
      */
     public synchronized static GeoTiffFormatFactorySpi getFactory() {
@@ -134,7 +134,7 @@ public class GeoTiffServiceExtension implements ServiceExtension2 {
 
         if( !isSupportedExtension(url) )
             return Messages.GeoTiffServiceExtension_badExt;
-        
+
         File file = null;
         try {
             ID id = new ID( url );
@@ -142,10 +142,10 @@ public class GeoTiffServiceExtension implements ServiceExtension2 {
         } catch (IllegalArgumentException ex) {
             return url.toExternalForm()+Messages.GeoTiffServiceExtension_notFile;
         }
-        
+
         if (!file.exists() )
             return file+Messages.GeoTiffServiceExtension_notExist;
-        
+
 
         try {
             if (!getFormat().accepts(file))
@@ -155,7 +155,7 @@ public class GeoTiffServiceExtension implements ServiceExtension2 {
         }
         return null;
     }
-    
+
     private boolean isSupportedExtension( URL url ) {
         File file = URLUtils.urlToFile(url);
         String fileLower = file.getAbsolutePath().toLowerCase();
@@ -166,5 +166,5 @@ public class GeoTiffServiceExtension implements ServiceExtension2 {
         return true;
     }
 
-    
+
 }

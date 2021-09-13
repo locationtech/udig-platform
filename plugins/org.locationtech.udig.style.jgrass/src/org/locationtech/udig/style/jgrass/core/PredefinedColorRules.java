@@ -1,6 +1,6 @@
 /*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,7 +28,7 @@ import org.locationtech.udig.style.jgrass.JGrassrasterStyleActivator;
 
 /**
  * The class reading default colortables from disk.
- * 
+ *
  * @author Andrea Antonello (www.hydrologis.com)
  *
  */
@@ -43,27 +43,27 @@ public class PredefinedColorRules {
     /**
      * The rainbow colormap is the only one that has to exist.
      */
-    public final static String[][] rainbow = new String[][]{{"255", "255", "0"}, {"0", "255", "0"},
+    public static final String[][] rainbow = new String[][]{{"255", "255", "0"}, {"0", "255", "0"},
             {"0", "255", "255"}, {"0", "0", "255"}, {"255", "0", "255"}, {"255", "0", "0"}};
 
     /**
      * Reads and returns the {@link HashMap map} holding all predefined color rules.
-     * 
+     *
      * <p>
-     * The map has the name of the colortable as key and 
+     * The map has the name of the colortable as key and
      * and array of Strings as value, representing the colors and values
      * of the colortable.<br>
      * The array can be of two types:<br>
      * <ul>
      *  <li>
      *      3 values per row (r, g, b): in that case the colortable
-     *      will be interpolated over a supplied range and be kept 
+     *      will be interpolated over a supplied range and be kept
      *      continuos between the values. On example is the elevation map.
      *  </li>
      *  <li>
-     *      8 values per row (v1, r1, g1, b1, v2, r2, g2, b2): 
-     *      in that case the values of every step is defined and the 
-     *      color rules are used as they come. One example is the corine 
+     *      8 values per row (v1, r1, g1, b1, v2, r2, g2, b2):
+     *      in that case the values of every step is defined and the
+     *      color rules are used as they come. One example is the corine
      *      landcover map, that has to be consistent with the given values
      *      and colors.
      *  </li>
@@ -144,7 +144,7 @@ public class PredefinedColorRules {
         if (colorRules[0].length == 3) {
             /*
              * the colorrules are without values, so we ramp through them
-             * over the range. 
+             * over the range.
              */
             if (dataRange == null) {
                 dataRange = new double[]{-100.0, 5000};
@@ -185,7 +185,7 @@ public class PredefinedColorRules {
         } else {
             /*
              * in this case we have also the values for the range defined
-             * and the color rule has to be "v1 r1 g1 b1 v2 r2 g2 b2". 
+             * and the color rule has to be "v1 r1 g1 b1 v2 r2 g2 b2".
              */
             if (colorRules[0].length != 8) {
                 throw new IOException(

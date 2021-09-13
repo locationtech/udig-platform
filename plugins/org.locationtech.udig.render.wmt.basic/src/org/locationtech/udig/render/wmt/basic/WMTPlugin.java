@@ -24,7 +24,7 @@ import org.osgi.framework.BundleContext;
 
 /**
  * WMTRenderer plugin
- * 
+ *
  * @author to.srwn
  * @since 1.1.0
  */
@@ -45,7 +45,7 @@ public class WMTPlugin extends AbstractUIPlugin {
     public static WMTPlugin getDefault(){
         return plugin;
     }
-    
+
     /**
      * This method is called upon plug-in activation
      */
@@ -64,7 +64,7 @@ public class WMTPlugin extends AbstractUIPlugin {
             Thread.currentThread().setContextClassLoader(current);
         }
     }
-    
+
     /**
      * This method is called when the plug-in is stopped
      */
@@ -72,16 +72,16 @@ public class WMTPlugin extends AbstractUIPlugin {
         super.stop(context);
         plugin = null;
     }
-    
+
     public static void log(String message) {
         log(message, null);
     }
-    
+
     public static void log(String message, Throwable exception) {
         WMTPlugin.getDefault().getLog().log(
-                new Status(IStatus.INFO, WMTPlugin.ID, IStatus.OK, 
+                new Status(IStatus.INFO, WMTPlugin.ID, IStatus.OK,
                         message, exception));
-    }    
+    }
     /**
      * Messages that only engage if getDefault().isDebugging()
      * <p>
@@ -91,7 +91,7 @@ public class WMTPlugin extends AbstractUIPlugin {
      *      System.out.println( "your message here" );
      * }
      */
-    public final static void trace( String message, Throwable e) {
+    public static final void trace( String message, Throwable e) {
         if( getDefault().isDebugging() ) {
             if( message != null ) System.out.println( message );
             if( e != null ) e.printStackTrace();
@@ -107,19 +107,19 @@ public class WMTPlugin extends AbstractUIPlugin {
      * <ul>
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
-     * </p> 
+     * </p>
      * @param trace currently only RENDER is defined
      */
     public static boolean isDebugging( final String trace ){
         return getDefault().isDebugging() &&
             "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
-    
+
     }
-    
+
     public static void debug(String message, final String trace) {
         debug(message, null, trace);
     }
-    
+
     public static void debug(String message, Throwable e, final String trace) {
         if(isDebugging(trace)) {
             if(message != null) System.out.println(message);

@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * Used to advertise the availability of an IService implementation
  * to the catalog.
- * 
+ *
  * Example:<pre><code>
  * public class MyService implements ServiceExtension {
  *    public Map<String, Serializable> createParams( URL url ) {
@@ -39,20 +39,20 @@ import java.util.Map;
  * }
  * <code></pre>
  * We also use this interface internally, so look in this plugin for additional examples.
- * 
+ *
  * @author David Zwiers, Refractions Research
  * @since 0.6
  */
 public interface ServiceExtension {
 
-    public final static String EXTENSION_ID = "org.locationtech.udig.catalog.ServiceExtension"; //$NON-NLS-1$
+    public static final String EXTENSION_ID = "org.locationtech.udig.catalog.ServiceExtension"; //$NON-NLS-1$
 
     /**
      * Creates an IService based on the params provided. This may or may not return a singleton,
      * caching is optional. Error messages can be retrieved using the getStatus and getMessage
      * methods. It is important to note that this method must inspect the url to determine if it can
      * be used to create the service. If it cannot, null must be returned.
-     * 
+     *
      * @param id The suggested service id, should be generated when null.
      * @param params The set of connection params. These param values may either be parsed, or
      *        unparsed (String).
@@ -67,7 +67,7 @@ public interface ServiceExtension {
      * ... in most cases this will be passed to the createService method. It is important to note
      * that this method must inspect the url to determine if it can be used to create the service.
      * If it cannot, null must be returned.
-     * 
+     *
      * @param url The potential source of params.
      * @return Map of params to be used for creation, <code>null</code> if the URL cannot be used.
      */

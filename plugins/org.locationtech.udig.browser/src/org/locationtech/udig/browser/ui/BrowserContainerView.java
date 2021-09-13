@@ -74,9 +74,9 @@ import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
  */
 public class BrowserContainerView extends ViewPart {
     /** BrowserContainerView ID field */
-    public final static String VIEW_ID = "org.locationtech.udig.browser.ui.browserContainerView"; //$NON-NLS-1$
+    public static final String VIEW_ID = "org.locationtech.udig.browser.ui.browserContainerView"; //$NON-NLS-1$
 
-    private final static String BROWSER_INITIAL_URL_PROPERTY = "org.locationtech.udig.browser.initialURL"; //$NON-NLS-1$
+    private static final String BROWSER_INITIAL_URL_PROPERTY = "org.locationtech.udig.browser.initialURL"; //$NON-NLS-1$
 
     private static String BROWSER_TYPE = "org.locationtech.udig.browser.TYPE"; //$NON-NLS-1$
 

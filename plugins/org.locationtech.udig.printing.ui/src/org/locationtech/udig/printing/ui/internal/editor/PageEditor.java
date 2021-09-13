@@ -66,14 +66,14 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 /**
  * An editor for print pages. Uses GEF to edit the layout of the pages.
- * 
+ *
  * @author Richard Gould
  * @since 0.3
  */
 public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAdaptable {
 
-    public final static String EDIT_MAP = "edit map"; //$NON-NLS-1$
-    public final static String ID = "org.locationtech.udig.printing.ui.internal.editor.pageEditor"; //$NON-NLS-1$
+    public static final String EDIT_MAP = "edit map"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.printing.ui.internal.editor.pageEditor"; //$NON-NLS-1$
 
     private boolean savePreviouslyNeeded;
     private Page page;
@@ -146,7 +146,7 @@ public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAda
         // public void run() throws Exception {
         // page.getProject().eResource().save(null);
         // }
-        //            
+        //
         // });
         // setDirty(false);
     }
@@ -230,7 +230,7 @@ public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAda
                         /*
                          * If multiple maps are found, return null. This will prevent entities
                          * that operate only on one map from losing their context.
-                         * (Imagine the layers view with two map objects selected. It would 
+                         * (Imagine the layers view with two map objects selected. It would
                          * only display the layers from one of the objects - confusing to user)
                          */
                         if (found != null) {
