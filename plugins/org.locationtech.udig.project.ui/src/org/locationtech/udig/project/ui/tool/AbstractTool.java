@@ -39,13 +39,13 @@ import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelListe
  * </p>
  * <p>
  * Example:
- * 
+ *
  * <pre>
  * <code>
  *  super( MOUSE|MOTION ) indicates that the items will be receive all mouse and mouse motion commands.
  * </code>
  * </pre>
- * 
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  * @see Tool
@@ -58,19 +58,19 @@ public abstract class AbstractTool implements Tool, MapMouseListener, MapMouseMo
         MapMouseWheelListener, EventListener {
 
     /** Flag indicating that the tool does not listen for events from the ViewportPane */
-    public final static int NONE = 0;
+    public static final int NONE = 0;
 
     /** Flag indicating the tool is a {@linkplain MapMouseListener} */
-    public final static int MOUSE = 1;
+    public static final int MOUSE = 1;
 
     /** Flag indicating the tool is a {@linkplain MapMouseMotionListener} */
-    public final static int MOTION = 2;
+    public static final int MOTION = 2;
 
     /** Flag indicating the tool is a {@linkplain MapMouseWheelListener} */
-    public final static int WHEEL = 4;
+    public static final int WHEEL = 4;
 
     /** Flag indicating that the tool can drag from the Map Editor. (drag in terms of drag-drop) */
-    public final static int DRAG_DROP = 8;
+    public static final int DRAG_DROP = 8;
 
     /** The items to use for tool actions */
     protected IToolContext context;
@@ -96,7 +96,7 @@ public abstract class AbstractTool implements Tool, MapMouseListener, MapMouseMo
     /**
      * Assigns renderManager to field and registers as a listener with source. The target field is
      * used to determine which type of listeners to register as.
-     * 
+     *
      * @param targets Used to determine which listeners to register as. The following choices from
      *        the following list can be combined using | and this tool will be registered as both
      *        types of listeners:
@@ -120,7 +120,7 @@ public abstract class AbstractTool implements Tool, MapMouseListener, MapMouseMo
      * <p>
      * Default implementation does nothing
      * </p>
-     * 
+     *
      * @param element the configuration element that defines the tool extension
      */
     public void init(IConfigurationElement element) {
@@ -252,7 +252,7 @@ public abstract class AbstractTool implements Tool, MapMouseListener, MapMouseMo
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.locationtech.udig.project.ui.tool.Tool#getSelectionProvider()
      */
     public IMapEditorSelectionProvider getSelectionProvider() {
@@ -261,7 +261,7 @@ public abstract class AbstractTool implements Tool, MapMouseListener, MapMouseMo
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * org.locationtech.udig.project.ui.tool.Tool#setSelectionProvider(org.locationtech.udig.project
      * .ui.tool.IMapEditorSelectionProvider)

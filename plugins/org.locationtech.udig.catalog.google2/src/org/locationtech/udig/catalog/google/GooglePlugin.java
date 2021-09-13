@@ -27,8 +27,8 @@ public class GooglePlugin extends AbstractUIPlugin {
 	private static GooglePlugin plugin;
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
-	
-    public final static String ID = "org.locationtech.udig.catalog.google"; //$NON-NLS-1$
+
+    public static final String ID = "org.locationtech.udig.catalog.google"; //$NON-NLS-1$
 
 	/**
 	 * The constructor.
@@ -94,8 +94,8 @@ public class GooglePlugin extends AbstractUIPlugin {
      * <li>t is an Exception we are assuming it is human readable or if a message is provided
      * </ul>
      * </p>
-     * @param message 
-     * @param t 
+     * @param message
+     * @param t
      */
     public static void log( String message, Throwable t ) {
         int status = t instanceof Exception || message != null ? IStatus.ERROR : IStatus.WARNING;
@@ -111,8 +111,8 @@ public class GooglePlugin extends AbstractUIPlugin {
      * }
      * </code></pre>
      * </p>
-     * @param message 
-     * @param e 
+     * @param message
+     * @param e
      */
     public static void trace( String message, Throwable e) {
         if( getDefault().isDebugging() ) {
@@ -127,12 +127,12 @@ public class GooglePlugin extends AbstractUIPlugin {
      * <ul>
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
-     * </p> 
+     * </p>
      * @param trace currently only RENDER is defined
-     * @return true if -debug is on for this plugin 
+     * @return true if -debug is on for this plugin
      */
     public static boolean isDebugging( final String trace ){
         return getDefault().isDebugging() &&
-            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
-    }    
+            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
+    }
 }

@@ -16,12 +16,12 @@ package org.locationtech.udig.ui;
  * only within the uDig project.
  */
 public interface GraphicConstants {
-    
-    public final static String IMG_ETOOL_DATASOURCE_WIZ = "IMG_ETOOL_DATASOURCE_WIZ"; //$NON-NLS-1$
-	public final static String IMG_ETOOL_DATASOURCE_WIZ_HOVER = "IMG_ETOOL_DATASOURCE_WIZ_HOVER"; //$NON-NLS-1$
-	public final static String IMG_ETOOL_DATASOURCE_WIZ_DISABLED = "IMG_ETOOL_DATASOURCE_WIZ_DISABLED"; //$NON-NLS-1$
-	
+
+    public static final String IMG_ETOOL_DATASOURCE_WIZ = "IMG_ETOOL_DATASOURCE_WIZ"; //$NON-NLS-1$
+	public static final String IMG_ETOOL_DATASOURCE_WIZ_HOVER = "IMG_ETOOL_DATASOURCE_WIZ_HOVER"; //$NON-NLS-1$
+	public static final String IMG_ETOOL_DATASOURCE_WIZ_DISABLED = "IMG_ETOOL_DATASOURCE_WIZ_DISABLED"; //$NON-NLS-1$
+
     //  wizard images
-	public final static String IMG_WIZBAN_DATASOURCE_WIZ = "IMG_WIZBAN_DATASOURCE_WIZ"; //$NON-NLS-1$
-	
+	public static final String IMG_WIZBAN_DATASOURCE_WIZ = "IMG_WIZBAN_DATASOURCE_WIZ"; //$NON-NLS-1$
+
 }

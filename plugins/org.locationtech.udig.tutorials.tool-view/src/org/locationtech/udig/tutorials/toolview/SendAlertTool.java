@@ -43,16 +43,16 @@ import org.locationtech.jts.geom.Envelope;
 /**
  * Finds all features under the mouse pointer (and surrounding 4 pixels) and all features that touch those features.
  * For each feature a ReferencedEnvelope is added to the {@link ShowAlertsMapGraphic}'s layer blackboard.
- * 
+ *
  * This class also show a rectangle around the mouse pointer and an animation of a circle zooming to a point when the mouse is
  * clicked.
- *  
+ *
  * @author jeichar
  */
 public class SendAlertTool extends SimpleTool {
 
-	public final static String EXTENSION_ID = "org.locationtech.udig.tutorials.tool-view.sendalerttool";
-	
+	public static final String EXTENSION_ID = "org.locationtech.udig.tutorials.tool-view.sendalerttool";
+
 	/**
 	 * Animation of a circle zooming to a point.
 	 */
@@ -94,11 +94,11 @@ public class SendAlertTool extends SimpleTool {
 		public boolean hasNext() {
 			return size > 0;
 		}
-		
+
 	}
-	
+
 	private DrawShapeCommand affectedArea = new DrawShapeCommand();
-	
+
 	public SendAlertTool() {
 		super(MOUSE|MOTION);
 		affectedArea.setFill(new Color(200, 200,0,50));
@@ -123,16 +123,16 @@ public class SendAlertTool extends SimpleTool {
 			getContext().getViewportPane().repaint(validArea.x-2, validArea.y-2, validArea.width+4, validArea.height+4);
 		}
 	}
-	
+
 	@Override
 	protected void onMouseExited(MapMouseEvent e) {
 		if(affectedArea.isValid()) {
 			affectedArea.setValid(false);
 			refreshAffectedArea();
-		} 
+		}
 		super.onMouseExited(e);
 	}
-	
+
 	@Override
 	protected void onMouseEntered(MapMouseEvent e) {
 		Rectangle area = new Rectangle(e.x-10,e.y-10,20,20);
@@ -144,38 +144,38 @@ public class SendAlertTool extends SimpleTool {
 		refreshAffectedArea();
 		super.onMouseEntered(e);
 	}
-	
+
 	@Override
 	protected void onMouseMoved(MapMouseEvent e) {
 		Rectangle originalArea = affectedArea.getValidArea();
-		
+
 		Rectangle area = new Rectangle(e.x-10,e.y-10,20,20);
 		affectedArea.setShape(area);
 		Rectangle validArea;
 		Rectangle newArea = affectedArea.getValidArea();
 		if(originalArea == null) {
-			validArea = newArea; 
+			validArea = newArea;
 		} else {
 			validArea = newArea.union(originalArea);
 		}
 		getContext().getViewportPane().repaint(validArea.x-2, validArea.y-2, validArea.width+4, validArea.height+4);
 	}
-	
+
 	@Override
 	protected void onMouseReleased(MapMouseEvent e) {
 		IToolContext toolContext = getContext();
 
 		// start animation
 		AnimationUpdater.runTimer(toolContext.getMapDisplay(), new Pulse(e.getPoint()));
-		
+
 		ILayer mapGraphicLayer = findMapGraphicLayer(toolContext);
-		
+
 		FeatureIterator<SimpleFeature> features = null;
 		try {
 			Envelope bbox = toolContext.getBoundingBox(e.getPoint(), 4);
 			ILayer selectedLayer = toolContext.getSelectedLayer();
 			features = toolContext.getFeaturesInBbox(selectedLayer, bbox).features();
-			
+
 			ArrayList<ReferencedEnvelope> alerts = new ArrayList<ReferencedEnvelope>();
 			ReferencedEnvelope bounds = new ReferencedEnvelope();
 			while(features.hasNext()) {
@@ -184,7 +184,7 @@ public class SendAlertTool extends SimpleTool {
 			}
 
 			mapGraphicLayer.getBlackboard().put(ShowAlertsMapGraphic.ALERTS_KEY, alerts);
-			
+
 			mapGraphicLayer.refresh(bounds);
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -220,16 +220,16 @@ public class SendAlertTool extends SimpleTool {
 		PropertyName geomPropertyExpression = filterFactory.property(geomAttName);
 		Literal literalGeomExpression = filterFactory.literal(feature.getDefaultGeometry());
 		Touches filter = filterFactory.touches(geomPropertyExpression, literalGeomExpression);
-		
-		IProgressMonitor monitor = 
+
+		IProgressMonitor monitor =
 			getContext().getActionBars().getStatusLineManager().getProgressMonitor();
-		FeatureSource<SimpleFeatureType,SimpleFeature> resource = 
+		FeatureSource<SimpleFeatureType,SimpleFeature> resource =
 			getContext().getSelectedLayer().getResource(FeatureSource.class, monitor);
-		
+
 		return resource.getFeatures(filter).features();
 	}
-	
-	
+
+
 	private ILayer findMapGraphicLayer(IToolContext toolContext) {
 		for( ILayer layer : toolContext.getMapLayers()) {
 			if(layer.hasResource(ShowAlertsMapGraphic.class)) {

@@ -63,7 +63,7 @@ import org.opengis.feature.simple.SimpleFeature;
  * <li>use CellEditors for the form's fields</li>
  * </ul>
  * </p>
- * 
+ *
  * @author Naz Chan
  */
 public class CountryPanelForm
@@ -74,26 +74,26 @@ public class CountryPanelForm
             MouseListener {
 
     /** Attribute name for attribute NAME_FORMA */
-    public final static String NAME_FORMA = "NAME_FORMA";
-    public final static String NAME_FORMA_LBL = "Name (formal)";
+    public static final String NAME_FORMA = "NAME_FORMA";
+    public static final String NAME_FORMA_LBL = "Name (formal)";
 
     /** Attribute name for attribute NAME_SORT */
-    public final static String NAME_SORT = "NAME_SORT";
-    public final static String NAME_SORT_LBL = "Name (short)";
+    public static final String NAME_SORT = "NAME_SORT";
+    public static final String NAME_SORT_LBL = "Name (short)";
 
     /** Attribute name for attribute POP_EST */
-    public final static String POP_EST = "POP_EST";
-    public final static String POP_EST_LBL = "Population Estimate";
+    public static final String POP_EST = "POP_EST";
+    public static final String POP_EST_LBL = "Population Estimate";
 
     /** Attribute name for attribute TYPE */
-    public final static String TYPE = "TYPE";
-    public final static String TYPE_SOV_LBL = "Sovereign Country";
-    public final static String TYPE_COU_LBL = "Country";
+    public static final String TYPE = "TYPE";
+    public static final String TYPE_SOV_LBL = "Sovereign Country";
+    public static final String TYPE_COU_LBL = "Country";
 
     /** Attribute name for attribute MAP_COLOR */
-    public final static String COLOR_MAP = "MAP_COLOR";
-    public final static String COLOR_MAP_LBL = "Map Color";
-    public final static Double[] COLOR_MAP_OPTS;
+    public static final String COLOR_MAP = "MAP_COLOR";
+    public static final String COLOR_MAP_LBL = "Map Color";
+    public static final Double[] COLOR_MAP_OPTS;
     static {
         COLOR_MAP_OPTS = new Double[13];
         for( int i = 0; i < COLOR_MAP_OPTS.length; i++ ) {
@@ -135,7 +135,7 @@ public class CountryPanelForm
     private IToolContext context;
 
     public void createControl( Composite parent, FormToolkit toolkit ) {
-        
+
         this.toolkit = toolkit;
 
         form = toolkit.createScrolledForm(parent);
@@ -210,7 +210,7 @@ public class CountryPanelForm
         layoutData = new GridData(GridData.FILL_HORIZONTAL);
         layoutData.horizontalSpan = 3;
         type.setLayoutData(layoutData);
-        
+
         // JFace Viewer
         label = toolkit.createLabel(client, "Color Map:", LABEL_STYLE);
         colorMap = new ComboViewer(client, FIELD_STYLE);

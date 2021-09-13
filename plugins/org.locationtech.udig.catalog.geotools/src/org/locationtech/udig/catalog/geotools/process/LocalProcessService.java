@@ -39,10 +39,10 @@ public class LocalProcessService extends IService {
     /**
      * ID used for geotools processes
      */
-    public final static String ID = "process:///localhost/geotools/process"; //$NON-NLS-1$
+    public static final String ID = "process:///localhost/geotools/process"; //$NON-NLS-1$
 
     /** Service ID used for GeoTools processes */
-    public final static ID SERVICE_ID = new ID(ID,"geotools");
+    public static final ID SERVICE_ID = new ID(ID,"geotools");
 
     /**
      * Contents are presented as a series of folders; once for each process factory.

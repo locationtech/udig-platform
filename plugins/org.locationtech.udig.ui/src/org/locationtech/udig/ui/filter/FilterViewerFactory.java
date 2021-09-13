@@ -28,7 +28,7 @@ import org.opengis.filter.Filter;
  * FilterViewer can allow the user to work with any provided Fitler, we also expect viewers that are
  * specifically used for checks such as isNull (data integrity) or Before (temporal)</li>
  * </ul>
- * 
+ *
  * @author Scott
  * @since 1.3.0
  */
@@ -38,10 +38,10 @@ public abstract class FilterViewerFactory {
      * <p>
      * An example would be a custom FilterViewer for "Roads" that would not be appropriate when
      * working with rivers.
-     * 
+     *
      * @see FilterViewerFactory#appropriate
      */
-    public final static int NOT_APPROPRIATE = 0;
+    public static final int NOT_APPROPRIATE = 0;
 
     /**
      * Unable to display or edit all the provided information.
@@ -50,20 +50,20 @@ public abstract class FilterViewerFactory {
      * current Filter - however they unable to use this viewer to display the provided filter.
      * <p>
      * An example would be an Include/Exclude viewer that would not be able to PropertyEquals test.
-     * 
+     *
      * @see FilterViewerFactory#appropriate
      */
-    public final static int INCOMPLETE = 1;
+    public static final int INCOMPLETE = 1;
 
     /**
      * General purpose Viewer tjat allows the user to view and edit the provided filter (although
      * perhaps not in the most easy to use manner).
      * <p>
      * Used for DefaultFilterViewer offering direct (and general purpose) CQL filter definition.
-     * 
+     *
      * @see FilterViewerFactory#appropriate
      */
-    public final static int COMPLETE = 25;
+    public static final int COMPLETE = 25;
 
     /**
      * Custom viewer able to work with the provided filter.
@@ -72,7 +72,7 @@ public abstract class FilterViewerFactory {
      * understand fashion.
      * <p>
      * This is often the best general purpose viewer available for the provided filter.
-     * 
+     *
      * @see FilterViewerFactory#appropriate
      */
     public static final int APPROPRIATE = 50;
@@ -90,10 +90,10 @@ public abstract class FilterViewerFactory {
      * <p>
      * This is intended to be custom viewer that recognizes and is able to work with the provided
      * filter.
-     * 
+     *
      * @see FilterViewerFactory#appropriate
      */
-    public final static int FRIENDLY = 75;
+    public static final int FRIENDLY = 75;
 
     /**
      * An exact match - used for custom viewers that make some of the more complicated functions
@@ -101,10 +101,10 @@ public abstract class FilterViewerFactory {
      * <p>
      * Example would be viewer able to walk the user through filling in a temporal filter check
      * using a calendar control widget supporting ranges.
-     * 
+     *
      * @see FilterViewerFactory#appropriate
      */
-    public final static int PERFECT = 100;
+    public static final int PERFECT = 100;
 
     public static int toCategory(int appropriate) {
         if (appropriate <= NOT_APPROPRIATE) {
@@ -125,7 +125,7 @@ public abstract class FilterViewerFactory {
 
     /**
      * Configuration from extension point of things like display name and binding
-     * 
+     *
      * @return
      */
     void init(IConfigurationElement config) {
@@ -139,14 +139,14 @@ public abstract class FilterViewerFactory {
      * At the current time this is used to uniquely identify popup menu items (used to choose
      * a filterViewer) and used by {@link FilterViewer#getViewerId()} allowing
      * client code to reference the current viewer when saving our DialogSettings.
-     * 
+     *
      * @return id used to identify this viewer
      */
     public String getId(){
         String id = config.getAttribute("id");
         return id;
     }
-    
+
     public String getDisplayName() {
         String name = config.getAttribute("name");
         return name;
@@ -171,7 +171,7 @@ public abstract class FilterViewerFactory {
      * <li>{@link #FRIENDLY}</li>
      * <li>{@link #PERFECT}</li>
      * </ul>
-     * 
+     *
      * @param schema FeatureType being considered (may be ignored by general purpose FilterViewers
      *        capable of working with any content)
      * @param filter Existing filter provided by user, may be null
@@ -193,13 +193,13 @@ public abstract class FilterViewerFactory {
      * This method simply creates the viewer; client code is expected to call
      * {@link Viewer#setInput(filter )} prior to use. For more information please see the JFace
      * {@link Viewer} class.
-     * 
+     *
      * @param composite
      * @param style
      * @return requested viewer
      */
     public abstract IFilterViewer createViewer(Composite composite, int style);
-    
+
     //
     // Factory and Extension Point Support
     //

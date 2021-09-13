@@ -37,7 +37,7 @@ import org.opengis.feature.simple.SimpleFeature;
 
 /**
  * Builds SWT images for to represent layers.
- * 
+ *
  * @author jeichar
  * @since 0.6.0
  */
@@ -61,7 +61,7 @@ public class GlyphBuilder {
         return new org.eclipse.swt.graphics.Image(Display.getDefault(), data);
     }
 
-    public final static int TRANSPARENT = 0x220000 | 0x2200 | 0x22;
+    public static final int TRANSPARENT = 0x220000 | 0x2200 | 0x22;
 
     public static ImageData createImageData( RenderedImage image ) {
         ImageData swtdata = null;
@@ -159,7 +159,7 @@ public class GlyphBuilder {
         } catch (Throwable e) {
             return null;
         } finally {
-            reader.close();            
+            reader.close();
         }
     }
 

@@ -29,35 +29,35 @@ import org.geotools.data.memory.MemoryDataStore;
 public class MemoryServiceExtensionImpl implements ServiceExtension {
     /** service creation key **/
     public static final String KEY = "scratch"; //$NON-NLS-1$
-    
+
     /** special memory service url **/
-    public final static URL URL;
+    public static final URL URL;
     static {
         URL tmp;
        try {
         tmp = new URL("http://localhost/scratch"); //$NON-NLS-1$
-       } 
+       }
        catch (MalformedURLException e) {
            tmp=null;
             e.printStackTrace();
        }
-       URL=tmp; 
+       URL=tmp;
     }
-    
+
     // contains a map of id->MemoryService implementation.
     public static final Map<URL, MemoryServiceImpl> impl=Collections.synchronizedMap(new HashMap<URL, MemoryServiceImpl>());
-    
+
     /**
      * This param indicates a SimpleFeatureType that needs to be created in the DataStore.
      * <p>
-     * Since MemoryData store is volatile there needs to be a way to specify what FeatureTypes 
-     * the DataStore has using the parameters.  
+     * Since MemoryData store is volatile there needs to be a way to specify what FeatureTypes
+     * the DataStore has using the parameters.
      * </p>
      */
     public static final String MEMBER_PARAM="MEMBER_PARAM_KEY"; //$NON-NLS-1$
 
     private MemoryDSFactory factory;
-        
+
     public MemoryServiceExtensionImpl() {
         super();
     }
@@ -82,7 +82,7 @@ public class MemoryServiceExtensionImpl implements ServiceExtension {
                 impl.put(id, new MemoryServiceImpl(id, this.factory));
             MemoryServiceImpl service = impl.get(id);
             MemoryDataStore store = null;
-            
+
             try {
                 store = service.resolve(MemoryDataStore.class, null);
             } catch (IOException e) {
@@ -114,15 +114,15 @@ public class MemoryServiceExtensionImpl implements ServiceExtension {
         }
         return null;
     }
-    
+
 
 	public Map<String, Serializable> createParams(URL url) {
 		 if( url != null && url.toExternalForm().startsWith( URL.toExternalForm())){
             Map<String,Serializable> map = new HashMap<String,Serializable>();
-            map.put( KEY, url ); 
-            return map;            
+            map.put( KEY, url );
+            return map;
         }
         return null;
 	}
-	
+
 }

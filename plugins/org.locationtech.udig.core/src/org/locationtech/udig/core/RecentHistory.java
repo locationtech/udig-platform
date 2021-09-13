@@ -22,7 +22,7 @@ import java.util.List;
  * <p>
  * This class replaces previous addToHistory based on ConfigurationWizardMainPage. It has been made
  * into a stand alone class supporting typed elements rather than only Strings.
- * 
+ *
  * <pre>
  * <code>
  *   RecentHistory<String> recent = new RecentHistory<String>( settings.getArray(WMSC_RECENT) );
@@ -30,12 +30,12 @@ import java.util.List;
  *   settings.put(WMSC_RECENT, recent.toArray(new String[recent.size()]));
  *   </code>
  * </pre>
- * 
+ *
  * @author Jody Garnett (LocationTech)
  * @since 1.4.0
  */
 public class RecentHistory<T> extends AbstractCollection<T> {
-    public final static int DEFAULT_LIMIT = 15;
+    public static final int DEFAULT_LIMIT = 15;
 
     private final int LIMIT;
 
@@ -59,7 +59,7 @@ public class RecentHistory<T> extends AbstractCollection<T> {
      * Remembers the provided entry in recent history.
      * <p>
      * The entry will be recommended at the top of the list as it is considered most recent.
-     * 
+     *
      * @param entry
      */
     public boolean add(T entry) {
@@ -86,7 +86,7 @@ public class RecentHistory<T> extends AbstractCollection<T> {
 
     /**
      * Static utility method allowing the recent history workflow to be applied to an Array.
-     * 
+     *
      * @param array
      * @param entry
      * @return modified array with entry added to the front of the array as recent history

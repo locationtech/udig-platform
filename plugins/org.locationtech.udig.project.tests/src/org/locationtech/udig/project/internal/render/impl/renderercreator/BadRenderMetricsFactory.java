@@ -28,7 +28,7 @@ import org.geotools.util.Range;
 /**
  * A Rendermetrics factory that makes a RenderMetrics that behaves badly which makes a renderer that
  * behaves badly :).  For testing obviously.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -37,26 +37,26 @@ public class BadRenderMetricsFactory implements IRenderMetricsFactory {
     /**
      * if the georesource can resolve to this string then every method will throw an exception
      */
-    public final static String ALWAYS_EXCEPTION="ALWAYS_EXCEPTION"; //$NON-NLS-1$
+    public static final String ALWAYS_EXCEPTION="ALWAYS_EXCEPTION"; //$NON-NLS-1$
     /**
      * if the georesource can resolve to this string then every method except
      * {@link #canRender(IRenderContext)} will throw an exception
      */
-    public final static String CAN_RENDER_NO_EXCEPTION="CAN_RENDER_NO_EXCEPTION"; //$NON-NLS-1$
+    public static final String CAN_RENDER_NO_EXCEPTION="CAN_RENDER_NO_EXCEPTION"; //$NON-NLS-1$
     /**
      * if the georesource can resolve to this string then all methods in the metrics will throw an exception
      * but not in the metrics factory
      */
-    public final static String CAN_CREATE_METRICS="CAN_CREATE_METRICS_LAYER"; //$NON-NLS-1$
+    public static final String CAN_CREATE_METRICS="CAN_CREATE_METRICS_LAYER"; //$NON-NLS-1$
     /**
      * if the georesource can resolve to this string then only the canAddLayerMethod will throw an exception
      */
-    public final static String CAN_ADD_LAYER_EXCEPTION="CAN_ADD_LAYER_EXCEPTION"; //$NON-NLS-1$
-    
-    private final static List<String> ALL=Arrays.asList(new String[]{
+    public static final String CAN_ADD_LAYER_EXCEPTION="CAN_ADD_LAYER_EXCEPTION"; //$NON-NLS-1$
+
+    private static final List<String> ALL=Arrays.asList(new String[]{
       ALWAYS_EXCEPTION, CAN_CREATE_METRICS, CAN_RENDER_NO_EXCEPTION,
       CAN_ADD_LAYER_EXCEPTION
-    
+
     });
     public boolean canRender( IRenderContext context ) throws IOException {
         String resolve=context.getGeoResource().resolve(String.class, new NullProgressMonitor());
@@ -95,7 +95,7 @@ public class BadRenderMetricsFactory implements IRenderMetricsFactory {
                 public IRenderContext getRenderContext() {
                     return context;
                 }
-                
+
                 @Override
                 public IRenderMetricsFactory getRenderMetricsFactory() {
                     return factory;
@@ -108,7 +108,7 @@ public class BadRenderMetricsFactory implements IRenderMetricsFactory {
     public Class< ? extends IRenderer> getRendererType() {
         return MultiLayerRenderer.class;
     }
-    
+
     class BadRenderMetrics extends AbstractRenderMetrics{
 
         public BadRenderMetrics( IRenderContext context, IRenderMetricsFactory factory ) {
@@ -142,7 +142,7 @@ public class BadRenderMetricsFactory implements IRenderMetricsFactory {
         public Set<Range<Double>> getValidScaleRanges() {
             return null;
         }
-        
+
     }
 
 }

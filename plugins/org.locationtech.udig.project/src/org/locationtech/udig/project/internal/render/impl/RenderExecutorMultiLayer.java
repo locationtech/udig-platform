@@ -28,17 +28,17 @@ import org.locationtech.jts.geom.Envelope;
 
 /**
  * A RenderExecutor that runs MultiLayerRenderers such as WMSRenderer and MapGraphic Renderers.
- * 
+ *
  * @author   Jesse
  * @since   1.0.0
  */
 public class RenderExecutorMultiLayer extends RenderExecutorImpl {
 
-    protected final static class MultiLayerRendererLayerListener extends LayerListener {
+    protected static final class MultiLayerRendererLayerListener extends LayerListener {
 
         /**
          * Construct <code>CompositeRendererLayerListener</code>.
-         * 
+         *
          * @param executor
          */
         MultiLayerRendererLayerListener( RenderExecutorMultiLayer executor ) {
@@ -105,7 +105,7 @@ public class RenderExecutorMultiLayer extends RenderExecutorImpl {
     protected static class MultiLayerRendererListener extends RendererListener {
         /**
          * Construct <code>CompositeRendererListener</code>.
-         * 
+         *
          * @param executor
          */
         MultiLayerRendererListener( RenderExecutor executor ) {
@@ -155,13 +155,13 @@ public class RenderExecutorMultiLayer extends RenderExecutorImpl {
 	/**
 	 * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl#setRenderer(org.locationtech.udig.project.render.Renderer)
 	 */
-	@SuppressWarnings("unchecked") 
+	@SuppressWarnings("unchecked")
 	public void setRenderer(Renderer newRenderer) {
 		if (getContext() != null)
 			for (IRenderContext context : getContext().getContexts()) {
 				removeLayerListener(context);
 			}
-		
+
 		if (getContext() != null )
 			getContext().removeListener(listener);
 		setRendererInternal(newRenderer);

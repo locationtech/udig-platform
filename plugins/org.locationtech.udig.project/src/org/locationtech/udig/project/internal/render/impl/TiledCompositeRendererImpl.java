@@ -52,14 +52,14 @@ import org.eclipse.swt.graphics.RGB;
 /**
  * This is a composite renderer that does not use composite contexts to track the children.  Instead
  * this renderer keeps a list of the children as a list of RenderInfo objects.  Each of these
- * render info objects has a render executor, and a render metrics.  
- * 
+ * render info objects has a render executor, and a render metrics.
+ *
  * <p>This is used by the Tile Rendering system so that the TileRendererCreator
  * does not have to keep track of the render metrics inorder to create a renderer.  The default
  * CompositeRenderer requires the the TileRendererCreator create the renderers.  This renderer
  * uses the information in the render metrics to create the children renderers as required.
  * </p>
- * 
+ *
  * @author Emily Gouge
  * @since 1.1.0
  */
@@ -68,7 +68,7 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
     /**
      * Used to sort the layers by there z order for composition of images
      */
-    private final static Comparator<? super RenderExecutor> comparator = new Comparator<RenderExecutor>(){
+    private static final Comparator<? super RenderExecutor> comparator = new Comparator<RenderExecutor>(){
         public int compare(RenderExecutor e1,RenderExecutor e2){
             return e1.getContext().getLayer().compareTo(
                     e2.getContext().getLayer());
@@ -76,28 +76,28 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
     };
 
     /**
-     * This is the collection of children this 
+     * This is the collection of children this
      * renderer is responsible for rendering.
      */
     private final Set<RenderInfo> childrenRenderers = new HashSet<RenderInfo>();
-    
 
-    
-    
+
+
+
     /**
      * Creates a new Renderer
-     * 
-     * @generated NOT   
+     *
+     * @generated NOT
      */
     protected TiledCompositeRendererImpl() {
         super();
     }
 
     /**
-     * 
+     *
      * Returns a list that is a copy of all the children renders.  This list
      * is a list of RenderInfo which contains the render executor and render metrics.
-     * 
+     *
      */
     public List<RenderInfo> getChildren() {
         List<RenderInfo> children = new ArrayList<RenderInfo>();
@@ -107,11 +107,11 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
         return children;
     }
 
-    
+
     /**
-     * 
+     *
      * Returns a list that is a copy of all the children render metrics.
-     * 
+     *
      */
     public List<AbstractRenderMetrics> getChildrenMetrics() {
         List<AbstractRenderMetrics> children = new ArrayList<AbstractRenderMetrics>();
@@ -125,12 +125,12 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
      * Used to create a render executor for a particular renderer.  Also
      * adds a listner to the executor to listen to state events
      * and set the state for the executor.
-     * 
+     *
      * @param renderer
      */
     protected RenderExecutor createRenderExecutor( Renderer renderer ) {
          final RenderExecutor executor = RenderFactory.eINSTANCE.createRenderExecutor(renderer);
-         
+
         executor.eAdapters().add(new RenderListenerAdapter(){
 
             /**
@@ -183,7 +183,7 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
     /**
      * Returns a composite context; however the children of this composite context are not
      * maintained.  This should only be used to get things such as viewport bounds and map information.
-     * 
+     *
      */
     public CompositeRenderContext getContext() {
         return super.getContext();
@@ -209,7 +209,7 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
 
     /**
      * Returns all the children render executors
-     * 
+     *
      * @uml.property name="renderExecutors"
      * @generated NOT
      */
@@ -225,29 +225,29 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
      * Determines if a particular layer has been mylared.
      */
     private boolean isFullAlphaUsed(RenderExecutor executor) {
-        
+
         Object object = getContext().getMap().getBlackboard().get("MYLAR"); //$NON-NLS-1$
-        
+
         if( object==null || !((Boolean)object).booleanValue() )
             return true;
-        
+
         if( executor.getContext() instanceof CompositeRenderContext ){
             CompositeRenderContext context=(CompositeRenderContext) executor.getContext();
             if (context.getLayers().contains(getContext().getSelectedLayer()) )
                 return true;
-            
+
             return false;
         }
-        
+
         if (executor.getContext().getLayer()==getContext().getSelectedLayer())
             return true;
-        
+
         return false;
     }
 
     /**
      * Re-composes the image
-     * 
+     *
      * @throws RenderException
      * @generated NOT
      */
@@ -259,7 +259,7 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
      * Vitalus:
      * Refreshes map image from buffered images of renderers with or without
      * labels cache painting.
-     * 
+     *
      * @param paintLabels
      */
     void refreshImage(boolean paintLabels) throws RenderException{
@@ -271,13 +271,13 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
             Graphics2D g = null;
             try {
                 BufferedImage current = getContext().getImage();
-                
+
                 //create a copy of the image to draw into
-            
+
                 BufferedImage copy = new BufferedImage(current.getWidth(), current.getHeight(),current.getType() );
-            
+
                 g = (Graphics2D)copy.getGraphics();
-                
+
                 g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
                 g.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_DISABLE);
                 g.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED);
@@ -286,24 +286,24 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
                 g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
                 g.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_OFF);
                 g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
-                
+
                 IMap map = getContext().getMap();
                 Object object = map.getBlackboard().get(ProjectBlackboardConstants.MAP__BACKGROUND_COLOR);
                 if( object==null ){
                     IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
-                    RGB background = PreferenceConverter.getColor(store, PreferenceConstants.P_BACKGROUND); 
+                    RGB background = PreferenceConverter.getColor(store, PreferenceConstants.P_BACKGROUND);
                     map.getBlackboard().put(ProjectBlackboardConstants.MAP__BACKGROUND_COLOR, new Color(background.red, background.green, background.blue ));
                     object = map.getBlackboard().get(ProjectBlackboardConstants.MAP__BACKGROUND_COLOR);
                 }
                 g.setBackground((Color) object);
                 g.clearRect(0,0,copy.getWidth(), copy.getHeight());
-                
+
                 SortedSet<RenderExecutor> executors;
                 synchronized (childrenRenderers) {
                     executors = new TreeSet<RenderExecutor>(comparator);
                     executors.addAll(getRenderExecutors());
                 }
-                
+
                 ILabelPainter cache = getContext().getLabelPainter();
                 RENDERERS: for( RenderExecutor executor : executors ) {
                     if (!executor.getContext().isVisible()){
@@ -315,13 +315,13 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
                     }
                     if (executor.getState() == NEVER || executor.getState() == STARTING || executor.getState() == RENDER_REQUEST) {
                         continue RENDERERS;
-                    } 
+                    }
                     if( isFullAlphaUsed(executor) ){
                         g.setComposite(AlphaComposite.getInstance(
                                 AlphaComposite.SRC_OVER, 1.0f));
                     }else{
                         g.setComposite(AlphaComposite.getInstance(
-                                AlphaComposite.SRC_OVER, 0.5f));                        
+                                AlphaComposite.SRC_OVER, 0.5f));
                     }
                     g.drawRenderedImage(executor.getContext().getImage(), IDENTITY);
                 }
@@ -333,7 +333,7 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
                 }
                 //update the context with the new image
                 ((RenderContextImpl)getContext()).setImage(copy);
-                
+
             } catch (IllegalStateException e) {
                 stopRendering();
                 return;
@@ -349,7 +349,7 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
      * <p>
      * First all the states are set to starting then it calls render.
      * </p>
-     * 
+     *
      * @throws RenderException
      * @generated NOT
      */
@@ -363,9 +363,9 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
         }
     }
 
-    
+
     /**
-     * 
+     *
      * Kicks all the children renderers to render.
      * @throws RenderException
      * @see org.locationtech.udig.project.internal.render.Renderer#render(org.locationtech.jts.geom.Envelope)
@@ -379,10 +379,10 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
         }
     }
 
-  
+
 
     /**
-     *  
+     *
      * @generated NOT
      */
     public void stopRendering() {
@@ -390,7 +390,7 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
             element.stopRendering();
         }
     }
-    
+
     /**
      * Removes a child from the list of children.
      *
@@ -399,18 +399,18 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
     public void removeChild(AbstractRenderMetrics childtoremove){
         ArrayList<RenderInfo> toRemove = new ArrayList<RenderInfo>();
         synchronized (childrenRenderers) {
-            
+
             for( RenderInfo child : childrenRenderers ) {
                 if (child.getMetrics().equals(childtoremove)){
                     child.getExecutor().dispose();
                     toRemove.add(child);
                 }
-            }    
-            
-        }   
+            }
+
+        }
         childrenRenderers.removeAll(toRemove);
     }
-    
+
     /**
      * Removes a set of children
      *
@@ -421,7 +421,7 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
            removeChild(child);
         }
     }
-    
+
     /**
      * Removes all children
      */
@@ -431,12 +431,12 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
             for( RenderInfo child : childrenRenderers ) {
                     child.getExecutor().dispose();
                     toRemove.add(child);
-            }    
-            
-        }   
+            }
+
+        }
         childrenRenderers.removeAll(toRemove);
     }
-    
+
     /**
      * Adds a child and creates a render and render executor for the child.
      *
@@ -451,9 +451,9 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
             childrenRenderers.add(ri);
         }
     }
-    
-  
-    
+
+
+
     /**
      * Adds a set of children, creating renderers and render executors for the children
      *
@@ -465,40 +465,40 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
         }
     }
 
-    
+
     /**
      * Class to track the information need for succesfull rendering.  This includes
      * a render executor (which references a renderer) and a metrics for creating the renderer.
-     * 
+     *
      * <p>The metrics contains the context.</p>
-     * 
+     *
      * @author Emily Gouge
      * @since 1.1.0
      */
     public class RenderInfo{
         private RenderExecutor executor;
         private AbstractRenderMetrics metrics;
-        
+
         public RenderInfo(RenderExecutor executor, AbstractRenderMetrics metrics){
             this.executor = executor;
             this.metrics = metrics;
         }
-        
+
         public AbstractRenderMetrics getMetrics(){
             return this.metrics;
         }
-        
+
         public RenderExecutor getExecutor(){
             return this.executor;
         }
         public Renderer getRenderer(){
             return getExecutor().getRenderer();
         }
-        
-        
+
+
     }
-    
-    
+
+
 } // CompositeRendererImpl
 
 

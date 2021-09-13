@@ -27,20 +27,20 @@ import org.locationtech.jts.geom.Envelope;
 
 /**
  * A MapCommand that selects all features in the bounding box encapsulated by the class.
- * 
+ *
  * @author jeichar
  * @since TODO provide version
  */
 public class BBoxSelectionCommand extends AbstractCommand implements UndoableMapCommand {
 
     /** Add bbox to layers' current filters */
-    public final static int ADD = 1;
+    public static final int ADD = 1;
 
     /** Replaces layers' filters */
-    public final static int NONE = 0;
+    public static final int NONE = 0;
 
     /** "and" bbox to layer's current filters */
-    public final static int SUBTRACT = -1;
+    public static final int SUBTRACT = -1;
 
     Envelope bbox = null;
 
@@ -52,7 +52,7 @@ public class BBoxSelectionCommand extends AbstractCommand implements UndoableMap
 
     /**
      * Creates a new instance of BBoxSelectionCommand
-     * 
+     *
      * @param bbox
      */
     public BBoxSelectionCommand( Envelope bbox, int modifiers ) {
@@ -94,7 +94,7 @@ public class BBoxSelectionCommand extends AbstractCommand implements UndoableMap
      * @see org.locationtech.udig.project.command.MapCommand#getName()
      */
     public String getName() {
-        return Messages.BBoxSelectionCommand_boxSelection; 
+        return Messages.BBoxSelectionCommand_boxSelection;
     }
 
 }
