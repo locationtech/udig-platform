@@ -23,7 +23,7 @@ import org.locationtech.udig.tools.edit.EditToolHandler;
  * @since 1.1.0
  * @see EditToolFeedbackManager
  */
-public class CancelFeedbakBehaviour implements Behaviour {
+public class CancelFeedbackBehaviour implements Behaviour {
 
     private EditToolFeedbackManager feedbackManager;
 
@@ -31,20 +31,20 @@ public class CancelFeedbakBehaviour implements Behaviour {
      * @return always <code>true</code> as it is not this behaviour responsibility to determine
      *         when to be ran, but assumes the cancel action on the associated tool has been called.
      */
-    public boolean isValid( EditToolHandler handler ) {
+    public boolean isValid(EditToolHandler handler) {
         return true;
     }
 
-    public CancelFeedbakBehaviour( EditToolFeedbackManager feedbackManager ) {
+    public CancelFeedbackBehaviour(EditToolFeedbackManager feedbackManager) {
         assert feedbackManager != null;
         this.feedbackManager = feedbackManager;
     }
 
-    public UndoableMapCommand getCommand( EditToolHandler handler ) {
+    public UndoableMapCommand getCommand(EditToolHandler handler) {
         return feedbackManager.getCancelCommand(handler);
     }
 
-    public void handleError( EditToolHandler handler, Throwable error, UndoableMapCommand command ) {
+    public void handleError(EditToolHandler handler, Throwable error, UndoableMapCommand command) {
 
     }
 
