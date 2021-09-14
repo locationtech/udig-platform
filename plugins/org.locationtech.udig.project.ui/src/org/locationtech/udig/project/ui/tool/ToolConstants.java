@@ -24,6 +24,9 @@ public interface ToolConstants {
     public static final String SELECTION_CA = "org.locationtech.udig.tool.category.selection"; //$NON-NLS-1$
     public static final String INFO_CA = "org.locationtech.udig.tool.category.info"; //$NON-NLS-1$
     public static final String EDIT_CA = "org.locationtech.udig.tool.category.edit"; //$NON-NLS-1$
+    public static final String TOOL_EDIT_CA = "org.locationtech.udig.tool.edit.edit"; //$NON-NLS-1$
+    public static final String TOOL_CREATE_CA = "org.locationtech.udig.tool.edit.create"; //$NON-NLS-1$
+    public static final String TOOL_FEATURE_CA = "org.locationtech.udig.tool.edit.feature"; //$NON-NLS-1$
     
     
     /**

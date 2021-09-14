@@ -161,7 +161,18 @@ public interface IToolManager {
      * 
      */
     void contributeToCoolBar( SubCoolBarManager cbmanager, IActionBars bars );
-    
+
+    /**
+     * Adds tools contribution items to the toolbar.
+     * <p>
+     * The actual toolbar UI elements are created and managed by the framework, IToolManager
+     * just adds tools as contributions to the specified <code>IToolBarManager</code>.
+     * 
+     * @param toolManager
+     * @param bars
+     */
+    void contributeTools( IToolBarManager toolBarManager, IActionBars bars );
+
     /**
      * Adds action tools contribution items to the toolbar.
      * <p>
