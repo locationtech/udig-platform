@@ -239,7 +239,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * The cached value of the '{@link #getEditManagerInternal() <em>Edit Manager Internal</em>}' containment reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see #getEditManagerInternal()
-     * @generated not 
+     * @generated not
      * @ordered
      */
     protected volatile EditManager editManagerInternal = null;
@@ -248,7 +248,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * The cached value of the '{@link #getRenderManagerInternal() <em>Render Manager Internal</em>}' reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see #getRenderManagerInternal()
-     * @generated not 
+     * @generated not
      * @ordered
      */
     protected volatile RenderManager renderManagerInternal = null;
@@ -270,7 +270,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * begin-user-doc --> <!-- end-user-doc -->
      *
      * @see #getColourScheme()
-     * @generated not 
+     * @generated not
      * @ordered
      */
     protected volatile ColourScheme colourScheme = null;
@@ -647,7 +647,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @throws IOException
      * @generated NOT
      */
@@ -735,7 +735,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -1413,20 +1413,24 @@ public class MapImpl extends EObjectImpl implements Map {
         @Override
         public void notifyChanged(Notification msg) {
             switch (msg.getFeatureID(RenderManager.class)) {
-            case RenderPackage.RENDER_MANAGER__VIEWPORT_MODEL_INTERNAL: {
-                if (msg.getEventType() == Notification.ADD)
-                    if (getViewportModel() != msg.getNewValue())
-                        setViewportModelInternal((ViewportModel) msg.getNewValue());
-                break;
-            }
+                case RenderPackage.RENDER_MANAGER__VIEWPORT_MODEL_INTERNAL: {
+                    if (msg.getEventType() == Notification.ADD) {
+                        if (getViewportModel() != msg.getNewValue()) {
+                            setViewportModelInternal((ViewportModel) msg.getNewValue());
+                        }
+                    }
+                    break;
+                }
             }
             switch (msg.getFeatureID(ViewportModel.class)) {
-            case RenderPackage.VIEWPORT_MODEL__RENDER_MANAGER_INTERNAL: {
-                if (msg.getEventType() == Notification.ADD)
-                    if (getRenderManager() != msg.getNewValue())
-                        setRenderManagerInternal((RenderManager) msg.getNewValue());
-                break;
-            }
+                case RenderPackage.VIEWPORT_MODEL__RENDER_MANAGER_INTERNAL: {
+                    if (msg.getEventType() == Notification.ADD) {
+                        if (getRenderManager() != msg.getNewValue()) {
+                            setRenderManagerInternal((RenderManager) msg.getNewValue());
+                        }
+                    }
+                    break;
+                }
             }
         }
     };
@@ -1685,21 +1689,21 @@ public class MapImpl extends EObjectImpl implements Map {
                         try {
                             command.run(monitor);
                         } catch (Exception e) {
-                            ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); 
+                            ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e);
                         }
                     }
 
                 });
             } catch (InvocationTargetException e) {
-                ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); 
+                ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e);
             } catch (InterruptedException e) {
-                ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); 
+                ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e);
             }
         } else {
             try {
                 command.run(new NullProgressMonitor());
             } catch (Exception e) {
-                ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); 
+                ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e);
             }
         }
     }
@@ -1714,7 +1718,7 @@ public class MapImpl extends EObjectImpl implements Map {
                 try {
                     command.run(monitor);
                 } catch (Exception e) {
-                    ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e); 
+                    ProjectPlugin.log(ERROR_EXECUTING_COMMAND + command.getName(), e);
                 }
             }
 

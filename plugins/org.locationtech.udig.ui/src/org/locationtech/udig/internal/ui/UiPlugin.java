@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -61,12 +61,15 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.Preferences;
 
 import com.google.common.base.Function;
+
 /**
  * The UiPlugin helps integrate uDig with your custom RCP application.
  * <p>
- * The UiPlugin actually contains a sample UDIGApplication (that is used
- * for demos), but the real intention here is to isolate all the code
- * needed for your own custom (or existing) RCP application.
+ * The UiPlugin actually contains a sample UDIGApplication (that is used for demos), but the real
+ * intention here is to isolate all the code needed for your own custom (or existing) RCP
+ * application.
+ * </p>
+ *
  * @author Jody
  */
 public class UiPlugin extends AbstractUdigUIPlugin {
@@ -89,7 +92,9 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     private URL iconsUrl;
 
     private OperationMenuFactory operationMenuFactory;
+
     private MenuBuilder menuBuilder;
+
     /**
      * Version of uDig as determined from the product bundle.
      * @see loadVersion()
@@ -112,14 +117,15 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      * @param context
      * @throws Exception
      */
-    public void start( BundleContext context ) throws Exception {
+    @Override
+    public void start(BundleContext context) throws Exception {
         super.start(context);
         iconsUrl = context.getBundle().getEntry(ICONS_PATH);
         Authenticator.setDefault(new UDIGAuthenticator());
         /*
-         * TODO Further code can nuke the previously set authenticator. Proper security access
-         * should be configured to prevent this.
-         */
+        * TODO Further code can nuke the previously set authenticator. Proper security access
+        * should be configured to prevent this.
+        */
         disableCerts();
         try {
             loadVersion();
@@ -137,12 +143,21 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     private static void disableCerts() {
         // Create a trust manager that does not validate certificate chains
         TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager(){
+            @Override
             public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                 return null;
             }
-            public void checkClientTrusted( java.security.cert.X509Certificate[] certs, String authType ) {
+
+            @Override
+            public void checkClientTrusted( java.security.cert.X509Certificate[] certs,
+                    String authType ) {
+
             }
-            public void checkServerTrusted( java.security.cert.X509Certificate[] certs, String authType ) {
+
+            @Override
+            public void checkServerTrusted( java.security.cert.X509Certificate[] certs,
+                    String authType ) {
+
             }
         }};
 
@@ -161,6 +176,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         } catch (MalformedURLException e) {
         }
     }
+
     /**
      * This method hunts down the version recorded in the current product.
      *
@@ -211,6 +227,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
             this.version = bundle.getString(UDIG_VERSION_KEY);
         }
     }
+
     /**
      * This is the version of uDig being deployed; obtained from the current product
      * if available.
@@ -272,6 +289,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
                 new Object[]{clazz.getName(), methodName, t});
         log(msg, t);
     }
+
     /**
      * Writes an info log in the plugin's log.
      * <p>
@@ -292,6 +310,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     public static void log( IStatus status ) {
         getDefault().getLog().log(status);
     }
+
     /**
      * Messages that only engage if getDefault().isDebugging()
      * <p>
@@ -311,6 +330,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
             }
         }
     }
+
     /**
      * Messages that only engage if getDefault().isDebugging() and the trace option traceID is true.
      * Available trace options can be found in the Trace class.  (They must also be part of the .options file)
@@ -346,6 +366,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     public static boolean isDebugging( final String trace ) {
         return getDefault().isDebugging() && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
+
     /**
      * Get the MenuFactory which will create the menus for this plugin
      *
@@ -384,6 +405,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         final int[] heapS = new int[1];
         processAppIni(true, new Function<String, String>(){
 
+            @Override
             public String apply( String line ) {
                 if (line.matches(".*Xmx.*")) { //$NON-NLS-1$
                     Matcher matcher = pattern.matcher(line);
@@ -417,6 +439,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     public static void setMaxHeapSize( final String maxHeapSize ) throws FileNotFoundException, IOException {
         processAppIni(false, new Function<String, String>(){
 
+            @Override
             public String apply( String line ) {
                 if (line.matches(".*Xmx([0-9]+)([mMgGkKbB]).*")) { //$NON-NLS-1$
                     line = line.replaceFirst("Xmx([0-9]+)([mMgGkKbB])", "Xmx" + maxHeapSize + "M"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -649,6 +672,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
                 final Throwable[] error = new Throwable[1];
                 ExtensionPointProcessor p = new ExtensionPointProcessor(){
 
+                    @Override
                     public void process( IExtension extension, IConfigurationElement element ) throws Exception {
                         try {
                             if (element.getAttribute(idField) != null && element.getAttribute(idField).equals(configurationID)) {
@@ -696,7 +720,8 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     // public static synchronized IExportedPreferences getUserPreferences() throws CoreException,
     // IOException {
     // if (preferences == null) {
-    //                    preferences=new UDIGExportedPreferences(getDefault().getPreferenceStore(), "^^preference^root^^"); //$NON-NLS-1$
+    //     preferences=new UDIGExportedPreferences(getDefault().getPreferenceStore(),
+    //             "^^preference^root^^"); //$NON-NLS-1$
     // }
     // return preferences;
     // }
@@ -705,7 +730,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         return new InstanceScope().getNode(ID);
     }
 
-	public IPath getIconPath() {
-		return new Path(ICONS_PATH);
-	}
+    public IPath getIconPath() {
+        return new Path(ICONS_PATH);
+    }
 }

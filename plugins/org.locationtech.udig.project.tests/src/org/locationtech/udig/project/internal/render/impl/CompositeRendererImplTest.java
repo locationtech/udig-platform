@@ -31,23 +31,23 @@ public class CompositeRendererImplTest {
     public void testZorder() throws Exception {
         Map map = MapTests.createDefaultMap("typename", 2, true, null); //$NON-NLS-1$
         map.getLayersInternal().add(map.getLayerFactory().createLayer(MapTests.createGeoResource("type2", 3, false))); //$NON-NLS-1$
-        
+
         CompositeRendererImpl renderer = (CompositeRendererImpl) map.getRenderManagerInternal().getRenderExecutor().getRenderer();
         renderer.getContext().clear();
         RendererCreator creator=map.getRenderManagerInternal().getRendererCreator();
-        
+
         SortedSet<Layer> layers = creator.getLayers();
         layers.clear();
         layers.addAll(map.getLayersInternal());
         layers.add(new SelectionLayer(map.getLayersInternal().get(0)));
         layers.add(new SelectionLayer(map.getLayersInternal().get(1)));
-        
+
         creator.reset();
-        
+
         renderer.getContext().addContexts(creator.getConfiguration());
-        
+
         Collection<RenderExecutor> executors = renderer.getRenderExecutors();
-        
+
         Iterator<RenderExecutor> iter = executors.iterator();
 
         RenderExecutor executor = iter.next();
@@ -60,6 +60,6 @@ public class CompositeRendererImplTest {
         executor = iter.next();
         sl = (SelectionLayer) executor.getContext().getLayer();
         assertEquals( map.getLayersInternal().get(1),sl.getWrappedLayer() );
-        
+
     }
 }

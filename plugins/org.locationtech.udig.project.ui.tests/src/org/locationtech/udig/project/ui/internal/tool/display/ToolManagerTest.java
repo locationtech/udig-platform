@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -29,6 +29,7 @@ import org.locationtech.udig.project.ui.tool.IToolManager;
 public class ToolManagerTest {
 
     private Map map;
+
     private MapEditorPart editor;
 
     @Before
@@ -37,7 +38,7 @@ public class ToolManagerTest {
         ApplicationGIS.openMap(map, true);
         editor=ApplicationGISInternal.getActiveEditor();
     }
-    
+
     @Ignore
     @Test
     public void testSetCurrentEditor() {
@@ -51,32 +52,30 @@ public class ToolManagerTest {
                     tool = proxy;
                     break;
                 }
-                    
+
             }
         }
         assertTrue( tool.isEnabled() );
         assertEquals(1, TestProperty.listeners.size());
-        
+
         TestProperty.returnVal=false;
         TestProperty.listeners.get(0).notifyChange(TestProperty.lastObj);
-        
+
         assertFalse( tool.isEnabled() );
-        
+
         manager.setCurrentEditor(null);
-        
+
         TestProperty.returnVal=true;
         assertEquals(0, TestProperty.listeners.size());
-        
+
         assertFalse( tool.isEnabled() );
-        
+
         manager.setCurrentEditor(editor);
-        
+
         TestProperty.returnVal=true;
         TestProperty.listeners.get(0).notifyChange(TestProperty.lastObj);
-        
+
         assertTrue( tool.isEnabled() );
-        
-        
     }
 
 }
