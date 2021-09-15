@@ -542,19 +542,6 @@
 	      <artifactId>postgresql</artifactId>
 	      <version>42.1.1</version>
 	    </dependency -->
-				
-		<!-- We get this from the base RCP as such they are already provided by 
-			our org.locationtech.udig.libs dependencies in the MANIFEST.MF and we don't 
-			need to ask for them to be downloaded now. -->
-		<!--<dependency> <groupId>org.apache</groupId> <artifactId>xerces</artifactId> 
-			<version>2.7.1</version> <scope>provided</scope> </dependency> -->
-
-		<dependency>
-			<groupId>xerces</groupId>
-			<artifactId>xercesImpl</artifactId>
-			<version>2.4.0</version>
-			<scope>provided</scope>
-		</dependency>
 
 		<!-- the following is provided by the eclipse modeling target platform -->
 		<dependency>
@@ -571,28 +558,6 @@
 			<version>0.32</version>
 		</dependency>
 		
-		<!--<dependency>
-			<groupId>com.vividsolutions</groupId>
-			<artifactId>jts-core</artifactId>
-			<version>${jts.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>xerces</groupId>
-					<artifactId>xercesImpl</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>com.vividsolutions</groupId>
-			<artifactId>jts-example</artifactId>
-			<version>${jts.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>xerces</groupId>
-					<artifactId>xercesImpl</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>-->
 		<dependency>
 			<groupId>org.wkb4j</groupId>
 			<artifactId>wkb4j</artifactId>
@@ -604,95 +569,36 @@
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-svg</artifactId>
 			<version>${geotools.version}</version>
-		</dependency>
-
-		<!-- batik jars provided as plugin by target platform -->
-		<dependency>
-			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>batik-transcoder</artifactId>
-			<version>1.7</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>batik-util</artifactId>
-			<version>1.7</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>batik-svg-dom</artifactId>
-			<version>1.7</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>batik-dom</artifactId>
-			<version>1.7</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>batik-css</artifactId>
-			<version>1.7</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>batik-bridge</artifactId>
-			<version>1.7</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>batik-gvt</artifactId>
-			<version>1.7</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>batik-ext</artifactId>
-			<version>1.7</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>batik-xml</artifactId>
-			<version>1.7</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>batik-script</artifactId>
-			<version>1.7</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>batik-awt-util</artifactId>
-			<version>1.7</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>batik-parser</artifactId>
-			<version>1.7</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<!-- These dependencies are for optional batik components and are not used -->
-		<dependency>
-			<groupId>xml-apis</groupId>
-			<artifactId>xml-apis-xerces</artifactId>
-			<version>2.7.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>xml-apis</groupId>
-			<artifactId>xml-apis</artifactId>
-			<version>1.0.b2</version>
-			<scope>provided</scope>
+			<exclusions>
+				<!-- batik jars provided as plugin by target platform, see import-packages and Required-Bundles in Manifest-File-->
+				<!--
+					+- org.geotools:gt-svg:jar:22.1:compile
+					|  \- org.apache.xmlgraphics:batik-transcoder:jar:1.10:compile
+					|     +- org.apache.xmlgraphics:batik-anim:jar:1.10:compile
+					|     |  +- org.apache.xmlgraphics:batik-css:jar:1.10:compile
+					|     |  +- org.apache.xmlgraphics:batik-ext:jar:1.10:compile
+					|     |  +- org.apache.xmlgraphics:batik-parser:jar:1.10:compile
+					|     |  \- org.apache.xmlgraphics:batik-svg-dom:jar:1.10:compile
+					|     +- org.apache.xmlgraphics:batik-awt-util:jar:1.10:compile
+					|     |  \- org.apache.xmlgraphics:xmlgraphics-commons:jar:2.2:compile
+					|     +- org.apache.xmlgraphics:batik-bridge:jar:1.10:compile
+					|     |  \- org.apache.xmlgraphics:batik-script:jar:1.10:compile
+					|     +- org.apache.xmlgraphics:batik-dom:jar:1.10:compile
+					|     |  \- xalan:xalan:jar:2.7.2:compile
+					|     |     \- xalan:serializer:jar:2.7.2:compile
+					|     +- org.apache.xmlgraphics:batik-gvt:jar:1.10:compile
+					|     +- org.apache.xmlgraphics:batik-svggen:jar:1.10:compile
+					|     +- org.apache.xmlgraphics:batik-util:jar:1.10:compile
+					|     |  +- org.apache.xmlgraphics:batik-constants:jar:1.10:compile
+					|     |  \- org.apache.xmlgraphics:batik-i18n:jar:1.10:compile
+					|     +- org.apache.xmlgraphics:batik-xml:jar:1.10:compile
+					|     \- xml-apis:xml-apis-ext:jar:1.3.04:compile
+				-->
+				<exclusion>
+					<groupId>org.apache.xmlgraphics</groupId>
+					<artifactId>batik-transcoder</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- Apache Commons Libraries -->

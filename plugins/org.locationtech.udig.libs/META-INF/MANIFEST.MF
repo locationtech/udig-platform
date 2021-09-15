@@ -10,10 +10,10 @@ Eclipse-BuddyPolicy: registered,
  ext
 Eclipse-RegisterBuddy: org.apache.log4j
 Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
- org.apache.xerces;visibility:=reexport,
  org.apache.log4j;visibility:=reexport,
  org.eclipse.xsd;visibility:=reexport,
- org.eclipse.swt;visibility:=reexport
+ org.eclipse.swt;visibility:=reexport,
+ org.apache.batik.util;bundle-version="1.13.0"
 Bundle-Activator: org.locationtech.udig.libs.internal.Activator
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -111,6 +111,22 @@ Import-Package: com.google.common.annotations;version="27.0.0",
  oracle.security.o3logon;resolution:=optional,
  oracle.sql;resolution:=optional,
  oracle.sql.converter;resolution:=optional,
+ org.apache.batik.anim;version="1.13.0",
+ org.apache.batik.anim.dom;version="1.13.0",
+ org.apache.batik.anim.dom.resources;version="1.13.0",
+ org.apache.batik.anim.resources;version="1.13.0",
+ org.apache.batik.anim.timing;version="1.13.0",
+ org.apache.batik.anim.values;version="1.13.0",
+ org.apache.batik.bridge;version="1.13.0",
+ org.apache.batik.bridge.resources;version="1.13.0",
+ org.apache.batik.bridge.svg12;version="1.13.0",
+ org.apache.batik.gvt;version="1.13.0",
+ org.apache.batik.gvt.event;version="1.13.0",
+ org.apache.batik.gvt.filter;version="1.13.0",
+ org.apache.batik.gvt.flow;version="1.13.0",
+ org.apache.batik.gvt.font;version="1.13.0",
+ org.apache.batik.gvt.renderer;version="1.13.0",
+ org.apache.batik.gvt.text;version="1.13.0",
  org.apache.commons.codec;version="1.2.0",
  org.apache.commons.codec.binary;version="1.2.0",
  org.apache.commons.codec.digest;version="1.2.0",
