@@ -3,7 +3,8 @@
     <template autoinsert="false" context="filecomment_context" deleted="false" 
               description="Comment for created Java files" enabled="true" 
               id="org.eclipse.jdt.ui.text.codetemplates.filecomment" name="filecomment">
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * https://locationtech.org/projects/technology.udig
  * (C) 2015, Eclipse Foundation
  *
