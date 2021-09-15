@@ -78,17 +78,19 @@ import org.opengis.feature.simple.SimpleFeatureType;
  * on the what the ShapeType of those geometries are.</li>
  * </ul>
  * </p>
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
 public class AcceptChangesBehaviour implements Behaviour {
 
     private final Class< ? extends Geometry> geomToCreate;
+
     /**
      * This is true if we need to check and close polgons on the blackboad.
      */
     private boolean updateBlackboard = true;
+
     private boolean deselectCreatedFeatures;
 
     /**
@@ -96,8 +98,8 @@ public class AcceptChangesBehaviour implements Behaviour {
      * @param deselectCreatedFeatures TODO
      * @param if true created features will be removed from the editblackboard.
      */
-    public AcceptChangesBehaviour( Class< ? extends Geometry> geomToCreate,
-            boolean deselectCreatedFeatures ) {
+    public AcceptChangesBehaviour(Class<? extends Geometry> geomToCreate,
+            boolean deselectCreatedFeatures) {
         if (geomToCreate != Polygon.class && geomToCreate != Point.class
                 && geomToCreate != LineString.class && geomToCreate != LinearRing.class) {
             throw new IllegalArgumentException(
@@ -107,7 +109,8 @@ public class AcceptChangesBehaviour implements Behaviour {
         this.deselectCreatedFeatures = deselectCreatedFeatures;
     }
 
-    public boolean isValid( EditToolHandler handler ) {
+    @Override
+    public boolean isValid(EditToolHandler handler) {
         EditGeom currentGeom = handler.getCurrentGeom();
 
         boolean currentGeomNotNull = currentGeom != null;
@@ -121,7 +124,7 @@ public class AcceptChangesBehaviour implements Behaviour {
      * @return
      */
     @SuppressWarnings("unchecked")
-    private boolean typeCanBeAssignedToLayer( Class type ) {
+    private boolean typeCanBeAssignedToLayer(Class type) {
         if (type.isAssignableFrom(geomToCreate))
             return true;
         if (geomToCreate == Polygon.class && type.isAssignableFrom(MultiPolygon.class)) {
@@ -136,8 +139,9 @@ public class AcceptChangesBehaviour implements Behaviour {
         return false;
     }
 
+    @Override
     @SuppressWarnings({"deprecation", "unchecked"})
-    public UndoableMapCommand getCommand( EditToolHandler handler ) {
+    public UndoableMapCommand getCommand(EditToolHandler handler) {
         if (!isValid(handler))
             throw new IllegalArgumentException("Not in a valid state for this to run"); //$NON-NLS-1$
         Map<String, GeometryCreationUtil.Bag> idToGeom;
@@ -159,8 +163,7 @@ public class AcceptChangesBehaviour implements Behaviour {
         ILayer layer = handler.getEditLayer();
 
         Set<Entry<String, GeometryCreationUtil.Bag>> entries = idToGeom.entrySet();
-        for( Entry<String, GeometryCreationUtil.Bag> entry : entries ) {
-
+        for (Entry<String, GeometryCreationUtil.Bag> entry : entries) {
             commands.addAll(processIntoCommands(handler, layer, entry));
         }
 
@@ -172,6 +175,7 @@ public class AcceptChangesBehaviour implements Behaviour {
 
         return composite;
     }
+
     /**
      * Process the provided entry into a list of commands.
      * <p>
@@ -183,7 +187,7 @@ public class AcceptChangesBehaviour implements Behaviour {
      * <ul>
      * This method uses GeometryCreationUtil.ceateGeometryCollection to modify the origional
      * geometry.
-     * 
+     *
      * @param handler
      * @param commands
      * @param layer
@@ -191,8 +195,8 @@ public class AcceptChangesBehaviour implements Behaviour {
      * @return List of commands based on the current entry
      */
     @SuppressWarnings("unchecked")
-    private List<UndoableMapCommand> processIntoCommands( EditToolHandler handler, ILayer layer,
-            Entry<String, GeometryCreationUtil.Bag> entry ) {
+    private List<UndoableMapCommand> processIntoCommands(EditToolHandler handler, ILayer layer,
+            Entry<String, GeometryCreationUtil.Bag> entry) {
         IMapDisplay display = handler.getContext().getMapDisplay();
         DrawCommandFactory drawfactory = handler.getContext().getDrawFactory();
         SimpleFeatureType schema = layer.getSchema();
@@ -241,9 +245,9 @@ public class AcceptChangesBehaviour implements Behaviour {
                         throw new IllegalStateException(
                                 "Could not create an empty " + schema.getTypeName() + ":" + e, e); //$NON-NLS-1$//$NON-NLS-2$
                     }
-                    
+
                     CreateFeatureCommand.runFeatureCreationInterceptors(feature);
-                    
+
                     // FeaturePanelProcessor panels = ProjectUIPlugin.getDefault()
                     // .getFeaturePanelProcessor();
                     // List<FeaturePanelEntry> popup = panels.search(schema);
@@ -277,34 +281,36 @@ public class AcceptChangesBehaviour implements Behaviour {
         return commands;
     }
 
-    private boolean isCreatingNewFeature( EditToolHandler handler ) {
+    private boolean isCreatingNewFeature(EditToolHandler handler) {
         return handler.getContext().getEditManager().getEditFeature() == null;
     }
+
     /**
      * Checks if the EditGeom is the one the user is currently working on.
      * <p>
      * Several edit geometries can be in play at once.
-     * 
+     *
      * @param handler
      * @param editGeom
      * @return true if the editGeom is in use by the user
      */
-    private boolean isCurrentGeometry( EditToolHandler handler, EditGeom editGeom ) {
+    private boolean isCurrentGeometry(EditToolHandler handler, EditGeom editGeom) {
         return editGeom == handler.getCurrentGeom();
     }
+
     /**
      * This method will add a AddVertextCommand if needed to close a polygon.
-     * 
+     *
      * @param handler
      * @param editGeom
      * @param geom
      * @param commands
      */
-    private void updateBlackboardGeometry( EditToolHandler handler, EditGeom editGeom,
-            Geometry geom, List<UndoableMapCommand> commands ) {
+    private void updateBlackboardGeometry(EditToolHandler handler, EditGeom editGeom,
+            Geometry geom, List<UndoableMapCommand> commands) {
         if (handler.getCurrentGeom() == editGeom) {
             if (Polygon.class.isAssignableFrom(geomToCreate)) {
-                for( PrimitiveShape shape : editGeom ) {
+                for (PrimitiveShape shape : editGeom) {
                     if (shape.getNumPoints() > 0
                             && !shape.getPoint(0).equals(shape.getPoint(shape.getNumPoints() - 1)))
                         commands.add(new AddVertexCommand(handler, editGeom.getEditBlackboard(),
@@ -315,7 +321,7 @@ public class AcceptChangesBehaviour implements Behaviour {
             if (editGeom.getShapeType() == ShapeType.POLYGON
                     || (editGeom.getShapeType() == ShapeType.UNKNOWN && Polygon.class
                             .isAssignableFrom(geomToCreate))) {
-                for( PrimitiveShape shape : editGeom ) {
+                for(PrimitiveShape shape : editGeom) {
                     if (shape.getNumPoints() > 0
                             && !shape.getPoint(0).equals(shape.getPoint(shape.getNumPoints() - 1)))
                         commands.add(new AddVertexCommand(handler, editGeom.getEditBlackboard(),
@@ -325,14 +331,15 @@ public class AcceptChangesBehaviour implements Behaviour {
         }
     }
 
-    public void handleError( EditToolHandler handler, Throwable error, UndoableMapCommand command ) {
+    @Override
+    public void handleError(EditToolHandler handler, Throwable error, UndoableMapCommand command) {
         EditPlugin.log("", error); //$NON-NLS-1$
     }
 
     /**
      * @param updateBlackboard The updateBlackboard to set.
      */
-    public void setUpdateBlackboard( boolean autoFix ) {
+    public void setUpdateBlackboard(boolean autoFix) {
         this.updateBlackboard = autoFix;
     }
 }

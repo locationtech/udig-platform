@@ -33,24 +33,24 @@ public class CompositeRenderContextImplTest {
     public void testAddRemoveClear() throws Exception {
         Map map = MapTests.createDefaultMap("typename", 2, true, null); //$NON-NLS-1$
         map.getLayersInternal().add(map.getLayerFactory().createLayer(MapTests.createGeoResource("type2", 3, false))); //$NON-NLS-1$
-        
+
         CompositeRendererImpl renderer = (CompositeRendererImpl) map.getRenderManagerInternal().getRenderExecutor().getRenderer();
         renderer.getContext().clear();
         RendererCreator creator=map.getRenderManagerInternal().getRendererCreator();
-        
+
         SortedSet<Layer> layers = creator.getLayers();
         layers.clear();
         layers.addAll(map.getLayersInternal());
         layers.add(new SelectionLayer(map.getLayersInternal().get(0)));
         layers.add(new SelectionLayer(map.getLayersInternal().get(1)));
-        
+
         creator.reset();
-        
+
         CompositeRenderContextImpl comp=new CompositeRenderContextImpl();
         comp.addContexts(creator.getConfiguration());
-        
-        Iterator iter = comp.getContexts().iterator();  
-        
+
+        Iterator iter = comp.getContexts().iterator();
+
         RenderContext executor = (RenderContext) iter.next();
         assertEquals( map.getLayersInternal().get(0),executor.getLayer() );
         executor = (RenderContext) iter.next();
@@ -71,10 +71,10 @@ public class CompositeRenderContextImplTest {
         comp2.addContexts(Collections.singleton(comp3));
         comp3.addContexts(Collections.singleton(comp));
         assertFalse(CompositeRenderContextImpl.assertNoSelfReference(comp, comp, Collections.singleton(comp2)));
-        
+
         comp2.removeContexts(Collections.singleton(comp3));
         assertTrue(CompositeRenderContextImpl.assertNoSelfReference(comp, comp, Collections.singleton(comp2)));
-        
+
     }
 
     @Test

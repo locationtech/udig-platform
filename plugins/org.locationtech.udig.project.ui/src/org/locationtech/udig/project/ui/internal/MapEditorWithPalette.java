@@ -130,7 +130,7 @@ import org.opengis.feature.simple.SimpleFeature;
  * the palette inline; and hiding it when the normal PaletteView is opened
  * </li>
  * </ul>
- * 
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
@@ -154,7 +154,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
      * by GEF. We are not using GEF tools directly; simply borrowing some of their
      * infrastructure to support a nice visual palette.
      * <p>
-     * The *id* of the current tool in the editDomain is used to determine the 
+     * The *id* of the current tool in the editDomain is used to determine the
      * active tool for the map.
      * <p>
      * Holds onto the paletteViewer while delegating to ToolManager
@@ -162,11 +162,13 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     private MapEditDomain editDomain;
 
     final StatusLineManager statusLineManager = new StatusLineManager();
+
     private MapEditorSite mapEditorSite;
+
     private boolean dirty = false;
-    
+
     private PaletteRoot paletteRoot;
-    
+
     private MapViewer viewer = null;
 
     private IContributionItem crsContributionItem;
@@ -189,7 +191,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
      */
     public MapEditorWithPalette() {
         // Make sure the featureEditorProcessor has been started.
-        // This will load all the tools so we can use them        
+        // This will load all the tools so we can use them
         ProjectUIPlugin.getDefault().getFeatureEditProcessor();
     }
 
@@ -484,10 +486,10 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         partlistener = null;
 
         statusLineManager.dispose();
-        
+
         MapToolPaletteFactory.dispose( paletteRoot );
         paletteRoot = null;
-        
+
         final ScopedPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
         if (!PlatformUI.getWorkbench().isClosing()) {
             ShutdownTaskList.instance().removePreShutdownTask(shutdownTask);
@@ -514,7 +516,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
                             if (p.eResource() != null && p.eResource().isModified()) {
                                 p.eResource().save(ProjectPlugin.getPlugin().saveOptions);
                             }
-                            
+
                             /*
                              * when closing a map the platform wants to save the map resource,
                              * but if you are removing the map, its no longer available.
@@ -697,25 +699,25 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
             editDomain = new MapEditDomain(this);
         }
         setEditDomain( editDomain );
-        
+
         // super class sets up the splitter; it needs the setEditDomain to be defined
         // prior to the method being called (so the FlyoutPaletteComposite split can latch on)
-        
+
     	super.createPartControl(parent);
     	// the above sets up a splitter; and then calls GraphicalEditor.createGraphicalViewer
-    	// which we can use to set up our display area...        
+    	// which we can use to set up our display area...
     }
 
     @Override
     protected Control getGraphicalControl() {
     	return composite;
     }
-    
+
     /**
      * Hijacked; supposed to create a GraphicalViewer on the specified <code>Composite</code>.
      * <p>
      * Instead we make use of the composite for our MapViewer.
-     * 
+     *
      * @param parent the parent composite
      */
     @Override
@@ -739,7 +741,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
         // allow the viewer to open our context menu; work with our selection proivder etc
         viewer.init(this);
-        
+
         // if a map was provided as input we can ask the viewer to use it
         Map input = (Map) ((UDIGEditorInput) getEditorInput()).getProjectElement();
         if (input != null) {
@@ -858,10 +860,10 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
                 @Override
                 public void menuAboutToShow( IMenuManager mgr ) {
                     IToolManager tm = ApplicationGIS.getToolManager();
-                    
+
                     contextMenu.add(tm.getENTERAction());
                     contextMenu.add(new Separator());
-                    
+
                     contextMenu.add(tm.getZOOMTOSELECTEDAction());
                     contextMenu.add(new Separator());
                     contextMenu.add(tm.getBACKWARD_HISTORYAction());
@@ -967,7 +969,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
     /**
      * Returns the map that this editor edits
-     * 
+     *
      * @return Returns the map that this editor edits
      */
     @Override
@@ -983,7 +985,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
     /**
      * Returns the ActionbarContributor for the Editor.
-     * 
+     *
      * @return the ActionbarContributor for the Editor.
      */
     public SubActionBars2 getActionbar() {

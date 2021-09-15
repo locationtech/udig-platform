@@ -27,9 +27,9 @@ import org.locationtech.udig.project.render.IMultiLayerRenderer;
 import org.locationtech.udig.project.render.IRenderMetricsFactory;
 
 /**
- * Processes the org.locationtech.udig.project.renderer extension point adding the RendererMetricsFactories that apply to the layer to 
+ * Processes the org.locationtech.udig.project.renderer extension point adding the RendererMetricsFactories that apply to the layer to
  * a cache of legal RendererMetricsFactories.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -42,55 +42,54 @@ public class RendererExtensionProcessor implements ExtensionPointProcessor {
 
     private RenderManager rm;
 
-
     /**
      * Creates an new instance of Processor
-     * 
+     *
      * @param layer The layer which needs to be rendered
      */
-    public RendererExtensionProcessor( Layer layer, org.locationtech.udig.project.internal.Map map, RenderManager rm ) {
+    public RendererExtensionProcessor(Layer layer, org.locationtech.udig.project.internal.Map map, RenderManager rm) {
         this.layer = layer;
-        this.rm=rm;
-        this.map=map;
+        this.rm = rm;
+        this.map = map;
     }
 
     @Override
-    public void process( IExtension extension, IConfigurationElement element ) {
+    public void process(IExtension extension, IConfigurationElement element) {
 
         try {
             IRenderMetricsFactory createExecutableExtension = (IRenderMetricsFactory) element.createExecutableExtension("class"); //$NON-NLS-1$
             InternalRenderMetricsFactory metricsFactory = new InternalRenderMetricsFactory(
-                    createExecutableExtension, element); 
+                    createExecutableExtension, element);
 
-            
+
             List<IGeoResource> data = layer.getGeoResources();
-            for( IGeoResource resource : data ) {
+            for (IGeoResource resource : data) {
 
                 RenderContext context;
 
-                try{
+                try {
                     if (IMultiLayerRenderer.class
                             .isAssignableFrom(metricsFactory.getRendererType())) {
                         context = new CompositeRenderContextImpl();
                     } else {
                         context = new RenderContextImpl(layer instanceof SelectionLayer);
                     }
-                }catch(Throwable e){
+                } catch (Throwable e){
                     context = new RenderContextImpl(layer instanceof SelectionLayer);
                 }
-                
+
                 context.setMapInternal(map);
                 context.setRenderManagerInternal(rm);
                 context.setLayerInternal(layer);
                 context.setGeoResourceInternal(resource);
-                                
+
                 InternalRenderMetrics metrics = metricsFactory.createMetrics(context);
                 metrics.delegate.setId(element.getNamespaceIdentifier()+"."+element.getAttribute("id")); //$NON-NLS-1$ //$NON-NLS-2$)
                 rFactories.add(metrics);
             }
         } catch (CoreException e) {
             throw (RuntimeException)new RuntimeException().initCause(e);
-        } 
+        }
     }
 
     public List<InternalRenderMetrics> getRFactories() {
