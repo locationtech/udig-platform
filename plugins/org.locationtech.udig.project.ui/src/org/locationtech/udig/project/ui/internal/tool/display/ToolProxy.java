@@ -125,8 +125,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
      * @param definition The configuration element which describes the tool
      * @param toolManager ToolManager responsible for this tool
      */
-    public ToolProxy(IExtension extension, IConfigurationElement definition,
-            ToolManager toolManager) {
+    public ToolProxy(IExtension extension, IConfigurationElement definition, ToolManager toolManager ) {
         super();
 
         this.toolManager = toolManager;
@@ -141,10 +140,13 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         String toolTip = definition.getAttribute("tooltip"); //$NON-NLS-1$
         String iconID = definition.getAttribute("icon"); //$NON-NLS-1$
         String largeIconID = definition.getAttribute("largeIcon"); //$NON-NLS-1$
-
         String preferencePageId = definition.getAttribute("preferencePageId"); //$NON-NLS-1$
-        // setup attributes used by status bare tool options
+
+        //setup attributes used by status bar tool options
         setPreferencePageId(preferencePageId);
+        setName(name);
+        setToolTipText(toolTip);
+        setId(id);
 
         defaultCursorID = definition.getAttribute("toolCursorId"); //$NON-NLS-1$
 
@@ -171,6 +173,8 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         bool = definition.getAttribute("onToolbar"); //$NON-NLS-1$
         onToolbar = ((bool != null) && bool.equalsIgnoreCase("true")) ? true : false; //$NON-NLS-1$
         menuPath = definition.getAttribute("menuPath"); //$NON-NLS-1$
+        element = definition;
+
         ImageDescriptor icon;
         if (iconID == null) {
             icon = null;
@@ -183,15 +187,10 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
             // default to normal size so we have something
             setLargeImageDescriptor(icon);
         } else {
-            ImageDescriptor largeIcon = icon = AbstractUIPlugin.imageDescriptorFromPlugin(pluginid,
-                    largeIconID);
+            ImageDescriptor largeIcon = AbstractUIPlugin.imageDescriptorFromPlugin(pluginid, largeIconID);
             setLargeImageDescriptor(largeIcon);
         }
 
-        this.element = definition;
-        setName(name);
-        setToolTipText(toolTip);
-        setId(id);
         if (type.equals("modalTool")) { //$NON-NLS-1$
             this.type = MODAL;
         } else if (type.equals("backgroundTool")) { //$NON-NLS-1$
@@ -306,78 +305,54 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
      */
     public Tool getTool() {
         if (tool == null) {
-            Display display = Display.getCurrent();
-            if (display == null)
-                display = Display.getDefault();
-            final Display finalDisplay = display;
-            Runnable runnable = new Runnable() {
-                @Override
-                public void run() {
-                    BusyIndicator.showWhile(finalDisplay, new Runnable() {
-                        @Override
-                        public void run() {
-                            String klassName = element.getAttribute("class"); //$NON-NLS-1$
-                            if (klassName != null) {
-                                try {
-                                    Object o = element.createExecutableExtension("class"); //$NON-NLS-1$
-                                    tool = (Tool) o;
+            PlatformGIS.syncInDisplayThread(() -> {
+                try {
+                    Object o = element.createExecutableExtension("class"); //$NON-NLS-1$
+                    tool = (Tool) o;
 
-                                    if (tool instanceof AbstractTool) {
-                                        ((AbstractTool) tool).init(element);
-                                    }
+                    if (tool instanceof AbstractTool) {
+                        ((AbstractTool) tool).init(element);
+                    }
 
-                                    /* Tool cursors framework */
-                                    if (tool instanceof ModalTool) {
-                                        if (defaultCursorID != null) {
-                                            ((ModalTool) tool).setCursorID(defaultCursorID);
-                                            tool.setProperty(ToolConstants.DEFAULT_CURSOR_ID_KEY,
-                                                    defaultCursorID);
-                                        }
-                                    }
-
-                                    tool.setContext(toolContext);
-                                    tool.setEnabled(isEnabled());
-
-                                    if (tool instanceof ModalTool) {
-                                        IMapEditorSelectionProvider selectionProvider = getSelectionProvider();
-                                        ModalTool modalTool = (ModalTool) tool;
-                                        modalTool.setSelectionProvider(selectionProvider);
-                                    }
-
-                                } catch (CoreException e) {
-                                    ProjectUIPlugin.log("Error loading tool", e); //$NON-NLS-1$
-                                }
-                            }
-
-                            IConfigurationElement[] toolElementChildren = element.getChildren();
-
-                            for (IConfigurationElement toolElement : toolElementChildren) {
-
-                                if (toolElement.getAttribute("class") != null) {
-                                    try {
-                                        String contributionId = toolElement.getAttribute("id");
-
-                                        Object optionsContribution = toolElement
-                                                .createExecutableExtension("class");
-                                        ContributionItem contributionItem = (ContributionItem) optionsContribution;
-                                        contributionItem.setId(contributionId);
-
-                                        addOptionsContribution(
-                                                (ContributionItem) optionsContribution);
-                                    } catch (CoreException e) {
-                                        // TODO Auto-generated catch block
-                                        e.printStackTrace();
-                                    }
-                                }
-
-                            }
-
+                    /* Tool cursors framework */
+                    if (tool instanceof ModalTool) {
+                        if (defaultCursorID != null) {
+                            ((ModalTool) tool).setCursorID(defaultCursorID);
+                            tool.setProperty(ToolConstants.DEFAULT_CURSOR_ID_KEY,
+                                    defaultCursorID);
                         }
-                    });
-                }
-            };
+                    }
 
-            PlatformGIS.syncInDisplayThread(runnable);
+                    tool.setContext(toolContext);
+                    tool.setEnabled(isEnabled());
+
+                    if (tool instanceof ModalTool) {
+                        IMapEditorSelectionProvider selectionProvider = getSelectionProvider();
+                        ModalTool modalTool = (ModalTool) tool;
+                        modalTool.setSelectionProvider(selectionProvider);
+                    }
+
+                    IConfigurationElement[] toolElementChildren = element.getChildren();
+
+                    for (IConfigurationElement toolElement : toolElementChildren) {
+
+                        if (toolElement.getAttribute("class") != null) {
+                            String contributionId = toolElement.getAttribute("id");
+
+                            Object optionsContribution = toolElement
+                                    .createExecutableExtension("class");
+                            ContributionItem contributionItem = (ContributionItem) optionsContribution;
+                            contributionItem.setId(contributionId);
+
+                            addOptionsContribution((ContributionItem) optionsContribution);
+                        }
+                    }
+
+                } catch (CoreException e) {
+                    tool = null;
+                    ProjectUIPlugin.log("Error loading tool with id " + getId(), e); //$NON-NLS-1$
+                }
+            });
         }
         return tool;
     }
@@ -527,7 +502,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         if (activeToolProxy == this) {
             // good that worked then
         } else {
-            // okay we will chagne the active item ourself
+            // okay we will change the active item ourself
             if (activeToolProxy != null) {
                 activeToolProxy.setActive(false);
             }
