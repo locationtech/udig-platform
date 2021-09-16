@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.locationtech.udig.project.internal.ui.wizard;
 
@@ -20,7 +20,6 @@ public class URLConnectionFactory extends UDIGConnectionFactory {
 	 */
 	@Override
 	public boolean canProcess(Object context) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -29,7 +28,6 @@ public class URLConnectionFactory extends UDIGConnectionFactory {
 	 */
 	@Override
 	public Map<String, Serializable> createConnectionParameters(Object context) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

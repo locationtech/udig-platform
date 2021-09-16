@@ -34,13 +34,13 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * A Graphics object that wraps SWT's GC object
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
 public class SWTGraphics implements ViewportGraphics {
 	/** The <code>TRANSPARENT</code> color */
-	public final static int TRANSPARENT = 0x220000 | 0x2200 | 0x22;
+	public static final int TRANSPARENT = 0x220000 | 0x2200 | 0x22;
 
     static final AffineTransform AFFINE_TRANSFORM = new AffineTransform();
 
@@ -55,24 +55,24 @@ public class SWTGraphics implements ViewportGraphics {
 	private Display display;
 
 	private Font font = null;
-	
+
 	/**
 	 * Construct <code>SWTGraphics</code>.
-	 * 
+	 *
 	 * @param Image
 	 *            image
-     *  @param display the display to use with the 
+     *  @param display the display to use with the
 	 * @param display
 	 *            The display object
 	 */
 	public SWTGraphics(Image image, Display display) {
 		this(new GC(image), display);
-        
+
 	}
 
 	/**
 	 * Construct <code>SWTGraphics</code>.
-	 * 
+	 *
 	 * @param gc
 	 *            The GC object
 	 * @param display
@@ -92,14 +92,14 @@ public class SWTGraphics implements ViewportGraphics {
             back.dispose();
         back = new Color(display, 255, 255, 255);
         gc.setBackground(back);
-        
+
         if (swtTransform != null)
         	swtTransform.dispose();
         swtTransform = new Transform(display);
 
         gc.setAdvanced(true);
     }
-	
+
     public <T> T getGraphics( Class<T> adaptee ) {
         AWTSWTImageUtils.checkAccess();
         if (adaptee.isAssignableFrom(GC.class)) {
@@ -134,13 +134,13 @@ public class SWTGraphics implements ViewportGraphics {
             gc.drawPath(path);
             path.dispose();
         }
-        
+
     }
 
     /**
      * Converts the shape to a path object.  Remember to dispose of the path object when
      * done.
-     * 
+     *
      * @param shape
      * @return the shape converted to a {@link Path} object.
      * @deprecated Use {@link AWTSWTImageUtils#convertToPath(Shape,Device)} instead
@@ -198,14 +198,14 @@ public class SWTGraphics implements ViewportGraphics {
     public void fillRect( int x, int y, int width, int height ) {
         Color tmp = prepareForFill();
         gc.fillRectangle(new Rectangle(x, y, width, height));
-        
+
         gc.setBackground(tmp);
     }
 
 	/**
 	 * @see org.locationtech.udig.project.render.ViewportGraphics#setColor(java.awt.Color)
 	 */
-	public void setColor(final java.awt.Color c) { 
+	public void setColor(final java.awt.Color c) {
         AWTSWTImageUtils.checkAccess();
 		Color color = new Color(display, c.getRed(), c.getGreen(), c.getBlue());
 		gc.setForeground(color);
@@ -217,7 +217,7 @@ public class SWTGraphics implements ViewportGraphics {
 
     /**
      * This is hard because - background doesn't mean what we think it means.
-     * 
+     *
      * @see org.locationtech.udig.project.render.ViewportGraphics#setBackground(java.awt.Color)
      */
     public void setBackground( java.awt.Color c ) {
@@ -234,7 +234,7 @@ public class SWTGraphics implements ViewportGraphics {
      */
     public void setStroke( int style, int width ) {
         AWTSWTImageUtils.checkAccess();
-        
+
         gc.setLineWidth(width);
         switch( style ) {
         case LINE_DASH: {
@@ -314,7 +314,7 @@ public class SWTGraphics implements ViewportGraphics {
                 return AWTSWTImageUtils.createImageDescriptor(image, transparent);
             }
 
-    /** Create a buffered image that can be be converted to SWTland later 
+    /** Create a buffered image that can be be converted to SWTland later
      * @deprecated Use {@link AWTSWTImageUtils#createBufferedImage(int,int)} instead*/
     public static BufferedImage createBufferedImage( int w, int h ) {
         return AWTSWTImageUtils.createBufferedImage(w, h);
@@ -340,7 +340,7 @@ public class SWTGraphics implements ViewportGraphics {
         org.eclipse.swt.graphics.Point text = gc.stringExtent(string);
         int w = (int)text.x;
         int h = (int)text.y;
-        
+
         int x2 = (alignx == 0) ? x - w/2 : (alignx > 0) ? x - w : x;
         int y2 = (aligny == 0) ? y + h/2 : (aligny > 0) ? y + h : y;
 
@@ -352,13 +352,13 @@ public class SWTGraphics implements ViewportGraphics {
         double[] matrix=new double[6];
         transform.getMatrix(matrix);
 
-        //Note that the arguments are not in the same order as the elements returned by 
+        //Note that the arguments are not in the same order as the elements returned by
         //AffineTransform.getMatrix(double[]). Consult the javadocs for details.
         swtTransform.setElements(
                 (float)matrix[0], (float)matrix[2],
                 (float)matrix[1], (float)matrix[3],
                 (float)matrix[4], (float)matrix[5] );
-        
+
         gc.setTransform(swtTransform);
     }
 
@@ -380,7 +380,7 @@ public class SWTGraphics implements ViewportGraphics {
     public Rectangle2D getStringBounds( String str ) {
         AWTSWTImageUtils.checkAccess();
         org.eclipse.swt.graphics.Point extent = gc.textExtent(str);
-        
+
         return new java.awt.Rectangle(0,0,extent.x, extent.y);
     }
 
@@ -411,7 +411,7 @@ public class SWTGraphics implements ViewportGraphics {
                 swtImage = AWTSWTImageUtils.createSWTImage(rimage);
             }
             if (swtImage != null) {
-                gc.drawImage(swtImage, sx1, sy1, Math.abs(sx2-sx1), Math.abs(sy2-sy1), 
+                gc.drawImage(swtImage, sx1, sy1, Math.abs(sx2-sx1), Math.abs(sy2-sy1),
                         dx1, dy1, Math.abs(dx2-dx1), Math.abs(dy2-dy1) );
                 swtImage.dispose();
             }
@@ -419,7 +419,7 @@ public class SWTGraphics implements ViewportGraphics {
             if (swtImage != null)
                 swtImage.dispose();
         }
-    
+
     }
 
     /**
@@ -437,11 +437,11 @@ public class SWTGraphics implements ViewportGraphics {
             int sx2, int sy2 ) {
         AWTSWTImageUtils.checkAccess();
 
-        gc.drawImage(swtImage, sx1, sy1, Math.abs(sx2-sx1), Math.abs(sy2-sy1), 
+        gc.drawImage(swtImage, sx1, sy1, Math.abs(sx2-sx1), Math.abs(sy2-sy1),
                 dx1, dy1, Math.abs(dx2-dx1), Math.abs(dy2-dy1) );
 
     }
-    
+
     public void drawImage( Image swtImage, int x, int y ) {
         gc.drawImage(swtImage, x, y);
     }
@@ -450,13 +450,13 @@ public class SWTGraphics implements ViewportGraphics {
         AWTSWTImageUtils.checkAccess();
         if( swtTransform==null )
             return AFFINE_TRANSFORM;
-        
+
         float[] matrix=new float[6];
         swtTransform.getElements(matrix);
         return new AffineTransform(matrix);
     }
-    
-    
+
+
     public void drawOval( int x, int y, int width, int height ){
         gc.drawOval(x,y,width, height);
     }
@@ -464,7 +464,7 @@ public class SWTGraphics implements ViewportGraphics {
     public void fillOval( int x, int y, int width, int height ) {
         gc.fillOval(x, y, width, height);
     }
-    
+
     /**
      * Creates an image descriptor that from the source image.
      *
@@ -487,7 +487,7 @@ public class SWTGraphics implements ViewportGraphics {
     public static Image convertToSWTImage( BufferedImage image ) {
         return AWTSWTImageUtils.convertToSWTImage(image);
     }
-    
+
     /**
      * Creates an ImageData from the 0,0,width,height section of the source BufferedImage.
      * <p>
@@ -501,7 +501,7 @@ public class SWTGraphics implements ViewportGraphics {
     public static ImageData createImageData( BufferedImage image ) {
         return AWTSWTImageUtils.createImageData(image);
     }
-    
+
     /**
      * Converts a RenderedImage to an SWT Image.  You are responsible for disposing the created image.  This
      * method is slower than calling {@link #createSWTImage(BufferedImage, int, int)}.
@@ -515,7 +515,7 @@ public class SWTGraphics implements ViewportGraphics {
     public static Image createSWTImage( RenderedImage image  ) {
         return AWTSWTImageUtils.createSWTImage(image);
     }
-    
+
     /**
      * Creates an ImageData from the source RenderedImage.
      * <p>
@@ -547,7 +547,7 @@ public class SWTGraphics implements ViewportGraphics {
         AWTSWTImageUtils.checkAccess();
 		return AWTSWTImageUtils.swtColor2awtColor(gc, gc.getForeground());
 	}
-	
+
 	/**
      * @deprecated Use {@link AWTSWTImageUtils#swtColor2awtColor(GC,Color)} instead
      */
@@ -566,7 +566,7 @@ public class SWTGraphics implements ViewportGraphics {
     static void checkAccess() {
         AWTSWTImageUtils.checkAccess();
     }
-    
+
     public void fillRoundRect(  int x, int y, int width, int height, int arcWidth, int arcHeight ) {
         Color tmp = prepareForFill();
         gc.fillRoundRectangle(x, y, width, height, arcWidth, arcHeight);
@@ -590,13 +590,13 @@ public class SWTGraphics implements ViewportGraphics {
     public static int toFontStyle( java.awt.Font f ){
         return AWTSWTImageUtils.toFontStyle(f);
     }
-    
+
     public void setFont(java.awt.Font f){
-        Font swtFont;  
-        
+        Font swtFont;
+
         int size = (f.getSize()* getDPI() ) / 72;
         int style = AWTSWTImageUtils.toFontStyle( f );
-                
+
         swtFont = new Font( gc.getDevice(),f.getFamily(), size, style );
         if (font != null){
             font.dispose();
@@ -604,7 +604,7 @@ public class SWTGraphics implements ViewportGraphics {
         font = swtFont;
         gc.setFont(font);
     }
-    
+
     public int getDPI() {
         return gc.getDevice().getDPI().y;
     }
@@ -625,7 +625,7 @@ public class SWTGraphics implements ViewportGraphics {
 
     /**
      * Converts SWT FontData to a AWT Font
-     * 
+     *
      * @param fontData the font data
      * @return the equivalent AWT font
      * @deprecated Use {@link AWTSWTImageUtils#swtFontToAwt(FontData)} instead
@@ -636,7 +636,7 @@ public class SWTGraphics implements ViewportGraphics {
 
     /**
      * Converts an AWTFont to a SWT Font
-     * 
+     *
      * @param font and AWT Font
      * @param fontRegistry
      * @return the equivalent SWT Font

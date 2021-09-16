@@ -56,3 +56,8 @@ jobs:
       with:
         name: udig-product.macosx.cocoa.x86_64
         path: ${{ github.workspace }}/features/org.locationtech.udig-product/target/products/org.locationtech.udig-product/macosx/cocoa/x86_64
+    - name: provide User documentation
+      uses: actions/upload-artifact@v2
+      with:
+        name: user-doc
+        path: ${{ github.workspace }}/docs/target/user/en/html

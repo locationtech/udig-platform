@@ -31,8 +31,8 @@ public class FeaturePanelTabDescriptor implements ITabItem {
      * tab.
      */
     public static final String TOP = "top";
-    
-	private final static String TAB_ERROR = "Tab in {0} must provide an id, label and category.";
+
+	private static final String TAB_ERROR = "Tab in {0} must provide an id, label and category.";
 
 	private String id;
 
@@ -49,10 +49,10 @@ public class FeaturePanelTabDescriptor implements ITabItem {
 	private String afterTab;
 
 	FeaturePanelEntry entry;
-	
+
 	/**
 	 * Constructor for TabDescriptor.
-	 * 
+	 *
 	 * @param configurationElement
 	 *            the configuration element for the tab descriptor.
 	 */
@@ -60,9 +60,9 @@ public class FeaturePanelTabDescriptor implements ITabItem {
 		if (entry == null) {
 		    throw new NullPointerException("Feature Panel Entry required");
 		}
-		id = entry.getId(); 
+		id = entry.getId();
 		label = entry.getName();
-		image = entry.getImage();			
+		image = entry.getImage();
 		indented = entry.isIndented();
 		category = entry.getCategory();
 		afterTab = entry.getAfterPanel();
@@ -81,7 +81,7 @@ public class FeaturePanelTabDescriptor implements ITabItem {
     }
 	/**
 	 * Get the unique identifier for the tab.
-	 * 
+	 *
 	 * @return the unique identifier for the tab.
 	 */
 	public String getId() {
@@ -90,7 +90,7 @@ public class FeaturePanelTabDescriptor implements ITabItem {
 
 	/**
 	 * Get the text label for the tab.
-	 * 
+	 *
 	 * @return the text label for the tab.
 	 */
 	public String getLabel() {
@@ -101,7 +101,7 @@ public class FeaturePanelTabDescriptor implements ITabItem {
 	 * Get the identifier of the tab after which this tab should be displayed.
 	 * When two or more tabs belong to the same category, they are sorted by the
 	 * after tab values.
-	 * 
+	 *
 	 * @return the identifier of the tab.
 	 */
 	public String getAfterTab() {
@@ -113,7 +113,7 @@ public class FeaturePanelTabDescriptor implements ITabItem {
 
 	/**
 	 * Get the category this tab belongs to.
-	 * 
+	 *
 	 * @return Get the category this tab belongs to.
 	 */
 	public String getCategory() {
@@ -129,7 +129,7 @@ public class FeaturePanelTabDescriptor implements ITabItem {
 
 	/**
 	 * Set the image for the tab.
-	 * 
+	 *
 	 * @param image
 	 *            the image for the tab.
 	 */
@@ -140,7 +140,7 @@ public class FeaturePanelTabDescriptor implements ITabItem {
 	/**
 	 * Set the indicator to determine if the tab should be displayed as
 	 * indented.
-	 * 
+	 *
 	 * @param indented
 	 *            <code>true</code> if the tab should be displayed as
 	 *            indented.
@@ -152,7 +152,7 @@ public class FeaturePanelTabDescriptor implements ITabItem {
 	/**
 	 * Set the indicator to determine if the tab should be the selected tab in
 	 * the list.
-	 * 
+	 *
 	 * @param selected
 	 *            <code>true</code> if the tab should be the selected tab in
 	 *            the list.
@@ -163,7 +163,7 @@ public class FeaturePanelTabDescriptor implements ITabItem {
 
 	/**
 	 * Set the text label for the tab.
-	 * 
+	 *
 	 * @param label
 	 *            the text label for the tab.
 	 */
@@ -173,7 +173,7 @@ public class FeaturePanelTabDescriptor implements ITabItem {
 
 	/**
 	 * Get the image for the tab.
-	 * 
+	 *
 	 * @return the image for the tab.
 	 */
 	public Image getImage() {
@@ -182,7 +182,7 @@ public class FeaturePanelTabDescriptor implements ITabItem {
 
 	/**
 	 * Determine if the tab is selected.
-	 * 
+	 *
 	 * @return <code>true</code> if the tab is selected.
 	 */
 	public boolean isSelected() {
@@ -191,7 +191,7 @@ public class FeaturePanelTabDescriptor implements ITabItem {
 
 	/**
 	 * Determine if the tab should be displayed as indented.
-	 * 
+	 *
 	 * @return <code>true</code> if the tab should be displayed as indented.
 	 */
 	public boolean isIndented() {
@@ -200,7 +200,7 @@ public class FeaturePanelTabDescriptor implements ITabItem {
 
 	/**
 	 * Get the text label for the tab.
-	 * 
+	 *
 	 * @return the text label for the tab.
 	 */
 	public String getText() {

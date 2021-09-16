@@ -60,7 +60,7 @@ import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
 
 /**
  * Test handler that provides a way to check behavior of {@link RenderMetricsSorter}.
- * 
+ *
  * @author Nikolaos Pringouris <nprigour@gmail.com>
  *
  */
@@ -91,9 +91,9 @@ public class RendererSetterHandler extends AbstractHandler {
     }
 
     /**
-     * Helper class to compute rate of an {@link AbstractRenderMetrics} metric. 
+     * Helper class to compute rate of an {@link AbstractRenderMetrics} metric.
      * see also {@link RenderMetricsSorter}
-     * 
+     *
      * @author Nikolaos Pringouris <nprigour@gmail.com>
      *
      */
@@ -108,7 +108,7 @@ public class RendererSetterHandler extends AbstractHandler {
             ILayer layer = metrics.getRenderContext().getLayer();
             final IStyleBlackboard style = layer.getStyleBlackboard();
 
-            //render metrics - 
+            //render metrics -
             //guarenteed to be between 0 & 1 - higher better so we subtract one to get make lower better
             double renderAppearanceMetric = 1 - metrics.getUserAppearanceMetric(style);
             double userAppearanceMetric = 1 - metrics.getRenderAppearanceMetric(style);
@@ -127,7 +127,7 @@ public class RendererSetterHandler extends AbstractHandler {
             if (diff == 0){
                 resolutionMetric = 0; //perfect match (lower is better)
             }else{
-                resolutionMetric = (diff / width);  //lower number 
+                resolutionMetric = (diff / width);  //lower number
             }
 
             int multiLayerMetric = 1 - rateMultiLayerRenderer(metrics);
@@ -145,7 +145,7 @@ public class RendererSetterHandler extends AbstractHandler {
         }
 
         private int rateScaleRange( AbstractRenderMetrics metrics ) {
-            Set<Range<Double>> scales =new HashSet<Range<Double>>(); 
+            Set<Range<Double>> scales =new HashSet<Range<Double>>();
             try {
                 scales =metrics.getValidScaleRanges();
             } catch (Exception e) {
@@ -177,7 +177,7 @@ public class RendererSetterHandler extends AbstractHandler {
     /**
      * Provides a Dialog that enables setting/resetting of preferred Renderer
      * and displays info of available metrics ratings.
-     *  
+     *
      * @author Nikolaos Pringouris <nprigour@gmail.com>
      *
      */
@@ -198,7 +198,7 @@ public class RendererSetterHandler extends AbstractHandler {
 
         /**
          * @param parentShell
-         * @param emf 
+         * @param emf
          */
         protected RendererControlDialog(Shell parentShell) {
             super(parentShell);
@@ -227,11 +227,11 @@ public class RendererSetterHandler extends AbstractHandler {
                     if (selection instanceof Layer) {
                         Layer layer = (Layer)selection;
                         sorter = new RenderMetricsSorterExt(Collections.singletonList(layer));
-                        outputText.setText(printRendererInfo(layer));	
+                        outputText.setText(printRendererInfo(layer));
 
                         Collection<AbstractRenderMetrics> metrics = getApplicableRendererMetrics(layer);
                         rendererCombo.setInput(metrics);
-                        
+
                         RenderContext context = layer.getMapInternal().getRenderManagerInternal().getRendererCreator().getRenderContext(layer);
                         IRenderer rend = layer.getMapInternal().getRenderManagerInternal().getRendererCreator().getRenderer(context);
                         for (AbstractRenderMetrics metric : metrics) {
@@ -272,7 +272,7 @@ public class RendererSetterHandler extends AbstractHandler {
 							layer.getStyleBlackboard().putString(RendererCreatorImpl.PREFERRED_RENDERER_ID, rendererMetric.getId());
 						}
                          */
-                        outputText.setText(printRendererInfo(layer));	
+                        outputText.setText(printRendererInfo(layer));
                         RendererControlDialog.this.setMessage("A close and reopen of the Map is needed in order changes to apply", MessageDialog.WARNING);
                     }
 
@@ -306,12 +306,11 @@ public class RendererSetterHandler extends AbstractHandler {
                         ApplicationGISInternal.getActiveMap().getBlackBoardInternal().remove(RendererCreatorImpl.PREFERRED_RENDERER_ID);
                     }
                     RendererControlDialog.this.setErrorMessage("A close and reopen of the Map is needed in order changes to apply");
-                    outputText.setText(printRendererInfo(layer));	
+                    outputText.setText(printRendererInfo(layer));
                 }
 
                 @Override
                 public void widgetDefaultSelected(SelectionEvent e) {
-                    // TODO Auto-generated method stub
 
                 }
 
@@ -332,12 +331,11 @@ public class RendererSetterHandler extends AbstractHandler {
                         layer.getStyleBlackboard().remove(RendererCreatorImpl.PREFERRED_RENDERER_ID);
                     }
                     RendererControlDialog.this.setErrorMessage("A close and reopen of the Map is needed in order changes to apply");
-                    outputText.setText(printRendererInfo(layer));	
+                    outputText.setText(printRendererInfo(layer));
                 }
 
                 @Override
                 public void widgetDefaultSelected(SelectionEvent e) {
-                    // TODO Auto-generated method stub
 
                 }
 
@@ -358,12 +356,11 @@ public class RendererSetterHandler extends AbstractHandler {
                         ApplicationGISInternal.getActiveMap().getBlackBoardInternal().remove(RendererCreatorImpl.LAST_RESORT_RENDERER_ID);
                     }
                     RendererControlDialog.this.setErrorMessage("A close and reopen of the Map is needed in order changes to apply");
-                    outputText.setText(printRendererInfo(layer));	
+                    outputText.setText(printRendererInfo(layer));
                 }
 
                 @Override
                 public void widgetDefaultSelected(SelectionEvent e) {
-                    // TODO Auto-generated method stub
 
                 }
 
@@ -384,12 +381,11 @@ public class RendererSetterHandler extends AbstractHandler {
                         layer.getStyleBlackboard().remove(RendererCreatorImpl.LAST_RESORT_RENDERER_ID);
                     }
                     RendererControlDialog.this.setErrorMessage("A close and reopen of the Map is needed in order changes to apply");
-                    outputText.setText(printRendererInfo(layer));	
+                    outputText.setText(printRendererInfo(layer));
                 }
 
                 @Override
                 public void widgetDefaultSelected(SelectionEvent e) {
-                    // TODO Auto-generated method stub
 
                 }
 
@@ -408,12 +404,11 @@ public class RendererSetterHandler extends AbstractHandler {
                     ApplicationGISInternal.getActiveMap().getBlackBoardInternal().remove(RendererCreatorImpl.LAST_RESORT_RENDERER_ID);
                     ApplicationGISInternal.getActiveMap().getBlackBoardInternal().remove(RendererCreatorImpl.PREFERRED_RENDERER_ID);
                     RendererControlDialog.this.setErrorMessage("A close and reopen of the Map is needed in order changes to apply");
-                    outputText.setText(printRendererInfo(layer));   
+                    outputText.setText(printRendererInfo(layer));
                 }
 
                 @Override
                 public void widgetDefaultSelected(SelectionEvent e) {
-                    // TODO Auto-generated method stub
 
                 }
 
@@ -466,9 +461,9 @@ public class RendererSetterHandler extends AbstractHandler {
             buf.append("----------------------------------").append("\n");
             return buf.toString();
         }
-        
+
         /**
-         * 
+         *
          * @param layer
          */
         private Collection<AbstractRenderMetrics> getApplicableRendererMetrics(Layer layer) {
@@ -476,21 +471,21 @@ public class RendererSetterHandler extends AbstractHandler {
         }
 
         /**
-         * 
+         *
          * @param layer
          */
         private Collection<AbstractRenderMetrics> getNotApplicableRendererMetrics(Layer layer) {
             return getRendererMetrics(layer, false);
         }
-        
+
         /**
-         * 
+         *
          * @param layer
          */
         private Collection<AbstractRenderMetrics> getRendererMetrics(Layer layer, boolean applicable) {
             Collection<AbstractRenderMetrics> result = new ArrayList<AbstractRenderMetrics>();
             RenderContext context = layer.getMapInternal().getRenderManagerInternal().getRendererCreator().getRenderContext(layer);
-            
+
             Collection<AbstractRenderMetrics>  metrics = layer.getMapInternal().getRenderManagerInternal().getRendererCreator().getAvailableRendererMetrics(layer);
             int order = 1;
             for (AbstractRenderMetrics metric : metrics) {

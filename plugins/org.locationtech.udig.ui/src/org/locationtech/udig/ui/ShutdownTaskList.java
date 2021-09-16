@@ -28,13 +28,13 @@ import org.eclipse.ui.IWorkbenchListener;
  * This class allows a plugin to add an {@link IShutdownTask} object that will be run when uDig
  * shuts down. It allows a single place for shutdown tasks such as saving the catalog or projects or
  * anything else.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public class ShutdownTaskList implements IWorkbenchListener {
 
-    private final static ShutdownTaskList INSTANCE = new ShutdownTaskList();
+    private static final ShutdownTaskList INSTANCE = new ShutdownTaskList();
     private Collection<PostTask> postShutdownTasks = new LinkedList<PostTask>();
     private Collection<PreTask> preShutdownTasks = new LinkedList<PreTask>();
 
@@ -72,7 +72,7 @@ public class ShutdownTaskList implements IWorkbenchListener {
                         }
                     }
                 }
-                
+
             });
         } catch (InvocationTargetException e) {
             throw (RuntimeException) new RuntimeException().initCause(e);
@@ -89,16 +89,16 @@ public class ShutdownTaskList implements IWorkbenchListener {
         allowShutdown[0] = true;
 
         workbench.getActiveWorkbenchWindow().getShell().setVisible(false);
-        
+
         final Display display=Display.getCurrent();
         try {
             dialog.run(true, forced, new IRunnableWithProgress(){
 
                 public void run( IProgressMonitor monitor2 ) throws InvocationTargetException,
                         InterruptedException {
-                    
+
                     IProgressMonitor monitor=new OffThreadProgressMonitor(monitor2, display);
-                    
+
                     int totalsteps = 0;
                     for( PreTask task : preShutdownTasks ) {
                         try {
@@ -139,7 +139,7 @@ public class ShutdownTaskList implements IWorkbenchListener {
 
         if( !allowShutdown[0] )
             workbench.getActiveWorkbenchWindow().getShell().setVisible(true);
-        
+
         return allowShutdown[0];
     }
 
@@ -152,10 +152,10 @@ public class ShutdownTaskList implements IWorkbenchListener {
     }
 
     /**
-     *  Returns the shared instance for the application.  In most cases this method should 
+     *  Returns the shared instance for the application.  In most cases this method should
      * be used to get an instance of ShutdownTaskList instead of creating a new instance.
      *
-     * @return The shared instance of ShutdownTaskList 
+     * @return The shared instance of ShutdownTaskList
      */
     public static ShutdownTaskList instance() {
         return INSTANCE;
@@ -163,7 +163,7 @@ public class ShutdownTaskList implements IWorkbenchListener {
 
     /**
      * Adds a task to the list of tasks to be run after shutdown.
-     * 
+     *
      * @see #postShutdown(IWorkbench)
      * @param task the task to be ran. The ordering or the tasks ran is random so make sure there
      *        are no order dependencies between tasks
@@ -174,7 +174,7 @@ public class ShutdownTaskList implements IWorkbenchListener {
 
     /**
      * Adds a task to the list of tasks to be run before shutdown.
-     * 
+     *
      * @see #postShutdown(IWorkbench)
      * @param task the task to be ran. The ordering or the tasks ran is random so make sure there
      *        are no order dependencies between tasks
@@ -190,7 +190,7 @@ public class ShutdownTaskList implements IWorkbenchListener {
         postShutdownTasks.remove(new PostTask(shutdownTask) );
     }
 
-    
+
     public static class PostTask {
 
         int steps;
@@ -224,8 +224,8 @@ public class ShutdownTaskList implements IWorkbenchListener {
                 return false;
             return true;
         }
-        
-        
+
+
     }
     public static class PreTask {
 
@@ -260,7 +260,7 @@ public class ShutdownTaskList implements IWorkbenchListener {
                 return false;
             return true;
         }
-        
-        
+
+
     }
 }

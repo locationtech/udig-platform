@@ -1,49 +1,42 @@
 /**
- * 
+ *
  */
 package org.locationtech.udig.catalog.tests.ui.workflow;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public class DummyMonitor implements IProgressMonitor {
-		public void beginTask(String name, int totalWork) {
-			// TODO Auto-generated method stub
-			
-		}
 
-		public void done() {
-			// TODO Auto-generated method stub
-			
-		}
+	public void beginTask(String name, int totalWork) {
 
-		public void internalWorked(double work) {
-			// TODO Auto-generated method stub
-			
-		}
+	}
 
-		public boolean isCanceled() {
-			// TODO Auto-generated method stub
-			return false;
-		}
+	public void done() {
 
-		public void setCanceled(boolean value) {
-			// TODO Auto-generated method stub
-			
-		}
+	}
 
-		public void setTaskName(String name) {
-			// TODO Auto-generated method stub
-			
-		}
+	public void internalWorked(double work) {
 
-		public void subTask(String name) {
-			// TODO Auto-generated method stub
-			
-		}
+	}
 
-		public void worked(int work) {
-			// TODO Auto-generated method stub
-			
-		}
-	
+	public boolean isCanceled() {
+		return false;
+	}
+
+	public void setCanceled(boolean value) {
+
+	}
+
+	public void setTaskName(String name) {
+
+	}
+
+	public void subTask(String name) {
+
+	}
+
+	public void worked(int work) {
+
+	}
+
 }

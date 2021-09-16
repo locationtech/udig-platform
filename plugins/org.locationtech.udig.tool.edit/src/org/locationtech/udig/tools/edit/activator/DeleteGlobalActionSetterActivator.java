@@ -11,6 +11,14 @@ package org.locationtech.udig.tools.edit.activator;
 
 import java.util.Iterator;
 
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IKeyBindingService;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartSite;
+import org.eclipse.ui.actions.ActionFactory;
 import org.locationtech.udig.project.command.UndoableComposite;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
@@ -28,35 +36,27 @@ import org.locationtech.udig.tools.edit.support.EditGeom;
 import org.locationtech.udig.tools.edit.support.Point;
 import org.locationtech.udig.tools.edit.support.PrimitiveShape;
 
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.ui.IActionBars2;
-import org.eclipse.ui.IKeyBindingService;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchPartSite;
-import org.eclipse.ui.actions.ActionFactory;
-
 /**
  * Sets the Delete Global handler so that the selected vertices are deleted when the delete action
  * is pressed.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
 public class DeleteGlobalActionSetterActivator implements Activator {
-    
+
     private IAction oldAction;
     private DeleteVertexHandler deleteVertexHandler;
 
-    public void activate( EditToolHandler handler ) {
-        IActionBars2 actionBars = handler.getContext().getActionBars();
+    @Override
+    public void activate(EditToolHandler handler) {
+        IActionBars actionBars = handler.getContext().getActionBars();
         if( actionBars==null )
             return;
-        IWorkbenchPart part=(IWorkbenchPart) ApplicationGISInternal.getActiveEditor();
-        
+        IWorkbenchPart part= ApplicationGISInternal.getActiveEditor();
+
         if( part == null ) return;
-        
+
         oldAction=ApplicationGIS.getToolManager().getDELETEAction();
         IKeyBindingService keyBindingService = part.getSite().getKeyBindingService();
         if( oldAction!=null )
@@ -73,35 +73,38 @@ public class DeleteGlobalActionSetterActivator implements Activator {
         keyBindingService.registerAction(deleteVertexHandler);
     }
 
-    public void deactivate( EditToolHandler handler ) {
-        IActionBars2 actionBars = handler.getContext().getActionBars();
+    @Override
+    public void deactivate(EditToolHandler handler) {
+        IActionBars actionBars = handler.getContext().getActionBars();
         if( actionBars==null || oldAction==null ){
             return;
         }
         IWorkbenchPart part=ApplicationGISInternal.getActiveEditor();
-        
+
         if( part == null ) return;
-        
+
         IWorkbenchPartSite site = part.getSite();
-        
+
         IKeyBindingService keyBindingService = site.getKeyBindingService();
         keyBindingService.unregisterAction(deleteVertexHandler);
         deleteVertexHandler=null;
-        
+
         ApplicationGIS.getToolManager().setDELETEAction(oldAction,part);
         actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), oldAction);
         if( oldAction!=null ){
             keyBindingService.registerAction(oldAction);
         }
         oldAction=null;
-        
+
         actionBars.updateActionBars();
     }
 
+    @Override
     public void handleActivateError( EditToolHandler handler, Throwable error ) {
         EditPlugin.log("", error); //$NON-NLS-1$
     }
 
+    @Override
     public void handleDeactivateError( EditToolHandler handler, Throwable error ) {
         EditPlugin.log("", error); //$NON-NLS-1$
     }
@@ -147,5 +150,5 @@ public class DeleteGlobalActionSetterActivator implements Activator {
             return true;
         }
     }
-    
+
 }

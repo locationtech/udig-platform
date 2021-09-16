@@ -18,16 +18,17 @@ import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * Allows SimpleFeatureType schemas to be edited.
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
 public class SchemaEditor extends DialogCellEditor {
 
     private SimpleFeatureType type;
+
     /**
      * Creates a new instance of SchemaEditor
-     * 
+     *
      * @param parent The parent of this editor widget
      * @param type The feature type to edit.
      */
@@ -35,12 +36,12 @@ public class SchemaEditor extends DialogCellEditor {
         super(parent);
         this.type = type;
     }
+
     /**
      * @see org.eclipse.jface.viewers.DialogCellEditor#openDialogBox(org.eclipse.swt.widgets.Control)
      */
     protected Object openDialogBox( Control cellEditorWindow ) {
         type.getName().getLocalPart(); // does nothing yet.
-        // TODO Auto-generated method stub
         return null;
     }
 }

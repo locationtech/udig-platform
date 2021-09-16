@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.locationtech.udig.info.tests;
 
@@ -27,7 +27,7 @@ public class TestMap implements IMap {
 	private IRenderManager renderManager = new TestRenderManager();
 	private IViewportModel viewportModel;
 	private List<ILayer> layers;
-	
+
 	public TestMap() {
 	}
 
@@ -44,53 +44,43 @@ public class TestMap implements IMap {
 	}
 
 	public void addMapCompositionListener(IMapCompositionListener listener) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void addMapListener(IMapListener listener) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void executeASyncWithoutUndo(MapCommand command) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void executeSyncWithoutUndo(MapCommand command) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	public String getAbstract() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public double getAspectRatio(IProgressMonitor monitor) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public IBlackboard getBlackboard() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	// public ReferencedEnvelope getBounds(IProgressMonitor monitor) throws IOException {
 	public ReferencedEnvelope getBounds(IProgressMonitor monitor) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public IEditManager getEditManager() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public URI getID() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -107,23 +97,19 @@ public class TestMap implements IMap {
 	}
 
 	public void removeMapCompositionListener(IMapCompositionListener listener) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void removeMapListener(IMapListener listener) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void sendCommandASync(MapCommand command) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void sendCommandSync(MapCommand command) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	public String getName() {
@@ -131,26 +117,22 @@ public class TestMap implements IMap {
 	}
 
 	public IProject getProject() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public <E> List<E> getElements(Class<E> type) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<?> getElements() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public LayerFactory getLayerFactory() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }

@@ -27,22 +27,22 @@ import org.eclipse.ui.PartInitException;
 
 /**
  * Country Feature Panel used to show the use of AttributeFields.
- * 
+ *
  * @since 1.2.0
  */
 public class CountryFeaturePanel3 extends FeaturePanel {
     private static final String CURR_TYPE = "CURR_TYPE";
 
     /** Attribute name for attribute GMI_CNTRY */
-    public final static String GMI_CNTRY = "GMI_CNTRY";
+    public static final String GMI_CNTRY = "GMI_CNTRY";
 
     /** Attribute name for attribute REGION */
-    public final static String COLOR_MAP = "COLOR_MAP";
+    public static final String COLOR_MAP = "COLOR_MAP";
 
     /** Attribute name for attribute NAME */
-    public final static String CNTRY_NAME = "CNTRY_NAME";
+    public static final String CNTRY_NAME = "CNTRY_NAME";
 
-    public final static Object[] COLOR_MAP_OPTS = new Object[]{"1", "2", "3", "4", "5", "6", "7",
+    public static final Object[] COLOR_MAP_OPTS = new Object[]{"1", "2", "3", "4", "5", "6", "7",
             "8"};
 
     private StringAttributeField currType;
@@ -92,7 +92,7 @@ public class CountryFeaturePanel3 extends FeaturePanel {
             AttributeField field = (AttributeField) event.getSource();
             String name = field.getAttributeName();
             boolean isValid = (Boolean) event.getNewValue();
-            
+
             if (CURR_TYPE.equals( name )) {
                 // if the curr_type field is not valid; disable currency code
                 currCode.setEnabled(isValid);

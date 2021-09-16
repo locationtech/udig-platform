@@ -1,5 +1,5 @@
-Resource to Shapefile Wizard
-############################
+All Features to Shapefile Wizard
+################################
 
 Used to export a resource (often selected in the Catalog view) to a shapefile. This wizard is
 typically used to export contents from a remote WFS or Spatial database local storage.
@@ -30,8 +30,8 @@ List of selected resources:
    contents into the requested projection. The projection information will be stored in the
    resulting **prj** file.
 -  Charset: Shapefile charset encoding; you can control the encoding of string fields during
-   export. The proposed value is controlled by the startup system property **shp.encoding** or if not 
-   specified by the preference value **General-->udig UI-->Default Character Set**      
+   export. The proposed value is controlled by the startup system property **shp.encoding** or if not
+   specified by the preference value **General-->udig UI-->Default Character Set**
 
 **Related concepts**
 

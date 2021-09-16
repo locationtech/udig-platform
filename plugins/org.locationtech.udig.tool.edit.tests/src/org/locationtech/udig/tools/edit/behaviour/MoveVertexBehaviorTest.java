@@ -46,16 +46,16 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 
 public class MoveVertexBehaviorTest {
-    final static int BUTTON1=MapMouseEvent.BUTTON1;
-    final static int BUTTON2=MapMouseEvent.BUTTON2;
-    final static int NONE=MapMouseEvent.NONE;
-    final static int SHIFT=MapMouseEvent.SHIFT_DOWN_MASK;
-    final static int CTRL=MapMouseEvent.CTRL_DOWN_MASK;
-    final static TestMapDisplay DISPLAY = new TestMapDisplay(new Dimension(500,500));
+    static final int BUTTON1=MapMouseEvent.BUTTON1;
+    static final int BUTTON2=MapMouseEvent.BUTTON2;
+    static final int NONE=MapMouseEvent.NONE;
+    static final int SHIFT=MapMouseEvent.SHIFT_DOWN_MASK;
+    static final int CTRL=MapMouseEvent.CTRL_DOWN_MASK;
+    static final TestMapDisplay DISPLAY = new TestMapDisplay(new Dimension(500,500));
     private MoveVertexBehaviour mode;
     private TestHandler handler;
     private EditBlackboard editBlackboard;
-    
+
     @Before
     public void setUp() throws Exception {
         mode=new MoveVertexBehaviour();
@@ -66,7 +66,7 @@ public class MoveVertexBehaviorTest {
 
         MapMouseEvent event=new MapMouseEvent( DISPLAY, 10,10,NONE,BUTTON1, BUTTON1 );
         assertFalse(mode.isValid(handler, event, EventType.DRAGGED));
-        
+
         editBlackboard = handler.getEditBlackboard();
         EditGeom currentGeom = editBlackboard.getGeoms().get(0);
         editBlackboard.addPoint(10,10, currentGeom.getShell());
@@ -74,7 +74,7 @@ public class MoveVertexBehaviorTest {
         editBlackboard.addPoint(30,10, currentGeom.getShell());
         handler.setCurrentShape(currentGeom.getShell());
     }
-    
+
     /*
      * Test method for 'org.locationtech.udig.tools.edit.mode.MoveVertexMode.isValid(EditToolHandler, MapMouseEvent, EventType)'
      */
@@ -84,40 +84,40 @@ public class MoveVertexBehaviorTest {
         handler.getMouseTracker().setDragStarted(Point.valueOf(10,10));
 
         MapMouseEvent event = new MapMouseEvent( DISPLAY, 10,10,NONE,BUTTON1, BUTTON1 );
-        assertTrue(mode.isValid(handler, event, EventType.DRAGGED));      
-        
+        assertTrue(mode.isValid(handler, event, EventType.DRAGGED));
+
         handler.setCurrentState(EditState.MODIFYING);
         event=new MapMouseEvent( DISPLAY, 10,10,NONE,BUTTON1, BUTTON1 );
-        assertTrue(mode.isValid(handler, event, EventType.DRAGGED));      
-        
+        assertTrue(mode.isValid(handler, event, EventType.DRAGGED));
+
         // button isn't button1
         event=new MapMouseEvent( DISPLAY, 10,10,NONE, BUTTON2, BUTTON1 );
-        assertFalse(mode.isValid(handler, event, EventType.DRAGGED));        
-        
+        assertFalse(mode.isValid(handler, event, EventType.DRAGGED));
+
         // not dragged event type
         event=new MapMouseEvent( DISPLAY, 10,10,NONE,BUTTON1, BUTTON1 );
-        assertFalse(mode.isValid(handler, event, EventType.RELEASED));        
+        assertFalse(mode.isValid(handler, event, EventType.RELEASED));
 
         // a modifier is down
         event=new MapMouseEvent( DISPLAY, 10,10, CTRL, BUTTON1, BUTTON1 );
         assertFalse(mode.isValid(handler, event, EventType.DRAGGED));
-        
+
         // drag did not start over a selected vertex
         handler.getMouseTracker().setDragStarted(Point.valueOf(0,10));
         event=new MapMouseEvent( DISPLAY, 10,10, NONE, BUTTON1, BUTTON1 );
         assertFalse(mode.isValid(handler, event, EventType.DRAGGED));
 
         handler.getMouseTracker().setDragStarted(Point.valueOf(10,10));
-        
+
         // state is not MODIFIED or NONE
         handler.setCurrentState(EditState.CREATING);
         event=new MapMouseEvent( DISPLAY, 10,10, NONE, BUTTON1, BUTTON1 );
         assertFalse(mode.isValid(handler, event, EventType.DRAGGED));
-        
-        
+
+
         handler.setCurrentState(EditState.MODIFYING);
         assertTrue(mode.isValid(handler, event, EventType.DRAGGED));
-           
+
     }
 
     /*
@@ -135,7 +135,7 @@ public class MoveVertexBehaviorTest {
         }catch (Exception e) {
             // good behaviour because mode only works on EventType.DRAGGED
         }
-        
+
         handler.getMouseTracker().setDragStarted(Point.valueOf(10,10));
         mode.getCommand(handler, event, EventType.DRAGGED);
         assertEquals(1, editBlackboard.getCoords(10,15).size());
@@ -149,19 +149,19 @@ public class MoveVertexBehaviorTest {
         mode.getCommand(handler, event, EventType.DRAGGED);
         assertEquals(1, editBlackboard.getCoords(10,10).size());
         assertEquals(0, editBlackboard.getCoords(10,15).size());
-        
+
         //move 2 points
         handler.getEditBlackboard().selectionAdd(Point.valueOf(20,10));
         assertEquals(2, handler.getEditBlackboard().getSelection().size());
-        
+
         handler.unlock(mode);
         mode=new MoveVertexBehaviour();
-        
+
         handler.getMouseTracker().setDragStarted(Point.valueOf(10,10));
         event=new MapMouseEvent( DISPLAY, 10,15,NONE,BUTTON1, BUTTON1 );
-        
+
         mode.getCommand(handler, event, EventType.DRAGGED);
-        
+
         assertEquals(1, editBlackboard.getCoords(10,15).size());
         assertEquals(0, editBlackboard.getCoords(10,10).size());
         assertEquals(1, editBlackboard.getCoords(20,15).size());
@@ -171,8 +171,8 @@ public class MoveVertexBehaviorTest {
         mode.getCommand(handler, event, EventType.DRAGGED);
         assertEquals(1, editBlackboard.getCoords(10,10).size());
         assertEquals(0, editBlackboard.getCoords(10,15).size());
-        
-        
+
+
     }
 
     @Test
@@ -186,22 +186,22 @@ public class MoveVertexBehaviorTest {
         mode.getCommand(handler, event, EventType.DRAGGED);
         assertEquals(1, bb.getCoords(10,11).size());
         assertTrue(handler.getCurrentShape().hasVertex(Point.valueOf(10,11)));
-        
+
         event = new MapMouseEvent( DISPLAY, 10,12,NONE,BUTTON1, BUTTON1 );
         mode.getCommand(handler, event, EventType.DRAGGED);
         assertEquals(1, bb.getCoords(10,12).size());
         assertTrue(handler.getCurrentShape().hasVertex(Point.valueOf(10,12)));
-        
+
         event = new MapMouseEvent( DISPLAY, 10,13,NONE,BUTTON1, BUTTON1 );
         mode.getCommand(handler, event, EventType.DRAGGED);
         assertEquals(1, bb.getCoords(10,13).size());
         assertTrue(handler.getCurrentShape().hasVertex(Point.valueOf(10,13)));
-        
+
         event = new MapMouseEvent( DISPLAY, 10,14,NONE,BUTTON1, BUTTON1 );
         mode.getCommand(handler, event, EventType.DRAGGED);
         assertEquals(1, bb.getCoords(10,14).size());
         assertTrue(handler.getCurrentShape().hasVertex(Point.valueOf(10,14)));
-        
+
         event = new MapMouseEvent( DISPLAY, 10,15,NONE,BUTTON1, BUTTON1 );
         mode.getCommand(handler, event, EventType.DRAGGED);
         assertEquals(1, bb.getCoords(10,15).size());
@@ -211,7 +211,7 @@ public class MoveVertexBehaviorTest {
         assertEquals(1, editBlackboard.getCoords(20,15).size());
         assertEquals(0, editBlackboard.getCoords(10,10).size());
         assertEquals(0, editBlackboard.getCoords(20,10).size());
-        
+
         //test undo first button must release so the Position tracker will execute:
         event=new MapMouseEvent( DISPLAY, 10,10,NONE,BUTTON1, BUTTON1 );
         EventBehaviour tracker = findPositionTracker();
@@ -221,40 +221,40 @@ public class MoveVertexBehaviorTest {
         assertEquals(1, editBlackboard.getCoords(20,15).size());
         assertEquals(0, editBlackboard.getCoords(10,10).size());
         assertEquals(0, editBlackboard.getCoords(20,10).size());
-        
+
         ((CommandManager)((Map)handler.getContext().getMap()).getCommandStack()).undo(false);
-        
+
         assertEquals(0, editBlackboard.getCoords(10,15).size());
         assertEquals(0, editBlackboard.getCoords(20,15).size());
         assertEquals(1, editBlackboard.getCoords(10,10).size());
         assertEquals(1, editBlackboard.getCoords(20,10).size());
-        
+
         ((CommandManager)((Map)handler.getContext().getMap()).getCommandStack()).redo(false);
-        
+
         assertEquals(1, editBlackboard.getCoords(10,15).size());
         assertEquals(1, editBlackboard.getCoords(20,15).size());
         assertEquals(0, editBlackboard.getCoords(10,10).size());
         assertEquals(0, editBlackboard.getCoords(20,10).size());
     }
-    
+
     @Ignore
     @Test
     public void testPostSnapping() throws Exception {
         EditGeom newGeom = editBlackboard.newGeom("id", null); //$NON-NLS-1$
         editBlackboard.addPoint(30,20, newGeom.getShell());
         editBlackboard.addPoint(30,40, newGeom.getShell());
-        
+
         PreferenceUtil.instance().setSnapBehaviour(SnapBehaviour.ALL_LAYERS);
         handler.getTestEditBlackboard().util.setSnappingRadius(12);
-        
+
         editBlackboard.selectionAdd(Point.valueOf(10,10));
-        
+
         handler.getMouseTracker().setDragStarted(Point.valueOf(10,12));
         MapMouseEvent event = new MapMouseEvent( DISPLAY, 10,13,NONE,BUTTON1, BUTTON1 );
         mode.getCommand(handler, event, EventType.DRAGGED);
 
         assertEquals(1, editBlackboard.getCoords(10,13).size());
-        
+
         event = new MapMouseEvent( DISPLAY, 40,10,NONE,BUTTON1, BUTTON1 );
         mode.getCommand(handler, event, EventType.DRAGGED);
         handler.handleEvent(event, EventType.RELEASED);
@@ -277,18 +277,18 @@ public class MoveVertexBehaviorTest {
         event = new MapMouseEvent( DISPLAY, pointOnScreen.x+5,pointOnScreen.y,NONE,BUTTON1, BUTTON1 );
         mode.getCommand(handler, event, EventType.DRAGGED);
         handler.handleEvent(event, EventType.RELEASED);
-        
+
         assertEquals(1, editBlackboard.getCoords(pointOnScreen.x,pointOnScreen.y).size());
         assertEquals(1, editBlackboard.getCoords(30,20).size());
         assertEquals(t, editBlackboard.getCoords(pointOnScreen.x, pointOnScreen.y).get(0));
-        
+
     }
-    
+
     @Test
     public void testSnappingDuringDragging() throws Exception {
         editBlackboard.selectionAdd(Point.valueOf(10,10));
         editBlackboard.selectionAdd(Point.valueOf(20,10));
-        
+
         handler.getMouseTracker().setDragStarted(Point.valueOf(10,12));
         MapMouseEvent event = new MapMouseEvent( DISPLAY, 10,13,NONE,BUTTON1, BUTTON1 );
         mode.getCommand(handler, event, EventType.DRAGGED);
@@ -298,7 +298,7 @@ public class MoveVertexBehaviorTest {
         assertEquals(0, editBlackboard.getCoords(10,10).size());
         assertEquals(0, editBlackboard.getCoords(20,10).size());
     }
-    
+
     private EventBehaviour findPositionTracker( ){
         List<EventBehaviour> behaviours = handler.getBehaviours();
         for( EventBehaviour behaviour : behaviours ) {
@@ -313,20 +313,20 @@ public class MoveVertexBehaviorTest {
     public void testDragAcrossAnotherVertex() throws Exception {
         editBlackboard.selectionAdd(Point.valueOf(10,10));
 
-        
+
         handler.getMouseTracker().setDragStarted(Point.valueOf(10,12));
         MapMouseEvent event = new MapMouseEvent( DISPLAY, 12,10,NONE,BUTTON1, BUTTON1 );
         mode.getCommand(handler, event, EventType.DRAGGED);
-        
+
         assertEquals(1, editBlackboard.getCoords(12,10).size());
         assertEquals(0, editBlackboard.getCoords(10,10).size());
 
         event = new MapMouseEvent( DISPLAY, 20,10,NONE,BUTTON1, BUTTON1 );
         mode.getCommand(handler, event, EventType.DRAGGED);
-        
+
         assertEquals(2, editBlackboard.getCoords(20,10).size());
         assertEquals(0, editBlackboard.getCoords(12,10).size());
-        
+
         event = new MapMouseEvent( DISPLAY, 20,15,NONE,BUTTON1, BUTTON1 );
         mode.getCommand(handler, event, EventType.DRAGGED);
         assertEquals(1, editBlackboard.getCoords(20,10).size());
@@ -336,27 +336,27 @@ public class MoveVertexBehaviorTest {
         assertTrue( handler.getCurrentShape().hasVertex(Point.valueOf(20,10)));
 //        assertTrue( handler.getCurrentShape().hasVertex(Point.valueOf(20,10), handler.getEditBlackboard().getCoords(20,10).get(0)));
 //        assertTrue( handler.getCurrentShape().hasVertex(Point.valueOf(20,15), handler.getEditBlackboard().getCoords(20,15).get(0)));
-        
+
     }
-    
+
     @Test
     public void testSnapToVertex() throws Exception{
 
         MapMouseEvent event;
         //drag close to point and it should snap to a coord in point.
-        
+
         assertEquals(1, editBlackboard.getCoords(20,10).size());
         handler.getEditBlackboard().selectionClear();
         handler.getEditBlackboard().selectionAdd(Point.valueOf(10,10));
         handler.getMouseTracker().setDragStarted(Point.valueOf(10,10));
         event=new MapMouseEvent( DISPLAY, 13,10,NONE,BUTTON1, BUTTON1 );
         mode.getCommand(handler, event, EventType.DRAGGED);
-        
+
         event=new MapMouseEvent( DISPLAY, 18,10,NONE,BUTTON1, BUTTON1 );
         mode.getCommand(handler, event, EventType.DRAGGED);
-        
+
         handler.handleEvent(event, EventType.RELEASED);
-        
+
         assertEquals(2, editBlackboard.getCoords(20,10).size());
         assertEquals(0, editBlackboard.getCoords(10,10).size());
     }

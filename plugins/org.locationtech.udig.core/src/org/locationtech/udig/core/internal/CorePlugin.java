@@ -28,7 +28,7 @@ import org.osgi.framework.BundleContext;
 
 /**
  * PlugIn for org.locationtech.udig.core, used by utility classes to access workbench log.
- * 
+ *
  * @author jones
  * @since 0.3
  */
@@ -38,12 +38,12 @@ public class CorePlugin extends Plugin {
     public static final String ID = "org.locationtech.udig.core"; //$NON-NLS-1$
     private static CorePlugin plugin;
 
-    
-    
+
+
     /**
      * A url stream handler that delegates to the default one but if it doesn't work then it returns null as the stream.
      */
-    public final static URLStreamHandler RELAXED_HANDLER=new URLStreamHandler(){
+    public static final URLStreamHandler RELAXED_HANDLER=new URLStreamHandler(){
 
         @Override
         protected URLConnection openConnection( URL u ) throws IOException {
@@ -55,7 +55,7 @@ public class CorePlugin extends Plugin {
             }
         }
     };
-    
+
     /**
      * creates a plugin instance
      */
@@ -70,7 +70,7 @@ public class CorePlugin extends Plugin {
     public void start( BundleContext context ) throws Exception {
         super.start(context);
     }
-	
+
     /**
      * Create a URL from the provided spec; willing to create
      * a URL even if the spec does not have a registered handler.
@@ -106,7 +106,7 @@ public class CorePlugin extends Plugin {
 
     /**
      * Returns the system created plugin object
-     * 
+     *
      * @return the plugin object
      */
     public static CorePlugin getDefault() {
@@ -127,7 +127,7 @@ public class CorePlugin extends Plugin {
      * it attempts to load it as a File and then convert it. If that fails, it ignores it. It will
      * not insert a null into the returning List, so the size of the List may be smaller than the
      * size of <code>strings</code>
-     * 
+     *
      * @param strings an array of strings, each to be converted to a URL
      * @return a List of URLs, in the same order as the array
      */
@@ -148,7 +148,7 @@ public class CorePlugin extends Plugin {
         }
         return urls;
     }
-    
+
     /**
      * Writes an info log in the plugin's log.
      * <p>
@@ -165,13 +165,13 @@ public class CorePlugin extends Plugin {
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:
-     * 
+     *
      * <pre><code>
      * private static final String RENDERING = &quot;org.locationtech.udig.project/render/trace&quot;;
      * if (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
      *     System.out.println(&quot;your message here&quot;);
      * }
-     * 
+     *
      */
     public static void trace( String message, Throwable e ) {
         if (getDefault().isDebugging()) {
@@ -189,12 +189,12 @@ public class CorePlugin extends Plugin {
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
      * </p>
-     * 
+     *
      * @param trace currently only RENDER is defined
      */
     public static boolean isDebugging( final String trace ) {
         return getDefault().isDebugging()
-                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
+                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
 
     public static boolean isDeveloping() {

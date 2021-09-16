@@ -37,7 +37,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * Default implementation
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -329,9 +329,9 @@ public class ProjectImpl extends EObjectImpl implements Project {
     }
 
     /**
-     * Creates a new Resource from map.  The new Resource will be in the same directory as the project's
-     * resource.  The Resource will start with map appended with a number that will make the name unique.
-     * The resource will end in .umap.
+     * Creates a new Resource from map.  The new Resource will be in the same directory as the
+     * project's resource. The Resource will start with map appended with a number that will make
+     * the name unique. The resource will end in .umap.
      */
     private void createResourceAndAddElement(Project value, ProjectElement projectElement) {
         if (projectElement == null || projectElement.eIsProxy())
@@ -364,7 +364,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
 
     private static String findProjectResourcePath(URI projectURI) {
         String projectPath = projectURI.toFileString();
-        if (projectURI.hasAuthority()) { //remove '//' character (added in URI from emf version 2.9 and onward
+        if (projectURI.hasAuthority()) { // remove '//' character (added in URI from emf version 2.9
+                                         // and onward
             projectPath = StringUtils.removeStart(projectPath, "//");
         }
         projectPath = projectPath.substring(0, projectPath.lastIndexOf(File.separatorChar));
@@ -440,7 +441,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
         String extension = projectElement.getFileExtension();
         if (!extension.startsWith(".")) //$NON-NLS-1$
             extension = "." + extension; //$NON-NLS-1$
-        String tempPath = "file://" + projectPath + File.separator + resourceName + extension; //$NON-NLS-1$  
+        String tempPath = "file://" + projectPath + File.separator + resourceName + extension; //$NON-NLS-1$
         uri = URI.createURI(tempPath);
         return uri;
     }

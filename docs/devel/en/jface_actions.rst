@@ -1,7 +1,7 @@
 JFace Actions
 =============
 
-The default wizard provided by eclipse will let you add to the top-level toolbar or menu system 
+The default wizard provided by eclipse will let you add to the top-level toolbar or menu system
 using the concept of Actions and ActionSets.
 
 Action
@@ -13,7 +13,7 @@ within your plugin.
 .. code-block:: java
 
     newAction = new Action("New...") {
-        public void run() { 
+        public void run() {
             registerDatasource();
         }
     };
@@ -32,11 +32,11 @@ ActionSet
 You can contributing actions via action sets. An action set is a mechanism that allows a plug-in to
 contribute menus, menu items, and toolbar items to the main menu bar and toolbar of the Workbench
 window. It is important to understand what action sets are meant to be used for. An action set
-should contribute common actions which are not specific to any particular view or editor. The class defined 
-in the plugin ActionSets extension point must implement **org.eclipse.ui.IWorkbenchWindowActionDelegate** 
-interface if the pulldown attribute is false, or **org.eclipse.ui.IWorkbenchWindowPulldownDelegate** 
-interface if the pulldown attribute is true. This delegate class can control the enabled/disabled state 
-of the action when the selection changes, but only once the plug-in is loaded. Until then, the 
+should contribute common actions which are not specific to any particular view or editor. The class defined
+in the plugin ActionSets extension point must implement **org.eclipse.ui.IWorkbenchWindowActionDelegate**
+interface if the pulldown attribute is false, or **org.eclipse.ui.IWorkbenchWindowPulldownDelegate**
+interface if the pulldown attribute is true. This delegate class can control the enabled/disabled state
+of the action when the selection changes, but only once the plug-in is loaded. Until then, the
 enabled/disabled state of the action is controlled by other XML attributes like enablesFor and selection.
 
 Workbench and Actions
@@ -48,15 +48,15 @@ Uses IWorkbenchWindowActionDelegate ...
 
     public class EditStyleAction implements IWorkbenchWindowActionDelegate {
 
-        public final static String ID = "org.locationtech.udig.style.openStyleEditorAction"; //$NON-NLS-1$
-        
+        public static final String ID = "org.locationtech.udig.style.openStyleEditorAction"; //$NON-NLS-1$
+
         private Layer selectedLayer;
-        
+
         public void dispose() {
         }
 
         public void init( IWorkbenchWindow window ) {
-            
+
         }
 
         public void run( IAction action ) {
@@ -66,27 +66,27 @@ Uses IWorkbenchWindowActionDelegate ...
                     try {
                         IWorkbenchPage page  = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
                         page.showView( StyleView.VIEW_ID );
-                        
-                        styleView = (StyleView) 
+
+                        styleView = (StyleView)
                         if (selectedLayer != null);
                             styleView.setSelectedLayer(selectedLayer);
-                    } 
+                    }
                     catch (PartInitException e2) {
-                        e2.printStackTrace(); 
+                        e2.printStackTrace();
                     }
                 }
             });
         }
 
         public void selectionChanged( IAction action, ISelection selection ) {
-            if (selection.isEmpty() || !(selection instanceof IStructuredSelection)) 
+            if (selection.isEmpty() || !(selection instanceof IStructuredSelection))
                 return;
-            
+
             StructuredSelection sselection = (StructuredSelection)selection;
             if (sselection.getFirstElement() instanceof Layer) {
                 selectedLayer = (Layer)sselection.getFirstElement();
             }
-        }    
+        }
     }
 
 
@@ -165,14 +165,14 @@ Then create the ZoomToLayer class that implements IViewActionDelegate
         public void selectionChanged( IAction action, ISelection selection ) {
            try{
               this.selection=(IStructuredSelection) selection;
-           }catch (Exception e) { 
+           }catch (Exception e) {
               //do nothing
            }
         }
 
         public void runWithEvent( IAction action, Event event ) {
            try {
-              PlatformUI.getWorkbench().getActiveWorkbenchWindow().run(false, true, 
+              PlatformUI.getWorkbench().getActiveWorkbenchWindow().run(false, true,
                      new IRunnableWithProgress() {
 
                         public void run(IProgressMonitor monitor) {
@@ -251,7 +251,7 @@ Uses IObjectActionDelegate ...
 For object contributions, the class attribute of the action element is the name of a Java class
 that implements the org.eclipse.ui.IObjectActionDelegate interface. The interface
 IObjectActionDelegate allows the action delegate to retarget itself to the active part.
-The action delegate must implement the method 
+The action delegate must implement the method
 
 .. code-block:: java
 

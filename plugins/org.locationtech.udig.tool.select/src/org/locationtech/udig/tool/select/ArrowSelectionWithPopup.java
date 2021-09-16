@@ -46,9 +46,9 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
- * Selects and drags single features providing an appropriate selection popup 
+ * Selects and drags single features providing an appropriate selection popup
  * in case there are multiple features located at the click point.
- * 
+ *
  * @author nprigour
  * @since 2.0.0
  */
@@ -61,13 +61,12 @@ public class ArrowSelectionWithPopup extends AbstractModalTool implements ModalT
         super(DRAG_DROP|MOUSE);
     }
 
-
     @Override
     public void mousePressed( MapMouseEvent e ) {
         if (e.button == MapMouseEvent.BUTTON3)
             ((ViewportPane) e.source).getMapEditor().openContextMenu();
         else {
-            x=e.x; 
+            x=e.x;
             y=e.y;
         }
     }
@@ -78,7 +77,7 @@ public class ArrowSelectionWithPopup extends AbstractModalTool implements ModalT
         if( e.x==x && e.y==y ){
             final int selectionSearchSize = Platform.getPreferencesService().getInt(
                     ProjectUIPlugin.ID, PreferenceConstants.FEATURE_SELECTION_SCALEFACTOR, PreferenceConstants.DEFAULT_FEATURE_SELECTION_SCALEFACTOR, null);
-            
+
             final String featureAttributeName = Platform.getPreferencesService().getString(
                     ProjectUIPlugin.ID, PreferenceConstants.FEATURE_ATTRIBUTE_NAME, "id", null); //$NON-NLS-1$
 
@@ -109,7 +108,7 @@ public class ArrowSelectionWithPopup extends AbstractModalTool implements ModalT
                             if( !e.buttonsDown() ){
                                 getContext().sendASyncCommand(getContext().getEditFactory().createNullEditFeatureCommand());
                             }
-                            getContext().sendASyncCommand(getContext().getSelectionFactory().createNoSelectCommand());                            
+                            getContext().sendASyncCommand(getContext().getSelectionFactory().createNoSelectCommand());
                             return;
                         } else {
                             //if only one item then do normal UDIG action
@@ -131,9 +130,9 @@ public class ArrowSelectionWithPopup extends AbstractModalTool implements ModalT
                                         for (final SimpleFeature feat : features) {
                                             MenuItem item = new MenuItem(menu, SWT.PUSH);
                                             Object attribValue = attribName != null ? feat.getAttribute(attribName) : null;
-                                            item.setText(attribValue != null ? 
+                                            item.setText(attribValue != null ?
                                                     attribValue.toString() : feat.getID());
-                                            
+
                                             item.addSelectionListener(new SelectionListener() {
 
                                                 @Override
@@ -144,7 +143,6 @@ public class ArrowSelectionWithPopup extends AbstractModalTool implements ModalT
 
                                                 @Override
                                                 public void widgetDefaultSelected(SelectionEvent e) {
-                                                    // TODO Auto-generated method stub
 
                                                 }
                                             });

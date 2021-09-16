@@ -22,7 +22,7 @@ import org.locationtech.udig.document.DocumentPlugin;
 /**
  * Maintains hotlink descriptors and their properties stored in
  * {@link IGeoResource#getPersistentProperties()}.
- * 
+ *
  * @author Naz Chan
  */
 public class BasicHotlinkDescriptorParser {
@@ -31,44 +31,44 @@ public class BasicHotlinkDescriptorParser {
      * {@link IGeoResource#getPersistentProperties()} key used to record hotlink descriptor list as
      * string. See {@link HotlinkDescriptor} for encoding.
      */
-    private final static String HOTLINK = "hotlink"; //$NON-NLS-1$
+    private static final String HOTLINK = "hotlink"; //$NON-NLS-1$
     /**
      * {@link IGeoResource#getPersistentProperties()} key used to record hotlink enabled status.
      */
-    private final static String HOTLINK_ENABLED = "hotlink_enabled"; //$NON-NLS-1$
+    private static final String HOTLINK_ENABLED = "hotlink_enabled"; //$NON-NLS-1$
     /**
      * Delimiter used to separate hotlink descriptors.
      */
-    private final static String HOTLINK_DELIMITER = "|=|"; //$NON-NLS-1$
+    private static final String HOTLINK_DELIMITER = "|=|"; //$NON-NLS-1$
     /**
      * Regex equivalent of the hotlink delimiter.
      */
-    private final static String HOTLINK_DELIMITER_REGEX = "\\|=\\|"; //$NON-NLS-1$
-    
+    private static final String HOTLINK_DELIMITER_REGEX = "\\|=\\|"; //$NON-NLS-1$
+
     private IGeoResource resource;
 
     public BasicHotlinkDescriptorParser(IGeoResource resource) {
         this.resource = resource;
     }
-    
+
     /**
      * Checks if hotlinks are enabled or disabled.
-     * 
+     *
      * @return true if enabled, otherwise false
      */
     public boolean isEnabled() {
         return getProperty(HOTLINK_ENABLED);
     }
-    
+
     /**
      * Enables or disables hotlinks.
-     * 
+     *
      * @param isEnabled
      */
     public void setEnabled(boolean isEnabled) {
         setProperty(HOTLINK_ENABLED, isEnabled);
     }
-    
+
     private boolean getProperty(String key) {
         final Map<String, Serializable> props = resource.getPersistentProperties();
         if (props.containsKey(key)) {
@@ -76,15 +76,15 @@ public class BasicHotlinkDescriptorParser {
         }
         return false;
     }
-    
+
     private void setProperty(String key, boolean value) {
         final Map<String, Serializable> props = resource.getPersistentProperties();
         props.put(key, Boolean.toString(value));
     }
-    
+
     /**
      * Checks if the resource has hotlink descriptors.
-     * 
+     *
      * @param resource
      * @return true if hotlinks descriptors are set, otherwise false
      */
@@ -94,7 +94,7 @@ public class BasicHotlinkDescriptorParser {
 
     /**
      * Gets the hotlink descriptors of the resource.
-     * 
+     *
      * @return hotlink descriptors
      */
     public List<HotlinkDescriptor> getDescriptors() {

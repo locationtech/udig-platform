@@ -57,7 +57,7 @@ import org.locationtech.jts.geom.Envelope;
 /**
  * Wraps a layer and delegates all the method calls to that layer. See the gang of four decorator
  * pattern.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -85,7 +85,7 @@ public class LayerDecorator implements Layer, InternalEObject {
 
     /**
      * Construct <code>LayerDecorator</code>.
-     * 
+     *
      * @param layer
      */
     public LayerDecorator( Layer layer ) {
@@ -680,7 +680,7 @@ public class LayerDecorator implements Layer, InternalEObject {
 
     /**
      * The decorated layer
-     * 
+     *
      * @return the decorated layer
      */
     public Layer getWrappedLayer() {
@@ -878,7 +878,7 @@ public class LayerDecorator implements Layer, InternalEObject {
         return interalObject.eInvoke(operationID, arguments);
     }
 
-    public int eDerivedOperationID( int baseOperationID, Class< ? > baseClass ) {   
+    public int eDerivedOperationID( int baseOperationID, Class< ? > baseClass ) {
         return interalObject.eDerivedOperationID(baseOperationID, baseClass);
     }
 
@@ -889,14 +889,12 @@ public class LayerDecorator implements Layer, InternalEObject {
 
     @Override
     public boolean isShown() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public void setShown( boolean value ) {
-        // TODO Auto-generated method stub
-        
+
     }
 
 }

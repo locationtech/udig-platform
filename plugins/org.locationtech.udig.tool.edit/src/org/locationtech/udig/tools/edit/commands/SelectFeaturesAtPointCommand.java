@@ -1,12 +1,12 @@
 /* uDig - User Friendly Desktop Internet GIS client
- * http://udig.refractions.net
- * (C) 2004, Refractions Research Inc.
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
- * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
- */
+* http://udig.refractions.net
+* (C) 2004, Refractions Research Inc.
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+* License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
+*/
 package org.locationtech.udig.tools.edit.commands;
 
 import java.io.IOException;
@@ -136,43 +136,43 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
                 }
 
                 setAndRun(monitor, command);
-			} finally {
-				try {
-					if (iter != null) {
-						iter.close();
-					}
-				} finally {
-					if (animation != null) {
-						animation.setValid(false);
-						animation = null;
-					}
-				}
-				editBlackboard.fireBatchedEvents();
-			}
+            } finally {
+                try {
+                    if (iter != null) {
+                        iter.close();
+                    }
+                } finally {
+                    if (animation != null) {
+                        animation.setValid(false);
+                        animation = null;
+                    }
+                }
+                editBlackboard.fireBatchedEvents();
+            }
         }
     }
 
     /**
-     * Gets a feature iterator on the results of a BBox query.   BBox is used because intersects occasionally throws a 
-     * Side-conflict error so it is not a good query.  
-     * 
+     * Gets a feature iterator on the results of a BBox query.   BBox is used because intersects occasionally throws a
+     * Side-conflict error so it is not a good query.
+     *
      * However maybe a better way is to try intersects then if that fails do a bbox?
      * For now we do bbox and test it with intersects
-     * 
+     *
      * @return Pair of an option containing the first feature if it exists, and an iterator with the rest
      */
     private FeatureIterator<SimpleFeature> getFeatureIterator() throws IOException {
         ILayer editLayer = parameters.handler.getEditLayer();
         FeatureStore<SimpleFeatureType, SimpleFeature> store = getResource(editLayer);
-        
-        // transforms the bbox to the layer crs 
+
+        // transforms the bbox to the layer crs
         ReferencedEnvelope bbox = handler.getContext().getBoundingBox(event.getPoint(), SEARCH_SIZE);
         try {
-        	bbox = bbox.transform(parameters.handler.getEditLayer().getCRS(), true);
+            bbox = bbox.transform(parameters.handler.getEditLayer().getCRS(), true);
         } catch (TransformException e) {
-        	logTransformationWarning(e);
+            logTransformationWarning(e);
         } catch (FactoryException e) {
-        	logTransformationWarning(e);
+            logTransformationWarning(e);
         }
         // creates a bbox filter using the bbox in the layer crs and grabs the features present in this bbox
         // but not the edit geoms
@@ -190,16 +190,16 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
                         factory.not(factory.or(idFilterList))));
 
         FeatureIterator<SimpleFeature> reader = new IntersectTestingIterator(bbox, collection.features());
-        
+
         return reader;
     }
 
-	@SuppressWarnings("unchecked")
-	private FeatureStore<SimpleFeatureType, SimpleFeature> getResource(
-			ILayer editLayer) throws IOException {
-		FeatureStore<SimpleFeatureType, SimpleFeature> store = editLayer.getResource(FeatureStore.class, null);
-		return store;
-	}
+    @SuppressWarnings("unchecked")
+    private FeatureStore<SimpleFeatureType, SimpleFeature> getResource(
+            ILayer editLayer) throws IOException {
+        FeatureStore<SimpleFeatureType, SimpleFeature> store = editLayer.getResource(FeatureStore.class, null);
+        return store;
+    }
 
     private void runDeselectionStrategies( IProgressMonitor monitor ) {
 
@@ -216,20 +216,20 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
         final List<SelectionStrategy> strategies = parameters.selectionStrategies;
         final UndoableComposite compositeCommand = new UndoableComposite();
         compositeCommand.setName(Messages.SelectGeometryCommand_name);
-        
+
         /*
         SimpleFeature firstFeature = reader.next();
         for( SelectionStrategy selectionStrategy : strategies ) {
-          selectionStrategy.run(monitor, compositeCommand, parameters, firstFeature,
-              true);
+        selectionStrategy.run(monitor, compositeCommand, parameters, firstFeature,
+            true);
         }
-        
-        
+
+
         while (reader.hasNext()){
-          SimpleFeature nextFeature = reader.next();
+        SimpleFeature nextFeature = reader.next();
             for( SelectionStrategy selectionStrategy : strategies ) {
-              selectionStrategy.run(monitor, compositeCommand, parameters, nextFeature,
-                  false);
+            selectionStrategy.run(monitor, compositeCommand, parameters, nextFeature,
+                false);
             }
         }
         */
@@ -239,7 +239,7 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
         List<SimpleFeature> featureList =new ArrayList<SimpleFeature>();
         while (reader.hasNext()){
             featureList.add(reader.next());
-        }      
+        }
         final SimpleFeature[] features = featureList.toArray(new SimpleFeature[]{});
 
         if (features.length == 1) {
@@ -258,18 +258,18 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
                         MenuItem item = new MenuItem(menu, SWT.PUSH);
                         //SimpleFeature feature=iter.next();
                         Object attribValue = attribName != null ? feat.getAttribute(attribName) : null;
-                        item.setText(attribValue != null ? 
+                        item.setText(attribValue != null ?
                                 attribValue.toString() : feat.getID());
 
                         //add selection listener to execute selection logic upon menu item selection
-                        item.addSelectionListener(new SelectionAdapter() {                                              
+                        item.addSelectionListener(new SelectionAdapter() {
                             @Override
                             public void widgetSelected(SelectionEvent e) {
                                 for( SelectionStrategy selectionStrategy : strategies ) {
                                     selectionStrategy.run(monitor, compositeCommand, parameters, feat,
                                             true);
                                 }
-                                //notify mother thread lock 
+                                //notify mother thread lock
                                 synchronized (lock) {
                                     lock.notify();
                                 }
@@ -279,7 +279,7 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
 
                     //add menu listener to dispose menu upon hide
                     //dispose is called on a new UI thread
-                    menu.addMenuListener(new MenuAdapter() {                                                
+                    menu.addMenuListener(new MenuAdapter() {
                         @Override
                         public void menuHidden(MenuEvent e) {
                             e.display.asyncExec(new Runnable(){
@@ -292,16 +292,16 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
                     });
 
                     //add dispose listener that calls notify on lock
-                    //object. This is needed in case no selection has 
-                    //occurred otherwise the lock object will never 
+                    //object. This is needed in case no selection has
+                    //occurred otherwise the lock object will never
                     //be relinquished
                     menu.addDisposeListener(new DisposeListener() {
                         @Override
                         public void widgetDisposed(DisposeEvent e) {
-                            //notify mother thread lock 
+                            //notify mother thread lock
                             synchronized (lock) {
                                 lock.notify();
-                            }       
+                            }
                         }
                     });
 
@@ -311,12 +311,12 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
 
             });
             //lock here waiting for users selection or menu popup dispose to occur
-            //THIS IS needed so that compositeCommand below can be properly populated 
+            //THIS IS needed so that compositeCommand below can be properly populated
             synchronized (lock) {
                 try {
                     //add a 60 sec timeout just to ensure that if something weird
                     //happens, the lock eventually will be released
-                    lock.wait(60000); 
+                    lock.wait(60000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -335,7 +335,7 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
 
     /**
      * Creates A geometry filter for the given layer.
-     * 
+     *
      * @param boundingBox in the same crs as the viewport model.
      * @return a Geometry filter in the correct CRS or null if an exception occurs.
      */
@@ -347,9 +347,9 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
 
             SimpleFeatureType schema = layer.getSchema();
             Name geom = getGeometryAttDescriptor(schema).getName();
-            
+
             Filter bboxFilter =factory.bbox(factory.property(geom), boundingBox);
-            
+
 
             return bboxFilter;
         } catch (Exception e) {
@@ -375,61 +375,60 @@ public class SelectFeaturesAtPointCommand extends AbstractCommand implements Und
     private static GeometryDescriptor getGeometryAttDescriptor( SimpleFeatureType schema ) {
         return schema.getGeometryDescriptor();
     }
-    
+
     private static class IntersectTestingIterator implements FeatureIterator<SimpleFeature>{
-    	private final FeatureIterator<SimpleFeature> wrappedIter;
-    	private final ReferencedEnvelope bbox;
-    	private SimpleFeature next;
-    	
-		public IntersectTestingIterator(ReferencedEnvelope bbox, FeatureIterator<SimpleFeature> wrapped) {
-			this.wrappedIter = wrapped;
-			this.bbox=bbox;
-		}
+        private final FeatureIterator<SimpleFeature> wrappedIter;
+        private final ReferencedEnvelope bbox;
+        private SimpleFeature next;
 
-		public void close() {
-			wrappedIter.close();
-		}
+        public IntersectTestingIterator(ReferencedEnvelope bbox, FeatureIterator<SimpleFeature> wrapped) {
+            this.wrappedIter = wrapped;
+            this.bbox=bbox;
+        }
 
-		public boolean hasNext() {
-			if( next!=null ){
-				return true;
-			}
-			
-			while (wrappedIter.hasNext() && next==null ){
-				SimpleFeature feature=wrappedIter.next();
-				if(intersects(feature)){
-					next=feature;
-				}
-			}
-			
-			// TODO Auto-generated method stub
-			return next!=null;
-		}
+        public void close() {
+            wrappedIter.close();
+        }
 
-	    private boolean intersects( SimpleFeature feature ) {
-	        GeometryDescriptor geomDescriptor = getGeometryAttDescriptor(feature.getFeatureType());
-	        
-	        Geometry bboxGeom = new GeometryFactory().toGeometry(bbox);
+        public boolean hasNext() {
+            if( next!=null ){
+                return true;
+            }
 
-	        Geometry geom = (Geometry) feature.getAttribute(geomDescriptor.getName());
+            while (wrappedIter.hasNext() && next==null ){
+                SimpleFeature feature=wrappedIter.next();
+                if(intersects(feature)){
+                    next=feature;
+                }
+            }
 
-	        try{
-	            return geom.intersects(bboxGeom);
-	        }catch (Exception e) {
-	            // ok so exception happened during intersection.  This usually means geometry is a little crazy
-	            // what to do?...
-	            EditPlugin.log("Can't do intersection so I'm assuming they intersect", e); //$NON-NLS-1$
-	            return false;
-	        }
-	    }
-		public SimpleFeature next() throws NoSuchElementException {
-			if(!hasNext()){
-				throw new NoSuchElementException();
-			}
-			SimpleFeature f = next;
-			next=null;
-			return f;
-		}
-    	
+            return next!=null;
+        }
+
+        private boolean intersects( SimpleFeature feature ) {
+            GeometryDescriptor geomDescriptor = getGeometryAttDescriptor(feature.getFeatureType());
+
+            Geometry bboxGeom = new GeometryFactory().toGeometry(bbox);
+
+            Geometry geom = (Geometry) feature.getAttribute(geomDescriptor.getName());
+
+            try{
+                return geom.intersects(bboxGeom);
+            }catch (Exception e) {
+                // ok so exception happened during intersection.  This usually means geometry is a little crazy
+                // what to do?...
+                EditPlugin.log("Can't do intersection so I'm assuming they intersect", e); //$NON-NLS-1$
+                return false;
+            }
+        }
+        public SimpleFeature next() throws NoSuchElementException {
+            if(!hasNext()){
+                throw new NoSuchElementException();
+            }
+            SimpleFeature f = next;
+            next=null;
+            return f;
+        }
+
     }
 }

@@ -20,7 +20,7 @@ public class StyleUIPlugin extends AbstractUdigUIPlugin {
 	public static final String ID = "org.locationtech.udig.style.ui"; //$NON-NLS-1$
 
 	/** Icons path (value "icons/") */
-	public final static String ICONS_PATH = "icons/";//$NON-NLS-1$
+	public static final String ICONS_PATH = "icons/";//$NON-NLS-1$
 
 	private static StyleUIPlugin INSTANCE;
 

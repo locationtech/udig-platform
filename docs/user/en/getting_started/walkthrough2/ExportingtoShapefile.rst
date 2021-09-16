@@ -5,7 +5,7 @@ In addition to editing content from many sources, you can also export content to
 
 * With **Tasmania roads** selected, choose :menuselection:`File --> Export` from the menu bar
 
-* Select the **Resource to Shapefile** and press :guilabel:`Next`
+* Select the **All Features to Shapefile** and press :guilabel:`Next`
 
   .. image:: images/100000000000020D000002265A8298F4.png
     :width: 6.934cm

@@ -53,12 +53,12 @@ import org.osgi.framework.BundleContext;
  * The CatalogUIPlugin provides access for shared images descriptors.
  * </p>
  * Example use of a shared image descriptor:
- * 
+ *
  * <pre><code>
  * ImageRegistry images = CatalogUIPlugin.getDefault().getImageRegistry();
  * ImageDescriptor image = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.IMG_DATASTORE_OBJ);
  * </code></pre>
- * 
+ *
  * </p>
  * <h3>Implementation Note</h3>
  * </p>
@@ -69,12 +69,12 @@ import org.osgi.framework.BundleContext;
  * </ul>
  * These resources are intended for use by classes within this plugin.
  * </p>
- * 
+ *
  * @author Jody Garnett, Refractions Research, Inc
  */
 public class CatalogUIPlugin extends AbstractUdigUIPlugin {
 
-	private static CatalogUIPlugin INSTANCE; 
+	private static CatalogUIPlugin INSTANCE;
     /**
      * The id of the plug-in
      */
@@ -86,7 +86,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
     public static final String PREF_OPEN_DIALOG_DIRECTORY = "udig.preferences.openDialog.lastDirectory"; //$NON-NLS-1$
 
     /** Icons path (value "icons/") */
-    public final static String ICONS_PATH = "icons/";//$NON-NLS-1$
+    public static final String ICONS_PATH = "icons/";//$NON-NLS-1$
 
     private static final String LABELS_PREFERENCE_STORE = "CATALOG_LABELS_PREFERENCE_STORAGE"; //$NON-NLS-1$
 
@@ -104,7 +104,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
 
     /**
      * Set up shared images.
-     * 
+     *
      * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
      * @param context
      * @throws Exception
@@ -114,7 +114,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
         registerChangeListener();
     }
     /**
-     * Registers a listener with the local catalog for reset events so that there is a mechanism to 
+     * Registers a listener with the local catalog for reset events so that there is a mechanism to
      * reset the label cache for an IResolve.
      */
     private void registerChangeListener() {
@@ -125,7 +125,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
                     return;
                 }
 //                IPreferenceStore p = getPreferenceStore();
-                if( event.getType()==Type.POST_CHANGE 
+                if( event.getType()==Type.POST_CHANGE
                         && event.getDelta()!=null ){
                     //  TODO enable when resolve information is available
 //                     updateCache(event.getDelta(), p);
@@ -147,7 +147,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
                     updateCache(delta2, p);
                 }
             }
-            
+
         });
     }
 
@@ -159,7 +159,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
      * <li>t is an Exception we are assuming it is human readable or if a message is provided
      * </ul>
      * </p>
-     * 
+     *
      * @param message
      * @param t
      */
@@ -174,16 +174,16 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:
-     * 
+     *
      * <pre><code>
      * private static final String RENDERING = &quot;org.locationtech.udig.project/render/trace&quot;;
      * if (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
      *     System.out.println(&quot;your message here&quot;);
      * }
      * </code></pre>
-     * 
+     *
      * </p>
-     * 
+     *
      * @param message
      * @param e
      */
@@ -209,13 +209,13 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
      * </p>
-     * 
+     *
      * @param trace currently only RENDER is defined
      * @return true if -debug is on for this plugin
      */
     public static boolean isDebugging( final String trace ) {
         return getDefault().isDebugging()
-                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
+                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
 
     /**
@@ -225,7 +225,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
      * make use of any information available via an info object (because that would require blocking
      * and be unsafe).
      * </p>
-     * 
+     *
      * @see glyph
      * @param resource
      * @return Image representing provided resource
@@ -245,7 +245,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
         } else if (resolve instanceof IService) {
             IService service = (IService) resolve;
             boolean isFeature = service.canResolve(DataStore.class);
-            
+
             String iconId = iconInternalService( service.getID(), isFeature );
             return CatalogUIPlugin.getDefault().getImage( iconId );
         } else if (resolve instanceof ICatalog) {
@@ -260,7 +260,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
 
     /**
      * Create icon for provided resource, this will block!
-     * 
+     *
      * @param resource
      * @param monitor used to track progress in fetching an appropriate icon
      * @return ImageDescriptor for resource.
@@ -282,7 +282,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
                 public ImageData getImageData() {
                     return image(resolve).getImageData();
                 }
-                
+
             };
         }
 
@@ -309,7 +309,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
 
     /**
      * Create icon for provided resource, this will block!
-     * 
+     *
      * @param resource
      * @return ImageDescriptor for resource.
      * @throws IOException
@@ -317,7 +317,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
     private static ImageDescriptor icon( IGeoResource resource, IProgressMonitor monitor )
             throws IOException {
     	if( monitor == null ) monitor = new NullProgressMonitor();
-    	
+
     	// check for dynamic icon first!
     	if( resource.canResolve( ImageDescriptor.class )){
     		ImageDescriptor icon = resource.resolve( ImageDescriptor.class, monitor);
@@ -326,10 +326,10 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
     	// check for static icon next
         try{
             IGeoResourceInfo info;
-            info = resource.resolve(IGeoResourceInfo.class, monitor);            
-            
+            info = resource.resolve(IGeoResourceInfo.class, monitor);
+
             ImageDescriptor icon = info.getImageDescriptor();
-            if( icon != null ) return icon;            
+            if( icon != null ) return icon;
         }catch(Throwable t){
             log("Error obtaining info", t); //$NON-NLS-1$
             return null;
@@ -339,7 +339,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
         String iconId = iconInternalResource( resource.getID(), isFeature );
         return CatalogUIPlugin.getDefault().getImageDescriptor( iconId );
     }
-    
+
     /** Lookup default resource icon id */
     private static String iconInternalResource( ID id, boolean isFeature ){
     	if (Identifier.isGraphic(id.toURL())) {
@@ -364,7 +364,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
 
     /**
      * Create icon for provided folder, this will block!
-     * 
+     *
      * @return ImageDescriptor for folder.
      * @throws IOException
      */
@@ -372,7 +372,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
             throws IOException {
 
     	if( monitor == null ) monitor = new NullProgressMonitor();
-    	
+
     	// check for dynamic icon first!
     	if( folder.canResolve( ImageDescriptor.class )){
     		ImageDescriptor icon = folder.resolve( ImageDescriptor.class, monitor);
@@ -382,10 +382,10 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
         return CatalogUIPlugin.getDefault().getImageDescriptor( ISharedImages.FOLDER_OBJ );
     }
 
-    
+
     /**
      * Create icon for provided service, this will block!
-     * 
+     *
      * @param resource
      * @return ImageDescriptor for resource.
      * @throws IOException
@@ -393,7 +393,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
     private static ImageDescriptor icon( IService service, IProgressMonitor monitor )
             throws IOException {
     	if( monitor == null ) monitor = new NullProgressMonitor();
-    	
+
     	// check for dynamic icon first!
     	if( service.canResolve( ImageDescriptor.class )){
     		ImageDescriptor icon = service.resolve( ImageDescriptor.class, monitor);
@@ -402,11 +402,11 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
     	// check for static icon next
         try{
             IServiceInfo info;
-            info = service.resolve(IServiceInfo.class, monitor);            
+            info = service.resolve(IServiceInfo.class, monitor);
             if( info != null ){
                 ImageDescriptor icon = info.getImageDescriptor();
                 if( icon != null ) {
-                    return icon;            
+                    return icon;
                 }
             }
         }catch(Throwable t){
@@ -455,9 +455,9 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
 	public IPath getIconPath() {
 		return new Path(ICONS_PATH);
 	}
-   
+
 	public static CatalogUIPlugin getDefault() {
 		return INSTANCE;
 	}
-	
+
 }

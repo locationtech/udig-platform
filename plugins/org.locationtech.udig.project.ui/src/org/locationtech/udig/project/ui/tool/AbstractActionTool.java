@@ -25,72 +25,74 @@ import java.util.Set;
  */
 public abstract class AbstractActionTool implements ActionTool {
 
-	
-	/**
-	 * Tool context.
-	 */
+    /**
+     * Tool context.
+     */
     protected IToolContext context;
-    
+
     private Map<String, Object> properties = new HashMap<String, Object>(5);
-    
+
     /**
      * 
      * Tool's lifecycle listeners.
      */
     private Set<ToolLifecycleListener> listeners = new HashSet<ToolLifecycleListener>();
 
-    
     private boolean enabled = true;
-	
-	public AbstractActionTool() {
-	}
-	
-    /**
-     * @see org.locationtech.udig.project.ui.tool.Tool#setContext(org.locationtech.udig.project.ui.tool.ToolContext)
-     */
-    public void setContext( IToolContext toolContext ) {
-    	this.context = toolContext;
+
+    public AbstractActionTool() {
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.tool.Tool#getContext()
-     */
-	public IToolContext getContext() {
-		return context;
-	}
+    @Override
+    public void setContext(IToolContext toolContext) {
+        this.context = toolContext;
+    }
 
-    /**
-     * @see org.locationtech.udig.project.ui.tool.Tool#getProperty()
-     */
-	public Object getProperty(String key) {
-		return properties.get(key);
+    @Override
+    public IToolContext getContext() {
+        return context;
+    }
 
-	}
+    @Override
+    public Object getProperty(String key) {
+        return properties.get(key);
 
-    /**
-     * @see org.locationtech.udig.project.ui.tool.Tool#setProperty()
-     */
-	public void setProperty(String key, Object value) {
-		properties.put(key, value);
-	}
-    
-	
-	public boolean isEnabled() {
-		return enabled;
-	}
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+    }
 
-	public void addListener(ToolLifecycleListener listener) {
-		listeners.add(listener);
-		
-	}
+    @Override
+    public void setProperty(String key, Object value) {
+        properties.put(key, value);
+    }
 
-	public void removeListener(ToolLifecycleListener listener) {
-		listeners.remove(listener);
-		
-	}
-    
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    @Override
+    public void addListener(ToolLifecycleListener listener) {
+        listeners.add(listener);
+
+    }
+
+    @Override
+    public void removeListener(ToolLifecycleListener listener) {
+        listeners.remove(listener);
+
+    }
+
+    @Override
+    public boolean isToggleButton() {
+        return false;
+    }
+
+    @Override
+    public boolean isTogglingButtonEnabled() {
+        return false;
+    }
 }

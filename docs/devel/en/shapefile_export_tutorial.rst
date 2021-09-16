@@ -2,7 +2,7 @@ Shapefile Export Tutorial
 =========================
 
 .. figure:: /images/shapefile_export_tutorial/ShapefileExportWorkbook.png
-   :alt: 
+   :alt:
 
 Reference:
 
@@ -53,7 +53,7 @@ FeatureSource, and copy them into a shapefile FeatureStore.
 
 .. figure:: /images/shapefile_export_tutorial/datastore.png
    :align: center
-   :alt: 
+   :alt:
 
 FeatureSource provides read-only methods for accessing geographic data. The subclass FeatureStore
 provides read-write methods if available. You can check if a file is writable using a simple Java
@@ -159,7 +159,7 @@ The following tips have been provided by the udig-devel list; please stop by and
 Display Thread
 ``````````````
 
-If you check back in the first :doc:`tool_plugin_tutorial` or :doc:`iadaptable_and_operations_tutorial` 
+If you check back in the first :doc:`tool_plugin_tutorial` or :doc:`iadaptable_and_operations_tutorial`
 tutorial you will find a couple examples of how to open something on the display thread.
 
 Many examples on the internet show how to use the **Display** class provided by **swt**. This class
@@ -205,7 +205,7 @@ thread pauses while the display thread queues up your Runnable and prompts the u
 
    .. code-block:: java
 
-       final static String result[] = new String[1];
+       static final String result[] = new String[1];
 
        PlatformGIS.asyncInDisplayThread( new Runnable(){
            public void run(){

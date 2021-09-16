@@ -12,6 +12,6 @@ package org.locationtech.udig.validation;
 public interface ImageConstants {
 
     /** Check icon **/
-    public final static String IMAGE_WIZBAN = "wizban/check_wiz.gif"; //$NON-NLS-1$
-    
+    public static final String IMAGE_WIZBAN = "wizban/check_wiz.gif"; //$NON-NLS-1$
+
 }

@@ -3,7 +3,7 @@
  * (C) 2012, Refractions Research Inc.
  * (C) 2006, Axios Engineering S.L. (Axios)
  * (C) 2006, County Council of Gipuzkoa, Department of Environment and Planning
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
@@ -41,14 +41,14 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * <p>
- * 
+ *
  * <pre>
  * Get the feature that is under the cursor are. Store it on
  * {@link ParallelContext} and run the animation that highlight this feature.
  * </pre>
- * 
+ *
  * </p>
- * 
+ *
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
  */
@@ -59,14 +59,12 @@ public class SetReferenceFeatureCommand extends AbstractCommand implements Undoa
 	private MapMouseEvent	event			= null;
 
 	public SetReferenceFeatureCommand(ParallelContext paralleContext, EditToolHandler handler, MapMouseEvent event) {
-
 		this.parallelContext = paralleContext;
 		this.handler = handler;
 		this.event = event;
 	}
 
 	public String getName() {
-
 		return Messages.PrecisionParallelReferenceFeature;
 	}
 
@@ -113,7 +111,6 @@ public class SetReferenceFeatureCommand extends AbstractCommand implements Undoa
 	}
 
 	public void rollback(IProgressMonitor monitor) throws Exception {
-		// TODO Auto-generated method stub
 
 	}
 

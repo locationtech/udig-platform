@@ -23,7 +23,7 @@ Table of Contents
 
 4. `Creating the View Panel`_
 
-- `Constants and Variables`_ 
+- `Constants and Variables`_
 - `Using Eclipse Forms`_
 - `Using Cell Editors`_
 - `Using JFace Viewers`_
@@ -68,7 +68,7 @@ Comparison of SWT and AWT
 Eclipse RCP applications make use of the Standard Widget Toolkit (SWT) when defining a user interface. SWT is similar in function to the built-in Java Abstract Window Toolkit. Both libraries use native widgets for display; they only differ in the approach taken at a technical level.
 
 - **SWT**: Uses a different swt.jar for each platform; the implementation makes direct operating system level calls to create widgets such as buttons and so forth. SWT implements in native code any "missing" widgets (e.g. swt for x85/Motif has contains a tree widget).
-- **AWT**: Uses an Abstract Factory (the *Toolkit* class) to construct widgets. Each JRE must provide an implementation of this class teaching Java how to make the widgets for that environment. Early implementations of AWT did not quite hide platform differences from developers (resulting in write once test  everywhere frustration). 
+- **AWT**: Uses an Abstract Factory (the *Toolkit* class) to construct widgets. Each JRE must provide an implementation of this class teaching Java how to make the widgets for that environment. Early implementations of AWT did not quite hide platform differences from developers (resulting in write once test  everywhere frustration).
 
 At a pragmatic level both libraries function in a similar manner, making use of an event thread, listeners, layouts and so on.
 
@@ -117,7 +117,7 @@ Fig. Add dependencies
 Customising Cell Editors
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-JFace cell editors are wrapped widgets that are primarily used to allow editing values in table viewers. Here we try to re-use and customise cell editors to be usable in forms. So let us sub-class one of the most basic cell editors in **TextCellEditor** and hook up an **ICellEditorListener** and an **ICellEditorValidator**. 
+JFace cell editors are wrapped widgets that are primarily used to allow editing values in table viewers. Here we try to re-use and customise cell editors to be usable in forms. So let us sub-class one of the most basic cell editors in **TextCellEditor** and hook up an **ICellEditorListener** and an **ICellEditorValidator**.
 
 Create the FormCellEditorListener
 ''''''''''''''''''''''''''''''''''
@@ -151,11 +151,11 @@ Implement the Cell Editor Listener
 
    private IMessageManager msgManager;
    private CellEditor cellEditor;
-   
+
 2. Implement the constructor.
 
 ::
-   
+
    public FormCellEditorListener( CellEditor cellEditor, IMessageManager msgManager ) {
       this.cellEditor = cellEditor;
       this.msgManager = msgManager;
@@ -164,7 +164,7 @@ Implement the Cell Editor Listener
 3. Implement the interface methods.
 
 ::
-   
+
    @Override
    public void applyEditorValue() {
 
@@ -194,7 +194,7 @@ Notes:
 
 - Wondered where the error message that we are using gets set? Well, this is what our validator (next step) does.
 - Notice that we are passing in a message manager, this facilitates showing the error message on the UI, don't worry about where this one comes from, everything will come together when we integrate the pieces together in the view panel.
-- The sequence of cell editor events (validation, value changed, apply change, etc.) vary from each cell editor implementation to another. In our case, **applyEditorValue()** is done on lose of focus and validation is done before this event is fired.   
+- The sequence of cell editor events (validation, value changed, apply change, etc.) vary from each cell editor implementation to another. In our case, **applyEditorValue()** is done on lose of focus and validation is done before this event is fired.
 
 Create the MandatoryFormTextCellEditorValidator
 '''''''''''''''''''''''''''''''''''''''''''''''
@@ -221,17 +221,17 @@ Fig. Create cell editor validator dialog
 
 Implement the Cell Editor Validator
 '''''''''''''''''''''''''''''''''''
-   
+
 2. Implement the interface method.
 
 ::
-   
+
    @Override
    public String isValid( Object value ) {
       final String textValue = (String) value;
       if ("".equals(textValue)) {
          return "Field must not be blank.";
-      } 
+      }
       return null;
    }
 
@@ -265,7 +265,7 @@ Fig. Create cell editor dialog
 Implement the Cell Editor
 '''''''''''''''''''''''''
 
-In this section, we implement our cell editor, then set a validator and add a listener to the editor. This allows integration of the editor, its validation and publishing the error message to the UI. 
+In this section, we implement our cell editor, then set a validator and add a listener to the editor. This allows integration of the editor, its validation and publishing the error message to the UI.
 
 1. Implement the constructor.
 
@@ -275,7 +275,7 @@ In this section, we implement our cell editor, then set a validator and add a li
       super(composite, SWT.SHADOW_IN | SWT.BORDER);
       setValidator(new MandatoryFormTextCellEditorValidator());
       addListener(new FormCellEditorListener(this, msgManager));
-   } 
+   }
 
 2. Override the methods that control cell editor's enablement and visibility, which are used in table viewers, but is not really necessary in our implementation since we want the editors to be visible and enabled all the time.
 
@@ -329,26 +329,26 @@ Fig. Create view panel dialog
 
 5. Press **Finish** to create **CountryPanel.java** class
 
-Constants and Variables 
+Constants and Variables
 ''''''''''''''''''''''''
 
-Now let us set-up some constants and variables that we will be using later on hook up to the panel's elements. 
+Now let us set-up some constants and variables that we will be using later on hook up to the panel's elements.
 
 1. Add the following constants.
 
 These values represent names of attributes in countries.shp file::
 
    // Name of NAME_FORMA attribute
-   public final static String NAME_FORMA = "NAME_FORMA";
+   public static final String NAME_FORMA = "NAME_FORMA";
 
    // Name of NAME_SORT attribute
-   public final static String NAME_SORT = "NAME_SORT";
-   
+   public static final String NAME_SORT = "NAME_SORT";
+
    // Name of MAP_COLOR attribute
-   public final static String MAP_COLOR = "MAP_COLOR";
-    
+   public static final String MAP_COLOR = "MAP_COLOR";
+
    // Possible values of MAP_COLOR attribute
-   public final static Double[] MAP_COLOR_OPTS;
+   public static final Double[] MAP_COLOR_OPTS;
    static {
       MAP_COLOR_OPTS = new Double[13];
       for( int i = 0; i < MAP_COLOR_OPTS.length; i++ ) {
@@ -367,11 +367,11 @@ These values represent names of attributes in countries.shp file::
    private Text nameFormal;
    private Text nameShort;
    private ComboViewer colorMap;
-   
+
    // Action buttons
    private Action apply;
    private Action reset;
-   
+
    // Feature containers
    private SimpleFeature editedFeature;
    private SimpleFeature baseFeature;
@@ -406,30 +406,30 @@ Using Eclipse Forms
 
 Eclipse Forms is a layer above SWT that provides us with a *web* looking user interface. This also gives us some other options in creating UI (eg. additional widgets) that helps us create a elegantly functional interface, which also gives us the simplicity of handling widgets the same way as we would if we create them separately.
 
-Using the **FormToolkit**, let us create the *form* element that will hold our widgets::  
+Using the **FormToolkit**, let us create the *form* element that will hold our widgets::
 
    // Instantiate Eclipse Forms
    form = toolkit.createScrolledForm(parent);
-   
+
    form.setText("Country Form");
    form.getBody().setLayout(new GridLayout());
    toolkit.decorateFormHeading(form.getForm());
-   
+
    final Section section = toolkit.createSection(form.getBody(), Section.TWISTIE | Section.TITLE_BAR);
    section.setText("Country Details");
    section.setDescription("Update country details below.");
    section.setLayoutData(new GridData(GridData.FILL_BOTH));
    section.setExpanded(true);
-        
+
    final Composite client = toolkit.createComposite(section, SWT.NONE);
    client.setLayoutData(new GridData(GridData.FILL_BOTH));
    client.setLayout(new MigLayout("wrap 2, fillx", "[20%!, right]10[left]", ""));
    section.setClient(client);
-   
+
 Use **Control-Shift-O** to fix up the imports as needed.
-   
+
 Notice that we are able to use both **GridLayout** and **MigLayout** into our containers.
-   
+
 Using Cell Editors
 ''''''''''''''''''
 
@@ -447,7 +447,7 @@ Now let us integrate the cell editors that we created earlier.
    nameFormal = (Text) nameFormalEditor.getControl();
    nameFormal.setLayoutData("growx");
    nameFormal.addKeyListener(this);
-   
+
 
 2. Then the *Name (short)* field:
 
@@ -511,25 +511,25 @@ Set a *ContentProvider* to control how viewer data is derived from our data inpu
          // dispose elements as necessary
       }
    });
-   
+
 Set a *LabelProvider* to control what and how data labels will we displayed in the viewer.
 
 ::
-   
+
    colorMap.setLabelProvider(new LabelProvider(){
       public String getText( Object element ) {
          return " " + element + " color";
       }
    });
-   
+
 Finally, let us set the constant we created earlier as the data input of our viewer.
 
 ::
-   
+
    colorMap.setInput(MAP_COLOR_OPTS);
-   
+
 3. Use **Control-Shift-O** to fix up the imports as needed.
-   
+
 Notes:
 
 - We set an array of objects as our data input and thus the providers will work with each element in the array.
@@ -543,7 +543,7 @@ Create Action Buttons
 Now let us create some action button elements for applying and reseting changes on the form.
 
 ::
-   
+
    // Create buttons
    apply = new Action("Apply"){
       @Override
@@ -565,16 +565,16 @@ Now let us create some action button elements for applying and reseting changes 
 
    form.getToolBarManager().update(true);
 
-Notes: 
+Notes:
 
 - Instead of Button widgets we created JFace Action objects since we are adding these controls into the form's toolbar.
 - Expect compile errors at this point as the methods *applyChanges()* and *resetChanges()* will be implemented later to facilitate feature editing.
-   
+
 Implement Listeners
 '''''''''''''''''''
-   
+
 Now let us implement the interfaces that we added during creation of the panel.
-   
+
 1. Create a method that will control the enablement of both the *Apply* and *Reset* buttons.
 
 ::
@@ -586,7 +586,7 @@ Now let us implement the interfaces that we added during creation of the panel.
       apply.setEnabled(enabled);
       reset.setEnabled(enabled);
    }
-   
+
 2. Now lets fill in the two methods of the *KeyListener* interface that we hooked up to our text input fields.
 
 ::
@@ -594,11 +594,11 @@ Now let us implement the interfaces that we added during creation of the panel.
    public void keyPressed(KeyEvent e) {
       // Do nothing
    }
-   
+
    public void keyReleased(KeyEvent e) {
       setEnabled(true);
    }
-   
+
 19. And also fill in the method of the *ISelectionChangedListener* interface that we hooked up to our combo viewer's control.
 
 ::
@@ -619,10 +619,10 @@ We need to make a copy of the current feature. This allow the user to edit or re
 ::
 
    public void setEditFeature(SimpleFeature newFeature, IToolContext newContext) {
-   
+
       this.context = newContext;
       baseFeature = newFeature;
-      
+
       if (baseFeature != null) {
          try {
             editedFeature = SimpleFeatureBuilder.copy(newFeature);
@@ -632,7 +632,7 @@ We need to make a copy of the current feature. This allow the user to edit or re
       } else {
          editedFeature = null;
       }
-      
+
       if (baseFeature == null) {
          nameFormal.setText("");
          nameShort.setText("");
@@ -646,29 +646,29 @@ We need to make a copy of the current feature. This allow the user to edit or re
          String nameSortStr = (String) baseFeature.getAttribute(NAME_SORT);
          if (nameSortStr == null) nameSortStr = "";
          nameShort.setText(nameSortStr);
-         
+
          Double colorText = (Double) baseFeature.getAttribute(MAP_COLOR);
          if (colorText != null) {
             colorMap.setSelection(new StructuredSelection(colorText));
          } else {
             colorMap.setSelection(new StructuredSelection());
          }
-         
+
       }
-      
+
       setEnabled(false);
-      
+
    }
-   
-2. Implement the **applyChanges()** method. 
+
+2. Implement the **applyChanges()** method.
 
 This will update the *editedFeature* and then make use of a composite command to send the changes off to the uDig application.
 
 ::
 
    private void applyChanges() {
-   
-      // Set changes to feature 
+
+      // Set changes to feature
       try {
          editedFeature.setAttribute(NAME_FORMA, nameFormal.getText());
          editedFeature.setAttribute(NAME_SORT, nameShort.getText());
@@ -677,14 +677,14 @@ This will update the *editedFeature* and then make use of a composite command to
       } catch (IllegalAttributeException e) {
          // shouldn't happen.
       }
-      
+
       // Send command to write changes
       CompositeCommand compComm = new CompositeCommand();
       compComm.getCommands().add(context.getEditFactory().createSetEditFeatureCommand(editedFeature));
       compComm.getCommands().add(context.getEditFactory().createWriteEditFeatureCommand());
       context.sendASyncCommand(compComm);
       setEnabled(false);
-      
+
    }
 
 3. Implement the **resetChanges()** method.
@@ -697,9 +697,9 @@ This will reset the *editedFeature* to the un-touched *baseFeature*.
       setEditFeature(baseFeature, context);
       setEnabled(false);
    }
-   
+
 4. Use **Control-Shift-O** to fix up the imports as needed.
-   
+
 Now we have made our own panel that can be used to edit a feature. In the next section we will hook this up to our view.
 
 Defining the View
@@ -755,12 +755,12 @@ Integrating the View Panel
 ''''''''''''''''''''''''''
 
 1. Open **CountryView**.
-2. Create a view panel as a class variable. 
+2. Create a view panel as a class variable.
 
 ::
 
    private CountryPanel panel = new CountryPanel();
-   
+
 3. Override the **createPartControl(Composite)** method. We will use this to set up our panel to create the user interface.
 
 ::
@@ -770,7 +770,7 @@ Integrating the View Panel
       FormToolkit toolkit = new FormToolkit(parent.getDisplay());
       panel.createControl(parent, toolkit);
    }
-   
+
 4. Override the **setFocus()** method. We will use this to set up our panel to set the focus.
 
 ::
@@ -779,7 +779,7 @@ Integrating the View Panel
    public void setFocus() {
       panel.setFocus();
    }
-   
+
 5. And there is the **dispose()** method. In our case, the super class is going to take care of cleaning up our widgets, but you could override this method to take care of any resources you made use of (such as Icons or Colors).
 6. Use **Control-Shift-O** to fix up the imports as needed.
 
@@ -792,28 +792,28 @@ Notes:
 Implementing IUDIGView
 ''''''''''''''''''''''
 
-The IUDIGView is used to feed a tool context into a normal Eclipse view allowing it to interact with the GISApplication. This interface also gives us a hook to the current edit feature which we are using to fill in our form. 
+The IUDIGView is used to feed a tool context into a normal Eclipse view allowing it to interact with the GISApplication. This interface also gives us a hook to the current edit feature which we are using to fill in our form.
 
-1. Create a tool context as a class variable. 
+1. Create a tool context as a class variable.
 
 ::
 
    private IToolContext context;
-   
+
 2. Implement the getter and setter method for the tool context.
 
 ::
-   
+
    @Override
    public void setContext( IToolContext newContext ) {
       context = newContext;
    }
-   
+
    @Override
    public IToolContext getContext() {
       return context;
    }
-   
+
 3. Implement the *editFeatureChanged(SimpleFeature)* method. This provides the view with the feature to be edited.
 
 ::
@@ -822,11 +822,11 @@ The IUDIGView is used to feed a tool context into a normal Eclipse view allowing
    public void editFeatureChanged( SimpleFeature feature ) {
       panel.setEditFeature(feature, context);
    }
-   
+
 4. Use **Control-Shift-O** to fix up the imports as needed.
-   
+
 Notes:
-   
+
 - The *editFeatureChanged(SimpleFeature)* method is triggered by a feature selection.
 - At this point the view is now ready to use.
 
@@ -849,12 +849,12 @@ Open the View
 '''''''''''''
 
 1. Open our feature editor view. Go to **Window** > **Show View** > **Other**
-2. A view selection dialog will pop up, select the **Country** view. 
+2. A view selection dialog will pop up, select the **Country** view.
 
 Select a Feature
 ''''''''''''''''
 
-1. Open the tab for **Selection** tools. 
+1. Open the tab for **Selection** tools.
 2. Select the **Feature Selection** tool.
 3. Select a country on the map.
 4. The view will display the country's information.
@@ -887,12 +887,12 @@ Fig. MigLayout samples
 - Can you re-do the layout of this view using the Eclipse FormLayout? This layout manager makes the opposite trade off you have real Java data structures to fill in for your layout data. Here is a small example to get you started::
 
    parent.setLayout(new GridLayout(2, false));
-   
+
    // SWT Widgets
    Label label = new Label(parent, SWT.SHADOW_IN);
    label.setLayoutData(new GridData(SWT.NONE, SWT.FILL));
    label.setText("Country:");
-   
+
 - MiGLayout has now added the use of java beans as a type safe options::
 
    name = new Text(parent, SWT.SHADOW_IN | SWT.BORDER);
@@ -902,7 +902,7 @@ Fig. MigLayout samples
    cc.wrap();
    name.setLayoutData( cc );
    name.addKeyListener(this);
-   
+
 - You can use this technique to make custom forms for your own data using the full facilities of SWT and JFace (say stars for restaurant reviews).
 - If this is your first time using SWT try experimenting with the different Layouts: GridLayout, TableLayout, and FormLayout.
 - Try moving the functionality that controls enabling/disabling the Apply and Reset buttons to the cell editor listener.

@@ -1,6 +1,6 @@
 /*
  * uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -37,16 +37,16 @@ import org.osgi.framework.Bundle;
 
 /**
  * The class reading default colortables from disk.
- * 
+ *
  * @author Andrea Antonello (www.hydrologis.com)
- * 
+ *
  */
 public class PredefinedColorRules {
 
 	/**
 	 * The rainbow colormap is the only one that has to exist.
 	 */
-	public final static String[][] rainbow = new String[][] { //
+	public static final String[][] rainbow = new String[][] { //
 	{ "255", "255", "0" }, // //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			{ "0", "255", "0" }, // //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			{ "0", "255", "255" }, // //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -115,7 +115,7 @@ public class PredefinedColorRules {
 	public void clear() {
 		colorRules.clear();
 	}
-	
+
 	public PredefinedColorRule getPredefinedRule(String name){
 		for (PredefinedColorRule r: getPredefinedSets()){
 			if (r.getName().equals(name)){
@@ -128,7 +128,7 @@ public class PredefinedColorRules {
 	/**
 	 * Reads and returns the {@link HashMap map} holding all predefined color
 	 * rules.
-	 * 
+	 *
 	 * <p>
 	 * The map has the name of the colortable as key and and array of Strings as
 	 * value, representing the colors and values of the colortable.<br>
@@ -145,7 +145,7 @@ public class PredefinedColorRules {
 	 * with the given values and colors.</li>
 	 * </ul>
 	 * </p>
-	 * 
+	 *
 	 * @param doReset
 	 *            if true the folder of colortables is reread.
 	 * @return the map of colortables.

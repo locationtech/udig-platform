@@ -38,13 +38,13 @@ import org.locationtech.jts.geom.Envelope;
 /**
  * Represents one tile in a tileset from a WMS Server. Has a unique id, bounds, scale and a
  * BufferedImage. All other data such as the format, crs, etc are stored as part of the tileset.
- * 
+ *
  * @author GDavis
  * @since 1.2.0
  */
 public class WMSTile implements Tile {
 
-    private final static boolean testing = false; // for testing output
+    private static final boolean testing = false; // for testing output
 
     public static final int INERROR = 1;
     public static final int OK = 0;
@@ -82,7 +82,7 @@ public class WMSTile implements Tile {
 
     /**
      * Builds a tile id in the form of: id = "<scale>_<minx>_<maxy>_<maxy>_<miny>"
-     * 
+     *
      * @param bbox
      * @param scale
      * @return tile id string
@@ -128,7 +128,7 @@ public class WMSTile implements Tile {
 
     /**
      * Set the buffered image while locking and set the state of the tile.
-     * 
+     *
      * @see org.locationtech.udig.catalog.wmsc.server.Tile#setBufferedImage(java.awt.image.BufferedImage)
      */
     public void setBufferedImage( BufferedImage im ) {
@@ -326,7 +326,7 @@ public class WMSTile implements Tile {
     /**
      * Extract the cache-control header from the servers response object in the form: 'max-age=3600,
      * must-revalidate'
-     * 
+     *
      * @param response
      * @return
      */
@@ -403,7 +403,7 @@ public class WMSTile implements Tile {
 
     /**
      * Class for sending map requests
-     * 
+     *
      * @author GDavis
      * @since 1.1.0
      */

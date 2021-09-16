@@ -316,7 +316,6 @@ public class PlatformGeoSelectionManager extends AbstractGeoSelectionManager {
 
         @Override
         public void partBroughtToTop(IWorkbenchPartReference partRef) {
-            // TODO Auto-generated method stub
 
         }
 
@@ -346,31 +345,26 @@ public class PlatformGeoSelectionManager extends AbstractGeoSelectionManager {
 
         @Override
         public void partDeactivated(IWorkbenchPartReference partRef) {
-            // TODO Auto-generated method stub
 
         }
 
         @Override
         public void partHidden(IWorkbenchPartReference partRef) {
-            // TODO Auto-generated method stub
 
         }
 
         @Override
         public void partInputChanged(IWorkbenchPartReference partRef) {
-            // TODO Auto-generated method stub
 
         }
 
         @Override
         public void partOpened(IWorkbenchPartReference partRef) {
-            // TODO Auto-generated method stub
 
         }
 
         @Override
         public void partVisible(IWorkbenchPartReference partRef) {
-            // TODO Auto-generated method stub
 
         }
 

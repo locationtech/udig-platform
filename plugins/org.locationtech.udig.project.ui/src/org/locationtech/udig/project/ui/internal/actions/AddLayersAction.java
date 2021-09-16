@@ -27,7 +27,7 @@ import org.locationtech.udig.project.ui.internal.wizard.MapImport;
 /**
  * Performs the open action from the file menu of uDig. It is responsible for creating new maps
  * from selected resources.
- * 
+ *
  * @author rgould
  * @since 0.9.0
  */
@@ -70,88 +70,71 @@ public class AddLayersAction extends ActionDelegate
     }
 
     public void addPropertyChangeListener( IPropertyChangeListener listener ) {
-        // TODO Auto-generated method stub
-        
+
     }
 
     public int getAccelerator() {
-        // TODO Auto-generated method stub
         return 0;
     }
 
     public String getActionDefinitionId() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public String getDescription() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public ImageDescriptor getDisabledImageDescriptor() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public HelpListener getHelpListener() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public ImageDescriptor getHoverImageDescriptor() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public String getId() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public ImageDescriptor getImageDescriptor() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public IMenuCreator getMenuCreator() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public int getStyle() {
-        // TODO Auto-generated method stub
         return 0;
     }
 
     public String getText() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public String getToolTipText() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public boolean isChecked() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     public boolean isEnabled() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     public boolean isHandled() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     public void removePropertyChangeListener( IPropertyChangeListener listener ) {
-        // TODO Auto-generated method stub
-        
+
     }
 
     public void run() {
@@ -159,73 +142,59 @@ public class AddLayersAction extends ActionDelegate
     }
 
     public void runWithEvent( Event event ) {
-        // TODO Auto-generated method stub
-        
+
     }
 
     public void setActionDefinitionId( String id ) {
-        // TODO Auto-generated method stub
-        
+
     }
 
     public void setChecked( boolean checked ) {
-        // TODO Auto-generated method stub
-        
+
     }
 
     public void setDescription( String text ) {
-        // TODO Auto-generated method stub
-        
+
     }
 
     public void setDisabledImageDescriptor( ImageDescriptor newImage ) {
-        // TODO Auto-generated method stub
-        
+
     }
 
     public void setEnabled( boolean enabled ) {
-        // TODO Auto-generated method stub
-        
+
     }
 
     public void setHelpListener( HelpListener listener ) {
-        // TODO Auto-generated method stub
-        
+
     }
 
     public void setHoverImageDescriptor( ImageDescriptor newImage ) {
-        // TODO Auto-generated method stub
-        
+
     }
 
     public void setId( String id ) {
-        // TODO Auto-generated method stub
-        
+
     }
 
     public void setImageDescriptor( ImageDescriptor newImage ) {
-        // TODO Auto-generated method stub
-        
+
     }
 
     public void setMenuCreator( IMenuCreator creator ) {
-        // TODO Auto-generated method stub
-        
+
     }
 
     public void setText( String text ) {
-        // TODO Auto-generated method stub
-        
+
     }
 
     public void setToolTipText( String text ) {
-        // TODO Auto-generated method stub
-        
+
     }
 
     public void setAccelerator( int keycode ) {
-        // TODO Auto-generated method stub
-        
+
     }
 
 }

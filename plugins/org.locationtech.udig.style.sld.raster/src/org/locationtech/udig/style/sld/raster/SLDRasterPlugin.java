@@ -26,7 +26,7 @@ public class SLDRasterPlugin extends AbstractUdigUIPlugin {
     /** The id of the plug-in */
     public static final String ID = "org.locationtech.udig.style.sld.raster"; //$NON-NLS-1$
     /** Icons path (value "icons/") */
-    public final static String ICONS_PATH = "icons/";//$NON-NLS-1$
+    public static final String ICONS_PATH = "icons/";//$NON-NLS-1$
 	private static SLDRasterPlugin INSTANCE;
 
     /**
@@ -58,7 +58,7 @@ public class SLDRasterPlugin extends AbstractUdigUIPlugin {
      * }
      */
     public static void trace( String message, Throwable e) {
-        if( getDefault().isDebugging() ) {            
+        if( getDefault().isDebugging() ) {
             if( message != null ) System.out.println( message );
             if( e != null ) e.printStackTrace();
         }
@@ -70,12 +70,12 @@ public class SLDRasterPlugin extends AbstractUdigUIPlugin {
      * <ul>
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
-     * </p> 
+     * </p>
      * @param trace currently only RENDER is defined
      */
     public static boolean isDebugging( final String trace ){
         return getDefault().isDebugging() &&
-            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
+            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
 
 	public static SLDRasterPlugin getDefault() {
