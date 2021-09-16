@@ -5,7 +5,7 @@ This wizard allows you to export information from the uDig application to a rang
 
 .. figure:: /images/export_wizard/ExportWizard.png
    :align: center
-   :alt: 
+   :alt:
 
 You can choose between the following options:
 
@@ -14,5 +14,5 @@ You can choose between the following options:
 
    Layer to Shapefile Wizard
    Map to Image Wizard
-   Resource to Shapefile Wizard
+   All Features to Shapefile Wizard
 
