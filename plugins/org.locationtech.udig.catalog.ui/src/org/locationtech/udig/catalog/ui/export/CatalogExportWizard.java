@@ -296,7 +296,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
         return true;
     }
 
-    protected static SimpleFeatureType removeUnsupportedTypes(final SimpleFeatureType destinationFeatureType, boolean writeLog) {
+    private static SimpleFeatureType removeUnsupportedTypes(final SimpleFeatureType destinationFeatureType, boolean writeLog) {
         final List<AttributeDescriptor> attributeDescriptors = destinationFeatureType.getAttributeDescriptors();
         final SimpleFeatureTypeBuilder sftb = new SimpleFeatureTypeBuilder();
         sftb.setName(destinationFeatureType.getTypeName());
