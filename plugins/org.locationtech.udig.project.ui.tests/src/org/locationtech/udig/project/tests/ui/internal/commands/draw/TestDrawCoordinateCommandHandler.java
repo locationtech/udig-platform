@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * https://locationtech.org/projects/technology.udig
  * (C) 2018, Eclipse Foundation
  *
@@ -49,10 +50,10 @@ import org.locationtech.udig.project.ui.internal.commands.draw.DrawCoordinateCom
 import org.locationtech.udig.tools.internal.CursorPosition;
 
 /**
- * Test for DraWCoordinateCommand. 
+ * Test for DraWCoordinateCommand.
  * The handler prompts for input a coordinate. navigates to it and
  * flashes 3 times using an animation based on {@link DrawCoordinateCommand}
- * 
+ *
  * @author nprigour
  *
  */
@@ -96,7 +97,7 @@ public class TestDrawCoordinateCommandHandler extends AbstractHandler {
 
     /**
      * shows a dialog for providing coordinate to show.
-     * 
+     *
      * @author nprigour
      *
      */
@@ -122,21 +123,11 @@ public class TestDrawCoordinateCommandHandler extends AbstractHandler {
 
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.eclipse.jface.dialogs.MessageDialog#open()
-         */
         @Override
         public int open() {
             return super.open();
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.eclipse.jface.dialogs.Dialog#close()
-         */
         @Override
         public boolean close() {
             return super.close();
@@ -182,8 +173,8 @@ public class TestDrawCoordinateCommandHandler extends AbstractHandler {
         }
 
         /**
-         * sets the position based on passed value. If an 
-         * exception occurs position is set to the ViewPort center.  
+         * sets the position based on passed value. If an
+         * exception occurs position is set to the ViewPort center.
          * @param coord
          */
         public void setPosition(Coordinate coord) {
@@ -194,9 +185,9 @@ public class TestDrawCoordinateCommandHandler extends AbstractHandler {
                 }
             } catch (Exception e) {
                 position = getPosition();
-                coordText.setText(CursorPosition.getString(getPosition()));              
+                coordText.setText(CursorPosition.getString(getPosition()));
             }
-                 
+
         }
 
         /**
@@ -209,19 +200,16 @@ public class TestDrawCoordinateCommandHandler extends AbstractHandler {
             return position;
         }
 
-        /**
-         * 
-         */
         private void go() {
             final IMap activeMap = ApplicationGIS.getActiveMap();
             if (activeMap.equals(ApplicationGIS.NO_MAP)) {
                 return;
             }
 
-            final Coordinate newpos = getCoordinateToShow(activeMap); 
+            final Coordinate newpos = getCoordinateToShow(activeMap);
 
             List<Command> commandList = new ArrayList<Command>();
-            
+
             // create the set viewport command if need be
             setPosition(newpos);
             MapCommand centerCommand = new SetViewportCenterCommand(newpos);
@@ -247,7 +235,7 @@ public class TestDrawCoordinateCommandHandler extends AbstractHandler {
                     final Rectangle validArea = (Rectangle) rect;
 
                     animation = new FeatureAnimation(commands, validArea);
-                    
+
                     AnimationUpdater.runTimer(activeMap.getRenderManager().getMapDisplay(),
                             animation);
                 }
@@ -276,7 +264,7 @@ public class TestDrawCoordinateCommandHandler extends AbstractHandler {
         /**
          * return the input coordinate or the center of the current viewport
          * if parsing fails the {@link #getPosition()} coordinate is returned
-         * 
+         *
          * @param activeMap
          * @return
          */

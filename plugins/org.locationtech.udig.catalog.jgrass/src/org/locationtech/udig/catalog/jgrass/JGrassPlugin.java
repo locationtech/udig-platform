@@ -1,6 +1,6 @@
-/*
+/**
  * uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -32,7 +32,7 @@ import org.locationtech.udig.catalog.jgrass.activeregion.ActiveRegionMapGraphic;
  * <p>
  * The activator class controls the plug-in life cycle
  * </p>
- * 
+ *
  * @author Andrea Antonello - www.hydrologis.com
  * @since 1.1.0
  */
@@ -50,21 +50,11 @@ public class JGrassPlugin extends AbstractUIPlugin {
     public JGrassPlugin() {
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-     */
     public void start( BundleContext context ) throws Exception {
         super.start(context);
         plugin = this;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-     */
     public void stop( BundleContext context ) throws Exception {
         plugin = null;
         super.stop(context);
@@ -72,7 +62,7 @@ public class JGrassPlugin extends AbstractUIPlugin {
 
     /**
      * Returns the shared instance
-     * 
+     *
      * @return the shared instance
      */
     public static JGrassPlugin getDefault() {
@@ -97,7 +87,7 @@ public class JGrassPlugin extends AbstractUIPlugin {
         int status = t instanceof Exception || message != null ? IStatus.ERROR : IStatus.WARNING;
         getDefault().getLog().log(new Status(status, PLUGIN_ID, IStatus.OK, message, t));
     }
-    
+
     private ILayer activeRegionLayer;
     public ILayer getActiveRegionMapGraphic() {
 

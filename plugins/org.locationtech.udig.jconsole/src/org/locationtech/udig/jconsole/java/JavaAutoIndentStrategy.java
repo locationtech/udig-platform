@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.locationtech.udig.jconsole.java;
 
-
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DefaultIndentLineAutoEditStrategy;
 import org.eclipse.jface.text.DocumentCommand;
@@ -25,9 +24,6 @@ public class JavaAutoIndentStrategy extends DefaultIndentLineAutoEditStrategy {
 	public JavaAutoIndentStrategy() {
 	}
 
-	/* (non-Javadoc)
-	 * Method declared on IAutoIndentStrategy
-	 */
 	public void customizeDocumentCommand(IDocument d, DocumentCommand c) {
 		if (c.length == 0 && c.text != null && endsWithDelimiter(d, c.text))
 			smartIndentAfterNewLine(d, c);

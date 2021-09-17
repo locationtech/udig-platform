@@ -1,12 +1,13 @@
-/* uDig - User Friendly Desktop Internet GIS client
-* http://udig.refractions.net
-* (C) 2004-2013, Refractions Research Inc.
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
-* License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
-*/
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004-2013, Refractions Research Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
+ */
 package org.locationtech.udig.project.ui.wizard.export.map;
 
 import java.util.Collection;
@@ -42,9 +43,6 @@ public class ExportMapWizard extends Wizard implements IExportWizard {
 		mapSelector = new MapSelectorPageWithScaleColumn("Export Selection", title, banner );
 	}
 
-	/* (non-Javadoc)
-	* @see org.eclipse.jface.wizard.Wizard#performFinish()
-	*/
 	@Override
 	public boolean performFinish() {
 		Collection<IMap> maps = mapSelector.getMaps();
@@ -64,9 +62,6 @@ public class ExportMapWizard extends Wizard implements IExportWizard {
 
 	}
 
-	/* (non-Javadoc)
-	* @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench, org.eclipse.jface.viewers.IStructuredSelection)
-	*/
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		mapSelector.setSelection(selection);
 	}

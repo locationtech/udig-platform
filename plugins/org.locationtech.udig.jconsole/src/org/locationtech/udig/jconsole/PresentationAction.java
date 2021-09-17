@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.locationtech.udig.jconsole;
 
-
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.TextEditorAction;
 
@@ -29,9 +28,6 @@ public class PresentationAction extends TextEditorAction {
 		update();
 	}
 
-	/* (non-Javadoc)
-	 * Method declared on IAction
-	 */
 	public void run() {
 
 		ITextEditor editor= getTextEditor();
@@ -42,9 +38,6 @@ public class PresentationAction extends TextEditorAction {
 		editor.showHighlightRangeOnly(!show);
 	}
 
-	/* (non-Javadoc)
-	 * Method declared on TextEditorAction
-	 */
 	public void update() {
 		setChecked(getTextEditor() != null && getTextEditor().showsHighlightRangeOnly());
 		setEnabled(true);

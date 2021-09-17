@@ -1,10 +1,10 @@
 /* Image Georeferencing
- * 
- * Axios Engineering 
- *      http://www.axios.es 
+ *
+ * Axios Engineering
+ *      http://www.axios.es
  *
  * (C) 2011, Axios Engineering S.L. (Axios)
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
@@ -20,11 +20,11 @@ import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.ImageCo
 
 /**
  * Tool used to pan the image.
- * 
+ *
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
  * @since 1.3.3
- * 
+ *
  */
 public class PanImageTool extends AbstractImageTool {
 
@@ -46,15 +46,6 @@ public class PanImageTool extends AbstractImageTool {
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see es.axios.udig.ui.georeferencing.internal.ui.imagepanel.tools.
-	 * AbstractImageTool
-	 * #executeBehaviour(es.axios.udig.ui.georeferencing.internal
-	 * .ui.imagepanel.tools.ImageInputEvent,
-	 * es.axios.udig.ui.georeferencing.internal.ui.MarkPresenter)
-	 */
 	@Override
 	protected boolean executeBehaviour(ImageInputEvent ev) {
 
@@ -66,12 +57,12 @@ public class PanImageTool extends AbstractImageTool {
 	/**
 	 * <p>
 	 * Performs a drag&drop operation.
-	 * 
+	 *
 	 * On mouse down, it captures the start position, on mouse drag, it performs
 	 * the pan operation and on mouse up, it reset the start position variables
 	 * ending the cycle.
 	 * </p>
-	 * 
+	 *
 	 * @param x
 	 *            Position in the canvas.
 	 * @param y
@@ -106,13 +97,13 @@ public class PanImageTool extends AbstractImageTool {
 	/**
 	 * <p>
 	 * Performs the pan operation.
-	 * 
+	 *
 	 * Given the X and Y positions, calculates if it can continue scrolling and
 	 * update the scroll variables inside the {@link ImageMetricPosition} class.
 	 * After doing it, broadcast this event to the presenters so they update and
 	 * redraw the image.
 	 * </p>
-	 * 
+	 *
 	 * @param x
 	 *            Position in the canvas.
 	 * @param y

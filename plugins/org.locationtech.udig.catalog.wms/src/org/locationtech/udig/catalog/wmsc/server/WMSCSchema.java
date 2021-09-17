@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2008, Refractions Research Inc.
  *
@@ -110,6 +111,7 @@ public class WMSCSchema implements Schema {
     }
 
     private static Schema[] imports = new Schema[]{XLinkSchema.getInstance(), WMSSchema.getInstance()};
+
     public Schema[] getImports() {
         return imports;
     }
@@ -174,6 +176,7 @@ public class WMSCSchema implements Schema {
             this.min = 1;
             this.max = 1;
         }
+
         /**
          * @param max
          * @param min
@@ -253,21 +256,14 @@ public class WMSCSchema implements Schema {
             return type;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.ElementGrouping#getGrouping()
-         */
         public int getGrouping() {
             return ELEMENT;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.ElementGrouping#findChildElement(java.lang.String)
-         */
         public Element findChildElement( String name ) {
             return (this.name != null && this.name.equals(name)) ? this : null;
         }
+
         public Element findChildElement( String localName, URI namespaceURI ) {
             return (this.name != null && this.name.equals(localName)) ? this : null;
         }

@@ -1,5 +1,12 @@
 /**
- * 
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2021, Refractions Research Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.feature.editor.field;
 
@@ -26,7 +33,7 @@ import org.opengis.feature.type.AttributeDescriptor;
  * <li></li>
  * </ul>
  * </p>
- * 
+ *
  * @author myleskenihan
  * @since 1.2.0
  */
@@ -44,7 +51,7 @@ public class IntegerAttributeField extends StringAttributeField {
 
     /**
      * Creates an integer attribute field.
-     * 
+     *
      * @param name the name of the preference this attribute field works on
      * @param labelText the label text of the attribute field
      * @param parent the parent of the attribute field's control
@@ -55,7 +62,7 @@ public class IntegerAttributeField extends StringAttributeField {
 
     /**
      * Creates an integer attribute field.
-     * 
+     *
      * @param name the name of the preference this attribute field works on
      * @param labelText the label text of the attribute field
      * @param parent the parent of the attribute field's control
@@ -71,7 +78,7 @@ public class IntegerAttributeField extends StringAttributeField {
 
     /**
      * Sets the range of valid values for this field.
-     * 
+     *
      * @param min the minimum allowed value (inclusive)
      * @param max the maximum allowed value (inclusive)
      */
@@ -83,8 +90,7 @@ public class IntegerAttributeField extends StringAttributeField {
     }
 
     /*
-     * (non-Javadoc) Method declared on StringAttributeField. Checks whether the entered String is a
-     * valid integer or not.
+     * Checks whether the entered String is a valid integer or not.
      */
     public boolean checkState() {
 
@@ -112,9 +118,6 @@ public class IntegerAttributeField extends StringAttributeField {
         return false;
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
     public void doLoad() {
         Object value = getFeature().getAttribute(getAttributeName());
         Integer thenumber = Converters.convert(value, Integer.class);
@@ -123,9 +126,6 @@ public class IntegerAttributeField extends StringAttributeField {
 
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
     protected void doLoadDefault() {
         if (textField != null) {
             SimpleFeatureType schema = getFeature().getFeatureType();
@@ -137,9 +137,6 @@ public class IntegerAttributeField extends StringAttributeField {
         valueChanged();
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
     protected void doStore() {
 
         SimpleFeatureType schema = getFeature().getFeatureType();
@@ -151,7 +148,7 @@ public class IntegerAttributeField extends StringAttributeField {
 
     /**
      * Returns this attribute field's current value as an integer.
-     * 
+     *
      * @return the value
      * @exception NumberFormatException if the <code>String</code> does not contain a parsable
      *            integer
@@ -159,28 +156,22 @@ public class IntegerAttributeField extends StringAttributeField {
     public int getIntValue() throws NumberFormatException {
         return new Integer(getStringValue()).intValue();
     }
-  
+
     @Override
     public Text getTextControl( Composite parent ) {
         if (textField == null) {
-            
+
             textField = new Text(parent, SWT.MULTI | SWT.BORDER); // this is a multi-line text
-                        
+
             textField.setFont(parent.getFont());
 
             textField.addKeyListener(new KeyAdapter(){
-                /*
-                 * (non-Javadoc)
-                 * @see
-                 * org.eclipse.swt.events.KeyAdapter#keyReleased(org.eclipse.swt.events.KeyEvent
-                 * )
-                 */
                 public void keyReleased( KeyEvent e ) {
                     //backspace pressed
                     if(e.keyCode == SWT.BS){
-                    valueChanged();                       
+                    valueChanged();
                     }
-                    
+
                     //numeric pressed
                     if (e.keyCode >=48 && e.keyCode <=57){
                     valueChanged();
@@ -195,7 +186,7 @@ public class IntegerAttributeField extends StringAttributeField {
                     valueChanged();
                 }
             });
-            
+
             textField.addDisposeListener(new DisposeListener(){
                 public void widgetDisposed( DisposeEvent event ) {
                     textField = null;

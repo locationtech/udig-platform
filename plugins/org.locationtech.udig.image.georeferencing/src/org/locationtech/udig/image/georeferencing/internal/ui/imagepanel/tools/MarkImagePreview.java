@@ -1,10 +1,10 @@
 /* Image Georeferencing
- * 
- * Axios Engineering 
- *      http://www.axios.es 
+ *
+ * Axios Engineering
+ *      http://www.axios.es
  *
  * (C) 2011, Axios Engineering S.L. (Axios)
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
@@ -29,11 +29,11 @@ import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.MarkIma
 
 /**
  * Preview used to show a mark while being D&D.
- * 
+ *
  * @author Mauricio Pazos (www.axios.es)
  * @author Aritz Davila (www.axios.es)
  * @since 1.3.3
- * 
+ *
  */
 final class MarkImagePreview extends AbstractMarkPresenter implements MarkImagePresenter {
 
@@ -68,24 +68,11 @@ final class MarkImagePreview extends AbstractMarkPresenter implements MarkImageP
 		});
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-	 */
 	public void update(Observable arg0, Object arg1) {
 
 		// nothing
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * es.axios.udig.ui.georeferencing.internal.ui.MarkPresenter#eventHandler
-	 * (es.axios.udig.ui.georeferencing.internal.ui.MarkPresenter.InputEvent,
-	 * int, int)
-	 */
 	public boolean eventHandler(InputEvent event, int x, int y) {
 
 		switch (event) {
@@ -102,11 +89,6 @@ final class MarkImagePreview extends AbstractMarkPresenter implements MarkImageP
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see es.axios.udig.ui.georeferencing.internal.ui.MarkPresenter#draw()
-	 */
 	public void draw() {
 
 		assert this.gc != null;

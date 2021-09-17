@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -119,11 +119,6 @@ public class SelectionStyleContent extends StyleContent {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.project.StyleContent#createDefaultStyle(org.locationtech.udig.catalog.IGeoResource)
-     */
     public Object createDefaultStyle( IGeoResource resource, Color colour, IProgressMonitor monitor ) {
         // this is purposely no implemented
         return null;
@@ -148,7 +143,7 @@ public class SelectionStyleContent extends StyleContent {
         GeometryDescriptor geom = schema.getGeometryDescriptor();
         ssc.getDefaultRule(style).symbolizers().clear();
         if (isLine(geom)) {
-        	
+
         	for (Symbolizer s : createLineSymbolizers(ssc)) ssc.getDefaultRule(style).symbolizers().add(s);
         } else if (isPoint(geom)) {
             int size = queryPointSize(style);
@@ -173,7 +168,7 @@ public class SelectionStyleContent extends StyleContent {
         createDefaultStyledLayerDescriptor(style);
         return style;
     }
-    
+
     private static int queryPointSize( Object style ) {
         int size = 6;
         if( style instanceof Style ){
@@ -305,7 +300,7 @@ public class SelectionStyleContent extends StyleContent {
     /**
      * Returns the the first feature type style for the SLD style. The feature type style is created
      * if it does not exist.
-     * 
+     *
      * @return The default (first) feature type style.
      */
     public FeatureTypeStyle getDefaultFeatureTypeStyle( Style style ) {
@@ -377,7 +372,7 @@ public class SelectionStyleContent extends StyleContent {
     /**
      * Creates an SLD and UserLayer, and nests the style (SLD-->UserLayer-->Style). This method is a
      * copy of the one in SLDContent to avoid a cyclic dependency.
-     * 
+     *
      * @see net.refractions.style.sld.SLDContent#createDefaultStyledLayerDescriptor
      * @param style
      * @return SLD

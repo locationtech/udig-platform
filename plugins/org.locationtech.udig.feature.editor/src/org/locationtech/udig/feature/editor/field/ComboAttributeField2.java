@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -44,16 +44,16 @@ public class ComboAttributeField2 extends AttributeField {
 
     private List<?> options;
 
-    private ISelectionChangedListener listener = new ISelectionChangedListener() {                
-        public void selectionChanged(SelectionChangedEvent event) {                    
+    private ISelectionChangedListener listener = new ISelectionChangedListener() {
+        public void selectionChanged(SelectionChangedEvent event) {
             IStructuredSelection sel = (IStructuredSelection) event.getSelection();
-            fireValueChanged(VALUE, null, sel.getFirstElement() ); 
+            fireValueChanged(VALUE, null, sel.getFirstElement() );
         }
     };
 
     /**
      * Create the combo box attribute field.
-     * 
+     *
      * @param name
      *            the name of the preference this attribute field works on
      * @param labelText
@@ -76,11 +76,7 @@ public class ComboAttributeField2 extends AttributeField {
         }
         return null;
     }
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.AttributeField#adjustForNumColumns(int)
-     */
+
     public void adjustForNumColumns(int numColumns) {
         if (numColumns > 1) {
             Control control = getLabelControl();
@@ -99,13 +95,6 @@ public class ComboAttributeField2 extends AttributeField {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.eclipse.jface.preference.AttributeField#doFillIntoGrid(org.eclipse
-     * .swt.widgets.Composite, int)
-     */
     protected void doFillIntoGrid(Composite parent, int numColumns) {
         int comboC = 1;
         if (numColumns > 1) {
@@ -124,11 +113,6 @@ public class ComboAttributeField2 extends AttributeField {
         control.setFont(parent.getFont());
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.AttributeField#doLoad()
-     */
     public void doLoad() {
         Object value = getFeature().getAttribute(getAttributeName());
 //        int index = -1;
@@ -152,11 +136,6 @@ public class ComboAttributeField2 extends AttributeField {
         viewer.addSelectionChangedListener(listener);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.AttributeField#doLoadDefault()
-     */
     protected void doLoadDefault() {
         SimpleFeatureType schema = getFeature().getFeatureType();
         AttributeDescriptor descriptor = schema.getDescriptor(getAttributeName());
@@ -167,11 +146,6 @@ public class ComboAttributeField2 extends AttributeField {
         viewer.addSelectionChangedListener(listener);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.AttributeField#doStore()
-     */
     protected void doStore() {
         ISelection selection = viewer.getSelection();
         if (!selection.isEmpty() && selection instanceof IStructuredSelection) {
@@ -180,20 +154,15 @@ public class ComboAttributeField2 extends AttributeField {
             getFeature().setAttribute(getAttributeName(), value);
         } else {
             SimpleFeatureType schema = getFeature().getFeatureType();
-            AttributeDescriptor descriptor = schema.getDescriptor( getAttributeName());  
-            
+            AttributeDescriptor descriptor = schema.getDescriptor( getAttributeName());
+
             String text = viewer.getCombo().getText();
-            Object value = Converters.convert( text, descriptor.getType().getBinding() );        
+            Object value = Converters.convert( text, descriptor.getType().getBinding() );
             getFeature().setAttribute( getAttributeName(), value );
         }
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.AttributeField#getNumberOfControls()
-     */
     public int getNumberOfControls() {
         return 2;
     }

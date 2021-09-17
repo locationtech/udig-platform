@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2013, Refractions Research Inc.
  *
@@ -48,7 +49,7 @@ import org.locationtech.udig.project.ui.wizard.export.image.ExportMapToImageWiza
 
 /**
  * Wizard Page for selecting the maps to export.
- * 
+ *
  * @author Jesse
  */
 public class MapSelectorPage extends WizardPage {
@@ -59,22 +60,17 @@ public class MapSelectorPage extends WizardPage {
 
     /**
      * Create a new instance
-     * @param banner 
-     * @param title 
+     * @param banner
+     * @param title
      */
     public MapSelectorPage(String page, String title, ImageDescriptor banner) {
         super( page,
                title != null ? title : Messages.MapSelectorPage_pageName,
                banner );
-        
+
         setPageComplete(!getMaps().isEmpty());
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
-     */
     public void createControl( Composite parent ) {
         Composite comp = new Composite(parent, SWT.NONE);
         GridLayout layout = new GridLayout(3, false);
@@ -91,7 +87,7 @@ public class MapSelectorPage extends WizardPage {
 
         setControl(comp);
     }
-    
+
 
     private void createExportBrowseButton(Composite comp, String tooltip) {
         Button browse = new Button(comp, SWT.PUSH);
@@ -126,7 +122,6 @@ public class MapSelectorPage extends WizardPage {
         return new File(this.destText.getText());
     }
 
-
     private void createMapSelector( Composite listComp ) {
         GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true);
         listComp.setLayoutData(layoutData);
@@ -151,7 +146,7 @@ public class MapSelectorPage extends WizardPage {
         remove.setText(Messages.MapSelectorPage_Remove);
         gridData = new GridData();
         gridData.horizontalAlignment = SWT.FILL;
-        remove.setLayoutData(gridData);        
+        remove.setLayoutData(gridData);
         remove.addListener(SWT.Selection, new Listener(){
 
             @SuppressWarnings("unchecked")
@@ -174,7 +169,7 @@ public class MapSelectorPage extends WizardPage {
     /**
      * By default creates a table viewer. Calls add columns in order to create the required columns
      * for the table.
-     * 
+     *
      * @param listComp the parent Composite.
      */
     protected final void initializeViewer( Composite listComp ) {
@@ -194,25 +189,25 @@ public class MapSelectorPage extends WizardPage {
         viewer.getControl().setLayoutData(layoutData);
         viewer.setLabelProvider(createLabelProvider(viewer));
         viewer.setInput(maps);
-        
+
         configureEditors(tableViewer);
     }
 
     /**
      * Implementation does nothing
-     * 
+     *
      * @param viewer2 the viewer created by
      */
     protected void configureEditors( TableViewer viewer2 ) {
-        
+
     }
 
     /**
      * Creates the label provider to use in the table viewer.
-     * 
+     *
      * This version creates an AdapterFactoryLabelProviderDecorator.
-     * @param viewer2 
-     * 
+     * @param viewer2
+     *
      * @return
      */
     protected IBaseLabelProvider createLabelProvider(StructuredViewer viewer2) {
@@ -223,11 +218,11 @@ public class MapSelectorPage extends WizardPage {
     /**
      * Creates the columns that are shown in the viewer. The default is a single "Map" column. The
      * table that is passed in has one column and uses TableLayout with ColumnWeightData. The
-     * headers are not visible. 
+     * headers are not visible.
      * <p>
      * This method simply renames the first (only) column's name to "Name"
      * </p>
-     * 
+     *
      * @param table table to add columns to
      * @param tableLayout
      */
@@ -240,7 +235,7 @@ public class MapSelectorPage extends WizardPage {
 
     /**
      * Updates the list of selected maps
-     * 
+     *
      * @param mapList
      */
     public void updateMapList() {
@@ -255,7 +250,7 @@ public class MapSelectorPage extends WizardPage {
 
     /**
      * Sets the set of selected maps
-     * 
+     *
      * @param selection
      */
     public void setSelection( IStructuredSelection selection ) {
@@ -266,7 +261,7 @@ public class MapSelectorPage extends WizardPage {
 
     /**
      * Adds the selection to the set of selected maps
-     * 
+     *
      * @param selection selections to inspect
      */
     @SuppressWarnings("unchecked")
@@ -307,6 +302,7 @@ public class MapSelectorPage extends WizardPage {
 
         return null;
     }
+
     public class SelectButtonListener implements SelectionListener {
 
         public void widgetDefaultSelected(SelectionEvent e) {

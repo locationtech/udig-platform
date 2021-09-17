@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2008, Refractions Research Inc.
  *
@@ -29,14 +30,14 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * Allows user to set the location of the scalebar?
- * 
+ *
  *  ScalebarStyleConfigurator x = new ScalebarStyleConfigurator( ... );
  *  TODO code example
- *  
+ *
  * </code></pre>
- * 
+ *
  * </p>
- * 
+ *
  * @author jdeolive
  * @since 0.6.0
  */
@@ -44,30 +45,26 @@ public class ScalebarStyleConfigurator extends IStyleConfigurator
     implements SelectionListener {
 
     /** vertical alignment constants * */
-    private static final String TOP = Messages.ScalebarStyleConfigurator_top; 
-    private static final String MIDDLE = Messages.ScalebarStyleConfigurator_middle; 
-    private static final String BOTTOM = Messages.ScalebarStyleConfigurator_bottom; 
+    private static final String TOP = Messages.ScalebarStyleConfigurator_top;
+    private static final String MIDDLE = Messages.ScalebarStyleConfigurator_middle;
+    private static final String BOTTOM = Messages.ScalebarStyleConfigurator_bottom;
 
     /** horizontal alignment constants * */
-    private static final String LEFT = Messages.ScalebarStyleConfigurator_left; 
-    private static final String CENTER = Messages.ScalebarStyleConfigurator_center; 
-    private static final String RIGHT = Messages.ScalebarStyleConfigurator_right; 
+    private static final String LEFT = Messages.ScalebarStyleConfigurator_left;
+    private static final String CENTER = Messages.ScalebarStyleConfigurator_center;
+    private static final String RIGHT = Messages.ScalebarStyleConfigurator_right;
 
     /** ui widgets * */
     private Combo xCombo;
     private Combo yCombo;
 
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.style.IStyleConfigurator#init()
-	 */
-	public void init() {
-		// do nothing
+    public void init() {
+        // do nothing
+    }
 
-	}
-    
     /*
-     * @see org.locationtech.udig.style.IStyleConfigurator#refresh()
-     */
+    * @see org.locationtech.udig.style.IStyleConfigurator#refresh()
+    */
     public void refresh() {
         IBlackboard blackboard = getStyleBlackboard();
         Rectangle rect = (Rectangle) blackboard.get(LocationStyleContent.ID);
@@ -87,19 +84,19 @@ public class ScalebarStyleConfigurator extends IStyleConfigurator
             xCombo.select(1);
         else if (isRight(rect))
             xCombo.select(2);
-        
-        if (isTop(rect)) 
+
+        if (isTop(rect))
             yCombo.select(0);
-        else if (isMiddle(rect)) 
+        else if (isMiddle(rect))
             yCombo.select(1);
-        else if (isBottom(rect)) 
+        else if (isBottom(rect))
             yCombo.select(2);
 
     }
 
     /*
-     * @see org.locationtech.udig.style.IStyleConfigurator#apply()
-     */
+    * @see org.locationtech.udig.style.IStyleConfigurator#apply()
+    */
     public void apply() {
         IBlackboard blackboard = getStyleBlackboard();
         Rectangle rect = (Rectangle) blackboard.get(LocationStyleContent.ID);
@@ -114,8 +111,8 @@ public class ScalebarStyleConfigurator extends IStyleConfigurator
     }
 
     /*
-     * @see org.locationtech.udig.style.IStyleConfigurator#canStyle(org.locationtech.udig.project.Layer)
-     */
+    * @see org.locationtech.udig.style.IStyleConfigurator#canStyle(org.locationtech.udig.project.Layer)
+    */
     public boolean canStyle( Layer layer ) {
         return layer.hasResource(ScalebarMapGraphic.class);
     }
@@ -207,8 +204,8 @@ public class ScalebarStyleConfigurator extends IStyleConfigurator
     }
 
     /*
-     * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-     */
+    * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+    */
     public void widgetSelected( SelectionEvent e ) {
         IBlackboard blackboard = getStyleBlackboard();
         Rectangle rect = (Rectangle) blackboard.get(LocationStyleContent.ID);
@@ -221,7 +218,7 @@ public class ScalebarStyleConfigurator extends IStyleConfigurator
             blackboard.put(LocationStyleContent.ID, rect);
             ((StyleBlackboard) getStyleBlackboard()).setSelected(new String[]{LocationStyleContent.ID});
         }
-        
+
         //read object state from ui widgets
         switch (xCombo.getSelectionIndex()) {
             case 0:
@@ -232,9 +229,9 @@ public class ScalebarStyleConfigurator extends IStyleConfigurator
                 break;
             case 2:
                 setRight(rect);
-                
+
         }
-        
+
         switch(yCombo.getSelectionIndex()) {
             case 0:
                 setTop(rect);
@@ -248,19 +245,16 @@ public class ScalebarStyleConfigurator extends IStyleConfigurator
     }
 
     /*
-     * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
-     */
+    * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
+    */
     public void widgetDefaultSelected( SelectionEvent e ) {
         //do nothing
     }
 
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.style.IStyleConfigurator#createControl(org.eclipse.swt.widgets.Composite)
-	 */
-	public void createControl(Composite parent) {
+    public void createControl(Composite parent) {
         parent.setLayout( new GridLayout( 2, true ));
         Label xLabel = new Label(parent, SWT.RIGHT);
-        xLabel.setText(Messages.ScalebarStyleConfigurator_horizontalAlignment); 
+        xLabel.setText(Messages.ScalebarStyleConfigurator_horizontalAlignment);
 
         xCombo = new Combo(parent, SWT.DROP_DOWN);
         xCombo.setItems(new String[]{LEFT, CENTER, RIGHT});
@@ -268,12 +262,12 @@ public class ScalebarStyleConfigurator extends IStyleConfigurator
         xCombo.addSelectionListener(this);
 
         Label yLabel = new Label(parent, SWT.RIGHT);
-        yLabel.setText(Messages.ScalebarStyleConfigurator_verticalAlignment); 
+        yLabel.setText(Messages.ScalebarStyleConfigurator_verticalAlignment);
 
         yCombo = new Combo(parent, SWT.DROP_DOWN);
         yCombo.setItems(new String[]{TOP, MIDDLE, BOTTOM});
         yCombo.select(0);
         yCombo.addSelectionListener(this);
-	}
+    }
 
 }

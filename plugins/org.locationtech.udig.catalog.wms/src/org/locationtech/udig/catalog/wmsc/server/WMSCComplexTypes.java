@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2008, Refractions Research Inc.
  *
@@ -36,7 +37,7 @@ import org.xml.sax.SAXException;
 
 /**
  * WMS-C getCapabilities xml complex types (part of the capabilities document).
- * 
+ *
  * @author Emily Gouge (Refractions Research, Inc.)
  * @since 1.1.0
  */
@@ -65,35 +66,18 @@ public interface WMSCComplexTypes {
             return instance;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.ComplexType#getAttributes()
-         */
         public Attribute[] getAttributes() {
             return attrs;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.ComplexType#getChild()
-         */
         public ElementGrouping getChild() {
             return null;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.ComplexType#getChildElements()
-         */
         public Element[] getChildElements() {
             return null;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#getValue(org.geotools.xml.schema.Element,
-         * org.geotools.xml.schema.ElementValue[], org.xml.sax.Attributes, java.util.Map)
-         */
         @SuppressWarnings("unchecked")
         public Object getValue( Element element, ElementValue[] value, Attributes attrs, Map hints )
                 throws SAXException, OperationNotSupportedException {
@@ -123,37 +107,19 @@ public interface WMSCComplexTypes {
             return bbox;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#getName()
-         */
         public String getName() {
             return "BoundingBox"; //$NON-NLS-1$
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#getInstanceType()
-         */
         public Class< ? > getInstanceType() {
             return CRSEnvelope.class;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#canEncode(org.geotools.xml.schema.Element,
-         * java.lang.Object, java.util.Map)
-         */
         @SuppressWarnings("unchecked")
         public boolean canEncode( Element element, Object value, Map hints ) {
             return false;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#encode(org.geotools.xml.schema.Element,
-         * java.lang.Object, org.geotools.xml.PrintHandler, java.util.Map)
-         */
         @SuppressWarnings("unchecked")
         public void encode( Element element, Object value, PrintHandler output, Map hints )
                 throws IOException, OperationNotSupportedException {
@@ -182,35 +148,18 @@ public interface WMSCComplexTypes {
             return instance;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.ComplexType#getAttributes()
-         */
         public Attribute[] getAttributes() {
             return null;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.ComplexType#getChild()
-         */
         public ElementGrouping getChild() {
             return seq;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.ComplexType#getChildElements()
-         */
         public Element[] getChildElements() {
             return elems;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#getValue(org.geotools.xml.schema.Element,
-         * org.geotools.xml.schema.ElementValue[], org.xml.sax.Attributes, java.util.Map)
-         */
         @SuppressWarnings("unchecked")
         public Object getValue( Element element, ElementValue[] value, Attributes attrs, Map hints )
                 throws SAXException, OperationNotSupportedException {
@@ -267,37 +216,19 @@ public interface WMSCComplexTypes {
             return tileset;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#getName()
-         */
         public String getName() {
             return "WMSTileSet"; //$NON-NLS-1$
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#getInstanceType()
-         */
         public Class< ? > getInstanceType() {
             return WMSTileSet.class;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#canEncode(org.geotools.xml.schema.Element,
-         * java.lang.Object, java.util.Map)
-         */
         @SuppressWarnings("unchecked")
         public boolean canEncode( Element element, Object value, Map hints ) {
             return false;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#encode(org.geotools.xml.schema.Element,
-         * java.lang.Object, org.geotools.xml.PrintHandler, java.util.Map)
-         */
         @SuppressWarnings("unchecked")
         public void encode( Element element, Object value, PrintHandler output, Map hints )
                 throws IOException, OperationNotSupportedException {
@@ -319,35 +250,18 @@ public interface WMSCComplexTypes {
             return instance;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.ComplexType#getAttributes()
-         */
         public Attribute[] getAttributes() {
             return null;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.ComplexType#getChild()
-         */
         public ElementGrouping getChild() {
             return seq;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.ComplexType#getChildElements()
-         */
         public Element[] getChildElements() {
             return elems;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#getValue(org.geotools.xml.schema.Element,
-         * org.geotools.xml.schema.ElementValue[], org.xml.sax.Attributes, java.util.Map)
-         */
         @SuppressWarnings("unchecked")
         public Object getValue( Element element, ElementValue[] value, Attributes attrs, Map hints )
                 throws SAXException, OperationNotSupportedException {
@@ -365,37 +279,19 @@ public interface WMSCComplexTypes {
             return capabilities;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#getName()
-         */
         public String getName() {
             return "VendorSpecificCapabilities"; //$NON-NLS-1$
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#getInstanceType()
-         */
         public Class< ? > getInstanceType() {
             return VendorSpecificCapabilities.class;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#canEncode(org.geotools.xml.schema.Element,
-         * java.lang.Object, java.util.Map)
-         */
         @SuppressWarnings("unchecked")
         public boolean canEncode( Element element, Object value, Map hints ) {
             return false;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#encode(org.geotools.xml.schema.Element,
-         * java.lang.Object, org.geotools.xml.PrintHandler, java.util.Map)
-         */
         @SuppressWarnings("unchecked")
         public void encode( Element element, Object value, PrintHandler output, Map hints )
                 throws IOException, OperationNotSupportedException {
@@ -409,7 +305,7 @@ public interface WMSCComplexTypes {
         /*
          * The vendor specific capabilities in this list should not be necessary once
          * geowebcache returns a valid wms document.  This is currently in there to support
-         * the geowebcache current getCapabilities document 
+         * the geowebcache current getCapabilities document
          */
         private static Element[] elems = new Element[] {
             new WMSCElement("Service", _ServiceType.getInstance()), //$NON-NLS-1$
@@ -428,35 +324,18 @@ public interface WMSCComplexTypes {
             return instance;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.ComplexType#getAttributes()
-         */
         public Attribute[] getAttributes() {
             return attrs;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.ComplexType#getChild()
-         */
         public ElementGrouping getChild() {
             return seq;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.ComplexType#getChildElements()
-         */
         public Element[] getChildElements() {
             return elems;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#getValue(org.geotools.xml.schema.Element,
-         * org.geotools.xml.schema.ElementValue[], org.xml.sax.Attributes, java.util.Map)
-         */
         @SuppressWarnings("unchecked")
         public Object getValue( Element element, ElementValue[] value, Attributes attrs, Map hints )
                 throws SAXException, OperationNotSupportedException {
@@ -493,44 +372,26 @@ public interface WMSCComplexTypes {
             return capabilities;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#getName()
-         */
         public String getName() {
             return "WMT_MS_Capabilities"; //$NON-NLS-1$
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#getInstanceType()
-         */
         public Class< ? > getInstanceType() {
             return WMSCCapabilities.class;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#canEncode(org.geotools.xml.schema.Element,
-         * java.lang.Object, java.util.Map)
-         */
         @SuppressWarnings("unchecked")
         public boolean canEncode( Element element, Object value, Map hints ) {
             return false;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#encode(org.geotools.xml.schema.Element,
-         * java.lang.Object, org.geotools.xml.PrintHandler, java.util.Map)
-         */
         @SuppressWarnings("unchecked")
         public void encode( Element element, Object value, PrintHandler output, Map hints )
                 throws IOException, OperationNotSupportedException {
             throw new OperationNotSupportedException();
         }
     }
-    
+
     public static class _CapabilityType   extends WMSCComplexType {
         private static final WMSCComplexType instance = new _CapabilityType();
 
@@ -541,40 +402,23 @@ public interface WMSCComplexTypes {
         private static Sequence seq = new SequenceGT(elems);
 
         private static Attribute[] attrs = new Attribute[]{};
-               
+
         public static WMSCComplexType getInstance() {
             return instance;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.ComplexType#getAttributes()
-         */
         public Attribute[] getAttributes() {
             return attrs;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.ComplexType#getChild()
-         */
         public ElementGrouping getChild() {
             return seq;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.ComplexType#getChildElements()
-         */
         public Element[] getChildElements() {
             return elems;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#getValue(org.geotools.xml.schema.Element,
-         * org.geotools.xml.schema.ElementValue[], org.xml.sax.Attributes, java.util.Map)
-         */
         @SuppressWarnings("unchecked")
         public Object getValue( Element element, ElementValue[] value, Attributes attrs, Map hints )
                 throws SAXException, OperationNotSupportedException {
@@ -591,48 +435,30 @@ public interface WMSCComplexTypes {
             return capabilities;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#getName()
-         */
         public String getName() {
             return "Capability"; //$NON-NLS-1$
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#getInstanceType()
-         */
         public Class< ? > getInstanceType() {
             return Capability.class;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#canEncode(org.geotools.xml.schema.Element,
-         * java.lang.Object, java.util.Map)
-         */
         @SuppressWarnings("unchecked")
         public boolean canEncode( Element element, Object value, Map hints ) {
             return false;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.geotools.xml.schema.Type#encode(org.geotools.xml.schema.Element,
-         * java.lang.Object, org.geotools.xml.PrintHandler, java.util.Map)
-         */
         @SuppressWarnings("unchecked")
         public void encode( Element element, Object value, PrintHandler output, Map hints )
                 throws IOException, OperationNotSupportedException {
             throw new OperationNotSupportedException();
         }
     }
-    
+
     /**
      * Represents a service complex type from wmsc.  Currently this only parses out
-     * the Name, Title and OnlineResrouce attributes.  
-     * 
+     * the Name, Title and OnlineResrouce attributes.
+     *
      * @author Emily Gouge (Refractions Research, Inc).
      * @since 1.1.0
      */
@@ -673,40 +499,18 @@ public interface WMSCComplexTypes {
             return instance;
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.geotools.xml.schema.ComplexType#getAttributes()
-         */
         public Attribute[] getAttributes() {
             return null;
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.geotools.xml.schema.ComplexType#getChild()
-         */
         public ElementGrouping getChild() {
             return seq;
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.geotools.xml.schema.ComplexType#getChildElements()
-         */
         public Element[] getChildElements() {
             return elems;
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.geotools.xml.schema.Type#getValue(org.geotools.xml.schema.Element,
-         *      org.geotools.xml.schema.ElementValue[], org.xml.sax.Attributes,
-         *      java.util.Map)
-         */
         @SuppressWarnings("unchecked")
         public Object getValue(Element element, ElementValue[] value,
                 Attributes attrs, Map hints) throws SAXException,
@@ -744,7 +548,7 @@ public interface WMSCComplexTypes {
                         try {
                             service.setOnlineResource(new URL( spec ));
                         } catch (MalformedURLException e) {
-                           System.out.println("OnlineResource cannot string to url: " +spec); //$NON-NLS-1$                           
+                           System.out.println("OnlineResource cannot string to url: " +spec); //$NON-NLS-1$
                         }
                     }
                 }
@@ -780,42 +584,19 @@ public interface WMSCComplexTypes {
             return service;
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.geotools.xml.schema.Type#getName()
-         */
         public String getName() {
             return "Service"; //$NON-NLS-1$
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.geotools.xml.schema.Type#getInstanceType()
-         */
         public Class<?> getInstanceType() {
             return Service.class;
-//            return null;
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.geotools.xml.schema.Type#canEncode(org.geotools.xml.schema.Element,
-         *      java.lang.Object, java.util.Map)
-         */
         @SuppressWarnings("unchecked")
         public boolean canEncode(Element element, Object value, Map hints) {
             return false;
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.geotools.xml.schema.Type#encode(org.geotools.xml.schema.Element,
-         *      java.lang.Object, org.geotools.xml.PrintHandler, java.util.Map)
-         */
         @SuppressWarnings("unchecked")
         public void encode(Element element, Object value, PrintHandler output,
                 Map hints) throws IOException, OperationNotSupportedException {
@@ -823,7 +604,4 @@ public interface WMSCComplexTypes {
         }
     }
 
-    
-    
-    
 }

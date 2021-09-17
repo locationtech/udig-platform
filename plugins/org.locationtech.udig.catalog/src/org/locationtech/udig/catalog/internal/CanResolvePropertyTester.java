@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2012, Refractions Research Inc.
  *
@@ -21,12 +22,12 @@ import org.opengis.style.Style;
 
 /**
  * PropertyTester used to check IResolve support for common resolve targets.
- * 
+ *
  * @author Jody Garnett (LISAsoft)
  * @since 1.3.2
  */
 public class CanResolvePropertyTester extends PropertyTester {
-    
+
     private static final String PROPERTY_FEATURESOURCE = "featureSource"; //$NON-NLS-1$
     private static final String PROPERTY_FEATURESTORE = "featureStore"; //$NON-NLS-1$
     private static final String PROPERTY_DATASTORE = "dataSource"; //$NON-NLS-1$
@@ -34,13 +35,10 @@ public class CanResolvePropertyTester extends PropertyTester {
     private static final String PROPERTY_WMS_LAYER = "wmsLayer"; //$NON-NLS-1$
     private static final String PROPERTY_SCHEMA = "schema";  //$NON-NLS-1$
     private static final String PROPERTY_STYLE = "style";  //$NON-NLS-1$
-    
+
     public CanResolvePropertyTester() {
     }
 
-    /* (non-Javadoc)
-     * @see org.eclipse.core.expressions.IPropertyTester#test(java.lang.Object, java.lang.String, java.lang.Object[], java.lang.Object)
-     */
     @Override
     public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
         IResolve resolve = (IResolve) receiver;
@@ -49,25 +47,25 @@ public class CanResolvePropertyTester extends PropertyTester {
         }
         // that is the class equivelent of "instanceof"
         if( PROPERTY_FEATURESOURCE.equals(property)){
-            return resolve.canResolve( SimpleFeatureSource.class );            
+            return resolve.canResolve( SimpleFeatureSource.class );
         }
         else if( PROPERTY_FEATURESTORE.equals(property)){
-            return resolve.canResolve( SimpleFeatureStore.class );            
+            return resolve.canResolve( SimpleFeatureStore.class );
         }
         else if( PROPERTY_DATASTORE.equals(property)){
-            return resolve.canResolve( DataStore.class );            
+            return resolve.canResolve( DataStore.class );
         }
         else if( PROPERTY_WMS.equals(property)){
-            return resolve.canResolve( WebMapServer.class );            
+            return resolve.canResolve( WebMapServer.class );
         }
         else if( PROPERTY_WMS_LAYER.equals(property)){
-            return resolve.canResolve( org.geotools.ows.wms.Layer.class );            
+            return resolve.canResolve( org.geotools.ows.wms.Layer.class );
         }
         else if( PROPERTY_SCHEMA.equals(property)){
-            return resolve.canResolve( SimpleFeatureType.class );            
+            return resolve.canResolve( SimpleFeatureType.class );
         }
         else if( PROPERTY_STYLE.equals(property)){
-            return resolve.canResolve( Style.class );            
+            return resolve.canResolve( Style.class );
         }
         return false;
     }

@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2010, Refractions Research Inc.
  *
@@ -19,24 +20,19 @@ import org.eclipse.jface.preference.IPreferenceStore;
  * Class used to initialize default preference values.
  */
 public class WMTPreferenceInitializer extends AbstractPreferenceInitializer {
-    
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#initializeDefaultPreferences()
-     */
+
     @Override
     public void initializeDefaultPreferences() {
         IPreferenceStore store = WMTPlugin.getDefault().getPreferenceStore();
 
-        store.setDefault(WMTPreferenceConstants.P_WMT_SCALEFACTOR, 
+        store.setDefault(WMTPreferenceConstants.P_WMT_SCALEFACTOR,
                 WMTPreferenceConstants.P_WMT_SCALEFACTOR_DEFAULT);
-        
-        store.setDefault(WMTPreferenceConstants.P_WMT_TILELIMIT_WARNING, 
+
+        store.setDefault(WMTPreferenceConstants.P_WMT_TILELIMIT_WARNING,
                 WMTPreferenceConstants.P_WMT_TILELIMIT_WARNING_DEFAULT);
-        
-        store.setDefault(WMTPreferenceConstants.P_WMT_TILELIMIT_ERROR, 
+
+        store.setDefault(WMTPreferenceConstants.P_WMT_TILELIMIT_ERROR,
                 WMTPreferenceConstants.P_WMT_TILELIMIT_ERROR_DEFAULT);
     }
-    
+
 }

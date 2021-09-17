@@ -1,5 +1,12 @@
-/*
- * Created on 28-Mar-2005
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2005, Refractions Research Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.catalog.tests;
 
@@ -19,20 +26,15 @@ import org.junit.Test;
 
 /**
  * Sub-class me and fill in the appripriate protected methods ...
- * 
+ *
  * @author dzwiers
  */
 public abstract class AbstractResolveTest {
-    
+
     public static final int BLOCK = 1000; // number of acceptable milliseconds for a run
-    
+
     public static final class FakeProgress implements IProgressMonitor {
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.eclipse.core.runtime.IProgressMonitor#beginTask(java.lang.String, int)
-         */
         public void beginTask( String name, int totalWork ) {
             total = totalWork;
         }
@@ -42,11 +44,6 @@ public abstract class AbstractResolveTest {
         public int total = 0;
         public int completed = 0;
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.eclipse.core.runtime.IProgressMonitor#done()
-         */
         public void done() {
             completed = total;
             // Date done = new Date();
@@ -55,29 +52,14 @@ public abstract class AbstractResolveTest {
             // Date(start.getTime()+4)).after(done));
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.eclipse.core.runtime.IProgressMonitor#internalWorked(double)
-         */
         public void internalWorked( double work ) {
             // no op
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.eclipse.core.runtime.IProgressMonitor#isCanceled()
-         */
         public boolean isCanceled() {
             return completed == -1;
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.eclipse.core.runtime.IProgressMonitor#setCanceled(boolean)
-         */
         public void setCanceled( boolean value ) {
             if (value)
                 completed = -1;
@@ -85,29 +67,14 @@ public abstract class AbstractResolveTest {
                 completed = 0;
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.eclipse.core.runtime.IProgressMonitor#setTaskName(java.lang.String)
-         */
         public void setTaskName( String name ) {
             // no op
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.eclipse.core.runtime.IProgressMonitor#subTask(java.lang.String)
-         */
         public void subTask( String name ) {
             // no op
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.eclipse.core.runtime.IProgressMonitor#worked(int)
-         */
         public void worked( int work ) {
             if (completed > -1)
                 completed += work;
@@ -116,7 +83,7 @@ public abstract class AbstractResolveTest {
     }
 
     protected abstract IResolve getResolve();
-    
+
     protected abstract boolean hasParent();
 
     @Test
@@ -162,14 +129,14 @@ public abstract class AbstractResolveTest {
 
     protected <T> T resolve(final IResolve resolve, final Class<T> adaptee, final IProgressMonitor monitor) throws IOException {
         final Callable<T> job = new Callable<T>() {
-            
+
             @Override
             public T call() throws Exception {
                 return resolve.resolve(adaptee, monitor);
             }
-            
+
         };
-        
+
         return retrieveInNewThread(job);
     }
 
@@ -178,13 +145,13 @@ public abstract class AbstractResolveTest {
         Thread t = new Thread(task);
         t.start();
         T info = null;
-        
+
         try {
             info = task.get();
         } catch (InterruptedException e) {
         } catch (ExecutionException e) {
         }
-        
+
         return info;
     }
 

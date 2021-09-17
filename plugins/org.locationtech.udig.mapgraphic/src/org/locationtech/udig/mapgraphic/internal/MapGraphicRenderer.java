@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -65,22 +65,22 @@ public class MapGraphicRenderer extends RendererImpl implements IMultiLayerRende
 
     public static final String BLACKBOARD_IMAGE_KEY = "CACHED_IMAGE"; //$NON-NLS-1$
     public static final String BLACKBOARD_IMAGE_BOUNDS_KEY = "CACHED_IMAGE_BOUNDS"; //$NON-NLS-1$
-    
+
     @Override
     public String getName() {
         return super.getName();
     }
-   
-    
+
+
     /*
      * Renders the mapgraphic for the entire screen
-     * 
+     *
      * @returns array[0] = new image; array[1] = image bounds
      */
      private Object[] backgroundRenderImage(ICompositeRenderContext context, List<IOException> exceptions){
-        BufferedImage cache = new BufferedImage(context.getMapDisplay().getWidth(), context.getMapDisplay().getHeight(), BufferedImage.TYPE_INT_ARGB);      
+        BufferedImage cache = new BufferedImage(context.getMapDisplay().getWidth(), context.getMapDisplay().getHeight(), BufferedImage.TYPE_INT_ARGB);
         ReferencedEnvelope imageBounds = context.getViewportModel().getBounds();
-        
+
         for( IRenderContext l : context.getContexts() ) {
             Graphics2D copy = (Graphics2D) cache.createGraphics();
             //final NonDisposableGraphics graphics = new NonDisposableGraphics(copy);
@@ -97,7 +97,7 @@ public class MapGraphicRenderer extends RendererImpl implements IMultiLayerRende
             }
             setState(RENDERING);
         }
-        return new Object[]{cache, imageBounds};   
+        return new Object[]{cache, imageBounds};
     }
 
     /**
@@ -107,10 +107,10 @@ public class MapGraphicRenderer extends RendererImpl implements IMultiLayerRende
     @Override
     public void render( Graphics2D destination, IProgressMonitor monitor ) {
         /* entry point for printing
-         * cannot used cached image when printing; so 
-         * draw directly to destination 
+         * cannot used cached image when printing; so
+         * draw directly to destination
          */
-        
+
         List<IOException> exceptions = new ArrayList<IOException>();
         for( IRenderContext l : getContext().getContexts() ) {
             Graphics2D copy = (Graphics2D) destination.create();
@@ -135,7 +135,7 @@ public class MapGraphicRenderer extends RendererImpl implements IMultiLayerRende
             exception.fillInStackTrace();
         }
         setState(DONE);
-        
+
     }
 
     /**
@@ -150,17 +150,12 @@ public class MapGraphicRenderer extends RendererImpl implements IMultiLayerRende
     public synchronized void setContext( IRenderContext newContext ) {
         super.setContext(newContext);
     }
-    
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.project.render.Renderer#render(org.locationtech.jts.geom.Envelope)
-     */
+
     @Override
     public void render( IProgressMonitor monitor ) {
         // this is the entry point for non printing
-        /* For non-printing we will have a layer and can 
-         * used the cached image on the layer.  
+        /* For non-printing we will have a layer and can
+         * used the cached image on the layer.
          */
         List<IOException> exceptions = new ArrayList<IOException>();
         ILayer layer = context.getLayer();
@@ -171,16 +166,16 @@ public class MapGraphicRenderer extends RendererImpl implements IMultiLayerRende
                 cached = null;
             }
         }
-    
+
         if (cached == null){
             Object values[] = backgroundRenderImage(getContext(), exceptions);
             cached = new BlackboardItem((BufferedImage)values[0], (ReferencedEnvelope)values[1], getContext().getLayers());
             layer.getBlackboard().put(BLACKBOARD_IMAGE_KEY, cached);
-            
+
         }
         BufferedImage cache = cached.image;
         ReferencedEnvelope imageBounds = cached.env;
-        
+
         //we need to extract from the cache which is the size of the map display
         //the part of the image which is appropriate for the given bounds
         ReferencedEnvelope request = getContext().getImageBounds();
@@ -194,7 +189,7 @@ public class MapGraphicRenderer extends RendererImpl implements IMultiLayerRende
         AffineTransform transform = new AffineTransform(1f,0f,0f,1f,-lx,ly);
         Graphics2D denstination = getContext().getImage().createGraphics();
         denstination.drawImage(cache, transform, null);
-        
+
         if (!exceptions.isEmpty()) {
             //XXX: externalize this message
             RenderException exception = new RenderException(exceptions.size()
@@ -209,7 +204,7 @@ public class MapGraphicRenderer extends RendererImpl implements IMultiLayerRende
         protected IStatus run( IProgressMonitor monitor ) {
             getContext().clearImage();
             try {
-                
+
                 render(monitor);
             } catch (Throwable e) {
                 MapGraphicPlugin.log(null, e);
@@ -227,10 +222,10 @@ public class MapGraphicRenderer extends RendererImpl implements IMultiLayerRende
     public boolean isCacheable() {
     	return false;
     }
-    
+
     @Override
     public void setState( int newState ) {
-        
+
         if (newState == RENDER_REQUEST){
             //clear blackboard
             //TODO: make this only occur on layer.refresh() event.  Right now this works fine for the regular
@@ -590,20 +585,20 @@ public class MapGraphicRenderer extends RendererImpl implements IMultiLayerRende
         public void translate( int x, int y ) {
             graphics.translate(x, y);
         }
-        
+
     }
-    
+
     static class BlackboardItem{
         BufferedImage image;
-        ReferencedEnvelope env;      
+        ReferencedEnvelope env;
         Collection<ILayer> layers;
-        
+
         public BlackboardItem(BufferedImage image, ReferencedEnvelope env, Collection<ILayer> layers){
             this.image = image;
             this.env = env;
-            this.layers = layers; 
+            this.layers = layers;
         }
-        
+
         public boolean layersEqual(Collection<ILayer> layers){
             if (this.layers.size() != layers.size()) return false;
             for( Iterator<ILayer> iterator = this.layers.iterator(); iterator.hasNext(); ) {
@@ -612,7 +607,7 @@ public class MapGraphicRenderer extends RendererImpl implements IMultiLayerRende
             }
             return true;
         }
-        
+
     }
-    
+
 }

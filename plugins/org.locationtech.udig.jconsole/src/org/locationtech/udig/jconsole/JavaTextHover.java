@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.locationtech.udig.jconsole;
 
-
 import org.eclipse.swt.graphics.Point;
 
 import org.eclipse.jface.text.BadLocationException;
@@ -27,7 +26,7 @@ public class JavaTextHover implements ITextHover {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @deprecated As of 3.4, replaced by
 	 *             {@link ITextHoverExtension2#getHoverInfo2(ITextViewer, IRegion)}
 	 */
@@ -42,9 +41,6 @@ public class JavaTextHover implements ITextHover {
 		return JavaEditorMessages.getString("JavaTextHover.emptySelection"); //$NON-NLS-1$
 	}
 
-	/* (non-Javadoc)
-	 * Method declared on ITextHover
-	 */
 	public IRegion getHoverRegion(ITextViewer textViewer, int offset) {
 		Point selection= textViewer.getSelectedRange();
 		if (selection.x <= offset && offset < selection.x + selection.y)

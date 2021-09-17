@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.locationtech.udig.jconsole.util;
 
-
 import org.eclipse.jface.text.rules.IWhitespaceDetector;
 
 /**
@@ -18,9 +17,6 @@ import org.eclipse.jface.text.rules.IWhitespaceDetector;
  */
 public class JavaWhitespaceDetector implements IWhitespaceDetector {
 
-	/* (non-Javadoc)
-	 * Method declared on IWhitespaceDetector
-	 */
 	public boolean isWhitespace(char character) {
 		return Character.isWhitespace(character);
 	}

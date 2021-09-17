@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -23,7 +23,6 @@ import org.eclipse.swt.widgets.DirectoryDialog;
 /* NOT to be fully implmented to the extent it will add stuff to EditManager just
  * showing the business users what it will look like
  */
-
 public class AddsetAttributeField extends ListAttributeField {
 
     private String lastPath;
@@ -50,7 +49,6 @@ public class AddsetAttributeField extends ListAttributeField {
      */
     public AddsetAttributeField(String name, String labelText,
             String prompt, Composite parent) {
-    //    System.out.println("Inside Addset Attribute");
         init(name, labelText);
         this.prompt = prompt;
         createControl(parent);
@@ -58,7 +56,7 @@ public class AddsetAttributeField extends ListAttributeField {
 
     static final String SEPARATOR = "\n";
 
-    /* (non-Javadoc)
+    /**
      * Method declared on ListAttributeField.
      * Creates a single string from the given array by separating each
      * string with the appropriate OS-specific path separator.
@@ -73,7 +71,7 @@ public class AddsetAttributeField extends ListAttributeField {
         return path.toString();
     }
 
-    /* (non-Javadoc)
+    /**
      * Method declared on ListAttributeField.
      * Creates a new path element by means of a directory dialog.
      */
@@ -97,7 +95,7 @@ public class AddsetAttributeField extends ListAttributeField {
         return dialog.getValue();
     }
 
-    /* (non-Javadoc)
+    /**
      * Method declared on ListAttributeField.
      */
     protected String[] parseString(String stringList) {

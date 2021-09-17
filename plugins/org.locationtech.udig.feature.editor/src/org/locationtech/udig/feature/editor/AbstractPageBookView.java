@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -75,7 +75,7 @@ import org.eclipse.ui.part.ViewPart;
  * The default implementation tracks both the workbench selection and the workbench parts. And does
  * its best to convert them to a useful target for use by the page book view.
  * </p>
- * 
+ *
  * @author Jody Garnett
  * @since 1.2.0
  */
@@ -175,7 +175,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
     /**
      * Used by subclass to track workbench or selection information as required.
-     * 
+     *
      * @param part
      * @param selection
      */
@@ -238,10 +238,10 @@ abstract class AbstractPageBookView<K> extends ViewPart {
      * }
      * else {
      *   map.removeMapListener( ... );
-     * }    
+     * }
      * </code> Note you do not need to listen to part.getSite().getSelectionProvider() as this is
      * handled by the ISelectionService.
-     * 
+     *
      * @param listen
      * @param part
      */
@@ -317,7 +317,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
         /**
          * Make sure that the part is not considered if it is hidden.
-         * 
+         *
          * @param part
          * @since 3.5
          */
@@ -330,7 +330,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
         /**
          * Make sure that the part is not considered if it is hidden.
-         * 
+         *
          * @param part
          * @since 3.5
          */
@@ -379,7 +379,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
         /**
          * Calls deactivated if possible from the provided workbench part.
-         * 
+         *
          * @param part
          */
         public void partDeactivated( IWorkbenchPart part ) {
@@ -433,7 +433,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
         /**
          * Creates a new page record initialized to the given part and page.
-         * 
+         *
          * @param part
          * @param page
          */
@@ -507,16 +507,10 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
         private SelectionManager postSelectionListeners = new SelectionManager();
 
-        /*
-         * (non-Javadoc) Method declared on ISelectionProvider.
-         */
         public void addSelectionChangedListener( ISelectionChangedListener listener ) {
             selectionListeners.addSelectionChangedListener(listener);
         }
 
-        /*
-         * (non-Javadoc) Method declared on ISelectionProvider.
-         */
         public ISelection getSelection() {
             // get the selection provider from the current page
             IPage currentPage = getCurrentPage();
@@ -536,9 +530,6 @@ abstract class AbstractPageBookView<K> extends ViewPart {
             return StructuredSelection.EMPTY;
         }
 
-        /*
-         * (non-Javadoc) Method declared on ISelectionProvider.
-         */
         public void removeSelectionChangedListener( ISelectionChangedListener listener ) {
             selectionListeners.removeSelectionChangedListener(listener);
         }
@@ -546,7 +537,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
         /**
          * The selection has changed. Process the event, notifying selection listeners and post
          * selection listeners.
-         * 
+         *
          * @param event the change
          */
         public void selectionChanged( final SelectionChangedEvent event ) {
@@ -555,16 +546,13 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
         /**
          * The selection has changed, so notify any post-selection listeners.
-         * 
+         *
          * @param event the change
          */
         public void postSelectionChanged( final SelectionChangedEvent event ) {
             postSelectionListeners.selectionChanged(event);
         }
 
-        /*
-         * (non-Javadoc) Method declared on ISelectionProvider.
-         */
         public void setSelection( ISelection selection ) {
             // get the selection provider from the current page
             IPage currentPage = getCurrentPage();
@@ -584,22 +572,10 @@ abstract class AbstractPageBookView<K> extends ViewPart {
             }
         }
 
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.eclipse.jface.viewers.IPostSelectionProvider#addPostSelectionChangedListener(org.
-         * eclipse.jface.viewers.ISelectionChangedListener)
-         */
         public void addPostSelectionChangedListener( ISelectionChangedListener listener ) {
             postSelectionListeners.addSelectionChangedListener(listener);
         }
 
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.eclipse.jface.viewers.IPostSelectionProvider#removePostSelectionChangedListener(org
-         * .eclipse.jface.viewers.ISelectionChangedListener)
-         */
         public void removePostSelectionChangedListener( ISelectionChangedListener listener ) {
             postSelectionListeners.removeSelectionChangedListener(listener);
         }
@@ -620,7 +596,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
      * Subclasses must call initPage with the new page (if it is an <code>IPageBookViewPage</code>)
      * before calling createControl on the page.
      * </p>
-     * 
+     *
      * @param book the pagebook control
      * @return the default page
      */
@@ -628,7 +604,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
     /**
      * Creates a page for a given part. Adds it to the pagebook but does not show it.
-     * 
+     *
      * @param part The part we are making a page for.
      * @return IWorkbenchPart
      */
@@ -643,7 +619,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
     /**
      * Prepares the page in the given page rec for use in this view.
-     * 
+     *
      * @param rec
      */
     private void preparePage( PageRec<K> rec ) {
@@ -687,7 +663,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
      * <p>
      * Subclasses may override
      * </p>
-     * 
+     *
      * @param page The page to initialize
      */
     protected void initPage( IPageBookViewPage page ) {
@@ -769,7 +745,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
      * Subclasses must call initPage with the new page (if it is an <code>IPageBookViewPage</code>)
      * before calling createControl on the page.
      * </p>
-     * 
+     *
      * @param part the input part
      * @return the record describing a new page for this view
      * @see #doDestroyPage
@@ -782,7 +758,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
      * <p>
      * Subclasses must implement this method.
      * </p>
-     * 
+     *
      * @param part the input part
      * @param pageRecord a page record for the part
      * @see #doCreatePage
@@ -791,7 +767,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
     /**
      * Returns true if the page has already been created.
-     * 
+     *
      * @param page the page to test
      * @return true if this page has already been created.
      */
@@ -833,7 +809,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
      * <p>
      * The default implementation returns <code>null</code>. Subclasses may override.
      * </p>
-     * 
+     *
      * @param adapter the adapter class to look up
      * @return a object castable to the given class, or <code>null</code> if this object does not
      *         have an adapter for the given class
@@ -855,7 +831,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
      * default implementation checks the current active part with getCurrent( part ) to see if it is
      * something we care about.
      * </p>
-     * 
+     *
      * @return the active target, or <code>null</code> if none
      */
     protected K getBootstrapTarget() {
@@ -878,7 +854,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
      * <p>
      * The default implementation returns null indicating that there is no relationship between
      * workbench parts and our target.
-     * 
+     *
      * @param part WorkbenchPart
      * @return target if available, or null otherwise.
      */
@@ -891,7 +867,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
      * <p>
      * Default implementation will delegate to getCurrent( IWorkbenchPart) if the part is currently
      * restored, if not returning null resulting in the default page being displayed.
-     * 
+     *
      * @param partRef
      * @return Target for the partRef
      */
@@ -905,7 +881,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
     /**
      * Returns the part which contributed the current page to this view.
-     * 
+     *
      * @return the part which contributed the current page or <code>null</code> if no part
      *         contributed the current page
      */
@@ -919,7 +895,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
     /**
      * Returns the currently visible page for this view or <code>null</code> if no page is currently
      * visible.
-     * 
+     *
      * @return the currently visible page
      */
     public IPage getCurrentPage() {
@@ -931,7 +907,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
     /**
      * Returns the view site for the given page of this view.
-     * 
+     *
      * @param page the page
      * @return the corresponding site, or <code>null</code> if not found
      */
@@ -946,7 +922,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
     /**
      * Returns the default page for this view.
-     * 
+     *
      * @return the default page
      */
     public IPage getDefaultPage() {
@@ -955,7 +931,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
     /**
      * Returns the pagebook control for this view.
-     * 
+     *
      * @return the pagebook control, or <code>null</code> if not initialized
      */
     protected PageBook getPageBook() {
@@ -964,7 +940,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
     /**
      * Returns the page record for the given part.
-     * 
+     *
      * @param part the part
      * @return the corresponding page record, or <code>null</code> if not found
      */
@@ -974,7 +950,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
     /**
      * Returns the page record for the given page of this view.
-     * 
+     *
      * @param page the page
      * @return the corresponding page record, or <code>null</code> if not found
      */
@@ -994,15 +970,12 @@ abstract class AbstractPageBookView<K> extends ViewPart {
      * <p>
      * Subclasses must implement this method.
      * </p>
-     * 
+     *
      * @param part the input part
      * @return <code>true</code> if the part is relevant, and <code>false</code> otherwise
      */
     protected abstract boolean isImportant( K part );
 
-    /*
-     * (non-Javadoc) Method declared on IViewPart.
-     */
     public void init( IViewSite site ) throws PartInitException {
         site.setSelectionProvider(selectionProvider);
         super.init(site);
@@ -1035,7 +1008,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
     /**
      * Default implementation does nothing
-     * 
+     *
      * @param target
      */
     public void broughtToTop( K target ) {
@@ -1070,7 +1043,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
     /**
      * Called when an opened workbench part can provided a target.
-     * 
+     *
      * @param target
      */
     public void opened( K target ) {
@@ -1102,7 +1075,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
     /**
      * Removes a page record. If it is the last reference to the page dispose of it - otherwise just
      * decrement the reference count.
-     * 
+     *
      * @param rec
      */
     private void removePage( PageRec<K> rec ) {
@@ -1155,9 +1128,6 @@ abstract class AbstractPageBookView<K> extends ViewPart {
         }
     }
 
-    /*
-     * (non-Javadoc) Method declared on IWorkbenchPart.
-     */
     public void setFocus() {
         // first set focus on the page book, in case the page
         // doesn't properly handle setFocus
@@ -1172,7 +1142,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
     /**
      * Handle page selection changes.
-     * 
+     *
      * @param event
      */
     private void pageSelectionChanged( SelectionChangedEvent event ) {
@@ -1185,7 +1155,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
     /**
      * Handle page selection changes.
-     * 
+     *
      * @param event
      */
     private void postSelectionChanged( SelectionChangedEvent event ) {
@@ -1214,7 +1184,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
      * the given page's control, and records that the given page is now current. Subclasses may
      * extend.
      * </p>
-     * 
+     *
      * @param pageRec the page record containing the page to show
      */
     protected void showPageRec( PageRec<K> pageRec ) {
@@ -1286,7 +1256,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
     /**
      * Returns the selectionProvider for this page book view.
-     * 
+     *
      * @return a SelectionProvider
      */
     protected SelectionProvider getSelectionProvider() {
@@ -1310,13 +1280,15 @@ abstract class AbstractPageBookView<K> extends ViewPart {
         return false;
     }
 
-    protected void hidden( K target ) {
-    }
-
-    protected void inputChanged( K target ) {
+    protected void hidden(K target) {
 
     }
 
-    protected void visible( K target ) {
+    protected void inputChanged(K target) {
+
+    }
+
+    protected void visible(K target) {
+
     }
 }

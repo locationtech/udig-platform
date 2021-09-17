@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -76,7 +76,7 @@ public class BooleanAttributeField extends AttributeField {
 
     /**
      * Creates a boolean attribute field in the given style.
-     * 
+     *
      * @param name the name of the preference this attribute field works on
      * @param labelText the label text of the attribute field
      * @param style the style, either <code>DEFAULT</code> or <code>SEPARATE_LABEL</code>
@@ -92,6 +92,7 @@ public class BooleanAttributeField extends AttributeField {
 
         createControl(parent);
     }
+
     public BooleanAttributeField( String name, String labelText, int style, Composite parent,
             Object yes, Object no ) {
         init(name, labelText);
@@ -103,7 +104,7 @@ public class BooleanAttributeField extends AttributeField {
 
     /**
      * Creates a boolean attribute field in the default style.
-     * 
+     *
      * @param name the name of the preference this attribute field works on
      * @param label the label text of the attribute field
      * @param parent the parent of the attribute field's control
@@ -112,9 +113,6 @@ public class BooleanAttributeField extends AttributeField {
         this(name, label, DEFAULT, parent);
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
     public void adjustForNumColumns( int numColumns ) {
         if (style == SEPARATE_LABEL) {
             numColumns--;
@@ -122,9 +120,6 @@ public class BooleanAttributeField extends AttributeField {
         ((GridData) checkBox.getLayoutData()).horizontalSpan = numColumns;
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
     protected void doFillIntoGrid( Composite parent, int numColumns ) {
         String text = getLabelText();
         switch( style ) {
@@ -149,7 +144,7 @@ public class BooleanAttributeField extends AttributeField {
      * be used to set a tooltip for a <code>BooleanAttributeField</code>. Note that the normal
      * pattern of <code>getLabelControl(parent).setToolTipText(tooltipText)</code> does not work for
      * boolean attribute fields, as it can lead to duplicate text (see bug 259952).
-     * 
+     *
      * @param parent the parent composite
      * @return the control responsible for displaying the label
      * @since 3.5
@@ -162,8 +157,7 @@ public class BooleanAttributeField extends AttributeField {
     }
 
     /*
-     * (non-Javadoc) Method declared on AttributeField. Loads the value from the feature type schema
-     * and sets it to the check box.
+     * Loads the value from the feature type schema and sets it to the check box.
      */
     public void doLoad() {
         if (checkBox != null) {
@@ -182,7 +176,7 @@ public class BooleanAttributeField extends AttributeField {
             return false;
         }
         Class<?> target = YES.getClass(); // usually Boolean
-        
+
         if( Boolean.class.isAssignableFrom(target)){
             Boolean check = (Boolean) Converters.convert(value, target );
             if( check != null ){
@@ -193,7 +187,7 @@ public class BooleanAttributeField extends AttributeField {
                 check = number.longValue() != 0;
             }
         }
-        
+
         Object test = Converters.convert(value, target );
         if( test != null && YES.equals( test )){
             return true;
@@ -201,55 +195,52 @@ public class BooleanAttributeField extends AttributeField {
         else if ( test != null && NO.equals( test )){
             return false;
         }
-        
+
         Object sure = Converters.convert( YES, target );
         Object huh = Converters.convert( NO, target );
-                
+
         if( sure != null && sure.equals( value )){
            return true;
         }
         else if ( huh != null && huh.equals( value )){
             return false;
         }
-        
+
         return false; // (sigh)
     }
+
     /*
-     * (non-Javadoc) Method declared on AttributeField. Loads the default value from the feature
-     * type schema and sets it to the check box.
+     * Loads the default value from the feature type schema and sets it to the check box.
      */
     protected void doLoadDefault() {
         if (checkBox != null) {
             SimpleFeatureType schema = getFeature().getFeatureType();
             AttributeDescriptor descriptor = schema.getDescriptor(getAttributeName());
             Object value = descriptor.getDefaultValue();
-            
+
             Boolean check = toBoolean(value);
-            
+
             checkBox.setSelection(check);
             wasSelected = check;
         }
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
     protected void doStore() {
         SimpleFeatureType schema = getFeature().getFeatureType();
         AttributeDescriptor descriptor = schema.getDescriptor(getAttributeName());
         Class< ? > binding = descriptor.getType().getBinding();
-        
+
         boolean check = checkBox.getSelection();
-        
+
         Object checkValue = check ? YES : NO;
         Object value = Converters.convert(checkValue, binding);
-        
+
         getFeature().setAttribute(getAttributeName(), value);
     }
 
     /**
      * Returns this attribute field's current value.
-     * 
+     *
      * @return the value
      */
     public boolean getBooleanValue() {
@@ -258,7 +249,7 @@ public class BooleanAttributeField extends AttributeField {
 
     /**
      * Returns the change button for this attribute field.
-     * 
+     *
      * @param parent The Composite to create the receiver in.
      * @return the change button
      */
@@ -284,9 +275,6 @@ public class BooleanAttributeField extends AttributeField {
         return checkBox;
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
     public int getNumberOfControls() {
         switch( style ) {
         case SEPARATE_LABEL:
@@ -296,18 +284,12 @@ public class BooleanAttributeField extends AttributeField {
         }
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
     public void setFocus() {
         if (checkBox != null) {
             checkBox.setFocus();
         }
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
     public void setLabelText( String text ) {
         super.setLabelText(text);
         Label label = getLabelControl();
@@ -319,7 +301,7 @@ public class BooleanAttributeField extends AttributeField {
     /**
      * Informs this attribute field's listener, if it has one, about a change to the value (
      * <code>VALUE</code> property) provided that the old and new values are different.
-     * 
+     *
      * @param oldValue the old value
      * @param newValue the new value
      */
@@ -340,6 +322,7 @@ public class BooleanAttributeField extends AttributeField {
             checkBox.setVisible(visible);
         }
     }
+
     /*
      * @see AttributeField.setEnabled
      */
@@ -358,11 +341,10 @@ public class BooleanAttributeField extends AttributeField {
         if (YES == (Object)1){
             System.out.println("Retired");
             return "1";
-            
         }
         else{
             System.out.println("un Retired");
-        return "0";
+            return "0";
         }
     }
 

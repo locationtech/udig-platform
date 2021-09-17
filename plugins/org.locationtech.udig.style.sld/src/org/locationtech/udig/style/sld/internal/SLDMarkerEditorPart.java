@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -35,7 +35,7 @@ import org.locationtech.udig.ui.graphics.SLDs;
 
 /**
  * Simple view part for editing a Marker.
- * 
+ *
  * @author aalam
  * @since 1.0.0
  */
@@ -55,29 +55,14 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
     private Spinner markerWidth;
     private Spinner markerOpacity;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.style.sld.SLDEditorPart#getContentType()
-     */
     public Class getContentType() {
         return PointSymbolizer.class;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.style.sld.SLDEditorPart#init()
-     */
     public void init() {
         // do nothing
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.style.sld.SLDEditorPart#reset()
-     */
     public void reset() {
         // initialize the ui
         setStylingElements((PointSymbolizer) getContent());
@@ -146,11 +131,6 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
         markerOpacity.setSelection((int) (opacity * opacityMaxValue));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.style.StyleConfigurator#apply()
-     */
     private void apply() {
         PointSymbolizer symbolizer = (PointSymbolizer) getContent();
         StyleBuilder styleBuilder = getStyleBuilder();
@@ -192,7 +172,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
      * Creates a composite with a grid layout of the specifed columns, and a label with text from
      * tag.
      * </p>
-     * 
+     *
      * @param parent
      * @param tag
      * @param numColumns number of columns (usually 2_
@@ -223,7 +203,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
 
     /**
      * Create a row layout, with individual rows provided by sub part.
-     * 
+     *
      * @see org.locationtech.udig.style.StyleConfigurator#createControl(org.eclipse.swt.widgets.Composite)
      */
     protected Control createPartControl( Composite parent ) {
@@ -291,21 +271,11 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
         markerOpacity.setPageIncrement(10);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
-     */
     public void widgetDefaultSelected( SelectionEvent e ) {
         // Don't care.
         // TODO: Commit style here
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-     */
     public void widgetSelected( SelectionEvent e ) {
         apply();
     }

@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -37,103 +37,97 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
  * preference store.
  */
 public class BasicWMSRendererPreferencePage
-	extends FieldEditorPreferencePage
-	implements IWorkbenchPreferencePage {
+    extends FieldEditorPreferencePage
+    implements IWorkbenchPreferencePage {
 
     private ImageTypeListEditor editor;
+
     private BooleanFieldEditor checkbox;
 
-   /**
-	 * 
-	 */
-	public BasicWMSRendererPreferencePage() {
-		super(GRID);
-		setPreferenceStore(WMSPlugin.getDefault().getPreferenceStore());
-		setDescription(Messages.BasicWMSRendererPreferencePage_warning); 
-	}
-	
-	/**
-	 * Creates the field editors. Field editors are abstractions of
-	 * the common GUI blocks needed to manipulate various types
-	 * of preferences. Each field editor knows how to save and
-	 * restore itself.
-	 */
-	@Override
-   public void createFieldEditors() {
-      checkbox = new BooleanFieldEditor(PreferenceConstants.P_USE_DEFAULT_ORDER, 
-                     Messages.BasicWMSRendererPreferencePage_useDefaults, 
-                     getFieldEditorParent());
-//      checkbox.setPropertyChangeListener(this);
-      addField( checkbox );
-      editor = new ImageTypeListEditor(PreferenceConstants.P_IMAGE_TYPE_ORDER,
-                     Messages.BasicWMSRendererPreferencePage_setOrder,  
-                     getFieldEditorParent());
-      editor.setEnabled(!getPreferenceStore().getBoolean(PreferenceConstants.P_USE_DEFAULT_ORDER),
-                     getFieldEditorParent());
-      addField( editor );
-	}
+    public BasicWMSRendererPreferencePage() {
+        super(GRID);
+        setPreferenceStore(WMSPlugin.getDefault().getPreferenceStore());
+        setDescription(Messages.BasicWMSRendererPreferencePage_warning);
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
-	 */
-	public void init(IWorkbench workbench) {
-      // nothing to do here
-	}
-   
-   @Override
-   public void propertyChange(PropertyChangeEvent event){
-      super.propertyChange(event);
-      if(event.getSource().equals(checkbox)){
-         boolean useDefault = ((Boolean)event.getNewValue()).booleanValue();
-         editor.setEnabled(!useDefault, getFieldEditorParent());
-      }
-   }
-   
-   protected class ImageTypeListEditor extends ListEditor {
-      protected ImageTypeListEditor( String name, String labelText, Composite parent ){
-         super(name, labelText, parent);
-      }
-      
-      @Override
-      protected String createList(String[] items){
-         StringBuilder stringList = new StringBuilder();
-         for(String str : items){
-            if(stringList.length() > 0){
-               stringList.append(',');
+    /**
+     * Creates the field editors. Field editors are abstractions of
+     * the common GUI blocks needed to manipulate various types
+     * of preferences. Each field editor knows how to save and
+     * restore itself.
+     */
+    @Override
+    public void createFieldEditors() {
+        checkbox = new BooleanFieldEditor(PreferenceConstants.P_USE_DEFAULT_ORDER,
+                        Messages.BasicWMSRendererPreferencePage_useDefaults,
+                        getFieldEditorParent());
+        // checkbox.setPropertyChangeListener(this);
+        addField( checkbox );
+        editor = new ImageTypeListEditor(PreferenceConstants.P_IMAGE_TYPE_ORDER,
+                        Messages.BasicWMSRendererPreferencePage_setOrder,
+                        getFieldEditorParent());
+        editor.setEnabled(!getPreferenceStore().getBoolean(PreferenceConstants.P_USE_DEFAULT_ORDER),
+                        getFieldEditorParent());
+        addField( editor );
+    }
+
+    public void init(IWorkbench workbench) {
+        // nothing to do here
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent event){
+        super.propertyChange(event);
+        if(event.getSource().equals(checkbox)){
+            boolean useDefault = ((Boolean)event.getNewValue()).booleanValue();
+            editor.setEnabled(!useDefault, getFieldEditorParent());
+        }
+    }
+
+    protected class ImageTypeListEditor extends ListEditor {
+        protected ImageTypeListEditor( String name, String labelText, Composite parent ){
+            super(name, labelText, parent);
+        }
+
+        @Override
+        protected String createList(String[] items){
+            StringBuilder stringList = new StringBuilder();
+            for(String str : items){
+                if(stringList.length() > 0){
+                stringList.append(',');
+                }
+                stringList.append(str);
+
             }
-            stringList.append(str);
-        
-         }
-         return stringList.toString();
-      }
+            return stringList.toString();
+        }
 
-      @Override
-      protected String getNewInputObject(){
-         String str = new String("image/");  
-         InputDialog dialog = new InputDialog(
-                        Display.getCurrent().getActiveShell(),
-                        "New Image Type",
-                        "Enter the image type",
-                        str,
-                        null
-         );
-         int result = dialog.open();         
-         if(result == Window.OK){
-            str = dialog.getValue();
-         }
-         if( "image/".equals( str )){
-             return null; // nothing to add
-         }
-         return str;
-      }
+        @Override
+        protected String getNewInputObject(){
+            String str = new String("image/");
+            InputDialog dialog = new InputDialog(
+                            Display.getCurrent().getActiveShell(),
+                            "New Image Type",
+                            "Enter the image type",
+                            str,
+                            null
+            );
+            int result = dialog.open();
+            if(result == Window.OK){
+                str = dialog.getValue();
+            }
+            if( "image/".equals( str )){
+                return null; // nothing to add
+            }
+            return str;
+        }
 
-      @Override
-      protected String[] parseString(String stringList){
-         String[] items = stringList.split(","); //$NON-NLS-1$
-         return items;
-      }
-      
-   }
-   
-	
+        @Override
+        protected String[] parseString(String stringList){
+            String[] items = stringList.split(","); //$NON-NLS-1$
+            return items;
+        }
+
+    }
+
 }

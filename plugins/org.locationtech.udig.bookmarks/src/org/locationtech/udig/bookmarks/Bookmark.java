@@ -18,7 +18,7 @@ import org.locationtech.udig.bookmarks.internal.MapReference;
  * A <code>Bookmark</code> consists of the <code>IMap</code> object it is associated with, the
  * <code>Envelope</code> that decscribes the bounds, and a user-defined name.
  * </p>
- * 
+ *
  * @author cole.markham
  * @since 1.0.0
  */
@@ -29,7 +29,7 @@ public class Bookmark implements IBookmark {
 
     /**
      * Construct a new bookmark with the given center and envelope.
-     * 
+     *
      * @param envelope
      * @param map
      * @param name
@@ -40,16 +40,11 @@ public class Bookmark implements IBookmark {
         this.name = name;
     }
 
-    /* (non-Javadoc)
-     * @see org.locationtech.udig.bookmarks.IBookmark#getEnvelope()
-     */
     @Override
     public ReferencedEnvelope getEnvelope() {
         return envelope;
     }
-    /* (non-Javadoc)
-     * @see org.locationtech.udig.bookmarks.IBookmark#setEnvelope(org.geotools.geometry.jts.ReferencedEnvelope)
-     */
+
     @Override
     public void setEnvelope( ReferencedEnvelope envelope ) {
         this.envelope = envelope;
@@ -69,9 +64,6 @@ public class Bookmark implements IBookmark {
         this.mapID = map;
     }
 
-    /* (non-Javadoc)
-     * @see org.locationtech.udig.bookmarks.IBookmark#getName()
-     */
     @Override
     public String getName() {
         return name;
@@ -82,9 +74,6 @@ public class Bookmark implements IBookmark {
         return this.getName();
     }
 
-    /* (non-Javadoc)
-     * @see org.locationtech.udig.bookmarks.IBookmark#setName(java.lang.String)
-     */
     @Override
     public void setName( String name ) {
         this.name = name;

@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -121,13 +121,13 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
      * <li>Register a selection provider with the <code>ISelectionService</code> (optional).</li>
      * </ol>
      * </p>
-     * 
+     *
      * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
      * @param parent
      */
     public void createPartControl( Composite parent ) {
         // create viewer
-//        treeviewer = new CatalogTreeViewer(parent, false);
+        // treeviewer = new CatalogTreeViewer(parent, false);
         treeviewer = new CatalogTreeViewer(parent, true);
         treeviewer.setMessageBoard(new StatusLineMessageBoardAdapter(getViewSite().getActionBars().getStatusLineManager()));
 
@@ -155,7 +155,7 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
                 IWorkbenchActionConstants.PROPERTIES,
                 propertiesAction );
     }
-    
+
     private void createContextMenu() {
         final MenuManager contextMenu = new MenuManager();
 
@@ -196,28 +196,28 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
     private void createActions() {
         propertiesAction  =
             new PropertyDialogAction( getViewSite().getWorkbenchWindow(), treeviewer );
-                   
-        getViewSite().getActionBars().setGlobalActionHandler(ActionFactory.PROPERTIES.getId(), propertiesAction);        
+
+        getViewSite().getActionBars().setGlobalActionHandler(ActionFactory.PROPERTIES.getId(), propertiesAction);
         getSite().getKeyBindingService().registerAction(propertiesAction);
-        
+
         removeAction = new Action(){
             public void run() {
                 IStructuredSelection selected = (IStructuredSelection) treeviewer.getSelection();
                 removeSelected( selected );
             }
         };
-        
+
         Messages.initAction(removeAction, "action_remove"); //$NON-NLS-1$
         removeAction.setEnabled(false);
         removeAction.setImageDescriptor(CatalogUIPlugin.getDefault().getImageDescriptor(ImageConstants.REMOVE_CO));
         removeAction.setActionDefinitionId("org.eclipse.ui.edit.delete"); //$NON-NLS-1$
         getViewSite().getActionBars().setGlobalActionHandler(ActionFactory.DELETE.getId(), removeAction);
         getSite().getKeyBindingService().registerAction(removeAction);
-        
+
         PlatformUI.getWorkbench().getHelpSystem().setHelp(removeAction,
                 IHelpContextIds.REMOVE_SERVICE_ACTION);
 
-        saveAction = new Action(Messages.CatalogView_save_label){ 
+        saveAction = new Action(Messages.CatalogView_save_label){
             public void run() {
                 try {
                     CatalogPlugin.getDefault().storeToPreferences(ProgressManager.instance().get());
@@ -229,7 +229,7 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
             }
         };
 
-        loadAction = new Action(Messages.CatalogView_load_label){ 
+        loadAction = new Action(Messages.CatalogView_load_label){
             public void run() {
                 try {
                     CatalogPlugin.getDefault().restoreFromPreferences();
@@ -252,9 +252,9 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
     }
 
     protected void showProperties( IStructuredSelection selected ){
-        if( selected.isEmpty() ) return; // action should of been disabled!        
+        if( selected.isEmpty() ) return; // action should of been disabled!
         Object content = selected.getFirstElement();
-        
+
         for( Iterator iter = selected.iterator(); iter.hasNext(); ) {
             @SuppressWarnings("all")//$NON-NLS-1$
             Object o = iter.next();
@@ -264,7 +264,7 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
                 remove((IGeoResource) o);
         }
     }
-    
+
     /**
      * Remove selected stuff from the catalog.
      * <p>
@@ -280,7 +280,7 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
     protected void removeSelected( IStructuredSelection selected ) {
         // Free selected data source - but only if it is not
         // in use...
-        
+
         for( Iterator iter = selected.iterator(); iter.hasNext(); ) {
             @SuppressWarnings("all")//$NON-NLS-1$
             Object o = iter.next();
@@ -368,6 +368,7 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
     public void setFocus() {
         treeviewer.getControl().setFocus();
     }
+
     /**
      * @return Returns the treeviewer.
      */
@@ -375,11 +376,6 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
         return treeviewer;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.part.ISetSelectionTarget#selectReveal(org.eclipse.jface.viewers.ISelection)
-     */
     public void selectReveal( ISelection selection ) {
         treeviewer.setSelection(selection, true);
     }

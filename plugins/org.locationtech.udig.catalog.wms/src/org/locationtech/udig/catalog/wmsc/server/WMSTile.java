@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2008, Refractions Research Inc.
  *
@@ -95,10 +96,6 @@ public class WMSTile implements Tile {
                 + bbox.getMaxY() + ID_DIVIDER + bbox.getMinY();
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.catalog.wmsc.server.Tile#getId()
-     */
     public String getId() {
         if (id == null) {
             id = buildId(bounds, scale);
@@ -110,18 +107,10 @@ public class WMSTile implements Tile {
         return tileset;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.catalog.wmsc.server.Tile#getBounds()
-     */
     public Envelope getBounds() {
         return bounds;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.catalog.wmsc.server.Tile#getScale()
-     */
     public double getScale() {
         return scale;
     }
@@ -150,10 +139,6 @@ public class WMSTile implements Tile {
         this.image = im;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.catalog.wmsc.server.Tile#getBufferedImage()
-     */
     public BufferedImage getBufferedImage() {
         return image;
     }
@@ -180,44 +165,22 @@ public class WMSTile implements Tile {
         return super.equals(arg0);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.catalog.wmsc.server.Tile#getTileState()
-     */
     public int getTileState() {
         return this.state;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.catalog.wmsc.server.Tile#setTileState(int)
-     */
     public void setTileState( int state ) {
         this.state = state;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.catalog.wmsc.server.Tile#setPosition(java.lang.String)
-     */
     public void setPosition( String pos ) {
         this.position = pos;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.catalog.wmsc.server.Tile#getPosition()
-     */
     public String getPosition() {
         return this.position;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.locationtech.udig.catalog.wmsc.server.Tile#loadTile(org.eclipse.core.runtime.IProgressMonitor
-     * )
-     */
     public boolean loadTile( IProgressMonitor monitor ) {
         // build request
         if (server == null && tileset != null) {

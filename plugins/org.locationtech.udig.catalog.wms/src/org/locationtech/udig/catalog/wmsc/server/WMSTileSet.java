@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2008, Refractions Research Inc.
  *
@@ -44,7 +45,7 @@ public class WMSTileSet implements TileSet {
     /** the AbstractOpenWebService **/
     private AbstractOpenWebService<?,?> server;
 
-	/** Coordinate Reference System of the Tiles */
+    /** Coordinate Reference System of the Tiles */
     private CoordinateReferenceSystem crs;
     /**
      * SRSName (usually of the format "EPSG:4326")
@@ -92,9 +93,6 @@ public class WMSTileSet implements TileSet {
         updateID();
     }
 
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#setCoorindateReferenceSystem(java.lang.String)
-	 */
     public void setCoorindateReferenceSystem( String epsg ) {
         this.epsgCode = epsg;
         try {
@@ -105,16 +103,10 @@ public class WMSTileSet implements TileSet {
         updateID();
     }
 
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getCoordinateReferenceSystem()
-	 */
     public CoordinateReferenceSystem getCoordinateReferenceSystem() {
         return this.crs;
     }
 
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#setBoundingBox(org.geotools.data.ows.CRSEnvelope)
-	 */
     public void setBoundingBox( CRSEnvelope bbox ) {
         CoordinateReferenceSystem crs = null;
         try {
@@ -126,47 +118,32 @@ public class WMSTileSet implements TileSet {
                 .getMaxY(), crs);
         updateID();
     }
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#setWidth(int)
-	 */
+
     public void setWidth( int width ) {
         this.width = width;
         updateID();
     }
 
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#setStyles(java.lang.String)
-	 */
     public void setStyles( String styles ) {
         this.styles = styles;
         updateID();
     }
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#setHeight(int)
-	 */
+
     public void setHeight( int height ) {
         this.height = height;
         updateID();
     }
 
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#setFormat(java.lang.String)
-	 */
     public void setFormat( String format ) {
         this.format = format;
         updateID();
     }
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#setLayers(java.lang.String)
-	 */
+
     public void setLayers( String layers ) {
         this.layers = layers;
         updateID();
     }
 
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#setResolutions(java.lang.String)
-	 */
     public void setResolutions( String res ) {
         this.resolutions = res;
         String[] sres = resolutions.split(" "); //$NON-NLS-1$
@@ -185,9 +162,6 @@ public class WMSTileSet implements TileSet {
         updateID();
     }
 
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getNumLevels()
-	 */
     public int getNumLevels() {
         return this.dresolutions.length;
     }
@@ -230,17 +204,11 @@ public class WMSTileSet implements TileSet {
         return query;
     }
 
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getTilesFromViewportScale(org.locationtech.jts.geom.Envelope, double)
-	 */
     public Map<String, Tile> getTilesFromViewportScale( Envelope bounds, double viewportScale ) {
         double scale = findAppropriateZoomLevel(viewportScale);
         return getTilesFromZoom(bounds, scale);
     }
 
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getTilesFromZoom(org.locationtech.jts.geom.Envelope, double)
-	 */
     public Map<String, Tile> getTilesFromZoom( Envelope bounds, double zoom ) {
 
         double xscale = width * zoom;
@@ -324,12 +292,12 @@ public class WMSTileSet implements TileSet {
      *  Break up the bounds for this zoom level into a list of bounds so that no single
      *  bounds has more than 1024 tiles in it.
      *
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getBoundsListForZoom(org.locationtech.jts.geom.Envelope, double)
-	 */
+     * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getBoundsListForZoom(org.locationtech.jts.geom.Envelope, double)
+     */
     public List<Envelope> getBoundsListForZoom( Envelope bounds, double zoom ) {
 
-    	int maxTilesPerBound = 1024;
-    	List<Envelope> boundsList = new ArrayList<Envelope>();
+        int maxTilesPerBound = 1024;
+        List<Envelope> boundsList = new ArrayList<Envelope>();
 
         double xscale = width * zoom;
         double value = bounds.getMinX() - bboxSrs.getMinX();
@@ -347,39 +315,36 @@ public class WMSTileSet implements TileSet {
         long tilesPerCol = Math.round((maxy-miny) / yscale);
         long totalTiles = tilesPerCol * tilesPerRow;
 
-         // if there are not enough tiles to make 1024 for this zoom and bounds, then
+        // if there are not enough tiles to make 1024 for this zoom and bounds, then
         // return the single bounds
-    	if ( totalTiles <=  maxTilesPerBound ) {
-    		boundsList.add(bounds);
-    		return boundsList;
-    	}
+        if ( totalTiles <=  maxTilesPerBound ) {
+            boundsList.add(bounds);
+            return boundsList;
+        }
 
-    	// create the size of each bounds
-    	double scaleDownFactor = Math.ceil(totalTiles / maxTilesPerBound);
-    	double boundsWidth = Math.ceil(tilesPerRow / scaleDownFactor) * xscale;
-    	double boundsHeight = Math.ceil(tilesPerCol / scaleDownFactor) * yscale;
+        // create the size of each bounds
+        double scaleDownFactor = Math.ceil(totalTiles / maxTilesPerBound);
+        double boundsWidth = Math.ceil(tilesPerRow / scaleDownFactor) * xscale;
+        double boundsHeight = Math.ceil(tilesPerCol / scaleDownFactor) * yscale;
 
-    	// create each bounds
-    	double x = minx;
-    	while (x <= maxx) {
-    		double y = miny;
-    		while (y <= maxy) {
-    			double x2 = x + boundsWidth;
-    			if (x2 > maxx) x2 = maxx;
-    			double y2 = y + boundsHeight;
-    			if (y2 > maxy) y2 = maxy;
-    			boundsList.add(new Envelope(x, x2, y, y2));
-    			y += boundsHeight;
-    		}
-    		x += boundsWidth;
-    	}
+        // create each bounds
+        double x = minx;
+        while (x <= maxx) {
+            double y = miny;
+            while (y <= maxy) {
+                double x2 = x + boundsWidth;
+                if (x2 > maxx) x2 = maxx;
+                double y2 = y + boundsHeight;
+                if (y2 > maxy) y2 = maxy;
+                boundsList.add(new Envelope(x, x2, y, y2));
+                y += boundsHeight;
+            }
+            x += boundsWidth;
+        }
 
         return boundsList;
     }
 
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getTileCount((org.locationtech.jts.geom.Envelope, double))
-	 */
     public long getTileCount( Envelope bounds, double zoom ) {
         double xscale = width * zoom;
         double value = bounds.getMinX() - bboxSrs.getMinX();
@@ -398,61 +363,38 @@ public class WMSTileSet implements TileSet {
         return tilesPerCol * tilesPerRow;
     }
 
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getLayers()
-	 */
     public String getLayers() {
         return this.layers;
     }
 
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getStyles()
-	 */
     public String getStyles() {
         return this.styles;
     }
 
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getFormat()
-	 */
     public String getFormat() {
         return this.format;
     }
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getEPSGCode()
-	 */
+
     public String getEPSGCode() {
         return this.epsgCode;
     }
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getWidth()
-	 */
+
     public int getWidth() {
         return this.width;
     }
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getHeight()
-	 */
+
     public int getHeight() {
         return this.height;
     }
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getBounds()
-	 */
+
     public ReferencedEnvelope getBounds() {
         return this.bboxSrs;
     }
 
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getId()
-	 */
     public int getId() {
         return this.id;
     }
 
-    /* (non-Javadoc)
-	 * @see org.locationtech.udig.catalog.wmsc.server.TileSet#getResolutions()
-	 */
     /**
      * @returns a copy of the resolutions array
      */
@@ -500,10 +442,10 @@ public class WMSTileSet implements TileSet {
     }
 
     public AbstractOpenWebService<?,?> getServer() {
-		return server;
-	}
+        return server;
+    }
 
-	public void setServer(AbstractOpenWebService<?,?> server) {
-		this.server = server;
-	}
+    public void setServer(AbstractOpenWebService<?,?> server) {
+        this.server = server;
+    }
 }

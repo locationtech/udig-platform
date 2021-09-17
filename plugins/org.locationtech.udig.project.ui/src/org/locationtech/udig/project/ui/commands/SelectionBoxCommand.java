@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -24,27 +24,20 @@ import org.locationtech.udig.project.preferences.PreferenceConstants;
 import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 /**
- * A command that draws the indicated shape onto the viewport in the correct "selection" style.  The default Shape is 
+ * A command that draws the indicated shape onto the viewport in the correct "selection" style.  The default Shape is
  * a rectangle.
- * 
+ *
  * @author Jesse
  */
 public class SelectionBoxCommand extends AbstractDrawCommand implements
 		IDrawCommand {
 
 	private Shape shape;
-	
-	
-	/* (non-Javadoc)
-	 * @see org.locationtech.udig.project.ui.commands.IDrawCommand#getValidArea()
-	 */
+
 	public Rectangle getValidArea() {
 		return shape.getBounds();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.locationtech.udig.project.command.Command#run(org.eclipse.core.runtime.IProgressMonitor)
-	 */
 	public void run(IProgressMonitor monitor) throws Exception {
 		if( shape!=null ){
 			graphics.setColor(getSelectionColor(75));

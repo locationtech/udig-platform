@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.locationtech.udig.jconsole.javadoc;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +26,6 @@ import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.rules.WhitespaceRule;
 import org.eclipse.jface.text.rules.WordRule;
 
-
 /**
  * A rule based JavaDoc scanner.
  */
@@ -38,16 +36,10 @@ public class JavaDocScanner extends RuleBasedScanner {
 	 */
 	static class JavaDocWordDetector implements IWordDetector {
 
-	/* (non-Javadoc)
-	 * Method declared on IWordDetector
-	 */
 		public boolean isWordStart(char c) {
 			return (c == '@');
 		}
 
-		/* (non-Javadoc)
-	 	* Method declared on IWordDetector
-	 	*/
 		public boolean isWordPart(char c) {
 			return Character.isLetter(c);
 		}

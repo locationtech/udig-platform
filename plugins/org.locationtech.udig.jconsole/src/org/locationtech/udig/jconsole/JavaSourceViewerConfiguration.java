@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.locationtech.udig.jconsole;
 
-
 import org.locationtech.udig.jconsole.java.JavaAutoIndentStrategy;
 import org.locationtech.udig.jconsole.java.JavaCompletionProcessor;
 import org.locationtech.udig.jconsole.java.JavaDoubleClickSelector;
@@ -36,32 +35,27 @@ import org.eclipse.jface.text.source.IAnnotationHover;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
-
 /**
  * Example configuration for an <code>SourceViewer</code> which shows Java code.
  */
 public class JavaSourceViewerConfiguration extends SourceViewerConfiguration {
 
-
-		/**
-		 * Single token scanner.
-		 */
-		static class SingleTokenScanner extends BufferedRuleBasedScanner {
-			public SingleTokenScanner(TextAttribute attribute) {
-				setDefaultReturnToken(new Token(attribute));
-			}
+	/**
+	 * Single token scanner.
+	 */
+	static class SingleTokenScanner extends BufferedRuleBasedScanner {
+		public SingleTokenScanner(TextAttribute attribute) {
+			setDefaultReturnToken(new Token(attribute));
 		}
-
+	}
 
 	/**
 	 * Default constructor.
 	 */
 	public JavaSourceViewerConfiguration() {
+
 	}
 
-	/* (non-Javadoc)
-	 * Method declared on SourceViewerConfiguration
-	 */
 	public IAnnotationHover getAnnotationHover(ISourceViewer sourceViewer) {
 		return new JavaAnnotationHover();
 	}
@@ -81,16 +75,10 @@ public class JavaSourceViewerConfiguration extends SourceViewerConfiguration {
 		return JConsolePlugin.JAVA_PARTITIONING;
 	}
 
-	/* (non-Javadoc)
-	 * Method declared on SourceViewerConfiguration
-	 */
 	public String[] getConfiguredContentTypes(ISourceViewer sourceViewer) {
 		return new String[] { IDocument.DEFAULT_CONTENT_TYPE, JavaPartitionScanner.JAVA_DOC, JavaPartitionScanner.JAVA_MULTILINE_COMMENT };
 	}
 
-	/* (non-Javadoc)
-	 * Method declared on SourceViewerConfiguration
-	 */
 	public IContentAssistant getContentAssistant(ISourceViewer sourceViewer) {
 
 		ContentAssistant assistant= new ContentAssistant();
@@ -107,23 +95,14 @@ public class JavaSourceViewerConfiguration extends SourceViewerConfiguration {
 		return assistant;
 	}
 
-	/* (non-Javadoc)
-	 * Method declared on SourceViewerConfiguration
-	 */
 	public ITextDoubleClickStrategy getDoubleClickStrategy(ISourceViewer sourceViewer, String contentType) {
 		return new JavaDoubleClickSelector();
 	}
 
-	/* (non-Javadoc)
-	 * Method declared on SourceViewerConfiguration
-	 */
 	public String[] getIndentPrefixes(ISourceViewer sourceViewer, String contentType) {
 		return new String[] { "\t", "    " }; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
-	/* (non-Javadoc)
-	 * Method declared on SourceViewerConfiguration
-	 */
 	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) {
 
 		JavaColorProvider provider= JConsolePlugin.getDefault().getJavaColorProvider();
@@ -145,16 +124,10 @@ public class JavaSourceViewerConfiguration extends SourceViewerConfiguration {
 		return reconciler;
 	}
 
-	/* (non-Javadoc)
-	 * Method declared on SourceViewerConfiguration
-	 */
 	public int getTabWidth(ISourceViewer sourceViewer) {
 		return 4;
 	}
 
-	/* (non-Javadoc)
-	 * Method declared on SourceViewerConfiguration
-	 */
 	public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType) {
 		return new JavaTextHover();
 	}

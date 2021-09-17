@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -42,55 +42,34 @@ public final class CacheContent extends StyleContent {
         super(ID);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.project.StyleContent#getStyleClass()
-     */
     public Class<?> getStyleClass() {
         return Boolean.class;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.project.StyleContent#save(org.eclipse.ui.IMemento,
-     *      java.lang.Object)
-     */
     public void save( IMemento memento, Object value ) {
         Boolean style = (Boolean) value;
-        
+
         memento.putBoolean("cache", style );
         memento.putString("type", "CacheStyle"); //$NON-NLS-1$ //$NON-NLS-2$
         memento.putString("version", "1.0"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.project.StyleContent#load(org.eclipse.ui.IMemento)
-     */
     public Object load( IMemento momento ) {
         Boolean style = momento.getBoolean("cache");
-        
+
         return style;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.project.StyleContent#load(java.net.URL)
-     */
     public Object load( URL url, IProgressMonitor m ) throws IOException {
         return null;
     }
-    
+
     /**
      * This will need to know the "scheme."
      */
-    public Object createDefaultStyle( IGeoResource resource, Color colour, 
+    public Object createDefaultStyle( IGeoResource resource, Color colour,
             IProgressMonitor m ) throws IOException {
-        
+
         if( resource.canResolve(Boolean.class)){
             Boolean isCaching = resource.resolve( Boolean.class, m);
             if( isCaching != null ){
@@ -101,7 +80,7 @@ public final class CacheContent extends StyleContent {
         if( service == null ){
             return null; // cannot determine sevice at this time!
         }
-        ID serviceID = service.getID();        
+        ID serviceID = service.getID();
 //        if( serviceID.isWFS() ){
 //            return true; // we want to cache for WFS
 //        }
@@ -113,7 +92,6 @@ public final class CacheContent extends StyleContent {
             }
         }
         return null; // there is no good Style default for this resource type
-    }    
+    }
 
-    
 }

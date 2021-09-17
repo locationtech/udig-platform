@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -23,10 +23,10 @@ import org.eclipse.jface.action.ContributionItem;
  * @version 1.3.0
  */
 public abstract class CurrentContributionItem extends ContributionItem {
-	
-	/**
-	 * Enablement of the contribution item.
-	 */
+
+    /**
+     * Enablement of the contribution item.
+     */
     protected boolean enabled = true;
 
     /**
@@ -38,14 +38,14 @@ public abstract class CurrentContributionItem extends ContributionItem {
 
     /**
      * Tndicates whether the widget should appear pressed.
-     * 
+     *
      * @param checked indicates whether the widget should appear pressed.
      */
     public abstract void setSelection( boolean checked, ModalItem proxy );
-    
+
     /**
      * True of the item is selected.
-     * 
+     *
      * @return true if the item is considered checked (ie current)
      */
     protected abstract boolean isChecked();
@@ -54,20 +54,16 @@ public abstract class CurrentContributionItem extends ContributionItem {
      * Indicates if the item is disposed.
      */
     public abstract boolean isDisposed();
-    
-    /**
-     *  (non-Javadoc)
-     * @see org.eclipse.jface.action.ContributionItem#isEnabled()
-     */
-    @Override
-	public boolean isEnabled() {
-    	return enabled;
-	}
 
-	/**
-	 * @param enabled
-	 */
-	public void setEnabled(boolean enabled) {
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    /**
+     * @param enabled
+     */
+    public void setEnabled(boolean enabled) {
         this.enabled  = enabled;
     }
 }

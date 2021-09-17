@@ -1,10 +1,10 @@
 /* Image Georeferencing
- * 
- * Axios Engineering 
- *      http://www.axios.es 
+ *
+ * Axios Engineering
+ *      http://www.axios.es
  *
  * (C) 2011, Axios Engineering S.L. (Axios)
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
@@ -35,23 +35,23 @@ import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.ImageCo
 
 /**
  * Responsible of drawing the mark collection on the map.
- * 
+ *
  * It contains a list of {@link MarkMapPresenterImp}.
- * 
+ *
  * @author Mauricio Pazos (www.axios.es)
  * @author Aritz Davila (www.axios.es)
  * @since 1.3.3
- * 
+ *
  */
 public final class MapMarksGraphics implements MapGraphic {
 
-	private Map<String, MarkMapPresenter>	markMapPresenterList				= Collections.synchronizedMap(new Hashtable<String, MarkMapPresenter>());
+	private Map<String, MarkMapPresenter> markMapPresenterList = Collections.synchronizedMap(new Hashtable<String, MarkMapPresenter>());
 
-	private MarkMapPreview						preview								= null;
-	private Set<MouseSelectionListener>			listeners							= new HashSet<MouseSelectionListener>();
+	private MarkMapPreview preview = null;
+	private Set<MouseSelectionListener> listeners = new HashSet<MouseSelectionListener>();
 
-	private MouseSelectionListener				coordinatePanelSelectionListener	= null;
-	private MouseSelectionListener				imageSelectionListener				= null;
+	private MouseSelectionListener coordinatePanelSelectionListener = null;
+	private MouseSelectionListener imageSelectionListener = null;
 
 	/**
 	 * Constructor. Creates its listeners.
@@ -87,7 +87,7 @@ public final class MapMarksGraphics implements MapGraphic {
 
 	/**
 	 * Adds his listeners to the given composites.
-	 * 
+	 *
 	 * @param coordComposite
 	 *            {@link CoordinateTableComposite}.
 	 * @param imageComposite
@@ -101,7 +101,7 @@ public final class MapMarksGraphics implements MapGraphic {
 
 	/**
 	 * Removes his listeners from the given composites.
-	 * 
+	 *
 	 * @param coordComposite
 	 *            {@link CoordinateTableComposite}.
 	 * @param imageComposite
@@ -113,13 +113,6 @@ public final class MapMarksGraphics implements MapGraphic {
 		imageComposite.deleteMouseSelectionListener(imageSelectionListener);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.locationtech.udig.mapgraphic.MapGraphic#draw(org.locationtech.udig.
-	 * mapgraphic.MapGraphicContext)
-	 */
 	public void draw(MapGraphicContext context) {
 
 		Set<Entry<String, MarkMapPresenter>> entrySet = markMapPresenterList.entrySet();
@@ -141,7 +134,7 @@ public final class MapMarksGraphics implements MapGraphic {
 
 	/**
 	 * Add a {@link MarkMapPresenterImp} to the list.
-	 * 
+	 *
 	 * @param markPresenter
 	 *            A map presenter.
 	 */
@@ -160,7 +153,7 @@ public final class MapMarksGraphics implements MapGraphic {
 
 	/**
 	 * Get the {@link MarkMapPresenterImp} list.
-	 * 
+	 *
 	 * @return The map list containing the presenters.
 	 */
 	public Map<String, MarkMapPresenter> getPresenters() {
@@ -170,19 +163,19 @@ public final class MapMarksGraphics implements MapGraphic {
 
 	/**
 	 * <p>
-	 * 
+	 *
 	 * <pre>
 	 * Manages the D&D event which is divided into 3 parts:
-	 * 
+	 *
 	 * -Mouse_down: Find the presenter that is under the given point and creates a preview.
 	 * -Mouse_drag: Updates the preview with the current point position.
 	 * -Mouse_up: Deletes the preview and update the coordinate of the mark model that has been moved.
-	 * 
+	 *
 	 * This method also manages when to show or not the feedback of the presenters.
 	 * </pre>
-	 * 
+	 *
 	 * </p>
-	 * 
+	 *
 	 * @param event
 	 *            Input event.
 	 * @param point
@@ -239,7 +232,7 @@ public final class MapMarksGraphics implements MapGraphic {
 	/**
 	 * Shows the feedback and broadcast which mark is getting affected by the
 	 * feedback to the listeners.
-	 * 
+	 *
 	 * @param inputEvent
 	 *            Input event.
 	 * @param x
@@ -269,7 +262,7 @@ public final class MapMarksGraphics implements MapGraphic {
 
 	/**
 	 * Adds a {@link MouseSelectionListener}.
-	 * 
+	 *
 	 * @param listener
 	 *            The listener.
 	 */
@@ -280,7 +273,7 @@ public final class MapMarksGraphics implements MapGraphic {
 
 	/**
 	 * Delete a {@link MouseSelectionListener}.
-	 * 
+	 *
 	 * @param listener
 	 *            The listener.
 	 */
@@ -292,7 +285,7 @@ public final class MapMarksGraphics implements MapGraphic {
 	/**
 	 * Broadcast to all the listeners that the given mark is under the mouse
 	 * position.
-	 * 
+	 *
 	 * @param mark
 	 *            The mark model.
 	 */
@@ -306,7 +299,7 @@ public final class MapMarksGraphics implements MapGraphic {
 	/**
 	 * Broadcast to all the listeners that the given mark is not under the mouse
 	 * position.
-	 * 
+	 *
 	 * @param mark
 	 *            The mark model.
 	 */
@@ -320,7 +313,7 @@ public final class MapMarksGraphics implements MapGraphic {
 	/**
 	 * Find the given mark inside the list of {@link MarkMapPresenterImp}s and
 	 * shows the feedback.
-	 * 
+	 *
 	 * @param mark
 	 *            The mark model.
 	 */
@@ -345,7 +338,7 @@ public final class MapMarksGraphics implements MapGraphic {
 	/**
 	 * Find the given mark inside the list of {@link MarkMapPresenterImp}s and
 	 * establish to not show the feedback.
-	 * 
+	 *
 	 * @param mark
 	 *            The mark model.
 	 */

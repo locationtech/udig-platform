@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -41,12 +41,7 @@ import org.locationtech.jts.geom.Envelope;
 public class LocalCatalogTest extends AbstractCatalogTest {
 
     private ICatalog instance = null;
-    
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.catalog.tests.AbstractCatalogTest#getResolve()
-     */
+
     protected ICatalog getResolve() {
         return instance;
     }
@@ -88,13 +83,14 @@ public class LocalCatalogTest extends AbstractCatalogTest {
                     return null;
                 }
             }
+
             protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
                 try {
                     return new IServiceInfo("Testing 1", "", "", getIdentifier().toURI(), (URI) null, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                             (URI) null, (new String[]{"Test"}), (ImageDescriptor) null); //$NON-NLS-1$
                 } catch (URISyntaxException e) {
                     throw (RuntimeException) new RuntimeException( ).initCause( e );
-                }                 
+                }
             }
         });
         instance.add(new IService(){
@@ -105,35 +101,37 @@ public class LocalCatalogTest extends AbstractCatalogTest {
 
             public List< ? extends IGeoResource> resources( IProgressMonitor monitor )
                     throws IOException {
-            	ArrayList<IGeoResource> list = new ArrayList<IGeoResource>();
-            	list.add( new IGeoResource(){
+                ArrayList<IGeoResource> list = new ArrayList<IGeoResource>();
+                list.add( new IGeoResource(){
 
-					@Override
-					public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor) throws IOException {
-						return super.resolve(adaptee, monitor);
-					}
+                    @Override
+                    public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor) throws IOException {
+                        return super.resolve(adaptee, monitor);
+                    }
+
                     protected IGeoResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
                         return new IGeoResourceInfo("Test Title", "Test Name", "description", null,  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                                 new Envelope(20,30,0,40), DefaultGeographicCRS.WGS84, new String[0],
                                 null);
                     }
+
                     public <T> boolean canResolve(Class<T> adaptee) {
-						return super.canResolve(adaptee);
-					}
+                        return super.canResolve(adaptee);
+                    }
 
-					public Status getStatus() {
-						return null;
-					}
+                    public Status getStatus() {
+                        return null;
+                    }
 
-					public Throwable getMessage() {
-						return null;
-					}
+                    public Throwable getMessage() {
+                        return null;
+                    }
 
-					public URL getIdentifier() {
-						return null;
-					}
-            		
-            	});
+                    public URL getIdentifier() {
+                        return null;
+                    }
+
+                });
                 return list;
             }
 
@@ -160,57 +158,34 @@ public class LocalCatalogTest extends AbstractCatalogTest {
                     return null;
                 }
             }
+
             protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
                 try {
                     return new IServiceInfo("Testing 2", "", "", getIdentifier().toURI(), (URI) null, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                             (URI) null, (new String[]{"Test"}), (ImageDescriptor) null); //$NON-NLS-1$
                 } catch (URISyntaxException e) {
                     throw (RuntimeException) new RuntimeException( ).initCause( e );
-                } 
+                }
             }
         });
     }
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.catalog.tests.AbstractCatalogTest#mutable()
-     */
+
     protected boolean mutable() {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.catalog.tests.AbstractCatalogTest#getSearchBounds()
-     */
     protected Envelope getSearchBounds() {
         return new Envelope(-180,180,-90,90);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.catalog.tests.AbstractCatalogTest#getSearchString()
-     */
     protected String getSearchString() {
         return "Test"; //$NON-NLS-1$
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.catalog.tests.AbstractResolveTest#hasParent()
-     */
     protected boolean hasParent() {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.catalog.tests.AbstractResolveTest#isLeaf()
-     */
     protected boolean isLeaf() {
         return false;
     }

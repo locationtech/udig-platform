@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2012, Refractions Research Inc.
  *
@@ -77,7 +78,7 @@ public class EditorPageManager implements IExtensionChangeHandler {
 
     /**
      * Create a new instance of the receiver with the specified seperatorChar
-     * 
+     *
      * @param separatorChar
      */
     public EditorPageManager(char separatorChar) {
@@ -103,7 +104,7 @@ public class EditorPageManager implements IExtensionChangeHandler {
 
     /**
      * Add the pages and the groups to the receiver.
-     * 
+     *
      * @param pageContributions
      */
     public void addPages(Collection<?> pageContributions) {
@@ -123,7 +124,7 @@ public class EditorPageManager implements IExtensionChangeHandler {
 
     /**
      * Register a node with the extension tracker.
-     * 
+     *
      * @param node register the given node and its subnodes with the extension tracker
      */
     public void registerNode(EditorNode node) {
@@ -137,13 +138,6 @@ public class EditorPageManager implements IExtensionChangeHandler {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.eclipse.core.runtime.dynamicHelpers.IExtensionChangeHandler#addExtension(org.eclipse.core
-     * .runtime.dynamicHelpers.IExtensionTracker, org.eclipse.core.runtime.IExtension)
-     */
     public void addExtension(IExtensionTracker tracker, IExtension extension) {
 
         IConfigurationElement[] elements = extension.getConfigurationElements();
@@ -198,23 +192,10 @@ public class EditorPageManager implements IExtensionChangeHandler {
         return candidateChildren[0].getAttribute(ATT_CLASS);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.eclipse.core.runtime.dynamicHelpers.IExtensionAdditionHandler#getExtensionPointFilter()
-     */
     private IExtensionPoint getExtensionPointFilter() {
         return Platform.getExtensionRegistry().getExtensionPoint(StyleEditorPage.XPID);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.eclipse.core.runtime.dynamicHelpers.IExtensionChangeHandler#removeExtension(org.eclipse.
-     * core.runtime.IExtension, java.lang.Object[])
-     */
     public void removeExtension(IExtension extension, Object[] objects) {
         for (int i = 0; i < objects.length; i++) {
             if (objects[i] instanceof EditorNode) {
@@ -227,7 +208,7 @@ public class EditorPageManager implements IExtensionChangeHandler {
 
     /**
      * Removes the node from the manager, searching through all subnodes.
-     * 
+     *
      * @param parent the node to search
      * @param nodeToRemove the node to remove
      * @return whether the node was removed
@@ -279,7 +260,7 @@ public class EditorPageManager implements IExtensionChangeHandler {
     /**
      * Recursively enumerates all nodes at or below the given node and adds them to the given list
      * in the given order.
-     * 
+     *
      * @param node the starting node
      * @param sequence a read-write list of preference nodes (element type:
      *        <code>SLDEditorPageNode</code>) in the given order
@@ -311,7 +292,7 @@ public class EditorPageManager implements IExtensionChangeHandler {
      *
      * @param path the path
      * @return the node, or <code>null</code> if none
-     * 
+     *
      * @since 3.1
      */
     protected EditorNode find(String path, EditorNode top) {
@@ -452,7 +433,7 @@ public class EditorPageManager implements IExtensionChangeHandler {
     /**
      * Creates the default {@link EditorPageManager} implementation and loads the style pages for
      * the layer into the manager.
-     * 
+     *
      * @param plugin the plug-in to send error messages to.
      * @param selectedLayer the layer to use to filter the style pages
      * @return the default {@link EditorPageManager} implementation and loads the style pages for

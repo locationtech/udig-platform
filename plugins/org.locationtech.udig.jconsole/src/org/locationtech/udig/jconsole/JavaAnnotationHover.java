@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.locationtech.udig.jconsole;
 
-
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
@@ -20,12 +19,8 @@ import org.eclipse.jface.text.source.ISourceViewer;
 /**
  * The JavaAnnotationHover provides the hover support for java editors.
  */
-
 public class JavaAnnotationHover implements IAnnotationHover {
 
-	/* (non-Javadoc)
-	 * Method declared on IAnnotationHover
-	 */
 	public String getHoverInfo(ISourceViewer sourceViewer, int lineNumber) {
 		IDocument document= sourceViewer.getDocument();
 

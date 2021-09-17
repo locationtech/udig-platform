@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,10 +28,10 @@ import org.eclipse.swt.graphics.Rectangle;
 
 /**
  * An abstract implementation of a Template that provides basic functionality.
- * 
- * Classes that extend this should typically create their own boxes and 
+ *
+ * Classes that extend this should typically create their own boxes and
  * organize them according to their own desires.
- * 
+ *
  * @author Richard Gould
  */
 public abstract class AbstractTemplate implements Template {
@@ -52,9 +52,6 @@ public abstract class AbstractTemplate implements Template {
         zoomToSelectionHint = false;
     }
 
-    /** (non-Javadoc)
-     * @see org.locationtech.udig.printing.ui.Template#iterator()
-     */
     public Iterator<Box> iterator() {
         return boxes.iterator();
     }

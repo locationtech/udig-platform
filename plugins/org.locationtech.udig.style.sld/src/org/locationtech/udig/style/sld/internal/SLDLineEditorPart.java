@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -33,7 +33,7 @@ import org.locationtech.udig.ui.graphics.SLDs;
 
 /**
  * Edit a line symbolizer.
- * 
+ *
  * @author aalam
  * @since 0.6.0
  */
@@ -47,29 +47,14 @@ public class SLDLineEditorPart extends SLDEditorPart implements SelectionListene
     int opacityMaxValue = 100;
     double opacityMaxValueFloat = 100.0;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.style.sld.SLDEditorPart#getContentType()
-     */
     public Class<?> getContentType() {
         return LineSymbolizer.class;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.style.sld.SLDEditorPart#init()
-     */
     public void init() {
         //Nothing to do
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.style.sld.SLDEditorPart#reset()
-     */
     public void reset() {
         // initialize the ui
         setStylingElements((LineSymbolizer) getContent());
@@ -98,7 +83,7 @@ public class SLDLineEditorPart extends SLDEditorPart implements SelectionListene
         lineWidth.setSelection(width);
         //lineWidthText.setText(Integer.toString(width));
         //lineWidthText.pack(true);
-        
+
         double opacity = SLDs.lineOpacity(symbolizer);
         if( Double.isNaN(opacity) ) {
             opacity = SymbolizerContent.DEFAULT_LINE_OPACITY;
@@ -106,7 +91,7 @@ public class SLDLineEditorPart extends SLDEditorPart implements SelectionListene
         lineOpacity.setSelection((int)(opacity*opacityMaxValue));
         //lineOpacityText.setText(Integer.toString((int)(opacity*opacityMaxValue)) + "%"); //$NON-NLS-1$
         //lineOpacityText.pack(true);
-        
+
         //TODO: fix all these hard coded defaults etc...
         String linejoin = SLDs.lineLinejoin(symbolizer);
         String[] options = new String[] {"mitre","round","bevel" };   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
@@ -121,7 +106,7 @@ public class SLDLineEditorPart extends SLDEditorPart implements SelectionListene
         } else {
             linejoinCombo.select(index);
         }
-        
+
 //      TODO: fix all these hard coded defaults etc...
         String linecap = SLDs.lineLinecap(symbolizer);
         String[] lcoptions = new String[] {"butt", "round", "square" };   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
@@ -136,7 +121,7 @@ public class SLDLineEditorPart extends SLDEditorPart implements SelectionListene
         } else {
             linecapCombo.select(lcindex);
         }
-        
+
 //        TODO: This functionality to be added later with a better UI...goes with other task
 //        float[] lineDash = SLDs.lineDash(symbolizer);
 //        if( lineDash.length == 2 ) {
@@ -147,7 +132,7 @@ public class SLDLineEditorPart extends SLDEditorPart implements SelectionListene
 //            lineSpaceText.setText(""); //$NON-NLS-1$
 //        }
     }
-    
+
     /**
      * Construct a subpart labeled with the provided tag.
      * <p>
@@ -157,10 +142,10 @@ public class SLDLineEditorPart extends SLDEditorPart implements SelectionListene
      * @param parent
      * @param tag
      * @param numColumns number of columns (usually 2_
-     * @return Composite with one label 
+     * @return Composite with one label
      */
     private Composite subpart( Composite parent, String tag, int width  ){
-        Composite subpart = new Composite( parent, SWT.NONE );        
+        Composite subpart = new Composite( parent, SWT.NONE );
         RowLayout across = new RowLayout();
         across.type = SWT.HORIZONTAL;
         across.wrap = true;
@@ -168,9 +153,9 @@ public class SLDLineEditorPart extends SLDEditorPart implements SelectionListene
         across.fill = true;
         across.marginBottom = 1;
         across.marginRight = 2;
-        
+
         subpart.setLayout( across );
-        
+
         Label label = new Label( subpart, SWT.NONE );
         label.setText(tag);
         label.setAlignment( SWT.RIGHT );
@@ -178,42 +163,44 @@ public class SLDLineEditorPart extends SLDEditorPart implements SelectionListene
         data.width = 40;
         data.height = 10;
         label.setLayoutData( data );
-                
+
         return subpart;
     }
+
     private void strokePart( Composite parent ) {
         Composite stroke = subpart( parent, Messages.SLDLineEditorPart_label_stroke, 2 );
-        
+
         linejoinCombo = new Combo( stroke, SWT.READ_ONLY);
         linejoinCombo.addSelectionListener(this);
-    
+
         linecapCombo = new Combo(stroke, SWT.READ_ONLY);
         linecapCombo.addSelectionListener(this);
     }
+
     private void borderPart( Composite parent ) {
-        Composite border = subpart( parent, Messages.SLDLineEditorPart_label_border , 4 ); 
-        
+        Composite border = subpart( parent, Messages.SLDLineEditorPart_label_border , 4 );
+
         Button borderEnabled = new Button( border, SWT.CHECK);
         borderEnabled.setEnabled( false );
         borderEnabled.setSelection( true );
-        
+
         lineColourEditor = new ColorEditor(border, this);
-        
-        lineWidth = new Spinner( border, SWT.HORIZONTAL);     
+
+        lineWidth = new Spinner( border, SWT.HORIZONTAL);
         lineWidth.setMinimum(1);
         lineWidth.setMaximum(30);
         lineWidth.setPageIncrement(5);
         lineWidth.addSelectionListener(this);
-        
+
         lineOpacity = new Spinner( border, SWT.HORIZONTAL);
         lineOpacity.setMinimum(0);
         lineOpacity.setMaximum(opacityMaxValue);
         lineOpacity.setPageIncrement(10);
         lineOpacity.addSelectionListener( this );
     }
-    
+
     protected Control createPartControl( Composite parent ) {
-        RowLayout layout = new RowLayout();        
+        RowLayout layout = new RowLayout();
         layout.pack = false;
         layout.wrap = true;
         layout.type = SWT.HORIZONTAL;
@@ -224,34 +211,24 @@ public class SLDLineEditorPart extends SLDEditorPart implements SelectionListene
         layout.marginBottom = 0;
         layout.spacing = 0;
         parent.setLayout(layout);
-        
+
         borderPart(parent);
-        strokePart(parent);        
-                
+        strokePart(parent);
+
         return parent;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
-     */
     public void widgetDefaultSelected( SelectionEvent e ) {
         // Meh! Meh I say!
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-     */
     public void widgetSelected( SelectionEvent e ) {
         apply();
     }
 
     /**
      * Reflects the changes from the UI to the symbolizer
-     * 
+     *
      */
     public void apply() {
         LineSymbolizer symbolizer = (LineSymbolizer) getContent();

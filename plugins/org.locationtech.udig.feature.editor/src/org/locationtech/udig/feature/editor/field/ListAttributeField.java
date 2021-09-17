@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -84,14 +84,14 @@ public abstract class ListAttributeField extends AttributeField {
     private SelectionListener selectionListener;
 
     /**
-     * Creates a new list field editor 
+     * Creates a new list field editor
      */
     protected ListAttributeField() {
     }
 
     /**
      * Creates a list field editor.
-     * 
+     *
      * @param name the name of the preference this field editor works on
      * @param labelText the label text of the field editor
      * @param parent the parent of the field editor's control
@@ -119,9 +119,6 @@ public abstract class ListAttributeField extends AttributeField {
         }
     }
 
-    /* (non-Javadoc)
-     * Method declared on FieldEditor.
-     */
     public void adjustForNumColumns(int numColumns) {
         Control control = getLabelControl();
         ((GridData) control.getLayoutData()).horizontalSpan = numColumns;
@@ -142,7 +139,7 @@ public abstract class ListAttributeField extends AttributeField {
 
     /**
      * Combines the given list of items into a single string.
-     * This method is the converse of <code>parseString</code>. 
+     * This method is the converse of <code>parseString</code>.
      * <p>
      * Subclasses must implement this method.
      * </p>
@@ -155,7 +152,7 @@ public abstract class ListAttributeField extends AttributeField {
 
     /**
      * Helper method to create a push button.
-     * 
+     *
      * @param parent the parent control
      * @param key the resource name used to supply the button's label text
      * @return Button
@@ -207,9 +204,6 @@ public abstract class ListAttributeField extends AttributeField {
         };
     }
 
-    /* (non-Javadoc)
-     * Method declared on FieldEditor.
-     */
     protected void doFillIntoGrid(Composite parent, int numColumns) {
         Control control = getLabelControl(parent);
         GridData gd = new GridData();
@@ -229,12 +223,9 @@ public abstract class ListAttributeField extends AttributeField {
         buttonBox.setLayoutData(gd);
     }
 
-    /* (non-Javadoc)
-     * Method declared on FieldEditor.
-     */
     public void doLoad() {
         if (list != null) {
-            Object value = getFeature().getAttribute( getAttributeName() );            
+            Object value = getFeature().getAttribute( getAttributeName() );
             String text = Converters.convert(value, String.class );
             String[] array = parseString(text);
             for (int i = 0; i < array.length; i++) {
@@ -243,14 +234,11 @@ public abstract class ListAttributeField extends AttributeField {
         }
     }
 
-    /* (non-Javadoc)
-     * Method declared on FieldEditor.
-     */
     protected void doLoadDefault() {
         if (list != null) {
             list.removeAll();
             SimpleFeatureType schema = getFeature().getFeatureType();
-            AttributeDescriptor descriptor = schema.getDescriptor( getAttributeName());            
+            AttributeDescriptor descriptor = schema.getDescriptor( getAttributeName());
             Object value = descriptor.getDefaultValue();
             String text = Converters.convert(value, String.class );
             String[] array = parseString(text);
@@ -260,12 +248,9 @@ public abstract class ListAttributeField extends AttributeField {
         }
     }
 
-    /* (non-Javadoc)
-     * Method declared on FieldEditor.
-     */
     protected void doStore() {
         String s = createList(list.getItems());
-        if (s != null) {                  
+        if (s != null) {
             getFeature().setAttribute( getAttributeName(), s);
         }
     }
@@ -334,7 +319,7 @@ public abstract class ListAttributeField extends AttributeField {
     public List getControl(){
         return list;
     }
-    
+
     /**
      * Creates and returns a new item for the list.
      * <p>
@@ -345,9 +330,6 @@ public abstract class ListAttributeField extends AttributeField {
      */
     protected abstract String getNewInputObject();
 
-    /* (non-Javadoc)
-     * Method declared on FieldEditor.
-     */
     public int getNumberOfControls() {
         return 3;
     }
@@ -383,7 +365,7 @@ public abstract class ListAttributeField extends AttributeField {
 
     /**
      * Splits the given string into a list of strings.
-     * This method is the converse of <code>createList</code>. 
+     * This method is the converse of <code>createList</code>.
      * <p>
      * Subclasses must implement this method.
      * </p>
@@ -408,17 +390,17 @@ public abstract class ListAttributeField extends AttributeField {
 
     /**
      * Invoked when the selection in the list has changed.
-     * 
+     *
      * <p>
      * The default implementation of this method utilizes the selection index
      * and the size of the list to toggle the enablement of the up, down and
      * remove buttons.
      * </p>
-     * 
+     *
      * <p>
      * Sublcasses may override.
      * </p>
-     * 
+     *
      * @since 3.5
      */
     protected void selectionChanged() {
@@ -431,9 +413,6 @@ public abstract class ListAttributeField extends AttributeField {
         downButton.setEnabled(size > 1 && index >= 0 && index < size - 1);
     }
 
-    /* (non-Javadoc)
-     * Method declared on FieldEditor.
-     */
     public void setFocus() {
         if (list != null) {
             list.setFocus();
@@ -481,7 +460,7 @@ public abstract class ListAttributeField extends AttributeField {
             downButton.setEnabled(enabled);
         }
     }
-    
+
     public void setVisible(boolean visble) {
         super.setVisible(visble);
         if( list != null && list.isDisposed() ){
@@ -492,50 +471,50 @@ public abstract class ListAttributeField extends AttributeField {
             downButton.setVisible(visble);
         }
     }
-    
+
     /**
-     * Return the Add button.  
-     * 
+     * Return the Add button.
+     *
      * @return the button
      * @since 3.5
      */
     protected Button getAddButton() {
         return addButton;
     }
-    
+
     /**
-     * Return the Remove button.  
-     * 
+     * Return the Remove button.
+     *
      * @return the button
      * @since 3.5
      */
     protected Button getRemoveButton() {
         return removeButton;
     }
-    
+
     /**
-     * Return the Up button.  
-     * 
+     * Return the Up button.
+     *
      * @return the button
      * @since 3.5
      */
     protected Button getUpButton() {
         return upButton;
     }
-    
+
     /**
-     * Return the Down button.  
-     * 
+     * Return the Down button.
+     *
      * @return the button
      * @since 3.5
      */
     protected Button getDownButton() {
         return downButton;
     }
-    
+
     /**
      * Return the List.
-     * 
+     *
      * @return the list
      * @since 3.5
      */

@@ -1,6 +1,6 @@
-/*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+/**
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -53,7 +53,7 @@ import org.locationtech.udig.catalog.jgrass.messages.Messages;
  * <p>
  * This class supplies a tree viewer containing the JGrass raster maps that are in the catalog.
  * </p>
- * 
+ *
  * @author Andrea Antonello - www.hydrologis.com
  */
 public class JGRasterCatalogTreeViewer extends Composite implements ISelectionChangedListener, IResourcesSelector {
@@ -124,7 +124,7 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
     private class ContentProvider implements ITreeContentProvider {
         /**
          * Gets the children of the specified object
-         * 
+         *
          * @param arg0 the parent object
          * @return Object[]
          */
@@ -185,7 +185,7 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
 
         /**
          * Gets the parent of the specified object
-         * 
+         *
          * @param arg0 the object
          * @return Object
          */
@@ -204,7 +204,7 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
 
         /**
          * Returns whether the passed object has children
-         * 
+         *
          * @param arg0 the parent object
          * @return boolean
          */
@@ -219,7 +219,7 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
 
         /**
          * Gets the root element(s) of the tree
-         * 
+         *
          * @param arg0 the input data
          * @return Object[]
          */
@@ -271,7 +271,7 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
 
         /**
          * Called when the input changes
-         * 
+         *
          * @param arg0 the viewer
          * @param arg1 the old input
          * @param arg2 the new input
@@ -320,7 +320,7 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
 
         /**
          * Gets the image to display for a node in the tree
-         * 
+         *
          * @param arg0 the node
          * @return Image
          */
@@ -349,7 +349,7 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
 
         /**
          * Gets the text to display for a node in the tree
-         * 
+         *
          * @param arg0 the node
          * @return String
          */
@@ -376,7 +376,7 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
 
         /**
          * Adds a listener to this label provider
-         * 
+         *
          * @param arg0 the listener
          */
         public void addListener( ILabelProviderListener arg0 ) {
@@ -395,7 +395,7 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
         /**
          * Returns whether changes to the specified property on the specified element would affect
          * the label for the element
-         * 
+         *
          * @param arg0 the element
          * @param arg1 the property
          * @return boolean
@@ -406,7 +406,7 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
 
         /**
          * Removes the listener
-         * 
+         *
          * @param arg0 the listener to remove
          */
         public void removeListener( ILabelProviderListener arg0 ) {
@@ -414,10 +414,6 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * @see eu.hydrologis.jgrass.ui.utilities.ResourcesSelector#getSelectedLayers()
-     */
     public List<IGeoResource> getSelectedLayers() {
         return itemLayers;
     }

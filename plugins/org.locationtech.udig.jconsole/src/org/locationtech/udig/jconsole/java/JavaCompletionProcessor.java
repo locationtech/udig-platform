@@ -89,9 +89,6 @@ public class JavaCompletionProcessor implements IContentAssistProcessor {
         }
     }
 
-    /* (non-Javadoc)
-     * Method declared on IContentAssistProcessor
-     */
     public ICompletionProposal[] computeCompletionProposals( ITextViewer viewer, int documentOffset ) {
         // get the word the user is currently writing
         String guessedModelWord = null;

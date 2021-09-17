@@ -1,8 +1,12 @@
-/*
- * Created on 8-Jan-2005
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2005, Refractions Research Inc.
  *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.catalog.util;
 
@@ -13,7 +17,7 @@ import java.util.Stack;
 
 /**
  * Used by catalog to implement search.
- * 
+ *
  * @author David Zwiers, Refractions Research
  */
 public class ASTFactory {
@@ -24,7 +28,7 @@ public class ASTFactory {
      * Creates an AST for the pattern The pattern uses the following conventions: use " " to
      * surround a phase use + to represent 'AND' use - to represent 'OR' use ! to represent 'NOT'
      * use ( ) to designate scope
-     * 
+     *
      * @param pattern Search pattern
      * @return AST
      */
@@ -171,7 +175,7 @@ public class ASTFactory {
 
         /**
          * TODO summary sentence for accept ...
-         * 
+         *
          * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
          * @param datum
          * @return
@@ -183,26 +187,18 @@ public class ASTFactory {
 
         /**
          * TODO summary sentence for type ...
-         * 
+         *
          * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#type()
          * @return
          */
         public int type() {
             return AND;
         }
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.locationtech.udig.catalog.util.AST#getLeft()
-         */
+
         public AST getLeft() {
             return left;
         }
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.locationtech.udig.catalog.util.AST#getRight()
-         */
+
         public AST getRight() {
             return right;
         }
@@ -221,7 +217,7 @@ public class ASTFactory {
 
         /**
          * TODO summary sentence for accept ...
-         * 
+         *
          * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
          * @param datum
          * @return
@@ -233,27 +229,18 @@ public class ASTFactory {
 
         /**
          * TODO summary sentence for type ...
-         * 
+         *
          * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#type()
          * @return
          */
         public int type() {
             return OR;
         }
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.locationtech.udig.catalog.util.AST#getLeft()
-         */
+
         public AST getLeft() {
             return left;
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.locationtech.udig.catalog.util.AST#getRight()
-         */
         public AST getRight() {
             return right;
         }
@@ -271,7 +258,7 @@ public class ASTFactory {
 
         /**
          * TODO summary sentence for accept ...
-         * 
+         *
          * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
          * @param datum
          * @return
@@ -283,26 +270,18 @@ public class ASTFactory {
 
         /**
          * TODO summary sentence for type ...
-         * 
+         *
          * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#type()
          * @return
          */
         public int type() {
             return NOT;
         }
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.locationtech.udig.catalog.util.AST#getLeft()
-         */
+
         public AST getLeft() {
             return child;
         }
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.locationtech.udig.catalog.util.AST#getRight()
-         */
+
         public AST getRight() {
             return null;
         }
@@ -320,7 +299,7 @@ public class ASTFactory {
 
         /**
          * TODO summary sentence for accept ...
-         * 
+         *
          * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
          * @param datum
          * @return
@@ -332,26 +311,18 @@ public class ASTFactory {
 
         /**
          * TODO summary sentence for type ...
-         * 
+         *
          * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#type()
          * @return
          */
         public int type() {
             return LITERAL;
         }
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.locationtech.udig.catalog.util.AST#getLeft()
-         */
+
         public AST getLeft() {
             return null;
         }
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.locationtech.udig.catalog.util.AST#getRight()
-         */
+
         public AST getRight() {
             return null;
         }

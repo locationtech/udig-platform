@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -41,7 +42,7 @@ import org.osgi.framework.BundleContext;
 /**
  * The Plugin class for the org.locationtech.udig.project plugin. Provides access to plugin
  * resources.
- * 
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
@@ -66,7 +67,7 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
      */
     public static final int MAX_RESOURCES_IN_SERVICE = 1;
 
-	private static ProjectUIPlugin INSTANCE;
+    private static ProjectUIPlugin INSTANCE;
 
     List<AdapterFactory> adapterFactories;
 
@@ -85,9 +86,9 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
     }
 
     FeatureEditorExtensionProcessor featureEditProcessor = null;
-    
+
     FeaturePanelProcessor featurePanelProcessor = null;
-    
+
     /**
      * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
      */
@@ -97,7 +98,7 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
 
     /**
      * Returns the system created plugin object
-     * 
+     *
      * @return the plugin object
      */
     public static ProjectUIPlugin getDefault() {
@@ -106,7 +107,7 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
 
     /**
      * Returns the ToolManager singleton.
-     * 
+     *
      * @return the ToolManager singleton.
      * @deprecated
      */
@@ -148,7 +149,7 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
     /**
      * This accesses a cached version of the property sheet. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @return An IProperty page for the selected object
      */
     public IPropertySheetPage getPropertySheetPage() {
@@ -178,7 +179,7 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
 
     /**
      * Returns the adapterfactory instance.
-     * 
+     *
      * @return the adapterfactory instance.
      */
     public AdapterFactory getAdapterFactory() {
@@ -212,7 +213,7 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
 
     /**
      * Gets the FeatureEditorProcessor instance.
-     * 
+     *
      * @return
      */
     public FeatureEditorExtensionProcessor getFeatureEditProcessor() {
@@ -222,10 +223,10 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
         }
         return featureEditProcessor;
     }
-    
+
     /**
      * Gets the FeatureEditorProcessor instance.
-     * 
+     *
      * @return
      */
     public FeaturePanelProcessor getFeaturePanelProcessor() {
@@ -244,7 +245,7 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
     public static void log( String message2, Throwable e ) {
         String message=message2;
         if (message == null)
-            message = Messages.ProjectUIPlugin_error + e; 
+            message = Messages.ProjectUIPlugin_error + e;
         getDefault().getLog().log(new Status(IStatus.INFO, ID, IStatus.OK, message, e));
     }
     /**
@@ -254,7 +255,7 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
      * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
-     * 
+     *
      */
     private static void trace( String message, Throwable e ) {
         if (getDefault().isDebugging()) {
@@ -268,7 +269,7 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
     }
     /**
      * Messages that only engage if getDefault().isDebugging() and the trace option traceID is true.
-     * Available trace options can be found in the Trace class.  (They must also be part of the .options file) 
+     * Available trace options can be found in the Trace class.  (They must also be part of the .options file)
      */
     public static void trace( String traceID, Class caller, String message, Throwable e ) {
         if (isDebugging(traceID)) {
@@ -277,7 +278,7 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
     }
 
     /**
-     * Adds the name of the caller class to the message. 
+     * Adds the name of the caller class to the message.
      *
      * @param caller class of the object doing the trace.
      * @param message tracing message, may be null.
@@ -286,7 +287,7 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
     public static void trace( Class caller, String message, Throwable e ) {
         trace(caller.getSimpleName()+": "+message, e); //$NON-NLS-1$ //$NON-NLS-2$
     }
-    
+
     /**
      * Performs the Platform.getDebugOption true check on the provided trace
      * <p>
@@ -295,20 +296,20 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
      * </p>
-     * 
+     *
      * @param trace currently only RENDER is defined
      */
     public static boolean isDebugging( final String trace ) {
         return getDefault().isDebugging()
-                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
+                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
     /**
      * The delay used to determine double click speed.
-     * 
+     *
      * <p>
      * The delay defaults to 100 milliseconds.
      * </p>
-     * 
+     *
      * @return the milliseconds used for the double-click speed.
      */
     public int getDoubleClickSpeed() {
@@ -317,14 +318,11 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
         if (mouseSpeed == 0) {
             mouseSpeed = DEFAULT_DOUBLECLICK_SPEED_MILLIS;
         }
-        return mouseSpeed; 
+        return mouseSpeed;
     }
 
-	/* (non-Javadoc)
-	 * @see org.locationtech.udig.core.AbstractUdigUIPlugin#getIconPath()
-	 */
-	public IPath getIconPath() {
-		return new Path(ICONS_PATH);
-	}
+    public IPath getIconPath() {
+        return new Path(ICONS_PATH);
+    }
 
 }

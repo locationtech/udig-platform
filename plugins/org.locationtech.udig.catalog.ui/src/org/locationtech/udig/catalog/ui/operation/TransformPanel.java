@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -61,7 +62,7 @@ import org.opengis.filter.expression.Expression;
 /**
  * Panel that can be places in a UI used to ask the user to enter in a series of expression for use
  * with the Transform process.
- * 
+ *
  * @author leviputna
  */
 public class TransformPanel extends Composite {
@@ -94,7 +95,7 @@ public class TransformPanel extends Composite {
 
     /**
      * List of change listeners
-     * 
+     *
      * @see #fireChanged
      */
     private ListenerList changedListeners = new ListenerList();
@@ -192,7 +193,7 @@ public class TransformPanel extends Composite {
      * <p>
      * Recommend using the Design tab as it will help maintain layout.
      * </p>
-     * 
+     *
      * @param parent
      * @param style
      */
@@ -204,16 +205,10 @@ public class TransformPanel extends Composite {
         this.listen(true);
     }
 
-    /*
-     * (non-Javadoc) Method declared on ISelectionProvider.
-     */
     public void addChangedListener(ChangeListener listener) {
         changedListeners.add(listener);
     }
 
-    /*
-     * (non-Javadoc) Method declared on ISelectionProvider.
-     */
     public void removeChangedListener(ChangeListener listener) {
         changedListeners.remove(listener);
     }
@@ -221,9 +216,9 @@ public class TransformPanel extends Composite {
     /**
      * Notifies any selection changed listeners that the viewer's selection has changed. Only
      * listeners registered at the time this method is called are notified.
-     * 
+     *
      * @param changeEvent a selection changed event
-     * 
+     *
      * @see ISelectionChangedListener#selectionChanged
      */
     protected void fireChanged(final ChangeEvent changeEvent) {
@@ -251,7 +246,7 @@ public class TransformPanel extends Composite {
 
     /**
      * Get the Composite containing the UI
-     * 
+     *
      * @return the composite
      */
     public Composite getComposite() {
@@ -260,7 +255,7 @@ public class TransformPanel extends Composite {
 
     /**
      * Transform process definition;
-     * 
+     *
      * @return
      */
     public List<TransformProcess.Definition> getTransform() {

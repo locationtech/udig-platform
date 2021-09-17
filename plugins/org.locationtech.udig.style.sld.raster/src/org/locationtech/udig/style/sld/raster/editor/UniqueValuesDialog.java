@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2011, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2011, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -48,22 +48,22 @@ import org.opengis.coverage.grid.GridCoverageReader;
 /**
  * Dialog for computing the unique values
  * in a raster.
- * 
+ *
  * @author Emily Gouge (Refractions Research Inc.)
  *
  */
 public class UniqueValuesDialog extends TitleAreaDialog{
-	
+
 	private static final String COMPUTE_LABEL = Messages.UniqueValuesDialog_ComputingLabel;
 	private Long sampleSize = ClassificationEngine.WARN_VALUE;
-	
+
 	private Text txtSampleSize;
 	private Button chSampleSize;
 	private GridCoverageReader layer;
 	private ListViewer lstViewer;
 	private List<Number> uniqueValues = null;
 	private Button btnRecompute;
-	
+
 	/*
 	 * Job to compute the unique values
 	 */
@@ -83,7 +83,7 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 						lstViewer.refresh();
 					}
 				});
-			
+
 				try {
 					values = engine.computeUniqueValues(layer, thisSampleSize, monitor);
 				} catch (Exception e) {
@@ -108,13 +108,13 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 						btnRecompute.setEnabled(true);
 						lstViewer.setInput(uniqueValues);
 						lstViewer.refresh();
-					}			
+					}
 				});
-		
+
 			}
 			return Status.OK_STATUS;
 		}};
-		
+
 	/**
 	 * Creates a new unique values dialog
 	 * @param parentShell parent
@@ -125,10 +125,7 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 		this.layer = layer;
 		this.uniqueValues = new ArrayList<Number>();
 	}
-	
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.dialogs.Dialog#close()
-	 */
+
 	public boolean close() {
 		computeJob.cancel();
 		return super.close();
@@ -141,17 +138,17 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 		gl.marginWidth = gl.marginHeight = 20;
 		main.setLayout(gl);
 		main.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		
-		
+
+
+
 		Composite sampleSizeComp = new Composite(main, SWT.NONE);
 		sampleSizeComp.setLayout(new GridLayout(3, false));
 		sampleSizeComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		
+
 		Label lbls = new Label(sampleSizeComp, SWT.NONE);
 		lbls.setText(Messages.UniqueValuesDialog_LimitLabel);
 		lbls.setToolTipText(Messages.UniqueValuesDialog_LimitTooltip);
-	
+
 		chSampleSize = new Button(sampleSizeComp, SWT.CHECK);
 		chSampleSize.setSelection(false);
 		chSampleSize.addSelectionListener(new SelectionAdapter() {
@@ -159,13 +156,13 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 			public void widgetSelected(SelectionEvent e) {
 				txtSampleSize.setEnabled(chSampleSize.getSelection());
 			}
-				
+
 		});
 		txtSampleSize = new Text(sampleSizeComp, SWT.BORDER);
 		txtSampleSize.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		txtSampleSize.setText("100000"); //$NON-NLS-1$
 		txtSampleSize.setEnabled(false);
-		
+
 		btnRecompute = new Button(sampleSizeComp, SWT.NONE);
 		btnRecompute.setText(Messages.UniqueValuesDialog_ReCalcButtonName);
 		btnRecompute.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false,3,1));
@@ -178,28 +175,27 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 
 		Label lblSep = new Label(main, SWT.SEPARATOR | SWT.HORIZONTAL);
 		lblSep.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		
-		
+
 		Composite lowerPanel = new Composite(main, SWT.NONE);
 		lowerPanel.setLayout(new GridLayout(2, false));
 		lowerPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
+
 		Label lblValues = new Label(lowerPanel, SWT.NONE);
 		lblValues.setText(Messages.UniqueValuesDialog_ValuesToAddLabel);
 		lblValues.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false, 2, 1));
-		
+
 		lstViewer = new ListViewer(lowerPanel);
 		lstViewer.setContentProvider(ArrayContentProvider.getInstance());
 		lstViewer.setLabelProvider(new LabelProvider());
 		lstViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
+
 		((GridData)lstViewer.getControl().getLayoutData()).widthHint = 150;
 		((GridData)lstViewer.getControl().getLayoutData()).heightHint = 200;
-		
+
 		Composite buttons = new Composite(lowerPanel, SWT.NONE);
 		buttons.setLayout(new GridLayout(1, false));
 		buttons.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false));
-		
+
 		Button btnAdd = new Button(buttons, SWT.PUSH);
 		btnAdd.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		btnAdd.setText(Messages.UniqueValuesDialog_AddButton);
@@ -224,7 +220,7 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 				}
 			}
 		});
-		
+
 		Button btnRemove = new Button(buttons, SWT.PUSH);
 		btnRemove.setText(Messages.UniqueValuesDialog_RemoveButton);
 		btnRemove.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -239,28 +235,25 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 				lstViewer.refresh();
 			}
 		});
-		
-		
 
-		
 		super.setTitle(Messages.UniqueValuesDialog_DialogTitle);
 		super.setMessage(Messages.UniqueValuesDialog_DialogMessage);
 		super.getShell().setText(Messages.UniqueValuesDialog_ShellTitle);
-		
+
 		return main;
-		
+
 	}
-	
+
 	/**
 	 * Updates the provided panel with the selected colors.
-	 * 
+	 *
 	 * @param panel must be UniqueValuesPanel
 	 */
 	public void updatePanel(IColorMapTypePanel panel){
 		if (!(panel instanceof UniqueValuesPanel)){
 			return;
 		}
-		
+
 		List<ColorEntry> entries = new ArrayList<ColorEntry>();
 		for (Number n :uniqueValues){
 			ColorEntry ce = new ColorEntry(Color.BLACK, 1, n.doubleValue(),""); //$NON-NLS-1$
@@ -268,7 +261,7 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 		}
 		((UniqueValuesPanel)panel).setBreaks(entries);
 	}
-	
+
 	/*
 	 * sorts values
 	 */
@@ -286,7 +279,7 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 			}
 		});
 	}
-	
+
 	private void computeValues(){
 		this.sampleSize = null;
 		if (chSampleSize.getSelection()){
@@ -295,7 +288,7 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 		computeJob.cancel();
 		computeJob.schedule();
 	}
-	
+
 	@Override
 	protected boolean isResizable() {
 		return true;

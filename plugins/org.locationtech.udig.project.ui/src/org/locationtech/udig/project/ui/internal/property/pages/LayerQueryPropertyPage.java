@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2011, Refractions Research Inc.
  *
@@ -38,13 +39,13 @@ import net.miginfocom.swt.MigLayout;
  * in that it can be used to provide a cut-down data set.
  * <p>
  * In order for this property page to work we require that FeatureType be made available.
- * 
+ *
  * @author Jody Garnett (LISAsoft)
  */
 public class LayerQueryPropertyPage extends UDIGPropertyPage implements IWorkbenchPropertyPage {
 
     private FilterViewer filter;
-    
+
     /*
      * Used to enable the apply button when content changes
      */
@@ -54,15 +55,11 @@ public class LayerQueryPropertyPage extends UDIGPropertyPage implements IWorkben
             setApplyButton();
         }
     };
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.eclipse.jface.preference.PreferencePage#createContents(org.eclipse.swt.widgets.Composite)
-     */
+
     @Override
     protected Control createContents( Composite parent ) {
         Layer layer = getElement( Layer.class );
-        
+
         SimpleFeatureType schema = layer.getSchema();
         // check if layer is polygon
         if (schema == null) {
@@ -78,18 +75,18 @@ public class LayerQueryPropertyPage extends UDIGPropertyPage implements IWorkben
         ControlDecoration decoration = new ControlDecoration(label, SWT.RIGHT | SWT.TOP );
         filter = new FilterViewer(page, SWT.MULTI );
         filter.getControl().setLayoutData("cell 1 0,grow,width 200:100%:100%,height 60:100%:100%");
-        
+
         FilterInput input = new FilterInput();
         input.setFeedback(decoration);
         input.setRequired(false);
         filter.setInput(input);
-        
+
         loadLayer();
         listen(true);
-        
+
         return page;
     }
-    
+
     public void listen( boolean listen ) {
         if (listen) {
             filter.addSelectionChangedListener(selectionListener);
@@ -97,14 +94,13 @@ public class LayerQueryPropertyPage extends UDIGPropertyPage implements IWorkben
             filter.removeSelectionChangedListener(selectionListener);
         }
     }
-    
-    
+
     @Override
     public boolean performOk() {
         saveLayer();
         return super.performOk();
     }
-    
+
     @Override
     protected void performApply() {
         saveLayer();
@@ -116,13 +112,13 @@ public class LayerQueryPropertyPage extends UDIGPropertyPage implements IWorkben
         loadLayer();
         super.performDefaults();
     }
-    
+
     /**
      * Look up the {@link ProjectBlackboardConstants#LAYER__DATA_QUERY} on the style blackboard.
      * <p>
      * The provided filter is returned, or {@link Filter#INCLUDE} if not available
      * (as the default is to include all content).
-     * 
+     *
      * @return Filter, or {@link Filter#INCLUDE} if not available
      */
     Filter getDataQueryFilter(){
@@ -140,19 +136,20 @@ public class LayerQueryPropertyPage extends UDIGPropertyPage implements IWorkben
         }
         return Filter.INCLUDE;
     }
+
     /**
      * Update the apply and revert buttons if anything has been modified ...
      */
     protected void setApplyButton(){
         Filter stored = getDataQueryFilter();
         Filter current = filter.getFilter();
-        
+
         boolean changed = !IFilterViewer.same(stored,  current);
-        
+
         this.getApplyButton().setEnabled(changed);
         this.getDefaultsButton().setEnabled(changed);
     }
-    
+
     /*
      * Saves any changes to the style blackboard
      */
@@ -168,16 +165,16 @@ public class LayerQueryPropertyPage extends UDIGPropertyPage implements IWorkben
             }
         }
     }
-    
+
     /* Grabs the layer and fills in the current page. */
     private void loadLayer() {
         Layer layer = getElement(Layer.class);
         SimpleFeatureType schema = layer != null ? layer.getSchema() : null;
         filter.getInput().setSchema(schema);
-        
+
         boolean enabled = schema != null;
         filter.getControl().setEnabled(enabled);
-        
+
         Filter stored = getDataQueryFilter();
         filter.setFilter(stored);
     }

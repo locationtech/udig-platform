@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -34,17 +34,11 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * Writes the projection file for a shapefile
- * 
+ *
  * @author jesse
  */
 public class SetProjection implements IOp {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.locationtech.udig.ui.operations.IOp#op(org.eclipse.swt.widgets.Display,
-	 *      java.lang.Object, org.eclipse.core.runtime.IProgressMonitor)
-	 */
 	public void op(final Display display, final Object target,
 			IProgressMonitor monitor) throws Exception {
 		Object[] targets = (Object[]) target;

@@ -20,7 +20,7 @@ import org.osgi.framework.Bundle;
 
 /**
  * log4j appender to an eclipse plugin's Ilog.
- * 
+ *
  * @author John J. Franey
  *
  */
@@ -28,12 +28,6 @@ public class PluginLogAppender extends AppenderSkeleton {
 
 	private String symbolicName;
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * org.apache.log4j.AppenderSkeleton#append(org.apache.log4j.spi.LoggingEvent)
-	 */
 	protected void append(LoggingEvent event) {
 
 		// don't go any further if event is not severe enough.

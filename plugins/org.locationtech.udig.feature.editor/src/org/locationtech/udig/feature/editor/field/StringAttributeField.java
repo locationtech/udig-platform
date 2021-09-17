@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2010, Refractions Research Inc.
  *
@@ -36,7 +37,7 @@ import org.opengis.feature.type.AttributeDescriptor;
 
 /**
  * Attribute field for a string type attribute.
- * 
+ *
  * @since 1.2.0
  */
 public class StringAttributeField extends AttributeField {
@@ -44,7 +45,7 @@ public class StringAttributeField extends AttributeField {
     /**
      * Validation strategy constant (value <code>0</code>) indicating that the editor should perform
      * validation after every key stroke.
-     * 
+     *
      * @see #setValidateStrategy
      */
     public static final int VALIDATE_ON_KEY_STROKE = 0;
@@ -52,7 +53,7 @@ public class StringAttributeField extends AttributeField {
     /**
      * Validation strategy constant (value <code>1</code>) indicating that the editor should perform
      * validation only when the text widget loses focus.
-     * 
+     *
      * @see #setValidateStrategy
      */
     public static final int VALIDATE_ON_FOCUS_LOST = 1;
@@ -69,7 +70,7 @@ public class StringAttributeField extends AttributeField {
 
     /**
      * Old text value.
-     * 
+     *
      * @since 3.4 this field is protected.
      */
     protected String oldValue;
@@ -120,7 +121,7 @@ public class StringAttributeField extends AttributeField {
 
     /**
      * Creates a string field editor. Use the method <code>setTextLimit</code> to limit the text.
-     * 
+     *
      * @param name the name of the preference this field editor works on
      * @param labelText the label text of the field editor
      * @param width the width of the text input field in characters, or <code>UNLIMITED</code> for
@@ -146,7 +147,7 @@ public class StringAttributeField extends AttributeField {
 
     /**
      * Creates a string field editor. Use the method <code>setTextLimit</code> to limit the text.
-     * 
+     *
      * @param name the name of the preference this field editor works on
      * @param labelText the label text of the field editor
      * @param width the width of the text input field in characters, or <code>UNLIMITED</code> for
@@ -161,7 +162,7 @@ public class StringAttributeField extends AttributeField {
     /**
      * Creates a string field editor of unlimited width. Use the method <code>setTextLimit</code> to
      * limit the text.
-     * 
+     *
      * @param name the name of the preference this field editor works on
      * @param labelText the label text of the field editor
      * @param parent the parent of the field editor's control
@@ -175,19 +176,6 @@ public class StringAttributeField extends AttributeField {
         this(name, labelText, UNLIMITED, parent, 0); // UNLIMITED
     }
 
-    /**
-     * Creates a string field editor of unlimited width. Use the method <code>setTextLimit</code> to
-     * limit the text.
-     * 
-     * @param name the name of the preference this field editor works on
-     * @param labelText the label text of the field editor
-     * @param parent the parent of the field editor's control
-     * @param line text field type. True if multiline, false if single line
-     */
-
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
     public void adjustForNumColumns( int numColumns ) {
         GridData gd = (GridData) textField.getLayoutData();
         gd.horizontalSpan = numColumns - 1;
@@ -199,7 +187,7 @@ public class StringAttributeField extends AttributeField {
 
     /**
      * Checks whether the text input field contains a valid value or not.
-     * 
+     *
      * @return <code>true</code> if the field value is valid, and <code>false</code> if invalid
      */
     public boolean checkState() {
@@ -234,7 +222,7 @@ public class StringAttributeField extends AttributeField {
      * The default implementation of this framework method does nothing and returns
      * <code>true</code>. Subclasses should override this method to specific state checks.
      * </p>
-     * 
+     *
      * @return <code>true</code> if the field value is valid, and <code>false</code> if invalid
      */
     protected boolean doCheckState() {
@@ -270,7 +258,7 @@ public class StringAttributeField extends AttributeField {
     boolean isRequired(){
         return required;
     }
-    
+
     public void setRequired( boolean required ) {
         this.required = required;
     }
@@ -357,9 +345,6 @@ public class StringAttributeField extends AttributeField {
 
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
     public void doLoad() {
         if (textField != null && getFeature() != null) {
             // AttributeDescriptor descriptor = getFeature().getType().getDescriptor(
@@ -376,9 +361,6 @@ public class StringAttributeField extends AttributeField {
         }
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
     protected void doLoadDefault() {
         if (textField != null) {
             SimpleFeatureType schema = getFeature().getFeatureType();
@@ -391,9 +373,6 @@ public class StringAttributeField extends AttributeField {
         valueChanged();
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
     protected void doStore() {
         SimpleFeatureType schema = getFeature().getFeatureType();
         AttributeDescriptor descriptor = schema.getDescriptor(getAttributeName());
@@ -405,23 +384,20 @@ public class StringAttributeField extends AttributeField {
 
     /**
      * Returns the error message that will be displayed when and if an error occurs.
-     * 
+     *
      * @return the error message, or <code>null</code> if none
      */
     public String getErrorMessage() {
         return errorMessage;
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
     public int getNumberOfControls() {
         return 2;
     }
 
     /**
      * Returns the field editor's value.
-     * 
+     *
      * @return the current value
      */
     public String getStringValue() {
@@ -436,7 +412,7 @@ public class StringAttributeField extends AttributeField {
 
     /**
      * Returns this field editor's text control.
-     * 
+     *
      * @return the text control, or <code>null</code> if no text field is created yet
      */
     protected Text getTextControl() {
@@ -452,7 +428,7 @@ public class StringAttributeField extends AttributeField {
      * <p>
      * The control is created if it does not yet exist
      * </p>
-     * 
+     *
      * @param parent the parent
      * @return the text control
      */
@@ -465,18 +441,11 @@ public class StringAttributeField extends AttributeField {
                 textField = new Text(parent, SWT.SINGLE | SWT.BORDER); // this is a single-line text
                 // field
             }
-            
+
             textField.setFont(parent.getFont());
             switch( validateStrategy ) {
             case VALIDATE_ON_KEY_STROKE:
                 textField.addKeyListener(new KeyAdapter(){
-
-                    /*
-                     * (non-Javadoc)
-                     * @see
-                     * org.eclipse.swt.events.KeyAdapter#keyReleased(org.eclipse.swt.events.KeyEvent
-                     * )
-                     */
                     public void keyReleased( KeyEvent e ) {
                         valueChanged();
                     }
@@ -527,7 +496,7 @@ public class StringAttributeField extends AttributeField {
 
     /**
      * Returns whether an empty string is a valid value.
-     * 
+     *
      * @return <code>true</code> if an empty string is a valid value, and <code>false</code> if an
      *         empty string is invalid
      * @see #setEmptyStringAllowed
@@ -536,23 +505,17 @@ public class StringAttributeField extends AttributeField {
         return emptyStringAllowed;
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
     public boolean isValid() {
         return isValid;
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
     protected void refreshValidState() {
         isValid = checkState();
     }
 
     /**
      * Sets whether the empty string is a valid value or not.
-     * 
+     *
      * @param b <code>true</code> if the empty string is allowed, and <code>false</code> if it is
      *        considered invalid
      */
@@ -562,16 +525,13 @@ public class StringAttributeField extends AttributeField {
 
     /**
      * Sets the error message that will be displayed when and if an error occurs.
-     * 
+     *
      * @param message the error message
      */
     public void setErrorMessage( String message ) {
         errorMessage = message;
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
     public void setFocus() {
         if (textField != null) {
             textField.setFocus();
@@ -580,7 +540,7 @@ public class StringAttributeField extends AttributeField {
 
     /**
      * Sets this field editor's value.
-     * 
+     *
      * @param value the new value, or <code>null</code> meaning the empty string
      */
     public void setStringValue( String value ) {
@@ -598,7 +558,7 @@ public class StringAttributeField extends AttributeField {
 
     /**
      * Sets this text field's text limit.
-     * 
+     *
      * @param limit the limit on the number of character in the text input field, or
      *        <code>UNLIMITED</code> for no limit
      */
@@ -616,7 +576,7 @@ public class StringAttributeField extends AttributeField {
      * method is really only useful for subclasses to call in their constructor. However, it has
      * public visibility for backward compatibility.
      * </p>
-     * 
+     *
      * @param value either <code>VALIDATE_ON_KEY_STROKE</code> to perform on the fly checking (the
      *        default), or <code>VALIDATE_ON_FOCUS_LOST</code> to perform validation only after the
      *        text has been typed in
@@ -642,14 +602,14 @@ public class StringAttributeField extends AttributeField {
      * </p>
      */
     protected void valueChanged() {
-        
+
         setPresentsDefaultValue(false);
         boolean oldState = isValid;
         refreshValidState();
         if (isValid != oldState) {
             fireStateChanged(IS_VALID, oldState, isValid);
-        }        
-        
+        }
+
         textField.addFocusListener(new FocusAdapter(){
             public void focusGained( FocusEvent e ) {
                 refreshValidState();
@@ -661,7 +621,7 @@ public class StringAttributeField extends AttributeField {
                     fireValueChanged(VALUE, oldValue, newValue);
                     oldValue = newValue;
                     System.out.println("oldValue");
-                }  
+                }
                 clearErrorMessage();
             }
         });

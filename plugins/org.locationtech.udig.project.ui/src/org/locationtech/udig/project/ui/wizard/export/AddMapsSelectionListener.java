@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -29,7 +29,7 @@ import org.locationtech.udig.project.ui.internal.ProjectExplorer;
 
 /**
  * Opens a dialog for adding maps to the set of maps to export.
- * 
+ *
  * @author Jesse
  */
 final class AddMapsSelectionListener implements SelectionListener {
@@ -40,20 +40,10 @@ final class AddMapsSelectionListener implements SelectionListener {
 		this.page = page;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
-	 */
 	public void widgetDefaultSelected(SelectionEvent e) {
 		widgetSelected(e);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-	 */
 	public void widgetSelected(SelectionEvent e) {
 		SelectMapsDialog dialog = new SelectMapsDialog(e.display
 				.getActiveShell());

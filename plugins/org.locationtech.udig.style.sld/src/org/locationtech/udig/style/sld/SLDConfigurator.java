@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -49,7 +49,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
  * capable of editing individual Symbolizers.
  * </p>
  * <p>
- * 
+ *
  * @author Justin Deoliveira, Refractions Research Inc.
  */
 public class SLDConfigurator extends IStyleConfigurator {
@@ -96,7 +96,7 @@ public class SLDConfigurator extends IStyleConfigurator {
         Comparator<Class> compare = new Comparator<Class>(){
             public int compare( Class a, Class b) {
                 return a.getSimpleName().compareTo( b.getSimpleName() );
-            }                
+            }
         };
         classToEditors = new TreeMap<Class, List<SLDEditorPart>>( compare );
 
@@ -131,11 +131,6 @@ public class SLDConfigurator extends IStyleConfigurator {
         ExtensionPointUtil.process(SLDPlugin.getDefault(),SLDEditorPart.XPID, p);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.style.IStyleConfigurator#createControl(org.eclipse.swt.widgets.Composite)
-     */
     public void createControl( Composite parent ) {
         createToolbarItems(); // now we have toolbar items
         editorBook = new PageBook(parent, SWT.NONE);
@@ -153,7 +148,8 @@ public class SLDConfigurator extends IStyleConfigurator {
                 }
             }
         }
-    }	
+    }
+
     /*
      * Called when new layer and blackbard values are available. <p> This provides update
      * information as a callback (rather than an event listener). </p>
@@ -165,24 +161,24 @@ public class SLDConfigurator extends IStyleConfigurator {
         }
         // pull the sld style off the blackboard, and initialize the cm
         Style style = (Style) getStyleBlackboard().get(SLDContent.ID);
-        
+
         // if no style information, create default
         if (style == null) {
             style = SLDContent.createDefaultStyle();
             getStyleBlackboard().put(SLDContent.ID, style);
         }
         sldContentManager.init(SLDContent.getStyleBuilder(), style);
-        
+
         // pull the feature type name out of the layer
         if (layer.getSchema() != null) {
             SimpleFeatureType featureType = layer.getSchema();
-        
+
             //set the name of the feature type style for the feature renderer
             String name = featureType.getName().getLocalPart();
             sldContentManager.getDefaultFeatureTypeStyle().featureTypeNames().clear();
             sldContentManager.getDefaultFeatureTypeStyle().featureTypeNames().add(new NameImpl(SLDs.GENERIC_FEATURE_TYPENAME));
         }
-        
+
         // force the toolbar to refresh
         //
         IToolBarManager tbm = getViewSite().getActionBars().getToolBarManager();
@@ -208,7 +204,7 @@ public class SLDConfigurator extends IStyleConfigurator {
         // if we get here the current editor wasn't applicable, show first that works
         for( Class type : classToEditors.keySet() ){
             if( !supported.contains( type )) continue;
-            
+
             for( SLDEditorPart part : classToEditors.get( type ) ){
                 initEditor( part ); // FIXME: we don't want the editor to have content it should not
                 part.reset();
@@ -219,7 +215,7 @@ public class SLDConfigurator extends IStyleConfigurator {
             }
         }
         editorBook.showPage(blank);
-        
+
     }
 
     protected void createToolbarItems() {
@@ -254,7 +250,7 @@ public class SLDConfigurator extends IStyleConfigurator {
     void initEditor( SLDEditorPart editor ) {
         // enable the symbolizer if necessary
     	@SuppressWarnings("unchecked") Class<Symbolizer> symbolizerType = editor.getContentType();
-    	
+
         Symbolizer content = sldContentManager.getSymbolizer( symbolizerType );
         if (content == null) {
             sldContentManager.addSymbolizer( symbolizerType );
@@ -294,7 +290,7 @@ public class SLDConfigurator extends IStyleConfigurator {
         public void dispose() {
             if (menu != null) {
                 menu.dispose();
-            }            
+            }
         }
 
         public Menu getMenu( Control parent ) {
@@ -324,6 +320,7 @@ public class SLDConfigurator extends IStyleConfigurator {
             return editors.get(0).getContentType().getName().compareTo(
                     other.editors.get(0).getContentType().getName());
         }
+
         /**
          * @see org.eclipse.jface.action.Action#isEnabled()
          */
@@ -377,6 +374,7 @@ public class SLDConfigurator extends IStyleConfigurator {
             editorBook.showPage(page);
             // page.setVisible( true );
         }
+
         protected ImageDescriptor getImageDescriptor( SLDEditorPart editor1 ) {
             return editor1.getImageDescriptor();
         }
@@ -392,36 +390,21 @@ public class SLDConfigurator extends IStyleConfigurator {
         public SLDDisableEditorPart( Class<Symbolizer> contentType ) {
             this.contentType = contentType;
             setImageDescriptor(SLD.createDisabledImageDescriptor(contentType));
-            setLabel(Messages.SLDConfigurator_disable); 
+            setLabel(Messages.SLDConfigurator_disable);
         }
 
         public void init() {
             // do nothing
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.locationtech.udig.style.sld.SLDEditorPart#getContentType()
-         */
         public Class getContentType() {
             return contentType;
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.locationtech.udig.style.sld.SLDEditorPart#createPartControl(org.eclipse.swt.widgets.Composite)
-         */
         protected Control createPartControl( Composite parent ) {
             return new Composite(parent, SWT.NONE);
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.locationtech.udig.style.sld.SLDEditorPart#reset()
-         */
         public void reset() {
             // disable the content configurator
             sldContentManager.removeSymbolizer(contentType);

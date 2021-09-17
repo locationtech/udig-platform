@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -869,13 +870,6 @@ public class ToolManager implements IToolManager {
         }
     }
 
-
-
-
-    /** (non-Javadoc)
-     *
-     * @see org.locationtech.udig.project.ui.tool.IToolManager#contributeActiveModalTool(org.eclipse.jface.action.IMenuManager)
-     */
     public void contributeActiveModalTool( IMenuManager manager ) {
 
         Tool activeTool = getActiveTool();
@@ -1428,9 +1422,6 @@ public class ToolManager implements IToolManager {
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.locationtech.udig.project.ui.tool.IToolManager#contributeActionTools(org.eclipse.jface.action.IToolBarManager, org.eclipse.ui.IActionBars)
-     */
     public void contributeActionTools(IToolBarManager toolBarManager, IActionBars bars ) {
         toolBarManager.add(getBACKWARD_HISTORYAction());
         toolBarManager.add(getFORWARD_HISTORYAction());
@@ -1441,9 +1432,6 @@ public class ToolManager implements IToolManager {
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.locationtech.udig.project.ui.tool.IToolManager#contributeModalTools(org.eclipse.jface.action.IToolBarManager, org.eclipse.ui.IActionBars)
-     */
     public void contributeModalTools(IToolBarManager toolBarManager, IActionBars bars ) {
         for( String id : categoryIds ) {
             ModalToolCategory modalCategory = findModalCategory(id);
@@ -1886,10 +1874,6 @@ public class ToolManager implements IToolManager {
         return UiPlugin.getDefault().getOperationMenuFactory();
     }
 
-    /**
-     *  (non-Javadoc)
-     * @see org.locationtech.udig.project.ui.tool.IToolManager#getActiveTool()
-     */
     public Tool getActiveTool() {
     	return activeModalToolProxy.getTool();
     }

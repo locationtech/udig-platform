@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2010, Refractions Research Inc.
  *
@@ -100,17 +101,11 @@ public abstract class WMTTile implements Tile{
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see org.locationtech.udig.catalog.wmsc.server.Tile#getTileState()
-     */
     @Override
     public int getTileState(){
         return this.state;
     }
 
-    /* (non-Javadoc)
-     * @see org.locationtech.udig.catalog.wmsc.server.Tile#setTileState(int)
-     */
     @Override
     public void setTileState(int state){
         this.state = state;

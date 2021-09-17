@@ -259,9 +259,6 @@ public class JavaEditor extends TextEditor {
         return super.getAdapter(required);
     }
 
-    /* (non-Javadoc)
-     * Method declared on AbstractTextEditor
-     */
     protected void initializeEditor() {
         super.initializeEditor();
         setSourceViewerConfiguration(new JavaSourceViewerConfiguration());

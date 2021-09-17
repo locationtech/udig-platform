@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.locationtech.udig.jconsole.java;
 
-
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextDoubleClickStrategy;
@@ -35,9 +34,6 @@ public class JavaDoubleClickSelector implements ITextDoubleClickStrategy {
 		super();
 	}
 
-	/* (non-Javadoc)
-	 * Method declared on ITextDoubleClickStrategy
-	 */
 	public void doubleClicked(ITextViewer text) {
 
 		fPos= text.getSelectedRange().x;

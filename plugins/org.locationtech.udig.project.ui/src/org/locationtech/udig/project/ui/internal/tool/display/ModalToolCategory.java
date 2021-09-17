@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -31,12 +31,12 @@ import org.locationtech.udig.project.ui.tool.IToolManager;
 
 /**
  * A category object that contributes to a toolbar.
- * 
+ *
  * @author jeichar
  * @since 0.9.0
  */
 public class ModalToolCategory extends ToolCategory {
-    
+
     /** Alternate: displayed as a menu contribution */
     private CurrentModalToolContribution contribution;
 
@@ -54,7 +54,7 @@ public class ModalToolCategory extends ToolCategory {
 
     /**
      * Construct <code>ToolbarToolCategory</code>.
-     * 
+     *
      * @param element
      * @param manager
      */
@@ -64,7 +64,7 @@ public class ModalToolCategory extends ToolCategory {
 
     /**
      * Construct <code>ModalToolCategory</code>.
-     * 
+     *
      * @param manager
      */
     public ModalToolCategory( IToolManager manager ) {
@@ -84,26 +84,27 @@ public class ModalToolCategory extends ToolCategory {
 
     /**
      * Returns  a  current UI contribution item for this category of modal tools.
-     * 
+     *
      * @return
      */
     public AbstractToolbarContributionItem getContribution() {
         return contribution;
     }
+
     /**
      * Hooks the provided container up to this cateogry; so that it can update
      * in response to key presses
-     * 
+     *
      * @param container
      */
     public void hook( PaletteContainer container ){
         this.container = container;
     }
-    
+
     public void container( PaletteContainer container ){
         this.container = container;
     }
-    
+
     public void contribute( IToolBarManager manager ) {
         CurrentContributionItem old = contribution;
         contribution = new CurrentModalToolContribution();
@@ -114,10 +115,10 @@ public class ModalToolCategory extends ToolCategory {
             if (tool.getType() == ToolProxy.MODAL) {
                 if(old != null){
                     /*
-                     * Vitalis:
-                     * Just to clean old contributions being collected
-                     * during maps opening/closing.
-                     */
+                    * Vitalis:
+                    * Just to clean old contributions being collected
+                    * during maps opening/closing.
+                    */
                     tool.removeContribution(old);
                 }
                 tool.addContribution(contribution);
@@ -146,10 +147,10 @@ public class ModalToolCategory extends ToolCategory {
 
     /**
      * The class representing contribution item for modal tools on the toolbar.
-     * 
+     *
      * @author jeichar
      * @author Vitalus
-     * 
+     *
      */
     protected class CurrentModalToolContribution extends AbstractToolbarContributionItem {
 
@@ -167,20 +168,20 @@ public class ModalToolCategory extends ToolCategory {
             super.runCurrentTool();
             IMapEditorSelectionProvider provider = ((ToolProxy)currentTool).getSelectionProvider();
             MapPart editor = ApplicationGISInternal.getActiveEditor();
-            
+
             //if( editor!=null && editor.getSite()!=null && provider!=editor.getSite().getSelectionProvider() )
             if( editor != null ){
                 editor.setSelectionProvider(provider);
             }
         }
-        
+
         /**
          * @see org.locationtech.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#getTools()
          */
         protected List<ModalItem> getTools() {
             List<ModalItem> onToolbar=new ArrayList<ModalItem>();
             ModalItem enabled=null;
-            
+
             for( ModalItem item : items ) {
                 if( ((ToolProxy)item).isOnToolbar() )
                     onToolbar.add(item);
@@ -191,7 +192,7 @@ public class ModalToolCategory extends ToolCategory {
                 onToolbar.remove(enabled);
                 onToolbar.add(0, enabled);
             }
-                
+
             return onToolbar;
         }
 
@@ -202,14 +203,10 @@ public class ModalToolCategory extends ToolCategory {
             return getTools().contains(((ToolManager)manager).defaultModalToolProxy);
         }
 
-		/**
-		 *  (non-Javadoc)
-		 * @see org.locationtech.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#isActiveItem()
-		 */
-		@Override
-		protected boolean isActiveItem() {
-			return getTools().contains(manager.getActiveToolProxy());
-		}
+        @Override
+        protected boolean isActiveItem() {
+            return getTools().contains(manager.getActiveToolProxy());
+        }
     }
 
     /** As an alternative to a contirbution; we can use a palette container */

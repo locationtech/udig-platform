@@ -1,5 +1,12 @@
 /**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2021, Refractions Research Inc.
  *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.feature.editor;
 
@@ -33,8 +40,11 @@ public class DefaultEditor extends ViewPart implements IUDIGView {
     }
 
     private IToolContext context;
+
     private PropertySheetPage featureDisplay;
+
     private SimpleFeature current;
+
     /**
      * @see org.locationtech.udig.project.ui.IUDIGView#setContext()
      */
@@ -61,10 +71,6 @@ public class DefaultEditor extends ViewPart implements IUDIGView {
         featureDisplay.selectionChanged(null, selection);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
-     */
     public void createPartControl( Composite parent ) {
         featureDisplay = new PropertySheetPage();
         featureDisplay.createControl(parent);
@@ -78,10 +84,6 @@ public class DefaultEditor extends ViewPart implements IUDIGView {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
-     */
     public void setFocus() {
         featureDisplay.setFocus();
         if (current == null)

@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -44,11 +44,6 @@ public class IssuesActivator extends AbstractUdigUIPlugin {
         super();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-     */
     public void start(BundleContext context) throws Exception {
         super.start(context);
         INSTANCE = this;
@@ -91,11 +86,6 @@ public class IssuesActivator extends AbstractUdigUIPlugin {
         return INSTANCE;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.core.AbstractUdigUIPlugin#getIconPath()
-     */
     public IPath getIconPath() {
         return new Path(ICONS_PATH);
     }

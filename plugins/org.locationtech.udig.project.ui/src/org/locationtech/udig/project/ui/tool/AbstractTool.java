@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -250,22 +250,10 @@ public abstract class AbstractTool implements Tool, MapMouseListener, MapMouseMo
         properties.put(key, value);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.locationtech.udig.project.ui.tool.Tool#getSelectionProvider()
-     */
     public IMapEditorSelectionProvider getSelectionProvider() {
         return selectionProvider;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * org.locationtech.udig.project.ui.tool.Tool#setSelectionProvider(org.locationtech.udig.project
-     * .ui.tool.IMapEditorSelectionProvider)
-     */
     public void setSelectionProvider(IMapEditorSelectionProvider selectionProvider) {
         this.selectionProvider = selectionProvider;
     }
@@ -301,39 +289,48 @@ public abstract class AbstractTool implements Tool, MapMouseListener, MapMouseMo
     }
 
     @Override
-    public void mouseEntered(MapMouseEvent e) { // do nothing
+    public void mouseEntered(MapMouseEvent e) {
+        // do nothing
     }
 
     @Override
-    public void mouseExited(MapMouseEvent e) { // do nothing
+    public void mouseExited(MapMouseEvent e) {
+        // do nothing
     }
 
     @Override
-    public void mousePressed(MapMouseEvent e) { // do nothing
+    public void mousePressed(MapMouseEvent e) {
+        // do nothing
     }
 
     @Override
-    public void mouseReleased(MapMouseEvent e) { // do nothing
+    public void mouseReleased(MapMouseEvent e) {
+        // do nothing
     }
 
     @Override
-    public void mouseDragged(MapMouseEvent e) { // do nothing
+    public void mouseDragged(MapMouseEvent e) {
+        // do nothing
     }
 
     @Override
-    public void mouseMoved(MapMouseEvent e) { // do nothing
+    public void mouseMoved(MapMouseEvent e) {
+        // do nothing
     }
 
     @Override
-    public void mouseHovered(MapMouseEvent e) { // do nothing
+    public void mouseHovered(MapMouseEvent e) {
+        // do nothing
     }
 
     @Override
-    public void mouseWheelMoved(MapMouseWheelEvent e) { // do nothing
+    public void mouseWheelMoved(MapMouseWheelEvent e) {
+        // do nothing
     }
 
     @Override
-    public void mouseDoubleClicked(MapMouseEvent event) { // do nothing
+    public void mouseDoubleClicked(MapMouseEvent event) {
+        // do nothing
     }
 
     @Override

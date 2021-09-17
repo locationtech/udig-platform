@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.locationtech.udig.jconsole;
 
-
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -183,9 +182,6 @@ public class JavaContentOutlinePage extends ContentOutlinePage {
 		fTextEditor= editor;
 	}
 
-	/* (non-Javadoc)
-	 * Method declared on ContentOutlinePage
-	 */
 	public void createControl(Composite parent) {
 
 		super.createControl(parent);
@@ -199,9 +195,6 @@ public class JavaContentOutlinePage extends ContentOutlinePage {
 			viewer.setInput(fInput);
 	}
 
-	/* (non-Javadoc)
-	 * Method declared on ContentOutlinePage
-	 */
 	public void selectionChanged(SelectionChangedEvent event) {
 
 		super.selectionChanged(event);

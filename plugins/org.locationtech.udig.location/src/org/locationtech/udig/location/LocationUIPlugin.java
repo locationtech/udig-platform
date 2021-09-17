@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -23,22 +23,25 @@ import org.eclipse.core.runtime.Status;
  */
 public class LocationUIPlugin extends AbstractUdigUIPlugin {
 
-	private static LocationUIPlugin INSTANCE;
+    private static LocationUIPlugin INSTANCE;
+
     public static String ID = "org.locationtech.udig.location"; //$NON-NLS-1$
+
     /** Icons path (value "icons/") */
     public static final String ICONS_PATH = "icons/";//$NON-NLS-1$
 
-	/**
-	 * The constructor.
-	 */
-	public LocationUIPlugin() {
-		super();
-		INSTANCE = this;
-	}
+    /**
+     * The constructor.
+     */
+    public LocationUIPlugin() {
+        super();
+        INSTANCE = this;
+    }
 
-	public static LocationUIPlugin getDefault() {
-		return INSTANCE;
-	}
+    public static LocationUIPlugin getDefault() {
+        return INSTANCE;
+    }
+
     /**
      * Logs the Throwable in the plugin's log.
      * <p>
@@ -83,12 +86,14 @@ public class LocationUIPlugin extends AbstractUdigUIPlugin {
                 e.printStackTrace();
         }
     }
+
     public static void trace( String message ) {
         if (getDefault().isDebugging()) {
             if (message != null)
                 System.out.println(message);
         }
     }
+
     /**
      * Performs the Platform.getDebugOption true check on the provided trace
      * <p>
@@ -106,10 +111,7 @@ public class LocationUIPlugin extends AbstractUdigUIPlugin {
                 && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
 
-	/* (non-Javadoc)
-	 * @see org.locationtech.udig.core.AbstractUdigUIPlugin#getIconPath()
-	 */
-	public IPath getIconPath() {
-		return new Path(ICONS_PATH);
-	}
+    public IPath getIconPath() {
+        return new Path(ICONS_PATH);
+    }
 }

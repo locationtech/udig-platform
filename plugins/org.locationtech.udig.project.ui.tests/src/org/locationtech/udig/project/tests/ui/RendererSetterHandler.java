@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * https://locationtech.org/projects/technology.udig
  * (C) 2017, Eclipse Foundation
  *
@@ -66,13 +67,8 @@ import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
  */
 public class RendererSetterHandler extends AbstractHandler {
 
-
-    /* (non-Javadoc)
-     * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
-     */
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-
 
         final Shell shell= HandlerUtil.getActiveShell(event);
 
@@ -205,10 +201,6 @@ public class RendererSetterHandler extends AbstractHandler {
             setShellStyle(SWT.RESIZE|SWT.DIALOG_TRIM|SWT.CLOSE);
         }
 
-
-        /* (non-Javadoc)
-         * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
-         */
         @Override
         protected Control createDialogArea(Composite parent) {
             Composite container = (Composite) super.createDialogArea(parent);
@@ -265,13 +257,13 @@ public class RendererSetterHandler extends AbstractHandler {
 
                     if (layer != null) {
                         /*
-						if (mapPreferredRendererButton.getSelection()) {
-							ApplicationGISInternal.getActiveMap().getBlackBoardInternal().putString(RendererCreatorImpl.PREFERRED_RENDERER_ID, rendererMetric.getId());
-						}
-						if (layerPreferredRendererButton.getSelection()) {
-							layer.getStyleBlackboard().putString(RendererCreatorImpl.PREFERRED_RENDERER_ID, rendererMetric.getId());
-						}
-                         */
+                        if (mapPreferredRendererButton.getSelection()) {
+                            ApplicationGISInternal.getActiveMap().getBlackBoardInternal().putString(RendererCreatorImpl.PREFERRED_RENDERER_ID, rendererMetric.getId());
+                        }
+                        if (layerPreferredRendererButton.getSelection()) {
+                            layer.getStyleBlackboard().putString(RendererCreatorImpl.PREFERRED_RENDERER_ID, rendererMetric.getId());
+                        }
+                        */
                         outputText.setText(printRendererInfo(layer));
                         RendererControlDialog.this.setMessage("A close and reopen of the Map is needed in order changes to apply", MessageDialog.WARNING);
                     }
@@ -428,7 +420,6 @@ public class RendererSetterHandler extends AbstractHandler {
         protected Point getInitialSize() {
             return new Point(1000, 600);
         }
-
 
         private String printRendererInfo(Layer layer) {
             if (layer == null) {

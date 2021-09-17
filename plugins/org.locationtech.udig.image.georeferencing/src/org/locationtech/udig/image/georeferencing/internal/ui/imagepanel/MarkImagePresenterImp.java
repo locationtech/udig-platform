@@ -1,10 +1,10 @@
 /* Image Georeferencing
- * 
- * Axios Engineering 
- *      http://www.axios.es 
+ *
+ * Axios Engineering
+ *      http://www.axios.es
  *
  * (C) 2011, Axios Engineering S.L. (Axios)
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
@@ -31,10 +31,10 @@ import org.locationtech.udig.image.georeferencing.internal.ui.InputEvent;
 /**
  * <p>
  * Mark Presenter.
- * 
+ *
  * It will be the graphical representation of the mark model in the canvas.
  * </p>
- * 
+ *
  * @author Mauricio Pazos (www.axios.es)
  * @author Aritz Davila (www.axios.es)
  * @since 1.3.3
@@ -61,13 +61,13 @@ class MarkImagePresenterImp extends AbstractMarkPresenter implements MarkImagePr
 	private static int			EXTEND_LABEL_HEIGHT	= 25;
 
 	private static final int	EXTENT_SIZE			= 10;
-	
+
 
 	/**
 	 * Constructor of the mark presenter.
-	 * 
+	 *
 	 * It'll create a presenter and set the extent used by it.
-	 * 
+	 *
 	 * @param canvas
 	 *            The canvas from the {@link ImageComposite}.
 	 * @param mark
@@ -113,7 +113,7 @@ class MarkImagePresenterImp extends AbstractMarkPresenter implements MarkImagePr
 	/**
 	 * Adds a listener to the canvas. It'll paint whenever an event is triggered
 	 * and its output will vary on the current action.
-	 * 
+	 *
 	 * @param parent
 	 */
 	private void createContent(Canvas parent) {
@@ -157,13 +157,6 @@ class MarkImagePresenterImp extends AbstractMarkPresenter implements MarkImagePr
 		this.extent.y = Math.round(this.mark.getYImage() * this.scale) - (EXTENT_SIZE / 2) - this.yRelativeToCanvas;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * es.axios.udig.ui.georeferencing.internal.ui.MarkPresenters#draw(org.eclipse
-	 * .swt.graphics.GC)
-	 */
 	public void draw() {
 
 		assert this.gc != null;
@@ -256,13 +249,13 @@ class MarkImagePresenterImp extends AbstractMarkPresenter implements MarkImagePr
 	 * <p>
 	 * For the following events will return true if the given X and Y are
 	 * contained inside this presenter's extent:
-	 * 
+	 *
 	 * Mouse_down, Delete, Mouse_drag.
-	 * 
+	 *
 	 * When a Pan event occurs, it'll update the x and y position relative to
 	 * the canvas.
 	 * </p>
-	 * 
+	 *
 	 * @param event
 	 *            Input event.
 	 * @param x
@@ -295,7 +288,7 @@ class MarkImagePresenterImp extends AbstractMarkPresenter implements MarkImagePr
 
 	/**
 	 * Handles the Zoom event.
-	 * 
+	 *
 	 * @param event
 	 *            Input event.
 	 * @param x
@@ -322,7 +315,7 @@ class MarkImagePresenterImp extends AbstractMarkPresenter implements MarkImagePr
 	 * Updates the values used by the extent. They are positions relative to the
 	 * canvas, so the presenter knows depending on the current scroll where it
 	 * has to be drawn.
-	 * 
+	 *
 	 * @param x
 	 *            X position relative to the canvas.
 	 * @param y
@@ -338,7 +331,7 @@ class MarkImagePresenterImp extends AbstractMarkPresenter implements MarkImagePr
 
 	/**
 	 * Updates the zoom scale.
-	 * 
+	 *
 	 * @param scale
 	 *            Zoom scale.
 	 */

@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -509,6 +509,7 @@ public class MapFactory {
 
     private static class CurrentMapFinder implements Runnable {
         Map map = null;
+
         /**
          * @return
          */
@@ -518,11 +519,6 @@ public class MapFactory {
             return map;
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see java.lang.Runnable#run()
-         */
         public void run() {
             if (isMapOpen()) {
                 UDIGEditorInput input = (UDIGEditorInput) PlatformUI.getWorkbench()

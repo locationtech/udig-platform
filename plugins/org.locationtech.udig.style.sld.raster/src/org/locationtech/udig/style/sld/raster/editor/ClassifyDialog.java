@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2011, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2011, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -47,34 +47,33 @@ import org.opengis.coverage.grid.GridCoverageReader;
 /**
  * Classify dialog for classifying raster values
  * into different bins.
- * 
+ *
  * @author Emily
  *
  */
 public class ClassifyDialog extends TitleAreaDialog{
 
 	private static final String GENERATE_LABEL = Messages.ClassifyDialog_GenerateBreaksButtonText;
-	
 
-	
 	private ComboViewer cmbClass;
 	private ListViewer cmbRanges;
 	private Text txtIgnore ;
 	private Text txtSampleSize;
-	
+
 	private Label lblOp;
 	private Text txtOp;
-	private Button btnCompute; 
+	private Button btnCompute;
 	private Button chSampleSize;
 	private List<Double> breaks ;
 	private GridCoverageReader layer;
-	
+
 	private ClassifyFunction currentSelection = null;
 	private Number currentOption = null;
 	private String currentIgnore = null;
 	private Long currentSampleSize = null;
-	
+
 	private double[] defaultNoData = null;
+
 	/**
 	 * Supported classifications
 	 *
@@ -85,13 +84,13 @@ public class ClassifyDialog extends TitleAreaDialog{
 		QUANTILE(Messages.ClassifyDialog_QuantileLabel, Messages.ClassifyDialog_NumberOfBinsLabel);
 		String guiName;
 		String opName;
-		
+
 		private ClassifyFunction(String guiName, String opName){
 			this.guiName = guiName;
 			this.opName = opName;
 		}
 	}
-	
+
 	/**
 	 * Creates a new classify dialog
 	 * @param parentShell parent shell
@@ -101,31 +100,27 @@ public class ClassifyDialog extends TitleAreaDialog{
 		super(parentShell);
 		this.layer = layer;
 		this.defaultNoData = noDataValues;
-		
+
 	}
 
-
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.dialogs.Dialog#close()
-	 */
 	public boolean close() {
 		computeValuesJob.cancel();
 		return super.close();
 	}
-	
+
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		breaks = new ArrayList<Double>();
-		
+
 		Composite main = new Composite((Composite)super.createDialogArea(parent), SWT.NONE);
 		main.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		GridLayout gl = new GridLayout(2, false);
 		gl.marginWidth = gl.marginHeight = 20;
 		main.setLayout(gl);
-		
+
 		Label lbl = new Label(main, SWT.NONE);
 		lbl.setText(Messages.ClassifyDialog_ClassificationFunctionLabel);
-		
+
 		cmbClass = new ComboViewer(main, SWT.DROP_DOWN | SWT.READ_ONLY | SWT.BORDER);
 		cmbClass.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		cmbClass.setContentProvider(ArrayContentProvider.getInstance());
@@ -141,22 +136,22 @@ public class ClassifyDialog extends TitleAreaDialog{
 		cmbClass.getCombo().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+
 				lblOp.setText(getCurrentSelection().opName);
 				lblOp.getParent().layout();
 			}
 		});
-		
+
 		lblOp = new Label(main, SWT.NONE);
 		lblOp.setText(ClassifyFunction.EQUAL_INTERNAL.opName);
-		
+
 		txtOp = new Text(main, SWT.BORDER);
 		txtOp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		txtOp.setText("10"); //$NON-NLS-1$
-		
+
 		Label lbl4 = new Label(main, SWT.NONE);
 		lbl4.setText(Messages.ClassifyDialog_ValuesToIgnoreLabel + "*"); //$NON-NLS-1$
-	
+
 		txtIgnore = new Text(main, SWT.BORDER);
 		txtIgnore .setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		if (defaultNoData == null){
@@ -173,17 +168,17 @@ public class ClassifyDialog extends TitleAreaDialog{
 			}
 			txtIgnore.setText(sb.toString());
 		}
-		
+
 		Label lbls = new Label(main, SWT.NONE);
 		lbls.setText(Messages.ClassifyDialog_LimitSizeLabel);
 		lbls.setToolTipText(Messages.ClassifyDialog_LimitSizeTooltip);
-	
+
 		Composite compSample = new Composite(main, SWT.NONE);
 		GridLayout gla = new GridLayout(2, false);
 		gla.marginHeight = gla.marginWidth = 0;
 		compSample.setLayout(gla);
 		compSample.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		
+
 		chSampleSize = new Button(compSample, SWT.CHECK);
 		chSampleSize.setSelection(false);
 		chSampleSize.addSelectionListener(new SelectionAdapter() {
@@ -191,14 +186,14 @@ public class ClassifyDialog extends TitleAreaDialog{
 			public void widgetSelected(SelectionEvent e) {
 				txtSampleSize.setEnabled(chSampleSize.getSelection());
 			}
-				
+
 		});
 		txtSampleSize = new Text(compSample, SWT.BORDER);
 		txtSampleSize.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		txtSampleSize.setText("100000"); //$NON-NLS-1$
 		txtSampleSize.setEnabled(false);
-		
-		
+
+
 		btnCompute = new Button(main, SWT.PUSH);
 		btnCompute.setText(GENERATE_LABEL);
 		btnCompute.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 2, 1));
@@ -208,15 +203,15 @@ public class ClassifyDialog extends TitleAreaDialog{
 				computeValues();
 			}
 		});
-		
-		
+
+
 		Label lblSep = new Label(main, SWT.SEPARATOR | SWT.HORIZONTAL);
 		lblSep.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		
+
 		Label lblRange = new Label(main, SWT.NONE);
 		lblRange.setText(Messages.ClassifyDialog_BreaksLabel);
 		lblRange.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		
+
 		cmbRanges = new ListViewer(main, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 		GridData gd =new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		gd.widthHint = 150;
@@ -225,29 +220,28 @@ public class ClassifyDialog extends TitleAreaDialog{
 		cmbRanges.setLabelProvider(new LabelProvider());
 		cmbRanges.setContentProvider(ArrayContentProvider.getInstance());
 		cmbRanges.setInput(breaks);
-		
-		
+
+
 		Label lbl3 = new Label(main, SWT.WRAP);
 		lbl3.setText("*" + Messages.ClassifyDialog_IgnoreValuesInfo); //$NON-NLS-1$
 		lbl3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		
+
 		cmbClass.setSelection(new StructuredSelection(ClassifyFunction.EQUAL_INTERNAL));
-		
+
 		setMessage(Messages.ClassifyDialog_DialogMessage);
 		setTitle(Messages.ClassifyDialog_DialogTitle);
 		getShell().setText(Messages.ClassifyDialog_ShellTitle);
 		return main;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return current selected classification function
 	 */
 	private ClassifyFunction getCurrentSelection(){
 		return (ClassifyFunction) ((IStructuredSelection)cmbClass.getSelection()).getFirstElement();
 	}
-	
-	
+
 	/*
 	 * computes the breaks
 	 */
@@ -264,7 +258,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 				return;
 			}
 		}
-		
+
 		if (currentSelection == ClassifyFunction.EQUAL_INTERNAL || currentSelection == ClassifyFunction.QUANTILE){
 			try{
 				currentOption = Integer.parseInt(txtOp.getText());
@@ -276,31 +270,29 @@ public class ClassifyDialog extends TitleAreaDialog{
 				MessageDialog.openError(getShell(), Messages.ClassifyDialog_ErrorDialogTitle, MessageFormat.format(Messages.ClassifyDialog_MaxValueError, new Object[]{SingleBandEditorPage.MAX_ENTRIES-1 }));
 				return;
 			}
-			 
+
 		}else if (currentSelection == ClassifyFunction.DEFINED_INTERVAL){
 			try{
 				currentOption = Double.parseDouble(txtOp.getText());
 			}catch (Exception ex){
 				MessageDialog.openError(getShell(), Messages.ClassifyDialog_ErrorDialogTitle3, MessageFormat.format(Messages.ClassifyDialog_InvalidValueOption2, new Object[]{currentSelection.opName }));
 			}
-		
+
 		}
 		if (currentOption.doubleValue() <= 0){
 			MessageDialog.openError(getShell(), Messages.ClassifyDialog_ErrorDialogTitle3, MessageFormat.format(Messages.ClassifyDialog_InvalidValue, new Object[]{currentSelection.opName }));
 		}
 		computeValuesJob.schedule();
 	}
-	
-	
-	
+
 	@Override
 	protected boolean isResizable() {
 		return true;
 	}
-	
+
 	/**
 	 * Updates the given panel with the new breaks.
-	 * 
+	 *
 	 * @param panel must be IntervalValuesPanel or RampValuesPanel
 	 */
 	public void updatePanel(IColorMapTypePanel panel){
@@ -311,7 +303,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 				ColorEntry ce = new ColorEntry(Color.BLACK, 1, d, ""); //$NON-NLS-1$
 				entries.add(ce);
 			}
-			
+
 			if (panel instanceof IntervalValuesPanel){
 				((IntervalValuesPanel)panel).setBreaks(entries);
 			}else if (panel instanceof RampValuesPanel){
@@ -319,7 +311,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 			}
 		}
 	}
-	
+
 	/*
 	 * Job for computing breaks
 	 */
@@ -329,10 +321,10 @@ public class ClassifyDialog extends TitleAreaDialog{
 		protected IStatus run(IProgressMonitor monitor) {
 			ClassifyFunction function = currentSelection;
 			Number op = currentOption;
-			
+
 			Long sampleSize = currentSampleSize;
 			String ignore = currentIgnore;
-			
+
 			List<Double> toIgnore = new ArrayList<Double>();
 			if (ignore.trim().length() > 0){
 				String[] str = ignore.split(","); //$NON-NLS-1$
@@ -349,7 +341,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 			for(int i = 0; i < toIgnore.size(); i++){
 				valuesToIgnore[i] = toIgnore.get(i);
 			}
-			
+
 			breaks.clear();
 			final ClassificationEngine engine = new ClassificationEngine();
 			if (function == null || op == null){
@@ -362,7 +354,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 						cmbRanges.refresh();
 						btnCompute.setEnabled(false);
 					}});
-				
+
 				List<Double> newBreaks = null;
 				if (function == ClassifyFunction.EQUAL_INTERNAL){
 					newBreaks = engine.computeEqualInterval(((Integer)op).intValue(), valuesToIgnore, layer, sampleSize);
@@ -371,7 +363,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 				}else if (function == ClassifyFunction.QUANTILE){
 					newBreaks = engine.computeQuantile(((Integer)op).intValue(), valuesToIgnore, layer, sampleSize, monitor);
 				}
-				
+
 				if (newBreaks == null || monitor.isCanceled()){
 					return Status.CANCEL_STATUS;
 				}else{
@@ -395,11 +387,10 @@ public class ClassifyDialog extends TitleAreaDialog{
 							btnCompute.setEnabled(true);
 						}
 					}});
-				
+
 			}
 			return Status.OK_STATUS;
 		}
-		
-		
+
 	};
 }

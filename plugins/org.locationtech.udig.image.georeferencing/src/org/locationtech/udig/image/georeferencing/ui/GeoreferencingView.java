@@ -1,10 +1,10 @@
 /* Image Georeferencing
- * 
- * Axios Engineering 
- *      http://www.axios.es 
+ *
+ * Axios Engineering
+ *      http://www.axios.es
  *
  * (C) 2011, Axios Engineering S.L. (Axios)
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
@@ -50,7 +50,7 @@ import org.locationtech.udig.image.georeferencing.internal.ui.message.InfoMessag
 
 /**
  * View for Georeferencing.
- * 
+ *
  * @author Mauricio Pazos (www.axios.es)
  * @author Aritz Davila (www.axios.es)
  * @since 1.3.3
@@ -80,20 +80,13 @@ public class GeoreferencingView extends ViewPart implements IUDIGView, Observer 
 
 
 	/**
-	 * 
+	 *
 	 */
 	public GeoreferencingView() {
 
 		this.displayThread = Display.getCurrent().getThread();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
-	 * .Composite)
-	 */
 	@Override
 	public void createPartControl(Composite parent) {
 
@@ -111,15 +104,9 @@ public class GeoreferencingView extends ViewPart implements IUDIGView, Observer 
 		this.cmd.addObserver(this);
 	}
 
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
-	 */
 	@Override
 	public void setFocus() {
-		
+
 	}
 
 	@Override
@@ -142,7 +129,7 @@ public class GeoreferencingView extends ViewPart implements IUDIGView, Observer 
 
 	/**
 	 * Create the toolbar
-	 * 
+	 *
 	 * @param composite
 	 */
 	private void createToolbar(Composite composite) {
@@ -192,7 +179,7 @@ public class GeoreferencingView extends ViewPart implements IUDIGView, Observer 
 		};
 		this.loadAction.setText(Messages.GeoreferencingView_loadActionText);
 		this.loadAction.setToolTipText(Messages.GeoreferencingView_loadActionTooltip);
-		imgFile = LOAD_IMAGE_BUTTON; 
+		imgFile = LOAD_IMAGE_BUTTON;
 		this.loadAction.setImageDescriptor(ImageDescriptor.createFromFile(GeoreferencingView.class, imgFile));
 		this.loadAction.setEnabled(false);
 
@@ -206,7 +193,7 @@ public class GeoreferencingView extends ViewPart implements IUDIGView, Observer 
 		};
 		this.saveAction.setText(Messages.GeoreferencingView_saveActionText);
 		this.saveAction.setToolTipText(Messages.GeoreferencingView_saveActionTooltip);
-		imgFile = SAVE_IMAGE_BUTTON; 
+		imgFile = SAVE_IMAGE_BUTTON;
 		this.saveAction.setImageDescriptor(ImageDescriptor.createFromFile(GeoreferencingView.class, imgFile));
 		this.saveAction.setEnabled(false);
 	}
@@ -222,10 +209,10 @@ public class GeoreferencingView extends ViewPart implements IUDIGView, Observer 
 		}
 
 	}
-	
+
 	/**
 	 * Create the runButtonAction
-	 * 
+	 *
 	 */
 	private class runButtonAction extends Action {
 
@@ -233,7 +220,7 @@ public class GeoreferencingView extends ViewPart implements IUDIGView, Observer 
 		public runButtonAction() {
 
 			setToolTipText(Messages.GeoreferencingView_runButtonText);
-			String imgFile = RUN_IMAGE_BUTTON; 
+			String imgFile = RUN_IMAGE_BUTTON;
 			setImageDescriptor(ImageDescriptor.createFromFile(GeoreferencingView.class, imgFile));
 
 		}
@@ -250,7 +237,7 @@ public class GeoreferencingView extends ViewPart implements IUDIGView, Observer 
 		public loadButtonAction() {
 
 			setToolTipText(Messages.GeoreferencingView_loadButtonText);
-			String imgFile = LOAD_IMAGE_BUTTON; 
+			String imgFile = LOAD_IMAGE_BUTTON;
 			setImageDescriptor(ImageDescriptor.createFromFile(GeoreferencingView.class, imgFile));
 		}
 
@@ -283,8 +270,8 @@ public class GeoreferencingView extends ViewPart implements IUDIGView, Observer 
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 
 		FileDialog fd = new FileDialog(shell, SWT.SAVE);
-		fd.setFilterExtensions(new String[] { GCP_FILE_EXT }); 
-		fd.setText(Messages.GeoreferencingView_saveMarksFile); 
+		fd.setFilterExtensions(new String[] { GCP_FILE_EXT });
+		fd.setText(Messages.GeoreferencingView_saveMarksFile);
 		fd.setFilterPath(Preferences.getSaveLoadPath());
 
 		String marksFileName = fd.open();
@@ -308,8 +295,8 @@ public class GeoreferencingView extends ViewPart implements IUDIGView, Observer 
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 
 		FileDialog fd = new FileDialog(shell, SWT.OPEN);
-		fd.setFilterExtensions(new String[] { GCP_FILE_EXT }); 
-		fd.setText(Messages.GeoreferencingView_openMarksFile); 
+		fd.setFilterExtensions(new String[] { GCP_FILE_EXT });
+		fd.setText(Messages.GeoreferencingView_openMarksFile);
 		fd.setFilterPath(Preferences.getSaveLoadPath());
 
 		String marksFile = fd.open();
@@ -368,7 +355,7 @@ public class GeoreferencingView extends ViewPart implements IUDIGView, Observer 
 
 	/**
 	 * Enable the runButton
-	 * 
+	 *
 	 * @param enable
 	 */
 	private void enableRunButton(boolean enable) {

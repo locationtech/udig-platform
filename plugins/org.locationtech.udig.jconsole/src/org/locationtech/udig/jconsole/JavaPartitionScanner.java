@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.locationtech.udig.jconsole;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,16 +38,10 @@ public class JavaPartitionScanner extends RuleBasedPartitionScanner {
 	 */
 	static class EmptyCommentDetector implements IWordDetector {
 
-		/* (non-Javadoc)
-		* Method declared on IWordDetector
-	 	*/
 		public boolean isWordStart(char c) {
 			return (c == '/');
 		}
 
-		/* (non-Javadoc)
-		* Method declared on IWordDetector
-	 	*/
 		public boolean isWordPart(char c) {
 			return (c == '*' || c == '/');
 		}

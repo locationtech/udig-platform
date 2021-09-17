@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2010, Refractions Research Inc.
  * (C) 2005 IBM Corporation and others
@@ -43,15 +44,12 @@ public class EditorNodeFilter extends ViewerFilter {
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.viewers.ViewerFilter#select(org.eclipse.jface.viewers.Viewer, java.lang.Object, java.lang.Object)
-     */
     public boolean select(Viewer viewer, Object parentElement, Object element) {
         return checkNodeAndChildren((IPreferenceNode) element);
     }
 
     /**
-     * Check to see if the node or any of its children 
+     * Check to see if the node or any of its children
      * have an id in the ids.
      * @param node WorkbenchPreferenceNode
      * @return boolean <code>true</code> if node or oe of its children
@@ -60,12 +58,12 @@ public class EditorNodeFilter extends ViewerFilter {
     private boolean checkNodeAndChildren(IPreferenceNode node) {
         if(ids.contains(node.getId()))
             return true;
-        
+
         IPreferenceNode[] subNodes = node.getSubNodes();
         for (int i = 0; i < subNodes.length; i++) {
             if(checkNodeAndChildren(subNodes[i]))
                 return true;
-            
+
         }
         return false;
     }

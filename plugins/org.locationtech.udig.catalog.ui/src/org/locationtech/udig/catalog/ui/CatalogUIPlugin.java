@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -74,7 +74,8 @@ import org.osgi.framework.BundleContext;
  */
 public class CatalogUIPlugin extends AbstractUdigUIPlugin {
 
-	private static CatalogUIPlugin INSTANCE;
+    private static CatalogUIPlugin INSTANCE;
+
     /**
      * The id of the plug-in
      */
@@ -124,11 +125,11 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
                 if( !PlatformUI.isWorkbenchRunning() || PlatformUI.getWorkbench().isClosing() ){
                     return;
                 }
-//                IPreferenceStore p = getPreferenceStore();
+                // IPreferenceStore p = getPreferenceStore();
                 if( event.getType()==Type.POST_CHANGE
                         && event.getDelta()!=null ){
-                    //  TODO enable when resolve information is available
-//                     updateCache(event.getDelta(), p);
+                    // TODO enable when resolve information is available
+                    // updateCache(event.getDelta(), p);
                 }
 
             }
@@ -170,6 +171,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
         int status = t instanceof Exception || message != null ? IStatus.ERROR : IStatus.WARNING;
         getDefault().getLog().log(new Status(status, ID, IStatus.OK, message, t));
     }
+
     /**
      * Messages that only engage if getDefault().isDebugging()
      * <p>
@@ -195,12 +197,14 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
                 e.printStackTrace();
         }
     }
+
     public static void trace( String message ) {
         if (getDefault().isDebugging()) {
             if (message != null)
                 System.out.println(message);
         }
     }
+
     /**
      * Performs the Platform.getDebugOption true check on the provided trace
      * <p>
@@ -232,11 +236,11 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
      */
     public static Image image( IResolve resolve ) {
 
-    	if (resolve == null) {
+        if (resolve == null) {
             return null;
         }
         if (resolve instanceof IResolveFolder ) {
-        	return CatalogUIPlugin.getDefault().getImage(ISharedImages.FOLDER_OBJ);
+            return CatalogUIPlugin.getDefault().getImage(ISharedImages.FOLDER_OBJ);
         }else if (resolve instanceof IGeoResource) {
             IGeoResource resource = (IGeoResource) resolve;
             boolean isFeature = resource.canResolve(FeatureSource.class);
@@ -289,7 +293,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
         if (resolve instanceof IService) {
             ImageDescriptor icon = icon((IService) resolve, monitor);
             if( icon != null ){
-            	return icon;
+                return icon;
             }
             return CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.SERVER_OBJ);
         }
@@ -316,14 +320,14 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
      */
     private static ImageDescriptor icon( IGeoResource resource, IProgressMonitor monitor )
             throws IOException {
-    	if( monitor == null ) monitor = new NullProgressMonitor();
+        if( monitor == null ) monitor = new NullProgressMonitor();
 
-    	// check for dynamic icon first!
-    	if( resource.canResolve( ImageDescriptor.class )){
-    		ImageDescriptor icon = resource.resolve( ImageDescriptor.class, monitor);
-    		if( icon != null ) return icon;
-    	}
-    	// check for static icon next
+        // check for dynamic icon first!
+        if( resource.canResolve( ImageDescriptor.class )){
+            ImageDescriptor icon = resource.resolve( ImageDescriptor.class, monitor);
+            if( icon != null ) return icon;
+        }
+        // check for static icon next
         try{
             IGeoResourceInfo info;
             info = resource.resolve(IGeoResourceInfo.class, monitor);
@@ -342,7 +346,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
 
     /** Lookup default resource icon id */
     private static String iconInternalResource( ID id, boolean isFeature ){
-    	if (Identifier.isGraphic(id.toURL())) {
+        if (Identifier.isGraphic(id.toURL())) {
             return ISharedImages.GRAPHIC_OBJ;
         }
         if (Identifier.isWMS(id.toURL())) {
@@ -355,10 +359,10 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
             return ISharedImages.MEMORY_OBJ;
         }
         if( isFeature ){
-        	return ISharedImages.FEATURE_OBJ;
+            return ISharedImages.FEATURE_OBJ;
         }
         else {
-        	return ISharedImages.GRID_OBJ;
+            return ISharedImages.GRID_OBJ;
         }
     }
 
@@ -371,13 +375,13 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
     private static ImageDescriptor icon( IResolveFolder folder, IProgressMonitor monitor )
             throws IOException {
 
-    	if( monitor == null ) monitor = new NullProgressMonitor();
+        if( monitor == null ) monitor = new NullProgressMonitor();
 
-    	// check for dynamic icon first!
-    	if( folder.canResolve( ImageDescriptor.class )){
-    		ImageDescriptor icon = folder.resolve( ImageDescriptor.class, monitor);
-    		if( icon != null ) return icon;
-    	}
+        // check for dynamic icon first!
+        if( folder.canResolve( ImageDescriptor.class )){
+            ImageDescriptor icon = folder.resolve( ImageDescriptor.class, monitor);
+            if( icon != null ) return icon;
+        }
         // check for default icon last
         return CatalogUIPlugin.getDefault().getImageDescriptor( ISharedImages.FOLDER_OBJ );
     }
@@ -392,14 +396,14 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
      */
     private static ImageDescriptor icon( IService service, IProgressMonitor monitor )
             throws IOException {
-    	if( monitor == null ) monitor = new NullProgressMonitor();
+        if( monitor == null ) monitor = new NullProgressMonitor();
 
-    	// check for dynamic icon first!
-    	if( service.canResolve( ImageDescriptor.class )){
-    		ImageDescriptor icon = service.resolve( ImageDescriptor.class, monitor);
-    		if( icon != null ) return icon;
-    	}
-    	// check for static icon next
+        // check for dynamic icon first!
+        if( service.canResolve( ImageDescriptor.class )){
+            ImageDescriptor icon = service.resolve( ImageDescriptor.class, monitor);
+            if( icon != null ) return icon;
+        }
+        // check for static icon next
         try{
             IServiceInfo info;
             info = service.resolve(IServiceInfo.class, monitor);
@@ -419,15 +423,15 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
         return CatalogUIPlugin.getDefault().getImageDescriptor( iconId );
     }
 
-	private static String iconInternalService(ID id, boolean isFeature) {
-		URL url = id.toURL();
-		if (Identifier.isFile(url)) {
-			if( isFeature ){
-				return ISharedImages.FEATURE_FILE_OBJ;
-			}
-			else {
-				return ISharedImages.GRID_FILE_OBJ;
-			}
+    private static String iconInternalService(ID id, boolean isFeature) {
+        URL url = id.toURL();
+        if (Identifier.isFile(url)) {
+            if( isFeature ){
+                return ISharedImages.FEATURE_FILE_OBJ;
+            }
+            else {
+                return ISharedImages.GRID_FILE_OBJ;
+            }
         }
         if (Identifier.isGraphic(url)) {
             return ISharedImages.MAP_GRAPHICS_OBJ;
@@ -445,19 +449,16 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
             return ISharedImages.DATASTORE_OBJ;
         }
         else {
-	        return ISharedImages.SERVER_OBJ;
+            return ISharedImages.SERVER_OBJ;
         }
-	}
+    }
 
-	/* (non-Javadoc)
-	 * @see org.locationtech.udig.core.AbstractUdigUIPlugin#getIconPath()
-	 */
-	public IPath getIconPath() {
-		return new Path(ICONS_PATH);
-	}
+    public IPath getIconPath() {
+        return new Path(ICONS_PATH);
+    }
 
-	public static CatalogUIPlugin getDefault() {
-		return INSTANCE;
-	}
+    public static CatalogUIPlugin getDefault() {
+        return INSTANCE;
+    }
 
 }

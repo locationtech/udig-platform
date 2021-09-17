@@ -1,6 +1,6 @@
-/*
+/**
  * uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -61,19 +61,11 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
     public OmsBoxPlugin() {
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-     */
     public void start( BundleContext context ) throws Exception {
         super.start(context);
         plugin = this;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-     */
     public void stop( BundleContext context ) throws Exception {
         plugin = null;
 
@@ -95,7 +87,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
     /**
      * Gets the saved jars paths from the preferences, filtering those that still exist.
-     * 
+     *
      * @return the existing jar from the preferences or <code>null</code>.
      */
     public String[] retrieveSavedJars() {
@@ -125,7 +117,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
     /**
      * Save a list of jar paths to the preferences.
-     * 
+     *
      * @param jarsList the list of jars to save.
      */
     public void saveJars( List<String> jarsList ) {
@@ -143,7 +135,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
     /**
      * Utility method to get the heap memory from the prefs.
-     * 
+     *
      * @return the heap memory last saved or 64 megabytes.
      */
     public int retrieveSavedHeap() {
@@ -157,7 +149,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
     /**
      * Save the heap memory to the preferences.
-     * 
+     *
      * @param mem the memory to save.
      */
     public void saveHeap( int mem ) {
@@ -169,7 +161,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
     /**
      * Utility method to get the log level from the prefs.
-     * 
+     *
      * @return the log level string.
      */
     public String retrieveSavedLogLevel() {
@@ -183,7 +175,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
     /**
      * Save the log level to the preferences.
-     * 
+     *
      * @param logLevel the log level to save.
      */
     public void saveLogLevel( final String logLevel ) {
@@ -195,7 +187,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
     /**
      * Utility method for file dialogs to retrieve the last folder.
-     * 
+     *
      * @return the path to the last folder chosen or the home folder.
      */
     public String getLastFolderChosen() {
@@ -217,7 +209,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
     /**
      * Utility method for file dialogs to set the last folder.
-     * 
+     *
      * @param folderPath
      */
     public void setLastFolderChosen( String folderPath ) {
@@ -304,10 +296,10 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
     /**
      * Adds custom libs from the plugins.
-     * 
-     * FIXME this should hopefully get better at some point. 
-     * 
-     * @throws IOException 
+     *
+     * FIXME this should hopefully get better at some point.
+     *
+     * @throws IOException
      */
     private void addCustomLibs( StringBuilder sb ) throws IOException {
         // add some extra jars that are locked inside some eclipse plugins
@@ -318,14 +310,14 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
             addPath(log4jFolderPath + File.separator + "*", sb);
         }
         Bundle itextBundle = Platform.getBundle("com.lowagie.text");
-        
+
         String itextPath = getPath(itextBundle, "/");
         if (itextPath != null) {
             itextPath = itextPath.replaceAll("!", "");
             sb.append(File.pathSeparator);
             addPath(itextPath, sb);
         }
-        
+
         Location installLocation = Platform.getInstallLocation();
         File installFolder = URLs.urlToFile(installLocation.getURL());
         if (installFolder != null && installFolder.exists()) {
@@ -358,7 +350,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
     /**
      * Get the folder named spatialtoolbox in the installation folder.
-     * 
+     *
      * @return the folder or <code>null</code>.
      */
     public static File getExtraSpatialtoolboxLibsFolder() {
@@ -455,7 +447,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
      * <p>
      * You can use this to find the ProcessingRegion (which is storied
      * on the StyleBlackboard for this layer).
-     * 
+     *
      * @return layer for processing region (if found);
      */
     public ILayer getProcessingRegionMapGraphic() {
@@ -511,7 +503,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
     /**
      * Utility method to get the gisbase preference.
-     * 
+     *
      * @return the gisbase string.
      */
     public String getGisbasePreference() {
@@ -522,7 +514,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
     /**
      * Save the gisbase preference.
-     * 
+     *
      * @param gisbase the gisbase to save.
      */
     public void setGisbasePreference( final String gisbase ) {
@@ -532,7 +524,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
     /**
      * Utility method to get the shell preference.
-     * 
+     *
      * @return the shell string.
      */
     public String getShellPreference() {
@@ -543,7 +535,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
     /**
      * Save the shell preference.
-     * 
+     *
      * @param shell the shell to save.
      */
     public void setShellPreference( final String shell ) {
@@ -553,7 +545,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
     /**
      * Utility method to get the mapcalc history.
-     * 
+     *
      * @return the mapcalc history, divided by @@@..
      */
     public String getMapcalcHistory() {
@@ -564,7 +556,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
     /**
      * Save the mapcalc history.
-     * 
+     *
      * @param mapcalcHistory the mapcalc history to save.
      */
     public void setMapcalcHistory( final String mapcalcHistory ) {
@@ -574,7 +566,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
     /**
      * Getter for the internal config folder.
-     * 
+     *
      * @return the path to the configuration folder.
      */
     public File getConfigurationsFolder() {

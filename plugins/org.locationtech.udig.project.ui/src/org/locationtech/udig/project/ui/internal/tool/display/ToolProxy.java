@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -51,7 +51,7 @@ import org.locationtech.udig.ui.operations.OpFilter;
 /**
  * The tool proxy allows tools to be loaded lazily. It acts as a proxy for a tool as far as the Map
  * editors are concerned.
- * 
+ *
  * @author Jesse Eichar
  * @version 1.3.0
  */
@@ -120,7 +120,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 
     /**
      * Creates an new instance of MapViewport.ToolAction
-     * 
+     *
      * @param extension The Tool extension
      * @param definition The configuration element which describes the tool
      * @param toolManager ToolManager responsible for this tool
@@ -200,7 +200,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
             toggleButton = Boolean.parseBoolean(definition.getAttribute("isToggleButton")); //$NON-NLS-1$
         }
         handlerType = definition.getAttribute(HandlerProxy.ID);
-        
+
         String unparsedCommandIds = definition.getAttribute("commandIds"); //$NON-NLS-1$
         if (unparsedCommandIds != null && unparsedCommandIds.length() > 0)
             commandIds = unparsedCommandIds.split(","); //$NON-NLS-1$
@@ -300,7 +300,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 
     /**
      * Returns proxy
-     * 
+     *
      * @return
      */
     public Tool getTool() {
@@ -366,7 +366,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 
     /**
      * If the current action is a ActionTool then the menu path of the tool action is returned
-     * 
+     *
      * @return the menu path of the tool action or null if the current tool is not an ActionTool.
      */
     public String getMenuPath() {
@@ -390,7 +390,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 
     /**
      * Returns ID of tool category from extention registry.
-     * 
+     *
      * @return
      */
     public String getCategoryId() {
@@ -399,7 +399,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 
     /**
      * Creates an action that will run the tool referenced by this proxy
-     * 
+     *
      * @return an action that will run the tool referenced by this proxy
      */
     public IAction getAction() {
@@ -414,11 +414,6 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         return action;
     }
 
-    /**
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.project.ui.tool.Tool#isEnabled()
-     */
     @Override
     public boolean isEnabled() {
         if (tool == null)
@@ -429,11 +424,6 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 
     Lock enabledLock = new ReentrantLock(true);
 
-    /**
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.project.ui.tool.ModalTool#setEnabled(boolean)
-     */
     @Override
     public void setEnabled(final boolean enabled) {
         PlatformGIS.syncInDisplayThread(new Runnable() {
@@ -521,7 +511,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 
     /**
      * Runs getModelessTool() safely in the display thread.
-     * 
+     *
      * @see org.locationtech.udig.project.ui.internal.tool.display.ModalItem#runModeless()
      */
     @Override
@@ -604,7 +594,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     }
 
     /**
-     * 
+     *
      * @see org.locationtech.udig.project.ui.internal.tool.display.ModalItem#getActiveItem()
      */
     @Override
@@ -620,11 +610,6 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         toolManager.setActiveModalToolProxy((ToolProxy) modalItem);
     }
 
-    /**
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.project.ui.tool.ModalTool#isActive()
-     */
     @Override
     public boolean isActive() {
         return getModalTool().isActive();
@@ -671,11 +656,6 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
         return selectionProviderInstance;
     }
 
-    /**
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.project.ui.tool.ModalTool#getCursorID()
-     */
     @Override
     public String getCursorID() {
         throw new UnsupportedOperationException(
@@ -684,7 +664,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 
     /**
      * Empty implementation
-     * 
+     *
      * @see org.locationtech.udig.project.ui.tool.ModalTool#setCursorID(java.lang.String)
      */
     @Override
@@ -693,23 +673,12 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
                 "Call ToolProxy.getTool().setCursorID(String) method instead"); //$NON-NLS-1$
     }
 
-    /**
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.project.ui.tool.Tool#getProperty(java.lang.String)
-     */
     @Override
     public Object getProperty(String key) {
         throw new UnsupportedOperationException(
                 "Call ToolProxy.getTool().getProperty(String) method instead"); //$NON-NLS-1$
     }
 
-    /**
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.project.ui.tool.Tool#setProperty(java.lang.String,
-     *      java.lang.Object)
-     */
     @Override
     public void setProperty(String key, Object value) {
         throw new UnsupportedOperationException(

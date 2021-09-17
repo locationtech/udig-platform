@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2010, Refractions Research Inc.
  * (C) 2005 IBM Corporation and others
@@ -30,12 +31,8 @@ public class CapabilityFilter extends ViewerFilter {
      */
     public CapabilityFilter() {
         super();
-        
     }
 
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.viewers.ViewerFilter#select(org.eclipse.jface.viewers.Viewer, java.lang.Object, java.lang.Object)
-     */
     public boolean select(Viewer viewer, Object parentElement, Object element) {
         return ! WorkbenchActivityHelper.filterItem(element);
     }

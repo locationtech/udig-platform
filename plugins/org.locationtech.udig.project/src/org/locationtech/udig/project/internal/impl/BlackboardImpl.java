@@ -1,8 +1,12 @@
 /**
- * <copyright>
- * </copyright>
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2021, Refractions Research Inc.
  *
- * $Id$
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.project.internal.impl;
 
@@ -44,7 +48,7 @@ import org.eclipse.ui.XMLMemento;
 
 /**
  * A blackboard that saves its state out as an EObject.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -53,7 +57,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * underlying container *
-     * 
+     *
      * @uml.property name="blackboard"
      * @uml.associationEnd qualifier="key:java.lang.Object
      *                     org.locationtech.udig.project.internal.impl.BlackboardEntryImpl"
@@ -183,21 +187,13 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         return super.eIsSet(featureID);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.project.IBlackboard#contains(java.lang.String)
-     */
     @Override
     public boolean contains(String key) {
         return get(key) != null;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.project.IBlackboard#get(java.lang.String)
-     */
     @Override
-    @SuppressWarnings("unchecked") 
+    @SuppressWarnings("unchecked")
     public Object get(String key) {
         if (!initialized) {
             initialize();
@@ -230,7 +226,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
                     }
                 } catch (Exception e) {
                     String msg = "Error loading content: " + entry.getObjectClass(); //$NON-NLS-1$
-                    IStatus status = new Status(IStatus.WARNING, ProjectPlugin.ID, 0, msg, e); 
+                    IStatus status = new Status(IStatus.WARNING, ProjectPlugin.ID, 0, msg, e);
                     ProjectPlugin.getPlugin().getLog().log(status);
                 }
 
@@ -291,10 +287,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         return oldValue;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.project.IBlackboard#put(java.lang.String, java.lang.Object)
-     */
     @Override
     public void put(String key, Object value) {
         if (key == null) {
@@ -351,10 +343,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.project.IBlackboard#getFloat(java.lang.String)
-     */
     @Override
     public Float getFloat(String key) {
         Object o = get(key);
@@ -365,10 +353,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.project.IBlackboard#getInteger(java.lang.String)
-     */
     @Override
     public Integer getInteger(String key) {
         Object o = get(key);
@@ -379,10 +363,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.project.IBlackboard#getString(java.lang.String)
-     */
     @Override
     public String getString(String key) {
         Object o = get(key);
@@ -393,38 +373,22 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.project.IBlackboard#putFloat(java.lang.String, float)
-     */
     @Override
     public void putFloat(String key, float value) {
         put(key, value);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.project.IBlackboard#putInteger(java.lang.String, int)
-     */
     @Override
     public void putInteger(String key, int value) {
         put(key, value);
 
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.project.IBlackboard#putString(java.lang.String, java.lang.String)
-     */
     @Override
     public void putString(String key, String value) {
         put(key, value);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.project.IBlackboard#clear()
-     */
     @Override
     public void clear() {
         blackboard.clear();

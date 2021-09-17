@@ -1,4 +1,4 @@
-/*
+/**
  * uDig - User Friendly Desktop Internet GIS client
  * (C) HydroloGIS - www.hydrologis.com
  *
@@ -54,19 +54,11 @@ public class JConsolePlugin extends AbstractUIPlugin {
     public JConsolePlugin() {
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-     */
     public void start( BundleContext context ) throws Exception {
         super.start(context);
         plugin = this;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-     */
     public void stop( BundleContext context ) throws Exception {
         plugin = null;
 
@@ -142,17 +134,21 @@ public class JConsolePlugin extends AbstractUIPlugin {
     }
 
     private String loggerLevel = "OFF";
+
     public void setLoggerLevel( String level ) {
         loggerLevel = level;
     }
+
     public String getLoggerLevel() {
         return loggerLevel;
     }
 
     private String ram = "512";
+
     public void setRam( String ram ) {
         this.ram = ram;
     }
+
     public String getRam() {
         return ram;
     }

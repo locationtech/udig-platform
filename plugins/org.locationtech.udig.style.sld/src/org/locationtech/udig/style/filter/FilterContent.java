@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -43,7 +43,7 @@ import org.opengis.filter.Filter;
  * These settings offer the ability to "filter" out content; or using Query pre process the columns
  * or sort information prior to the FeatureSource being used (this is accomplished using
  * ShowViewInterceptor).
- * 
+ *
  * @see ShowViewInterceptor
  */
 public final class FilterContent extends StyleContent {
@@ -58,19 +58,10 @@ public final class FilterContent extends StyleContent {
         super(STYLE_ID);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.project.StyleContent#getStyleClass()
-     */
     public Class< ? > getStyleClass() {
         return Boolean.class;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.project.StyleContent#save(org.eclipse.ui.IMemento,
-     * java.lang.Object)
-     */
     public void save( IMemento memento, Object value ) {
         Filter filter = null;
         Boolean aoiFilter = null;
@@ -96,8 +87,6 @@ public final class FilterContent extends StyleContent {
 
     /**
      * Retrieves a {@link FilterStyle}, or null if not provided.
-     * (non-Javadoc)
-     * @see org.locationtech.udig.project.StyleContent#load(org.eclipse.ui.IMemento)
      */
     public Object load( IMemento memento ) {
         String type = memento.getString("type");
@@ -114,7 +103,7 @@ public final class FilterContent extends StyleContent {
             }
             String aoi = memento.getString("aoiFilter"); //$NON-NLS-1$
             boolean isAOI = "true".equalsIgnoreCase(aoi);
-    
+
             if (isAOI) {
                 FilterStyle styleFilter = new FilterStyle();
                 styleFilter.setAoiFilter(true);
@@ -133,10 +122,6 @@ public final class FilterContent extends StyleContent {
         return null; // not a supported memento format
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.project.StyleContent#load(java.net.URL)
-     */
     public Object load( URL url, IProgressMonitor m ) throws IOException {
         return null;
     }
