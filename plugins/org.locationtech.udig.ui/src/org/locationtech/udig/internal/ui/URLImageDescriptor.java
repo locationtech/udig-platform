@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -36,9 +36,6 @@ public class URLImageDescriptor extends ImageDescriptor {
         this.url = url;
     }
 
-    /* (non-Javadoc)
-     * Method declared on Object.
-     */
     public boolean equals(Object o) {
         if (!(o instanceof URLImageDescriptor)) {
             return false;
@@ -46,8 +43,7 @@ public class URLImageDescriptor extends ImageDescriptor {
         return ((URLImageDescriptor) o).url.equals(this.url);
     }
 
-    /* (non-Javadoc)
-     * Method declared on ImageDesciptor.
+    /**
      * Returns null if the image data cannot be read.
      */
     public ImageData getImageData() {
@@ -85,18 +81,12 @@ public class URLImageDescriptor extends ImageDescriptor {
         }
     }
 
-    /* (non-Javadoc)
-     * Method declared on Object.
-     */
     public int hashCode() {
         return url.hashCode();
     }
 
-    /* (non-Javadoc)
-     * Method declared on Object.
-     */
     /**
-     * The <code>URLImageDescriptor</code> implementation of this <code>Object</code> method 
+     * The <code>URLImageDescriptor</code> implementation of this <code>Object</code> method
      * returns a string representation of this object which is suitable only for debugging.
      */
     public String toString() {

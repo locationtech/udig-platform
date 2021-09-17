@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2012, Refractions Research Inc.
  *
@@ -22,24 +23,19 @@ import org.locationtech.udig.tools.merge.internal.view.MergeView;
  * key-action for the coexistence of the two workflows available for MErgeTool usage ('classic'
  * workflow -> tool activated by using Feature Editing -> Merge tool || new 'operation' workflow ->
  * tool activated using right click in map -> "Operations -> Merge Selected")
- * 
+ *
  * The key-action consists in removing (actually hiding) an eventually present MergeView during uDig
  * startup. The MegeView window could be present as left opened by the user in the last uDig
  * shutdown and, so, is reopened in an inconsistent state by Eclipse workbench restoring activities.
  * For the MergeView to operate correctly in each workflow ('classic' and 'operation mode') it must
  * be opened by either the MergeTool or by the MergeOperation classes, through the relative UI-user
  * interacitons.
- * 
+ *
  * @author Marco Foi (www.mcfoi.it)
- * 
+ *
  */
 public class MergeStartup implements IStartup {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.IStartup#earlyStartup()
-     */
     @Override
     public void earlyStartup() {
         final IWorkbench workbench = PlatformUI.getWorkbench();

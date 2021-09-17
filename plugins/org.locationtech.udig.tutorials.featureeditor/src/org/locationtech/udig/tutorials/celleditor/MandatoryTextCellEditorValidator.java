@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2011, Refractions Research Inc.
  *
@@ -14,24 +15,22 @@ import org.eclipse.jface.viewers.ICellEditorValidator;
 /**
  * A sample implementation of an ICellEditorValidator that checks a TextCellEditor for mandatory
  * input.
- * 
+ *
  * @author Naz Chan
  * @since 1.3.1
  */
 public class MandatoryTextCellEditorValidator implements ICellEditorValidator {
 
     private static final String BLANK = ""; //$NON-NLS-1$
+
     private static final String ERR_MSG = "Must not be blank."; //$NON-NLS-1$
-    
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.viewers.ICellEditorValidator#isValid(java.lang.Object)
-     */
+
     @Override
     public String isValid( Object value ) {
         final String textValue = (String) value;
         if (BLANK.equals(textValue)) {
             return ERR_MSG;
-        } 
+        }
         return null;
     }
 

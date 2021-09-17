@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * https://locationtech.org/projects/technology.udig
  * (C) 2015, Eclipse Foundation
  *
@@ -18,7 +19,7 @@ import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * 
+ *
  * @author Nikolaos Pringouris <nprigour@gmail.com>
  * @since 2.0.0
  */
@@ -35,32 +36,17 @@ public class NumberCellEditor extends TextCellEditor {
         this.cls = cls;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.viewers.CellEditor#doGetValue()
-     */
     @Override
     protected Object doGetValue() {
         return convertToNumber();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.viewers.CellEditor#doSetFocus()
-     */
     @Override
     protected void doSetFocus() {
         super.doSetFocus();
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.viewers.CellEditor#doSetValue(java.lang.Object)
-     */
     @Override
     protected void doSetValue(Object value) {
         if (value == null) {

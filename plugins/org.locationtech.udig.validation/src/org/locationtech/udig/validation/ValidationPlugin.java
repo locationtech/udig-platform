@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -47,6 +48,7 @@ public class ValidationPlugin extends AbstractUdigUIPlugin {
         super.stop(context);
         INSTANCE = null;
     }
+
     /**
      * Writes an info log in the plugin's log.
      *
@@ -132,11 +134,6 @@ public class ValidationPlugin extends AbstractUdigUIPlugin {
 
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.locationtech.udig.core.AbstractUdigUIPlugin#getIconPath()
-     */
     public IPath getIconPath() {
         return new Path(ICONS_PATH);
     }

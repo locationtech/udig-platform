@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2011, Refractions Research Inc.
  *
@@ -16,16 +17,11 @@ import org.eclipse.ui.services.IServiceLocator;
 
 /**
  * Responsible for creating our internal AOIServiceImpl (Area of Interest).
- * 
+ *
  * @author pfeiffp
  */
 public class AOIServiceFactory extends AbstractServiceFactory {
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.services.AbstractServiceFactory#create(java.lang.Class,
-     * org.eclipse.ui.services.IServiceLocator, org.eclipse.ui.services.IServiceLocator)
-     */
     @Override
     public IAOIService create( Class serviceInterface, IServiceLocator parentLocator,
             IServiceLocator locator ) {

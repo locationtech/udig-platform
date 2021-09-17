@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -65,10 +66,10 @@ import org.eclipse.ui.part.ViewPart;
  * @since 1.0.0
  */
 public class SearchPart extends ViewPart implements ISetSelectionTarget {
-    
+
     /** Viewer for search results List/Tree/Table ... */
     protected StructuredViewer viewer; // often a tree or table viewer
-        
+
     /**
      * Used to cancel current searchMonitor
      * <p>
@@ -76,7 +77,7 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
      * </p>
      */
     protected IAction cancel;
-    
+
     /**
      * Used to control search jobs.
      * <p>
@@ -90,20 +91,22 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
 
     /** Save state here */
     protected IMemento save;
+
     protected Composite parent;
-    
+
     IDialogSettings settings;
-    
+
     /** We need dialog settings for persistence */
     protected SearchPart( IDialogSettings dialogSettings ) {
         settings = dialogSettings;
     }
+
     @Override
     public void init( IViewSite site, IMemento memento ) throws PartInitException {
         super.init(site, memento);
         save = memento;
-    }        
-    
+    }
+
     @Override
     public void saveState( IMemento memento ) {
         if ( splitter == null) { // part has not been created
@@ -111,8 +114,9 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
                 memento.putMemento( save );
             }
             return;
-        }        
+        }
     }
+
     private void addResizeListener(Composite parent) {
         parent.addControlListener(new ControlListener() {
             public void controlMoved(ControlEvent e) {
@@ -122,10 +126,10 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
             }
         });
     }
-     
+
     protected enum Orientation { VERTICAL, HORIZONTAL, SINGLE, AUTOMATIC };
     protected Orientation orientation = Orientation.VERTICAL;
-    
+
     void computeOrientation() {
         saveSplitterRatio();
         if( save != null ) save.putInteger("orientation", orientation.ordinal() ); //$NON-NLS-1$
@@ -134,16 +138,17 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
         }
         else {
             if (orientation == Orientation.SINGLE ) return;
-            
+
             Point size= parent.getSize();
             if (size.x != 0 && size.y != 0) {
-                if (size.x > size.y) 
+                if (size.x > size.y)
                     setOrientation( Orientation.HORIZONTAL );
-                else 
+                else
                     setOrientation( Orientation.VERTICAL );
             }
         }
     }
+
     private void saveSplitterRatio() {
         if (splitter != null && ! splitter.isDisposed()) {
             int[] weigths = splitter.getWeights();
@@ -151,6 +156,7 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
             settings.put( "ratio"+orientation, ratio );             //$NON-NLS-1$
         }
     }
+
     private void restoreSplitterRatio() {
         try {
             Integer ratio= settings.getInt("ratio"+orientation); //$NON-NLS-1$
@@ -162,12 +168,14 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
             // ignore bad setting
         }
     }
-    
+
     Orientation currentOrientation;
+
     private boolean showDetails;
+
     /**
      * called from ToggleOrientationAction (or compute).
-     * 
+     *
      * @param orientation Orientation.HORIZONTAL or Orientation.VERTICAL
      */
     protected void setOrientation(Orientation orientation) {
@@ -176,7 +184,7 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
         }
         if (viewer != null && !viewer.getControl().isDisposed() &&
             splitter != null && !splitter.isDisposed() ) {
-            
+
             if (orientation == Orientation.SINGLE) {
                 setShowDetails(false);
             } else {
@@ -191,21 +199,27 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
         updateCheckedState();
 
         currentOrientation = orientation;
-        
+
         restoreSplitterRatio();
     }
+
     private ToggleOrientationAction[] toggleOrientationActions;
+
     private Composite details;
+
     private IPartListener2 partListener;
+
     private void updateCheckedState() {
         for (ToggleOrientationAction toggle : toggleOrientationActions) {
             toggle.setChecked( orientation == toggle.getOrientation());
         }
     }
+
     public void setShowDetails(boolean show) {
         showDetails = show;
         showOrHideDetails();
     }
+
     private void showOrHideDetails() {
         if (showDetails) {
             splitter.setMaximizedControl(null);
@@ -213,7 +227,7 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
             splitter.setMaximizedControl( viewer.getControl() );
         }
     }
-    
+
     /**
      * Creates the SWT controls for this workbench part.
      * <p>
@@ -230,50 +244,52 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
      * </li>
      * </ol>
      * </p>
-     * 
+     *
      * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
      * @param parent
      */
     public void createPartControl( Composite aParent ) {
         parent= aParent;
         addResizeListener(parent);
-        
+
         // split
         splitter = new SashForm( parent, SWT.HORIZONTAL);
         // TODO: key listener
-        
+
         viewer = createViewer( splitter );
         viewer.setContentProvider( createContentProvider() );
-        viewer.setLabelProvider( createLabelProvider() );        
+        viewer.setLabelProvider( createLabelProvider() );
         viewer.addSelectionChangedListener( createSelectionListener() );
         getSite().setSelectionProvider(viewer);
         details = createDetails( splitter );
-        
+
         initDragAndDrop();
-        
+
         makeActions();
         fillViewMenu();
         fillActionBars();
-        
+
         initOrientation();
-        
+
         if (save != null) {
             restoreState( save );
         }
         restoreSplitterRatio();
         addPartListener();
     }
-    
+
     /**
      * You can now restore whatever state you need.
      */
     private void restoreState(IMemento memento) {
         //
     }
-    protected void saveViewSettings() {        
+
+    protected void saveViewSettings() {
         saveSplitterRatio();
         settings.put( "orientation", orientation.ordinal() );         //$NON-NLS-1$
     }
+
     private void addPartListener() {
         final String ID = getViewSite().getId();
         partListener= new IPartListener2() {
@@ -294,6 +310,7 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
                 };
         getViewSite().getPage().addPartListener(partListener);
     }
+
     /**
      * Should do the dialog settings thing here ...
      */
@@ -302,14 +319,15 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
         if( save != null ) {
             Integer integer = save.getInteger( "orientation" ); //$NON-NLS-1$
             if( integer != null ) {
-                orientation = Orientation.values()[ integer ];    
-            }            
+                orientation = Orientation.values()[ integer ];
+            }
         }
 
         // force the update
         currentOrientation = null;
         setOrientation( orientation );
     }
+
     /**
      * Subclass should override to provide custom details display.
      * <p>
@@ -320,8 +338,9 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
      * @return Composite to use for details display
      */
     protected Composite createDetails( SashForm splitter ) {
-        return new Composite( splitter, SWT.NONE );        
+        return new Composite( splitter, SWT.NONE );
     }
+
     /**
      * Subclass can override to return its kind of details,
      * example a PageBook.
@@ -330,8 +349,8 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
      */
     protected Composite getDetails() {
         return details;
-    }    
-    
+    }
+
     /**
      * Create viewer (default is a ListViewer please override if you want a Tree or Table Viewer.
      * <p>
@@ -341,7 +360,7 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
      * <li>viewer.setLabelProvider( createLableProvider() );
      * </ul>
      * This allows people who subclass you to do their own thing.
-     * </p>    
+     * </p>
      * @param page
      * @return
      */
@@ -349,6 +368,7 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
         ListViewer viewer = new ListViewer( parent );
         return viewer;
     }
+
     /**
      * Default implementation calls showDetail( IStructuredSelection ).
      * <p>
@@ -362,10 +382,11 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
                     IStructuredSelection selection = (IStructuredSelection) sel;
                     showDetail( selection.getFirstElement() );
                 }
-            }            
+            }
         };
     }
-    /** Allows subclass to focus the detail on this selection  */ 
+
+    /** Allows subclass to focus the detail on this selection  */
     protected void showDetail( Object selection ) {
         //
     }
@@ -373,7 +394,7 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
     /**
      * Default implementation will work for lists, please overide if
      * you are into the whole tree thing.
-     * 
+     *
      * @return
      */
     protected IStructuredContentProvider createContentProvider() {
@@ -390,13 +411,13 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
             public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
                 assert( newInput instanceof List );
                 // lists don't have events for us to watch
-            }            
+            }
         };
     }
 
     /**
      * LabelProvider; override to take charge of your labels and icons.
-     * 
+     *
      * @return LabelProvider for use with the viewer
      */
     protected IBaseLabelProvider createLabelProvider() {
@@ -404,55 +425,53 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
     }
 
     /** Will cancel any outstanding search */
-    synchronized void stopSearch(){        
+    synchronized void stopSearch(){
         if( searchMonitor != null ){
             IProgressMonitor cancelMonitor = searchMonitor;
-            
+
             searchMonitor = null;
-            cancelMonitor.setCanceled( true );            
-        }        
+            cancelMonitor.setCanceled( true );
+        }
     }
-        
+
     /**
      * Subclass should override to support DnD.
      */
     protected void initDragAndDrop() {
         //
-    }    
+    }
 
     protected void makeActions() {
         cancel = new Action() {
             public void run() {
                 stopSearch();
                 setEnabled(false);
-                //book.showPage( promptPage );                
+                //book.showPage( promptPage );
             }
         };
         Messages.initAction( cancel, "cancel" ); //$NON-NLS-1$
         cancel.setEnabled( false );
-        
+
         toggleOrientationActions = new ToggleOrientationAction[] {
                 new ToggleOrientationAction(this, Orientation.VERTICAL),
                 new ToggleOrientationAction(this, Orientation.HORIZONTAL),
                 new ToggleOrientationAction(this, Orientation.AUTOMATIC),
                 new ToggleOrientationAction(this, Orientation.SINGLE)
             };
-        
+
     }
-    /**
-    *
-    */
+
    protected void fillViewMenu() {
        IActionBars actionBars = getViewSite().getActionBars();
        IMenuManager viewMenu = actionBars.getMenuManager();
-       
+
        viewMenu.add( cancel );
        viewMenu.add(new Separator());
        for (ToggleOrientationAction toggle : toggleOrientationActions) {
            viewMenu.add( toggle );
        }
-   }    
-    
+   }
+
     /**
      * Create toolbar with cancel.
      */
@@ -462,7 +481,7 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
 
         toolBar.add( cancel );
     }
-    
+
     public void quick( String pattern ) {
         // search through existing contents based on label?
     }
@@ -470,44 +489,44 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
     Object filter = null;
     Job looking = new Job( getPartName()+"..."){ //$NON-NLS-1$
         protected IStatus run( IProgressMonitor monitor ) {
-            try {                    
+            try {
                 final ResultSet set=new ResultSet(SearchPart.this);
                 Display.getDefault().asyncExec(new Runnable(){
                     public void run() {
                         viewer.setInput( set.results );
                     }
-                }); 
-                
+                });
+
                 searchImplementation( filter, monitor, set);
-                
+
 //                PlatformGIS.runBlockingOperation(new IRunnableWithProgress(){
 //
 //                    public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
 //                        searchImplementation( filter, monitor, set);
 //                    }
-//                    
+//
 //                }, monitor);
-                
+
                 Display.getDefault().asyncExec(new Runnable(){
                     public void run() {
                         viewer.setSelection(getSelection(set.results), showSelection());
                     }
-                }); 
+                });
             }
-            
+
             catch (Throwable t ) {
-                //book.showPage( promptPage );                    
+                //book.showPage( promptPage );
             }finally{
-                cancel.setEnabled( false );                    
+                cancel.setEnabled( false );
             }
-            return Status.OK_STATUS;                
+            return Status.OK_STATUS;
         }
-    }; 
-    
+    };
+
     /**
      * Called each time data is added to the result set by the search.  Note: Many items or a single item could have been added.
      *
-     * @param set the results of the search at the current point. 
+     * @param set the results of the search at the current point.
      * @param newObjects the objects that have been added this time.
      */
     protected void notifyChange( final ResultSet set, final Collection< ? extends Object> newObjects ) {
@@ -516,13 +535,13 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
                 if( !newObjects.isEmpty() )
                     viewer.refresh(true);
             }
-        }); 
+        });
     }
 
     /**
      * Called to determine what object(s) in the input should be the selection in the viewer.  This method is called when the search is complete.
      * The default selection is the first object in the list.
-     * 
+     *
      * @param the complete list of objects in the viewer.
      *
      * @return the selection that will be set in the viewer.  may be null.
@@ -533,6 +552,7 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
         else
             return new StructuredSelection();
     }
+
     /**
      * Returns true if the selection returned by {@link #getNewSelection(List)} should be shown in the viewer.
      *
@@ -542,39 +562,33 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
         return true;
     }
 
-    
     /**
      * Search the catalog for text and update view contents
-     * 
+     *
      * @param pattern
      */
-    public void search( final Object newFilter ) {        
+    public void search( final Object newFilter ) {
         if ( newFilter== null) {
-            stopSearch();     
+            stopSearch();
             //book.showPage( promptPage );
             return;
-        }        
+        }
         stopSearch();
-        
+
         viewer.setInput( null );
-        filter = newFilter;        
+        filter = newFilter;
         searchMonitor=Platform.getJobManager().createProgressGroup();
-        searchMonitor.setTaskName( getPartName());           
+        searchMonitor.setTaskName( getPartName());
         looking.setPriority( Job.BUILD );
         looking.setProgressGroup( searchMonitor, IProgressMonitor.UNKNOWN );
         cancel.setEnabled( true );
-        looking.schedule(); // do it                
+        looking.schedule(); // do it
     }
-  
+
     protected void searchImplementation( Object filter, IProgressMonitor monitor, ResultSet results ) {
         // No default action.
      }
-    
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.part.ISetSelectionTarget#selectReveal(org.eclipse.jface.viewers.ISelection)
-     */
+
     public void selectReveal( ISelection selection ) {
         //viewer.setSelection(selection);
     }
@@ -585,42 +599,43 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
             viewer.getControl().setFocus();
         }
     }
-    
+
     /**
      * Toggles the orientationof the layout
      */
     static class ToggleOrientationAction extends Action {
-        private SearchPart view;    
-        private Orientation orientation;        
+        private SearchPart view;
+        private Orientation orientation;
         public ToggleOrientationAction(SearchPart searchPart, Orientation orientation) {
-            super("", AS_RADIO_BUTTON); //$NON-NLS-1$            
-            Messages.initAction( this, "orientation_"+orientation.toString().toLowerCase() );             //$NON-NLS-1$
+            super("", AS_RADIO_BUTTON); //$NON-NLS-1$
+            Messages.initAction( this, "orientation_"+orientation.toString().toLowerCase() ); //$NON-NLS-1$
             view = searchPart;
             this.orientation = orientation;
-            //PlatformUI.getWorkbench().getHelpSystem().setHelp(this, lookup context id? );                    
-        }        
+            //PlatformUI.getWorkbench().getHelpSystem().setHelp(this, lookup context id? );
+        }
         public Orientation getOrientation() {
             return orientation;
-        }           
+        }
         /*
          * @see Action#actionPerformed
-         */     
+         */
         public void run() {
             if (isChecked()) {
-                view.orientation = orientation; 
+                view.orientation = orientation;
                 view.computeOrientation();
             }
         }
-        
+
     }
+
     /**
      * Set of results collected for display in a SearchPart (such as the info view)
      */
     public static class ResultSet{
-        SearchPart owner; 
+        SearchPart owner;
         List<Object> results=new CopyOnWriteArrayList<Object>();
         private int changes=0;
-        
+
         private ResultSet(SearchPart owner){
             this.owner=owner;
         }
@@ -662,7 +677,7 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
         public int indexOf( Object arg0 ) {
             return results.indexOf(arg0);
         }
-        
+
     }
 
 }

@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2011, Refractions Research Inc.
  *
@@ -32,7 +33,7 @@ import org.locationtech.jts.io.WKTReader;
 /**
  * This service is set by the AOI Navigation Tool and provides a filter service based on the
  * selection of AOI layer features.
- * 
+ *
  * @author leviputna
  * @since 1.2.3
  */
@@ -40,7 +41,7 @@ public class AOILayerStrategy extends IAOIStrategy {
 
     private static final String AOI_GEOMETRY = "aoiGeometry";
     private static final String AOI_LAYER = "aoiLayer";
-    private static String name = "Layer";    
+    private static String name = "Layer";
     /**
      * This layer is looked up by id on the layer blackboard
      */
@@ -51,7 +52,7 @@ public class AOILayerStrategy extends IAOIStrategy {
 
     /**
      * Set the geometry to be used as the AOI
-     * 
+     *
      * @param geometry The geometry to use as the AOI must be type Polygon or Multy Polygon
      */
     public void setGeometry( Geometry geometry ) {
@@ -60,7 +61,7 @@ public class AOILayerStrategy extends IAOIStrategy {
         if( victim != null ){
             IBlackboard blackboard = victim.getBlackboard();
             if( geometry != null ){
-                blackboard.put(AOI_GEOMETRY, geometry );            
+                blackboard.put(AOI_GEOMETRY, geometry );
             }
             else {
                 blackboard.remove(AOI_GEOMETRY);
@@ -80,17 +81,13 @@ public class AOILayerStrategy extends IAOIStrategy {
             mapBlackboard.put(AOI_GEOMETRY, wkt );
         }
         else {
-            mapBlackboard.remove(AOI_GEOMETRY );            
+            mapBlackboard.remove(AOI_GEOMETRY );
         }
-        
+
         AOIListener.Event aoiEvent = new AOIListener.Event( AOILayerStrategy.this);
         notifyListeners(aoiEvent);
     }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.aoi.IAOIStrategy#getExtent()
-     */
+
     @Override
     public ReferencedEnvelope getExtent() {
         Geometry geometry = getGeometry();
@@ -101,10 +98,6 @@ public class AOILayerStrategy extends IAOIStrategy {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.aoi.IAOIStrategy#getAOI()
-     */
     @Override
     public Geometry getGeometry() {
         ILayer victim = getActiveLayer();
@@ -116,10 +109,6 @@ public class AOILayerStrategy extends IAOIStrategy {
         return geometry;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.aoi.IAOIStrategy#getCrs()
-     */
     @Override
     public CoordinateReferenceSystem getCrs() {
         ILayer activeLayer = getActiveLayer();
@@ -129,10 +118,6 @@ public class AOILayerStrategy extends IAOIStrategy {
         return activeLayer.getCRS();
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.locationtech.udig.aoi.IAOIStrategy#getName()
-     */
     @Override
     public String getName() {
         return name;
@@ -147,7 +132,7 @@ public class AOILayerStrategy extends IAOIStrategy {
 
         List<ILayer> layers = ApplicationGIS.getActiveMap().getMapLayers(); // immutable must copy
         List<ILayer> aoiLayers = new ArrayList<ILayer>();
-        
+
         for (ILayer layer: layers) {
             if (layer.getInteraction(Interaction.AOI)) {
                 aoiLayers.add(layer);
@@ -155,19 +140,19 @@ public class AOILayerStrategy extends IAOIStrategy {
         }
         return aoiLayers;
     }
-    
+
     /**
      * @return the activeLayer
      */
     public ILayer getActiveLayer() {
         IMap map = ApplicationGIS.getActiveMap();
-        
+
         // check if this map has a AOI layer marked already
         ILayer layer = restoreFromMapBlackboard(map);
         if( layer != null ){
             return layer;
         }
-        
+
         // fine we will assume the last AOI layer for this map
 //        List<ILayer> layers = getAOILayers();
 //        if (layers.size() > 0) {
@@ -227,38 +212,38 @@ public class AOILayerStrategy extends IAOIStrategy {
                 return;
             }
             map.getBlackboard().remove(AOI_LAYER);
-        }        
+        }
         AOIListener.Event aoiEvent = new AOIListener.Event( AOILayerStrategy.this);
         notifyListeners(aoiEvent);
     }
-    
+
     /**
      * Look up the "next" layer in the map layer list; only AOI layers are considered.
-     * 
+     *
      * @return The next layer; or null if it is not available.
      */
     public ILayer getNextLayer() {
         List<ILayer> layers = getAOILayers();
         ILayer activeLayer = getActiveLayer();
-        
+
         int index = layers.indexOf(activeLayer);
         if (index < layers.size()-1) {
             return layers.get(index+1);
         }
         return null; // nothing to see here move along
     }
-    
+
     /**
      * Look up the the previous layer in the map layer list; only AOI
      * layers are considered.
-     * 
+     *
      * @return The previous layer if available; or null if we are already the "last" layer
      */
     public ILayer getPreviousLayer() {
         ILayer activeLayer = getActiveLayer();
         if (activeLayer == null) {
             return null; // nothing to see here move along
-        }        
+        }
         List<ILayer> layers = getAOILayers();
         int index = layers.indexOf(activeLayer);
         if (index > 0) {
@@ -267,7 +252,7 @@ public class AOILayerStrategy extends IAOIStrategy {
         }
         return null;
     }
-    
+
 //    /**
 //     * Gets the features that have been selected
 //     * @return List of SimpleFeature
@@ -290,5 +275,5 @@ public class AOILayerStrategy extends IAOIStrategy {
 //    public void setFeatures(SimpleFeatureCollection featureCollection) {
 //        features = featureCollection;
 //    }
-    
+
 }

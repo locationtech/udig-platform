@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2011, Refractions Research Inc.
  *
@@ -20,9 +21,6 @@ import org.eclipse.ui.PlatformUI;
  */
 public class Application implements IApplication {
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.IApplicationContext)
-	 */
 	public Object start(IApplicationContext context) {
 		Display display = PlatformUI.createDisplay();
 		try {
@@ -36,9 +34,6 @@ public class Application implements IApplication {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.equinox.app.IApplication#stop()
-	 */
 	public void stop() {
 		if (!PlatformUI.isWorkbenchRunning())
 			return;

@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2011, Refractions Research Inc.
  *
@@ -18,7 +19,7 @@ import org.eclipse.ui.forms.IMessageManager;
 /**
  * A sample implementation of an ICellEditorListener that integrates a form's IMessageManager to
  * display the cell editor's error messages from validation.
- * 
+ *
  * @author Naz Chan
  * @since 1.3.1
  */
@@ -32,10 +33,6 @@ public class FormCellEditorListener implements ICellEditorListener {
         this.msgManager = msgManager;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.jface.viewers.ICellEditorListener#applyEditorValue()
-     */
     @Override
     public void applyEditorValue() {
 
@@ -49,19 +46,11 @@ public class FormCellEditorListener implements ICellEditorListener {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.jface.viewers.ICellEditorListener#cancelEditor()
-     */
     @Override
     public void cancelEditor() {
         // Nothing
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.jface.viewers.ICellEditorListener#editorValueChanged(boolean, boolean)
-     */
     @Override
     public void editorValueChanged( boolean oldValidState, boolean newValidState ) {
         // Nothing

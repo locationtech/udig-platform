@@ -27,7 +27,7 @@ import org.eclipse.ui.activities.WorkbenchActivityHelper;
 public class OperationContentProvider implements ITreeContentProvider {
 
     /**
-     * Child cache.  Map from Object->Object[].  Our hasChildren() method is 
+     * Child cache.  Map from Object->Object[].  Our hasChildren() method is
      * expensive so it's better to cache the results of getChildren().
      */
     private Map childMap = new HashMap();
@@ -39,20 +39,10 @@ public class OperationContentProvider implements ITreeContentProvider {
         //no-op
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.viewers.IContentProvider#dispose()
-     */
     public void dispose() {
         childMap.clear();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.viewers.ITreeContentProvider#getChildren(java.lang.Object)
-     */
     public Object[] getChildren(Object element) {
         Object[] children = (Object[]) childMap.get(element);
         if (children == null) {
@@ -64,7 +54,7 @@ public class OperationContentProvider implements ITreeContentProvider {
 
     /**
      * Does the actual work of getChildren.
-     * 
+     *
      * @see org.eclipse.jface.viewers.ITreeContentProvider#getChildren(java.lang.Object)
      */
     private Object[] createChildren(Object element) {
@@ -101,34 +91,19 @@ public class OperationContentProvider implements ITreeContentProvider {
                 }
                 return filtered.toArray();
             }
-        } 
+        }
 
         return new Object[0];
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java.lang.Object)
-     */
     public Object[] getElements(Object element) {
         return getChildren(element);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.viewers.ITreeContentProvider#getParent(java.lang.Object)
-     */
     public Object getParent(Object element) {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.viewers.ITreeContentProvider#hasChildren(java.lang.Object)
-     */
     public boolean hasChildren(java.lang.Object element) {
         if (element instanceof OperationMenuFactory)
             return true;
@@ -139,12 +114,6 @@ public class OperationContentProvider implements ITreeContentProvider {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer,
-     *      java.lang.Object, java.lang.Object)
-     */
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
         childMap.clear();
     }

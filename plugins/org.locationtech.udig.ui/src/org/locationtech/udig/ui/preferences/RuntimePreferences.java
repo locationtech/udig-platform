@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -40,28 +40,24 @@ public class RuntimePreferences extends FieldEditorPreferencePage
         addField(fieldEditor);
 
     }
-    
+
     @Override
     protected void performApply() {
         super.performApply();
         apply();
     }
-    
+
     public boolean performOk() {
         apply();
         return super.performOk();
     }
-    
+
     private void apply() {
         fieldEditor.doStore();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
-     */
     public void init( IWorkbench workbench ) {
+
     }
 
 }

@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * https://locationtech.org/projects/technology.udig
  * (C) 2015, Eclipse Foundation
  *
@@ -25,7 +26,7 @@ import org.eclipse.swt.widgets.Shell;
 /**
  * Class DatePickerDialog. A dialog where the user can select a dateValue using a month/dateValue
  * view. The class provides an extra option for un-setting the dateValue value.
- * 
+ *
  * @author Nikolaos Pringouris <nprigour@gmail.com>
  * @since 2.0.0
  */
@@ -50,7 +51,7 @@ public class DateTimePickerDialog extends Dialog {
 
     /**
      * Create the dialog
-     * 
+     *
      * @param parent
      */
     public DateTimePickerDialog(Shell parent, String subject) {
@@ -61,7 +62,7 @@ public class DateTimePickerDialog extends Dialog {
 
     /**
      * Create the dialog with null option enabled
-     * 
+     *
      * @param parent
      */
     public DateTimePickerDialog(Shell parent, String subject, boolean allowNullOPtion) {
@@ -73,7 +74,7 @@ public class DateTimePickerDialog extends Dialog {
 
     /**
      * Set the dateValue (used as start dateValue in calendar)
-     * 
+     *
      * @param value dateValue to start with, if null, the current dateValue is used and displayed in
      *        the default locale
      */
@@ -85,22 +86,12 @@ public class DateTimePickerDialog extends Dialog {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
-     */
     protected void configureShell(Shell newShell) {
         // newShell.setText(Messages.getString("RCPDatePickerDialog.DatePickerTitle"));
         // //$NON-NLS-1$
         super.configureShell(newShell);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
-     */
     protected Control createDialogArea(Composite parent) {
 
         Composite client = (Composite) super.createDialogArea(parent);

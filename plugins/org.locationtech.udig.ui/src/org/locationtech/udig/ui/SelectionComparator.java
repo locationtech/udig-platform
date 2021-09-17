@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -18,7 +19,7 @@ import org.opengis.filter.Filter;
 
 /**
  * Promotes the Features selected by the filter to the top if SWT.UP.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -30,13 +31,13 @@ public class SelectionComparator implements Comparator<SimpleFeature> {
             return 0;
         }
     };
-    
+
     private final Filter filter;
     private final int direction;
     private final Comparator<SimpleFeature> subComparator;
 
     /**
-     * 
+     *
      * @param filter the filter to use to promote the selected features
      * @param direction SWT.UP to put selected features at the start of the list, SWT.DOWN to put the selected features on the end
      */
@@ -44,7 +45,7 @@ public class SelectionComparator implements Comparator<SimpleFeature> {
         this( filter, direction, NATURAL_ORDER_COMPARATOR );
     }
     /**
-     * 
+     *
      * @param filter2 the filter to use to promote the selected features
      * @param direction SWT.UP to put selected features at the start of the list, SWT.DOWN to put the selected features on the end
      * @param subComparator this comparator will sort the same-type items.  IE selection will all be at the top but sorted by this comparator.
@@ -54,23 +55,20 @@ public class SelectionComparator implements Comparator<SimpleFeature> {
         this.direction=direction==SWT.UP?1:-1;
         this.subComparator=subComparator;
     }
-    
+
     public int compare( SimpleFeature o1, SimpleFeature o2 ) {
         boolean f1Contained=filter.evaluate(o1);
         boolean f2Contained=filter.evaluate(o2);
-        
+
         if( f1Contained && !f2Contained )
             return -1*direction;
 
         if( f2Contained && !f1Contained )
             return 1*direction;
-        
+
         return subComparator.compare(o1, o2);
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -81,10 +79,6 @@ public class SelectionComparator implements Comparator<SimpleFeature> {
         return result;
     }
 
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)

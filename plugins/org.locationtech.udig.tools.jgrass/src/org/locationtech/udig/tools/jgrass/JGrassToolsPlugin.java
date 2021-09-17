@@ -1,6 +1,6 @@
-/*
+/**
  * uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -56,19 +56,11 @@ public class JGrassToolsPlugin extends AbstractUIPlugin {
     public JGrassToolsPlugin() {
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-     */
     public void start( BundleContext context ) throws Exception {
         super.start(context);
         plugin = this;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-     */
     public void stop( BundleContext context ) throws Exception {
         plugin = null;
         super.stop(context);
@@ -76,7 +68,7 @@ public class JGrassToolsPlugin extends AbstractUIPlugin {
 
     /**
      * Returns the shared instance
-     * 
+     *
      * @return the shared instance
      */
     public static JGrassToolsPlugin getDefault() {
@@ -140,10 +132,10 @@ public class JGrassToolsPlugin extends AbstractUIPlugin {
 
     /**
      * Writes a featurecollection to a shapefile
-     * 
+     *
      * @param dataStore the datastore
      * @param collection the featurecollection
-     * @throws IOException 
+     * @throws IOException
      */
     public void writeToShapefile( ShapefileDataStore dataStore, FeatureCollection<SimpleFeatureType, SimpleFeature> collection )
             throws IOException {

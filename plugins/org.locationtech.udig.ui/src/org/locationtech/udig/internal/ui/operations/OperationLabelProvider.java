@@ -40,9 +40,6 @@ public class OperationLabelProvider extends LabelProvider {
         return image;
     }
 
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
-     */
     public void dispose() {
         if (images != null) {
             for (Iterator i = images.values().iterator(); i.hasNext();) {

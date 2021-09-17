@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -53,18 +53,14 @@ public class UiPreferences extends FieldEditorPreferencePage implements IWorkben
                     org.locationtech.udig.ui.preferences.PreferenceConstants.P_ADVANCED_GRAPHICS,
                     Messages.UiPreferences_advancedGraphics_label, getFieldEditorParent()));
         //}
-           
+
             String[][] values = {{Messages.UiPreferences_AutoUnits, PreferenceConstants.AUTO_UNITS}, {Messages.UiPreferences_MetricUnits, PreferenceConstants.METRIC_UNITS}, {Messages.UiPreferences_ImperialUnits,PreferenceConstants.IMPERIAL_UNITS}};
             addField(new ComboFieldEditor(org.locationtech.udig.ui.preferences.PreferenceConstants.P_DEFAULT_UNITS, Messages.UiPreferences_UnitsLabel, values, getFieldEditorParent()));
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
-     */
     public void init( IWorkbench workbench ) {
+
     }
 
 }
