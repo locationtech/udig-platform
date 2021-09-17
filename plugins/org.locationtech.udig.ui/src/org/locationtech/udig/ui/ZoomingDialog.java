@@ -94,6 +94,7 @@ public class ZoomingDialog extends Dialog {
     }
 
 
+    @Override
     public boolean close() {
 
         boolean result = delegate.close();
@@ -108,12 +109,14 @@ public class ZoomingDialog extends Dialog {
     }
 
 
+    @Override
     public void create() {
         super.create();
         if( delegate.getShell()==null )
             delegate.create();
     }
 
+    @Override
     public int getReturnCode() {
         return delegate.getReturnCode();
     }
@@ -136,6 +139,7 @@ public class ZoomingDialog extends Dialog {
      * </p>
      *
      */
+    @Override
     public int open() {
         if( delegate.getShell()==null )
             delegate.create();
@@ -184,6 +188,7 @@ public class ZoomingDialog extends Dialog {
     private void addClosingListeners() {
         delegate.getShell().addListener(SWT.Close|SWT.Dispose, new Listener(){
 
+            @Override
             public void handleEvent( Event event ) {
                 closeInternal();
             }
@@ -191,6 +196,7 @@ public class ZoomingDialog extends Dialog {
         });
         delegate.getShell().addListener(SWT.Dispose, new Listener(){
 
+            @Override
             public void handleEvent( Event event ) {
                 closeInternal();
             }
@@ -231,6 +237,7 @@ public class ZoomingDialog extends Dialog {
 
     }
 
+    @Override
     public String toString() {
         return delegate.toString();
     }
@@ -369,7 +376,4 @@ public class ZoomingDialog extends Dialog {
 
         return bounds;
     }
-
-
-
 }

@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -61,20 +61,23 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.Preferences;
 
 import com.google.common.base.Function;
+
 /**
  * The UiPlugin helps integrate uDig with your custom RCP application.
  * <p>
- * The UiPlugin actually contains a sample UDIGApplication (that is used
- * for demos), but the real intention here is to isolate all the code
- * needed for your own custom (or existing) RCP application.
- * @author Jody 
+ * The UiPlugin actually contains a sample UDIGApplication (that is used for demos), but the real
+ * intention here is to isolate all the code needed for your own custom (or existing) RCP
+ * application.
+ * </p>
+ *
+ * @author Jody
  */
 public class UiPlugin extends AbstractUdigUIPlugin {
 
     /** Icons path (value "icons/") */
-    public final static String ICONS_PATH = "icons/";//$NON-NLS-1$
+    public static final String ICONS_PATH = "icons/";//$NON-NLS-1$
 
-    public final static String ID = "org.locationtech.udig.ui"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.ui"; //$NON-NLS-1$
 
     public static final String DROP_ACTIONS_ID = ID + ".dropActions"; //$NON-NLS-1$
 
@@ -89,13 +92,15 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     private URL iconsUrl;
 
     private OperationMenuFactory operationMenuFactory;
+
     private MenuBuilder menuBuilder;
+
     /**
      * Version of uDig as determined from the product bundle.
      * @see loadVersion()
      */
     private String version;
-    
+
     private static UiPlugin INSTANCE;
 
     /**
@@ -108,18 +113,19 @@ public class UiPlugin extends AbstractUdigUIPlugin {
 
     /**
      * This method is called upon plug-in activation
-     * 
+     *
      * @param context
      * @throws Exception
      */
-    public void start( BundleContext context ) throws Exception {
+    @Override
+    public void start(BundleContext context) throws Exception {
         super.start(context);
         iconsUrl = context.getBundle().getEntry(ICONS_PATH);
         Authenticator.setDefault(new UDIGAuthenticator());
         /*
-         * TODO Further code can nuke the previously set authenticator. Proper security access
-         * should be configured to prevent this.
-         */
+        * TODO Further code can nuke the previously set authenticator. Proper security access
+        * should be configured to prevent this.
+        */
         disableCerts();
         try {
             loadVersion();
@@ -137,12 +143,21 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     private static void disableCerts() {
         // Create a trust manager that does not validate certificate chains
         TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager(){
+            @Override
             public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                 return null;
             }
-            public void checkClientTrusted( java.security.cert.X509Certificate[] certs, String authType ) {
+
+            @Override
+            public void checkClientTrusted( java.security.cert.X509Certificate[] certs,
+                    String authType ) {
+
             }
-            public void checkServerTrusted( java.security.cert.X509Certificate[] certs, String authType ) {
+
+            @Override
+            public void checkServerTrusted( java.security.cert.X509Certificate[] certs,
+                    String authType ) {
+
             }
         }};
 
@@ -161,9 +176,10 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         } catch (MalformedURLException e) {
         }
     }
+
     /**
      * This method hunts down the version recorded in the current product.
-     * 
+     *
      * @throws IOException
      */
     private void loadVersion() {
@@ -211,6 +227,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
             this.version = bundle.getString(UDIG_VERSION_KEY);
         }
     }
+
     /**
      * This is the version of uDig being deployed; obtained from the current product
      * if available.
@@ -256,10 +273,10 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      * Logs the given throwable to the platform log, indicating the class and
      * method from where it is being logged (this is not necessarily where it
      * occurred).
-     * 
+     *
      * This convenience method is for internal use by the Workbench only and
      * must not be called outside the Workbench.
-     * 
+     *
      * @param clazz
      *            The calling class.
      * @param methodName
@@ -272,6 +289,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
                 new Object[]{clazz.getName(), methodName, t});
         log(msg, t);
     }
+
     /**
      * Writes an info log in the plugin's log.
      * <p>
@@ -292,6 +310,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     public static void log( IStatus status ) {
         getDefault().getLog().log(status);
     }
+
     /**
      * Messages that only engage if getDefault().isDebugging()
      * <p>
@@ -299,7 +318,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
-     * 
+     *
      */
     private static void trace( String message, Throwable e ) {
         if (getDefault().isDebugging()) {
@@ -311,9 +330,10 @@ public class UiPlugin extends AbstractUdigUIPlugin {
             }
         }
     }
+
     /**
      * Messages that only engage if getDefault().isDebugging() and the trace option traceID is true.
-     * Available trace options can be found in the Trace class.  (They must also be part of the .options file) 
+     * Available trace options can be found in the Trace class.  (They must also be part of the .options file)
      */
     public static void trace( String traceID, Class< ? > caller, String message, Throwable e ) {
         if (isDebugging(traceID)) {
@@ -322,7 +342,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     }
 
     /**
-     * Adds the name of the caller class to the message. 
+     * Adds the name of the caller class to the message.
      *
      * @param caller class of the object doing the trace.
      * @param message tracing message, may be null.
@@ -340,15 +360,16 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
      * </p>
-     * 
+     *
      * @param trace currently only RENDER is defined
      */
     public static boolean isDebugging( final String trace ) {
-        return getDefault().isDebugging() && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
+        return getDefault().isDebugging() && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
+
     /**
      * Get the MenuFactory which will create the menus for this plugin
-     * 
+     *
      * @return The MenuFactory singleton
      */
     public MenuBuilder getMenuFactory() {
@@ -384,6 +405,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         final int[] heapS = new int[1];
         processAppIni(true, new Function<String, String>(){
 
+            @Override
             public String apply( String line ) {
                 if (line.matches(".*Xmx.*")) { //$NON-NLS-1$
                     Matcher matcher = pattern.matcher(line);
@@ -417,6 +439,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     public static void setMaxHeapSize( final String maxHeapSize ) throws FileNotFoundException, IOException {
         processAppIni(false, new Function<String, String>(){
 
+            @Override
             public String apply( String line ) {
                 if (line.matches(".*Xmx([0-9]+)([mMgGkKbB]).*")) { //$NON-NLS-1$
                     line = line.replaceFirst("Xmx([0-9]+)([mMgGkKbB])", "Xmx" + maxHeapSize + "M"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -427,7 +450,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         });
 
     }
-    
+
     /**
      * The quote used to delimit multiple proxies.
      */
@@ -573,41 +596,41 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     }
 
     /**
-     * Looks a configuration object using the preference store and extension 
+     * Looks a configuration object using the preference store and extension
      * points to locate the class and instantiate it. If there is a problem,
      * null is returned and the caller is expect to supply a default value of
      * their own. Exceptions are not thrown, but messages will be logged.
-     * 
-     * These configuration objects are typically defined in 
-     * plugin_customization.ini files, and these values are loaded into the 
+     *
+     * These configuration objects are typically defined in
+     * plugin_customization.ini files, and these values are loaded into the
      * preference store. The parameter <tt>prefConstant</tt> is used to look
      * up this value, and should be the key (prefixed by the plug-in name,
-     * org.locationtech.udig.ui) used in the ini file. 
-     * 
-     * The returned object will either be an instances of 
+     * org.locationtech.udig.ui) used in the ini file.
+     *
+     * The returned object will either be an instances of
      * <tt>interfaceClass</tt> or <tt>null</tt>.
-     * 
+     *
      * The parameter <tt>xpid</tt> is the extension point ID that the value
      * specified in the ini file should point to. This extension point must
      * contain an attribute used for an id, and an attribute used for the class
      * which is an implementation of <tt>interfaceClass</tt>. <tt>idField</tt>
      * indicates the name of the attribute for id, and <tt>classField</tt>
      * indicates the name of the attribute for the class.
-     * 
+     *
      * Example:
      * plugin_customization.ini
      * <pre>
      * org.locationtech.udig.ui/workbenchConfiguration=org.locationtech.udig.internal.ui.UDIGWorkbenchConfiguration
      * </pre>
-     * 
-     * <b><tt>store</tt></b>: org.locationtech.udig.internal.ui.UiPlugin.getPreferenceStore() 
+     *
+     * <b><tt>store</tt></b>: org.locationtech.udig.internal.ui.UiPlugin.getPreferenceStore()
      * (this corresponds to the first part of the key)
-     * 
+     *
      * <b><tt>pluginID</tt></b>: "org.locationtech.udig.ui"
-     * 
+     *
      * <b><tt>prefConstant</tt></b>: "workbenchConfiguration"
-     * 
-     * 
+     *
+     *
      * <pre>
      *     <extension
      *       point="org.locationtech.udig.ui.workbenchConfigurations">
@@ -616,18 +639,18 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      *           id="org.locationtech.udig.internal.ui.UDIGWorkbenchConfiguration"/>
      *     </extension>
      * </pre>
-     * 
+     *
      * <b><tt>xpid</tt></b>: "org.locationtech.udig.ui.workbenchConfigurations"
      * <b><tt>idField</tt></b>: "id"
      * <b><tt>classField</tt></b>: "class"
-     * 
+     *
      * This will return an instance of <tt>org.locationtech.udig.ui.WorkbenchConfiguration</tt>,
      * or null if it cannot find one (in which case, check the logs!).
-     * 
-     * Make sure to be a good developer and use constants. Also make sure to 
+     *
+     * Make sure to be a good developer and use constants. Also make sure to
      * use a default implementation if this returns null! The code should not
      * explode!
-     * 
+     *
      * TODO It would be nice to simplify this API call.
      *
      * @param interfaceClass instance of the interface that will be instantiated and returned
@@ -649,6 +672,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
                 final Throwable[] error = new Throwable[1];
                 ExtensionPointProcessor p = new ExtensionPointProcessor(){
 
+                    @Override
                     public void process( IExtension extension, IConfigurationElement element ) throws Exception {
                         try {
                             if (element.getAttribute(idField) != null && element.getAttribute(idField).equals(configurationID)) {
@@ -688,7 +712,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     /**
      * Gets preferences that are user specific. You don't have to worry about the preferences
      * changes interfering with preferences of another user's workspace.
-     * 
+     *
      * @return preferences that are user specific
      * @throws CoreException
      * @throws IOException
@@ -696,7 +720,8 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     // public static synchronized IExportedPreferences getUserPreferences() throws CoreException,
     // IOException {
     // if (preferences == null) {
-    //                    preferences=new UDIGExportedPreferences(getDefault().getPreferenceStore(), "^^preference^root^^"); //$NON-NLS-1$
+    //     preferences=new UDIGExportedPreferences(getDefault().getPreferenceStore(),
+    //             "^^preference^root^^"); //$NON-NLS-1$
     // }
     // return preferences;
     // }
@@ -705,7 +730,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         return new InstanceScope().getNode(ID);
     }
 
-	public IPath getIconPath() {
-		return new Path(ICONS_PATH);
-	}
+    public IPath getIconPath() {
+        return new Path(ICONS_PATH);
+    }
 }

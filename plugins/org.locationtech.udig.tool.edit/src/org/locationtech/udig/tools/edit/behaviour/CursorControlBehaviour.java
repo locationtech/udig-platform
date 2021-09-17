@@ -9,6 +9,12 @@
  */
 package org.locationtech.udig.tools.edit.behaviour;
 
+import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.PlatformUI;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Polygon;
 import org.locationtech.udig.core.IProvider;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.command.UndoableMapCommand;
@@ -23,31 +29,22 @@ import org.locationtech.udig.tools.edit.support.EditGeom;
 import org.locationtech.udig.tools.edit.support.Point;
 import org.locationtech.udig.ui.PlatformGIS;
 
-import org.eclipse.swt.graphics.Cursor;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IActionBars2;
-import org.eclipse.ui.PlatformUI;
-
-import org.locationtech.jts.geom.MultiPolygon;
-import org.locationtech.jts.geom.Polygon;
-
 /**
  * Sets the cursor to indicate what action can be done.
- * 
+ *
  * Also adds tips to the status bar.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public class CursorControlBehaviour implements EventBehaviour {
-
 
     private IProvider<String> defaultMessage;
     private IProvider<Cursor> overVertexCursor;
     private IProvider<Cursor> overEdgeCursor;
     private IProvider<String> overEdgeMessage;
     private IProvider<String> overVertexMessage;
-    
+
     /**
      * Configuration describing how an AbstractEditTool provides visual feedback in
      * the form of a cursor and message.
@@ -62,7 +59,7 @@ public class CursorControlBehaviour implements EventBehaviour {
      * <em>WILL NOT</em> dispose of the cursor.
      * @param overEdgeMessage generates the message to display when over an edge
      */
-    public CursorControlBehaviour(EditToolHandler handler, IProvider<String> defaultMessage, IProvider<Cursor> overVertexCursor, 
+    public CursorControlBehaviour(EditToolHandler handler, IProvider<String> defaultMessage, IProvider<Cursor> overVertexCursor,
             IProvider<String> overVertexMessage, IProvider<Cursor> overEdgeCursor, IProvider<String> overEdgeMessage){
         this.defaultMessage=defaultMessage;
         if( overVertexCursor==null )
@@ -83,12 +80,14 @@ public class CursorControlBehaviour implements EventBehaviour {
             this.overEdgeMessage=overEdgeMessage;
     }
 
+    @Override
     public boolean isValid( EditToolHandler handler, MapMouseEvent e, EventType eventType ) {
         boolean isHover=eventType==EventType.HOVERED;
         boolean isMove=eventType==EventType.MOVED;
         return isHover || isMove;
     }
 
+    @Override
     public UndoableMapCommand getCommand( EditToolHandler handler, MapMouseEvent e,
             EventType eventType ) {
         if( overVertex(handler, e) ){
@@ -100,7 +99,7 @@ public class CursorControlBehaviour implements EventBehaviour {
 
         return null;
     }
-    
+
 
     private boolean onEdge( EditToolHandler handler, MapMouseEvent e ) {
         Point point = Point.valueOf(e.x,e.y);
@@ -113,7 +112,7 @@ public class CursorControlBehaviour implements EventBehaviour {
         boolean polygonLayer=Polygon.class.isAssignableFrom(type) || MultiPolygon.class.isAssignableFrom(type);
 
         ClosestEdge closestEdge = geom.getClosestEdge(point, polygonLayer);
-        
+
         return closestEdge!=null && closestEdge.getDistanceToEdge()<PreferenceUtil.instance().getVertexRadius();
     }
 
@@ -125,27 +124,30 @@ public class CursorControlBehaviour implements EventBehaviour {
         return handler.getCurrentGeom().overVertex(point, radius)!=null;
     }
 
-    private void setCursorAndMessage(final Cursor cursor, final String string, final EditToolHandler handler) {
-        Runnable runnable = new Runnable(){
+    private void setCursorAndMessage(final Cursor cursor, final String string,
+            final EditToolHandler handler) {
+        Runnable runnable = new Runnable() {
+            @Override
             public void run() {
-                if( PlatformUI.getWorkbench().isClosing() )
+                if (PlatformUI.getWorkbench().isClosing())
                     return;
-                IActionBars2 bars = handler.getContext().getActionBars();
-                if (bars!=null){
+                IActionBars bars = handler.getContext().getActionBars();
+                if (bars != null) {
                     bars.getStatusLineManager().setErrorMessage(null);
                     bars.getStatusLineManager().setMessage(string);
                 }
                 handler.getContext().getViewportPane().setCursor(cursor);
-                
+
             }
         };
-        if( Display.getCurrent()!=null )
+        if (Display.getCurrent() != null)
             runnable.run();
         else
             Display.getDefault().asyncExec(runnable);
     }
 
-    public void handleError( EditToolHandler handler, Throwable error, UndoableMapCommand command ) {
+    @Override
+    public void handleError(EditToolHandler handler, Throwable error, UndoableMapCommand command) {
         EditPlugin.log("", error); //$NON-NLS-1$
     }
 
@@ -158,16 +160,18 @@ public class CursorControlBehaviour implements EventBehaviour {
         public SystemCursorProvider(int swtCursorID){
             this.id=swtCursorID;
         }
+        @Override
         public Cursor get(Object... params) {
             final Cursor[] cursor = new Cursor[1];
             PlatformGIS.syncInDisplayThread(new Runnable(){
+                @Override
                 public void run() {
                     cursor[0] = Display.getDefault().getSystemCursor(id);
                 }
             });
             return cursor[0];
         }
-        
+
     }
 
     public static class DefaultCursorProvider implements IProvider<Cursor> {
@@ -178,6 +182,7 @@ public class CursorControlBehaviour implements EventBehaviour {
             this.handler=handler;
         }
 
+        @Override
         public Cursor get(Object... params) {
             return handler.editCursor;
         }
@@ -186,6 +191,7 @@ public class CursorControlBehaviour implements EventBehaviour {
 
     public static class NullStringProvider implements IProvider<String> {
 
+        @Override
         public String get(Object... params) {
             return null;
         }

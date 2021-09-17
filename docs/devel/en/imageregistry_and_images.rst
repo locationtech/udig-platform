@@ -51,13 +51,13 @@ We simply need to supply the icons using the provided callback:
 
     public class MyPlugin extends AbstractUIPlugin {
            public static final String ID = "example.package.my"; //$NON-NLS-1$
-           public final static String ICONS_PATH = "icons/";//$NON-NLS-1$
-           public final static String PATH_ELOCALTOOL = ICONS_PATH+"elcl16/";
-           public final static String ADD_CO = PATH_ELOCALTOOL + "add_co.gif";
+           public static final String ICONS_PATH = "icons/";//$NON-NLS-1$
+           public static final String PATH_ELOCALTOOL = ICONS_PATH+"elcl16/";
+           public static final String ADD_CO = PATH_ELOCALTOOL + "add_co.gif";
 
            protected void initializeImageRegistry(
                     ImageRegistry registry) {
-        
+
             Bundle bundle = Platform.getBundle(ID);
             IPath path = new Path( ImageConstants.ADD_CO );
             URL url = Platform.find(bundle, path);
@@ -85,8 +85,8 @@ The ISharedImage file need to be in a public directory:
 ::
 
     public interface ISharedImages {
-        public final static String ICONS_PATH = "icons/";//$NON-NLS-1$
-        public final static String PATH_ELOCALTOOL = ICONS_PATH+"elcl16/";
+        public static final String ICONS_PATH = "icons/";//$NON-NLS-1$
+        public static final String PATH_ELOCALTOOL = ICONS_PATH+"elcl16/";
         public static final String IMG_ADD_COMMAND = PATH_ELOCALTOOL + "add_co.gif";
     }
 
@@ -122,8 +122,8 @@ This class should be located in an internal package.
 ::
 
     public interface ImageConstants {
-        public final static String PATH_ELOCALTOOL = "elcl16/";
-        public final static String ADD_CO = PATH_ELOCALTOOL + "add_co.gif";
+        public static final String PATH_ELOCALTOOL = "elcl16/";
+        public static final String ADD_CO = PATH_ELOCALTOOL + "add_co.gif";
     }
 
 We have removed the leading ICONS\_PATH in order to shorten key names.

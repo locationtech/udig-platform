@@ -1,6 +1,6 @@
 /*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -40,7 +40,7 @@ import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
  */
 public class RasterLegendGraphic implements MapGraphic {
 
-    public final static String LEGEND_SEPERATOR = "|"; //$NON-NLS-1$
+    public static final String LEGEND_SEPERATOR = "|"; //$NON-NLS-1$
 
     private Thread run;
 
@@ -66,8 +66,8 @@ public class RasterLegendGraphic implements MapGraphic {
 
         /*
          * get the blackboard from the map and not from the layer. This
-         * is due to the fact that we need the mapreader here to get the 
-         * legend string. The mapreader is put on blackboard by the 
+         * is due to the fact that we need the mapreader here to get the
+         * legend string. The mapreader is put on blackboard by the
          * raster renderer.
          */
 

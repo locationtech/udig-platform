@@ -25,15 +25,15 @@ import org.eclipse.ui.PlatformUI;
 
 public class EditStyleAction implements IWorkbenchWindowActionDelegate {
 
-    public final static String ID = "org.locationtech.udig.style.openStyleEditorAction"; //$NON-NLS-1$
-    
+    public static final String ID = "org.locationtech.udig.style.openStyleEditorAction"; //$NON-NLS-1$
+
     private Layer selectedLayer;
-    
+
     public void dispose() {
     }
 
     public void init( IWorkbenchWindow window ) {
-        
+
     }
 
     public void run( IAction action ) {
@@ -43,27 +43,27 @@ public class EditStyleAction implements IWorkbenchWindowActionDelegate {
                 try {
                     IWorkbenchPage page  = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
                     page.showView( StyleView.VIEW_ID );
-                    
-                    //styleView = (StyleView) 
+
+                    //styleView = (StyleView)
                     //if (selectedLayer != null);
                         //styleView.setSelectedLayer(selectedLayer);
-                } 
+                }
                 catch (PartInitException e2) {
-                    e2.printStackTrace(); 
+                    e2.printStackTrace();
                 }
             }
         });
     }
 
     public void selectionChanged( IAction action, ISelection selection ) {
-        if (selection.isEmpty() || !(selection instanceof IStructuredSelection)) 
+        if (selection.isEmpty() || !(selection instanceof IStructuredSelection))
             return;
-        
+
         StructuredSelection sselection = (StructuredSelection)selection;
         if (sselection.getFirstElement() instanceof Layer) {
             selectedLayer = (Layer)sselection.getFirstElement();
         }
     }
-    
-    
+
+
 }

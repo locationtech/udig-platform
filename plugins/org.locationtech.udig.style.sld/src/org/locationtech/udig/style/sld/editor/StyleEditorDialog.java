@@ -43,13 +43,13 @@ import org.geotools.data.util.NullProgressListener;
  */
 public class StyleEditorDialog extends FilteredEditorDialog implements IStyleEditorPageContainer {
 
-    public final static int IMPORT_ID = 32;
-    public final static int EXPORT_ID = 33;
-    public final static int APPLY_ID = 34;
-    public final static int REVERT_ID = 35;
-    public final static int DEFAULTS_ID = 36;
-    public final static int OK_ID = 37;
-    public final static int CANCEL_ID = 38;
+    public static final int IMPORT_ID = 32;
+    public static final int EXPORT_ID = 33;
+    public static final int APPLY_ID = 34;
+    public static final int REVERT_ID = 35;
+    public static final int DEFAULTS_ID = 36;
+    public static final int OK_ID = 37;
+    public static final int CANCEL_ID = 38;
 
     StyleLayer selectedLayer;
 
@@ -62,7 +62,7 @@ public class StyleEditorDialog extends FilteredEditorDialog implements IStyleEdi
      * Creates an style editor dialog open to a particular page. It is the responsibility of the
      * caller to then call <code>open()</code>. The call to <code>open()</code> will not return
      * until the dialog closes, so this is the last chance to manipulate the dialog.
-     * 
+     *
      * @param shell The Shell to parent the dialog off of if it is not already created. May be
      *        <code>null</code> in which case the active workbench window will be used if
      *        available.
@@ -89,7 +89,7 @@ public class StyleEditorDialog extends FilteredEditorDialog implements IStyleEdi
         dialog.setSelectedNode(pageId);
         dialog.setSelectedLayer(selectedLayer);
         dialog.create();
-        dialog.getShell().setText(Messages.StyleEditor_name); 
+        dialog.getShell().setText(Messages.StyleEditor_name);
         dialog.filteredTree.getFilterCombo().setEnabled(true); // allow filtering
 
         if (pageId != null) {
@@ -100,7 +100,7 @@ public class StyleEditorDialog extends FilteredEditorDialog implements IStyleEdi
 
     /**
      * Creates a new dialog under the control of the given manager manager.
-     * 
+     *
      * @param parentShell the parent shell
      * @param manager the preference manager
      */
@@ -112,7 +112,7 @@ public class StyleEditorDialog extends FilteredEditorDialog implements IStyleEdi
     protected void setShellStyle( int newShellStyle ) {
         super.setShellStyle(SWT.SHELL_TRIM|SWT.APPLICATION_MODAL|SWT.RESIZE);
     }
-    
+
     public void setSelectedLayer( Layer layer ) {
         if (selectedLayer == null && layer == null) {
             return;
@@ -147,7 +147,7 @@ public class StyleEditorDialog extends FilteredEditorDialog implements IStyleEdi
     public void setStyle( Style newStyle ) {
         StyleBlackboard styleBlackboard = selectedLayer.getStyleBlackboard();
         // put the style on the blackboard
-        styleBlackboard.put(SLDContent.ID, newStyle);        
+        styleBlackboard.put(SLDContent.ID, newStyle);
         styleBlackboard.setSelected(new String[]{SLDContent.ID});
     }
 
@@ -209,32 +209,32 @@ public class StyleEditorDialog extends FilteredEditorDialog implements IStyleEdi
         compRight.setFont(parent.getFont());
 
         Button defaultsButton = createButton(compRight, DEFAULTS_ID,
-                Messages.StyleEditorDialog_defaults, false); 
+                Messages.StyleEditorDialog_defaults, false);
         defaultsButton.setEnabled(true);
         defaultsButton.addListener(SWT.Selection, new StyleEditorButtonListener(this));
 
         Button revertButton = createButton(compRight, REVERT_ID,
-                Messages.StyleEditor_revert, false); 
+                Messages.StyleEditor_revert, false);
         revertButton.setEnabled(false);
         revertButton.addListener(SWT.Selection, new StyleEditorButtonListener(this));
-        
+
         Button applyButton = createButton(compRight, APPLY_ID,
-                Messages.StyleEditor_apply, false); 
+                Messages.StyleEditor_apply, false);
         applyButton.setEnabled(false);
         applyButton.addListener(SWT.Selection, new StyleEditorButtonListener(this));
-        
+
         new Label(compRight, SWT.None);
-        
+
         Button closeButton = createButton(compRight, CANCEL_ID,
-                IDialogConstants.CANCEL_LABEL, false); 
+                IDialogConstants.CANCEL_LABEL, false);
         closeButton.setEnabled(true);
         closeButton.addListener(SWT.Selection, new StyleEditorButtonListener(this));
-        
+
         Button okButton = createButton(compRight, OK_ID,
-                IDialogConstants.OK_LABEL, false); 
+                IDialogConstants.OK_LABEL, false);
         okButton.setEnabled(true);
         okButton.addListener(SWT.Selection, new StyleEditorButtonListener(this));
-        
+
         layout.numColumns=3;
     }
 
@@ -250,11 +250,11 @@ public class StyleEditorDialog extends FilteredEditorDialog implements IStyleEdi
         compLeft.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, false));
 
         Button importButton = createButton(compLeft, IMPORT_ID,
-                Messages.StyleEditor_import, false); 
+                Messages.StyleEditor_import, false);
         importButton.setEnabled(false);
         importButton.addListener(SWT.Selection, new StyleEditorButtonListener(this));
         Button exportButton = createButton(compLeft, EXPORT_ID,
-                Messages.StyleEditor_export, false); 
+                Messages.StyleEditor_export, false);
         exportButton.setEnabled(false);
         exportButton.addListener(SWT.Selection, new StyleEditorButtonListener(this));
     }
@@ -270,7 +270,7 @@ public class StyleEditorDialog extends FilteredEditorDialog implements IStyleEdi
         getButton(OK_ID).setEnabled(true);
         getButton(CANCEL_ID).setEnabled(true);
     }
-    
+
     /**
      * Used to enable the Apply button.
      */
@@ -288,27 +288,27 @@ public class StyleEditorDialog extends FilteredEditorDialog implements IStyleEdi
             public void setText( String text ) {
                 applyButton.setText(text);
             }
-            
+
             @Override
             public String getText() {
                 return applyButton.getText();
             }
-            
+
             @Override
             public void setToolTipText( String toolTipText ) {
                 applyButton.setToolTipText(toolTipText);
             }
-            
+
             @Override
             public String getToolTipText() {
                 return applyButton.getToolTipText();
             }
-            
+
             @Override
             public void setEnabled( boolean enabled ) {
                 applyButton.setEnabled(enabled);
             }
-            
+
             @Override
             public void run() {
                 Event event = new Event();
@@ -317,12 +317,12 @@ public class StyleEditorDialog extends FilteredEditorDialog implements IStyleEdi
                 event.widget = applyButton;
                 applyButton.notifyListeners(SWT.Selection, event);
             }
-            
+
             @Override
             public void setChecked( boolean checked ) {
                 applyButton.setSelection(checked);
             }
-            
+
         };
     }
 

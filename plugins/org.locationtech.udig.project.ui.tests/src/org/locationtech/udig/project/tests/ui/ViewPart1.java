@@ -17,20 +17,20 @@ import org.eclipse.ui.part.ViewPart;
 
 /**
  * A test view.  Momento makes a difference.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
 public class ViewPart1 extends ViewPart {
-    public final static String ID="org.locationtech.udig.project.tests.ui.view1"; //$NON-NLS-1$
+    public static final String ID="org.locationtech.udig.project.tests.ui.view1"; //$NON-NLS-1$
     public IMemento memento;
     /**
-     * 
+     *
      */
     public ViewPart1() {
         super();
     }
-    
+
     @Override
     public void init( IViewSite site, IMemento memento ) throws PartInitException {
         super.init(site, memento);

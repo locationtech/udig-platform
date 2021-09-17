@@ -7,7 +7,7 @@ please use the following procedure.
 
 #. Select the contents of your shapefile in the **Catalog view**; or by selecting a Layer if you
    have the shapefile on screen.
-#. Open the **Export wizard** and choose **Resource to Shapefile** and press **Next>**
+#. Open the **Export wizard** and choose **All Features to Shapefile** and press **Next>**
 #. Chose a destination directory for your new shapefile:
     C:\\Documents and Settings\\Jody\\Desktop\\data
 #. Ensure your shapefile is checked off on in the list
@@ -23,4 +23,4 @@ please use the following procedure.
 
 **Related reference**
 
-:doc:`/reference/Resource to Shapefile Wizard`
+:doc:`/reference/All Features to Shapefile Wizard`

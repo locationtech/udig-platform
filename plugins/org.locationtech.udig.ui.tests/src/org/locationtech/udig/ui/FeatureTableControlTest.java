@@ -97,7 +97,6 @@ public class FeatureTableControlTest {
         shell.redraw();
 
         while( Display.getCurrent().readAndDispatch() );
-        
 
     }
 
@@ -108,33 +107,35 @@ public class FeatureTableControlTest {
 
     @Test
     public void testDeleteSelection() throws Exception{
-        IStructuredSelection selection=new StructuredSelection(new SimpleFeature[]{feature1, feature3});
+        IStructuredSelection selection = new StructuredSelection(new SimpleFeature[]{feature1, feature3});
         table.setSelection(selection);
-        
-        UDIGTestUtil.inDisplayThreadWait(1000, new WaitCondition(){
 
+        UDIGTestUtil.inDisplayThreadWait(1000, new WaitCondition() {
+
+            @Override
             public boolean isTrue() {
                 return table.getSelectionCount()==2;
             }
-            
-        }, false);
-        
-        table.deleteSelection();
-        
-        UDIGTestUtil.inDisplayThreadWait(1000, new WaitCondition(){
 
+        }, false);
+
+        table.deleteSelection();
+
+        UDIGTestUtil.inDisplayThreadWait(1000, new WaitCondition() {
+
+            @Override
             public boolean isTrue() {
                 return table.getViewer().getTable().getItemCount()==2;
             }
-            
+
         }, false);
-        
+
         assertEquals( feature2, table.getViewer().getTable().getItem(0).getData());
         assertEquals( feature4, table.getViewer().getTable().getItem(1).getData());
         assertEquals( 0, table.getSelectionCount() );
         assertTrue( table.getSelection().isEmpty());
     }
-    
+
     @Test
     public void testUpdateFeatureCollection() throws Exception {
         SimpleFeatureType ft = DataUtilities.createType("type", "name:String,"+ ID_ATTRIBUTE + ":int"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
@@ -147,24 +148,25 @@ public class FeatureTableControlTest {
         newFeatures.add(f2);
 
         table.update(newFeatures);
-        
-        UDIGTestUtil.inDisplayThreadWait(100000000, new WaitCondition(){
 
+        UDIGTestUtil.inDisplayThreadWait(100000000, new WaitCondition() {
+
+            @Override
             public boolean isTrue() {
 
-                return table.getViewer().getTable().getItemCount()==5  
+                return table.getViewer().getTable().getItemCount()==5
                     && ((Integer) ((SimpleFeature) table.getViewer().getTable().getItem(0).getData()).getAttribute(ID_ATTRIBUTE)).intValue()==10; //$NON-NLS-1$
             }
-            
+
         }, false);
 
         SimpleFeature feature=(SimpleFeature) table.getViewer().getTable().getItem(0).getData();
-        
+
         assertEquals( 5, table.getViewer().getTable().getItemCount() );
         assertEquals( 10, ((Integer) feature.getAttribute(ID_ATTRIBUTE)).intValue() ); //$NON-NLS-1$
         table.assertInternallyConsistent();
     }
-    
+
     @Test
     public void testUpdate() throws Exception {
 
@@ -334,8 +336,9 @@ public class FeatureTableControlTest {
         Set<Identifier> ids = FeatureUtils.stringToId(fac, fid);
         Id selection = fac.id(ids);
         table.setSelection(new StructuredSelection(selection), reveal);
-        UDIGTestUtil.inDisplayThreadWait(3000, new WaitCondition(){
+        UDIGTestUtil.inDisplayThreadWait(3000, new WaitCondition() {
 
+            @Override
             public boolean isTrue() {
                 TableItem item = tree.getItem(index);
                 if (item.getData() == null)
@@ -357,11 +360,11 @@ public class FeatureTableControlTest {
         table.sort(new FIDComparator(SWT.DOWN), SWT.DOWN, column);
         while( Display.getCurrent().readAndDispatch() );
         assertSort(true);
-        
+
         table.sort(new FIDComparator(SWT.DOWN), SWT.UP, column);
         while( Display.getCurrent().readAndDispatch() );
         assertSort(false);
-        
+
         table.sort(new FIDComparator(SWT.UP), SWT.UP, column);
         while( Display.getCurrent().readAndDispatch() );
         assertSort(true);
@@ -410,21 +413,21 @@ public class FeatureTableControlTest {
         // test normal click
         doEventBasedSelection(1, 0, 1);
 
-        
+
         IStructuredSelection structuredSelection = ((IStructuredSelection) table.getSelection());
         assertNotNull( "Selection expected", structuredSelection );
-        
+
 		Object firstElement = structuredSelection.getFirstElement();
 		assertNotNull( "First element should not be null", firstElement );
-		
+
         Id idFilter = (Id) firstElement;
         assertFalse( "Expect a non empty selection", idFilter.getIdentifiers().isEmpty() );
-        assertFalse( "Expect a non empty selection", idFilter.getIDs().isEmpty() );        
+        assertFalse( "Expect a non empty selection", idFilter.getIDs().isEmpty() );
 		Set<Object> ds = (idFilter).getIDs();
-		
+
 		String[] fids = ds.toArray(new String[0]);
         assertEquals("Expect selected ID to match", feature2.getID(), fids[0]);
-        
+
         assertSelectedBackgroundColor(1);
 
         doEventBasedSelection(2, 0, 1);
@@ -434,7 +437,7 @@ public class FeatureTableControlTest {
         assertEquals(1, fids.length);
         assertEquals(feature3.getID(), fids[0]);
         assertSelectedBackgroundColor(2);
-        
+
         doEventBasedSelection(2, 0, 2);
 
         firstElement = structuredSelection.getFirstElement();
@@ -480,7 +483,7 @@ public class FeatureTableControlTest {
         assertTrue(contains(feature3.getID(),fids));
         assertTrue(contains(feature2.getID(),fids));
         assertSelectedBackgroundColor(1,2);
-        
+
     }
 
     private void doEventBasedSelection( int item, int stateMask, int button ) {
@@ -518,7 +521,5 @@ public class FeatureTableControlTest {
         }
         return false;
     }
-    
-    
 
 }

@@ -38,13 +38,11 @@ public class ZoomToFeatures extends AbstractActionTool {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }

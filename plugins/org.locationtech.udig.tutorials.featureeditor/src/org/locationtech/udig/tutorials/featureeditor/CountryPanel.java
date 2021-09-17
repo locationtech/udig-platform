@@ -41,15 +41,15 @@ import org.opengis.feature.simple.SimpleFeature;
 
 public class CountryPanel implements KeyListener, ISelectionChangedListener {
     /** Attribute name for attribute GMI_CNTRY */
-    public final static String GMI_CNTRY = "GMI_CNTRY";
+    public static final String GMI_CNTRY = "GMI_CNTRY";
 
     /** Attribute name for attribute REGION */
-    public final static String COLOR_MAP = "COLOR_MAP";
+    public static final String COLOR_MAP = "COLOR_MAP";
 
     /** Attribute name for attribute NAME */
-    public final static String NAME = "CNTRY_NAME";
+    public static final String NAME = "CNTRY_NAME";
 
-    public final static Object[] COLOR_MAP_OPTS = new Object[]{1, 2, 3, 4, 5, 6, 7, 8};
+    public static final Object[] COLOR_MAP_OPTS = new Object[]{1, 2, 3, 4, 5, 6, 7, 8};
 
     Text gmiCntry;
     Text name;
@@ -109,7 +109,7 @@ public class CountryPanel implements KeyListener, ISelectionChangedListener {
             }
         });
         colorMap.setInput(COLOR_MAP_OPTS);
-        
+
         // Buttons
         apply = new Button(parent, SWT.PUSH);
         apply.setLayoutData("skip2");
@@ -223,7 +223,7 @@ public class CountryPanel implements KeyListener, ISelectionChangedListener {
         // SWT Widgets
         Label label = new Label(parent, SWT.SHADOW_IN);
         label.setText("Country:");
-        
+
         name = new Text(parent, SWT.SHADOW_IN | SWT.BORDER);
         CC cc = new CC();
         cc.spanX(3);
@@ -274,7 +274,7 @@ public class CountryPanel implements KeyListener, ISelectionChangedListener {
         reset.setText("Reset");
         reset.setEnabled(false);
     }
-    
+
     public void setFocus() {
         name.setFocus();
     }

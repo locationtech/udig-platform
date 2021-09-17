@@ -77,7 +77,7 @@ public class PrintingPlugin extends AbstractUIPlugin {
 
         final HashMap<String, TemplateFactory> results = new HashMap<String, TemplateFactory>();
 
-        
+
         for( int i = 0; i < extensions.length; i++ ) {
             for( IConfigurationElement element : extensions[i].getConfigurationElements() ) {
                 if( "templateFactory".equals( element.getName() )){
@@ -95,7 +95,7 @@ public class PrintingPlugin extends AbstractUIPlugin {
                 }
                 else if( "template".equals( element.getName() )){
                     final String id = element.getAttribute("id"); //$NON-NLS-1$
-                    final IConfigurationElement remember = element;                            
+                    final IConfigurationElement remember = element;
                     TemplateFactory fakeFactory = new TemplateFactory(){
                         public Template createTemplate() {
                             try {
@@ -185,7 +185,7 @@ public class PrintingPlugin extends AbstractUIPlugin {
 
     /**
      * Gets all the boxes that will appear in the tool bar.
-     * 
+     *
      * @return all the boxes that will appear in the tool bar.
      */
     public synchronized List<BoxFactory> getVisibleBoxes() {
@@ -203,8 +203,8 @@ public class PrintingPlugin extends AbstractUIPlugin {
 
     /**
      * Returns all the BoxFactories
-     * 
-     * @return all the BoxFactories 
+     *
+     * @return all the BoxFactories
      */
     public List<BoxFactory> getBoxes() {
         List<BoxFactory> boxes = gatherBoxes(ExtensionPointList
@@ -234,11 +234,11 @@ public class PrintingPlugin extends AbstractUIPlugin {
         getDefault().getLog().log(new Status(IStatus.INFO, ID, IStatus.OK, message, e));
     }
 
-    public final static String TRACE_PRINTING = "org.locationtech.udig.printing.ui/debug/printing"; //$NON-NLS-1$
+    public static final String TRACE_PRINTING = "org.locationtech.udig.printing.ui/debug/printing"; //$NON-NLS-1$
 
     /**
      * Performs the Platform.getDebugOption true check on the provided trace
-     * 
+     *
      * @param trace constant, defined in the Trace class
      * @return true if -debug is on for this plugin
      */
@@ -249,7 +249,7 @@ public class PrintingPlugin extends AbstractUIPlugin {
 
     /**
      * Outputs a message or an Exception if the current plug-in is debugging.
-     * 
+     *
      * @param message if not null, message will be sent to standard out
      * @param e if not null, e.printStackTrace() will be called.
      */

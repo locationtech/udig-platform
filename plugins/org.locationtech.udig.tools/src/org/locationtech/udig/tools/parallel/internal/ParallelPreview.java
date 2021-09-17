@@ -3,7 +3,7 @@
  * (C) 2012, Refractions Research Inc.
  * (C) 2006, Axios Engineering S.L. (Axios)
  * (C) 2006, County Council of Gipuzkoa, Department of Environment and Planning
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
@@ -35,12 +35,12 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.udig.tools.parallel.internal.command.AddCustomVertexCommand;
 
 /**
- * 
+ *
  * This class will draw the parallel on the blackboard.
- * 
+ *
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
- * 
+ *
  */
 public class ParallelPreview implements Observer {
 
@@ -48,7 +48,7 @@ public class ParallelPreview implements Observer {
 	private IToolContext					context			= null;
 	private EditToolHandler					handler			= null;
 
-	private final static ParallelPreview	THIS			= new ParallelPreview();
+	private static final ParallelPreview	THIS			= new ParallelPreview();
 
 	/**
 	 * use {@link #getInstance()}
@@ -58,7 +58,7 @@ public class ParallelPreview implements Observer {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return The instance of this class.
 	 */
 	public static ParallelPreview getInstance() {
@@ -67,7 +67,7 @@ public class ParallelPreview implements Observer {
 
 	/**
 	 * Set the parameters needed for working with class.
-	 * 
+	 *
 	 * @param toolContext
 	 * @param editToolHandler
 	 * @param parallelContext
@@ -105,7 +105,7 @@ public class ParallelPreview implements Observer {
 
 	/**
 	 * Deletes the parallel preview or any selected feature.
-	 * 
+	 *
 	 * @param composite
 	 */
 	private void delete(UndoableComposite composite) {
@@ -121,9 +121,9 @@ public class ParallelPreview implements Observer {
 	/**
 	 * Draw the parallel preview. The context have a state which is used to know
 	 * when the parallel tool is ready for drawing the preview.
-	 * 
+	 *
 	 * @param composite
-	 * 
+	 *
 	 */
 	public void draw(UndoableComposite composite) {
 

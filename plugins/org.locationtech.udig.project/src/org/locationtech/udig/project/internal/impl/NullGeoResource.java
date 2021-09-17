@@ -27,7 +27,7 @@ import org.locationtech.jts.geom.Envelope;
  * Placeholder indicating that GeoResources was found.
  * <p>
  * This is often used by a Layer when there was no resource found for the layer.
- * 
+ *
  * @author Jesse
  */
 public class NullGeoResource extends IGeoResource {
@@ -45,7 +45,7 @@ public class NullGeoResource extends IGeoResource {
     }
 
     public Throwable getMessage() {
-        return new Exception(Messages.NullGeoResource_0); 
+        return new Exception(Messages.NullGeoResource_0);
     }
 
     public URL getIdentifier() {
@@ -59,17 +59,14 @@ public class NullGeoResource extends IGeoResource {
     }
 
     @Override
-	protected IGeoResourceInfo createInfo( IProgressMonitor monitor ) {
-        // TODO Auto-generated method stub
+    protected IGeoResourceInfo createInfo( IProgressMonitor monitor ) {
         return new IGeoResourceInfo(){
             @Override
             public ReferencedEnvelope getBounds() {
-                // TODO Auto-generated method stub
                 return new ReferencedEnvelope(new Envelope(), null);
             }
             @Override
             public CoordinateReferenceSystem getCRS() {
-                // TODO Auto-generated method stub
                 return null;
             }
 

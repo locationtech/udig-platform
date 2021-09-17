@@ -41,7 +41,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-
 import org.geotools.data.FeatureSource;
 import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
@@ -57,7 +56,10 @@ import org.geotools.filter.IllegalFilterException;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.operation.transform.IdentityTransform;
 import org.geotools.referencing.wkt.UnformattableObjectException;
-
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.MultiLineString;
+import org.locationtech.jts.geom.MultiPoint;
+import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.IGeoResource;
@@ -74,7 +76,6 @@ import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
 import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.ProgressManager;
-
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
@@ -86,11 +87,6 @@ import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
-
-import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.MultiLineString;
-import org.locationtech.jts.geom.MultiPoint;
-import org.locationtech.jts.geom.MultiPolygon;
 
 public class CatalogExportWizard extends WorkflowWizard implements IExportWizard {
 
@@ -238,8 +234,9 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
                 SimpleFeatureType destinationFeatureType = createFeatureType(schema,
                         (Class< ? extends Geometry>) schema.getGeometryDescriptor().getType()
                                 .getBinding(), crs);
+                final SimpleFeatureType finalFeatureType = removeUnsupportedTypes(destinationFeatureType, true);
 
-                ShapefileDataStore shapefile = createShapefile(destinationFeatureType, file, data.getCharset());
+                ShapefileDataStore shapefile = createShapefile(finalFeatureType, file, data.getCharset());
                 SimpleFeatureType targetFeatureType = shapefile.getSchema();
 
                 ReprojectingFeatureCollection processed = new ReprojectingFeatureCollection(fc, monitor, targetFeatureType, mt);
@@ -249,6 +246,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
                     addToCatalog(file, data);
                 } else {
                     Display.getDefault().asyncExec(new Runnable(){
+                        @Override
                         public void run() {
                             String msg = "No features were exported; did you select anything?"; //$NON-NLS-1$
                             CatalogUIPlugin.log(msg, null);
@@ -294,6 +292,34 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
         return true;
     }
 
+    private static SimpleFeatureType removeUnsupportedTypes(final SimpleFeatureType destinationFeatureType, boolean writeLog) {
+        final List<AttributeDescriptor> attributeDescriptors = destinationFeatureType.getAttributeDescriptors();
+        final SimpleFeatureTypeBuilder sftb = new SimpleFeatureTypeBuilder();
+        sftb.setName(destinationFeatureType.getTypeName());
+
+        for (final AttributeDescriptor at : attributeDescriptors) {
+            if (at.getType().getBinding().equals(Object.class)) {
+                if (writeLog) {
+                    CatalogUIPlugin.log(MessageFormat.format(
+                        "Catalog Export : Ignoring attribute {0} (FeatureType {1}) which is of unsupported type Object.", ////$NON-NLS-1$
+                        at.getName(), destinationFeatureType.getName()), null);
+                }
+            } else {
+                if (!(at instanceof GeometryDescriptor)) {
+                    sftb.add(at);
+                } else {
+                    final GeometryDescriptor geom = destinationFeatureType.getGeometryDescriptor();
+                    sftb.crs(destinationFeatureType.getCoordinateReferenceSystem()).defaultValue(null).restrictions(
+                            geom.getType().getRestrictions()).nillable(geom.isNillable()).add(
+                                    geom.getLocalName(),
+                                    geom.getType().getBinding());
+                }
+
+            }
+        }
+        return sftb.buildFeatureType();
+    }
+
     @SuppressWarnings("unchecked")
     private File determineDestinationFile( Data data ) {
         ExportResourceSelectionState layerSelectState = findState();
@@ -310,6 +336,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
             final File[] destination = new File[]{addSuffix(new File(exportDir, typeName))};
             if (destination[0].exists()) {
                 getContainer().getShell().getDisplay().syncExec(new Runnable(){
+                    @Override
                     public void run() {
                         String pattern = Messages.CatalogExportWizard_OverwriteDialogQuery;
 
@@ -407,6 +434,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
         }
 
         PlatformGIS.asyncInDisplayThread(new Runnable(){
+            @Override
             public void run() {
                 CatalogView catalogView = getCatalogView();
                 if (catalogView != null) {
@@ -656,6 +684,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
         }
     }
 
+    @Override
     public void init( IWorkbench workbench, IStructuredSelection selection ) {
         getWorkflow().getState(ExportResourceSelectionState.class).selection = selection;
     }

@@ -35,14 +35,14 @@ import org.eclipse.swt.widgets.Display;
  * MessageHandlers to see which one can handle the message. The first handler
  * that accepts it handles the message. If an error occurs then a Message
  * starting with "FAILURE" will be returned.
- * 
+ *
  * @author jesse
  */
 public class MapDaemon extends Thread {
 
 	// TODO This is a modification it will use the pluging system to
 	// look up handlers in the future
-	private final static List<MessageHandler> handlers = new ArrayList<MessageHandler>();
+	private static final List<MessageHandler> handlers = new ArrayList<MessageHandler>();
 	static {
 		handlers.add(new DisplayLayerHandler());
 	}

@@ -21,7 +21,7 @@ import org.locationtech.udig.catalog.ui.internal.Messages;
 /**
  * URLs are used for resolve.getId(), this class contains utility methods to help work with urls
  * used in this manner.
- * 
+ *
  * @author jgarnett
  * @since 0.9.0
  * @deprecated Please use ID
@@ -152,9 +152,9 @@ public class Identifier {
      * @param url
      * @return label describing the URL as a resource (ie file or content)
      */
-    final static public String labelResource( URL url ) {
+    static final public String labelResource( URL url ) {
         if (url == null)
-            return Messages.ResolveLabelProvider_missingText; 
+            return Messages.ResolveLabelProvider_missingText;
 
         String HOST = url.getHost();
         String QUERY = url.getQuery();
@@ -246,9 +246,9 @@ public class Identifier {
      * @param server
      * @return label as if url points to just a server
      */
-    final static public String labelServer( URL url ) {
+    static final public String labelServer( URL url ) {
         if (url == null)
-            return Messages.ResolveLabelProvider_missingText; 
+            return Messages.ResolveLabelProvider_missingText;
 
         String HOST = url.getHost();
         int PORT = url.getPort();

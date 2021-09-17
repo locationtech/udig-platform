@@ -1,6 +1,6 @@
 /*
  * uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,12 +19,12 @@ import org.eclipse.ui.console.MessageConsoleStream;
 
 /**
  * The {@link MessageConsole} of the script editor.
- * 
+ *
  * @author Andrea Antonello (www.hydrologis.com)
  */
 public class JConsoleOutputConsole extends MessageConsole {
 
-    private final static String title = "OmsBox Processing Output";
+    private static final String title = "OmsBox Processing Output";
     public final PrintStream internal;
     public final PrintStream err;
     public final PrintStream out;

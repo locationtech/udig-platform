@@ -15,22 +15,25 @@ import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.tools.edit.EditBlackboardUtil;
 
 /**
- * When a map is closed this cleans out all the references to the blackboard so it can be garbage collected.  
- * 
+ * When a map is closed this cleans out all the references to the blackboard so it can be garbage collected.
+ *
  * @author jesse
  * @since 1.1.0
  */
 public class DisposeBlackboardOnCloseInterceptor implements MapInterceptor {
 
     public void run( Map map ) {
-        for( ILayer layer : map.getMapLayers() ) {
-            EditBlackboard bb = (EditBlackboard) layer.getBlackboard().get(EditBlackboardUtil.EDIT_BLACKBOARD_KEY);
-            if( bb!=null ){
-                bb.getListeners().clear();
-                bb.selectionClear();
-                bb.clear();
+        if (map != null && map.getMapLayers() != null) {
+            for (ILayer layer : map.getMapLayers()) {
+                EditBlackboard bb = (EditBlackboard) layer.getBlackboard()
+                        .get(EditBlackboardUtil.EDIT_BLACKBOARD_KEY);
+                if (bb != null) {
+                    bb.getListeners().clear();
+                    bb.selectionClear();
+                    bb.clear();
+                }
+                layer.getBlackboard().put(EditBlackboardUtil.EDIT_BLACKBOARD_KEY, null);
             }
-            layer.getBlackboard().put(EditBlackboardUtil.EDIT_BLACKBOARD_KEY, null);
         }
     }
 

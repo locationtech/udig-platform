@@ -49,17 +49,17 @@ import org.opengis.feature.type.FeatureType;
 /**
  * Provides information about the feature panel extension points. Each feature panel registry is
  * associated with a unique FeatureType.
- * 
+ *
  * @see TabbedPropertyRegistery
  */
 @SuppressWarnings("unused")
 public class FeaturePanelRegistry {
 
-    private final static String NO_TAB_ERROR = "Schema {0} declares non-existing tab {1}";
+    private static final String NO_TAB_ERROR = "Schema {0} declares non-existing tab {1}";
 
-    private final static String CONTRIBUTOR_ERROR = "Contributor {0} cannot be created.";
+    private static final String CONTRIBUTOR_ERROR = "Contributor {0} cannot be created.";
 
-    private final static String TAB_ERROR = "Tab in {0} declares non-existing category {1}.";
+    private static final String TAB_ERROR = "Tab in {0} declares non-existing category {1}.";
 
     // extension point constants
 
@@ -79,7 +79,7 @@ public class FeaturePanelRegistry {
 
     private static final String ATT_CONTRIBUTOR_ID = "contributorId"; //$NON-NLS-1$
 
-    private static final String ATT_TYPE_MAPPER = "typeMapper"; //$NON-NLS-1$	
+    private static final String ATT_TYPE_MAPPER = "typeMapper"; //$NON-NLS-1$
 
     private static final String ATT_LABEL_PROVIDER = "labelProvider"; //$NON-NLS-1$
 
@@ -142,7 +142,7 @@ public class FeaturePanelRegistry {
 
     /**
      * Handle the error when an issue is found loading from the configuration element.
-     * 
+     *
      * @param message log message
      * @param exception an optional CoreException
      */
@@ -170,7 +170,7 @@ public class FeaturePanelRegistry {
      * <p>
      * This is an interesting one; the workbench part may be something have a list of Maps; with the
      * ISelection being a selected Map.
-     * 
+     *
      * @param part the workbench part containing the selection
      * @param selection the current selection.
      * @return all section descriptors.
@@ -303,7 +303,7 @@ public class FeaturePanelRegistry {
 
     /**
      * Gets the type mapper for the contributor.
-     * 
+     *
      * @return the type mapper for the contributor.
      */
     public ITypeMapper getTypeMapper() {
@@ -312,7 +312,7 @@ public class FeaturePanelRegistry {
 
     /**
      * Gets the label provider for the contributor.
-     * 
+     *
      * @return the label provider for the contributor.
      */
     public ILabelProvider getLabelProvider() {
@@ -321,7 +321,7 @@ public class FeaturePanelRegistry {
 
     /**
      * Gets the action provider for the contributor.
-     * 
+     *
      * @return the action provider for the contributor.
      */
     public ActionProvider getActionProvider() {
@@ -330,7 +330,7 @@ public class FeaturePanelRegistry {
 
     /**
      * Gets the tab list content provider for the contributor.
-     * 
+     *
      * @return the tab list content provider for the contributor.
      */
     public IStructuredContentProvider getTabListContentProvider() {
@@ -339,7 +339,7 @@ public class FeaturePanelRegistry {
 
     /**
      * Handle the tab error when an issue is found loading from the configuration element.
-     * 
+     *
      * @param configurationElement the configuration element
      */
     private void handleTabError( IConfigurationElement configurationElement, String category ) {

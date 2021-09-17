@@ -30,9 +30,9 @@ import org.eclipse.jface.text.rules.WordRule;
  */
 public class JavaPartitionScanner extends RuleBasedPartitionScanner {
 
-	public final static String JAVA_MULTILINE_COMMENT= "__java_multiline_comment"; //$NON-NLS-1$
-	public final static String JAVA_DOC= "__java_javadoc"; //$NON-NLS-1$
-	public final static String[] JAVA_PARTITION_TYPES= new String[] { JAVA_MULTILINE_COMMENT, JAVA_DOC };
+	public static final String JAVA_MULTILINE_COMMENT= "__java_multiline_comment"; //$NON-NLS-1$
+	public static final String JAVA_DOC= "__java_javadoc"; //$NON-NLS-1$
+	public static final String[] JAVA_PARTITION_TYPES= new String[] { JAVA_MULTILINE_COMMENT, JAVA_DOC };
 
 	/**
 	 * Detector for empty comments.

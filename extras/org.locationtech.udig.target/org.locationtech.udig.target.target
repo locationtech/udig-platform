@@ -78,24 +78,12 @@
 <repository location="http://udig.refractions.net/files/update-jai/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="com.google.guava" version="15.0.0.v201403281430"/>
 <unit id="com.lowagie.text" version="2.1.7.v201004222200"/>
 <unit id="javax.xml" version="1.3.4.v201005080400"/>
 <unit id="net.miginfocom.layout" version="3.7.1.v200911230030"/>
 <unit id="net.miginfocom.layout.swing" version="3.7.1.v200911230030"/>
 <unit id="net.miginfocom.layout.swt" version="3.7.1.v201505121915"/>
-<unit id="org.apache.batik.bridge" version="1.7.0.v201011041433"/>
-<unit id="org.apache.batik.css" version="1.7.0.v201011041433"/>
-<unit id="org.apache.batik.dom" version="1.7.1.v201505191845"/>
-<unit id="org.apache.batik.dom.svg" version="1.7.0.v201011041433"/>
-<unit id="org.apache.batik.ext.awt" version="1.7.0.v201011041433"/>
-<unit id="org.apache.batik.parser" version="1.7.0.v201011041433"/>
-<unit id="org.apache.batik.svggen" version="1.7.0.v201011041433"/>
-<unit id="org.apache.batik.transcoder" version="1.7.0.v201011041433"/>
-<unit id="org.apache.batik.util" version="1.7.0.v201011041433"/>
-<unit id="org.apache.batik.util.gui" version="1.7.0.v200903091627"/>
-<unit id="org.apache.batik.xml" version="1.7.0.v201011041433"/>
-<unit id="org.apache.commons.codec" version="0.0.0"/>
+<unit id="org.apache.commons.codec" version="1.9.0.v20170208-1614"/>
 <unit id="org.apache.commons.lang" version="0.0.0"/>
 <unit id="org.apache.commons.logging" version="1.1.1.v201101211721"/>
 <unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
@@ -114,6 +102,27 @@
 <unit id="org.objenesis" version="2.6.0.v20180420-1519"/>
 <unit id="com.sun.jna" version="4.5.1.v20190425-1842"/>
 <unit id="com.sun.jna.platform" version="4.5.1.v20190425-1842"/>
+<unit id="com.google.guava" version="27.1.0.v20190517-1946"/>
+<unit id="org.apache.batik.anim" version="0.0.0"/>
+<unit id="org.apache.batik.awt.util" version="0.0.0"/>
+<unit id="org.apache.batik.bridge" version="0.0.0"/>
+<unit id="org.apache.batik.codec" version="0.0.0"/>
+<unit id="org.apache.batik.constants" version="0.0.0"/>
+<unit id="org.apache.batik.css" version="1.13.0.v20200622-2037"/>
+<unit id="org.apache.batik.dom" version="0.0.0"/>
+<unit id="org.apache.batik.dom.svg" version="0.0.0"/>
+<unit id="org.apache.batik.ext" version="1.13.0.v20201124-1832"/>
+<unit id="org.apache.batik.gvt" version="0.0.0"/>
+<unit id="org.apache.batik.i18n" version="1.13.0.v20200622-2037"/>
+<unit id="org.apache.batik.parser" version="0.0.0"/>
+<unit id="org.apache.batik.script" version="0.0.0"/>
+<unit id="org.apache.batik.shared.resources" version="0.0.0"/>
+<unit id="org.apache.batik.svggen" version="0.0.0"/>
+<unit id="org.apache.batik.transcoder" version="0.0.0"/>
+<unit id="org.apache.batik.util" version="1.13.0.v20200622-2037"/>
+<unit id="org.apache.batik.xml" version="0.0.0"/>
+<unit id="org.apache.xalan" version="2.7.2.v20201124-1837"/>
+<unit id="org.apache.xmlgraphics" version="2.4.0.v20200622-2037"/>
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20201130205003/repository/"/>
 </location>
 </locations>

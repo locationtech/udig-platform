@@ -35,13 +35,13 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * A Graphics object that wraps SWT's GC object
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
 public class NonAdvancedSWTGraphics implements ViewportGraphics {
     /** The <code>TRANSPARENT</code> color */
-    public final static int TRANSPARENT = 0x220000 | 0x2200 | 0x22;
+    public static final int TRANSPARENT = 0x220000 | 0x2200 | 0x22;
 
     private AffineTransform transform = new AffineTransform();
 
@@ -63,7 +63,7 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
 
     /**
      * Construct <code>SWTGraphics</code>.
-     * 
+     *
      * @param Image
      *            image
      * @param display
@@ -75,7 +75,7 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
 
     /**
      * Construct <code>SWTGraphics</code>.
-     * 
+     *
      * @param gc
      *            The GC object
      * @param display
@@ -143,7 +143,7 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
 
     /**
      * Sets an affine transformation for drawing shapes.
-     * 
+     *
      * @param t
      *            The transform.
      */
@@ -176,7 +176,7 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
 
     /**
      * This is hard because - background doesn't mean what we think it means.
-     * 
+     *
      * @see org.locationtech.udig.project.render.ViewportGraphics#setBackground(java.awt.Color)
      */
     public void setBackground( java.awt.Color c ) {
@@ -381,7 +381,7 @@ public class NonAdvancedSWTGraphics implements ViewportGraphics {
     /**
      * @see org.locationtech.udig.ui.graphics.ViewportGraphics#drawImage(java.awt.Image,
      *      int, int)
-     * 
+     *
      * Current version can only draw Image if the image is an RenderedImage
      */
     public void drawImage( java.awt.Image image, int x, int y ) {

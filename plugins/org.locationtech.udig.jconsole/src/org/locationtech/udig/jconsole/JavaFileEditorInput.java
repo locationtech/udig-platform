@@ -23,12 +23,12 @@ import org.eclipse.ui.model.IWorkbenchAdapter;
 
 public class JavaFileEditorInput implements IPathEditorInput, ILocationProvider {
 
-    public final static String UNTITLEDFILE = System.getProperty("user.home") + File.separator
+    public static final String UNTITLEDFILE = System.getProperty("user.home") + File.separator
             + "default.groovy";
 
     /**
      * The workbench adapter which simply provides the label.
-     * 
+     *
      * @since 3.1
      */
     private class WorkbenchAdapter implements IWorkbenchAdapter {
@@ -108,12 +108,12 @@ public class JavaFileEditorInput implements IPathEditorInput, ILocationProvider 
             return fWorkbenchAdapter;
 
         // if (IFile.class.equals(adapter)) {
-        //            
+        //
         // IPath location = Path.fromOSString(fFile.getAbsolutePath());
         // IFileStore fileStore = EFS.getLocalFileSystem().getStore(location);
         // fileStore.fetchInfo().
-        //            
-        //            
+        //
+        //
         // IWorkspace ws = ResourcesPlugin.getWorkspace();
         // IProject project = ws.getRoot().getProject();
         // try {

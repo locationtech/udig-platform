@@ -24,17 +24,17 @@ import org.osgi.framework.BundleContext;
 
 /**
  * Provides lifecycle management for the ImageIOPlugin plugin.
- * 
+ *
  * @author mleslie
  * @author Daniele Romagnoli, GeoSolutions
  * @author Jody Garnett
  * @author Simone Giannecchini, GeoSolutions
- * 
+ *
  * @since 0.6.0
  */
 public class Activator extends AbstractUIPlugin {
     private static Activator plugin;
-    public final static String ID = "org.locationtech.udig.catalog.imageio"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.catalog.imageio"; //$NON-NLS-1$
     private ResourceBundle resourceBundle;
 
     /**
@@ -44,7 +44,7 @@ public class Activator extends AbstractUIPlugin {
         super();
         plugin = this;
     }
-    
+
     public void start( BundleContext context ) throws Exception {
         super.start(context);
         if (!GDALUtilities.isGDALAvailable()) {
@@ -72,25 +72,25 @@ public class Activator extends AbstractUIPlugin {
 			return null;
 		}
 	}
-    
+
     public void stop(BundleContext context) throws Exception {
         plugin = null;
         this.resourceBundle = null;
         super.stop(context);
     }
-    
+
     /**
      * Retrieves the default instance of this class.
-     * 
+     *
      * @return Default instance of ImageIOPlugin.
      */
     public static Activator getDefault() {
         return plugin;
     }
-    
+
     /**
      * Retrieves the string value of the requested resource.
-     * 
+     *
      * @param key
      * @return Value of the desired resource string.
      */
@@ -102,10 +102,10 @@ public class Activator extends AbstractUIPlugin {
             return key;
         }
     }
-    
+
     /**
      * Retrieves the default resource bundle for this plugin.
-     * 
+     *
      * @return ResourceBundle
      */
     public ResourceBundle getResourceBundle() {
@@ -118,8 +118,8 @@ public class Activator extends AbstractUIPlugin {
             this.resourceBundle = null;
         }
         return this.resourceBundle;
-    } 
-    
+    }
+
     /**
      * Writes an info log in the plugin's log.
      * <p>

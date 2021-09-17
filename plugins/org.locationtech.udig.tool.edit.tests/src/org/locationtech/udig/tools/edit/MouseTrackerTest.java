@@ -24,13 +24,13 @@ import org.junit.Test;
 
 public class MouseTrackerTest {
 
-    final static int BUTTON1=MapMouseEvent.BUTTON1;
-    final static int BUTTON2=MapMouseEvent.BUTTON2;
-    final static int NONE=MapMouseEvent.NONE;
-    final static int SHIFT=MapMouseEvent.SHIFT_DOWN_MASK;
-    final static int CTRL=MapMouseEvent.CTRL_DOWN_MASK;
-    final static TestMapDisplay DISPLAY = new TestMapDisplay(new Dimension(500,500));
-    
+    static final int BUTTON1=MapMouseEvent.BUTTON1;
+    static final int BUTTON2=MapMouseEvent.BUTTON2;
+    static final int NONE=MapMouseEvent.NONE;
+    static final int SHIFT=MapMouseEvent.SHIFT_DOWN_MASK;
+    static final int CTRL=MapMouseEvent.CTRL_DOWN_MASK;
+    static final TestMapDisplay DISPLAY = new TestMapDisplay(new Dimension(500,500));
+
     /*
      * Test method for 'org.locationtech.udig.tools.edit.latest.MouseTracker.updateState(MapMouseEvent, EventType)'
      */
@@ -40,13 +40,13 @@ public class MouseTrackerTest {
 
         MapMouseEvent event=new MapMouseEvent( DISPLAY, 10,15,NONE,BUTTON1, BUTTON1 );
         tracker.updateState(event, EventType.MOVED);
-        
+
         assertEquals(Point.valueOf(10,15), tracker.getDragStarted());
-        
+
         event=new MapMouseEvent( DISPLAY, 10,10,NONE,BUTTON1, BUTTON1 );
         tracker.updateState(event, EventType.DRAGGED);
         assertEquals(Point.valueOf(10,15), tracker.getDragStarted());
-        
+
     }
 
 }

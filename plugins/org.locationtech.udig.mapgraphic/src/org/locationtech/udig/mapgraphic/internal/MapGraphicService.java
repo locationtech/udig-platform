@@ -38,8 +38,8 @@ public class MapGraphicService extends IService {
     public static String ID = "mapgraphic:///localhost/mapgraphic"; //$NON-NLS-1$
 
     /** Dummy url for a MapGraphic */
-    public final static URL SERVICE_URL;
-    public final static ID SERVICE_ID;
+    public static final URL SERVICE_URL;
+    public static final ID SERVICE_ID;
     static {
         URL tmp;
         try {

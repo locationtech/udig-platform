@@ -29,15 +29,15 @@ import org.geotools.data.ows.AbstractOpenWebService;
 import org.locationtech.jts.geom.Envelope;
 
 /**
- * An AbstractTileRange represents a set of Tiles in a given bounds.  
+ * An AbstractTileRange represents a set of Tiles in a given bounds.
  * This TileRange is responsible for fetching the individual tiles if they are not yet
- * "complete" and ready to paint, which it does through a TiledWebMapServer.  The 
- * TileRange really only lives for the cycle of fetching all the tiles.  Once the 
- * TileRange has finished loading (when all the tiles are complete), its use is 
+ * "complete" and ready to paint, which it does through a TiledWebMapServer.  The
+ * TileRange really only lives for the cycle of fetching all the tiles.  Once the
+ * TileRange has finished loading (when all the tiles are complete), its use is
  * pretty much done.
- * 
+ *
  * Every time a tile is "completed", all listeners will be notified.
- * 
+ *
  * @author GDavis
  * @since 1.2.0
  */
@@ -49,22 +49,22 @@ public abstract class AbstractTileRange implements TileRange {
     protected TileSet tileset;
     protected TileWorkerQueue requestTileWorkQueue; // queue of threads for requesting tiles
     protected boolean using_threadpools = false;  // set in the constructor
-    
-    protected final static boolean testing = false;  // for testing output
- 
+
+    protected static final boolean testing = false;  // for testing output
+
     /** keep track of all tile listeners **/
-    protected Set<TileListener> tileListeners = new HashSet<TileListener>();    
-    
+    protected Set<TileListener> tileListeners = new HashSet<TileListener>();
+
     /**
      * This lock controls access to tilesWaitingToLoad.
      */
     protected ReentrantReadWriteLock tilesWaitingToLoad_lock = new ReentrantReadWriteLock();
-    
+
     /**
      * Map of tiles that are not yet loaded; may be empty.
      */
     protected volatile Map<String, Tile> tilesWaitingToLoad = new HashMap<String, Tile>();
-     
+
     /**
      * A TileRange implementation where you can fill in the fetching protocol.
      * @param server The Server to fetch the tiles from
@@ -73,7 +73,7 @@ public abstract class AbstractTileRange implements TileRange {
      * @param tiles The tiles that we wish to fetch; must be from the provided tileset
      * @param requestTileWorkQueue Queue of worker threads that can be used to fetch tiles
      */
-    public AbstractTileRange(AbstractOpenWebService<?,?> server, TileSet tileset, Envelope bounds, 
+    public AbstractTileRange(AbstractOpenWebService<?,?> server, TileSet tileset, Envelope bounds,
             Map<String, Tile> tiles, TileWorkerQueue requestTileWorkQueue) {
         this.server = server;
         this.tileset = tileset;
@@ -96,55 +96,55 @@ public abstract class AbstractTileRange implements TileRange {
 		else {
 			using_threadpools = true;
 			this.requestTileWorkQueue = requestTileWorkQueue;
-		}        
-        
+		}
+
         // calculate what tiles are not yet loaded
         setTilesNotLoaded();
     }
-    
+
     /**
      * Go through every tile and pick out the ones that are not yet loaded and set
      * them in the notLoaded list.
      */
     protected void setTilesNotLoaded() {
         try {
-            tilesWaitingToLoad_lock.writeLock().lock();      	
+            tilesWaitingToLoad_lock.writeLock().lock();
 	        for( Iterator<Entry<String, Tile>> iterator = allTiles.entrySet().iterator(); iterator.hasNext(); ) {
 	            Entry<String, Tile> tileentry = (Entry<String, Tile>) iterator.next();
 	            if (tileentry.getValue().getBufferedImage() == null){
 	                tilesWaitingToLoad.put(tileentry.getKey(), tileentry.getValue());
-	            }   
+	            }
 	        }
         } finally {
             // unlock the write lock
             tilesWaitingToLoad_lock.writeLock().unlock();
-        }	        
+        }
     }
 
     /**
      * This is the entry point of this class once it has been created.  It will
      * ensure all the tiles are loaded.  If a tile is not yet loaded it will
      * create a request thread to fetch it, blocking until all the tiles are loaded.
-     * 
+     *
      * @param monitor
      */
-    public void loadTiles(IProgressMonitor monitor) {            
+    public void loadTiles(IProgressMonitor monitor) {
         // load each tile not yet loaded.  Lock on the list of
         // tiles to load.
-        Set<String> removeTiles = new HashSet<String>();     
+        Set<String> removeTiles = new HashSet<String>();
         try {
-            tilesWaitingToLoad_lock.writeLock().lock();  
+            tilesWaitingToLoad_lock.writeLock().lock();
             // now that we have a lock, check if this has been canceled while waiting
             if (monitor.isCanceled()) {
                 dispose();
                 return;
             }
-            
+
             Set<Entry<String, Tile>> entrySet = tilesWaitingToLoad.entrySet();
             for( Entry<String, Tile> set : entrySet ) {
                 String tileid = set.getKey();
                 Tile tile = set.getValue();
-                
+
                 // only send a request to get the tile if we don't have it already
                 if (tile.getBufferedImage() == null) {
                     try {
@@ -158,12 +158,12 @@ public abstract class AbstractTileRange implements TileRange {
                     }
                 }else{
                     //we already have this image; somehow it was filled in for us between when we first
-                    //asked for tiles and now.  So we need to notify any listeners 
+                    //asked for tiles and now.  So we need to notify any listeners
                     tileLoaded(tile);
                     removeTiles.add(tileid); // set tile to be removed from loading list
                 }
-            }         
-            // remove all successfully completed tiles and any error tiles from the list 
+            }
+            // remove all successfully completed tiles and any error tiles from the list
             // of loading tiles to prevent endless blocking.
             for (String key : removeTiles) {
                 tilesWaitingToLoad.remove(key);
@@ -174,7 +174,7 @@ public abstract class AbstractTileRange implements TileRange {
             tilesWaitingToLoad_lock.writeLock().unlock();
         }
     }
-    
+
     /**
      * remove all listeners and do any other cleanup
      */
@@ -184,9 +184,9 @@ public abstract class AbstractTileRange implements TileRange {
             removeListener(listener);
         }
     }
-    
+
     /**
-     * Notify any listeners and update the tile list that the given 
+     * Notify any listeners and update the tile list that the given
      * tile is now loaded
      *
      * @param tile
@@ -194,12 +194,12 @@ public abstract class AbstractTileRange implements TileRange {
     public void tileLoaded( Tile tile ) {
         // notify any listeners that the tile is ready
         notifyListenersTileReady(tile);
-    } 
+    }
 
     /**
      * Remove the given tile from the loading list and ensure the lock is obtained before
      * modifying it.
-     * 
+     *
      * @return
      */
     protected void removeTileFromLoadingList( Tile tile) {
@@ -210,7 +210,7 @@ public abstract class AbstractTileRange implements TileRange {
         	tilesWaitingToLoad.remove(tile.getId());
         } finally {
         	tilesWaitingToLoad_lock.writeLock().unlock();
-        }      	
+        }
     }
 
     protected Envelope calculateBounds() {
@@ -220,14 +220,14 @@ public abstract class AbstractTileRange implements TileRange {
         }
         return newBounds;
     }
-    
+
     public Tile getTile(String tileId) {
         if (tileId == null) {
             return null;
         }
         return allTiles.get(tileId);
     }
-    
+
     /**
      * Returns the tiles in the given range as an unmodifiable
      * map.
@@ -237,12 +237,12 @@ public abstract class AbstractTileRange implements TileRange {
     @SuppressWarnings("unchecked")
     public Map<String, Tile> getTiles() {
         return MapUtils.unmodifiableMap(allTiles);
-    }    
-    
+    }
+
     public int getTileCount() {
         return allTiles.keySet().size();
     }
-    
+
     /**
      * Returns whether every tile in the range is complete and ready
      * to paint
@@ -258,16 +258,16 @@ public abstract class AbstractTileRange implements TileRange {
         }
         return true;
     }
-    
+
     public Envelope getRangeBounds() {
         return bounds;
     }
-    
+
     /**
-     * This method will see if we are using thread pools and either create a runnable 
+     * This method will see if we are using thread pools and either create a runnable
      * to load the tile using the pool or create a single thread to do it.  It will
-     * lock on the tile.  
-     * 
+     * lock on the tile.
+     *
      * @param tile
      * @param monitor
      * @throws Exception
@@ -292,10 +292,10 @@ public abstract class AbstractTileRange implements TileRange {
     		t.start();
     	}
     }
-    
+
     /**
      * Do the work of loading a tile
-     * 
+     *
      * @param tile
      * @param monitor
      */
@@ -306,11 +306,11 @@ public abstract class AbstractTileRange implements TileRange {
         // update the not loaded list (we want to do this whether we got
         // the tile or not because we don't want the blocking queue
         // in the rendering to wait blocked forever for missing tiles)
-        tileLoaded(tile); 
+        tileLoaded(tile);
         removeTileFromLoadingList(tile);
         cacheTile(tile);  // cache the tile with whatever method is setup
     }
-    
+
     protected BufferedImage createErrorImage(){
         BufferedImage bf = new BufferedImage(tileset.getWidth(), tileset.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = bf.createGraphics();
@@ -319,7 +319,7 @@ public abstract class AbstractTileRange implements TileRange {
         g.drawLine(0, tileset.getHeight(), tileset.getWidth(), 0);
         return bf;
     }
-    
+
     /**
      * Notify all tile listeners that a tile can now be drawn
      *
@@ -329,14 +329,14 @@ public abstract class AbstractTileRange implements TileRange {
         for (TileListener listener : tileListeners) {
             listener.notifyTileReady(tile);
         }
-    }    
-    
+    }
+
     public void addListener(TileListener listener) {
         tileListeners.add(listener);
     }
-    
+
     public void removeListener(TileListener listener) {
         tileListeners.remove(listener);
-    }       
+    }
 
 }

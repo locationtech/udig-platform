@@ -11,9 +11,11 @@ package org.locationtech.udig.project.ui.internal;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -57,7 +59,7 @@ public class ActiveMapTracker implements IStartup, IPartListener2, IWindowListen
     /**
      * All the maps that are currently open
      */
-    private List<MapPart> openMaps = new CopyOnWriteArrayList<>();
+    private Deque<MapPart> openMaps = new ConcurrentLinkedDeque<>();
 
     /**
      * Returns the set of the visible maps.
@@ -93,7 +95,7 @@ public class ActiveMapTracker implements IStartup, IPartListener2, IWindowListen
      */
     public MapPart getMostRecentOpenedPart() {
         if (!openMaps.isEmpty()) {
-            return openMaps.get(0);
+            return openMaps.peek();
         }
         return null;
     }
@@ -179,11 +181,11 @@ public class ActiveMapTracker implements IStartup, IPartListener2, IWindowListen
         openMaps.remove(part);
     }
 
-    private void addOpenMap(IWorkbenchPart part) {
-        while (openMaps.remove((MapPart)part)) {
+    private void addOpenMap(MapPart part) {
+        while (openMaps.remove(part)) {
             ;
         }
-        openMaps.add(0, (MapPart) part);
+        openMaps.push(part);
     }
 
     @Override
@@ -219,7 +221,7 @@ public class ActiveMapTracker implements IStartup, IPartListener2, IWindowListen
         for (IEditorReference reference : editors) {
             IWorkbenchPart workbenchPart = reference.getPart(false);
             if (workbenchPart instanceof MapPart) {
-                addOpenMap(workbenchPart);
+                addOpenMap((MapPart) workbenchPart);
 
                 if (page.isPartVisible(workbenchPart)) {
                     visibleMaps.add((MapPart) workbenchPart);
@@ -230,7 +232,7 @@ public class ActiveMapTracker implements IStartup, IPartListener2, IWindowListen
         for (IViewReference reference : views) {
             IWorkbenchPart workbenchPart = reference.getPart(false);
             if (workbenchPart instanceof MapPart) {
-                addOpenMap(workbenchPart);
+                addOpenMap((MapPart) workbenchPart);
 
                 if (page.isPartVisible(workbenchPart)) {
                     visibleMaps.add((MapPart) workbenchPart);
@@ -281,7 +283,7 @@ public class ActiveMapTracker implements IStartup, IPartListener2, IWindowListen
     public void partOpened(IWorkbenchPartReference partRef) {
         IWorkbenchPart part = partRef.getPart(false);
         if (part instanceof MapPart) {
-            addOpenMap(part);
+            addOpenMap((MapPart) part);
         }
     }
 

@@ -26,31 +26,33 @@ import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * A Property source for services.
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
 public class IGeoResourcePropertySource implements IPropertySource2 {
     private IGeoResource geoResource;
     private IPropertyDescriptor[] descriptors;
-    private static final String RESOURCE = Messages.IGeoResourcePropertySource_0; 
+    private static final String RESOURCE = Messages.IGeoResourcePropertySource_0;
     IPropertyDescriptor resourceDescriptor;
-    private static final String FEATURE_SOURCE = Messages.IGeoResourcePropertySource_1; 
+    private static final String FEATURE_SOURCE = Messages.IGeoResourcePropertySource_1;
+
     /**
      * Creates a new instance of DataPropertySource
-     * 
+     *
      * @param entry
      */
     public IGeoResourcePropertySource( IGeoResource entry ) {
         this.geoResource = entry;
     }
+
     /**
      * @see org.eclipse.ui.views.properties.IPropertySource#getEditableValue()
      */
     public Object getEditableValue() {
-        // TODO Auto-generated method stub
         return null;
     }
+
     /**
      * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
      */
@@ -61,9 +63,9 @@ public class IGeoResourcePropertySource implements IPropertySource2 {
                 if (geoResource.canResolve(FeatureSource.class)) {
                     resourceDescriptor = new SchemaDescriptor(
                             FEATURE_SOURCE,
-                            Messages.IGeoResourcePropertySource_schema, (FeatureSource<SimpleFeatureType, SimpleFeature>) geoResource.resolve(FeatureSource.class, null)); 
+                            Messages.IGeoResourcePropertySource_schema, (FeatureSource<SimpleFeatureType, SimpleFeature>) geoResource.resolve(FeatureSource.class, null));
                 } else {
-                    resourceDescriptor = new PropertyDescriptor(RESOURCE, 
+                    resourceDescriptor = new PropertyDescriptor(RESOURCE,
                     		Messages.IGeoResourcePropertySource_data);
                 }
             } catch (IOException e) {
@@ -78,6 +80,7 @@ public class IGeoResourcePropertySource implements IPropertySource2 {
         System.arraycopy(descriptors, 0, c, 0, c.length);
         return c;
     }
+
     /**
      * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(java.lang.Object)
      */
@@ -94,31 +97,33 @@ public class IGeoResourcePropertySource implements IPropertySource2 {
             }
         return null;
     }
+
     /**
      * @see org.eclipse.ui.views.properties.IPropertySource#isPropertySet(java.lang.Object)
      */
     public boolean isPropertySet( Object id ) {
-        // TODO Auto-generated method stub
         return false;
     }
+
     /**
      * @see org.eclipse.ui.views.properties.IPropertySource#resetPropertyValue(java.lang.Object)
      */
     public void resetPropertyValue( Object id ) {
-        // TODO Auto-generated method stub
+
     }
+
     /**
      * @see org.eclipse.ui.views.properties.IPropertySource#setPropertyValue(java.lang.Object,
      *      java.lang.Object)
      */
     public void setPropertyValue( Object id, Object value ) {
-        // TODO Auto-generated method stub
+
     }
+
     /**
      * @see org.eclipse.ui.views.properties.IPropertySource2#isPropertyResettable(java.lang.Object)
      */
     public boolean isPropertyResettable( Object id ) {
-        // TODO implement method body
         return true;
     }
 }

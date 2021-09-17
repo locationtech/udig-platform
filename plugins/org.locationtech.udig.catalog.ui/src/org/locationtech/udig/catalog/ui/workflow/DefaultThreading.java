@@ -19,7 +19,7 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * Threading strategy that uses eclipse Jobs to run through the workflow
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
@@ -96,7 +96,7 @@ public class DefaultThreading implements ThreadingStrategy {
     }
 
 
-    private final static class WorkflowThread extends Thread {
+    private static final class WorkflowThread extends Thread {
         private final BlockingQueue<Runnable> requests = new LinkedBlockingQueue<Runnable>();
         private volatile boolean running = true;
         @Override

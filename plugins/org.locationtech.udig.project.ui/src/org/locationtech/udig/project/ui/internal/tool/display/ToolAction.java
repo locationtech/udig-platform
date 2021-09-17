@@ -22,6 +22,7 @@ import org.eclipse.jface.action.Action;
 public class ToolAction extends Action {
 
     ToolProxy tool;
+    private boolean checked = false;
 
     ToolAction( ToolProxy proxy ) {
         this.tool = proxy;
@@ -31,13 +32,22 @@ public class ToolAction extends Action {
         setToolTipText(tool.getToolTipText());
         if( tool.getImageDescriptor()!=null) 
             setImageDescriptor(tool.getImageDescriptor());
+        if(tool.isToggleButton()) {
+            checked = tool.isTogglingButtonEnabled();
+            setChecked(checked);
+        }
     }
 
     /**
      * @see org.eclipse.jface.action.Action#run()
      */
+    @Override
     public void run() {
-      tool.run();
+        if(tool.isToggleButton()) {
+            checked = !checked;
+            setChecked(checked);
+        }
+        tool.run();
     }
 
 }

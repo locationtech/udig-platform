@@ -1,3 +1,13 @@
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * https://locationtech.org/projects/technology.udig
+ * (C) 2021, Eclipse Foundation
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Eclipse Distribution
+ * License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
+ */
 package org.locationtech.udig.project.ui.internal;
 
 import static org.junit.Assert.assertEquals;
@@ -97,7 +107,7 @@ public class ActiveMapTrackerTest {
     @Test
     public void trackMapPartOnlyOnPartOpened() {
         final ActiveMapTracker instance = new ActiveMapTracker();
-        final MapPart mapPart = mock(MapPart.class);
+        final MapEditorPart mapPart = mock(MapEditorPart.class);
         final IViewPart anotherPart = mock(IViewPart.class);
 
         when(partRef.getPart(false)).thenReturn(mapPart);
@@ -124,8 +134,8 @@ public class ActiveMapTrackerTest {
     public void mostRecentOpenedMapFirst() {
         final ActiveMapTracker instance = new ActiveMapTracker();
         IWorkbenchPartReference partRef = mock(IWorkbenchPartReference.class);
-        final MapPart mapPart1 = mock(MapPart.class);
-        final MapPart mapPart2 = mock(MapPart.class);
+        final MapEditorPart mapPart1 = mock(MapEditorPart.class);
+        final MapEditorPart mapPart2 = mock(MapEditorPart.class);
 
         when(partRef.getPart(false)).thenReturn(mapPart1);
 

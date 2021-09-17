@@ -29,20 +29,20 @@ public class AddsetAttributeField extends ListAttributeField {
     private String lastPath;
 
     /**
-     * The special label text for directory chooser, 
+     * The special label text for directory chooser,
      * or <code>null</code> if none.
      */
     private String prompt;
 
     /**
-     * Creates a new add set attribute field 
+     * Creates a new add set attribute field
      */
     protected AddsetAttributeField() {
     }
 
     /**
      * Creates a add set attribute field.
-     * 
+     *
      * @param name the name of the preference this field editor works on
      * @param labelText the label text of the field editor
      * @param prompt the label text displayed for the directory chooser
@@ -56,8 +56,8 @@ public class AddsetAttributeField extends ListAttributeField {
         createControl(parent);
     }
 
-    final static String SEPARATOR = "\n";
-    
+    static final String SEPARATOR = "\n";
+
     /* (non-Javadoc)
      * Method declared on ListAttributeField.
      * Creates a single string from the given array by separating each
@@ -89,7 +89,7 @@ public class AddsetAttributeField extends ListAttributeField {
                 return null;
             }
         });
-        
+
         int sucess = dialog.open();
         if( sucess == InputDialog.CANCEL ){
             return null; // we may have to produce a default value here

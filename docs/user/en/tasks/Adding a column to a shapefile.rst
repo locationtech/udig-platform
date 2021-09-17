@@ -40,7 +40,7 @@ attributes and then export the resulting scratch layer.
 #. Right click on the above scratch entry in the catalog view and select **Export** to open the
    :doc:`/reference/Export Wizard`
 
-#. Choose **Resource to Shapefile** and press **Next>**
+#. Choose **All Features to Shapefile** and press **Next>**
 #. Provide a destination directory for your new shapefile
 #. Ensure that your scratch entry is checked off for export
 #. Press **Finish**
@@ -59,4 +59,4 @@ format can only support one geometry column.
 
 :doc:`/reference/Catalog view`
 
-:doc:`/reference/Resource to Shapefile Wizard`
+:doc:`/reference/All Features to Shapefile Wizard`

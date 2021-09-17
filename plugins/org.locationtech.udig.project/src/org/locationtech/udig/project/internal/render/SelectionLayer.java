@@ -28,7 +28,7 @@ import org.opengis.filter.Filter;
  * TODO Purpose of org.locationtech.udig.project.internal.render
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
@@ -40,16 +40,17 @@ public class SelectionLayer extends LayerDecorator {
 
     /**
      * Construct <code>SelectionLayer</code>.
-     * 
+     *
      * @param layer
      */
-    public SelectionLayer( Layer layer ) {
+    public SelectionLayer(Layer layer) {
         super(layer);
     }
 
     /**
      * @see org.locationtech.udig.project.internal.Layer#isVisible()
      */
+    @Override
     public boolean isVisible() {
         return layer.isVisible() && !Filter.EXCLUDE.equals(getFilter());
     }
@@ -58,25 +59,26 @@ public class SelectionLayer extends LayerDecorator {
      * @see org.locationtech.udig.project.internal.Layer#getStyleBlackboard()
      * @uml.property name="styleBlackboard"
      */
+    @Override
     public StyleBlackboard getStyleBlackboard() {
         if (styleBlackboard == null)
             styleBlackboard = ProjectFactory.eINSTANCE.createStyleBlackboard();
 
         styleBlackboard.clear();
         Style style = null;
-        
+
         //if the original layer has a selection style on its blackboard, copy
         //it to this blackboard
         if (layer.getStyleBlackboard() != null) {
             style = (Style)layer.getStyleBlackboard().get(SelectionStyleContent.ID);
         }
-        
+
         //no selection style defined on original layer, so create a default one
         if (style == null) {
             style = SelectionStyleContent.createDefaultStyle(layer);
             style.featureTypeStyles().get(0).featureTypeNames().add(new NameImpl(SLDs.GENERIC_FEATURE_TYPENAME));
         }
-        
+
         styleBlackboard.put(SelectionStyleContent.ID, style);
         return styleBlackboard;
     }
@@ -85,52 +87,42 @@ public class SelectionLayer extends LayerDecorator {
      * @see org.locationtech.udig.project.internal.Layer#setStyleBlackboard(org.locationtech.udig.project.StyleBlackboard)
      * @uml.property name="styleBlackboard"
      */
-    public void setStyleBlackboard( StyleBlackboard value ) {
+    @Override
+    public void setStyleBlackboard(StyleBlackboard value) {
         styleBlackboard = value;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.LAYER__STYLE_BLACKBOARD, value, value));
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.LayerDecorator#getZorder()
-     */
     @Override
     public int getZorder() {
         Map mapInternal = getMapInternal();
-        if( mapInternal==null )
+        if (mapInternal == null) {
             return Integer.MAX_VALUE;
+        }
         return super.getZorder() + mapInternal.getLayersInternal().size();
     }
 
-    /**
-     * Required because delegating to layer won't get this objects z-order
-     */
-    public int compareTo( ILayer layer2 ) {
+    @Override
+    public int compareTo(ILayer layer2) {
         return LayerImpl.doComparison(this, layer2);
     }
 
-    
-    /**
-     * @see org.locationtech.udig.project.internal.Layer#setStatus(int)
-     */
-    public void setStatus( int status ) {
+    @Override
+    public void setStatus(int status) {
         // FIXME: Selection layer is always setting wait on us
         if (status == WAIT)
             return; // not
         layer.setStatus(status);
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.LayerDecorator#setStatusMessage(java.lang.String)
-     */
-    public void setStatusMessage( String message ) {
+    @Override
+    public void setStatusMessage(String message) {
         this.message = message;
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.LayerDecorator#getStatusMessage()
-     */
+    @Override
     public String getStatusMessage() {
         return message;
     }

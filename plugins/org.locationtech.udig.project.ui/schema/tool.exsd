@@ -436,6 +436,13 @@ See the command extension point
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="isToggleButton" type="boolean" use="default" value="false">
+            <annotation>
+               <documentation>
+                  Flag indicating whether the toolbar button has toggling behaviour, i.e. behaves like a switch
+               </documentation>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

@@ -49,26 +49,26 @@ import org.locationtech.udig.project.render.RenderException;
  * <ul>
  * <li>Combines the output from several renderer into a single image.</li>
  * <li>Listens to its context (CompositeContext) and creates new RenderExecutors when required.</li>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
 public class CompositeRendererImpl extends RendererImpl implements MultiLayerRenderer {
 
-    private final static Comparator<? super RenderExecutor> comparator = new Comparator<RenderExecutor>(){
-        
+    private static final Comparator<? super RenderExecutor> comparator = new Comparator<RenderExecutor>(){
+
         @Override
         public int compare(RenderExecutor e1,RenderExecutor e2){
-            
+
             return e1.getContext().getLayer().compareTo(
                     e2.getContext().getLayer());
-            
+
         }
     };
 
     static final AffineTransform IDENTITY = new AffineTransform();
     CompositeContextListener contextListener = new CompositeContextListener(){
-   
+
     	private void add( List<RenderContext> contexts ) {
             List<RenderExecutor> renderers = new ArrayList<RenderExecutor>();
             for( RenderContext context : contexts ) {
@@ -112,7 +112,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     protected CompositeRendererImpl() {
@@ -120,9 +120,9 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
     }
 
     /**
-     * 
+     *
      * Returns a list that is a copy of all the children render.
-     * 
+     *
      * @see org.locationtech.udig.project.internal.render.MultiLayerRenderer#children()
      */
     public List<Renderer> children() {
@@ -200,7 +200,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
 
     /**
      * Called to remove the corresponding RenderExecutor from the list of RenderExecutors.
-     * 
+     *
      * @param renderer the renderer that has been removed
      */
     protected RenderExecutor findExecutor( IRenderContext context ) {
@@ -211,7 +211,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
         }
         return null;
     }
-    
+
     /**
      * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#getContext()
      */
@@ -237,7 +237,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
 
 //    /**
 //     * <!-- begin-user-doc --> <!-- end-user-doc -->
-//     * 
+//     *
 //     * @throws RenderException
 //     * @generated NOT
 //     */
@@ -258,7 +258,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="renderExecutors"
      * @generated NOT
      */
@@ -267,29 +267,29 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
     }
 
     private boolean isFullAlphaUsed(RenderExecutor executor) {
-		
+
         Object object = getContext().getMap().getBlackboard().get("MYLAR"); //$NON-NLS-1$
-        
+
         if( object==null || !((Boolean)object).booleanValue() )
 			return true;
-		
+
 		if( executor.getContext() instanceof CompositeRenderContext ){
 			CompositeRenderContext context=(CompositeRenderContext) executor.getContext();
 			if (context.getLayers().contains(getContext().getSelectedLayer()) )
 				return true;
-			
+
 			return false;
 		}
-		
+
 		if (executor.getContext().getLayer()==getContext().getSelectedLayer())
 			return true;
-		
+
 		return false;
 	}
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @throws RenderException
      * @generated NOT
      */
@@ -302,11 +302,11 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
      * Vitalus:
      * Refreshes map image from buffered images of renderers with or without
      * labels cache painting.
-     * 
+     *
      * @param paintLabels
      */
-    
-    
+
+
     void refreshImage(boolean paintLabels) throws RenderException{
         if( getContext().getMapDisplay()==null ){
             // we've been disposed lets bail
@@ -316,13 +316,13 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
             Graphics2D g = null;
             try {
                 BufferedImage current = getContext().getImage();
-                
+
                 //create a copy of the image to draw into
-            
+
                 BufferedImage copy = new BufferedImage(current.getWidth(), current.getHeight(),current.getType() );
-            
+
                 g = (Graphics2D)copy.getGraphics();
-                
+
                 g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
                 g.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_DISABLE);
                 g.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED);
@@ -331,25 +331,25 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
                 g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
                 g.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_OFF);
                 g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
-                
+
                 IMap map = getContext().getMap();
                 Object object = map.getBlackboard().get(ProjectBlackboardConstants.MAP__BACKGROUND_COLOR);
                 if( object==null ){
                     IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
-                    RGB background = PreferenceConverter.getColor(store, PreferenceConstants.P_BACKGROUND); 
+                    RGB background = PreferenceConverter.getColor(store, PreferenceConstants.P_BACKGROUND);
                     map.getBlackboard().put(ProjectBlackboardConstants.MAP__BACKGROUND_COLOR, new Color(background.red, background.green, background.blue ));
                     object = map.getBlackboard().get(ProjectBlackboardConstants.MAP__BACKGROUND_COLOR);
                 }
                 g.setBackground((Color) object);
                 g.clearRect(0,0,copy.getWidth(), copy.getHeight());
-                
+
                 SortedSet<RenderExecutor> executors;
                 synchronized (renderExecutors) {
                     executors = new TreeSet<RenderExecutor>(comparator);
                     executors.addAll(getRenderExecutors());
                 }
                 ILabelPainter cache = getContext().getLabelPainter();
-                
+
                 RENDERERS: for( RenderExecutor executor : executors ) {
 
                     if (!executor.getContext().isVisible()){
@@ -359,17 +359,17 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
                         }
                         continue RENDERERS;
                     }
-                        
+
 
                     if (executor.getState() == NEVER || executor.getState() == STARTING || executor.getState() == RENDER_REQUEST) {
                         continue RENDERERS;
-                    } 
+                    }
                     if( isFullAlphaUsed(executor) ){
                         g.setComposite(AlphaComposite.getInstance(
                                 AlphaComposite.SRC_OVER, 1.0f));
                     }else{
                         g.setComposite(AlphaComposite.getInstance(
-                                AlphaComposite.SRC_OVER, 0.5f));                        
+                                AlphaComposite.SRC_OVER, 0.5f));
                     }
                     g.drawRenderedImage(executor.getContext().getImage(), IDENTITY);
                 }
@@ -387,7 +387,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
 
                 //update the context with the new image
                 ((RenderContextImpl)getContext()).setImage(copy);
-                
+
 
             } catch (IllegalStateException e) {
                 stopRendering();
@@ -402,7 +402,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @throws RenderException
      * @generated NOT
      */
@@ -464,7 +464,7 @@ public class CompositeRendererImpl extends RendererImpl implements MultiLayerRen
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public void stopRendering() {

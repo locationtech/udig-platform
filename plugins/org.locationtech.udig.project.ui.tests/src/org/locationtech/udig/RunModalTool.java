@@ -60,4 +60,11 @@ public class RunModalTool implements ActionTool {
     public void setProperty( String key, Object value ) {
     }
 
+    public boolean isToggleButton() {
+        return false;
+    }
+
+    public boolean isTogglingButtonEnabled() {
+        return false;
+    }
 }

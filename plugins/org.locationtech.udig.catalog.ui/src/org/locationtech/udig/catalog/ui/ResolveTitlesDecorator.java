@@ -62,13 +62,13 @@ import org.eclipse.ui.PlatformUI;
 
 /**
  * Decorate labels with actual titles from the info objects.
- * 
+ *
  * @author jgarnett
  * @since 0.6.0
  */
 public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator, IFontDecorator {
 
-    final static Set<ILabelProviderListener> listeners = new CopyOnWriteArraySet<ILabelProviderListener>();
+    static final Set<ILabelProviderListener> listeners = new CopyOnWriteArraySet<ILabelProviderListener>();
     final Set<ILabelProviderListener> instanceListeners = new HashSet<ILabelProviderListener>();
 
     private ResolveLabelProviderSimple source;
@@ -79,14 +79,14 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
 
     final Queue<IResolve> toDecorate = new ConcurrentLinkedQueue<IResolve>();
     final Queue<IResolve> imagesToDecorate = new ConcurrentLinkedQueue<IResolve>();
-    
+
     final UpdateLabel textWorker = new UpdateLabel(toDecorate, decorated, true);
     final Queue<UpdateLabel> availableImageWorkers = new ConcurrentLinkedQueue<UpdateLabel>();
     final List<UpdateLabel> allImageWorkers=new ArrayList<UpdateLabel>();
 
 
     private volatile boolean disposed;
-    
+
     private Font brokenFont;
 
     private IResolveChangeListener listener=new IResolveChangeListener(){
@@ -107,10 +107,10 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
                             for( ILabelProviderListener l : listeners ) {
                                 l.labelProviderChanged(labelEvent);
                             }
-                            
+
                         }
                     };
-                    
+
                     if( Display.getCurrent()==null ){
                         Display.getDefault().asyncExec(runnable);
                     }else{
@@ -137,7 +137,7 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
         }
 
     };
-    
+
     /**
      * Prevent fetching of remote icons (localhost and files are okay)
      */
@@ -145,7 +145,7 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
 
     /**
      * Wrap around the ResolveLabelProviderSimple and add some state markup.
-     * 
+     *
      * @param resolveLabelProviderSimple
      */
     public ResolveTitlesDecorator( ResolveLabelProviderSimple resolveLabelProviderSimple ) {
@@ -176,7 +176,7 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
             return null;
 
         IResolve resolve = (IResolve) element;
-        
+
         if (images.containsKey(element)) {
             LabelData data = images.get(element);
             // if data is null then it is being loaded already so return
@@ -193,24 +193,24 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
             if( i!=null && !i.isDisposed()){
                 return i;
             }
-            
+
             if (i!=null && i.isDisposed() )
                 imageRegistry.remove(resolve.getIdentifier().toString());
         }
-        
+
         // we tried to look up a cached version... If not around and viewer doesn't want decorated images then we'll return.
-        
+
         if( !resolve.getID().isLocal() && !decorateImages ){
             return null;
         }
-        
+
         // put an element in the map so that it will not be loaded again.
         images.put(resolve, null);
 
         // put resolve in queue for loading
         imagesToDecorate.offer(resolve);
         synchronized (imageRegistry) {
-            // get a worker for loading images and schedule it.  
+            // get a worker for loading images and schedule it.
             // If pool is empty then don't worry request will be processed.
             UpdateLabel imageWorker = availableImageWorkers.poll();
             if( imageWorker!=null )
@@ -227,7 +227,7 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
         }
 
         IResolve resolve = (IResolve) element;
-        
+
         if (decorated.containsKey(element)) {
             LabelData data = decorated.get(element);
             if (data == null){
@@ -238,20 +238,20 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
                     return data.text + " ("+resolve.getID().getTypeQualifier() +")";
                 }
             }
-            return data.text;            
+            return data.text;
         }
 
         decorated.put(resolve, null);
         if (resolve.getTitle() != null) {
             LabelData data = new LabelData();
             data.text = resolve.getTitle();
-            decorated.put(resolve, data);       
+            decorated.put(resolve, data);
             if( resolve instanceof IService ){
                 if( resolve.getID().getTypeQualifier() != null ){
                     return data.text + " ("+resolve.getID().getTypeQualifier() +")";
                 }
             }
-            return data.text;            
+            return data.text;
         }
         toDecorate.offer(resolve);
         textWorker.schedule();
@@ -275,13 +275,13 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
         }
         return null;
     }
-    
+
     public Font decorateFont( Object element ) {
         if (!(element instanceof IResolve))
             return null;
 
         IResolve resolve = (IResolve) element;
-        if (resolve.getStatus() == org.locationtech.udig.catalog.IResolve.Status.BROKEN 
+        if (resolve.getStatus() == org.locationtech.udig.catalog.IResolve.Status.BROKEN
                 || resolve.getStatus() == org.locationtech.udig.catalog.IResolve.Status.RESTRICTED_ACCESS) {
             return getBrokenFont();
         }
@@ -294,7 +294,7 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
             FontData fd = systemFont.getFontData()[0];
             brokenFont=new Font(systemFont.getDevice(), fd.getName(), fd.getHeight(), SWT.ITALIC );
         }
-        
+
         return brokenFont;
     }
     /**
@@ -309,7 +309,7 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
         for( UpdateLabel updater : allImageWorkers ) {
             updater.cancel();
         }
-        // clean up 
+        // clean up
         decorated.clear();
         listeners.removeAll(instanceListeners);
         instanceListeners.clear();
@@ -359,7 +359,7 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
         private Queue<IResolve> toDecorate;
         private Map<IResolve, LabelData> decorated;
         private boolean text;
-        
+
         public UpdateLabel(Queue<IResolve> toDecorate, Map<IResolve, LabelData> decorated, boolean text) {
             // message is just for debugging since job is a system job
             super("Decorate Resolve "+(text?"Titles":"Images")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -382,7 +382,7 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
                         continue;
                     if (!text && labelData!=null)
                         continue;
-                    
+
                     URL identifier = element.getIdentifier();
                     monitor.beginTask(Messages.ResolveTitlesDecorator_0 + identifier.getFile(),
                             IProgressMonitor.UNKNOWN);
@@ -431,9 +431,9 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
                     decorated.put(element, data);
                     if( monitor.isCanceled() )
                         return Status.OK_STATUS;
-                    
+
                     addUpdate(monitor, element);
-    
+
                 }
                 return Status.OK_STATUS;
             }finally{
@@ -462,7 +462,7 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
             synchronized (updater.updates) {
                 if (updater.updates.isEmpty()){
                     updater=new DisplayUpdater(monitor);
-                    
+
                     updater.updates.add(element);
                     final Display display = Display.getDefault();
                     display.asyncExec(new Runnable(){
@@ -504,17 +504,17 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
                 if( i2!=null && !i2.isDisposed()){
                     return i;
                 }
-                
+
                 if (i2!=null && i2.isDisposed() )
                     imageRegistry.remove(key);
-                
+
                 imageRegistry.put(key, i);
             }
             return i;
         }
 
     }
-    
+
     private class DisplayUpdater implements Runnable{
 
         IProgressMonitor monitor;
@@ -540,12 +540,12 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
                 }
             }
         }
-        
+
     }
     private static class LabelData {
         public ImageDescriptor image;
         String text;
     }
 
-    
+
 }

@@ -22,19 +22,19 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.eclipse.swt.widgets.Display;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
-import org.eclipse.swt.widgets.Display;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-
 public class UDIGDisplaySafeLockTest {
 
     int WAIT_LENGTH = 10000;
+
     private UDIGDisplaySafeLock lock;
 
     @Before
@@ -54,7 +54,8 @@ public class UDIGDisplaySafeLockTest {
         final Throwable[] exception = new Throwable[1];
         final boolean[] passed = new boolean[1];
 
-        Runnable other = new Runnable(){
+        Runnable other = new Runnable() {
+            @Override
             public void run() {
                 try {
                     lockLock.lock();
@@ -66,14 +67,16 @@ public class UDIGDisplaySafeLockTest {
                         Thread.sleep(100);
                     }
 
-                    Display.getDefault().asyncExec(new Runnable(){
+                    Display.getDefault().asyncExec(new Runnable() {
+                        @Override
                         public void run() {
                             passed[0] = true;
                         }
                     });
 
-                    PlatformGIS.wait(200, WAIT_LENGTH, new WaitCondition(){
+                    PlatformGIS.wait(200, WAIT_LENGTH, new WaitCondition() {
 
+                        @Override
                         public boolean isTrue() {
                             return passed[0] = true;
                         }
@@ -94,8 +97,9 @@ public class UDIGDisplaySafeLockTest {
                     states.add(State.THREAD_HAS_LOCK);
                     lockLock.unlock();
 
-                    PlatformGIS.wait(200, WAIT_LENGTH, new WaitCondition(){
+                    PlatformGIS.wait(200, WAIT_LENGTH, new WaitCondition() {
 
+                        @Override
                         public boolean isTrue() {
                             return passed[0];
                         }
@@ -116,8 +120,9 @@ public class UDIGDisplaySafeLockTest {
         t.start();
 
         // wait til thread has lock
-        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition(){
+        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition() {
 
+            @Override
             public boolean isTrue() {
                 return states.contains(State.THREAD_HAS_LOCK);
             }
@@ -139,8 +144,9 @@ public class UDIGDisplaySafeLockTest {
 
         passed[0] = false;
 
-        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition(){
+        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition() {
 
+            @Override
             public boolean isTrue() {
                 return states.contains(State.THREAD_WAITING_FOR_LOCK);
             }
@@ -153,8 +159,9 @@ public class UDIGDisplaySafeLockTest {
         states.remove(State.DISPLAY_HAS_LOCK);
         lock.unlock();
 
-        UDIGTestUtil.inDisplayThreadWait(5000, new WaitCondition(){
+        UDIGTestUtil.inDisplayThreadWait(5000, new WaitCondition() {
 
+            @Override
             public boolean isTrue() {
                 return states.contains(State.THREAD_HAS_LOCK);
             }
@@ -165,8 +172,9 @@ public class UDIGDisplaySafeLockTest {
 
         passed[0] = true;
 
-        UDIGTestUtil.inDisplayThreadWait(5000, new WaitCondition(){
+        UDIGTestUtil.inDisplayThreadWait(5000, new WaitCondition() {
 
+            @Override
             public boolean isTrue() {
                 return states.contains(State.THREAD_RELEASED_LOCK);
             }
@@ -186,13 +194,15 @@ public class UDIGDisplaySafeLockTest {
         final boolean[] gotLock = new boolean[1];
         gotLock[0] = false;
 
-        Runnable thread1 = new Runnable(){
+        Runnable thread1 = new Runnable() {
+            @Override
             public void run() {
                 lock.lock();
                 gotLock[0] = true;
                 try {
-                    PlatformGIS.wait(200, WAIT_LENGTH, new WaitCondition(){
+                    PlatformGIS.wait(200, WAIT_LENGTH, new WaitCondition() {
 
+                        @Override
                         public boolean isTrue() {
                             return canQuit[0];
                         }
@@ -214,7 +224,7 @@ public class UDIGDisplaySafeLockTest {
 
         final boolean[] gotLock2 = new boolean[1];
         gotLock2[0] = false;
-        Runnable thread2 = new Runnable(){
+        Runnable thread2 = new Runnable() {
             public void run() {
                 waiting[0] = true;
                 lock.lock();
@@ -225,8 +235,9 @@ public class UDIGDisplaySafeLockTest {
         Thread t2 = new Thread(thread2);
         t2.start();
 
-        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition(){
+        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition() {
 
+            @Override
             public boolean isTrue() {
                 return gotLock[0];
             }
@@ -240,8 +251,9 @@ public class UDIGDisplaySafeLockTest {
 
         lock.unlock();
 
-        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition(){
+        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition() {
 
+            @Override
             public boolean isTrue() {
                 return gotLock2[0];
             }
@@ -253,38 +265,39 @@ public class UDIGDisplaySafeLockTest {
     @Test
     public void testTryLock() throws Exception {
         assertTrue(lock.tryLock());
-        
+
         assertTrue(lock.isHeldByCurrentThread());
         final boolean[] result=new boolean[1];
         result[0]=true;
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 result[0]=lock.tryLock();
             }
         }.start();
-        
-        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition(){
 
+        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition() {
+
+            @Override
             public boolean isTrue() {
                 return !result[0];
             }
-            
+
         }, true);
     }
 
     @Test
     public void testTryLockTimout() throws Throwable {
         assertTrue(lock.tryLock(100, TimeUnit.MICROSECONDS));
-        
+
         assertTrue(lock.isHeldByCurrentThread());
         final boolean[] ready=new boolean[1];
         ready[0]=false;
-        
+
         final boolean[] obtained=new boolean[1];
         obtained[0]=false;
         final Throwable[] exception=new Throwable[1];
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 ready[0]=true;
@@ -295,41 +308,44 @@ public class UDIGDisplaySafeLockTest {
                 }
             }
         }.start();
-        
-        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition(){
 
+        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition() {
+
+            @Override
             public boolean isTrue() {
                 return ready[0];
             }
-            
+
         }, false);
         if( exception[0]!=null )
             throw exception[0];
 
         lock.unlock();
-        
-        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition(){
 
+        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition() {
+
+            @Override
             public boolean isTrue() {
                 return obtained[0];
             }
-            
+
         }, false);
         if( exception[0]!=null )
             throw exception[0];
-        
-        
+
+
     }
 
     @Test
     public void testReentrance() throws Exception {
         final Thread current = Thread.currentThread();
-        Thread t = new Thread(){
+        Thread t = new Thread() {
             @Override
             public void run() {
                 try {
-                    PlatformGIS.wait(100, WAIT_LENGTH, new WaitCondition(){
+                    PlatformGIS.wait(100, WAIT_LENGTH, new WaitCondition() {
 
+                        @Override
                         public boolean isTrue() {
                             return !lock.isLocked();
                         }
@@ -374,8 +390,8 @@ public class UDIGDisplaySafeLockTest {
         assertFalse(lock.hasWaiters(condition));
 
         final Exception[] ex=new Exception[1];
-        
-        Thread t = new Thread(){
+
+        Thread t = new Thread() {
             @Override
             public void run() {
                 try {
@@ -390,8 +406,9 @@ public class UDIGDisplaySafeLockTest {
 
         t.start();
 
-        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition(){
+        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition() {
 
+            @Override
             public boolean isTrue() {
                 return lock.getWaitQueueLength(condition) == 1 || ex[0]!=null;
             }
@@ -405,8 +422,9 @@ public class UDIGDisplaySafeLockTest {
         condition.signal();
         lock.unlock();
 
-        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition(){
+        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition() {
 
+            @Override
             public boolean isTrue() {
                 return lock.getWaitQueueLength(condition) == 0;
             }
@@ -415,14 +433,14 @@ public class UDIGDisplaySafeLockTest {
 
         assertFalse(lock.hasWaiters(condition));
     }
-    
+
     @Test
     public void testLockInterruptibly() throws Exception {
         final boolean[] interrupted = new boolean[1];
         final boolean[] isLocked = new boolean[1];
         lock.lock();
 
-        Thread t = new Thread(){
+        Thread t = new Thread() {
             @Override
             public void run() {
                 try {
@@ -436,8 +454,9 @@ public class UDIGDisplaySafeLockTest {
 
         t.start();
 
-        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition(){
+        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition() {
 
+            @Override
             public boolean isTrue() {
                 return isLocked[0];
             }
@@ -446,8 +465,9 @@ public class UDIGDisplaySafeLockTest {
 
         t.interrupt();
 
-        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition(){
+        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition() {
 
+            @Override
             public boolean isTrue() {
                 return interrupted[0];
             }
@@ -457,14 +477,15 @@ public class UDIGDisplaySafeLockTest {
         assertTrue(interrupted[0]);
         lock.unlock();
     }
-    
+
     @Test
     public void testConditionWithDisplay() throws Exception {
         lock.lock();
         try {
             final Condition condition = lock.newCondition();
-            Display.getCurrent().asyncExec(new Runnable(){
+            Display.getCurrent().asyncExec(new Runnable() {
 
+                @Override
                 public void run() {
                     lock.lock();
                     try {
@@ -481,15 +502,16 @@ public class UDIGDisplaySafeLockTest {
             lock.unlock();
         }
     }
-    
+
     @Ignore("fails in tycho")
     @Test
     public void testSignalAll() throws Exception {
             final Condition condition = lock.newCondition();
             final Exception[] exception=new Exception[1];
             final boolean[] awake=new boolean[2];
-            Thread t=new Thread(){
+            Thread t=new Thread() {
 
+                @Override
                 public void run() {
                     lock.lock();
                     try {
@@ -505,8 +527,9 @@ public class UDIGDisplaySafeLockTest {
             };
             t.start();
 
-            Thread t2=new Thread(){
+            Thread t2=new Thread() {
 
+                @Override
                 public void run() {
                     lock.lock();
                     try {
@@ -522,32 +545,34 @@ public class UDIGDisplaySafeLockTest {
             };
             t2.start();
 
-            UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition(){
+            UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition() {
 
+                @Override
                 public boolean isTrue() {
                     return lock.getWaitQueueLength(condition)==2;
                 }
-                
+
             }, false);
             if( exception[0]!=null )
                 throw exception[0];
             lock.lock();
             condition.signalAll();
             lock.unlock();
-            UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition(){
+            UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition() {
 
+                @Override
                 public boolean isTrue() {
                     return lock.getWaitQueueLength(condition)==0;
                 }
-                
+
             }, false);
             if( exception[0]!=null )
                 throw exception[0];
             assertTrue(awake[0]);
             assertTrue(awake[1]);
-            
+
     }
-    
+
     /**
      * This is a special case that we found causes a bug.  See <a href="http://jira.codehaus.org/browse/UDIG-1007"/>
      *
@@ -559,18 +584,21 @@ public class UDIGDisplaySafeLockTest {
         final Set<State> state=new CopyOnWriteArraySet<State>();
         final boolean[] done=new boolean[1];
         done[0]=false;
-        
-        Thread t=new Thread(){
 
+        Thread t=new Thread() {
+
+            @Override
             public void run() {
                 lock.lock();
                 state.add(UDIGDisplaySafeLockTest.State.THREAD_HAS_LOCK);
                 final boolean[] locked=new boolean[1];
                 locked[0]=false;
 
-                display.asyncExec(new Runnable(){
+                display.asyncExec(new Runnable() {
+                    @Override
                     public void run() {
-                        display.asyncExec(new Runnable(){
+                        display.asyncExec(new Runnable() {
+                            @Override
                             public void run() {
                                 state.add(UDIGDisplaySafeLockTest.State.DISPLAY_WAITING_FOR_LOCK);
                                 lock.lock();
@@ -584,10 +612,10 @@ public class UDIGDisplaySafeLockTest {
                         lock.unlock();
                     }
                 });
-                
+
                 long timeout=200000;
                 long start=System.currentTimeMillis();
-                
+
                 while( !state.contains(UDIGDisplaySafeLockTest.State.DISPLAY_WAITING_FOR_LOCK) && timeout>(System.currentTimeMillis()-start) ){
                     synchronized (this) {
                         try {
@@ -597,10 +625,10 @@ public class UDIGDisplaySafeLockTest {
                         }
                     }
                 }
-                
+
                 lock.unlock();
                 state.remove(UDIGDisplaySafeLockTest.State.THREAD_HAS_LOCK);
-                
+
                 start=System.currentTimeMillis();
                 while( (!locked[0]) && timeout>(System.currentTimeMillis()-start) ){
                     synchronized (this) {
@@ -624,22 +652,24 @@ public class UDIGDisplaySafeLockTest {
         };
         t.start();
 
-        UDIGTestUtil.inDisplayThreadWait(5000, new WaitCondition(){
+        UDIGTestUtil.inDisplayThreadWait(5000, new WaitCondition() {
 
+            @Override
             public boolean isTrue() {
                 return state.contains(State.THREAD_HAS_LOCK);
             }
-            
+
         }, false);
 
         lock.lock();
 
-        UDIGTestUtil.inDisplayThreadWait(5000, new WaitCondition(){
+        UDIGTestUtil.inDisplayThreadWait(5000, new WaitCondition() {
 
+            @Override
             public boolean isTrue() {
                 return done[0];
             }
-            
+
         }, true);
         lock.unlock();
     }

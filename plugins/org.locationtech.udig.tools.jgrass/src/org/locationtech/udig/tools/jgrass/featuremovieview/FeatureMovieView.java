@@ -1,6 +1,6 @@
 /*
  * uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -62,7 +62,7 @@ import org.locationtech.udig.tools.jgrass.JGrassToolsPlugin;
 
 /**
  * A navigation view.
- * 
+ *
  * @author Andrea Antonello (www.hydrologis.com)
  *
  */
@@ -405,6 +405,7 @@ public class FeatureMovieView extends ViewPart {
         playButton.setText("stop");
         isRunning = true;
     }
+
     private synchronized void stop() {
         playButton.setImage(playImage);
         playButton.setText("start");
@@ -433,7 +434,7 @@ public class FeatureMovieView extends ViewPart {
 
     /**
      * Extracts features from a {@link FeatureCollection} into an {@link ArrayList}.
-     * 
+     *
      * @param collection the feature collection.
      * @return the list with the features or an empty list if no features present.
      */
@@ -453,7 +454,6 @@ public class FeatureMovieView extends ViewPart {
 
     @Override
     public void setFocus() {
-        // TODO Auto-generated method stub
 
     }
 

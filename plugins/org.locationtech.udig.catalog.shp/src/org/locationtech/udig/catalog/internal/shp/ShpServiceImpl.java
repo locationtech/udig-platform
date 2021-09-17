@@ -38,7 +38,7 @@ import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 
 /**
  * Connect to a shapefile
- * 
+ *
  * @author David Zwiers, Refractions Research
  * @since 0.6
  * @version 1.2
@@ -54,11 +54,11 @@ public class ShpServiceImpl extends IService {
      */
     volatile ShapefileDataStore ds = null;
     protected final Lock rLock = new UDIGDisplaySafeLock();
-    private final static Lock dsInstantiationLock = new UDIGDisplaySafeLock();
+    private static final Lock dsInstantiationLock = new UDIGDisplaySafeLock();
 
     /**
      * Construct <code>ShpServiceImpl</code>.
-     * 
+     *
      * @param arg1
      * @param arg2
      */
@@ -323,7 +323,7 @@ public class ShpServiceImpl extends IService {
     /**
      * The File as indicated in the connection parameters, may be null if we are representing a web
      * resource.
-     * 
+     *
      * @return file as indicated in the connection parameters, may be null if we are reprsenting a
      *         web resource
      */
