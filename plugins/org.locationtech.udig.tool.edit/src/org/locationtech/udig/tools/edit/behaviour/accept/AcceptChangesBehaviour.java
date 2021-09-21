@@ -233,6 +233,8 @@ public class AcceptChangesBehaviour implements Behaviour {
                     display, Collections.singletonList((IAnimation) animation));
             commands.add(startAnimationCommand);
 
+            String featureIdReference = editGeom.getFeatureIDRef().get();
+
             if (isCurrentGeometry(handler, editGeom)) {
                 if (isCreatingNewFeature(handler)) {
                     int attributeCount = schema.getAttributeCount();
@@ -265,19 +267,20 @@ public class AcceptChangesBehaviour implements Behaviour {
                     // commands.add(newFeatureCommand);
                     // }
                 } else {
-                    String idRef = editGeom.getFeatureIDRef().get();
-                    if (idRef != null) {
+                    if (featureIdReference != null) {
                         // not creating it so don't need to set it.
-                        UndoableMapCommand setGeometryCommand = new SetGeometryCommand(idRef,
+                        UndoableMapCommand setGeometryCommand = new SetGeometryCommand(featureIdReference,
                                 new StaticBlockingProvider<>(layer), SetGeometryCommand.DEFAULT,
                                 geom);
                         commands.add(setGeometryCommand);
                     }
                 }
             } else {
-                commands.add(new CreateNewOrSelectExitingFeatureCommand(
-                        editGeom.getFeatureIDRef().get(), layer, geom));
-
+                if (featureIdReference != null) {
+                    CreateNewOrSelectExitingFeatureCommand featureCommand = new CreateNewOrSelectExitingFeatureCommand(
+                            featureIdReference, layer, geom);
+                    commands.add(featureCommand);
+                }
             }
             commands.add(new SetEditGeomChangedStateCommand(editGeom, false));
             commands.add(drawfactory.createStopAnimationCommand(display,
