@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,17 +28,6 @@ import java.util.ResourceBundle;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.locationtech.udig.catalog.internal.CatalogImpl;
-import org.locationtech.udig.catalog.internal.Messages;
-import org.locationtech.udig.catalog.internal.ResolveManager;
-import org.locationtech.udig.catalog.internal.ResolveManager2;
-import org.locationtech.udig.catalog.internal.ServiceFactoryImpl;
-import org.locationtech.udig.core.internal.ExtensionPointProcessor;
-import org.locationtech.udig.core.internal.ExtensionPointUtil;
-import org.locationtech.udig.ui.PreShutdownTask;
-import org.locationtech.udig.ui.ProgressManager;
-import org.locationtech.udig.ui.ShutdownTaskList;
-
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -54,6 +43,15 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
+import org.locationtech.udig.catalog.internal.CatalogImpl;
+import org.locationtech.udig.catalog.internal.Messages;
+import org.locationtech.udig.catalog.internal.ResolveManager2;
+import org.locationtech.udig.catalog.internal.ServiceFactoryImpl;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.ui.PreShutdownTask;
+import org.locationtech.udig.ui.ProgressManager;
+import org.locationtech.udig.ui.ShutdownTaskList;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.BackingStoreException;
 
@@ -62,7 +60,7 @@ import org.osgi.service.prefs.BackingStoreException;
  */
 public class CatalogPlugin extends Plugin {
 
-    private static final String EXTENSION_POINT_ICATALOG = "org.locationtech.udig.catalog.ICatalog";
+    private static final String EXTENSION_POINT_ICATALOG = "org.locationtech.udig.catalog.ICatalog"; //$NON-NLS-1$
 
     public static final String ID = "org.locationtech.udig.catalog"; //$NON-NLS-1$
 
@@ -72,7 +70,9 @@ public class CatalogPlugin extends Plugin {
     // Resource bundle.
     private ResourceBundle resourceBundle;
 
-    /** Local catalog used as a repository to manage servies that are known the the client */
+    /**
+     * Local catalog used as a repository to manage servies that are known the the client
+     */
     private CatalogImpl local;
 
     /**
@@ -97,15 +97,16 @@ public class CatalogPlugin extends Plugin {
      */
     private volatile IResolveManager resolveManager;
 
-
-    /** Lock used to protect map of available services; for the last call? */
+    /**
+     * Lock used to protect map of available services; for the last call?
+     */
     private Lock registeredLock = new ReentrantLock();
 
     /**
      * Map of ServiceExtension by "id", access control policed by above "lock".
      */
     Map<String, ServiceExtension> registered = null; // lazy creation
-    
+
     /**
      * The constructor. See {@link #start(BundleContext)} for the initialization of the plugin.
      */
@@ -117,31 +118,34 @@ public class CatalogPlugin extends Plugin {
     /**
      * This method is called upon plug-in activation
      */
-    public void start( BundleContext context ) throws Exception {
+    @Override
+    public void start(BundleContext context) throws Exception {
         super.start(context);
         local = new CatalogImpl();
         catalogs = Collections.emptyList();
         serviceFactory = new ServiceFactoryImpl();
         resolveManager = new ResolveManager2();
-        
+
         // ensure a preference store is around so we can save to it in the shutdown hook
-        preferenceStore = new ScopedPreferenceStore(new InstanceScope(), getBundle().getSymbolicName());
+        preferenceStore = new ScopedPreferenceStore(new InstanceScope(),
+                getBundle().getSymbolicName());
 
         try {
             if (Display.getCurrent() != null) {
-                CatalogPlugin.trace("Restoring Local Catalog", null);
+                CatalogPlugin.trace("Restoring Local Catalog", null); //$NON-NLS-1$
             }
             plugin.restoreFromPreferences();
         } catch (Throwable e) {
-            CatalogPlugin.log("Unable to restore catalog:"+e, e);
+            CatalogPlugin.log("Unable to restore catalog:" + e, e); //$NON-NLS-1$
             handlerLoadingError(e);
         }
         addSaveLocalCatalogShutdownHook();
     }
 
     private void addSaveLocalCatalogShutdownHook() {
-        ShutdownTaskList.instance().addPreShutdownTask(new PreShutdownTask(){
+        ShutdownTaskList.instance().addPreShutdownTask(new PreShutdownTask() {
 
+            @Override
             public int getProgressMonitorSteps() {
                 try {
                     return getLocalCatalog().members(ProgressManager.instance().get()).size();
@@ -150,19 +154,21 @@ public class CatalogPlugin extends Plugin {
                 }
             }
 
-            public boolean handlePreShutdownException( Throwable t, boolean forced ) {
+            @Override
+            public boolean handlePreShutdownException(Throwable t, boolean forced) {
                 CatalogPlugin.log("Error storing local catalog", t); //$NON-NLS-1$
                 return true;
             }
 
-            public boolean preShutdown( IProgressMonitor monitor, IWorkbench workbench,
-                    boolean forced ) throws Exception {
+            @Override
+            public boolean preShutdown(IProgressMonitor monitor, IWorkbench workbench,
+                    boolean forced) throws Exception {
                 ISearch[] toDispose = getCatalogs();
                 monitor.beginTask(Messages.CatalogPlugin_SavingCatalog, 4 + (4 * toDispose.length));
                 SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, 4);
                 storeToPreferences(subProgressMonitor);
                 subProgressMonitor.done();
-                for( ISearch catalog : toDispose ) {
+                for (ISearch catalog : toDispose) {
                     subProgressMonitor = new SubProgressMonitor(monitor, 4);
                     catalog.dispose(subProgressMonitor);
                     subProgressMonitor.done();
@@ -175,10 +181,10 @@ public class CatalogPlugin extends Plugin {
 
     /**
      * Opens a dialog warning the user that an error occurred while loading the local catalog
-     * 
+     *
      * @param e the exception that occurred
      */
-    private void handlerLoadingError( Throwable e ) {
+    private void handlerLoadingError(Throwable e) {
         try {
             File backup = new File(getLocalCatalogFile().getParentFile(), "corruptedLocalCatalog"); //$NON-NLS-1$
             copy(getLocalCatalogFile(), backup);
@@ -192,28 +198,33 @@ public class CatalogPlugin extends Plugin {
         }
     }
 
-    private void copy( File file, File backup ) throws IOException {
-        FileChannel in = new FileInputStream(file).getChannel(), out = new FileOutputStream(backup)
-                .getChannel();
+    private void copy(File file, File backup) throws IOException {
+        FileInputStream inputStream = new FileInputStream(file);
+        FileOutputStream outputStream = new FileOutputStream(backup);
+        FileChannel in = inputStream.getChannel(),
+                out = outputStream.getChannel();
         final int BSIZE = 1024;
         ByteBuffer buffer = ByteBuffer.allocate(BSIZE);
-        while( in.read(buffer) != -1 ) {
+        while (in.read(buffer) != -1) {
             buffer.flip(); // Prepare for writing
             out.write(buffer);
             buffer.clear(); // Prepare for reading
         }
+        inputStream.close();
+        outputStream.close();
     }
 
     /**
      * Cleanup after shared images.
      * <p>
-     * 
+     *
      * @see addSaveLocalCatalogShutdownHook
      * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
      * @param context
      * @throws Exception
      */
-    public void stop( BundleContext context ) throws Exception {
+    @Override
+    public void stop(BundleContext context) throws Exception {
         super.stop(context);
         plugin = null;
         resourceBundle = null;
@@ -224,55 +235,57 @@ public class CatalogPlugin extends Plugin {
      */
     public void restoreFromPreferences() {
         try {
-            if( getLocalCatalog() instanceof CatalogImpl){
+            if (getLocalCatalog() instanceof CatalogImpl) {
                 CatalogImpl localCatalog = (CatalogImpl) getLocalCatalog();
                 File catalogFile = getLocalCatalogFile();
                 IServiceFactory serviceFactory = CatalogPlugin.getDefault().getServiceFactory();
                 localCatalog.loadFromFile(catalogFile, serviceFactory);
             }
         } catch (Throwable t) {
-            CatalogPlugin.log("Trouble restoring local catalog:"+t, t);
+            CatalogPlugin.log("Trouble restoring local catalog:" + t, t); //$NON-NLS-1$
         }
         try {
             loadCatalogs();
+        } catch (Throwable t) {
+            CatalogPlugin.log("Trouble connectin remote catalogs:" + t, t); //$NON-NLS-1$
         }
-        catch (Throwable t) {
-            CatalogPlugin.log("Trouble connectin remote catalogs:"+t, t);
-        }
-    }
-    /**
-     * Go through and load the "external" catalogs ... this is used to
-     * populate getCatalogs() and the result is cached.
-     */
-    private List<ISearch> loadCatalogs() {
-        final List<ISearch> availableCatalogs = new LinkedList<ISearch>();
-        ExtensionPointUtil.process(getDefault(),
-            EXTENSION_POINT_ICATALOG, new ExtensionPointProcessor(){
-                public void process( IExtension extension, IConfigurationElement element )
-                        throws Exception {
-                    ISearch externalCatalog = (ISearch) element.createExecutableExtension("class");
-                    availableCatalogs.add(externalCatalog); //$NON-NLS-1$                 
-                }
-            }
-        );
-    	return availableCatalogs;
     }
 
-    public void storeToPreferences( IProgressMonitor monitor ) throws BackingStoreException,
-            IOException {
+    /**
+     * Go through and load the "external" catalogs ... this is used to populate getCatalogs() and
+     * the result is cached.
+     */
+    private List<ISearch> loadCatalogs() {
+        final List<ISearch> availableCatalogs = new LinkedList<>();
+        ExtensionPointUtil.process(getDefault(), EXTENSION_POINT_ICATALOG,
+                new ExtensionPointProcessor() {
+            @Override
+            public void process(IExtension extension, IConfigurationElement element)
+                    throws Exception {
+                ISearch externalCatalog = (ISearch) element
+                        .createExecutableExtension("class"); //$NON-NLS-1$
+                availableCatalogs.add(externalCatalog); // $NON-NLS-1$
+            }
+        });
+        return availableCatalogs;
+    }
+
+    public void storeToPreferences(IProgressMonitor monitor)
+            throws BackingStoreException, IOException {
         ((CatalogImpl) getLocalCatalog()).saveToFile(getLocalCatalogFile(), getServiceFactory(),
                 monitor);
     }
+
     /**
      * File used to load/save the local catalog.
-     * 
+     *
      * @return
      * @throws IOException
      */
     private File getLocalCatalogFile() throws IOException {
         // working directory for the application as a file
-        File userLocation = new File(FileLocator.toFileURL(Platform.getInstanceLocation().getURL())
-                .getFile());
+        File userLocation = new File(
+                FileLocator.toFileURL(Platform.getInstanceLocation().getURL()).getFile());
         // will create the file if needed
         if (!userLocation.exists())
             userLocation.mkdirs();
@@ -287,28 +300,29 @@ public class CatalogPlugin extends Plugin {
     public static CatalogPlugin getDefault() {
         return plugin;
     }
+
     /**
      * Add a catalog listener for changed to this catalog.
-     * 
+     *
      * @param listener
      */
-    public static void addListener( IResolveChangeListener listener ) {
+    public static void addListener(IResolveChangeListener listener) {
         ((CatalogImpl) getDefault().getLocalCatalog()).addCatalogListener(listener);
     }
 
     /**
      * Remove a catalog listener that was interested in this catalog.
-     * 
+     *
      * @param listener
      */
-    public static void removeListener( IResolveChangeListener listener ) {
+    public static void removeListener(IResolveChangeListener listener) {
         ((CatalogImpl) getDefault().getLocalCatalog()).removeCatalogListener(listener);
     }
 
     /**
      * Returns the string from the plugin's resource bundle, or 'key' if not found.
      */
-    public static String getResourceString( String key ) {
+    public static String getResourceString(String key) {
         ResourceBundle bundle = CatalogPlugin.getDefault().getResourceBundle();
         try {
             return (bundle != null) ? bundle.getString(key) : key;
@@ -324,41 +338,44 @@ public class CatalogPlugin extends Plugin {
         try {
             if (resourceBundle == null)
                 resourceBundle = ResourceBundle
-                        .getBundle("org.locationtech.udig.catalog.CatalogPluginResources"); //$NON-NLS-1$
+                .getBundle("org.locationtech.udig.catalog.CatalogPluginResources"); //$NON-NLS-1$
         } catch (MissingResourceException x) {
             resourceBundle = null;
         }
         return resourceBundle;
     }
+
     /**
      * Available catalogs supporting the ISearch interface. Please note that not all of these
      * catalogs are "local"; although the first [0] one is the same as getLocal().
-     * 
+     *
      * @return Returns the catalogs found ... local one is slot[0].
      */
-	public synchronized ISearch[] getCatalogs() {
-		if (catalogs == null) {
-			// look up all catalogs and populate catalogs
-			catalogs = loadCatalogs();
-		}
-		List<ISearch> c = new ArrayList<ISearch>();
-		c.add(local);
-		c.addAll(catalogs);
-		return c.toArray(new ISearch[c.size()]);
-	}
+    public synchronized ISearch[] getCatalogs() {
+        if (catalogs == null) {
+            // look up all catalogs and populate catalogs
+            catalogs = loadCatalogs();
+        }
+        List<ISearch> c = new ArrayList<>();
+        c.add(local);
+        c.addAll(catalogs);
+        return c.toArray(new ISearch[c.size()]);
+    }
 
     public synchronized void addSearchCatalog(ISearch searchCatalog) {
-    	// force init
-    	getCatalogs();
-    	
-    	catalogs.add(searchCatalog);
+        // force init
+        getCatalogs();
+
+        catalogs.add(searchCatalog);
     }
+
     /**
      * @return the local catalog. Equivalent to getCatalogs()[0]
      */
     public ICatalog getLocalCatalog() {
         return local;
     }
+
     /**
      * Access to the local repository which you can add/remove services to.
      * <p>
@@ -369,88 +386,104 @@ public class CatalogPlugin extends Plugin {
      * This repository is persisted (currently the the contents are saved into the catalog plugin
      * preferencestore, although a successful geoserver implementation indicates that the use of a
      * hibernate is also appropriate).
-     * 
+     *
      * @return Local repository used to manage known serivces and all connected services.
      */
     public IRepository getLocal() {
         return local;
     }
+
     /**
      * Service factory used to connect to new services.
      * <p>
      * Serivces hold on to live connections; please take care to call dispose() or to add the
      * service to the local repository so that the service is disposed when the application shuts
      * down.
-     * 
+     *
      * @return Returns the serviceFactory.
      */
     public IServiceFactory getServiceFactory() {
         return serviceFactory;
     }
+
     /**
      * List of registered {@link ServiceExtension}s.
+     *
      * @return Registered {@link ServiceExtension}
      */
-    public List<ServiceExtension> getServiceExtensions(){
-        List<ServiceExtension> list = new ArrayList<ServiceExtension>( getRegisteredExtensions().values() );
-        return Collections.unmodifiableList( list );
+    public List<ServiceExtension> getServiceExtensions() {
+        List<ServiceExtension> list = new ArrayList<>(
+                getRegisteredExtensions().values());
+        return Collections.unmodifiableList(list);
     }
+
     /**
      * Register a service extension by hand.
-     * 
+     *
      * @param id
      * @param extension
      */
-    public void register( String id, ServiceExtension extension ){
+    public void register(String id, ServiceExtension extension) {
         try {
             registeredLock.lock();
             getRegisteredExtensions();
-            if( registered.containsKey(id)){
+            if (registered.containsKey(id)) {
                 ServiceExtension existing = registered.get(id);
-                String exsistingName = existing != null ? existing.getClass().getSimpleName() : null;
-                throw new IllegalStateException("ServiceExtension "+id+" already registered with "+exsistingName );
+                String exsistingName = existing != null ? existing.getClass().getSimpleName()
+                        : null;
+                throw new IllegalStateException(
+                        "ServiceExtension " + id + " already registered with " + exsistingName); //$NON-NLS-1$ //$NON-NLS-2$
             }
-            
-            registered.put( id, extension );
+
+            registered.put(id, extension);
         } finally {
             registeredLock.unlock();
         }
     }
+
     /**
      * Internal method to lazily process the {@link #CATALOG_SERVICE_EXTENSION}
+     *
      * @return Map of {@link ServiceExtension} by id
      */
     Map<String, ServiceExtension> getRegisteredExtensions() {
         try {
             registeredLock.lock();
             if (registered == null) { // load available
-                // we are going to sort the map so that "generic" fallback datastores are selected last
+                // we are going to sort the map so that "generic" fallback datastores are selected
+                // last
                 //
-                registered = new HashMap<String, ServiceExtension>();
+                registered = new HashMap<>();
                 ExtensionPointUtil.process(CatalogPlugin.getDefault(),
-                        ServiceExtension.EXTENSION_ID, new ExtensionPointProcessor() { //$NON-NLS-1$
-                            public void process(IExtension extension, IConfigurationElement element) throws Exception {
-                                // extentionIdentifier used to report any problems;
-                                // in the event of failure we want to be able to report
-                                // who had the problem
-                                // String extensionId = extension.getUniqueIdentifier();
-                                String id = element.getAttribute("id");
-                                ServiceExtension se = (ServiceExtension) element.createExecutableExtension("class");
-                                if (id == null || id.length() == 0) {
-                                    id = se.getClass().getSimpleName();
-                                }
-                                registered.put(id, se);
-                            }
-                        });
+                        ServiceExtension.EXTENSION_ID, new ExtensionPointProcessor() { // $NON-NLS-1$
+                    @Override
+                    public void process(IExtension extension, IConfigurationElement element)
+                            throws Exception {
+                        // extentionIdentifier used to report any problems;
+                        // in the event of failure we want to be able to report
+                        // who had the problem
+                        // String extensionId = extension.getUniqueIdentifier();
+                        String id = element.getAttribute("id"); //$NON-NLS-1$
+                        ServiceExtension se = (ServiceExtension) element
+                                .createExecutableExtension("class"); //$NON-NLS-1$
+                        if (id == null || id.length() == 0) {
+                            id = se.getClass().getSimpleName();
+                        }
+                        registered.put(id, se);
+                    }
+                });
             }
             return registered;
         } finally {
             registeredLock.unlock();
         }
     }
-    /** Look up a specific implementation; used mostly for test cases */
-    public <E extends ServiceExtension> E serviceImplementation( Class<E> implementation ) {
-        for( Map.Entry<String, ServiceExtension> entry : getRegisteredExtensions().entrySet() ) {
+
+    /**
+     * Look up a specific implementation; used mostly for test cases
+     */
+    public <E extends ServiceExtension> E serviceImplementation(Class<E> implementation) {
+        for (Map.Entry<String, ServiceExtension> entry : getRegisteredExtensions().entrySet()) {
             String id = entry.getKey();
             ServiceExtension serviceExtension = entry.getValue();
 
@@ -462,9 +495,12 @@ public class CatalogPlugin extends Plugin {
         }
         return null;
     }
-    /** Look up a specific implementation; used mostly for test cases */
-    public ServiceExtension serviceImplementation( String serviceExtensionId ) {
-        for( Map.Entry<String, ServiceExtension> entry : getRegisteredExtensions().entrySet() ) {
+
+    /**
+     * Look up a specific implementation; used mostly for test cases
+     */
+    public ServiceExtension serviceImplementation(String serviceExtensionId) {
+        for (Map.Entry<String, ServiceExtension> entry : getRegisteredExtensions().entrySet()) {
             String id = entry.getKey();
             ServiceExtension serviceExtension = entry.getValue();
 
@@ -476,17 +512,19 @@ public class CatalogPlugin extends Plugin {
         }
         return null;
     }
+
     /**
      * Attempts to turn data into a URL. If data is an array or Collection, it will return the first
      * successful URL it can find. This is a utility method. Feel free to move it to another class.
      * In the future, it might be nice to have it return a List of the URLs it found, not just the
      * first one.
-     * 
+     *
      * @param data
      * @return a URL if it can find one, or null otherwise
      * @deprecated Please use ID.cast( data ).toURL();
      */
-    public static URL locateURL( Object data ) {
+    @Deprecated
+    public static URL locateURL(Object data) {
         ID id = org.locationtech.udig.catalog.ID.cast(data);
         if (id == null) {
             return null;
@@ -501,27 +539,29 @@ public class CatalogPlugin extends Plugin {
      * <ul>
      * <li>t is an Exception we are assuming it is human readable or if a message is provided</li>
      * </ul>
-     * 
+     *
      * @param message log message
      * @param t Throwable causing the message; if this is an exception an error will be logged
      */
-    public static void log( String message, Throwable t ) {
-        String msg = message == null ? "" : message;
+    public static void log(String message, Throwable t) {
+        String msg = message == null ? "" : message; //$NON-NLS-1$
         int status = t instanceof Exception || message != null ? IStatus.ERROR : IStatus.INFO;
         getDefault().getLog().log(new Status(status, ID, IStatus.OK, msg, t));
     }
+
     /**
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:
-     * 
-     * <pre><code>
-     * private static final String RENDERING = &quot;org.locationtech.udig.project/render/trace&quot;;
-     * if (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
-     *     System.out.println(&quot;your message here&quot;);
-     * }
+     *
+     * <pre>
+     * <code> private static final String RENDERING =
+     * &quot;org.locationtech.udig.project/render/trace&quot;; if
+     * (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp;
+     * &quot;true&quot;.equalsIgnoreCase(RENDERING)) { System.out.println(&quot;your message
+     * here&quot;); }
      */
-    public static void trace( String message, Throwable e ) {
+    public static void trace(String message, Throwable e) {
         if (getDefault().isDebugging()) {
             if (message != null)
                 System.out.println(message);
@@ -529,6 +569,7 @@ public class CatalogPlugin extends Plugin {
                 e.printStackTrace();
         }
     }
+
     /**
      * Performs the Platform.getDebugOption true check on the provided trace
      * <p>
@@ -537,12 +578,12 @@ public class CatalogPlugin extends Plugin {
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
      * </p>
-     * 
+     *
      * @param trace currently only RENDER is defined
      */
-    public static boolean isDebugging( final String trace ) {
+    public static boolean isDebugging(final String trace) {
         return getDefault().isDebugging()
-                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
+                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
 
     /**
@@ -559,16 +600,17 @@ public class CatalogPlugin extends Plugin {
      * runtime compatibility layer and so plug-ins relying on Plugin#initializeDefaultPreferences
      * will have to access the compatibility layer themselves.
      * </p>
-     * 
+     *
      * @return the preference store
      */
     public IPreferenceStore getPreferenceStore() {
         return preferenceStore;
     }
+
     /**
      * ResolveManager used to allow plugins to teach new resolve targets to existing IService and
      * IGeoResoruce implementations.
-     * 
+     *
      * @return IResolveManager
      */
     public IResolveManager getResolveManager() {

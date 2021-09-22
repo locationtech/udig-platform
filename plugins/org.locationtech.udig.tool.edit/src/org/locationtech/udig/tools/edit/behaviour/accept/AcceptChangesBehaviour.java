@@ -47,7 +47,7 @@ import org.locationtech.udig.tools.edit.EditToolHandler;
 import org.locationtech.udig.tools.edit.animation.GeometryOperationAnimation;
 import org.locationtech.udig.tools.edit.commands.AddVertexCommand;
 import org.locationtech.udig.tools.edit.commands.CreateAndSelectNewFeature;
-import org.locationtech.udig.tools.edit.commands.CreateNewOrSelectExitingFeatureCommand;
+import org.locationtech.udig.tools.edit.commands.CreateNewOrSelectExistingFeatureCommand;
 import org.locationtech.udig.tools.edit.commands.SetEditGeomChangedStateCommand;
 import org.locationtech.udig.tools.edit.commands.SetEditStateCommand;
 import org.locationtech.udig.tools.edit.support.EditGeom;
@@ -265,7 +265,7 @@ public class AcceptChangesBehaviour implements Behaviour {
                 }
             } else {
                 if (featureIdReference != null) {
-                    CreateNewOrSelectExitingFeatureCommand featureCommand = new CreateNewOrSelectExitingFeatureCommand(
+                    CreateNewOrSelectExistingFeatureCommand featureCommand = new CreateNewOrSelectExistingFeatureCommand(
                             featureIdReference, layer, geom);
                     commands.add(featureCommand);
                 }

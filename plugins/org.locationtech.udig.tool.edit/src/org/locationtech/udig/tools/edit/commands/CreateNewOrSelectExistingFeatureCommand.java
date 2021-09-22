@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -27,82 +28,92 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 
 /**
- * If there is no feature with the Feature ID in the layer then a new feature will be
- * created.  Otherwise the feature's geometry will be set.
- * 
+ * If there is no feature with the Feature ID in the layer then a new feature will be created.
+ * Otherwise the feature's geometry will be set.
+ *
  * @author jones
  * @since 1.1.0
  */
-public class CreateNewOrSelectExitingFeatureCommand extends AbstractCommand implements UndoableMapCommand {
+public class CreateNewOrSelectExistingFeatureCommand extends AbstractCommand implements UndoableMapCommand {
 
     private Geometry geom;
+
     private ILayer layer;
+
     private String fid;
+
     private boolean createFeature;
+
     private UndoableMapCommand modifyCommand;
+
     private SimpleFeature feature;
+
     private UndoableMapCommand createCommand;
 
-    public CreateNewOrSelectExitingFeatureCommand( String fid2, ILayer layer2, Geometry geom2 ) {
-        this.fid=fid2;
-        this.layer=layer2;
-        this.geom=geom2;
+    public CreateNewOrSelectExistingFeatureCommand(String fid2, ILayer layer2, Geometry geom2) {
+        this.fid = fid2;
+        this.layer = layer2;
+        this.geom = geom2;
     }
 
-    public void run( IProgressMonitor monitor ) throws Exception {
+    @Override
+    public void run(IProgressMonitor monitor) throws Exception {
         monitor.beginTask(Messages.CreateOrSetFeature_name, 10);
         monitor.worked(1);
-        FeatureStore<SimpleFeatureType, SimpleFeature> store = layer.getResource(FeatureStore.class, new SubProgressMonitor(monitor,2));
+        FeatureStore<SimpleFeatureType, SimpleFeature> store = layer.getResource(FeatureStore.class,
+                new SubProgressMonitor(monitor, 2));
         Filter id = FeatureUtils.id(fid);
         String typeName = store.getSchema().getTypeName();
         Query query = new Query(typeName, id);
-        FeatureIterator<SimpleFeature> iter=store.getFeatures( query ).features();
-        try{
-            createFeature=!iter.hasNext();
-        }finally{
+        FeatureIterator<SimpleFeature> iter = store.getFeatures(query).features();
+        try {
+            createFeature = !iter.hasNext();
+        } finally {
             iter.close();
         }
-        if( createFeature ){
+        if (createFeature) {
             createFeature(new SubProgressMonitor(monitor, 8));
-        }else{
+        } else {
             modifyFeature(new SubProgressMonitor(monitor, 8));
         }
     }
 
     /**
      * Modifies the existing feature.
-     * 
+     *
      * @param monitor
-     * @throws Exception 
+     * @throws Exception
      */
-    private void modifyFeature( IProgressMonitor monitor ) throws Exception {
-        
-        modifyCommand=EditCommandFactory.getInstance().createSetGeomteryCommand(fid, layer, geom);
+    private void modifyFeature(IProgressMonitor monitor) throws Exception {
+        modifyCommand = EditCommandFactory.getInstance().createSetGeomteryCommand(fid, layer, geom);
         modifyCommand.setMap(getMap());
         modifyCommand.run(monitor);
     }
 
     /**
      * Creates a new feature
+     *
      * @param monitor
      */
-    private void createFeature( IProgressMonitor monitor ) throws Exception  {
+    private void createFeature(IProgressMonitor monitor) throws Exception {
         Object[] attributeArray = new Object[layer.getSchema().getAttributeCount()];
-        feature=SimpleFeatureBuilder.build(layer.getSchema(), attributeArray, "newFeature"); //$NON-NLS-1$
+        feature = SimpleFeatureBuilder.build(layer.getSchema(), attributeArray, "newFeature"); //$NON-NLS-1$
         feature.setDefaultGeometry(geom);
-        createCommand=EditCommandFactory.getInstance().createAddFeatureCommand(feature, layer);
+        createCommand = EditCommandFactory.getInstance().createAddFeatureCommand(feature, layer);
         createCommand.setMap(getMap());
         createCommand.run(monitor);
     }
 
+    @Override
     public String getName() {
         return Messages.CreateOrSetFeature_name;
     }
 
-    public void rollback( IProgressMonitor monitor ) throws Exception {
-        if( createFeature ){
+    @Override
+    public void rollback(IProgressMonitor monitor) throws Exception {
+        if (createFeature) {
             createCommand.rollback(monitor);
-        }else{
+        } else {
             modifyCommand.rollback(monitor);
         }
     }
