@@ -88,7 +88,7 @@ public class AcceptChangesBehaviour implements Behaviour {
     private final Class<? extends Geometry> geomToCreate;
 
     /**
-     * This is true if we need to check and close polgons on the blackboad.
+     * This is true if we need to check and close polygons on the blackboard.
      */
     private boolean updateBlackboard = true;
 
@@ -142,7 +142,7 @@ public class AcceptChangesBehaviour implements Behaviour {
     }
 
     @Override
-    @SuppressWarnings({"deprecation", "unchecked"})
+    @SuppressWarnings({ "deprecation", "unchecked" })
     public UndoableMapCommand getCommand(EditToolHandler handler) {
         if (!isValid(handler))
             throw new IllegalArgumentException("Not in a valid state for this to run"); //$NON-NLS-1$
@@ -212,12 +212,14 @@ public class AcceptChangesBehaviour implements Behaviour {
         Geometry geom = GeometryCreationUtil.ceateGeometryCollection(geoms, binding);
 
         if (geom == null) { // null is used to mark things for delete?
-            IBlockingProvider<ILayer> layerProvider = new StaticBlockingProvider<>(layer);
-            FIDFeatureProvider featureProvider = new FIDFeatureProvider(entry.getKey(),
-                    layerProvider);
-            DeleteFeatureCommand deleteFeatureCommand = new DeleteFeatureCommand(featureProvider,
-                    layerProvider);
-            commands.add(deleteFeatureCommand);
+            if (entry != null) {
+                IBlockingProvider<ILayer> layerProvider = new StaticBlockingProvider<>(layer);
+                FIDFeatureProvider featureProvider = new FIDFeatureProvider(entry.getKey(),
+                        layerProvider);
+                DeleteFeatureCommand deleteFeatureCommand = new DeleteFeatureCommand(
+                        featureProvider, layerProvider);
+                commands.add(deleteFeatureCommand);
+            }
         } else {
             // geometry is going to be written out
             if (updateBlackboard) {
@@ -269,9 +271,9 @@ public class AcceptChangesBehaviour implements Behaviour {
                 } else {
                     if (featureIdReference != null) {
                         // not creating it so don't need to set it.
-                        UndoableMapCommand setGeometryCommand = new SetGeometryCommand(featureIdReference,
-                                new StaticBlockingProvider<>(layer), SetGeometryCommand.DEFAULT,
-                                geom);
+                        UndoableMapCommand setGeometryCommand = new SetGeometryCommand(
+                                featureIdReference, new StaticBlockingProvider<>(layer),
+                                SetGeometryCommand.DEFAULT, geom);
                         commands.add(setGeometryCommand);
                     }
                 }
@@ -328,7 +330,7 @@ public class AcceptChangesBehaviour implements Behaviour {
         } else {
             if (editGeom.getShapeType() == ShapeType.POLYGON
                     || (editGeom.getShapeType() == ShapeType.UNKNOWN
-                            && Polygon.class.isAssignableFrom(geomToCreate))) {
+                    && Polygon.class.isAssignableFrom(geomToCreate))) {
                 for (PrimitiveShape shape : editGeom) {
                     if (shape.getNumPoints() > 0
                             && !shape.getPoint(0).equals(shape.getPoint(shape.getNumPoints() - 1)))
