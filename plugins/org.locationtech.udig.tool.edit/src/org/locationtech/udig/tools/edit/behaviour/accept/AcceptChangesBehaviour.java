@@ -142,7 +142,6 @@ public class AcceptChangesBehaviour implements Behaviour {
     }
 
     @Override
-    @SuppressWarnings({ "deprecation", "unchecked" })
     public UndoableMapCommand getCommand(EditToolHandler handler) {
         if (!isValid(handler))
             throw new IllegalArgumentException("Not in a valid state for this to run"); //$NON-NLS-1$
@@ -212,7 +211,7 @@ public class AcceptChangesBehaviour implements Behaviour {
         Geometry geom = GeometryCreationUtil.ceateGeometryCollection(geoms, binding);
 
         if (geom == null) { // null is used to mark things for delete?
-            if (entry != null) {
+            if (entry != null && entry.getKey() != null) {
                 IBlockingProvider<ILayer> layerProvider = new StaticBlockingProvider<>(layer);
                 FIDFeatureProvider featureProvider = new FIDFeatureProvider(entry.getKey(),
                         layerProvider);
@@ -239,13 +238,10 @@ public class AcceptChangesBehaviour implements Behaviour {
 
             if (isCurrentGeometry(handler, editGeom)) {
                 if (isCreatingNewFeature(handler)) {
-                    int attributeCount = schema.getAttributeCount();
                     SimpleFeature feature;
                     try {
                         feature = SimpleFeatureBuilder.template(schema,
-                                "newFeature" + new Random().nextInt());
-                        // feature = SimpleFeatureBuilder.build(schema, new
-                        // Object[attributeCount],"newFeature");
+                                "newFeature" + new Random().nextInt()); //$NON-NLS-1$
                         feature.setDefaultGeometry(geom);
                     } catch (IllegalAttributeException e) {
                         throw new IllegalStateException(
@@ -254,20 +250,10 @@ public class AcceptChangesBehaviour implements Behaviour {
 
                     CreateFeatureCommand.runFeatureCreationInterceptors(feature);
 
-                    // FeaturePanelProcessor panels = ProjectUIPlugin.getDefault()
-                    // .getFeaturePanelProcessor();
-                    // List<FeaturePanelEntry> popup = panels.search(schema);
-                    // if (popup.isEmpty()) {
                     CreateAndSelectNewFeature newFeatureCommand = new CreateAndSelectNewFeature(
                             handler.getCurrentGeom(), feature, layer, deselectCreatedFeatures);
                     commands.add(newFeatureCommand);
-                    // } else {
-                    // CreateDialogAndSelectNewFeature newFeatureCommand = new
-                    // CreateDialogAndSelectNewFeature(
-                    // handler.getCurrentGeom(), feature, layer, deselectCreatedFeatures,
-                    // popup);
-                    // commands.add(newFeatureCommand);
-                    // }
+
                 } else {
                     if (featureIdReference != null) {
                         // not creating it so don't need to set it.
