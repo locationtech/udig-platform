@@ -93,7 +93,6 @@ import org.locationtech.udig.project.internal.ProjectPackage;
 import org.locationtech.udig.project.internal.commands.CreateMapCommand;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
-import org.locationtech.udig.project.ui.internal.MapEditorPart;
 import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
 import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.project.ui.internal.Messages;
@@ -2178,7 +2177,7 @@ public class ToolManager implements IToolManager {
             Object selection = firstSelectedElement();
 
             if (contents != null) {
-                MapEditorPart activeEditor = ApplicationGISInternal.getActiveEditor();
+                MapPart activeEditor = ApplicationGISInternal.getActiveEditor();
                 final Map finalMap;
                 final UDIGDropHandler finalDropHandler;
                 if( selection instanceof Map){
@@ -2206,7 +2205,7 @@ public class ToolManager implements IToolManager {
                     finalMap = activeEditor.getMap();
                 }
 
-                final MapEditorPart finalActiveEditor = activeEditor;
+                final MapPart finalActiveEditor = activeEditor;
                 ILayer selectedLayer = finalMap.getEditManager().getSelectedLayer();
                 if( selectedLayer==null ){
                     finalDropHandler.setTarget(finalMap);

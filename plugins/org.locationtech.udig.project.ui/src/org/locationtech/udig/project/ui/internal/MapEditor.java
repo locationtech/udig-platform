@@ -675,7 +675,7 @@ public class MapEditor extends EditorPart
         setTitleToolTip(Messages.MapEditor_titleToolTip);
         setTitleImage(ProjectUIPlugin.getDefault().getImage(ISharedImages.MAP_OBJ));
 
-        viewer = new MapViewer(composite, SWT.DOUBLE_BUFFERED);
+        viewer = new MapViewer(composite, this, SWT.DOUBLE_BUFFERED);
         // allow the viewer to open our context menu; work with our selection provider etc
         viewer.init(this);
         // if a map was provided as input we can ask the viewer to use it

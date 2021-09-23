@@ -22,6 +22,7 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.locationtech.udig.project.command.UndoableComposite;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.tool.edit.internal.Messages;
 import org.locationtech.udig.tools.edit.Activator;
 import org.locationtech.udig.tools.edit.EditPlugin;
@@ -53,7 +54,7 @@ public class DeleteGlobalActionSetterActivator implements Activator {
         IActionBars actionBars = handler.getContext().getActionBars();
         if( actionBars==null )
             return;
-        IWorkbenchPart part= ApplicationGISInternal.getActiveEditor();
+        MapPart part = ApplicationGISInternal.getActiveEditor();
 
         if( part == null ) return;
 
@@ -67,7 +68,7 @@ public class DeleteGlobalActionSetterActivator implements Activator {
             deleteVertexHandler.setImageDescriptor(oldAction.getImageDescriptor());
             deleteVertexHandler.setDisabledImageDescriptor(oldAction.getDisabledImageDescriptor());
         }
-        ApplicationGIS.getToolManager().setDELETEAction(deleteVertexHandler,part);
+        ApplicationGIS.getToolManager().setDELETEAction(deleteVertexHandler, part);
         actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), deleteVertexHandler);
         actionBars.updateActionBars();
         keyBindingService.registerAction(deleteVertexHandler);
@@ -79,17 +80,18 @@ public class DeleteGlobalActionSetterActivator implements Activator {
         if( actionBars==null || oldAction==null ){
             return;
         }
-        IWorkbenchPart part=ApplicationGISInternal.getActiveEditor();
+        MapPart part = ApplicationGISInternal.getActiveEditor();
+        IWorkbenchPart wbPart = (IWorkbenchPart) part;
 
         if( part == null ) return;
 
-        IWorkbenchPartSite site = part.getSite();
+        IWorkbenchPartSite site = wbPart.getSite();
 
         IKeyBindingService keyBindingService = site.getKeyBindingService();
         keyBindingService.unregisterAction(deleteVertexHandler);
         deleteVertexHandler=null;
 
-        ApplicationGIS.getToolManager().setDELETEAction(oldAction,part);
+        ApplicationGIS.getToolManager().setDELETEAction(oldAction, wbPart);
         actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), oldAction);
         if( oldAction!=null ){
             keyBindingService.registerAction(oldAction);

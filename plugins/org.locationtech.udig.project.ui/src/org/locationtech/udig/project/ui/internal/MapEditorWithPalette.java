@@ -731,7 +731,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         setTitleToolTip(Messages.MapEditor_titleToolTip);
         setTitleImage(ProjectUIPlugin.getDefault().getImage(ISharedImages.MAP_OBJ));
 
-        viewer = new MapViewer(composite, SWT.DOUBLE_BUFFERED);
+        viewer = new MapViewer(composite, this, SWT.DOUBLE_BUFFERED);
         // we need an edit domain for GEF
         // This represents the "Current Tool" for the Palette
         // We should not duplicate the idea of current tools so we may

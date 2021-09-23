@@ -10,23 +10,6 @@
  */
 package org.locationtech.udig.tutorials.rcp;
 
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.ProjectFactory;
-import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.MapPart;
-import org.locationtech.udig.project.ui.internal.tool.display.ToolManager;
-import org.locationtech.udig.project.ui.internal.wizard.MapImport;
-import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
-import org.locationtech.udig.project.ui.tool.IToolManager;
-import org.locationtech.udig.project.ui.tool.ModalTool;
-import org.locationtech.udig.project.ui.viewers.MapEditDomain;
-import org.locationtech.udig.project.ui.viewers.MapViewer;
-import org.locationtech.udig.tools.internal.ScrollPanTool;
-import org.locationtech.udig.tools.internal.Zoom;
-import org.locationtech.udig.tutorials.tracking.glasspane.SeagullGlassPaneOp;
-import org.locationtech.udig.tutorials.tracking.glasspane.TrackSeagullOp;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
@@ -45,6 +28,20 @@ import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.ViewPart;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.wizard.MapImport;
+import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
+import org.locationtech.udig.project.ui.tool.ModalTool;
+import org.locationtech.udig.project.ui.viewers.MapEditDomain;
+import org.locationtech.udig.project.ui.viewers.MapViewer;
+import org.locationtech.udig.tools.internal.ScrollPanTool;
+import org.locationtech.udig.tools.internal.Zoom;
+import org.locationtech.udig.tutorials.tracking.glasspane.SeagullGlassPaneOp;
+import org.locationtech.udig.tutorials.tracking.glasspane.TrackSeagullOp;
 
 /**
  * A sample map view that contains an overview map in the lower left corner.
@@ -64,7 +61,10 @@ public class OverviewMapView extends ViewPart implements MapPart {
     private MapViewer mapviewer; // main map viewer
     private OverviewMapViewer overviewmapviewer; // overview map viewer
 
-	private MapEditDomain editDomain;
+    private MapEditDomain editDomain;
+
+    /** This is for testing only DO NOT USE OTHERWISE */
+    public boolean isTesting;
 
     public OverviewMapView() {
         super();
@@ -245,6 +245,22 @@ public class OverviewMapView extends ViewPart implements MapPart {
 
     }
 
+    @Override
+    public UDIGDropHandler getDropHandler() {
+        return mapviewer.getDropHandler(); // oder overviewmapviewer.getDropHandler() ????
+    }
+
+    // helper methods for Toolmanager
+    @Override
+    public boolean isTesting() {
+        return this.isTesting;
+    }
+
+    @Override
+    public void setTesting(boolean testing) {
+        this.isTesting = testing;
+    }
+
     class SetBackgroundWMSCAction extends Action {
         public SetBackgroundWMSCAction() {
             super("Add Background layer..."); //$NON-NLS-1$
@@ -264,6 +280,7 @@ public class OverviewMapView extends ViewPart implements MapPart {
 	public IStatusLineManager getStatusLineManager() {
 		return getViewSite().getActionBars().getStatusLineManager();
 	}
+
 }
 
 class OverviewLayoutManager extends Layout {
@@ -278,3 +295,4 @@ class OverviewLayoutManager extends Layout {
     }
 
 }
+

@@ -15,25 +15,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.ICatalog;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.IServiceFactory;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.ProjectFactory;
-import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
-import org.locationtech.udig.project.internal.commands.AddLayersCommand;
-import org.locationtech.udig.project.ui.internal.MapPart;
-import org.locationtech.udig.project.ui.internal.wizard.MapImport;
-import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
-import org.locationtech.udig.project.ui.tool.ModalTool;
-import org.locationtech.udig.project.ui.viewers.MapViewer;
-import org.locationtech.udig.tools.internal.FixedScalePan;
-import org.locationtech.udig.tools.internal.Zoom;
-import org.locationtech.udig.tutorials.tracking.glasspane.SeagullGlassPaneOp;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
@@ -49,6 +30,24 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.part.ViewPart;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import org.locationtech.udig.project.internal.commands.AddLayersCommand;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.wizard.MapImport;
+import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
+import org.locationtech.udig.project.ui.tool.ModalTool;
+import org.locationtech.udig.project.ui.viewers.MapViewer;
+import org.locationtech.udig.tools.internal.FixedScalePan;
+import org.locationtech.udig.tools.internal.Zoom;
+import org.locationtech.udig.tutorials.tracking.glasspane.SeagullGlassPaneOp;
 
 /**
  * A map view.
@@ -64,6 +63,9 @@ public class MapView extends ViewPart implements MapPart {
     // private RenderManager renderManager;
     private Map map;
     private SeagullGlassPaneOp seagullOp;
+
+    /** This is for testing only DO NOT USE OTHERWISE */
+    public boolean isTesting;
 
     public MapView() {
         super();
@@ -330,5 +332,21 @@ public class MapView extends ViewPart implements MapPart {
         }
         tool.setActive(true);
         activeTool = tool;
+    }
+
+    @Override
+     public UDIGDropHandler getDropHandler() {
+        return mapviewer.getDropHandler();
+     }
+
+    // helper methods for Toolmanager
+    @Override
+    public boolean isTesting() {
+        return this.isTesting;
+    }
+
+    @Override
+    public void setTesting(boolean testing) {
+        this.isTesting = testing;
     }
 }

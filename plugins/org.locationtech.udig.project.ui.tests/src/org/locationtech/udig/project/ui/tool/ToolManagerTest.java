@@ -78,12 +78,15 @@ public class ToolManagerTest extends AbstractProjectUITestCase {
         AdaptingFilter filter = AdaptingFilterFactory.createAdaptingFilter(firstLayer.getFilter(), firstLayer );
         StructuredSelection structuredSelection = new StructuredSelection(filter);
         
-        ApplicationGISInternal.getActiveEditor().getEditorSite().getSelectionProvider().setSelection(structuredSelection) ;
+        ApplicationGISInternal.getActiveEditor().getSite().getSelectionProvider()
+                .setSelection(structuredSelection);
+
         Event event = new Event();
         event.display=Display.getCurrent();
         copyAction.runWithEvent(event);
 
-        ApplicationGISInternal.getActiveEditor().getEditorSite().getSelectionProvider().setSelection(new StructuredSelection(layer));
+        ApplicationGISInternal.getActiveEditor().getSite().getSelectionProvider()
+                .setSelection(new StructuredSelection(layer));
         
         pasteAction.runWithEvent(event);
         

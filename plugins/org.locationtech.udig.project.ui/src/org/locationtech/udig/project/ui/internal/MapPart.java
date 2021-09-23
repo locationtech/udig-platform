@@ -12,6 +12,8 @@ package org.locationtech.udig.project.ui.internal;
 
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IWorkbenchPart;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
 
@@ -32,7 +34,7 @@ import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
  * @since 1.1.0
  * @version 1.3.0
  */
-public interface MapPart {
+public interface MapPart extends IWorkbenchPart {
 
     /**
      * Returns the map that this editor edits
@@ -68,10 +70,16 @@ public interface MapPart {
      */
     public abstract IStatusLineManager getStatusLineManager();
 
-    // /**
-    // * EditDomain used to control the current tool.
-    // * @return
-    // */
-    // public abstract MapEditDomain getEditDomain();
+    /**
+     * Returns the DropHandler from this editor.
+     * 
+     * @return Returns the DropHandler from this editor.
+     */
+    public UDIGDropHandler getDropHandler();
+
+    // helper methods for tools
+    boolean isTesting();
+
+    void setTesting(boolean isTesting);
 
 }

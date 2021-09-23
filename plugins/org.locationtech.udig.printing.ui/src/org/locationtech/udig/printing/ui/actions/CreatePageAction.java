@@ -19,23 +19,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import org.locationtech.udig.printing.model.Box;
-import org.locationtech.udig.printing.model.ModelFactory;
-import org.locationtech.udig.printing.model.Page;
-import org.locationtech.udig.printing.ui.Template;
-import org.locationtech.udig.printing.ui.TemplateFactory;
-import org.locationtech.udig.printing.ui.internal.BasicTemplateFactory;
-import org.locationtech.udig.printing.ui.internal.Messages;
-import org.locationtech.udig.printing.ui.internal.PrintingPlugin;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.Project;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.MapEditor;
-import org.locationtech.udig.project.ui.internal.MapEditorInput;
-import org.locationtech.udig.project.ui.internal.MapEditorPart;
-import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
-import org.locationtech.udig.project.ui.internal.MapPart;
-
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.action.IAction;
@@ -48,11 +31,23 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorActionDelegate;
-import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ListDialog;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.ModelFactory;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.printing.ui.Template;
+import org.locationtech.udig.printing.ui.TemplateFactory;
+import org.locationtech.udig.printing.ui.internal.BasicTemplateFactory;
+import org.locationtech.udig.printing.ui.internal.Messages;
+import org.locationtech.udig.printing.ui.internal.PrintingPlugin;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
+import org.locationtech.udig.project.ui.internal.MapPart;
 
 /**
  * Creates a Page using the current map
@@ -64,57 +59,54 @@ import org.eclipse.ui.dialogs.ListDialog;
 public class CreatePageAction implements IEditorActionDelegate {
 
     public void run( IAction action ) {
-        IEditorPart activeEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                .getActivePage().getActiveEditor();
-        IEditorInput input = activeEditor.getEditorInput();
-        if (!(activeEditor instanceof MapEditorPart) && !(input instanceof MapEditorInput)) {
+
+        MapPart mapEditor = ApplicationGISInternal.getActiveEditor();
+
+        if (mapEditor == null) {
             MessageDialog.openError(Display.getDefault().getActiveShell(),
                     Messages.CreatePageAction_printError_title,
                     Messages.CreatePageAction_printError_text);
-        }
+        } else {
 
-        MapPart mapEditor = (MapPart) activeEditor;
-        
-        Template template = getPageTemplate();
+            Template template = getPageTemplate();
 
-        if (template == null) {
-            return;
-        }
+            if (template == null) {
+                return;
+            }
 
-        Map map = null;
-        Project project = null;
+            Map map = null;
+            Project project = null;
 
-        Map oldMap = (Map) ((MapEditorInput) input).getProjectElement();
-        project = oldMap.getProjectInternal();
-        try {
-            map = (Map) EcoreUtil.copy(oldMap);   
-        }
-        catch( Throwable t ){
-            // unable to copy map?
-            t.printStackTrace();
-            return;
-        }
+            Map oldMap = mapEditor.getAdapter(Map.class);
+            project = oldMap.getProjectInternal();
+            try {
+                map = (Map) EcoreUtil.copy(oldMap);
+            } catch (Throwable t) {
+                // unable to copy map?
+                t.printStackTrace();
+                return;
+            }
 
-        project.getElementsInternal().add(map);
+            project.getElementsInternal().add(map);
 
-        //Point size = //mapEditor.getComposite().getSize();
-        Point partSize;
-        if( mapEditor instanceof MapEditorPart ){
-            MapEditorPart part = (MapEditorPart) mapEditor;
-        	partSize = part.getComposite().getSize();
-        }
-        else if( mapEditor instanceof MapEditorWithPalette){
-        	MapEditorWithPalette part = (MapEditorWithPalette) mapEditor;
-        	partSize = part.getComposite().getSize();
-        }
-        else {
-        	//java.awt.Dimension size = map.getRenderManager().getMapDisplay().getDisplaySize();
-        	//Point partSize = new Point(size.width,size.height);
-        	partSize = new Point(500,500);
-        }
-        Page page = createPage(template, map, project, partSize );
+            Point partSize;
+            if (mapEditor instanceof MapEditorPart) {
+                MapEditorPart part = (MapEditorPart) mapEditor;
+                partSize = part.getComposite().getSize();
+            } else if (mapEditor instanceof MapEditorWithPalette) {
+                MapEditorWithPalette part = (MapEditorWithPalette) mapEditor;
+                partSize = part.getComposite().getSize();
+            } else {
+                // java.awt.Dimension size =
+                // map.getRenderManager().getMapDisplay().getDisplaySize();
+                // Point partSize = new Point(size.width,size.height);
+                partSize = new Point(500, 500);
+            }
+            Page page = createPage(template, map, project, partSize);
 
-        ApplicationGIS.openProjectElement(page, false);
+            ApplicationGIS.openProjectElement(page, false);
+
+        }
     }
 
     private Page createPage( Template template, Map map, Project project, Point partSize ) {

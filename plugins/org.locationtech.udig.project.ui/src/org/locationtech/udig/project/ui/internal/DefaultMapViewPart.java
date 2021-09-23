@@ -23,6 +23,8 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.part.ViewPart;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.internal.ui.IDropTargetProvider;
+import org.locationtech.udig.internal.ui.UDIGControlDropListener;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
 import org.locationtech.udig.project.IProject;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.commands.CreateMapCommand;
@@ -52,6 +54,9 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
 
     private DropTargetDescriptor dropTarget;
 
+    /** This is for testing only DO NOT USE OTHERWISE */
+    public boolean isTesting;
+
     private IToolManager toolManager;
 
     private MapEditDomain editDomain;
@@ -80,7 +85,7 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
         editDomain = new MapEditDomain(null);
         try {
             IProgressMonitor monitor = getViewSite().getActionBars().getStatusLineManager().getProgressMonitor();
-            viewer = new MapViewer(parent, SWT.DOUBLE_BUFFERED);
+            viewer = new MapViewer(parent, this, SWT.DOUBLE_BUFFERED);
             List<IGeoResource> resources = new ArrayList<IGeoResource>();
             createResources(resources, monitor);
             IProject activeProject = ApplicationGIS.getActiveProject();
@@ -204,6 +209,23 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
             viewer.setMenu(menu);
             getSite().registerContextMenu(contextMenu, getSite().getSelectionProvider());
         }
+    }
+
+    @Override
+    public UDIGDropHandler getDropHandler() {
+        return ((UDIGControlDropListener) dropTarget.listener).getHandler();
+    }
+
+    //
+    // helper method for ToolManager
+    @Override
+    public boolean isTesting() {
+        return this.isTesting;
+    }
+
+    @Override
+    public void setTesting(boolean testing) {
+        this.isTesting = testing;
     }
 
 }
