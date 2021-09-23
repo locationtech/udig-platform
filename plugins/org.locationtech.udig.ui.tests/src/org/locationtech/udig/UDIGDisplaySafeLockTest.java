@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -49,7 +49,7 @@ public class UDIGDisplaySafeLockTest {
     @Test
     public void testLock() throws Throwable {
         final Thread displayThread = Thread.currentThread();
-        final Set<State> states = new HashSet<State>();
+        final Set<State> states = new HashSet<>();
         final Lock lockLock = new ReentrantLock();
         final Throwable[] exception = new Throwable[1];
         final boolean[] passed = new boolean[1];
@@ -63,7 +63,7 @@ public class UDIGDisplaySafeLockTest {
                     states.add(State.THREAD_HAS_LOCK);
                     lockLock.unlock();
 
-                    while( !states.contains(State.DISPLAY_WAITING_FOR_LOCK) ) {
+                    while (!states.contains(State.DISPLAY_WAITING_FOR_LOCK)) {
                         Thread.sleep(100);
                     }
 
@@ -87,7 +87,7 @@ public class UDIGDisplaySafeLockTest {
                     states.remove(State.THREAD_HAS_LOCK);
                     lock.unlock();
 
-                    while( !states.contains(State.DISPLAY_HAS_LOCK) )
+                    while (!states.contains(State.DISPLAY_HAS_LOCK))
                         Thread.sleep(200);
 
                     lockLock.lock();
@@ -225,6 +225,7 @@ public class UDIGDisplaySafeLockTest {
         final boolean[] gotLock2 = new boolean[1];
         gotLock2[0] = false;
         Runnable thread2 = new Runnable() {
+            @Override
             public void run() {
                 waiting[0] = true;
                 lock.lock();
@@ -235,7 +236,7 @@ public class UDIGDisplaySafeLockTest {
         Thread t2 = new Thread(thread2);
         t2.start();
 
-        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition() {
+        UDIGTestUtil.inDisplayThreadWait(2 * WAIT_LENGTH, new WaitCondition() {
 
             @Override
             public boolean isTrue() {
@@ -267,12 +268,12 @@ public class UDIGDisplaySafeLockTest {
         assertTrue(lock.tryLock());
 
         assertTrue(lock.isHeldByCurrentThread());
-        final boolean[] result=new boolean[1];
-        result[0]=true;
+        final boolean[] result = new boolean[1];
+        result[0] = true;
         new Thread() {
             @Override
             public void run() {
-                result[0]=lock.tryLock();
+                result[0] = lock.tryLock();
             }
         }.start();
 
@@ -291,20 +292,20 @@ public class UDIGDisplaySafeLockTest {
         assertTrue(lock.tryLock(100, TimeUnit.MICROSECONDS));
 
         assertTrue(lock.isHeldByCurrentThread());
-        final boolean[] ready=new boolean[1];
-        ready[0]=false;
+        final boolean[] ready = new boolean[1];
+        ready[0] = false;
 
-        final boolean[] obtained=new boolean[1];
-        obtained[0]=false;
-        final Throwable[] exception=new Throwable[1];
+        final boolean[] obtained = new boolean[1];
+        obtained[0] = false;
+        final Throwable[] exception = new Throwable[1];
         new Thread() {
             @Override
             public void run() {
-                ready[0]=true;
+                ready[0] = true;
                 try {
-                    obtained[0]=lock.tryLock(100, TimeUnit.SECONDS);
+                    obtained[0] = lock.tryLock(100, TimeUnit.SECONDS);
                 } catch (Throwable e) {
-                    exception[0]=e;
+                    exception[0] = e;
                 }
             }
         }.start();
@@ -317,7 +318,7 @@ public class UDIGDisplaySafeLockTest {
             }
 
         }, false);
-        if( exception[0]!=null )
+        if (exception[0] != null)
             throw exception[0];
 
         lock.unlock();
@@ -330,9 +331,8 @@ public class UDIGDisplaySafeLockTest {
             }
 
         }, false);
-        if( exception[0]!=null )
+        if (exception[0] != null)
             throw exception[0];
-
 
     }
 
@@ -389,7 +389,7 @@ public class UDIGDisplaySafeLockTest {
         assertEquals(0, lock.getWaitQueueLength(condition));
         assertFalse(lock.hasWaiters(condition));
 
-        final Exception[] ex=new Exception[1];
+        final Exception[] ex = new Exception[1];
 
         Thread t = new Thread() {
             @Override
@@ -399,7 +399,7 @@ public class UDIGDisplaySafeLockTest {
                     condition.await();
                     lock.unlock();
                 } catch (Exception e) {
-                    ex[0]=e;
+                    ex[0] = e;
                 }
             }
         };
@@ -410,11 +410,11 @@ public class UDIGDisplaySafeLockTest {
 
             @Override
             public boolean isTrue() {
-                return lock.getWaitQueueLength(condition) == 1 || ex[0]!=null;
+                return lock.getWaitQueueLength(condition) == 1 || ex[0] != null;
             }
 
         }, true);
-        if( ex[0]!=null )
+        if (ex[0] != null)
             throw ex[0];
         assertTrue(lock.hasWaiters(condition));
 
@@ -506,93 +506,94 @@ public class UDIGDisplaySafeLockTest {
     @Ignore("fails in tycho")
     @Test
     public void testSignalAll() throws Exception {
-            final Condition condition = lock.newCondition();
-            final Exception[] exception=new Exception[1];
-            final boolean[] awake=new boolean[2];
-            Thread t=new Thread() {
+        final Condition condition = lock.newCondition();
+        final Exception[] exception = new Exception[1];
+        final boolean[] awake = new boolean[2];
+        Thread t = new Thread() {
 
-                @Override
-                public void run() {
-                    lock.lock();
-                    try {
-                        condition.await();
-                        awake[0]=true;
-                    } catch (InterruptedException e) {
-                        exception[0]=e;
-                    } finally {
-                        lock.unlock();
-                    }
+            @Override
+            public void run() {
+                lock.lock();
+                try {
+                    condition.await();
+                    awake[0] = true;
+                } catch (InterruptedException e) {
+                    exception[0] = e;
+                } finally {
+                    lock.unlock();
                 }
+            }
 
-            };
-            t.start();
+        };
+        t.start();
 
-            Thread t2=new Thread() {
+        Thread t2 = new Thread() {
 
-                @Override
-                public void run() {
-                    lock.lock();
-                    try {
-                        condition.await();
-                        awake[1]=true;
-                    } catch (InterruptedException e) {
-                        exception[0]=e;
-                    } finally {
-                        lock.unlock();
-                    }
+            @Override
+            public void run() {
+                lock.lock();
+                try {
+                    condition.await();
+                    awake[1] = true;
+                } catch (InterruptedException e) {
+                    exception[0] = e;
+                } finally {
+                    lock.unlock();
                 }
+            }
 
-            };
-            t2.start();
+        };
+        t2.start();
 
-            UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition() {
+        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition() {
 
-                @Override
-                public boolean isTrue() {
-                    return lock.getWaitQueueLength(condition)==2;
-                }
+            @Override
+            public boolean isTrue() {
+                return lock.getWaitQueueLength(condition) == 2;
+            }
 
-            }, false);
-            if( exception[0]!=null )
-                throw exception[0];
-            lock.lock();
-            condition.signalAll();
-            lock.unlock();
-            UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition() {
+        }, false);
+        if (exception[0] != null)
+            throw exception[0];
+        lock.lock();
+        condition.signalAll();
+        lock.unlock();
+        UDIGTestUtil.inDisplayThreadWait(WAIT_LENGTH, new WaitCondition() {
 
-                @Override
-                public boolean isTrue() {
-                    return lock.getWaitQueueLength(condition)==0;
-                }
+            @Override
+            public boolean isTrue() {
+                return lock.getWaitQueueLength(condition) == 0;
+            }
 
-            }, false);
-            if( exception[0]!=null )
-                throw exception[0];
-            assertTrue(awake[0]);
-            assertTrue(awake[1]);
+        }, false);
+        if (exception[0] != null)
+            throw exception[0];
+        assertTrue(awake[0]);
+        assertTrue(awake[1]);
 
     }
 
     /**
-     * This is a special case that we found causes a bug.  See <a href="http://jira.codehaus.org/browse/UDIG-1007"/>
+     * This is a special case that we found causes a bug. See
+     * <a href="http://jira.codehaus.org/browse/UDIG-1007"/>
      *
      * @throws Exception
      */
     @Test
     public void testLockSignalLockUnlockUnlock() throws Exception {
-        final Display display=Display.getCurrent();
-        final Set<State> state=new CopyOnWriteArraySet<State>();
-        final boolean[] done=new boolean[1];
-        done[0]=false;
+        final Display display = Display.getCurrent();
+        final Set<State> state = new CopyOnWriteArraySet<>();
+        final boolean[] done = new boolean[1];
+        done[0] = false;
 
-        Thread t=new Thread() {
+        Thread t = new Thread() {
 
             @Override
             public void run() {
                 lock.lock();
                 state.add(UDIGDisplaySafeLockTest.State.THREAD_HAS_LOCK);
-                final boolean[] locked=new boolean[1];
-                locked[0]=false;
+                final boolean[] locked = new boolean[1];
+                locked[0] = false;
 
                 display.asyncExec(new Runnable() {
                     @Override
@@ -604,24 +605,26 @@ public class UDIGDisplaySafeLockTest {
                                 lock.lock();
                                 lock.unlock();
 
-                                state.remove(UDIGDisplaySafeLockTest.State.DISPLAY_WAITING_FOR_LOCK);
+                                state.remove(
+                                        UDIGDisplaySafeLockTest.State.DISPLAY_WAITING_FOR_LOCK);
                             }
                         });
                         lock.lock();
-                        locked[0]=true;
+                        locked[0] = true;
                         lock.unlock();
                     }
                 });
 
-                long timeout=200000;
-                long start=System.currentTimeMillis();
+                long timeout = 200000;
+                long start = System.currentTimeMillis();
 
-                while( !state.contains(UDIGDisplaySafeLockTest.State.DISPLAY_WAITING_FOR_LOCK) && timeout>(System.currentTimeMillis()-start) ){
+                while (!state.contains(UDIGDisplaySafeLockTest.State.DISPLAY_WAITING_FOR_LOCK)
+                        && timeout > (System.currentTimeMillis() - start)) {
                     synchronized (this) {
                         try {
                             wait(200);
                         } catch (InterruptedException e) {
-                            throw (RuntimeException) new RuntimeException( ).initCause( e );
+                            throw (RuntimeException) new RuntimeException().initCause(e);
                         }
                     }
                 }
@@ -629,24 +632,25 @@ public class UDIGDisplaySafeLockTest {
                 lock.unlock();
                 state.remove(UDIGDisplaySafeLockTest.State.THREAD_HAS_LOCK);
 
-                start=System.currentTimeMillis();
-                while( (!locked[0]) && timeout>(System.currentTimeMillis()-start) ){
+                start = System.currentTimeMillis();
+                while ((!locked[0]) && timeout > (System.currentTimeMillis() - start)) {
                     synchronized (this) {
                         try {
                             wait(200);
                         } catch (InterruptedException e) {
-                            throw (RuntimeException) new RuntimeException( ).initCause( e );
+                            throw (RuntimeException) new RuntimeException().initCause(e);
                         }
                     }
                 }
 
-                if( !locked[0] ){
+                if (!locked[0]) {
                     display.getThread().interrupt();
-                    Exception exception=new Exception("Test Failed in a blocking manner so killing tests... Sorry no other way"); //$NON-NLS-1$
+                    Exception exception = new Exception(
+                            "Test Failed in a blocking manner so killing tests... Sorry no other way"); //$NON-NLS-1$
                     exception.printStackTrace();
                     System.exit(-1);
                 }
-                done[0]=true;
+                done[0] = true;
             }
 
         };
