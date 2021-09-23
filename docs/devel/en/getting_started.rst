@@ -10,6 +10,7 @@ Tutorials:
 .. toctree::
    :maxdepth: 1
    
+   IDE-Setup/Eclipse/getting_started_Eclipse_IDE
    SDKQuickstart/SDKQuickstart
    CustomApplication/CustomApplication
    tool_plugin_tutorial
