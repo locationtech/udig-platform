@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.style.advanced.raster
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Advanced Style for Rasters

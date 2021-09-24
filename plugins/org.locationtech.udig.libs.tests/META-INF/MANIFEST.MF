@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.libs.tests
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Libs Tests

@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.render.gridcoverage.basic.test
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Basic Feature Renderer Test Plug-in

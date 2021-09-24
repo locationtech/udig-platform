@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.tutorials.catalog.csv.tests
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Test CSV Catalog Plug-in

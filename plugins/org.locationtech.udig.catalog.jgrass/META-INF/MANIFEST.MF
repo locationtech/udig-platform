@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.catalog.jgrass
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: JGrass Catalog Plugin
@@ -25,4 +26,3 @@ Export-Package: org.locationtech.udig.catalog.jgrass,org.locationtech.
  cationtech.udig.catalog.jgrass.workspacecreation
 Import-Package: javax.media.jai,
  javax.media.jai.iterator
-

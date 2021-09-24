@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.browser
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Manifest.name
@@ -14,5 +15,4 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.project.ui,
  org.locationtech.udig.mapgraphic
 Bundle-ActivationPolicy: lazy
-Export-Package: org.locationtech.udig.browser,org.locationtech.udig.br
- owser.ui
+Export-Package: org.locationtech.udig.browser,org.locationtech.udig.browser.ui

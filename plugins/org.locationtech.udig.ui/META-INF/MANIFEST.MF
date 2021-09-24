@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.ui
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
@@ -32,4 +33,3 @@ Export-Package: org.locationtech.udig,
  org.locationtech.udig.ui.properties
 Import-Package: com.google.common.base;version="12.0.0",
  net.miginfocom.swt;version="[3.7.0,3.8.0)"
-

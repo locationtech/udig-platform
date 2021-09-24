@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.context
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Context Plug-in

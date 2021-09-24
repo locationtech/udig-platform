@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.catalog.wmt
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
@@ -27,4 +28,3 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
-

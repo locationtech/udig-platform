@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.jconsole
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: JConsole Plugin
@@ -29,4 +30,3 @@ Eclipse-BuddyPolicy: global
 Eclipse-AutoStart: true 
 Bundle-ClassPath: .
 Export-Package: .
-

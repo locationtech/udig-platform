@@ -1,3 +1,4 @@
+Automatic-Module-Name: net.sf.opencsv
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Java CSV Plug-in

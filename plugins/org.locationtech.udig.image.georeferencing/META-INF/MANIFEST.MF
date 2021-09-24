@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.image.georeferencing
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.locationtech.udig.image.georeferencing

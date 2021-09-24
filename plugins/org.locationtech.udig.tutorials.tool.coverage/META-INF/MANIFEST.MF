@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.tutorials.tool.coverage
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Coverage Edit Tool Plug-in
