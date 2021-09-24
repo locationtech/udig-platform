@@ -28,6 +28,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.tests.CatalogTests;
 import org.locationtech.udig.catalog.tests.ui.CatalogTestsUIPlugin;
 import org.locationtech.udig.catalog.ui.ConnectionFactoryManager;
 import org.locationtech.udig.internal.ui.UDIGControlDropListener;
@@ -37,7 +38,6 @@ import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.IMapCompositionListener;
 import org.locationtech.udig.project.MapCompositionEvent;
 import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.MapTests;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
 import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
@@ -130,7 +130,7 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
         URL url = FileLocator.toFileURL(
                 CatalogTestsUIPlugin.getDefault().getBundle().getEntry("data/lakes.shp")); //$NON-NLS-1$
         String data = "<td class='confluenceTd'> <span class=\"nobr\"><a href=\"" + url.toString() //$NON-NLS-1$
-        + "\" title=\"Visit page outside Confluence\" rel=\"nofollow\">DM Solutions WMS<sup><img class=\"rendericon\" src=\"/confluence/images/icons/linkext7.gif\" height=\"7\" width=\"7\" align=\"absmiddle\" alt=\"\" border=\"0\"/></sup></a></span> </td>"; //$NON-NLS-1$
+                + "\" title=\"Visit page outside Confluence\" rel=\"nofollow\">DM Solutions WMS<sup><img class=\"rendericon\" src=\"/confluence/images/icons/linkext7.gif\" height=\"7\" width=\"7\" align=\"absmiddle\" alt=\"\" border=\"0\"/></sup></a></span> </td>"; //$NON-NLS-1$
 
         final int[] baseLayers = new int[1];
         baseLayers[0] = 0;
@@ -158,8 +158,7 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
         System.out.println("current maps=" + map.getProject().getElements()); //$NON-NLS-1$
         assertNotNull(map);
         List<ILayer> layers = map.getMapLayers();
-        assertEquals(
-                map.getName() + " should have " + (baseLayers[0] + 1) //$NON-NLS-1$
+        assertEquals(map.getName() + " should have " + (baseLayers[0] + 1) //$NON-NLS-1$
                 + " number of layers but instead layers=" + layers, //$NON-NLS-1$
                 baseLayers[0] + 1, layers.size());
 
@@ -282,9 +281,10 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
     @Test
     public void testMultiGeoResources() throws Exception {
         Object data = new Object[] {
-                MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures("test1", 2), //$NON-NLS-1$
-                        true), MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures("test2", 2), true) //$NON-NLS-1$
-        };
+                CatalogTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures("test1", 2), //$NON-NLS-1$
+                        true),
+                CatalogTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures("test2", 2), //$NON-NLS-1$
+                        true) };
 
         int base = 0;
 

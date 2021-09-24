@@ -16,6 +16,7 @@ import java.awt.Dimension;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.locationtech.udig.catalog.tests.CatalogTests;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
@@ -33,7 +34,7 @@ public class SelectionLayerTest extends AbstractProjectTestCase {
     public void setUp() throws Exception {
         SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("testType", 3); //$NON-NLS-1$
         Map map = MapTests.createNonDynamicMapAndRenderer(
-                MapTests.createGeoResource(features, true), new Dimension(512, 512));
+                CatalogTests.createGeoResource(features, true), new Dimension(512, 512));
         layer = map.getLayersInternal().get(0);
         selectionLayer = new SelectionLayer(layer);
     }

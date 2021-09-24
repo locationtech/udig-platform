@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -29,6 +30,7 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.tests.CatalogTests;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.render.impl.RenderContextImpl;
 import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
@@ -41,36 +43,25 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * Test BasicFeatureRenderer
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public class BasicFeatureRendererTest extends AbstractProjectTestCase {
-    
-    public static final String BC_ALBERS_WKT=
-        "PROJCS[\"BC_Albers\",GEOGCS[\"GCS_North_American_1983\"," + //$NON-NLS-1$
-            "DATUM[\"North_American_Datum_1983\"," + //$NON-NLS-1$
-            "SPHEROID[\"GRS_1980\",6378137,298.257222101]]," + //$NON-NLS-1$
-            "PRIMEM[\"Greenwich\",0]," + //$NON-NLS-1$
-            "UNIT[\"Degree\",0.017453292519943295]]," + //$NON-NLS-1$
-            "PROJECTION[\"Albers\"]," + //$NON-NLS-1$
-            "PARAMETER[\"False_Easting\",1000000]," + //$NON-NLS-1$
-            "PARAMETER[\"False_Northing\",0]," + //$NON-NLS-1$
-            "PARAMETER[\"Central_Meridian\",-126]," + //$NON-NLS-1$
-            "PARAMETER[\"Standard_Parallel_1\",50]," + //$NON-NLS-1$
-            "PARAMETER[\"Standard_Parallel_2\",58.5]," + //$NON-NLS-1$
-            "PARAMETER[\"Latitude_Of_Origin\",45]," + //$NON-NLS-1$
-            "UNIT[\"Meter\",1]]"; //$NON-NLS-1$
 
-    //  Accuracy for when the envelopes are being transformed.  The tests are
-    //  made so that the accuracy isn't expected to be perfect.
+    public static final String BC_ALBERS_WKT = "PROJCS[\"BC_Albers\",GEOGCS[\"GCS_North_American_1983\"," //$NON-NLS-1$
+            + "DATUM[\"North_American_Datum_1983\"," + "SPHEROID[\"GRS_1980\",6378137,298.257222101]]," + "PRIMEM[\"Greenwich\",0]," + "UNIT[\"Degree\",0.017453292519943295]]," + "PROJECTION[\"Albers\"]," + "PARAMETER[\"False_Easting\",1000000]," + "PARAMETER[\"False_Northing\",0]," + "PARAMETER[\"Central_Meridian\",-126]," + "PARAMETER[\"Standard_Parallel_1\",50]," + "PARAMETER[\"Standard_Parallel_2\",58.5]," + "PARAMETER[\"Latitude_Of_Origin\",45]," + "UNIT[\"Meter\",1]]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
+
+    // Accuracy for when the envelopes are being transformed. The tests are
+    // made so that the accuracy isn't expected to be perfect.
     private static final double ACCURACY = 0.1;
-    
+
     private Map map;
-    
+
     private RenderContextImpl context;
 
-    private RenderContextImpl createContext( Map map ) {
-        RenderContextImpl context=new RenderContextImpl();
+    private RenderContextImpl createContext(Map map) {
+        RenderContextImpl context = new RenderContextImpl();
         context.setGeoResourceInternal(map.getLayersInternal().get(0).getGeoResources().get(0));
         context.setMapInternal(map);
         context.setRenderManagerInternal(map.getRenderManagerInternal());
@@ -80,97 +71,105 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
 
     @Before
     public void setup() throws Exception {
-        map = MapTests.createDefaultMap("BasicFeatureRenderer", 4, true, new Dimension(1024,1024)); //$NON-NLS-1$
-        map.getViewportModelInternal().setBounds(0,100,0,90);
+        map = MapTests.createDefaultMap("BasicFeatureRenderer", 4, true, new Dimension(1024, 1024)); //$NON-NLS-1$
+        map.getViewportModelInternal().setBounds(0, 100, 0, 90);
         map.getViewportModelInternal().setCRS(DefaultGeographicCRS.WGS84);
 
         context = createContext(map);
-        context.getRenderManagerInternal().setMapDisplay(new TestMapDisplay(new Dimension( 1000, 200)));
-       
-    }
+        context.getRenderManagerInternal()
+                .setMapDisplay(new TestMapDisplay(new Dimension(1000, 200)));
 
+    }
 
     @Test
     @Ignore
     public void testBC_ALBERS_Viewport() throws Exception {
         CRSFactory fac = ReferencingFactoryFinder.getCRSFactories(null).iterator().next();
         CoordinateReferenceSystem crs = fac.createFromWKT(BC_ALBERS_WKT);
-        
+
         GeometryFactory gfac = new GeometryFactory();
-        
+
         double maxx = -120;
         double maxy = 59.9;
         double minx = -125;
         double miny = 50;
-        LineString linestring = gfac.createLineString(new Coordinate[]{
-                new Coordinate(minx,miny),
-                new Coordinate(maxx,maxy)
-        });
-        
-        linestring=(LineString) JTS.transform(linestring, CRS.findMathTransform(DefaultGeographicCRS.WGS84, crs, true));
-        
-        SimpleFeature[] features = UDIGTestUtil.createTestFeatures("testBC_ALBERS_Viewport", new Geometry[]{ //$NON-NLS-1$
-                linestring
-        }
-        , null, crs);
-        
-        IGeoResource resource = MapTests.createGeoResource(features, false );
-        Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(1024,1024));
+        LineString linestring = gfac.createLineString(
+                new Coordinate[] { new Coordinate(minx, miny), new Coordinate(maxx, maxy) });
+
+        linestring = (LineString) JTS.transform(linestring,
+                CRS.findMathTransform(DefaultGeographicCRS.WGS84, crs, true));
+
+        SimpleFeature[] features = UDIGTestUtil.createTestFeatures("testBC_ALBERS_Viewport", //$NON-NLS-1$
+                new Geometry[] { linestring },
+                null, crs);
+
+        IGeoResource resource = CatalogTests.createGeoResource(features, false);
+        Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(1024, 1024));
         map.getViewportModelInternal().setCRS(DefaultGeographicCRS.WGS84);
-        
+
         createContext(map);
-        
-        map.getViewportModelInternal().setBounds(-150,-120,45,65);
-        
-        Envelope result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( minx,maxx,miny,maxy,crs ), new NullProgressMonitor(), context);
-        compareEnvelopes( new Envelope( minx,maxx,miny,maxy ), result);
-        
-        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( minx,maxx,miny,maxy-5, crs), new NullProgressMonitor(), context);
-        compareEnvelopes( new Envelope( minx,maxx,miny,maxy-5 ), result);
 
-        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( minx,maxx,miny-20,maxy+20, crs ), new NullProgressMonitor(), context);
-        compareEnvelopes( new Envelope( minx,maxx,50,60 ), result);
-        
-        map.getViewportModelInternal().setBounds(minx-5,minx+5,miny-5,miny+5);
+        map.getViewportModelInternal().setBounds(-150, -120, 45, 65);
 
-        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( minx,maxx,miny,maxy,crs ), new NullProgressMonitor(), context);
-        compareEnvelopes( new Envelope( minx,minx+5,miny,miny+5 ), result);
-        
-        map.getViewportModelInternal().setBounds(minx+2,minx+4,miny+2,miny+4);
+        Envelope result = BasicFeatureRenderer.validateBounds(
+                new ReferencedEnvelope(minx, maxx, miny, maxy, crs), new NullProgressMonitor(),
+                context);
+        compareEnvelopes(new Envelope(minx, maxx, miny, maxy), result);
 
-        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( minx,maxx,miny,maxy,crs ), new NullProgressMonitor(), context);
-        compareEnvelopes( new Envelope( minx+2,minx+4,miny+2,miny+4 ), result);
-        
-        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( 0,20,0,20,crs ), new NullProgressMonitor(), context);
-        assertTrue( result.isNull() );
+        result = BasicFeatureRenderer.validateBounds(
+                new ReferencedEnvelope(minx, maxx, miny, maxy - 5, crs), new NullProgressMonitor(),
+                context);
+        compareEnvelopes(new Envelope(minx, maxx, miny, maxy - 5), result);
+
+        result = BasicFeatureRenderer.validateBounds(
+                new ReferencedEnvelope(minx, maxx, miny - 20, maxy + 20, crs),
+                new NullProgressMonitor(), context);
+        compareEnvelopes(new Envelope(minx, maxx, 50, 60), result);
+
+        map.getViewportModelInternal().setBounds(minx - 5, minx + 5, miny - 5, miny + 5);
+
+        result = BasicFeatureRenderer.validateBounds(
+                new ReferencedEnvelope(minx, maxx, miny, maxy, crs), new NullProgressMonitor(),
+                context);
+        compareEnvelopes(new Envelope(minx, minx + 5, miny, miny + 5), result);
+
+        map.getViewportModelInternal().setBounds(minx + 2, minx + 4, miny + 2, miny + 4);
+
+        result = BasicFeatureRenderer.validateBounds(
+                new ReferencedEnvelope(minx, maxx, miny, maxy, crs), new NullProgressMonitor(),
+                context);
+        compareEnvelopes(new Envelope(minx + 2, minx + 4, miny + 2, miny + 4), result);
+
+        result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope(0, 20, 0, 20, crs),
+                new NullProgressMonitor(), context);
+        assertTrue(result.isNull());
     }
 
     @Test
     @Ignore("Looks like a TransformationException occurs -> same envelope as given")
     public void testLayerWithNoBounds() throws Exception {
-        SimpleFeature[] features = UDIGTestUtil.createTestFeatures("testNoBounds_Viewport", new Geometry[]{ //$NON-NLS-1$
-        }
-        , null, DefaultGeographicCRS.WGS84);
-        
-        IGeoResource resource = MapTests.createGeoResource(features, false );
-        Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(1024,1024));
+        SimpleFeature[] features = UDIGTestUtil.createTestFeatures("testNoBounds_Viewport", //$NON-NLS-1$
+                new Geometry[] { }, null, DefaultGeographicCRS.WGS84);
+
+        IGeoResource resource = CatalogTests.createGeoResource(features, false);
+        Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(1024, 1024));
         map.getViewportModelInternal().setCRS(DefaultGeographicCRS.WGS84);
-        
+
         RenderContextImpl myContext = createContext(map);
-        
+
         map.getViewportModelInternal().setBounds(-150, -120, 45, 65);
         CoordinateReferenceSystem crs = DefaultGeographicCRS.WGS84;
-        
+
         Envelope result = BasicFeatureRenderer.validateBounds(
                 new ReferencedEnvelope(0, 20, 0, 20, crs), new NullProgressMonitor(), myContext);
         assertTrue(result.isNull());
     }
 
     /**
-     * Compares envelopes to verify that they are "close".  THis is because reprojection is involved so
-     * they can't be perfect.  Or probably aren't perfect at any rate...
+     * Compares envelopes to verify that they are "close". THis is because reprojection is involved
+     * so they can't be perfect. Or probably aren't perfect at any rate...
      */
-    private void compareEnvelopes( Envelope expected, Envelope result ) {
+    private void compareEnvelopes(Envelope expected, Envelope result) {
         assertEquals(expected.getMinX(), result.getMinX(), ACCURACY);
         assertEquals(expected.getMinY(), result.getMinY(), ACCURACY);
         assertEquals(expected.getMaxX(), result.getMaxX(), ACCURACY);

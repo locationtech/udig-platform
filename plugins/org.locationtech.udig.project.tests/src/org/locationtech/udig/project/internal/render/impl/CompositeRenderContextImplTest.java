@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,6 +18,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.SortedSet;
 
+import org.junit.Test;
+import org.locationtech.udig.catalog.tests.CatalogTests;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.render.RenderContext;
@@ -25,18 +27,18 @@ import org.locationtech.udig.project.internal.render.RendererCreator;
 import org.locationtech.udig.project.internal.render.SelectionLayer;
 import org.locationtech.udig.project.tests.support.MapTests;
 
-import org.junit.Test;
-
 public class CompositeRenderContextImplTest {
 
     @Test
     public void testAddRemoveClear() throws Exception {
         Map map = MapTests.createDefaultMap("typename", 2, true, null); //$NON-NLS-1$
-        map.getLayersInternal().add(map.getLayerFactory().createLayer(MapTests.createGeoResource("type2", 3, false))); //$NON-NLS-1$
+        map.getLayersInternal().add(map.getLayerFactory()
+                .createLayer(CatalogTests.createGeoResource("type2", 3, false))); //$NON-NLS-1$
 
-        CompositeRendererImpl renderer = (CompositeRendererImpl) map.getRenderManagerInternal().getRenderExecutor().getRenderer();
+        CompositeRendererImpl renderer = (CompositeRendererImpl) map.getRenderManagerInternal()
+                .getRenderExecutor().getRenderer();
         renderer.getContext().clear();
-        RendererCreator creator=map.getRenderManagerInternal().getRendererCreator();
+        RendererCreator creator = map.getRenderManagerInternal().getRendererCreator();
 
         SortedSet<Layer> layers = creator.getLayers();
         layers.clear();
@@ -46,40 +48,37 @@ public class CompositeRenderContextImplTest {
 
         creator.reset();
 
-        CompositeRenderContextImpl comp=new CompositeRenderContextImpl();
+        CompositeRenderContextImpl comp = new CompositeRenderContextImpl();
         comp.addContexts(creator.getConfiguration());
 
         Iterator iter = comp.getContexts().iterator();
 
         RenderContext executor = (RenderContext) iter.next();
-        assertEquals( map.getLayersInternal().get(0),executor.getLayer() );
+        assertEquals(map.getLayersInternal().get(0), executor.getLayer());
         executor = (RenderContext) iter.next();
-        assertEquals( map.getLayersInternal().get(1),executor.getLayer() );
+        assertEquals(map.getLayersInternal().get(1), executor.getLayer());
         executor = (RenderContext) iter.next();
         SelectionLayer sl = (SelectionLayer) executor.getLayer();
-        assertEquals( map.getLayersInternal().get(0),sl.getWrappedLayer() );
+        assertEquals(map.getLayersInternal().get(0), sl.getWrappedLayer());
         executor = (RenderContext) iter.next();
         sl = (SelectionLayer) executor.getLayer();
-        assertEquals( map.getLayersInternal().get(1),sl.getWrappedLayer() );
+        assertEquals(map.getLayersInternal().get(1), sl.getWrappedLayer());
     }
 
     @Test
     public void testAssertNoSelfReference() {
-        CompositeRenderContextImpl comp=new CompositeRenderContextImpl();
-        CompositeRenderContextImpl comp2=new CompositeRenderContextImpl();
-        CompositeRenderContextImpl comp3=new CompositeRenderContextImpl();
+        CompositeRenderContextImpl comp = new CompositeRenderContextImpl();
+        CompositeRenderContextImpl comp2 = new CompositeRenderContextImpl();
+        CompositeRenderContextImpl comp3 = new CompositeRenderContextImpl();
         comp2.addContexts(Collections.singleton(comp3));
         comp3.addContexts(Collections.singleton(comp));
-        assertFalse(CompositeRenderContextImpl.assertNoSelfReference(comp, comp, Collections.singleton(comp2)));
+        assertFalse(CompositeRenderContextImpl.assertNoSelfReference(comp, comp,
+                Collections.singleton(comp2)));
 
         comp2.removeContexts(Collections.singleton(comp3));
-        assertTrue(CompositeRenderContextImpl.assertNoSelfReference(comp, comp, Collections.singleton(comp2)));
+        assertTrue(CompositeRenderContextImpl.assertNoSelfReference(comp, comp,
+                Collections.singleton(comp2)));
 
-    }
-
-    @Test
-    public void testCopy() {
-        // TODO
     }
 
 }
