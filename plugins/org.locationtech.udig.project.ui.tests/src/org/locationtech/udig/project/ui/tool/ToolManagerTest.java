@@ -27,6 +27,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.tests.CatalogTests;
 import org.locationtech.udig.core.filter.AdaptingFilter;
 import org.locationtech.udig.core.filter.AdaptingFilterFactory;
 import org.locationtech.udig.project.internal.Layer;
@@ -66,7 +67,7 @@ public class ToolManagerTest extends AbstractProjectUITestCase {
         }, true);
 
         SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("new", 1); //$NON-NLS-1$
-        IGeoResource resource = MapTests.createGeoResource(features, true);
+        IGeoResource resource = CatalogTests.createGeoResource(features, true);
         Layer layer = map.getLayerFactory().createLayer(resource);
         map.getLayersInternal().add(layer);
 
@@ -84,13 +85,13 @@ public class ToolManagerTest extends AbstractProjectUITestCase {
         StructuredSelection structuredSelection = new StructuredSelection(filter);
 
         ApplicationGISInternal.getActiveEditor().getEditorSite().getSelectionProvider()
-        .setSelection(structuredSelection);
+                .setSelection(structuredSelection);
         Event event = new Event();
         event.display = Display.getCurrent();
         copyAction.runWithEvent(event);
 
         ApplicationGISInternal.getActiveEditor().getEditorSite().getSelectionProvider()
-        .setSelection(new StructuredSelection(layer));
+                .setSelection(new StructuredSelection(layer));
 
         pasteAction.runWithEvent(event);
 
@@ -116,7 +117,7 @@ public class ToolManagerTest extends AbstractProjectUITestCase {
     @Test
     public void testDeleteAction() throws Exception {
         SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("new", 15); //$NON-NLS-1$
-        IGeoResource resource = MapTests.createGeoResource(features, true);
+        IGeoResource resource = CatalogTests.createGeoResource(features, true);
         Layer layer = map.getLayerFactory().createLayer(resource);
         map.getLayersInternal().add(layer);
 

@@ -40,6 +40,7 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.Polygon;
+import org.locationtech.udig.catalog.tests.CatalogTests;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.render.RenderExecutor;
 import org.locationtech.udig.project.internal.render.Renderer;
@@ -79,9 +80,10 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
         Polygon poly2 = factory.createPolygon(ring2, new LinearRing[] {});
 
         SimpleFeature[] features = UDIGTestUtil.createTestFeatures("testType", //$NON-NLS-1$
-                new Geometry[] { poly1, poly2 }, new String[] {}, DefaultEngineeringCRS.CARTESIAN_2D);
-        map = MapTests.createNonDynamicMapAndRenderer(MapTests.createGeoResource(features, true),
-                new Dimension(w, h));
+                new Geometry[] { poly1, poly2 }, new String[] {},
+                DefaultEngineeringCRS.CARTESIAN_2D);
+        map = MapTests.createNonDynamicMapAndRenderer(
+                CatalogTests.createGeoResource(features, true), new Dimension(w, h));
         StyleBuilder sb = new StyleBuilder();
         Style style = sb.createStyle(features[0].getName().getLocalPart(),
                 sb.createPolygonSymbolizer(Color.BLACK, Color.BLACK, 1));
@@ -97,7 +99,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
         map.getRenderManagerInternal().dispose();
     }
 
-    /*
+    /**
      * Test method for
      * 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.setState(int)'
      */
@@ -106,7 +108,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 
     }
 
-    /*
+    /**
      * Test method for
      * 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.render(Graphics2D,
      * IProgressMonitor)'
@@ -129,7 +131,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 
     }
 
-    /*
+    /**
      * Test method for
      * 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.render(Envelope,
      * IProgressMonitor)'
@@ -230,44 +232,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
         return frame;
     }
 
-    /*
-     * Test method for
-     * 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.dispose()'
-     */
-    @Test
-    public void testDispose() {
-
-    }
-
-    /*
-     * Test method for
-     * 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.resyncState(Renderer)'
-     */
-    @Test
-    public void testResyncState() {
-
-    }
-
-    /*
-     * Test method for
-     * 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.setLayerState(
-     * IRenderContext, int)'
-     */
-    @Test
-    public void testSetLayerState() {
-
-    }
-
-    /*
-     * Test method for
-     * 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.stopRendering()'
-     */
-    @Test
-    public void testStopRendering() {
-
-    }
-
-    /*
+    /**
      * Test method for
      * 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.render()'
      */
@@ -292,35 +257,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
         assertTrue(image == ex.getContext().getImage(w, h));
     }
 
-    /*
-     * Test method for
-     * 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.getContext()'
-     */
-    @Test
-    public void testGetContext() {
-
-    }
-
-    /*
-     * Test method for
-     * 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.getRenderer()'
-     */
-    @Test
-    public void testGetRenderer() {
-
-    }
-
-    /*
-     * Test method for
-     * 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.addLayerListener(
-     * RenderContext)'
-     */
-    @Test
-    public void testAddLayerListener() {
-
-    }
-
-    /*
+    /**
      * Test method for
      * 'org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl.render(Envelope)'
      */
