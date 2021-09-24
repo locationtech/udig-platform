@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2008, Refractions Research Inc.
  *
@@ -57,11 +58,17 @@ import org.locationtech.udig.tutorials.tracking.glasspane.SeagullGlassPaneOp;
  * @version 1.3.0
  */
 public class MapView extends ViewPart implements MapPart {
+
     public static String ID = "org.locationtech.udig.tutorials.rcp.mapView";
+
     // private GISWidget widget;
+
     private MapViewer mapviewer;
+
     // private RenderManager renderManager;
+
     private Map map;
+
     private SeagullGlassPaneOp seagullOp;
 
     /** This is for testing only DO NOT USE OTHERWISE */
@@ -316,10 +323,10 @@ public class MapView extends ViewPart implements MapPart {
         mapviewer.setSelectionProvider(selectionProvider);
     }
 
-	@Override
-	public IStatusLineManager getStatusLineManager() {
-		return getViewSite().getActionBars().getStatusLineManager();
-	}
+    @Override
+    public IStatusLineManager getStatusLineManager() {
+        return getViewSite().getActionBars().getStatusLineManager();
+    }
 
     ModalTool activeTool = null;
     public void setActive( ModalTool tool ){
@@ -339,7 +346,6 @@ public class MapView extends ViewPart implements MapPart {
         return mapviewer.getDropHandler();
      }
 
-    // helper methods for Toolmanager
     @Override
     public boolean isTesting() {
         return this.isTesting;

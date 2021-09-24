@@ -82,7 +82,7 @@ public class ToolManagerTest extends AbstractProjectUITestCase {
         AdaptingFilter filter = AdaptingFilterFactory.createAdaptingFilter(firstLayer.getFilter(),
                 firstLayer);
         StructuredSelection structuredSelection = new StructuredSelection(filter);
-        
+
         ApplicationGISInternal.getActiveEditor().getSite().getSelectionProvider()
                 .setSelection(structuredSelection);
 
@@ -92,7 +92,7 @@ public class ToolManagerTest extends AbstractProjectUITestCase {
 
         ApplicationGISInternal.getActiveEditor().getSite().getSelectionProvider()
                 .setSelection(new StructuredSelection(layer));
-        
+
         pasteAction.runWithEvent(event);
 
         final FeatureSource<SimpleFeatureType, SimpleFeature> fs = layer

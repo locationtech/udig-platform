@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -59,6 +59,7 @@ public class OverviewMapView extends ViewPart implements MapPart {
     public static final String ID = "org.locationtech.udig.tutorials.rcp.mapViewOverview"; //$NON-NLS-1$
 
     private MapViewer mapviewer; // main map viewer
+
     private OverviewMapViewer overviewmapviewer; // overview map viewer
 
     private MapEditDomain editDomain;
@@ -69,6 +70,7 @@ public class OverviewMapView extends ViewPart implements MapPart {
     public OverviewMapView() {
         super();
     }
+
     public Map getMap() {
         return mapviewer.getMap();
     }
@@ -105,7 +107,7 @@ public class OverviewMapView extends ViewPart implements MapPart {
         overviewmapviewer.getControl().setLayoutData(fd);
 
         // create map
-    	editDomain = new MapEditDomain(null);
+        editDomain = new MapEditDomain(null);
 
         mapviewer = new MapViewer(parent, SWT.MULTI | SWT.NO_BACKGROUND);
         mapviewer.setMap(mainmap);
@@ -139,11 +141,13 @@ public class OverviewMapView extends ViewPart implements MapPart {
     public void setFocus() {
         mapviewer.getViewport().getControl().setFocus();
     }
+
     @Override
     public void init( IViewSite site ) throws PartInitException {
         super.init(site);
         // Normally we might do other stuff here.
     }
+
     @Override
     public void dispose() {
         if (mapviewer != null && mapviewer.getViewport() != null && getMap() != null) {
@@ -174,7 +178,9 @@ public class OverviewMapView extends ViewPart implements MapPart {
             setActive(tool);
         }
     }
+
     ModalTool activeTool = null;
+
     public void setActive( ModalTool tool ){
         if( activeTool == tool ){
             return; // no change
@@ -186,6 +192,7 @@ public class OverviewMapView extends ViewPart implements MapPart {
         tool.setActive(true);
         activeTool = tool;
     }
+
     class SetZoomToMapToolAction extends Action {
         public SetZoomToMapToolAction() {
             super("Zoom to Map"); //$NON-NLS-1$
@@ -247,10 +254,9 @@ public class OverviewMapView extends ViewPart implements MapPart {
 
     @Override
     public UDIGDropHandler getDropHandler() {
-        return mapviewer.getDropHandler(); // oder overviewmapviewer.getDropHandler() ????
+        return mapviewer.getDropHandler(); // or overviewmapviewer.getDropHandler() ????
     }
 
-    // helper methods for Toolmanager
     @Override
     public boolean isTesting() {
         return this.isTesting;
@@ -276,22 +282,23 @@ public class OverviewMapView extends ViewPart implements MapPart {
         }
     }
 
-	@Override
-	public IStatusLineManager getStatusLineManager() {
-		return getViewSite().getActionBars().getStatusLineManager();
-	}
+    @Override
+    public IStatusLineManager getStatusLineManager() {
+        return getViewSite().getActionBars().getStatusLineManager();
+    }
 
 }
 
 class OverviewLayoutManager extends Layout {
 
     @Override
-    protected Point computeSize( Composite composite, int hint, int hint2, boolean flushCache ) {
+    protected Point computeSize(Composite composite, int hint, int hint2, boolean flushCache) {
         return null;
     }
 
     @Override
-    protected void layout( Composite composite, boolean flushCache ) {
+    protected void layout(Composite composite, boolean flushCache) {
+
     }
 
 }
