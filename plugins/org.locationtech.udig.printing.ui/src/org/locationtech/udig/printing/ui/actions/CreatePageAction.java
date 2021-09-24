@@ -51,16 +51,17 @@ import org.locationtech.udig.project.ui.internal.MapPart;
 
 /**
  * Creates a Page using the current map
- * 
+ *
  * @author Richard Gould
- * 
+ *
  * @version 1.3.0
  */
 public class CreatePageAction implements IEditorActionDelegate {
 
+    @Override
     public void run( IAction action ) {
 
-        MapPart mapEditor = ApplicationGISInternal.getActiveEditor();
+        MapPart mapEditor = ApplicationGISInternal.getActiveMapPart();
 
         if (mapEditor == null) {
             MessageDialog.openError(Display.getDefault().getActiveShell(),
@@ -80,7 +81,7 @@ public class CreatePageAction implements IEditorActionDelegate {
             Map oldMap = mapEditor.getAdapter(Map.class);
             project = oldMap.getProjectInternal();
             try {
-                map = (Map) EcoreUtil.copy(oldMap);
+                map = EcoreUtil.copy(oldMap);
             } catch (Throwable t) {
                 // unable to copy map?
                 t.printStackTrace();
@@ -154,7 +155,7 @@ public class CreatePageAction implements IEditorActionDelegate {
 
         ListDialog dialog = createTemplateChooserDialog(templateFactories);
 
-        TemplateFactory templateFactory = (TemplateFactory) PrintingPlugin.getDefault()
+        TemplateFactory templateFactory = PrintingPlugin.getDefault()
                 .getTemplateFactories().get(defaultTemplate);
 
         dialog.setInitialSelections(new Object[]{templateFactory});
@@ -170,7 +171,7 @@ public class CreatePageAction implements IEditorActionDelegate {
         if (templateFactory == null) {
             PrintingPlugin.log(Messages.CreatePageAction_error_cannotFindDefaultTemplate, null);
 
-            TemplateFactory firstAvailable = (TemplateFactory) templateFactories.values()
+            TemplateFactory firstAvailable = templateFactories.values()
                     .iterator().next();
             if (firstAvailable == null) {
                 PrintingPlugin.log(
@@ -195,21 +196,22 @@ public class CreatePageAction implements IEditorActionDelegate {
         ListDialog dialog = new ListDialog(Display.getDefault().getActiveShell());
         dialog.setTitle(Messages.CreatePageAction_dialog_title);
         dialog.setMessage(Messages.CreatePageAction_dialog_message);
-        
+
         Set<String> keySet = templateFactories.keySet();
-        List<String> keyList = new ArrayList<String>();
+        List<String> keyList = new ArrayList<>();
         keyList.addAll(keySet);
         Collections.sort(keyList);
-        List<TemplateFactory> valuesList = new ArrayList<TemplateFactory>();
+        List<TemplateFactory> valuesList = new ArrayList<>();
         for( String key : keyList ) {
             valuesList.add(templateFactories.get(key));
         }
-        
+
         dialog.setInput(valuesList);
         ArrayContentProvider provider = new ArrayContentProvider();
         dialog.setContentProvider(provider);
 
         ILabelProvider labelProvider = new LabelProvider(){
+            @Override
             public String getText( Object element ) {
                 return ((TemplateFactory) element).getName();
             }
@@ -218,9 +220,11 @@ public class CreatePageAction implements IEditorActionDelegate {
         return dialog;
     }
 
+    @Override
     public void setActiveEditor( IAction action, IEditorPart targetEditor ) {
     }
 
+    @Override
     public void selectionChanged( IAction action, ISelection selection ) {
     }
 }

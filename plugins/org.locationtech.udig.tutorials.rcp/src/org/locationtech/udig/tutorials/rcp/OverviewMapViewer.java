@@ -28,6 +28,7 @@ import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
 import org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent;
 import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
 import org.locationtech.udig.project.ui.commands.IDrawCommand;
+import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 import org.locationtech.udig.project.ui.tool.AbstractModalTool;
@@ -75,8 +76,8 @@ public class OverviewMapViewer {
 
     private IDrawCommand rectDrawCommand = null;
 
-    public OverviewMapViewer(Composite parent, int style, Map mainMap) {
-        mapviewer = new MapViewer(parent, style);
+    public OverviewMapViewer(Composite parent, MapPart mapPart, int style, Map mainMap) {
+        mapviewer = new MapViewer(parent, mapPart, style);
         this.mainmap = mainMap;
     }
 

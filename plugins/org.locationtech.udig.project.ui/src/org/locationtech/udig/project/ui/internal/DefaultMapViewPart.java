@@ -61,9 +61,6 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
 
     private DropTargetDescriptor dropTarget;
 
-    /** This is for testing only DO NOT USE OTHERWISE */
-    public boolean isTesting;
-
     private IToolManager toolManager;
 
     private MapEditDomain editDomain;
@@ -71,17 +68,21 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
     /**
      * Returns the map that is to be displayed in the view.
      */
+    @Override
     public Map getMap() {
         return viewer.getMap();
     }
+    @Override
     public void openContextMenu() {
         viewer.openContextMenu();
     }
 
+    @Override
     public void setFont(Control textArea) {
         viewer.setFont(textArea);
     }
 
+    @Override
     public void setSelectionProvider(
             IMapEditorSelectionProvider selectionProvider) {
         viewer.setSelectionProvider(selectionProvider);
@@ -93,7 +94,7 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
         try {
             IProgressMonitor monitor = getViewSite().getActionBars().getStatusLineManager().getProgressMonitor();
             viewer = new MapViewer(parent, this, SWT.DOUBLE_BUFFERED);
-            List<IGeoResource> resources = new ArrayList<IGeoResource>();
+            List<IGeoResource> resources = new ArrayList<>();
             createResources(resources, monitor);
             IProject activeProject = ApplicationGIS.getActiveProject();
 
@@ -165,6 +166,7 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
     /**
      * Passing the focus request to the viewer's control.
      */
+    @Override
     public void setFocus() {
         if(acquireToolbar()) {
             toolManager.setCurrentEditor(this);
@@ -172,6 +174,7 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
         viewer.getControl().setFocus();
     }
 
+    @Override
     public Object getTarget(DropTargetEvent event) {
         return this;
     }
@@ -194,6 +197,7 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
             final MenuManager contextMenu = new MenuManager();
             contextMenu.setRemoveAllWhenShown(true);
             contextMenu.addMenuListener(new IMenuListener(){
+                @Override
                 public void menuAboutToShow( IMenuManager mgr ) {
                     IToolManager tm = ApplicationGIS.getToolManager();
 
@@ -202,8 +206,8 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
                     contextMenu.add(tm.getFORWARD_HISTORYAction());
                     contextMenu.add(new Separator());
                     /*
-                    * Gets contributions from active modal tool if possible
-                    */
+                     * Gets contributions from active modal tool if possible
+                     */
                     // tm.contributeActiveModalTool(contextMenu);
 
                     contextMenu.add(new Separator());
@@ -222,15 +226,4 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
     public UDIGDropHandler getDropHandler() {
         return ((UDIGControlDropListener) dropTarget.listener).getHandler();
     }
-
-    @Override
-    public boolean isTesting() {
-        return this.isTesting;
-    }
-
-    @Override
-    public void setTesting(boolean testing) {
-        this.isTesting = testing;
-    }
-
 }

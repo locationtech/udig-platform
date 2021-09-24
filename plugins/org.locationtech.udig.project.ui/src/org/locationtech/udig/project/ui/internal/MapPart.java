@@ -68,17 +68,12 @@ public interface MapPart extends IWorkbenchPart {
      * Access to status line manager; used to display messages and provide tool feedback.
      * @return
      */
-    public abstract IStatusLineManager getStatusLineManager();
+    IStatusLineManager getStatusLineManager();
 
     /**
      * Returns the DropHandler from this editor.
-     * 
+     *
      * @return Returns the DropHandler from this editor.
      */
     public UDIGDropHandler getDropHandler();
-
-    boolean isTesting();
-
-    void setTesting(boolean isTesting);
-
 }

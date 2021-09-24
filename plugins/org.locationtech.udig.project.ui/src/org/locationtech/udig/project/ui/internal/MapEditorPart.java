@@ -15,7 +15,7 @@ import org.eclipse.ui.IEditorPart;
 
 /**
  * interface for map editor related map parts
- * 
+ *
  * @author GDavis
  * @since 1.1.0
  */
@@ -35,4 +35,8 @@ public interface MapEditorPart extends MapPart, IEditorPart {
     Composite getComposite();
 
     void setDirty(boolean b);
+
+    boolean isTesting();
+
+    void setTesting(boolean testing);
 }

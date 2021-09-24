@@ -102,8 +102,9 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
             assertLayerType(layer, typeNames, ShapefileDataStore.class);
         }
 
-        MapPart activeEditor = ApplicationGISInternal.getActiveEditor();
+        MapPart activeEditor = ApplicationGISInternal.getActiveMapPart();
         UDIGDropHandler dropHandler = activeEditor.getDropHandler();
+        assertNotNull("expected MapPart with Drop Support", dropHandler);
         dropHandler.setTarget(activeEditor);
         dropHandler.setViewerLocation(ViewerDropLocation.NONE);
         dropHandler.performDrop(data, null);

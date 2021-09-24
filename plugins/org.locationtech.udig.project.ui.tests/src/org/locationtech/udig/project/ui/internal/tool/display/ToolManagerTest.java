@@ -36,7 +36,7 @@ public class ToolManagerTest {
     public void setUp() throws Exception {
         map=MapTests.createDefaultMap("ToolmanagerTestType", 5, true, null); //$NON-NLS-1$
         ApplicationGIS.openMap(map, true);
-        editor=ApplicationGISInternal.getActiveEditor();
+        editor=ApplicationGISInternal.getActiveMapPart();
     }
 
     @Ignore

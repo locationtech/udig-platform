@@ -52,7 +52,7 @@ import org.locationtech.udig.tutorials.tracking.glasspane.SeagullGlassPaneOp;
 
 /**
  * A map view.
- * 
+ *
  * @author Emily Gouge, Graham Davis (Refractions Research, Inc.)
  * @since 1.1.0
  * @version 1.3.0
@@ -71,9 +71,6 @@ public class MapView extends ViewPart implements MapPart {
 
     private SeagullGlassPaneOp seagullOp;
 
-    /** This is for testing only DO NOT USE OTHERWISE */
-    public boolean isTesting;
-
     public MapView() {
         super();
     }
@@ -84,13 +81,13 @@ public class MapView extends ViewPart implements MapPart {
         fillLayout.type = SWT.VERTICAL;
         parent.setLayout(fillLayout);
         // mapviewer = new MapViewer(parent, SWT.NO_BACKGROUND | SWT.DOUBLE_BUFFERED | SWT.MULTI);
-        mapviewer = new MapViewer(parent, SWT.SINGLE | SWT.DOUBLE_BUFFERED);
+        mapviewer = new MapViewer(parent, this, SWT.SINGLE | SWT.DOUBLE_BUFFERED);
 
         // create a new empty map
         // if you are going to add layers do so now
         // prior to adding to the mapviewer
-        // 
-        map = (Map) ProjectFactory.eINSTANCE.createMap();
+        //
+        map = ProjectFactory.eINSTANCE.createMap();
         mapviewer.setMap(map);
 
         IMenuManager viewMenu = getViewSite().getActionBars().getMenuManager();
@@ -130,7 +127,7 @@ public class MapView extends ViewPart implements MapPart {
     // }
     // }
     // }
-    //    
+    //
     // class SetPrintTilesVPToolAction extends Action {
     // public SetPrintTilesVPToolAction() {
     //  	      super("Print VP Tiles"); //$NON-NLS-1$
@@ -158,6 +155,7 @@ public class MapView extends ViewPart implements MapPart {
         public SetPrintMapLayersToolAction() {
             super("Print Map Layers"); //$NON-NLS-1$
         }
+        @Override
         public void run() {
             if (map != null) {
                 for( Layer layer : map.getLayersInternal() ) {
@@ -173,6 +171,7 @@ public class MapView extends ViewPart implements MapPart {
         }
 
         private FixedScalePan tool = new FixedScalePan();
+        @Override
         public void run() {
             setActive(tool);
         }
@@ -183,6 +182,7 @@ public class MapView extends ViewPart implements MapPart {
         public SetZoomExtentToolAction() {
             super("Zoom"); //$NON-NLS-1$
         }
+        @Override
         public void run() {
             setActive(tool);
         }
@@ -192,6 +192,7 @@ public class MapView extends ViewPart implements MapPart {
         public SetZoomToMapToolAction() {
             super("Zoom to Map"); //$NON-NLS-1$
         }
+        @Override
         public void run() {
             ReferencedEnvelope bounds = map.getBounds(new NullProgressMonitor());
             map.sendCommandASync(new SetViewportBBoxCommand(bounds));
@@ -202,6 +203,7 @@ public class MapView extends ViewPart implements MapPart {
         public SetRefreshToolAction() {
             super("Refresh Map"); //$NON-NLS-1$
         }
+        @Override
         public void run() {
             mapviewer.getRenderManager().refresh(null);
         }
@@ -211,11 +213,13 @@ public class MapView extends ViewPart implements MapPart {
         public SetBackgroundFileAction() {
             super("Add Background layer from file..."); //$NON-NLS-1$
         }
+        @Override
         @SuppressWarnings("unchecked")
         public void run() {
             Display display = Display.getCurrent();
-            final ArrayList<File> files = new ArrayList<File>();
+            final ArrayList<File> files = new ArrayList<>();
             display.syncExec(new Runnable(){
+                @Override
                 public void run() {
                     FileDialog openDialog = new FileDialog(getSite().getShell(), SWT.OPEN
                             | SWT.MULTI);
@@ -229,9 +233,9 @@ public class MapView extends ViewPart implements MapPart {
             });
             if (files.isEmpty())
                 return;
-            List<IGeoResource> dataHandles = new ArrayList<IGeoResource>();
+            List<IGeoResource> dataHandles = new ArrayList<>();
             ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
-            
+
             for( File file : files ) {
                 try {
                     URL url = file.toURI().toURL();
@@ -261,6 +265,7 @@ public class MapView extends ViewPart implements MapPart {
         public SetGlassSeagullsAction() {
             super("Add Glass Seagulls layer"); //$NON-NLS-1$
         }
+        @Override
         public void run() {
             Display display = Display.getCurrent();
             if (seagullOp == null) {
@@ -280,10 +285,12 @@ public class MapView extends ViewPart implements MapPart {
         public SetBackgroundWMSCAction() {
             super("Add Background layer..."); //$NON-NLS-1$
         }
+        @Override
         public void run() {
             Display display = Display.getCurrent();
             // final ArrayList<File> files = new ArrayList<File>();
             display.syncExec(new Runnable(){
+                @Override
                 public void run() {
                     MapImport mapImport = new MapImport();
                     mapImport.getDialog().open();
@@ -300,6 +307,7 @@ public class MapView extends ViewPart implements MapPart {
     public void setModalTool( ModalTool tool ) {
         tool.setActive(true);
     }
+    @Override
     public Map getMap() {
         return mapviewer.getMap();
     }
@@ -311,14 +319,17 @@ public class MapView extends ViewPart implements MapPart {
         }
     }
 
+    @Override
     public void openContextMenu() {
         mapviewer.openContextMenu();
     }
 
+    @Override
     public void setFont( Control control ) {
         mapviewer.setFont(control);
     }
 
+    @Override
     public void setSelectionProvider( IMapEditorSelectionProvider selectionProvider ) {
         mapviewer.setSelectionProvider(selectionProvider);
     }
@@ -342,17 +353,8 @@ public class MapView extends ViewPart implements MapPart {
     }
 
     @Override
-     public UDIGDropHandler getDropHandler() {
-        return mapviewer.getDropHandler();
-     }
-
-    @Override
-    public boolean isTesting() {
-        return this.isTesting;
-    }
-
-    @Override
-    public void setTesting(boolean testing) {
-        this.isTesting = testing;
+    public UDIGDropHandler getDropHandler() {
+        // view has no drop support
+        return null;
     }
 }
