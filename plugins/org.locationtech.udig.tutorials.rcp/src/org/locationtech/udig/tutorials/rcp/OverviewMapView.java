@@ -49,7 +49,7 @@ import org.locationtech.udig.tutorials.tracking.glasspane.TrackSeagullOp;
  * This overview map tracks the main map and displays a blue box that outlines the area you are
  * currently zoomed to.
  * </p>
- * 
+ *
  * @author Emily Gouge
  * @since 1.2.0
  * @version 1.3.0
@@ -64,25 +64,26 @@ public class OverviewMapView extends ViewPart implements MapPart {
 
     private MapEditDomain editDomain;
 
-    /** This is for testing only DO NOT USE OTHERWISE */
-    public boolean isTesting;
-
     public OverviewMapView() {
         super();
     }
 
+    @Override
     public Map getMap() {
         return mapviewer.getMap();
     }
 
+    @Override
     public void openContextMenu() {
         mapviewer.openContextMenu();
     }
 
+    @Override
     public void setFont( Control textArea ) {
         mapviewer.getViewport().getControl().setFocus();
     }
 
+    @Override
     public void setSelectionProvider( IMapEditorSelectionProvider selectionProvider ) {
         mapviewer.setSelectionProvider(selectionProvider);
     }
@@ -92,11 +93,11 @@ public class OverviewMapView extends ViewPart implements MapPart {
         parent.setLayout(new FormLayout());
 
         // create two maps
-        final Map overviewmap = (Map) ProjectFactory.eINSTANCE.createMap();
-        final Map mainmap = (Map) ProjectFactory.eINSTANCE.createMap();
+        final Map overviewmap = ProjectFactory.eINSTANCE.createMap();
+        final Map mainmap = ProjectFactory.eINSTANCE.createMap();
 
         // create overview
-        overviewmapviewer = new OverviewMapViewer(parent, SWT.MULTI | SWT.NO_BACKGROUND
+        overviewmapviewer = new OverviewMapViewer(parent, this, SWT.MULTI | SWT.NO_BACKGROUND
                 | SWT.BORDER, mainmap);
         int size = 25;
         FormData fd = new FormData();
@@ -109,7 +110,7 @@ public class OverviewMapView extends ViewPart implements MapPart {
         // create map
         editDomain = new MapEditDomain(null);
 
-        mapviewer = new MapViewer(parent, SWT.MULTI | SWT.NO_BACKGROUND);
+        mapviewer = new MapViewer(parent, this, SWT.MULTI | SWT.NO_BACKGROUND);
         mapviewer.setMap(mainmap);
         fd = new FormData();
         fd.left = new FormAttachment(0);
@@ -164,6 +165,7 @@ public class OverviewMapView extends ViewPart implements MapPart {
         }
 
         private ScrollPanTool tool = new ScrollPanTool();
+        @Override
         public void run() {
             setActive(tool);
         }
@@ -174,6 +176,7 @@ public class OverviewMapView extends ViewPart implements MapPart {
         public SetZoomExtentToolAction() {
             super("Zoom"); //$NON-NLS-1$
         }
+        @Override
         public void run() {
             setActive(tool);
         }
@@ -197,6 +200,7 @@ public class OverviewMapView extends ViewPart implements MapPart {
         public SetZoomToMapToolAction() {
             super("Zoom to Map"); //$NON-NLS-1$
         }
+        @Override
         public void run() {
             ReferencedEnvelope bounds = getMap().getBounds(new NullProgressMonitor());
             getMap().sendCommandASync(new SetViewportBBoxCommand(bounds));
@@ -207,6 +211,7 @@ public class OverviewMapView extends ViewPart implements MapPart {
         public SetRefreshToolAction() {
             super("Refresh Map"); //$NON-NLS-1$
         }
+        @Override
         public void run() {
             mapviewer.getRenderManager().refresh(null);
         }
@@ -217,6 +222,7 @@ public class OverviewMapView extends ViewPart implements MapPart {
         public SetGlassSeagullsAction() {
             super("Add Glass Seagulls layer"); //$NON-NLS-1$
         }
+        @Override
         public void run() {
             Display display = Display.getCurrent();
             if (seagullOp == null) {
@@ -237,6 +243,7 @@ public class OverviewMapView extends ViewPart implements MapPart {
         public SetTrackGlassSeagullsAction() {
             super("Add Glass Seagull Tracking layer"); //$NON-NLS-1$
         }
+        @Override
         public void run() {
             Display display = Display.getCurrent();
             if (seagullOp == null) {
@@ -254,26 +261,19 @@ public class OverviewMapView extends ViewPart implements MapPart {
 
     @Override
     public UDIGDropHandler getDropHandler() {
-        return mapviewer.getDropHandler(); // or overviewmapviewer.getDropHandler() ????
-    }
-
-    @Override
-    public boolean isTesting() {
-        return this.isTesting;
-    }
-
-    @Override
-    public void setTesting(boolean testing) {
-        this.isTesting = testing;
+        // view has no drop support
+        return null;
     }
 
     class SetBackgroundWMSCAction extends Action {
         public SetBackgroundWMSCAction() {
             super("Add Background layer..."); //$NON-NLS-1$
         }
+        @Override
         public void run() {
             Display display = Display.getCurrent();
             display.syncExec(new Runnable(){
+                @Override
                 public void run() {
                     MapImport mapImport = new MapImport();
                     mapImport.getDialog().open();

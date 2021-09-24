@@ -478,7 +478,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         deregisterFeatureFlasher();
         page.removePartListener(partlistener);
         if( viewer != null ){
-        	viewer.getViewport().removePaneListener(getMap().getViewportModelInternal());
+            viewer.getViewport().removePaneListener(getMap().getViewportModelInternal());
         }
         getMap().getViewportModelInternal().setInitialized(false);
 
@@ -572,7 +572,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         if (store
                 .getBoolean(org.locationtech.udig.project.preferences.PreferenceConstants.P_REMOVE_LAYERS)) {
             List<Layer> layers = getMap().getLayersInternal();
-            List<Layer> layersToRemove = new ArrayList<Layer>();
+            List<Layer> layersToRemove = new ArrayList<>();
             for( Layer layer : layers ) {
                 if (!layer.getGeoResources().isEmpty() && layer.getGeoResources().get(0).canResolve(ITransientResolve.class)) {
                     layersToRemove.add(layer);
@@ -703,14 +703,14 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         // super class sets up the splitter; it needs the setEditDomain to be defined
         // prior to the method being called (so the FlyoutPaletteComposite split can latch on)
 
-    	super.createPartControl(parent);
-    	// the above sets up a splitter; and then calls GraphicalEditor.createGraphicalViewer
-    	// which we can use to set up our display area...
+        super.createPartControl(parent);
+        // the above sets up a splitter; and then calls GraphicalEditor.createGraphicalViewer
+        // which we can use to set up our display area...
     }
 
     @Override
     protected Control getGraphicalControl() {
-    	return composite;
+        return composite;
     }
 
     /**
@@ -812,7 +812,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         });
 
         setDirty(isMapDirty());
-	}
+    }
 
     private void runMapOpeningInterceptor( Map map ) {
         List<IConfigurationElement> interceptors = ExtensionPointList
@@ -912,25 +912,25 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
             final PropertyDialogAction tmp = new PropertyDialogAction(new SameShellProvider(shell),
                     new ISelectionProvider(){
 
-                        @Override
-                        public void addSelectionChangedListener( ISelectionChangedListener listener ) {
-                        }
+                @Override
+                public void addSelectionChangedListener( ISelectionChangedListener listener ) {
+                }
 
-                        @Override
-                        public ISelection getSelection() {
-                            return new StructuredSelection(getMap());
-                        }
+                @Override
+                public ISelection getSelection() {
+                    return new StructuredSelection(getMap());
+                }
 
-                        @Override
-                        public void removeSelectionChangedListener(
-                                ISelectionChangedListener listener ) {
-                        }
+                @Override
+                public void removeSelectionChangedListener(
+                        ISelectionChangedListener listener ) {
+                }
 
-                        @Override
-                        public void setSelection( ISelection selection ) {
-                        }
+                @Override
+                public void setSelection( ISelection selection ) {
+                }
 
-                    });
+            });
 
             propertiesAction = new Action(){
                 @Override
@@ -1061,7 +1061,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
                 menu.setVisible(true);
             }
         });
-        */
+         */
     }
 
     @Override
@@ -1130,7 +1130,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
                 public void run() {
                     if (selection instanceof IStructuredSelection) {
                         IStructuredSelection s = (IStructuredSelection) selection;
-                        List<SimpleFeature> features = new ArrayList<SimpleFeature>();
+                        List<SimpleFeature> features = new ArrayList<>();
                         for (Iterator iter = s.iterator(); iter.hasNext();) {
                             Object element = iter.next();
 
@@ -1173,7 +1173,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         }
 
         private IAnimation createAnimation(List<SimpleFeature> current) {
-            final List<IDrawCommand> commands = new ArrayList<IDrawCommand>();
+            final List<IDrawCommand> commands = new ArrayList<>();
             for (SimpleFeature feature : current) {
                 if (feature == null || feature.getFeatureType().getGeometryDescriptor() == null)
                     continue;
@@ -1214,18 +1214,19 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
     @Override
     public IStatusLineManager getStatusLineManager() {
-    	return statusLineManager;
+        return statusLineManager;
     }
 
     @Override
     public MapEditDomain getEditDomain(){
         return editDomain;
     }
-    // helper methods for Toolmanager
+
     @Override
     public boolean isTesting() {
         return this.isTesting;
     }
+
     @Override
     public void setTesting( boolean testing ) {
         this.isTesting = testing;

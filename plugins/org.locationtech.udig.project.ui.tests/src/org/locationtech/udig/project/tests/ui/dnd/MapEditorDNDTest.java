@@ -104,6 +104,7 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
 
         MapPart activeEditor = ApplicationGISInternal.getActiveEditor();
         UDIGDropHandler dropHandler = activeEditor.getDropHandler();
+        assertNotNull("expected MapPart with Drop Support", dropHandler);
         dropHandler.setTarget(activeEditor);
         dropHandler.setViewerLocation(ViewerDropLocation.NONE);
         dropHandler.performDrop(data, null);

@@ -39,6 +39,8 @@ import org.locationtech.udig.project.tests.support.MapTests;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
 import org.locationtech.udig.project.ui.internal.LayersView;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 import org.opengis.feature.simple.SimpleFeature;
@@ -141,8 +143,10 @@ public class AddLayersRenderTest extends AbstractProjectUITestCase {
 
         PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
         .showView(LayersView.ID);
-        ApplicationGISInternal.getActiveEditor().setTesting(true);
-
+        MapPart activeMapPart = ApplicationGISInternal.getActiveEditor();
+        if (activeMapPart instanceof MapEditorPart) {
+            ((MapEditorPart) activeMapPart).setTesting(true);
+        }
     }
 
     @Ignore

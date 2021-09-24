@@ -126,7 +126,7 @@ import org.opengis.feature.simple.SimpleFeature;
  * @version $Revision: 1.9 $
  */
 public class MapEditor extends EditorPart
-        implements IDropTargetProvider, IAdaptable, MapEditorPart {
+implements IDropTargetProvider, IAdaptable, MapEditorPart {
     /** The id of the MapViewport View */
     public static final String ID = "org.locationtech.udig.project.ui.mapEditorOld"; //$NON-NLS-1$
 
@@ -848,26 +848,26 @@ public class MapEditor extends EditorPart
             final PropertyDialogAction tmp = new PropertyDialogAction(new SameShellProvider(shell),
                     new ISelectionProvider() {
 
-                        @Override
-                        public void addSelectionChangedListener(
-                                final ISelectionChangedListener listener) {
-                        }
+                @Override
+                public void addSelectionChangedListener(
+                        final ISelectionChangedListener listener) {
+                }
 
-                        @Override
-                        public ISelection getSelection() {
-                            return new StructuredSelection(getMap());
-                        }
+                @Override
+                public ISelection getSelection() {
+                    return new StructuredSelection(getMap());
+                }
 
-                        @Override
-                        public void removeSelectionChangedListener(
-                                final ISelectionChangedListener listener) {
-                        }
+                @Override
+                public void removeSelectionChangedListener(
+                        final ISelectionChangedListener listener) {
+                }
 
-                        @Override
-                        public void setSelection(final ISelection selection) {
-                        }
+                @Override
+                public void setSelection(final ISelection selection) {
+                }
 
-                    });
+            });
 
             propertiesAction = new Action() {
                 @Override
@@ -1150,8 +1150,6 @@ public class MapEditor extends EditorPart
         return statusLineManager;
     }
 
-    //
-    // helper method for ToolManager
     @Override
     public boolean isTesting() {
         return this.isTesting;
