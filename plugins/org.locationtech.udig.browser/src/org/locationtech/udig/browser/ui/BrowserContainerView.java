@@ -418,7 +418,7 @@ public class BrowserContainerView extends ViewPart {
                         event.doit = false;
 
                         UDIGDropHandler dropHandler = new UDIGDropHandler();
-                        dropHandler.setTarget(ApplicationGISInternal.getActiveEditor());
+                        dropHandler.setTarget(ApplicationGISInternal.getActiveMapPart());
                         dropHandler.performDrop(url, null);
                     }
                 }

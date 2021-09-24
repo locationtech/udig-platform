@@ -17,7 +17,6 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IKeyBindingService;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.actions.ActionFactory;
 import org.locationtech.udig.project.command.UndoableComposite;
 import org.locationtech.udig.project.ui.ApplicationGIS;
@@ -54,7 +53,7 @@ public class DeleteGlobalActionSetterActivator implements Activator {
         IActionBars actionBars = handler.getContext().getActionBars();
         if( actionBars==null )
             return;
-        MapPart part = ApplicationGISInternal.getActiveEditor();
+        MapPart part = ApplicationGISInternal.getActiveMapPart();
 
         if( part == null ) return;
 
@@ -80,18 +79,15 @@ public class DeleteGlobalActionSetterActivator implements Activator {
         if( actionBars==null || oldAction==null ){
             return;
         }
-        MapPart part = ApplicationGISInternal.getActiveEditor();
-        IWorkbenchPart wbPart = (IWorkbenchPart) part;
+        IWorkbenchPart part = ApplicationGISInternal.getActiveMapPart();
 
         if( part == null ) return;
 
-        IWorkbenchPartSite site = wbPart.getSite();
-
-        IKeyBindingService keyBindingService = site.getKeyBindingService();
+        IKeyBindingService keyBindingService = part.getSite().getKeyBindingService();
         keyBindingService.unregisterAction(deleteVertexHandler);
         deleteVertexHandler=null;
 
-        ApplicationGIS.getToolManager().setDELETEAction(oldAction, wbPart);
+        ApplicationGIS.getToolManager().setDELETEAction(oldAction, part);
         actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), oldAction);
         if( oldAction!=null ){
             keyBindingService.registerAction(oldAction);

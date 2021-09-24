@@ -32,7 +32,7 @@ import org.opengis.feature.simple.SimpleFeature;
 
 /**
  * Allows access to the internal types such as Map.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
@@ -43,7 +43,7 @@ public class ApplicationGISInternal {
     }
     /**
      * May return null of no project is active.
-     * 
+     *
      * @return The current active project, or null if no such project exists.
      */
     public static Project getActiveProject() {
@@ -52,7 +52,7 @@ public class ApplicationGISInternal {
 
     /**
      * Return all Projects. The list is unmodifiable.
-     * 
+     *
      * @return all Projects.
      */
     public static List< ? extends Project> getProjects() {
@@ -62,7 +62,7 @@ public class ApplicationGISInternal {
 
     /**
      * May return null if the active editor is not a Map Editor.
-     * 
+     *
      * @return the map contained by the current MapEditor or null if the active editor is not a map
      *         editor.
      */
@@ -73,7 +73,7 @@ public class ApplicationGISInternal {
 
     /**
      * Returns all open maps. May return null if no Map Editors exist.
-     * 
+     *
      * @return a list of maps contained or null if no Map Editors exist.
      */
     @SuppressWarnings("unchecked")
@@ -83,7 +83,7 @@ public class ApplicationGISInternal {
 
     /**
      * Return a feature editor for the provided feature
-     * 
+     *
      * @return a feature editor for the provided feature
      */
     public static FeatureEditorLoader getFeatureEditorLoader( SimpleFeature feature ) {
@@ -93,11 +93,23 @@ public class ApplicationGISInternal {
                 new StructuredSelection(feature));
     }
 
+    /**
+     * @return
+     * @deprecated return the Active Editor
+     */
     public static MapPart getActiveEditor() {
+        return getActiveMapPart();
+    }
+
+    /**
+     * @return the Active MapPart or null if there is no active MapPart.
+     */
+    public static MapPart getActiveMapPart() {
         try {
-            final AtomicReference<MapPart> editor = new AtomicReference<MapPart>();
+            final AtomicReference<MapPart> editor = new AtomicReference<>();
 
             Runnable runnable = new Runnable(){
+                @Override
                 public void run() {
                     try {
 
@@ -134,6 +146,7 @@ public class ApplicationGISInternal {
 
         final MapEditorPart[] result = new MapEditorPart[1];
         PlatformGIS.syncInDisplayThread(new Runnable(){
+            @Override
             public void run() {
                 IWorkbenchWindow win = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
                 if (win == null)

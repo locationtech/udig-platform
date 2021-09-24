@@ -71,9 +71,9 @@ public class ToolManagerTest extends AbstractProjectUITestCase {
         map.getLayersInternal().add(layer);
 
         IAction copyAction = ApplicationGIS.getToolManager()
-                .getCOPYAction(ApplicationGISInternal.getActiveEditor());
+                .getCOPYAction(ApplicationGISInternal.getActiveMapPart());
         IAction pasteAction = ApplicationGIS.getToolManager()
-                .getPASTEAction(ApplicationGISInternal.getActiveEditor());
+                .getPASTEAction(ApplicationGISInternal.getActiveMapPart());
 
         map.getEditManagerInternal().setSelectedLayer(firstLayer);
 
@@ -83,14 +83,14 @@ public class ToolManagerTest extends AbstractProjectUITestCase {
                 firstLayer);
         StructuredSelection structuredSelection = new StructuredSelection(filter);
 
-        ApplicationGISInternal.getActiveEditor().getSite().getSelectionProvider()
+        ApplicationGISInternal.getActiveMapPart().getSite().getSelectionProvider()
                 .setSelection(structuredSelection);
 
         Event event = new Event();
         event.display = Display.getCurrent();
         copyAction.runWithEvent(event);
 
-        ApplicationGISInternal.getActiveEditor().getSite().getSelectionProvider()
+        ApplicationGISInternal.getActiveMapPart().getSite().getSelectionProvider()
                 .setSelection(new StructuredSelection(layer));
 
         pasteAction.runWithEvent(event);

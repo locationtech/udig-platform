@@ -143,7 +143,7 @@ public class AddLayersRenderTest extends AbstractProjectUITestCase {
 
         PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
         .showView(LayersView.ID);
-        MapPart activeMapPart = ApplicationGISInternal.getActiveEditor();
+        MapPart activeMapPart = ApplicationGISInternal.getActiveMapPart();
         if (activeMapPart instanceof MapEditorPart) {
             ((MapEditorPart) activeMapPart).setTesting(true);
         }
