@@ -105,20 +105,40 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
      */
     @Override
     public Adapter createLayerAdapter() {
-        return new LayerItemProvider(this);
+        if (layerItemProvider == null) {
+            layerItemProvider = new LayerItemProvider(this);
+        }
+
+        return layerItemProvider;
     }
 
+    /**
+     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Map} instances.
+     * But because of refreshing problems in the LayersView we do NOT use it.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated but unused
+     */
+    protected MapItemProvider mapItemProvider;
 
     /**
      * This creates an adapter for a {@link org.locationtech.udig.project.internal.Map}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @generated
+     * @generated but changed manually
      */
     @Override
     public Adapter createMapAdapter() {
         return new MapItemProvider(this);
     }
+
+    /**
+     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Project} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ProjectItemProvider projectItemProvider;
 
     /**
      * This creates an adapter for a {@link org.locationtech.udig.project.internal.Project}. <!--
@@ -128,7 +148,11 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
      */
     @Override
     public Adapter createProjectAdapter() {
-        return new ProjectItemProvider(this);
+        if (projectItemProvider == null) {
+            projectItemProvider = new ProjectItemProvider(this);
+        }
+
+        return projectItemProvider;
     }
 
     /**
@@ -381,6 +405,14 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Layer} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected LayerItemProvider layerItemProvider;
+
+    /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -498,6 +530,12 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
             contextModelItemProvider.dispose();
         if (editManagerItemProvider != null)
             editManagerItemProvider.dispose();
+        if (layerItemProvider != null)
+            layerItemProvider.dispose();
+        if (mapItemProvider != null)
+            mapItemProvider.dispose();
+        if (projectItemProvider != null)
+            projectItemProvider.dispose();
         if (projectRegistryItemProvider != null)
             projectRegistryItemProvider.dispose();
         if (styleBlackboardItemProvider != null)
