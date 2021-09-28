@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004-2011, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004-2011, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -34,6 +34,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.IExportedPreferences;
+import org.eclipse.core.runtime.preferences.IPreferencesService;
+import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.swt.widgets.Display;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.ICatalogInfo;
@@ -61,29 +76,12 @@ import org.locationtech.udig.core.internal.ExtensionPointList;
 import org.locationtech.udig.core.internal.ExtensionPointProcessor;
 import org.locationtech.udig.core.internal.ExtensionPointUtil;
 import org.locationtech.udig.ui.PlatformGIS;
-
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.core.runtime.preferences.IExportedPreferences;
-import org.eclipse.core.runtime.preferences.IPreferencesService;
-import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.swt.widgets.Display;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
-import org.locationtech.jts.geom.Envelope;
-
 /**
  * Local Catalog implementation (tracking known services, persisted by XML currently).
- * 
+ *
  * @author David Zwiers (Refractions Research)
  * @author Jody Garnett
  * @since 0.6
@@ -93,7 +91,8 @@ public class CatalogImpl extends ICatalog {
     private static final String TEMPORARY_RESOURCE_EXT_ID = "org.locationtech.udig.catalog.temporaryResource"; //$NON-NLS-1$
 
     /** All services known to the local catalog */
-    private final Set<IService> services = new CopyOnWriteArraySet<IService>();
+    private final Set<IService> services = new CopyOnWriteArraySet<>();
+
     /** Information about this catalog */
     private ICatalogInfo metadata;
 
@@ -115,7 +114,7 @@ public class CatalogImpl extends ICatalog {
         catalogListeners = Collections.synchronizedSet(new WeakHashSet<IResolveChangeListener>());
     }
 
-    public CatalogImpl( ICatalogInfo metadata ) {
+    public CatalogImpl(ICatalogInfo metadata) {
         this();
         this.metadata = metadata;
     }
@@ -124,10 +123,13 @@ public class CatalogImpl extends ICatalog {
      * @see org.locationtech.udig.catalog.ICatalog#addCatalogListener(org.locationtech.udig.catalog.ICatalog.ICatalogListener)
      * @param listener
      */
-    public void addCatalogListener( IResolveChangeListener listener ) {
+    @Override
+    public void addCatalogListener(IResolveChangeListener listener) {
         catalogListeners.add(listener);
     }
-    public void addListener( IResolveChangeListener listener ) {
+
+    @Override
+    public void addListener(IResolveChangeListener listener) {
         catalogListeners.add(listener);
     }
 
@@ -135,14 +137,18 @@ public class CatalogImpl extends ICatalog {
      * @see org.locationtech.udig.catalog.ICatalog#removeCatalogListener(org.locationtech.udig.catalog.ICatalog.ICatalogListener)
      * @param listener
      */
-    public void removeCatalogListener( IResolveChangeListener listener ) {
-        catalogListeners.remove(listener);
-    }
-    public void removeListener( IResolveChangeListener listener ) {
+    @Override
+    public void removeCatalogListener(IResolveChangeListener listener) {
         catalogListeners.remove(listener);
     }
 
-    public IService add( IService service ) throws UnsupportedOperationException {
+    @Override
+    public void removeListener(IResolveChangeListener listener) {
+        catalogListeners.remove(listener);
+    }
+
+    @Override
+    public IService add(IService service) throws UnsupportedOperationException {
         if (service == null || service.getIdentifier() == null)
             throw new NullPointerException("Cannot have a null id"); //$NON-NLS-1$
         ID id = service.getID();
@@ -154,18 +160,19 @@ public class CatalogImpl extends ICatalog {
             try {
                 service.dispose(new NullProgressMonitor());
             } catch (Throwable t) {
-                CatalogPlugin.trace("dispose " + id, t);
+                CatalogPlugin.trace("dispose " + id, t); //$NON-NLS-1$
             }
             return found;
         }
 
         services.add(service);
         runInterceptor(service, ServiceInterceptor.ADDED_ID);
-        
+
         IResolveDelta deltaAdded = new ResolveDelta(service, IResolveDelta.Kind.ADDED);
         IResolveDelta deltaChanged = new ResolveDelta(this, Collections.singletonList(deltaAdded));
-        fire(new ResolveChangeEvent(CatalogImpl.this, IResolveChangeEvent.Type.POST_CHANGE,deltaChanged));
-        
+        fire(new ResolveChangeEvent(CatalogImpl.this, IResolveChangeEvent.Type.POST_CHANGE,
+                deltaChanged));
+
         return service;
     }
 
@@ -174,40 +181,44 @@ public class CatalogImpl extends ICatalog {
      * @param entry
      * @throws UnsupportedOperationException
      */
-    public void remove( IService entry ) throws UnsupportedOperationException {
-        if (entry == null || entry.getIdentifier() == null){
+    @Override
+    public void remove(IService entry) throws UnsupportedOperationException {
+        if (entry == null || entry.getIdentifier() == null) {
             throw new NullPointerException("Cannot have a null id"); //$NON-NLS-1$
         }
         IResolveDelta deltaRemoved = new ResolveDelta(entry, IResolveDelta.Kind.REMOVED);
-        IResolveDelta deltaChanged = new ResolveDelta(this, Collections.singletonList(deltaRemoved));
+        IResolveDelta deltaChanged = new ResolveDelta(this,
+                Collections.singletonList(deltaRemoved));
         fire(new ResolveChangeEvent(CatalogImpl.this, IResolveChangeEvent.Type.PRE_DELETE,
                 deltaChanged));
-        
+
         services.remove(entry);
         runInterceptor(entry, ServiceInterceptor.REMOVED_ID);
-        
+
         fire(new ResolveChangeEvent(CatalogImpl.this, IResolveChangeEvent.Type.POST_CHANGE,
                 deltaRemoved));
     }
-    public void replace( ID id, IService replacement ) throws UnsupportedOperationException {
+
+    @Override
+    public void replace(ID id, IService replacement) throws UnsupportedOperationException {
         if (replacement == null || replacement.getIdentifier() == null || id == null) {
             throw new NullPointerException("Cannot have a null id"); //$NON-NLS-1$
         }
         final IService service = getServiceById(id);
-        List<IResolveDelta> changes = new ArrayList<IResolveDelta>();
-        List<IResolveDelta> childChanges = new ArrayList<IResolveDelta>();
+        List<IResolveDelta> changes = new ArrayList<>();
+        List<IResolveDelta> childChanges = new ArrayList<>();
         try {
-            List< ? extends IGeoResource> newChildren = replacement.resources(null);
-            List< ? extends IGeoResource> oldChildren = service.resources(null);
+            List<? extends IGeoResource> newChildren = replacement.resources(null);
+            List<? extends IGeoResource> oldChildren = service.resources(null);
             if (oldChildren != null)
-                for( IGeoResource oldChild : oldChildren ) {
+                for (IGeoResource oldChild : oldChildren) {
                     String oldName = oldChild.getIdentifier().toString();
 
-                    for( IGeoResource child : newChildren ) {
+                    for (IGeoResource child : newChildren) {
                         String name = child.getIdentifier().toString();
                         if (oldName.equals(name)) {
-                            childChanges.add(new ResolveDelta(child, oldChild,
-                                    IResolveDelta.NO_CHILDREN));
+                            childChanges.add(
+                                    new ResolveDelta(child, oldChild, IResolveDelta.NO_CHILDREN));
                             break;
                         }
                     }
@@ -224,10 +235,11 @@ public class CatalogImpl extends ICatalog {
         services.remove(service);
         runInterceptor(service, ServiceInterceptor.REMOVED_ID);
 
-        PlatformGIS.run(new IRunnableWithProgress(){
+        PlatformGIS.run(new IRunnableWithProgress() {
 
-            public void run( IProgressMonitor monitor ) throws InvocationTargetException,
-                    InterruptedException {
+            @Override
+            public void run(IProgressMonitor monitor)
+                    throws InvocationTargetException, InterruptedException {
                 try {
                     service.dispose(monitor);
                 } catch (Throwable e) {
@@ -241,7 +253,7 @@ public class CatalogImpl extends ICatalog {
         runInterceptor(replacement, ServiceInterceptor.ADDED_ID);
         event = new ResolveChangeEvent(this, IResolveChangeEvent.Type.POST_CHANGE, deltas);
 
-        if (!id.equals(replacement.getIdentifier())) {
+        if (!id.toURL().equals(replacement.getIdentifier())) {
             // the service has actually moved
             IService moved = new MovedService(id, replacement.getID());
             services.add(moved);
@@ -249,32 +261,30 @@ public class CatalogImpl extends ICatalog {
         }
         fire(event);
     }
-    //
-    // Registration: creation
-    //
-    
+
     /**
      * This is the preferred way to connect to a service using a URL.
      * <p>
-     * If the service is already in the catalog it will be returned; if not we will
-     * connect to the service (add it to the catalog for safekeeping and cleanup)
-     * and return you the result.
+     * If the service is already in the catalog it will be returned; if not we will connect to the
+     * service (add it to the catalog for safekeeping and cleanup) and return you the result.
      * <p>
-     * The catalog takes responsibility for cleaning up after the service (ie call dispose())
-     * so you are free to continue with your work.
+     * The catalog takes responsibility for cleaning up after the service (ie call dispose()) so you
+     * are free to continue with your work.
+     *
      * @param url
      * @param monitor
      * @return Service used to access the provided url
      */
-    public IService acquire( URL url, IProgressMonitor monitor ) throws IOException {
-        List<IService> possible = new ArrayList<IService>();
+    @Override
+    public IService acquire(URL url, IProgressMonitor monitor) throws IOException {
+        List<IService> possible = new ArrayList<>();
         IService createdService = null;
-        
+
         if (monitor == null)
             monitor = new NullProgressMonitor();
 
-        monitor.beginTask("acquire", 100);
-        monitor.subTask("acquire services");
+        monitor.beginTask("acquire", 100); //$NON-NLS-1$
+        monitor.subTask("acquire services"); //$NON-NLS-1$
 
         monitor.worked(10);
         try {
@@ -282,24 +292,24 @@ public class CatalogImpl extends ICatalog {
             possible = constructServices(url, monitor);
 
             if (possible.isEmpty()) {
-                throw new IOException("Unable to connect to any service supporting " + url);
+                throw new IOException("Unable to connect to any service supporting " + url); //$NON-NLS-1$
             }
-            
+
             createdService = possible.get(0);
-            
+
             try {
-                
+
                 add(createdService);// TODO don't clean this one up!
                 return createdService;
             } catch (Throwable t) {
                 // usually indicates an IOException as the service is unable to connect
-                CatalogPlugin.trace("trouble connecting to " + createdService.getID(), t);
+                CatalogPlugin.trace("trouble connecting to " + createdService.getID(), t); //$NON-NLS-1$
             }
 
         } finally {
             List<IService> members = checkMembers(possible);
-            
-            for( Iterator<IService> iterator = members.iterator(); iterator.hasNext(); ) {
+
+            for (Iterator<IService> iterator = members.iterator(); iterator.hasNext();) {
                 IService service = iterator.next();
 
                 if (service.equals(createdService))
@@ -315,33 +325,35 @@ public class CatalogImpl extends ICatalog {
     /**
      * This is the preferred way to connect to a service using connection parameters.
      * <p>
-     * If the service is already in the catalog it will be returned; if not we will
-     * connect to the service (add it to the catalog for safekeeping and cleanup)
-     * and return you the result.
+     * If the service is already in the catalog it will be returned; if not we will connect to the
+     * service (add it to the catalog for safekeeping and cleanup) and return you the result.
      * <p>
-     * The catalog takes responsibility for cleaning up after the service (ie call dispose())
-     * so you are free to continue with your work.
+     * The catalog takes responsibility for cleaning up after the service (ie call dispose()) so you
+     * are free to continue with your work.
+     *
      * @param connectionParameters
      * @param monitor
      * @return Service used to access the provided connectionParameters
      */
-    public IService acquire( Map<String, Serializable> connectionParameters,
-            IProgressMonitor monitor ) throws IOException {
-        
-        List<IService> possible = new ArrayList<IService>();
-        IService createdService = null;
-        
-        if (monitor == null) monitor = new NullProgressMonitor();
+    @Override
+    public IService acquire(Map<String, Serializable> connectionParameters,
+            IProgressMonitor monitor) throws IOException {
 
-        monitor.beginTask("acquire", 100);
-        monitor.subTask("acquire services");
+        List<IService> possible = new ArrayList<>();
+        IService createdService = null;
+
+        if (monitor == null)
+            monitor = new NullProgressMonitor();
+
+        monitor.beginTask("acquire", 100); //$NON-NLS-1$
+        monitor.subTask("acquire services"); //$NON-NLS-1$
 
         try {
 
             possible = constructServices(connectionParameters, monitor);
 
             if (possible.isEmpty()) {
-                throw new IOException("Unable to connect to any service ");
+                throw new IOException("Unable to connect to any service "); //$NON-NLS-1$
             }
 
             createdService = possible.get(0);
@@ -351,13 +363,13 @@ public class CatalogImpl extends ICatalog {
                 return createdService;
             } catch (Throwable t) {
                 // usually indicates an IOException as the service is unable to connect
-                CatalogPlugin.trace("trouble connecting to " + createdService.getID(), t);
+                CatalogPlugin.trace("trouble connecting to " + createdService.getID(), t); //$NON-NLS-1$
             }
 
         } finally {
             List<IService> members = checkMembers(possible);
-            
-            for( Iterator<IService> iterator = members.iterator(); iterator.hasNext(); ) {
+
+            for (Iterator<IService> iterator = members.iterator(); iterator.hasNext();) {
                 IService service = iterator.next();
 
                 if (service.equals(createdService))
@@ -365,7 +377,7 @@ public class CatalogImpl extends ICatalog {
 
                 service.dispose(new SubProgressMonitor(monitor, 10));
             }
-            
+
             monitor.done();
         }
         return null;
@@ -374,20 +386,21 @@ public class CatalogImpl extends ICatalog {
     //
     // Search Implementations
     //
-    public List<IResolve> find( ID id, IProgressMonitor monitor ) {
+    @Override
+    public List<IResolve> find(ID id, IProgressMonitor monitor) {
         URL query = id.toURL();
-        Set<IResolve> found = new LinkedHashSet<IResolve>();
-        
-        //ID id1 = new ID(query);
+        Set<IResolve> found = new LinkedHashSet<>();
+
+        // ID id1 = new ID(query);
 
         // first pass 1.1- use urlEquals on CONNECTED service for subset check
-        for( IService service : services ) {
+        for (IService service : services) {
             if (service.getStatus() != CONNECTED)
                 continue; // skip non connected service
-            
+
             URL identifier = service.getIdentifier();
             boolean matchParentURL = URLUtils.urlEquals(query, identifier, true);
-            boolean matchParentID = service.getID().equals( id, true );
+            boolean matchParentID = service.getID().equals(id, true);
 
             if (matchParentURL || matchParentID) {
                 if (matchedService(query, identifier)) {
@@ -403,7 +416,7 @@ public class CatalogImpl extends ICatalog {
             }
         }
         // first pass 1.2 - use urlEquals on unCONNECTED service for subset check
-        for( IService service : services ) {
+        for (IService service : services) {
             if (service.getStatus() == CONNECTED)
                 continue; // already checked in pass 1.1
             URL identifier = service.getIdentifier();
@@ -425,7 +438,7 @@ public class CatalogImpl extends ICatalog {
         // first pass 1.3 - use urlEquals on BROKEN or RESTRICTED_ACCESS service for subset check
         // the hope here is that a "friend" will still have data! May be tough for friends
         // to negotiate a match w/ a broken services - but there is still hope...
-        for( IService service : services ) {
+        for (IService service : services) {
             if (service.getStatus() == CONNECTED || service.getStatus() == NOTCONNECTED) {
                 continue; // already checked in pass 1.1-1.2
             }
@@ -466,29 +479,30 @@ public class CatalogImpl extends ICatalog {
          * getChildById(service, query, monitor); if( res!=null ){ found.add(res); found.addAll(
          * friends( res)); break; } } } }
          */
-        return new ArrayList<IResolve>(found);
+        return new ArrayList<>(found);
     }
 
     /**
      * Quick search by url match.
-     * 
+     *
      * @param query
      * @see org.locationtech.udig.catalog.ICatalog#search(org.opengis.filter.Filter)
      * @return List<IResolve>
      * @throws IOException
      */
-    public List<IResolve> find( URL query, IProgressMonitor monitor ) {
+    @Override
+    public List<IResolve> find(URL query, IProgressMonitor monitor) {
         return find(new ID(query), monitor);
     }
 
     /**
      * Check if the provided query is a child of identifier.
-     * 
+     *
      * @param query
      * @param identifier
      * @return true if query may be a child of identifier
      */
-    private boolean matchedService( URL query, URL identifier ) {
+    private boolean matchedService(URL query, URL identifier) {
         return query.getRef() == null && URLUtils.urlEquals(query, identifier, false);
     }
 
@@ -504,19 +518,21 @@ public class CatalogImpl extends ICatalog {
      * <li>URL Pattern matching for well known cases like GeoServer and MapServer
      * <li>Service Metadata, for example WMS resourceURL referencing a WFS SimpleFeatureType
      * </ul>
-     * All of these handles will be returned from the find( URL, monitor ) method. </ul>
-     * 
+     * All of these handles will be returned from the find( URL, monitor ) method.
+     * </ul>
+     *
      * @param handle
      * @return List of frends, possibly empty
      */
-    public List<IResolve> friends( final IResolve handle ) {
-        final List<IResolve> friends = new ArrayList<IResolve>();
+    public List<IResolve> friends(final IResolve handle) {
+        final List<IResolve> friends = new ArrayList<>();
         ExtensionPointUtil.process(CatalogPlugin.getDefault(),
-                "org.locationtech.udig.catalog.friendly", new ExtensionPointProcessor(){ //$NON-NLS-1$
+                "org.locationtech.udig.catalog.friendly", new ExtensionPointProcessor() { //$NON-NLS-1$
                     /**
                      * Lets find our friends.
                      */
-                    public void process( IExtension extension, IConfigurationElement element )
+                    @Override
+                    public void process(IExtension extension, IConfigurationElement element)
                             throws Exception {
                         try {
                             String target = element.getAttribute("target"); //$NON-NLS-1$
@@ -550,14 +566,14 @@ public class CatalogImpl extends ICatalog {
      * We are depending on the provided ID being unique for this catalog; please note that in the
      * event the ID locates an IForward instances we will find and return the replacement.
      * <p>
-     * 
+     *
      * @param id Identification of service to find
      * @return Found service handle or null
      */
-    private IService getServiceById( final ID id ) {
+    private IService getServiceById(final ID id) {
         if (id == null)
             return null;
-        for( IService service : services ) {
+        for (IService service : services) {
             if (id.equals(service.getID())) {
                 return service;
             }
@@ -565,9 +581,11 @@ public class CatalogImpl extends ICatalog {
         return null;
     }
 
-    public <T extends IResolve> T getById( Class<T> type, final ID id, IProgressMonitor monitor ) {
+    @Override
+    public <T extends IResolve> T getById(Class<T> type, final ID id, IProgressMonitor monitor) {
 
-        IProgressMonitor monitor2 = monitor;;
+        IProgressMonitor monitor2 = monitor;
+        ;
         if (monitor2 == null)
             monitor2 = new NullProgressMonitor();
         if (id == null)
@@ -582,7 +600,7 @@ public class CatalogImpl extends ICatalog {
 
         URL url = id.toURL();
         if (IResolve.class.isAssignableFrom(type)) {
-            for( IService service : services ) {
+            for (IService service : services) {
                 if (URLUtils.urlEquals(url, service.getIdentifier(), true)) {
                     IResolve child = getChildById(service, id, false, monitor2);
                     if (child != null)
@@ -621,12 +639,12 @@ public class CatalogImpl extends ICatalog {
      * getCapabilities document between runs (will have to be updated too as the app has time).
      * </quote> Repeat the following comment is out of date since people are using this method to
      * look for entries that have not been added to the catalog yet.
-     * 
+     *
      * @param roughMatch an ID consists of a URL and other info like a typeQualifier if roughMatch
      *        is true then the extra information is ignored during search
      */
-    public IResolve getChildById( IResolve handle, final ID id, boolean roughMatch,
-            IProgressMonitor monitor ) {
+    public IResolve getChildById(IResolve handle, final ID id, boolean roughMatch,
+            IProgressMonitor monitor) {
         IProgressMonitor monitor2 = monitor;
         if (monitor2 == null)
             monitor2 = new NullProgressMonitor();
@@ -643,12 +661,12 @@ public class CatalogImpl extends ICatalog {
             }
         }
         try {
-            List< ? extends IResolve> children = handle.members(monitor2);
+            List<? extends IResolve> children = handle.members(monitor2);
             if (children == null || children.isEmpty())
                 return null;
 
             monitor2.beginTask(Messages.CatalogImpl_monitorTask2, children.size());
-            for( IResolve child : children ) {
+            for (IResolve child : children) {
                 IResolve found = getChildById(child, id, roughMatch, null);
                 if (found != null)
                     return found;
@@ -664,66 +682,68 @@ public class CatalogImpl extends ICatalog {
      * following conventions: use " " to surround a phase use + to represent 'AND' use - to
      * represent 'OR' use ! to represent 'NOT' use ( ) to designate scope The bbox provided shall be
      * in Lat - Long, or null if the search is not to be contained within a specified area.
-     * 
+     *
      * @see org.locationtech.udig.catalog.ICatalog#search(java.lang.String,
      *      org.locationtech.jts.geom.Envelope)
      * @param pattern
      * @param bbox used for an intersection test
      * @return
      */
-    public synchronized List<IResolve> search( String pattern, Envelope bbox,
-            IProgressMonitor monitor2 ) {
-        
-        if( CatalogPlugin.getDefault().isDebugging() ){
-            if( Display.getCurrent() != null ){
-                throw new IllegalStateException("search called from display thread");
+    @Override
+    public synchronized List<IResolve> search(String pattern, Envelope bbox,
+            IProgressMonitor monitor2) {
+
+        if (CatalogPlugin.getDefault().isDebugging()) {
+            if (Display.getCurrent() != null) {
+                throw new IllegalStateException("search called from display thread"); //$NON-NLS-1$
             }
         }
-        
+
         IProgressMonitor monitor = monitor2;
         if (monitor == null)
             monitor = new NullProgressMonitor();
         if ((pattern == null || "".equals(pattern.trim())) //$NON-NLS-1$
                 && (bbox == null || bbox.isNull())) {
-            return new LinkedList<IResolve>();
+            return new LinkedList<>();
         }
-        List<IResolve> result = new LinkedList<IResolve>();
+        List<IResolve> result = new LinkedList<>();
         AST ast = ASTFactory.parse(pattern);
         if (ast == null) {
             return result;
         }
-        HashSet<IService> searchScope = new HashSet<IService>();
+        HashSet<IService> searchScope = new HashSet<>();
         searchScope.addAll(this.services);
         try {
             monitor.beginTask(Messages.CatalogImpl_finding, searchScope.size() * 10);
-            SERVICE: for( IService service : searchScope ) {
+            SERVICE: for (IService service : searchScope) {
                 ID serviceID = service.getID();
                 if (check(service, ast)) {
                     result.add(service);
                 }
-                //Iterator< ? extends IGeoResource> resources;
+                // Iterator< ? extends IGeoResource> resources;
                 SubProgressMonitor submonitor = new SubProgressMonitor(monitor, 10);
                 try {
-                    List< ? extends IGeoResource> members = service.resources(submonitor);
+                    List<? extends IGeoResource> members = service.resources(submonitor);
                     if (members == null) {
                         continue SERVICE;
                     }
-                    for( IGeoResource resource : members ) {
+                    for (IGeoResource resource : members) {
                         ID resoruceID = resource.getID();
                         try {
                             if (check(resource, ast, bbox)) {
                                 result.add(resource);
                             }
                         } catch (Throwable t) {
-                            CatalogPlugin.log("Could not search in resource:" + resoruceID, t);
+                            CatalogPlugin.log("Could not search in resource:" + resoruceID, t); //$NON-NLS-1$
                         }
                     }
                 } catch (IOException e) {
-                    CatalogPlugin.log("Could not search in service:" + serviceID, e);
+                    CatalogPlugin.log("Could not search in service:" + serviceID, e); //$NON-NLS-1$
                 } finally {
                     submonitor.done();
                 }
-                Thread.yield(); // allow other threads to have a go... makes search view more responsive
+                Thread.yield(); // allow other threads to have a go... makes search view more
+                                // responsive
             }
             return result;
         } finally {
@@ -732,7 +752,7 @@ public class CatalogImpl extends ICatalog {
     }
 
     /* check the fields we catre about */
-    protected static boolean check( IService service, AST pattern ) {
+    protected static boolean check(IService service, AST pattern) {
         if (pattern == null) {
             return false;
         }
@@ -749,7 +769,7 @@ public class CatalogImpl extends ICatalog {
                 t = pattern.accept(info.getTitle());
             if (!t && info.getKeywords() != null) {
                 String[] keys = info.getKeywords().toArray(new String[0]);
-                for( int i = 0; !t && i < keys.length; i++ )
+                for (int i = 0; !t && i < keys.length; i++)
                     if (keys[i] != null)
                         t = pattern.accept(keys[i]);
             }
@@ -764,7 +784,7 @@ public class CatalogImpl extends ICatalog {
     }
 
     /* check the fields we catre about */
-    protected static boolean check( IGeoResource resource, AST pattern ) {
+    protected static boolean check(IGeoResource resource, AST pattern) {
         if (pattern == null) {
             return true;
         }
@@ -785,7 +805,7 @@ public class CatalogImpl extends ICatalog {
             return true;
         }
         if (info.getKeywords() != null) {
-            for( String key : info.getKeywords() ) {
+            for (String key : info.getKeywords()) {
                 if (pattern.accept(key)) {
                     return true;
                 }
@@ -800,7 +820,7 @@ public class CatalogImpl extends ICatalog {
         return false;
     }
 
-    protected static boolean check( IGeoResource resource, AST pattern, Envelope bbox ) {
+    protected static boolean check(IGeoResource resource, AST pattern, Envelope bbox) {
         if (!check(resource, pattern)) {
             return false;
         }
@@ -822,7 +842,7 @@ public class CatalogImpl extends ICatalog {
 
     /**
      * Fire a resource changed event, these may be batched into one delta for performance.
-     * 
+     *
      * @param resoruce IGeoResource undergoing change
      * @param mask of IDelta constants indicating change
      * @throws IOException protected void fireResourceEvent( IGeoResource resource,
@@ -834,19 +854,21 @@ public class CatalogImpl extends ICatalog {
      *         Collections.singletonList( (IDelta)sDelta ) ); fire( new CatalogChangeEvent(
      *         resource, ICatalogChangeEvent.Type.POST_CHANGE, cDelta ) ); }
      */
-    public void fire( IResolveChangeEvent event ) {
+    public void fire(IResolveChangeEvent event) {
         if (catalogListeners.size() == 0)
             return;
 
         HashSet<IResolveChangeListener> copy;
         copy = getListenersCopy();
 
-        for( IResolveChangeListener listener : copy ) {
+        for (IResolveChangeListener listener : copy) {
             try {
                 listener.changed(event);
             } catch (Throwable die) {
-                CatalogPlugin.log("Catalog event could not be delivered to "
-                        + listener.getClass().getSimpleName() + ":" + listener.toString(), die);
+                CatalogPlugin.log(
+                        "Catalog event could not be delivered to " //$NON-NLS-1$
+                                + listener.getClass().getSimpleName() + ":" + listener.toString(), //$NON-NLS-1$
+                        die);
                 die.printStackTrace();
             }
         }
@@ -858,17 +880,17 @@ public class CatalogImpl extends ICatalog {
     private HashSet<IResolveChangeListener> getListenersCopy() {
         HashSet<IResolveChangeListener> copy;
         synchronized (catalogListeners) {
-            copy = new HashSet<IResolveChangeListener>(catalogListeners);
+            copy = new HashSet<>(catalogListeners);
         }
         return copy;
     }
 
     /**
      * @see org.locationtech.udig.catalog.ICatalog#resolve(java.lang.Class,
-     *      org.eclipse.core.runtime.IProgressMonitor)
-     * @SuppressWarnings(value={"unchecked" )
+     *      org.eclipse.core.runtime.IProgressMonitor) @SuppressWarnings(value={"unchecked" )
      */
-    public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor2 ) {
+    @Override
+    public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor2) {
         IProgressMonitor monitor;
         if (monitor2 == null)
             monitor = new NullProgressMonitor();
@@ -886,7 +908,7 @@ public class CatalogImpl extends ICatalog {
             if (adaptee.isAssignableFrom(services.getClass()))
                 return adaptee.cast(services);
             if (adaptee.isAssignableFrom(List.class))
-                return adaptee.cast(new LinkedList<IService>(services));
+                return adaptee.cast(new LinkedList<>(services));
             if (adaptee.isAssignableFrom(catalogListeners.getClass()))
                 return adaptee.cast(getListenersCopy());
         } finally {
@@ -899,23 +921,27 @@ public class CatalogImpl extends ICatalog {
     /*
      * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
-    public <T> boolean canResolve( Class<T> adaptee ) {
+    @Override
+    public <T> boolean canResolve(Class<T> adaptee) {
         Object value = resolve(adaptee, null);
         return value != null;
     }
 
     /*
-     * @see org.locationtech.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
+     * @see
+     * org.locationtech.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
      */
-    public List<IResolve> members( IProgressMonitor monitor2 ) {
+    @Override
+    public List<IResolve> members(IProgressMonitor monitor2) {
         IProgressMonitor monitor = monitor2;
         if (monitor == null)
             monitor = new NullProgressMonitor();
         monitor.beginTask(Messages.CatalogImpl_finding, 1);
         monitor.done();
-        return new LinkedList<IResolve>(services);
+        return new LinkedList<>(services);
     }
 
+    @Override
     public String getTitle() {
         return metadata.getTitle();
     }
@@ -923,6 +949,7 @@ public class CatalogImpl extends ICatalog {
     /*
      * @see org.locationtech.udig.catalog.IResolve#getStatus()
      */
+    @Override
     public Status getStatus() {
         return Status.CONNECTED;
     }
@@ -930,6 +957,7 @@ public class CatalogImpl extends ICatalog {
     /*
      * @see org.locationtech.udig.catalog.IResolve#getMessage()
      */
+    @Override
     public Throwable getMessage() {
         return null;
     }
@@ -937,22 +965,24 @@ public class CatalogImpl extends ICatalog {
     /*
      * @see org.locationtech.udig.catalog.IResolve#getIdentifier()
      */
+    @Override
     public URL getIdentifier() {
         return metadata.getSource();
     }
 
+    @Override
     public ID getID() {
         return new ID(getIdentifier());
     }
 
     @Override
-    public IGeoResource createTemporaryResource( Object descriptor ) {
+    public IGeoResource createTemporaryResource(Object descriptor) {
         List<IConfigurationElement> list = ExtensionPointList
                 .getExtensionPointList(TEMPORARY_RESOURCE_EXT_ID);
-        for( IConfigurationElement element : list ) {
+        for (IConfigurationElement element : list) {
             try {
                 String attribute = element.getAttribute("descriptorClass"); //$NON-NLS-1$
-                Class< ? > c = descriptor.getClass().getClassLoader().loadClass(attribute);
+                Class<?> c = descriptor.getClass().getClassLoader().loadClass(attribute);
                 if (c.isAssignableFrom(descriptor.getClass())) {
                     TemporaryResourceFactory fac = (TemporaryResourceFactory) element
                             .createExecutableExtension("factory"); //$NON-NLS-1$
@@ -965,9 +995,9 @@ public class CatalogImpl extends ICatalog {
                 throw (RuntimeException) new RuntimeException().initCause(e);
             }
         }
-        throw new IllegalArgumentException(descriptor.getClass()
-                + " is not a legal descriptor type.  If must be one of " + //$NON-NLS-1$
-                String.valueOf(getTemporaryDescriptorClasses()));
+        throw new IllegalArgumentException(
+                descriptor.getClass() + " is not a legal descriptor type.  If must be one of " + //$NON-NLS-1$
+                        String.valueOf(getTemporaryDescriptorClasses()));
     }
 
     @Override
@@ -975,8 +1005,8 @@ public class CatalogImpl extends ICatalog {
         if (descriptors == null) {
             List<IConfigurationElement> list = ExtensionPointList
                     .getExtensionPointList(TEMPORARY_RESOURCE_EXT_ID);
-            ArrayList<String> temp = new ArrayList<String>();
-            for( IConfigurationElement element : list ) {
+            ArrayList<String> temp = new ArrayList<>();
+            for (IConfigurationElement element : list) {
                 try {
                     String desc = element.getAttribute("descriptorClass"); //$NON-NLS-1$
                     if (desc != null)
@@ -996,43 +1026,43 @@ public class CatalogImpl extends ICatalog {
         return k;
     }
 
-    public void loadFromFile( File catalogLocation, IServiceFactory factory ) {
+    public void loadFromFile(File catalogLocation, IServiceFactory factory) {
         try {
             FileInputStream input = new FileInputStream(catalogLocation);
             IPreferencesService preferencesService = Platform.getPreferencesService();
             IExportedPreferences paramsNode = preferencesService.readPreferences(input);
 
-            ServiceParameterPersister persister = new ServiceParameterPersister(this, factory, catalogLocation);
+            ServiceParameterPersister persister = new ServiceParameterPersister(this, factory,
+                    catalogLocation);
             Preferences parameterNode = findParameterNode(paramsNode);
-            
+
             persister.restore(parameterNode);
         } catch (Throwable e) {
-            CatalogPlugin.trace("Unable to restore catalog:"+e, e); //$NON-NLS-1$
+            CatalogPlugin.trace("Unable to restore catalog:" + e, e); //$NON-NLS-1$
             try {
                 loadFromFileOld(factory, e);
-                CatalogPlugin.trace("Restored from old catalog format",null);
-            }
-            catch (Throwable e2) {
+                CatalogPlugin.trace("Restored from old catalog format", null); //$NON-NLS-1$
+            } catch (Throwable e2) {
                 CatalogPlugin.log("Unable to restore from old catalog format", e); //$NON-NLS-1$
             }
         }
     }
+
     /**
      * Ok maybe it is an from an older version of uDig so try the oldCatalogRef.
-     * 
+     *
      * @param factory
      * @param e
      */
     public void loadFromFileOld(IServiceFactory factory, Throwable e) {
         IPreferencesService prefs = Platform.getPreferencesService();
         IEclipsePreferences root = prefs.getRootNode();
-        Preferences node = root.node(InstanceScope.SCOPE).node(
-                CatalogPlugin.ID + ".services"); //$NON-NLS-1$
+        Preferences node = root.node(InstanceScope.SCOPE).node(CatalogPlugin.ID + ".services"); //$NON-NLS-1$
         ServiceParameterPersister persister = new ServiceParameterPersister(this, factory);
         persister.restore(node);
     }
 
-    private Preferences findParameterNode( IExportedPreferences paramsNode )
+    private Preferences findParameterNode(IExportedPreferences paramsNode)
             throws BackingStoreException {
         String[] name = paramsNode.childrenNames();
 
@@ -1041,17 +1071,19 @@ public class CatalogImpl extends ICatalog {
 
         return plugin.node(name[0]);
     }
+
     /**
      * Save this local catalog to the provided file.
-     * 
+     *
      * @param catalogLocation
      * @param factory
      * @param monitor
      */
-    public void saveToFile( File catalogLocation, IServiceFactory factory, IProgressMonitor monitor ) {
+    public void saveToFile(File catalogLocation, IServiceFactory factory,
+            IProgressMonitor monitor) {
         try {
-            Preferences toSave = Platform.getPreferencesService().getRootNode().node(
-                    CatalogPlugin.ID).node("LOCAL_CATALOG_SERVICES"); //$NON-NLS-1$
+            Preferences toSave = Platform.getPreferencesService().getRootNode()
+                    .node(CatalogPlugin.ID).node("LOCAL_CATALOG_SERVICES"); //$NON-NLS-1$
             if (services != null) {
                 ServiceParameterPersister persister = new ServiceParameterPersister(this, factory,
                         catalogLocation.getParentFile());
@@ -1065,18 +1097,19 @@ public class CatalogImpl extends ICatalog {
             toSave.clear();
 
         } catch (Throwable t) {
-            CatalogPlugin.log("Error saving services for the local catalog", t); //$NON-NLS-1$ 
+            CatalogPlugin.log("Error saving services for the local catalog", t); //$NON-NLS-1$
         }
     }
+
     //
     // Interceptors
     //
     /**
      * Run the service interceptors for the indicated activity.
-     * 
+     *
      * @param activity ADDED_ID, CREATED_ID, REMOVED_ID
      */
-    public static void runInterceptor( IService service, String activity ) {
+    public static void runInterceptor(IService service, String activity) {
         if (!ServiceInterceptor.ADDED_ID.equals(activity)
                 && !ServiceInterceptor.REMOVED_ID.equals(activity)
                 && !ServiceInterceptor.CREATED_ID.equals(activity)) {
@@ -1085,7 +1118,7 @@ public class CatalogImpl extends ICatalog {
         List<IConfigurationElement> interceptors = ExtensionPointList
                 .getExtensionPointList(ServiceInterceptor.EXTENSION_ID);
 
-        for( IConfigurationElement element : interceptors ) {
+        for (IConfigurationElement element : interceptors) {
             if (!activity.equals(element.getName())) {
                 continue;
             }
@@ -1094,17 +1127,17 @@ public class CatalogImpl extends ICatalog {
                         .createExecutableExtension("class"); //$NON-NLS-1$
                 interceptor.run(service);
             } catch (Exception e) {
-                CatalogPlugin.trace( activity +" "+element.getAttribute("class")+":"+e, e); //$NON-NLS-1$
+                CatalogPlugin.trace(activity + " " + element.getAttribute("class") + ":" + e, e); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             }
         }
     }
-    
+
     /**
      * Run the resource interceptors for the indicated activity.
-     * 
+     *
      * @param activity ADDED_ID, CREATED_ID, REMOVED_ID
      */
-    public static void runInterceptor( IGeoResource resource, String activity ) {
+    public static void runInterceptor(IGeoResource resource, String activity) {
         if (!GeoResourceInterceptor.ADDED_ID.equals(activity)
                 && !GeoResourceInterceptor.REMOVED_ID.equals(activity)) {
             return; // no activities defined
@@ -1112,7 +1145,7 @@ public class CatalogImpl extends ICatalog {
         List<IConfigurationElement> interceptors = ExtensionPointList
                 .getExtensionPointList(ServiceInterceptor.EXTENSION_ID);
 
-        for( IConfigurationElement element : interceptors ) {
+        for (IConfigurationElement element : interceptors) {
             if (!activity.equals(element.getName())) {
                 continue;
             }
@@ -1121,50 +1154,51 @@ public class CatalogImpl extends ICatalog {
                         .createExecutableExtension("class"); //$NON-NLS-1$
                 interceptor.run(resource);
             } catch (Exception e) {
-                CatalogPlugin.trace( activity +" "+element.getAttribute("class")+":"+e, e); //$NON-NLS-1$
+                CatalogPlugin.trace(activity + " " + element.getAttribute("class") + ":" + e, e); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             }
         }
     }
-    
+
     /**
      * Takes a list of IServices and prioritises them by the percentage of metadata available. This
      * method relies on IServiceInfo.getMetric() for metadata metric calculations. Subclasses are
      * encouraged to override IServiceInfo getMetric() to calculate required metadata for each
      * services.
-     * 
+     *
      * @param services A list of IServices to be prioritised.
      * @param monitor Used to track the process of connecting
      * @return
      * @see #IserviceInfo.getMetric()
      */
-    private List<IService> prioritise( List<IService> services, IProgressMonitor monitor ) {
-        
-        //If there is less than 2 IService there is no sorting required. 
-        if(services.size() < 2){
+    private List<IService> prioritise(List<IService> services, IProgressMonitor monitor) {
+
+        // If there is less than 2 IService there is no sorting required.
+        if (services.size() < 2) {
             return services;
         }
-        
+
         final IProgressMonitor monitor2 = new SubProgressMonitor(monitor, 60);
 
         class IServiceComparator implements Comparator<IService> {
-            
-            public int compare( IService o1, IService o2 ) {
+
+            @Override
+            public int compare(IService o1, IService o2) {
                 try {
                     IServiceInfo info1 = o1.getInfo(new SubProgressMonitor(monitor2, 1));
                     IServiceInfo info2 = o2.getInfo(new SubProgressMonitor(monitor2, 1));
                     double metric1 = info1.getMetric();
                     double metric2 = info2.getMetric();
-                    
+
                     // needs to be sorted in descending order, so that the most matching
                     // is the first (callers of constructServices always choose the first)
                     if (metric1 > metric2) {
                         return -1;
-                    }else if(metric1 < metric2){
-                       return 1;
-                    }else{
-                       return 0;
+                    } else if (metric1 < metric2) {
+                        return 1;
+                    } else {
+                        return 0;
                     }
-                    
+
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -1172,7 +1206,7 @@ public class CatalogImpl extends ICatalog {
                 return 0;
             }
         }
-       
+
         Comparator<IService> comparator = new IServiceComparator();
         Collections.sort(services, comparator);
 
@@ -1180,10 +1214,10 @@ public class CatalogImpl extends ICatalog {
     }
 
     @Override
-    public List<IService> checkMembers( List<IService> constructServiceList ) {
-        List<IService> catalogServices = new ArrayList<IService>();
+    public List<IService> checkMembers(List<IService> constructServiceList) {
+        List<IService> catalogServices = new ArrayList<>();
 
-        for( IService service : constructServiceList ) {
+        for (IService service : constructServiceList) {
 
             ID id = service.getID();
             IService found = getById(IService.class, id, new NullProgressMonitor());
@@ -1198,10 +1232,10 @@ public class CatalogImpl extends ICatalog {
     }
 
     @Override
-    public List<IService> checkNonMembers( List<IService> constructServiceList ) {
-        List<IService> catalogServices = new ArrayList<IService>();
+    public List<IService> checkNonMembers(List<IService> constructServiceList) {
+        List<IService> catalogServices = new ArrayList<>();
 
-        for( IService service : constructServiceList ) {
+        for (IService service : constructServiceList) {
 
             ID id = service.getID();
             IService found = getById(IService.class, id, new NullProgressMonitor());
@@ -1215,69 +1249,69 @@ public class CatalogImpl extends ICatalog {
     }
 
     @Override
-    public List<IService> constructServices(URL url, IProgressMonitor monitor )
-            throws IOException {
+    public List<IService> constructServices(URL url, IProgressMonitor monitor) throws IOException {
         if (monitor == null)
             monitor = new NullProgressMonitor();
-        
-        if (url == null){
+
+        if (url == null) {
             return null;
         }
-        
+
         int urlProcessCount = 0;
-        
-        List<IService> availableServices = new ArrayList<IService>();//services already in catalog
+
+        List<IService> availableServices = new ArrayList<>();// services already in catalog
 
         IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
 
-        monitor.beginTask("Check", 1);
-        monitor.subTask("Check available services");
+        monitor.beginTask("Check", 1); //$NON-NLS-1$
+        monitor.subTask("Check available services"); //$NON-NLS-1$
 
         try {
             List<IService> possible = factory.createService(url);
             monitor.worked(urlProcessCount);
 
             IProgressMonitor monitor3 = new SubProgressMonitor(monitor, 60);
-            monitor3.beginTask("connect", possible.size() * 10);
+            monitor3.beginTask("connect", possible.size() * 10); //$NON-NLS-1$
 
-            for( Iterator<IService> iterator = possible.iterator(); iterator.hasNext(); ) {
+            for (Iterator<IService> iterator = possible.iterator(); iterator.hasNext();) {
                 IService service = iterator.next();
 
-                if (service == null) continue;
+                if (service == null)
+                    continue;
 
-                monitor3.subTask("connect " + service.getID());
+                monitor3.subTask("connect " + service.getID()); //$NON-NLS-1$
                 try {
                     // try connecting
                     IServiceInfo info = service.getInfo(new SubProgressMonitor(monitor3, 10));
 
                     if (info == null) {
-                        CatalogPlugin.trace("unable to connect to " + service.getID(), null);
+                        CatalogPlugin.trace("unable to connect to " + service.getID(), null); //$NON-NLS-1$
                         continue; // skip unable to connect
                     }
 
                     availableServices.add(service);
                 } catch (Throwable t) {
                     // usually indicates an IOException as the service is unable to connect
-                    CatalogPlugin.trace("trouble connecting to " + service.getID(), t);
+                    CatalogPlugin.trace("trouble connecting to " + service.getID(), t); //$NON-NLS-1$
                 }
             }
             monitor3.done();
         } finally {
             monitor.done();
         }
-        return prioritise(availableServices, monitor); //return a prioritise list
+        return prioritise(availableServices, monitor); // return a prioritise list
     }
 
     @Override
-    public List<IService> constructServices( Map<String, Serializable> params,
-            IProgressMonitor monitor ) throws IOException {
+    public List<IService> constructServices(Map<String, Serializable> params,
+            IProgressMonitor monitor) throws IOException {
         if (monitor == null)
             monitor = new NullProgressMonitor();
 
-        List<IService> availableServices = new ArrayList<IService>();//services already in catalog
+        List<IService> availableServices = new ArrayList<>();// services already in catalog
 
         IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
-        
+
         // IOException used to report a problem connecting; usually we only have one
         // Service willing to try with a given set of parameters so this works out okay
         //
@@ -1286,25 +1320,23 @@ public class CatalogImpl extends ICatalog {
 
             if (params != null && !params.isEmpty()) {
                 List<IService> createdServices = factory.createService(params);
-                Set<IService> results = new HashSet<IService>(createdServices);
-                if( results.isEmpty() ){
+                Set<IService> results = new HashSet<>(createdServices);
+                if (results.isEmpty()) {
                     return createdServices; // nothing was willing to try connecting!
                 }
-                for( IService service : results ) {
+                for (IService service : results) {
                     try {
                         IServiceInfo info = service.getInfo(new SubProgressMonitor(monitor, 10));
                         if (info == null) {
-                            CatalogPlugin.trace("unable to connect to " + service.getID(), null);
+                            CatalogPlugin.trace("unable to connect to " + service.getID(), null); //$NON-NLS-1$
                             continue; // skip unable to connect
                         }
                         availableServices.add(service);
-                    }
-                    catch( Throwable t ){
+                    } catch (Throwable t) {
                         // unable to use the service - getInfo did not return correctly!
-                        if( t instanceof IOException ){
+                        if (t instanceof IOException) {
                             eek = (IOException) t;
-                        }
-                        else {
+                        } else {
                             t.printStackTrace();
                         }
                     }
@@ -1314,10 +1346,10 @@ public class CatalogImpl extends ICatalog {
         } finally {
             monitor.done();
         }
-        if( eek != null ){
+        if (eek != null) {
             throw eek; // unable to connect due to error!
         }
-        
-        return prioritise(availableServices, monitor); //return a prioritise list
+
+        return prioritise(availableServices, monitor); // return a prioritise list
     }
 }

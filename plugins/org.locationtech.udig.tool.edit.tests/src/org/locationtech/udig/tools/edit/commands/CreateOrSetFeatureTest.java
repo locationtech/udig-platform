@@ -59,7 +59,7 @@ public class CreateOrSetFeatureTest {
         original = resource.getFeatures().features().next();
     }
 
-    /*
+    /**
      * Test method for
      * 'org.locationtech.udig.tools.edit.commands.CreateOrSetFeature.run(IProgressMonitor)'
      */
@@ -81,7 +81,7 @@ public class CreateOrSetFeatureTest {
         assertEquals(2, getCount());
         assertEquals(new Coordinate(10, 10),
                 ((Geometry) feature.getDefaultGeometry()).getCoordinates()[0]);
-        assertFalse(feature.getID().equals(original));
+        assertFalse(feature.getID().equals(original.getID()));
         command.rollback(nullProgressMonitor);
 
         assertEquals(1, getCount());
@@ -95,7 +95,7 @@ public class CreateOrSetFeatureTest {
 
     }
 
-    /*
+    /**
      * Test method for
      * 'org.locationtech.udig.tools.edit.commands.CreateOrSetFeature.run(IProgressMonitor)'
      */
