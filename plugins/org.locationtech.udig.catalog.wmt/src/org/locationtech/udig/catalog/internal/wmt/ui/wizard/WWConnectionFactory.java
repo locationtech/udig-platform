@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2010, Refractions Research Inc.
  *
@@ -18,7 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.internal.wmt.wmtsource.ww.LayerSet;
@@ -27,27 +30,27 @@ import org.locationtech.udig.catalog.internal.wmt.ww.WWService;
 import org.locationtech.udig.catalog.internal.wmt.ww.WWServiceExtension;
 import org.locationtech.udig.catalog.ui.UDIGConnectionFactory;
 
-import org.eclipse.core.runtime.NullProgressMonitor;
-
 /**
  * Based on WMSConnectionFactory
- * 
+ *
  * @see org.locationtech.udig.catalog.internal.wms.ui.WMSConnectionFactory
- * 
+ *
  * @author to.srwn
  * @since 1.1.0
  */
 public class WWConnectionFactory extends UDIGConnectionFactory {
 
-	public boolean canProcess(Object context) {
-		if(context instanceof IResolve){
-           IResolve resolve = (IResolve) context;
-           return resolve.canResolve(LayerSet.class);
-       }
-       return toWWConfigURL(context) != null;        
-	}
-	
-	public Map<String, Serializable> createConnectionParameters( Object context ) {
+    @Override
+    public boolean canProcess(Object context) {
+        if (context instanceof IResolve) {
+            IResolve resolve = (IResolve) context;
+            return resolve.canResolve(LayerSet.class);
+        }
+        return toWWConfigURL(context) != null;
+    }
+
+    @Override
+    public Map<String, Serializable> createConnectionParameters(Object context) {
         if (context instanceof IResolve) {
             Map<String, Serializable> params = createParams((IResolve) context);
             if (!params.isEmpty())
@@ -55,14 +58,14 @@ public class WWConnectionFactory extends UDIGConnectionFactory {
         }
         URL url = toWWConfigURL(context);
         if (url == null) {
-            // so we are not sure it is a WW Config File url
+            // so we are not sure it is a WW config file URL
             // lets guess
-            url = CatalogPlugin.locateURL(context);
+            url = ID.cast(context).toURL();
         }
         if (url != null) {
-            // well we have a url - lets try it!
+            // well we have a URL - lets try it!
             List<IResolve> list = CatalogPlugin.getDefault().getLocalCatalog().find(url, null);
-            for( IResolve resolve : list ) {
+            for (IResolve resolve : list) {
                 Map<String, Serializable> params = createParams(resolve);
                 if (!params.isEmpty())
                     return params; // we got the goods!
@@ -73,13 +76,12 @@ public class WWConnectionFactory extends UDIGConnectionFactory {
         return Collections.emptyMap();
     }
 
-	static public Map<String,Serializable> createParams( IResolve handle ){
-        if(handle instanceof WWService) {
+    static public Map<String, Serializable> createParams(IResolve handle) {
+        if (handle instanceof WWService) {
             // got a hit!
             WWService service = (WWService) handle;
             return service.getConnectionParams();
-        }
-        else if (handle instanceof WWGeoResource ){
+        } else if (handle instanceof WWGeoResource) {
             WWGeoResource geoResource = (WWGeoResource) handle;
             WWService service;
             try {
@@ -87,31 +89,30 @@ public class WWConnectionFactory extends UDIGConnectionFactory {
                 return service.getConnectionParams();
             } catch (IOException e) {
                 checkedURL(geoResource.getIdentifier());
-            }                    
-        }
-        else if(handle.canResolve(LayerSet.class)){
+            }
+        } else if (handle.canResolve(LayerSet.class)) {
             // must be some kind of handle from a search!
             return createParams(handle.getIdentifier());
         }
-        
+
         return Collections.emptyMap();
     }
-	
-	/** 'Create' params given the provided url, no magic occurs */
-    static public Map<String,Serializable> createParams(URL url){
+
+    /** 'Create' params given the provided url, no magic occurs */
+    static public Map<String, Serializable> createParams(URL url) {
         WWServiceExtension factory = new WWServiceExtension();
-        Map<String,Serializable> params = factory.createParams(url);
-        if( params != null) return params;
-        
-        Map<String,Serializable> params2 = new HashMap<String,Serializable>();
+        Map<String, Serializable> params = factory.createParams(url);
+        if (params != null)
+            return params;
+
+        Map<String, Serializable> params2 = new HashMap<>();
         params2.put(WWService.WW_URL_KEY, url);
-        
+
         return params2;
     }
 
-    
-	 /**
-     * Convert "data" to a WW Config UUrl
+    /**
+     * Convert "data" to a WW config URL
      * <p>
      * Candidates for conversion are:
      * <ul>
@@ -123,83 +124,83 @@ public class WWConnectionFactory extends UDIGConnectionFactory {
      * </ul>
      * </p>
      * <p>
-     * No external processing should be required here, it is enough to guess and let
-     * the ServiceFactory try a real connect.
+     * No external processing should be required here, it is enough to guess and let the
+     * ServiceFactory try a real connect.
      * </p>
+     *
      * @param data IService, URL, or something else
      * @return URL considered a possibility for a WMS Capabilities, or null
      */
-    static URL toWWConfigURL( Object data ) {
-        if( data instanceof IResolve ){
-            return toWWConfigURL( (IResolve) data );
-        }
-        else if( data instanceof URL ){
-            return toWWConfigURL( (URL) data );
-        }
-        else if( CatalogPlugin.locateURL(data) != null ){
-            return toWWConfigURL( CatalogPlugin.locateURL(data) );
-        }
-        else {
+    static URL toWWConfigURL(Object data) {
+        if (data instanceof IResolve) {
+            return toWWConfigURL((IResolve) data);
+        } else if (data instanceof URL) {
+            return toWWConfigURL((URL) data);
+        } else if (ID.cast(data).toURL() != null) {
+            return toWWConfigURL(ID.cast(data).toURL());
+        } else {
             return null; // no idea what this should be
         }
     }
 
-    static URL toWWConfigURL( IResolve resolve ){
-        if( resolve instanceof IService ){
-            return toWWConfigURL( (IService) resolve );
+    static URL toWWConfigURL(IResolve resolve) {
+        if (resolve instanceof IService) {
+            return toWWConfigURL((IService) resolve);
         }
-        return toWWConfigURL( resolve.getIdentifier() );        
+        return toWWConfigURL(resolve.getIdentifier());
     }
 
-    static URL toWWConfigURL(IService resolve){
-        if(resolve instanceof WWService){
+    static URL toWWConfigURL(IService resolve) {
+        if (resolve instanceof WWService) {
             return toWWConfigURL((WWService) resolve);
         }
-        return toWWConfigURL(resolve.getIdentifier());        
+        return toWWConfigURL(resolve.getIdentifier());
     }
 
     /** No further QA checks needed - we know this one works */
-    static URL toWWConfigURL(WWService service){
-        return service.getIdentifier();                
+    static URL toWWConfigURL(WWService service) {
+        return service.getIdentifier();
     }
 
-    /** Quick sanity check to see if url is a WMS url */
-    static URL toWWConfigURL(URL url){
-        if (url == null) return null;
-    
+    /** Quick sanity check to see if URL is a WMS URL */
+    static URL toWWConfigURL(URL url) {
+        if (url == null)
+            return null;
+
         String PROTOCOL = url.getProtocol();
         String PATH = url.getPath();
-        if (PROTOCOL==null || PROTOCOL.isEmpty()) {
+        if (PROTOCOL == null || PROTOCOL.isEmpty()) {
             return null;
         }
-        
+
         if (PATH == null || PATH.isEmpty() || !PATH.toLowerCase().contains(".xml")) { //$NON-NLS-1$
             return null;
         }
-        
+
         return checkedURL(url);
     }
-    
-    /** Check that any trailing #layer is removed from the url */
-    static public URL checkedURL(URL url){
+
+    /** Check that any trailing #layer is removed from the URL */
+    static public URL checkedURL(URL url) {
         String check = url.toExternalForm();
 
         int hash = check.indexOf('#');
-        if ( hash == -1 ){
-            return url;            
+        if (hash == -1) {
+            return url;
         }
         try {
-            return new URL( check.substring(0, hash ));
+            return new URL(check.substring(0, hash));
         } catch (MalformedURLException e) {
             return null;
         }
     }
-    
-	public URL createConnectionURL(Object context) {
-	    if(context instanceof URL){
-	        return (URL) context;
-	    }
-		return null;
-	}
+
+    @Override
+    public URL createConnectionURL(Object context) {
+        if (context instanceof URL) {
+            return (URL) context;
+        }
+        return null;
+    }
 
 }
