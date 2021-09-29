@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -14,21 +15,23 @@ import org.eclipse.jface.action.StatusLineManager;
 
 /**
  * Adapts a {@link StatusLineManager} as a {@link IMessageBoard}
+ *
  * @author Jesse
  * @since 1.1.0
  */
-public class StatusLineMessageBoardAdapter implements IMessageBoard{
+public class StatusLineMessageBoardAdapter implements IMessageBoard {
 
     final IStatusLineManager manager;
-    
-    public StatusLineMessageBoardAdapter( final IStatusLineManager manager ) {
+
+    public StatusLineMessageBoardAdapter(final IStatusLineManager manager) {
         this.manager = manager;
     }
 
-    public void putMessage( String message, Type type ) {
-        if( type==Type.ERROR )
+    @Override
+    public void putMessage(String message, Type type) {
+        if (type == Type.ERROR)
             manager.setErrorMessage(message);
-        else{
+        else {
             manager.setErrorMessage(null);
             manager.setMessage(message);
         }

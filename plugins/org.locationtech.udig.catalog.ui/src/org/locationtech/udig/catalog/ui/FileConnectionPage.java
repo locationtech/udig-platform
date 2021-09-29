@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004-2011, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004-2011, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,13 +22,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.ICatalog;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.ui.FileConnectionFactory.FileType;
-import org.locationtech.udig.catalog.ui.internal.Messages;
-import org.locationtech.udig.ui.PlatformGIS;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -46,22 +39,32 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ui.FileConnectionFactory.FileType;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.ui.PlatformGIS;
 
 /**
  * A wizard page that opens a file dialog and closes the wizard when dialog is closed.
- * 
+ *
  * @author jeichar
  * @since 0.9.0
  * @version 1.2.0
  */
 public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGConnectionPage {
 
-    private final Set<URL> list = new HashSet<URL>();
+    private final Set<URL> list = new HashSet<>();
+
     private Composite comp;
 
     private FileConnectionFactory factory = new FileConnectionFactory();
+
     private FileDialog fileDialog;
-    private Collection<URL> resourceIds = new HashSet<URL>();
+
+    private Collection<URL> resourceIds = new HashSet<>();
+
     private ListViewer viewer;
 
     public String getId() {
@@ -76,18 +79,18 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
     }
 
     /**
-     * Process a list of URLs resulting in candidate IService instances
-     * that may need to be added to the catalog.
+     * Process a list of URLs resulting in candidate IService instances that may need to be added to
+     * the catalog.
      *
      * @param urls
      * @param monitor
      * @return Candidate IServices
      */
-    List<IService> process( List<URL> urls, IProgressMonitor monitor ) {
-        List<IService> resources = new ArrayList<IService>();
+    List<IService> process(List<URL> urls, IProgressMonitor monitor) {
+        List<IService> resources = new ArrayList<>();
         monitor.beginTask(Messages.OpenFilePage_1, list.size());
         int worked = 0;
-        for( URL url : urls ) {
+        for (URL url : urls) {
             if (monitor.isCanceled())
                 return null;
             try {
@@ -103,7 +106,7 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
         return resources;
     }
 
-    private void pushButton( final int buttonId ) {
+    private void pushButton(final int buttonId) {
         try {
 
             findButton(getShell().getChildren(), buttonId).notifyListeners(SWT.Selection,
@@ -113,11 +116,11 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
         }
     }
 
-    Button findButton( Control[] children, int id ) {
+    Button findButton(Control[] children, int id) {
         if (((Integer) getShell().getDefaultButton().getData()).intValue() == id)
             return getShell().getDefaultButton();
 
-        for( Control child : children ) {
+        for (Control child : children) {
             if (child instanceof Button) {
                 Button button = (Button) child;
                 if (button.getData() != null && ((Integer) button.getData()).intValue() == id)
@@ -132,7 +135,7 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
         }
         return null;
     }
-    
+
     /**
      * Check if only one resource is available; in which case we can skip asking.
      *
@@ -141,7 +144,7 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
      * @return
      * @throws IOException
      */
-    protected boolean hasOneResource( SubProgressMonitor monitor, List<IService> services )
+    protected boolean hasOneResource(SubProgressMonitor monitor, List<IService> services)
             throws IOException {
         if (services.size() > 1 || services.isEmpty())
             return false;
@@ -154,6 +157,7 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
     /**
      * @see org.eclipse.jface.wizard.WizardPage#canFlipToNextPage()
      */
+    @Override
     public boolean canFlipToNextPage() {
         return (list != null && list.size() > 1);
     }
@@ -161,25 +165,27 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
     /**
      * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
      */
-    public void createControl( Composite parent ) {
+    @Override
+    public void createControl(Composite parent) {
         comp = new Composite(parent, SWT.NONE);
-        comp.setLayout(new GridLayout(1,true));
+        comp.setLayout(new GridLayout(1, true));
 
-        Label label = new Label(comp,SWT.NONE);
+        Label label = new Label(comp, SWT.NONE);
         GridDataFactory.swtDefaults().applyTo(label);
         label.setText(Messages.FileConnectionPage_waitMessage);
-        
-        viewer = new ListViewer(comp,SWT.READ_ONLY| SWT.H_SCROLL | SWT.V_SCROLL);
+
+        viewer = new ListViewer(comp, SWT.READ_ONLY | SWT.H_SCROLL | SWT.V_SCROLL);
         viewer.setContentProvider(new ArrayContentProvider());
         viewer.setLabelProvider(new LabelProvider());
         GridDataFactory.fillDefaults().grab(true, true).applyTo(viewer.getControl());
-        
+
         setControl(comp);
     }
 
     @Override
     public void shown() {
-        Runnable openFileDialog = new Runnable(){
+        Runnable openFileDialog = new Runnable() {
+            @Override
             public void run() {
                 selectAndContinueWizard();
             }
@@ -195,7 +201,7 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
         okPressed = openFileDialog(comp);
         viewer.setInput(list);
         getContainer().updateButtons();
-        
+
         /*
          * XXX I'm not liking this. I think the workflow should be used to drive the pages because
          * by trying to put the buttons it is dependent the implementation of
@@ -214,14 +220,15 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
         }
 
     }
-    private boolean checkDND( FileDialog fileDialog ) {
+
+    private boolean checkDND(FileDialog fileDialog) {
         try {
 
             Object context = getState().getWorkflow().getContext();
 
             // IStructuredSelection selection = ((IDataWizard) getWizard()).getSelection();
 
-            Set<URL> urlList = new HashSet<URL>();
+            Set<URL> urlList = new HashSet<>();
 
             URL url = factory.createConnectionURL(context);
             if (url != null) {
@@ -241,13 +248,14 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
                 String[] filters = fileDialog.getFilterExtensions();
                 if (filters == null || filters.length == 0) {
                     // no filters set, set em up
-                    fileDialog.setFilterExtensions(new String[]{"*" + ext, "*.*"}); //$NON-NLS-1$ //$NON-NLS-2$	
+                    fileDialog.setFilterExtensions(new String[] { "*" + ext, "*.*" }); //$NON-NLS-1$ //$NON-NLS-2$
                 } else {
                     // we have some filters, look for the one in question
                     // in the list
                     int i = 0;
-                    for( ; i < filters.length; i++ ) {
-                        if (("*" + ext).equals(filters[i]))break; //$NON-NLS-1$
+                    for (; i < filters.length; i++) {
+                        if (("*" + ext).equals(filters[i])) //$NON-NLS-1$
+                            break;
                     }
 
                     if (i < filters.length) {
@@ -281,48 +289,46 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
         return fileDialog;
     }
 
-    private boolean openFileDialog( Composite parent ) {
-        String lastOpenedDirectory = PlatformUI.getPreferenceStore().getString(
-                CatalogUIPlugin.PREF_OPEN_DIALOG_DIRECTORY);
+    private boolean openFileDialog(Composite parent) {
+        String lastOpenedDirectory = PlatformUI.getPreferenceStore()
+                .getString(CatalogUIPlugin.PREF_OPEN_DIALOG_DIRECTORY);
         fileDialog = new FileDialog(parent.getShell(), SWT.MULTI | SWT.OPEN);
 
-        
-        List<String> names = new ArrayList<String>();
-        List<String> extensions = new ArrayList<String>();
+        List<String> names = new ArrayList<>();
+        List<String> extensions = new ArrayList<>();
         StringBuilder all = new StringBuilder();
-        
-        for( FileType fileType : factory.getTypeList()){
+
+        for (FileType fileType : factory.getTypeList()) {
             String name = fileType.getName();
             String fileExtensions = fileType.getExtensions();
-            if( name == null ){
+            if (name == null) {
                 name = fileExtensions;
             }
-            names.add( name );
-            extensions.add( fileExtensions );
-         
-            if( all.length() != 0 ){
-                all.append( ";" );    
+            names.add(name);
+            extensions.add(fileExtensions);
+
+            if (all.length() != 0) {
+                all.append(";"); //$NON-NLS-1$
             }
-            all.append( fileExtensions );
-            
+            all.append(fileExtensions);
+
         }
         // default to all supported files
-        names.add(0,"Supported Files");
-        extensions.add( 0, all.toString() );
-        
+        names.add(0, "Supported Files"); //$NON-NLS-1$
+        extensions.add(0, all.toString());
+
         // provide an option to select any file
         String platform = SWT.getPlatform();
-        if (platform.equals("win32") || platform.equals("wpf")) {
-            names.add("All Files (*.*)");
-            extensions.add("*.*");
-        }
-        else {
-            names.add("All Files (*)");
-            extensions.add("*");
+        if (platform.equals("win32") || platform.equals("wpf")) { //$NON-NLS-1$ //$NON-NLS-2$
+            names.add("All Files (*.*)"); //$NON-NLS-1$
+            extensions.add("*.*"); //$NON-NLS-1$
+        } else {
+            names.add("All Files (*)"); //$NON-NLS-1$
+            extensions.add("*"); //$NON-NLS-1$
         }
         fileDialog.setFilterExtensions(extensions.toArray(new String[0]));
-        fileDialog.setFilterNames( names.toArray(new String[0]));
-        
+        fileDialog.setFilterNames(names.toArray(new String[0]));
+
         if (lastOpenedDirectory != null && !checkDND(fileDialog)) {
             fileDialog.setFilterPath(lastOpenedDirectory);
         }
@@ -334,10 +340,12 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
         String path = fileDialog.getFilterPath();
         PlatformUI.getPreferenceStore().setValue(CatalogUIPlugin.PREF_OPEN_DIALOG_DIRECTORY, path);
         String[] filenames = fileDialog.getFileNames();
-        for( int i = 0; i < filenames.length; i++ ) {
+        for (int i = 0; i < filenames.length; i++) {
             try {
-                //URL url = new File(path + System.getProperty("file.separator") + filenames[i]).toURL(); //$NON-NLS-1$
-                URL url = new File(path + System.getProperty("file.separator") + filenames[i]).toURI().toURL(); //$NON-NLS-1$
+                // URL url = new File(path + System.getProperty("file.separator") +
+                // filenames[i]).toURL(); //$NON-NLS-1$
+                URL url = new File(path + System.getProperty("file.separator") + filenames[i]) //$NON-NLS-1$
+                        .toURI().toURL();
                 list.add(url);
             } catch (Throwable e) {
                 CatalogUIPlugin.log("", e); //$NON-NLS-1$
@@ -351,17 +359,18 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
         resourceIds.clear();
 
         final ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
-        final Collection<IService> services = new ArrayList<IService>();
+        final Collection<IService> services = new ArrayList<>();
 
-        IRunnableWithProgress runnable = new IRunnableWithProgress(){
+        IRunnableWithProgress runnable = new IRunnableWithProgress() {
 
-            public void run( IProgressMonitor monitor ) throws InvocationTargetException,
-                    InterruptedException {
+            @Override
+            public void run(IProgressMonitor monitor)
+                    throws InvocationTargetException, InterruptedException {
 
                 List<IService> availableServices = null;
 
                 if (!list.isEmpty()) {
-                    for( Iterator<URL> URLIterator = list.iterator(); URLIterator.hasNext(); ) {
+                    for (Iterator<URL> URLIterator = list.iterator(); URLIterator.hasNext();) {
                         URL url = URLIterator.next();
 
                         try {
@@ -376,11 +385,12 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
                         } finally {
                             List<IService> members = catalog.checkMembers(availableServices);
 
-                            for( Iterator<IService> iterator = members.iterator(); iterator
-                                    .hasNext(); ) {
+                            for (Iterator<IService> iterator = members.iterator(); iterator
+                                    .hasNext();) {
                                 IService service = iterator.next();
 
-                                if (service.equals(service)) continue;
+                                if (service.equals(service))
+                                    continue;
 
                                 service.dispose(new SubProgressMonitor(monitor, 10));
                             }

@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,7 +17,6 @@ import java.net.URL;
 import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.ui.internal.Messages;
 
-
 /**
  * URLs are used for resolve.getId(), this class contains utility methods to help work with urls
  * used in this manner.
@@ -26,33 +25,39 @@ import org.locationtech.udig.catalog.ui.internal.Messages;
  * @since 0.9.0
  * @deprecated Please use ID
  */
+@Deprecated
 public class Identifier {
-	/**
-	 * @deprecated Please use new ID( url ).isFile()
-	 * @param url
-	 * @return true if url is a file url
-	 */
-    public static final boolean isFile( URL url ) {
+    /**
+     * @deprecated Please use new ID( url ).isFile()
+     * @param url
+     * @return true if url is a file url
+     */
+    @Deprecated
+    public static final boolean isFile(URL url) {
         return "file".equals(url.getProtocol()); //$NON-NLS-1$
     }
 
     /**
-     * @deprecated Please use new ID( url ).isGraphc()
+     * @deprecated Please use new ID( url ).isDecorator()
      * @param url
      * @return true if url is a graphic url
      */
-    public static boolean isGraphic( URL url ) {
+    @Deprecated
+    public static boolean isGraphic(URL url) {
         // http://localhost/mapgraphic
         String HOST = url.getHost();
         String PROTOCOL = url.getProtocol();
         String PATH = url.getPath();
-        if ("mapgraphic".equals(PROTOCOL)){
+        if ("mapgraphic".equals(PROTOCOL)) { //$NON-NLS-1$
             return true; // we are hitting some mangled url
         }
-        if (!"http".equals(PROTOCOL))return false; //$NON-NLS-1$
-        if (!"localhost".equals(HOST))return false; //$NON-NLS-1$
+        if (!"http".equals(PROTOCOL)) //$NON-NLS-1$
+            return false;
+        if (!"localhost".equals(HOST)) //$NON-NLS-1$
+            return false;
 
-        if (!"/mapgraphic".equals(PATH))return false; //$NON-NLS-1$
+        if (!"/mapgraphic".equals(PATH)) //$NON-NLS-1$
+            return false;
 
         return true;
     }
@@ -62,14 +67,18 @@ public class Identifier {
      * @param url
      * @return true url identifies an in memory resource
      */
-    public static boolean isMemory( URL url ) {
+    @Deprecated
+    public static boolean isMemory(URL url) {
         String HOST = url.getHost();
         String PROTOCOL = url.getProtocol();
         String PATH = url.getPath();
-        if (!"http".equals(PROTOCOL))return false; //$NON-NLS-1$
-        if (!"localhost".equals(HOST))return false; //$NON-NLS-1$
+        if (!"http".equals(PROTOCOL)) //$NON-NLS-1$
+            return false;
+        if (!"localhost".equals(HOST)) //$NON-NLS-1$
+            return false;
 
-        if (!"/scratch".equals(PATH))return false; //$NON-NLS-1$
+        if (!"/scratch".equals(PATH)) //$NON-NLS-1$
+            return false;
 
         return true;
     }
@@ -79,7 +88,8 @@ public class Identifier {
      * @param url
      * @return true if url refers to a web map server
      */
-    public static boolean isWMS( URL url ) {
+    @Deprecated
+    public static boolean isWMS(URL url) {
         String PATH = url.getPath();
         String QUERY = url.getQuery();
         String PROTOCOL = url.getProtocol();
@@ -93,12 +103,14 @@ public class Identifier {
         }
         return false;
     }
+
     /**
      * @deprecated Please use new ID( url ).isWFS()
      * @param url
      * @return true if ID refers to a web feature server
      */
-    public static final boolean isWFS( URL url ) {
+    @Deprecated
+    public static final boolean isWFS(URL url) {
         String PATH = url.getPath();
         String QUERY = url.getQuery();
         String PROTOCOL = url.getProtocol();
@@ -113,16 +125,19 @@ public class Identifier {
         }
         return false;
     }
+
     /**
      * @deprecated Please use new ID( url ).isJDBC()
      * @param url
      * @return true if ID refers to a database (ie is a jdbc url)
      */
-    public static final boolean isJDBC( URL url ) {
-    	return new ID( url ).isJDBC();
-//        String PROTOCOL = url.getProtocol();
-//        String HOST = url.getHost();
-//        return "http".equals(PROTOCOL) && HOST != null && HOST.indexOf(".jdbc") != -1; //$NON-NLS-1$ //$NON-NLS-2$
+    @Deprecated
+    public static final boolean isJDBC(URL url) {
+        return new ID(url).isJDBC();
+        // String PROTOCOL = url.getProtocol();
+        // String HOST = url.getHost();
+        // return "http".equals(PROTOCOL) && HOST != null && HOST.indexOf(".jdbc") != -1;
+        // //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
@@ -148,11 +163,13 @@ public class Identifier {
      * <li>http://kraken.postgis.jdbc:5432/production.... becomes road
      * </ul>
      * <li>
+     *
      * @deprecated Please use new ID( url ).labelResource()
      * @param url
      * @return label describing the URL as a resource (ie file or content)
      */
-    static final public String labelResource( URL url ) {
+    @Deprecated
+    static final public String labelResource(URL url) {
         if (url == null)
             return Messages.ResolveLabelProvider_missingText;
 
@@ -189,13 +206,13 @@ public class Identifier {
             }
         } else if ("http".equals(PROTOCOL)) { //$NON-NLS-1$
             if (QUERY != null && QUERY.toUpperCase().indexOf("SERVICE=WFS") != -1) { //$NON-NLS-1$
-                for( String split : QUERY.split("&") ) { //$NON-NLS-1$
+                for (String split : QUERY.split("&")) { //$NON-NLS-1$
                     if (split.toLowerCase().startsWith("type=")) { //$NON-NLS-1$
                         label.append(split.substring(5));
                     }
                 }
             } else if (QUERY != null && QUERY.toUpperCase().indexOf("SERVICE=WMS") != -1) { //$NON-NLS-1$
-                for( String split : QUERY.split("&") ) { //$NON-NLS-1$
+                for (String split : QUERY.split("&")) { //$NON-NLS-1$
                     if (split.startsWith("LAYER=")) { //$NON-NLS-1$
                         label.append(split.substring(6));
                     }
@@ -235,18 +252,20 @@ public class Identifier {
      * Here are some examples:
      * <ul>
      * <li>file:///C:/java/workspace/shapefiles/a.shp becomes "shapefiles/a.shp"
-     * <li>http://www.refractions.net:8080/geoserver/wfs?REQUEST=GetCapabilities&SERVICE=WFS
-     * becomes "wfs://www.refractions.net:8080"
+     * <li>http://www.refractions.net:8080/geoserver/wfs?REQUEST=GetCapabilities&SERVICE=WFS becomes
+     * "wfs://www.refractions.net:8080"
      * <li>http://www.refractions.net:8080/data/a.shp becomes "www.refractions.net:8080"
      * <li>ftp://ftp.refractions.net/data/a.shp becomes "ftp://ftp.refractions.net"
      * <li>http://kraken.postgis.jdbc:5432/production becomes postgis://kraken:5432
      * </ul>
      * <li>
+     *
      * @deprecated Please use new ID( url ).labelServer()
      * @param server
      * @return label as if url points to just a server
      */
-    static final public String labelServer( URL url ) {
+    @Deprecated
+    static final public String labelServer(URL url) {
         if (url == null)
             return Messages.ResolveLabelProvider_missingText;
 
