@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -46,23 +47,22 @@ import org.xml.sax.helpers.XMLReaderFactory;
 /**
  * If a cache flag is set in the layer style blackboard this interceptor will return a
  * CacheFeatureSource wrapper.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public class CacheInterceptor
-        implements
-            IResourceInterceptor<FeatureSource<SimpleFeatureType, SimpleFeature>> {
+        implements IResourceInterceptor<FeatureSource<SimpleFeatureType, SimpleFeature>> {
 
     /**
      * The key that is checked to see if a filter is on the Map Blackboard or the Layer Properties.
      */
-    public static final String KEY = "org.locationtech.udig.style.cache";
+    public static final String KEY = "org.locationtech.udig.style.cache"; //$NON-NLS-1$
 
-    @SuppressWarnings("unchecked")
-    public FeatureSource<SimpleFeatureType, SimpleFeature> run( ILayer layer,
+    @Override
+    public FeatureSource<SimpleFeatureType, SimpleFeature> run(ILayer layer,
             FeatureSource<SimpleFeatureType, SimpleFeature> resource,
-            Class< ? super FeatureSource<SimpleFeatureType, SimpleFeature>> requestedType ) {
+            Class<? super FeatureSource<SimpleFeatureType, SimpleFeature>> requestedType) {
 
         Object prop = layer.getStyleBlackboard().get(KEY);
         if (prop == null) {
@@ -70,16 +70,18 @@ public class CacheInterceptor
         }
         if (prop instanceof Boolean && Boolean.TRUE.equals(prop)) {
             try {
-                CachingFeatureSource cachingFeatureSource = (CachingFeatureSource) layer.getBlackboard().get("cache");
-                if( cachingFeatureSource != null ){
+                CachingFeatureSource cachingFeatureSource = (CachingFeatureSource) layer
+                        .getBlackboard().get("cache"); //$NON-NLS-1$
+                if (cachingFeatureSource != null) {
                     return cachingFeatureSource;
-                }                
+                }
                 cachingFeatureSource = new CachingFeatureSource(resource);
-                layer.getBlackboard().put("cache", cachingFeatureSource);
+                layer.getBlackboard().put("cache", cachingFeatureSource); //$NON-NLS-1$
                 return cachingFeatureSource;
             } catch (IOException e) {
-                if ( ProjectPlugin.getPlugin().isDebugging()){
-                    ProjectPlugin.getPlugin().log("Unable to cache "+resource+":"+e.getLocalizedMessage());
+                if (ProjectPlugin.getPlugin().isDebugging()) {
+                    ProjectPlugin.getPlugin()
+                            .log("Unable to cache " + resource + ":" + e.getLocalizedMessage()); //$NON-NLS-1$ //$NON-NLS-2$
                     e.printStackTrace();
                 }
             }
@@ -87,10 +89,10 @@ public class CacheInterceptor
         return resource; // no wrapper needed
     }
 
-    private static Query createQuery( Filter filter, CoordinateReferenceSystem crs,
+    private static Query createQuery(Filter filter, CoordinateReferenceSystem crs,
             CoordinateReferenceSystem reproject, String handle, Integer maxFeature, URI namespace,
-            String[] propertyNames, String typeName ) {
-    	Query query = new Query();
+            String[] propertyNames, String typeName) {
+        Query query = new Query();
         if (namespace != null) {
             query = new Query(typeName, namespace, filter, maxFeature, propertyNames, handle);
         }
@@ -120,36 +122,42 @@ public class CacheInterceptor
 
     /**
      * Persists Query and Filters saved on the style blackboard.
-     * 
+     *
      * @author Jesse
      */
     public static class ViewStyleContent extends StyleContent {
 
-        private static final String CRS = "CRS";
-        private static final String REPOJECT = "REPOJECT";
-        private static final String HANDLE = "HANDLE";
-        private static final String MAX_FEATURES = "MAX_FEATURES";
-        private static final String NAMESPACE = "NAMESPACE";
-        private static final String TYPENAME = "TYPENAME";
-        private static final String PROPERTY_NAMES = "PROPERTY_NAMES";
+        private static final String CRS = "CRS"; //$NON-NLS-1$
+
+        private static final String REPOJECT = "REPOJECT"; //$NON-NLS-1$
+
+        private static final String HANDLE = "HANDLE"; //$NON-NLS-1$
+
+        private static final String MAX_FEATURES = "MAX_FEATURES"; //$NON-NLS-1$
+
+        private static final String NAMESPACE = "NAMESPACE"; //$NON-NLS-1$
+
+        private static final String TYPENAME = "TYPENAME"; //$NON-NLS-1$
+
+        private static final String PROPERTY_NAMES = "PROPERTY_NAMES"; //$NON-NLS-1$
 
         public ViewStyleContent() {
             super(KEY);
         }
 
         @Override
-        public Object createDefaultStyle( IGeoResource resource, Color colour,
-                IProgressMonitor monitor ) throws IOException {
+        public Object createDefaultStyle(IGeoResource resource, Color colour,
+                IProgressMonitor monitor) throws IOException {
             return null;
         }
 
         @Override
-        public Class< ? extends Object> getStyleClass() {
+        public Class<? extends Object> getStyleClass() {
             return Query.class;
         }
 
         @Override
-        public Object load( IMemento memento ) {
+        public Object load(IMemento memento) {
             Filter filter;
             String textData = memento.getTextData();
             if (textData == null || textData.trim().length() == 0) {
@@ -175,7 +183,7 @@ public class CacheInterceptor
             String propNameString = decode(memento.getString(PROPERTY_NAMES));
             String[] propertyNames;
             if (propNameString != null) {
-                propertyNames = propNameString.split(",");
+                propertyNames = propNameString.split(","); //$NON-NLS-1$
             } else {
                 propertyNames = Query.ALL_NAMES;
             }
@@ -186,7 +194,7 @@ public class CacheInterceptor
             return query;
         }
 
-        private CoordinateReferenceSystem readCRS( String string ) {
+        private CoordinateReferenceSystem readCRS(String string) {
             try {
                 return org.geotools.referencing.CRS.parseWKT(decode(string));
             } catch (Exception e) {
@@ -194,8 +202,8 @@ public class CacheInterceptor
             }
         }
 
-        private Filter readFilter( String textData ) {
-            if ("all".equals(textData)) {
+        private Filter readFilter(String textData) {
+            if ("all".equals(textData)) { //$NON-NLS-1$
                 return Filter.EXCLUDE;
             }
             InputSource input = new InputSource(new StringReader(textData));
@@ -217,16 +225,16 @@ public class CacheInterceptor
         }
 
         @Override
-        public Object load( URL url, IProgressMonitor monitor ) throws IOException {
+        public Object load(URL url, IProgressMonitor monitor) throws IOException {
             return null;
         }
 
         @Override
-        public void save( IMemento memento, Object value ) {
+        public void save(IMemento memento, Object value) {
             Query viewRestriction;
             if (value instanceof Filter) {
                 Filter filter = (Filter) value;
-                viewRestriction = new Query("Feature", filter);
+                viewRestriction = new Query("Feature", filter); //$NON-NLS-1$
             } else {
                 viewRestriction = (Query) value;
             }
@@ -249,7 +257,7 @@ public class CacheInterceptor
 
             StringBuilder propertyNamesString = new StringBuilder();
             if (propertyNames != null) {
-                for( String string : propertyNames ) {
+                for (String string : propertyNames) {
                     propertyNamesString.append(string);
                     propertyNamesString.append(',');
                 }
@@ -260,13 +268,13 @@ public class CacheInterceptor
 
                 try {
                     if (filter == Filter.EXCLUDE) {
-                        memento.putTextData("all");
+                        memento.putTextData("all"); //$NON-NLS-1$
                     } else {
                         memento.putTextData(encode(transformer.transform(filter)));
                     }
                 } catch (TransformerException e) {
                     throw new RuntimeException(
-                            "Unable to convert filter to string I couldn't save the view query");
+                            "Unable to convert filter to string I couldn't save the view query"); //$NON-NLS-1$
                 }
             }
             if (crs != null) {
@@ -279,7 +287,7 @@ public class CacheInterceptor
                 memento.putString(HANDLE, encode(handle));
             }
             if (maxFeature != Integer.MAX_VALUE) {
-                memento.putInteger(MAX_FEATURES, new Integer(maxFeature));
+                memento.putInteger(MAX_FEATURES, Integer.valueOf(maxFeature));
             }
             if (namespace != null) {
                 memento.putString(NAMESPACE, encode(namespace.toString()));
@@ -293,23 +301,23 @@ public class CacheInterceptor
 
         }
 
-        private String encode( String toEncode ) {
+        private String encode(String toEncode) {
             if (toEncode == null) {
                 return null;
             }
             try {
-                return URLEncoder.encode(toEncode, "UTF-8");
+                return URLEncoder.encode(toEncode, "UTF-8"); //$NON-NLS-1$
             } catch (UnsupportedEncodingException e) {
                 return toEncode;
             }
         }
 
-        private String decode( String toDecode ) {
+        private String decode(String toDecode) {
             if (toDecode == null) {
                 return null;
             }
             try {
-                return URLDecoder.decode(toDecode, "UTF-8");
+                return URLDecoder.decode(toDecode, "UTF-8"); //$NON-NLS-1$
             } catch (UnsupportedEncodingException e) {
                 return toDecode;
             }
