@@ -1,7 +1,7 @@
-/**
- * uDig - User Friendly Desktop Internet GIS client
- * http://udig.refractions.net
- * (C) 2004, Refractions Research Inc.
+/*
+ *    uDig - User Friendly Desktop Internet GIS client
+ *    http://udig.refractions.net
+ *    (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -59,7 +59,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * <p>
  * Also not that the IService handles returned may not have enough information to connect; a classic
  * case is a security enabled WFS capabilities document. User involvement will be required.
- *
+ * 
  * @since 1.0 Initial version caused some confusion over use of acquire
  * @version 1.1 Explicitly broke generation of default parameters and creating a IService into
  *          separate steps
@@ -75,31 +75,29 @@ public abstract class IServiceFactory {
      * <p>
      * Please be advised that the services handles returned may already be noted in the local
      * catalog; please use findById to check before blinding throwing in a new service handle.
-     *
+     * 
      * @param connectionParameters
      * @return List of candidate IService handles, list may be empty but is never null
      */
-    public abstract List<IService> createService(Map<String, Serializable> connectionParameters);
+    public abstract List<IService> createService( Map<String, Serializable> connectionParameters );
 
     /**
      * Will generate a list of candidate services; each with their own default parameters based on
-     * the provided dragNdrop URL.
+     * the provided dragNdrop url.
      * <p>
      * This code is used to guess what a URL means when it is provided to the application as part of
      * a drag and drop action. A list of IService options is returned allowing the user to choose
      * when more than one option is available.
-     *
-     * @param dragNdrop Target URL provided by a drag and drop operation
+     * 
+     * @param dragNdrop Target url provided by a drag and drop operation
      * @return List of candidate IService handles, list may be empty but is never null
      */
-    public abstract List<IService> createService(URL dragNdrop);
+    public abstract List<IService> createService( URL dragNdrop );
 
     /**
      * Helper method used to clean up "unused" services in a list returned by createService.
      * <p>
-     *
-     * <pre>
-     * <code>
+     * <pre><code>
      * List<IService> possible = serviceFactory.createService( url );
      * try {
      *     // usually you process the possible services seeing which one will connect
@@ -108,14 +106,63 @@ public abstract class IServiceFactory {
      * finally {
      *    serviceFactory.dispose( possible ); // dispose any remaining services in the possible list
      * }
-     * </code>
-     * </pre>
-     *
+     * </code></pre>
      * This is just a simple method that closes each service in the list; nothing fancy.
-     *
+     * 
      * @param List of services to be disposed, each in turn
      * @param monitor Used to track what is going on
      */
-    public abstract void dispose(List<IService> list, IProgressMonitor monitor);
+    public abstract void dispose( List<IService> list, IProgressMonitor monitor );
+    
+    /**
+     * Generate a list of candidate services each with their own connection parameters.
+     * <p>
+     * The provided connectionParameters are used as a starting point and may be supplemented with
+     * defaults, or user credentials as required.
+     * <p>
+     * Please be advised that the services handles returned may already be noted in the local
+     * catalog; please use findById to check before blinding throwing in a new service handle.
+     * 
+     * @param params
+     * @return List of candidate IService handles, list may be empty but is never null
+     * @deprecated Use createService( Map )
+     */
+    public abstract List<IService> acquire( Map<String, Serializable> connectionParameter );
 
+    /**
+     * Will generate a list of candidate services; each with their own default parameters based on
+     * the provided dragNdrop url.
+     * 
+     * @param dragNdrop Url provided by a drag and drop operation
+     * @return List of candidate services
+     * @deprecated Use createService( URL )
+     */
+    public abstract List<IService> acquire( URL dragNdrop ); // creates a map, may look up authentication
+
+    /**
+     * Will generate a list of candidate services; each with their own default parameters.
+     * <p>
+     * Please be advised that although this method accepts an <code>id</code> parameter it you may
+     * not assume that all (or even any) of the returned services will match match the provided id.
+     * The resource may of moved on disk; or the service may not be available in this environment
+     * (if you are opening up a project on a different machine).
+     * 
+     * @param id This is the original id, please replace with service.getIdentifier
+     * @param params Connection Parameters
+     * @deprecated Use createService( Map )
+     * @return List of candidate services
+     */
+    public abstract List<IService> acquire( URL id, Map<String, Serializable> params );
+    /**
+     * @deprecated use {@link #acquire(Map)}
+     */
+    public abstract List<IService> aquire( Map<String, Serializable> params ); // may look up authentication
+    /**
+     * @deprecated use {@link #acquire(URL)}
+     */
+    public abstract List<IService> aquire( URL target ); // creates a map, may look up authentication
+    /**
+     * @deprecated use {@link #acquire(URL, Map)}
+     */
+    public abstract List<IService> aquire( URL id, Map<String, Serializable> params ); // may not look up
 }
