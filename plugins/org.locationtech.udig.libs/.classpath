@@ -17,7 +17,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/commons-collections-3.2.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-dbcp-1.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-digester-1.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/commons-httpclient-3.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-io-2.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-jxpath-1.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-lang3-3.8.1.jar"/>
@@ -139,7 +138,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/joda-time-1.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/json-simple-1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jsqlparser-0.3.14.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jsr305-1.3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jsr305-3.0.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jt-affine-1.1.12.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jt-algebra-1.1.12.jar"/>
@@ -211,11 +209,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/uom-lib-common-1.0.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/uom-se-1.0.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/wkb4j-1.0-RC1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/ws-commons-util-1.0.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xml-commons-resolver-1.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-client-3.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-common-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xpp3_min-1.1.4c.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/javax.activation-api-1.2.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
