@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2006, Refractions Research Inc.
  *
@@ -21,7 +22,7 @@ import org.locationtech.udig.project.IMap;
  * This gives the advantage of more easily displaying custom menus and icons.
  * <p>
  * </p>
- * 
+ *
  * @author cole.markham
  * @since 1.0.0
  */
@@ -30,10 +31,10 @@ public class MapWrapper {
 
     /**
      * Default constructor
-     * 
+     *
      * @param map The map that this object will wrap.
      */
-    public MapWrapper( IMap map ) {
+    public MapWrapper(IMap map) {
         this.map = map;
     }
 
@@ -47,13 +48,13 @@ public class MapWrapper {
     /**
      * @param map The map to set.
      */
-    public void setMap( IMap map ) {
+    public void setMap(IMap map) {
         this.map = map;
     }
 
     /**
      * Get the name for the map
-     * 
+     *
      * @return the name
      */
     public String getName() {
@@ -67,7 +68,7 @@ public class MapWrapper {
 
     /**
      * Get a wrapper for the project that contains this map
-     * 
+     *
      * @return the new ProjectWrapper
      */
     public ProjectWrapper getProjectWrapper() {
@@ -77,13 +78,13 @@ public class MapWrapper {
 
     /**
      * Unwrap all of the maps in the given list
-     * 
+     *
      * @param wrappedMaps
      * @return a Collection of IMap objects
      */
-    public static Collection unwrap( Collection wrappedMaps ) {
-        Vector<IMap> maps = new Vector<IMap>(wrappedMaps.size());
-        for( Object element : wrappedMaps ) {
+    public static Collection unwrap(Collection wrappedMaps) {
+        Vector<IMap> maps = new Vector<>(wrappedMaps.size());
+        for (Object element : wrappedMaps) {
             if (element instanceof MapWrapper) {
                 MapWrapper wrapper = (MapWrapper) element;
                 maps.add(wrapper.getMap());
@@ -94,13 +95,13 @@ public class MapWrapper {
 
     /**
      * Wrap the maps in the given list
-     * 
+     *
      * @param maps
      * @return a Collection of MapWrapper objects
      */
-    public static Collection<MapWrapper> wrap( Collection<IMap> maps ) {
-        Vector<MapWrapper> wrapped = new Vector<MapWrapper>(maps.size());
-        for( IMap map : maps ) {
+    public static Collection<MapWrapper> wrap(Collection<IMap> maps) {
+        Vector<MapWrapper> wrapped = new Vector<>(maps.size());
+        for (IMap map : maps) {
             wrapped.add(new MapWrapper(map));
         }
         return wrapped;

@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2006, Refractions Research Inc.
  *
@@ -32,18 +33,21 @@ import org.locationtech.udig.bookmarks.internal.BookmarksLabelProvider;
 import org.locationtech.udig.bookmarks.internal.actions.BookmarkAction;
 
 /**
- * This is the view that displays the <code>Bookmark</code>s. The content provider connects to
- * the <code>BookmarkManager</code> which is the model.
+ * This is the view that displays the <code>Bookmark</code>s. The content provider connects to the
+ * <code>BookmarkManager</code> which is the model.
  * <p>
- * 
+ *
  * @author cole.markham
  * @since 1.0.0
  */
 
 public class BookmarksView extends ViewPart implements ISetSelectionTarget {
     private TreeViewer bookmarksTree;
+
     private MenuManager menuMgr;
+
     private BookmarksLabelProvider labelProvider;
+
     private BookmarksContentProvider bookmarksProvider;
 
     /**
@@ -65,8 +69,9 @@ public class BookmarksView extends ViewPart implements ISetSelectionTarget {
     private void initPopup() {
         menuMgr = new MenuManager("#PopupMenu"); //$NON-NLS-1$
         menuMgr.setRemoveAllWhenShown(true);
-        menuMgr.addMenuListener(new IMenuListener(){
-            public void menuAboutToShow( IMenuManager manager ) {
+        menuMgr.addMenuListener(new IMenuListener() {
+            @Override
+            public void menuAboutToShow(IMenuManager manager) {
                 fillContextMenu(manager);
             }
         });
@@ -75,7 +80,7 @@ public class BookmarksView extends ViewPart implements ISetSelectionTarget {
         getViewSite().registerContextMenu(menuMgr, bookmarksTree);
     }
 
-    private void fillContextMenu( IMenuManager mm ) {
+    private void fillContextMenu(IMenuManager mm) {
         mm.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
     }
 
@@ -83,7 +88,7 @@ public class BookmarksView extends ViewPart implements ISetSelectionTarget {
      * This is a callback that will allow us to create the viewer and initialize it.
      */
     @Override
-    public void createPartControl( Composite parent ) {
+    public void createPartControl(Composite parent) {
         bookmarksTree = new TreeViewer(parent);
         bookmarksProvider = new BookmarksContentProvider();
         bookmarksTree.setContentProvider(bookmarksProvider);
@@ -94,17 +99,19 @@ public class BookmarksView extends ViewPart implements ISetSelectionTarget {
         bookmarksTree.setInput(bookmarksProvider);
         bookmarksTree.setAutoExpandLevel(2);
         bookmarksTree.addDoubleClickListener(new BookmarkAction());
-        bookmarksTree.addDoubleClickListener(new IDoubleClickListener(){
+        bookmarksTree.addDoubleClickListener(new IDoubleClickListener() {
 
-            public void doubleClick( DoubleClickEvent event ) {
+            @Override
+            public void doubleClick(DoubleClickEvent event) {
                 final Object obj = ((IStructuredSelection) bookmarksTree.getSelection())
                         .getFirstElement();
                 if (!(obj instanceof Bookmark)) {
-                    Display.getCurrent().asyncExec(new Runnable(){
+                    Display.getCurrent().asyncExec(new Runnable() {
 
+                        @Override
                         public void run() {
-                            bookmarksTree.setExpandedState(obj, !bookmarksTree
-                                    .getExpandedState(obj));
+                            bookmarksTree.setExpandedState(obj,
+                                    !bookmarksTree.getExpandedState(obj));
                         }
                     });
                     return;
@@ -129,17 +136,19 @@ public class BookmarksView extends ViewPart implements ISetSelectionTarget {
     public void refresh() {
         ISelection selection = bookmarksTree.getSelection();
         bookmarksTree.refresh();
-        if(selection.isEmpty()){
+        if (selection.isEmpty()) {
             bookmarksTree.setSelection(new StructuredSelection(bookmarksProvider.getCurrentMap()));
-        }else {
+        } else {
             bookmarksTree.setSelection(selection);
         }
     }
 
-    /*
-     * @see org.eclipse.ui.part.ISetSelectionTarget#selectReveal(org.eclipse.jface.viewers.ISelection)
+    /**
+     * @see
+     * org.eclipse.ui.part.ISetSelectionTarget#selectReveal(org.eclipse.jface.viewers.ISelection)
      */
-    public void selectReveal( ISelection selection ) {
+    @Override
+    public void selectReveal(ISelection selection) {
         bookmarksTree.setSelection(selection);
     }
 
