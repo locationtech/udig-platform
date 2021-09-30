@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -36,27 +36,27 @@ public class TestRemotePreferenceStore {
 
     private static final String val_str = new String("SOMETHING SOMETHING"); //$NON-NLS-1$
 
-    private static final Boolean val_boo = new Boolean(false);
+    private static final Boolean val_boo = Boolean.FALSE;
 
-    private static final Integer val_int = new Integer(1);
+    private static final Integer val_int = Integer.valueOf(1);
 
-    private static final Double val_dbl = new Double(24.779);
+    private static final Double val_dbl = Double.valueOf(24.779);
 
-    private static final Float val_flt = new Float(103.00);
+    private static final Float val_flt = Float.valueOf((float) 103.00);
 
-    private static final Long val_lng = new Long(500000);
+    private static final Long val_lng = Long.valueOf(500000);
 
     private static final String val2_str = new String("SoMeThInG eLsE"); //$NON-NLS-1$
 
-    private static final Boolean val2_boo = new Boolean(true);
+    private static final Boolean val2_boo = Boolean.TRUE;
 
-    private static final Integer val2_int = new Integer(5432);
+    private static final Integer val2_int = Integer.valueOf(5432);
 
-    private static final Double val2_dbl = new Double(0.707);
+    private static final Double val2_dbl = Double.valueOf(0.707);
 
-    private static final Float val2_flt = new Float(1.4142);
+    private static final Float val2_flt = Float.valueOf((float) 1.4142);
 
-    private static final Long val2_lng = new Long(1234567890);
+    private static final Long val2_lng = Long.valueOf(1234567890);
 
     @Before
     public void setUp() throws Exception {

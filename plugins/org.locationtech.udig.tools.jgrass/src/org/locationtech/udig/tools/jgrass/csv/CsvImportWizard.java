@@ -1,6 +1,6 @@
-/*
+/**
  * uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,12 +20,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.ui.ExceptionDetailsDialog;
-import org.locationtech.udig.ui.PlatformGIS;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -43,64 +37,75 @@ import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.gce.grassraster.JGrassConstants;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.tools.jgrass.JGrassToolsPlugin;
+import org.locationtech.udig.tools.jgrass.i18n.Messages;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.PlatformGIS;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.Point;
-
-import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
-import org.locationtech.udig.tools.jgrass.JGrassToolsPlugin;
-import org.locationtech.udig.tools.jgrass.i18n.Messages;
-
 /**
- * Csv to feature layer import wizard.
- * 
+ * CSV to feature layer import wizard.
+ *
  * @author Andrea Antonello - www.hydrologis.com
  */
 public class CsvImportWizard extends Wizard implements INewWizard {
 
     private CsvImportWizardPage mainPage;
 
-    private final Map<String, String> params = new HashMap<String, String>();
+    private final Map<String, String> params = new HashMap<>();
+
     public static boolean canFinish = true;
 
     public CsvImportWizard() {
         super();
     }
 
-    public void init( IWorkbench workbench, IStructuredSelection selection ) {
+    @Override
+    public void init(IWorkbench workbench, IStructuredSelection selection) {
         setWindowTitle(Messages.getString("CsvImportWizard.fileimport")); //$NON-NLS-1$
-        setDefaultPageImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID,
-                "icons/workset_wiz.png")); //$NON-NLS-1$
+        setDefaultPageImageDescriptor(AbstractUIPlugin
+                .imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID, "icons/workset_wiz.png")); //$NON-NLS-1$
         setNeedsProgressMonitor(true);
         mainPage = new CsvImportWizardPage(Messages.getString("CsvImportWizard.csvimport"), params); //$NON-NLS-1$
     }
 
+    @Override
     public void addPages() {
         super.addPages();
         addPage(mainPage);
     }
 
+    @Override
     public boolean performFinish() {
 
         final CoordinateReferenceSystem crs = mainPage.getCrs();
         final File csvFile = mainPage.getCsvFile();
         final String separator = mainPage.getSeparator();
-        final LinkedHashMap<String, Integer> fieldsAndTypesIndex = mainPage.getFieldsAndTypesIndex();
+        final LinkedHashMap<String, Integer> fieldsAndTypesIndex = mainPage
+                .getFieldsAndTypesIndex();
 
-        /*
+        /**
          * run with backgroundable progress monitoring
          */
-        IRunnableWithProgress operation = new IRunnableWithProgress(){
+        IRunnableWithProgress operation = new IRunnableWithProgress() {
 
-            public void run( IProgressMonitor pm ) throws InvocationTargetException, InterruptedException {
+            @Override
+            public void run(IProgressMonitor pm)
+                    throws InvocationTargetException, InterruptedException {
 
                 if (!csvFile.exists()) {
-                    MessageDialog.openError(getShell(), "Import error",
-                            Messages.getString("CsvImportWizard.inputnotexist") + csvFile.getAbsolutePath()); //$NON-NLS-1$ 
+                    MessageDialog.openError(getShell(), "Import error", //$NON-NLS-1$
+                            Messages.getString("CsvImportWizard.inputnotexist") //$NON-NLS-1$
+                                    + csvFile.getAbsolutePath());
                     return;
                 }
 
@@ -110,70 +115,76 @@ public class CsvImportWizard extends Wizard implements INewWizard {
 
                     SimpleFeatureType featureType = csvFileFeatureCollection.getSchema();
                     JGrassCatalogUtilities.removeMemoryServiceByTypeName(featureType.getTypeName());
-                    IGeoResource resource = CatalogPlugin.getDefault().getLocalCatalog().createTemporaryResource(featureType);
+                    IGeoResource resource = CatalogPlugin.getDefault().getLocalCatalog()
+                            .createTemporaryResource(featureType);
 
-                    SimpleFeatureStore resolve = (SimpleFeatureStore) resource.resolve(FeatureStore.class, pm);
+                    SimpleFeatureStore resolve = (SimpleFeatureStore) resource
+                            .resolve(FeatureStore.class, pm);
                     resolve.addFeatures(csvFileFeatureCollection);
-                    ApplicationGIS.addLayersToMap(ApplicationGIS.getActiveMap(), Collections.singletonList(resource), -1);
+                    ApplicationGIS.addLayersToMap(ApplicationGIS.getActiveMap(),
+                            Collections.singletonList(resource), -1);
 
                 } catch (Exception e) {
                     e.printStackTrace();
                     String message = Messages.getString("CsvImportWizard.error"); //$NON-NLS-1$
-                    ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassToolsPlugin.PLUGIN_ID, e);
+                    ExceptionDetailsDialog.openError(null, message, IStatus.ERROR,
+                            JGrassToolsPlugin.PLUGIN_ID, e);
                 }
 
             }
 
         };
 
-        PlatformGIS.runInProgressDialog("Importing data to feature layer", true, operation, true);
+        PlatformGIS.runInProgressDialog("Importing data to feature layer", true, operation, true); //$NON-NLS-1$
 
         return true;
     }
 
+    @Override
     public boolean canFinish() {
         return canFinish;
     }
 
     /**
      * <p>
-     * Convert a csv file to a FeatureCollection. 
-     * <b>This for now supports only point geometries</b>.<br>
-     * For different crs it also performs coor transformation.
+     * Convert a CSV file to a FeatureCollection. <b>This for now supports only point
+     * geometries</b>.<br>
+     * For different CRS it also performs coor transformation.
      * </p>
      * <p>
      * <b>NOTE: this doesn't support date attributes</b>
      * </p>
-     * 
-     * @param csvFile the csv file.
-     * @param crs the crs to use.
-     * @param fieldsAndTypes the {@link Map} of filed names and {@link JGrassConstants#CSVTYPESARRAY types}.
+     *
+     * @param csvFile the CSV file.
+     * @param crs the CRS to use.
+     * @param fieldsAndTypes the {@link Map} of filed names and {@link JGrassConstants#CSVTYPESARRAY
+     *        types}.
      * @param pm progress monitor.
      * @param separatorthe separator to use, if null, comma is used.
      * @return the created {@link FeatureCollection}
      * @throws Exception
      */
-    @SuppressWarnings("nls")
-    public static SimpleFeatureCollection csvFileToFeatureCollection( File csvFile, CoordinateReferenceSystem crs,
-            LinkedHashMap<String, Integer> fieldsAndTypesIndex, String separator, IProgressMonitor pm ) throws Exception {
+    public static SimpleFeatureCollection csvFileToFeatureCollection(File csvFile,
+            CoordinateReferenceSystem crs, LinkedHashMap<String, Integer> fieldsAndTypesIndex,
+            String separator, IProgressMonitor pm) throws Exception {
         GeometryFactory gf = new GeometryFactory();
-        Map<String, Class< ? >> typesMap = JGrassConstants.CSVTYPESCLASSESMAP;
+        Map<String, Class<?>> typesMap = JGrassConstants.CSVTYPESCLASSESMAP;
         String[] typesArray = JGrassConstants.CSVTYPESARRAY;
 
         if (separator == null) {
-            separator = ",";
+            separator = ","; //$NON-NLS-1$
         }
 
         SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
-        b.setName("csvimport");
+        b.setName("csvimport"); //$NON-NLS-1$
         b.setCRS(crs);
-        b.add("the_geom", Point.class);
+        b.add("the_geom", Point.class); //$NON-NLS-1$
 
         int xIndex = -1;
         int yIndex = -1;
         Set<String> fieldNames = fieldsAndTypesIndex.keySet();
-        String[] fieldNamesArray = (String[]) fieldNames.toArray(new String[fieldNames.size()]);
-        for( int i = 0; i < fieldNamesArray.length; i++ ) {
+        String[] fieldNamesArray = fieldNames.toArray(new String[fieldNames.size()]);
+        for (int i = 0; i < fieldNamesArray.length; i++) {
             String fieldName = fieldNamesArray[i];
             Integer typeIndex = fieldsAndTypesIndex.get(fieldName);
 
@@ -188,23 +199,24 @@ public class CsvImportWizard extends Wizard implements INewWizard {
         }
         SimpleFeatureType featureType = b.buildFeatureType();
 
-        DefaultFeatureCollection newCollection = new DefaultFeatureCollection(); 
+        DefaultFeatureCollection newCollection = new DefaultFeatureCollection();
         Collection<Integer> orderedTypeIndexes = fieldsAndTypesIndex.values();
-        Integer[] orderedTypeIndexesArray = (Integer[]) orderedTypeIndexes.toArray(new Integer[orderedTypeIndexes.size()]);
+        Integer[] orderedTypeIndexesArray = orderedTypeIndexes
+                .toArray(new Integer[orderedTypeIndexes.size()]);
 
         BufferedReader bR = null;
         try {
             bR = new BufferedReader(new FileReader(csvFile));
             String line = null;
             int featureId = 0;
-            pm.beginTask("Importing raw data", -1);
-            while( (line = bR.readLine()) != null ) {
+            pm.beginTask("Importing raw data", -1); //$NON-NLS-1$
+            while ((line = bR.readLine()) != null) {
                 pm.worked(1);
                 line = line.trim();
                 if (line.length() == 0) {
                     continue;
                 }
-                if (line.startsWith("#")) {
+                if (line.startsWith("#")) { //$NON-NLS-1$
                     continue;
                 }
 
@@ -218,7 +230,7 @@ public class CsvImportWizard extends Wizard implements INewWizard {
                 values[0] = point;
 
                 int objIndex = 1;
-                for( int i = 0; i < lineSplit.length; i++ ) {
+                for (int i = 0; i < lineSplit.length; i++) {
                     if (i == xIndex || i == yIndex) {
                         continue;
                     }
@@ -229,17 +241,18 @@ public class CsvImportWizard extends Wizard implements INewWizard {
                     if (typeName.equals(typesArray[3])) {
                         values[objIndex] = value;
                     } else if (typeName.equals(typesArray[4])) {
-                        values[objIndex] = new Double(value);
+                        values[objIndex] = Double.valueOf(value);
                     } else if (typeName.equals(typesArray[5])) {
-                        values[objIndex] = new Integer(value);
+                        values[objIndex] = Integer.valueOf(value);
                     } else {
-                        throw new IllegalArgumentException("An undefined value type was found");
+                        throw new IllegalArgumentException("An undefined value type was found"); //$NON-NLS-1$
                     }
                     objIndex++;
                 }
                 builder.addAll(values);
 
-                SimpleFeature feature = builder.buildFeature(featureType.getTypeName() + "." + featureId);
+                SimpleFeature feature = builder
+                        .buildFeature(featureType.getTypeName() + "." + featureId); //$NON-NLS-1$
                 featureId++;
                 newCollection.add(feature);
             }
