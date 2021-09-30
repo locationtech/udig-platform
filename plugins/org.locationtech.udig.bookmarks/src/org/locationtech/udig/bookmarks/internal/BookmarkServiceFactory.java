@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2011, Refractions Research Inc.
  *
@@ -15,15 +16,15 @@ import org.locationtech.udig.bookmarks.IBookmarkService;
 
 /**
  * Responsible for creating our internal BookmarkServiceImpl.
- * 
+ *
  * @author paul.pfeiffer
  */
 public class BookmarkServiceFactory extends AbstractServiceFactory {
 
     @Override
-    public IBookmarkService create( Class serviceInterface, IServiceLocator parentLocator,
-            IServiceLocator locator ) {
-        
+    public IBookmarkService create(Class serviceInterface, IServiceLocator parentLocator,
+            IServiceLocator locator) {
+
         if (IBookmarkService.class.equals(serviceInterface)) {
             return new BookmarkServiceImpl();
         }
