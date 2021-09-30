@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -16,17 +17,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.commons.lang.SystemUtils;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Assume;
 import org.junit.Test;
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.ICatalog;
-import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.URLUtils;
 
 /**
  * Tests for the default catalog
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -58,11 +55,4 @@ public class CatalogImplTest {
                 new URL("file:/java/udig#ResourceName"), true)); //$NON-NLS-1$
     }
 
-    @Test
-    public void testServiceComparison() throws Exception {
-        ICatalog ci = CatalogPlugin.getDefault().getLocalCatalog();
-        IService service = ci.acquire(new URL(SERVICE_COMPARISON_TEST_URL),
-                new NullProgressMonitor());
-        assertTrue(service instanceof MoreInterestingService.MoreInterestingServiceImpl);
-    }
 }
