@@ -35,12 +35,12 @@ import org.opengis.referencing.operation.MathTransform;
 public interface ILayer extends ILegendItem, Comparable<ILayer> {
 
     /**
-     * Indicates the crs that will be used if the layer does not declare a crs. This crs is wgs84
-     * crs with the name: Messages.LayerImpl_unknown (unkown in english)
+     * Indicates the CRS that will be used if the layer does not declare a CRS. This CRS is wgs84
+     * CRS with the name: Messages.LayerImpl_unknown (unknown in english)
      */
     public static final CoordinateReferenceSystem UNKNOWN_CRS = DefaultEngineeringCRS.GENERIC_2D;
 
-    /** <code>UNCONFIGURED</code> associated GeoResource is unconfigured, or is unavailable */
+    /** <code>UNCONFIGURED</code> associated GeoResource is not configured, or is unavailable */
     public static final int UNCONFIGURED = -2;
 
     /** <code>MISSING</code> cannot locate a GeoResource for this layer */
@@ -105,14 +105,14 @@ public interface ILayer extends ILegendItem, Comparable<ILayer> {
      * </p>
      *
      * @param clazz class of the resource that the IGeoResource claims it can adapt to.
-     * @return true if a IGeoResource exists that canResolve to resourceType.
+     * @return the first found IGeoResource that can resolve to clazz.
      */
     <T> IGeoResource findGeoResource(Class<T> clazz);
 
     /**
      * StyleBlackboard used for collaboration with the rendering process.
      * <p>
-     * This Blackboard is persisted, any modications made to the blackboard will result refresh of
+     * This Blackboard is persisted, any modifications made to the blackboard will result refresh of
      * the effected layers.
      * <p>
      *
@@ -137,7 +137,7 @@ public interface ILayer extends ILegendItem, Comparable<ILayer> {
      * The blocking {@linkplain #getResource(Class, IProgressMonitor)} method allow the object to be
      * obtained.
      *
-     * @param resourceType the type of resource calleer is interested in.
+     * @param resourceType the type of resource caller is interested in.
      * @return true if a IGeoResource exists that canResolve to resourceType.
      */
     public <T> boolean hasResource(Class<T> resourceType);
@@ -281,7 +281,7 @@ public interface ILayer extends ILegendItem, Comparable<ILayer> {
     /**
      * ImageDescriptor for this Layer.
      * <p>
-     * Note we need to do the decorator extention on Layer to reflect status.
+     * Note we need to do the decorator extension on Layer to reflect status.
      *
      * @return Custom glyph - or null if none available.
      */
@@ -362,7 +362,7 @@ public interface ILayer extends ILegendItem, Comparable<ILayer> {
     void refresh(Envelope bounds);
 
     /**
-     * Returns the Mathtransform from this layers CRS to the map's CRS (modelled as part of the
+     * Returns the Mathtransform from this layers CRS to the map's CRS (modeled as part of the
      * viewport model).
      * <p>
      * getMap().getViewportModel() will return the ViewportModel.
@@ -430,7 +430,7 @@ public interface ILayer extends ILegendItem, Comparable<ILayer> {
      *
      * @param monitor
      * @param crs the desired CRS for the returned envelope.
-     * @return the envelope of the layer. If the native crs is not known or if a transformation is
+     * @return the envelope of the layer. If the native CRS is not known or if a transformation is
      *         not possible then the untransformed envelope will be returned.
      */
     ReferencedEnvelope getBounds(IProgressMonitor monitor, CoordinateReferenceSystem crs);
