@@ -15,8 +15,9 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.catalog.ui,
  org.locationtech.udig.project.ui,
  org.locationtech.udig.mapgraphic,
- org.locationtech.udig.style
-Eclipse-LazyStart: true
+ org.locationtech.udig.style,
+ org.junit
+Bundle-ActivationPolicy: lazy
 Export-Package: org.locationtech.udig.catalog.jgrass,org.locationtech.
  udig.catalog.jgrass.activeregion,org.locationtech.udig.catalog.jgrass
  .activeregion.dialogs,org.locationtech.udig.catalog.jgrass.core,org.l
