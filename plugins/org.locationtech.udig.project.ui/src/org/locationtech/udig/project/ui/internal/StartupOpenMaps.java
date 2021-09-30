@@ -1,3 +1,13 @@
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2021, Refractions Research Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
+ */
 package org.locationtech.udig.project.ui.internal;
 
 import java.io.File;
@@ -40,15 +50,16 @@ import org.opengis.referencing.NoSuchAuthorityCodeException;
 /**
  * Loads the maps from the previous session and processes the command line arguments.
  * <p>
- * If the DND extension point will be called so that it will act as if the url/string whatever was
- * dropped on the application. So if a url to shapefile is on the commandline a new map will be
- * openned and will display the shapefile.
- * 
+ * If the DND extension point will be called so that it will act as if the URL/string whatever was
+ * dropped on the application. So if a URL to shapefile is on the commandline a new map will be
+ * opened and will display the shapefile.
+ *
  * @author jones
  */
 public class StartupOpenMaps implements IStartup {
 
     private String[] args;
+
     public StartupOpenMaps() {
         args = Platform.getApplicationArgs();
     }
@@ -56,22 +67,23 @@ public class StartupOpenMaps implements IStartup {
     /**
      * @see org.eclipse.ui.IStartup#earlyStartup()
      */
+    @Override
     public void earlyStartup() {
 
-        List<URL> urls = new ArrayList<URL>(args.length);
+        List<URL> urls = new ArrayList<>(args.length);
 
-        for( String string : args ) {
+        for (String string : args) {
             String urlString = string;
             try {
                 if (urlString.startsWith("-")) { //$NON-NLS-1$
                     continue;
                 }
-                // try to make string a url
+                // try to make string a URL
                 if (!urlString.contains(":/")) { //$NON-NLS-1$
                     File file = new File(urlString);
                     if (!file.exists())
                         continue;
-                    urlString = file.toURL().toString();
+                    urlString = file.toURI().toURL().toString();
                 }
                 if (urlString.startsWith("file:/")) {//$NON-NLS-1$
                     try {
@@ -97,10 +109,11 @@ public class StartupOpenMaps implements IStartup {
         if (!urls.isEmpty()) {
             final List<URL> finalurls = urls;
             final String title = Messages.StartupOpenMaps_openURLDialogTitle;
-            final IRunnableWithProgress openMapRunnable = new IRunnableWithProgress(){
+            final IRunnableWithProgress openMapRunnable = new IRunnableWithProgress() {
 
-                public void run( IProgressMonitor monitor ) throws InvocationTargetException,
-                        InterruptedException {
+                @Override
+                public void run(IProgressMonitor monitor)
+                        throws InvocationTargetException, InterruptedException {
                     dropURLS(finalurls, monitor);
                 }
 
@@ -116,10 +129,11 @@ public class StartupOpenMaps implements IStartup {
             if (numEditors == 0)
                 return;
             final String title = Messages.StartupOpenMaps_openMapDialogTitle;
-            final IRunnableWithProgress openMapRunnable = new IRunnableWithProgress(){
+            final IRunnableWithProgress openMapRunnable = new IRunnableWithProgress() {
 
-                public void run( IProgressMonitor monitor ) throws InvocationTargetException,
-                        InterruptedException {
+                @Override
+                public void run(IProgressMonitor monitor)
+                        throws InvocationTargetException, InterruptedException {
                     openLastOpenMaps(monitor);
                 }
 
@@ -131,15 +145,15 @@ public class StartupOpenMaps implements IStartup {
 
     /**
      * Opens maps from previous section. Only opens if there are no maps in the arguments, IE no
-     * maps dropped onto uDig icon or udig was not started by clicking on an associated file.
+     * maps dropped onto uDig icon or uDig was not started by clicking on an associated file.
      */
-    private void openLastOpenMaps( IProgressMonitor monitor ) {
+    private void openLastOpenMaps(IProgressMonitor monitor) {
         IPreferenceStore p = ProjectUIPlugin.getDefault().getPreferenceStore();
         int numEditors = p.getInt(MapEditorWithPalette.ID);
         monitor.beginTask(Messages.StartupOpenMaps_openMapDialogTitle, numEditors * 2 + 2);
         p.setValue(MapEditorWithPalette.ID, 0);
 
-        for( int i = 0; i < numEditors; i++ ) {
+        for (int i = 0; i < numEditors; i++) {
             monitor.worked(1);
             String id = MapEditorWithPalette.ID + ":" + i; //$NON-NLS-1$
             String name = p.getString(id);
@@ -159,7 +173,7 @@ public class StartupOpenMaps implements IStartup {
                 } catch (NoSuchAuthorityCodeException e) {
                     throw (RuntimeException) new RuntimeException().initCause(e);
                 } catch (FactoryException e) {
-                    throw (RuntimeException) new RuntimeException( ).initCause( e );
+                    throw (RuntimeException) new RuntimeException().initCause(e);
                 }
                 final Object object = resource.getContents().get(0);
                 if (object instanceof IProjectElement) {
@@ -173,7 +187,7 @@ public class StartupOpenMaps implements IStartup {
         }
     }
 
-    private void dropURLS( List<URL> urls, IProgressMonitor monitor ) {
+    private void dropURLS(List<URL> urls, IProgressMonitor monitor) {
         monitor.beginTask(Messages.StartupOpenMaps_openURLDialogTitle, urls.size() * 1 + 2);
         monitor.worked(1);
         Viewer viewer = LayersView.getViewer();
@@ -181,18 +195,20 @@ public class StartupOpenMaps implements IStartup {
             ProjectUIPlugin.trace(getClass(), "Layers View is not available", (Exception) null); //$NON-NLS-1$
 
         UDIGDropHandler dropHandler = new UDIGDropHandler();
-        dropHandler.setTarget(new EditorPart(){
+        dropHandler.setTarget(new EditorPart() {
 
             @Override
-            public void doSave( IProgressMonitor monitor ) {
+            public void doSave(IProgressMonitor monitor) {
+
             }
 
             @Override
             public void doSaveAs() {
+
             }
 
             @Override
-            public void init( IEditorSite site, IEditorInput input ) throws PartInitException {
+            public void init(IEditorSite site, IEditorInput input) throws PartInitException {
             }
 
             @Override
@@ -206,18 +222,20 @@ public class StartupOpenMaps implements IStartup {
             }
 
             @Override
-            public void createPartControl( Composite parent ) {
+            public void createPartControl(Composite parent) {
+
             }
 
             @Override
             public void setFocus() {
+
             }
 
         });
 
         closeIntro();
 
-        for( URL url : urls ) {
+        for (URL url : urls) {
             monitor.worked(1);
             monitor.setTaskName(Messages.StartupOpenMaps_processingTask + ": " + url); //$NON-NLS-1$
             if (monitor.isCanceled())
@@ -226,7 +244,7 @@ public class StartupOpenMaps implements IStartup {
             try {
                 dropHandler.addListener(listener);
                 dropHandler.performDrop(url, null);
-                while( !listener.processed && !monitor.isCanceled() ) {
+                while (!listener.processed && !monitor.isCanceled()) {
                     synchronized (this) {
                         try {
                             wait(500);
@@ -242,8 +260,9 @@ public class StartupOpenMaps implements IStartup {
     }
 
     private void closeIntro() {
-        PlatformGIS.syncInDisplayThread(new Runnable(){
+        PlatformGIS.syncInDisplayThread(new Runnable() {
 
+            @Override
             public void run() {
                 IIntroManager introManager = PlatformUI.getWorkbench().getIntroManager();
                 IIntroPart intro = introManager.getIntro();
@@ -253,7 +272,8 @@ public class StartupOpenMaps implements IStartup {
 
         });
     }
-    public void testingSetArgs( String[] strings ) {
+
+    public void testingSetArgs(String[] strings) {
         if (strings == null)
             this.args = new String[0];
         else {
@@ -265,12 +285,15 @@ public class StartupOpenMaps implements IStartup {
 
     private static class ProcessingURLSListener implements IDropHandlerListener {
         volatile boolean processed = false;
+
         StartupOpenMaps lock;
-        public ProcessingURLSListener( StartupOpenMaps maps ) {
+
+        public ProcessingURLSListener(StartupOpenMaps maps) {
             lock = maps;
         }
 
-        public void done( IDropAction action, Throwable t ) {
+        @Override
+        public void done(IDropAction action, Throwable t) {
             processed = true;
 
             synchronized (lock) {
@@ -278,10 +301,13 @@ public class StartupOpenMaps implements IStartup {
             }
         }
 
-        public void starting( IDropAction action ) {
+        @Override
+        public void starting(IDropAction action) {
+
         }
 
-        public void noAction( Object data ) {
+        @Override
+        public void noAction(Object data) {
             processed = true;
             synchronized (lock) {
                 lock.notify();
@@ -334,6 +360,6 @@ public class StartupOpenMaps implements IStartup {
     }
 
     private static String getMapIdForPrefStore(int index) {
-        return PreferenceConstants.P_OPEN_MAPS_PREFIX_ID + ":" + index;
+        return PreferenceConstants.P_OPEN_MAPS_PREFIX_ID + ":" + index; //$NON-NLS-1$
     }
 }
