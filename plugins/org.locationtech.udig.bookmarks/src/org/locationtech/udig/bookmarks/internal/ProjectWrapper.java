@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2006, Refractions Research Inc.
  *
@@ -21,7 +22,7 @@ import org.locationtech.udig.project.IProject;
  * This gives the advantage of more easily displaying custom menus and icons.
  * <p>
  * </p>
- * 
+ *
  * @author cole.markham
  * @since 1.0.0
  */
@@ -30,10 +31,10 @@ public class ProjectWrapper {
 
     /**
      * Default constructor
-     * 
+     *
      * @param project The project that this object will wrap.
      */
-    public ProjectWrapper( IProject project ) {
+    public ProjectWrapper(IProject project) {
         this.project = project;
     }
 
@@ -47,13 +48,13 @@ public class ProjectWrapper {
     /**
      * @param project The project to set.
      */
-    public void setProject( IProject project ) {
+    public void setProject(IProject project) {
         this.project = project;
     }
 
     /**
      * Get the name for the project
-     * 
+     *
      * @return the name
      */
     public String getName() {
@@ -67,13 +68,13 @@ public class ProjectWrapper {
 
     /**
      * Unwrap all of the projects in the given list
-     * 
+     *
      * @param wrappedProjects
      * @return a List of IProject objects
      */
-    public static Collection<IProject> unwrap( Collection wrappedProjects ) {
-        Vector<IProject> projects = new Vector<IProject>(wrappedProjects.size());
-        for( Object element : wrappedProjects ) {
+    public static Collection<IProject> unwrap(Collection wrappedProjects) {
+        Vector<IProject> projects = new Vector<>(wrappedProjects.size());
+        for (Object element : wrappedProjects) {
             if (element instanceof ProjectWrapper) {
                 ProjectWrapper wrapper = (ProjectWrapper) element;
                 projects.add(wrapper.getProject());
@@ -84,13 +85,13 @@ public class ProjectWrapper {
 
     /**
      * Wrap the projects in the given list
-     * 
+     *
      * @param projects
      * @return a List of ProjectWrapper objects
      */
-    public static Collection<ProjectWrapper> wrap( Collection<IProject> projects ) {
-        Vector<ProjectWrapper> wrapped = new Vector<ProjectWrapper>(projects.size());
-        for( IProject project : projects ) {
+    public static Collection<ProjectWrapper> wrap(Collection<IProject> projects) {
+        Vector<ProjectWrapper> wrapped = new Vector<>(projects.size());
+        for (IProject project : projects) {
             wrapped.add(new ProjectWrapper(project));
         }
         return wrapped;
