@@ -1,6 +1,6 @@
-/*
+/**
  * uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,33 +13,31 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.jgrass.activeregion.ActiveRegionMapGraphic;
 import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.ui.ApplicationGIS;
-
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
-
-import org.locationtech.udig.catalog.jgrass.activeregion.ActiveRegionMapGraphic;
 
 /**
  * <p>
  * The activator class controls the plug-in life cycle
  * </p>
- * 
+ *
  * @author Andrea Antonello - www.hydrologis.com
  * @since 1.1.0
  */
 public class JGrassPlugin extends AbstractUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "org.locationtech.udig.catalog.jgrass";
+    public static final String PLUGIN_ID = "org.locationtech.udig.catalog.jgrass"; //$NON-NLS-1$
 
     // The shared instance
     private static JGrassPlugin plugin;
@@ -48,31 +46,24 @@ public class JGrassPlugin extends AbstractUIPlugin {
      * The constructor
      */
     public JGrassPlugin() {
+
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-     */
-    public void start( BundleContext context ) throws Exception {
+    @Override
+    public void start(BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-     */
-    public void stop( BundleContext context ) throws Exception {
+    @Override
+    public void stop(BundleContext context) throws Exception {
         plugin = null;
         super.stop(context);
     }
 
     /**
      * Returns the shared instance
-     * 
+     *
      * @return the shared instance
      */
     public static JGrassPlugin getDefault() {
@@ -82,11 +73,11 @@ public class JGrassPlugin extends AbstractUIPlugin {
     /**
      * Logs the Throwable in the plugin's log.
      * <p>
-     * This will be a user visable ERROR iff:
+     * This will be a user visible ERROR iff:
      * <ul>
      * <li>t is an Exception we are assuming it is human readable or if a message is provided
      */
-    public static void log( String message2, Throwable t ) {
+    public static void log(String message2, Throwable t) {
         if (getDefault() == null) {
             t.printStackTrace();
             return;
@@ -97,22 +88,24 @@ public class JGrassPlugin extends AbstractUIPlugin {
         int status = t instanceof Exception || message != null ? IStatus.ERROR : IStatus.WARNING;
         getDefault().getLog().log(new Status(status, PLUGIN_ID, IStatus.OK, message, t));
     }
-    
+
     private ILayer activeRegionLayer;
+
     public ILayer getActiveRegionMapGraphic() {
 
-        /*
-         * load the right mapgraphic layer
+        /**
+         * Load the right mapgraphic layer
          */
         try {
-            List<IResolve> mapgraphics = CatalogPlugin.getDefault().getLocalCatalog().find(MapGraphicService.SERVICE_URL, null);
+            List<IResolve> mapgraphics = CatalogPlugin.getDefault().getLocalCatalog()
+                    .find(MapGraphicService.SERVICE_URL, null);
             List<IResolve> members = mapgraphics.get(0).members(null);
-            for( IResolve resolve : members ) {
+            for (IResolve resolve : members) {
                 if (resolve.canResolve(ActiveRegionMapGraphic.class)) {
                     IMap activeMap = ApplicationGIS.getActiveMap();
                     List<ILayer> layers = activeMap.getMapLayers();
                     boolean isAlreadyLoaded = false;
-                    for( ILayer layer : layers ) {
+                    for (ILayer layer : layers) {
                         if (layer.hasResource(ActiveRegionMapGraphic.class)) {
                             isAlreadyLoaded = true;
                             activeRegionLayer = layer;
@@ -120,9 +113,12 @@ public class JGrassPlugin extends AbstractUIPlugin {
                     }
 
                     if (!isAlreadyLoaded) {
-                        List< ? extends ILayer> addedLayersToMap = ApplicationGIS.addLayersToMap(activeMap,
-                                Collections.singletonList(resolve.resolve(IGeoResource.class, null)), layers.size());
-                        for( ILayer l : addedLayersToMap ) {
+                        List<? extends ILayer> addedLayersToMap = ApplicationGIS
+                                .addLayersToMap(activeMap,
+                                        Collections.singletonList(
+                                                resolve.resolve(IGeoResource.class, null)),
+                                        layers.size());
+                        for (ILayer l : addedLayersToMap) {
                             IGeoResource geoResource = l.getGeoResource();
                             if (geoResource.canResolve(ActiveRegionMapGraphic.class)) {
                                 activeRegionLayer = l;

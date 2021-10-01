@@ -14,7 +14,8 @@ Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
  org.locationtech.udig.catalog;visibility:=reexport,
  org.locationtech.udig.catalog.geotools,
  org.locationtech.udig.catalog.shp,
- org.locationtech.udig.ui.tests
+ org.locationtech.udig.ui.tests,
+ org.locationtech.udig.catalog.jgrass
 Bundle-Activator: org.locationtech.udig.catalog.tests.TestActivator
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
