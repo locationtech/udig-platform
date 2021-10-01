@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,17 +15,16 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IGeoResourceInfo;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.util.GeotoolsResourceInfoAdapter;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.ResourceInfo;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.data.simple.SimpleFeatureStore;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.util.GeotoolsResourceInfoAdapter;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -34,7 +33,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
  * <p>
  * TODO Description
  * </p>
- * 
+ *
  * @author David Zwiers, Refractions Research
  * @since 0.6
  */
@@ -43,15 +42,16 @@ class ArcSDEVectorGeoResource extends IGeoResource {
 
     /**
      * Construct <code>PostGISGeoResource</code>.
-     * 
+     *
      * @param parent
      * @param typename
      */
-    public ArcSDEVectorGeoResource( ArcServiceImpl service, String typename ) {
+    public ArcSDEVectorGeoResource(ArcServiceImpl service, String typename) {
         this.service = service;
         this.typename = typename;
     }
 
+    @Override
     public URL getIdentifier() {
         try {
             return new URL(service.getIdentifier().toString() + "#" + typename); //$NON-NLS-1$
@@ -60,27 +60,34 @@ class ArcSDEVectorGeoResource extends IGeoResource {
         }
     }
 
-    /*
+    /**
      * @see org.locationtech.udig.catalog.IGeoResource#getStatus()
      */
+    @Override
     public Status getStatus() {
         return service.getStatus();
     }
 
-    /*
+    /**
      * @see org.locationtech.udig.catalog.IGeoResource#getStatusMessage()
      */
+    @Override
     public Throwable getMessage() {
         return service.getMessage();
     }
 
-    /*
-     * Required adaptions: <ul> <li>IGeoResourceInfo.class <li>IService.class </ul>
+    /**
+     * Required adoptions:
+     * <ul>
+     * <li>IGeoResourceInfo.class
+     * <li>IService.class
+     * </ul>
+     *
      * @see org.locationtech.udig.catalog.IResolve#resolve(java.lang.Class,
-     * org.eclipse.core.runtime.IProgressMonitor)
+     *      org.eclipse.core.runtime.IProgressMonitor)
      */
-    @SuppressWarnings("unchecked")
-    public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
+    @Override
+    public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor) throws IOException {
         if (adaptee == null)
             return null;
         if (adaptee.isAssignableFrom(IService.class))
@@ -104,7 +111,7 @@ class ArcSDEVectorGeoResource extends IGeoResource {
         return super.resolve(adaptee, monitor);
     }
 
-    public DataStore getDataStore( IProgressMonitor monitor ) throws IOException {
+    public DataStore getDataStore(IProgressMonitor monitor) throws IOException {
         ArcServiceImpl service = service(monitor);
         ArcSDEVectorService vectorService = service.getVectorService();
         DataStore dataStore = vectorService.getDataStore(monitor);
@@ -112,7 +119,7 @@ class ArcSDEVectorGeoResource extends IGeoResource {
     }
 
     @Override
-    public <T> boolean canResolve( Class<T> adaptee ) {
+    public <T> boolean canResolve(Class<T> adaptee) {
         if (adaptee == null) {
             return false;
         }
@@ -120,20 +127,18 @@ class ArcSDEVectorGeoResource extends IGeoResource {
                 || adaptee.isAssignableFrom(SimpleFeatureStore.class)
                 || adaptee.isAssignableFrom(SimpleFeatureSource.class) || super.canResolve(adaptee);
     }
+
     @Override
-    protected IGeoResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
+    protected IGeoResourceInfo createInfo(IProgressMonitor monitor) throws IOException {
         DataStore dataStore = getDataStore(monitor);
         FeatureSource<SimpleFeatureType, SimpleFeature> fs = dataStore.getFeatureSource(typename);
         ResourceInfo gtinfo = fs.getInfo();
         GeotoolsResourceInfoAdapter vectorInfo = new GeotoolsResourceInfoAdapter(gtinfo);
-
-        // IResolveDelta delta = new ResolveDelta(this, IResolveDelta.Kind.CHANGED);
-        // ((CatalogImpl) CatalogPlugin.getDefault().getLocalCatalog())
-        // .fire(new ResolveChangeEvent(this, IResolveChangeEvent.Type.POST_CHANGE, delta));
         return vectorInfo;
     }
 
-    public ArcServiceImpl service( IProgressMonitor monitor ) throws IOException {
+    @Override
+    public ArcServiceImpl service(IProgressMonitor monitor) throws IOException {
         return (ArcServiceImpl) super.service(monitor);
     }
 }

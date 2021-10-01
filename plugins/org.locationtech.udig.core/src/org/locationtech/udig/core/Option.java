@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -12,8 +13,6 @@ package org.locationtech.udig.core;
 import java.util.NoSuchElementException;
 
 import org.opengis.feature.simple.SimpleFeature;
-
-
 
 /**
  * An object that indicates that it can either be None or have a value. This for return values so
@@ -30,27 +29,31 @@ import org.opengis.feature.simple.SimpleFeature;
  */
 public abstract class Option<T> {
 
-    @SuppressWarnings("unchecked")
     public static final Option NONE = new None();
 
     private Option() {
     }
 
-    public boolean isDefined(){return false;}
-    public T value(){ throw new NoSuchElementException(); }
-
-	public boolean isNone() {
-		return !isDefined();
-	}
-
-    @SuppressWarnings("unchecked")
-	public static <V> None<V> none() {
-    	return (None<V>) NONE;
+    public boolean isDefined() {
+        return false;
     }
 
-	public static Option<SimpleFeature> some(SimpleFeature next) {
-		return new Some(next);
-	}
+    public T value() {
+        throw new NoSuchElementException();
+    }
+
+    public boolean isNone() {
+        return !isDefined();
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <V> None<V> none() {
+        return (None<V>) NONE;
+    }
+
+    public static Option<SimpleFeature> some(SimpleFeature next) {
+        return new Some(next);
+    }
 
     /**
      * Indicates a none or null value.
@@ -65,13 +68,16 @@ public abstract class Option<T> {
     public static final class Some<V> extends Option<V> {
         private V value;
 
-        public Some( V value ) {
+        public Some(V value) {
             this.value = value;
         }
 
+        @Override
+        public boolean isDefined() {
+            return true;
+        }
 
-        public boolean isDefined(){return true;}
-
+        @Override
         public V value() {
             return value;
         }
