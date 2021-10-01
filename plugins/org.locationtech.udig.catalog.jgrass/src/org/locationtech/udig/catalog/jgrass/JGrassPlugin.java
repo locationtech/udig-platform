@@ -91,11 +91,11 @@ public class JGrassPlugin extends AbstractUIPlugin {
 
     private ILayer activeRegionLayer;
 
+    /**
+     * Load the right MapGraphic layer
+     */
     public ILayer getActiveRegionMapGraphic() {
 
-        /**
-         * Load the right mapgraphic layer
-         */
         try {
             List<IResolve> mapgraphics = CatalogPlugin.getDefault().getLocalCatalog()
                     .find(MapGraphicService.SERVICE_URL, null);
