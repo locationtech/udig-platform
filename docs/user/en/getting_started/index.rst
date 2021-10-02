@@ -10,7 +10,6 @@ user interface.
    Quickstart
    Walkthrough 1
    Walkthrough 2
-   Introduction to the Spatial Toolbox
    GeoScript Introduction
 
 Tips for using Online Help

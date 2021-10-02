@@ -89,13 +89,9 @@
         </topic>
 
 
-        <topic label="Introduction to the Spatial Toolbox" href="EN/getting_started/Introduction to the Spatial Toolbox.html">
-                </topic>
+        <topic label="GeoScript Introduction" href="EN/getting_started/GeoScript Introduction.html"></topic>
 
-		<topic label="GeoScript Introduction" href="EN/getting_started/GeoScript Introduction.html">
-                </topic>
-
-          </topic>
+   </topic>
 
    <topic label="Concepts" href="EN/concepts/index.html">
 
@@ -1002,10 +998,6 @@
                 </topic>
 
         <topic label="Search view" href="EN/reference/Search view.html">
-
-                </topic>
-
-        <topic label="Spatial Toolbox View" href="EN/reference/Spatial Toolbox View.html">
 
                 </topic>
 

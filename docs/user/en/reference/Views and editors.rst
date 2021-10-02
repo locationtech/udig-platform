@@ -21,7 +21,6 @@ Views and editors
    Palette View
    Projects view
    Search view
-   Spatial Toolbox View
    Style View
    Table view
    Tasks view
