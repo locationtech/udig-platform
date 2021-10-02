@@ -1,0 +1,10 @@
+proj:   0
+zone:   0
+north:   90.0
+south:   -90.0
+west:   -180.0
+east:   180.0
+rows:   180
+cols:   360
+e-w resol:   1.0
+n-s resol:   1.0
