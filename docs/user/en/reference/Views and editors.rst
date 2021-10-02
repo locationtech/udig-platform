@@ -9,7 +9,6 @@ Views and editors
    Catalog view
    Cheat Sheet view
    Document view
-   GeoScript editor 
    Help view
    Information view
    Layers view

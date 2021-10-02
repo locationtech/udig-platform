@@ -20,19 +20,20 @@ This license change has enabled the uDig project to
 `apply <http://locationtech.org/proposals/user-friendly-desktop-internet-gis-udig>`_ to the Eclipse Foundation
 `LocationTech <http://locationtech.org>`_ industry working group.
 
-GeoScript Editor
-----------------
+.. 
+   GeoScript Editor
+   ----------------
 
-uDig is pleased to directly offer a scripting environment for the first time. Scripting a powerful technique
-in a Geospatial Information Systems allowing non-developers the ability to automate common tasks.
+   uDig is pleased to directly offer a scripting environment for the first time. Scripting a powerful technique
+   in a Geospatial Information Systems allowing non-developers the ability to automate common tasks.
 
-.. figure:: /images/geoscript_editor/GeoScript.png
-   :align: center
-   :alt: 
-   
-There is a quick tutorial (:doc:`../getting_started/GeoScript Introduction`) and a reference page for the :doc:`../reference/GeoScript editor`.
+   .. figure:: /images/geoscript_editor/GeoScript.png
+      :align: center
+      :alt: 
+      
+   There is a quick tutorial (:doc:`../getting_started/GeoScript Introduction`) and a reference page for the :doc:`../reference/GeoScript editor`.
 
-For more information and tutorials please checkout GeoScript at `geoscript.org <http://geoscript.org/>`_
+   For more information and tutorials please checkout GeoScript at `geoscript.org <http://geoscript.org/>`_
 
 Documents
 ---------

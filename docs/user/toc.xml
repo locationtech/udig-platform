@@ -87,12 +87,6 @@
                     </topic>
             </topic>
         </topic>
-
-
-        <topic label="GeoScript Introduction" href="EN/getting_started/GeoScript Introduction.html"></topic>
-
-   </topic>
-
    <topic label="Concepts" href="EN/concepts/index.html">
 
 
@@ -928,9 +922,6 @@
 
                 </topic>
         <topic label="Document view" href="EN/reference/Document view.html">
-                </topic>
-
-        <topic label="GeoScript editor" href="EN/reference/GeoScript editor.html">
                 </topic>
 
         <topic label="Help view" href="EN/reference/Help view.html">
