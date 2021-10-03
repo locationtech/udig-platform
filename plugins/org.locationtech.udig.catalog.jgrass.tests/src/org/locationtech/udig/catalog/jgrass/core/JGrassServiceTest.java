@@ -40,8 +40,6 @@ public class JGrassServiceTest {
             IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
             // create the service
             List<IService> services = factory.createService(locationPath);
-            System.out.println(services.toArray());
-
             // ensure the service was created
             assertNotNull(services);
             assertEquals(services.size(), 1);
