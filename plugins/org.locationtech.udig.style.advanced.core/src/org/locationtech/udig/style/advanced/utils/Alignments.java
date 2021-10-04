@@ -1,6 +1,6 @@
-/*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+/**
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,31 +13,32 @@ import org.locationtech.udig.ui.graphics.SLDs;
 
 /**
  * Enumeration of possible vendor options.
- * 
+ *
  * @author Andrea Antonello (www.hydrologis.com)
  */
 public enum Alignments {
-    TOP("top"), //
-    MIDDLE("middle"), //
-    BOTTOM("bottom"), //
-    LEFT("left"), //
-    CENTER("center"), //
-    RIGHT("right");
+    TOP("top"), //$NON-NLS-1$
+    MIDDLE("middle"), //$NON-NLS-1$
+    BOTTOM("bottom"), //$NON-NLS-1$
+    LEFT("left"), //$NON-NLS-1$
+    CENTER("center"), //$NON-NLS-1$
+    RIGHT("right"); //$NON-NLS-1$
 
     private String defString = null;
-    Alignments( String defString ) {
+
+    Alignments(String defString) {
         this.defString = defString;
     }
 
     /**
      * Return the alignment based on the definition string.
-     * 
-     * @param defString the aliognment definition string.
+     *
+     * @param defString the alignment definition string.
      * @return the {@link Alignments} or null.
      */
-    public static Alignments toAlignment( String defString ) {
+    public static Alignments toAlignment(String defString) {
         Alignments[] values = values();
-        for( Alignments vendorOptions : values ) {
+        for (Alignments vendorOptions : values) {
             if (defString.equals(vendorOptions.toString())) {
                 return vendorOptions;
             }
@@ -45,7 +46,7 @@ public enum Alignments {
         return null;
     }
 
-    public static Alignments verticalAlignmentfromDouble( String alignment ) {
+    public static Alignments verticalAlignmentfromDouble(String alignment) {
         if (alignment == null)
             return TOP;
         double align = Double.parseDouble(alignment);
@@ -59,7 +60,7 @@ public enum Alignments {
         return TOP;
     }
 
-    public static Alignments horizontalAlignmentfromDouble( String alignment ) {
+    public static Alignments horizontalAlignmentfromDouble(String alignment) {
         if (alignment == null)
             return RIGHT;
         double align = Double.parseDouble(alignment);
@@ -74,7 +75,7 @@ public enum Alignments {
     }
 
     public double toDouble() {
-        switch( this ) {
+        switch (this) {
         case TOP:
             return SLDs.ALIGN_TOP;
         case MIDDLE:
@@ -94,7 +95,7 @@ public enum Alignments {
     }
 
     public int toIndex() {
-        switch( this ) {
+        switch (this) {
         case TOP:
             return 0;
         case MIDDLE:
@@ -113,6 +114,7 @@ public enum Alignments {
         return 1;
     }
 
+    @Override
     public String toString() {
         return defString;
     }

@@ -1,6 +1,6 @@
-/*
+/**
  * uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,7 +20,7 @@ import org.osgi.framework.BundleContext;
 public class JGrassrasterStyleActivator extends AbstractUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "org.locationtech.udig.style.jgrass";
+    public static final String PLUGIN_ID = "org.locationtech.udig.style.jgrass"; //$NON-NLS-1$
 
     // The shared instance
     private static JGrassrasterStyleActivator plugin;
@@ -29,31 +29,24 @@ public class JGrassrasterStyleActivator extends AbstractUIPlugin {
      * The constructor
      */
     public JGrassrasterStyleActivator() {
+
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-     */
-    public void start( BundleContext context ) throws Exception {
+    @Override
+    public void start(BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-     */
-    public void stop( BundleContext context ) throws Exception {
+    @Override
+    public void stop(BundleContext context) throws Exception {
         plugin = null;
         super.stop(context);
     }
 
     /**
      * Returns the shared instance
-     * 
+     *
      * @return the shared instance
      */
     public static JGrassrasterStyleActivator getDefault() {
@@ -63,11 +56,11 @@ public class JGrassrasterStyleActivator extends AbstractUIPlugin {
     /**
      * Logs the Throwable in the plugin's log.
      * <p>
-     * This will be a user visable ERROR iff:
+     * This will be a user visible ERROR iff:
      * <ul>
      * <li>t is an Exception we are assuming it is human readable or if a message is provided
      */
-    public static void log( String message2, Throwable t ) {
+    public static void log(String message2, Throwable t) {
         if (getDefault() == null) {
             t.printStackTrace();
             return;

@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -43,116 +43,119 @@ public class MapDropAction extends CatalogImportDropAction {
     @Override
     public boolean accept() {
         Object data2 = getData();
-        if ( data2.getClass().isArray() ){
-            Object[] objects = ((Object[])data2);
-            for( Object object : objects ) {
-                if( canAccept(object) ){
+        if (data2.getClass().isArray()) {
+            Object[] objects = ((Object[]) data2);
+            for (Object object : objects) {
+                if (canAccept(object)) {
                     return true;
                 }
             }
             return false;
-        }else {
+        } else {
             return canAccept(data2);
         }
-        
+
     }
 
-    private boolean canAccept( Object data2 ) {
-        if( data2 instanceof LayerResource ){
-            ILayer layer=((LayerResource) data2).getLayer();
-            
+    private boolean canAccept(Object data2) {
+        if (data2 instanceof LayerResource) {
+            ILayer layer = ((LayerResource) data2).getLayer();
+
             // Do not accept layer from same map, user is just changing order
-            if ( desinationContainsLayer(layer) ){
+            if (desinationContainsLayer(layer)) {
                 return false;
             }
-            if ( destinationLayerMapContainsLayer(layer)){ 
+            if (destinationLayerMapContainsLayer(layer)) {
                 return false;
             }
         }
-        if( data2 instanceof IGeoResource ){
+        if (data2 instanceof IGeoResource) {
             return true;
         }
-        if( data2 instanceof IAdaptable ){
-            IAdaptable adaptable=(IAdaptable) data2;
-            if( adaptable.getAdapter(IGeoResource.class)!=null ){
+        if (data2 instanceof IAdaptable) {
+            IAdaptable adaptable = (IAdaptable) data2;
+            if (adaptable.getAdapter(IGeoResource.class) != null) {
                 return true;
             }
         }
-        if (data2 instanceof IResolve){
-            return true; // may have to prompt the user to choose 
+        if (data2 instanceof IResolve) {
+            return true; // may have to prompt the user to choose
         }
         return canImport(data2);
     }
 
-    private boolean destinationLayerMapContainsLayer( ILayer layer ) {
-        if( getDestination() instanceof ILayer ){
-            ILayer dest=(ILayer) getDestination();
-            if( dest.getMap().getMapLayers().contains(layer) )
+    private boolean destinationLayerMapContainsLayer(ILayer layer) {
+        if (getDestination() instanceof ILayer) {
+            ILayer dest = (ILayer) getDestination();
+            if (dest.getMap().getMapLayers().contains(layer))
                 return true;
         }
         return false;
     }
 
-    private boolean desinationContainsLayer( ILayer layer) {
-        if( getDestination() instanceof IMap ){
-        IMap map=(IMap) getDestination();
-        if( map.getMapLayers().contains(layer) )
-            return true;
+    private boolean desinationContainsLayer(ILayer layer) {
+        if (getDestination() instanceof IMap) {
+            IMap map = (IMap) getDestination();
+            if (map.getMapLayers().contains(layer))
+                return true;
         }
         return false;
     }
-    
+
     @Override
     public void perform(IProgressMonitor monitor) {
-        List<IGeoResource> resources=new ArrayList<IGeoResource>();
-        List<Object> otherData=new ArrayList<Object>();
-        
+        List<IGeoResource> resources = new ArrayList<>();
+        List<Object> otherData = new ArrayList<>();
+
         Object data2 = getData();
         Object[] array;
-        if( data2.getClass().isArray() ){
-            array=(Object[]) data2;
-            for( int i = 0; i < array.length; i++ ) {
+        if (data2.getClass().isArray()) {
+            array = (Object[]) data2;
+            for (int i = 0; i < array.length; i++) {
                 Object object = array[i];
-                if(canAccept(object)){
+                if (canAccept(object)) {
                     seperateGeoResources(resources, otherData, object);
                 }
             }
-        }else{
+        } else {
             seperateGeoResources(resources, otherData, data2);
         }
-        
-        int layerpos=-1;
+
+        int layerpos = -1;
         layerpos = calculateDropPosition();
-        IMap map=null;
-        if( !otherData.isEmpty() ){
-            for( Object object : otherData ) {
-                Collection<IGeoResource> additionalResources = toResources(monitor, object, getClass());
-                
-                ProjectUIPlugin.trace(Trace.DND, MapDropAction.class,
-                        "Converted from DnD "+object.getClass().getSimpleName()+" data to:"+additionalResources,null);
+        IMap map = null;
+        if (!otherData.isEmpty()) {
+            for (Object object : otherData) {
+                Collection<IGeoResource> additionalResources = toResources(monitor, object,
+                        getClass());
+
+                ProjectUIPlugin.trace(Trace.DND, MapDropAction.class, "Converted from DnD " //$NON-NLS-1$
+                        + object.getClass().getSimpleName() + " data to:" + additionalResources, //$NON-NLS-1$
+                        null);
                 resources.addAll(additionalResources);
             }
         }
-        
-        if( !resources.isEmpty() ){
+
+        if (!resources.isEmpty()) {
             addResourcesToMap(resources, layerpos, map);
         }
     }
 
-    static Collection<IGeoResource> toResources( IProgressMonitor monitor, Object object, Class<?> callingClass ) {
-        // create a wizard that does not add to map.  We will add all resources at once.
-        MapImport mapImport = new MapImport(){
+    static Collection<IGeoResource> toResources(IProgressMonitor monitor, Object object,
+            Class<?> callingClass) {
+        // create a wizard that does not add to map. We will add all resources at once.
+        MapImport mapImport = new MapImport() {
 
             @Override
-            protected WorkflowWizard createWorkflowWizard( Workflow workflow,
-                    java.util.Map<Class< ? extends State>, WorkflowWizardPageProvider> map ) {
-                return new MapImportWizard(workflow, map){
+            protected WorkflowWizard createWorkflowWizard(Workflow workflow,
+                    java.util.Map<Class<? extends State>, WorkflowWizardPageProvider> map) {
+                return new MapImportWizard(workflow, map) {
                     @Override
-                    protected boolean performFinish( IProgressMonitor monitor ) {
+                    protected boolean performFinish(IProgressMonitor monitor) {
                         return true;
                     }
                 };
-           }
+            }
         };
         if (mapImport.run(monitor, object)) {
 
@@ -161,8 +164,8 @@ public class MapDropAction extends CatalogImportDropAction {
 
             Set<IGeoResource> keySet = state.getResources().keySet();
 
-            ProjectUIPlugin.trace(Trace.DND, callingClass,
-                    "converted " + object + " to " + keySet, null); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            ProjectUIPlugin.trace(Trace.DND, callingClass, "converted " + object + " to " + keySet, //$NON-NLS-1$ //$NON-NLS-2$
+                    null);
 
             return keySet;
         } else {
@@ -170,71 +173,77 @@ public class MapDropAction extends CatalogImportDropAction {
         }
     }
 
-    private void addResourcesToMap( List<IGeoResource> resources, int layerpos,IMap map2 ) {
-        IMap map=map2;
-        if( getDestination() instanceof Layer){
-            Layer layer=(Layer) getDestination();
-            map=layer.getMap();
-        } else if( getDestination() instanceof IMap ){
+    private void addResourcesToMap(List<IGeoResource> resources, int layerpos, IMap map2) {
+        IMap map = map2;
+        if (getDestination() instanceof Layer) {
+            Layer layer = (Layer) getDestination();
+            map = layer.getMap();
+        } else if (getDestination() instanceof IMap) {
             map = (IMap) getDestination();
         }
-        if (map==null )
+        if (map == null)
             map = ApplicationGIS.getActiveMap();
-        if( map==ApplicationGIS.NO_MAP ){
-            ProjectUIPlugin.trace(Trace.DND, getClass(), "Creating new Map with from resources: "+resources, null); //$NON-NLS-1$
-            ApplicationGIS.addLayersToMap((IMap)null, resources, layerpos);
-        }else{
-            ProjectUIPlugin.trace(Trace.DND, getClass(), "Add layers to "+map.getName()+" from resources: "+resources, null);  //$NON-NLS-1$//$NON-NLS-2$
+        if (map == ApplicationGIS.NO_MAP) {
+            ProjectUIPlugin.trace(Trace.DND, getClass(),
+                    "Creating new Map with from resources: " + resources, null); //$NON-NLS-1$
+            ApplicationGIS.addLayersToMap((IMap) null, resources, layerpos);
+        } else {
+            ProjectUIPlugin.trace(Trace.DND, getClass(),
+                    "Add layers to " + map.getName() + " from resources: " + resources, null); //$NON-NLS-1$//$NON-NLS-2$
             ApplicationGIS.addLayersToMap(map, resources, layerpos, null, true);
         }
     }
+
     /**
      * Places the object into the appropriate resources or otherData list.
-     * 
+     *
      * @param resources
      * @param otherData
      * @param object
      */
-    private void seperateGeoResources( List<IGeoResource> resources, List<Object> otherData, Object object ) {
-        if( object instanceof IGeoResource ){
+    private void seperateGeoResources(List<IGeoResource> resources, List<Object> otherData,
+            Object object) {
+        if (object instanceof IGeoResource) {
             resources.add((IGeoResource) object);
-        }
-        else {
+        } else {
             Object processed = processDropItem(object);
             otherData.add(processed);
         }
     }
 
-    private int calculateDropPosition( ) {
-        int layerpos=-1;
-        if( getDestination() instanceof ILayer ){
-            ILayer target=(ILayer) getDestination();
+    private int calculateDropPosition() {
+        int layerpos = -1;
+        if (getDestination() instanceof ILayer) {
+            ILayer target = (ILayer) getDestination();
             ViewerDropLocation location = getViewerLocation();
             layerpos = target.getZorder();
-            
+
             if (location == ViewerDropLocation.NONE) {
-                layerpos=0;
+                layerpos = 0;
             }
 
-            // Moving something AFTER a layer is the same as moving something BEFORE a layer.
-            // So we will use BEFORE as much as possible to prevent duplication here.
-            // This code will retrieve the layer before. Or the first one, if we are at the
-            // beginning of the list.
-            if( location == ViewerDropLocation.BEFORE ){
-                layerpos ++;
+            /**
+             * Moving something AFTER a layer is the same as moving something BEFORE a layer.
+             * So we will use BEFORE as much as possible to prevent duplication here.
+             * This code will retrieve the layer before. Or the first one, if we are at the beginning of the list.
+             */
+            if (location == ViewerDropLocation.BEFORE) {
+                layerpos++;
             }
-            if( location == ViewerDropLocation.ON ){
+            if (location == ViewerDropLocation.ON) {
                 layerpos++;
             }
         }
         return layerpos;
     }
+
     /**
      * Tries to return a File or URL if possible from provided concreteData2
+     *
      * @param concreteData2
      * @return
      */
-    private Object processDropItem( Object concreteData2 ) {
+    private Object processDropItem(Object concreteData2) {
         Object concreteData = concreteData2;
         if (concreteData instanceof String) {
             URL url = extractURL((String) concreteData);

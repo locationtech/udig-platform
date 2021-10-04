@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,10 +16,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.util.SafeRunnable;
@@ -37,7 +37,7 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
      * List of registered listeners (element type: <code>IPropertyChangeListener</code>). These
      * listeners are to be informed when the current value of a preference changes.
      */
-    private Set<IPropertyChangeListener> listeners = new CopyOnWriteArraySet<IPropertyChangeListener>();
+    private Set<IPropertyChangeListener> listeners = new CopyOnWriteArraySet<>();
 
     /**
      * The locally stored copy of the map from preference name to preference value (represented as
@@ -73,6 +73,7 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
     /**
      * Stores a remote value for the preference with the specified key. Subclasses must implement.
      */
+    @Override
     public abstract void putValue(String name, String value);
 
     /**
@@ -84,8 +85,8 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
     public abstract boolean isKey(String name);
 
     public RemotePreferenceStore() {
-        defaultProperties = new HashMap<String, String>();
-        localProperties = new HashMap<String, String>();
+        defaultProperties = new HashMap<>();
+        localProperties = new HashMap<>();
     }
 
     /**
@@ -104,6 +105,7 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         ready = true;
     }
 
+    @Override
     public void save() throws IOException {
         String[] names = preferenceNames();
         for (int i = 0; i < names.length; i++) {
@@ -144,10 +146,12 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         return String.valueOf(object);
     }
 
+    @Override
     public void addPropertyChangeListener(IPropertyChangeListener listener) {
         listeners.add(listener);
     }
 
+    @Override
     public boolean contains(String name) {
         if (name == null)
             return false;
@@ -161,13 +165,15 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
             return true;
     }
 
+    @Override
     public void firePropertyChangeEvent(String name, Object oldValue, Object newValue) {
         // Do we need to fire an event.
         if ((oldValue == null || !oldValue.equals(newValue))) {
             final PropertyChangeEvent pe = new PropertyChangeEvent(this, name, oldValue, newValue);
             for (final IPropertyChangeListener l : listeners) {
-                SafeRunnable.run(new SafeRunnable(JFaceResources
-                        .getString("PreferenceStore.changeError")) { //$NON-NLS-1$
+                SafeRunnable.run(
+                        new SafeRunnable(JFaceResources.getString("PreferenceStore.changeError")) { //$NON-NLS-1$
+                            @Override
                             public void run() {
                                 l.propertyChange(pe);
                             }
@@ -176,6 +182,7 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         }
     }
 
+    @Override
     public boolean getBoolean(String name) {
         if (!ready)
             load();
@@ -191,10 +198,12 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         return false;
     }
 
+    @Override
     public boolean getDefaultBoolean(String name) {
         return getBoolean(defaultProperties, name);
     }
 
+    @Override
     public double getDefaultDouble(String name) {
         return getDouble(defaultProperties, name);
     }
@@ -205,12 +214,13 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
             return DOUBLE_DEFAULT_DEFAULT;
         double ival = DOUBLE_DEFAULT_DEFAULT;
         try {
-            ival = new Double(value).doubleValue();
+            ival = Double.valueOf(value).doubleValue();
         } catch (NumberFormatException e) {
         }
         return ival;
     }
 
+    @Override
     public float getDefaultFloat(String name) {
         return getFloat(defaultProperties, name);
     }
@@ -221,12 +231,13 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
             return FLOAT_DEFAULT_DEFAULT;
         float ival = FLOAT_DEFAULT_DEFAULT;
         try {
-            ival = new Float(value).floatValue();
+            ival = Float.valueOf(value).floatValue();
         } catch (NumberFormatException e) {
         }
         return ival;
     }
 
+    @Override
     public int getDefaultInt(String name) {
         return getInt(defaultProperties, name);
     }
@@ -243,6 +254,7 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         return ival;
     }
 
+    @Override
     public long getDefaultLong(String name) {
         return getLong(defaultProperties, name);
     }
@@ -259,6 +271,7 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         return ival;
     }
 
+    @Override
     public String getDefaultString(String name) {
         return getString(defaultProperties, name);
     }
@@ -270,41 +283,48 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         return value;
     }
 
+    @Override
     public double getDouble(String name) {
         if (!ready)
             load();
         return getDouble(localProperties, name);
     }
 
+    @Override
     public float getFloat(String name) {
         if (!ready)
             load();
         return getFloat(localProperties, name);
     }
 
+    @Override
     public int getInt(String name) {
         if (!ready)
             load();
         return getInt(localProperties, name);
     }
 
+    @Override
     public long getLong(String name) {
         if (!ready)
             load();
         return getLong(localProperties, name);
     }
 
+    @Override
     public String getString(String name) {
         if (!ready)
             load();
         return getString(localProperties, name);
     }
 
+    @Override
     public boolean isDefault(String name) {
         // does not check remote store
         return (!localProperties.containsKey(name) && defaultProperties.containsKey(name));
     }
 
+    @Override
     public boolean needsSaving() {
         if (!ready)
             load();
@@ -319,45 +339,52 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
      */
     public String[] preferenceNames() {
         Set<String> names = defaultProperties.keySet();
-        return (String[]) names.toArray(new String[names.size()]);
+        return names.toArray(new String[names.size()]);
     }
 
+    @Override
     public void removePropertyChangeListener(IPropertyChangeListener listener) {
         listeners.remove(listener);
     }
 
+    @Override
     public void setDefault(String name, double value) {
         setValue(defaultProperties, name, value);
     }
 
+    @Override
     public void setDefault(String name, float value) {
         setValue(defaultProperties, name, value);
     }
 
+    @Override
     public void setDefault(String name, int value) {
         setValue(defaultProperties, name, value);
     }
 
+    @Override
     public void setDefault(String name, long value) {
         setValue(defaultProperties, name, value);
     }
 
+    @Override
     public void setDefault(String name, String value) {
         setValue(defaultProperties, name, value);
     }
 
+    @Override
     public void setDefault(String name, boolean value) {
         setValue(defaultProperties, name, value);
     }
 
     private void setValue(Map<String, String> p, String name, double value) {
         Assert.isTrue(p != null && name != null);
-        p.put(name, toString(new Double(value)));
+        p.put(name, toString(Double.valueOf(value)));
     }
 
     private void setValue(Map<String, String> p, String name, float value) {
         Assert.isTrue(p != null && name != null);
-        p.put(name, toString(new Float(value)));
+        p.put(name, toString(Float.valueOf(value)));
     }
 
     private void setValue(Map<String, String> p, String name, int value) {
@@ -380,6 +407,7 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         p.put(name, toString(Boolean.valueOf(value)));
     }
 
+    @Override
     public void setToDefault(String name) {
         Object oldValue = localProperties.get(name);
         localProperties.remove(name);
@@ -390,24 +418,27 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         firePropertyChangeEvent(name, oldValue, newValue);
     }
 
+    @Override
     public void setValue(String name, double value) {
         double oldValue = getDouble(name);
         if (oldValue != value) {
             setValue(localProperties, name, value);
             dirty = true;
-            firePropertyChangeEvent(name, new Double(oldValue), new Double(value));
+            firePropertyChangeEvent(name, Double.valueOf(oldValue), Double.valueOf(value));
         }
     }
 
+    @Override
     public void setValue(String name, float value) {
         float oldValue = getFloat(name);
         if (oldValue != value) {
             setValue(localProperties, name, value);
             dirty = true;
-            firePropertyChangeEvent(name, new Float(oldValue), new Float(value));
+            firePropertyChangeEvent(name, Float.valueOf(oldValue), Float.valueOf(value));
         }
     }
 
+    @Override
     public void setValue(String name, int value) {
         int oldValue = getInt(name);
         if (oldValue != value) {
@@ -417,6 +448,7 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         }
     }
 
+    @Override
     public void setValue(String name, long value) {
         long oldValue = getLong(name);
         if (oldValue != value) {
@@ -426,6 +458,7 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         }
     }
 
+    @Override
     public void setValue(String name, String value) {
         String oldValue = getString(name);
         if (oldValue == null || !oldValue.equals(value)) {
@@ -435,6 +468,7 @@ public abstract class RemotePreferenceStore implements IPersistentPreferenceStor
         }
     }
 
+    @Override
     public void setValue(String name, boolean value) {
         boolean oldValue = getBoolean(name);
         if (oldValue != value) {

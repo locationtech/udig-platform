@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,12 +18,12 @@ import org.locationtech.udig.project.IBlackboard;
 import org.locationtech.udig.project.internal.Layer;
 
 /**
- * 
+ *
  * Configures a style object.
  * <p>
  * Responsibilities:
  * <ul>
- * <li>Creating a ui to allow user configuration of a style object.
+ * <li>Creating a UI to allow user configuration of a style object.
  * <li>Placing style object information onto the style blackboard of a layer.
  * <li>Determining if a style configurator can be used to configure the style of a particular layer.
  * </ul>
@@ -36,9 +36,9 @@ import org.locationtech.udig.project.internal.Layer;
  *      ...
  *      StyleBlackboard styleBlackboard = getStyleBlackboard();
  *      Point style = styleBlackboard.lookup("point.style");
- *      
+ *
  *      if (style == null) {
- *          style = new Point();    
+ *          style = new Point();
  *          style.setX(0);
  *          style.setY(0);
  *          styleBlackboard.put("point.style", style);
@@ -52,64 +52,66 @@ import org.locationtech.udig.project.internal.Layer;
  * </p>
  * <p>
  * <b>Note:</b><i>Each time a style object is changed, it must be replaced onto the blackboard for
- * persistance reasons.</i> <code>
+ * persistence reasons.</i> <code>
  *      StyleBlackboard styleBlackboard = getStyleBlackboard();
  *      Point style = styleBlackboard.lookup("point.style");
  *      ...
  *      style.setX(10);
  *      style.setY(10);
- *      
+ *
  *      styleBlackboard.put("point.style", style);
  * </code>
  * </p>
  * <p>
  * The StyleConfigurator should store no state. All state should be stored in the style objects on
- * the style blackboard. When a ui widget changes state, the style object should be written to
- * immediately to reflect the change. When the configurator becomes active, the ui widgets should be
+ * the style blackboard. When a UI widget changes state, the style object should be written to
+ * immediately to reflect the change. When the configurator becomes active, the UI widgets should be
  * initialized from the values of style objects on the blackboard. This should be performed every
  * time refresh() is called.
  * </p>
  * <p>
  * Whenever style objects are read from the blackboard,
  * </p>
- * 
+ *
  * <p>
  * <code>
  *  void apply() {
  *      StyleBlackboard styleBlackboard = getStyleBlackboard();
  *      Point style = styleBlackboard.lookup("point.style");
- *      
+ *
  *      if (style == null) {
- *          style = new Point();    
+ *          style = new Point();
  *          styleBlackboard.put("point.style", style);
  *      }
- *      
+ *
  *      style.setX(...) //set to some value from ui
  *      style.setY(...) //set to some value from ui
  *  }
- *  
+ *
  *  void init() {
  *      StyleBlackboard styleBlackboard = getStyleBlackboard();
  *      Point style = styleBlackboard.lookup("point.style");
  *      if (style != null) {
- *          //set some ui widget to value of style.getX();
- *          //set some ui widget to value of style.getY();
+ *          //set some UI widget to value of style.getX();
+ *          //set some UI widget to value of style.getY();
  *      }
  *  }
  * </code>
  * </p>
  * <p>
- * A StyleConfigurator is not considered active until its ui has been created.
+ * A StyleConfigurator is not considered active until its UI has been created.
  *
  * </p>
- * 
+ *
  * @author Justin Deoliveira
  * @since 0.6.0
- * 
+ *
  */
 public abstract class IStyleConfigurator {
 
-    /** extension point id **/
+    /**
+     * extension point id
+     */
     public static final String XPID = "org.locationtech.udig.style.styleConfigurator"; //$NON-NLS-1$
 
     /**
@@ -136,7 +138,7 @@ public abstract class IStyleConfigurator {
     /**
      * Extension Point Attribute {@value} of {@link IStyleConfigurator}
      */
-    public static final String EXTENSION_ATTR_ID = "id";
+    public static final String EXTENSION_ATTR_ID = "id"; //$NON-NLS-1$
 
     private String styleId;
 
@@ -150,7 +152,7 @@ public abstract class IStyleConfigurator {
 
     /**
      * Sets the apply action.
-     * 
+     *
      * @param applyAction1
      */
     public final void setAction(IAction applyAction1) {
@@ -171,22 +173,22 @@ public abstract class IStyleConfigurator {
     }
 
     /**
-     * Called after apply action has been triggeredbefore apply is executed.
+     * Called after apply action has been triggered before apply is executed.
      */
     public void preApply() {
-        //
+
     }
 
     /**
      * Returns the declared style id of the style the configurator depends on.
      * <p>
-     * This is provided by SetStyleId by the extention point.
+     * This is provided by SetStyleId by the extension point.
      * <p>
      * <p>
      * When keeping information associated with a IStyleConfigurator (in a Map, or Memento) use this
      * as a KEY. Don't use label, two IStyleConfigurator may have the same label.
      * </p>
-     * 
+     *
      * @return styleId The style id.
      */
     public final String getStyleId() {
@@ -196,9 +198,9 @@ public abstract class IStyleConfigurator {
     /**
      * Sets the declared style id of the style the configurator depends on.
      * <p>
-     * Called by the extention point processor.
+     * Called by the extension point processor.
      * </p>
-     * 
+     *
      * @param id The style id.
      */
     public final void setStyleId(String id) {
@@ -206,8 +208,8 @@ public abstract class IStyleConfigurator {
     }
 
     /**
-     * Returns the label describing the configurator. Used mainly for ui purposes.
-     * 
+     * Returns the label describing the configurator. Used mainly for UI purposes.
+     *
      * @return A short description of the configurator.
      */
     public final String getLabel() {
@@ -215,8 +217,8 @@ public abstract class IStyleConfigurator {
     }
 
     /**
-     * Sets the label describing the configurator. Used mainly for ui purposes.
-     * 
+     * Sets the label describing the configurator. Used mainly for UI purposes.
+     *
      * @param label A short description of the configurator.
      */
     public void setLabel(String label) {
@@ -231,7 +233,7 @@ public abstract class IStyleConfigurator {
      * initialization is complete, this value must be non-<code>null</code> for the remainder of the
      * view's life cycle.
      * </p>
-     * 
+     *
      * @return the view site; this value may be <code>null</code> if the view has not yet been
      *         initialized
      */
@@ -259,7 +261,7 @@ public abstract class IStyleConfigurator {
      * <p>
      * You must call super.init();
      * </p>
-     * 
+     *
      * @throws PartInitException
      */
     protected void init() throws PartInitException {
@@ -268,7 +270,7 @@ public abstract class IStyleConfigurator {
 
     /**
      * Determines if the configurator can be used to configure the style for a specified layer.
-     * 
+     *
      * @param aLayer The layer to be styled.
      * @return true if the configurator can work with the layer, otherwise false.
      */
@@ -278,9 +280,9 @@ public abstract class IStyleConfigurator {
      * Gets the current layer to which the current style being configured is to be applied to.
      * <p>
      * The layer can be <code>null</code> while the view is being initialized or created. This value
-     * must be non-<code>null</code> when the IStyleConfigurator.getControl() is visiable.
+     * must be non-<code>null</code> when the IStyleConfigurator.getControl() is visible.
      * </p>
-     * 
+     *
      * @return Layer being edited at the moment
      */
     public final Layer getLayer() {
@@ -292,9 +294,9 @@ public abstract class IStyleConfigurator {
      * <p>
      * <p>
      * The blackboard can be <code>null</code> while the view is being initialized or created. This
-     * value must be non-<code>null</code> when the IStyleConfigurator.getControl() is visiable.
+     * value must be non-<code>null</code> when the IStyleConfigurator.getControl() is visible.
      * </p>
-     * 
+     *
      * @return A style blackboard.
      */
     public final IBlackboard getStyleBlackboard() {
@@ -305,9 +307,9 @@ public abstract class IStyleConfigurator {
     }
 
     /**
-     * Sets the layer (and thus changes the style blackboard) being targetted.
+     * Sets the layer (and thus changes the style blackboard) being targeted.
      * <p>
-     * When this method is called the user interface state should be re-initialised against the new
+     * When this method is called the user interface state should be re-initialized against the new
      * layer and blackboard.
      * <p>
      * When using this method to change between layers:
@@ -316,7 +318,7 @@ public abstract class IStyleConfigurator {
      * <li>getBlackboard() is updated (actually calls layer.getStyleBlackboard()
      * <li>refresh() is called to update the user interface
      * </p>
-     * 
+     *
      * @param targetLayer The layer being styled.
      */
     public void focus(Layer targetLayer) {
@@ -325,7 +327,7 @@ public abstract class IStyleConfigurator {
     }
 
     /**
-     * Called when new layer and blackbard values are available.
+     * Called when new layer and blackboard values are available.
      * <p>
      * This provides update information as a callback (rather than an event listener).
      * </p>
@@ -344,7 +346,7 @@ public abstract class IStyleConfigurator {
      * <p>
      * You can set the layout to the parent to be whatever you want.
      * </p>
-     * 
+     *
      * @param parent
      */
     public abstract void createControl(Composite parent);

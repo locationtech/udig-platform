@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -38,9 +39,10 @@ import org.opengis.feature.simple.SimpleFeature;
  */
 public class ApplicationGISInternal {
 
-    public static ToolContext createContext( IMap map ) {
+    public static ToolContext createContext(IMap map) {
         return (ToolContext) ApplicationGIS.createContext(map);
     }
+
     /**
      * May return null of no project is active.
      *
@@ -55,9 +57,9 @@ public class ApplicationGISInternal {
      *
      * @return all Projects.
      */
-    public static List< ? extends Project> getProjects() {
-        return Collections.unmodifiableList(ProjectPlugin.getPlugin().getProjectRegistry()
-                .getProjects());
+    public static List<? extends Project> getProjects() {
+        return Collections
+                .unmodifiableList(ProjectPlugin.getPlugin().getProjectRegistry().getProjects());
     }
 
     /**
@@ -77,8 +79,8 @@ public class ApplicationGISInternal {
      * @return a list of maps contained or null if no Map Editors exist.
      */
     @SuppressWarnings("unchecked")
-    public static Collection< ? extends Map> getOpenMaps() {
-        return (Collection< ? extends Map>) ApplicationGIS.getOpenMaps();
+    public static Collection<? extends Map> getOpenMaps() {
+        return (Collection<? extends Map>) ApplicationGIS.getOpenMaps();
     }
 
     /**
@@ -86,11 +88,11 @@ public class ApplicationGISInternal {
      *
      * @return a feature editor for the provided feature
      */
-    public static FeatureEditorLoader getFeatureEditorLoader( SimpleFeature feature ) {
+    public static FeatureEditorLoader getFeatureEditorLoader(SimpleFeature feature) {
         if (feature == null)
             return null;
-        return ProjectUIPlugin.getDefault().getFeatureEditProcessor().getClosestMatch(
-                new StructuredSelection(feature));
+        return ProjectUIPlugin.getDefault().getFeatureEditProcessor()
+                .getClosestMatch(new StructuredSelection(feature));
     }
 
     /**
@@ -108,7 +110,7 @@ public class ApplicationGISInternal {
         try {
             final AtomicReference<MapPart> editor = new AtomicReference<>();
 
-            Runnable runnable = new Runnable(){
+            Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
                     try {
@@ -139,13 +141,16 @@ public class ApplicationGISInternal {
         } catch (Exception e) {
             return null;
         }
+
+        return null;
     }
-    public static MapEditorPart findMapEditor( final IMap map ) {
+
+    public static MapEditorPart findMapEditor(final IMap map) {
         if (map == null)
             throw new NullPointerException("Map cannot be null"); //$NON-NLS-1$
 
         final MapEditorPart[] result = new MapEditorPart[1];
-        PlatformGIS.syncInDisplayThread(new Runnable(){
+        PlatformGIS.syncInDisplayThread(new Runnable() {
             @Override
             public void run() {
                 IWorkbenchWindow win = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
@@ -155,7 +160,7 @@ public class ApplicationGISInternal {
                 if (page == null)
                     return;
                 IEditorReference[] refs = page.getEditorReferences();
-                for( IEditorReference reference : refs ) {
+                for (IEditorReference reference : refs) {
                     IEditorPart e = reference.getEditor(false);
                     if (e instanceof MapEditorPart) {
                         MapEditorPart me = (MapEditorPart) e;
