@@ -393,7 +393,8 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette
             monitor.worked(1);
 
             /**
-             * Save the map's URI in the preferences so that it will be loaded the next time uDig is run.
+             * Save the map's URI in the preferences so that it will be loaded the next time uDig is
+             * run.
              */
             Resource resource = getMap().eResource();
             if (resource != null) {

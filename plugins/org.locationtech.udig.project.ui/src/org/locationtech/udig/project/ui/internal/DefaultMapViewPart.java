@@ -93,7 +93,8 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
     public final void createPartControl(Composite parent) {
         editDomain = new MapEditDomain(null);
         try {
-            IProgressMonitor monitor = getViewSite().getActionBars().getStatusLineManager().getProgressMonitor();
+            IProgressMonitor monitor = getViewSite().getActionBars().getStatusLineManager()
+                    .getProgressMonitor();
             viewer = new MapViewer(parent, this, SWT.DOUBLE_BUFFERED);
             List<IGeoResource> resources = new ArrayList<>();
             createResources(resources, monitor);

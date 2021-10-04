@@ -99,6 +99,7 @@ public class ApplicationGISInternal {
      * @return
      * @deprecated return the Active Editor
      */
+    @Deprecated
     public static MapPart getActiveEditor() {
         return getActiveMapPart();
     }
@@ -120,7 +121,7 @@ public class ApplicationGISInternal {
                         IEditorReference[] refs = window.getActivePage().getEditorReferences();
                         IMap map = ApplicationGIS.getActiveMap();
 
-                        for( IEditorReference ref : refs ) {
+                        for (IEditorReference ref : refs) {
                             IWorkbenchPart part = ref.getPart(false);
                             Map adapter = part.getAdapter(Map.class);
                             if (adapter != null && map == adapter && part instanceof MapPart) {
@@ -142,7 +143,6 @@ public class ApplicationGISInternal {
             return null;
         }
 
-        return null;
     }
 
     public static MapEditorPart findMapEditor(final IMap map) {
