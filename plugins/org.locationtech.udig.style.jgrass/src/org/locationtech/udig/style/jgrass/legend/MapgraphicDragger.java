@@ -1,6 +1,6 @@
-/*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+/**
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,6 +11,11 @@ package org.locationtech.udig.style.jgrass.legend;
 
 import java.awt.Rectangle;
 
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 import org.locationtech.udig.mapgraphic.style.LocationStyleContent;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IStyleBlackboard;
@@ -19,34 +24,37 @@ import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.project.ui.tool.ModalTool;
 import org.locationtech.udig.project.ui.tool.SimpleTool;
 
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
-
 /**
  * A tool that gives a way to drag mapgraphics around with the mouse.
- * 
+ *
  * @author Andrea Antonello - www.hydrologis.com
  */
 public class MapgraphicDragger extends SimpleTool implements ModalTool {
 
     private IStyleBlackboard bBoard;
+
     private ILayer selectedLayer;
+
     private boolean goGo = true;
+
     private Point startPoint;
+
     private Point runningPoint;
+
     private RasterLegendStyle rasterLegendStyle;
+
     private VectorLegendStyle vectorLegendStyle;
+
     private Rectangle scaleBarRectangle;
+
     private org.locationtech.udig.legend.ui.LegendStyle legendStyle;
 
     public MapgraphicDragger() {
         super(MOUSE | MOTION);
     }
 
-    protected void onMousePressed( MapMouseEvent e ) {
+    @Override
+    protected void onMousePressed(MapMouseEvent e) {
         super.onMousePressed(e);
         // reset
         goGo = true;
@@ -65,16 +73,22 @@ public class MapgraphicDragger extends SimpleTool implements ModalTool {
                 .get(org.locationtech.udig.legend.ui.LegendStyleContent.ID);
 
         if (selectedLayer == null
-                || (rasterLegendStyle == null ? (vectorLegendStyle == null ? (scaleBarRectangle == null ? (legendStyle == null
-                        ? true
-                        : false) : false) : false) : false)) {
+                || (rasterLegendStyle == null
+                        ? (vectorLegendStyle == null
+                                ? (scaleBarRectangle == null ? (legendStyle == null ? true : false)
+                                        : false)
+                                : false)
+                        : false)) {
             goGo = false;
-            Thread thread = new Thread(){
+            Thread thread = new Thread() {
+                @Override
                 public void run() {
-                    Display.getDefault().syncExec(new Runnable(){
+                    Display.getDefault().syncExec(new Runnable() {
+                        @Override
                         public void run() {
                             Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-                            MessageDialog.openWarning(shell, "Unsupported", "The selected layer type is not supported.");
+                            MessageDialog.openWarning(shell, "Unsupported", //$NON-NLS-1$
+                                    "The selected layer type is not supported."); //$NON-NLS-1$
                         }
                     });
                 }
@@ -83,7 +97,9 @@ public class MapgraphicDragger extends SimpleTool implements ModalTool {
         }
 
     }
-    protected void onMouseDragged( MapMouseEvent e ) {
+
+    @Override
+    protected void onMouseDragged(MapMouseEvent e) {
         super.onMouseDragged(e);
 
         if (goGo) {
@@ -103,19 +119,14 @@ public class MapgraphicDragger extends SimpleTool implements ModalTool {
             if (scaleBarRectangle != null) {
                 scaleBarRectangle.setLocation(scaleBarRectangle.x + dx, scaleBarRectangle.y + dy);
             }
-            // TODO put the positon x,y
-            // if (legendStyle!=null) {
-            // legendStyle.xPos = legendStyle.xPos + dx;
-            // legendStyle.yPos = legendStyle.yPos + dy;
-            // }
 
-            // selectedLayer.refresh(null);
             startPoint = runningPoint;
 
         }
     }
 
-    protected void onMouseReleased( MapMouseEvent e ) {
+    @Override
+    protected void onMouseReleased(MapMouseEvent e) {
         selectedLayer.refresh(null);
         super.onMouseReleased(e);
     }

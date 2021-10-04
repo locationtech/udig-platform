@@ -657,7 +657,6 @@ abstract class AbstractPageBookView<K> extends ViewPart {
                 // We will create a site for our use
                 site = new PageSite(getViewSite());
             }
-            // mapPageToSite.put(rec.page, site);
             rec.pageSite = site;
 
             rec.subActionBars = (SubActionBars) site.getActionBars();
@@ -1110,12 +1109,11 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
         Control control = rec.page.getControl();
         if (control != null && !control.isDisposed()) {
-            // Dispose the page's control so pages don't have to do this in
-            // their
-            // dispose method.
-            // The page's control is a child of this view's control so if
-            // this view
-            // is closed, the page's control will already be disposed.
+            /**
+             * Dispose the page's control so pages don't have to do this in their dispose method.
+             * The page's control is a child of this view's control so if this view is closed, the
+             * page's control will already be disposed.
+             */
             control.dispose();
         }
 
@@ -1152,9 +1150,6 @@ abstract class AbstractPageBookView<K> extends ViewPart {
         }
     }
 
-    /*
-     * (non-Javadoc) Method declared on IWorkbenchPart.
-     */
     @Override
     public void setFocus() {
         // first set focus on the page book, in case the page
@@ -1309,6 +1304,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
     }
 
     protected void hidden(K target) {
+
     }
 
     protected void inputChanged(K target) {
@@ -1316,5 +1312,6 @@ abstract class AbstractPageBookView<K> extends ViewPart {
     }
 
     protected void visible(K target) {
+
     }
 }

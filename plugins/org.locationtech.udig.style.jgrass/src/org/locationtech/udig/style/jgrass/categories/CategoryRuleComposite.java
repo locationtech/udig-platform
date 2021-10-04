@@ -1,13 +1,13 @@
-/*
+/**
  * uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
- package org.locationtech.udig.style.jgrass.categories;
+package org.locationtech.udig.style.jgrass.categories;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
@@ -23,20 +23,26 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * A composite that represents a facility to create JGrass category rules
- * 
+ *
  * @author Andrea Antonello - www.hydrologis.com
  */
 public class CategoryRuleComposite implements SelectionListener, KeyListener {
 
     private Label valueLabel;
+
     private Label labelLabel;
+
     private Button enableRuleCheckButton;
+
     private Text valueText;
+
     private Text labelText;
+
     private boolean isActive = true;
+
     private CategoryRule rule = null;
 
-    public CategoryRuleComposite( Composite parent, int style, CategoryRule rule ) {
+    public CategoryRuleComposite(Composite parent, int style, CategoryRule rule) {
 
         GridData gridData10 = new GridData();
         gridData10.horizontalAlignment = GridData.FILL;
@@ -75,15 +81,15 @@ public class CategoryRuleComposite implements SelectionListener, KeyListener {
         parent.setLayoutData(gridData5);
         parent.setLayout(gridLayout1);
         valueLabel = new Label(parent, SWT.NONE);
-        valueLabel.setText("value");
+        valueLabel.setText("value"); //$NON-NLS-1$
         valueLabel.setLayoutData(gridData6);
         valueText = new Text(parent, SWT.BORDER);
         valueText.setLayoutData(gridData7);
         Label dummylabel = new Label(parent, SWT.NONE);
-        dummylabel.setText("-");
+        dummylabel.setText("-"); //$NON-NLS-1$
         dummylabel.setLayoutData(gridData8);
         labelLabel = new Label(parent, SWT.NONE);
-        labelLabel.setText("label");
+        labelLabel.setText("label"); //$NON-NLS-1$
         labelLabel.setLayoutData(gridData9);
         labelText = new Text(parent, SWT.BORDER);
         labelText.setLayoutData(gridData10);
@@ -94,7 +100,7 @@ public class CategoryRuleComposite implements SelectionListener, KeyListener {
         valueText.addKeyListener(this);
         labelText.addKeyListener(this);
 
-        /*
+        /**
          * set values if needed
          */
         if (rule == null) {
@@ -116,10 +122,12 @@ public class CategoryRuleComposite implements SelectionListener, KeyListener {
         return rule;
     }
 
-    public void widgetDefaultSelected( SelectionEvent e ) {
+    @Override
+    public void widgetDefaultSelected(SelectionEvent e) {
     }
 
-    public void widgetSelected( SelectionEvent e ) {
+    @Override
+    public void widgetSelected(SelectionEvent e) {
         Button b = (Button) e.getSource();
         if (b.equals(enableRuleCheckButton)) {
             isActive = b.getSelection();
@@ -127,11 +135,13 @@ public class CategoryRuleComposite implements SelectionListener, KeyListener {
         }
     }
 
-    public void keyPressed( KeyEvent e ) {
+    @Override
+    public void keyPressed(KeyEvent e) {
 
     }
 
-    public void keyReleased( KeyEvent e ) {
+    @Override
+    public void keyReleased(KeyEvent e) {
         Object o = e.widget;
         try {
             if (o instanceof Text) {

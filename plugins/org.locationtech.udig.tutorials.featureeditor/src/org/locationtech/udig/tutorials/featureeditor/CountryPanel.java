@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,11 +9,6 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.tutorials.featureeditor;
-
-import net.miginfocom.layout.CC;
-import net.miginfocom.swt.MigLayout;
-import org.locationtech.udig.project.command.CompositeCommand;
-import org.locationtech.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -28,118 +23,133 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.locationtech.udig.project.command.CompositeCommand;
+import org.locationtech.udig.project.ui.tool.IToolContext;
 import org.opengis.feature.IllegalAttributeException;
 import org.opengis.feature.simple.SimpleFeature;
 
+import net.miginfocom.swt.MigLayout;
+
 public class CountryPanel implements KeyListener, ISelectionChangedListener {
     /** Attribute name for attribute GMI_CNTRY */
-    public static final String GMI_CNTRY = "GMI_CNTRY";
+    public static final String GMI_CNTRY = "GMI_CNTRY"; //$NON-NLS-1$
 
     /** Attribute name for attribute REGION */
-    public static final String COLOR_MAP = "COLOR_MAP";
+    public static final String COLOR_MAP = "COLOR_MAP"; //$NON-NLS-1$
 
     /** Attribute name for attribute NAME */
-    public static final String NAME = "CNTRY_NAME";
+    public static final String NAME = "CNTRY_NAME"; //$NON-NLS-1$
 
-    public static final Object[] COLOR_MAP_OPTS = new Object[]{1, 2, 3, 4, 5, 6, 7, 8};
+    public static final Object[] COLOR_MAP_OPTS = new Object[] { 1, 2, 3, 4, 5, 6, 7, 8 };
 
     Text gmiCntry;
+
     Text name;
+
     ComboViewer colorMap;
+
     private Button apply;
+
     private Button reset;
+
     private SimpleFeature editedFeature;
+
     private SimpleFeature oldFeature;
 
     /** Used send commands to the edit blackboard */
     private IToolContext context;
 
-    public void createControl( Composite parent ) {
-        parent.setLayout(new MigLayout("", "[right]10[left, grow][min!][min!]", "30"));
+    public void createControl(Composite parent) {
+        parent.setLayout(new MigLayout("", "[right]10[left, grow][min!][min!]", "30")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         // SWT Widgets
         Label label = new Label(parent, SWT.SHADOW_IN);
-        label.setText("Country:");
+        label.setText("Country:"); //$NON-NLS-1$
 
         name = new Text(parent, SWT.SHADOW_IN | SWT.BORDER);
-        name.setLayoutData("span 3, growx, wrap");
+        name.setLayoutData("span 3, growx, wrap"); //$NON-NLS-1$
         name.addKeyListener(this);
 
         label = new Label(parent, SWT.SHADOW_IN);
-        label.setText("Code:");
+        label.setText("Code:"); //$NON-NLS-1$
 
         gmiCntry = new Text(parent, SWT.SHADOW_IN | SWT.BORDER);
-        gmiCntry.setLayoutData("span 3, growx, wrap");
+        gmiCntry.setLayoutData("span 3, growx, wrap"); //$NON-NLS-1$
         gmiCntry.addKeyListener(this);
 
         // JFace Viewer
         label = new Label(parent, SWT.SHADOW_IN);
-        label.setText("Color Map:");
+        label.setText("Color Map:"); //$NON-NLS-1$
 
         colorMap = new ComboViewer(parent, SWT.SHADOW_IN);
-        colorMap.getControl().setLayoutData("wrap");
+        colorMap.getControl().setLayoutData("wrap"); //$NON-NLS-1$
         colorMap.addSelectionChangedListener(this);
 
         // hook up to data
-        colorMap.setContentProvider(new IStructuredContentProvider(){
-            public Object[] getElements( Object inputElement ) {
+        colorMap.setContentProvider(new IStructuredContentProvider() {
+            @Override
+            public Object[] getElements(Object inputElement) {
                 if (inputElement instanceof Object[]) {
                     return (Object[]) inputElement;
                 }
                 return null;
             }
 
-            public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
+            @Override
+            public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
                 // for dynamic content we would register listeners here
             }
 
+            @Override
             public void dispose() {
             }
         });
-        colorMap.setLabelProvider(new LabelProvider(){
-            public String getText( Object element ) {
-                return " " + element + " color";
+        colorMap.setLabelProvider(new LabelProvider() {
+            @Override
+            public String getText(Object element) {
+                return " " + element + " color"; //$NON-NLS-1$ //$NON-NLS-2$
             }
         });
         colorMap.setInput(COLOR_MAP_OPTS);
 
         // Buttons
         apply = new Button(parent, SWT.PUSH);
-        apply.setLayoutData("skip2");
-        apply.setText("Apply");
-        apply.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        apply.setLayoutData("skip2"); //$NON-NLS-1$
+        apply.setText("Apply"); //$NON-NLS-1$
+        apply.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
                 applyChanges();
             }
         });
         apply.setEnabled(false);
 
         reset = new Button(parent, SWT.PUSH);
-        reset.setText("Reset");
+        reset.setText("Reset"); //$NON-NLS-1$
         reset.setEnabled(false);
-        reset.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        reset.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
                 resetChanges();
             }
         });
     }
 
-    public void keyPressed( KeyEvent e ) {
+    @Override
+    public void keyPressed(KeyEvent e) {
         // do nothing
     }
 
-    public void keyReleased( KeyEvent e ) {
+    @Override
+    public void keyReleased(KeyEvent e) {
         setEnabled(true);
     }
 
-    private void setEnabled( boolean enabled ) {
+    private void setEnabled(boolean enabled) {
         if (oldFeature == null && enabled) {
             return;
         }
@@ -147,8 +157,11 @@ public class CountryPanel implements KeyListener, ISelectionChangedListener {
         reset.setEnabled(enabled);
     }
 
-    /** Listen to the viewer */
-    public void selectionChanged( SelectionChangedEvent event ) {
+    /**
+     * Listen to the viewer
+     */
+    @Override
+    public void selectionChanged(SelectionChangedEvent event) {
         IStructuredSelection selection = (IStructuredSelection) event.getSelection();
 
         Integer value = (Integer) selection.getFirstElement();
@@ -168,8 +181,8 @@ public class CountryPanel implements KeyListener, ISelectionChangedListener {
             // shouldn't happen.
         }
         CompositeCommand compComm = new CompositeCommand();
-        compComm.getCommands().add(
-                context.getEditFactory().createSetEditFeatureCommand(editedFeature));
+        compComm.getCommands()
+                .add(context.getEditFactory().createSetEditFeatureCommand(editedFeature));
         compComm.getCommands().add(context.getEditFactory().createWriteEditFeatureCommand());
         context.sendASyncCommand(compComm);
         setEnabled(false);
@@ -180,7 +193,7 @@ public class CountryPanel implements KeyListener, ISelectionChangedListener {
         setEnabled(false);
     }
 
-    public void setEditFeature( SimpleFeature newFeature, IToolContext newcontext ) {
+    public void setEditFeature(SimpleFeature newFeature, IToolContext newcontext) {
         this.context = newcontext;
         oldFeature = newFeature;
         if (oldFeature != null) {
@@ -193,86 +206,29 @@ public class CountryPanel implements KeyListener, ISelectionChangedListener {
             editedFeature = null;
         }
         if (oldFeature == null) {
-            gmiCntry.setText("");
+            gmiCntry.setText(""); //$NON-NLS-1$
             colorMap.setSelection(new StructuredSelection());
-            name.setText("");
+            name.setText(""); //$NON-NLS-1$
         } else {
             String nameText = (String) oldFeature.getAttribute(NAME);
             if (nameText == null)
-                nameText = "";
+                nameText = ""; //$NON-NLS-1$
             name.setText(nameText);
 
             String gmiText = (String) oldFeature.getAttribute(GMI_CNTRY);
             if (gmiText == null)
-                gmiText = "";
+                gmiText = ""; //$NON-NLS-1$
             gmiCntry.setText(gmiText);
 
             String colorText = (String) oldFeature.getAttribute(COLOR_MAP);
-            if (colorText != null && !colorText.equals("")) {
-                StructuredSelection selection = new StructuredSelection(new Integer(colorText));
+            if (colorText != null && !colorText.equals("")) { //$NON-NLS-1$
+                StructuredSelection selection = new StructuredSelection(Integer.valueOf(colorText));
                 colorMap.setSelection(selection);
             } else {
                 colorMap.setSelection(new StructuredSelection());
             }
         }
         setEnabled(false);
-    }
-
-    private void createControlMigLayout2( Composite parent ) {
-        parent.setLayout(new MigLayout("", "[right]10[left, grow][min!][min!]", "30"));
-        // SWT Widgets
-        Label label = new Label(parent, SWT.SHADOW_IN);
-        label.setText("Country:");
-
-        name = new Text(parent, SWT.SHADOW_IN | SWT.BORDER);
-        CC cc = new CC();
-        cc.spanX(3);
-        cc.growX();
-        cc.wrap();
-        name.setLayoutData( cc );
-        name.addKeyListener(this);
-    }
-    /* Example of form layout for the same view */
-    private void createControlFormLayout( Composite parent ) {
-        parent.setLayout(new GridLayout(2, false));
-        // SWT Widgets
-        Label label = new Label(parent, SWT.SHADOW_IN);
-        label.setLayoutData(new GridData(SWT.NONE, SWT.FILL));
-        label.setText("Country:");
-
-        name = new Text(parent, SWT.SHADOW_IN | SWT.BORDER);
-        name.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
-        name.addKeyListener(this);
-
-        label = new Label(parent, SWT.SHADOW_IN);
-        label.setLayoutData(new GridData(SWT.NONE, SWT.FILL, false, false));
-        label.setText("Code:");
-
-        gmiCntry = new Text(parent, SWT.SHADOW_IN | SWT.BORDER);
-        gmiCntry.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
-        gmiCntry.addKeyListener(this);
-
-        // JFace Viewer
-        label = new Label(parent, SWT.SHADOW_IN);
-        label.setLayoutData(new GridData(SWT.NONE, SWT.FILL, false, false));
-        label.setText("Color Map:");
-
-        colorMap = new ComboViewer(parent, SWT.SHADOW_IN);
-        colorMap.getControl().setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
-        // Buttons
-        Composite buttonBar = new Composite(parent, SWT.NONE);
-        GridData gridData = new GridData(SWT.RIGHT, SWT.TOP, false, false);
-        gridData.horizontalSpan = 2;
-        buttonBar.setLayoutData(gridData);
-        buttonBar.setLayout(new FillLayout(SWT.HORIZONTAL));
-
-        apply = new Button(buttonBar, SWT.PUSH);
-        apply.setText("Apply");
-        apply.setEnabled(false);
-
-        reset = new Button(buttonBar, SWT.PUSH);
-        reset.setText("Reset");
-        reset.setEnabled(false);
     }
 
     public void setFocus() {

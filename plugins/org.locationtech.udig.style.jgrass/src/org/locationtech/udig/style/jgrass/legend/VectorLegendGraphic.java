@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2005, Refractions Research Inc.
  *
@@ -61,31 +62,45 @@ import org.opengis.feature.type.Name;
 
 /**
  * Draw a legend based on looking at the current list layer list.
- * 
+ *
  * Based on uDig's legend.
- * 
+ *
  * @author Andrea Antonello (www.hydrologis.com)
  */
 public class VectorLegendGraphic implements MapGraphic {
 
     private int verticalMargin; // distance between border and icons/text
+
     private int horizontalMargin; // distance between border and icons/text
+
     private int verticalSpacing; // distance between layers
+
     private int horizontalSpacing; // space between image and text
+
     private Color foregroundColour;
+
     private Color backgroundColour;
+
     private Color fontColour;
+
     private boolean isRounded = false;
+
     private int indentSize;
+
     private int boxWidth;
+
     private int boxHeight; // size of image
+
     private int maxHeight;
+
     private int maxWidth;
+
     private Display display;
 
     private static Java2dDrawing java2dDrawing = Java2dDrawing.create();
 
-    public void draw( MapGraphicContext context ) {
+    @Override
+    public void draw(MapGraphicContext context) {
         IMap activeMap = ApplicationGIS.getActiveMap();
         IMap currentMap = context.getLayer().getMap();
         if (!activeMap.equals(currentMap)) {
@@ -93,7 +108,8 @@ public class VectorLegendGraphic implements MapGraphic {
         }
 
         IBlackboard blackboard = context.getLayer().getStyleBlackboard();
-        VectorLegendStyle legendStyle = (VectorLegendStyle) blackboard.get(VectorLegendStyleContent.ID);
+        VectorLegendStyle legendStyle = (VectorLegendStyle) blackboard
+                .get(VectorLegendStyleContent.ID);
         if (legendStyle == null) {
             legendStyle = VectorLegendStyleContent.createDefault();
             blackboard.put(VectorLegendStyleContent.ID, legendStyle);
@@ -142,32 +158,26 @@ public class VectorLegendGraphic implements MapGraphic {
 
         int fontHeight = rowHeight < 12 ? 8 : rowHeight - 8;
         Font font = new Font(oldFont.getName(), fontStyle.getFont().getStyle(), fontHeight);
-        if (font != null) {
-            graphics.setFont(font);
-        } else {
-            graphics.setFont(fontStyle.getFont());
-        }
+        graphics.setFont(font);
 
-        List<Map<ILayer, FeatureTypeStyle[]>> layers = new ArrayList<Map<ILayer, FeatureTypeStyle[]>>();
+        List<Map<ILayer, FeatureTypeStyle[]>> layers = new ArrayList<>();
 
         int longestRow = 0; // used to calculate the width of the graphic
         final int[] numberOfEntries = new int[1]; // total number of entries to draw
         numberOfEntries[0] = 0;
-        /*
-         * Set up the layers that we want to draw so we can operate just on
-         * those ones. Layers at index 0 are on the bottom of the map, so we 
-         * must iterate in reverse.
-         * 
-         * While we are doing this, determine the longest row so we can properly
-         * draw the graphic's border.
+        /**
+         * Set up the layers that we want to draw so we can operate just on those ones. Layers at
+         * index 0 are on the bottom of the map, so we must iterate in reverse.
+         *
+         * While we are doing this, determine the longest row so we can properly draw the graphic's
+         * border.
          */
-        for( int i = context.getMapLayers().size() - 1; i >= 0; i-- ) {
+        for (int i = context.getMapLayers().size() - 1; i >= 0; i--) {
             ILayer layer = context.getMapLayers().get(i);
             IGeoResource geoResource = layer.getGeoResource();
             boolean isMapgraphic = geoResource.canResolve(MapGraphicResource.class);
             if (!isMapgraphic && layer.isVisible()) {
 
-                // String layerName = LayerGeneratedGlyphDecorator.generateLabel((Layer) layer);
                 String layerName = layer.getName();
                 if (layerName != null && layerName.length() != 0) {
 
@@ -177,7 +187,7 @@ public class VectorLegendGraphic implements MapGraphic {
                         numberOfEntries[0] += rules(styles).size();
 
                         List<Rule> rules = rules(styles);
-                        for( Rule rule : rules ) {
+                        for (Rule rule : rules) {
                             String text = getText(rule);
                             Rectangle2D bounds = graphics.getStringBounds(text);
                             int length = indentSize + boxWidth + horizontalSpacing
@@ -226,8 +236,8 @@ public class VectorLegendGraphic implements MapGraphic {
             // width = Math.min(width, maxWidth);
         }
         // total height of the graphic
-        int height = rowHeight * numberOfEntries[0] + verticalMargin * 2 + verticalSpacing
-                * (numberOfEntries[0] - 1);
+        int height = rowHeight * numberOfEntries[0] + verticalMargin * 2
+                + verticalSpacing * (numberOfEntries[0] - 1);
         if (maxHeight > 0) {
             if (maxHeight > height) {
                 height = maxHeight;
@@ -265,12 +275,12 @@ public class VectorLegendGraphic implements MapGraphic {
         graphics.setClip(new Rectangle(locationStyle.x, locationStyle.y, locationStyle.width + 1,
                 locationStyle.height + 1));
 
-        /*
+        /**
          * Draw the box containing the layers/icons
          */
         drawOutline(graphics, context, locationStyle);
 
-        /*
+        /**
          * Draw the layer names/icons
          */
         final int[] rowsDrawn = new int[1];
@@ -280,14 +290,15 @@ public class VectorLegendGraphic implements MapGraphic {
         final int[] y = new int[1];
         y[0] = locationStyle.y + verticalMargin;
 
-        for( int i = 0; i < layers.size(); i++ ) {
+        for (int i = 0; i < layers.size(); i++) {
             Map<ILayer, FeatureTypeStyle[]> map = layers.get(i);
             final ILayer layer = map.keySet().iterator().next();
             final FeatureTypeStyle[] styles = map.values().iterator().next();
 
             final String layerName = layer.getName();
 
-            PlatformGIS.syncInDisplayThread(new Runnable(){
+            PlatformGIS.syncInDisplayThread(new Runnable() {
+                @Override
                 public void run() {
                     if (styles != null && rules(styles).size() > 1) {
                         drawRow(graphics, x[0], y[0], null, layerName, false);
@@ -298,7 +309,7 @@ public class VectorLegendGraphic implements MapGraphic {
                         }
                         rowsDrawn[0]++;
                         List<Rule> rules = rules(styles);
-                        for( Rule rule : rules ) {
+                        for (Rule rule : rules) {
 
                             BufferedImage awtIcon = null;
                             if (layer.hasResource(FeatureSource.class) && rule != null) {
@@ -322,9 +333,6 @@ public class VectorLegendGraphic implements MapGraphic {
                                     }
                                 }
                             }
-                            // swtIcon = LayerGeneratedGlyphDecorator.generateStyledIcon(layer,
-                            // rule)
-                            // .createImage();
 
                             drawRow(graphics, x[0], y[0], awtIcon, getText(rule), true);
 
@@ -353,16 +361,16 @@ public class VectorLegendGraphic implements MapGraphic {
         graphics.setClip(null);
     }
 
-    private List<Rule> rules( FeatureTypeStyle[] styles ) {
-        List<Rule> rules = new ArrayList<Rule>();
-        for( FeatureTypeStyle featureTypeStyle : styles ) {
-        	rules.addAll(featureTypeStyle.rules());
+    private List<Rule> rules(FeatureTypeStyle[] styles) {
+        List<Rule> rules = new ArrayList<>();
+        for (FeatureTypeStyle featureTypeStyle : styles) {
+            rules.addAll(featureTypeStyle.rules());
         }
 
         return rules;
     }
 
-    private String getText( Rule rule ) {
+    private String getText(Rule rule) {
         String text = ""; //$NON-NLS-1$
         String title = rule.getDescription().getTitle().toString();
         if (title != null && !"".equals(title)) { //$NON-NLS-1$
@@ -380,12 +388,12 @@ public class VectorLegendGraphic implements MapGraphic {
         }
     }
 
-    private void drawRow( ViewportGraphics graphics, int x, int y, RenderedImage icon, String text,
-            boolean indent ) {
+    private void drawRow(ViewportGraphics graphics, int x, int y, RenderedImage icon, String text,
+            boolean indent) {
 
         Rectangle2D stringBounds = graphics.getStringBounds(text);
 
-        /*
+        /**
          * Center the smaller item (text or icon) according to the taller one.
          */
         int textVerticalOffset = 0;
@@ -412,12 +420,13 @@ public class VectorLegendGraphic implements MapGraphic {
 
         if (text != null && text.length() != 0) {
             graphics.setColor(fontColour);
-            graphics.drawString(text, x + horizontalMargin, y + graphics.getFontAscent()
-                    + textVerticalOffset, ViewportGraphics.ALIGN_LEFT, ViewportGraphics.ALIGN_LEFT);
+            graphics.drawString(text, x + horizontalMargin,
+                    y + graphics.getFontAscent() + textVerticalOffset, ViewportGraphics.ALIGN_LEFT,
+                    ViewportGraphics.ALIGN_LEFT);
         }
     }
 
-    private FeatureTypeStyle[] locateStyle( ILayer layer ) {
+    private FeatureTypeStyle[] locateStyle(ILayer layer) {
         StyleBlackboard blackboard = (StyleBlackboard) layer.getStyleBlackboard();
         if (blackboard == null) {
             return null;
@@ -428,52 +437,46 @@ public class VectorLegendGraphic implements MapGraphic {
             return null;
         }
 
-        List<FeatureTypeStyle> styles = new ArrayList<FeatureTypeStyle>();
-        for( FeatureTypeStyle style : sld.featureTypeStyles() ) {
-        	
+        List<FeatureTypeStyle> styles = new ArrayList<>();
+        for (FeatureTypeStyle style : sld.featureTypeStyles()) {
+
             if (style.featureTypeNames() == null) {
-            	styles.add(style);
-            }else {
-            	boolean found = false;
-            	for (Name n : style.featureTypeNames()) {
-            		if (n.getLocalPart().equals(SLDs.GENERIC_FEATURE_TYPENAME)) {
-            			found = true;
-            		}
-            	}
-            	if (found) {
-            		styles.add(style);
-            	}else {
-            		if (layer.getSchema() != null && layer.getSchema().getTypeName() != null) {
-            			found = false;
-            			for (Name n : style.featureTypeNames()) {
-                    		if (n.getLocalPart().equals(layer.getSchema().getTypeName())) {
-                                // Direct match!
-                    			found = true;
-                    		}
-                    	}
-                        if (found) styles.add(style);
+                styles.add(style);
+            } else {
+                boolean found = false;
+                for (Name n : style.featureTypeNames()) {
+                    if (n.getLocalPart().equals(SLDs.GENERIC_FEATURE_TYPENAME)) {
+                        found = true;
                     }
-            	}
+                }
+                if (found) {
+                    styles.add(style);
+                } else {
+                    if (layer.getSchema() != null && layer.getSchema().getTypeName() != null) {
+                        found = false;
+                        for (Name n : style.featureTypeNames()) {
+                            if (n.getLocalPart().equals(layer.getSchema().getTypeName())) {
+                                // Direct match!
+                                found = true;
+                            }
+                        }
+                        if (found)
+                            styles.add(style);
+                    }
+                }
             }
-               
+
         }
         return styles.toArray(new FeatureTypeStyle[0]);
     }
 
-    private void drawOutline( ViewportGraphics graphics, MapGraphicContext context,
-            Rectangle locationStyle ) {
+    private void drawOutline(ViewportGraphics graphics, MapGraphicContext context,
+            Rectangle locationStyle) {
         Rectangle outline = new Rectangle(locationStyle.x, locationStyle.y, locationStyle.width,
                 locationStyle.height);
 
         // reserve this area free of labels!
         context.getLabelPainter().put(outline);
-
-        // graphics.setColor(backgroundColour);
-        // graphics.fill(outline);
-        //
-        // graphics.setColor(foregroundColour);
-        // graphics.setBackground(backgroundColour);
-        // graphics.draw(outline);
 
         if (isRounded) {
             graphics.setColor(backgroundColour);
@@ -497,12 +500,15 @@ public class VectorLegendGraphic implements MapGraphic {
     /**
      * Complex render of Geometry allowing presentation of point, line and polygon styles.
      * <p>
-     * Layout:<pre><code>
+     * Layout:
+     *
+     * <pre>
+     * <code>
      *    1 2 3 4 5 6 7 8 9101112131415
      *   0
-     *  1 
+     *  1
      *  2
-     *  3           L                 L                  
+     *  3           L                 L
      *  4       p  L L           PPPPPP
      *  5         L   L     PPPPP   L p
      *  6        L     LPPPP       L  p
@@ -513,22 +519,27 @@ public class VectorLegendGraphic implements MapGraphic {
      * 11   L   P           L L       P
      * 12  L   P             L        P
      * 13      p                      P
-     * 14      PPPPPPPPPPPPPPPPPPPPPPPP    
+     * 14      PPPPPPPPPPPPPPPPPPPPPPPP
      * 15
-     * </code><pre>
+     * </code>
+     *
+     * <pre>
      * </p>
-     * @param style 
+     *
+     * @param style
      * @return Icon representing geometry style
      */
-    public BufferedImage geometry( final Rule rule, final int width, final int height ) {
+    public BufferedImage geometry(final Rule rule, final int width, final int height) {
 
         BufferedImage bI = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
-        java2dDrawing.drawDirect(bI, display, java2dDrawing.feature(java2dDrawing
-                .line(new int[]{scale(0), scale(12), scale(6), scale(3), scale(11), scale(12),
-                        scale(15), scale(3)})), rule);
-        java2dDrawing.drawDirect(bI, display, java2dDrawing.feature(java2dDrawing.point(scale(4),
-                scale(4))), rule);
+        java2dDrawing
+                .drawDirect(bI, display,
+                        java2dDrawing.feature(java2dDrawing.line(new int[] { scale(0), scale(12),
+                                scale(6), scale(3), scale(11), scale(12), scale(15), scale(3) })),
+                        rule);
+        java2dDrawing.drawDirect(bI, display,
+                java2dDrawing.feature(java2dDrawing.point(scale(4), scale(4))), rule);
 
         return bI;
 
@@ -539,48 +550,55 @@ public class VectorLegendGraphic implements MapGraphic {
      * <p>
      * Simple render of point in the center of the screen.
      * </p>
+     *
      * @param style
-     * @return Icon representing style applyed to an image
+     * @return Icon representing style applied to an image
      */
-    public BufferedImage point( final Rule rule, final int width, final int height ) {
+    public BufferedImage point(final Rule rule, final int width, final int height) {
         BufferedImage bI = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
-        java2dDrawing.drawDirect(bI, display, java2dDrawing.feature(java2dDrawing.point(scale(7),
-                scale(7))), rule);
+        java2dDrawing.drawDirect(bI, display,
+                java2dDrawing.feature(java2dDrawing.point(scale(7), scale(7))), rule);
         return bI;
     }
 
     /**
      * Complex render of Geometry allowing presentation of point, line and polygon styles.
      * <p>
-     * Layout:<pre><code>
+     * Layout:
+     *
+     * <pre>
+     * <code>
      *    1 2 3 4 5 6 7 8 9101112131415
      *   0
-     *  1          LL                 L  
+     *  1          LL                 L
      *  2          L L                L
-     *  3         L  L               L                   
-     *  4        L    L             L  
-     *  5        L     L            L  
-     *  6       L      L           L   
-     *  7      L        L         L    
-     *  8      L         L        L    
-     *  9     L          L       L     
-     * 10    L            L     L      
-     * 11    L             L    L      
-     * 12   L              L   L       
-     * 13  L                L L        
-     * 14  L                 LL            
+     *  3         L  L               L
+     *  4        L    L             L
+     *  5        L     L            L
+     *  6       L      L           L
+     *  7      L        L         L
+     *  8      L         L        L
+     *  9     L          L       L
+     * 10    L            L     L
+     * 11    L             L    L
+     * 12   L              L   L
+     * 13  L                L L
+     * 14  L                 LL
      * 15
-     * </code><pre>
+     * </code>
+     *
+     * <pre>
      * </p>
-     * @param style 
+     *
+     * @param style
      * @return Icon representing geometry style
      */
-    public BufferedImage line( final Rule rule, final int width, final int height ) {
+    public BufferedImage line(final Rule rule, final int width, final int height) {
         BufferedImage bI = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
-        int[] coords = new int[]{scale(1), scale(14), scale(6), scale(0), scale(11), scale(14),
-                scale(15), scale(1)};
+        int[] coords = new int[] { scale(1), scale(14), scale(6), scale(0), scale(11), scale(14),
+                scale(15), scale(1) };
         final SimpleFeature feature = java2dDrawing.feature(java2dDrawing.line(coords));
         java2dDrawing.drawDirect(bI, display, feature, rule);
         return bI;
@@ -589,12 +607,15 @@ public class VectorLegendGraphic implements MapGraphic {
     /**
      * Render of a polygon allowing style.
      * <p>
-     * Layout:<pre><code>
+     * Layout:
+     *
+     * <pre>
+     * <code>
      *    1 2 3 4 5 6 7 8 9101112131415
      *   0
-     *  1             
+     *  1
      *  2                      PPPPPPPP
-     *  3                PPPPPP       P                  
+     *  3                PPPPPP       P
      *  4           PPPPPP            P
      *  5        PPP                  p
      *  6      PP                     p
@@ -605,31 +626,34 @@ public class VectorLegendGraphic implements MapGraphic {
      * 11  P                          P
      * 12  P                          P
      * 13  P                          P
-     * 14  PPPPPPPPPPPPPPPPPPPPPPPPPPPP    
+     * 14  PPPPPPPPPPPPPPPPPPPPPPPPPPPP
      * 15
-     * </code><pre>
+     * </code>
+     *
+     * <pre>
      * </p>
-     * @param style 
+     *
+     * @param style
      * @return Icon representing geometry style
      */
-    public BufferedImage polygon( final Rule rule, final int width, final int height ) {
+    public BufferedImage polygon(final Rule rule, final int width, final int height) {
         BufferedImage bI = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        int[] coords = new int[]{scale(1), scale(14), scale(3), scale(9), scale(4), scale(6),
-                scale(6), scale(4), scale(9), scale(3), scale(14), scale(1), scale(14), scale(14)};
+        int[] coords = new int[] { scale(1), scale(14), scale(3), scale(9), scale(4), scale(6),
+                scale(6), scale(4), scale(9), scale(3), scale(14), scale(1), scale(14), scale(14) };
         java2dDrawing.drawDirect(bI, display, java2dDrawing.feature(java2dDrawing.polygon(coords)),
                 rule);
         return bI;
     }
 
     /**
-     * Genearte label and place in label.getProperties().getSTring( GENERATED_NAME ).
+     * Generate label and place in label.getProperties().getSTring( GENERATED_NAME ).
      * <p>
-     * Label is genrated from Resource.
+     * Label is generated from Resource.
      * </p>
-     * 
-     * @return gernated layer
+     *
+     * @return granted layer
      */
-    public BufferedImage generateIcon( Layer layer, int width, int height ) {
+    public BufferedImage generateIcon(Layer layer, int width, int height) {
         StyleBlackboard style = layer.getStyleBlackboard();
 
         if (style != null && !style.getContent().isEmpty()) {
@@ -637,31 +661,25 @@ public class VectorLegendGraphic implements MapGraphic {
             if (icon != null)
                 return icon;
         }
-        // ImageDescriptor icon = generateDefaultIcon(layer);
-        // if (icon != null)
-        // return icon;
         return null;
     }
 
     /**
      * Generate icon based on style information.
      * <p>
-     * Will return null if an icom based on the current style could not be generated. You may
-     * consult generateDefaultIcon( layer ) for a second opionion based on just the layer
+     * Will return null if an icon based on the current style could not be generated. You may
+     * consult generateDefaultIcon( layer ) for a second opinion based on just the layer
      * information.
-     * 
+     *
      * @param layer
      * @return ImageDecriptor for layer, or null in style could not be indicated
      */
-    public BufferedImage generateStyledIcon( Layer layer ) {
+    public BufferedImage generateStyledIcon(Layer layer) {
         StyleBlackboard blackboard = layer.getStyleBlackboard();
         if (blackboard == null)
             return null;
 
-        Style sld = (Style) blackboard.lookup(Style.class); // or
-        // blackboard.get(
-        // "org.locationtech.udig.style.sld"
-        // );
+        Style sld = (Style) blackboard.lookup(Style.class);
         if (sld != null) {
             Rule rule = getRule(sld);
 
@@ -673,11 +691,13 @@ public class VectorLegendGraphic implements MapGraphic {
                     Class geom_type = geom.getType().getBinding();
                     if (geom_type == Point.class || geom_type == MultiPoint.class) {
                         swtIcon = point(rule, boxWidth, boxHeight);
-                    } else if (geom_type == LineString.class || geom_type == MultiLineString.class) {
+                    } else if (geom_type == LineString.class
+                            || geom_type == MultiLineString.class) {
                         swtIcon = line(rule, boxWidth, boxHeight);
                     } else if (geom_type == Polygon.class || geom_type == MultiPolygon.class) {
                         swtIcon = polygon(rule, boxWidth, boxHeight);
-                    } else if (geom_type == Geometry.class || geom_type == GeometryCollection.class) {
+                    } else if (geom_type == Geometry.class
+                            || geom_type == GeometryCollection.class) {
                         swtIcon = geometry(rule, boxWidth, boxHeight);
                     } else {
                         return null;
@@ -690,15 +710,15 @@ public class VectorLegendGraphic implements MapGraphic {
         return null;
     }
 
-    private Rule getRule( Style sld ) {
+    private Rule getRule(Style sld) {
         Rule rule = null;
         int size = 0;
 
-        for( FeatureTypeStyle style : sld.featureTypeStyles() ) {
-            for( Rule potentialRule : style.rules() ) {
+        for (FeatureTypeStyle style : sld.featureTypeStyles()) {
+            for (Rule potentialRule : style.rules()) {
                 if (potentialRule != null) {
                     Symbolizer[] symbs = potentialRule.getSymbolizers();
-                    for( int m = 0; m < symbs.length; m++ ) {
+                    for (int m = 0; m < symbs.length; m++) {
                         if (symbs[m] instanceof PointSymbolizer) {
                             int newSize = SLDs.pointSize((PointSymbolizer) symbs[m]);
                             if (newSize > 16 && size != 0) {
@@ -717,8 +737,8 @@ public class VectorLegendGraphic implements MapGraphic {
         return rule;
     }
 
-    private int scale( int value ) {
-        float scaled = (float) (value * boxHeight) / 16f;
-        return (int) Math.round(scaled);
+    private int scale(int value) {
+        float scaled = value * boxHeight / 16f;
+        return Math.round(scaled);
     }
 }
