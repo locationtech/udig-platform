@@ -412,69 +412,6 @@
 			<version>${geotools.version}</version>
 		</dependency>
 
-		<!-- geotools unsupported modules (ie legacy) -->
-
-		<!-- stuff for jgrass contributions -->
-		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy</artifactId>
-			<version>2.4.14</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geoscript</groupId>
-			<artifactId>geoscript-groovy</artifactId>
-			<version>1.10.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.geotools</groupId>
-					<artifactId>*</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.codehaus.groovy</groupId>
-					<artifactId>groovy</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.geoscript</groupId>
-					<artifactId>geocss_2.9.1</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.geotools.jdbc</groupId>
-					<artifactId>gt-jdbc-spatialite</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>net.sf.opencsv</groupId>
-					<artifactId>opencsv</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>bouncycastle</groupId>
-					<artifactId>bcmail-jdk14</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>bouncycastle</groupId>
-					<artifactId>bcprov-jdk14</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>bouncycastle</groupId>
-					<artifactId>bctsp-jdk14</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.bouncycastle</groupId>
-					<artifactId>bcprov-jdk14</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.bouncycastle</groupId>
-					<artifactId>bcmail-jdk14</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.lowagie</groupId>
-					<artifactId>itext</artifactId>
-				</exclusion>
-				<exclusion>
-				    <groupId>com.vividsolutions</groupId>
-				    <artifactId>jts</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
@@ -698,27 +635,6 @@
 			<groupId>org.antlr</groupId>
 			<artifactId>antlr-runtime</artifactId>
 			<version>3.3</version>
-		</dependency>
-		<!-- omsbox dependencies =================== Note that these do not necessarily 
-			need to be added to the libs runtime environment. The spatial toolbox needs 
-			them to be there as library but will pick them on its own. -->
-
-		<!-- tools.jar provided by refresh.xml -->
-		<!-- <dependency> <groupId>com.sun</groupId> <artifactId>tools</artifactId> 
-			<version>1.6.0_25</version> <scope>provided</scope> </dependency> -->
-		<!-- <dependency> <groupId>org.codehaus.groovy</groupId> <artifactId>groovy-all</artifactId> 
-			<version>1.7.1</version> </dependency> -->
-		
-		<dependency>
-			<groupId>org.jgrasstools</groupId>
-			<artifactId>jgt-oms3</artifactId>
-			<version>0.7.6</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.codehaus.groovy</groupId>
-					<artifactId>groovy-all</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>javassist</groupId>
