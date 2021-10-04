@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
@@ -511,25 +510,6 @@ public class CatalogPlugin extends Plugin {
             }
         }
         return null;
-    }
-
-    /**
-     * Attempts to turn data into a URL. If data is an array or Collection, it will return the first
-     * successful URL it can find. This is a utility method. Feel free to move it to another class.
-     * In the future, it might be nice to have it return a List of the URLs it found, not just the
-     * first one.
-     *
-     * @param data
-     * @return a URL if it can find one, or null otherwise
-     * @deprecated Please use ID.cast( data ).toURL();
-     */
-    @Deprecated
-    public static URL locateURL(Object data) {
-        ID id = org.locationtech.udig.catalog.ID.cast(data);
-        if (id == null) {
-            return null;
-        }
-        return id.toURL();
     }
 
     /**

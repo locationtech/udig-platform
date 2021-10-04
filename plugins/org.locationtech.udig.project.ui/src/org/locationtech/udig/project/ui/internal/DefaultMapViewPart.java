@@ -44,8 +44,9 @@ import org.locationtech.udig.ui.UDIGDragDropUtilities;
 import org.locationtech.udig.ui.UDIGDragDropUtilities.DropTargetDescriptor;
 
 /**
- * An viewpart for easily including a map in a view. To use, override getResources to configure the layers in the map.  Also override acquireToolbar if the
- * view should acquire a the toolbar when the view has focus.  Init map can be overridden to further configure the map.
+ * An ViewPart for easily including a map in a view. To use, override getResources to configure the
+ * layers in the map. Also override acquireToolbar if the view should acquire a the toolbar when the
+ * view has focus. Init map can be overridden to further configure the map.
  *
  * @author jeichar
  *
@@ -72,6 +73,7 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
     public Map getMap() {
         return viewer.getMap();
     }
+
     @Override
     public void openContextMenu() {
         viewer.openContextMenu();
@@ -83,8 +85,7 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
     }
 
     @Override
-    public void setSelectionProvider(
-            IMapEditorSelectionProvider selectionProvider) {
+    public void setSelectionProvider(IMapEditorSelectionProvider selectionProvider) {
         viewer.setSelectionProvider(selectionProvider);
     }
 
@@ -92,18 +93,18 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
     public final void createPartControl(Composite parent) {
         editDomain = new MapEditDomain(null);
         try {
-            IProgressMonitor monitor = getViewSite().getActionBars().getStatusLineManager().getProgressMonitor();
+            IProgressMonitor monitor = getViewSite().getActionBars().getStatusLineManager()
+                    .getProgressMonitor();
             viewer = new MapViewer(parent, this, SWT.DOUBLE_BUFFERED);
             List<IGeoResource> resources = new ArrayList<>();
             createResources(resources, monitor);
             IProject activeProject = ApplicationGIS.getActiveProject();
 
-            CreateMapCommand command = new CreateMapCommand("NewMap",resources , activeProject);
+            CreateMapCommand command = new CreateMapCommand("NewMap", resources, activeProject); //$NON-NLS-1$
             activeProject.sendSync(command);
             Map createdMap = (Map) command.getCreatedMap();
             viewer.setMap(createdMap);
             viewer.init(this);
-
 
             // ---------------
             this.selectionProvider = new MapEditorSelectionProvider();
@@ -111,11 +112,11 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
             selectionProvider.setActiveMap(createdMap, this);
             getSite().setSelectionProvider(selectionProvider);
 
-            selectionProvider.setSelection(new StructuredSelection(new Object[]{createdMap}));
+            selectionProvider.setSelection(new StructuredSelection(new Object[] { createdMap }));
 
             createContextMenu();
 
-            if(acquireToolbar()) {
+            if (acquireToolbar()) {
                 toolManager = ApplicationGIS.getToolManager();
                 IActionBars bars = getViewSite().getActionBars();
                 IToolBarManager toolbarManager = bars.getToolBarManager();
@@ -124,8 +125,9 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
                 toolManager.contributeActionTools(toolbarManager, bars);
                 toolManager.setCurrentEditor(this);
             }
-            if(createdMap.getLayersInternal().size() > 0) {
-                createdMap.getEditManagerInternal().setSelectedLayer(createdMap.getLayersInternal().get(createdMap.getMapLayers().size()-1));
+            if (createdMap.getLayersInternal().size() > 0) {
+                createdMap.getEditManagerInternal().setSelectedLayer(
+                        createdMap.getLayersInternal().get(createdMap.getMapLayers().size() - 1));
             }
 
             enableDropSupport();
@@ -139,22 +141,25 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
     }
 
     /**
-     * A hook for configuring the map.  The map may already be open and thus if many updates are made consideration about how often the map is
-     * re-rendered should be considered.  Likely eventing will need to be disabled and after one should manually re-enable them.
+     * A hook for configuring the map. The map may already be open and thus if many updates are made
+     * consideration about how often the map is re-rendered should be considered. Likely eventing
+     * will need to be disabled and after one should manually re-enable them.
      *
-     * Default behaviour is to simply zoom to extents.
+     * Default behavior is to simply zoom to extents.
      */
     protected void initMap(Map createdMap) {
         viewer.getMap().getViewportModelInternal().zoomToExtent();
     }
 
     /**
-     * Create the resources to put in the map.  If more configuration is required then override {@link #initMap(Map)} and put other configuration in that method
+     * Create the resources to put in the map. If more configuration is required then override
+     * {@link #initMap(Map)} and put other configuration in that method
+     *
      * @param resources the collection to add the resources to
      * @throws IOException
      */
-    protected abstract void createResources(List<IGeoResource> resources,
-            IProgressMonitor monitor) throws IOException;
+    protected abstract void createResources(List<IGeoResource> resources, IProgressMonitor monitor)
+            throws IOException;
 
     /**
      * Override and return if the view should acquire the toolbar when focus is set on the viewer.
@@ -168,7 +173,7 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
      */
     @Override
     public void setFocus() {
-        if(acquireToolbar()) {
+        if (acquireToolbar()) {
             toolManager.setCurrentEditor(this);
         }
         viewer.getControl().setFocus();
@@ -180,8 +185,7 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
     }
 
     private void enableDropSupport() {
-        dropTarget = UDIGDragDropUtilities.addDropSupport(viewer.getViewport()
-                .getControl(), this);
+        dropTarget = UDIGDragDropUtilities.addDropSupport(viewer.getViewport().getControl(), this);
     }
 
     @Override
@@ -196,22 +200,17 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
         if (menu == null) {
             final MenuManager contextMenu = new MenuManager();
             contextMenu.setRemoveAllWhenShown(true);
-            contextMenu.addMenuListener(new IMenuListener(){
+            contextMenu.addMenuListener(new IMenuListener() {
                 @Override
-                public void menuAboutToShow( IMenuManager mgr ) {
+                public void menuAboutToShow(IMenuManager mgr) {
                     IToolManager tm = ApplicationGIS.getToolManager();
 
                     contextMenu.add(new Separator());
                     contextMenu.add(tm.getBACKWARD_HISTORYAction());
                     contextMenu.add(tm.getFORWARD_HISTORYAction());
                     contextMenu.add(new Separator());
-                    /*
-                     * Gets contributions from active modal tool if possible
-                     */
-                    // tm.contributeActiveModalTool(contextMenu);
-
-                    contextMenu.add(new Separator());
-                    contextMenu.add(ApplicationGIS.getToolManager().createOperationsContextMenu(selectionProvider.getSelection()));
+                    contextMenu.add(ApplicationGIS.getToolManager()
+                            .createOperationsContextMenu(selectionProvider.getSelection()));
                 }
             });
 

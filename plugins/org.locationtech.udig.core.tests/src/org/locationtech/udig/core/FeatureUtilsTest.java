@@ -1,3 +1,13 @@
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * https://locationtech.org/projects/technology.udig
+ * (C) 2021, Eclipse Foundation
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Eclipse Distribution
+ * License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
+ */
 package org.locationtech.udig.core;
 
 import static org.junit.Assert.assertEquals;
@@ -33,13 +43,13 @@ public class FeatureUtilsTest {
 
     @BeforeClass
     public static void beforeClass() throws SchemaException {
-        featureType = DataUtilities.createType("testType",
-                "geometry:Point,Name:String,timestamp:java.util.Date,name:String");
+        featureType = DataUtilities.createType("testType", //$NON-NLS-1$
+                "geometry:Point,Name:String,timestamp:java.util.Date,name:String"); //$NON-NLS-1$
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testActualPropertyNameFeatureTypeNull() {
-        FeatureUtils.getActualPropertyName(null, "a property");
+        FeatureUtils.getActualPropertyName(null, "a property"); //$NON-NLS-1$
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -50,7 +60,7 @@ public class FeatureUtilsTest {
 
     @Test
     public void testActalPropertyNameUpperLowerCaseFirstMatchingAttribut() {
-        assertEquals("Name", FeatureUtils.getActualPropertyName(featureType, "NaMe"));
+        assertEquals("Name", FeatureUtils.getActualPropertyName(featureType, "NaMe")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     @Test
@@ -59,29 +69,29 @@ public class FeatureUtilsTest {
         GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
 
         featureTypeBuilder
-                .addAll(new Object[] { geometryFactory.createPoint(new Coordinate(10, 10)), "first",
-                        new Date(), "second" });
-        SimpleFeature feature = featureTypeBuilder.buildFeature("id");
+                .addAll(new Object[] { geometryFactory.createPoint(new Coordinate(10, 10)), "first", //$NON-NLS-1$
+                        new Date(), "second" }); //$NON-NLS-1$
+        SimpleFeature feature = featureTypeBuilder.buildFeature("id"); //$NON-NLS-1$
 
-        assertEquals("second",
-                feature.getAttribute(FeatureUtils.getActualPropertyName(featureType, "name")));
+        assertEquals("second", //$NON-NLS-1$
+                feature.getAttribute(FeatureUtils.getActualPropertyName(featureType, "name"))); //$NON-NLS-1$
     }
 
     @Test
-    public void  testActualPropertyWithNameThatDoesNotExists() {
-        assertNull(FeatureUtils.getActualPropertyName(featureType, "whatever"));
+    public void testActualPropertyWithNameThatDoesNotExists() {
+        assertNull(FeatureUtils.getActualPropertyName(featureType, "whatever")); //$NON-NLS-1$
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testActualPropertiesNamesNullList() {
         List<String> propertyNames = null;
-        FeatureUtils.getActualPropertyName(featureType,propertyNames);
+        FeatureUtils.getActualPropertyName(featureType, propertyNames);
     }
 
     @Test
     public void testActualPropertiesNamesEmptyList() {
         List<String> propertyNames = Collections.emptyList();
-        List<String> result = FeatureUtils.getActualPropertyName(featureType,propertyNames);
+        List<String> result = FeatureUtils.getActualPropertyName(featureType, propertyNames);
         assertTrue(result.isEmpty());
     }
 
@@ -93,98 +103,102 @@ public class FeatureUtilsTest {
 
     @Test
     public void testActualPropertiesUpperLowerCaseFirstMatchingAttribut() {
-        List<String> propertyNames = Arrays.asList("name", "Name");
+        List<String> propertyNames = Arrays.asList("name", "Name"); //$NON-NLS-1$ //$NON-NLS-2$
         List<String> result = FeatureUtils.getActualPropertyName(featureType, propertyNames);
 
-        assertTrue(result.indexOf("name") < result.indexOf("Name"));
+        assertTrue(result.indexOf("name") < result.indexOf("Name")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     @Test
     public void testActualPropertiesRequestPropertyThatDoesNotExtsis() {
-        List<String> propertyNames = Arrays.asList("name", "Whatever");
+        List<String> propertyNames = Arrays.asList("name", "Whatever"); //$NON-NLS-1$ //$NON-NLS-2$
         List<String> result = FeatureUtils.getActualPropertyName(featureType, propertyNames);
-        assertFalse(result.contains("Whatever"));
-        assertTrue(result.contains("name"));
+        assertFalse(result.contains("Whatever")); //$NON-NLS-1$
+        assertTrue(result.contains("name")); //$NON-NLS-1$
     }
-    
-    
+
     @Test
-    public void testCopyFeatureDoubleToInt() throws Exception{
-    	SimpleFeatureType featureType = DataUtilities.createType("testType",
-    			"geometry:Point,Name:String,timestamp:java.util.Date,val:Double");
+    public void testCopyFeatureDoubleToInt() throws Exception {
+        SimpleFeatureType featureType = DataUtilities.createType("testType", //$NON-NLS-1$
+                "geometry:Point,Name:String,timestamp:java.util.Date,val:Double"); //$NON-NLS-1$
 
-    	SimpleFeatureType featureType2 = DataUtilities.createType("testType",
-    			"geometry:Point,Name:String,timestamp:java.util.Date,val:Integer");
+        SimpleFeatureType featureType2 = DataUtilities.createType("testType", //$NON-NLS-1$
+                "geometry:Point,Name:String,timestamp:java.util.Date,val:Integer"); //$NON-NLS-1$
 
-    	SimpleFeatureBuilder featureTypeBuilder = new SimpleFeatureBuilder(featureType);
-    	GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
+        SimpleFeatureBuilder featureTypeBuilder = new SimpleFeatureBuilder(featureType);
+        GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
 
-    	featureTypeBuilder.addAll(
-    			new Object[] { geometryFactory.createPoint(new Coordinate(10, 10)), "first",
-    			new Date(), new Double(2.2) });
-    	SimpleFeature feature = featureTypeBuilder.buildFeature("id");
-    	Map<String, String> attributeMap = FeatureUtils.createAttributeMapping(featureType, featureType2);
-    	Collection<SimpleFeature> result = FeatureUtils.copyFeature(feature, featureType2, attributeMap, IdentityTransform.create(1));
-    	for (SimpleFeature c : result) {
-    		assertNotNull(c.getAttribute("val"));
-    		assertEquals(new Integer(2), (Integer)c.getAttribute("val"));
-    		return;
-    	}
-    	fail("Copy feature failed. No feature in collection");
-
-    }
-    
-    
-    @Test
-    public void testCopyFeatureDouble2BigDecimal() throws Exception{
-    	SimpleFeatureType featureType = DataUtilities.createType("testType",
-    			"geometry:Point,Name:String,timestamp:java.util.Date,val:Double");
-
-    	SimpleFeatureType featureType2 = DataUtilities.createType("testType",
-    			"geometry:Point,Name:String,timestamp:java.util.Date,val:java.math.BigDecimal");
-    	
-    	SimpleFeatureBuilder featureTypeBuilder = new SimpleFeatureBuilder(featureType);
-    	GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
-
-    	featureTypeBuilder.addAll(
-    			new Object[] { geometryFactory.createPoint(new Coordinate(10, 10)), "first",
-    			new Date(), new Double(2.2) });
-    	SimpleFeature feature = featureTypeBuilder.buildFeature("id");
-    	
-    	Map<String, String> attributeMap = FeatureUtils.createAttributeMapping(featureType, featureType2);
-    	Collection<SimpleFeature> result = FeatureUtils.copyFeature(feature, featureType2, attributeMap, IdentityTransform.create(1));
-    	for (SimpleFeature c : result) {
-    		assertNotNull(c.getAttribute("val"));
-    		assertEquals(new BigDecimal("2.2"), (BigDecimal)c.getAttribute("val"));
-    		return;
-    	}
-    	fail("Copy feature failed. No feature in collection");
+        featureTypeBuilder
+                .addAll(new Object[] { geometryFactory.createPoint(new Coordinate(10, 10)), "first", //$NON-NLS-1$
+                        new Date(), Double.valueOf(2.2) });
+        SimpleFeature feature = featureTypeBuilder.buildFeature("id"); //$NON-NLS-1$
+        Map<String, String> attributeMap = FeatureUtils.createAttributeMapping(featureType,
+                featureType2);
+        Collection<SimpleFeature> result = FeatureUtils.copyFeature(feature, featureType2,
+                attributeMap, IdentityTransform.create(1));
+        for (SimpleFeature c : result) {
+            assertNotNull(c.getAttribute("val")); //$NON-NLS-1$
+            assertEquals(Integer.valueOf(2), c.getAttribute("val")); //$NON-NLS-1$
+            return;
+        }
+        fail("Copy feature failed. No feature in collection"); //$NON-NLS-1$
 
     }
-    
-    
+
     @Test
-    public void testCopyFeatureDouble2String() throws Exception{
-    	SimpleFeatureType featureType = DataUtilities.createType("testType",
-    			"geometry:Point,Name:String,timestamp:java.util.Date,val:Double");
+    public void testCopyFeatureDouble2BigDecimal() throws Exception {
+        SimpleFeatureType featureType = DataUtilities.createType("testType", //$NON-NLS-1$
+                "geometry:Point,Name:String,timestamp:java.util.Date,val:Double"); //$NON-NLS-1$
 
-    	SimpleFeatureType featureType2 = DataUtilities.createType("testType",
-    			"geometry:Point,Name:String,timestamp:java.util.Date,val:String");
+        SimpleFeatureType featureType2 = DataUtilities.createType("testType", //$NON-NLS-1$
+                "geometry:Point,Name:String,timestamp:java.util.Date,val:java.math.BigDecimal"); //$NON-NLS-1$
 
-    	SimpleFeatureBuilder featureTypeBuilder = new SimpleFeatureBuilder(featureType);
-    	GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
+        SimpleFeatureBuilder featureTypeBuilder = new SimpleFeatureBuilder(featureType);
+        GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
 
-    	featureTypeBuilder.addAll(
-    			new Object[] { geometryFactory.createPoint(new Coordinate(10, 10)), "first",
-    			new Date(), new Double(2.2) });
-    	SimpleFeature feature = featureTypeBuilder.buildFeature("id");
-    	Map<String, String> attributeMap = FeatureUtils.createAttributeMapping(featureType, featureType2);
-    	Collection<SimpleFeature> result = FeatureUtils.copyFeature(feature, featureType2, attributeMap, IdentityTransform.create(1));
-    	for (SimpleFeature c : result) {
-    		assertNull(c.getAttribute("val")); //null should be set in 'val' since no adaptation is possible and value is not copied
-    		return;
-    	}
-    	fail("Copy feature failed. No feature in collection");
+        featureTypeBuilder
+                .addAll(new Object[] { geometryFactory.createPoint(new Coordinate(10, 10)), "first", //$NON-NLS-1$
+                        new Date(), Double.valueOf(2.2) });
+        SimpleFeature feature = featureTypeBuilder.buildFeature("id"); //$NON-NLS-1$
+
+        Map<String, String> attributeMap = FeatureUtils.createAttributeMapping(featureType,
+                featureType2);
+        Collection<SimpleFeature> result = FeatureUtils.copyFeature(feature, featureType2,
+                attributeMap, IdentityTransform.create(1));
+        for (SimpleFeature c : result) {
+            assertNotNull(c.getAttribute("val")); //$NON-NLS-1$
+            assertEquals(new BigDecimal("2.2"), c.getAttribute("val")); //$NON-NLS-1$ //$NON-NLS-2$
+            return;
+        }
+        fail("Copy feature failed. No feature in collection"); //$NON-NLS-1$
+
+    }
+
+    @Test
+    public void testCopyFeatureDouble2String() throws Exception {
+        SimpleFeatureType featureType = DataUtilities.createType("testType", //$NON-NLS-1$
+                "geometry:Point,Name:String,timestamp:java.util.Date,val:Double"); //$NON-NLS-1$
+
+        SimpleFeatureType featureType2 = DataUtilities.createType("testType", //$NON-NLS-1$
+                "geometry:Point,Name:String,timestamp:java.util.Date,val:String"); //$NON-NLS-1$
+
+        SimpleFeatureBuilder featureTypeBuilder = new SimpleFeatureBuilder(featureType);
+        GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
+
+        featureTypeBuilder
+                .addAll(new Object[] { geometryFactory.createPoint(new Coordinate(10, 10)), "first", //$NON-NLS-1$
+                        new Date(), Double.valueOf(2.2) });
+        SimpleFeature feature = featureTypeBuilder.buildFeature("id"); //$NON-NLS-1$
+        Map<String, String> attributeMap = FeatureUtils.createAttributeMapping(featureType,
+                featureType2);
+        Collection<SimpleFeature> result = FeatureUtils.copyFeature(feature, featureType2,
+                attributeMap, IdentityTransform.create(1));
+        for (SimpleFeature c : result) {
+            assertNull(c.getAttribute("val")); // null should be set in 'val' since no adaptation is //$NON-NLS-1$
+                                               // possible and value is not copied
+            return;
+        }
+        fail("Copy feature failed. No feature in collection"); //$NON-NLS-1$
 
     }
 }

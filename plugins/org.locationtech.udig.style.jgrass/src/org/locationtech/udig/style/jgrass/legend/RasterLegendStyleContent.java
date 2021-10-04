@@ -1,6 +1,6 @@
-/*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+/**
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,11 +13,10 @@ import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.StyleContent;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.StyleContent;
 
 @SuppressWarnings("nls")
 public class RasterLegendStyleContent extends StyleContent {
@@ -25,14 +24,23 @@ public class RasterLegendStyleContent extends StyleContent {
     public static final String ID = "eu.hydrologis.jgrass.rasterlegend.rasterlegendStyle"; //$NON-NLS-1$
 
     public static final String MAPPATH = "MAPPATH";
+
     public static final String LEGENDWIDTH = "LEGENDWIDTH";
+
     public static final String LEGENDHEIGHT = "LEGENDHEIGHT";
+
     public static final String BOXWIDTH = "BOXWIDTH";
+
     public static final String XPOS = "XPOS";
+
     public static final String YPOS = "YPOS";
+
     public static final String ISROUNDEDRECTANGLE = "ISROUNDEDRECTANGLE";
+
     public static final String BALPHA = "BALPHA";
+
     public static final String FALPHA = "FALPHA";
+
     public static final String TITLESTRING = "TITLESTRING";
 
     public RasterLegendStyleContent() {
@@ -45,7 +53,7 @@ public class RasterLegendStyleContent extends StyleContent {
     }
 
     @Override
-    public void save( IMemento memento, Object value ) {
+    public void save(IMemento memento, Object value) {
         RasterLegendStyle style = (RasterLegendStyle) value;
 
         memento.putString(MAPPATH, style.mapPath);
@@ -58,12 +66,12 @@ public class RasterLegendStyleContent extends StyleContent {
         memento.putInteger(BALPHA, style.bAlpha);
         memento.putInteger(FALPHA, style.fAlpha);
         memento.putString(TITLESTRING, style.titleString);
-        
+
         // TODO save colors
     }
 
     @Override
-    public Object load( IMemento memento ) {
+    public Object load(IMemento memento) {
         RasterLegendStyle style = createDefault();
 
         style.mapPath = memento.getString(MAPPATH);
@@ -81,12 +89,12 @@ public class RasterLegendStyleContent extends StyleContent {
     }
 
     @Override
-    public Object load( URL url, IProgressMonitor monitor ) throws IOException {
+    public Object load(URL url, IProgressMonitor monitor) throws IOException {
         return null;
     }
 
     @Override
-    public Object createDefaultStyle( IGeoResource resource, Color colour, IProgressMonitor monitor )
+    public Object createDefaultStyle(IGeoResource resource, Color colour, IProgressMonitor monitor)
             throws IOException {
         if (!resource.canResolve(RasterLegendGraphic.class))
             return null;

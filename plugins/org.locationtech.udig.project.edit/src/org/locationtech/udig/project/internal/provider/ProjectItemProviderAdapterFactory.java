@@ -60,7 +60,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    protected Collection<Object> supportedTypes = new ArrayList<Object>();
+    protected Collection<Object> supportedTypes = new ArrayList<>();
 
     /**
      * This constructs an instance.
@@ -114,9 +114,10 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
 
     /**
      * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Map} instances.
+     * But because of refreshing problems in the LayersView we do NOT use it.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
+     * @generated but unused
      */
     protected MapItemProvider mapItemProvider;
 
@@ -124,15 +125,11 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
      * This creates an adapter for a {@link org.locationtech.udig.project.internal.Map}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @generated
+     * @generated but changed manually
      */
     @Override
     public Adapter createMapAdapter() {
-        if (mapItemProvider == null) {
-            mapItemProvider = new MapItemProvider(this);
-        }
-
-        return mapItemProvider;
+        return new MapItemProvider(this);
     }
 
     /**

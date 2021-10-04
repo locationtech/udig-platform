@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -107,7 +108,6 @@ import org.locationtech.udig.project.ui.internal.commands.draw.DrawFeatureComman
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
 import org.locationtech.udig.project.ui.tool.IToolManager;
-import org.locationtech.udig.project.ui.viewers.MapEditDomain;
 import org.locationtech.udig.project.ui.viewers.MapViewer;
 import org.locationtech.udig.ui.IBlockingSelection;
 import org.locationtech.udig.ui.PlatformGIS;
@@ -154,6 +154,7 @@ implements IDropTargetProvider, IAdaptable, MapEditorPart {
     // Menu menu;
 
     // private ViewportPane viewportPane;
+
     private MapViewer viewer = null;
 
     /**
@@ -470,7 +471,7 @@ implements IDropTargetProvider, IAdaptable, MapEditorPart {
                 // kill rending now - even if it is moving
                 getRenderManager().dispose();
             } catch (final Throwable t) {
-                ProjectUIPlugin.log("Shutting down rendering - " + t, null);
+                ProjectUIPlugin.log("Shutting down rendering - " + t, null); //$NON-NLS-1$
             }
             getMap().getEditManagerInternal().setEditFeature(null, null);
             try {
@@ -571,7 +572,7 @@ implements IDropTargetProvider, IAdaptable, MapEditorPart {
 
     @Override
     public void doSaveAs() {
-        throw new UnsupportedOperationException("Do Save As is not implemented yet");
+        throw new UnsupportedOperationException("Do Save As is not implemented yet"); //$NON-NLS-1$
     }
 
     @Override
@@ -646,7 +647,6 @@ implements IDropTargetProvider, IAdaptable, MapEditorPart {
              * @see java.lang.Runnable#run()
              */
             @Override
-            @SuppressWarnings("synthetic-access")
             public void run() {
                 firePropertyChange(PROP_DIRTY);
             }
@@ -985,8 +985,6 @@ implements IDropTargetProvider, IAdaptable, MapEditorPart {
 
     private volatile boolean visible = false;
 
-    private MapEditDomain editDomain;
-
     /**
      * Opens the map's context menu.
      */
@@ -1156,7 +1154,7 @@ implements IDropTargetProvider, IAdaptable, MapEditorPart {
     }
 
     @Override
-    public void setTesting( boolean testing ) {
+    public void setTesting(boolean testing) {
         this.isTesting = testing;
     }
 

@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2011, Refractions Research Inc.
  *
@@ -28,32 +29,38 @@ import org.locationtech.udig.bookmarks.internal.MapReference;
 public class BookmarkServiceTest {
 
     private IBookmarkService service;
+
     private Bookmark bookmark;
-    private ReferencedEnvelope referencedEnvelope = new ReferencedEnvelope(-170.0, 170.0, -90.0, 90.0, DefaultGeographicCRS.WGS84);
-    private URI mapUri = URI.createURI("map uri");
-    private URI projectUri = URI.createURI("project uri");;
-    private MapReference mapID = new MapReference(mapUri, projectUri, "Test Map Reference");
-    
+
+    private ReferencedEnvelope referencedEnvelope = new ReferencedEnvelope(-170.0, 170.0, -90.0,
+            90.0, DefaultGeographicCRS.WGS84);
+
+    private URI mapUri = URI.createURI("map uri"); //$NON-NLS-1$
+
+    private URI projectUri = URI.createURI("project uri");; //$NON-NLS-1$
+
+    private MapReference mapID = new MapReference(mapUri, projectUri, "Test Map Reference"); //$NON-NLS-1$
+
     @Before
     public void setup() {
         service = BookmarksPlugin.getBookmarkService();
     }
-    
+
     @Test
     public void testAddBookmark() {
         Collection<IBookmark> bookmarks = service.getBookmarks();
         assertTrue(bookmarks.isEmpty());
-        
-        bookmark = new Bookmark(referencedEnvelope, mapID, "Test Bookmark 1");
+
+        bookmark = new Bookmark(referencedEnvelope, mapID, "Test Bookmark 1"); //$NON-NLS-1$
         service.addBookmark(bookmark);
         bookmarks = service.getBookmarks();
         assertEquals(1, bookmarks.size());
-        
-        Bookmark bookmark2 = new Bookmark(referencedEnvelope, mapID, "Test Bookmark 1");
+
+        Bookmark bookmark2 = new Bookmark(referencedEnvelope, mapID, "Test Bookmark 1"); //$NON-NLS-1$
         service.addBookmark(bookmark2);
         bookmarks = service.getBookmarks();
         assertEquals(2, bookmarks.size());
-        
+
     }
 
 }

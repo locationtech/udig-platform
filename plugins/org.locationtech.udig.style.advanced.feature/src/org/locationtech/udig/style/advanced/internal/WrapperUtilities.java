@@ -1,3 +1,12 @@
+/**
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
+ * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
+ */
 package org.locationtech.udig.style.advanced.internal;
 
 import java.awt.Graphics2D;
@@ -33,22 +42,23 @@ import org.opengis.filter.expression.Expression;
 
 public final class WrapperUtilities {
 
-    /** 
-     * Utility class for working with Images, Features and Styles 
+    /**
+     * Utility class for working with Images, Features and Styles
      */
     private static Drawing drawing = Drawing.create();
-    
+
     /**
      * Creates an image from a set of {@link RuleWrapper}s.
-     * 
+     *
      * @param ruleWrapperList the list of rule wrappers.
      * @param width the image width.
      * @param height the image height.
      * @param type the geometry type.
      * @return the new created {@link BufferedImage}.
      */
-    public static BufferedImage rulesWrapperToImage( List<RuleWrapper> ruleWrappers, int width, int height, SLD type ) {
-        switch( type ) {
+    public static BufferedImage rulesWrapperToImage(List<RuleWrapper> ruleWrappers, int width,
+            int height, SLD type) {
+        switch (type) {
         case POINT:
             return WrapperUtilities.pointRulesWrapperToImage(ruleWrappers, width, height);
         case LINE:
@@ -62,15 +72,16 @@ public final class WrapperUtilities {
 
     /**
      * Creates an image from a {@link RuleWrapper}.
-     * 
+     *
      * @param ruleWrapper the rule wrapper.
      * @param width the image width.
      * @param height the image height.
      * @param type the geometry type.
      * @return the new created {@link BufferedImage}.
      */
-    public static BufferedImage rulesWrapperToImage( RuleWrapper ruleWrapper, int width, int height, SLD type ) {
-        switch( type ) {
+    public static BufferedImage rulesWrapperToImage(RuleWrapper ruleWrapper, int width, int height,
+            SLD type) {
+        switch (type) {
         case POINT:
             return WrapperUtilities.pointRuleWrapperToImage(ruleWrapper, width, height);
         case LINE:
@@ -84,18 +95,20 @@ public final class WrapperUtilities {
 
     /**
      * Creates an image from a set of {@link RuleWrapper}s.
-     * 
+     *
      * @param ruleWrapperList the list of rule wrappers.
      * @param width the image width.
      * @param height the image height.
      * @return the new created {@link BufferedImage}.
      */
-    public static BufferedImage pointRulesWrapperToImage( final List<RuleWrapper> ruleWrapperList, int width, int height ) {
+    public static BufferedImage pointRulesWrapperToImage(final List<RuleWrapper> ruleWrapperList,
+            int width, int height) {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = image.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        for( RuleWrapper ruleWrapper : ruleWrapperList ) {
-            BufferedImage tmpImage = WrapperUtilities.pointRuleWrapperToImage(ruleWrapper, width, height);
+        for (RuleWrapper ruleWrapper : ruleWrapperList) {
+            BufferedImage tmpImage = WrapperUtilities.pointRuleWrapperToImage(ruleWrapper, width,
+                    height);
             g2d.drawImage(tmpImage, 0, 0, null);
         }
         g2d.dispose();
@@ -104,25 +117,26 @@ public final class WrapperUtilities {
 
     /**
      * Creates an {@link Image} for the given {@link RuleWrapper}.
-     * 
+     *
      * @param ruleWrapper the rule for which to create the image.
      * @param width the image width.
      * @param height the image height.
      * @return the generated image.
      */
-    public static BufferedImage pointRuleWrapperToImage( RuleWrapper ruleWrapper, int width, int height ) {
+    public static BufferedImage pointRuleWrapperToImage(RuleWrapper ruleWrapper, int width,
+            int height) {
         return pointRuleToImage(ruleWrapper.getRule(), width, height);
     }
 
     /**
      * Creates an {@link Image} for the given rule.
-     * 
+     *
      * @param rule the rule for which to create the image.
      * @param width the image width.
      * @param height the image height.
      * @return the generated image.
      */
-    public static BufferedImage pointRuleToImage( final Rule rule, int width, int height ) {
+    public static BufferedImage pointRuleToImage(final Rule rule, int width, int height) {
         DuplicatingStyleVisitor copyStyle = new DuplicatingStyleVisitor();
         rule.accept(copyStyle);
         Rule newRule = (Rule) copyStyle.getCopy();
@@ -153,7 +167,8 @@ public final class WrapperUtilities {
 
         // pointSize = width;
         BufferedImage finalImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        BufferedImage pointImage = new BufferedImage(pointSize, pointSize, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage pointImage = new BufferedImage(pointSize, pointSize,
+                BufferedImage.TYPE_INT_ARGB);
         Point point = drawing.point(pointSize / 2, pointSize / 2);
         drawing.drawDirect(pointImage, drawing.feature(point), newRule);
         Graphics2D g2d = finalImage.createGraphics();
@@ -173,18 +188,20 @@ public final class WrapperUtilities {
 
     /**
      * Creates an image from a set of {@link RuleWrapper}s.
-     * 
+     *
      * @param rulesWrapperList the list of rules wrapper.
      * @param width the image width.
      * @param height the image height.
      * @return the new created {@link BufferedImage}.
      */
-    public static BufferedImage polygonRulesWrapperToImage( final List<RuleWrapper> rulesWrapperList, int width, int height ) {
+    public static BufferedImage polygonRulesWrapperToImage(final List<RuleWrapper> rulesWrapperList,
+            int width, int height) {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = image.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        for( RuleWrapper rule : rulesWrapperList ) {
-            BufferedImage tmpImage = WrapperUtilities.polygonRuleWrapperToImage(rule, width, height);
+        for (RuleWrapper rule : rulesWrapperList) {
+            BufferedImage tmpImage = WrapperUtilities.polygonRuleWrapperToImage(rule, width,
+                    height);
             g2d.drawImage(tmpImage, 0, 0, null);
         }
         g2d.dispose();
@@ -193,25 +210,26 @@ public final class WrapperUtilities {
 
     /**
      * Creates an {@link Image} for the given ruleWrapper.
-     * 
+     *
      * @param ruleWrapper the rule wrapper for which to create the image.
      * @param width the image width.
      * @param height the image height.
      * @return the generated image.
      */
-    public static BufferedImage polygonRuleWrapperToImage( final RuleWrapper ruleWrapper, int width, int height ) {
+    public static BufferedImage polygonRuleWrapperToImage(final RuleWrapper ruleWrapper, int width,
+            int height) {
         return polygonRuleToImage(ruleWrapper.getRule(), width, height);
     }
 
     /**
      * Creates an {@link Image} for the given rule.
-     * 
+     *
      * @param rule the rule for which to create the image.
      * @param width the image width.
      * @param height the image height.
      * @return the generated image.
      */
-    public static BufferedImage polygonRuleToImage( final Rule rule, int width, int height ) {
+    public static BufferedImage polygonRuleToImage(final Rule rule, int width, int height) {
         DuplicatingStyleVisitor copyStyle = new DuplicatingStyleVisitor();
         rule.accept(copyStyle);
         Rule newRule = (Rule) copyStyle.getCopy();
@@ -234,13 +252,12 @@ public final class WrapperUtilities {
             }
         }
 
-        // pointSize = width;
         BufferedImage finalImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        // Polygon polygon = d.polygon(new int[]{40,30, 60,70, 30,130, 130,130, 130,30});
 
-        int[] xy = new int[]{(int) (height * 0.15), (int) (width * 0.20), (int) (height * 0.4), (int) (width * 0.3),
-                (int) (height * 0.85), (int) (width * 0.15), (int) (height * 0.85), (int) (width * 0.85), (int) (height * 0.15),
-                (int) (width * 0.85)};
+        int[] xy = new int[] { (int) (height * 0.15), (int) (width * 0.20), (int) (height * 0.4),
+                (int) (width * 0.3), (int) (height * 0.85), (int) (width * 0.15),
+                (int) (height * 0.85), (int) (width * 0.85), (int) (height * 0.15),
+                (int) (width * 0.85) };
         Polygon polygon = drawing.polygon(xy);
         drawing.drawDirect(finalImage, drawing.feature(polygon), newRule);
         Graphics2D g2d = finalImage.createGraphics();
@@ -253,17 +270,18 @@ public final class WrapperUtilities {
 
     /**
      * Creates an image from a set of {@link RuleWrapper}s.
-     * 
+     *
      * @param rulesWrapperList the list of rules wrapper.
      * @param width the image width.
      * @param height the image height.
      * @return the new created {@link BufferedImage}.
      */
-    public static BufferedImage lineRulesWrapperToImage( final List<RuleWrapper> rulesWrapperList, int width, int height ) {
+    public static BufferedImage lineRulesWrapperToImage(final List<RuleWrapper> rulesWrapperList,
+            int width, int height) {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = image.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        for( RuleWrapper rule : rulesWrapperList ) {
+        for (RuleWrapper rule : rulesWrapperList) {
             BufferedImage tmpImage = WrapperUtilities.lineRuleWrapperToImage(rule, width, height);
             g2d.drawImage(tmpImage, 0, 0, null);
         }
@@ -273,30 +291,31 @@ public final class WrapperUtilities {
 
     /**
      * Creates an {@link Image} for the given ruleWrapper.
-     * 
+     *
      * @param ruleWrapper the rule wrapper for which to create the image.
      * @param width the image width.
      * @param height the image height.
      * @return the generated image.
      */
-    public static BufferedImage lineRuleWrapperToImage( RuleWrapper ruleWrapper, int width, int height ) {
+    public static BufferedImage lineRuleWrapperToImage(RuleWrapper ruleWrapper, int width,
+            int height) {
         return Utilities.lineRuleToImage(ruleWrapper.getRule(), width, height);
     }
 
-
     /**
      * Checks if the list of {@link Rule}s supplied contains one with the supplied name.
-     * 
-     * <p>If the rule is contained it adds an index to the name.
-     * 
+     *
+     * <p>
+     * If the rule is contained it adds an index to the name.
+     *
      * @param rulesWrapper the list of rules to check.
      * @param ruleName the name of the rule to find.
      * @return the new name of the rule.
      */
-    public static String checkSameNameRule( List<RuleWrapper> rulesWrapper, String ruleName ) {
+    public static String checkSameNameRule(List<RuleWrapper> rulesWrapper, String ruleName) {
         int index = 1;
         String name = ruleName.trim();
-        for( int i = 0; i < rulesWrapper.size(); i++ ) {
+        for (int i = 0; i < rulesWrapper.size(); i++) {
             RuleWrapper ruleWrapper = rulesWrapper.get(i);
             String tmpName = ruleWrapper.getName();
             if (tmpName == null) {
@@ -306,10 +325,10 @@ public final class WrapperUtilities {
             tmpName = tmpName.trim();
             if (tmpName.equals(name)) {
                 // name exists, change the name of the entering
-                if (name.endsWith(")")) {
-                    name = name.trim().replaceFirst("\\([0-9]+\\)$", "(" + (index++) + ")");
+                if (name.endsWith(")")) { //$NON-NLS-1$
+                    name = name.trim().replaceFirst("\\([0-9]+\\)$", "(" + (index++) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 } else {
-                    name = name + " (" + (index++) + ")";
+                    name = name + " (" + (index++) + ")"; //$NON-NLS-1$ //$NON-NLS-2$
                 }
                 // start again
                 i = 0;
@@ -323,18 +342,21 @@ public final class WrapperUtilities {
     }
 
     /**
-     * Checks if the list of {@link FeatureTypeStyleWrapper}s supplied contains one with the supplied name.
-     * 
-     * <p>If the rule is contained it adds an index to the name.
-     * 
+     * Checks if the list of {@link FeatureTypeStyleWrapper}s supplied contains one with the
+     * supplied name.
+     *
+     * <p>
+     * If the rule is contained it adds an index to the name.
+     *
      * @param ftsWrapperList the list of featureTypeStyles to check.
      * @param ftsName the name of the featureTypeStyle to find.
      * @return the new name of the featureTypeStyle.
      */
-    public static String checkSameNameFeatureTypeStyle( List<FeatureTypeStyleWrapper> ftsWrapperList, String ftsName ) {
+    public static String checkSameNameFeatureTypeStyle(List<FeatureTypeStyleWrapper> ftsWrapperList,
+            String ftsName) {
         int index = 1;
         String name = ftsName.trim();
-        for( int i = 0; i < ftsWrapperList.size(); i++ ) {
+        for (int i = 0; i < ftsWrapperList.size(); i++) {
             FeatureTypeStyleWrapper ftsWrapper = ftsWrapperList.get(i);
             String tmpName = ftsWrapper.getName();
             if (tmpName == null) {
@@ -344,10 +366,10 @@ public final class WrapperUtilities {
             tmpName = tmpName.trim();
             if (tmpName.equals(name)) {
                 // name exists, change the name of the entering
-                if (name.endsWith(")")) {
-                    name = name.trim().replaceFirst("\\([0-9]+\\)$", "(" + (index++) + ")");
+                if (name.endsWith(")")) { //$NON-NLS-1$
+                    name = name.trim().replaceFirst("\\([0-9]+\\)$", "(" + (index++) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 } else {
-                    name = name + " (" + (index++) + ")";
+                    name = name + " (" + (index++) + ")"; //$NON-NLS-1$ //$NON-NLS-2$
                 }
                 // start again
                 i = 0;
@@ -362,17 +384,18 @@ public final class WrapperUtilities {
 
     /**
      * Checks if the list of {@link StyleWrapper}s supplied contains one with the supplied name.
-     * 
-     * <p>If the style is contained it adds an index to the name.
-     * 
+     *
+     * <p>
+     * If the style is contained it adds an index to the name.
+     *
      * @param styles the list of style wrappers to check.
      * @param styleName the name of the style to find.
      * @return the new name of the style.
      */
-    public static String checkSameNameStyle( List<StyleWrapper> styles, String styleName ) {
+    public static String checkSameNameStyle(List<StyleWrapper> styles, String styleName) {
         int index = 1;
         String name = styleName.trim();
-        for( int i = 0; i < styles.size(); i++ ) {
+        for (int i = 0; i < styles.size(); i++) {
             StyleWrapper styleWrapper = styles.get(i);
             String tmpName = styleWrapper.getName();
             if (tmpName == null) {
@@ -382,10 +405,10 @@ public final class WrapperUtilities {
             tmpName = tmpName.trim();
             if (tmpName.equals(name)) {
                 // name exists, change the name of the entering
-                if (name.endsWith(")")) {
-                    name = name.trim().replaceFirst("\\([0-9]+\\)$", "(" + (index++) + ")");
+                if (name.endsWith(")")) { //$NON-NLS-1$
+                    name = name.trim().replaceFirst("\\([0-9]+\\)$", "(" + (index++) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 } else {
-                    name = name + " (" + (index++) + ")";
+                    name = name + " (" + (index++) + ")"; //$NON-NLS-1$ //$NON-NLS-2$
                 }
                 // start again
                 i = 0;
@@ -400,26 +423,28 @@ public final class WrapperUtilities {
 
     /**
      * Generates a style based on a graphic.
-     * 
+     *
      * @param graphicsPath the graphic.
      * @return the generated style.
      * @throws IOException
      */
-    public static StyleWrapper createStyleFromGraphic( File graphicsPath ) throws IOException {
+    public static StyleWrapper createStyleFromGraphic(File graphicsPath) throws IOException {
         String name = graphicsPath.getName();
         ExternalGraphic exGraphic = null;
-        if (name.toLowerCase().endsWith(".png")) {
-            exGraphic = Utilities.sf.createExternalGraphic(graphicsPath.toURI().toURL(), "image/png");
-        } else if (name.toLowerCase().endsWith(".svg")) {
-            exGraphic = Utilities.sf.createExternalGraphic(graphicsPath.toURI().toURL(), "image/svg+xml");
-        } else if (name.toLowerCase().endsWith(".sld")) {
+        if (name.toLowerCase().endsWith(".png")) { //$NON-NLS-1$
+            exGraphic = Utilities.sf.createExternalGraphic(graphicsPath.toURI().toURL(),
+                    "image/png"); //$NON-NLS-1$
+        } else if (name.toLowerCase().endsWith(".svg")) { //$NON-NLS-1$
+            exGraphic = Utilities.sf.createExternalGraphic(graphicsPath.toURI().toURL(),
+                    "image/svg+xml"); //$NON-NLS-1$
+        } else if (name.toLowerCase().endsWith(".sld")) { //$NON-NLS-1$
             StyledLayerDescriptor sld = Utilities.readStyle(graphicsPath);
             Style style = SLDs.getDefaultStyle(sld);
             return new StyleWrapper(style);
         }
 
         if (exGraphic == null) {
-            throw new IOException("Style could not be created!");
+            throw new IOException("Style could not be created!"); //$NON-NLS-1$
         }
 
         Graphic gr = Utilities.sf.createDefaultGraphic();
@@ -441,6 +466,5 @@ public final class WrapperUtilities {
 
         return new StyleWrapper(namedStyle);
     }
-
 
 }

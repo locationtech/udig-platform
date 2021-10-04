@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -50,7 +51,7 @@ import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
 import org.locationtech.udig.project.ui.internal.MapPart;
 
 /**
- * Creates a Page using the current map
+ * Creates a page using the current map
  *
  * @author Richard Gould
  *
@@ -59,7 +60,7 @@ import org.locationtech.udig.project.ui.internal.MapPart;
 public class CreatePageAction implements IEditorActionDelegate {
 
     @Override
-    public void run( IAction action ) {
+    public void run(IAction action) {
 
         MapPart mapEditor = ApplicationGISInternal.getActiveMapPart();
 
@@ -98,9 +99,6 @@ public class CreatePageAction implements IEditorActionDelegate {
                 MapEditorWithPalette part = (MapEditorWithPalette) mapEditor;
                 partSize = part.getComposite().getSize();
             } else {
-                // java.awt.Dimension size =
-                // map.getRenderManager().getMapDisplay().getDisplaySize();
-                // Point partSize = new Point(size.width,size.height);
                 partSize = new Point(500, 500);
             }
             Page page = createPage(template, map, project, partSize);
@@ -110,55 +108,55 @@ public class CreatePageAction implements IEditorActionDelegate {
         }
     }
 
-    private Page createPage( Template template, Map map, Project project, Point partSize ) {
+    private Page createPage(Template template, Map map, Project project, Point partSize) {
         int width = 800;
         int height = 600;
         if (partSize != null) {
             width = partSize.x;
             height = partSize.y;
-        }else{
+        } else {
             PageFormat pageFormat = PrinterJob.getPrinterJob().defaultPage();
-            width = new Double(pageFormat.getImageableWidth()).intValue();
-            height = new Double(pageFormat.getImageableHeight()).intValue();
+            width = Double.valueOf(pageFormat.getImageableWidth()).intValue();
+            height = Double.valueOf(pageFormat.getImageableHeight()).intValue();
         }
 
         Page page = ModelFactory.eINSTANCE.createPage();
 
         page.setSize(new Dimension(width, height));
 
-        MessageFormat formatter = new MessageFormat("{0} - " + template.getAbbreviation(), Locale
+        MessageFormat formatter = new MessageFormat("{0} - " + template.getAbbreviation(), Locale //$NON-NLS-1$
                 .getDefault());
         if (page.getName() == null || page.getName().length() == 0) {
-            page.setName(formatter.format(new Object[]{map.getName()}));
+            page.setName(formatter.format(new Object[] { map.getName() }));
         }
 
         page.setProjectInternal(project);
         template.init(page, map);
         Iterator<Box> iter = template.iterator();
-        while( iter.hasNext() ) {
+        while (iter.hasNext()) {
             page.getBoxes().add(iter.next());
         }
         return page;
     }
 
     private Template getPageTemplate() {
-        final java.util.Map<String, TemplateFactory> templateFactories = PrintingPlugin
-                .getDefault().getTemplateFactories();
+        final java.util.Map<String, TemplateFactory> templateFactories = PrintingPlugin.getDefault()
+                .getTemplateFactories();
 
         // TODO move to a preference initializer
         PrintingPlugin.getDefault().getPluginPreferences().setValue(
                 PrintingPlugin.PREF_DEFAULT_TEMPLATE,
                 "org.locationtech.udig.printing.ui.internal.BasicTemplate"); //$NON-NLS-1$
 
-        String defaultTemplate = PrintingPlugin.getDefault().getPluginPreferences().getString(
-                PrintingPlugin.PREF_DEFAULT_TEMPLATE);
+        String defaultTemplate = PrintingPlugin.getDefault().getPluginPreferences()
+                .getString(PrintingPlugin.PREF_DEFAULT_TEMPLATE);
 
         ListDialog dialog = createTemplateChooserDialog(templateFactories);
 
-        TemplateFactory templateFactory = PrintingPlugin.getDefault()
-                .getTemplateFactories().get(defaultTemplate);
+        TemplateFactory templateFactory = PrintingPlugin.getDefault().getTemplateFactories()
+                .get(defaultTemplate);
 
-        dialog.setInitialSelections(new Object[]{templateFactory});
+        dialog.setInitialSelections(new Object[] { templateFactory });
         int result = dialog.open();
         if (result == Window.CANCEL || dialog.getResult().length == 0) {
             return null;
@@ -171,8 +169,7 @@ public class CreatePageAction implements IEditorActionDelegate {
         if (templateFactory == null) {
             PrintingPlugin.log(Messages.CreatePageAction_error_cannotFindDefaultTemplate, null);
 
-            TemplateFactory firstAvailable = templateFactories.values()
-                    .iterator().next();
+            TemplateFactory firstAvailable = templateFactories.values().iterator().next();
             if (firstAvailable == null) {
                 PrintingPlugin.log(
                         "Unable to locate any templates, resorting to hard coded default.", null); //$NON-NLS-1$
@@ -192,7 +189,7 @@ public class CreatePageAction implements IEditorActionDelegate {
      * @return
      */
     private ListDialog createTemplateChooserDialog(
-            final java.util.Map<String, TemplateFactory> templateFactories ) {
+            final java.util.Map<String, TemplateFactory> templateFactories) {
         ListDialog dialog = new ListDialog(Display.getDefault().getActiveShell());
         dialog.setTitle(Messages.CreatePageAction_dialog_title);
         dialog.setMessage(Messages.CreatePageAction_dialog_message);
@@ -202,7 +199,7 @@ public class CreatePageAction implements IEditorActionDelegate {
         keyList.addAll(keySet);
         Collections.sort(keyList);
         List<TemplateFactory> valuesList = new ArrayList<>();
-        for( String key : keyList ) {
+        for (String key : keyList) {
             valuesList.add(templateFactories.get(key));
         }
 
@@ -210,9 +207,9 @@ public class CreatePageAction implements IEditorActionDelegate {
         ArrayContentProvider provider = new ArrayContentProvider();
         dialog.setContentProvider(provider);
 
-        ILabelProvider labelProvider = new LabelProvider(){
+        ILabelProvider labelProvider = new LabelProvider() {
             @Override
-            public String getText( Object element ) {
+            public String getText(Object element) {
                 return ((TemplateFactory) element).getName();
             }
         };
@@ -221,10 +218,12 @@ public class CreatePageAction implements IEditorActionDelegate {
     }
 
     @Override
-    public void setActiveEditor( IAction action, IEditorPart targetEditor ) {
+    public void setActiveEditor(IAction action, IEditorPart targetEditor) {
+
     }
 
     @Override
-    public void selectionChanged( IAction action, ISelection selection ) {
+    public void selectionChanged(IAction action, ISelection selection) {
+
     }
 }
