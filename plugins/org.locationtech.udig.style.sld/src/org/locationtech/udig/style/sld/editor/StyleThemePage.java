@@ -648,7 +648,7 @@ public class StyleThemePage extends StyleEditorPage {
         tableSettings.setColumnMin(0, 50);
 
         treeViewer.setLabelProvider(new StyleTreeLabelProvider());
-        treeViewer.setSorter(new StyleTreeSorter());
+        treeViewer.setComparator(new StyleTreeSorter());
         treeViewer.setContentProvider(new StyleTreeContentProvider());
 
         treeViewer.setInput(getFTS());
@@ -831,7 +831,7 @@ public class StyleThemePage extends StyleEditorPage {
         paletteTable.setContentProvider(new BrewerPaletteContentProvider(this));
 
         paletteTable.addFilter(new BrewerPaletteViewerFilter(this));
-        paletteTable.setSorter(new BrewerPaletteViewerSorter());
+        paletteTable.setComparator(new BrewerPaletteViewerSorter());
 
         paletteTable.setInput(getBrewer());
         paletteTable.addSelectionChangedListener(new PalettesListener());
