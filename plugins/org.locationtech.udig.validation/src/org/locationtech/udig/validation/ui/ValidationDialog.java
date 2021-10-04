@@ -25,10 +25,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -77,7 +77,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.model.WorkbenchViewerSorter;
+import org.eclipse.ui.model.WorkbenchViewerComparator;
 import org.geotools.validation.Validation;
 import org.geotools.validation.dto.ArgumentDTO;
 import org.geotools.validation.dto.PlugInDTO;
@@ -434,7 +434,7 @@ public class ValidationDialog extends TitleAreaDialog {
         // create the treeViewer (list of possible validations (plugins) + prepared tests)
         treeViewer = new CheckboxTreeViewer(comp);
         treeViewer.setLabelProvider(new ValidationTreeLabelProvider());
-        treeViewer.setSorter(new WorkbenchViewerSorter());
+        treeViewer.setComparator(new WorkbenchViewerComparator());
         contentProvider = new ValidationTreeContentProvider();
         treeViewer.setContentProvider(contentProvider);
         treeViewer.addCheckStateListener(new ICheckStateListener() {
@@ -881,8 +881,7 @@ public class ValidationDialog extends TitleAreaDialog {
             throws Exception {
         if (pluginsDir == null) {
             URL pluginURL = ValidationPlugin.getDefault().getBundle().getResource("plugins"); //$NON-NLS-1$
-            String pluginsPath = Platform.asLocalURL(pluginURL).getFile();
-            // String pluginsPath = FileLocator.toFileURL(pluginURL).getFile();
+            String pluginsPath = FileLocator.toFileURL(pluginURL).getFile();
             pluginsDir = new File(pluginsPath);
         }
         return new ValidationProcessor(pluginsDir, testSuiteFile);

@@ -20,7 +20,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
@@ -95,7 +95,7 @@ public class BookmarksView extends ViewPart implements ISetSelectionTarget {
         getSite().getWorkbenchWindow().getPartService().addPartListener(bookmarksProvider);
         labelProvider = new BookmarksLabelProvider();
         bookmarksTree.setLabelProvider(labelProvider);
-        bookmarksTree.setSorter(new ViewerSorter());
+        bookmarksTree.setComparator(new ViewerComparator());
         bookmarksTree.setInput(bookmarksProvider);
         bookmarksTree.setAutoExpandLevel(2);
         bookmarksTree.addDoubleClickListener(new BookmarkAction());
@@ -144,8 +144,7 @@ public class BookmarksView extends ViewPart implements ISetSelectionTarget {
     }
 
     /**
-     * @see
-     * org.eclipse.ui.part.ISetSelectionTarget#selectReveal(org.eclipse.jface.viewers.ISelection)
+     * @see org.eclipse.ui.part.ISetSelectionTarget#selectReveal(org.eclipse.jface.viewers.ISelection)
      */
     @Override
     public void selectReveal(ISelection selection) {

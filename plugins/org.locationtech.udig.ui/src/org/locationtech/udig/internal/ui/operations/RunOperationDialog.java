@@ -13,10 +13,6 @@ package org.locationtech.udig.internal.ui.operations;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.locationtech.udig.internal.ui.UiPlugin;
-import org.locationtech.udig.ui.internal.Messages;
-import org.locationtech.udig.ui.operations.OpAction;
-
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -33,11 +29,15 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.internal.Messages;
+import org.locationtech.udig.ui.operations.OpAction;
+
 /**
  * The Run Operation Dialog
  */
-public class RunOperationDialog extends Dialog implements
-        ISelectionChangedListener, IDoubleClickListener {
+public class RunOperationDialog extends Dialog
+        implements ISelectionChangedListener, IDoubleClickListener {
 
     private static final String DIALOG_SETTING_SECTION_NAME = "RunOperationDialog"; //$NON-NLS-1$
 
@@ -46,10 +46,10 @@ public class RunOperationDialog extends Dialog implements
     private static final int LIST_WIDTH = 250;
 
     private static final String STORE_EXPANDED_CATEGORIES_ID = DIALOG_SETTING_SECTION_NAME
-            + ".STORE_EXPANDED_CATEGORIES_ID"; //$NON-NLS-1$    
+            + ".STORE_EXPANDED_CATEGORIES_ID"; //$NON-NLS-1$
 
     private static final String STORE_SELECTED_OPERATION_ID = DIALOG_SETTING_SECTION_NAME
-            + ".STORE_SELECTED_OPERATION_ID"; //$NON-NLS-1$    
+            + ".STORE_SELECTED_OPERATION_ID"; //$NON-NLS-1$
 
     private TreeViewer tree;
 
@@ -68,6 +68,7 @@ public class RunOperationDialog extends Dialog implements
     /**
      * This method is called if a button has been pressed.
      */
+    @Override
     protected void buttonPressed(int buttonId) {
         if (buttonId == IDialogConstants.OK_ID)
             saveWidgetValues();
@@ -77,16 +78,13 @@ public class RunOperationDialog extends Dialog implements
     /**
      * Notifies that the cancel button of this dialog has been pressed.
      */
+    @Override
     protected void cancelPressed() {
         opActions = new OpAction[0];
         super.cancelPressed();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
-     */
+    @Override
     protected void configureShell(Shell shell) {
         super.configureShell(shell);
         shell.setText(Messages.RunOperationDialog_run_operation);
@@ -95,28 +93,26 @@ public class RunOperationDialog extends Dialog implements
     /**
      * Adds buttons to this dialog's button bar.
      * <p>
-     * The default implementation of this framework method adds standard ok and
-     * cancel buttons using the <code>createButton</code> framework method.
-     * Subclasses may override.
+     * The default implementation of this framework method adds standard ok and cancel buttons using
+     * the <code>createButton</code> framework method. Subclasses may override.
      * </p>
-     * 
+     *
      * @param parent the button bar composite
      */
+    @Override
     protected void createButtonsForButtonBar(Composite parent) {
-        okButton = createButton(parent, IDialogConstants.OK_ID,
-                IDialogConstants.OK_LABEL, true);
-        createButton(parent, IDialogConstants.CANCEL_ID,
-                IDialogConstants.CANCEL_LABEL, false);
+        okButton = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
+        createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
         updateButtons();
     }
 
     /**
-     * Creates and returns the contents of the upper part of this dialog (above
-     * the button bar).
-     * 
+     * Creates and returns the contents of the upper part of this dialog (above the button bar).
+     *
      * @param parent the parent composite to contain the dialog area
      * @return the dialog area control
      */
+    @Override
     protected Control createDialogArea(Composite parent) {
         // Run super.
         Composite composite = (Composite) super.createDialogArea(parent);
@@ -135,26 +131,21 @@ public class RunOperationDialog extends Dialog implements
 
     /**
      * Create a new viewer in the parent.
-     * 
+     *
      * @param parent the parent <code>Composite</code>.
      */
     private void createViewer(Composite parent) {
-        tree = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL
-                | SWT.BORDER);
+        tree = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
         tree.setLabelProvider(new OperationLabelProvider());
         tree.setContentProvider(new OperationContentProvider());
-        tree.setSorter(new OperationSorter());
+        tree.setComparator(new OperationSorter());
         tree.setInput(opMenuFactory);
         tree.addSelectionChangedListener(this);
         tree.addDoubleClickListener(this);
         tree.getTree().setFont(parent.getFont());
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.viewers.IDoubleClickListener#doubleClick(org.eclipse.jface.viewers.DoubleClickEvent)
-     */
+    @Override
     public void doubleClick(DoubleClickEvent event) {
         IStructuredSelection s = (IStructuredSelection) event.getSelection();
         Object element = s.getFirstElement();
@@ -171,26 +162,23 @@ public class RunOperationDialog extends Dialog implements
      * Return the dialog store to cache values into
      */
     protected IDialogSettings getDialogSettings() {
-        IDialogSettings workbenchSettings = UiPlugin.getDefault()
-                .getDialogSettings();
-        IDialogSettings section = workbenchSettings
-                .getSection(DIALOG_SETTING_SECTION_NAME);
+        IDialogSettings workbenchSettings = UiPlugin.getDefault().getDialogSettings();
+        IDialogSettings section = workbenchSettings.getSection(DIALOG_SETTING_SECTION_NAME);
         if (section == null)
-            section = workbenchSettings
-                    .addNewSection(DIALOG_SETTING_SECTION_NAME);
+            section = workbenchSettings.addNewSection(DIALOG_SETTING_SECTION_NAME);
         return section;
     }
 
     public OpAction[] getSelection() {
 
-        OpAction[] copy=new OpAction[opActions.length];
+        OpAction[] copy = new OpAction[opActions.length];
         System.arraycopy(opActions, 0, copy, 0, opActions.length);
         return copy;
     }
 
     /**
      * Layout the top control.
-     * 
+     *
      * @param control the control.
      */
     private void layoutTopControl(Control control) {
@@ -201,18 +189,18 @@ public class RunOperationDialog extends Dialog implements
     }
 
     /**
-     * Use the dialog store to restore widget values to the values that they
-     * held last time this dialog was used to completion.
+     * Use the dialog store to restore widget values to the values that they held last time this
+     * dialog was used to completion.
      */
     protected void restoreWidgetValues() {
         IDialogSettings settings = getDialogSettings();
 
-        String[] expandedCategoryIds = settings
-                .getArray(STORE_EXPANDED_CATEGORIES_ID);
+        String[] expandedCategoryIds = settings.getArray(STORE_EXPANDED_CATEGORIES_ID);
         if (expandedCategoryIds == null)
             return;
 
-        ArrayList<OperationCategory> categoriesToExpand = new ArrayList<OperationCategory>(expandedCategoryIds.length);
+        ArrayList<OperationCategory> categoriesToExpand = new ArrayList<>(
+                expandedCategoryIds.length);
         for (int i = 0; i < expandedCategoryIds.length; i++) {
             OperationCategory category = opMenuFactory.findCategory(expandedCategoryIds[i]);
             if (category != null) // ie.- it still exists
@@ -221,7 +209,7 @@ public class RunOperationDialog extends Dialog implements
 
         if (!categoriesToExpand.isEmpty())
             tree.setExpandedElements(categoriesToExpand.toArray());
-        
+
         String selectedOperationID = settings.get(STORE_SELECTED_OPERATION_ID);
         if (selectedOperationID != null) {
             OpAction action = opMenuFactory.find(selectedOperationID);
@@ -232,8 +220,8 @@ public class RunOperationDialog extends Dialog implements
     }
 
     /**
-     * Since OK was pressed, write widget values to the dialog store so that
-     * they will persist into the next invocation of this dialog
+     * Since OK was pressed, write widget values to the dialog store so that they will persist into
+     * the next invocation of this dialog
      */
     protected void saveWidgetValues() {
         IDialogSettings settings = getDialogSettings();
@@ -246,7 +234,7 @@ public class RunOperationDialog extends Dialog implements
 
         // Save them for next time.
         settings.put(STORE_EXPANDED_CATEGORIES_ID, expandedCategoryIds);
-        
+
         String selectedOperationID = ""; //$NON-NLS-1$
         if (opActions.length > 0) {
             // in the case of a multi-selection, it's probably less confusing
@@ -258,9 +246,10 @@ public class RunOperationDialog extends Dialog implements
 
     /**
      * Notifies that the selection has changed.
-     * 
+     *
      * @param event event object describing the change
      */
+    @Override
     public void selectionChanged(SelectionChangedEvent event) {
         updateSelection(event);
         updateButtons();
@@ -279,7 +268,7 @@ public class RunOperationDialog extends Dialog implements
      * Update the selection object.
      */
     protected void updateSelection(SelectionChangedEvent event) {
-        ArrayList<Object> descs = new ArrayList<Object>();
+        ArrayList<Object> descs = new ArrayList<>();
         IStructuredSelection sel = (IStructuredSelection) event.getSelection();
         for (Iterator i = sel.iterator(); i.hasNext();) {
             Object o = i.next();
@@ -291,4 +280,3 @@ public class RunOperationDialog extends Dialog implements
         descs.toArray(opActions);
     }
 }
-
