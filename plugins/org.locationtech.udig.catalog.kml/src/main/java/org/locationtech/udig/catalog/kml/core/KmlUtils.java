@@ -1,6 +1,6 @@
-/*
- * (C) HydroloGIS - www.hydrologis.com 
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
+/**
+ * (C) HydroloGIS - www.hydrologis.com
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -39,32 +39,31 @@ import org.opengis.referencing.operation.MathTransform;
 
 /**
  * Utilities to convert kml to features and back (taken from geotools testcases).
- * 
+ *
  * @author Andrea Antonello (www.hydrologis.com)
  * @author Frank Gasdorf
  */
 public class KmlUtils {
 
-    
-    @SuppressWarnings("nls")
-    public static final String[] IGNORED_ATTR = {"LookAt", "Style", "Region"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-    
+    public static final String[] IGNORED_ATTR = { "LookAt", "Style", "Region" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
     public static final String KML_FILE_EXTENSION = "kml"; //$NON-NLS-1$
-    
+
     public static final String KMZ_FILE_EXTENSION = "kmz"; //$NON-NLS-1$
 
-    public static final String[] SUPPORTED_FILE_EXTENSIONS = new String [] {
-                        toFilterExtension(KmlUtils.KML_FILE_EXTENSION), 
-                        toFilterExtension(KmlUtils.KMZ_FILE_EXTENSION)};
+    public static final String[] SUPPORTED_FILE_EXTENSIONS = new String[] {
+            toFilterExtension(KmlUtils.KML_FILE_EXTENSION),
+            toFilterExtension(KmlUtils.KMZ_FILE_EXTENSION) };
 
     /**
      * Transform a kml file in a {@link FeatureCollection}.
-     * 
+     *
      * @param kml the file to convert.
      * @return the generated feature collection.
      * @throws Exception
      */
-    public static FeatureCollection<SimpleFeatureType, SimpleFeature> kmlFile2FeatureCollection( File kml ) throws Exception {
+    public static FeatureCollection<SimpleFeatureType, SimpleFeature> kmlFile2FeatureCollection(
+            File kml) throws Exception {
         InputStream inputStream = null;
         if (kml.getName().toLowerCase().endsWith(KMZ_FILE_EXTENSION)) {
             ZipInputStream zis = new ZipInputStream(new FileInputStream(kml));
@@ -72,38 +71,43 @@ public class KmlUtils {
             while (entry != null && !entry.getName().endsWith(KML_FILE_EXTENSION)) {
                 entry = zis.getNextEntry();
             }
+
+            zis.close();
+
             if (entry == null) {
                 throw new Exception(Messages.getString("KmlUtils.Error.NoKMLfileInKMZPackage")); //$NON-NLS-1$
             }
+
             inputStream = zis;
+
         } else {
             inputStream = new FileInputStream(kml);
         }
-        
+
         PullParser parser = new PullParser(new KMLConfiguration(), inputStream, KML.Placemark);
 
         DefaultFeatureCollection newCollection = new DefaultFeatureCollection();
-        
+
         int index = 0;
         SimpleFeature f;
         DefaultGeographicCRS crs = DefaultGeographicCRS.WGS84;
         SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
         b.setName(kml.getName());
         b.setCRS(crs);
-        b.add("name", String.class);
+        b.add("name", String.class); //$NON-NLS-1$
         b.add("the_geom", Geometry.class); //$NON-NLS-1$
         SimpleFeatureType type = b.buildFeatureType();
         SimpleFeatureBuilder builder = new SimpleFeatureBuilder(type);
 
-        while( (f = (SimpleFeature) parser.parse()) != null ) {
+        while ((f = (SimpleFeature) parser.parse()) != null) {
             Geometry geometry = (Geometry) f.getDefaultGeometry();
             Object nameAttribute = null;
             try {
-                nameAttribute = f.getAttribute("name");
-            } catch (Exception e){
+                nameAttribute = f.getAttribute("name"); //$NON-NLS-1$
+            } catch (Exception e) {
                 // ignore name attribute
             }
-            builder.addAll(new Object[]{nameAttribute, geometry });
+            builder.addAll(new Object[] { nameAttribute, geometry });
             SimpleFeature feature = builder.buildFeature(type.getTypeName() + "." + index++); //$NON-NLS-1$
             newCollection.add(feature);
         }
@@ -113,20 +117,23 @@ public class KmlUtils {
 
     /**
      * Writes the {@link FeatureCollection} to disk in KML format.
-     * 
+     *
      * @param kmlFile the file to write.
      * @param featureCollection the collection to transform.
      * @throws Exception
      */
-    public static void writeKml( File kmlFile, FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection ) throws Exception {
-        
+    public static void writeKml(File kmlFile,
+            FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection)
+            throws Exception {
+
         CoordinateReferenceSystem epsg4326 = DefaultGeographicCRS.WGS84;
-        CoordinateReferenceSystem crs = featureCollection.getSchema().getCoordinateReferenceSystem();
+        CoordinateReferenceSystem crs = featureCollection.getSchema()
+                .getCoordinateReferenceSystem();
         MathTransform mtrans = CRS.findMathTransform(crs, epsg4326, true);
 
-        DefaultFeatureCollection newCollection = new DefaultFeatureCollection(); 
+        DefaultFeatureCollection newCollection = new DefaultFeatureCollection();
         FeatureIterator<SimpleFeature> featuresIterator = featureCollection.features();
-        while( featuresIterator.hasNext() ) {
+        while (featuresIterator.hasNext()) {
             SimpleFeature f = featuresIterator.next();
             Geometry g = (Geometry) f.getDefaultGeometry();
             if (!mtrans.isIdentity()) {
@@ -141,19 +148,22 @@ public class KmlUtils {
             if (kmlFile.getName().toLowerCase().endsWith(KMZ_FILE_EXTENSION)) {
                 String fileName = kmlFile.getName();
                 String entryName = fileName.replace(KMZ_FILE_EXTENSION, KML_FILE_EXTENSION);
-                
+
                 ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(kmlFile));
-                zos.putNextEntry(new ZipEntry(entryName)); //$NON-NLS-1$
+                zos.putNextEntry(new ZipEntry(entryName)); // $NON-NLS-1$
                 fos = zos;
+
+                zos.close();
+
             } else {
                 fos = new FileOutputStream(kmlFile);
             }
-    
+
             Encoder encoder = new Encoder(new KMLConfiguration());
             encoder.setIndenting(true);
-    
-            encoder.encode(newCollection, KML.kml, fos); 
-            
+
+            encoder.encode(newCollection, KML.kml, fos);
+
         } finally {
             if (fos != null) {
                 fos.close();
@@ -163,7 +173,7 @@ public class KmlUtils {
     }
 
     private static String toFilterExtension(String fileExtension) {
-        return "*." + fileExtension;  //$NON-NLS-1$
+        return "*." + fileExtension; //$NON-NLS-1$
     }
 
 }
