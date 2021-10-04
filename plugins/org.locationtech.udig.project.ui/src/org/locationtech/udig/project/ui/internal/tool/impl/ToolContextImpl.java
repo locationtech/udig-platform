@@ -39,7 +39,6 @@ import org.locationtech.udig.project.command.MapCommand;
 import org.locationtech.udig.project.command.NavCommand;
 import org.locationtech.udig.project.command.factory.BasicCommandFactory;
 import org.locationtech.udig.project.command.factory.EditCommandFactory;
-import org.locationtech.udig.project.command.factory.NavigationCommandFactory;
 import org.locationtech.udig.project.command.factory.SelectionCommandFactory;
 import org.locationtech.udig.project.internal.impl.AbstractContextImpl;
 import org.locationtech.udig.project.internal.render.RenderManager;
@@ -155,15 +154,6 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
     private final EditCommandFactory editFactory = EditCommandFactory.getInstance();
 
     /**
-     * The cached value of the '{@link #getNavigationFactory() <em>Navigation Factory</em>}'
-     * attribute.
-     *
-     * @see #getNavigationFactory()
-     */
-    private final NavigationCommandFactory navigationFactory = NavigationCommandFactory
-            .getInstance();
-
-    /**
      * The cached value of the '{@link #getSelectionFactory() <em>Selection Factory</em>}'
      * attribute.
      *
@@ -189,11 +179,6 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
     @Override
     public EditCommandFactory getEditFactory() {
         return editFactory;
-    }
-
-    @Override
-    public NavigationCommandFactory getNavigationFactory() {
-        return navigationFactory;
     }
 
     @Override
@@ -362,4 +347,5 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
                 ScaleUtils.zoomClosenessPreference());
         return ScaleUtils.calculateZoomLevel(params);
     }
+
 } // Impl
