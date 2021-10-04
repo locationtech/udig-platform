@@ -276,7 +276,7 @@ public class ValidationDialog extends TitleAreaDialog {
         cancelButton = new Button(rightComp, SWT.PUSH);
         cancelButton.setText(IDialogConstants.CLOSE_LABEL);
         cancelButton.setFont(parent.getFont());
-        cancelButton.setData(new Integer(IDialogConstants.CANCEL_ID));
+        cancelButton.setData(Integer.valueOf(IDialogConstants.CANCEL_ID));
         closeListener = new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent event) {
@@ -284,7 +284,6 @@ public class ValidationDialog extends TitleAreaDialog {
                 buttonPressed(((Integer) event.widget.getData()).intValue());
             }
         };
-
         cancelButton.addSelectionListener(closeListener);
         setButtonLayoutData(cancelButton);
 
@@ -293,6 +292,7 @@ public class ValidationDialog extends TitleAreaDialog {
 
     @Override
     protected void createButtonsForButtonBar(Composite parent) {
+
     }
 
     @Override

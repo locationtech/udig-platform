@@ -10,21 +10,9 @@
  *******************************************************************************/
 package org.locationtech.udig.jconsole;
 
-
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.Viewer;
 
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.BadPositionCategoryException;
@@ -32,219 +20,236 @@ import org.eclipse.jface.text.DefaultPositionUpdater;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IPositionUpdater;
 import org.eclipse.jface.text.Position;
-
-import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
-
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;
+import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 
 /**
- * A content outline page which always represents the content of the
- * connected editor in 10 segments.
+ * A content outline page which always represents the content of the connected editor in 10
+ * segments.
  */
 public class JavaContentOutlinePage extends ContentOutlinePage {
 
-	/**
-	 * A segment element.
-	 */
-	protected static class Segment {
-		public String name;
-		public Position position;
+    /**
+     * A segment element.
+     */
+    protected static class Segment {
+        public String name;
 
-		public Segment(String name, Position position) {
-			this.name= name;
-			this.position= position;
-		}
+        public Position position;
 
-		public String toString() {
-			return name;
-		}
-	}
+        public Segment(String name, Position position) {
+            this.name = name;
+            this.position = position;
+        }
 
-	/**
-	 * Divides the editor's document into ten segments and provides elements for them.
-	 */
-	protected class ContentProvider implements ITreeContentProvider {
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
 
-		protected static final String SEGMENTS= "__java_segments"; //$NON-NLS-1$
-		protected IPositionUpdater fPositionUpdater= new DefaultPositionUpdater(SEGMENTS);
-		protected List fContent= new ArrayList(10);
+    /**
+     * Divides the editor's document into ten segments and provides elements for them.
+     */
+    protected class ContentProvider implements ITreeContentProvider {
 
-		protected void parse(IDocument document) {
+        protected static final String SEGMENTS = "__java_segments"; //$NON-NLS-1$
 
-			int lines= document.getNumberOfLines();
-			int increment= Math.max(Math.round(lines / 10f), 10);
+        protected IPositionUpdater fPositionUpdater = new DefaultPositionUpdater(SEGMENTS);
 
-			for (int line= 0; line < lines; line += increment) {
+        protected List fContent = new ArrayList(10);
 
-				int length= increment;
-				if (line + increment > lines)
-					length= lines - line;
+        protected void parse(IDocument document) {
 
-				try {
+            int lines = document.getNumberOfLines();
+            int increment = Math.max(Math.round(lines / 10f), 10);
 
-					int offset= document.getLineOffset(line);
-					int end= document.getLineOffset(line + length);
-					length= end - offset;
-					Position p= new Position(offset, length);
-					document.addPosition(SEGMENTS, p);
-					fContent.add(new Segment(MessageFormat.format(JavaEditorMessages.getString("OutlinePage.segment.title_pattern"), new Object[] { new Integer(offset) }), p)); //$NON-NLS-1$
+            for (int line = 0; line < lines; line += increment) {
 
-				} catch (BadPositionCategoryException x) {
-				} catch (BadLocationException x) {
-				}
-			}
-		}
+                int length = increment;
+                if (line + increment > lines)
+                    length = lines - line;
 
-		/*
-		 * @see IContentProvider#inputChanged(Viewer, Object, Object)
-		 */
-		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-			if (oldInput != null) {
-				IDocument document= fDocumentProvider.getDocument(oldInput);
-				if (document != null) {
-					try {
-						document.removePositionCategory(SEGMENTS);
-					} catch (BadPositionCategoryException x) {
-					}
-					document.removePositionUpdater(fPositionUpdater);
-				}
-			}
+                try {
 
-			fContent.clear();
+                    int offset = document.getLineOffset(line);
+                    int end = document.getLineOffset(line + length);
+                    length = end - offset;
+                    Position p = new Position(offset, length);
+                    document.addPosition(SEGMENTS, p);
+                    fContent.add(new Segment(MessageFormat.format(
+                            JavaEditorMessages.getString("OutlinePage.segment.title_pattern"), //$NON-NLS-1$
+                            new Object[] { Integer.valueOf(offset) }), p));
 
-			if (newInput != null) {
-				IDocument document= fDocumentProvider.getDocument(newInput);
-				if (document != null) {
-					document.addPositionCategory(SEGMENTS);
-					document.addPositionUpdater(fPositionUpdater);
+                } catch (BadPositionCategoryException x) {
+                } catch (BadLocationException x) {
+                }
+            }
+        }
 
-					parse(document);
-				}
-			}
-		}
+        /*
+         * @see IContentProvider#inputChanged(Viewer, Object, Object)
+         */
+        @Override
+        public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+            if (oldInput != null) {
+                IDocument document = fDocumentProvider.getDocument(oldInput);
+                if (document != null) {
+                    try {
+                        document.removePositionCategory(SEGMENTS);
+                    } catch (BadPositionCategoryException x) {
+                    }
+                    document.removePositionUpdater(fPositionUpdater);
+                }
+            }
 
-		/*
-		 * @see IContentProvider#dispose
-		 */
-		public void dispose() {
-			if (fContent != null) {
-				fContent.clear();
-				fContent= null;
-			}
-		}
+            fContent.clear();
 
-		/*
-		 * @see IStructuredContentProvider#getElements(Object)
-		 */
-		public Object[] getElements(Object element) {
-			return fContent.toArray();
-		}
+            if (newInput != null) {
+                IDocument document = fDocumentProvider.getDocument(newInput);
+                if (document != null) {
+                    document.addPositionCategory(SEGMENTS);
+                    document.addPositionUpdater(fPositionUpdater);
 
-		/*
-		 * @see ITreeContentProvider#hasChildren(Object)
-		 */
-		public boolean hasChildren(Object element) {
-			return element == fInput;
-		}
+                    parse(document);
+                }
+            }
+        }
 
-		/*
-		 * @see ITreeContentProvider#getParent(Object)
-		 */
-		public Object getParent(Object element) {
-			if (element instanceof Segment)
-				return fInput;
-			return null;
-		}
+        /*
+         * @see IContentProvider#dispose
+         */
+        @Override
+        public void dispose() {
+            if (fContent != null) {
+                fContent.clear();
+                fContent = null;
+            }
+        }
 
-		/*
-		 * @see ITreeContentProvider#getChildren(Object)
-		 */
-		public Object[] getChildren(Object element) {
-			if (element == fInput)
-				return fContent.toArray();
-			return new Object[0];
-		}
-	}
+        /*
+         * @see IStructuredContentProvider#getElements(Object)
+         */
+        @Override
+        public Object[] getElements(Object element) {
+            return fContent.toArray();
+        }
 
-	protected Object fInput;
-	protected IDocumentProvider fDocumentProvider;
-	protected ITextEditor fTextEditor;
+        /*
+         * @see ITreeContentProvider#hasChildren(Object)
+         */
+        @Override
+        public boolean hasChildren(Object element) {
+            return element == fInput;
+        }
 
-	/**
-	 * Creates a content outline page using the given provider and the given editor.
-	 *
-	 * @param provider the document provider
-	 * @param editor the editor
-	 */
-	public JavaContentOutlinePage(IDocumentProvider provider, ITextEditor editor) {
-		super();
-		fDocumentProvider= provider;
-		fTextEditor= editor;
-	}
+        /*
+         * @see ITreeContentProvider#getParent(Object)
+         */
+        @Override
+        public Object getParent(Object element) {
+            if (element instanceof Segment)
+                return fInput;
+            return null;
+        }
 
-	/* (non-Javadoc)
-	 * Method declared on ContentOutlinePage
-	 */
-	public void createControl(Composite parent) {
+        /*
+         * @see ITreeContentProvider#getChildren(Object)
+         */
+        @Override
+        public Object[] getChildren(Object element) {
+            if (element == fInput)
+                return fContent.toArray();
+            return new Object[0];
+        }
+    }
 
-		super.createControl(parent);
+    protected Object fInput;
 
-		TreeViewer viewer= getTreeViewer();
-		viewer.setContentProvider(new ContentProvider());
-		viewer.setLabelProvider(new LabelProvider());
-		viewer.addSelectionChangedListener(this);
+    protected IDocumentProvider fDocumentProvider;
 
-		if (fInput != null)
-			viewer.setInput(fInput);
-	}
+    protected ITextEditor fTextEditor;
 
-	/* (non-Javadoc)
-	 * Method declared on ContentOutlinePage
-	 */
-	public void selectionChanged(SelectionChangedEvent event) {
+    /**
+     * Creates a content outline page using the given provider and the given editor.
+     *
+     * @param provider the document provider
+     * @param editor the editor
+     */
+    public JavaContentOutlinePage(IDocumentProvider provider, ITextEditor editor) {
+        super();
+        fDocumentProvider = provider;
+        fTextEditor = editor;
+    }
 
-		super.selectionChanged(event);
+    @Override
+    public void createControl(Composite parent) {
 
-		ISelection selection= event.getSelection();
-		if (selection.isEmpty())
-			fTextEditor.resetHighlightRange();
-		else {
-			Segment segment= (Segment) ((IStructuredSelection) selection).getFirstElement();
-			int start= segment.position.getOffset();
-			int length= segment.position.getLength();
-			try {
-				fTextEditor.setHighlightRange(start, length, true);
-			} catch (IllegalArgumentException x) {
-				fTextEditor.resetHighlightRange();
-			}
-		}
-	}
+        super.createControl(parent);
 
-	/**
-	 * Sets the input of the outline page
-	 *
-	 * @param input the input of this outline page
-	 */
-	public void setInput(Object input) {
-		fInput= input;
-		update();
-	}
+        TreeViewer viewer = getTreeViewer();
+        viewer.setContentProvider(new ContentProvider());
+        viewer.setLabelProvider(new LabelProvider());
+        viewer.addSelectionChangedListener(this);
 
-	/**
-	 * Updates the outline page.
-	 */
-	public void update() {
-		TreeViewer viewer= getTreeViewer();
+        if (fInput != null)
+            viewer.setInput(fInput);
+    }
 
-		if (viewer != null) {
-			Control control= viewer.getControl();
-			if (control != null && !control.isDisposed()) {
-				control.setRedraw(false);
-				viewer.setInput(fInput);
-				viewer.expandAll();
-				control.setRedraw(true);
-			}
-		}
-	}
+    @Override
+    public void selectionChanged(SelectionChangedEvent event) {
+
+        super.selectionChanged(event);
+
+        ISelection selection = event.getSelection();
+        if (selection.isEmpty())
+            fTextEditor.resetHighlightRange();
+        else {
+            Segment segment = (Segment) ((IStructuredSelection) selection).getFirstElement();
+            int start = segment.position.getOffset();
+            int length = segment.position.getLength();
+            try {
+                fTextEditor.setHighlightRange(start, length, true);
+            } catch (IllegalArgumentException x) {
+                fTextEditor.resetHighlightRange();
+            }
+        }
+    }
+
+    /**
+     * Sets the input of the outline page
+     *
+     * @param input the input of this outline page
+     */
+    public void setInput(Object input) {
+        fInput = input;
+        update();
+    }
+
+    /**
+     * Updates the outline page.
+     */
+    public void update() {
+        TreeViewer viewer = getTreeViewer();
+
+        if (viewer != null) {
+            Control control = viewer.getControl();
+            if (control != null && !control.isDisposed()) {
+                control.setRedraw(false);
+                viewer.setInput(fInput);
+                viewer.expandAll();
+                control.setRedraw(true);
+            }
+        }
+    }
 }

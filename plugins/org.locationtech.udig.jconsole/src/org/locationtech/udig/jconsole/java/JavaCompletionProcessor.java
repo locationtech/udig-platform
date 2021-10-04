@@ -22,7 +22,6 @@ import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationPresenter;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
-
 import org.locationtech.udig.jconsole.util.Keywords;
 
 /**
@@ -31,36 +30,43 @@ import org.locationtech.udig.jconsole.util.Keywords;
 public class JavaCompletionProcessor implements IContentAssistProcessor {
 
     /**
-     * Simple content assist tip closer. The tip is valid in a range
-     * of 5 characters around its popup location.
+     * Simple content assist tip closer. The tip is valid in a range of 5 characters around its
+     * popup location.
      */
-    protected static class Validator implements IContextInformationValidator, IContextInformationPresenter {
+    protected static class Validator
+            implements IContextInformationValidator, IContextInformationPresenter {
 
         protected int fInstallOffset;
 
         /*
          * @see IContextInformationValidator#isContextInformationValid(int)
          */
-        public boolean isContextInformationValid( int offset ) {
+        @Override
+        public boolean isContextInformationValid(int offset) {
             return Math.abs(fInstallOffset - offset) < 5;
         }
 
         /*
          * @see IContextInformationValidator#install(IContextInformation, ITextViewer, int)
          */
-        public void install( IContextInformation info, ITextViewer viewer, int offset ) {
+        @Override
+        public void install(IContextInformation info, ITextViewer viewer, int offset) {
             fInstallOffset = offset;
         }
 
         /*
-         * @see org.eclipse.jface.text.contentassist.IContextInformationPresenter#updatePresentation(int, TextPresentation)
+         * @see
+         * org.eclipse.jface.text.contentassist.IContextInformationPresenter#updatePresentation(int,
+         * TextPresentation)
          */
-        public boolean updatePresentation( int documentPosition, TextPresentation presentation ) {
+        @Override
+        public boolean updatePresentation(int documentPosition, TextPresentation presentation) {
             return false;
         }
     }
 
     protected static String[] singleWordsProposals = null;
+
     protected static String[] methodWordsProposals = null;
 
     protected IContextInformationValidator fValidator = new Validator();
@@ -70,7 +76,7 @@ public class JavaCompletionProcessor implements IContentAssistProcessor {
         super();
 
         if (singleWordsProposals == null) {
-            List<String> all = new ArrayList<String>();
+            List<String> all = new ArrayList<>();
             all.addAll(Keywords.getValues(Keywords.GEOSCRIPT));
             all.addAll(Keywords.getValues(Keywords.KEYWORDS));
             all.addAll(Keywords.getValues(Keywords.TYPES));
@@ -80,7 +86,7 @@ public class JavaCompletionProcessor implements IContentAssistProcessor {
             singleWordsProposals = all.toArray(new String[0]);
         }
         if (methodWordsProposals == null) {
-            List<String> all = new ArrayList<String>();
+            List<String> all = new ArrayList<>();
             List<String> methods = Keywords.getValues(Keywords.METHODS);
             List<String> jgtmethods = Keywords.getValues(Keywords.JGTMETHODS);
             all.addAll(methods);
@@ -89,10 +95,12 @@ public class JavaCompletionProcessor implements IContentAssistProcessor {
         }
     }
 
-    /* (non-Javadoc)
-     * Method declared on IContentAssistProcessor
+    /*
+     * (non-Javadoc) Method declared on IContentAssistProcessor
      */
-    public ICompletionProposal[] computeCompletionProposals( ITextViewer viewer, int documentOffset ) {
+    @Override
+    public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer,
+            int documentOffset) {
         // get the word the user is currently writing
         String guessedModelWord = null;
         String guessedMethodWord = null;
@@ -102,7 +110,7 @@ public class JavaCompletionProcessor implements IContentAssistProcessor {
             String[] textSplit = text.split("\\s+"); //$NON-NLS-1$
             readWord = textSplit[textSplit.length - 1];
 
-            String[] split = readWord.split("\\.");
+            String[] split = readWord.split("\\."); //$NON-NLS-1$
             if (split.length > 0) {
                 guessedModelWord = split[0];
                 if (split.length != 1) {
@@ -113,11 +121,11 @@ public class JavaCompletionProcessor implements IContentAssistProcessor {
             e.printStackTrace();
         }
 
-        List<ICompletionProposal> props = new ArrayList<ICompletionProposal>();
+        List<ICompletionProposal> props = new ArrayList<>();
 
         if (guessedMethodWord != null) {
-            List<ICompletionProposal> tmp = new ArrayList<ICompletionProposal>();
-            for( int i = 0; i < methodWordsProposals.length; i++ ) {
+            List<ICompletionProposal> tmp = new ArrayList<>();
+            for (int i = 0; i < methodWordsProposals.length; i++) {
                 String wordProposal = methodWordsProposals[i];
                 if (wordProposal.toLowerCase().startsWith(guessedMethodWord.toLowerCase())) {
                     // propose first only those words that start with the letters the user is
@@ -126,8 +134,9 @@ public class JavaCompletionProcessor implements IContentAssistProcessor {
                     int replacementOffset = documentOffset - guessedMethodWord.length();
                     int replacementLength = guessedMethodWord.length();
                     int cursorPosition = wordProposal.length();
-                    CompletionProposal completionProposal = new CompletionProposal(replacementString, replacementOffset,
-                            replacementLength, cursorPosition);
+                    CompletionProposal completionProposal = new CompletionProposal(
+                            replacementString, replacementOffset, replacementLength,
+                            cursorPosition);
                     props.add(completionProposal);
                 } else if (wordProposal.toLowerCase().contains(guessedMethodWord.toLowerCase())) {
                     // propose then those words that contain the letters the user is writing
@@ -135,46 +144,52 @@ public class JavaCompletionProcessor implements IContentAssistProcessor {
                     int replacementOffset = documentOffset - guessedMethodWord.length();
                     int replacementLength = guessedMethodWord.length();
                     int cursorPosition = wordProposal.length();
-                    CompletionProposal completionProposal = new CompletionProposal(replacementString, replacementOffset,
-                            replacementLength, cursorPosition);
+                    CompletionProposal completionProposal = new CompletionProposal(
+                            replacementString, replacementOffset, replacementLength,
+                            cursorPosition);
                     tmp.add(completionProposal);
                 }
             }
             // add second choice
             props.addAll(tmp);
         } else {
-            if (readWord.endsWith(".")) {
+            if (readWord.endsWith(".")) { //$NON-NLS-1$
                 // after the dot, propose methods
-                for( int i = 0; i < methodWordsProposals.length; i++ ) {
+                for (int i = 0; i < methodWordsProposals.length; i++) {
                     String replacementString = methodWordsProposals[i];
                     int replacementOffset = documentOffset;
                     int replacementLength = 0;
                     int cursorPosition = methodWordsProposals[i].length();
-                    CompletionProposal completionProposal = new CompletionProposal(replacementString, replacementOffset,
-                            replacementLength, cursorPosition);
+                    CompletionProposal completionProposal = new CompletionProposal(
+                            replacementString, replacementOffset, replacementLength,
+                            cursorPosition);
                     props.add(completionProposal);
                 }
             } else {
-                List<ICompletionProposal> tmp = new ArrayList<ICompletionProposal>();
+                List<ICompletionProposal> tmp = new ArrayList<>();
                 // propose classes and other words
-                for( int i = 0; i < singleWordsProposals.length; i++ ) {
+                for (int i = 0; i < singleWordsProposals.length; i++) {
                     String wordProposal = singleWordsProposals[i];
-                    if (guessedModelWord != null && wordProposal.toLowerCase().startsWith(guessedModelWord.toLowerCase())) {
+                    if (guessedModelWord != null && wordProposal.toLowerCase()
+                            .startsWith(guessedModelWord.toLowerCase())) {
                         String replacementString = wordProposal;
                         int replacementOffset = documentOffset - guessedModelWord.length();
                         int replacementLength = guessedModelWord.length();
                         int cursorPosition = wordProposal.length();
-                        CompletionProposal completionProposal = new CompletionProposal(replacementString, replacementOffset,
-                                replacementLength, cursorPosition);
+                        CompletionProposal completionProposal = new CompletionProposal(
+                                replacementString, replacementOffset, replacementLength,
+                                cursorPosition);
                         props.add(completionProposal);
-                    } else if (wordProposal.toLowerCase().contains(guessedModelWord.toLowerCase())) {
+                    } else if (wordProposal.toLowerCase()
+                            .contains(guessedModelWord.toLowerCase())) {
                         // propose then those words that contain the letters the user is writing
                         String replacementString = wordProposal;
                         int replacementOffset = documentOffset - guessedModelWord.length();
                         int replacementLength = guessedModelWord.length();
                         int cursorPosition = wordProposal.length();
-                        CompletionProposal completionProposal = new CompletionProposal(replacementString, replacementOffset,
-                                replacementLength, cursorPosition);
+                        CompletionProposal completionProposal = new CompletionProposal(
+                                replacementString, replacementOffset, replacementLength,
+                                cursorPosition);
                         tmp.add(completionProposal);
                     }
                 }
@@ -182,35 +197,33 @@ public class JavaCompletionProcessor implements IContentAssistProcessor {
             }
         }
 
-        return (ICompletionProposal[]) props.toArray(new ICompletionProposal[props.size()]);
+        return props.toArray(new ICompletionProposal[props.size()]);
     }
 
-    public IContextInformation[] computeContextInformation( ITextViewer viewer, int documentOffset ) {
+    @Override
+    public IContextInformation[] computeContextInformation(ITextViewer viewer, int documentOffset) {
         // CONTEXT INFO DISABLED FOR NOW
         IContextInformation[] result = new IContextInformation[0];
-        // for( int i = 0; i < result.length; i++ ) {
-        // result[i] = new ContextInformation(
-        // MessageFormat
-        //                            .format(JavaEditorMessages.getString("CompletionProcessor.ContextInfo.display.pattern"), new Object[]{new Integer(i), new Integer(documentOffset)}), //$NON-NLS-1$
-        // MessageFormat.format(
-        //                            JavaEditorMessages.getString("CompletionProcessor.ContextInfo.value.pattern"), new Object[]{new Integer(i), new Integer(documentOffset - 5), new Integer(documentOffset + 5)})); //$NON-NLS-1$
-        // }
         return result;
     }
 
+    @Override
     public char[] getCompletionProposalAutoActivationCharacters() {
-        return new char[]{'.', '('};
+        return new char[] { '.', '(' };
     }
 
+    @Override
     public char[] getContextInformationAutoActivationCharacters() {
         // CONTEXT INFO DISABLED FOR NOW
-        return new char[]{'#'};
+        return new char[] { '#' };
     }
 
+    @Override
     public IContextInformationValidator getContextInformationValidator() {
         return fValidator;
     }
 
+    @Override
     public String getErrorMessage() {
         return null;
     }

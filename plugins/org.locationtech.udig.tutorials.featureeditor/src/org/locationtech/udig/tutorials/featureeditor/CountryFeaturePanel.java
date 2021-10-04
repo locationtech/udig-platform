@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,64 +10,51 @@
  */
 package org.locationtech.udig.tutorials.featureeditor;
 
-import java.io.IOException;
-import java.util.Properties;
-
-import net.miginfocom.swt.MigLayout;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.IEditManager;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.command.CompositeCommand;
-import org.locationtech.udig.project.command.factory.EditCommandFactory;
-import org.locationtech.udig.project.ui.IFeaturePanel;
-import org.locationtech.udig.project.ui.IFeatureSite;
-import org.locationtech.udig.project.ui.feature.EditFeature;
-import org.locationtech.udig.project.ui.tool.IToolContext;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.PartInitException;
-import org.opengis.feature.IllegalAttributeException;
+import org.locationtech.udig.project.IEditManager;
+import org.locationtech.udig.project.ui.IFeaturePanel;
+import org.locationtech.udig.project.ui.IFeatureSite;
+import org.locationtech.udig.project.ui.feature.EditFeature;
 import org.opengis.feature.simple.SimpleFeature;
 
+import net.miginfocom.swt.MigLayout;
+
 public class CountryFeaturePanel extends IFeaturePanel {
-    private static final String DIRTY = "DIRTY";
+    private static final String DIRTY = "DIRTY"; //$NON-NLS-1$
 
     /** Attribute name for attribute GMI_CNTRY */
-    public static final String GMI_CNTRY = "GMI_CNTRY";
+    public static final String GMI_CNTRY = "GMI_CNTRY"; //$NON-NLS-1$
 
     /** Attribute name for attribute REGION */
-    public static final String COLOR_MAP = "COLOR_MAP";
+    public static final String COLOR_MAP = "COLOR_MAP"; //$NON-NLS-1$
 
     /** Attribute name for attribute NAME */
-    public static final String NAME = "CNTRY_NAME";
+    public static final String NAME = "CNTRY_NAME"; //$NON-NLS-1$
 
-    public static final Object[] COLOR_MAP_OPTS = new Object[]{1, 2, 3, 4, 5, 6, 7, 8};
+    public static final Object[] COLOR_MAP_OPTS = new Object[] { 1, 2, 3, 4, 5, 6, 7, 8 };
 
     Text gmiCntry;
+
     Text name;
+
     ComboViewer colorMap;
 
     @Override
@@ -80,7 +67,7 @@ public class CountryFeaturePanel extends IFeaturePanel {
         listen(false);
     }
 
-    private void listen( boolean listen ) {
+    private void listen(boolean listen) {
         if (listen) {
             gmiCntry.addKeyListener(keyListener);
             name.addKeyListener(keyListener);
@@ -91,38 +78,47 @@ public class CountryFeaturePanel extends IFeaturePanel {
             colorMap.removeSelectionChangedListener(selectionListener);
         }
     }
+
     /**
      * Listen to the selection change.
      * <p>
-     * It is poliet to keep your listeners internal and not pollute your class definition with extra
+     * It is polite to keep your listeners internal and not pollute your class definition with extra
      * interfaces that have nothing to do with your interaction with the outside world (and are
      * basically an internal detail).
      */
-    private ISelectionChangedListener selectionListener = new ISelectionChangedListener(){
-        public void selectionChanged( SelectionChangedEvent event ) {
+    private ISelectionChangedListener selectionListener = new ISelectionChangedListener() {
+        @Override
+        public void selectionChanged(SelectionChangedEvent event) {
             Viewer viewer = (Viewer) event.getSource();
             viewer.setData(DIRTY, Boolean.TRUE);
             persistChanges();
         }
     };
+
     /**
      * List to the fields change as keys are pressed.
      */
-    private KeyListener keyListener = new KeyListener(){
-        public void keyPressed( KeyEvent e ) {
+    private KeyListener keyListener = new KeyListener() {
+        @Override
+        public void keyPressed(KeyEvent e) {
             // do nothing
         }
-        public void keyReleased( KeyEvent e ) {
+
+        @Override
+        public void keyReleased(KeyEvent e) {
             Widget widget = (Widget) e.getSource();
             widget.setData(DIRTY, Boolean.TRUE); // dirty!
         }
     };
 
-    private FocusListener focusListener = new FocusListener(){
-        public void focusLost( FocusEvent e ) {
+    private FocusListener focusListener = new FocusListener() {
+        @Override
+        public void focusLost(FocusEvent e) {
             persistChanges();
         }
-        public void focusGained( FocusEvent e ) {
+
+        @Override
+        public void focusGained(FocusEvent e) {
         }
     };
 
@@ -134,17 +130,17 @@ public class CountryFeaturePanel extends IFeaturePanel {
 
     protected void persistChanges() {
         IFeatureSite site = getSite();
-        if( site == null ){
+        if (site == null) {
             return;
         }
         EditFeature feature = site.getEditFeature();
 
         if (name != null && !name.isDisposed() && Boolean.TRUE.equals(name.getData(DIRTY))) {
-            feature.setAttribute(this.NAME, name.getText());
+            feature.setAttribute(CountryFeaturePanel.NAME, name.getText());
         }
         if (gmiCntry != null && !gmiCntry.isDisposed()
                 && Boolean.TRUE.equals(gmiCntry.getData(DIRTY))) {
-            feature.setAttribute(this.GMI_CNTRY, gmiCntry.getText());
+            feature.setAttribute(CountryFeaturePanel.GMI_CNTRY, gmiCntry.getText());
         }
         if (colorMap != null && !colorMap.getCombo().isDisposed()
                 && Boolean.TRUE.equals(colorMap.getData(DIRTY))) {
@@ -158,44 +154,45 @@ public class CountryFeaturePanel extends IFeaturePanel {
      * Step 1 - init using the editor site and memento holding any information from last time
      */
     @Override
-    public void init( IFeatureSite site, IMemento memento ) throws PartInitException {
+    public void init(IFeatureSite site, IMemento memento) throws PartInitException {
         super.init(site, memento);
     }
 
     @Override
-    public void createPartControl( Composite parent ) {
-        parent.setLayout(new MigLayout("", "[right]10[left, grow][min!][min!]", "30"));
+    public void createPartControl(Composite parent) {
+        parent.setLayout(new MigLayout("", "[right]10[left, grow][min!][min!]", "30")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
         // SWT Widgets
         Label label = new Label(parent, SWT.NONE);
-        label.setText("Country:");
+        label.setText("Country:"); //$NON-NLS-1$
 
         name = new Text(parent, SWT.SHADOW_IN | SWT.BORDER);
-        name.setLayoutData("span 3, growx, wrap");
+        name.setLayoutData("span 3, growx, wrap"); //$NON-NLS-1$
         name.addKeyListener(keyListener);
         name.addFocusListener(focusListener);
 
         label = new Label(parent, SWT.SHADOW_IN);
-        label.setText("Code:");
+        label.setText("Code:"); //$NON-NLS-1$
 
         gmiCntry = new Text(parent, SWT.SHADOW_IN | SWT.BORDER);
-        gmiCntry.setLayoutData("span 3, growx, wrap");
+        gmiCntry.setLayoutData("span 3, growx, wrap"); //$NON-NLS-1$
         gmiCntry.addKeyListener(keyListener);
         gmiCntry.addFocusListener(focusListener);
 
         // JFace Viewer
         label = new Label(parent, SWT.SHADOW_IN);
-        label.setText("Color Map:");
+        label.setText("Color Map:"); //$NON-NLS-1$
 
         colorMap = new ComboViewer(parent, SWT.SHADOW_IN);
-        colorMap.getControl().setLayoutData("wrap");
+        colorMap.getControl().setLayoutData("wrap"); //$NON-NLS-1$
         colorMap.addSelectionChangedListener(selectionListener);
 
         // hook up to data
         colorMap.setContentProvider(ArrayContentProvider.getInstance());
-        colorMap.setLabelProvider(new LabelProvider(){
-            public String getText( Object element ) {
-                return " " + element + " color";
+        colorMap.setLabelProvider(new LabelProvider() {
+            @Override
+            public String getText(Object element) {
+                return " " + element + " color"; //$NON-NLS-1$ //$NON-NLS-2$
             }
         });
         colorMap.setInput(COLOR_MAP_OPTS);
@@ -205,41 +202,40 @@ public class CountryFeaturePanel extends IFeaturePanel {
     public void refresh() {
         SimpleFeature feature = null;
         IFeatureSite site = getSite();
-        if( site != null ){
+        if (site != null) {
             IEditManager editManager = site.getEditManager();
-            if( editManager != null ){
+            if (editManager != null) {
                 feature = editManager.getEditFeature();
             }
         }
 
-        listen( false );
-        String nameText = "";
-        if( feature != null ){
+        listen(false);
+        String nameText = ""; //$NON-NLS-1$
+        if (feature != null) {
             nameText = (String) feature.getAttribute(NAME);
             if (nameText == null)
-                nameText = "";
+                nameText = ""; //$NON-NLS-1$
             name.setText(nameText);
             name.setEnabled(true);
 
             String gmiText = (String) feature.getAttribute(GMI_CNTRY);
             if (gmiText == null)
-                gmiText = "";
+                gmiText = ""; //$NON-NLS-1$
             gmiCntry.setText(gmiText);
             gmiCntry.setEnabled(true);
 
             String colorText = (String) feature.getAttribute(COLOR_MAP);
             if (colorText != null) {
-                StructuredSelection selection = new StructuredSelection(new Integer(colorText));
+                StructuredSelection selection = new StructuredSelection(Integer.valueOf(colorText));
                 colorMap.setSelection(selection);
             } else {
                 colorMap.setSelection(new StructuredSelection());
             }
             listen(true);
-        }
-        else {
-            name.setText("--");
+        } else {
+            name.setText("--"); //$NON-NLS-1$
             name.setEnabled(false);
-            gmiCntry.setText("--");
+            gmiCntry.setText("--"); //$NON-NLS-1$
             gmiCntry.setEnabled(false);
             colorMap.setSelection(new StructuredSelection());
             colorMap.getControl().setEnabled(false);
@@ -248,17 +244,17 @@ public class CountryFeaturePanel extends IFeaturePanel {
 
     @Override
     public String getDescription() {
-        return "Details on the selected country.";
+        return "Details on the selected country."; //$NON-NLS-1$
     }
 
     @Override
     public String getName() {
-        return "Country";
+        return "Country"; //$NON-NLS-1$
     }
 
     @Override
     public String getTitle() {
-        return "Country Details";
+        return "Country Details"; //$NON-NLS-1$
     }
 
 }

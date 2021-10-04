@@ -1,9 +1,15 @@
 /**
- * 
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2021, Refractions Research Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.feature.editor.field;
 
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -26,42 +32,45 @@ import org.opengis.feature.type.AttributeDescriptor;
  * <li></li>
  * </ul>
  * </p>
- * 
+ *
  * @author myleskenihan
  * @since 1.2.0
  */
 public class IntegerAttributeField extends StringAttributeField {
 
     private int minValidValue = 0;
+
     private int maxValidValue = Integer.MAX_VALUE;
+
     private static final int DEFAULT_TEXT_LIMIT = 10;
 
     /**
      * Creates a new integer attribute field
      */
     protected IntegerAttributeField() {
+
     }
 
     /**
      * Creates an integer attribute field.
-     * 
+     *
      * @param name the name of the preference this attribute field works on
      * @param labelText the label text of the attribute field
      * @param parent the parent of the attribute field's control
      */
-    public IntegerAttributeField( String name, String labelText, Composite parent ) {
+    public IntegerAttributeField(String name, String labelText, Composite parent) {
         this(name, labelText, parent, DEFAULT_TEXT_LIMIT);
     }
 
     /**
      * Creates an integer attribute field.
-     * 
+     *
      * @param name the name of the preference this attribute field works on
      * @param labelText the label text of the attribute field
      * @param parent the parent of the attribute field's control
      * @param textLimit the maximum number of characters in the text.
      */
-    public IntegerAttributeField( String name, String labelText, Composite parent, int textLimit ) {
+    public IntegerAttributeField(String name, String labelText, Composite parent, int textLimit) {
         init(name, labelText);
         setTextLimit(textLimit);
         setEmptyStringAllowed(false);
@@ -71,21 +80,18 @@ public class IntegerAttributeField extends StringAttributeField {
 
     /**
      * Sets the range of valid values for this field.
-     * 
+     *
      * @param min the minimum allowed value (inclusive)
      * @param max the maximum allowed value (inclusive)
      */
-    public void setValidRange( int min, int max ) {
+    public void setValidRange(int min, int max) {
         minValidValue = min;
         maxValidValue = max;
         setErrorMessage(JFaceResources.format("IntegerAttributeField.errorMessageRange", //$NON-NLS-1$
-                new Object[]{new Integer(min), new Integer(max)}));
+                new Object[] { Integer.valueOf(min), Integer.valueOf(max) }));
     }
 
-    /*
-     * (non-Javadoc) Method declared on StringAttributeField. Checks whether the entered String is a
-     * valid integer or not.
-     */
+    @Override
     public boolean checkState() {
 
         Text text = getTextControl();
@@ -112,9 +118,7 @@ public class IntegerAttributeField extends StringAttributeField {
         return false;
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
+    @Override
     public void doLoad() {
         Object value = getFeature().getAttribute(getAttributeName());
         Integer thenumber = Converters.convert(value, Integer.class);
@@ -123,9 +127,7 @@ public class IntegerAttributeField extends StringAttributeField {
 
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
+    @Override
     protected void doLoadDefault() {
         if (textField != null) {
             SimpleFeatureType schema = getFeature().getFeatureType();
@@ -137,9 +139,7 @@ public class IntegerAttributeField extends StringAttributeField {
         valueChanged();
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
+    @Override
     protected void doStore() {
 
         SimpleFeatureType schema = getFeature().getFeatureType();
@@ -151,53 +151,51 @@ public class IntegerAttributeField extends StringAttributeField {
 
     /**
      * Returns this attribute field's current value as an integer.
-     * 
+     *
      * @return the value
      * @exception NumberFormatException if the <code>String</code> does not contain a parsable
      *            integer
      */
     public int getIntValue() throws NumberFormatException {
-        return new Integer(getStringValue()).intValue();
+        return Integer.valueOf(getStringValue()).intValue();
     }
-  
+
     @Override
-    public Text getTextControl( Composite parent ) {
+    public Text getTextControl(Composite parent) {
         if (textField == null) {
-            
+
             textField = new Text(parent, SWT.MULTI | SWT.BORDER); // this is a multi-line text
-                        
+
             textField.setFont(parent.getFont());
 
-            textField.addKeyListener(new KeyAdapter(){
-                /*
-                 * (non-Javadoc)
-                 * @see
-                 * org.eclipse.swt.events.KeyAdapter#keyReleased(org.eclipse.swt.events.KeyEvent
-                 * )
-                 */
-                public void keyReleased( KeyEvent e ) {
-                    //backspace pressed
-                    if(e.keyCode == SWT.BS){
-                    valueChanged();                       
+            textField.addKeyListener(new KeyAdapter() {
+
+                @Override
+                public void keyReleased(KeyEvent e) {
+                    // backspace pressed
+                    if (e.keyCode == SWT.BS) {
+                        valueChanged();
                     }
-                    
-                    //numeric pressed
-                    if (e.keyCode >=48 && e.keyCode <=57){
-                    valueChanged();
+
+                    // numeric pressed
+                    if (e.keyCode >= 48 && e.keyCode <= 57) {
+                        valueChanged();
                     }
                 }
             });
-            textField.addFocusListener(new FocusAdapter(){
+            textField.addFocusListener(new FocusAdapter() {
                 // Ensure that the value is checked on focus loss in case we
                 // missed a keyRelease or user hasn't released key.
                 // See https://bugs.eclipse.org/bugs/show_bug.cgi?id=214716
-                public void focusLost( FocusEvent e ) {
+                @Override
+                public void focusLost(FocusEvent e) {
                     valueChanged();
                 }
             });
-            
-            textField.addDisposeListener(new DisposeListener(){
-                public void widgetDisposed( DisposeEvent event ) {
+
+            textField.addDisposeListener(new DisposeListener() {
+                @Override
+                public void widgetDisposed(DisposeEvent event) {
                     textField = null;
                 }
             });
