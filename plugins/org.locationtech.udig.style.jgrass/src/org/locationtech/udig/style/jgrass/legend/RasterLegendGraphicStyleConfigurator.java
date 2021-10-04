@@ -1,6 +1,6 @@
-/*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+/**
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -39,41 +39,59 @@ import org.locationtech.udig.style.IStyleConfigurator;
 import org.locationtech.udig.style.jgrass.messages.Messages;
 import org.locationtech.udig.ui.ColorEditor;
 
-public class RasterLegendGraphicStyleConfigurator extends IStyleConfigurator implements SelectionListener, ModifyListener {
+public class RasterLegendGraphicStyleConfigurator extends IStyleConfigurator
+        implements SelectionListener, ModifyListener {
 
     private Text xposText;
+
     private ColorEditor fontColour;
+
     private ColorEditor backgroundColour;
+
     private Text yposText;
+
     private Text legHeightText;
+
     private Text legWidthText;
+
     private Text boxWidthText;
+
     private Button isroundedButton;
+
     private Text backgroundAlphaText;
+
     private Text forgroundAlphaText;
+
     private ColorEditor foregroundColor;
+
     private Text titleText;
+
     private Label mapNameLabel;
+
     private RasterLegendStyle style;
 
-    /*
+    /**
      * verticalMargin = 3; horizontalMargin = 2; verticalSpacing = 5; horizontalSpacing = 3;
      * indentSize = 10; imageHeight = 16; imageWidth = 16; maxWidth = -1; maxHeight = -1;
      * foregroundColour = Color.BLACK; backgroundColour = Color.WHITE; location = new Point(30, 10);
      */
 
-    public void createControl( Composite parent ) {
+    @Override
+    public void createControl(Composite parent) {
 
-        ScrolledComposite scrollComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        ScrolledComposite scrollComposite = new ScrolledComposite(parent,
+                SWT.H_SCROLL | SWT.V_SCROLL);
         Composite c = new Composite(scrollComposite, SWT.None);
         c.setLayout(new GridLayout());
-        c.setLayoutData(new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL));
+        c.setLayoutData(new GridData(
+                GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL));
 
         GridData layoutData = null;
         Group chooseMapGroup = new Group(c, SWT.BORDER);
         GridLayout layout1 = new GridLayout(3, false);
         chooseMapGroup.setLayout(layout1);
-        chooseMapGroup.setLayoutData(new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL));
+        chooseMapGroup.setLayoutData(new GridData(
+                GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL));
         Label mapLabel = new Label(chooseMapGroup, SWT.NONE);
         mapLabel.setLayoutData(layoutData);
         mapLabel.setText(Messages.getString("LegendGraphicStyleConfigurator.map4legend")); //$NON-NLS-1$
@@ -87,8 +105,9 @@ public class RasterLegendGraphicStyleConfigurator extends IStyleConfigurator imp
         gd2.horizontalAlignment = GridData.HORIZONTAL_ALIGN_END;
         mapButton.setLayoutData(gd2);
         mapButton.setText(Messages.getString("LegendGraphicStyleConfigurator.browse")); //$NON-NLS-1$
-        mapButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        mapButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
                 JGRasterChooserDialog cDialog = new JGRasterChooserDialog(null);
                 cDialog.open(mapButton.getShell(), SWT.SINGLE);
 
@@ -130,19 +149,22 @@ public class RasterLegendGraphicStyleConfigurator extends IStyleConfigurator imp
         legWidthLabel.setLayoutData(layoutData);
         legWidthLabel.setText(Messages.getString("LegendGraphicStyleConfigurator.legendwidth")); //$NON-NLS-1$
         legWidthText = new Text(propertiesGroup, SWT.BORDER);
-        legWidthText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        legWidthText
+                .setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
 
         Label legHeightLabel = new Label(propertiesGroup, SWT.NONE);
         legHeightLabel.setLayoutData(layoutData);
         legHeightLabel.setText(Messages.getString("LegendGraphicStyleConfigurator.legendheight")); //$NON-NLS-1$
         legHeightText = new Text(propertiesGroup, SWT.BORDER);
-        legHeightText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        legHeightText
+                .setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
 
         Label boxWidthLabel = new Label(propertiesGroup, SWT.NONE);
         boxWidthLabel.setLayoutData(layoutData);
         boxWidthLabel.setText(Messages.getString("LegendGraphicStyleConfigurator.boxwidth")); //$NON-NLS-1$
         boxWidthText = new Text(propertiesGroup, SWT.BORDER);
-        boxWidthText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        boxWidthText
+                .setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
 
         isroundedButton = new Button(propertiesGroup, SWT.BORDER | SWT.CHECK);
         isroundedButton.setText(Messages.getString("LegendGraphicStyleConfigurator.roundedrect")); //$NON-NLS-1$
@@ -151,31 +173,41 @@ public class RasterLegendGraphicStyleConfigurator extends IStyleConfigurator imp
         isroundedButton.setLayoutData(gdata);
 
         Label fontColourLabel = new Label(propertiesGroup, SWT.NONE);
-        fontColourLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        fontColourLabel
+                .setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         fontColourLabel.setText(Messages.getString("LegendGraphicStyleConfigurator.fontcolor")); //$NON-NLS-1$
         fontColour = new ColorEditor(propertiesGroup);
 
         Label backgroundColourLabel = new Label(propertiesGroup, SWT.NONE);
-        backgroundColourLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
-        backgroundColourLabel.setText(Messages.getString("LegendGraphicStyleConfigurator.backgroundcolor")); //$NON-NLS-1$
+        backgroundColourLabel
+                .setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        backgroundColourLabel
+                .setText(Messages.getString("LegendGraphicStyleConfigurator.backgroundcolor")); //$NON-NLS-1$
         backgroundColour = new ColorEditor(propertiesGroup);
 
         Label backgroundAlphaLabel = new Label(propertiesGroup, SWT.NONE);
-        backgroundAlphaLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
-        backgroundAlphaLabel.setText(Messages.getString("LegendGraphicStyleConfigurator.backgroundalpha")); //$NON-NLS-1$
+        backgroundAlphaLabel
+                .setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        backgroundAlphaLabel
+                .setText(Messages.getString("LegendGraphicStyleConfigurator.backgroundalpha")); //$NON-NLS-1$
         backgroundAlphaText = new Text(propertiesGroup, SWT.BORDER);
-        backgroundAlphaText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        backgroundAlphaText
+                .setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
 
         Label foregroundColourLabel = new Label(propertiesGroup, SWT.NONE);
-        foregroundColourLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
-        foregroundColourLabel.setText(Messages.getString("LegendGraphicStyleConfigurator.foregroundcolor")); //$NON-NLS-1$
+        foregroundColourLabel
+                .setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        foregroundColourLabel
+                .setText(Messages.getString("LegendGraphicStyleConfigurator.foregroundcolor")); //$NON-NLS-1$
         foregroundColor = new ColorEditor(propertiesGroup);
 
         Label forgroundAlphaLabel = new Label(propertiesGroup, SWT.NONE);
         forgroundAlphaLabel.setLayoutData(layoutData);
-        forgroundAlphaLabel.setText(Messages.getString("LegendGraphicStyleConfigurator.foregroundalpha")); //$NON-NLS-1$
+        forgroundAlphaLabel
+                .setText(Messages.getString("LegendGraphicStyleConfigurator.foregroundalpha")); //$NON-NLS-1$
         forgroundAlphaText = new Text(propertiesGroup, SWT.BORDER);
-        forgroundAlphaText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        forgroundAlphaText
+                .setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
 
         c.layout();
         Point size = c.computeSize(SWT.DEFAULT, SWT.DEFAULT);
@@ -195,8 +227,9 @@ public class RasterLegendGraphicStyleConfigurator extends IStyleConfigurator imp
         backgroundColour.addButtonSelectionListener(this);
         fontColour.addButtonSelectionListener(this);
     }
+
     @Override
-    public boolean canStyle( Layer aLayer ) {
+    public boolean canStyle(Layer aLayer) {
         return aLayer.hasResource(RasterLegendGraphic.class);
     }
 
@@ -210,7 +243,6 @@ public class RasterLegendGraphicStyleConfigurator extends IStyleConfigurator imp
         if (style == null) {
             style = RasterLegendStyleContent.createDefault();
             styleBlackboard.put(RasterLegendStyleContent.ID, style);
-            // styleBlackboard.setSelected(new String[]{RasterLegendStyleContent.ID});
         }
     }
 
@@ -220,7 +252,7 @@ public class RasterLegendGraphicStyleConfigurator extends IStyleConfigurator imp
 
         String mapPath = style.mapPath;
         if (mapPath == null) {
-            mapPath = "";
+            mapPath = ""; //$NON-NLS-1$
         }
         File mapFile = new File(mapPath);
         String mName = null;
@@ -228,17 +260,18 @@ public class RasterLegendGraphicStyleConfigurator extends IStyleConfigurator imp
             mName = mapFile.getName();
         }
         if (mName == null)
-            mName = "";
+            mName = ""; //$NON-NLS-1$
         mapNameLabel.setText(mName);
 
-        fontColour.setColorValue(new RGB(style.fontColor.getRed(), style.fontColor.getGreen(), style.fontColor.getBlue()));
-        foregroundColor.setColorValue(new RGB(style.foregroundColor.getRed(), style.foregroundColor.getGreen(),
-                style.foregroundColor.getBlue()));
-        backgroundColour.setColorValue(new RGB(style.backgroundColor.getRed(), style.backgroundColor.getGreen(),
-                style.backgroundColor.getBlue()));
+        fontColour.setColorValue(new RGB(style.fontColor.getRed(), style.fontColor.getGreen(),
+                style.fontColor.getBlue()));
+        foregroundColor.setColorValue(new RGB(style.foregroundColor.getRed(),
+                style.foregroundColor.getGreen(), style.foregroundColor.getBlue()));
+        backgroundColour.setColorValue(new RGB(style.backgroundColor.getRed(),
+                style.backgroundColor.getGreen(), style.backgroundColor.getBlue()));
 
         if (style.titleString == null)
-            style.titleString = " ";
+            style.titleString = " "; //$NON-NLS-1$
         titleText.setText(style.titleString);
 
         xposText.setText(Integer.toString(style.xPos));
@@ -252,6 +285,7 @@ public class RasterLegendGraphicStyleConfigurator extends IStyleConfigurator imp
 
     }
 
+    @Override
     public void preApply() {
         updateBlackboard();
     }
@@ -295,15 +329,18 @@ public class RasterLegendGraphicStyleConfigurator extends IStyleConfigurator imp
         styleBlackboard.put(RasterLegendStyleContent.ID, style);
     }
 
-    public void widgetSelected( SelectionEvent e ) {
+    @Override
+    public void widgetSelected(SelectionEvent e) {
         updateBlackboard();
     }
 
-    public void widgetDefaultSelected( SelectionEvent e ) {
+    @Override
+    public void widgetDefaultSelected(SelectionEvent e) {
         updateBlackboard();
     }
 
-    public void modifyText( ModifyEvent e ) {
+    @Override
+    public void modifyText(ModifyEvent e) {
         // updateBlackboard();
     }
 }

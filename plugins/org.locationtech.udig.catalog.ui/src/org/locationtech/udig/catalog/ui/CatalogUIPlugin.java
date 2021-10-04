@@ -155,7 +155,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
     /**
      * Logs the Throwable in the plugin's log.
      * <p>
-     * This will be a user visable ERROR iff:
+     * This will be a user visible ERROR if:
      * <ul>
      * <li>t is an Exception we are assuming it is human readable or if a message is provided
      * </ul>
@@ -175,7 +175,7 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
     /**
      * Messages that only engage if getDefault().isDebugging()
      * <p>
-     * It is much prefered to do this:
+     * It is much preferred to do this:
      *
      * <pre>
      * <code>
@@ -349,7 +349,9 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
         return CatalogUIPlugin.getDefault().getImageDescriptor(iconId);
     }
 
-    /** Lookup default resource icon id */
+    /**
+     * Lookup default resource icon id
+     */
     private static String iconInternalResource(ID id, boolean isFeature) {
         if (id.isDecorator()) {
             return ISharedImages.GRAPHIC_OBJ;

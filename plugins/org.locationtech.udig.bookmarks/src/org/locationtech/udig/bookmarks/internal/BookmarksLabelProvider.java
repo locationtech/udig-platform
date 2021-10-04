@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2006, Refractions Research Inc.
  *
@@ -23,7 +24,7 @@ import org.locationtech.udig.bookmarks.IBookmarkService;
  * Provide labels with images to the bookmarks view
  * <p>
  * </p>
- * 
+ *
  * @author cole.markham
  * @since 1.0.0
  * @version 1.3.0
@@ -36,18 +37,18 @@ public class BookmarksLabelProvider extends LabelProvider {
      */
     public BookmarksLabelProvider() {
         try {
-            table = new HashMap<Class, Image>(4);
-            Image image = BookmarksPlugin.getDefault().getImageDescriptor(
-                    "icons/obj16/bookmark_obj.gif").createImage(); //$NON-NLS-1$
+            table = new HashMap<>(4);
+            Image image = BookmarksPlugin.getDefault()
+                    .getImageDescriptor("icons/obj16/bookmark_obj.gif").createImage(); //$NON-NLS-1$
             table.put(Bookmark.class, image);
-            image = BookmarksPlugin.getDefault()
-                    .getImageDescriptor("icons/obj16/fldr_obj.gif").createImage(); //$NON-NLS-1$
+            image = BookmarksPlugin.getDefault().getImageDescriptor("icons/obj16/fldr_obj.gif") //$NON-NLS-1$
+                    .createImage();
             table.put(MapReference.class, image);
-            image = BookmarksPlugin.getDefault()
-                    .getImageDescriptor("icons/obj16/fldr_obj.gif").createImage(); //$NON-NLS-1$
+            image = BookmarksPlugin.getDefault().getImageDescriptor("icons/obj16/fldr_obj.gif") //$NON-NLS-1$
+                    .createImage();
             table.put(ProjectWrapper.class, image);
-            image = BookmarksPlugin.getDefault().getImageDescriptor(
-                    "icons/obj16/bookmarkmanager_obj.gif").createImage(); //$NON-NLS-1$
+            image = BookmarksPlugin.getDefault()
+                    .getImageDescriptor("icons/obj16/bookmarkmanager_obj.gif").createImage(); //$NON-NLS-1$
             table.put(IBookmarkService.class, image);
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,13 +59,13 @@ public class BookmarksLabelProvider extends LabelProvider {
     public void dispose() {
         Collection<Image> images = table.values();
         table.clear();
-        for( Image img : images ) {
+        for (Image img : images) {
             img.dispose();
         }
     }
 
     @Override
-    public String getText( Object obj ) {
+    public String getText(Object obj) {
         String name;
         if (obj instanceof IBookmarkService) {
             IBookmarkService bManager = (BookmarkServiceImpl) obj;
@@ -85,7 +86,7 @@ public class BookmarksLabelProvider extends LabelProvider {
     }
 
     @Override
-    public Image getImage( Object obj ) {
+    public Image getImage(Object obj) {
         Class theClass = obj.getClass();
         Image image = table.get(theClass);
         return image;
