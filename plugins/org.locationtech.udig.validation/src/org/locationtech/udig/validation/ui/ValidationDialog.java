@@ -163,7 +163,6 @@ public class ValidationDialog extends TitleAreaDialog {
     private static String[] typeRefs;
 
     private static String[] layerNames;
-    // private ILayer[] layers;
 
     public ValidationDialog(Shell parentShell, ILayer[] layers) {
         this(parentShell);
