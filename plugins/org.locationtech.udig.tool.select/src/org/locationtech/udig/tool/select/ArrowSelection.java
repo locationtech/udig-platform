@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -14,7 +15,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureSource;
@@ -30,35 +31,37 @@ import org.opengis.feature.simple.SimpleFeature;
 
 /**
  * Selects and drags single features.
- * 
+ *
  * @deprecated {@link ArrowSelectionWithPopup} should be used instead
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
+@Deprecated
 public class ArrowSelection extends AbstractModalTool implements ModalTool {
 
     private int x;
+
     private int y;
 
-    public ArrowSelection(){
-        super(DRAG_DROP|MOUSE);
+    public ArrowSelection() {
+        super(DRAG_DROP | MOUSE);
     }
 
     @Override
-    public void mousePressed( MapMouseEvent e ) {
-        x=e.x;
-        y=e.y;
+    public void mousePressed(MapMouseEvent e) {
+        x = e.x;
+        y = e.y;
     }
-    
+
     @Override
-    public void mouseReleased( final MapMouseEvent e ) {
+    public void mouseReleased(final MapMouseEvent e) {
         if (e.x == x && e.y == y) {
             PlatformGIS.run(new IRunnableWithProgress() {
 
-                @SuppressWarnings("unchecked")
-                public void run(IProgressMonitor monitor) throws InvocationTargetException,
-                        InterruptedException {
+                @Override
+                public void run(IProgressMonitor monitor)
+                        throws InvocationTargetException, InterruptedException {
                     monitor.beginTask(Messages.ArrowSelection_0, 5);
                     ReferencedEnvelope bbox = getContext().getBoundingBox(new Point(x, y), 5);
                     SimpleFeatureCollection collection = null;
@@ -66,29 +69,26 @@ public class ArrowSelection extends AbstractModalTool implements ModalTool {
                     try {
                         ILayer selectedLayer = getContext().getSelectedLayer();
                         SimpleFeatureSource source = selectedLayer.getResource(
-                                SimpleFeatureSource.class, new SubProgressMonitor(monitor, 1));
+                                SimpleFeatureSource.class, SubMonitor.convert(monitor, 1));
                         if (source == null)
                             return;
                         collection = source.getFeatures(selectedLayer.createBBoxFilter(bbox,
-                                new SubProgressMonitor(monitor, 1)));
+                                SubMonitor.convert(monitor, 1)));
                         iter = collection.features();
                         if (!iter.hasNext()) {
                             if (!e.buttonsDown()) {
-                                getContext().sendASyncCommand(
-                                        getContext().getEditFactory()
-                                                .createNullEditFeatureCommand());
+                                getContext().sendASyncCommand(getContext().getEditFactory()
+                                        .createNullEditFeatureCommand());
                             }
                             getContext().sendASyncCommand(
                                     getContext().getSelectionFactory().createNoSelectCommand());
                             return;
                         }
                         SimpleFeature feature = iter.next();
-                        getContext().sendASyncCommand(
-                                getContext().getEditFactory().createSetEditFeatureCommand(feature,
-                                        selectedLayer));
-                        getContext().sendASyncCommand(
-                                getContext().getSelectionFactory().createFIDSelectCommand(
-                                        selectedLayer, feature));
+                        getContext().sendASyncCommand(getContext().getEditFactory()
+                                .createSetEditFeatureCommand(feature, selectedLayer));
+                        getContext().sendASyncCommand(getContext().getSelectionFactory()
+                                .createFIDSelectCommand(selectedLayer, feature));
                     } catch (IOException e) {
 
                         // return;

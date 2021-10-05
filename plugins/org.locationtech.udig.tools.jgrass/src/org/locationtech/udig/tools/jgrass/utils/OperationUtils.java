@@ -1,6 +1,6 @@
-/*
+/**
  * uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,16 +14,8 @@ import java.text.MessageFormat;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.command.CompositeCommand;
-import org.locationtech.udig.project.command.UndoableMapCommand;
-import org.locationtech.udig.project.command.factory.EditCommandFactory;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.tool.IToolContext;
-
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.geotools.data.DataUtilities;
@@ -31,14 +23,20 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.CompositeCommand;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.command.factory.EditCommandFactory;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.tools.jgrass.i18n.Messages;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
-import org.locationtech.udig.tools.jgrass.i18n.Messages;
-
 /**
  * Common methods for less code in operations.
- * 
+ *
  * @author Andrea Antonello (www.hydrologis.com)
  *
  */
@@ -47,10 +45,12 @@ public class OperationUtils {
         INFO, ERROR, WARNING;
     };
 
-    protected void showMessage( final Display display, final String title, final String msg, final MSGTYPE type ) {
-        display.asyncExec(new Runnable(){
+    protected void showMessage(final Display display, final String title, final String msg,
+            final MSGTYPE type) {
+        display.asyncExec(new Runnable() {
+            @Override
             public void run() {
-                switch( type ) {
+                switch (type) {
                 case INFO:
                     MessageDialog.openInformation(display.getActiveShell(), title, msg);
                     break;
@@ -67,10 +67,10 @@ public class OperationUtils {
         });
     }
 
-    protected void moveFeatures( final Display display, IProgressMonitor monitor, ILayer selectedLayer, boolean moveUp )
-            throws IOException {
-        SimpleFeatureSource featureSource = (SimpleFeatureSource) selectedLayer.getResource(FeatureSource.class,
-                new SubProgressMonitor(monitor, 1));
+    protected void moveFeatures(final Display display, IProgressMonitor monitor,
+            ILayer selectedLayer, boolean moveUp) throws IOException {
+        SimpleFeatureSource featureSource = (SimpleFeatureSource) selectedLayer
+                .getResource(FeatureSource.class, SubMonitor.convert(monitor, 1));
         if (featureSource == null) {
             return;
         }
@@ -86,8 +86,8 @@ public class OperationUtils {
 
         int toPosition = currentPosition + delta;
         if (toPosition < 0 || toPosition > mapLayers.size() - 1) {
-            showMessage(display,
-                    Messages.getString("OperationUtils_warning"), Messages.getString("OperationUtils_nolayer"), MSGTYPE.WARNING); //$NON-NLS-1$ //$NON-NLS-2$
+            showMessage(display, Messages.getString("OperationUtils_warning"), //$NON-NLS-1$
+                    Messages.getString("OperationUtils_nolayer"), MSGTYPE.WARNING); //$NON-NLS-1$
             return;
         }
         ILayer toLayer = mapLayers.get(toPosition);
@@ -97,40 +97,42 @@ public class OperationUtils {
         int compare = DataUtilities.compare(toSchema, selectedSchema);
         boolean needsReOrder = false;
         if (compare == -1) {
-            showMessage(display,
-                    Messages.getString("OperationUtils_warning"), Messages.getString("OperationUtils_sametypeproblem"), //$NON-NLS-1$ //$NON-NLS-2$
+            showMessage(display, Messages.getString("OperationUtils_warning"), //$NON-NLS-1$
+                    Messages.getString("OperationUtils_sametypeproblem"), //$NON-NLS-1$
                     MSGTYPE.WARNING);
             return;
-        } else if (compare == 1){
-            showMessage(display,
-                    Messages.getString("OperationUtils_warning"), "featureType match but needs reordering", MSGTYPE.INFO); //$NON-NLS-1$ //$NON-NLS-2$
-                needsReOrder = true;
+        } else if (compare == 1) {
+            showMessage(display, Messages.getString("OperationUtils_warning"), //$NON-NLS-1$
+                    "featureType match but needs reordering", MSGTYPE.INFO); //$NON-NLS-1$
+            needsReOrder = true;
         }
 
-        SimpleFeatureCollection featureCollection = featureSource.getFeatures(selectedLayer.getQuery(true));
+        SimpleFeatureCollection featureCollection = featureSource
+                .getFeatures(selectedLayer.getQuery(true));
         if (featureCollection.size() < 1) {
-            showMessage(
-                    display,
-                    Messages.getString("OperationUtils_warning"), Messages.getString("OperationUtils_nofeaturesproblem"), MSGTYPE.WARNING); //$NON-NLS-1$ //$NON-NLS-2$
+            showMessage(display, Messages.getString("OperationUtils_warning"), //$NON-NLS-1$
+                    Messages.getString("OperationUtils_nofeaturesproblem"), MSGTYPE.WARNING); //$NON-NLS-1$
             return;
         }
 
         SimpleFeatureIterator featureIterator = featureCollection.features();
         EditCommandFactory cmdFactory = EditCommandFactory.getInstance();
-        List<UndoableMapCommand> copyOverList = new LinkedList<UndoableMapCommand>();
-        List<UndoableMapCommand> deleteOldList = new LinkedList<UndoableMapCommand>();
+        List<UndoableMapCommand> copyOverList = new LinkedList<>();
+        List<UndoableMapCommand> deleteOldList = new LinkedList<>();
         int count = 0;
-        while( featureIterator.hasNext() ) {
+        while (featureIterator.hasNext()) {
             SimpleFeature feature = featureIterator.next();
             UndoableMapCommand addFeatureCmd = cmdFactory.createAddFeatureCommand(
-                    needsReOrder ? DataUtilities.reType(toSchema, feature, true) : feature, toLayer);
+                    needsReOrder ? DataUtilities.reType(toSchema, feature, true) : feature,
+                    toLayer);
             copyOverList.add(addFeatureCmd);
-            UndoableMapCommand deleteFeatureCmd = cmdFactory.createDeleteFeature(feature, selectedLayer);
+            UndoableMapCommand deleteFeatureCmd = cmdFactory.createDeleteFeature(feature,
+                    selectedLayer);
             deleteOldList.add(deleteFeatureCmd);
             count++;
         }
 
-        /*
+        /**
          * first copy things over and if that works, delete the old ones
          */
         IToolContext toolContext = ApplicationGIS.createContext(ApplicationGIS.getActiveMap());
@@ -138,19 +140,19 @@ public class OperationUtils {
             CompositeCommand compositeCommand = new CompositeCommand(copyOverList);
             toolContext.sendSyncCommand(compositeCommand);
         } catch (Exception e) {
-            showMessage(display,
-                    Messages.getString("OperationUtils_error"), Messages.getString("OperationUtils_copyproblem"), MSGTYPE.ERROR); //$NON-NLS-1$ //$NON-NLS-2$
+            showMessage(display, Messages.getString("OperationUtils_error"), //$NON-NLS-1$
+                    Messages.getString("OperationUtils_copyproblem"), MSGTYPE.ERROR); //$NON-NLS-1$
             return;
         }
         try {
             CompositeCommand compositeCommand = new CompositeCommand(deleteOldList);
             toolContext.sendSyncCommand(compositeCommand);
-            showMessage(
-                    display,
-                    Messages.getString("OperationUtils_info"), MessageFormat.format(Messages.getString("OperationUtils_movedinfo"), count), MSGTYPE.WARNING); //$NON-NLS-1$ //$NON-NLS-2$
+            showMessage(display, Messages.getString("OperationUtils_info"), //$NON-NLS-1$
+                    MessageFormat.format(Messages.getString("OperationUtils_movedinfo"), count), //$NON-NLS-1$
+                    MSGTYPE.WARNING);
         } catch (Exception e) {
-            showMessage(display,
-                    Messages.getString("OperationUtils_error"), Messages.getString("OperationUtils_deleteproblem"), MSGTYPE.ERROR); //$NON-NLS-1$ //$NON-NLS-2$
+            showMessage(display, Messages.getString("OperationUtils_error"), //$NON-NLS-1$
+                    Messages.getString("OperationUtils_deleteproblem"), MSGTYPE.ERROR); //$NON-NLS-1$
         }
     }
 }
