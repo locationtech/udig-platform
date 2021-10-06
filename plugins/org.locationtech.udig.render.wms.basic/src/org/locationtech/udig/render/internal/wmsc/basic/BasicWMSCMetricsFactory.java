@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2008-2011, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2008-2011, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -24,13 +24,14 @@ import org.locationtech.udig.render.wms.basic.WMSPlugin;
 
 /**
  * Creates metrics for WMS-C renderer.
- * 
+ *
  * @author Emily Gouge (Refractions Research, Inc)
  * @since 1.1.0
  */
 public class BasicWMSCMetricsFactory implements IRenderMetricsFactory {
 
-    public boolean canRender( IRenderContext context ) throws IOException {
+    @Override
+    public boolean canRender(IRenderContext context) throws IOException {
         if (context.getLayer().hasResource(TiledWebMapServer.class)) {
             return true;
         }
@@ -43,17 +44,19 @@ public class BasicWMSCMetricsFactory implements IRenderMetricsFactory {
         return false;
     }
 
-    public AbstractRenderMetrics createMetrics( IRenderContext context ) {
+    @Override
+    public AbstractRenderMetrics createMetrics(IRenderContext context) {
         TileSet tileset = null;
         try {
             tileset = context.getLayer().getResource(TileSet.class, null);
         } catch (IOException e) {
-            WMSPlugin.log("Cannot create render metrics from wmsc", e);
+            WMSPlugin.log("Cannot create render metrics from wmsc", e); //$NON-NLS-1$
         }
         return new BasicWMSCRenderMetrics(context, this, tileset);
     }
 
-    public Class< ? extends IRenderer> getRendererType() {
+    @Override
+    public Class<? extends IRenderer> getRendererType() {
         return BasicWMSCRenderer.class;
     }
 
