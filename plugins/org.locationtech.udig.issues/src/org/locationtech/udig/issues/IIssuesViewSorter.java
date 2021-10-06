@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -10,71 +11,70 @@
 package org.locationtech.udig.issues;
 
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerSorter;
-
+import org.eclipse.jface.viewers.ViewerComparator;
 
 /**
  * Interface for a sorting strategy for sorting and expanding elements/branches in the issues view.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
-public interface IIssuesViewSorter{
+public interface IIssuesViewSorter {
     /**
-     * Returns a negative, zero, or positive number depending on whether
-     * the first element is less than, equal to, or greater than
-     * the second element.
-     * 
+     * Returns a negative, zero, or positive number depending on whether the first element is less
+     * than, equal to, or greater than the second element.
+     *
      * @param viewer viewer that the sorter is sorting
-     * @param defaultSorter the default sorter.  
+     * @param defaultSorter the default sorter.
      * @param selectedColumn the selected column.
-     * @param direction if true then the order should be ascending if false then descending.  This is changed when the header of the 
-     * selected column is clicked.  It is normal table functionality in many apps.
+     * @param direction if true then the order should be ascending if false then descending. This is
+     *        changed when the header of the selected column is clicked. It is normal table
+     *        functionality in many apps.
      * @param e1 the first object
      * @param e2 the second object
-     * @return a negative number if the first element is less  than the 
-     *  second element; the value <code>0</code> if the first element is
-     *  equal to the second element; and a positive number if the first
-     *  element is greater than the second element
+     * @return a negative number if the first element is less than the second element; the value
+     *         <code>0</code> if the first element is equal to the second element; and a positive
+     *         number if the first element is greater than the second element
      */
-    public int compare( Viewer viewer, ViewerSorter defaultSorter, Column selectedColumn, boolean direction, Object e1, Object e2 );
+    public int compare(Viewer viewer, ViewerComparator defaultSorter, Column selectedColumn,
+            boolean direction, Object e1, Object e2);
 
     /**
-     * Returns the extension id so that the system can instantiate the 
-     * sorter again in the future after the workbench has been shutdown.
-     * 
+     * Returns the extension id so that the system can instantiate the sorter again in the future
+     * after the workbench has been shutdown.
+     *
      * @return pluginID.extensionid.
      */
     String getExtensionID();
+
     /**
-     * Returns whether this viewer sorter would be affected 
-     * by a change to the given property of the given element.
+     * Returns whether this viewer sorter would be affected by a change to the given property of the
+     * given element.
      * <p>
-     * The default implementation of this method returns <code>false</code>.
-     * Subclasses may reimplement.
+     * The default implementation of this method returns <code>false</code>. Subclasses may
+     * reimplement.
      * </p>
      *
-     * @param defaultSorter the default sorter.  
+     * @param defaultSorter the default sorter.
      * @param element the element
      * @param property the property
-     * @return <code>true</code> if the sorting would be affected,
-     *    and <code>false</code> if it would be unaffected
+     * @return <code>true</code> if the sorting would be affected, and <code>false</code> if it
+     *         would be unaffected
      */
-    public boolean isSorterProperty( ViewerSorter defaultSorter, Object element, String property );
+    public boolean isSorterProperty(ViewerComparator defaultSorter, Object element, String property);
+
     /**
-     * Returns the category of the given element. The category is a
-     * number used to allocate elements to bins; the bins are arranged
-     * in ascending numeric order. The elements within a bin are arranged
-     * via a second level sort criterion.
+     * Returns the category of the given element. The category is a number used to allocate elements
+     * to bins; the bins are arranged in ascending numeric order. The elements within a bin are
+     * arranged via a second level sort criterion.
      * <p>
-     * The default implementation of this framework method returns
-     * <code>0</code>. Subclasses may reimplement this method to provide
-     * non-trivial categorization.
+     * The default implementation of this framework method returns <code>0</code>. Subclasses may
+     * reimplement this method to provide non-trivial categorization.
      * </p>
      *
-     * @param defaultSorter the default sorter.  
+     * @param defaultSorter the default sorter.
      * @param element the element
      * @return the category
      */
-    public int category( ViewerSorter defaultSorter,  Object element );
+    public int category(ViewerComparator defaultSorter, Object element);
 }

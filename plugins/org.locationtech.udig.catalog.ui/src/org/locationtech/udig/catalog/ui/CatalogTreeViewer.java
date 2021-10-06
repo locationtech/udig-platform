@@ -62,8 +62,7 @@ public class CatalogTreeViewer extends TreeViewer implements ISelectionChangedLi
      * @param parent
      */
     public CatalogTreeViewer(Composite parent) {
-        this(parent, true); // no border by
-                            // default
+        this(parent, true); // no border by default
     }
 
     /**
@@ -96,7 +95,7 @@ public class CatalogTreeViewer extends TreeViewer implements ISelectionChangedLi
 
         setUseHashlookup(true);
         setInput(CatalogPlugin.getDefault().getLocalCatalog());
-        setSorter(new CatalogViewerSorter());
+        setComparator(new CatalogViewerSorter());
 
         addSelectionChangedListener(this);
 

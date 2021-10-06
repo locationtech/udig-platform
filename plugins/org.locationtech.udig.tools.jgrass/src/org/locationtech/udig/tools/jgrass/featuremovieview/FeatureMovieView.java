@@ -1,4 +1,4 @@
-/*
+/**
  * uDig - User Friendly Desktop Internet GIS client
  * (C) HydroloGIS - www.hydrologis.com
  *
@@ -13,16 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.command.UndoableMapCommand;
-import org.locationtech.udig.project.command.factory.SelectionCommandFactory;
-import org.locationtech.udig.project.internal.command.navigation.ZoomCommand;
-import org.locationtech.udig.project.internal.commands.selection.SelectCommand;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
@@ -46,19 +38,20 @@ import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.filter.FidFilterImpl;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.command.factory.SelectionCommandFactory;
+import org.locationtech.udig.project.internal.command.navigation.ZoomCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.tools.jgrass.JGrassToolsPlugin;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-import org.opengis.referencing.operation.TransformException;
-
-import org.locationtech.jts.geom.Envelope;
-import org.locationtech.jts.geom.Geometry;
-
-import org.locationtech.udig.tools.jgrass.JGrassToolsPlugin;
 
 /**
  * A navigation view.
@@ -69,50 +62,66 @@ import org.locationtech.udig.tools.jgrass.JGrassToolsPlugin;
 public class FeatureMovieView extends ViewPart {
 
     private Image playImage;
+
     private Image stopImage;
+
     private Text zoomBufferText;
+
     private double zoomBuffer;
+
     private Text timerText;
+
     private double timer;
 
     private boolean isRunning = false;
+
     private Button playButton;
+
     private Label currentFeatureInfo;
 
-    private String previousLayerName = "";
+    private String previousLayerName = ""; //$NON-NLS-1$
 
     private List<SimpleFeature> featureList;
+
     private int index = 0;
+
     private Label featureNumLabel;
 
     private IMap activeMap;
+
     private ILayer selectedLayer;
+
     private CoordinateReferenceSystem crs;
+
     private Image gotoImage;
+
     private Text gotoText;
+
     private Image nextImage;
+
     private Image previousImage;
 
     public FeatureMovieView() {
-        ImageDescriptor playImageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID,
-                "icons/play.gif");
+        ImageDescriptor playImageDescriptor = AbstractUIPlugin
+                .imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID, "icons/play.gif"); //$NON-NLS-1$
         playImage = playImageDescriptor.createImage();
-        ImageDescriptor stopImageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID,
-                "icons/stop.gif");
+        ImageDescriptor stopImageDescriptor = AbstractUIPlugin
+                .imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID, "icons/stop.gif"); //$NON-NLS-1$
         stopImage = stopImageDescriptor.createImage();
-        ImageDescriptor gotoImageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID,
-                "icons/goto.gif");
+        ImageDescriptor gotoImageDescriptor = AbstractUIPlugin
+                .imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID, "icons/goto.gif"); //$NON-NLS-1$
         gotoImage = gotoImageDescriptor.createImage();
-        ImageDescriptor nextImageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID,
-                "icons/shift_r_edit.gif");
+        ImageDescriptor nextImageDescriptor = AbstractUIPlugin
+                .imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID, "icons/shift_r_edit.gif"); //$NON-NLS-1$
         nextImage = nextImageDescriptor.createImage();
-        ImageDescriptor previousImageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID,
-                "icons/shift_l_edit.gif");
+        ImageDescriptor previousImageDescriptor = AbstractUIPlugin
+                .imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID, "icons/shift_l_edit.gif"); //$NON-NLS-1$
         previousImage = previousImageDescriptor.createImage();
 
     }
 
-    public void createPartControl( Composite theparent ) {
+    @Override
+    public void createPartControl(Composite theparent) {
 
         Composite parent = new Composite(theparent, SWT.NONE);
         parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -121,15 +130,16 @@ public class FeatureMovieView extends ViewPart {
         Group playGroup = new Group(parent, SWT.NONE);
         playGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         playGroup.setLayout(new GridLayout(2, false));
-        playGroup.setText("Commands");
+        playGroup.setText("Commands"); //$NON-NLS-1$
 
         playButton = new Button(playGroup, SWT.PUSH);
         playButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-        playButton.setText("start");
+        playButton.setText("start"); //$NON-NLS-1$
         playButton.setImage(playImage);
-        playButton.addSelectionListener(new SelectionAdapter(){
+        playButton.addSelectionListener(new SelectionAdapter() {
 
-            public void widgetSelected( SelectionEvent e ) {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
                 if (isRunning) {
                     // stop it
                     stop();
@@ -148,9 +158,10 @@ public class FeatureMovieView extends ViewPart {
                                 initLayer();
                             }
 
-                            new Thread(new Runnable(){
+                            new Thread(new Runnable() {
+                                @Override
                                 public void run() {
-                                    while( index < featureList.size() && isRunning ) {
+                                    while (index < featureList.size() && isRunning) {
                                         try {
                                             goToFeature();
                                             Thread.sleep((long) (timer * 1000));
@@ -176,14 +187,15 @@ public class FeatureMovieView extends ViewPart {
 
         featureNumLabel = new Label(playGroup, SWT.NONE);
         featureNumLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        featureNumLabel.setText(" - ");
+        featureNumLabel.setText(" - "); //$NON-NLS-1$
 
         Button gotoButton = new Button(playGroup, SWT.PUSH);
         gotoButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-        gotoButton.setText("goto");
+        gotoButton.setText("goto"); //$NON-NLS-1$
         gotoButton.setImage(gotoImage);
-        gotoButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        gotoButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
                 String text = gotoText.getText();
                 int gotoInt = 1;
                 try {
@@ -196,13 +208,14 @@ public class FeatureMovieView extends ViewPart {
 
                     int size = featureList.size();
                     if (index < 0 || index > size - 1) {
-                        MessageDialog.openWarning(getSite().getShell(), "Wrong feature number", "The feature number range is: "
-                                + 1 + " - " + size);
+                        MessageDialog.openWarning(getSite().getShell(), "Wrong feature number", //$NON-NLS-1$
+                                "The feature number range is: " //$NON-NLS-1$
+                                        + 1 + " - " + size); //$NON-NLS-1$
                         return;
                     }
                     goToFeature();
                 } catch (Exception ex) {
-                    gotoText.setText("");
+                    gotoText.setText(""); //$NON-NLS-1$
                     ex.printStackTrace();
                 }
             }
@@ -211,7 +224,7 @@ public class FeatureMovieView extends ViewPart {
         GridData gotoTextGD = new GridData(SWT.FILL, SWT.CENTER, false, false);
         gotoTextGD.widthHint = 20;
         gotoText.setLayoutData(gotoTextGD);
-        gotoText.setText("");
+        gotoText.setText(""); //$NON-NLS-1$
 
         Composite nextPreviousComposite = new Composite(playGroup, SWT.NONE);
         nextPreviousComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
@@ -222,10 +235,11 @@ public class FeatureMovieView extends ViewPart {
 
         Button previousButton = new Button(nextPreviousComposite, SWT.PUSH);
         previousButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-        previousButton.setText("previous");
+        previousButton.setText("previous"); //$NON-NLS-1$
         previousButton.setImage(previousImage);
-        previousButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        previousButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
                 try {
                     if (index == 1) {
                         return;
@@ -244,17 +258,18 @@ public class FeatureMovieView extends ViewPart {
                     }
                     goToFeature();
                 } catch (Exception ex) {
-                    gotoText.setText("");
+                    gotoText.setText(""); //$NON-NLS-1$
                     ex.printStackTrace();
                 }
             }
         });
         Button nextButton = new Button(nextPreviousComposite, SWT.PUSH);
         nextButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-        nextButton.setText("next");
+        nextButton.setText("next"); //$NON-NLS-1$
         nextButton.setImage(nextImage);
-        nextButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        nextButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
                 try {
                     if (selectedLayer == null) {
                         initLayer();
@@ -266,14 +281,15 @@ public class FeatureMovieView extends ViewPart {
                     // index stays the same, since later +1 is added
                     // index = index + 1;
                     if (index < 0) {
-                        index = 0;;
+                        index = 0;
+                        ;
                     }
                     if (index > size - 1) {
                         index = size - 1;
                     }
                     goToFeature();
                 } catch (Exception ex) {
-                    gotoText.setText("");
+                    gotoText.setText(""); //$NON-NLS-1$
                     ex.printStackTrace();
                 }
             }
@@ -282,17 +298,18 @@ public class FeatureMovieView extends ViewPart {
         Group paramsGroup = new Group(parent, SWT.NONE);
         paramsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         paramsGroup.setLayout(new GridLayout(2, true));
-        paramsGroup.setText("Parameters");
+        paramsGroup.setText("Parameters"); //$NON-NLS-1$
 
         Label zoomBufferLabel = new Label(paramsGroup, SWT.NONE);
         zoomBufferLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        zoomBufferLabel.setText("Zoom buffer around feature");
+        zoomBufferLabel.setText("Zoom buffer around feature"); //$NON-NLS-1$
 
         zoomBufferText = new Text(paramsGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         zoomBufferText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        zoomBufferText.setText("");
-        zoomBufferText.addModifyListener(new ModifyListener(){
-            public void modifyText( ModifyEvent e ) {
+        zoomBufferText.setText(""); //$NON-NLS-1$
+        zoomBufferText.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(ModifyEvent e) {
                 updateZoomBuffer();
             }
         });
@@ -300,13 +317,14 @@ public class FeatureMovieView extends ViewPart {
 
         Label timerLabel = new Label(paramsGroup, SWT.NONE);
         timerLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        timerLabel.setText("Timer interval in seconds");
+        timerLabel.setText("Timer interval in seconds"); //$NON-NLS-1$
 
         timerText = new Text(paramsGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         timerText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        timerText.setText("");
-        timerText.addModifyListener(new ModifyListener(){
-            public void modifyText( ModifyEvent e ) {
+        timerText.setText(""); //$NON-NLS-1$
+        timerText.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(ModifyEvent e) {
                 updateTimer();
             }
         });
@@ -315,18 +333,19 @@ public class FeatureMovieView extends ViewPart {
         Group infoGroup = new Group(parent, SWT.NONE);
         infoGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         infoGroup.setLayout(new GridLayout(1, true));
-        infoGroup.setText("Current Feature Info");
+        infoGroup.setText("Current Feature Info"); //$NON-NLS-1$
 
         currentFeatureInfo = new Label(infoGroup, SWT.NONE);
         currentFeatureInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        currentFeatureInfo.setText(" - ");
+        currentFeatureInfo.setText(" - "); //$NON-NLS-1$
     }
 
     private void initLayer() throws IOException {
         activeMap = ApplicationGIS.getActiveMap();
         selectedLayer = activeMap.getEditManager().getSelectedLayer();
-        SimpleFeatureSource featureSource = (SimpleFeatureSource) selectedLayer.getResource(FeatureSource.class,
-                new SubProgressMonitor(new NullProgressMonitor(), 1));
+        SubMonitor subMonitor = SubMonitor.convert(new NullProgressMonitor(), 1);
+        SimpleFeatureSource featureSource = (SimpleFeatureSource) selectedLayer
+                .getResource(FeatureSource.class, subMonitor);
         if (featureSource == null) {
             noProperLayerSelected();
             return;
@@ -339,8 +358,8 @@ public class FeatureMovieView extends ViewPart {
     }
 
     private void noProperLayerSelected() {
-        MessageDialog.openWarning(getSite().getShell(), "NO LAYER SELECTED",
-                "A feature layer needs to be selected to use the tool.");
+        MessageDialog.openWarning(getSite().getShell(), "NO LAYER SELECTED", //$NON-NLS-1$
+                "A feature layer needs to be selected to use the tool."); //$NON-NLS-1$
         stop();
     }
 
@@ -352,30 +371,31 @@ public class FeatureMovieView extends ViewPart {
 
         SimpleFeatureType featureType = currentFeature.getFeatureType();
         List<AttributeDescriptor> attributeDescriptors = featureType.getAttributeDescriptors();
-        List<String> attributeNames = new ArrayList<String>();
-        for( AttributeDescriptor attributeDescriptor : attributeDescriptors ) {
+        List<String> attributeNames = new ArrayList<>();
+        for (AttributeDescriptor attributeDescriptor : attributeDescriptors) {
             String name = attributeDescriptor.getLocalName();
             attributeNames.add(name);
         }
         final StringBuilder infoSb = new StringBuilder();
-        for( String name : attributeNames ) {
+        for (String name : attributeNames) {
             Object attribute = currentFeature.getAttribute(name);
             if (attribute != null) {
-                infoSb.append(name).append(" = ").append(attribute.toString()).append("\n");
+                infoSb.append(name).append(" = ").append(attribute.toString()).append("\n"); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
         final StringBuilder numSb = new StringBuilder();
-        numSb.append("  (");
+        numSb.append("  ("); //$NON-NLS-1$
         numSb.append(index + 1);
-        numSb.append("/");
+        numSb.append("/"); //$NON-NLS-1$
         numSb.append(featureList.size());
-        numSb.append(")");
+        numSb.append(")"); //$NON-NLS-1$
         index++;
         if (index == featureList.size()) {
             index = 0;
         }
 
-        Display.getDefault().asyncExec(new Runnable(){
+        Display.getDefault().asyncExec(new Runnable() {
+            @Override
             public void run() {
                 currentFeatureInfo.setText(infoSb.toString());
                 featureNumLabel.setText(numSb.toString());
@@ -392,8 +412,8 @@ public class FeatureMovieView extends ViewPart {
             // ignore
         }
 
-        UndoableMapCommand selectCommand = SelectionCommandFactory.getInstance().createFIDSelectCommand(selectedLayer,
-                currentFeature);
+        UndoableMapCommand selectCommand = SelectionCommandFactory.getInstance()
+                .createFIDSelectCommand(selectedLayer, currentFeature);
         ZoomCommand zoomCommand = new ZoomCommand(ref);
         activeMap.sendCommandASync(selectCommand);
         activeMap.sendCommandASync(zoomCommand);
@@ -402,13 +422,13 @@ public class FeatureMovieView extends ViewPart {
 
     private synchronized void start() {
         playButton.setImage(stopImage);
-        playButton.setText("stop");
+        playButton.setText("stop"); //$NON-NLS-1$
         isRunning = true;
     }
 
     private synchronized void stop() {
         playButton.setImage(playImage);
-        playButton.setText("start");
+        playButton.setText("start"); //$NON-NLS-1$
         isRunning = false;
     }
 
@@ -418,7 +438,7 @@ public class FeatureMovieView extends ViewPart {
             timer = Double.parseDouble(text);
         } catch (Exception e) {
             timer = 4.0;
-            timerText.setText(timer + "");
+            timerText.setText(timer + ""); //$NON-NLS-1$
         }
     }
 
@@ -428,7 +448,7 @@ public class FeatureMovieView extends ViewPart {
             zoomBuffer = Double.parseDouble(text);
         } catch (Exception e) {
             zoomBuffer = 10.0;
-            zoomBufferText.setText(zoomBuffer + "");
+            zoomBufferText.setText(zoomBuffer + ""); //$NON-NLS-1$
         }
     }
 
@@ -438,13 +458,13 @@ public class FeatureMovieView extends ViewPart {
      * @param collection the feature collection.
      * @return the list with the features or an empty list if no features present.
      */
-    private List<SimpleFeature> featureCollectionToList( SimpleFeatureCollection collection ) {
-        List<SimpleFeature> featuresList = new ArrayList<SimpleFeature>();
+    private List<SimpleFeature> featureCollectionToList(SimpleFeatureCollection collection) {
+        List<SimpleFeature> featuresList = new ArrayList<>();
         if (collection == null) {
             return featuresList;
         }
         SimpleFeatureIterator featureIterator = collection.features();
-        while( featureIterator.hasNext() ) {
+        while (featureIterator.hasNext()) {
             SimpleFeature feature = featureIterator.next();
             featuresList.add(feature);
         }

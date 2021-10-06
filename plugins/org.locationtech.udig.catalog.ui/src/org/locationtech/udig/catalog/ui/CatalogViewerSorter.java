@@ -13,7 +13,7 @@ package org.locationtech.udig.catalog.ui;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.locationtech.udig.catalog.IGeoResource;
 
 /**
@@ -22,7 +22,7 @@ import org.locationtech.udig.catalog.IGeoResource;
  * @author jones
  * @since 1.0.0
  */
-public class CatalogViewerSorter extends ViewerSorter {
+public class CatalogViewerSorter extends ViewerComparator {
 
     Map<Class, Integer> categories = new HashMap<>();
 
