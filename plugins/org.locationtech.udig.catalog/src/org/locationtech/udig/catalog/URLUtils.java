@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2011, Refractions Research Inc.
  *
@@ -21,7 +22,7 @@ import org.locationtech.udig.core.internal.CorePlugin;
 
 /**
  * Utilities for dealing with the catalog's use of URLs as identifiers
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  * @version 1.2
@@ -29,18 +30,18 @@ import org.locationtech.udig.core.internal.CorePlugin;
 public class URLUtils {
 
     /**
-     * Primarily for testing the coomparison of URLS. it is not a simple thing because different
+     * Primarily for testing the comparison of URLS. it is not a simple thing because different
      * platforms can sometimes create ones with a dangling / or with / vs \ some times file:/// or
      * file:/.
-     * 
-     * @param url1 first url to compare
-     * @param url2 second url
+     *
+     * @param url1 first URL to compare
+     * @param url2 second URL
      * @param stripRef if the reference should be ignored. For example searching for the IService of
      *        a IGeoResource. The Service ID would not have a reference but the IGeoResource would
      *        so ignore the reference in this case.
      * @return true if they refer to the same resource.
      */
-    public static boolean urlEquals( URL url1, URL url2, boolean stripRef ) {
+    public static boolean urlEquals(URL url1, URL url2, boolean stripRef) {
         if (url1 == null) {
             if (url2 == null)
                 return true;
@@ -50,52 +51,62 @@ public class URLUtils {
             return false;
         }
         boolean sameProtocol = url2.getProtocol().equalsIgnoreCase(url1.getProtocol());
-        
-        if ("file".equals(url2.getProtocol()) && "file".equals(url1.getProtocol())) {
+
+        if ("file".equals(url2.getProtocol()) && "file".equals(url1.getProtocol())) { //$NON-NLS-1$ //$NON-NLS-2$
             // take into account file links on linux and osx
             File file1 = urlToFile(url1);
             File file2 = urlToFile(url2);
             try {
                 if (file1 != null && file2 != null) {
                     String path1 = file1.getCanonicalPath();
-                    path1 = path1.replaceAll("\\\\", "/");
-                    if (file1.isDirectory() && !path1.endsWith("/")) {
-                        path1 = path1 + "/";
+                    path1 = path1.replaceAll("\\\\", "/"); //$NON-NLS-1$ //$NON-NLS-2$
+                    if (file1.isDirectory() && !path1.endsWith("/")) { //$NON-NLS-1$
+                        path1 = path1 + "/"; //$NON-NLS-1$
                     }
                     String path2 = file2.getCanonicalPath();
-                    path2 = path2.replaceAll("\\\\", "/");
-                    if (file2.isDirectory() && !path2.endsWith("/")) {
-                        path2 = path2 + "/";
+                    path2 = path2.replaceAll("\\\\", "/"); //$NON-NLS-1$ //$NON-NLS-2$
+                    if (file2.isDirectory() && !path2.endsWith("/")) { //$NON-NLS-1$
+                        path2 = path2 + "/"; //$NON-NLS-1$
                     }
                     if (stripRef) {
                         if (url1.getRef() != null) {
-                            //path1 = path1.substring(0, path1.length() - url1.getRef().length() - 1);
-                        	path1 = path1.substring(0, path1.length() - decodeReference(url1.getRef()).length() - 1);
+                            // path1 = path1.substring(0, path1.length() - url1.getRef().length() -
+                            // 1);
+                            path1 = path1.substring(0,
+                                    path1.length() - decodeReference(url1.getRef()).length() - 1);
                         }
                         if (url2.getRef() != null) {
-                            //path2 = path2.substring(0, path2.length() - url2.getRef().length() - 1);
-                            path2 = path2.substring(0, path2.length() - decodeReference(url2.getRef()).length() - 1);
+                            // path2 = path2.substring(0, path2.length() - url2.getRef().length() -
+                            // 1);
+                            path2 = path2.substring(0,
+                                    path2.length() - decodeReference(url2.getRef()).length() - 1);
                         }
                     }
                     return path1.equals(path2);
                 }
-			} catch (IOException e) {
-				CatalogPlugin.log("Unable to compare file URLS "+file1+" and "+file2+" files because of an exception.", e);
-			}
-        	
+            } catch (IOException e) {
+                CatalogPlugin.log("Unable to compare file URLS " + file1 + " and " + file2 //$NON-NLS-1$ //$NON-NLS-2$
+                        + " files because of an exception.", e); //$NON-NLS-1$
+            }
+
         }
-        
-        boolean sameHost = ((url2.getHost() == null || "".equals(url2.getHost())) || (url2.getHost() != null && url2.getHost().equalsIgnoreCase(url1.getHost()))); //$NON-NLS-1$
-        boolean samePath = ((url2.getPath() == null || "".equals(url2.getPath())) || (url2.getPath() != null && url2.getPath().equalsIgnoreCase(url1.getPath()))); //$NON-NLS-1$
-        boolean sameQuery = ((url2.getQuery() == null || "".equals(url2.getQuery())) || (url2.getQuery() != null && url2.getQuery().equalsIgnoreCase(url1.getQuery()))); //$NON-NLS-1$
-        boolean sameAuthority = ((url2.getAuthority() == null || "".equals(url2.getAuthority())) || (url2.getAuthority() != null && url2.getAuthority().equalsIgnoreCase(url1.getAuthority()))); //$NON-NLS-1$
-        boolean sameRef = !stripRef
-                && ((url2.getRef() == null || "".equals(url2.getRef())) || (url2.getRef() != null && url2.getRef().equalsIgnoreCase(url1.getRef()))); //$NON-NLS-1$
+
+        boolean sameHost = ((url2.getHost() == null || "".equals(url2.getHost())) //$NON-NLS-1$
+                || (url2.getHost() != null && url2.getHost().equalsIgnoreCase(url1.getHost())));
+        boolean samePath = ((url2.getPath() == null || "".equals(url2.getPath())) //$NON-NLS-1$
+                || (url2.getPath() != null && url2.getPath().equalsIgnoreCase(url1.getPath())));
+        boolean sameQuery = ((url2.getQuery() == null || "".equals(url2.getQuery())) //$NON-NLS-1$
+                || (url2.getQuery() != null && url2.getQuery().equalsIgnoreCase(url1.getQuery())));
+        boolean sameAuthority = ((url2.getAuthority() == null || "".equals(url2.getAuthority())) //$NON-NLS-1$
+                || (url2.getAuthority() != null
+                        && url2.getAuthority().equalsIgnoreCase(url1.getAuthority())));
+        boolean sameRef = !stripRef && ((url2.getRef() == null || "".equals(url2.getRef())) //$NON-NLS-1$
+                || (url2.getRef() != null && url2.getRef().equalsIgnoreCase(url1.getRef())));
         if (sameProtocol && sameHost && samePath && sameQuery && sameAuthority && sameRef)
             return true;
 
-        String string1 = URLUtils.urlToString(url1, stripRef).replace("%20", " ").toLowerCase();
-        String string2 = URLUtils.urlToString(url2, stripRef).replace("%20", " ").toLowerCase();
+        String string1 = URLUtils.urlToString(url1, stripRef).replace("%20", " ").toLowerCase(); //$NON-NLS-1$ //$NON-NLS-2$
+        String string2 = URLUtils.urlToString(url2, stripRef).replace("%20", " ").toLowerCase(); //$NON-NLS-1$ //$NON-NLS-2$
         if (stripRef)
             return string1.startsWith(string2) || string2.startsWith(string1);
         return string1.equalsIgnoreCase(string2);
@@ -104,20 +115,20 @@ public class URLUtils {
     /**
      * Provides a standard way of converting to string.
      * <p>
-     * Perform as much cleaning on the provided url as we can figure out (example: change all the
-     * windows backlashs to forward slashes).
-     * 
+     * Perform as much cleaning on the provided URL as we can figure out (example: change all the
+     * windows backslashes to forward slashes).
+     *
      * @param url Convert this URL to a clean string representation
      * @param ignoreRef ignore the reference in the string.
-     * @return the url in string form. Always uses / and file:/. (rather than file:///).
+     * @return the URL in string form. Always uses / and file:/. (rather than file:///).
      */
-    public static String urlToString( URL url, boolean ignoreRef ) {
+    public static String urlToString(URL url, boolean ignoreRef) {
         String string = url.toExternalForm();
         if (ignoreRef) {
             if (string.contains("#")) //$NON-NLS-1$
                 string = string.substring(0, string.lastIndexOf('#'));
         }
-        // deal with withs C:\foo\bar to C:/foo/bar
+        // deal with with C:\foo\bar to C:/foo/bar
         string = string.replaceAll("\\\\", "/"); //$NON-NLS-1$//$NON-NLS-2$
         if (string.endsWith("/")) //$NON-NLS-1$
             string = string.substring(0, string.length() - 1);
@@ -129,9 +140,9 @@ public class URLUtils {
         // 4) file:///Users/Jesse absolute mac or linux
         // 5) file:/Jesse relative path
         // 6) file://Jesse relative? 90% of the time
-        // 7) file:foo relative to base url
-        if( string.startsWith("file:"))	
-        	string = string.replaceAll("/+", "/"); //$NON-NLS-1$ //$NON-NLS-2$
+        // 7) file:foo relative to base URL
+        if (string.startsWith("file:")) //$NON-NLS-1$
+            string = string.replaceAll("/+", "/"); //$NON-NLS-1$ //$NON-NLS-2$
 
         return string;
     }
@@ -169,97 +180,52 @@ public class URLUtils {
      * </li>
      * </ul>
      * </p>
-     * 
-     * @param reference the "from" file/directory. The file/directory that the 
-     *                  relative path will start at.  It MUST exist 
-     * @param destination the URL to transform to a relative path. 
+     *
+     * @param reference the "from" file/directory. The file/directory that the relative path will
+     *        start at. It MUST exist
+     * @param destination the URL to transform to a relative path.
      * @return the relative path from reference to destination
      */
-	public static URL toRelativePath(File reference, URL destination) {
-	    if(!reference.exists()){
-	        
-	    }
-		if (!destination.getProtocol().equalsIgnoreCase("file") //$NON-NLS-1$
-				|| destination.getQuery() != null
-				|| destination.getRef() != null)
-			return destination;
+    public static URL toRelativePath(File reference, URL destination) {
 
-		try {
-			
-			File destinationFile = urlToFile(destination).getAbsoluteFile();
-			File destDir;
-			if(destinationFile.isFile()){
-                destDir = destinationFile.getParentFile();
-			}else{
-			    destDir = destinationFile;
-			}
-			
-			File absReference = reference.getAbsoluteFile();
-			if(absReference.isFile()){
-				absReference = absReference.getParentFile().getAbsoluteFile();
-			}
+        if (!destination.getProtocol().equalsIgnoreCase("file") //$NON-NLS-1$
+                || destination.getQuery() != null || destination.getRef() != null)
+            return destination;
 
-			if (destDir.equals(absReference)) {
-				if (destinationFile.isFile()) {
-					return new URL("file:/./" + destinationFile.getName());
-				} else {
-					return new URL("file:/./");
-				}
-			}
-
-			if (!destinationFile.getPath().startsWith(absReference.getPath())) {
-				return destination;
-			} else {
-				int length = absReference.getPath().length();
-				String frag = destinationFile.getPath().substring(length+1);
-				String dirPath = "file:/./" + frag.replaceAll("\\\\", "/");
-                return new URL(dirPath);
-			}
-		} catch (Exception e) {
-			return destination;
-		}
-	}
-
-
-    /**
-     * @param file
-     * @return null in case of relative path, otherwise the root element of a path
-     */
-    @Deprecated
-    public static String getPrefix( File file ) {
-        if (!file.isAbsolute()) {
-            // only if C:\ or D:\ or / is in the path
-            return null;
-        }
-        // this is the "correct" way that may be very slow
-        File compare;
         try {
-            compare = file.getCanonicalFile();
-        } catch (IOException e) {
-            compare = file.getAbsoluteFile();
-        }
-        while( compare.getParent() != null ) {
-            compare = compare.getParentFile();
-        }
-        String root = compare.getPath();
-        String platform = System.getProperty("os.name");
-        if (platform.toUpperCase().indexOf("WINDOWS") != -1) {
-            if (root.length() > 2 && root.charAt(1) == ':') {
-                // Example: C:\ or C:
-                return root.substring(0, 2);
+
+            File destinationFile = urlToFile(destination).getAbsoluteFile();
+            File destDir;
+            if (destinationFile.isFile()) {
+                destDir = destinationFile.getParentFile();
+            } else {
+                destDir = destinationFile;
             }
-            if (root.startsWith("\\\\")) {
-                // Example: \\machine\share
-                return root;
+
+            File absReference = reference.getAbsoluteFile();
+            if (absReference.isFile()) {
+                absReference = absReference.getParentFile().getAbsoluteFile();
             }
-        } else if (platform.toUpperCase().indexOf("MAC") != -1) {
-            return null;
-        } else {
-            if (root.startsWith("/")) {
-                return "/";
+
+            if (destDir.equals(absReference)) {
+                if (destinationFile.isFile()) {
+                    return new URL("file:/./" + destinationFile.getName()); //$NON-NLS-1$
+                } else {
+                    return new URL("file:/./"); //$NON-NLS-1$
+                }
             }
+
+            if (!destinationFile.getPath().startsWith(absReference.getPath())) {
+                return destination;
+            } else {
+                int length = absReference.getPath().length();
+                String frag = destinationFile.getPath().substring(length + 1);
+                String dirPath = "file:/./" + frag.replaceAll("\\\\", "/"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                return new URL(dirPath);
+            }
+        } catch (Exception e) {
+            return destination;
         }
-        return null;
     }
 
     /**
@@ -273,15 +239,16 @@ public class URLUtils {
      * </p>
      * <p>
      * return = file:/c:\booger\data
-     * <p></li>
+     * <p>
+     * </li>
      * </ul>
      * </p>
-     * 
+     *
      * @param base the base of any relative path. <b>MUST BE A FILE</b>
-     * @param urlSpec the url in string form.
+     * @param urlSpec the URL in string form.
      * @return the URL created from the string
      */
-    public static URL constructURL( File base, String urlSpec ) throws MalformedURLException {
+    public static URL constructURL(File base, String urlSpec) throws MalformedURLException {
         URL url = new URL(null, urlSpec, CorePlugin.RELAXED_HANDLER);
         if (!urlSpec.startsWith("file:/") || urlSpec.contains("?") //$NON-NLS-1$ //$NON-NLS-2$
                 || urlSpec.contains("#")) { //$NON-NLS-1$
@@ -291,18 +258,18 @@ public class URLUtils {
         if (file.exists()) {
             try {
                 if (file.getCanonicalPath().equals(file.getPath())) {
-                    // explicit (non relative) url
+                    // explicit (non relative) URL
                     return url;
                 }
             } catch (IOException e) {
                 // won't work so lets continue on and try to resolve the file.
             }
         }
-        
+
         String substring = urlSpec.substring(5);
         if (substring.startsWith("//")) { //$NON-NLS-1$
             // skip leading / indicating a root folder?
-            //substring = substring.substring(2);
+            // substring = substring.substring(2);
             return url;
         }
         try {
@@ -332,22 +299,22 @@ public class URLUtils {
             return url;
         }
     }
-    
+
     /**
-     * Decodes the reference part of the url
-     * 
+     * Decodes the reference part of the URL
+     *
      * @param urlRef
      * @return
      */
-    private static String decodeReference( String urlRef) {
-    	String string = urlRef;
-    	 try {
-             string = URLDecoder.decode(urlRef, "UTF-8"); //$NON-NLS-1$
-         } catch (UnsupportedEncodingException e) {
-             // Shouldn't happen
-         }
-    	 string = string.replace("%20", " "); //$NON-NLS-1$ //$NON-NLS-2$
-    	 return string;
+    private static String decodeReference(String urlRef) {
+        String string = urlRef;
+        try {
+            string = URLDecoder.decode(urlRef, "UTF-8"); //$NON-NLS-1$
+        } catch (UnsupportedEncodingException e) {
+            // Shouldn't happen
+        }
+        string = string.replace("%20", " "); //$NON-NLS-1$ //$NON-NLS-2$
+        return string;
     }
 
     /**
@@ -357,11 +324,11 @@ public class URLUtils {
      * construct the file. Otherwise, the authority is prefixed before the path. It is assumed that
      * url.getProtocol returns "file". Authority is the drive or network share the file is located
      * on. Such as "C:", "E:", "\\fooServer"
-     * 
+     *
      * @param url Indicate the location of a file on disk, should use the "file" protocol
      * @return File for the provided URL, or null if the URL was for another protocol like "http"
      */
-    public static File urlToFile( URL url ) {
+    public static File urlToFile(URL url) {
         if (!"file".equalsIgnoreCase(url.getProtocol())) { //$NON-NLS-1$
             return null;
         }
@@ -395,7 +362,7 @@ public class URLUtils {
         return new File(path3);
     }
 
-    public static URL fileToURL( File file ) {
+    public static URL fileToURL(File file) {
         try {
             return file.toURI().toURL();
         } catch (MalformedURLException e) {
@@ -419,13 +386,13 @@ public class URLUtils {
      * This method will replace all non alpha numeric characters with "_".
      * <p>
      * Example:<code>String filename = URLUtils.cleanFilename("topp:tasmania_citities");</code>
-     * 
+     *
      * @param typeName
      * @return
      */
-    public static String cleanFilename( String typeName ) {
+    public static String cleanFilename(String typeName) {
         StringBuffer fix = new StringBuffer(typeName);
-        for( int i = 0; i < fix.length(); i++ ) {
+        for (int i = 0; i < fix.length(); i++) {
             char c = fix.charAt(i);
             if (!Character.isLetterOrDigit(c)) {
                 fix.setCharAt(i, '_');
@@ -437,12 +404,12 @@ public class URLUtils {
     /**
      * Finds the other files with the same base name as the baseFile but with the
      * optionalExtensions. The case of the extensions are ignored.
-     * 
+     *
      * @param baseFile the baseFile
      * @param optionalExtensions all the options
      * @return Array of found files; or null if we have no luck
      */
-    public static File[] findRelatedFiles( File baseFile, final String... optionalExtensions ) {
+    public static File[] findRelatedFiles(File baseFile, final String... optionalExtensions) {
         int index = baseFile.getName().indexOf('.');
         final String base;
         if (index > 0) {
@@ -450,12 +417,13 @@ public class URLUtils {
         } else {
             base = baseFile.getName();
         }
-        File files[] = baseFile.getParentFile().listFiles(new FilenameFilter(){
+        File files[] = baseFile.getParentFile().listFiles(new FilenameFilter() {
 
-            public boolean accept( File dir, String name ) {
+            @Override
+            public boolean accept(File dir, String name) {
                 String lower = name.toLowerCase();
                 if (name.startsWith(base)) {
-                    for( String string : optionalExtensions ) {
+                    for (String string : optionalExtensions) {
                         String ext = string.toLowerCase();
                         if (lower.endsWith(ext) && lower.equalsIgnoreCase(base + ext)) {
                             return true;
