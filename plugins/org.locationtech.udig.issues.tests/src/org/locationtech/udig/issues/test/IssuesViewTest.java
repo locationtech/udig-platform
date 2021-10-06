@@ -770,7 +770,7 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         view.initViewerProviders();
 
         assertTrue(viewer.getContentProvider() instanceof TestContentProvider.Provider1);
-        assertTrue(((StrategizedSorter) viewer.getSorter())
+        assertTrue(((StrategizedSorter) viewer.getComparator())
                 .getStrategy() instanceof TestSorter.Sorter1);
         assertTrue(view.getExpansionProvider() instanceof TestExpansionProvider.Provider1);
         assertTrue(viewer.getLabelProvider() instanceof TestLabelProvider.Provider1);
@@ -786,7 +786,8 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         view.initViewerProviders();
 
         assertTrue(viewer.getContentProvider() instanceof IssuesContentProvider);
-        assertTrue(((StrategizedSorter) viewer.getSorter()).getStrategy() instanceof IssuesSorter);
+        assertTrue(
+                ((StrategizedSorter) viewer.getComparator()).getStrategy() instanceof IssuesSorter);
         assertTrue(view.getExpansionProvider() instanceof IssueExpansionProvider);
         assertTrue(viewer.getLabelProvider() instanceof IssuesLabelProvider);
     }

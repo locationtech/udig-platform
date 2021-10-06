@@ -9,7 +9,6 @@ Views and editors
    Catalog view
    Cheat Sheet view
    Document view
-   GeoScript editor 
    Help view
    Information view
    Layers view
@@ -21,7 +20,6 @@ Views and editors
    Palette View
    Projects view
    Search view
-   Spatial Toolbox View
    Style View
    Table view
    Tasks view

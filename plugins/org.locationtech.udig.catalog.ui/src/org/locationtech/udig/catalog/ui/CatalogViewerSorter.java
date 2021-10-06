@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -12,21 +13,23 @@ package org.locationtech.udig.catalog.ui;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.locationtech.udig.catalog.IGeoResource;
 
-import org.eclipse.jface.viewers.ViewerSorter;
 /**
  * Sorts the Catalog Viewers so that like Services are listed together.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
-public class CatalogViewerSorter extends ViewerSorter {
+public class CatalogViewerSorter extends ViewerComparator {
 
-    Map<Class, Integer> categories = new HashMap<Class, Integer>();
+    Map<Class, Integer> categories = new HashMap<>();
+
     int index = 0;
+
     @Override
-    public int category( Object element ) {
+    public int category(Object element) {
         if (element instanceof IGeoResource)
             return Integer.MAX_VALUE;
 
