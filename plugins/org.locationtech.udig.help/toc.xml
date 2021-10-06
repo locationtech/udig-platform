@@ -87,16 +87,6 @@
                     </topic>
             </topic>
         </topic>
-
-
-        <topic label="Introduction to the Spatial Toolbox" href="EN/getting_started/Introduction to the Spatial Toolbox.html">
-                </topic>
-
-		<topic label="GeoScript Introduction" href="EN/getting_started/GeoScript Introduction.html">
-                </topic>
-
-          </topic>
-
    <topic label="Concepts" href="EN/concepts/index.html">
 
 
@@ -934,9 +924,6 @@
         <topic label="Document view" href="EN/reference/Document view.html">
                 </topic>
 
-        <topic label="GeoScript editor" href="EN/reference/GeoScript editor.html">
-                </topic>
-
         <topic label="Help view" href="EN/reference/Help view.html">
 
                 </topic>
@@ -1002,10 +989,6 @@
                 </topic>
 
         <topic label="Search view" href="EN/reference/Search view.html">
-
-                </topic>
-
-        <topic label="Spatial Toolbox View" href="EN/reference/Spatial Toolbox View.html">
 
                 </topic>
 
@@ -1275,22 +1258,15 @@
         </topic>
 
 <topic label="What is new" href="EN/what_is_new/index.html">
-    <topic label="What is new 1.1" href="EN/what_is_new/What is new 1.1.html">
-        </topic>
-    <topic label="What is new 1.2" href="EN/what_is_new/What is new 1.2.html">
-        </topic>
-    <topic label="What is new 1.3" href="EN/what_is_new/What is new 1.3.html">
-        </topic>
-    <topic label="What is new 1.4" href="EN/what_is_new/What is new 1.4.html">
-        </topic>
-    <topic label="What is new 1.5" href="EN/what_is_new/What is new 1.5.html">
-        </topic>
-    <topic label="What is new 2.0" href="EN/what_is_new/What is new 2.0.html">
-        </topic>
-    <topic label="What is new 2.1" href="EN/what_is_new/What is new 2.1.html">
-        </topic>
-    <topic label="What is new 2.2" href="EN/what_is_new/What is new 2.2.html">
-        </topic>
+    <topic label="What is new 2.3" href="EN/what_is_new/What is new 2.3.html"></topic>
+    <topic label="What is new 2.2" href="EN/what_is_new/What is new 2.2.html"></topic>
+    <topic label="What is new 2.1" href="EN/what_is_new/What is new 2.1.html"></topic>
+    <topic label="What is new 2.0" href="EN/what_is_new/What is new 2.0.html"></topic>
+    <topic label="What is new 1.5" href="EN/what_is_new/What is new 1.5.html"></topic>
+    <topic label="What is new 1.4" href="EN/what_is_new/What is new 1.4.html"></topic>
+    <topic label="What is new 1.3" href="EN/what_is_new/What is new 1.3.html"></topic>
+    <topic label="What is new 1.2" href="EN/what_is_new/What is new 1.2.html"></topic>
+    <topic label="What is new 1.1" href="EN/what_is_new/What is new 1.1.html"></topic>
 </topic>
 
 </toc>

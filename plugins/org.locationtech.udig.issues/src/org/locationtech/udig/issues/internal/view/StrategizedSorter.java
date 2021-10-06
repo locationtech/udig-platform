@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -9,24 +10,27 @@
  */
 package org.locationtech.udig.issues.internal.view;
 
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.locationtech.udig.issues.Column;
 import org.locationtech.udig.issues.IIssuesViewSorter;
 
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerSorter;
-
 /**
  * Delegates sorting to a {@link IIssuesViewSorter} object
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
-public class StrategizedSorter extends ViewerSorter {
+public class StrategizedSorter extends ViewerComparator {
 
     private IIssuesViewSorter strategy;
+
     private Column column = Column.PRIORITY;
+
     private boolean reverse = false;
-    private ViewerSorter defaultSorter=new ViewerSorter();
+
+    private ViewerComparator defaultSorter = new ViewerComparator();
+
     /**
      * Gets the current strategy being used.
      *
@@ -41,20 +45,20 @@ public class StrategizedSorter extends ViewerSorter {
      *
      * @param newStrategy the new strategy to use.
      */
-    public void setStrategy( IIssuesViewSorter newStrategy ) {
-        strategy=newStrategy;
+    public void setStrategy(IIssuesViewSorter newStrategy) {
+        strategy = newStrategy;
     }
-    
+
     @Override
-    public int compare( Viewer viewer, Object e1, Object e2 ) {
+    public int compare(Viewer viewer, Object e1, Object e2) {
         return strategy.compare(viewer, defaultSorter, column, !reverse, e1, e2);
     }
-    
 
     public Column getColumn() {
         return column;
     }
-    public void setColumn( Column column ) {
+
+    public void setColumn(Column column) {
         this.column = column;
     }
 
@@ -62,17 +66,18 @@ public class StrategizedSorter extends ViewerSorter {
         return reverse;
     }
 
-    public void setReverse( boolean reverse ) {
+    public void setReverse(boolean reverse) {
         this.reverse = reverse;
     }
 
-    public int category( Object element ) {
+    @Override
+    public int category(Object element) {
         return strategy.category(defaultSorter, element);
     }
 
-    public boolean isSorterProperty( Object element, String property ) {
+    @Override
+    public boolean isSorterProperty(Object element, String property) {
         return strategy.isSorterProperty(defaultSorter, element, property);
     }
 
-    
 }

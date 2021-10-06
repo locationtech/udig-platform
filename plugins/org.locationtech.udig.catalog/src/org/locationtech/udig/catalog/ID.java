@@ -409,6 +409,8 @@ public class ID implements Serializable {
         String HOST = url.getHost();
         String PROTOCOL = url.getProtocol();
         String PATH = url.getPath();
+        if ("mapgraphic".equals(PROTOCOL)) //$NON-NLS-1$
+            return true; // we are hitting some mangled URL
         if (!"http".equals(PROTOCOL)) //$NON-NLS-1$
             return false;
         if (!"localhost".equals(HOST)) //$NON-NLS-1$
