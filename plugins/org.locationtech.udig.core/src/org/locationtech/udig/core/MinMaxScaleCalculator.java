@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -48,119 +49,163 @@ import org.geotools.styling.UserLayer;
 import org.geotools.util.Range;
 
 /**
- * 
+ *
  * Traverses a Style and determines the min and max scale that the style is valid for.
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
-@SuppressWarnings("deprecation")
 public class MinMaxScaleCalculator implements StyleVisitor {
-    
-    private Set<Range<Double>> ranges = new HashSet<Range<Double>>();
-    private double max;
-    private double min; 
 
-    public void visit( StyledLayerDescriptor sld ) {
+    private Set<Range<Double>> ranges = new HashSet<>();
+
+    private double max;
+
+    private double min;
+
+    @Override
+    public void visit(StyledLayerDescriptor sld) {
         StyledLayer[] layers = sld.getStyledLayers();
-        for( StyledLayer styledLayer : layers ) {
-            if( styledLayer instanceof NamedLayer){
-                ((NamedLayer)styledLayer).accept(this);
-            } else if( styledLayer instanceof UserLayer ){
-                ((UserLayer)styledLayer).accept(this);
+        for (StyledLayer styledLayer : layers) {
+            if (styledLayer instanceof NamedLayer) {
+                ((NamedLayer) styledLayer).accept(this);
+            } else if (styledLayer instanceof UserLayer) {
+                ((UserLayer) styledLayer).accept(this);
             }
         }
     }
 
-    public void visit( NamedLayer layer ) {
+    @Override
+    public void visit(NamedLayer layer) {
         Style[] styles = layer.getStyles();
-        for( Style style : styles ) {
+        for (Style style : styles) {
             style.accept(this);
         }
     }
 
-    public void visit( UserLayer layer ) {
+    @Override
+    public void visit(UserLayer layer) {
         Style[] styles = layer.getUserStyles();
-        for( Style style : styles ) {
+        for (Style style : styles) {
             style.accept(this);
         }
     }
 
-    public void visit( FeatureTypeConstraint ftc ) {
+    @Override
+    public void visit(FeatureTypeConstraint ftc) {
     }
 
-    public void visit( Style style ) {
-        for( FeatureTypeStyle featureTypeStyle : style.featureTypeStyles() ) {
+    @Override
+    public void visit(Style style) {
+        for (FeatureTypeStyle featureTypeStyle : style.featureTypeStyles()) {
             featureTypeStyle.accept(this);
         }
     }
 
-    public void visit( Rule rule ) {
+    @Override
+    public void visit(Rule rule) {
         double min = rule.getMinScaleDenominator();
         double max = rule.getMaxScaleDenominator();
         this.min = Math.min(min, this.min);
         this.max = Math.max(max, this.max);
-        ranges.add(new Range<Double>(Double.class, min,max));
+        ranges.add(new Range<>(Double.class, min, max));
     }
 
-    public void visit( FeatureTypeStyle fts ) {
-        for( Rule rule : fts.rules() ) {
+    @Override
+    public void visit(FeatureTypeStyle fts) {
+        for (Rule rule : fts.rules()) {
             rule.accept(this);
         }
     }
 
-    public void visit( Fill fill ) {
+    @Override
+    public void visit(Fill fill) {
+
     }
 
-    public void visit( Stroke stroke ) {
+    @Override
+    public void visit(Stroke stroke) {
+
     }
 
-    public void visit( Symbolizer sym ) {
+    @Override
+    public void visit(Symbolizer sym) {
+
     }
 
-    public void visit( PointSymbolizer ps ) {
+    @Override
+    public void visit(PointSymbolizer ps) {
+
     }
 
-    public void visit( LineSymbolizer line ) {
+    @Override
+    public void visit(LineSymbolizer line) {
+
     }
 
-    public void visit( PolygonSymbolizer poly ) {
+    @Override
+    public void visit(PolygonSymbolizer poly) {
+
     }
 
-    public void visit( TextSymbolizer text ) {
+    @Override
+    public void visit(TextSymbolizer text) {
+
     }
 
-    public void visit( RasterSymbolizer raster ) {
+    @Override
+    public void visit(RasterSymbolizer raster) {
+
     }
 
-    public void visit( Graphic gr ) {
+    @Override
+    public void visit(Graphic gr) {
+
     }
 
-    public void visit( Mark mark ) {
+    @Override
+    public void visit(Mark mark) {
+
     }
 
-    public void visit( ExternalGraphic exgr ) {
+    @Override
+    public void visit(ExternalGraphic exgr) {
+
     }
 
-    public void visit( PointPlacement pp ) {
+    @Override
+    public void visit(PointPlacement pp) {
+
     }
 
-    public void visit( AnchorPoint ap ) {
+    @Override
+    public void visit(AnchorPoint ap) {
+
     }
 
-    public void visit( Displacement dis ) {
+    @Override
+    public void visit(Displacement dis) {
+
     }
 
-    public void visit( LinePlacement lp ) {
+    @Override
+    public void visit(LinePlacement lp) {
+
     }
 
-    public void visit( Halo halo ) {
+    @Override
+    public void visit(Halo halo) {
+
     }
 
-    public void visit( ColorMap colorMap ) {
+    @Override
+    public void visit(ColorMap colorMap) {
+
     }
 
-    public void visit( ColorMapEntry colorMapEntry ) {
+    @Override
+    public void visit(ColorMapEntry colorMapEntry) {
+
     }
 
     public Set<Range<Double>> getRanges() {
@@ -175,28 +220,40 @@ public class MinMaxScaleCalculator implements StyleVisitor {
         return min;
     }
 
-    public void visit( ContrastEnhancement arg0 ) {
+    @Override
+    public void visit(ContrastEnhancement arg0) {
+
     }
 
-    public void visit( ImageOutline arg0 ) {
+    @Override
+    public void visit(ImageOutline arg0) {
+
     }
 
-    public void visit( ChannelSelection arg0 ) {
+    @Override
+    public void visit(ChannelSelection arg0) {
+
     }
 
-    public void visit( OverlapBehavior arg0 ) {
+    @Override
+    public void visit(OverlapBehavior arg0) {
+
     }
 
-    public void visit( SelectedChannelType arg0 ) {
+    @Override
+    public void visit(SelectedChannelType arg0) {
+
     }
 
-    public void visit( ShadedRelief arg0 ) {
+    @Override
+    public void visit(ShadedRelief arg0) {
+
     }
-    
+
     // UTILITY FUNCTIONS
     public static Set<Range<Double>> getValidScaleRanges(Style style) {
-        if( style == null ) {
-            return new HashSet<Range<Double>>();
+        if (style == null) {
+            return new HashSet<>();
         }
         MinMaxScaleCalculator minMaxScaleCalculator = new MinMaxScaleCalculator();
         style.accept(minMaxScaleCalculator);
