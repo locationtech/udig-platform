@@ -42,7 +42,7 @@ jobs:
     - name: Run uDig tests
       uses: GabrielBB/xvfb-action@v1
       with:
-         run: mvn verify -f plugins/pom.xml -B -Ptest --fail-at-end
+         run: mvn integration-test -B -Ptest --fail-at-end
     - name: provide Windows product for download
       uses: actions/upload-artifact@v2
       with:
