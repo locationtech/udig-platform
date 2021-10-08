@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -38,33 +38,45 @@ import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 
 /**
  * Handle for a WFS service.
- * 
+ *
  * @author David Zwiers, Refractions Research
  * @since 0.6
  */
 public class WFSServiceImpl extends IService {
 
     private URL identifier = null;
+
     private Map<String, Serializable> params = null;
+
     private volatile List<WFSGeoResourceImpl> members = null;
+
     protected Lock rLock = new UDIGDisplaySafeLock();
 
     private Throwable msg = null;
+
     private volatile WFSDataStoreFactory dsf;
+
     private volatile WFSDataStore ds = null;
+
     private static final Lock dsLock = new UDIGDisplaySafeLock();
 
-    public WFSServiceImpl( URL identifier, Map<String, Serializable> dsParams ) {
+    public WFSServiceImpl(URL identifier, Map<String, Serializable> dsParams) {
         this.identifier = identifier;
         this.params = dsParams;
     }
-    
-    /*
-     * Required adaptions: <ul> <li>IServiceInfo.class <li>List.class <IGeoResource> </ul>
+
+    /**
+     * Required adoptions:
+     * <ul>
+     * <li>IServiceInfo.class
+     * <li>List.class <IGeoResource>
+     * </ul>
+     *
      * @see org.locationtech.udig.catalog.IService#resolve(java.lang.Class,
-     * org.eclipse.core.runtime.IProgressMonitor)
+     *      org.eclipse.core.runtime.IProgressMonitor)
      */
-    public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
+    @Override
+    public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor) throws IOException {
         if (adaptee == null)
             return null;
         if (adaptee.isAssignableFrom(WFSDataStore.class)) {
@@ -73,40 +85,43 @@ public class WFSServiceImpl extends IService {
         return super.resolve(adaptee, monitor);
     }
 
-    /*
+    /**
      * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
-    public <T> boolean canResolve( Class<T> adaptee ) {
+    @Override
+    public <T> boolean canResolve(Class<T> adaptee) {
         if (adaptee == null)
             return false;
         return adaptee.isAssignableFrom(WFSDataStore.class) || super.canResolve(adaptee);
     }
 
-    public void dispose( IProgressMonitor monitor ) {
+    @Override
+    public void dispose(IProgressMonitor monitor) {
         super.dispose(monitor);
-        if (members != null){
+        if (members != null) {
             members = null;
         }
-        if( ds != null ){
+        if (ds != null) {
             ds.dispose();
             ds = null;
         }
     }
 
-    /*
+    /**
      * @see org.locationtech.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
      */
-    public List<WFSGeoResourceImpl> resources( IProgressMonitor monitor ) throws IOException {
+    @Override
+    public List<WFSGeoResourceImpl> resources(IProgressMonitor monitor) throws IOException {
 
         if (members == null) {
             rLock.lock();
             try {
                 if (members == null) {
                     getDS(monitor); // load ds
-                    members = new LinkedList<WFSGeoResourceImpl>();
+                    members = new LinkedList<>();
                     String[] typenames = ds.getTypeNames();
                     if (typenames != null)
-                        for( int i = 0; i < typenames.length; i++ ) {
+                        for (int i = 0; i < typenames.length; i++) {
                             try {
                                 members.add(new WFSGeoResourceImpl(this, typenames[i]));
                             } catch (Exception e) {
@@ -122,13 +137,15 @@ public class WFSServiceImpl extends IService {
     }
 
     @Override
-    public IServiceInfo getInfo( IProgressMonitor monitor ) throws IOException {
-        return (IServiceInfo) super.getInfo(monitor);
+    public IServiceInfo getInfo(IProgressMonitor monitor) throws IOException {
+        return super.getInfo(monitor);
     }
-    /*
+
+    /**
      * @see org.locationtech.udig.catalog.IService#getInfo(org.eclipse.core.runtime.IProgressMonitor)
      */
-    protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
+    @Override
+    protected IServiceInfo createInfo(IProgressMonitor monitor) throws IOException {
         DataStore dataStore = getDS(monitor); // load ds
         if (dataStore == null) {
             return null; // could not connect no info for you
@@ -141,14 +158,15 @@ public class WFSServiceImpl extends IService {
         }
     }
 
-    /*
+    /**
      * @see org.locationtech.udig.catalog.IService#getConnectionParams()
      */
+    @Override
     public Map<String, Serializable> getConnectionParams() {
         return params;
     }
 
-    WFSDataStore getDS( IProgressMonitor monitor ) throws IOException {
+    WFSDataStore getDS(IProgressMonitor monitor) throws IOException {
         if (ds == null) {
             if (monitor == null)
                 monitor = new NullProgressMonitor();
@@ -167,9 +185,9 @@ public class WFSServiceImpl extends IService {
                             // TODO Review : explicitly ask for WFS 1.0
                             URL url = (URL) params.get(WFSDataStoreFactory.URL.key);
                             url = WFSDataStoreFactory.createGetCapabilitiesRequest(url);
-                            params = new HashMap<String, Serializable>(params);
+                            params = new HashMap<>(params);
                             params.put(WFSDataStoreFactory.URL.key, url);
-                            ds = (WFSDataStore) dsf.createDataStore(params);
+                            ds = dsf.createDataStore(params);
                             monitor.worked(1);
                         } catch (IOException e) {
                             msg = e;
@@ -182,32 +200,35 @@ public class WFSServiceImpl extends IService {
                 monitor.done();
             }
             IResolveDelta delta = new ResolveDelta(this, IResolveDelta.Kind.CHANGED);
-            ((CatalogImpl) CatalogPlugin.getDefault().getLocalCatalog())
-                    .fire(new ResolveChangeEvent(this, IResolveChangeEvent.Type.POST_CHANGE, delta));
+            ((CatalogImpl) CatalogPlugin.getDefault().getLocalCatalog()).fire(
+                    new ResolveChangeEvent(this, IResolveChangeEvent.Type.POST_CHANGE, delta));
         }
         return ds;
     }
 
-    /*
+    /**
      * @see org.locationtech.udig.catalog.IResolve#getStatus()
      */
+    @Override
     public Status getStatus() {
-        if( ds == null ){
+        if (ds == null) {
             return super.getStatus();
         }
         return Status.CONNECTED;
     }
 
-    /*
+    /**
      * @see org.locationtech.udig.catalog.IResolve#getMessage()
      */
+    @Override
     public Throwable getMessage() {
         return msg;
     }
 
-    /*
+    /**
      * @see org.locationtech.udig.catalog.IResolve#getIdentifier()
      */
+    @Override
     public URL getIdentifier() {
         return identifier;
     }

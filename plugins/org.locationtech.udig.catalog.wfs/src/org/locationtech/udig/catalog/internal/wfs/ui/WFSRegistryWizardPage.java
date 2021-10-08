@@ -478,7 +478,7 @@ public class WFSRegistryWizardPage extends DataStoreWizardPage
 
     /**
      * @see org.locationtech.udig.catalog.ui.UDIGImportPage#getResources(org.eclipse.core.runtime.
-     * IProgressMonitor)
+     *      IProgressMonitor)
      */
     public List<IService> getResources(IProgressMonitor monitor) throws Exception {
         if (!isPageComplete())
