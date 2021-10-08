@@ -147,7 +147,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
                 String changeId) {
         }
 
-        // fix for bug 109245 and 69098 - fake a partActivated when the perpsective is switched
+        // fix for bug 109245 and 69098 - fake a partActivated when the perspective is switched
         @Override
         public void perspectiveActivated(IWorkbenchPage page, IPerspectiveDescriptor perspective) {
             viewInPage = page.findViewReference(getViewSite().getId()) != null;
@@ -524,17 +524,11 @@ abstract class AbstractPageBookView<K> extends ViewPart {
 
         private SelectionManager postSelectionListeners = new SelectionManager();
 
-        /*
-         * (non-Javadoc) Method declared on ISelectionProvider.
-         */
         @Override
         public void addSelectionChangedListener(ISelectionChangedListener listener) {
             selectionListeners.addSelectionChangedListener(listener);
         }
 
-        /*
-         * (non-Javadoc) Method declared on ISelectionProvider.
-         */
         @Override
         public ISelection getSelection() {
             // get the selection provider from the current page
@@ -555,9 +549,6 @@ abstract class AbstractPageBookView<K> extends ViewPart {
             return StructuredSelection.EMPTY;
         }
 
-        /*
-         * (non-Javadoc) Method declared on ISelectionProvider.
-         */
         @Override
         public void removeSelectionChangedListener(ISelectionChangedListener listener) {
             selectionListeners.removeSelectionChangedListener(listener);
@@ -582,9 +573,6 @@ abstract class AbstractPageBookView<K> extends ViewPart {
             postSelectionListeners.selectionChanged(event);
         }
 
-        /*
-         * (non-Javadoc) Method declared on ISelectionProvider.
-         */
         @Override
         public void setSelection(ISelection selection) {
             // get the selection provider from the current page
@@ -605,25 +593,11 @@ abstract class AbstractPageBookView<K> extends ViewPart {
             }
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * org.eclipse.jface.viewers.IPostSelectionProvider#addPostSelectionChangedListener(org.
-         * eclipse.jface.viewers.ISelectionChangedListener)
-         */
         @Override
         public void addPostSelectionChangedListener(ISelectionChangedListener listener) {
             postSelectionListeners.addSelectionChangedListener(listener);
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * org.eclipse.jface.viewers.IPostSelectionProvider#removePostSelectionChangedListener(org
-         * .eclipse.jface.viewers.ISelectionChangedListener)
-         */
         @Override
         public void removePostSelectionChangedListener(ISelectionChangedListener listener) {
             postSelectionListeners.removeSelectionChangedListener(listener);
@@ -688,7 +662,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
             rec.subActionBars = (SubActionBars) site.getActionBars();
             rec.subActionBars.addPropertyChangeListener(actionBarPropListener);
 
-            // for backward compability with IPage
+            // for backward compatibility with IPage
             rec.page.setActionBars(rec.subActionBars);
 
         } else {
@@ -1101,7 +1075,6 @@ abstract class AbstractPageBookView<K> extends ViewPart {
     /**
      * Refreshes the global actions for the active page.
      */
-    @SuppressWarnings("unchecked")
     private void refreshGlobalActionHandlers() {
         // Clear old actions.
         IActionBars bars = getViewSite().getActionBars();
