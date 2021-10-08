@@ -38,7 +38,7 @@ jobs:
     - name: Build docs with sphinx
       run: mvn install -B -f docs/pom.xml -Dtycho.mode=maven -Pdocs
     - name: Run uDig product & sdk build (parallel)
-      run: mvn install -B -DskipTests -Pproduct,sdk,test --fail-at-end -T4
+      run: mvn install -B -Pproduct,sdk,test -DskipTests --fail-at-end -T4
     - name: Run uDig tests
       uses: GabrielBB/xvfb-action@v1
       with:
