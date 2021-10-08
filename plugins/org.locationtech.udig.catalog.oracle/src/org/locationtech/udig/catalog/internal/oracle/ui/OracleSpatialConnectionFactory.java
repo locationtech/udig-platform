@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -23,34 +23,32 @@ import org.locationtech.udig.catalog.ui.AbstractUDIGConnectionFactory;
 
 /**
  * This appears to be glue code added by Jesse.
- * 
+ *
  * @since 1.2.0
  */
 public class OracleSpatialConnectionFactory extends AbstractUDIGConnectionFactory {
 
     @Override
-    protected Map<String, Serializable> doCreateConnectionParameters( Object context ) {
-        if( context instanceof OracleServiceImpl ){
+    protected Map<String, Serializable> doCreateConnectionParameters(Object context) {
+        if (context instanceof OracleServiceImpl) {
             OracleServiceImpl oracle = (OracleServiceImpl) context;
             return oracle.getConnectionParams();
         }
-        // we need to check the provided object (probably a URL)
-        // and ensure it is ment for us
-        ID id = ID.cast( context );
-        if( id.toString().indexOf("oracle") != -1){
-            
-        }        
-        return null;
-    }
+        // We need to check the provided object (probably a URL) and ensure it is meant for us
+        ID id = ID.cast(context);
+        if (id.toString().indexOf("oracle") != -1) { //$NON-NLS-1$
 
-
-    @Override
-    protected URL doCreateConnectionURL( Object context ) {
+        }
         return null;
     }
 
     @Override
-    protected boolean doOtherChecks( Object context ) {
+    protected URL doCreateConnectionURL(Object context) {
+        return null;
+    }
+
+    @Override
+    protected boolean doOtherChecks(Object context) {
         return false;
     }
 
