@@ -23,20 +23,20 @@ import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.tests.support.MapTests;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
-import org.locationtech.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.project.ui.tool.IToolManager;
 
 public class ToolManagerTest {
 
     private Map map;
 
-    private MapEditorPart editor;
+    private MapPart editor;
 
     @Before
     public void setUp() throws Exception {
         map=MapTests.createDefaultMap("ToolmanagerTestType", 5, true, null); //$NON-NLS-1$
         ApplicationGIS.openMap(map, true);
-        editor=ApplicationGISInternal.getActiveEditor();
+        editor=ApplicationGISInternal.getActiveMapPart();
     }
 
     @Ignore

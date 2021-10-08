@@ -10,16 +10,16 @@
  */
 package org.locationtech.udig.project.ui.internal;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.locationtech.udig.project.IMap;
@@ -27,7 +27,6 @@ import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.Project;
 import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.UDIGEditorInput;
 import org.locationtech.udig.project.ui.internal.tool.ToolContext;
 import org.locationtech.udig.ui.PlatformGIS;
 import org.opengis.feature.simple.SimpleFeature;
@@ -96,29 +95,41 @@ public class ApplicationGISInternal {
                 .getClosestMatch(new StructuredSelection(feature));
     }
 
-    public static MapEditorPart getActiveEditor() {
+    /**
+     * @return
+     * @deprecated return the Active Editor
+     */
+    @Deprecated
+    public static MapPart getActiveEditor() {
+        return getActiveMapPart();
+    }
+
+    /**
+     * @return the Active MapPart or null if there is no active MapPart.
+     */
+    public static MapPart getActiveMapPart() {
         try {
-            final ArrayList<IEditorPart> editor = new ArrayList<>();
+            final AtomicReference<MapPart> editor = new AtomicReference<>();
 
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
                     try {
+
                         IWorkbenchWindow window = PlatformUI.getWorkbench()
                                 .getActiveWorkbenchWindow();
                         IEditorReference[] refs = window.getActivePage().getEditorReferences();
                         IMap map = ApplicationGIS.getActiveMap();
 
                         for (IEditorReference ref : refs) {
-                            IEditorInput input = ref.getEditorInput();
-                            if (input instanceof UDIGEditorInput) {
-                                UDIGEditorInput in = (UDIGEditorInput) input;
-                                if (in.getProjectElement() == map) {
-                                    editor.add(ref.getEditor(false));
-                                    break;
-                                }
+                            IWorkbenchPart part = ref.getPart(false);
+                            Map adapter = part.getAdapter(Map.class);
+                            if (adapter != null && map == adapter && part instanceof MapPart) {
+                                editor.set((MapPart) part);
+                                break;
                             }
                         }
+
                     } catch (Throwable t) {
                         // do nothing
                     }
@@ -127,14 +138,11 @@ public class ApplicationGISInternal {
 
             PlatformGIS.syncInDisplayThread(runnable);
 
-            if (!editor.isEmpty() && editor.get(0) instanceof MapEditorPart) {
-                return (MapEditorPart) editor.get(0);
-            }
+            return editor.get();
         } catch (Exception e) {
             return null;
         }
 
-        return null;
     }
 
     public static MapEditorPart findMapEditor(final IMap map) {

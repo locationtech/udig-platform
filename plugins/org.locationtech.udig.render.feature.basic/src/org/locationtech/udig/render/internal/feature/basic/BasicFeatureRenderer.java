@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -75,7 +76,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.TransformException;
 
 /**
- * The default victim renderer. Based on the Lite-Renderer from Geotools.
+ * The default victim renderer. Based on the Lite-Renderer from GeoTools.
  *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
@@ -87,6 +88,7 @@ public class BasicFeatureRenderer extends RendererImpl {
     protected MapContent map = null;
 
     protected Layer[] layers = null;
+
     /**
      * Listens to the rendering process; and reports progress to our IProgressMonitor.
      */
@@ -115,7 +117,8 @@ public class BasicFeatureRenderer extends RendererImpl {
      * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#render(java.awt.Graphics2D,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
-    public void render( Graphics2D destination, IProgressMonitor monitor ) throws RenderException {
+    @Override
+    public void render(Graphics2D destination, IProgressMonitor monitor) throws RenderException {
         render(destination, getContext().getImageBounds(), monitor, false);
     }
 
@@ -124,27 +127,19 @@ public class BasicFeatureRenderer extends RendererImpl {
     private int expandSizePaintArea = 0;
 
     protected void setQueries() {
-//        try {
-//            // The context seems to have other ideas about the query we should draw
-//            // (in order to filter out the features being edited at the moment)
-//            //
-//            Query featureQuery = getContext().getFeatureQuery();
-//            ((FeatureLayer)layers[0]).setQuery(featureQuery);
-//        } catch (Exception e) {
-//            // do nothing.
-//        }
+
     }
 
     /**
      * does some additional initialization in preparation for drawing. It only needs to be done once
-     * so there is a quick shortcircuit check in the beginning Obtains the features source, creates
-     * the MapLayer and Map context objects required for Lite renderer and creates the lite
+     * so there is a quick short circuit check in the beginning Obtains the features source, creates
+     * the MapLayer and Map context objects required for lite renderer and creates the lite
      * renderer.
      *
      * @throws IOException
      * @throws SchemaException
      */
-    private void prepareDraw( IProgressMonitor monitor ) throws IOException, SchemaException {
+    private void prepareDraw(IProgressMonitor monitor) throws IOException, SchemaException {
 
         // check for style information on the blackboard
         ILayer layer = getContext().getLayer();
@@ -152,8 +147,8 @@ public class BasicFeatureRenderer extends RendererImpl {
         SimpleFeatureSource featureSource;
         featureSource = layer.getResource(SimpleFeatureStore.class, SubMonitor.convert(monitor, 0));
         if (featureSource == null) {
-            featureSource = layer.getResource(SimpleFeatureSource.class, SubMonitor.convert(monitor,
-                    0));
+            featureSource = layer.getResource(SimpleFeatureSource.class,
+                    SubMonitor.convert(monitor, 0));
         }
         Style style = getStyle(styleBlackboard, featureSource);
         layers = new Layer[1];
@@ -162,22 +157,20 @@ public class BasicFeatureRenderer extends RendererImpl {
 
         // Original Query provided by Layer.getFilter() as adjusted by selection and edit filter
         Query query = new Query(getContext().getFeatureQuery());
-        if( styleBlackboard.contains(ProjectBlackboardConstants.LAYER__STYLE_FILTER)){
-            if( query == null ){
-                query = new Query( schema.getTypeName() );
-            }
+        if (styleBlackboard.contains(ProjectBlackboardConstants.LAYER__STYLE_FILTER)) {
+            query = new Query(schema.getTypeName());
             // Additional Filter provided as Style used to reduce onscreen clutter
-            FilterStyle filterStyle = (FilterStyle) styleBlackboard.get(ProjectBlackboardConstants.LAYER__STYLE_FILTER);
+            FilterStyle filterStyle = (FilterStyle) styleBlackboard
+                    .get(ProjectBlackboardConstants.LAYER__STYLE_FILTER);
             Filter styleFilter = filterStyle.toFilter(schema);
-            if( styleFilter != Filter.INCLUDE ){
+            if (styleFilter != Filter.INCLUDE) {
                 Filter queryFilter = query.getFilter();
-                if( queryFilter == Filter.INCLUDE ){
-                    query.setFilter( styleFilter );
-                }
-                else {
+                if (queryFilter == Filter.INCLUDE) {
+                    query.setFilter(styleFilter);
+                } else {
                     FilterFactory ff = CommonFactoryFinder.getFilterFactory();
                     Filter combinedFilter = ff.and(styleFilter, queryFilter);
-                    query.setFilter( combinedFilter );
+                    query.setFilter(combinedFilter);
                 }
             }
         }
@@ -185,17 +178,17 @@ public class BasicFeatureRenderer extends RendererImpl {
         CoordinateReferenceSystem dataCRS = schema.getCoordinateReferenceSystem();
         if (!layerCRS.equals(dataCRS)) {
             // need to force the coordinate reference system to match the layer definition
-            FeatureLayer featureLayer = new FeatureLayer(featureSource, style, layer.getName()); //$NON-NLS-1$
-            if( query == null ){
-                query = new Query(schema.getTypeName());
-            }
+            FeatureLayer featureLayer = new FeatureLayer(featureSource, style, layer.getName());
+            query = new Query(schema.getTypeName());
             query.setCoordinateSystem(layerCRS);
             featureLayer.setQuery(query);
             // double check the implementation is respecting our layer CRS
-            FeatureCollection<SimpleFeatureType, SimpleFeature> features = featureSource.getFeatures( query );
-            CoordinateReferenceSystem queryCRS = features.getSchema().getCoordinateReferenceSystem();
+            FeatureCollection<SimpleFeatureType, SimpleFeature> features = featureSource
+                    .getFeatures(query);
+            CoordinateReferenceSystem queryCRS = features.getSchema()
+                    .getCoordinateReferenceSystem();
 
-            if(queryCRS != null && queryCRS.equals(layerCRS)){
+            if (queryCRS != null && queryCRS.equals(layerCRS)) {
                 layers[0] = featureLayer;
             } else {
                 // workaround
@@ -203,21 +196,20 @@ public class BasicFeatureRenderer extends RendererImpl {
                         features, layerCRS);
                 layers[0] = new FeatureLayer(reprojectingFc, style, layer.getName());
             }
-        }
-        else {
+        } else {
             FeatureLayer featureLayer = new FeatureLayer(featureSource, style, layer.getName());
-            if( query != null ){
-                featureLayer.setQuery( query );
+            if (query != null) {
+                featureLayer.setQuery(query);
             }
             layers[0] = featureLayer;
         }
         map = new MapContent();
         map.getViewport().setCoordinateReferenceSystem(getContext().getCRS());
-        map.layers().addAll( Arrays.asList(layers));
+        map.layers().addAll(Arrays.asList(layers));
     }
 
-    protected Style getStyle( StyleBlackboard styleBlackboard,
-            FeatureSource<SimpleFeatureType, SimpleFeature> featureSource ) {
+    protected Style getStyle(StyleBlackboard styleBlackboard,
+            FeatureSource<SimpleFeatureType, SimpleFeature> featureSource) {
         // pull style information off the blackboard
         Style style = (Style) styleBlackboard.lookup(Style.class);
         IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
@@ -236,7 +228,7 @@ public class BasicFeatureRenderer extends RendererImpl {
         }
 
         if (style != null) {
-            expandSizePaintArea  = getExpandSizeFromStyle(style);
+            expandSizePaintArea = getExpandSizeFromStyle(style);
         }
 
         if (style == null) {
@@ -246,36 +238,37 @@ public class BasicFeatureRenderer extends RendererImpl {
         return style;
     }
 
-    private Style removeTransparency( Style style ) {
+    private Style removeTransparency(Style style) {
         style.accept(new TransparencyRemovingVisitor());
         return style;
     }
 
     /**
-     * Returns an estimate of the rendering buffer needed to properly display this
-     * layer taking into consideration the sizes of strokes, symbols and icons in
-     * the feature type styles.
+     * Returns an estimate of the rendering buffer needed to properly display this layer taking into
+     * consideration the sizes of strokes, symbols and icons in the feature type styles.
      *
      * For more Details have a look at StreamingRenderer#findRenderingBuffer(Style)
      *
-     * @param styles
-     *            the feature type styles to be applied to the layer
-     * @return an estimate of the buffer that should be used to properly display a layer
-     *         rendered with the specified styles
+     * @param styles the feature type styles to be applied to the layer
+     * @return an estimate of the buffer that should be used to properly display a layer rendered
+     *         with the specified styles
      *
      */
 
-    private int getExpandSizeFromStyle( Style style ) {
+    private int getExpandSizeFromStyle(Style style) {
         MetaBufferEstimator rbe = new MetaBufferEstimator();
         for (FeatureTypeStyle lfts : style.featureTypeStyles()) {
-        	for (Rule r : lfts.rules()) rbe.visit(r);
+            for (Rule r : lfts.rules())
+                rbe.visit(r);
         }
 
-        if(!rbe.isEstimateAccurate())
-            RendererPlugin.log("Assuming rendering buffer = " + rbe.getBuffer()
-                + ", but estimation is not accurate, you may want to set a buffer manually", null);
+        if (!rbe.isEstimateAccurate())
+            RendererPlugin.log("Assuming rendering buffer = " + rbe.getBuffer() //$NON-NLS-1$
+                    + ", but estimation is not accurate, you may want to set a buffer manually", //$NON-NLS-1$
+                    null);
 
-        // the actual amount we have to grow the rendering area by is half of the stroke/symbol sizes
+        // the actual amount we have to grow the rendering area by is half of the stroke/symbol
+        // sizes
         // plus one extra pixel for antialiasing effects
         return (int) Math.round(rbe.getBuffer() / 2.0 + 1);
     }
@@ -283,19 +276,22 @@ public class BasicFeatureRenderer extends RendererImpl {
     /**
      * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#dispose()
      */
+    @Override
     public void dispose() {
-        if (getRenderer() != null && getState() != DONE && getState() != DISPOSED && getState() != CANCELLED) {
+        if (getRenderer() != null && getState() != DONE && getState() != DISPOSED
+                && getState() != CANCELLED) {
             try {
                 getRenderer().stopRendering();
             } catch (Exception e) {
                 // log this exception with its state
-                RendererPlugin.log("Error stop rendering Renderer (with State " + getState()+ ")", e); //$NON-NLS-1$
+                RendererPlugin.log("Error stop rendering Renderer (with State " + getState() + ")", //$NON-NLS-1$ //$NON-NLS-2$
+                        e);
             }
         }
     }
 
     @Override
-    public void setState( int newState ) {
+    public void setState(int newState) {
         super.setState(newState);
     }
 
@@ -303,7 +299,8 @@ public class BasicFeatureRenderer extends RendererImpl {
      * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#render(org.locationtech.jts.geom.Envelope,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
-    public void render( IProgressMonitor monitor ) throws RenderException {
+    @Override
+    public void render(IProgressMonitor monitor) throws RenderException {
         Graphics2D graphics = null;
         try {
             graphics = getContext().getImage().createGraphics();
@@ -313,6 +310,7 @@ public class BasicFeatureRenderer extends RendererImpl {
                 graphics.dispose();
         }
     }
+
     /**
      * Internal method used to draw into the provided graphics.
      *
@@ -323,10 +321,10 @@ public class BasicFeatureRenderer extends RendererImpl {
      * @throws RenderException
      */
     @SuppressWarnings("unchecked")
-    private void render( Graphics2D graphics, ReferencedEnvelope bounds, IProgressMonitor monitor, boolean clear)
-            throws RenderException {
+    private void render(Graphics2D graphics, ReferencedEnvelope bounds, IProgressMonitor monitor,
+            boolean clear) throws RenderException {
 
-        if( monitor == null ){
+        if (monitor == null) {
             monitor = new NullProgressMonitor();
         }
 
@@ -335,7 +333,7 @@ public class BasicFeatureRenderer extends RendererImpl {
         String endMessage = null;
         int endStatus = ILayer.DONE;
         try {
-            monitor.beginTask("rendering features", 100);
+            monitor.beginTask("rendering features", 100); //$NON-NLS-1$
 
             if (getContext().getLayer().getSchema() == null
                     || getContext().getLayer().getSchema().getGeometryDescriptor() == null) {
@@ -344,19 +342,20 @@ public class BasicFeatureRenderer extends RendererImpl {
                 return;
             }
 
-            prepareDraw( SubMonitor.convert(monitor, 2));
+            prepareDraw(SubMonitor.convert(monitor, 2));
 
-            if (monitor.isCanceled()){
+            if (monitor.isCanceled()) {
                 return;
             }
             // setFeatureLoading(monitor);
-            ReferencedEnvelope validBounds = validateBounds(bounds, SubMonitor.convert(monitor, 3), getContext());
+            ReferencedEnvelope validBounds = validateBounds(bounds, SubMonitor.convert(monitor, 3),
+                    getContext());
 
-            if (validBounds.isNull()){
+            if (validBounds.isNull()) {
                 return;
             }
             try {
-                monitor.setTaskName("rendering features - area");
+                monitor.setTaskName("rendering features - area"); //$NON-NLS-1$
                 validBounds.transform(getContext().getLayer().getCRS(), true);
             } catch (TransformException te) {
                 RendererPlugin.log("viewable area is available in the layer CRS", te); //$NON-NLS-1$
@@ -373,22 +372,21 @@ public class BasicFeatureRenderer extends RendererImpl {
                 throw (RenderException) new RenderException().initCause(e);
             }
 
-            listener.init( SubMonitor.convert( monitor,90) );
+            listener.init(SubMonitor.convert(monitor, 90));
             setQueries();
 
             monitor.worked(5);
 
-            Point min = getContext().worldToPixel(
-                    new Coordinate(validBounds.getMinX(), validBounds
-                            .getMinY()));
-            Point max = getContext().worldToPixel(
-                    new Coordinate(validBounds.getMaxX(), validBounds
-                            .getMaxY()));
+            Point min = getContext()
+                    .worldToPixel(new Coordinate(validBounds.getMinX(), validBounds.getMinY()));
+            Point max = getContext()
+                    .worldToPixel(new Coordinate(validBounds.getMaxX(), validBounds.getMaxY()));
 
             int width = Math.abs(max.x - min.x);
             int height = Math.abs(max.y - min.y);
 
-            Rectangle paintArea = new Rectangle(Math.min(min.x, max.x), Math.min(min.y, max.y), width, height);
+            Rectangle paintArea = new Rectangle(Math.min(min.x, max.x), Math.min(min.y, max.y),
+                    width, height);
 
             int expandPaintAreaBy = 0;
             if (expandSizePaintArea > 0) {
@@ -397,21 +395,21 @@ public class BasicFeatureRenderer extends RendererImpl {
             // expand the painArea by 30 pixels each direction to get symbols
             // rendered right (up to a size of 60 pix)
             // upper left
-            paintArea.add(  Math.min(min.x, max.x) - expandPaintAreaBy,
-                            Math.min(min.y, max.y) - expandPaintAreaBy);
+            paintArea.add(Math.min(min.x, max.x) - expandPaintAreaBy,
+                    Math.min(min.y, max.y) - expandPaintAreaBy);
             // lower right
-            paintArea.add(  Math.max(min.x, max.x) + expandPaintAreaBy,
-                            Math.max(min.y, max.y) + expandPaintAreaBy);
+            paintArea.add(Math.max(min.x, max.x) + expandPaintAreaBy,
+                    Math.max(min.y, max.y) + expandPaintAreaBy);
 
-            if( clear ){ // if partial update on live screen
-                graphics.setBackground(new Color(0,0,0,0));
+            if (clear) { // if partial update on live screen
+                graphics.setBackground(new Color(0, 0, 0, 0));
                 graphics.clearRect(paintArea.x, paintArea.y, paintArea.width, paintArea.height);
             }
 
-            validBounds=getContext().worldBounds(paintArea);
+            validBounds = getContext().worldBounds(paintArea);
 
-            MapViewport mapViewport = new MapViewport( validBounds );
-            map.setViewport( mapViewport);
+            MapViewport mapViewport = new MapViewport(validBounds);
+            map.setViewport(mapViewport);
 
             GTRenderer geotToolsRenderer = getRenderer();
 
@@ -420,8 +418,8 @@ public class BasicFeatureRenderer extends RendererImpl {
             }
             java.util.Map<Object, Object> rendererHints = geotToolsRenderer.getRendererHints();
 
-            rendererHints.put(StreamingRenderer.DECLARED_SCALE_DENOM_KEY, getContext()
-                    .getViewportModel().getScaleDenominator());
+            rendererHints.put(StreamingRenderer.DECLARED_SCALE_DENOM_KEY,
+                    getContext().getViewportModel().getScaleDenominator());
             rendererHints.put(StreamingRenderer.SCALE_COMPUTATION_METHOD_KEY,
                     StreamingRenderer.SCALE_ACCURATE);
             ILabelPainter labelPainter = getContext().getLabelPainter();
@@ -429,8 +427,8 @@ public class BasicFeatureRenderer extends RendererImpl {
             String layerId = getContext().getLayer().getID().toString();
             if (getContext().getLayer() instanceof SelectionLayer)
                 layerId = layerId + "-Selection"; //$NON-NLS-1$
-            rendererHints.put(StreamingRenderer.LABEL_CACHE_KEY, new LabelCacheDecorator(
-                    labelPainter, origin, layerId));
+            rendererHints.put(StreamingRenderer.LABEL_CACHE_KEY,
+                    new LabelCacheDecorator(labelPainter, origin, layerId));
 
             geotToolsRenderer.setRendererHints(rendererHints);
 
@@ -452,38 +450,41 @@ public class BasicFeatureRenderer extends RendererImpl {
 
             IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
             boolean antiAliasing = store.getBoolean(PreferenceConstants.P_ANTI_ALIASING);
-            hints.add(new RenderingHints(RenderingHints.KEY_ANTIALIASING, antiAliasing
-                    ? RenderingHints.VALUE_ANTIALIAS_ON
-                    : RenderingHints.VALUE_ANTIALIAS_OFF));
+            hints.add(new RenderingHints(RenderingHints.KEY_ANTIALIASING,
+                    antiAliasing ? RenderingHints.VALUE_ANTIALIAS_ON
+                            : RenderingHints.VALUE_ANTIALIAS_OFF));
 
             graphics.addRenderingHints(hints);
             geotToolsRenderer.setJava2DHints(hints);
 
-            if (monitor.isCanceled()){
+            if (monitor.isCanceled()) {
                 return;
             }
-            if( paintArea == null || paintArea.isEmpty() || validBounds == null || validBounds.isEmpty() || validBounds.isNull() || validBounds.getWidth() <=0 || validBounds.getHeight()<=0 ){
-                System.out.println("nothing to draw");
+            if (paintArea == null || paintArea.isEmpty() || validBounds == null
+                    || validBounds.isEmpty() || validBounds.isNull() || validBounds.getWidth() <= 0
+                    || validBounds.getHeight() <= 0) {
+                System.out.println("nothing to draw"); //$NON-NLS-1$
                 // nothing to draw yet
-            }
-            else {
+            } else {
                 geotToolsRenderer.paint(graphics, paintArea, validBounds);
             }
 
         } catch (Throwable renderingProblem) {
-            if (renderingProblem instanceof InterruptedException){
+            if (renderingProblem instanceof InterruptedException) {
                 // ignore the rendering process being interrupted this is expected
                 // if the user pans while we are drawing
                 return;
             }
-            RenderException e2 = new RenderException( renderingProblem.getClass()+" occured during rendering: " //$NON-NLS-1$
-                    + renderingProblem.getLocalizedMessage(), renderingProblem );
+            RenderException e2 = new RenderException(
+                    renderingProblem.getClass() + " occured during rendering: " //$NON-NLS-1$
+                            + renderingProblem.getLocalizedMessage(),
+                    renderingProblem);
             throw e2;
         } finally {
             /*
              * vitalus: Clear MapContext to remove <code>FeatureListener</code>s from FeatureStore
-             * implementation, otherwises listeners hell takes place (example is a
-             * ShapefileDataStore and its FeatureListenerManager).
+             * implementation, otherwise listeners hell takes place (example is a ShapefileDataStore
+             * and its FeatureListenerManager).
              */
             if (map != null) {
                 map.layers().clear();
@@ -498,7 +499,8 @@ public class BasicFeatureRenderer extends RendererImpl {
                 if (!(renderingProblem instanceof TopologyException)) {
                     RenderException e2 = new RenderException(
                             Messages.BasicFeatureRenderer_renderingProblem
-                                    + renderingProblem.getLocalizedMessage(), renderingProblem);
+                                    + renderingProblem.getLocalizedMessage(),
+                            renderingProblem);
                     throw e2;
                 }
             }
@@ -515,7 +517,7 @@ public class BasicFeatureRenderer extends RendererImpl {
     protected GTRenderer getRenderer() {
         if (renderer == null) {
             renderer = new StreamingRenderer();
-            HashMap<Object, Object> rendererHints = new HashMap<Object, Object>();
+            HashMap<Object, Object> rendererHints = new HashMap<>();
             rendererHints.put("optimizedDataLoadingEnabled", true); //$NON-NLS-1$
             renderer.setRendererHints(rendererHints);
             // renderer.removeRenderListener(StreamingRenderer.DEFAULT_LISTENER);
@@ -545,9 +547,9 @@ public class BasicFeatureRenderer extends RendererImpl {
      * @throws FactoryException
      * @throws RenderException
      */
-    public static ReferencedEnvelope validateBounds( ReferencedEnvelope viewBounds,
-            IProgressMonitor monitor, IRenderContext context ) throws IOException,
-            FactoryException, RenderException {
+    public static ReferencedEnvelope validateBounds(ReferencedEnvelope viewBounds,
+            IProgressMonitor monitor, IRenderContext context)
+            throws IOException, FactoryException, RenderException {
 
         if (viewBounds == null) {
             // get the bounds from the context
@@ -559,28 +561,30 @@ public class BasicFeatureRenderer extends RendererImpl {
         if (layerBounds == null || layerBounds.isNull() || layerBounds.isEmpty()) {
             return context.getImageBounds(); // layer bounds are unknown so draw what is on screen!
         }
-        // if the viewBounds interesect the layer at all then let us draw what is on the screen
-        if( layerBounds.getCoordinateReferenceSystem() == viewBounds.getCoordinateReferenceSystem() &&
-                layerBounds.intersects((BoundingBox) viewBounds)) {
+        // if the viewBounds intersect the layer at all then let us draw what is on the screen
+        if (layerBounds.getCoordinateReferenceSystem() == viewBounds.getCoordinateReferenceSystem()
+                && layerBounds.intersects((BoundingBox) viewBounds)) {
             // these bounds look okay; transform them to the viewportCRS
             ReferencedEnvelope screen = new ReferencedEnvelope(viewBounds, viewCRS);
             return screen;
-        }
-        else {
+        } else {
             try {
-                ReferencedEnvelope crsBounds = ReferencedEnvelopeCache.getReferencedEnvelope(viewCRS);
-                if( crsBounds.isEmpty() || crsBounds.isNull() ){
-                    return context.getImageBounds(); // max crs bounds are unknown so draw what is on screen!
+                ReferencedEnvelope crsBounds = ReferencedEnvelopeCache
+                        .getReferencedEnvelope(viewCRS);
+                if (crsBounds.isEmpty() || crsBounds.isNull()) {
+                    return context.getImageBounds(); // max crs bounds are unknown so draw what is
+                                                     // on screen!
                 }
-                ReferencedEnvelope maxBounds = crsBounds.transform( viewCRS, true, 10 );
-                if ( maxBounds.getCoordinateReferenceSystem() == viewBounds.getCoordinateReferenceSystem() &&
-                        maxBounds.intersects((BoundingBox) viewBounds)) {
+                ReferencedEnvelope maxBounds = crsBounds.transform(viewCRS, true, 10);
+                if (maxBounds.getCoordinateReferenceSystem() == viewBounds
+                        .getCoordinateReferenceSystem()
+                        && maxBounds.intersects((BoundingBox) viewBounds)) {
                     // okay the viewBounds are at least somewhere in the maxBounds for the CRS
                     // draw what is on screen
-                    ReferencedEnvelope clip = new ReferencedEnvelope( maxBounds.intersection(viewBounds), viewCRS );
+                    ReferencedEnvelope clip = new ReferencedEnvelope(
+                            maxBounds.intersection(viewBounds), viewCRS);
                     return clip;
-                }
-                else {
+                } else {
                     // okay we are right off the map; return an empty envelope
                     return new ReferencedEnvelope(viewCRS);
                 }
@@ -600,6 +604,7 @@ public class BasicFeatureRenderer extends RendererImpl {
         int exceptionCount = 0;
 
         boolean featureRendered = false;
+
         long lastUpdate;
 
         private static final int UPDATE_INTERVAL_MS = 3000;
@@ -607,7 +612,8 @@ public class BasicFeatureRenderer extends RendererImpl {
         /**
          * @see org.geotools.renderer.lite.RenderListener#featureRenderer(org.geotools.feature.SimpleFeature)
          */
-        public void featureRenderer( SimpleFeature feature ) {
+        @Override
+        public void featureRenderer(SimpleFeature feature) {
             if (!featureRendered)
                 featureRendered = true;
 
@@ -626,32 +632,29 @@ public class BasicFeatureRenderer extends RendererImpl {
         /**
          * @see org.geotools.renderer.lite.RenderListener#errorOccurred(java.lang.Exception)
          */
-        public void errorOccurred( Exception e ) {
+        @Override
+        public void errorOccurred(Exception e) {
             if (e != null) {
                 if (e.getMessage() != null && (e.getMessage().toLowerCase().contains("timeout") || //$NON-NLS-1$
                         e.getMessage().toLowerCase().contains("time-out") || //$NON-NLS-1$
                         e.getMessage().toLowerCase().contains("timed out"))) { //$NON-NLS-1$
                     exception = new Exception(Messages.BasicFeatureRenderer_request_timed_out);
-                    if (getRenderer() != null){
+                    if (getRenderer() != null) {
                         getRenderer().stopRendering();
                     }
                 }
                 if (e instanceof IOException) {
-                    if (getRenderer() != null){
+                    if (getRenderer() != null) {
                         getRenderer().stopRendering();
                     }
                     exception = e;
                 }
-//                if (e instanceof ProjectionException){
-//                    // ignore data is getting out of range for this projection
-//                    return;
-//                }
-                ProjectPlugin.log( getContext().getLayer().getName() + " rendering error:"+e, e);
+                ProjectPlugin.log(getContext().getLayer().getName() + " rendering error:" + e, e); //$NON-NLS-1$
                 e.printStackTrace();
             }
 
-            if (exceptionCount > 500){
-                if (getRenderer() != null){
+            if (exceptionCount > 500) {
+                if (getRenderer() != null) {
                     getRenderer().stopRendering();
                 }
             }
@@ -664,7 +667,7 @@ public class BasicFeatureRenderer extends RendererImpl {
          *
          * @param monitor
          */
-        public void init( IProgressMonitor monitor ) {
+        public void init(IProgressMonitor monitor) {
             lastUpdate = System.currentTimeMillis();
             this.monitor = monitor;
             exception = null;
@@ -674,7 +677,6 @@ public class BasicFeatureRenderer extends RendererImpl {
         }
     }
 
-    @SuppressWarnings("nls")
     public void refreshImage() {
         try {
             render(ProgressManager.instance().get());

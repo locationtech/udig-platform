@@ -126,7 +126,7 @@ import org.opengis.feature.simple.SimpleFeature;
  * @version $Revision: 1.9 $
  */
 public class MapEditor extends EditorPart
-        implements IDropTargetProvider, IAdaptable, MapEditorPart {
+implements IDropTargetProvider, IAdaptable, MapEditorPart {
     /** The id of the MapViewport View */
     public static final String ID = "org.locationtech.udig.project.ui.mapEditorOld"; //$NON-NLS-1$
 
@@ -675,7 +675,7 @@ public class MapEditor extends EditorPart
         setTitleToolTip(Messages.MapEditor_titleToolTip);
         setTitleImage(ProjectUIPlugin.getDefault().getImage(ISharedImages.MAP_OBJ));
 
-        viewer = new MapViewer(composite, SWT.DOUBLE_BUFFERED);
+        viewer = new MapViewer(composite, this, SWT.DOUBLE_BUFFERED);
         // allow the viewer to open our context menu; work with our selection provider etc
         viewer.init(this);
         // if a map was provided as input we can ask the viewer to use it
@@ -848,26 +848,26 @@ public class MapEditor extends EditorPart
             final PropertyDialogAction tmp = new PropertyDialogAction(new SameShellProvider(shell),
                     new ISelectionProvider() {
 
-                        @Override
-                        public void addSelectionChangedListener(
-                                final ISelectionChangedListener listener) {
-                        }
+                @Override
+                public void addSelectionChangedListener(
+                        final ISelectionChangedListener listener) {
+                }
 
-                        @Override
-                        public ISelection getSelection() {
-                            return new StructuredSelection(getMap());
-                        }
+                @Override
+                public ISelection getSelection() {
+                    return new StructuredSelection(getMap());
+                }
 
-                        @Override
-                        public void removeSelectionChangedListener(
-                                final ISelectionChangedListener listener) {
-                        }
+                @Override
+                public void removeSelectionChangedListener(
+                        final ISelectionChangedListener listener) {
+                }
 
-                        @Override
-                        public void setSelection(final ISelection selection) {
-                        }
+                @Override
+                public void setSelection(final ISelection selection) {
+                }
 
-                    });
+            });
 
             propertiesAction = new Action() {
                 @Override
