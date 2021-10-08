@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -32,12 +32,12 @@ public class ConfluenceDom {
 
     private Element docEle;
 
-    private Map<String, ConfluencePage> pageList = new HashMap<String, ConfluencePage>();
+    private Map<String, ConfluencePage> pageList = new HashMap<>();
 
     // private List<String> titleList = new ArrayList<String>();
 
     // private String textileLocation = "textile/";
-    private String htmlLocation = "html/";
+    private String htmlLocation = "html/"; //$NON-NLS-1$
 
     public ConfluenceDom(File xmlFileLocation) {
 
@@ -99,36 +99,37 @@ public class ConfluenceDom {
 
     private void getAllPages() {
 
-        NodeList objectList = docEle.getElementsByTagName("object");
+        NodeList objectList = docEle.getElementsByTagName("object"); //$NON-NLS-1$
         if (objectList != null && objectList.getLength() > 0) {
 
             for (int i = 0; i < objectList.getLength(); i++) {
                 // find a page
                 Element objectItem = (Element) objectList.item(i);
-                if (objectItem.getAttribute("class").equalsIgnoreCase("Page")) {
+                if (objectItem.getAttribute("class").equalsIgnoreCase("Page")) { //$NON-NLS-1$ //$NON-NLS-2$
                     // temp page
                     ConfluencePage tempPage = new ConfluencePage();
 
                     // get the properties
-                    NodeList pagePropertyList = objectItem.getElementsByTagName("property");
+                    NodeList pagePropertyList = objectItem.getElementsByTagName("property"); //$NON-NLS-1$
                     for (int j = 0; j < pagePropertyList.getLength(); j++) {
                         Element pagePropertyItem = (Element) pagePropertyList.item(j);
                         // get page details
-                        if (pagePropertyItem.getAttribute("name").equalsIgnoreCase("title")) {
+                        if (pagePropertyItem.getAttribute("name").equalsIgnoreCase("title")) { //$NON-NLS-1$ //$NON-NLS-2$
                             tempPage.setTitle(pagePropertyItem.getTextContent());
                         }
-                        if (pagePropertyItem.getAttribute("name").equalsIgnoreCase("contentStatus")) {
+                        if (pagePropertyItem.getAttribute("name") //$NON-NLS-1$
+                                .equalsIgnoreCase("contentStatus")) { //$NON-NLS-1$
                             tempPage.setStatus(pagePropertyItem.getTextContent());
                         }
-                        if (pagePropertyItem.getAttribute("name").equalsIgnoreCase("version")) {
+                        if (pagePropertyItem.getAttribute("name").equalsIgnoreCase("version")) { //$NON-NLS-1$ //$NON-NLS-2$
                             tempPage.setVersion(pagePropertyItem.getTextContent());
                         }
-                        if (pagePropertyItem.getAttribute("name").equalsIgnoreCase(
-                                "originalVersion")) {
+                        if (pagePropertyItem.getAttribute("name") //$NON-NLS-1$
+                                .equalsIgnoreCase("originalVersion")) { //$NON-NLS-1$
                             tempPage.setOriginalVersion(true);
                         }
-                        if (pagePropertyItem.getAttribute("name").equalsIgnoreCase("parent")) {
-                            NodeList pageIdList = pagePropertyItem.getElementsByTagName("id");
+                        if (pagePropertyItem.getAttribute("name").equalsIgnoreCase("parent")) { //$NON-NLS-1$ //$NON-NLS-2$
+                            NodeList pageIdList = pagePropertyItem.getElementsByTagName("id"); //$NON-NLS-1$
                             for (int k = 0; k < pageIdList.getLength(); k++) {
                                 Element pageId = (Element) pageIdList.item(k);
                                 tempPage.setParent(pageId.getTextContent());
@@ -137,17 +138,17 @@ public class ConfluenceDom {
                     }
 
                     // check if it has historical versions
-                    NodeList collectionList = objectItem.getElementsByTagName("collection");
+                    NodeList collectionList = objectItem.getElementsByTagName("collection"); //$NON-NLS-1$
                     for (int j = 0; j < collectionList.getLength(); j++) {
                         Element collectionItem = (Element) collectionList.item(j);
-                        if (collectionItem.getAttribute("name").equalsIgnoreCase(
-                                "historicalVersions")) {
+                        if (collectionItem.getAttribute("name") //$NON-NLS-1$
+                                .equalsIgnoreCase("historicalVersions")) { //$NON-NLS-1$
                             tempPage.setHistoricalVersions(true);
                         }
                     }
 
                     // get the page id
-                    NodeList pageIdList = objectItem.getElementsByTagName("id");
+                    NodeList pageIdList = objectItem.getElementsByTagName("id"); //$NON-NLS-1$
                     tempPage.setId(pageIdList.item(0).getTextContent());
 
                     // add to page list
@@ -160,23 +161,23 @@ public class ConfluenceDom {
     private void updatePageContent() {
         ConfluencePage tempPage = new ConfluencePage();
 
-        NodeList objectList = docEle.getElementsByTagName("object");
+        NodeList objectList = docEle.getElementsByTagName("object"); //$NON-NLS-1$
         if (objectList != null && objectList.getLength() > 0) {
 
             for (int i = 0; i < objectList.getLength(); i++) {
                 // find a page content
                 Element objectItem = (Element) objectList.item(i);
-                if (objectItem.getAttribute("class").equalsIgnoreCase("BodyContent")) {
-                    NodeList pagePropertyList = objectItem.getElementsByTagName("property");
+                if (objectItem.getAttribute("class").equalsIgnoreCase("BodyContent")) { //$NON-NLS-1$ //$NON-NLS-2$
+                    NodeList pagePropertyList = objectItem.getElementsByTagName("property"); //$NON-NLS-1$
                     for (int j = 0; j < pagePropertyList.getLength(); j++) {
                         Element pagePropertyItem = (Element) pagePropertyList.item(j);
                         // get body content
-                        if (pagePropertyItem.getAttribute("name").equalsIgnoreCase("body")) {
+                        if (pagePropertyItem.getAttribute("name").equalsIgnoreCase("body")) { //$NON-NLS-1$ //$NON-NLS-2$
                             tempPage.setBodyText(pagePropertyItem.getTextContent());
                         }
 
-                        if (pagePropertyItem.getAttribute("name").equalsIgnoreCase("content")) {
-                            NodeList pageIdList = pagePropertyItem.getElementsByTagName("id");
+                        if (pagePropertyItem.getAttribute("name").equalsIgnoreCase("content")) { //$NON-NLS-1$ //$NON-NLS-2$
+                            NodeList pageIdList = pagePropertyItem.getElementsByTagName("id"); //$NON-NLS-1$
                             for (int k = 0; k < pageIdList.getLength(); k++) {
                                 Element pageId = (Element) pageIdList.item(k);
                                 tempPage.setId(pageId.getTextContent());
@@ -206,10 +207,10 @@ public class ConfluenceDom {
 
         for (ConfluencePage tempPage : pageList.values()) {
             if (tempPage.getParent().equalsIgnoreCase(parent) && tempPage.isCurrent()) {
-                children += "<topic label=\"" + tempPage.getTitle() + "\"  href=\""
-                        + this.htmlLocation + tempPage.getId() + ".html\">\n";
+                children += "<topic label=\"" + tempPage.getTitle() + "\"  href=\"" //$NON-NLS-1$ //$NON-NLS-2$
+                        + this.htmlLocation + tempPage.getId() + ".html\">\n"; //$NON-NLS-1$
                 children += getChildrenToc(tempPage.getId());
-                children += "</topic>\n";
+                children += "</topic>\n"; //$NON-NLS-1$
             }
         }
 
@@ -217,33 +218,33 @@ public class ConfluenceDom {
     }
 
     private String buildToc() {
-        String toc = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                + "<?NLS TYPE=\"org.eclipse.help.toc\"?>\n"
-                + "<toc label=\"Sample Table of Contents\">\n";
+        String toc = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" //$NON-NLS-1$
+                + "<?NLS TYPE=\"org.eclipse.help.toc\"?>\n" //$NON-NLS-1$
+                + "<toc label=\"Sample Table of Contents\">\n"; //$NON-NLS-1$
 
         // loop through page list
         for (ConfluencePage tempPage : pageList.values()) {
             if (tempPage.getParent().isEmpty() && tempPage.isCurrent()
-                    && !tempPage.getTitle().startsWith(".")) {
-                toc += "<topic label=\"" + tempPage.getTitle() + "\"  href=\"" + this.htmlLocation
-                        + tempPage.getId() + ".html\">\n";
+                    && !tempPage.getTitle().startsWith(".")) { //$NON-NLS-1$
+                toc += "<topic label=\"" + tempPage.getTitle() + "\"  href=\"" + this.htmlLocation //$NON-NLS-1$ //$NON-NLS-2$
+                        + tempPage.getId() + ".html\">\n"; //$NON-NLS-1$
                 toc += getChildrenToc(tempPage.getId());
-                toc += "</topic>\n";
+                toc += "</topic>\n"; //$NON-NLS-1$
             }
         }
 
-        toc += "</toc>";
+        toc += "</toc>"; //$NON-NLS-1$
 
         return toc;
     }
 
     private void writeToc(File location) {
         try {
-            BufferedWriter f = new BufferedWriter(new FileWriter(location + "toc.xml"));
+            BufferedWriter f = new BufferedWriter(new FileWriter(location + "toc.xml")); //$NON-NLS-1$
             f.write(this.buildToc());
             f.close();
         } catch (IOException e) {
-            System.out.println("Unable to generate toc.xml:"+e);
+            System.out.println("Unable to generate toc.xml:" + e); //$NON-NLS-1$
             e.printStackTrace();
         }
     }
