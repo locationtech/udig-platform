@@ -39,6 +39,9 @@ jobs:
       run: mvn install -B -f docs/pom.xml -Dtycho.mode=maven -Pdocs
     - name: Run uDig product & sdk build (parallel)
       run: mvn install -B -Pproduct,sdk,test -DskipTests spotbugs:check --fail-at-end -T4
+    - uses: jwgmeligmeyling/spotbugs-github-action@v1.2
+      with:
+        path: '**/spotbugsXml.xml'
     - name: Run uDig tests
       uses: GabrielBB/xvfb-action@v1
       with:
@@ -63,6 +66,3 @@ jobs:
       with:
         name: user-doc
         path: ${{ github.workspace }}/docs/target/user/en/html
-    - uses: jwgmeligmeyling/spotbugs-github-action@master
-      with:
-        path: '**/spotbugsXml.xml'
