@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2010-2012, Refractions Research Inc.
  *
@@ -12,37 +13,41 @@ package org.locationtech.udig.catalog.geotools.data;
 import java.io.IOException;
 import java.net.URL;
 
-import org.locationtech.udig.catalog.ID;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IGeoResourceInfo;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.DataStore;
 import org.geotools.data.ResourceInfo;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.data.simple.SimpleFeatureStore;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
 import org.opengis.feature.type.Name;
 
 public class FeatureSourceGeoResource extends IGeoResource {
 
     protected Name name;
+
     private ID id;
 
-    public FeatureSourceGeoResource( DataStoreService service, Name name ) {
+    public FeatureSourceGeoResource(DataStoreService service, Name name) {
         this.service = service;
         this.name = name;
         this.id = new ID(service.getID(), name.getLocalPart());
     }
-    public DataStoreService service( IProgressMonitor monitor ) throws IOException {
+
+    @Override
+    public DataStoreService service(IProgressMonitor monitor) throws IOException {
         return (DataStoreService) this.service;
     };
+
     public SimpleFeatureSource toFeatureSource() throws IOException {
         DataStore dataStore = service(null).toDataAccess();
         return dataStore.getFeatureSource(name);
     }
+
     @Override
-    protected IGeoResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
+    protected IGeoResourceInfo createInfo(IProgressMonitor monitor) throws IOException {
         SimpleFeatureSource featureSource = toFeatureSource();
         ResourceInfo gtInfo = featureSource.getInfo();
         return new FeatureSourceGeoResourceInfo(gtInfo);
@@ -58,29 +63,29 @@ public class FeatureSourceGeoResource extends IGeoResource {
         return id.toURL();
     }
 
+    @Override
     public Throwable getMessage() {
         return null;
     }
 
+    @Override
     public Status getStatus() {
         return null;
     }
 
     @Override
-    public <T> boolean canResolve( Class<T> adaptee ) {
+    public <T> boolean canResolve(Class<T> adaptee) {
         if (adaptee == null) {
             return false;
         }
         return adaptee.isInstance(this)
                 || adaptee.isAssignableFrom(FeatureSourceGeoResourceInfo.class)
                 || adaptee.isAssignableFrom(SimpleFeatureSource.class)
-                || adaptee.isAssignableFrom(SimpleFeatureStore.class)
-                || super.canResolve(adaptee);
+                || adaptee.isAssignableFrom(SimpleFeatureStore.class) || super.canResolve(adaptee);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
+    public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor) throws IOException {
         if (monitor == null)
             monitor = new NullProgressMonitor();
 
