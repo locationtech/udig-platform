@@ -6,7 +6,7 @@ The User-friendly Desktop Internet GIS (uDig) is an open source ("EPL":http://ww
 * uDig can be extended with RCP "plug-ins"
 * uDig can be used as a plug-in in an existing RCP application
 
-uDig is an open project, with developers from multiple companies participating in the decision making process and project direction.
+uDig is an open project, with developers from multiple companies participating in the decision making process and project direction, or open discussions using chat tools such as "Gitter":https://gitter.im/uDig
 
 h2. Website
 
@@ -34,6 +34,8 @@ h2. Contributing
 Join us in working on uDig: "Contributing":CONTRIBUTING.textile
 
 There are two ways to take part: indirectly using github pull requests; and directly by obtaining commit access. Remember that a pull request is the start of a conversation!
+
+
 
 h1. Build Instructions
 
