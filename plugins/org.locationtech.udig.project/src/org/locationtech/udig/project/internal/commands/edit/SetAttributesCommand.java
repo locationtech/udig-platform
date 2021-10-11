@@ -97,7 +97,7 @@ public class SetAttributesCommand extends AbstractEditCommand implements Undoabl
     public void run(IProgressMonitor monitor) throws Exception {
         ILayer layer = editLayer.get(monitor);
         if (layer == null) {
-            ProjectPlugin.log("class " + editLayer.getClass().getName() + " is returning null"); //$NON-NLS-1$ //$NON-NLS-2$
+            ProjectPlugin.error("Class " + editLayer.getClass().getName() + " is returning null"); //$NON-NLS-1$ //$NON-NLS-2$
             return;
         }
         FeatureStore<SimpleFeatureType, SimpleFeature> resource = layer
