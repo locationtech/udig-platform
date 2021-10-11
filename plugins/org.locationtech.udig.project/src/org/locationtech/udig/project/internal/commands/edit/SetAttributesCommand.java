@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -26,9 +27,9 @@ import org.locationtech.udig.project.command.UndoableMapCommand;
 import org.locationtech.udig.project.command.provider.EditFeatureProvider;
 import org.locationtech.udig.project.command.provider.EditLayerProvider;
 import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.Name;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.Id;
@@ -36,15 +37,16 @@ import org.opengis.filter.Id;
 /**
  * This command modifies an attribute of the current editFeature(the victim that is currently
  * editable).
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
 public class SetAttributesCommand extends AbstractEditCommand implements UndoableMapCommand {
-    protected String xpath[];
-    protected final Object value[];
+    protected String[] xpath;
 
-    private Object oldValue[];
+    protected final Object[] value;
+
+    private Object[] oldValue;
 
     private final IBlockingProvider<SimpleFeature> editFeature;
 
@@ -52,17 +54,17 @@ public class SetAttributesCommand extends AbstractEditCommand implements Undoabl
 
     /**
      * Creates a new instance of SetAttributeCommand.
-     * 
+     *
      * @param feature the feature to modify
      * @param layer to ask for object
-     * @param xpath the xpath that identifies an attribute in the current edit feature.
+     * @param xpath the XPath that identifies an attribute in the current edit feature.
      * @param value the value that will replace the old attribute value.
      */
     public SetAttributesCommand(IBlockingProvider<SimpleFeature> feature,
-            IBlockingProvider<ILayer> layer, String xpath[], Object value[]) {
+            IBlockingProvider<ILayer> layer, String[] xpath, Object[] value) {
         Validate.notNull(xpath);
         Validate.notNull(value);
-        Validate.isTrue(xpath.length == value.length, "xpath and values do not have same lenght");
+        Validate.isTrue(xpath.length == value.length, "xpath and values do not have same lenght"); //$NON-NLS-1$
         this.xpath = xpath;
         this.value = value;
         this.oldValue = new Object[xpath.length];
@@ -72,15 +74,15 @@ public class SetAttributesCommand extends AbstractEditCommand implements Undoabl
 
     /**
      * Creates a new instance of SetAttributeCommand.
-     * 
+     *
      * @param feature the feature to modify
-     * @param xpath the xpath that identifies an attribute in the current edit feature.
+     * @param xpath the XPath that identifies an attribute in the current edit feature.
      * @param value the value that will replace the old attribute value.
      */
-    public SetAttributesCommand(String xpath[], Object value[]) {
+    public SetAttributesCommand(String[] xpath, Object[] value) {
         Validate.notNull(xpath);
         Validate.notNull(value);
-        Validate.isTrue(xpath.length == value.length, "xpath and values do not have same lenght");
+        Validate.isTrue(xpath.length == value.length, "xpath and values do not have same lenght"); //$NON-NLS-1$
         editFeature = new EditFeatureProvider(this);
         editLayer = new EditLayerProvider(this);
         this.oldValue = new Object[xpath.length];
@@ -91,61 +93,64 @@ public class SetAttributesCommand extends AbstractEditCommand implements Undoabl
     /**
      * @see org.locationtech.udig.project.command.MapCommand#run()
      */
-    public void run( IProgressMonitor monitor ) throws Exception {
+    @Override
+    public void run(IProgressMonitor monitor) throws Exception {
         ILayer layer = editLayer.get(monitor);
-        if( layer==null ){
-            System.err.println("class "+editLayer.getClass().getName()+" is returning null");  //$NON-NLS-1$//$NON-NLS-2$
+        if (layer == null) {
+            ProjectPlugin.log("class " + editLayer.getClass().getName() + " is returning null"); //$NON-NLS-1$ //$NON-NLS-2$
             return;
         }
-        FeatureStore<SimpleFeatureType, SimpleFeature> resource = layer.getResource(FeatureStore.class, null);
+        FeatureStore<SimpleFeatureType, SimpleFeature> resource = layer
+                .getResource(FeatureStore.class, null);
         SimpleFeature feature2 = editFeature.get(monitor);
 
-        FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-		Id fidFilter = filterFactory.id(
-                FeatureUtils.stringToId(filterFactory,feature2.getID()));
+        FilterFactory filterFactory = CommonFactoryFinder
+                .getFilterFactory(GeoTools.getDefaultHints());
+        Id fidFilter = filterFactory.id(FeatureUtils.stringToId(filterFactory, feature2.getID()));
 
-		// for loop to get the old values
-		for(int i = 0; i < xpath.length; i++){
-		    oldValue[i] = feature2.getAttribute(xpath[i]);
-		}
-		
-		// update the new values with another for loop
-		for(int i = 0; i < xpath.length; i++){
-		    feature2.setAttribute(xpath[i],value[i]);
-		}
-        
+        // for loop to get the old values
+        for (int i = 0; i < xpath.length; i++) {
+            oldValue[i] = feature2.getAttribute(xpath[i]);
+        }
+
+        // update the new values with another for loop
+        for (int i = 0; i < xpath.length; i++) {
+            feature2.setAttribute(xpath[i], value[i]);
+        }
+
         List<Name> attributeList = new ArrayList<>();
         SimpleFeatureType schema = layer.getSchema();
-        for( String name : xpath ){
-            attributeList.add( schema.getDescriptor( name ).getName() );
+        for (String name : xpath) {
+            attributeList.add(schema.getDescriptor(name).getName());
         }
-        Name[] array = attributeList.toArray( new Name[attributeList.size()]);
+        Name[] array = attributeList.toArray(new Name[attributeList.size()]);
         resource.modifyFeatures(array, value, fidFilter);
     }
 
     /**
      * @see org.locationtech.udig.project.internal.command.UndoableCommand#rollback()
      */
-    public void rollback( IProgressMonitor monitor ) throws Exception {
+    @Override
+    public void rollback(IProgressMonitor monitor) throws Exception {
         SimpleFeature feature = editFeature.get(monitor);
-        // need another for loop
-        for ( int i = 0; i > xpath.length; i++){
+
+        for (int i = 0; i < xpath.length; i++) {
             feature.setAttribute(xpath[i], oldValue[i]);
         }
 
         ILayer layer = editLayer.get(monitor);
-        FeatureStore<SimpleFeatureType, SimpleFeature> resource = layer.getResource(FeatureStore.class, null);
-        
-        // need another for loop
-        
-        List<Name> attributeList = new ArrayList<Name>();
+        FeatureStore<SimpleFeatureType, SimpleFeature> resource = layer
+                .getResource(FeatureStore.class, null);
+
+        List<Name> attributeList = new ArrayList<>();
         SimpleFeatureType schema = layer.getSchema();
-        for( String name : xpath ){
-            attributeList.add( schema.getDescriptor( name ).getName());
+        for (String name : xpath) {
+            attributeList.add(schema.getDescriptor(name).getName());
         }
-        Name[] array = attributeList.toArray( new Name[attributeList.size()]);
-        
-        FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
+        Name[] array = attributeList.toArray(new Name[attributeList.size()]);
+
+        FilterFactory filterFactory = CommonFactoryFinder
+                .getFilterFactory(GeoTools.getDefaultHints());
         Id id = filterFactory.id(FeatureUtils.stringToId(filterFactory, feature.getID()));
         resource.modifyFeatures(array, oldValue, id);
     }
@@ -153,13 +158,14 @@ public class SetAttributesCommand extends AbstractEditCommand implements Undoabl
     /**
      * @see org.locationtech.udig.project.command.MapCommand#getName()
      */
+    @Override
     public String getName() {
-        return MessageFormat.format(
-                Messages.SetAttributeCommand_setFeatureAttribute, new Object[]{xpath});
+        return MessageFormat.format(Messages.SetAttributeCommand_setFeatureAttribute,
+                new Object[] { xpath });
     }
 
     @Override
-    public void setMap( IMap map ) {
+    public void setMap(IMap map) {
         super.setMap(map);
     }
 }
