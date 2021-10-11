@@ -30,6 +30,8 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.part.ViewPart;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.internal.ui.IDropTargetProvider;
+import org.locationtech.udig.internal.ui.UDIGControlDropListener;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
 import org.locationtech.udig.project.IProject;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.commands.CreateMapCommand;
@@ -93,7 +95,7 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
         try {
             IProgressMonitor monitor = getViewSite().getActionBars().getStatusLineManager()
                     .getProgressMonitor();
-            viewer = new MapViewer(parent, SWT.DOUBLE_BUFFERED);
+            viewer = new MapViewer(parent, this, SWT.DOUBLE_BUFFERED);
             List<IGeoResource> resources = new ArrayList<>();
             createResources(resources, monitor);
             IProject activeProject = ApplicationGIS.getActiveProject();
@@ -219,4 +221,8 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
         }
     }
 
+    @Override
+    public UDIGDropHandler getDropHandler() {
+        return ((UDIGControlDropListener) dropTarget.listener).getHandler();
+    }
 }

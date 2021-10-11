@@ -393,7 +393,8 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette
             monitor.worked(1);
 
             /**
-             * Save the map's URI in the preferences so that it will be loaded the next time uDig is run.
+             * Save the map's URI in the preferences so that it will be loaded the next time uDig is
+             * run.
              */
             Resource resource = getMap().eResource();
             if (resource != null) {
@@ -735,7 +736,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette
         setTitleToolTip(Messages.MapEditor_titleToolTip);
         setTitleImage(ProjectUIPlugin.getDefault().getImage(ISharedImages.MAP_OBJ));
 
-        viewer = new MapViewer(composite, SWT.DOUBLE_BUFFERED);
+        viewer = new MapViewer(composite, this, SWT.DOUBLE_BUFFERED);
         // we need an edit domain for GEF
         // This represents the "Current Tool" for the Palette
         // We should not duplicate the idea of current tools so we may
