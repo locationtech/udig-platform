@@ -32,9 +32,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorActionDelegate;
-import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ListDialog;
 import org.locationtech.udig.printing.model.Box;
 import org.locationtech.udig.printing.model.ModelFactory;
@@ -47,7 +45,7 @@ import org.locationtech.udig.printing.ui.internal.PrintingPlugin;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.Project;
 import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.MapEditorInput;
+import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
 import org.locationtech.udig.project.ui.internal.MapEditorPart;
 import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
 import org.locationtech.udig.project.ui.internal.MapPart;
@@ -63,51 +61,51 @@ public class CreatePageAction implements IEditorActionDelegate {
 
     @Override
     public void run(IAction action) {
-        IEditorPart activeEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                .getActivePage().getActiveEditor();
-        IEditorInput input = activeEditor.getEditorInput();
-        if (!(activeEditor instanceof MapEditorPart) && !(input instanceof MapEditorInput)) {
+
+        MapPart mapEditor = ApplicationGISInternal.getActiveMapPart();
+
+        if (mapEditor == null) {
             MessageDialog.openError(Display.getDefault().getActiveShell(),
                     Messages.CreatePageAction_printError_title,
                     Messages.CreatePageAction_printError_text);
-        }
-
-        MapPart mapEditor = (MapPart) activeEditor;
-
-        Template template = getPageTemplate();
-
-        if (template == null) {
-            return;
-        }
-
-        Map map = null;
-        Project project = null;
-
-        Map oldMap = (Map) ((MapEditorInput) input).getProjectElement();
-        project = oldMap.getProjectInternal();
-        try {
-            map = EcoreUtil.copy(oldMap);
-        } catch (Throwable t) {
-            // unable to copy map?
-            t.printStackTrace();
-            return;
-        }
-
-        project.getElementsInternal().add(map);
-
-        Point partSize;
-        if (mapEditor instanceof MapEditorPart) {
-            MapEditorPart part = (MapEditorPart) mapEditor;
-            partSize = part.getComposite().getSize();
-        } else if (mapEditor instanceof MapEditorWithPalette) {
-            MapEditorWithPalette part = (MapEditorWithPalette) mapEditor;
-            partSize = part.getComposite().getSize();
         } else {
-            partSize = new Point(500, 500);
-        }
-        Page page = createPage(template, map, project, partSize);
 
-        ApplicationGIS.openProjectElement(page, false);
+            Template template = getPageTemplate();
+
+            if (template == null) {
+                return;
+            }
+
+            Map map = null;
+            Project project = null;
+
+            Map oldMap = mapEditor.getAdapter(Map.class);
+            project = oldMap.getProjectInternal();
+            try {
+                map = EcoreUtil.copy(oldMap);
+            } catch (Throwable t) {
+                // unable to copy map?
+                t.printStackTrace();
+                return;
+            }
+
+            project.getElementsInternal().add(map);
+
+            Point partSize;
+            if (mapEditor instanceof MapEditorPart) {
+                MapEditorPart part = (MapEditorPart) mapEditor;
+                partSize = part.getComposite().getSize();
+            } else if (mapEditor instanceof MapEditorWithPalette) {
+                MapEditorWithPalette part = (MapEditorWithPalette) mapEditor;
+                partSize = part.getComposite().getSize();
+            } else {
+                partSize = new Point(500, 500);
+            }
+            Page page = createPage(template, map, project, partSize);
+
+            ApplicationGIS.openProjectElement(page, false);
+
+        }
     }
 
     private Page createPage(Template template, Map map, Project project, Point partSize) {

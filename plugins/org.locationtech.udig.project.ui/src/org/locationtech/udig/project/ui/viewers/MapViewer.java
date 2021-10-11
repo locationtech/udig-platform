@@ -10,6 +10,7 @@
  */
 package org.locationtech.udig.project.ui.viewers;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.swt.SWT;
@@ -50,7 +51,7 @@ import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
  * @since 1.1.0
  * @version 1.2.3
  */
-public class MapViewer implements MapPart {
+public class MapViewer {
     /**
      * This viewer's ViewportPane control.
      */
@@ -79,8 +80,12 @@ public class MapViewer implements MapPart {
     /** Preferred scales like open layers (used for zoom in, zoom out etc...) */
     private double[] resolutions;
 
+    /** This viewer's map part */
     private MapPart mapPart;
     
+    /** This is for testing only DO NOT USE OTHERWISE */
+    public boolean isTesting;
+
     /**
      * Creates a map viewer on a newly-created viewport pane under the given
      * parent.
@@ -94,30 +99,30 @@ public class MapViewer implements MapPart {
      * @param parent
      *      the parent control
      */
-    public MapViewer(Composite parent) {
-        this(parent, SWT.DOUBLE_BUFFERED | SWT.MULTI );
+    public MapViewer(Composite parent, MapPart mapPart) {
+        this(parent, mapPart, SWT.DOUBLE_BUFFERED | SWT.MULTI );
     }
 
     /**
-     * Creates a table viewer on a newly-created table control under the given
-     * parent. The table control is created using the given style bits. The
-     * viewer has no input, no content provider, a default label provider, no
-     * sorter, and no filters. The table has no columns.
+     * Creates a table viewer on a newly-created table control under the given parent. The table
+     * control is created using the given style bits. The viewer has no input, no content provider,
+     * a default label provider, no sorter, and no filters. The table has no columns.
      * 
-     * @param parent
-     *      the parent control
-     * @param style Use SWT.SINGLE or SWT.MULTI to control the use of tiles, 
-     *      SWT.DOUBLE_BUFFERED and SWT.NO_BACKGROUND can be used to configure the canvas. 
+     * @param parent the parent control
+     * @param mapPart the map part of this viewer.
+     * @param style Use SWT.SINGLE or SWT.MULTI to control the use of tiles, SWT.DOUBLE_BUFFERED and
+     *        SWT.NO_BACKGROUND can be used to configure the canvas.
      */
-    public MapViewer(Composite parent, int style) {
-        if( (style & SWT.MULTI) == SWT.MULTI ){
-            viewport = new ViewportPaneTiledSWT(parent, style, this );
-        }
-        else if( (style & SWT.SINGLE) == SWT.SINGLE){
-            viewport = new ViewportPaneSWT(parent, style, this );            
-        }
-        else {
-            viewport = new ViewportPaneSWT(parent, this );   
+    public MapViewer(Composite parent, MapPart mapPart, int style) {
+        Assert.isNotNull(mapPart, "MapPart required");
+
+        this.mapPart = mapPart;
+        if ((style & SWT.MULTI) == SWT.MULTI) {
+            viewport = new ViewportPaneTiledSWT(parent, style, this.mapPart);
+        } else if ((style & SWT.SINGLE) == SWT.SINGLE) {
+            viewport = new ViewportPaneSWT(parent, style, this.mapPart);
+        } else {
+            viewport = new ViewportPaneSWT(parent, this.mapPart);
         }
     }
 
@@ -202,6 +207,10 @@ public class MapViewer implements MapPart {
         
         // add the new map
         this.map = map;
+
+        if (this.map == null)
+            return;
+
         if (map.getRenderManager() == null) {
         	if( viewport instanceof ViewportPaneTiledSWT) {
         		map.setRenderManagerInternal(new TiledRenderManagerDynamic());
@@ -328,16 +337,22 @@ public class MapViewer implements MapPart {
         if (selectionProvider == null) {
             throw new NullPointerException("selection provider must not be null!"); //$NON-NLS-1$
         }
-        selectionProvider.setActiveMap( map, this );        
+        selectionProvider.setActiveMap(map, mapPart);
         if( part != null ){
             part.getSite().setSelectionProvider( selectionProvider );
         }
     }
     public void dispose() {
-        if (viewport != null && getMap() != null) {
-            viewport .removePaneListener(getMap().getViewportModelInternal());
-            viewport = null;
-            map = null;
+        if (this.viewport != null) {
+            if (getMap() != null && getMap().getViewportModelInternal() != null) {
+                this.viewport.removePaneListener(getMap().getViewportModelInternal());
+            }
+            this.viewport.dispose();
+            this.viewport = null;
+            this.map = null;
+            this.renderManager = null;
+            this.part = null;
+            this.menu = null;
         }
     }
     
@@ -397,6 +412,7 @@ public class MapViewer implements MapPart {
             }
         } );
     }
+
 //    /**
 //     * Get the MapEditDomain
 //     * @return
