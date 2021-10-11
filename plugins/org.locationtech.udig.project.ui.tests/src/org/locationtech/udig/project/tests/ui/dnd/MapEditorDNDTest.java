@@ -40,8 +40,8 @@ import org.locationtech.udig.project.MapCompositionEvent;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
-import org.locationtech.udig.project.ui.internal.MapEditorPart;
 import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
+import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.ui.IDropAction;
 import org.locationtech.udig.ui.IDropHandlerListener;
 import org.locationtech.udig.ui.UDIGDragDropUtilities;
@@ -102,8 +102,9 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
             assertLayerType(layer, typeNames, ShapefileDataStore.class);
         }
 
-        MapEditorPart activeEditor = ApplicationGISInternal.getActiveEditor();
+        MapPart activeEditor = ApplicationGISInternal.getActiveMapPart();
         UDIGDropHandler dropHandler = activeEditor.getDropHandler();
+        assertNotNull("expected MapPart with Drop Support", dropHandler);
         dropHandler.setTarget(activeEditor);
         dropHandler.setViewerLocation(ViewerDropLocation.NONE);
         dropHandler.performDrop(data, null);
