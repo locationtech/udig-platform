@@ -12,11 +12,10 @@ package org.locationtech.udig.project.ui.internal;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorPart;
-import org.locationtech.udig.internal.ui.UDIGDropHandler;
 
 /**
  * interface for map editor related map parts
- * 
+ *
  * @author GDavis
  * @since 1.1.0
  */
@@ -28,13 +27,6 @@ public interface MapEditorPart extends MapPart, IEditorPart {
     static final String LAYER_DIRTY_KEY = "DIRTY"; //$NON-NLS-1$
 
     MapEditorSite getMapEditorSite();
-    
-    // helper methods for tools
-    boolean isTesting();
-
-    void setTesting(boolean isTesting);
-
-    UDIGDropHandler getDropHandler();
 
     boolean isDragging();
 
@@ -43,4 +35,8 @@ public interface MapEditorPart extends MapPart, IEditorPart {
     Composite getComposite();
 
     void setDirty(boolean b);
+
+    boolean isTesting();
+
+    void setTesting(boolean testing);
 }
