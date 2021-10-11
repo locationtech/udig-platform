@@ -1,8 +1,13 @@
 /**
- * <copyright>
- * </copyright>
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2021, Refractions Research Inc.
  *
- * $Id$
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
+ *
  */
 package org.locationtech.udig.project.internal.provider;
 
@@ -10,16 +15,6 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
-import org.locationtech.udig.project.edit.internal.Messages;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.LayerDecorator;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.ProjectFactory;
-import org.locationtech.udig.project.internal.ProjectPackage;
-import org.locationtech.udig.project.internal.impl.SynchronizedEList;
-import org.locationtech.udig.project.internal.render.ViewportModel;
-import org.locationtech.udig.project.internal.render.provider.ViewportModelItemProvider;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
@@ -45,12 +40,21 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
+import org.locationtech.udig.project.edit.internal.Messages;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerDecorator;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.impl.SynchronizedEList;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.internal.render.provider.ViewportModelItemProvider;
 import org.osgi.framework.Bundle;
 
 /**
- * This is the item provider adapter for a {@link org.locationtech.udig.project.internal.Map} object.
- * <!-- begin-user-doc --> <!-- end-user-doc -->
- * 
+ * This is the item provider adapter for a {@link org.locationtech.udig.project.internal.Map}
+ * object. <!-- begin-user-doc --> <!-- end-user-doc -->
+ *
  * @generated NOT
  */
 public class MapItemProvider extends AbstractLazyLoadingItemProvider
@@ -59,7 +63,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
 
     /**
      * Placeholder that will be placed in viewers while layers are being loaded.
-     * 
+     *
      * @author Jesse
      * @since 1.1.0
      */
@@ -89,7 +93,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * Allows the property descriptor of the viewport model to appear as part of the map (User does
      * not need to know that there is a viewport model)
-     * 
+     *
      * @author jones
      * @since 0.6.0
      */
@@ -99,7 +103,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
 
         /**
          * Construct <code>ViewportModelDescriptor</code>.
-         * 
+         *
          * @param element
          */
         public ViewportModelDescriptor(ItemPropertyDescriptor element) {
@@ -252,22 +256,22 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
-    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client\n"
-            + "http://udig.refractions.net\n" + "(C) 2004-2012, Refractions Research Inc.\n"
-            + "\n\n" + "All rights reserved. This program and the accompanying materials\n"
-            + "are made available under the terms of the Eclipse Public License v1.0\n"
-            + "(http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD\n"
-            + "License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).\n";
+    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client\n" //$NON-NLS-1$
+            + "http://udig.refractions.net\n" + "(C) 2004-2012, Refractions Research Inc.\n" //$NON-NLS-1$ //$NON-NLS-2$
+            + "\n\n" + "All rights reserved. This program and the accompanying materials\n" //$NON-NLS-1$ //$NON-NLS-2$
+            + "are made available under the terms of the Eclipse Public License v1.0\n" //$NON-NLS-1$
+            + "(http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD\n" //$NON-NLS-1$
+            + "License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).\n"; //$NON-NLS-1$
 
     ViewportModelItemProvider modelProvider;
 
     /**
      * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public MapItemProvider(AdapterFactory adapterFactory) {
@@ -278,7 +282,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -292,7 +296,6 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
         return itemPropertyDescriptors;
     }
 
-    @SuppressWarnings("unchecked")
     private void addViewportModelDescriptors(Map map) {
         for (Iterator iter = modelProvider.getPropertyDescriptors(map.getViewportModel())
                 .iterator(); iter.hasNext();) {
@@ -304,10 +307,9 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This adds a property descriptor for the Abstract feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
-    @SuppressWarnings("unchecked")
     protected void addAbstractPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add(createItemPropertyDescriptor(
                 ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -321,10 +323,9 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This adds a property descriptor for the Name feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
-    @SuppressWarnings("unchecked")
     protected void addNamePropertyDescriptor(Object object) {
         itemPropertyDescriptors.add(createItemPropertyDescriptor(
                 ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -338,10 +339,9 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This adds a property descriptor for the Nav Command Stack feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
-    @SuppressWarnings("unchecked")
     protected void addNavCommandStackPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add(createItemPropertyDescriptor(
                 ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -355,10 +355,9 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This adds a property descriptor for the Command Stack feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
-    @SuppressWarnings("unchecked")
     protected void addCommandStackPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add(createItemPropertyDescriptor(
                 ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -372,10 +371,9 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This adds a property descriptor for the Color Palette feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
-    @SuppressWarnings("unchecked")
     protected void addColorPalettePropertyDescriptor(Object object) {
         itemPropertyDescriptors.add(createItemPropertyDescriptor(
                 ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
@@ -389,7 +387,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This adds a property descriptor for the Render Manager Internal feature. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addRenderManagerInternalPropertyDescriptor(Object object) {
@@ -402,9 +400,9 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     }
 
     /**
-     * This adds a property descriptor for the Colour Scheme feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the Color Scheme feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addColourSchemePropertyDescriptor(Object object) {
@@ -420,13 +418,13 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This adds a property descriptor for the Black Board Internal feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     protected void addBlackBoardInternalPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add(createItemPropertyDescriptor(
                 ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                getResourceLocator(), "blackboard", "blackboard ",
+                getResourceLocator(), "blackboard", "blackboard ", //$NON-NLS-1$ //$NON-NLS-2$
                 ProjectPackage.eINSTANCE.getMap_BlackBoardInternal(), true, null, null, null));
     }
 
@@ -436,7 +434,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
      * {@link org.eclipse.emf.edit.command.RemoveCommand} or
      * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}. <!--
      * begin-user-doc --> Changed so only layers and viewport model appears. <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -450,7 +448,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override
@@ -463,7 +461,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
 
     /**
      * This returns Map.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override
@@ -484,7 +482,6 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     protected org.locationtech.udig.project.internal.provider.LoadingPlaceHolder getLoadingItem() {
         return LOADING_LAYER;
     };
@@ -554,7 +551,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -571,14 +568,14 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
                 label = toString.substring(lastSlash);
             }
         }
-        return label == null || label.length() == 0 ? "Unable to load map" : label;
+        return label == null || label.length() == 0 ? "Unable to load map" : label; //$NON-NLS-1$
     }
 
     /**
      * This handles model notifications by calling {@link #updateChildren} to update any cached
-     * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * children and by creating a viewer notification, which it passes to
+     * {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated NOT
      */
     @Override
@@ -593,8 +590,6 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
         switch (notification.getFeatureID(Map.class)) {
         case ProjectPackage.MAP__NAME:
         case ProjectPackage.MAP__ABSTRACT:
-            //        case ProjectPackage.MAP__NAV_COMMAND_STACK:
-            //        case ProjectPackage.MAP__COMMAND_STACK:
         case ProjectPackage.MAP__COLOR_PALETTE:
         case ProjectPackage.MAP__COLOUR_SCHEME:
             fireNotifyChanged(
@@ -614,7 +609,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override

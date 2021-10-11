@@ -440,7 +440,6 @@
                     <configuration>
                         <useUIHarness>true</useUIHarness>
                         <runOrder>alphabetical</runOrder>
-                        <product>org.locationtech.udig-product</product>
                         <argLine>-Xmx1024m -Dlauncher.suppressErrors -Dsdtcore.headless ${tycho.test.OSspecific} ${tycho.test.envSettings}</argLine>
                     </configuration>
                 </plugin>
