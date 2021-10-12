@@ -3,9 +3,12 @@ package org.locationtech.udig.libs.tests;
 import static org.junit.Assert.assertTrue;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -40,7 +43,7 @@ public class ManifestValidationTest {
             }
         }
         StringBuffer sb = new StringBuffer();
-        missingFilesReferencedInClasspath.stream().sorted().forEach(s -> sb.append(" " + s+ "\n"));
+        missingFilesReferencedInClasspath.stream().sorted().forEach(s -> sb.append(" " + s + "\n"));
 
         assertTrue(
                 "Expected that all jars listed in classpath are present\nClasspath-entries but missing on File-System:\n"
@@ -65,12 +68,33 @@ public class ManifestValidationTest {
             }
         }
         StringBuffer sb = new StringBuffer();
-        jarsNotListedInClasspath.stream().sorted().forEach(s -> sb.append(" " + s+ "\n"));
+        jarsNotListedInClasspath.stream().sorted().forEach(s -> sb.append(" " + s + "\n"));
 
         assertTrue(
                 "Expected that available jars in lib folder of Bundle are not listed in Bundle-ClassPath of Manifest-File\nMissing Bundle-ClassPath entry for:\n"
                         + sb.toString(),
                 jarsNotListedInClasspath.isEmpty());
+    }
+
+    @Test
+    public void checkThatLibsAreNoteBundlesBecauseOtherBundlesProvideThese() {
+        List<String> blacklist = new ArrayList<>();
+        blacklist.add("jfreechart");
+        blacklist.add("jcommon");
+        blacklist.add("netcdf");
+        blacklist.add("imageio-ext-netcdf");
+        blacklist.add("opencsv");
+
+        List<String> libsThatShouldNotBeBundled = manifestClasspathEntries.stream()
+                .filter(p -> matches(p, blacklist)).collect(Collectors.toList());
+
+        StringBuffer sb = new StringBuffer();
+        libsThatShouldNotBeBundled.stream().sorted().forEach(s -> sb.append(" " + s + "\n"));
+
+        assertTrue(
+                "Expected empty List of black-listed libraries\nLibraries that should not be bundled here:\n"
+                        + sb.toString(),
+                libsThatShouldNotBeBundled.isEmpty());
     }
 
     private static Set<String> getManifestClasspathEntries(Bundle bundle) throws BundleException {
@@ -85,5 +109,15 @@ public class ManifestValidationTest {
             }
         }
         return libs;
+    }
+
+    private static boolean matches(String libEntry, List<String> blacklist) {
+        for (String blEntry : blacklist) {
+            if (libEntry.contains(blEntry)) {
+                return true;
+            }
+        }
+        return false;
+
     }
 }
