@@ -1,5 +1,4 @@
-/**
- * uDig - User Friendly Desktop Internet GIS client
+/* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -14,16 +13,16 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.internal.Messages;
+
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchListener;
-import org.locationtech.udig.internal.ui.UiPlugin;
-import org.locationtech.udig.ui.internal.Messages;
 
 /**
  * This class allows a plugin to add an {@link IShutdownTask} object that will be run when uDig
@@ -36,39 +35,34 @@ import org.locationtech.udig.ui.internal.Messages;
 public class ShutdownTaskList implements IWorkbenchListener {
 
     private static final ShutdownTaskList INSTANCE = new ShutdownTaskList();
+    private Collection<PostTask> postShutdownTasks = new LinkedList<PostTask>();
+    private Collection<PreTask> preShutdownTasks = new LinkedList<PreTask>();
 
-    private Collection<PostTask> postShutdownTasks = new LinkedList<>();
-
-    private Collection<PreTask> preShutdownTasks = new LinkedList<>();
-
-    @Override
-    public void postShutdown(final IWorkbench workbench) {
+    public void postShutdown( final IWorkbench workbench ) {
 
         try {
             final ProgressMonitorDialog dialog = getDialog(workbench);
-            dialog.run(true, false, new IRunnableWithProgress() {
+            dialog.run(true, false, new IRunnableWithProgress(){
 
-                @Override
-                public void run(IProgressMonitor monitor2)
-                        throws InvocationTargetException, InterruptedException {
-                    OffThreadProgressMonitor monitor = new OffThreadProgressMonitor(monitor2,
-                            dialog.getShell().getDisplay());
+                public void run( IProgressMonitor monitor2 ) throws InvocationTargetException,
+                        InterruptedException {
+                    OffThreadProgressMonitor monitor = new OffThreadProgressMonitor(monitor2, dialog.getShell().getDisplay());
 
                     int totalsteps = 0;
-                    for (PostTask task : postShutdownTasks) {
+                    for( PostTask task : postShutdownTasks ) {
                         try {
                             task.steps = task.task.getProgressMonitorSteps();
                             totalsteps += task.steps;
                         } catch (Throwable e) {
-                            UiPlugin.log("error calling getProgressMonitorSteps() on " + task.task, //$NON-NLS-1$
-                                    e);
+                            UiPlugin.log("error calling getProgressMonitorSteps() on " + task.task, e); //$NON-NLS-1$
                         }
                     }
 
                     monitor.beginTask(Messages.ShutdownTaskList_shutDown, totalsteps);
 
-                    for (PostTask task : postShutdownTasks) {
-                        SubMonitor subMonitor = SubMonitor.convert(monitor, task.steps);
+                    for( PostTask task : postShutdownTasks ) {
+                        IProgressMonitor subMonitor = new ProgressMonitorTaskNamer(monitor,
+                                task.steps);
                         try {
                             task.task.postShutdown(subMonitor, workbench);
                         } catch (Throwable t) {
@@ -83,13 +77,12 @@ public class ShutdownTaskList implements IWorkbenchListener {
         } catch (InvocationTargetException e) {
             throw (RuntimeException) new RuntimeException().initCause(e);
         } catch (InterruptedException e) {
-            throw (RuntimeException) new RuntimeException().initCause(e);
+            throw (RuntimeException) new RuntimeException( ).initCause( e );
         }
 
     }
 
-    @Override
-    public boolean preShutdown(final IWorkbench workbench, final boolean forced) {
+    public boolean preShutdown( final IWorkbench workbench, final boolean forced ) {
         final ProgressMonitorDialog dialog = getDialog(workbench);
 
         final boolean[] allowShutdown = new boolean[1];
@@ -97,36 +90,35 @@ public class ShutdownTaskList implements IWorkbenchListener {
 
         workbench.getActiveWorkbenchWindow().getShell().setVisible(false);
 
-        final Display display = Display.getCurrent();
+        final Display display=Display.getCurrent();
         try {
-            dialog.run(true, forced, new IRunnableWithProgress() {
+            dialog.run(true, forced, new IRunnableWithProgress(){
 
-                @Override
-                public void run(IProgressMonitor monitor2)
-                        throws InvocationTargetException, InterruptedException {
+                public void run( IProgressMonitor monitor2 ) throws InvocationTargetException,
+                        InterruptedException {
 
-                    IProgressMonitor monitor = new OffThreadProgressMonitor(monitor2, display);
+                    IProgressMonitor monitor=new OffThreadProgressMonitor(monitor2, display);
 
                     int totalsteps = 0;
-                    for (PreTask task : preShutdownTasks) {
+                    for( PreTask task : preShutdownTasks ) {
                         try {
                             task.steps = task.task.getProgressMonitorSteps();
                             totalsteps += task.steps;
                         } catch (Throwable e) {
-                            UiPlugin.log("error calling getProgressMonitorSteps() on " + task.task, //$NON-NLS-1$
-                                    e);
+                            UiPlugin.log("error calling getProgressMonitorSteps() on " + task.task, e); //$NON-NLS-1$
                         }
                     }
-                    monitor.beginTask(Messages.ShutdownTaskList_shutDown, totalsteps);
+                    monitor.beginTask(Messages.ShutdownTaskList_shutDown,
+                            totalsteps);
 
-                    for (PreTask task : preShutdownTasks) {
-                        SubMonitor subMonitor = SubMonitor.convert(monitor, task.steps);
+                    for( PreTask task : preShutdownTasks ) {
+                        IProgressMonitor subMonitor = new ProgressMonitorTaskNamer(monitor, task.steps);
                         boolean result;
                         try {
                             result = task.task.preShutdown(subMonitor, workbench, forced);
                         } catch (Throwable t) {
                             result = task.task.handlePreShutdownException(t, forced);
-                        } finally {
+                        }finally{
                             subMonitor.done();
                         }
                         if (!forced) {
@@ -145,13 +137,13 @@ public class ShutdownTaskList implements IWorkbenchListener {
             throw (RuntimeException) new RuntimeException().initCause(e);
         }
 
-        if (!allowShutdown[0])
+        if( !allowShutdown[0] )
             workbench.getActiveWorkbenchWindow().getShell().setVisible(true);
 
         return allowShutdown[0];
     }
 
-    private ProgressMonitorDialog getDialog(IWorkbench workbench) {
+    private ProgressMonitorDialog getDialog( IWorkbench workbench ) {
         Shell shell = new Shell(Display.getCurrent());
 
         ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
@@ -160,8 +152,8 @@ public class ShutdownTaskList implements IWorkbenchListener {
     }
 
     /**
-     * Returns the shared instance for the application. In most cases this method should be used to
-     * get an instance of ShutdownTaskList instead of creating a new instance.
+     *  Returns the shared instance for the application.  In most cases this method should
+     * be used to get an instance of ShutdownTaskList instead of creating a new instance.
      *
      * @return The shared instance of ShutdownTaskList
      */
@@ -176,7 +168,7 @@ public class ShutdownTaskList implements IWorkbenchListener {
      * @param task the task to be ran. The ordering or the tasks ran is random so make sure there
      *        are no order dependencies between tasks
      */
-    public synchronized void addPostShutdownTask(PostShutdownTask task) {
+    public synchronized void addPostShutdownTask( PostShutdownTask task ) {
         postShutdownTasks.add(new PostTask(task));
     }
 
@@ -187,25 +179,24 @@ public class ShutdownTaskList implements IWorkbenchListener {
      * @param task the task to be ran. The ordering or the tasks ran is random so make sure there
      *        are no order dependencies between tasks
      */
-    public synchronized void addPreShutdownTask(PreShutdownTask task) {
+    public synchronized void addPreShutdownTask( PreShutdownTask task ) {
         preShutdownTasks.add(new PreTask(task));
     }
 
-    public synchronized void removePreShutdownTask(PreShutdownTask shutdownTask) {
-        preShutdownTasks.remove(new PreTask(shutdownTask));
+    public synchronized void removePreShutdownTask( PreShutdownTask shutdownTask ) {
+        preShutdownTasks.remove(new PreTask(shutdownTask) );
+    }
+    public synchronized void removePostShutdownTask( PostShutdownTask shutdownTask ) {
+        postShutdownTasks.remove(new PostTask(shutdownTask) );
     }
 
-    public synchronized void removePostShutdownTask(PostShutdownTask shutdownTask) {
-        postShutdownTasks.remove(new PostTask(shutdownTask));
-    }
 
     public static class PostTask {
 
         int steps;
-
         final PostShutdownTask task;
 
-        public PostTask(PostShutdownTask task) {
+        public PostTask( PostShutdownTask task ) {
             this.task = task;
         }
 
@@ -218,7 +209,7 @@ public class ShutdownTaskList implements IWorkbenchListener {
         }
 
         @Override
-        public boolean equals(Object obj) {
+        public boolean equals( Object obj ) {
             if (this == obj)
                 return true;
             if (obj == null)
@@ -234,15 +225,14 @@ public class ShutdownTaskList implements IWorkbenchListener {
             return true;
         }
 
-    }
 
+    }
     public static class PreTask {
 
         int steps;
-
         final PreShutdownTask task;
 
-        public PreTask(PreShutdownTask task) {
+        public PreTask( PreShutdownTask task ) {
             this.task = task;
         }
 
@@ -255,7 +245,7 @@ public class ShutdownTaskList implements IWorkbenchListener {
         }
 
         @Override
-        public boolean equals(Object obj) {
+        public boolean equals( Object obj ) {
             if (this == obj)
                 return true;
             if (obj == null)
@@ -270,6 +260,7 @@ public class ShutdownTaskList implements IWorkbenchListener {
                 return false;
             return true;
         }
+
 
     }
 }
