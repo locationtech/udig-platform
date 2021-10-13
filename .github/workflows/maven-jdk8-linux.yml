@@ -38,10 +38,7 @@ jobs:
     - name: Build docs with sphinx
       run: mvn install -B -f docs/pom.xml -Dtycho.mode=maven -Pdocs
     - name: Run uDig product & sdk build (parallel)
-      run: mvn install -B -Pproduct,sdk,test -DskipTests spotbugs:check --fail-at-end -T4
-    - uses: jwgmeligmeyling/spotbugs-github-action@v1.2
-      with:
-        path: '**/spotbugsXml.xml'
+      run: mvn install -B -Pproduct,sdk,test -DskipTests --fail-at-end -T4
     - name: Run uDig tests
       uses: GabrielBB/xvfb-action@v1
       with:
