@@ -73,20 +73,6 @@
 	</dependencyManagement>
 
 	<dependencies>
-		<!-- see org.locationtech.udig.libs.jfreechart -->
-		<dependency>
-			<groupId>jfree</groupId>
-			<artifactId>jfreechart</artifactId>
-			<version>1.0.13</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>jfree</groupId>
-			<artifactId>jcommon</artifactId>
-			<version>1.0.13</version>
-			<scope>provided</scope>
-		</dependency>
-
 		<!-- uDig Specific Extras -->
 		<dependency>
 			<!-- scope provided means that it is excluded globally -->
@@ -300,6 +286,17 @@
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-charts</artifactId>
 			<version>${geotools.version}</version>
+			<exclusions>
+				<!-- see org.locationtech.udig.libs.jfreechart -->
+				<exclusion>
+					<groupId>jfree</groupId>
+					<artifactId>jfreechart</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>jfree</groupId>
+					<artifactId>jcommon</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.geotools</groupId>
