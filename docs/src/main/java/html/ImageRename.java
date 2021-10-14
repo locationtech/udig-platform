@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -32,13 +32,14 @@ import javax.swing.JFileChooser;
  * The open document to RST conversion is great - except for the generated image names.
  * <p>
  * This application takes a file describing how you want to fix the problem:
- * 
+ *
  * <pre>
  * 10000000000002010000018F5D64B4D5.png=installer_admin.png
  * 10000000000002010000018F5E22EE7A.png=installer_location
  * 1000000000000081000001924E854422.jpg=splash_screen
  * 10000000000001010000007AC9F16190.png
  * </pre>
+ *
  * Files will be renamed if a new name is defined, the rename will preserving their extension.
  * <p>
  * The renames will also be used to update the RST files (as long as the final file exists).
@@ -50,9 +51,9 @@ import javax.swing.JFileChooser;
  * <li>Create "rename.properties" using the format above</li>
  * <li>Run html.ImageRename index.rst rename.properties</li>
  * </ul>
- * I experimented with converting the images from PNG to jpeg to save space, but at least for my
+ * I experimented with converting the images from PNG to JPEG to save space, but at least for my
  * docs it did not appear worthwhile.
- * 
+ *
  * @author jody
  */
 public class ImageRename {
@@ -63,21 +64,22 @@ public class ImageRename {
             this.target = target;
         }
 
+        @Override
         public String getDescription() {
-            return target + " file";
+            return target + " file"; //$NON-NLS-1$
         }
 
         @Override
         public boolean accept(File f) {
-            if( target.startsWith("*.")){
-                return f.getName().endsWith( target.substring(1) );
+            if (target.startsWith("*.")) { //$NON-NLS-1$
+                return f.getName().endsWith(target.substring(1));
             }
             return f.getName().equals(target);
         }
     }
 
     /**
-     * Used to list html files for conversion.
+     * Used to list HTML files for conversion.
      */
     private final class ExtensionFileFilter implements FileFilter {
         private String extension;
@@ -86,8 +88,9 @@ public class ImageRename {
             this.extension = extension;
         }
 
+        @Override
         public boolean accept(File file) {
-            return file.getName().endsWith("." + extension);
+            return file.getName().endsWith("." + extension); //$NON-NLS-1$
         }
     }
 
@@ -101,16 +104,17 @@ public class ImageRename {
     }
 
     private void process() {
-        File imageDirectory = new File(target, "images");
+        File imageDirectory = new File(target, "images"); //$NON-NLS-1$
 
         Map<String, String> moved = moveImages(imageDirectory, rename);
 
-        File[] rstFileList = target.listFiles(new ExtensionFileFilter("rst"));
+        File[] rstFileList = target.listFiles(new ExtensionFileFilter("rst")); //$NON-NLS-1$
         for (File rstFile : rstFileList) {
             updateRstFile(rstFile, moved);
         }
     }
 
+    @SuppressWarnings("unused")
     private void updateRstFile(File rstFile, Map<String, String> moved) {
         StringBuilder contents = new StringBuilder();
         BufferedReader reader = null;
@@ -125,18 +129,18 @@ public class ImageRename {
                     if (line.contains(search)) {
                         String updated = line.replace(search, replace);
                         contents.append(updated);
-                        contents.append("\n");
+                        contents.append("\n"); //$NON-NLS-1$
                         continue READ;
                     }
                 }
                 contents.append(line);
-                contents.append("\n");
+                contents.append("\n"); //$NON-NLS-1$
             }
         } catch (FileNotFoundException notFound) {
-            System.err.println("Unable to locate " + rstFile + ":" + notFound);
+            System.err.println("Unable to locate " + rstFile + ":" + notFound); //$NON-NLS-1$ //$NON-NLS-2$
             return;
         } catch (IOException io) {
-            System.err.println("Unable to read " + rstFile + ":" + io);
+            System.err.println("Unable to read " + rstFile + ":" + io); //$NON-NLS-1$ //$NON-NLS-2$
             return;
         } finally {
             close(reader);
@@ -150,7 +154,7 @@ public class ImageRename {
         if (file.exists()) {
             boolean deleted = file.delete();
             if (!deleted) {
-                System.err.println("Unable to replace " + file);
+                System.err.println("Unable to replace " + file); //$NON-NLS-1$
                 return false;
             }
         }
@@ -160,7 +164,7 @@ public class ImageRename {
             writer = new BufferedWriter(new FileWriter(file));
             writer.write(text);
         } catch (IOException eek) {
-            System.out.println("Trouble writing modified '" + file + "':" + eek);
+            System.out.println("Trouble writing modified '" + file + "':" + eek); //$NON-NLS-1$ //$NON-NLS-2$
             return false;
         } finally {
             close(writer);
@@ -175,42 +179,43 @@ public class ImageRename {
         }
         return path;
     }
-    
+
     String extension(String path) {
         int split = path.lastIndexOf('.');
         if (split != -1) {
             return path.substring(split);
         }
-        return "";
+        return ""; //$NON-NLS-1$
     }
 
     /**
      * Move the indicated images, returns a map of the search and replace to perform.
-     * 
+     *
      * @param images
      * @param list
      * @return
      */
     private Map<String, String> moveImages(File images, Properties list) {
-        Map<String, String> renamed = new HashMap<String, String>();
+        Map<String, String> renamed = new HashMap<>();
         for (Entry<Object, Object> entry : list.entrySet()) {
             String from = trimExtension((String) entry.getKey());
-            String extension = extension( (String) entry.getKey() );
-            
+            String extension = extension((String) entry.getKey());
+
             String to = trimExtension((String) entry.getValue());
 
-            if( to.isEmpty() ) continue; // skip
-            
+            if (to.isEmpty())
+                continue; // skip
+
             File file = new File(images, from + extension);
             File move = new File(images, to + extension);
-            
+
             if (!file.exists()) {
                 // checking if it was already moved ...
                 if (move.exists()) {
                     renamed.put(from, to);
                     continue; // fine then
                 } else {
-                    System.out.println("Unable to locate " + file + " to rename to " + to);
+                    System.out.println("Unable to locate " + file + " to rename to " + to); //$NON-NLS-1$ //$NON-NLS-2$
                     continue;
                 }
             } else {
@@ -234,15 +239,15 @@ public class ImageRename {
     }
 
     public static void main(String args[]) {
-        if (args.length == 1 && "?".equals(args[0])) {
-            System.out.println(" Usage: java html.ImageRename [file.rst] [rename.properties]");
+        if (args.length == 1 && "?".equals(args[0])) { //$NON-NLS-1$
+            System.out.println(" Usage: java html.ImageRename [file.rst] [rename.properties]"); //$NON-NLS-1$
             System.out.println();
-            System.out.println("Where:");
-            System.out.println("  file.rst Used to locate your odt2sphinx files");
-            System.out.println("  rename.properties used to rename files in your images folder");
+            System.out.println("Where:"); //$NON-NLS-1$
+            System.out.println("  file.rst Used to locate your odt2sphinx files"); //$NON-NLS-1$
+            System.out.println("  rename.properties used to rename files in your images folder"); //$NON-NLS-1$
             System.out.println();
-            System.out
-                    .println("If not provided the appication will prompt you for the above information");
+            System.out.println(
+                    "If not provided the appication will prompt you for the above information"); //$NON-NLS-1$
 
             System.exit(0);
         }
@@ -250,54 +255,53 @@ public class ImageRename {
         File renameFile = args.length > 1 ? new File(args[1]) : null;
 
         if (rstFile != null && rstFile.isDirectory()) {
-            rstFile = new File(rstFile, "*.rst");
+            rstFile = new File(rstFile, "*.rst"); //$NON-NLS-1$
         }
 
         if (rstFile == null || !rstFile.exists()) {
-            File cd = new File("user");
+            File cd = new File("user"); //$NON-NLS-1$
 
             JFileChooser dialog = new JFileChooser(cd);
-            dialog.setFileFilter(new TargetFileFilter("index.rst"));
-            dialog.setDialogTitle("Step 1: odt2sphinx RST file");
+            dialog.setFileFilter(new TargetFileFilter("index.rst")); //$NON-NLS-1$
+            dialog.setDialogTitle("Step 1: odt2sphinx RST file"); //$NON-NLS-1$
 
-            int open = dialog.showDialog(null, "Rename Images");
+            int open = dialog.showDialog(null, "Rename Images"); //$NON-NLS-1$
 
             if (open == JFileChooser.CANCEL_OPTION) {
-                System.out.println("Rename Canceled");
+                System.out.println("Rename Canceled"); //$NON-NLS-1$
                 System.exit(-1);
             }
             rstFile = dialog.getSelectedFile();
         }
 
         if (rstFile == null || !rstFile.exists() || rstFile.isDirectory()) {
-            System.out
-                    .println("Locate *.RST file generated from odt2sphinx: '" + rstFile + "'");
+            System.out.println("Locate *.RST file generated from odt2sphinx: '" + rstFile + "'"); //$NON-NLS-1$ //$NON-NLS-2$
             System.exit(-1);
         }
         File rstDirectory = null;
         try {
             rstDirectory = rstFile.getParentFile().getCanonicalFile();
         } catch (IOException eek) {
-            System.out.println("Could determine parent of " + rstFile + ":" + eek);
+            System.out.println("Could determine parent of " + rstFile + ":" + eek); //$NON-NLS-1$ //$NON-NLS-2$
             System.exit(-1);
         }
 
         if (renameFile == null) {
             JFileChooser dialog = new JFileChooser(rstDirectory.getParentFile());
-            dialog.setFileFilter(new TargetFileFilter("rename.properties"));
-            dialog.setDialogTitle("Step 2: rename.properties");
+            dialog.setFileFilter(new TargetFileFilter("rename.properties")); //$NON-NLS-1$
+            dialog.setDialogTitle("Step 2: rename.properties"); //$NON-NLS-1$
 
-            int open = dialog.showDialog(null, "Rename Images");
+            int open = dialog.showDialog(null, "Rename Images"); //$NON-NLS-1$
 
             if (open == JFileChooser.CANCEL_OPTION) {
-                System.out.println("Rename images canceled");
+                System.out.println("Rename images canceled"); //$NON-NLS-1$
                 System.exit(-1);
             }
             renameFile = dialog.getSelectedFile();
         }
         Properties rename = properties(renameFile);
         if (rename == null) {
-            System.out.println("No rename image information provided  " + renameFile);
+            System.out.println("No rename image information provided  " + renameFile); //$NON-NLS-1$
             System.exit(-1);
         }
         ImageRename imageRename = new ImageRename(rstDirectory, rename);
@@ -306,7 +310,7 @@ public class ImageRename {
 
     private static Properties properties(File file) {
         if (file == null || !file.isFile() || !file.exists()) {
-            System.out.println("Warning: Unable to locate " + file);
+            System.out.println("Warning: Unable to locate " + file); //$NON-NLS-1$
             return null;
         }
         Properties properties = new Properties();
@@ -315,17 +319,17 @@ public class ImageRename {
             input = new FileInputStream(file);
             properties.load(input);
         } catch (FileNotFoundException e) {
-            System.out.println("Warning: Unable to locate " + file + ":" + e);
+            System.out.println("Warning: Unable to locate " + file + ":" + e); //$NON-NLS-1$ //$NON-NLS-2$
             return null;
         } catch (IOException e) {
-            System.out.println("Warning: Unable to process " + file + ":" + e);
+            System.out.println("Warning: Unable to process " + file + ":" + e); //$NON-NLS-1$ //$NON-NLS-2$
             return null;
         } finally {
             if (input != null) {
                 try {
                     input.close();
                 } catch (IOException e) {
-                    System.out.println("Warning: Trouble parsing " + file + ":" + e);
+                    System.out.println("Warning: Trouble parsing " + file + ":" + e); //$NON-NLS-1$ //$NON-NLS-2$
                 }
             }
         }

@@ -91,7 +91,7 @@ public final class ProjectPlugin extends EMFPlugin {
                     projectElement.eResource().save(saveOptions);
                 }
             } catch (Exception e) {
-                log("Error while saving resource", e);
+                log("Error while saving resource", e); //$NON-NLS-1$
                 String msg = "Error occurred while saving project: " + project.getID().toString(); //$NON-NLS-1$
                 errors.add(msg);
             }
@@ -182,7 +182,7 @@ public final class ProjectPlugin extends EMFPlugin {
                         Resource resource = iter.next();
                         if (resource.getContents().isEmpty()) {
                             ProjectPlugin
-                            .log("Not saving " + resource.getURI() + " empty contents"); //$NON-NLS-1$
+                                    .log("Not saving " + resource.getURI() + " empty contents"); //$NON-NLS-1$ //$NON-NLS-2$
                             continue;
                         }
                         Object next = resource.getAllContents().next();
@@ -266,7 +266,7 @@ public final class ProjectPlugin extends EMFPlugin {
         public synchronized ScopedPreferenceStore getPreferenceStore() {
             // Create the preference store lazily.
             if (preferenceStore == null) {
-                preferenceStore = new ScopedPreferenceStore(new InstanceScope(),
+                preferenceStore = new ScopedPreferenceStore(InstanceScope.INSTANCE,
                         getBundle().getSymbolicName());
 
             }
@@ -291,13 +291,20 @@ public final class ProjectPlugin extends EMFPlugin {
      */
     public static void log(String message, Throwable e) {
         getPlugin().getLog()
-        .log(new Status(IStatus.INFO, ID, 0, message == null ? "" : message, e)); //$NON-NLS-1$
+                .log(new Status(IStatus.INFO, ID, 0, message == null ? "" : message, e)); //$NON-NLS-1$
+    }
+
+    /**
+     * Writes an error log in the plugin's log.
+     */
+    public static void error(String message) {
+        getPlugin().getLog().log(new Status(IStatus.ERROR, ID, message));
     }
 
     /**
      * Messages that only engage if getDefault().isDebugging()
      * <p>
-     * It is much prefered to do this:
+     * It is much preferred to do this:
      *
      * <pre>
      * <code> private static final String RENDERING = "org.locationtech.udig.project/render/trace";
@@ -351,7 +358,6 @@ public final class ProjectPlugin extends EMFPlugin {
      */
     public static boolean isDebugging(final String trace) {
         return getPlugin().isDebugging() && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
-
     }
 
 }
