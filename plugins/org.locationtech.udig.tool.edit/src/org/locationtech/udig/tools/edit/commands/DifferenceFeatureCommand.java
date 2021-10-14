@@ -1,5 +1,4 @@
-/**
- * uDig - User Friendly Desktop Internet GIS client
+/* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -20,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
@@ -66,80 +65,74 @@ import org.opengis.referencing.operation.MathTransform;
 /**
  * Splits a feature based on the current shape in the handler.
  * <p>
- * After the command the current shape will be set to null and the edit blackboard will be cleared.
- *
+ * After the command the current shape will be set to null and
+ * the edit blackboard will be cleared.
+ * 
  * @author jones
  * @since 1.1.0
  */
 public class DifferenceFeatureCommand extends AbstractCommand implements UndoableMapCommand {
 
-    private EditToolHandler handler;
-
-    private PrimitiveShape shape;
-
-    private EditState state;
-
-    private ILayer layer;
-
+    private EditToolHandler     handler;
+    private PrimitiveShape      shape;
+    private EditState           state;
+    private ILayer              layer;
     private ArrayList<EditGeom> geoms;
-
-    private EditState endState;
-
-    private UndoableComposite writeCommand;
-
-    private boolean addedEndVertex = false;
+    private EditState           endState;
+    private UndoableComposite   writeCommand;
+    private boolean             addedEndVertex = false;
 
     /**
      * @param handler
      */
-    public DifferenceFeatureCommand(EditToolHandler handler, EditState endState) {
+    public DifferenceFeatureCommand( EditToolHandler handler, EditState endState ) {
         this.handler = handler;
         this.layer = handler.getEditLayer();
         this.endState = endState;
     }
 
-    @Override
-    public void run(IProgressMonitor monitor) throws Exception {
+    @SuppressWarnings("unchecked")
+    public void run( IProgressMonitor monitor ) throws Exception {
         monitor.beginTask(Messages.DifferenceFeatureCommand_runTaskMessage, 10);
         monitor.worked(1);
         this.state = handler.getCurrentState();
         this.shape = handler.getCurrentShape();
         handler.setCurrentShape(null);
-        List<UndoableMapCommand> commands = new ArrayList<>();
+        List<UndoableMapCommand> commands = new ArrayList<UndoableMapCommand>();
 
-        // check that start point is same as end point
+        //check that start point is same as end point
         Point startPoint = shape.getPoint(0);
         if (!startPoint.equals(shape.getPoint(shape.getNumPoints() - 1))) {
             addedEndVertex = true;
             shape.getEditBlackboard().addPoint(startPoint.getX(), startPoint.getY(), shape);
         }
         GeometryOperationAnimation indicator = new GeometryOperationAnimation(
-                PrimitiveShapeIterator.getPathIterator(shape).toShape(),
-                new IsBusyStateProvider(handler));
+                PrimitiveShapeIterator.getPathIterator(shape).toShape(), new IsBusyStateProvider(
+                        handler));
         try {
             AnimationUpdater.runTimer(handler.getContext().getMapDisplay(), indicator);
             handler.setCurrentState(EditState.BUSY);
 
             if (writeCommand == null) {
                 EditBlackboard editBlackboard = handler.getEditBlackboard(layer);
-                this.geoms = new ArrayList<>(editBlackboard.getGeoms());
+                this.geoms = new ArrayList<EditGeom>(editBlackboard.getGeoms());
                 geoms.remove(shape.getEditGeom());
 
                 editBlackboard.clear();
 
-                FeatureCollection<SimpleFeatureType, SimpleFeature> features = getFeatures(monitor);
-                if (features == null) {
+                FeatureCollection<SimpleFeatureType, SimpleFeature>  features = getFeatures(monitor);
+                if( features == null ){                    
                     return; // did not hit anything
                 }
                 try {
-                    List<Geometry> geoms = new ArrayList<>();
+                    List<Geometry> geoms = new ArrayList<Geometry>();
                     geoms.add(createReferenceGeom());
-
+                    
                     SimpleFeature first = runDifferenceOp(features.features(), geoms);
-
+                    
                     if (first == null)
                         return;
-
+                    
                     createAddFeatureCommands(commands, geoms, first);
                 } finally {
                     monitor.worked(2);
@@ -148,7 +141,7 @@ public class DifferenceFeatureCommand extends AbstractCommand implements Undoabl
             }
             writeCommand.setMap(getMap());
             handler.setCurrentState(EditState.COMMITTING);
-            writeCommand.execute(SubMonitor.convert(monitor, 5));
+            writeCommand.execute(new SubProgressMonitor(monitor, 5));
         } finally {
             indicator.setValid(false);
             handler.setCurrentState(endState);
@@ -156,14 +149,14 @@ public class DifferenceFeatureCommand extends AbstractCommand implements Undoabl
         }
     }
 
-    private void createAddFeatureCommands(List<UndoableMapCommand> commands, List<Geometry> geoms,
-            SimpleFeature first) throws IllegalAttributeException {
+    @SuppressWarnings("unchecked")
+    private void createAddFeatureCommands( List<UndoableMapCommand> commands, List<Geometry> geoms, SimpleFeature first ) throws IllegalAttributeException {
         SimpleFeatureType featureType = first.getFeatureType();
         if ((geoms.size() > 1 && !featureType.getGeometryDescriptor().getType().getBinding()
                 .isAssignableFrom(MultiPolygon.class))
-                || !featureType.getGeometryDescriptor().getType().getBinding()
-                        .isAssignableFrom(MultiPolygon.class)) {
-            for (Geometry geom : geoms) {
+                || !featureType.getGeometryDescriptor().getType().getBinding().isAssignableFrom(
+                        MultiPolygon.class)) {
+            for( Geometry geom : geoms ) {
                 SimpleFeature newFeature = SimpleFeatureBuilder.copy(first);
                 newFeature.setDefaultGeometry(geom);
                 commands.add(handler.getContext().getEditFactory()
@@ -173,61 +166,60 @@ public class DifferenceFeatureCommand extends AbstractCommand implements Undoabl
             SimpleFeature newFeature = SimpleFeatureBuilder.copy(first);
             GeometryFactory factory = new GeometryFactory();
 
-            newFeature.setDefaultGeometry(
-                    factory.createMultiPolygon(geoms.toArray(new Polygon[geoms.size()])));
-            commands.add(handler.getContext().getEditFactory().createAddFeatureCommand(newFeature,
-                    layer));
+            newFeature.setDefaultGeometry(factory.createMultiPolygon(geoms
+                    .toArray(new Polygon[geoms.size()])));
+            commands.add(handler.getContext().getEditFactory().createAddFeatureCommand(
+                    newFeature, layer));
         }
     }
 
     /**
      * Collect the provided geometries into a single geometry.
-     *
+     * 
      * @param geometryCollection
      * @return A single geometry which is the union of the provided geometryCollection
      */
-    static Geometry combineIntoOneGeometry(Collection<Geometry> geometryCollection) {
-        // GeometryFactory factory = FactoryFinder.getGeometryFactory( null );
+    static Geometry combineIntoOneGeometry( Collection<Geometry> geometryCollection ){
+        //GeometryFactory factory = FactoryFinder.getGeometryFactory( null );
         GeometryFactory factory = new GeometryFactory();
-
-        Geometry combined = factory.buildGeometry(geometryCollection);
+        
+    	Geometry combined = factory.buildGeometry( geometryCollection );
         return combined.union();
     }
-
+    
     /**
      * @param iter
-     * @param geoms the geometry to remove the features in iter from. IE the geometries that will be
-     *        diffed. Is also the list of resulting geometries.
+     * @param geoms the geometry to remove the features in iter from.  IE the geometries that will be diffed.  Is
+     * also the list of resulting geometries.
      * @return
      */
-    public static SimpleFeature runDifferenceOp(FeatureIterator<SimpleFeature> iter,
-            List<Geometry> geoms) {
-        Geometry createdGeometry = combineIntoOneGeometry(geoms);
-        Geometry differenceGeometry = createdGeometry;
-        SimpleFeature first = null;
-        try {
+    public static SimpleFeature runDifferenceOp( FeatureIterator<SimpleFeature> iter, List<Geometry> geoms ) {
+    	Geometry createdGeometry = combineIntoOneGeometry( geoms );    	
+    	Geometry differenceGeometry = createdGeometry;
+    	SimpleFeature first=null;
+    	try {
 
-            Set<Geometry> featureGeoms = new HashSet<>();
-            while (iter.hasNext()) {
-                SimpleFeature f = iter.next();
-
-                if (first == null) {
-                    first = f;
-                }
-                Geometry featureGeometry = (Geometry) f.getDefaultGeometry();
-                featureGeoms.add(featureGeometry);
-            }
-            Geometry existingGeometry = combineIntoOneGeometry(featureGeoms);
-            if (existingGeometry != null) {
-                differenceGeometry = createdGeometry.difference(existingGeometry);
-            }
-        } finally {
-            if (iter != null)
+        	Set<Geometry> featureGeoms = new HashSet<Geometry>();
+	        while( iter.hasNext() ) {
+	            SimpleFeature f = iter.next();
+	            
+	            if (first == null){
+	                first = f;
+	            }
+	            Geometry featureGeometry = (Geometry) f.getDefaultGeometry();
+	            featureGeoms.add( featureGeometry );
+	        }
+	        Geometry existingGeometry = combineIntoOneGeometry( featureGeoms );
+	        if( existingGeometry!=null ){
+	            differenceGeometry = createdGeometry.difference( existingGeometry );
+	        }
+        } finally{
+            if( iter!=null )
                 iter.close();
         }
         geoms.clear();
-        for (int i = 0; i < differenceGeometry.getNumGeometries(); i++) {
-            geoms.add(differenceGeometry.getGeometryN(i));
+        for( int i=0; i<differenceGeometry.getNumGeometries(); i++){
+        	geoms.add( differenceGeometry.getGeometryN(i) );
         }
         return first;
     }
@@ -241,32 +233,29 @@ public class DifferenceFeatureCommand extends AbstractCommand implements Undoabl
      * @throws NoninvertibleTransformException
      * @throws IllegalFilterException
      */
-    private FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatures(
-            IProgressMonitor monitor)
-            throws IOException, NoninvertibleTransformException, IllegalFilterException {
-        FeatureSource<SimpleFeatureType, SimpleFeature> source = layer
-                .getResource(FeatureSource.class, SubMonitor.convert(monitor, 2));
+    private FeatureCollection<SimpleFeatureType, SimpleFeature>  getFeatures(IProgressMonitor monitor) throws IOException, NoninvertibleTransformException, IllegalFilterException {
+        FeatureSource<SimpleFeatureType, SimpleFeature> source =layer.getResource(FeatureSource.class, new SubProgressMonitor(monitor,2));
         SimpleFeatureType schema = layer.getSchema();
         Rectangle bounds = shape.getBounds();
-        double[] toTransform = new double[] { bounds.getMinX(), bounds.getMinY(), bounds.getMaxX(),
-                bounds.getMaxY() };
-        handler.getContext().worldToScreenTransform().inverseTransform(toTransform, 0, toTransform,
-                0, 2);
-        ReferencedEnvelope transformedBounds = new ReferencedEnvelope(toTransform[0],
-                toTransform[2], toTransform[1], toTransform[3], handler.getContext().getCRS());
+        double[] toTransform = new double[]{bounds.getMinX(), bounds.getMinY(),
+                bounds.getMaxX(), bounds.getMaxY()};
+        handler.getContext().worldToScreenTransform().inverseTransform(toTransform, 0,
+                toTransform, 0, 2);
+        ReferencedEnvelope transformedBounds = new ReferencedEnvelope(toTransform[0], toTransform[2],
+                toTransform[1], toTransform[3], handler.getContext().getCRS());
 
-        FilterFactory2 filterFactory = CommonFactoryFinder
-                .getFilterFactory2(GeoTools.getDefaultHints());
+        FilterFactory2 filterFactory = CommonFactoryFinder.getFilterFactory2(GeoTools.getDefaultHints());
         ReferencedEnvelope layerBounds;
         try {
             MathTransform transform = layer.mapToLayerTransform();
-            layerBounds = new ReferencedEnvelope(JTS.transform(transformedBounds, transform),
-                    layer.getCRS());
+            layerBounds = new ReferencedEnvelope(JTS.transform(transformedBounds, transform), layer.getCRS());
         } catch (Exception e) {
             layerBounds = transformedBounds;
         }
         String geomAttributeName = layer.getSchema().getGeometryDescriptor().getLocalName();
-
+//        Geometry boundsAsGeom = new GeometryFactory().toGeometry(layerBounds);
+//        
+//        Intersects filter = filterFactory.intersects(filterFactory.literal(boundsAsGeom),  filterFactory.property(geomAttributeName));
         String srs;
         try {
             srs = CRS.lookupIdentifier(layerBounds.getCoordinateReferenceSystem(), false);
@@ -276,9 +265,9 @@ public class DifferenceFeatureCommand extends AbstractCommand implements Undoabl
             ProjectPlugin.getPlugin().log(e);
             return null;
         }
-        BBOX filter = filterFactory.bbox(geomAttributeName, layerBounds.getMinX(),
-                layerBounds.getMinY(), layerBounds.getMaxX(), layerBounds.getMaxY(), srs);
-        Query query = new Query(schema.getName().getLocalPart(), filter);
+        BBOX filter = filterFactory.bbox(geomAttributeName, layerBounds.getMinX(), 
+        		layerBounds.getMinY(), layerBounds.getMaxX(), layerBounds.getMaxY(), srs);
+        Query query=new Query(schema.getName().getLocalPart(), filter);
 
         return source.getFeatures(query);
     }
@@ -293,12 +282,10 @@ public class DifferenceFeatureCommand extends AbstractCommand implements Undoabl
         return fac.createPolygon(ring, new LinearRing[0]);
 
     }
-
-    @Override
-    public void rollback(IProgressMonitor monitor) throws Exception {
+    public void rollback( IProgressMonitor monitor ) throws Exception {
         GeometryOperationAnimation indicator = new GeometryOperationAnimation(
-                PrimitiveShapeIterator.getPathIterator(shape).toShape(),
-                new IsBusyStateProvider(handler));
+                PrimitiveShapeIterator.getPathIterator(shape).toShape(), new IsBusyStateProvider(
+                        handler));
         try {
             monitor.beginTask(Messages.DifferenceFeatureCommand_undoTaskMessage, 10);
             monitor.worked(1);
@@ -307,20 +294,20 @@ public class DifferenceFeatureCommand extends AbstractCommand implements Undoabl
 
             handler.setCurrentState(EditState.BUSY);
 
-            SubMonitor subMonitor = SubMonitor.convert(monitor, 5);
-            writeCommand.rollback(subMonitor);
-            subMonitor.done();
+            SubProgressMonitor submonitor = new SubProgressMonitor(monitor, 5);
+            writeCommand.rollback(submonitor);
+            submonitor.done();
 
             EditBlackboard bb = handler.getEditBlackboard(layer);
             bb.clear();
-            for (EditGeom geom : geoms) {
+            for( EditGeom geom : geoms ) {
                 addGeom(bb, geom);
             }
             PrimitiveShape shell = addGeom(bb, shape.getEditGeom()).getShell();
             handler.setCurrentShape(shell);
             if (addedEndVertex) {
-                bb.removeCoordinate(shape.getNumCoords() - 1,
-                        shape.getCoord(shape.getNumCoords() - 1), shell);
+                bb.removeCoordinate(shape.getNumCoords() - 1, shape
+                        .getCoord(shape.getNumCoords() - 1), shell);
             }
             handler.setCurrentState(state);
         } catch (Exception e) {
@@ -337,22 +324,21 @@ public class DifferenceFeatureCommand extends AbstractCommand implements Undoabl
      * @param geom
      * @return
      */
-    private EditGeom addGeom(EditBlackboard bb, EditGeom geom) {
+    private EditGeom addGeom( EditBlackboard bb, EditGeom geom ) {
         EditGeom newGeom = bb.newGeom(geom.getFeatureIDRef().get(), geom.getShapeType());
         newGeom.setChanged(geom.isChanged());
-        for (PrimitiveShape shape : geom) {
+        for( PrimitiveShape shape : geom ) {
             PrimitiveShape newShape = newGeom.getShell();
             if (shape != geom.getShell())
                 newShape = newGeom.newHole();
             Coordinate[] coords = shape.coordArray();
-            for (int i = 0; i < coords.length; i++) {
+            for( int i = 0; i < coords.length; i++ ) {
                 bb.addCoordinate(coords[i], newShape);
             }
         }
         return newGeom;
     }
 
-    @Override
     public String getName() {
         return Messages.DifferenceFeatureCommand_name;
     }

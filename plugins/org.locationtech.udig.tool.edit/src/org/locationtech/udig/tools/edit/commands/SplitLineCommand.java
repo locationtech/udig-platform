@@ -1,5 +1,4 @@
-/**
- * uDig - User Friendly Desktop Internet GIS client
+/* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -19,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.geotools.data.FeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.feature.collection.AdaptorFeatureCollection;
@@ -55,49 +54,37 @@ import org.opengis.filter.identity.FeatureId;
 
 /**
  * Splits a line at the selected Vertices.
- *
+ * 
  * @author Jesse
  * @since 1.1.0
  */
 public class SplitLineCommand extends AbstractCommand implements MapCommand, UndoableCommand {
 
     private EditBlackboard editBlackboard;
-
     private IBlockingProvider<PrimitiveShape> shapeProvider;
-
     private Set<Point> points;
-
     private PrimitiveShape oldshape;
-
     private IBlockingProvider<SimpleFeature> featureProvider;
-
     private IBlockingProvider<ILayer> layerProvider;
-
     private SimpleFeature oldFeature;
-
     private ILayer layer;
-
-    private List<FeatureId> newFids = new ArrayList<>();
-
+    private List<FeatureId> newFids = new ArrayList<FeatureId>();
     private boolean currentShapeSet = false;
-
     private Geometry oldGeometry;
-
     private EditGeom first;
 
     /**
      * New instance
-     *
+     * 
      * @param editBlackboard the blackboard that the feature is on.
      * @param provider the
      * @param feature
      * @param evaluationObject
      * @param points
      */
-    public SplitLineCommand(EditBlackboard editBlackboard,
-            IBlockingProvider<PrimitiveShape> provider,
-            IBlockingProvider<SimpleFeature> featureProvider,
-            IBlockingProvider<ILayer> layerProvider, Set<Point> points) {
+    public SplitLineCommand( EditBlackboard editBlackboard,
+            IBlockingProvider<PrimitiveShape> provider, IBlockingProvider<SimpleFeature> featureProvider,
+            IBlockingProvider<ILayer> layerProvider, Set<Point> points ) {
         this.editBlackboard = editBlackboard;
         this.shapeProvider = provider;
         this.layerProvider = layerProvider;
@@ -105,35 +92,32 @@ public class SplitLineCommand extends AbstractCommand implements MapCommand, Und
         this.points = points;
     }
 
-    @Override
-    public void run(IProgressMonitor monitor) throws Exception {
+    public void run( IProgressMonitor monitor ) throws Exception {
         editBlackboard.startBatchingEvents();
-
-        oldshape = shapeProvider.get(SubMonitor.convert(monitor, 1));
-        oldFeature = featureProvider.get(SubMonitor.convert(monitor, 1));
+        
+        oldshape = shapeProvider.get(new SubProgressMonitor(monitor, 1));
+        oldFeature = featureProvider.get(new SubProgressMonitor(monitor, 1));
         oldGeometry = (Geometry) oldFeature.getDefaultGeometry();
-        layer = layerProvider.get(SubMonitor.convert(monitor, 1));
+        layer = layerProvider.get(new SubProgressMonitor(monitor, 1));
 
         editBlackboard.removeGeometries(Collections.singleton(oldshape.getEditGeom()));
         ShapeType shapeType = oldshape.getEditGeom().getShapeType();
-        EditGeom current = editBlackboard.newGeom(oldshape.getEditGeom().getFeatureIDRef().get(),
-                shapeType);
+        EditGeom current = editBlackboard.newGeom(oldshape.getEditGeom().getFeatureIDRef().get(), shapeType);
         first = current;
 
-        final Set<EditGeom> addedGeoms = new HashSet<>();
-        for (int i = 0; i < oldshape.getNumPoints(); i++) {
+        final Set<EditGeom> addedGeoms=new HashSet<EditGeom>();
+        for( int i = 0; i < oldshape.getNumPoints(); i++ ) {
             addCoords(current.getShell(), i);
             if (current.getShell().getNumPoints() > 1 && i < oldshape.getNumPoints() - 1
                     && points.contains(oldshape.getPoint(i))) {
 
-                current = editBlackboard.newGeom("newFeature" + System.currentTimeMillis(), //$NON-NLS-1$
-                        shapeType);
+                current = editBlackboard.newGeom("newFeature" + System.currentTimeMillis(), shapeType); //$NON-NLS-1$
                 List<Coordinate> coords = oldshape.getCoordsAt(i);
                 editBlackboard.addCoordinate(coords.get(coords.size() - 1), current.getShell());
                 addedGeoms.add(current);
             }
         }
-
+        
         editBlackboard.removeGeometries(addedGeoms);
 
         if (getCurrentShape() == oldshape) {
@@ -141,25 +125,25 @@ public class SplitLineCommand extends AbstractCommand implements MapCommand, Und
             setCurrentShape(first.getShell());
         }
 
-        final FeatureStore<SimpleFeatureType, SimpleFeature> store = layer
-                .getResource(FeatureStore.class, SubMonitor.convert(monitor, 1));
+        final FeatureStore<SimpleFeatureType, SimpleFeature> store = layer.getResource(FeatureStore.class, new SubProgressMonitor(
+                monitor, 1));
 
         modifyOldFeature(store);
 
         createAndAddFeatures(addedGeoms, store);
-
+        
         editBlackboard.fireBatchedEvents();
     }
 
-    private void modifyOldFeature(final FeatureStore<SimpleFeatureType, SimpleFeature> store)
-            throws IOException, IllegalAttributeException {
+    @SuppressWarnings({"unchecked"}) 
+    private void modifyOldFeature( final FeatureStore<SimpleFeatureType, SimpleFeature> store ) throws IOException, IllegalAttributeException {
         FilterFactory fac = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
         Filter filter = fac.id(FeatureUtils.stringToId(fac, oldFeature.getID()));
 
         Geometry g = GeometryCreationUtil.createGeom(LineString.class, first.getShell(), true);
         if (store.getSchema().getGeometryDescriptor().getType().getBinding()
                 .isAssignableFrom(MultiLineString.class))
-            g = new GeometryFactory().createMultiLineString(new LineString[] { (LineString) g });
+            g = new GeometryFactory().createMultiLineString(new LineString[]{(LineString) g});
 
         store.modifyFeatures(store.getSchema().getGeometryDescriptor().getName(), g, filter);
         oldFeature.setDefaultGeometry(g);
@@ -172,64 +156,56 @@ public class SplitLineCommand extends AbstractCommand implements MapCommand, Und
      * @throws IOException
      */
     @SuppressWarnings("unchecked")
-    private void createAndAddFeatures(final Set<EditGeom> addedGeoms,
-            final FeatureStore<SimpleFeatureType, SimpleFeature> store) throws IOException {
-        newFids = store.addFeatures(
-                new AdaptorFeatureCollection("createAndAddCollection", store.getSchema()) { //$NON-NLS-1$
+    private void createAndAddFeatures( final Set<EditGeom> addedGeoms, final FeatureStore<SimpleFeatureType, SimpleFeature> store ) throws IOException {
+        newFids = store.addFeatures(new AdaptorFeatureCollection("createAndAddCollection", store.getSchema()){
 
-                    @Override
-                    public int size() {
-                        return addedGeoms.size() - 1;
+            @Override
+            public int size() {
+                return addedGeoms.size() - 1;
+            }
+
+            @Override
+            protected Iterator openIterator() {
+                final Iterator<EditGeom> iter = addedGeoms.iterator();
+                return new Iterator(){
+                    GeometryFactory factory = new GeometryFactory();
+                    public boolean hasNext() {
+                        return iter.hasNext();
                     }
 
-                    @Override
-                    protected Iterator openIterator() {
-                        final Iterator<EditGeom> iter = addedGeoms.iterator();
-                        return new Iterator() {
-                            GeometryFactory factory = new GeometryFactory();
-
-                            @Override
-                            public boolean hasNext() {
-                                return iter.hasNext();
-                            }
-
-                            @Override
-                            public Object next() {
-                                List<Object> attrs = oldFeature.getAttributes();
-                                try {
-                                    SimpleFeature feature = SimpleFeatureBuilder.build(
-                                            store.getSchema(), attrs,
-                                            "copyOf" + oldFeature.getID()); //$NON-NLS-1$
-                                    Geometry geom = GeometryCreationUtil.createGeom(
-                                            LineString.class, iter.next().getShell(), true);
-                                    if (getSchema().getGeometryDescriptor().getType().getBinding()
-                                            .isAssignableFrom(MultiLineString.class))
-                                        geom = factory.createMultiLineString(
-                                                new LineString[] { (LineString) geom });
-                                    feature.setDefaultGeometry(geom);
-                                    return feature;
-                                } catch (IllegalAttributeException e) {
-                                    throw (RuntimeException) new RuntimeException().initCause(e);
-                                }
-                            }
-
-                            @Override
-                            public void remove() {
-
-                            }
-
-                        };
+                    @SuppressWarnings("unchecked")
+                    public Object next() {
+                        List<Object> attrs = oldFeature.getAttributes();
+                        try {
+                            SimpleFeature feature = SimpleFeatureBuilder.build(store.getSchema(), attrs, "copyOf"+oldFeature.getID());
+                            Geometry geom = GeometryCreationUtil.createGeom(LineString.class, iter
+                                    .next().getShell(), true);
+                            if (getSchema().getGeometryDescriptor().getType()
+                                    .getBinding().isAssignableFrom(
+                                            MultiLineString.class))
+                                geom = factory
+                                        .createMultiLineString(new LineString[]{(LineString) geom});
+                            feature.setDefaultGeometry(geom);
+                            return feature;
+                        } catch (IllegalAttributeException e) {
+                            throw (RuntimeException) new RuntimeException().initCause(e);
+                        }
                     }
 
-                    @Override
-                    protected void closeIterator(Iterator close) {
-
+                    public void remove() {
                     }
 
-                });
+                };
+            }
+
+            @Override
+            protected void closeIterator( Iterator close ) {
+            }
+
+        });
     }
 
-    private void setCurrentShape(PrimitiveShape shape) {
+    private void setCurrentShape( PrimitiveShape shape ) {
         getMap().getBlackboard().put(EditToolHandler.CURRENT_SHAPE, shape);
     }
 
@@ -237,47 +213,43 @@ public class SplitLineCommand extends AbstractCommand implements MapCommand, Und
         return (PrimitiveShape) getMap().getBlackboard().get(EditToolHandler.CURRENT_SHAPE);
     }
 
-    private void addCoords(PrimitiveShape current, int i) {
+    private void addCoords( PrimitiveShape current, int i ) {
         List<Coordinate> coords = oldshape.getCoordsAt(i);
-        for (Coordinate coordinate : coords) {
+        for( Coordinate coordinate : coords ) {
             editBlackboard.addCoordinate(coordinate, current);
         }
     }
 
-    @Override
     public String getName() {
         return Messages.SplitLineCommand_name;
     }
 
-    @Override
-    public void rollback(IProgressMonitor monitor) throws Exception {
+    public void rollback( IProgressMonitor monitor ) throws Exception {
         editBlackboard.removeGeometries(Collections.singleton(first));
 
-        EditGeom newGeom = editBlackboard.newGeom(oldshape.getEditGeom().getFeatureIDRef().get(),
-                oldshape.getEditGeom().getShapeType());
+        EditGeom newGeom = editBlackboard.newGeom(oldshape.getEditGeom().getFeatureIDRef().get(), oldshape.getEditGeom().getShapeType());
 
-        for (int i = 0; i < oldshape.getNumCoords(); i++) {
+        for( int i = 0; i < oldshape.getNumCoords(); i++ ) {
             editBlackboard.addCoordinate(oldshape.getCoord(i), newGeom.getShell());
         }
 
         if (currentShapeSet)
             setCurrentShape(newGeom.getShell());
 
-        FeatureStore<SimpleFeatureType, SimpleFeature> store = layer.getResource(FeatureStore.class,
-                SubMonitor.convert(monitor, 1));
+        FeatureStore<SimpleFeatureType, SimpleFeature> store = layer.getResource(FeatureStore.class, new SubProgressMonitor(monitor,
+                1));
 
         FilterFactory factory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-        Set<FeatureId> ids = new HashSet<>();
-        for (FeatureId id : newFids) {
-            ids.add(id);
+        Set<FeatureId> ids = new HashSet<FeatureId>();
+        for( FeatureId id : newFids ) {
+        	ids.add(id);
         }
         Id filter = factory.id(ids);
 
         store.removeFeatures(filter);
         Geometry oldType = (Geometry) oldFeature.getDefaultGeometry();
-        GeometryDescriptor newType = store.getSchema().getGeometryDescriptor();
-        store.modifyFeatures(newType.getName(), oldType,
-                factory.id(FeatureUtils.stringToId(factory, oldFeature.getID())));
+		GeometryDescriptor newType = store.getSchema().getGeometryDescriptor();
+		store.modifyFeatures(newType.getName(), oldType, factory.id(FeatureUtils.stringToId(factory, oldFeature.getID())));
         oldFeature.setDefaultGeometry(oldGeometry);
         newFids.clear();
     }

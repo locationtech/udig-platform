@@ -1,5 +1,4 @@
-/**
- * uDig - User Friendly Desktop Internet GIS client
+/* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -13,80 +12,76 @@ package org.locationtech.udig.tools.edit;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubMonitor;
 import org.locationtech.udig.project.command.AbstractCommand;
 import org.locationtech.udig.project.command.PostDeterminedEffectCommand;
 import org.locationtech.udig.project.command.UndoableMapCommand;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.tool.edit.internal.Messages;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
+
 /**
- * Command used by (@link org.locationtech.udig.tools.edit.EditToolHandler} and
- * {@link org.locationtech.udig.tools.edit.OrderedCompositeEventBehavior} for executing the
- * behaviors in a tool.
- *
+ * Command used by (@link org.locationtech.udig.tools.edit.EditToolHandler} and 
+ * {@link org.locationtech.udig.tools.edit.OrderedCompositeEventBehavior} for executing the 
+ * behaviours in a tool.
+ * 
  * @author jones
  * @since 1.1.0
  */
 public class EventBehaviourCommand extends AbstractCommand implements PostDeterminedEffectCommand {
 
     private List<EventBehaviour> behaviours;
-
-    private List<UndoableMapCommand> commandsRan = new LinkedList<>();
-
+    private List<UndoableMapCommand> commandsRan=new LinkedList<UndoableMapCommand>();
     private EditToolHandler handler;
-
     private MapMouseEvent event;
-
     private EventType eventType;
 
     public EventBehaviourCommand(List<EventBehaviour> behaviours, EditToolHandler handler,
             MapMouseEvent event, EventType eventType) {
-        this.behaviours = behaviours;
-        this.handler = handler;
-        this.event = event;
-        this.eventType = eventType;
+        this.behaviours=behaviours;
+        this.handler=handler;
+        this.event=event;
+        this.eventType=eventType;
     }
-
-    @Override
-    public boolean execute(IProgressMonitor monitor) throws Exception {
-        if (commandsRan.isEmpty()) {
-            monitor.beginTask(getName(), commandsRan.size() * 12);
+    
+    public boolean execute( IProgressMonitor monitor ) throws Exception {
+        if( commandsRan.isEmpty() ){
+            monitor.beginTask(getName(), commandsRan.size()*12);
             monitor.worked(2);
-            for (EventBehaviour behaviour : behaviours) {
+            for( EventBehaviour behaviour : behaviours ) {
 
-                if (canUnlock(behaviour) && behaviour.isValid(handler, event, eventType)) {
-                    UndoableMapCommand c = null;
-                    try {
-                        c = behaviour.getCommand(handler, event, eventType);
-                        if (c == null)
+                if( canUnlock(behaviour) && behaviour.isValid(handler, event, eventType)){
+                    UndoableMapCommand c=null;
+                    try{
+                        c=behaviour.getCommand(handler, event, eventType);
+                        if( c==null )
                             continue;
-                        IProgressMonitor submonitor = SubMonitor.convert(monitor, 10);
+                        IProgressMonitor submonitor = new SubProgressMonitor(monitor, 10);
                         c.setMap(getMap());
                         if (c instanceof PostDeterminedEffectCommand) {
                             PostDeterminedEffectCommand command = (PostDeterminedEffectCommand) c;
-                            if (command.execute(submonitor))
+                            if( command.execute(submonitor) )
                                 commandsRan.add(command);
-                        } else {
-                            c.run(submonitor);
-                            commandsRan.add(c);
+                        }else{
+                        c.run(submonitor);
+                        commandsRan.add(c);
                         }
                         submonitor.done();
-                    } catch (Exception e) {
+                    }catch(Exception e){
                         behaviour.handleError(handler, e, c);
                     }
                 }
             }
-        } else {
-            monitor.beginTask(getName(), commandsRan.size() * 12);
+        }else{
+            monitor.beginTask(getName(), commandsRan.size()*12);
             monitor.worked(2);
-            for (UndoableMapCommand command : commandsRan) {
+            for( UndoableMapCommand command : commandsRan ) {
                 command.setMap(getMap());
-                IProgressMonitor submonitor = SubMonitor.convert(monitor, 10);
+                IProgressMonitor submonitor = new SubProgressMonitor(monitor, 10);
                 if (command instanceof PostDeterminedEffectCommand) {
-                    ((PostDeterminedEffectCommand) command).execute(submonitor);
-                } else {
+                    ((PostDeterminedEffectCommand)command).execute(submonitor);
+                }else{
                     command.run(submonitor);
                 }
                 submonitor.done();
@@ -97,50 +92,45 @@ public class EventBehaviourCommand extends AbstractCommand implements PostDeterm
     }
 
     /**
-     * Returns true if the handler is unlocked or the behavior has the correct key.
-     *
+     * Returns true if the handler is unlocked or the behaviour has the correct key.
+     * 
      * @param behaviour trying to run
-     * @return Returns true if the handler is unlocked or the behavior has the correct key.
+     * @return Returns true if the handler is unlocked or the behaviour has the correct key.
      */
-    private boolean canUnlock(EventBehaviour behaviour) {
-        if (!handler.isLocked())
+    private boolean canUnlock( EventBehaviour behaviour ) {
+        if( !handler.isLocked() )
             return true;
         if (behaviour instanceof LockingBehaviour) {
             LockingBehaviour locker = (LockingBehaviour) behaviour;
 
-            EditPlugin.trace(EditPlugin.HANDLER_LOCK,
-                    "Can unlock: " + (handler.behaviourLock == locker.getKey(handler)), null); //$NON-NLS-1$
-            return handler.behaviourLock == locker.getKey(handler);
+            EditPlugin.trace(EditPlugin.HANDLER_LOCK, "Can unlock: "+(handler.behaviourLock==locker.getKey(handler)), null); //$NON-NLS-1$
+            return handler.behaviourLock==locker.getKey(handler);
         }
         return false;
     }
 
-    String name = Messages.EventBehaviourCommand_name;
+    String name=Messages.EventBehaviourCommand_name;
 
-    @Override
     public String getName() {
         return name;
     }
-
-    public void setName(String name) {
+    
+    public void setName( String name ) {
         this.name = name;
     }
 
-    @Override
-    public void rollback(IProgressMonitor monitor) throws Exception {
-        monitor.beginTask(getName(), commandsRan.size() * 12);
+    public void rollback( IProgressMonitor monitor ) throws Exception {
+        monitor.beginTask(getName(), commandsRan.size()*12);
         monitor.worked(2);
-        for (UndoableMapCommand command : commandsRan) {
+        for( UndoableMapCommand command : commandsRan ) {
             command.setMap(getMap());
-            IProgressMonitor submonitor = SubMonitor.convert(monitor, 10);
+            IProgressMonitor submonitor = new SubProgressMonitor(monitor, 10);
             command.rollback(submonitor);
             submonitor.done();
         }
     }
 
-    @Override
-    public void run(IProgressMonitor monitor) throws Exception {
-        throw new UnsupportedOperationException(
-                "PostDeterminedEffectCommands do not use the run method"); //$NON-NLS-1$
+    public void run( IProgressMonitor monitor ) throws Exception {
+        throw new UnsupportedOperationException("PostDeterminedEffectCommands do not use the run method"); //$NON-NLS-1$
     }
 }
