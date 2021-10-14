@@ -125,11 +125,6 @@
 			<artifactId>gt-brewer</artifactId>
 			<version>${geotools.version}</version>
 		</dependency>
-
-		<!-- gt-11 no longer under development. <dependency> <groupId>org.geotools</groupId> 
-			<artifactId>gt-shapefile-renderer</artifactId> <version>${geotools.version}</version> 
-			</dependency> -->
-
 		<dependency>
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-validation</artifactId>
@@ -194,11 +189,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.geotools</groupId>
-			<artifactId>gt-imagemosaic-jdbc</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
 			<artifactId>gt-imageio-ext-gdal</artifactId>
 			<version>${geotools.version}</version>
 		</dependency>
@@ -232,11 +222,6 @@
 			<artifactId>gt-shapefile</artifactId>
 			<version>${geotools.version}</version>
 		</dependency>
-
-		<!-- gt-11: shapefile-ng was merged in shapefile <dependency> <groupId>org.geotools</groupId> 
-			<artifactId>gt-shapefile-ng</artifactId> <version>${geotools.version}</version> 
-			</dependency> -->
-
 		<dependency>
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-wfs-ng</artifactId>
@@ -268,6 +253,10 @@
 			<version>${geotools.version}</version>
 			<exclusions>
 				<!-- see org.locationtech.udig.libs.jfreechart -->
+				<exclusion>
+					<groupId>jfree</groupId>
+					<artifactId>eastwood</artifactId>
+				</exclusion>
 				<exclusion>
 					<groupId>jfree</groupId>
 					<artifactId>jfreechart</artifactId>
@@ -383,6 +372,13 @@
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-coverage-api</artifactId>
 			<version>${geotools.version}</version>
+			<exclusions>
+				<exclusion>
+					<!-- its an unused dependency -->
+					<groupId>com.github.spotbugs</groupId>
+					<artifactId>spotbugs-annotations</artifactId>				
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -580,11 +576,6 @@
 			<version>2.0.8</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.ant</groupId>
-			<artifactId>ant</artifactId>
-			<version>1.8.1</version>
-		</dependency>
-		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.1.1</version>
@@ -624,14 +615,6 @@
 			<artifactId>org.eclipse.xsd</artifactId>
 			<version>2.12.0</version>
 		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>provided</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -639,39 +622,6 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- antlr dependencies ================== Both groovy and jiffle depend 
-			on the antlr.jar, while only requring the antlr runtime. -->
-		<dependency>
-			<groupId>org.antlr</groupId>
-			<artifactId>antlr</artifactId>
-			<version>3.3</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.antlr</groupId>
-			<artifactId>antlr-runtime</artifactId>
-			<version>3.3</version>
-		</dependency>
-		<dependency>
-			<groupId>javassist</groupId>
-			<artifactId>javassist</artifactId>
-			<version>3.8.0.GA</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.scannotation</groupId>
-			<artifactId>scannotation</artifactId>
-			<version>1.0.2</version>
-		</dependency>
-		<dependency>
-			<groupId>jline</groupId>
-			<artifactId>jline</artifactId>
-			<version>0.9.94</version>
-		</dependency>
-		<dependency>
-			<groupId>org.fusesource.jansi</groupId>
-			<artifactId>jansi</artifactId>
-			<version>1.3</version>
-		</dependency>
 		<dependency>
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-grid</artifactId>
