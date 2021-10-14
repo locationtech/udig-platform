@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -39,13 +39,14 @@ public class BulkConvert {
      * Used to shortlist index.html file
      */
     private static final class IndexFileFilter extends javax.swing.filechooser.FileFilter {
+        @Override
         public String getDescription() {
-            return "index.html";
+            return "index.html"; //$NON-NLS-1$
         }
 
         @Override
         public boolean accept(File f) {
-            return f.getName().equals("index.html");
+            return f.getName().equals("index.html"); //$NON-NLS-1$
         }
     }
 
@@ -53,22 +54,23 @@ public class BulkConvert {
      * Used to list html files for conversion.
      */
     private final class HtmlFileFilter implements FileFilter {
+        @Override
         public boolean accept(File file) {
-            return file.getName().endsWith(".html");
+            return file.getName().endsWith(".html"); //$NON-NLS-1$
         }
     }
 
     public static void main(String args[]) {
-        if (args.length == 1 && "?".equals(args[0])) {
-            System.out.println(" Usage: java html.BulkConvert [index.html] [rst directory]");
+        if (args.length == 1 && "?".equals(args[0])) { //$NON-NLS-1$
+            System.out.println(" Usage: java html.BulkConvert [index.html] [rst directory]"); //$NON-NLS-1$
             System.out.println();
-            System.out.println("Where:");
-            System.out.println("  index.html Where you have unzipped the confluence html export");
+            System.out.println("Where:"); //$NON-NLS-1$
+            System.out.println("  index.html Where you have unzipped the confluence html export"); //$NON-NLS-1$
             System.out
-                    .println("  rst directory location where you would like the html files saved");
+                    .println("  rst directory location where you would like the html files saved"); //$NON-NLS-1$
             System.out.println();
-            System.out
-                    .println("If not provided the appication will prompt you for the above information");
+            System.out.println(
+                    "If not provided the appication will prompt you for the above information"); //$NON-NLS-1$
 
             System.exit(0);
         }
@@ -76,33 +78,33 @@ public class BulkConvert {
         File rstDir = args.length > 1 ? new File(args[1]) : null;
 
         if (indexFile != null && indexFile.isDirectory()) {
-            indexFile = new File(indexFile, "index.html");
+            indexFile = new File(indexFile, "index.html"); //$NON-NLS-1$
         }
 
         if (indexFile == null || !indexFile.exists()) {
-            File cd = new File(".");
+            File cd = new File("."); //$NON-NLS-1$
 
             JFileChooser dialog = new JFileChooser(cd);
             dialog.setFileFilter(new IndexFileFilter());
-            dialog.setDialogTitle("Locate Confluence wiki html export");
-            int open = dialog.showDialog(null, "Convert");
+            dialog.setDialogTitle("Locate Confluence wiki html export"); //$NON-NLS-1$
+            int open = dialog.showDialog(null, "Convert"); //$NON-NLS-1$
 
             if (open == JFileChooser.CANCEL_OPTION) {
-                System.out.println("Conversion canceled");
+                System.out.println("Conversion canceled"); //$NON-NLS-1$
                 System.exit(-1);
             }
             indexFile = dialog.getSelectedFile();
         }
         if (indexFile == null || !indexFile.exists() || indexFile.isDirectory()) {
-            System.out.println("File index.html to use for conversion not provided: '" + indexFile
-                    + "'");
+            System.out.println(
+                    "File index.html to use for conversion not provided: '" + indexFile + "'"); //$NON-NLS-1$ //$NON-NLS-2$
             System.exit(-1);
         }
         File htmlDirectory = null;
         try {
             htmlDirectory = indexFile.getParentFile().getCanonicalFile();
         } catch (IOException eek) {
-            System.out.println("Coudl not sort parent of " + indexFile + ":" + eek);
+            System.out.println("Coudl not sort parent of " + indexFile + ":" + eek); //$NON-NLS-1$ //$NON-NLS-2$
             System.exit(-1);
         }
 
@@ -110,18 +112,18 @@ public class BulkConvert {
             JFileChooser dialog = new JFileChooser(htmlDirectory.getParentFile());
 
             dialog.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            dialog.setDialogTitle("Target Directory for textile files");
+            dialog.setDialogTitle("Target Directory for textile files"); //$NON-NLS-1$
 
-            int open = dialog.showDialog(null, "Export");
+            int open = dialog.showDialog(null, "Export"); //$NON-NLS-1$
 
             if (open == JFileChooser.CANCEL_OPTION) {
-                System.out.println("Canceled canceled");
+                System.out.println("Canceled canceled"); //$NON-NLS-1$
                 System.exit(-1);
             }
             rstDir = dialog.getSelectedFile();
         }
         if (rstDir == null || !rstDir.isDirectory() || !rstDir.exists()) {
-            System.out.println("Taget directory for textile files not provided: '" + rstDir + "'");
+            System.out.println("Taget directory for textile files not provided: '" + rstDir + "'"); //$NON-NLS-1$ //$NON-NLS-2$
             System.exit(-1);
         }
 
@@ -133,37 +135,36 @@ public class BulkConvert {
 
         File[] htmlFileList = htmlDirectory.listFiles(new HtmlFileFilter());
         for (File htmlFile : htmlFileList) {
-            // File dir = htmlFile.getParentFile();
 
             String htmlName = htmlFile.getName();
-            if( htmlName.equals("index.html")){
-                File tocFile = new File( rstDirectory.getParentFile(), "toc.xml");
+            if (htmlName.equals("index.html")) { //$NON-NLS-1$
+                File tocFile = new File(rstDirectory.getParentFile(), "toc.xml"); //$NON-NLS-1$
                 boolean deleted = tocFile.delete();
                 if (!deleted) {
-                    System.out.println("\tCould not remove '" + tocFile
-                            + "' do you have it open in an editor?");
-                    System.out.println("\tSkipping ...");
+                    System.out.println("\tCould not remove '" + tocFile //$NON-NLS-1$
+                            + "' do you have it open in an editor?"); //$NON-NLS-1$
+                    System.out.println("\tSkipping ..."); //$NON-NLS-1$
                     continue;
                 }
-                bufferedStreamsCopy( htmlFile, tocFile );
+                bufferedStreamsCopy(htmlFile, tocFile);
                 continue; // just a straight copy
             }
             String name = htmlName.substring(0, htmlName.lastIndexOf('.'));
             name = fixPageReference(name);
-            
-            String rstName = name + ".rst";
-            if( htmlName.equals("Home.html") ){
-                rstName = "index.rst";
+
+            String rstName = name + ".rst"; //$NON-NLS-1$
+            if (htmlName.equals("Home.html")) { //$NON-NLS-1$
+                rstName = "index.rst"; //$NON-NLS-1$
             }
-            
+
             File rstFile = new File(rstDirectory, rstName);
-            System.out.println(htmlFile + " to " + rstFile.getName());
+            System.out.println(htmlFile + " to " + rstFile.getName()); //$NON-NLS-1$
             if (rstFile.exists()) {
                 boolean deleted = rstFile.delete();
                 if (!deleted) {
-                    System.out.println("\tCould not remove '" + rstFile
-                            + "' do you have it open in an editor?");
-                    System.out.println("\tSkipping ...");
+                    System.out.println("\tCould not remove '" + rstFile //$NON-NLS-1$
+                            + "' do you have it open in an editor?"); //$NON-NLS-1$
+                    System.out.println("\tSkipping ..."); //$NON-NLS-1$
                     continue;
                 }
             }
@@ -204,8 +205,8 @@ public class BulkConvert {
             return name;
         }
         String page = name.substring(0, split);
-        
-        String title = toTitleCase( page.replace('_',' ') );
+
+        String title = toTitleCase(page.replace('_', ' '));
         return title;
     }
 
@@ -224,52 +225,51 @@ public class BulkConvert {
         }
         return title.toString();
     }
+
     /**
      * Process the generated rstFile and perform a few fixes.
-     * 
+     *
      * @param rstFile
      */
     private boolean fixRstAndMoveImages(File rstFile) {
-        File imageDir = new File(rstFile.getParent(), "images");
+        File imageDir = new File(rstFile.getParent(), "images"); //$NON-NLS-1$
         String page = baseName(rstFile);
         String title = baseTitle(rstFile);
 
         // Fix image location
         // BEFORE: .. |image0| image:: download/attachments/3536/view.gif
-        //  AFTER: .. |image0| image:: /image/active_part/view.gif
+        // AFTER: .. |image0| image:: /image/active_part/view.gif
         //
         // Use http://www.regexplanet.com/advanced/java/index.html to work out
         //
         // pattern: .. \|image(\d)\| image:: (download/attachments/.+?)/(.+)
         // replace: .. |image$1| image:: /page/$3
         Pattern imagePattern = Pattern
-                .compile(".. \\|image(\\d+)\\| image:: (download/attachments/.+?)/(.+)");
-        String imageReplace = ".. |image$1| image:: /images/" + page + "/$3";
+                .compile(".. \\|image(\\d+)\\| image:: (download/attachments/.+?)/(.+)"); //$NON-NLS-1$
+        String imageReplace = ".. |image$1| image:: /images/" + page + "/$3"; //$NON-NLS-1$ //$NON-NLS-2$
 
         // BEFORE: .. |image10| image:: download/attachments/4523/delete_feature_mode.gif
-        //  AFTER: .. |image10| image:: /image/edit_tools/delete_feature_mode.gif
-        
-        Pattern figurePattern = Pattern.compile(".. figure:: (download/attachments/.+?)/(.+)");
-        String figureReplace = ".. figure:: /images/" + page + "/$2";
+        // AFTER: .. |image10| image:: /image/edit_tools/delete_feature_mode.gif
+
+        Pattern figurePattern = Pattern.compile(".. figure:: (download/attachments/.+?)/(.+)"); //$NON-NLS-1$
+        String figureReplace = ".. figure:: /images/" + page + "/$2"; //$NON-NLS-1$ //$NON-NLS-2$
 
         // Fix Related cross references
         // .. figure:: http://udig.refractions.net/image/EN/ngrelc.gif
-        Map<Pattern, String> related = new HashMap<Pattern, String>();
-        related.put(Pattern.compile(".. figure:: http://udig.refractions.net/image/EN/ngrelt.gif"),
-                "**Related tasks**");
-        related.put(Pattern.compile(".. figure:: http://udig.refractions.net/image/EN/ngrelr.gif"),
-                "**Related reference**");
-        related.put(Pattern.compile(".. figure:: http://udig.refractions.net/image/EN/ngrelc.gif"),
-                "**Related concepts**");
+        Map<Pattern, String> related = new HashMap<>();
+        related.put(Pattern.compile(".. figure:: http://udig.refractions.net/image/EN/ngrelt.gif"), //$NON-NLS-1$
+                "**Related tasks**"); //$NON-NLS-1$
+        related.put(Pattern.compile(".. figure:: http://udig.refractions.net/image/EN/ngrelr.gif"), //$NON-NLS-1$
+                "**Related reference**"); //$NON-NLS-1$
+        related.put(Pattern.compile(".. figure:: http://udig.refractions.net/image/EN/ngrelc.gif"), //$NON-NLS-1$
+                "**Related concepts**"); //$NON-NLS-1$
 
-        Pattern linkPattern = Pattern.compile("(\\s*)-\\s*`(.*) <(.*)>`_");
-        String linkReplace = "$1* :doc:`$2`";
-        
-        Pattern strightLinkPattern = Pattern.compile("(\\s*)`(.*) <(.*)>`_");
-        String straightLinkReplace = "$1:doc:`$2`";
+        Pattern linkPattern = Pattern.compile("(\\s*)-\\s*`(.*) <(.*)>`_"); //$NON-NLS-1$
 
-        Pattern heading = Pattern.compile("(=|-|~|\\^|\\')+");
-        final String LEVEL = "=-~^'";
+        Pattern strightLinkPattern = Pattern.compile("(\\s*)`(.*) <(.*)>`_"); //$NON-NLS-1$
+
+        Pattern heading = Pattern.compile("(=|-|~|\\^|\\')+"); //$NON-NLS-1$
+        final String LEVEL = "=-~^'"; //$NON-NLS-1$
 
         StringBuilder contents = new StringBuilder();
         BufferedReader reader = null;
@@ -284,16 +284,16 @@ public class BulkConvert {
             reader = new BufferedReader(new FileReader(rstFile));
 
             while ((line = reader.readLine()) != null) {
-                if( line.contains("delete_feature_mode.gif")){
+                if (line.contains("delete_feature_mode.gif")) { //$NON-NLS-1$
                     // breakpoint for debugging
-                    System.out.println("Check delete_feature_mode.gif ");
+                    System.out.println("Check delete_feature_mode.gif "); //$NON-NLS-1$
                 }
                 // check headings
                 if (heading.matcher(line).matches()) {
                     int level = LEVEL.indexOf(line.charAt(1));
                     if (pageLevel == -1) {
                         pageLevel = level; // you are the first heading
-                        if (previousLine.equalsIgnoreCase( title ) ) {
+                        if (previousLine.equalsIgnoreCase(title)) {
                             // title already emitted!
                             includesTitle = true;
                         }
@@ -322,13 +322,12 @@ public class BulkConvert {
                     // "$1* :doc:`$2`"
                     // line = linkMatcher.replaceAll(linkReplace);
                     String fixed_page_ref = fixPageReference(pageRef);
-                    if( htmlRef.startsWith("http")){
+                    if (htmlRef.startsWith("http")) { //$NON-NLS-1$
                         // external link `
                         // $1* `$2 <$3>`_
-                        line = indent+"* `"+pageRef+" <"+htmlRef+">`_";
-                    }
-                    else {
-                        line = indent+"* :doc:`"+fixed_page_ref+"`";
+                        line = indent + "* `" + pageRef + " <" + htmlRef + ">`_"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    } else {
+                        line = indent + "* :doc:`" + fixed_page_ref + "`"; //$NON-NLS-1$ //$NON-NLS-2$
                         lineFeedNeeded = true;
                     }
                 }
@@ -342,13 +341,12 @@ public class BulkConvert {
                     // line = straightLinkMatcher.replaceAll(straightLinkReplace);
                     // lineFeedNeeded = true;
                     String fixed_page_ref = fixPageReference(pageRef);
-                    if( htmlRef.startsWith("http")){
+                    if (htmlRef.startsWith("http")) { //$NON-NLS-1$
                         // external link `
                         // $1`$2 <$3>`_
-                        line = indent+"`"+pageRef+" <"+htmlRef+">`_";
-                    }
-                    else {
-                        line = indent+":doc:`"+fixed_page_ref+"`";
+                        line = indent + "`" + pageRef + " <" + htmlRef + ">`_"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    } else {
+                        line = indent + ":doc:`" + fixed_page_ref + "`"; //$NON-NLS-1$ //$NON-NLS-2$
                         lineFeedNeeded = true;
                     }
                 }
@@ -356,7 +354,6 @@ public class BulkConvert {
                 //
                 Matcher imageMatcher = imagePattern.matcher(line);
                 if (imageMatcher.matches()) {
-                    String image = imageMatcher.group(1);
                     String path = imageMatcher.group(2);
                     String file = imageMatcher.group(3);
 
@@ -377,7 +374,7 @@ public class BulkConvert {
                     String path = figureMatcher.group(1);
                     String file = figureMatcher.group(2);
 
-                    File attachementImage =new File( new File(htmlDirectory,path), file);
+                    File attachementImage = new File(new File(htmlDirectory, path), file);
                     File pageDir = new File(imageDir, page);
                     File pageImage = new File(pageDir, file);
 
@@ -388,18 +385,18 @@ public class BulkConvert {
                     }
                 }
                 contents.append(line);
-                contents.append("\n");
+                contents.append("\n"); //$NON-NLS-1$
                 if (lineFeedNeeded) {
-                    contents.append("\n");
+                    contents.append("\n"); //$NON-NLS-1$
                     lineFeedNeeded = false;
                 }
                 previousLine = line; // remember for next time in case this is a heading!
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to read '" + rstFile + "':" + e);
+            System.out.println("Unable to read '" + rstFile + "':" + e); //$NON-NLS-1$ //$NON-NLS-2$
             return false;
         } catch (IOException e) {
-            System.out.println("Trouble reading '" + rstFile + "':" + e);
+            System.out.println("Trouble reading '" + rstFile + "':" + e); //$NON-NLS-1$ //$NON-NLS-2$
             return false;
         } finally {
             close(reader);
@@ -409,10 +406,10 @@ public class BulkConvert {
             char chars[] = new char[title.length()];
             Arrays.fill(chars, '#');
             String underline = new String(chars);
-            contents.insert(0, "\n");
-            contents.insert(0, "\n");
+            contents.insert(0, "\n"); //$NON-NLS-1$
+            contents.insert(0, "\n"); //$NON-NLS-1$
             contents.insert(0, underline);
-            contents.insert(0, "\n");
+            contents.insert(0, "\n"); //$NON-NLS-1$
             contents.insert(0, title);
         }
 
@@ -423,40 +420,42 @@ public class BulkConvert {
             try {
                 OutputStream modifiedCopy = new BufferedOutputStream(new FileOutputStream(rstFile));
 
-                InputStream textSteram = new ByteArrayInputStream(text.getBytes(Charset
-                        .defaultCharset()));
+                InputStream textSteram = new ByteArrayInputStream(
+                        text.getBytes(Charset.defaultCharset()));
                 bufferedStreamsCopy(textSteram, modifiedCopy);
             } catch (IOException eek) {
-                System.out.println("Trouble writing modified '" + rstFile + "':" + eek);
+                System.out.println("Trouble writing modified '" + rstFile + "':" + eek); //$NON-NLS-1$ //$NON-NLS-2$
                 return false;
             }
         }
         return true;
     }
-    /** Frank has asked that pages be all lowercase and not contain any spaces */
+
+    /**
+     * Frank has asked that pages be all lowercase and not contain any spaces
+     */
     private String fixPageReference(String pageRef) {
-        pageRef = pageRef.replace(' ','_');
+        pageRef = pageRef.replace(' ', '_');
         pageRef = pageRef.toLowerCase();
-        
+
         return pageRef;
     }
 
     private void duplicateImage(File attachementImage, File pageImage) {
         String fileName = attachementImage.getName();
-        
+
         File liveImage = searchPluginImages(fileName);
-        if( liveImage != null ){
-            System.out.println("   Override attachment image from : "+ liveImage );
+        if (liveImage != null) {
+            System.out.println("   Override attachment image from : " + liveImage); //$NON-NLS-1$
             attachementImage = liveImage;
-        }
-        else if (!attachementImage.exists()) {
+        } else if (!attachementImage.exists()) {
             File otherAttachment = searchAllAttachments(fileName);
-            if( otherAttachment != null ){
-                System.out.println("   Found attachment on another page " + otherAttachment );
+            if (otherAttachment != null) {
+                System.out.println("   Found attachment on another page " + otherAttachment); //$NON-NLS-1$
                 attachementImage = otherAttachment; // okay we found it on another page
-            }
-            else {
-                System.out.println("   WARNING: Unable to locate " + attachementImage + " broken link!");                
+            } else {
+                System.out.println(
+                        "   WARNING: Unable to locate " + attachementImage + " broken link!"); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
 
@@ -465,15 +464,15 @@ public class BulkConvert {
             pageDir.mkdirs();
         }
         if (!pageImage.exists()) {
-            System.out.println("   Copy image to  " + pageImage);
+            System.out.println("   Copy image to  " + pageImage); //$NON-NLS-1$
             bufferedStreamsCopy(attachementImage, pageImage);
         } else {
             boolean deleted = pageImage.delete();
             if (deleted) {
-                System.out.println("   Copy image to  " + pageImage);
+                System.out.println("   Copy image to  " + pageImage); //$NON-NLS-1$
                 bufferedStreamsCopy(attachementImage, pageImage);
             } else {
-                System.out.println("   WARNING: Unable to repalce " + pageImage);
+                System.out.println("   WARNING: Unable to repalce " + pageImage); //$NON-NLS-1$
             }
         }
     }
@@ -481,7 +480,7 @@ public class BulkConvert {
     /** Search for the provided filename */
     private File searchAllAttachments(String fileName) {
         // search downloads
-        File attachments = new File( new File(htmlDirectory, "download"),"attachments");
+        File attachments = new File(new File(htmlDirectory, "download"), "attachments"); //$NON-NLS-1$ //$NON-NLS-2$
         if (attachments.exists() && attachments.isDirectory()) {
             File file = searchDirectory(attachments, fileName);
             if (file != null) {
@@ -494,10 +493,10 @@ public class BulkConvert {
     private File searchPluginImages(String fileName) {
         // search for live icons first!
         File checkout = rstDirectory.getParentFile().getParentFile().getParentFile();
-        File plugins = new File(checkout, "plugins");
-        if( plugins.exists() && plugins.isDirectory() ){
+        File plugins = new File(checkout, "plugins"); //$NON-NLS-1$
+        if (plugins.exists() && plugins.isDirectory()) {
             for (File plugin : plugins.listFiles()) {
-                File icons = new File(plugin, "icons");
+                File icons = new File(plugin, "icons"); //$NON-NLS-1$
                 if (icons.exists() && icons.isDirectory()) {
                     File file = searchDirectory(icons, fileName);
                     if (file != null) {
@@ -510,14 +509,14 @@ public class BulkConvert {
     }
 
     private File searchDirectory(File dir, String fileName) {
-        for( File file : dir.listFiles() ){
-            if( file.isDirectory() ){
+        for (File file : dir.listFiles()) {
+            if (file.isDirectory()) {
                 File found = searchDirectory(file, fileName);
-                if( found != null ){
+                if (found != null) {
                     return found; // found!
                 }
             }
-            if( fileName.equals( file.getName() ) ){
+            if (fileName.equals(file.getName())) {
                 return file;
             }
         }
@@ -529,50 +528,21 @@ public class BulkConvert {
         String rstFilePath = rstFile.getAbsolutePath().toString();
         String htmlFilePath = htmlFile.getAbsolutePath().toString();
 
-        System.out.println("/usr/local/bin/pandoc --columns=100 -o \"" + rstFilePath + "\" \""
-                + htmlFilePath + "\"");
-        String run[] = new String[] { "/usr/local/bin/pandoc", "--columns=100", "-o", rstFilePath,
+        System.out.println("/usr/local/bin/pandoc --columns=100 -o \"" + rstFilePath + "\" \"" //$NON-NLS-1$ //$NON-NLS-2$
+                + htmlFilePath + "\""); //$NON-NLS-1$
+        String run[] = new String[] { "/usr/local/bin/pandoc", "--columns=100", "-o", rstFilePath, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 htmlFilePath };
         try {
             Process process = Runtime.getRuntime().exec(run, null, htmlFile.getParentFile());
             int exit = process.waitFor();
-            System.out.println("\tGenerated " + rstFile.getName() + " with exist code " + exit);
+            System.out.println("\tGenerated " + rstFile.getName() + " with exist code " + exit); //$NON-NLS-1$ //$NON-NLS-2$
             return exit == 0;
         } catch (InterruptedException e) {
-            System.out.println("\\tFailed on " + rstFile.getName() + " with: " + e);
+            System.out.println("\\tFailed on " + rstFile.getName() + " with: " + e); //$NON-NLS-1$ //$NON-NLS-2$
             return false;
         } catch (IOException e) {
-            System.out.println("\\tFailed on " + rstFile.getName() + " with: " + e);
+            System.out.println("\\tFailed on " + rstFile.getName() + " with: " + e); //$NON-NLS-1$ //$NON-NLS-2$
             e.printStackTrace();
-            return false;
-        }
-    }
-
-    private boolean html2res(File htmlFile, File rstFile) {
-        String run[] = new String[] { "/usr/local/bin/html2rest", htmlFile.getName() };
-
-        BufferedInputStream inputStream = null;
-        BufferedOutputStream outputStream = null;
-        try {
-            Process process = Runtime.getRuntime().exec(run, null, htmlFile.getParentFile());
-            // inputStream = new BufferedInputStream(new FileInputStream(htmlFile));
-            // outputStream = new BufferedOutputStream( new FileOutputStream(rstFile));
-
-            inputStream = new BufferedInputStream(process.getInputStream());
-            outputStream = new BufferedOutputStream(new FileOutputStream(rstFile));
-
-            bufferedStreamsCopy(inputStream, outputStream);
-
-            process.waitFor();
-            int exit = process.exitValue();
-            System.out.println("\tGenerated " + rstFile.getName() + " with exist code " + exit);
-            return exit == 0;
-        } catch (IOException e) {
-            System.out.println("\\tFailed on " + rstFile.getName() + " with: " + e);
-            e.printStackTrace();
-            return false;
-        } catch (InterruptedException e) {
-            System.out.println("\\tFailed on " + rstFile.getName() + " with: " + e);
             return false;
         }
     }
@@ -586,7 +556,7 @@ public class BulkConvert {
 
             bufferedStreamsCopy(in, out);
         } catch (Exception eek) {
-            System.out.print("Unable to copy from " + origional.getName() + "to " + copy);
+            System.out.print("Unable to copy from " + origional.getName() + "to " + copy); //$NON-NLS-1$ //$NON-NLS-2$
             eek.printStackTrace();
         }
     }
