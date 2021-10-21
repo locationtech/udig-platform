@@ -11,6 +11,7 @@ package org.locationtech.udig.project.internal.render;
 
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -21,7 +22,6 @@ import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
 import org.eclipse.emf.ecore.EObject;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
-import org.joda.time.DateTime;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -455,14 +455,14 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * 
      * @model
      */
-    public List<DateTime> getAvailableTimesteps();
+    public List<LocalDateTime> getAvailableTimesteps();
 
     /**
      * Returns the current timestep or null if no time has been defined. 
      * 
      * @model
      */
-    public DateTime getCurrentTimestep();
+    public LocalDateTime getCurrentTimestep();
 
     /**
      * Sets the value of the '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCurrentTimestep <em>Current Timestep</em>}' attribute.
@@ -472,7 +472,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * @see #getCurrentTimestep()
      * @generated
      */
-    void setCurrentTimestep(DateTime value);
+    void setCurrentTimestep(LocalDateTime value);
 
     /**
      * Returns the available list of elevations or null if no elevation has been defined. 

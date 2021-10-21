@@ -13,10 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.ui.ExceptionDetailsDialog;
-import org.locationtech.udig.ui.PlatformGIS;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -25,13 +21,13 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
 import org.geotools.data.simple.SimpleFeatureSource;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
+import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.kml.core.KmlToolPlugin;
 import org.locationtech.udig.catalog.kml.core.KmlUtils;
 import org.locationtech.udig.catalog.kml.internal.Messages;
 import org.locationtech.udig.catalog.kml.internal.ui.ImageConstants;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.PlatformGIS;
 
 /**
  * @author Andrea Antonello (www.hydrologis.com)
@@ -41,7 +37,6 @@ public class KmlExportWizard extends Wizard implements IExportWizard {
 
     public static boolean canFinish = false;
     private KmlExportWizardPage mainPage;
-    public static DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyyMMddHHmm"); //$NON-NLS-1$
 
     public KmlExportWizard() {
         super();

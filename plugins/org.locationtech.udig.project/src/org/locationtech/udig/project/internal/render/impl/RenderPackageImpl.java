@@ -8,6 +8,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import java.util.SortedSet;
@@ -45,7 +46,6 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.geotools.data.Query;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.joda.time.DateTime;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -1160,7 +1160,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
                 !IS_GENERATED_INSTANCE_CLASS);
         initEDataType(referencedEnvelopeEDataType, ReferencedEnvelope.class, "ReferencedEnvelope", //$NON-NLS-1$
                 IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
-        initEDataType(dateTimeEDataType, DateTime.class, "DateTime", IS_SERIALIZABLE, //$NON-NLS-1$
+        initEDataType(dateTimeEDataType, LocalDateTime.class, "DateTime", IS_SERIALIZABLE, //$NON-NLS-1$
                 !IS_GENERATED_INSTANCE_CLASS);
         initEDataType(illegalArgumentExceptionEDataType, IllegalArgumentException.class,
                 "IllegalArgumentException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

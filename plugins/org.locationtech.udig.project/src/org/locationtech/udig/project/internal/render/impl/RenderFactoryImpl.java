@@ -8,6 +8,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -43,7 +44,6 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.geotools.data.Query;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.joda.time.DateTime;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.osgi.framework.Bundle;
 
@@ -625,8 +625,8 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public DateTime createDateTimeFromString(EDataType eDataType, String initialValue) {
-        return (DateTime) super.createFromString(eDataType, initialValue);
+    public LocalDateTime createDateTimeFromString(EDataType eDataType, String initialValue) {
+        return (LocalDateTime) super.createFromString(eDataType, initialValue);
     }
 
     /**

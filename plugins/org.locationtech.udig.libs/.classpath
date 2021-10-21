@@ -126,7 +126,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/javax.mail-1.5.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jdom2-2.0.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jgridshift-core-1.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/joda-time-1.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/json-simple-1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jsqlparser-0.3.14.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jt-affine-1.1.12.jar"/>

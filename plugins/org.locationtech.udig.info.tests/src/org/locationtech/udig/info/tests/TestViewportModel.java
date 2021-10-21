@@ -8,15 +8,9 @@ import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.SortedSet;
-
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.render.RenderManager;
-import org.locationtech.udig.project.internal.render.ViewportModel;
-import org.locationtech.udig.project.render.IViewportModelListener;
-import org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
@@ -28,11 +22,15 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.joda.time.DateTime;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.render.IViewportModelListener;
+import org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 public class TestViewportModel implements ViewportModel {
 
@@ -336,17 +334,17 @@ public class TestViewportModel implements ViewportModel {
 	}
 
 	@Override
-	public List<DateTime> getAvailableTimesteps() {
+	public List<LocalDateTime> getAvailableTimesteps() {
 		return null;
 	}
 
 	@Override
-	public DateTime getCurrentTimestep() {
+	public LocalDateTime getCurrentTimestep() {
 		return null;
 	}
 
 	@Override
-	public void setCurrentTimestep(DateTime value) {
+	public void setCurrentTimestep(LocalDateTime value) {
 
 	}
 
