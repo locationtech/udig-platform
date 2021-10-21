@@ -130,6 +130,7 @@
 <unit id="org.apache.xmlrpc" version="3.0.0.v20100427-1100"/>
 <unit id="org.apache.commons.httpclient" version="3.1.0.v201012070820"/>
 <unit id="org.apache.ws.commons.util" version="1.0.2.v20160817-1930"/>
+<unit id="org.apache.commons.io" version="2.6.0.v20190123-2029"/>
 <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20201130205003/repository/"/>
 </location>
 </locations>
