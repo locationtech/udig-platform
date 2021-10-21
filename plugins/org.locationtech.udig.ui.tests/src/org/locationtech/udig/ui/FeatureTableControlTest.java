@@ -185,8 +185,8 @@ public class FeatureTableControlTest {
     }
 
     @Test
-    public void testUpdate() throws Exception {
-
+    public void tableElementShowsNewAttributeValue_onFeatureUpdate() throws Exception {
+        final String newAttibuteValue = "newName";
         TableViewer viewer = table.getViewer();
 
         TableItem topItem = viewer.getTable().getItem(0);
@@ -194,21 +194,39 @@ public class FeatureTableControlTest {
         SimpleFeature f = (SimpleFeature) topItem.getData();
         final Object featureId = f.getAttribute(ID_ATTRIBUTE);
         assertNotNull(featureId);
-        f.setAttribute(0, "newName"); //$NON-NLS-1$
+        f.setAttribute(0, newAttibuteValue); // $NON-NLS-1$
 
         while (Display.getCurrent().readAndDispatch())
             ;
         assertEquals("feature1", topItem.getText(1)); //$NON-NLS-1$
         table.update();
-        while (Display.getCurrent().readAndDispatch())
-            ;
-        for (TableItem ti : table.getViewer().getTable().getItems()) {
-            SimpleFeature sf = (SimpleFeature) ti.getData();
-            if (sf != null && sf.getAttribute(ID_ATTRIBUTE) != null
-                    && featureId.equals(sf.getAttribute(ID_ATTRIBUTE))) {
-                assertEquals("newName", ti.getText(1)); //$NON-NLS-1$
+
+        UDIGTestUtil.inDisplayThreadWait(2000, new WaitCondition() {
+
+            @Override
+            public boolean isTrue() {
+                if (table.getViewer().getTable().getItemCount() == 0) {
+                    return false;
+                }
+                TableItem tableItem = table.getViewer().getTable().getItem(0);
+                if (!(tableItem.getData() instanceof SimpleFeature)) {
+                    return false;
+                }
+
+                if (!((SimpleFeature) tableItem.getData()).getAttribute(ID_ATTRIBUTE)
+                        .equals(featureId)) {
+                    return false;
+                }
+
+                return newAttibuteValue.equals(tableItem.getText(1));
             }
-        }
+
+            @Override
+            public String toString() {
+                return "expected to get first TableItem updated in time to '" + newAttibuteValue
+                        + "'";
+            }
+        }, true);
     }
 
     @Test
