@@ -489,6 +489,13 @@
 			<version>3.1</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.xml</groupId>
+			<artifactId>xml-commons-resolver</artifactId>
+			<version>1.2</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<!-- add jdbc drivers dependencies -->
 		<!-- normally drivers will be retrieved from the dependencies of the 
 			 corresponding gt-jdbc-xxx geotools packages. Usually the latest
