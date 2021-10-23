@@ -15,25 +15,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import org.locationtech.udig.aoi.IAOIService;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.ProjectPackage;
-import org.locationtech.udig.project.internal.render.RenderFactory;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.render.RenderManager;
-import org.locationtech.udig.project.internal.render.RenderPackage;
-import org.locationtech.udig.project.internal.render.ViewportModel;
-import org.locationtech.udig.project.preferences.PreferenceConstants;
-import org.locationtech.udig.project.render.IViewportModelListener;
-import org.locationtech.udig.project.render.ViewportModelEvent;
-import org.locationtech.udig.project.render.ViewportModelEvent.EventType;
-import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
-import org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent;
-import org.locationtech.udig.ui.PlatformGIS;
-import org.locationtech.udig.ui.ProgressManager;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -50,6 +31,26 @@ import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.udig.aoi.IAOIService;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.RenderFactory;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.render.IViewportModelListener;
+import org.locationtech.udig.project.render.ViewportModelEvent;
+import org.locationtech.udig.project.render.ViewportModelEvent.EventType;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.ProgressManager;
 import org.opengis.geometry.DirectPosition;
 import org.opengis.geometry.MismatchedDimensionException;
 import org.opengis.referencing.FactoryException;
@@ -57,14 +58,11 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Envelope;
-
 /**
  * TODO Purpose of org.locationtech.udig.project.internal.render.impl
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -83,7 +81,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * The cached value of the '{@link #getCRS() <em>CRS</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @see #getCRS()
      * @generated NOT
      * @ordered
@@ -92,7 +90,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * This is true if the CRS attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated false
      * @ordered
      */
@@ -112,7 +110,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * The cached value of the '{@link #getBounds() <em>Bounds</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getBounds()
      * @generated NOT
      * @ordered
@@ -122,7 +120,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * The default value of the '{@link #getCenter() <em>Center</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getCenter()
      * @generated
      * @ordered
@@ -132,7 +130,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * The default value of the '{@link #getHeight() <em>Height</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getHeight()
      * @generated
      * @ordered
@@ -142,7 +140,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * The default value of the '{@link #getWidth() <em>Width</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getWidth()
      * @generated
      * @ordered
@@ -152,7 +150,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * The default value of the '{@link #getAspectRatio() <em>Aspect Ratio</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getAspectRatio()
      * @generated
      * @ordered
@@ -162,7 +160,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * The default value of the '{@link #getPixelSize() <em>Pixel Size</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getPixelSize()
      * @generated
      * @ordered
@@ -252,7 +250,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     protected ViewportModelImpl() {
@@ -336,7 +334,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -361,7 +359,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -447,7 +445,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -458,7 +456,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -471,7 +469,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -481,7 +479,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -491,7 +489,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -501,7 +499,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -511,7 +509,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -524,7 +522,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * TODO summary sentence for validState ...
-     * 
+     *
      * @return validState
      */
     private boolean validState() {
@@ -673,7 +671,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -695,7 +693,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -705,7 +703,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -747,7 +745,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -760,7 +758,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -773,7 +771,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -799,7 +797,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -1260,7 +1258,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * FIXME, This method was added as a work around for the fact that we do not have the ability to
      * chain or batch commands.
-     * 
+     *
      * @param firing
      */
     public void setFiringEvents(boolean firing) {
@@ -1317,7 +1315,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     @Override
     public synchronized SortedSet<Double> getDefaultPreferredScaleDenominators() {
         if (defaultScaleDenominators == null) {
-            TreeSet<Double> scales = new TreeSet<Double>();
+            TreeSet<Double> scales = new TreeSet<>();
             scales.add(1000000.0);
             scales.add(100000.0);
             scales.add(50000.0);
@@ -1347,7 +1345,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
             preferredScaleDenominators = null;
         } else {
             preferredScaleDenominators = Collections
-                    .unmodifiableSortedSet(new TreeSet<Double>(newPreferredScaleDenominators));
+                    .unmodifiableSortedSet(new TreeSet<>(newPreferredScaleDenominators));
         }
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
@@ -1363,7 +1361,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     @Override
     public List<LocalDateTime> getAvailableTimesteps() {
         if (availableTimesteps == null) {
-            availableTimesteps = new EDataTypeUniqueEList<LocalDateTime>(LocalDateTime.class, this,
+            availableTimesteps = new EDataTypeUniqueEList<>(LocalDateTime.class, this,
                     RenderPackage.VIEWPORT_MODEL__AVAILABLE_TIMESTEPS);
         }
         return availableTimesteps;
@@ -1386,7 +1384,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      */
     @Override
     public void setCurrentTimestep(LocalDateTime newCurrentTimestep) {
-    	LocalDateTime oldCurrentTimestep = currentTimestep;
+        LocalDateTime oldCurrentTimestep = currentTimestep;
         currentTimestep = newCurrentTimestep;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
@@ -1402,7 +1400,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     @Override
     public List<Double> getAvailableElevation() {
         if (availableElevation == null) {
-            availableElevation = new EDataTypeUniqueEList<Double>(Double.class, this,
+            availableElevation = new EDataTypeUniqueEList<>(Double.class, this,
                     RenderPackage.VIEWPORT_MODEL__AVAILABLE_ELEVATION);
         }
         return availableElevation;
@@ -1434,7 +1432,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * This method will calculate the current width based on ScaleUtils and 
+     * This method will calculate the current width based on ScaleUtils and
      * the current RenderManager.
      */
     @Override
@@ -1457,7 +1455,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         setWidth(newExtents.getWidth());
     }
 
-    CopyOnWriteArraySet<IViewportModelListener> listeners = new CopyOnWriteArraySet<IViewportModelListener>();
+    CopyOnWriteArraySet<IViewportModelListener> listeners = new CopyOnWriteArraySet<>();
 
     @Override
     public void addViewportModelListener(IViewportModelListener listener) {

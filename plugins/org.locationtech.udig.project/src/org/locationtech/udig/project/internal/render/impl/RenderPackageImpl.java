@@ -10,8 +10,22 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 import java.util.List;
-
 import java.util.SortedSet;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EGenericType;
+import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.geotools.data.Query;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.element.ElementPackage;
@@ -33,23 +47,7 @@ import org.locationtech.udig.project.render.IViewportModel;
 import org.locationtech.udig.project.render.RenderException;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EGenericType;
-import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.geotools.data.Query;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Envelope;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package </b>. <!-- end-user-doc -->
@@ -240,7 +238,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    private EDataType dateTimeEDataType = null;
+    private EDataType localDateTimeEDataType = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -801,8 +799,8 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * @generated
      */
     @Override
-    public EDataType getDateTime() {
-        return dateTimeEDataType;
+    public EDataType getLocalDateTime() {
+        return localDateTimeEDataType;
     }
 
     /**
@@ -817,7 +815,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated public EDataType getInfoList() { return infoListEDataType; }
      */
 
@@ -913,7 +911,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
         renderExceptionEDataType = createEDataType(RENDER_EXCEPTION);
         sortedSetEDataType = createEDataType(SORTED_SET);
         referencedEnvelopeEDataType = createEDataType(REFERENCED_ENVELOPE);
-        dateTimeEDataType = createEDataType(DATE_TIME);
+        localDateTimeEDataType = createEDataType(LOCAL_DATE_TIME);
         illegalArgumentExceptionEDataType = createEDataType(ILLEGAL_ARGUMENT_EXCEPTION);
     }
 
@@ -1048,12 +1046,12 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
                 "preferredScaleDenominators", null, 0, 1, ViewportModel.class, !IS_TRANSIENT, //$NON-NLS-1$
                 !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
                 IS_ORDERED);
-        initEAttribute(getViewportModel_AvailableTimesteps(), this.getDateTime(),
+        initEAttribute(getViewportModel_AvailableTimesteps(), this.getLocalDateTime(),
                 "availableTimesteps", null, 0, -1, ViewportModel.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
                 IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getViewportModel_CurrentTimestep(), this.getDateTime(), "currentTimestep", //$NON-NLS-1$
-                null, 0, 1, ViewportModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-                !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getViewportModel_CurrentTimestep(), this.getLocalDateTime(),
+                "currentTimestep", null, 0, 1, ViewportModel.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+                IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getViewportModel_AvailableElevation(), ecorePackage.getEDoubleObject(),
                 "availableElevation", null, 0, -1, ViewportModel.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
                 IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1160,7 +1158,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
                 !IS_GENERATED_INSTANCE_CLASS);
         initEDataType(referencedEnvelopeEDataType, ReferencedEnvelope.class, "ReferencedEnvelope", //$NON-NLS-1$
                 IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
-        initEDataType(dateTimeEDataType, LocalDateTime.class, "DateTime", IS_SERIALIZABLE, //$NON-NLS-1$
+        initEDataType(localDateTimeEDataType, LocalDateTime.class, "LocalDateTime", IS_SERIALIZABLE, //$NON-NLS-1$
                 !IS_GENERATED_INSTANCE_CLASS);
         initEDataType(illegalArgumentExceptionEDataType, IllegalArgumentException.class,
                 "IllegalArgumentException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
