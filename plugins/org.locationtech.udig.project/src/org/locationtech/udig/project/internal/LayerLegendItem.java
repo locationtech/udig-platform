@@ -30,31 +30,31 @@ import org.locationtech.udig.project.ILayerLegendItem;
  * @generated
  */
 public interface LayerLegendItem extends LegendItem, ILayerLegendItem {
-    /**
-     * Returns the value of the '<em><b>Layer</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Layer</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Layer</em>' reference.
-     * @see #setLayer(Layer)
-     * @see org.locationtech.udig.project.internal.ProjectPackage#getLayerLegendItem_Layer()
-     * @model required="true"
-     * @generated
-     */
-    @Override
-    Layer getLayer();
+	/**
+	 * Returns the value of the '<em><b>Layer</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Layer</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Layer</em>' reference.
+	 * @see #setLayer(Layer)
+	 * @see org.locationtech.udig.project.internal.ProjectPackage#getLayerLegendItem_Layer()
+	 * @model required="true"
+	 * @generated
+	 */
+	@Override
+	Layer getLayer();
 
-    /**
-     * Sets the value of the '{@link org.locationtech.udig.project.internal.LayerLegendItem#getLayer <em>Layer</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Layer</em>' reference.
-     * @see #getLayer()
-     * @generated
-     */
-    void setLayer(Layer value);
+	/**
+	 * Sets the value of the '{@link org.locationtech.udig.project.internal.LayerLegendItem#getLayer <em>Layer</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Layer</em>' reference.
+	 * @see #getLayer()
+	 * @generated
+	 */
+	void setLayer(Layer value);
 
 } // LayerLegendItem

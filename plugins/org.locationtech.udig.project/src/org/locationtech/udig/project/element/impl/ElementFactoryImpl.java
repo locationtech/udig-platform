@@ -41,199 +41,192 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  * @generated
  */
 public class ElementFactoryImpl extends EFactoryImpl implements ElementFactory {
-    private static final String EXTENSION_POINT_ID_KEY = "@ElementFactoryImpl.ExtensionPointId.key@"; //$NON-NLS-1$
+	private static final String EXTENSION_POINT_ID_KEY = "@ElementFactoryImpl.ExtensionPointId.key@"; //$NON-NLS-1$
 
-    /**
-     * Creates the default factory implementation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public static ElementFactory init() {
-        try {
-            ElementFactory theElementFactory = (ElementFactory) EPackage.Registry.INSTANCE
-                    .getEFactory(ElementPackage.eNS_URI);
-            if (theElementFactory != null) {
-                return theElementFactory;
-            }
-        } catch (Exception exception) {
-            EcorePlugin.INSTANCE.log(exception);
-        }
-        return new ElementFactoryImpl();
-    }
+	/**
+	 * Creates the default factory implementation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static ElementFactory init() {
+		try {
+			ElementFactory theElementFactory = (ElementFactory) EPackage.Registry.INSTANCE
+					.getEFactory(ElementPackage.eNS_URI);
+			if (theElementFactory != null) {
+				return theElementFactory;
+			}
+		} catch (Exception exception) {
+			EcorePlugin.INSTANCE.log(exception);
+		}
+		return new ElementFactoryImpl();
+	}
 
-    /**
-     * Creates an instance of the factory.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ElementFactoryImpl() {
-        super();
-    }
+	/**
+	 * Creates an instance of the factory.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ElementFactoryImpl() {
+		super();
+	}
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EObject create(EClass eClass) {
-        switch (eClass.getClassifierID()) {
-        case ElementPackage.PROJECT_ELEMENT_ADAPTER:
-            return createProjectElementAdapter();
-        default:
-            throw new IllegalArgumentException(
-                    "The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
-        }
-    }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
+		case ElementPackage.PROJECT_ELEMENT_ADAPTER:
+			return createProjectElementAdapter();
+		default:
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+	}
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Object createFromString(EDataType eDataType, String initialValue) {
-        switch (eDataType.getClassifierID()) {
-        case ElementPackage.IGENERIC_PROJECT_ELEMENT:
-            return createIGenericProjectElementFromString(eDataType, initialValue);
-        default:
-            throw new IllegalArgumentException(
-                    "The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
-        }
-    }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object createFromString(EDataType eDataType, String initialValue) {
+		switch (eDataType.getClassifierID()) {
+		case ElementPackage.IGENERIC_PROJECT_ELEMENT:
+			return createIGenericProjectElementFromString(eDataType, initialValue);
+		default:
+			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+	}
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public String convertToString(EDataType eDataType, Object instanceValue) {
-        switch (eDataType.getClassifierID()) {
-        case ElementPackage.IGENERIC_PROJECT_ELEMENT:
-            return convertIGenericProjectElementToString(eDataType, instanceValue);
-        default:
-            throw new IllegalArgumentException(
-                    "The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
-        }
-    }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String convertToString(EDataType eDataType, Object instanceValue) {
+		switch (eDataType.getClassifierID()) {
+		case ElementPackage.IGENERIC_PROJECT_ELEMENT:
+			return convertIGenericProjectElementToString(eDataType, instanceValue);
+		default:
+			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+	}
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public ProjectElementAdapter createProjectElementAdapter() {
-        ProjectElementAdapterImpl projectElementAdapter = new ProjectElementAdapterImpl();
-        return projectElementAdapter;
-    }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ProjectElementAdapter createProjectElementAdapter() {
+		ProjectElementAdapterImpl projectElementAdapter = new ProjectElementAdapterImpl();
+		return projectElementAdapter;
+	}
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated NO MORE
-     */
-    public IGenericProjectElement createIGenericProjectElementFromString(EDataType eDataType,
-            String initialValue) {
-        try {
-            UdigMemento memento = UdigMemento.readString(initialValue);
-            IGenericProjectElement backingObject = createGenericProjectElement(
-                    IGenericProjectElement.class, memento.getString(EXTENSION_POINT_ID_KEY));
-            backingObject.init(memento);
-            return backingObject;
-        } catch (IOException e) {
-            ProjectPlugin.log("Error parsing memento data for IGenericProject Element", e); //$NON-NLS-1$
-            return null;
-        }
-    }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NO MORE
+	 */
+	public IGenericProjectElement createIGenericProjectElementFromString(EDataType eDataType, String initialValue) {
+		try {
+			UdigMemento memento = UdigMemento.readString(initialValue);
+			IGenericProjectElement backingObject = createGenericProjectElement(IGenericProjectElement.class,
+					memento.getString(EXTENSION_POINT_ID_KEY));
+			backingObject.init(memento);
+			return backingObject;
+		} catch (IOException e) {
+			ProjectPlugin.log("Error parsing memento data for IGenericProject Element", e); //$NON-NLS-1$
+			return null;
+		}
+	}
 
-    /**
-     * Uses the IMemento pattern to obtain persistence data from the object
-     * @generated NO MORE
-     */
-    public String convertIGenericProjectElementToString(EDataType eDataType, Object instanceValue) {
-        IGenericProjectElement elem = (IGenericProjectElement) instanceValue;
-        UdigMemento memento = new UdigMemento();
-        elem.save(memento);
-        memento.putString(EXTENSION_POINT_ID_KEY, elem.getExtensionId());
-        return memento.toString();
-    }
+	/**
+	 * Uses the IMemento pattern to obtain persistence data from the object
+	 * @generated NO MORE
+	 */
+	public String convertIGenericProjectElementToString(EDataType eDataType, Object instanceValue) {
+		IGenericProjectElement elem = (IGenericProjectElement) instanceValue;
+		UdigMemento memento = new UdigMemento();
+		elem.save(memento);
+		memento.putString(EXTENSION_POINT_ID_KEY, elem.getExtensionId());
+		return memento.toString();
+	}
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public ElementPackage getElementPackage() {
-        return (ElementPackage) getEPackage();
-    }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ElementPackage getElementPackage() {
+		return (ElementPackage) getEPackage();
+	}
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @deprecated
-     * @generated
-     */
-    @Deprecated
-    public static ElementPackage getPackage() {
-        return ElementPackage.eINSTANCE;
-    }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @deprecated
+	 * @generated
+	 */
+	@Deprecated
+	public static ElementPackage getPackage() {
+		return ElementPackage.eINSTANCE;
+	}
 
-    @Override
-    public ProjectElementAdapter createProjectElementAdapter(IProject project,
-            Class<? extends IGenericProjectElement> typeToCreate, String extensionId) {
-        ProjectElementAdapter adapter = createProjectElementAdapter();
+	@Override
+	public ProjectElementAdapter createProjectElementAdapter(IProject project,
+			Class<? extends IGenericProjectElement> typeToCreate, String extensionId) {
+		ProjectElementAdapter adapter = createProjectElementAdapter();
 
-        IGenericProjectElement genericProjectElement = createGenericProjectElement(typeToCreate,
-                extensionId);
-        adapter.setBackingObject(genericProjectElement);
+		IGenericProjectElement genericProjectElement = createGenericProjectElement(typeToCreate, extensionId);
+		adapter.setBackingObject(genericProjectElement);
 
-        ((Project) project).getElementsInternal().add(adapter);
-        return adapter;
-    }
+		((Project) project).getElementsInternal().add(adapter);
+		return adapter;
+	}
 
-    @Override
-    public ProjectElementAdapter createProjectElementAdapter(IProject project, String elemName,
-            Class<? extends IGenericProjectElement> typeToCreate, String extensionId) {
-        ProjectElementAdapter adapter = createProjectElementAdapter();
-        adapter.setName(elemName);
+	@Override
+	public ProjectElementAdapter createProjectElementAdapter(IProject project, String elemName,
+			Class<? extends IGenericProjectElement> typeToCreate, String extensionId) {
+		ProjectElementAdapter adapter = createProjectElementAdapter();
+		adapter.setName(elemName);
 
-        IGenericProjectElement genericProjectElement = createGenericProjectElement(typeToCreate,
-                extensionId);
-        adapter.setBackingObject(genericProjectElement);
+		IGenericProjectElement genericProjectElement = createGenericProjectElement(typeToCreate, extensionId);
+		adapter.setBackingObject(genericProjectElement);
 
-        ((Project) project).getElementsInternal().add(adapter);
-        return adapter;
-    }
+		((Project) project).getElementsInternal().add(adapter);
+		return adapter;
+	}
 
-    private <T extends IGenericProjectElement> T createGenericProjectElement(Class<T> typeToCreate,
-            String extensionId) {
-        List<IConfigurationElement> list = ExtensionPointList
-                .getExtensionPointList(ProjectElementAdapter.EXT_ID);
-        for (IConfigurationElement configurationElement : list) {
-            String id = configurationElement.getAttribute("id"); //$NON-NLS-1$
-            if (id != null && id.equals(extensionId)) {
-                try {
-                    Object obj = configurationElement.createExecutableExtension("class"); //$NON-NLS-1$
-                    if (typeToCreate.isAssignableFrom(obj.getClass())) {
-                        ((IGenericProjectElement) obj).setExtensionId(extensionId);
-                        return typeToCreate.cast(obj);
-                    } else {
-                        throw new IllegalArgumentException("The " + extensionId //$NON-NLS-1$
-                                + " created an object of type: " + obj.getClass() //$NON-NLS-1$
-                                + " which is not compatible with " + typeToCreate); //$NON-NLS-1$
-                    }
-                } catch (CoreException e) {
-                    throw new RuntimeException("Error creating extension", e); //$NON-NLS-1$
-                }
-            }
-        }
+	private <T extends IGenericProjectElement> T createGenericProjectElement(Class<T> typeToCreate,
+			String extensionId) {
+		List<IConfigurationElement> list = ExtensionPointList.getExtensionPointList(ProjectElementAdapter.EXT_ID);
+		for (IConfigurationElement configurationElement : list) {
+			String id = configurationElement.getAttribute("id"); //$NON-NLS-1$
+			if (id != null && id.equals(extensionId)) {
+				try {
+					Object obj = configurationElement.createExecutableExtension("class"); //$NON-NLS-1$
+					if (typeToCreate.isAssignableFrom(obj.getClass())) {
+						((IGenericProjectElement) obj).setExtensionId(extensionId);
+						return typeToCreate.cast(obj);
+					} else {
+						throw new IllegalArgumentException("The " + extensionId //$NON-NLS-1$
+								+ " created an object of type: " + obj.getClass() //$NON-NLS-1$
+								+ " which is not compatible with " + typeToCreate); //$NON-NLS-1$
+					}
+				} catch (CoreException e) {
+					throw new RuntimeException("Error creating extension", e); //$NON-NLS-1$
+				}
+			}
+		}
 
-        throw new IllegalArgumentException(extensionId + " was not a valid extension id"); //$NON-NLS-1$
-    }
+		throw new IllegalArgumentException(extensionId + " was not a valid extension id"); //$NON-NLS-1$
+	}
 
 } //ElementFactoryImpl

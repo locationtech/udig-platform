@@ -130,6 +130,6 @@
     <eTypeParameters name="T"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="ReferencedEnvelope" instanceClassName="org.geotools.geometry.jts.ReferencedEnvelope"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="DateTime" instanceClassName="java.time.LocalDateTime"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="LocalDateTime" instanceClassName="java.time.LocalDateTime"/>
   <eClassifiers xsi:type="ecore:EDataType" name="IllegalArgumentException" instanceClassName="java.lang.IllegalArgumentException"/>
 </ecore:EPackage>

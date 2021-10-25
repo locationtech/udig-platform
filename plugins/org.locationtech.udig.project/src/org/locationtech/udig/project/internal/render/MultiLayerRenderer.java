@@ -51,21 +51,22 @@ import org.locationtech.udig.project.render.RenderException;
  */
 public interface MultiLayerRenderer extends Renderer, IMultiLayerRenderer {
 
-    /**
-     * Called when the map has changed.
-     * <p>
-     * this method is guaranteed not to block
-     * </p>
-     * <p>
-     * Usually the image will merge the images for each layer. However in some cases, such as for a
-     * WMS, the image will have to be recreated. This should be a quick operation.
-     * </p>
-     * <p>
-     * Note: This command differs from render. render() forces a full rerendering of the data
-     * whereas refreshImage does not require that the renderer access the data again.
-     * 
-     * @throws RenderException
-     * @model
-     */
-    void refreshImage() throws RenderException;
+	/**
+	 * Called when the map has changed.
+	 * <p>
+	 * this method is guaranteed not to block
+	 * </p>
+	 * <p>
+	 * Usually the image will merge the images for each layer. However in some cases, such as for a
+	 * WMS, the image will have to be recreated. This should be a quick operation.
+	 * </p>
+	 * <p>
+	 * Note: This command differs from render. render() forces a full rerendering of the data
+	 * whereas refreshImage does not require that the renderer access the data again.
+	 * 
+	 * @throws RenderException
+	 * @model
+	 */
+	@Override
+	void refreshImage() throws RenderException;
 }

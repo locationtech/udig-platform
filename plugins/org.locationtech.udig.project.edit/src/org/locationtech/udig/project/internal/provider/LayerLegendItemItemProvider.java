@@ -30,95 +30,94 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  */
 public class LayerLegendItemItemProvider extends LegendItemItemProvider {
 
-    private LayerItemProvider layerItemProvider;
+	private LayerItemProvider layerItemProvider;
 
-    /**
-     * This constructs an instance from a factory and a notifier.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public LayerLegendItemItemProvider(AdapterFactory adapterFactory) {
-        super(adapterFactory);
-    }
+	/**
+	 * This constructs an instance from a factory and a notifier.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public LayerLegendItemItemProvider(AdapterFactory adapterFactory) {
+		super(adapterFactory);
+	}
 
-    /**
-     * This returns the property descriptors for the adapted class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-        if (itemPropertyDescriptors == null) {
-            super.getPropertyDescriptors(object);
+	/**
+	 * This returns the property descriptors for the adapted class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
+			super.getPropertyDescriptors(object);
 
-            addLayerPropertyDescriptor(object);
-        }
-        return itemPropertyDescriptors;
-    }
+			addLayerPropertyDescriptor(object);
+		}
+		return itemPropertyDescriptors;
+	}
 
-    /**
-     * This adds a property descriptor for the Layer feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addLayerPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(
-                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                getResourceLocator(), getString("_UI_LayerLegendItem_layer_feature"), //$NON-NLS-1$
-                getString("_UI_PropertyDescriptor_description", "_UI_LayerLegendItem_layer_feature", //$NON-NLS-1$//$NON-NLS-2$
-                        "_UI_LayerLegendItem_type"), //$NON-NLS-1$
-                ProjectPackage.Literals.LAYER_LEGEND_ITEM__LAYER, true, false, true, null, null,
-                null));
-    }
+	/**
+	 * This adds a property descriptor for the Layer feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addLayerPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+						getResourceLocator(), getString("_UI_LayerLegendItem_layer_feature"), //$NON-NLS-1$
+						getString("_UI_PropertyDescriptor_description", "_UI_LayerLegendItem_layer_feature", //$NON-NLS-1$//$NON-NLS-2$
+								"_UI_LayerLegendItem_type"), //$NON-NLS-1$
+						ProjectPackage.Literals.LAYER_LEGEND_ITEM__LAYER, true, false, true, null, null, null));
+	}
 
-    /**
-     * This returns LayerLegendItem.gif.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/LayerLegendItem")); //$NON-NLS-1$
-    }
+	/**
+	 * This returns LayerLegendItem.gif.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/LayerLegendItem")); //$NON-NLS-1$
+	}
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    protected boolean shouldComposeCreationImage() {
-        return true;
-    }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected boolean shouldComposeCreationImage() {
+		return true;
+	}
 
-    /**
-     * This returns the label text for the adapted class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public String getText(Object object) {
-        String label = ((LayerLegendItem) object).getName();
-        return label == null || label.length() == 0 ? getString("_UI_LayerLegendItem_type") : //$NON-NLS-1$
-                getString("_UI_LayerLegendItem_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
-    }
+	/**
+	 * This returns the label text for the adapted class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String getText(Object object) {
+		String label = ((LayerLegendItem) object).getName();
+		return label == null || label.length() == 0 ? getString("_UI_LayerLegendItem_type") : //$NON-NLS-1$
+				getString("_UI_LayerLegendItem_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+	}
 
-    /**
-     * This handles model notifications by calling {@link #updateChildren} to update any cached
-     * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void notifyChanged(Notification notification) {
-        updateChildren(notification);
-        super.notifyChanged(notification);
-    }
+	/**
+	 * This handles model notifications by calling {@link #updateChildren} to update any cached
+	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void notifyChanged(Notification notification) {
+		updateChildren(notification);
+		super.notifyChanged(notification);
+	}
 
 }

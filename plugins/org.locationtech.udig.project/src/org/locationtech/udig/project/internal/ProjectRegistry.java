@@ -25,69 +25,69 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface ProjectRegistry extends EObject {
 
-    public static final String PROJECT_FILE = "project.uprj";
+	public static final String PROJECT_FILE = "project.uprj";
 
-    /**
-     * Will create or return the default project. This project is called: workspace/newProject.udig
-     * (in english versions)
-     * 
-     * @return the default project
-     */
-    public Project getDefaultProject();
+	/**
+	 * Will create or return the default project. This project is called: workspace/newProject.udig
+	 * (in english versions)
+	 * 
+	 * @return the default project
+	 */
+	public Project getDefaultProject();
 
-    /**
-     * Returns the last selected/modified project
-     * 
-     * @return the last selected/modified project
-     * @model transient="true"
-     */
-    public Project getCurrentProject();
+	/**
+	 * Returns the last selected/modified project
+	 * 
+	 * @return the last selected/modified project
+	 * @model transient="true"
+	 */
+	public Project getCurrentProject();
 
-    /**
-     * Sets the value of the '{@link org.locationtech.udig.project.internal.ProjectRegistry#getCurrentProject <em>Current Project</em>}' reference.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @param value the new value of the '<em>Current Project</em>' reference.
-     * @see #getCurrentProject()
-     * @generated
-     */
-    void setCurrentProject(Project value);
+	/**
+	 * Sets the value of the '{@link org.locationtech.udig.project.internal.ProjectRegistry#getCurrentProject <em>Current Project</em>}' reference.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Current Project</em>' reference.
+	 * @see #getCurrentProject()
+	 * @generated
+	 */
+	void setCurrentProject(Project value);
 
-    /**
-     * Returns the Project that is associated with the filename.
-     * <p>
-     * If the Project is not part of the ProjectRegistry it is loaded.
-     * </p>
-     * <p>
-     * <ul>
-     * <li>Loads projects when required.</li>
-     * </ul>
-     * 
-     * @model
-     * @param uri The file name of the Project
-     * @return The Project that maps to the file indicated by name
-     */
-    public Project getProject(URI uri);
+	/**
+	 * Returns the Project that is associated with the filename.
+	 * <p>
+	 * If the Project is not part of the ProjectRegistry it is loaded.
+	 * </p>
+	 * <p>
+	 * <ul>
+	 * <li>Loads projects when required.</li>
+	 * </ul>
+	 * 
+	 * @model
+	 * @param uri The file name of the Project
+	 * @return The Project that maps to the file indicated by name
+	 */
+	public Project getProject(URI uri);
 
-    /**
-     * Returns the Project that is associated with the file path.
-     * <p>
-     * If the Project is not part of the ProjectRegistry it is loaded.
-     * </p>
-     * <p>
-     * <ul>
-     * <li>Loads projects when required.</li>
-     * </ul>
-     * 
-     * @model
-     * @param projectPath The file path of the Project
-     * @return The Project that maps to the file indicated by name
-     */
-    public Project getProject(String projectPath);
+	/**
+	 * Returns the Project that is associated with the file path.
+	 * <p>
+	 * If the Project is not part of the ProjectRegistry it is loaded.
+	 * </p>
+	 * <p>
+	 * <ul>
+	 * <li>Loads projects when required.</li>
+	 * </ul>
+	 * 
+	 * @model
+	 * @param projectPath The file path of the Project
+	 * @return The Project that maps to the file indicated by name
+	 */
+	public Project getProject(String projectPath);
 
-    /**
-     * @model type="Project" containment="false" resolveProxies="true"
-     * @return All the projects registered with the ProjectRegistry.  This is a muteable list.
-     */
-    public List<Project> getProjects();
+	/**
+	 * @model type="Project" containment="false" resolveProxies="true"
+	 * @return All the projects registered with the ProjectRegistry.  This is a muteable list.
+	 */
+	public List<Project> getProjects();
 
 }

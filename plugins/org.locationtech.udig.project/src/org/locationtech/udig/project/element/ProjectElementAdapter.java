@@ -22,24 +22,24 @@ import org.locationtech.udig.project.internal.ProjectElement;
  * @model
  */
 public interface ProjectElementAdapter extends ProjectElement {
-    String EXT_ID = "org.locationtech.udig.project.element"; //$NON-NLS-1$
+	String EXT_ID = "org.locationtech.udig.project.element"; //$NON-NLS-1$
 
-    /**
-     * Returns the object that is persisted and wrapped by this class
-     * 
-     * @return the object that is persisted and wrapped by this class
-     * @model
-     */
-    public IGenericProjectElement getBackingObject();
+	/**
+	 * Returns the object that is persisted and wrapped by this class
+	 * 
+	 * @return the object that is persisted and wrapped by this class
+	 * @model
+	 */
+	public IGenericProjectElement getBackingObject();
 
-    /**
-     * Sets the value of the '{@link org.locationtech.udig.project.element.ProjectElementAdapter#getBackingObject <em>Backing Object</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Backing Object</em>' attribute.
-     * @see #getBackingObject()
-     * @generated
-     */
-    void setBackingObject(IGenericProjectElement value);
+	/**
+	 * Sets the value of the '{@link org.locationtech.udig.project.element.ProjectElementAdapter#getBackingObject <em>Backing Object</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Backing Object</em>' attribute.
+	 * @see #getBackingObject()
+	 * @generated
+	 */
+	void setBackingObject(IGenericProjectElement value);
 
 }

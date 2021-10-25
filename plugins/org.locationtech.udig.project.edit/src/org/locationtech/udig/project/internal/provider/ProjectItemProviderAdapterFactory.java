@@ -37,524 +37,523 @@ import org.locationtech.udig.project.internal.util.ProjectAdapterFactory;
  * @generated
  */
 public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
-        implements ComposeableAdapterFactory, IChangeNotifier, IDisposable {
-    /**
-     * This keeps track of the root adapter factory that delegates to this adapter factory. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    protected ComposedAdapterFactory parentAdapterFactory;
+		implements ComposeableAdapterFactory, IChangeNotifier, IDisposable {
+	/**
+	 * This keeps track of the root adapter factory that delegates to this adapter factory. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected ComposedAdapterFactory parentAdapterFactory;
 
-    /**
-     * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    protected IChangeNotifier changeNotifier = new ChangeNotifier();
+	/**
+	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected IChangeNotifier changeNotifier = new ChangeNotifier();
 
-    /**
-     * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    protected Collection<Object> supportedTypes = new ArrayList<>();
+	/**
+	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
-    /**
-     * This constructs an instance.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public ProjectItemProviderAdapterFactory() {
-        supportedTypes.add(IEditingDomainItemProvider.class);
-        supportedTypes.add(IStructuredItemContentProvider.class);
-        supportedTypes.add(ITreeItemContentProvider.class);
-        supportedTypes.add(IItemLabelProvider.class);
-        supportedTypes.add(IItemPropertySource.class);
-    }
+	/**
+	 * This constructs an instance.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ProjectItemProviderAdapterFactory() {
+		supportedTypes.add(IEditingDomainItemProvider.class);
+		supportedTypes.add(IStructuredItemContentProvider.class);
+		supportedTypes.add(ITreeItemContentProvider.class);
+		supportedTypes.add(IItemLabelProvider.class);
+		supportedTypes.add(IItemPropertySource.class);
+	}
 
-    /**
-     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.ContextModel} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected ContextModelItemProvider contextModelItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.ContextModel} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ContextModelItemProvider contextModelItemProvider;
 
-    /**
-     * This creates an adapter for a {@link org.locationtech.udig.project.internal.ContextModel}.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createContextModelAdapter() {
-        if (contextModelItemProvider == null) {
-            contextModelItemProvider = new ContextModelItemProvider(this);
-        }
+	/**
+	 * This creates an adapter for a {@link org.locationtech.udig.project.internal.ContextModel}.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createContextModelAdapter() {
+		if (contextModelItemProvider == null) {
+			contextModelItemProvider = new ContextModelItemProvider(this);
+		}
 
-        return contextModelItemProvider;
-    }
+		return contextModelItemProvider;
+	}
 
-    /**
-     * This creates an adapter for a {@link org.locationtech.udig.project.internal.Layer}. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    @Override
-    public Adapter createLayerAdapter() {
-        if (layerItemProvider == null) {
-            layerItemProvider = new LayerItemProvider(this);
-        }
+	/**
+	 * This creates an adapter for a {@link org.locationtech.udig.project.internal.Layer}. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createLayerAdapter() {
+		if (layerItemProvider == null) {
+			layerItemProvider = new LayerItemProvider(this);
+		}
 
-        return layerItemProvider;
-    }
+		return layerItemProvider;
+	}
 
-    /**
-     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Map} instances.
-     * But because of refreshing problems in the LayersView we do NOT use it.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated but unused
-     */
-    protected MapItemProvider mapItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Map} instances.
+	 * But because of refreshing problems in the LayersView we do NOT use it.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated but unused
+	 */
+	protected MapItemProvider mapItemProvider;
 
-    /**
-     * This creates an adapter for a {@link org.locationtech.udig.project.internal.Map}. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     *
-     * @generated but changed manually
-     */
-    @Override
-    public Adapter createMapAdapter() {
-        return new MapItemProvider(this);
-    }
+	/**
+	 * This creates an adapter for a {@link org.locationtech.udig.project.internal.Map}. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated but changed manually
+	 */
+	@Override
+	public Adapter createMapAdapter() {
+		return new MapItemProvider(this);
+	}
 
-    /**
-     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Project} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected ProjectItemProvider projectItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Project} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ProjectItemProvider projectItemProvider;
 
-    /**
-     * This creates an adapter for a {@link org.locationtech.udig.project.internal.Project}. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    @Override
-    public Adapter createProjectAdapter() {
-        if (projectItemProvider == null) {
-            projectItemProvider = new ProjectItemProvider(this);
-        }
+	/**
+	 * This creates an adapter for a {@link org.locationtech.udig.project.internal.Project}. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createProjectAdapter() {
+		if (projectItemProvider == null) {
+			projectItemProvider = new ProjectItemProvider(this);
+		}
 
-        return projectItemProvider;
-    }
+		return projectItemProvider;
+	}
 
-    /**
-     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.ProjectRegistry} instances.
-     * <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
-     * @generated
-     */
-    protected ProjectRegistryItemProvider projectRegistryItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.ProjectRegistry} instances.
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ProjectRegistryItemProvider projectRegistryItemProvider;
 
-    /**
-     * This creates an adapter for a {@link org.locationtech.udig.project.internal.ProjectRegistry}.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createProjectRegistryAdapter() {
-        if (projectRegistryItemProvider == null) {
-            projectRegistryItemProvider = new ProjectRegistryItemProvider(this);
-        }
+	/**
+	 * This creates an adapter for a {@link org.locationtech.udig.project.internal.ProjectRegistry}.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createProjectRegistryAdapter() {
+		if (projectRegistryItemProvider == null) {
+			projectRegistryItemProvider = new ProjectRegistryItemProvider(this);
+		}
 
-        return projectRegistryItemProvider;
-    }
+		return projectRegistryItemProvider;
+	}
 
-    /**
-     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.StyleBlackboard} instances.
-     * <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
-     * @generated
-     */
-    protected StyleBlackboardItemProvider styleBlackboardItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.StyleBlackboard} instances.
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected StyleBlackboardItemProvider styleBlackboardItemProvider;
 
-    /**
-     * This creates an adapter for a {@link org.locationtech.udig.project.internal.StyleBlackboard}.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createStyleBlackboardAdapter() {
-        if (styleBlackboardItemProvider == null) {
-            styleBlackboardItemProvider = new StyleBlackboardItemProvider(this);
-        }
+	/**
+	 * This creates an adapter for a {@link org.locationtech.udig.project.internal.StyleBlackboard}.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createStyleBlackboardAdapter() {
+		if (styleBlackboardItemProvider == null) {
+			styleBlackboardItemProvider = new StyleBlackboardItemProvider(this);
+		}
 
-        return styleBlackboardItemProvider;
-    }
+		return styleBlackboardItemProvider;
+	}
 
-    /**
-     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.StyleEntry} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected StyleEntryItemProvider styleEntryItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.StyleEntry} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected StyleEntryItemProvider styleEntryItemProvider;
 
-    /**
-     * This creates an adapter for a {@link org.locationtech.udig.project.internal.StyleEntry}. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    @Override
-    public Adapter createStyleEntryAdapter() {
-        if (styleEntryItemProvider == null) {
-            styleEntryItemProvider = new StyleEntryItemProvider(this);
-        }
+	/**
+	 * This creates an adapter for a {@link org.locationtech.udig.project.internal.StyleEntry}. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createStyleEntryAdapter() {
+		if (styleEntryItemProvider == null) {
+			styleEntryItemProvider = new StyleEntryItemProvider(this);
+		}
 
-        return styleEntryItemProvider;
-    }
+		return styleEntryItemProvider;
+	}
 
-    /**
-     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.LayerFactory} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected LayerFactoryItemProvider layerFactoryItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.LayerFactory} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected LayerFactoryItemProvider layerFactoryItemProvider;
 
-    /**
-     * This creates an adapter for a {@link org.locationtech.udig.project.internal.LayerFactory}.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createLayerFactoryAdapter() {
-        if (layerFactoryItemProvider == null) {
-            layerFactoryItemProvider = new LayerFactoryItemProvider(this);
-        }
+	/**
+	 * This creates an adapter for a {@link org.locationtech.udig.project.internal.LayerFactory}.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createLayerFactoryAdapter() {
+		if (layerFactoryItemProvider == null) {
+			layerFactoryItemProvider = new LayerFactoryItemProvider(this);
+		}
 
-        return layerFactoryItemProvider;
-    }
+		return layerFactoryItemProvider;
+	}
 
-    /**
-     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Blackboard} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected BlackboardItemProvider blackboardItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Blackboard} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected BlackboardItemProvider blackboardItemProvider;
 
-    /**
-     * This creates an adapter for a {@link org.locationtech.udig.project.internal.Blackboard}. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    @Override
-    public Adapter createBlackboardAdapter() {
-        if (blackboardItemProvider == null) {
-            blackboardItemProvider = new BlackboardItemProvider(this);
-        }
+	/**
+	 * This creates an adapter for a {@link org.locationtech.udig.project.internal.Blackboard}. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createBlackboardAdapter() {
+		if (blackboardItemProvider == null) {
+			blackboardItemProvider = new BlackboardItemProvider(this);
+		}
 
-        return blackboardItemProvider;
-    }
+		return blackboardItemProvider;
+	}
 
-    /**
-     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.BlackboardEntry} instances.
-     * <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
-     * @generated
-     */
-    protected BlackboardEntryItemProvider blackboardEntryItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.BlackboardEntry} instances.
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected BlackboardEntryItemProvider blackboardEntryItemProvider;
 
-    /**
-     * This creates an adapter for a {@link org.locationtech.udig.project.internal.BlackboardEntry}.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createBlackboardEntryAdapter() {
-        if (blackboardEntryItemProvider == null) {
-            blackboardEntryItemProvider = new BlackboardEntryItemProvider(this);
-        }
+	/**
+	 * This creates an adapter for a {@link org.locationtech.udig.project.internal.BlackboardEntry}.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createBlackboardEntryAdapter() {
+		if (blackboardEntryItemProvider == null) {
+			blackboardEntryItemProvider = new BlackboardEntryItemProvider(this);
+		}
 
-        return blackboardEntryItemProvider;
-    }
+		return blackboardEntryItemProvider;
+	}
 
-    /**
-     * This keeps track of the one adapter used for all {@link java.util.Map.Entry} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected InteractionToEBooleanObjectMapEntryItemProvider interactionToEBooleanObjectMapEntryItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link java.util.Map.Entry} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected InteractionToEBooleanObjectMapEntryItemProvider interactionToEBooleanObjectMapEntryItemProvider;
 
-    /**
-     * This creates an adapter for a {@link java.util.Map.Entry}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createInteractionToEBooleanObjectMapEntryAdapter() {
-        if (interactionToEBooleanObjectMapEntryItemProvider == null) {
-            interactionToEBooleanObjectMapEntryItemProvider = new InteractionToEBooleanObjectMapEntryItemProvider(
-                    this);
-        }
+	/**
+	 * This creates an adapter for a {@link java.util.Map.Entry}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createInteractionToEBooleanObjectMapEntryAdapter() {
+		if (interactionToEBooleanObjectMapEntryItemProvider == null) {
+			interactionToEBooleanObjectMapEntryItemProvider = new InteractionToEBooleanObjectMapEntryItemProvider(this);
+		}
 
-        return interactionToEBooleanObjectMapEntryItemProvider;
-    }
+		return interactionToEBooleanObjectMapEntryItemProvider;
+	}
 
-    /**
-     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Folder} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected FolderItemProvider folderItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Folder} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected FolderItemProvider folderItemProvider;
 
-    /**
-     * This creates an adapter for a {@link org.locationtech.udig.project.internal.Folder}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createFolderAdapter() {
-        if (folderItemProvider == null) {
-            folderItemProvider = new FolderItemProvider(this);
-        }
+	/**
+	 * This creates an adapter for a {@link org.locationtech.udig.project.internal.Folder}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createFolderAdapter() {
+		if (folderItemProvider == null) {
+			folderItemProvider = new FolderItemProvider(this);
+		}
 
-        return folderItemProvider;
-    }
+		return folderItemProvider;
+	}
 
-    /**
-     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.LegendItem} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected LegendItemItemProvider legendItemItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.LegendItem} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected LegendItemItemProvider legendItemItemProvider;
 
-    /**
-     * This creates an adapter for a {@link org.locationtech.udig.project.internal.LegendItem}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createLegendItemAdapter() {
-        if (legendItemItemProvider == null) {
-            legendItemItemProvider = new LegendItemItemProvider(this);
-        }
+	/**
+	 * This creates an adapter for a {@link org.locationtech.udig.project.internal.LegendItem}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createLegendItemAdapter() {
+		if (legendItemItemProvider == null) {
+			legendItemItemProvider = new LegendItemItemProvider(this);
+		}
 
-        return legendItemItemProvider;
-    }
+		return legendItemItemProvider;
+	}
 
-    /**
-     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.LayerLegendItem} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected LayerLegendItemItemProvider layerLegendItemItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.LayerLegendItem} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected LayerLegendItemItemProvider layerLegendItemItemProvider;
 
-    /**
-     * This creates an adapter for a {@link org.locationtech.udig.project.internal.LayerLegendItem}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createLayerLegendItemAdapter() {
-        if (layerLegendItemItemProvider == null) {
-            layerLegendItemItemProvider = new LayerLegendItemItemProvider(this);
-        }
+	/**
+	 * This creates an adapter for a {@link org.locationtech.udig.project.internal.LayerLegendItem}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createLayerLegendItemAdapter() {
+		if (layerLegendItemItemProvider == null) {
+			layerLegendItemItemProvider = new LayerLegendItemItemProvider(this);
+		}
 
-        return layerLegendItemItemProvider;
-    }
+		return layerLegendItemItemProvider;
+	}
 
-    /**
-     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.EditManager} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected EditManagerItemProvider editManagerItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.EditManager} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected EditManagerItemProvider editManagerItemProvider;
 
-    /**
-     * This creates an adapter for a {@link org.locationtech.udig.project.internal.EditManager}.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createEditManagerAdapter() {
-        if (editManagerItemProvider == null) {
-            editManagerItemProvider = new EditManagerItemProvider(this);
-        }
+	/**
+	 * This creates an adapter for a {@link org.locationtech.udig.project.internal.EditManager}.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createEditManagerAdapter() {
+		if (editManagerItemProvider == null) {
+			editManagerItemProvider = new EditManagerItemProvider(this);
+		}
 
-        return editManagerItemProvider;
-    }
+		return editManagerItemProvider;
+	}
 
-    /**
-     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Layer} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected LayerItemProvider layerItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Layer} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected LayerItemProvider layerItemProvider;
 
-    /**
-     * This returns the root adapter factory that contains this factory.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public ComposeableAdapterFactory getRootAdapterFactory() {
-        return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
-    }
+	/**
+	 * This returns the root adapter factory that contains this factory.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ComposeableAdapterFactory getRootAdapterFactory() {
+		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
+	}
 
-    /**
-     * This sets the composed adapter factory that contains this factory.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
-        this.parentAdapterFactory = parentAdapterFactory;
-    }
+	/**
+	 * This sets the composed adapter factory that contains this factory.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
+		this.parentAdapterFactory = parentAdapterFactory;
+	}
 
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public boolean isFactoryForType(Object type) {
-        return supportedTypes.contains(type) || super.isFactoryForType(type);
-    }
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isFactoryForType(Object type) {
+		return supportedTypes.contains(type) || super.isFactoryForType(type);
+	}
 
-    /**
-     * This implementation substitutes the factory itself as the key for the adapter. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     *
-     * @generated NOT
-     */
-    @Override
-    public Adapter adapt(Notifier notifier, Object type) {
-        EList<Adapter> adapters = notifier.eAdapters();
-        if (adapters instanceof SynchronizedEList) {
-            SynchronizedEList<Adapter> synchList = (SynchronizedEList<Adapter>) adapters;
-            synchList.lock();
-        }
-        try {
-            return super.adapt(notifier, this);
-        } finally {
-            if (adapters instanceof SynchronizedEList) {
-                SynchronizedEList<Adapter> synchList = (SynchronizedEList<Adapter>) adapters;
-                synchList.unlock();
-            }
+	/**
+	 * This implementation substitutes the factory itself as the key for the adapter. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated NOT
+	 */
+	@Override
+	public Adapter adapt(Notifier notifier, Object type) {
+		EList<Adapter> adapters = notifier.eAdapters();
+		if (adapters instanceof SynchronizedEList) {
+			SynchronizedEList<Adapter> synchList = (SynchronizedEList<Adapter>) adapters;
+			synchList.lock();
+		}
+		try {
+			return super.adapt(notifier, this);
+		} finally {
+			if (adapters instanceof SynchronizedEList) {
+				SynchronizedEList<Adapter> synchList = (SynchronizedEList<Adapter>) adapters;
+				synchList.unlock();
+			}
 
-        }
-    }
+		}
+	}
 
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Object adapt(Object object, Object type) {
-        if (isFactoryForType(type)) {
-            Object adapter = super.adapt(object, type);
-            if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter))) {
-                return adapter;
-            }
-        }
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object adapt(Object object, Object type) {
+		if (isFactoryForType(type)) {
+			Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter))) {
+				return adapter;
+			}
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    /**
-     * This adds a listener.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void addListener(INotifyChangedListener notifyChangedListener) {
-        changeNotifier.addListener(notifyChangedListener);
-    }
+	/**
+	 * This adds a listener.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void addListener(INotifyChangedListener notifyChangedListener) {
+		changeNotifier.addListener(notifyChangedListener);
+	}
 
-    /**
-     * This removes a listener.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void removeListener(INotifyChangedListener notifyChangedListener) {
-        changeNotifier.removeListener(notifyChangedListener);
-    }
+	/**
+	 * This removes a listener.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void removeListener(INotifyChangedListener notifyChangedListener) {
+		changeNotifier.removeListener(notifyChangedListener);
+	}
 
-    /**
-     * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    @Override
-    public void fireNotifyChanged(Notification notification) {
-        changeNotifier.fireNotifyChanged(notification);
+	/**
+	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void fireNotifyChanged(Notification notification) {
+		changeNotifier.fireNotifyChanged(notification);
 
-        if (parentAdapterFactory != null) {
-            parentAdapterFactory.fireNotifyChanged(notification);
-        }
-    }
+		if (parentAdapterFactory != null) {
+			parentAdapterFactory.fireNotifyChanged(notification);
+		}
+	}
 
-    /**
-     * This disposes all of the item providers created by this factory.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void dispose() {
-        if (contextModelItemProvider != null)
-            contextModelItemProvider.dispose();
-        if (editManagerItemProvider != null)
-            editManagerItemProvider.dispose();
-        if (layerItemProvider != null)
-            layerItemProvider.dispose();
-        if (mapItemProvider != null)
-            mapItemProvider.dispose();
-        if (projectItemProvider != null)
-            projectItemProvider.dispose();
-        if (projectRegistryItemProvider != null)
-            projectRegistryItemProvider.dispose();
-        if (styleBlackboardItemProvider != null)
-            styleBlackboardItemProvider.dispose();
-        if (styleEntryItemProvider != null)
-            styleEntryItemProvider.dispose();
-        if (layerFactoryItemProvider != null)
-            layerFactoryItemProvider.dispose();
-        if (blackboardItemProvider != null)
-            blackboardItemProvider.dispose();
-        if (blackboardEntryItemProvider != null)
-            blackboardEntryItemProvider.dispose();
-        if (interactionToEBooleanObjectMapEntryItemProvider != null)
-            interactionToEBooleanObjectMapEntryItemProvider.dispose();
-        if (folderItemProvider != null)
-            folderItemProvider.dispose();
-        if (legendItemItemProvider != null)
-            legendItemItemProvider.dispose();
-        if (layerLegendItemItemProvider != null)
-            layerLegendItemItemProvider.dispose();
-    }
+	/**
+	 * This disposes all of the item providers created by this factory. 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void dispose() {
+		if (contextModelItemProvider != null)
+			contextModelItemProvider.dispose();
+		if (editManagerItemProvider != null)
+			editManagerItemProvider.dispose();
+		if (layerItemProvider != null)
+			layerItemProvider.dispose();
+		if (mapItemProvider != null)
+			mapItemProvider.dispose();
+		if (projectItemProvider != null)
+			projectItemProvider.dispose();
+		if (projectRegistryItemProvider != null)
+			projectRegistryItemProvider.dispose();
+		if (styleBlackboardItemProvider != null)
+			styleBlackboardItemProvider.dispose();
+		if (styleEntryItemProvider != null)
+			styleEntryItemProvider.dispose();
+		if (layerFactoryItemProvider != null)
+			layerFactoryItemProvider.dispose();
+		if (blackboardItemProvider != null)
+			blackboardItemProvider.dispose();
+		if (blackboardEntryItemProvider != null)
+			blackboardEntryItemProvider.dispose();
+		if (interactionToEBooleanObjectMapEntryItemProvider != null)
+			interactionToEBooleanObjectMapEntryItemProvider.dispose();
+		if (folderItemProvider != null)
+			folderItemProvider.dispose();
+		if (legendItemItemProvider != null)
+			legendItemItemProvider.dispose();
+		if (layerLegendItemItemProvider != null)
+			layerLegendItemItemProvider.dispose();
+	}
 
 }

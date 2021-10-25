@@ -50,326 +50,315 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
-        implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-        ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
-    private static final String LABEL_PROVIDER_ATT = "labelProvider";
+public class ProjectElementAdapterItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
+		IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+	private static final String LABEL_PROVIDER_ATT = "labelProvider";
 
-    private static final String LABEL_ATT = "label";
+	private static final String LABEL_ATT = "label";
 
-    private static final String ICON_ATT = "icon";
+	private static final String ICON_ATT = "icon";
 
-    /**
-     * This constructs an instance from a factory and a notifier.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ProjectElementAdapterItemProvider(AdapterFactory adapterFactory) {
-        super(adapterFactory);
-    }
+	/**
+	 * This constructs an instance from a factory and a notifier.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ProjectElementAdapterItemProvider(AdapterFactory adapterFactory) {
+		super(adapterFactory);
+	}
 
-    /**
-     * This returns the property descriptors for the adapted class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-        if (itemPropertyDescriptors == null) {
-            super.getPropertyDescriptors(object);
+	/**
+	 * This returns the property descriptors for the adapted class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
+			super.getPropertyDescriptors(object);
 
-            addNamePropertyDescriptor(object);
-            addProjectInternalPropertyDescriptor(object);
-            addBackingObjectPropertyDescriptor(object);
-        }
-        return itemPropertyDescriptors;
-    }
+			addNamePropertyDescriptor(object);
+			addProjectInternalPropertyDescriptor(object);
+			addBackingObjectPropertyDescriptor(object);
+		}
+		return itemPropertyDescriptors;
+	}
 
-    /**
-     * This adds a property descriptor for the Name feature.
-     * 
-     * @generated NO MORE
-     */
-    protected void addNamePropertyDescriptor(Object object) {
-        //  TODO uncomment when all emf has been regenerated
-        //
-        //        itemPropertyDescriptors
-        //                .add(createItemPropertyDescriptor(
-        //                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-        //                        getResourceLocator(),
-        //                        getString("_UI_ProjectElement_name_feature"), //$NON-NLS-1$
-        //                        getString(
-        //                                "_UI_PropertyDescriptor_description", "_UI_ProjectElement_name_feature", "_UI_ProjectElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        //                        ProjectPackage.Literals.PROJECT_ELEMENT__NAME, true, false, false,
-        //                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-    }
+	/**
+	 * This adds a property descriptor for the Name feature.
+	 * 
+	 * @generated NO MORE
+	 */
+	protected void addNamePropertyDescriptor(Object object) {
+		//  TODO uncomment when all emf has been regenerated
+		//
+		//        itemPropertyDescriptors
+		//                .add(createItemPropertyDescriptor(
+		//                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		//                        getResourceLocator(),
+		//                        getString("_UI_ProjectElement_name_feature"), //$NON-NLS-1$
+		//                        getString(
+		//                                "_UI_PropertyDescriptor_description", "_UI_ProjectElement_name_feature", "_UI_ProjectElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		//                        ProjectPackage.Literals.PROJECT_ELEMENT__NAME, true, false, false,
+		//                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	}
 
-    /**
-     * This adds a property descriptor for the Project Internal feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addProjectInternalPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(
-                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                getResourceLocator(), getString("_UI_ProjectElement_projectInternal_feature"), //$NON-NLS-1$
-                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
-                        "_UI_ProjectElement_projectInternal_feature", "_UI_ProjectElement_type"), //$NON-NLS-1$ //$NON-NLS-2$
-                ProjectPackage.Literals.PROJECT_ELEMENT__PROJECT_INTERNAL, true, false, true, null,
-                null, null));
-    }
+	/**
+	 * This adds a property descriptor for the Project Internal feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addProjectInternalPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+				((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+				getString("_UI_ProjectElement_projectInternal_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_ProjectElement_projectInternal_feature", //$NON-NLS-1$//$NON-NLS-2$
+						"_UI_ProjectElement_type"), //$NON-NLS-1$
+				ProjectPackage.Literals.PROJECT_ELEMENT__PROJECT_INTERNAL, true, false, true, null, null, null));
+	}
 
-    /**
-     * This adds a property descriptor for the Backing Object feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addBackingObjectPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(
-                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                getResourceLocator(), getString("_UI_ProjectElementAdapter_backingObject_feature"), //$NON-NLS-1$
-                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
-                        "_UI_ProjectElementAdapter_backingObject_feature", //$NON-NLS-1$
-                        "_UI_ProjectElementAdapter_type"), //$NON-NLS-1$
-                ElementPackage.Literals.PROJECT_ELEMENT_ADAPTER__BACKING_OBJECT, true, false, false,
-                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-    }
+	/**
+	 * This adds a property descriptor for the Backing Object feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addBackingObjectPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+						getResourceLocator(), getString("_UI_ProjectElementAdapter_backingObject_feature"), //$NON-NLS-1$
+						getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+								"_UI_ProjectElementAdapter_backingObject_feature", "_UI_ProjectElementAdapter_type"), //$NON-NLS-1$ //$NON-NLS-2$
+						ElementPackage.Literals.PROJECT_ELEMENT_ADAPTER__BACKING_OBJECT, true, false, false,
+						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	}
 
-    private IConfigurationElement findExtension(String extensionId) {
-        List<IConfigurationElement> list = ExtensionPointList
-                .getExtensionPointList(ProjectElementAdapter.EXT_ID);
-        for (IConfigurationElement configurationElement : list) {
-            String id = configurationElement.getAttribute("id"); //$NON-NLS-1$
-            if (id != null && id.equals(extensionId)) {
-                return configurationElement;
-            }
-        }
-        return null;
-    }
+	private IConfigurationElement findExtension(String extensionId) {
+		List<IConfigurationElement> list = ExtensionPointList.getExtensionPointList(ProjectElementAdapter.EXT_ID);
+		for (IConfigurationElement configurationElement : list) {
+			String id = configurationElement.getAttribute("id"); //$NON-NLS-1$
+			if (id != null && id.equals(extensionId)) {
+				return configurationElement;
+			}
+		}
+		return null;
+	}
 
-    /**
-     * If the extension's LabelProvider is non-null and implements the
-     * IColorProvider interface the foreground color from the provider is
-     * returned otherwise null is returned
-     */
-    @Override
-    public Color getForeground(Object object) {
-        ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
-        IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
-        if (backingObject == null) {
-            return null;
-        }
-        String extensionId = backingObject.getExtensionId();
-        IConfigurationElement extension = findExtension(extensionId);
-        String labelProviderAtt = extension.getAttribute(LABEL_PROVIDER_ATT);
-        Color color = null;
-        if (labelProviderAtt != null) {
-            try {
-                IBaseLabelProvider baseProvider = (IBaseLabelProvider) extension
-                        .createExecutableExtension(LABEL_PROVIDER_ATT);
-                if (baseProvider instanceof IColorProvider) {
-                    IColorProvider labelProvider = (IColorProvider) baseProvider;
-                    color = labelProvider.getForeground(backingObject);
-                }
-            } catch (CoreException e) {
-                // not good log this
-                ProjectEditPlugin
-                        .log("Unable to load the LabelProvider for Element: " + extensionId, e);
-            }
-        }
-        return color;
-    }
+	/**
+	 * If the extension's LabelProvider is non-null and implements the
+	 * IColorProvider interface the foreground color from the provider is
+	 * returned otherwise null is returned
+	 */
+	@Override
+	public Color getForeground(Object object) {
+		ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
+		IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
+		if (backingObject == null) {
+			return null;
+		}
+		String extensionId = backingObject.getExtensionId();
+		IConfigurationElement extension = findExtension(extensionId);
+		String labelProviderAtt = extension.getAttribute(LABEL_PROVIDER_ATT);
+		Color color = null;
+		if (labelProviderAtt != null) {
+			try {
+				IBaseLabelProvider baseProvider = (IBaseLabelProvider) extension
+						.createExecutableExtension(LABEL_PROVIDER_ATT);
+				if (baseProvider instanceof IColorProvider) {
+					IColorProvider labelProvider = (IColorProvider) baseProvider;
+					color = labelProvider.getForeground(backingObject);
+				}
+			} catch (CoreException e) {
+				// not good log this
+				ProjectEditPlugin.log("Unable to load the LabelProvider for Element: " + extensionId, e);
+			}
+		}
+		return color;
+	}
 
-    /**
-     * If the extension's LabelProvider is non-null and implements the
-     * IColorProvider interface the background color from the provider is
-     * returned otherwise null is returned
-     */
-    @Override
-    public Color getBackground(Object object) {
-        ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
-        IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
-        if (backingObject == null) {
-            return null;
-        }
-        String extensionId = backingObject.getExtensionId();
-        IConfigurationElement extension = findExtension(extensionId);
-        String labelProviderAtt = extension.getAttribute(LABEL_PROVIDER_ATT);
-        Color color = null;
-        if (labelProviderAtt != null) {
-            try {
-                IBaseLabelProvider baseProvider = (IBaseLabelProvider) extension
-                        .createExecutableExtension(LABEL_PROVIDER_ATT);
-                if (baseProvider instanceof IColorProvider) {
-                    IColorProvider labelProvider = (IColorProvider) baseProvider;
-                    color = labelProvider.getBackground(backingObject);
-                }
-            } catch (CoreException e) {
-                // not good log this
-                ProjectEditPlugin
-                        .log("Unable to load the LabelProvider for Element: " + extensionId, e);
-            }
-        }
-        return color;
-    }
+	/**
+	 * If the extension's LabelProvider is non-null and implements the
+	 * IColorProvider interface the background color from the provider is
+	 * returned otherwise null is returned
+	 */
+	@Override
+	public Color getBackground(Object object) {
+		ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
+		IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
+		if (backingObject == null) {
+			return null;
+		}
+		String extensionId = backingObject.getExtensionId();
+		IConfigurationElement extension = findExtension(extensionId);
+		String labelProviderAtt = extension.getAttribute(LABEL_PROVIDER_ATT);
+		Color color = null;
+		if (labelProviderAtt != null) {
+			try {
+				IBaseLabelProvider baseProvider = (IBaseLabelProvider) extension
+						.createExecutableExtension(LABEL_PROVIDER_ATT);
+				if (baseProvider instanceof IColorProvider) {
+					IColorProvider labelProvider = (IColorProvider) baseProvider;
+					color = labelProvider.getBackground(backingObject);
+				}
+			} catch (CoreException e) {
+				// not good log this
+				ProjectEditPlugin.log("Unable to load the LabelProvider for Element: " + extensionId, e);
+			}
+		}
+		return color;
+	}
 
-    /**
-     * If the extension's LabelProvider is non-null and implements the
-     * IFontProvider interface the font from the provider is returned otherwise
-     * null is returned
-     */
-    @Override
-    public Font getFont(Object object) {
-        ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
-        IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
-        if (backingObject == null) {
-            return null;
-        }
-        String extensionId = backingObject.getExtensionId();
-        IConfigurationElement extension = findExtension(extensionId);
-        String labelProviderAtt = extension.getAttribute(LABEL_PROVIDER_ATT);
-        Font font = null;
-        if (labelProviderAtt != null) {
-            try {
-                IBaseLabelProvider baseProvider = (IBaseLabelProvider) extension
-                        .createExecutableExtension(LABEL_PROVIDER_ATT);
-                if (baseProvider instanceof IFontProvider) {
-                    IFontProvider labelProvider = (IFontProvider) baseProvider;
-                    font = labelProvider.getFont(backingObject);
-                }
-            } catch (CoreException e) {
-                // not good log this
-                ProjectEditPlugin
-                        .log("Unable to load the LabelProvider for Element: " + extensionId, e);
-            }
-        }
-        return font;
-    }
+	/**
+	 * If the extension's LabelProvider is non-null and implements the
+	 * IFontProvider interface the font from the provider is returned otherwise
+	 * null is returned
+	 */
+	@Override
+	public Font getFont(Object object) {
+		ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
+		IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
+		if (backingObject == null) {
+			return null;
+		}
+		String extensionId = backingObject.getExtensionId();
+		IConfigurationElement extension = findExtension(extensionId);
+		String labelProviderAtt = extension.getAttribute(LABEL_PROVIDER_ATT);
+		Font font = null;
+		if (labelProviderAtt != null) {
+			try {
+				IBaseLabelProvider baseProvider = (IBaseLabelProvider) extension
+						.createExecutableExtension(LABEL_PROVIDER_ATT);
+				if (baseProvider instanceof IFontProvider) {
+					IFontProvider labelProvider = (IFontProvider) baseProvider;
+					font = labelProvider.getFont(backingObject);
+				}
+			} catch (CoreException e) {
+				// not good log this
+				ProjectEditPlugin.log("Unable to load the LabelProvider for Element: " + extensionId, e);
+			}
+		}
+		return font;
+	}
 
-    /**
-     * If the object is a {@link ProjectElementAdapter} it returns the image
-     * returned by the extension's labelProvider or the icon defined in the
-     * extension (if it is defined). If the element is not a
-     * ProjectElementAdapter the a default image is returned
-     * 
-     * @generated NOT
-     */
-    @Override
-    public Object getImage(Object object) {
-        ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
-        IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
-        if (backingObject == null) {
-            return null;
-        }
-        String extensionId = backingObject.getExtensionId();
-        IConfigurationElement extension = findExtension(extensionId);
-        String labelProviderAtt = extension.getAttribute(LABEL_PROVIDER_ATT);
-        Object image = null;
-        if (labelProviderAtt != null) {
-            try {
-                IBaseLabelProvider baseProvider = (IBaseLabelProvider) extension
-                        .createExecutableExtension(LABEL_PROVIDER_ATT);
-                if (baseProvider instanceof ILabelProvider) {
-                    ILabelProvider labelProvider = (ILabelProvider) baseProvider;
-                    image = labelProvider.getImage(backingObject);
-                }
-            } catch (CoreException e) {
-                // not good log this
-                ProjectEditPlugin
-                        .log("Unable to load the LabelProvider for Element: " + extensionId, e);
-            }
-        }
-        String iconPath = extension.getAttribute(ICON_ATT);
-        if (image == null && iconPath != null) {
-            image = AbstractUIPlugin.imageDescriptorFromPlugin(extension.getNamespaceIdentifier(),
-                    iconPath);
-        }
-        return image;
-    }
+	/**
+	 * If the object is a {@link ProjectElementAdapter} it returns the image
+	 * returned by the extension's labelProvider or the icon defined in the
+	 * extension (if it is defined). If the element is not a
+	 * ProjectElementAdapter the a default image is returned
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public Object getImage(Object object) {
+		ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
+		IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
+		if (backingObject == null) {
+			return null;
+		}
+		String extensionId = backingObject.getExtensionId();
+		IConfigurationElement extension = findExtension(extensionId);
+		String labelProviderAtt = extension.getAttribute(LABEL_PROVIDER_ATT);
+		Object image = null;
+		if (labelProviderAtt != null) {
+			try {
+				IBaseLabelProvider baseProvider = (IBaseLabelProvider) extension
+						.createExecutableExtension(LABEL_PROVIDER_ATT);
+				if (baseProvider instanceof ILabelProvider) {
+					ILabelProvider labelProvider = (ILabelProvider) baseProvider;
+					image = labelProvider.getImage(backingObject);
+				}
+			} catch (CoreException e) {
+				// not good log this
+				ProjectEditPlugin.log("Unable to load the LabelProvider for Element: " + extensionId, e);
+			}
+		}
+		String iconPath = extension.getAttribute(ICON_ATT);
+		if (image == null && iconPath != null) {
+			image = AbstractUIPlugin.imageDescriptorFromPlugin(extension.getNamespaceIdentifier(), iconPath);
+		}
+		return image;
+	}
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    protected boolean shouldComposeCreationImage() {
-        return true;
-    }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected boolean shouldComposeCreationImage() {
+		return true;
+	}
 
-    /**
-     * If the object is a {@link ProjectElementAdapter} it returns the text
-     * returned by the extension's labelProvider or the label defined in the
-     * extension (if it is defined). If the element is not a
-     * ProjectElementAdapter the a default text is returned
-     * 
-     * @generated NOT
-     */
-    @Override
-    public String getText(Object object) {
-        ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
-        IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
-        if (backingObject == null) {
-            return projectElementAdapter.getName() + "- No backing object";
-        }
-        String extensionId = backingObject.getExtensionId();
-        IConfigurationElement extension = findExtension(extensionId);
-        String labelProviderAtt = extension.getAttribute(LABEL_PROVIDER_ATT);
-        String text = null;
-        if (labelProviderAtt != null) {
-            try {
-                IBaseLabelProvider baseProvider = (IBaseLabelProvider) extension
-                        .createExecutableExtension(LABEL_PROVIDER_ATT);
-                if (baseProvider instanceof ILabelProvider) {
-                    ILabelProvider labelProvider = (ILabelProvider) baseProvider;
-                    text = labelProvider.getText(backingObject);
-                }
-            } catch (CoreException e) {
-                // not good log this
-                ProjectEditPlugin
-                        .log("Unable to load the LabelProvider for Element: " + extensionId, e);
-            }
-        }
-        if (text == null) {
-            text = extension.getAttribute(LABEL_ATT);
-        }
-        return text;
-    }
+	/**
+	 * If the object is a {@link ProjectElementAdapter} it returns the text
+	 * returned by the extension's labelProvider or the label defined in the
+	 * extension (if it is defined). If the element is not a
+	 * ProjectElementAdapter the a default text is returned
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public String getText(Object object) {
+		ProjectElementAdapter projectElementAdapter = ((ProjectElementAdapter) object);
+		IGenericProjectElement backingObject = projectElementAdapter.getBackingObject();
+		if (backingObject == null) {
+			return projectElementAdapter.getName() + "- No backing object";
+		}
+		String extensionId = backingObject.getExtensionId();
+		IConfigurationElement extension = findExtension(extensionId);
+		String labelProviderAtt = extension.getAttribute(LABEL_PROVIDER_ATT);
+		String text = null;
+		if (labelProviderAtt != null) {
+			try {
+				IBaseLabelProvider baseProvider = (IBaseLabelProvider) extension
+						.createExecutableExtension(LABEL_PROVIDER_ATT);
+				if (baseProvider instanceof ILabelProvider) {
+					ILabelProvider labelProvider = (ILabelProvider) baseProvider;
+					text = labelProvider.getText(backingObject);
+				}
+			} catch (CoreException e) {
+				// not good log this
+				ProjectEditPlugin.log("Unable to load the LabelProvider for Element: " + extensionId, e);
+			}
+		}
+		if (text == null) {
+			text = extension.getAttribute(LABEL_ATT);
+		}
+		return text;
+	}
 
-    /**
-     * This handles model notifications by calling {@link #updateChildren} to update any cached
-     * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void notifyChanged(Notification notification) {
-        updateChildren(notification);
+	/**
+	 * This handles model notifications by calling {@link #updateChildren} to update any cached
+	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void notifyChanged(Notification notification) {
+		updateChildren(notification);
 
-        switch (notification.getFeatureID(ProjectElementAdapter.class)) {
-        case ElementPackage.PROJECT_ELEMENT_ADAPTER__NAME:
-        case ElementPackage.PROJECT_ELEMENT_ADAPTER__BACKING_OBJECT:
-            fireNotifyChanged(
-                    new ViewerNotification(notification, notification.getNotifier(), false, true));
-            return;
-        }
-        super.notifyChanged(notification);
-    }
+		switch (notification.getFeatureID(ProjectElementAdapter.class)) {
+		case ElementPackage.PROJECT_ELEMENT_ADAPTER__NAME:
+		case ElementPackage.PROJECT_ELEMENT_ADAPTER__BACKING_OBJECT:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+			return;
+		}
+		super.notifyChanged(notification);
+	}
 
-    /**
-     * Return the resource locator for this item provider's resources.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public ResourceLocator getResourceLocator() {
-        return ProjectEditPlugin.INSTANCE;
-    }
+	/**
+	 * Return the resource locator for this item provider's resources.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ResourceLocator getResourceLocator() {
+		return ProjectEditPlugin.INSTANCE;
+	}
 
 }

@@ -17,156 +17,155 @@ import org.eclipse.emf.ecore.EFactory;
  * @generated
  */
 public interface ProjectFactory extends EFactory {
-    /**
-     * The singleton instance of the factory.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    ProjectFactory eINSTANCE = org.locationtech.udig.project.internal.impl.ProjectFactoryImpl
-            .init();
+	/**
+	 * The singleton instance of the factory.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	ProjectFactory eINSTANCE = org.locationtech.udig.project.internal.impl.ProjectFactoryImpl.init();
 
-    /**
-     * Returns a new object of class '<em>Context Model</em>'.
-     * <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * @return a new object of class '<em>Context Model</em>'.
-     * @generated
-     */
-    ContextModel createContextModel();
+	/**
+	 * Returns a new object of class '<em>Context Model</em>'.
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * @return a new object of class '<em>Context Model</em>'.
+	 * @generated
+	 */
+	ContextModel createContextModel();
 
-    /**
-     * Returns a new object of class '<em>Layer</em>'. <!-- begin-user-doc --> <!-- end-user-doc
-     * -->
-     * 
-     * @return a new object of class '<em>Layer</em>'.
-     * @generated
-     */
-    Layer createLayer();
+	/**
+	 * Returns a new object of class '<em>Layer</em>'. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
+	 * @return a new object of class '<em>Layer</em>'.
+	 * @generated
+	 */
+	Layer createLayer();
 
-    /**
-     * Returns a new object of class '<em>Map</em>'. <!-- begin-user-doc --> <!-- end-user-doc
-     * -->
-     * 
-     * @return a new object of class '<em>Map</em>'.
-     * @generated
-     */
-    Map createMap();
+	/**
+	 * Returns a new object of class '<em>Map</em>'. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
+	 * @return a new object of class '<em>Map</em>'.
+	 * @generated
+	 */
+	Map createMap();
 
-    /**
-     * Returns a new object of class '<em>Map</em>'.
-     * 
-     * @return a new object of class '<em>Map</em>'.
-     */
-    Map createMap(Project owner, String name, List layers);
+	/**
+	 * Returns a new object of class '<em>Map</em>'.
+	 * 
+	 * @return a new object of class '<em>Map</em>'.
+	 */
+	Map createMap(Project owner, String name, List layers);
 
-    /**
-     * Returns a new object of class '<em>Project</em>'.
-     * <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * @return a new object of class '<em>Project</em>'.
-     * @generated
-     */
-    Project createProject();
+	/**
+	 * Returns a new object of class '<em>Project</em>'.
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * @return a new object of class '<em>Project</em>'.
+	 * @generated
+	 */
+	Project createProject();
 
-    /**
-     * Returns a new object of class '<em>Registry</em>'.
-     * <!-- begin-user-doc --> 
-     * <b>This creates a new instance.  {@link ProjectPlugin.Implementation#getProjectRegistry()} should
-     * be used instead
-     * </b>
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Registry</em>'.
-     * @generated
-     */
-    ProjectRegistry createProjectRegistry();
+	/**
+	 * Returns a new object of class '<em>Registry</em>'.
+	 * <!-- begin-user-doc --> 
+	 * <b>This creates a new instance.  {@link ProjectPlugin.Implementation#getProjectRegistry()} should
+	 * be used instead
+	 * </b>
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Registry</em>'.
+	 * @generated
+	 */
+	ProjectRegistry createProjectRegistry();
 
-    /**
-     * Returns a new object of class '<em>Style Blackboard</em>'.
-     * <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * @return a new object of class '<em>Style Blackboard</em>'.
-     * @generated
-     */
-    StyleBlackboard createStyleBlackboard();
+	/**
+	 * Returns a new object of class '<em>Style Blackboard</em>'.
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * @return a new object of class '<em>Style Blackboard</em>'.
+	 * @generated
+	 */
+	StyleBlackboard createStyleBlackboard();
 
-    /**
-     * Returns a new object of class '<em>Style Entry</em>'.
-     * <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * @return a new object of class '<em>Style Entry</em>'.
-     * @generated
-     */
-    StyleEntry createStyleEntry();
+	/**
+	 * Returns a new object of class '<em>Style Entry</em>'.
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * @return a new object of class '<em>Style Entry</em>'.
+	 * @generated
+	 */
+	StyleEntry createStyleEntry();
 
-    /**
-     * Returns a new object of class '<em>Layer Factory</em>'.
-     * <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * @return a new object of class '<em>Layer Factory</em>'.
-     * @generated
-     */
-    LayerFactory createLayerFactory();
+	/**
+	 * Returns a new object of class '<em>Layer Factory</em>'.
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * @return a new object of class '<em>Layer Factory</em>'.
+	 * @generated
+	 */
+	LayerFactory createLayerFactory();
 
-    /**
-     * Returns a new object of class '<em>Blackboard</em>'.
-     * <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * @return a new object of class '<em>Blackboard</em>'.
-     * @generated
-     */
-    Blackboard createBlackboard();
+	/**
+	 * Returns a new object of class '<em>Blackboard</em>'.
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * @return a new object of class '<em>Blackboard</em>'.
+	 * @generated
+	 */
+	Blackboard createBlackboard();
 
-    /**
-     * Returns a new object of class '<em>Blackboard Entry</em>'.
-     * <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * @return a new object of class '<em>Blackboard Entry</em>'.
-     * @generated
-     */
-    BlackboardEntry createBlackboardEntry();
+	/**
+	 * Returns a new object of class '<em>Blackboard Entry</em>'.
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * @return a new object of class '<em>Blackboard Entry</em>'.
+	 * @generated
+	 */
+	BlackboardEntry createBlackboardEntry();
 
-    /**
-     * Returns a new object of class '<em>Folder</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Folder</em>'.
-     * @generated
-     */
-    Folder createFolder();
+	/**
+	 * Returns a new object of class '<em>Folder</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Folder</em>'.
+	 * @generated
+	 */
+	Folder createFolder();
 
-    /**
-     * Returns a new object of class '<em>Legend Item</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Legend Item</em>'.
-     * @generated
-     */
-    LegendItem createLegendItem();
+	/**
+	 * Returns a new object of class '<em>Legend Item</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Legend Item</em>'.
+	 * @generated
+	 */
+	LegendItem createLegendItem();
 
-    /**
-     * Returns a new object of class '<em>Layer Legend Item</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Layer Legend Item</em>'.
-     * @generated
-     */
-    LayerLegendItem createLayerLegendItem();
+	/**
+	 * Returns a new object of class '<em>Layer Legend Item</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Layer Legend Item</em>'.
+	 * @generated
+	 */
+	LayerLegendItem createLayerLegendItem();
 
-    /**
-     * Returns a new object of class '<em>Edit Manager</em>'.
-     * <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * @return a new object of class '<em>Edit Manager</em>'.
-     * @generated
-     */
-    EditManager createEditManager();
+	/**
+	 * Returns a new object of class '<em>Edit Manager</em>'.
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * @return a new object of class '<em>Edit Manager</em>'.
+	 * @generated
+	 */
+	EditManager createEditManager();
 
-    /**
-     * Returns the package supported by this factory.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @return the package supported by this factory.
-     * @generated
-     */
-    ProjectPackage getProjectPackage();
+	/**
+	 * Returns the package supported by this factory.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @return the package supported by this factory.
+	 * @generated
+	 */
+	ProjectPackage getProjectPackage();
 
 } // ProjectFactory

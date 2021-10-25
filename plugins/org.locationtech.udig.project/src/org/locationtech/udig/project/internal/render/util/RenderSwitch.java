@@ -30,345 +30,345 @@ import org.eclipse.emf.ecore.util.Switch;
  * @generated
  */
 public class RenderSwitch<T> extends Switch<T> {
-    /**
-     * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated NOT
-     */
-    static RenderPackage modelPackage;
+	/**
+	 * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	static RenderPackage modelPackage;
 
-    /**
-     * Creates an instance of the switch.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public RenderSwitch() {
-        if (modelPackage == null) {
-            modelPackage = RenderPackage.eINSTANCE;
-        }
-    }
+	/**
+	 * Creates an instance of the switch.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RenderSwitch() {
+		if (modelPackage == null) {
+			modelPackage = RenderPackage.eINSTANCE;
+		}
+	}
 
-    /**
-     * Checks whether this is a switch for the given package.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param ePackage the package in question.
-     * @return whether this is a switch for the given package.
-     * @generated
-     */
-    @Override
-    protected boolean isSwitchFor(EPackage ePackage) {
-        return ePackage == modelPackage;
-    }
+	/**
+	 * Checks whether this is a switch for the given package.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param ePackage the package in question.
+	 * @return whether this is a switch for the given package.
+	 * @generated
+	 */
+	@Override
+	protected boolean isSwitchFor(EPackage ePackage) {
+		return ePackage == modelPackage;
+	}
 
-    /**
-     * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @return the first non-null result returned by a <code>caseXXX</code> call.
-     * @generated
-     */
-    @Override
-    protected T doSwitch(int classifierID, EObject theEObject) {
-        switch (classifierID) {
-        case RenderPackage.IRENDER_MANAGER: {
-            IRenderManager iRenderManager = (IRenderManager) theEObject;
-            T result = caseIRenderManager(iRenderManager);
-            if (result == null)
-                result = defaultCase(theEObject);
-            return result;
-        }
-        case RenderPackage.IVIEWPORT_MODEL: {
-            IViewportModel iViewportModel = (IViewportModel) theEObject;
-            T result = caseIViewportModel(iViewportModel);
-            if (result == null)
-                result = defaultCase(theEObject);
-            return result;
-        }
-        case RenderPackage.IMULTI_LAYER_RENDERER: {
-            IMultiLayerRenderer iMultiLayerRenderer = (IMultiLayerRenderer) theEObject;
-            T result = caseIMultiLayerRenderer(iMultiLayerRenderer);
-            if (result == null)
-                result = defaultCase(theEObject);
-            return result;
-        }
-        case RenderPackage.IRENDERER: {
-            IRenderer iRenderer = (IRenderer) theEObject;
-            T result = caseIRenderer(iRenderer);
-            if (result == null)
-                result = defaultCase(theEObject);
-            return result;
-        }
-        case RenderPackage.ILAYER: {
-            ILayer iLayer = (ILayer) theEObject;
-            T result = caseILayer(iLayer);
-            if (result == null)
-                result = defaultCase(theEObject);
-            return result;
-        }
-        case RenderPackage.MULTI_LAYER_RENDERER: {
-            MultiLayerRenderer multiLayerRenderer = (MultiLayerRenderer) theEObject;
-            T result = caseMultiLayerRenderer(multiLayerRenderer);
-            if (result == null)
-                result = caseRenderer(multiLayerRenderer);
-            if (result == null)
-                result = caseIMultiLayerRenderer(multiLayerRenderer);
-            if (result == null)
-                result = caseIRenderer(multiLayerRenderer);
-            if (result == null)
-                result = defaultCase(theEObject);
-            return result;
-        }
-        case RenderPackage.RENDER_EXECUTOR: {
-            RenderExecutor renderExecutor = (RenderExecutor) theEObject;
-            T result = caseRenderExecutor(renderExecutor);
-            if (result == null)
-                result = caseRenderer(renderExecutor);
-            if (result == null)
-                result = caseIRenderer(renderExecutor);
-            if (result == null)
-                result = defaultCase(theEObject);
-            return result;
-        }
-        case RenderPackage.RENDER_MANAGER: {
-            RenderManager renderManager = (RenderManager) theEObject;
-            T result = caseRenderManager(renderManager);
-            if (result == null)
-                result = caseIRenderManager(renderManager);
-            if (result == null)
-                result = defaultCase(theEObject);
-            return result;
-        }
-        case RenderPackage.VIEWPORT_MODEL: {
-            ViewportModel viewportModel = (ViewportModel) theEObject;
-            T result = caseViewportModel(viewportModel);
-            if (result == null)
-                result = caseIMapDisplayListener(viewportModel);
-            if (result == null)
-                result = caseIViewportModel(viewportModel);
-            if (result == null)
-                result = defaultCase(theEObject);
-            return result;
-        }
-        case RenderPackage.COMPARABLE: {
-            Comparable comparable = (Comparable) theEObject;
-            T result = caseComparable(comparable);
-            if (result == null)
-                result = defaultCase(theEObject);
-            return result;
-        }
-        case RenderPackage.RENDERER: {
-            Renderer renderer = (Renderer) theEObject;
-            T result = caseRenderer(renderer);
-            if (result == null)
-                result = caseIRenderer(renderer);
-            if (result == null)
-                result = defaultCase(theEObject);
-            return result;
-        }
-        case RenderPackage.IMAP_DISPLAY_LISTENER: {
-            IMapDisplayListener iMapDisplayListener = (IMapDisplayListener) theEObject;
-            T result = caseIMapDisplayListener(iMapDisplayListener);
-            if (result == null)
-                result = defaultCase(theEObject);
-            return result;
-        }
-        case RenderPackage.IRENDER_CONTEXT: {
-            IRenderContext iRenderContext = (IRenderContext) theEObject;
-            T result = caseIRenderContext(iRenderContext);
-            if (result == null)
-                result = defaultCase(theEObject);
-            return result;
-        }
-        default:
-            return defaultCase(theEObject);
-        }
-    }
+	/**
+	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @return the first non-null result returned by a <code>caseXXX</code> call.
+	 * @generated
+	 */
+	@Override
+	protected T doSwitch(int classifierID, EObject theEObject) {
+		switch (classifierID) {
+		case RenderPackage.IRENDER_MANAGER: {
+			IRenderManager iRenderManager = (IRenderManager) theEObject;
+			T result = caseIRenderManager(iRenderManager);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case RenderPackage.IVIEWPORT_MODEL: {
+			IViewportModel iViewportModel = (IViewportModel) theEObject;
+			T result = caseIViewportModel(iViewportModel);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case RenderPackage.IMULTI_LAYER_RENDERER: {
+			IMultiLayerRenderer iMultiLayerRenderer = (IMultiLayerRenderer) theEObject;
+			T result = caseIMultiLayerRenderer(iMultiLayerRenderer);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case RenderPackage.IRENDERER: {
+			IRenderer iRenderer = (IRenderer) theEObject;
+			T result = caseIRenderer(iRenderer);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case RenderPackage.ILAYER: {
+			ILayer iLayer = (ILayer) theEObject;
+			T result = caseILayer(iLayer);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case RenderPackage.MULTI_LAYER_RENDERER: {
+			MultiLayerRenderer multiLayerRenderer = (MultiLayerRenderer) theEObject;
+			T result = caseMultiLayerRenderer(multiLayerRenderer);
+			if (result == null)
+				result = caseRenderer(multiLayerRenderer);
+			if (result == null)
+				result = caseIMultiLayerRenderer(multiLayerRenderer);
+			if (result == null)
+				result = caseIRenderer(multiLayerRenderer);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case RenderPackage.RENDER_EXECUTOR: {
+			RenderExecutor renderExecutor = (RenderExecutor) theEObject;
+			T result = caseRenderExecutor(renderExecutor);
+			if (result == null)
+				result = caseRenderer(renderExecutor);
+			if (result == null)
+				result = caseIRenderer(renderExecutor);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case RenderPackage.RENDER_MANAGER: {
+			RenderManager renderManager = (RenderManager) theEObject;
+			T result = caseRenderManager(renderManager);
+			if (result == null)
+				result = caseIRenderManager(renderManager);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case RenderPackage.VIEWPORT_MODEL: {
+			ViewportModel viewportModel = (ViewportModel) theEObject;
+			T result = caseViewportModel(viewportModel);
+			if (result == null)
+				result = caseIMapDisplayListener(viewportModel);
+			if (result == null)
+				result = caseIViewportModel(viewportModel);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case RenderPackage.COMPARABLE: {
+			Comparable comparable = (Comparable) theEObject;
+			T result = caseComparable(comparable);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case RenderPackage.RENDERER: {
+			Renderer renderer = (Renderer) theEObject;
+			T result = caseRenderer(renderer);
+			if (result == null)
+				result = caseIRenderer(renderer);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case RenderPackage.IMAP_DISPLAY_LISTENER: {
+			IMapDisplayListener iMapDisplayListener = (IMapDisplayListener) theEObject;
+			T result = caseIMapDisplayListener(iMapDisplayListener);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case RenderPackage.IRENDER_CONTEXT: {
+			IRenderContext iRenderContext = (IRenderContext) theEObject;
+			T result = caseIRenderContext(iRenderContext);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		default:
+			return defaultCase(theEObject);
+		}
+	}
 
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>IRender Manager</em>'.
-     * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
-     * terminate the switch. <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>IRender Manager</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseIRenderManager(IRenderManager object) {
-        return null;
-    }
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>IRender Manager</em>'.
+	 * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
+	 * terminate the switch. <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>IRender Manager</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIRenderManager(IRenderManager object) {
+		return null;
+	}
 
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>IViewport Model</em>'.
-     * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
-     * terminate the switch. <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>IViewport Model</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseIViewportModel(IViewportModel object) {
-        return null;
-    }
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>IViewport Model</em>'.
+	 * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
+	 * terminate the switch. <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>IViewport Model</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIViewportModel(IViewportModel object) {
+		return null;
+	}
 
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>IMulti Layer Renderer</em>'.
-     * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
-     * terminate the switch. <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>IMulti Layer Renderer</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseIMultiLayerRenderer(IMultiLayerRenderer object) {
-        return null;
-    }
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>IMulti Layer Renderer</em>'.
+	 * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
+	 * terminate the switch. <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>IMulti Layer Renderer</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIMultiLayerRenderer(IMultiLayerRenderer object) {
+		return null;
+	}
 
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>IRender Context</em>'.
-     * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
-     * terminate the switch. <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>IRender Context</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseIRenderContext(IRenderContext object) {
-        return null;
-    }
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>IRender Context</em>'.
+	 * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
+	 * terminate the switch. <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>IRender Context</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIRenderContext(IRenderContext object) {
+		return null;
+	}
 
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>IRenderer</em>'.
-     * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
-     * terminate the switch. <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>IRenderer</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseIRenderer(IRenderer object) {
-        return null;
-    }
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>IRenderer</em>'.
+	 * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
+	 * terminate the switch. <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>IRenderer</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIRenderer(IRenderer object) {
+		return null;
+	}
 
-    /**
-     * Returns the result of interpretting the object as an instance of '<em>ILayer</em>'. <!--
-     * begin-user-doc --> This implementation returns null; returning a non-null result will
-     * terminate the switch. <!-- end-user-doc -->
-     * 
-     * @param object the target of the switch.
-     * @return the result of interpretting the object as an instance of '<em>ILayer</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseILayer(ILayer object) {
-        return null;
-    }
+	/**
+	 * Returns the result of interpretting the object as an instance of '<em>ILayer</em>'. <!--
+	 * begin-user-doc --> This implementation returns null; returning a non-null result will
+	 * terminate the switch. <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpretting the object as an instance of '<em>ILayer</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseILayer(ILayer object) {
+		return null;
+	}
 
-    /**
-     * Returns the result of interpretting the object as an instance of '<em>Manager</em>'. <!--
-     * begin-user-doc --> This implementation returns null; returning a non-null result will
-     * terminate the switch. <!-- end-user-doc -->
-     * 
-     * @param object the target of the switch.
-     * @return the result of interpretting the object as an instance of '<em>Manager</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseRenderManager(RenderManager object) {
-        return null;
-    }
+	/**
+	 * Returns the result of interpretting the object as an instance of '<em>Manager</em>'. <!--
+	 * begin-user-doc --> This implementation returns null; returning a non-null result will
+	 * terminate the switch. <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpretting the object as an instance of '<em>Manager</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRenderManager(RenderManager object) {
+		return null;
+	}
 
-    /**
-     * Returns the result of interpretting the object as an instance of '<em>er</em>'. <!--
-     * begin-user-doc --> This implementation returns null; returning a non-null result will
-     * terminate the switch. <!-- end-user-doc -->
-     * 
-     * @param object the target of the switch.
-     * @return the result of interpretting the object as an instance of '<em>er</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseRenderer(Renderer object) {
-        return null;
-    }
+	/**
+	 * Returns the result of interpretting the object as an instance of '<em>er</em>'. <!--
+	 * begin-user-doc --> This implementation returns null; returning a non-null result will
+	 * terminate the switch. <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpretting the object as an instance of '<em>er</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRenderer(Renderer object) {
+		return null;
+	}
 
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Viewport Model</em>'.
-     * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
-     * terminate the switch. <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Viewport Model</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseViewportModel(ViewportModel object) {
-        return null;
-    }
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Viewport Model</em>'.
+	 * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
+	 * terminate the switch. <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Viewport Model</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseViewportModel(ViewportModel object) {
+		return null;
+	}
 
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Executor</em>'.
-     * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
-     * terminate the switch. <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Executor</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseRenderExecutor(RenderExecutor object) {
-        return null;
-    }
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Executor</em>'.
+	 * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
+	 * terminate the switch. <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Executor</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRenderExecutor(RenderExecutor object) {
+		return null;
+	}
 
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Comparable</em>'.
-     * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
-     * terminate the switch. <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Comparable</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseComparable(Comparable object) {
-        return null;
-    }
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Comparable</em>'.
+	 * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
+	 * terminate the switch. <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Comparable</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseComparable(Comparable object) {
+		return null;
+	}
 
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Multi Layer Renderer</em>'.
-     * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
-     * terminate the switch. <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Multi Layer Renderer</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseMultiLayerRenderer(MultiLayerRenderer object) {
-        return null;
-    }
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Multi Layer Renderer</em>'.
+	 * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
+	 * terminate the switch. <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Multi Layer Renderer</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseMultiLayerRenderer(MultiLayerRenderer object) {
+		return null;
+	}
 
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>IMap Display Listener</em>'.
-     * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
-     * terminate the switch. <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>IMap Display Listener</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseIMapDisplayListener(IMapDisplayListener object) {
-        return null;
-    }
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>IMap Display Listener</em>'.
+	 * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will
+	 * terminate the switch. <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>IMap Display Listener</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIMapDisplayListener(IMapDisplayListener object) {
+		return null;
+	}
 
-    /**
-     * Returns the result of interpretting the object as an instance of '<em>EObject</em>'. <!--
-     * begin-user-doc --> This implementation returns null; returning a non-null result will
-     * terminate the switch, but this is the last case anyway. <!-- end-user-doc -->
-     * 
-     * @param object the target of the switch.
-     * @return the result of interpretting the object as an instance of '<em>EObject</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject)
-     * @generated
-     */
-    @Override
-    public T defaultCase(EObject object) {
-        return null;
-    }
+	/**
+	 * Returns the result of interpretting the object as an instance of '<em>EObject</em>'. <!--
+	 * begin-user-doc --> This implementation returns null; returning a non-null result will
+	 * terminate the switch, but this is the last case anyway. <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpretting the object as an instance of '<em>EObject</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)
+	 * @generated
+	 */
+	@Override
+	public T defaultCase(EObject object) {
+		return null;
+	}
 
 } // RenderSwitch
