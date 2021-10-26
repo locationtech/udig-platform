@@ -90,12 +90,6 @@
         <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
       </eGenericType>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="availableTimesteps" upperBound="-1"
-        eType="#//LocalDateTime"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="currentTimestep" eType="#//LocalDateTime"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="availableElevation" upperBound="-1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="currentElevation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Comparable" instanceTypeName="Comparable"
       abstract="true" interface="true"/>
@@ -130,6 +124,5 @@
     <eTypeParameters name="T"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="ReferencedEnvelope" instanceClassName="org.geotools.geometry.jts.ReferencedEnvelope"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="LocalDateTime" instanceClassName="java.time.LocalDateTime"/>
   <eClassifiers xsi:type="ecore:EDataType" name="IllegalArgumentException" instanceClassName="java.lang.IllegalArgumentException"/>
 </ecore:EPackage>

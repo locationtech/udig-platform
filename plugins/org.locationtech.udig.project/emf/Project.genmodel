@@ -238,7 +238,6 @@
       <genTypeParameters ecoreTypeParameter="render.ecore#//SortedSet/T"/>
     </genDataTypes>
     <genDataTypes ecoreDataType="render.ecore#//ReferencedEnvelope"/>
-    <genDataTypes ecoreDataType="render.ecore#//LocalDateTime"/>
     <genDataTypes ecoreDataType="render.ecore#//IllegalArgumentException"/>
     <genClasses image="false" ecoreClass="render.ecore#//IRenderManager"/>
     <genClasses image="false" ecoreClass="render.ecore#//IViewportModel"/>

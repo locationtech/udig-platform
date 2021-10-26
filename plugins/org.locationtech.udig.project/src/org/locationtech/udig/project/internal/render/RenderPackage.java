@@ -662,16 +662,6 @@ public interface RenderPackage extends EPackage {
     int REFERENCED_ENVELOPE = 28;
 
     /**
-     * The meta object id for the '<em>Local Date Time</em>' data type.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see java.time.LocalDateTime
-     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getLocalDateTime()
-     * @generated
-     */
-    int LOCAL_DATE_TIME = 29;
-
-    /**
      * The meta object id for the '<em>Illegal Argument Exception</em>' data type. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      *
@@ -679,7 +669,7 @@ public interface RenderPackage extends EPackage {
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIllegalArgumentException()
      * @generated
      */
-    int ILLEGAL_ARGUMENT_EXCEPTION = 30;
+    int ILLEGAL_ARGUMENT_EXCEPTION = 29;
 
     /**
      * The meta object id for the '<em>Info List</em>' data type. <!-- begin-user-doc --> <!--
@@ -1175,17 +1165,6 @@ public interface RenderPackage extends EPackage {
     EDataType getReferencedEnvelope();
 
     /**
-     * Returns the meta object for data type '{@link java.time.LocalDateTime <em>Local Date Time</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for data type '<em>Local Date Time</em>'.
-     * @see java.time.LocalDateTime
-     * @model instanceClass="java.time.LocalDateTime"
-     * @generated
-     */
-    EDataType getLocalDateTime();
-
-    /**
      * Returns the meta object for data type '{@link java.lang.IllegalArgumentException <em>Illegal Argument Exception</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Illegal Argument Exception</em>'.
@@ -1635,16 +1614,6 @@ public interface RenderPackage extends EPackage {
          * @generated
          */
         EDataType REFERENCED_ENVELOPE = eINSTANCE.getReferencedEnvelope();
-
-        /**
-         * The meta object literal for the '<em>Local Date Time</em>' data type.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see java.time.LocalDateTime
-         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getLocalDateTime()
-         * @generated
-         */
-        EDataType LOCAL_DATE_TIME = eINSTANCE.getLocalDateTime();
 
         /**
          * The meta object literal for the '<em>Illegal Argument Exception</em>' data type. <!--

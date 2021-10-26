@@ -8,7 +8,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -149,8 +148,6 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
             return createSortedSetFromString(eDataType, initialValue);
         case RenderPackage.REFERENCED_ENVELOPE:
             return createReferencedEnvelopeFromString(eDataType, initialValue);
-        case RenderPackage.LOCAL_DATE_TIME:
-            return createLocalDateTimeFromString(eDataType, initialValue);
         case RenderPackage.ILLEGAL_ARGUMENT_EXCEPTION:
             return createIllegalArgumentExceptionFromString(eDataType, initialValue);
         default:
@@ -198,8 +195,6 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
             return convertSortedSetToString(eDataType, instanceValue);
         case RenderPackage.REFERENCED_ENVELOPE:
             return convertReferencedEnvelopeToString(eDataType, instanceValue);
-        case RenderPackage.LOCAL_DATE_TIME:
-            return convertLocalDateTimeToString(eDataType, instanceValue);
         case RenderPackage.ILLEGAL_ARGUMENT_EXCEPTION:
             return convertIllegalArgumentExceptionToString(eDataType, instanceValue);
         default:
@@ -616,24 +611,6 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
     public String convertReferencedEnvelopeToString(EDataType eDataType, Object instanceValue) {
         return ProjectFactory.eINSTANCE
                 .convertToString(ProjectPackage.eINSTANCE.getReferencedEnvelope(), instanceValue);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public LocalDateTime createLocalDateTimeFromString(EDataType eDataType, String initialValue) {
-        return (LocalDateTime) super.createFromString(eDataType, initialValue);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String convertLocalDateTimeToString(EDataType eDataType, Object instanceValue) {
-        return super.convertToString(eDataType, instanceValue);
     }
 
     /**

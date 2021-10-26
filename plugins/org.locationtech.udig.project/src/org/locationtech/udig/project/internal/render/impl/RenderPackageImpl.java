@@ -8,7 +8,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -232,13 +231,6 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * @generated
      */
     private EDataType referencedEnvelopeEDataType = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EDataType localDateTimeEDataType = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -759,16 +751,6 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * @generated
      */
     @Override
-    public EDataType getLocalDateTime() {
-        return localDateTimeEDataType;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EDataType getIllegalArgumentException() {
         return illegalArgumentExceptionEDataType;
     }
@@ -867,7 +849,6 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
         renderExceptionEDataType = createEDataType(RENDER_EXCEPTION);
         sortedSetEDataType = createEDataType(SORTED_SET);
         referencedEnvelopeEDataType = createEDataType(REFERENCED_ENVELOPE);
-        localDateTimeEDataType = createEDataType(LOCAL_DATE_TIME);
         illegalArgumentExceptionEDataType = createEDataType(ILLEGAL_ARGUMENT_EXCEPTION);
     }
 
@@ -1102,8 +1083,6 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
                 !IS_GENERATED_INSTANCE_CLASS);
         initEDataType(referencedEnvelopeEDataType, ReferencedEnvelope.class, "ReferencedEnvelope", //$NON-NLS-1$
                 IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
-        initEDataType(localDateTimeEDataType, LocalDateTime.class, "LocalDateTime", IS_SERIALIZABLE, //$NON-NLS-1$
-                !IS_GENERATED_INSTANCE_CLASS);
         initEDataType(illegalArgumentExceptionEDataType, IllegalArgumentException.class,
                 "IllegalArgumentException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
