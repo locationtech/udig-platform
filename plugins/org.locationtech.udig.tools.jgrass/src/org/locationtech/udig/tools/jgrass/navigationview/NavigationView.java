@@ -134,6 +134,12 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
 
     private Combo countriesCombo;
 
+
+    private List<Double> lavailableElevation = null;
+    private List<LocalDateTime> lavailableTimesteps = null;
+    private LocalDateTime currentTimestep = null;
+    private Double currentElevation = null;
+
     public NavigationView() {
         ImageDescriptor imageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID,
                 "icons/worldoverview2.png");
@@ -646,7 +652,7 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                     scaleCombo.select(selectionIndex);
                 }
 
-                List<LocalDateTime> availableTimesteps = viewportModel.getAvailableTimesteps();
+                List<LocalDateTime> availableTimesteps = lavailableTimesteps;
                 if (availableTimesteps != null) {
                     dateTimeCombo.setEnabled(true);
                     dtDownButton.setEnabled(true);
@@ -667,7 +673,7 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                     dtUpButton.setEnabled(false);
                 }
 
-                List<Double> availableElevation = viewportModel.getAvailableElevation();
+                List<Double> availableElevation = lavailableElevation;
                 if (availableElevation != null) {
                     verticalCombo.setEnabled(true);
                     verticalDownButton.setEnabled(true);
@@ -707,14 +713,14 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
             int index = dateTimeCombo.getSelectionIndex();
             String item = dateTimeCombo.getItem(index);
             ZonedDateTime date = ZonedDateTime.parse(item, ISO_DATE_TIME_PARSER);
-            viewportModel.setCurrentTimestep(date.toLocalDateTime());
+            currentTimestep = date.toLocalDateTime();
         }
         if (source.equals(verticalCombo)) {
             int index = verticalCombo.getSelectionIndex();
             String item = verticalCombo.getItem(index);
             try {
                 double vertical = Double.parseDouble(item);
-                viewportModel.setCurrentElevation(vertical);
+                currentElevation = vertical;
             } catch (NumberFormatException e1) {
                 e1.printStackTrace();
             }
@@ -727,7 +733,7 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
             }
             String item = verticalCombo.getItem(selectionIndex);
             double vertical = Double.parseDouble(item);
-            viewportModel.setCurrentElevation(vertical);
+            currentElevation = vertical;
             verticalCombo.select(selectionIndex);
         }
         if (source.equals(verticalUpButton)) {
@@ -738,7 +744,7 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
             }
             String item = verticalCombo.getItem(selectionIndex);
             double vertical = Double.parseDouble(item);
-            viewportModel.setCurrentElevation(vertical);
+            currentElevation = vertical;
             verticalCombo.select(selectionIndex);
         }
         if (source.equals(scaleDownButton)) {
@@ -771,7 +777,7 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
             }
             String item = dateTimeCombo.getItem(selectionIndex);
             ZonedDateTime dt = ZonedDateTime.parse(item, ISO_DATE_TIME_PARSER);
-            viewportModel.setCurrentTimestep(dt.toLocalDateTime());
+            currentTimestep = dt.toLocalDateTime();
             dateTimeCombo.select(selectionIndex);
         }
         if (source.equals(dtUpButton)) {
@@ -782,7 +788,7 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
             }
             String item = dateTimeCombo.getItem(selectionIndex);
             ZonedDateTime dt = ZonedDateTime.parse(item, ISO_DATE_TIME_PARSER);
-            viewportModel.setCurrentTimestep(dt.toLocalDateTime());
+            currentTimestep = dt.toLocalDateTime();
             dateTimeCombo.select(selectionIndex);
         }
         updateData();

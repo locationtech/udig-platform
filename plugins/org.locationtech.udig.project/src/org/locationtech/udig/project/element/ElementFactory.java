@@ -12,9 +12,8 @@
  */
 package org.locationtech.udig.project.element;
 
-import org.locationtech.udig.project.IProject;
-
 import org.eclipse.emf.ecore.EFactory;
+import org.locationtech.udig.project.IProject;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,57 +24,57 @@ import org.eclipse.emf.ecore.EFactory;
  * @generated
  */
 public interface ElementFactory extends EFactory {
-	/**
-	 * The singleton instance of the factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	ElementFactory eINSTANCE = org.locationtech.udig.project.element.impl.ElementFactoryImpl.init();
+    /**
+     * The singleton instance of the factory.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    ElementFactory eINSTANCE = org.locationtech.udig.project.element.impl.ElementFactoryImpl.init();
 
-	/**
-	 * Returns a new object of class '<em>Project Element Adapter</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Project Element Adapter</em>'.
-	 * @generated
-	 */
-	ProjectElementAdapter createProjectElementAdapter();
+    /**
+     * Returns a new object of class '<em>Project Element Adapter</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Project Element Adapter</em>'.
+     * @generated
+     */
+    ProjectElementAdapter createProjectElementAdapter();
 
-	/**
-	 * Returns the package supported by this factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the package supported by this factory.
-	 * @generated
-	 */
-	ElementPackage getElementPackage();
+    /**
+     * Returns the package supported by this factory.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the package supported by this factory.
+     * @generated
+     */
+    ElementPackage getElementPackage();
 
-	/**
-	 * Creates a {@link IGenericProjectElement} with an adapter that allows it to integrate with the 
-	 * ProjectElement framework.  
-	 *
-	 * @param project the project to add the new ProjectElementAdapter ot
-	 * @param typeToCreate the type of {@link IGenericProjectElement} that is created by the extension
-	 * @param extensionId The id of the extension to use to create the IGenericProjectElement
-	 * 
-	 * @return the new {@link ProjectElementAdapter} (it has been added to the project already)
-	 */
-	ProjectElementAdapter createProjectElementAdapter(IProject project,
-			Class<? extends IGenericProjectElement> typeToCreate, String extensionId);
+    /**
+     * Creates a {@link IGenericProjectElement} with an adapter that allows it to integrate with the
+     * ProjectElement framework.
+     *
+     * @param project the project to add the new ProjectElementAdapter ot
+     * @param typeToCreate the type of {@link IGenericProjectElement} that is created by the extension
+     * @param extensionId The id of the extension to use to create the IGenericProjectElement
+     *
+     * @return the new {@link ProjectElementAdapter} (it has been added to the project already)
+     */
+    ProjectElementAdapter createProjectElementAdapter(IProject project,
+            Class<? extends IGenericProjectElement> typeToCreate, String extensionId);
 
-	/**
-	 * Creates a {@link IGenericProjectElement} with an adapter that allows it to integrate with the 
-	 * ProjectElement framework.  
-	 *
-	 * @param project the project to add the new ProjectElementAdapter to
-	 * @param elemName the name of the ProjectElementAdapter.  It will also be the name of the eResource created.
-	 * @param typeToCreate the type of {@link IGenericProjectElement} that is created by the extension
-	 * @param extensionId The id of the extension to use to create the IGenericProjectElement
-	 * 
-	 * @return the new {@link ProjectElementAdapter} (it has been added to the project already)
-	 */
-	ProjectElementAdapter createProjectElementAdapter(IProject project, String elemName,
-			Class<? extends IGenericProjectElement> typeToCreate, String extensionId);
+    /**
+     * Creates a {@link IGenericProjectElement} with an adapter that allows it to integrate with the
+     * ProjectElement framework.
+     *
+     * @param project the project to add the new ProjectElementAdapter to
+     * @param elemName the name of the ProjectElementAdapter.  It will also be the name of the eResource created.
+     * @param typeToCreate the type of {@link IGenericProjectElement} that is created by the extension
+     * @param extensionId The id of the extension to use to create the IGenericProjectElement
+     *
+     * @return the new {@link ProjectElementAdapter} (it has been added to the project already)
+     */
+    ProjectElementAdapter createProjectElementAdapter(IProject project, String elemName,
+            Class<? extends IGenericProjectElement> typeToCreate, String extensionId);
 
 } // ElementFactory

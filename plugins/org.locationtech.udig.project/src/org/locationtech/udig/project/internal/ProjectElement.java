@@ -9,10 +9,9 @@
  */
 package org.locationtech.udig.project.internal;
 
-import org.locationtech.udig.project.IProjectElement;
-
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.ecore.EObject;
+import org.locationtech.udig.project.IProjectElement;
 
 /**
  * The interface that describes an Element that can be part of a Project.
@@ -22,45 +21,45 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface ProjectElement extends EObject, IProjectElement, IAdaptable {
 
-	/**
-	 * Returns the owner project of Map.
-	 * 
-	 * @return the owner project of Map.
-	 * @model many="false" opposite="elementsInternal"
-	 */
-	public Project getProjectInternal();
+    /**
+     * Returns the owner project of Map.
+     *
+     * @return the owner project of Map.
+     * @model many="false" opposite="elementsInternal"
+     */
+    public Project getProjectInternal();
 
-	/**
-	 * Sets the value of the '{@link org.locationtech.udig.project.internal.ProjectElement#getProjectInternal <em>Project Internal</em>}' reference.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Project Internal</em>' reference.
-	 * @see #getProjectInternal()
-	 * @generated
-	 */
-	void setProjectInternal(Project value);
+    /**
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.ProjectElement#getProjectInternal <em>Project Internal</em>}' reference.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @param value the new value of the '<em>Project Internal</em>' reference.
+     * @see #getProjectInternal()
+     * @generated
+     */
+    void setProjectInternal(Project value);
 
-	/**
-	 * Returns the owner project of Map.
-	 * 
-	 * @return the owner project of Map.
-	 * @uml.property name="name"
-	 * @model many="false"
-	 */
-	@Override
-	public String getName();
+    /**
+     * Returns the owner project of Map.
+     *
+     * @return the owner project of Map.
+     * @uml.property name="name"
+     * @model many="false"
+     */
+    @Override
+    public String getName();
 
-	/**
-	 * The new name for the project element.
-	 * 
-	 * @param name
-	 * @uml.property name="name"
-	 */
-	public void setName(String name);
+    /**
+     * The new name for the project element.
+     *
+     * @param name
+     * @uml.property name="name"
+     */
+    public void setName(String name);
 
-	/**
-	 * Returns the default file extension for this type of project element.
-	 * @return
-	 */
-	public String getFileExtension();
+    /**
+     * Returns the default file extension for this type of project element.
+     * @return
+     */
+    public String getFileExtension();
 
 }

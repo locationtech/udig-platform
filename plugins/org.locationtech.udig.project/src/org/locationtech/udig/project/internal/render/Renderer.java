@@ -9,100 +9,99 @@
  */
 package org.locationtech.udig.project.internal.render;
 
+import org.eclipse.emf.ecore.EObject;
 import org.locationtech.udig.project.render.IRenderContext;
 import org.locationtech.udig.project.render.IRenderer;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * The EMF object extension to the IRenderer interface.  Non-udig developers should not have to reference this class.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @model abstract="true"
  */
 public interface Renderer extends EObject, IRenderer {
 
-	/**
-	 * Returns the current state of rendering.
-	 * <p>
-	 * The state is the current state of the {@linkplain org.eclipse.core.runtime.jobs.Job}
-	 * </p>
-	 * Options are:
-	 * <ul>
-	 * <li> {@linkplain #RENDERING} </li>
-	 * <li> {@linkplain #DONE} </li>
-	 * <li> {@linkplain #NEVER} </li>
-	 * <li> {@linkplain #DISPOSED} </li>
-	 * </ul>
-	 * 
-	 * @return the current state of rendering.
-	 * @uml.property name="state"
-	 * @model default="0"
-	 */
-	@Override
-	public int getState();
+    /**
+     * Returns the current state of rendering.
+     * <p>
+     * The state is the current state of the {@linkplain org.eclipse.core.runtime.jobs.Job}
+     * </p>
+     * Options are:
+     * <ul>
+     * <li> {@linkplain #RENDERING} </li>
+     * <li> {@linkplain #DONE} </li>
+     * <li> {@linkplain #NEVER} </li>
+     * <li> {@linkplain #DISPOSED} </li>
+     * </ul>
+     *
+     * @return the current state of rendering.
+     * @uml.property name="state"
+     * @model default="0"
+     */
+    @Override
+    public int getState();
 
-	/**
-	 * Sets the value of the '{@link org.locationtech.udig.project.internal.render.Renderer#getState <em>State</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @param value the new value of the '<em>State</em>' attribute.
-	 * @see #getState()
-	 * @generated
-	 */
-	void setState(int value);
+    /**
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.Renderer#getState <em>State</em>}' attribute.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @param value the new value of the '<em>State</em>' attribute.
+     * @see #getState()
+     * @generated
+     */
+    void setState(int value);
 
-	/**
-	 * Returns the value of the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
-	 * @return the value of the '<em>Name</em>' attribute.
-	 * @see #setName(String)
-	 * @see org.locationtech.udig.project.internal.render.RenderPackage#getRenderer_Name()
-	 * @model id="true"
-	 * @generated
-	 */
-	String getName();
+    /**
+     * Returns the value of the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * @return the value of the '<em>Name</em>' attribute.
+     * @see #setName(String)
+     * @see org.locationtech.udig.project.internal.render.RenderPackage#getRenderer_Name()
+     * @model id="true"
+     * @generated
+     */
+    String getName();
 
-	/**
-	 * Sets the value of the '{@link org.locationtech.udig.project.internal.render.Renderer#getName <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' attribute.
-	 * @see #getName()
-	 * @generated
-	 */
-	void setName(String value);
+    /**
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.Renderer#getName <em>Name</em>}' attribute.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @param value the new value of the '<em>Name</em>' attribute.
+     * @see #getName()
+     * @generated
+     */
+    void setName(String value);
 
-	/**
-	 * Returns the value of the '<em><b>Toolkit</b></em>' attribute. <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Toolkit</em>' attribute isn't clear, there really should be
-	 * more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the value of the '<em>Toolkit</em>' attribute.
-	 * @see org.locationtech.udig.project.internal.render.RenderPackage#getRenderer_Context()
-	 * @model transient="true" resolveProxies="false"
-	 */
-	@Override
-	IRenderContext getContext();
+    /**
+     * Returns the value of the '<em><b>Toolkit</b></em>' attribute. <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Toolkit</em>' attribute isn't clear, there really should be
+     * more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     *
+     * @return the value of the '<em>Toolkit</em>' attribute.
+     * @see org.locationtech.udig.project.internal.render.RenderPackage#getRenderer_Context()
+     * @model transient="true" resolveProxies="false"
+     */
+    @Override
+    IRenderContext getContext();
 
-	/**
-	 * Sets the value of the '{@link org.locationtech.udig.project.internal.render.Renderer#getContext <em>Context</em>}' reference.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Context</em>' reference.
-	 * @see #getContext()
-	 * @generated
-	 */
-	void setContext(IRenderContext value);
+    /**
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.Renderer#getContext <em>Context</em>}' reference.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @param value the new value of the '<em>Context</em>' reference.
+     * @see #getContext()
+     * @generated
+     */
+    void setContext(IRenderContext value);
 
-	/**
-	 * Informs the renderer to dispose of resources
-	 * 
-	 * @model
-	 */
-	@Override
-	public void dispose();
+    /**
+     * Informs the renderer to dispose of resources
+     *
+     * @model
+     */
+    @Override
+    public void dispose();
 
 }

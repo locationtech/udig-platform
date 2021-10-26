@@ -8,8 +8,6 @@ import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.lang.reflect.InvocationTargetException;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.SortedSet;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -54,222 +52,276 @@ public class TestViewportModel implements ViewportModel {
 		this.crs = crs;
 	}
 
-	public double getAspectRatio() {
+	@Override
+    public double getAspectRatio() {
 		return 0;
 	}
 
-	public ReferencedEnvelope getBounds() {
+	@Override
+    public ReferencedEnvelope getBounds() {
 		return this.bbox;
 	}
 
-	public CoordinateReferenceSystem getCRS() {
+	@Override
+    public CoordinateReferenceSystem getCRS() {
 		return this.crs;
 	}
 
-	public Coordinate getCenter() {
+	@Override
+    public Coordinate getCenter() {
 		return null;
 	}
 
-	public double getHeight() {
+	@Override
+    public double getHeight() {
 		return 0;
 	}
 
-	public Map getMapInternal() {
+	@Override
+    public Map getMapInternal() {
 		return null;
 	}
 
-	public Coordinate getPixelSize() {
+	@Override
+    public Coordinate getPixelSize() {
 		return null;
 	}
 
-	public RenderManager getRenderManagerInternal() {
+	@Override
+    public RenderManager getRenderManagerInternal() {
 		return null;
 	}
 
-	public double getWidth() {
+	@Override
+    public double getWidth() {
 		return 0;
 	}
 
-	public boolean isInitialized() {
+	@Override
+    public boolean isInitialized() {
 		return false;
 	}
 
-	public boolean isSetCRS() {
+	@Override
+    public boolean isSetCRS() {
 		return false;
 	}
 
-	public ViewportModel panUsingScreenCoords(int xpixels, int ypixels) {
+	@Override
+    public ViewportModel panUsingScreenCoords(int xpixels, int ypixels) {
 		return null;
 	}
 
-	public ViewportModel panUsingWorldCoords(double x, double y) {
+	@Override
+    public ViewportModel panUsingWorldCoords(double x, double y) {
 		return null;
 	}
 
-	public Coordinate pixelToWorld(int x, int y) {
+	@Override
+    public Coordinate pixelToWorld(int x, int y) {
 		return null;
 	}
 
-	public void setBounds(Envelope value) {
+	@Override
+    public void setBounds(Envelope value) {
 
 	}
 
-	public void setBounds(double minx, double maxx, double miny, double maxy) throws IllegalArgumentException {
+	@Override
+    public void setBounds(double minx, double maxx, double miny, double maxy) throws IllegalArgumentException {
 
 	}
 
-	public void setCRS(CoordinateReferenceSystem value) {
+	@Override
+    public void setCRS(CoordinateReferenceSystem value) {
 
 	}
 
-	public void setCenter(Coordinate value) {
+	@Override
+    public void setCenter(Coordinate value) {
 
 	}
 
-	public void setHeight(double value) {
+	@Override
+    public void setHeight(double value) {
 
 	}
 
-	public void setInitialized(boolean initialized) {
+	@Override
+    public void setInitialized(boolean initialized) {
 
 	}
 
-	public void setMapInternal(Map value) {
+	@Override
+    public void setMapInternal(Map value) {
 
 	}
 
-	public void setRenderManagerInternal(RenderManager value) {
+	@Override
+    public void setRenderManagerInternal(RenderManager value) {
 
 	}
 
-	public void setScale(double scaleDenominator) {
+	@Override
+    public void setScale(double scaleDenominator) {
 
 	}
 
-	public void setWidth(double value) {
+	@Override
+    public void setWidth(double value) {
 
 	}
 
-	public void unsetCRS() {
+	@Override
+    public void unsetCRS() {
 
 	}
 
-	public Point worldToPixel(Coordinate coord) {
+	@Override
+    public Point worldToPixel(Coordinate coord) {
 		Point2D w = new Point2D.Double(coord.x, coord.y);
 		AffineTransform at = worldToScreenTransform();
 		Point2D p = at.transform(w, new Point2D.Double());
 		return new Point((int) p.getX(), (int) p.getY());
 	}
 
-	public AffineTransform worldToScreenTransform() {
+	@Override
+    public AffineTransform worldToScreenTransform() {
 		return worldToScreenTransform(getBounds(), this.displaySize);
 	}
 
-	public ViewportModel zoom(double zoom) {
+	@Override
+    public ViewportModel zoom(double zoom) {
 		return null;
 	}
 
-	public void zoomToBox(Envelope box) {
+	@Override
+    public void zoomToBox(Envelope box) {
 
 	}
 
-	public void zoomToExtent() {
+	@Override
+    public void zoomToExtent() {
 
 	}
 
-	public TreeIterator eAllContents() {
+	@Override
+    public TreeIterator eAllContents() {
 		return null;
 	}
 
-	public EClass eClass() {
+	@Override
+    public EClass eClass() {
 		return null;
 	}
 
-	public EObject eContainer() {
+	@Override
+    public EObject eContainer() {
 		return null;
 	}
 
-	public EStructuralFeature eContainingFeature() {
+	@Override
+    public EStructuralFeature eContainingFeature() {
 		return null;
 	}
 
-	public EReference eContainmentFeature() {
+	@Override
+    public EReference eContainmentFeature() {
 		return null;
 	}
 
-	public EList eContents() {
+	@Override
+    public EList eContents() {
 		return null;
 	}
 
-	public EList eCrossReferences() {
+	@Override
+    public EList eCrossReferences() {
 		return null;
 	}
 
-	public Object eGet(EStructuralFeature arg0) {
+	@Override
+    public Object eGet(EStructuralFeature arg0) {
 		return null;
 	}
 
-	public Object eGet(EStructuralFeature arg0, boolean arg1) {
+	@Override
+    public Object eGet(EStructuralFeature arg0, boolean arg1) {
 		return null;
 	}
 
-	public boolean eIsProxy() {
+	@Override
+    public boolean eIsProxy() {
 		return false;
 	}
 
-	public boolean eIsSet(EStructuralFeature arg0) {
+	@Override
+    public boolean eIsSet(EStructuralFeature arg0) {
 		return false;
 	}
 
-	public Resource eResource() {
+	@Override
+    public Resource eResource() {
 		return null;
 	}
 
-	public void eSet(EStructuralFeature arg0, Object arg1) {
+	@Override
+    public void eSet(EStructuralFeature arg0, Object arg1) {
 
 	}
 
-	public void eUnset(EStructuralFeature arg0) {
+	@Override
+    public void eUnset(EStructuralFeature arg0) {
 
 	}
 
-	public EList eAdapters() {
+	@Override
+    public EList eAdapters() {
 		return null;
 	}
 
-	public boolean eDeliver() {
+	@Override
+    public boolean eDeliver() {
 		return false;
 	}
 
-	public void eNotify(Notification arg0) {
+	@Override
+    public void eNotify(Notification arg0) {
 
 	}
 
-	public void eSetDeliver(boolean arg0) {
+	@Override
+    public void eSetDeliver(boolean arg0) {
 
 	}
 
-	public void sizeChanged(MapDisplayEvent event) {
+	@Override
+    public void sizeChanged(MapDisplayEvent event) {
 
 	}
 
-	public void addViewportModelListener(IViewportModelListener listener) {
+	@Override
+    public void addViewportModelListener(IViewportModelListener listener) {
 
 	}
 
-	public IMap getMap() {
+	@Override
+    public IMap getMap() {
 		return null;
 	}
 
-	public double getScaleDenominator() {
+	@Override
+    public double getScaleDenominator() {
 		return 0;
 	}
 
-	public void removeViewportModelListener(IViewportModelListener listener) {
+	@Override
+    public void removeViewportModelListener(IViewportModelListener listener) {
 
 	}
 
-	public AffineTransform worldToScreenTransform(Envelope mapExtent, Dimension displaySize) {
+	@Override
+    public AffineTransform worldToScreenTransform(Envelope mapExtent, Dimension displaySize) {
 		double scaleX = displaySize.getWidth() / mapExtent.getWidth();
 		double scaleY = displaySize.getHeight() / mapExtent.getHeight();
 
@@ -330,36 +382,6 @@ public class TestViewportModel implements ViewportModel {
 
 	@Override
 	public void setIsBoundsChanging(boolean changing) {
-
-	}
-
-	@Override
-	public List<LocalDateTime> getAvailableTimesteps() {
-		return null;
-	}
-
-	@Override
-	public LocalDateTime getCurrentTimestep() {
-		return null;
-	}
-
-	@Override
-	public void setCurrentTimestep(LocalDateTime value) {
-
-	}
-
-	@Override
-	public List<Double> getAvailableElevation() {
-		return null;
-	}
-
-	@Override
-	public Double getCurrentElevation() {
-		return null;
-	}
-
-	@Override
-	public void setCurrentElevation(Double value) {
 
 	}
 

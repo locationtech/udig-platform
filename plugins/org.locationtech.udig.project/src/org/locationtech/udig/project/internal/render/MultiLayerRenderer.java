@@ -28,7 +28,7 @@ import org.locationtech.udig.project.render.RenderException;
  * layers again.</li>
  * <li>The events the render stack must listen for are setState(DONE) events. The following code
  * illustrates how this can be done:
- * 
+ *
  * <pre><code>
  * executor.eAdapters().add(new RenderListenerAdapter(){
  *     //renderDone is called when setState(DONE) is called
@@ -39,34 +39,34 @@ import org.locationtech.udig.project.render.RenderException;
  *     }
  * });
  * </code></pre>
- * 
+ *
  * <li>Call setState(RENDERING) when a redraw is required.</li>
  * </p>
  * The Default implementation simply draws the layers overtop one another to merge the Layers.
  * CompositeRenderer
  * </p>
- * 
+ *
  * @author jeichar
  * @model abstract="true"
  */
 public interface MultiLayerRenderer extends Renderer, IMultiLayerRenderer {
 
-	/**
-	 * Called when the map has changed.
-	 * <p>
-	 * this method is guaranteed not to block
-	 * </p>
-	 * <p>
-	 * Usually the image will merge the images for each layer. However in some cases, such as for a
-	 * WMS, the image will have to be recreated. This should be a quick operation.
-	 * </p>
-	 * <p>
-	 * Note: This command differs from render. render() forces a full rerendering of the data
-	 * whereas refreshImage does not require that the renderer access the data again.
-	 * 
-	 * @throws RenderException
-	 * @model
-	 */
-	@Override
-	void refreshImage() throws RenderException;
+    /**
+     * Called when the map has changed.
+     * <p>
+     * this method is guaranteed not to block
+     * </p>
+     * <p>
+     * Usually the image will merge the images for each layer. However in some cases, such as for a
+     * WMS, the image will have to be recreated. This should be a quick operation.
+     * </p>
+     * <p>
+     * Note: This command differs from render. render() forces a full rerendering of the data
+     * whereas refreshImage does not require that the renderer access the data again.
+     *
+     * @throws RenderException
+     * @model
+     */
+    @Override
+    void refreshImage() throws RenderException;
 }
