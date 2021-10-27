@@ -7,45 +7,25 @@ Windows Sphinx Install
 
 Install Python:
 
-1. Python version 2.7 has been verified to work: http://www.python.org/download/releases/2.7/
+1. Python version 3.9 has been verified to work: https://www.python.org/downloads/release/python-3100/
 2. You will need to add it to your path.::
      
-     set 'PYTHON=C:\Python27\'
+     set 'PYTHON=C:\Python-3.9.0\'
      set 'PATH=%PATH%;%PYTHON%'
 
-3. You will need Setup Tools for Python 2.7
-   
-   http://pypi.python.org/pypi/setuptools#downloads
-   
-4. Install and add Setup Tools to your path::
-        
-        run 'set SETUPTOOLS=C:\Python27\Scripts'
-        run 'set PATH=%PATH%;%SETUPTOOLS%'
+3. To install sphinx easily its recommend to install pip first
 
-5. Install Sphinx::
+   download https://bootstrap.pypa.io/get-pip.py
+
+   run 'python get-pip.py'
+
+5. Install Sphinx
    
-        easy_install sphinx
-   
+        pip  sphinx==4.2.0
+
    Optionally you could install a specific version of sphinx (although we try and use the latest)::
-    
-        easy_install sphinx==1.8.5
 
-rst2pdf Optional Install
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-You can optionally install rst2pdf to build pdf documentation:
-
-1. Install Visual Studio 2008 Express Edition (this provides windows with a C compiler). It is a free download on the Microsoft site.
-   You need to be sure to use the 2008 edition so that easy_install will compile something that can actually be linked to the Python executable.
-
-2. Use easy install to produce rst2pdf::
-      
-      easy_install rst2pdf
-      
-3. This depends on the Python Image Library (which it can probably build now that you have a compiler).
-4. If you cannot manage to build you can download a precompiled Python Image Library (PIL) from here:
-   
-   * http://effbot.org/downloads/#pil (download the one for python 2.7)
+        easy_install sphinx==4.2.0
 
 Mac Sphinx Install
 ^^^^^^^^^^^^^^^^^^
@@ -53,11 +33,11 @@ Mac Sphinx Install
 You can use the distribution manager of your choice (example bru, macports, etc...). The following example
 is for macports.
 
-1. On OSX Use macports to install Python 2.7::
+1. On OSX Use macports to install Python 3.9::
      
-     sudo port install python27
+     sudo port install python39
      sudo port install python_select
-     sudo python_select python27
+     sudo python_select python39
      
 2. You can use macports to install Python Image Library::
      
@@ -69,7 +49,7 @@ is for macports.
    
    Optionally you could ask for a specific version (we try and use the latest)::
      
-      sudo easy_install sphinx==1.8.5
+      sudo easy_install sphinx==4.2.0
  
 4. To build the PDF targets you will also need rst2pdf.::
      
@@ -95,5 +75,5 @@ Use apt-get and easy install.
   
   Optionally you can install a specifc version::
   
-     easy_install sphinx==1.8.5
+     easy_install sphinx==4.2.0
  
