@@ -13,17 +13,19 @@ Support for the Terradata database has been provided.
 
 * :doc:`../reference/Teradata page`
 
+.. 
+   archived for compatibility reasons
 
-Spatial Toolbox
----------------
+   Spatial Toolbox
+   ---------------
 
-Spatial toolbox has arrived allowing access to a vast range of spatial functionality provided by
-through Open Modeling Services 3 components.
+   Spatial toolbox has arrived allowing access to a vast range of spatial functionality provided by
+   through Open Modeling Services 3 components.
 
-For more information:
+   For more information:
 
-* :doc:`../getting_started/Introduction to the Spatial Toolbox` covers the installation and use of JGrass compoenents
-* :doc:`../reference/Spatial Toolbox View`
+   * :doc:`../getting_started/Introduction to the Spatial Toolbox` covers the installation and use of JGrass compoenents
+   * :doc:`../reference/Spatial Toolbox View`
 
 
 Generic DataStore

@@ -18,6 +18,7 @@
             <modules>
                 <module>org.locationtech.udig.bookmarks.tests</module>
                 <module>org.locationtech.udig.catalog.geotiff.tests</module>
+                <module>org.locationtech.udig.catalog.jgrass.tests</module>
                 <module>org.locationtech.udig.catalog.tests</module>
                 <module>org.locationtech.udig.catalog.rasterings.tests</module>
                 <module>org.locationtech.udig.catalog.ui.tests</module>
@@ -91,8 +92,6 @@
         <module>org.locationtech.udig.catalog.kml</module>
         <module>org.locationtech.udig.catalog.teradata</module>
         <module>org.locationtech.udig.image.georeferencing</module>
-        <module>org.locationtech.udig.jconsole</module>
-        <module>org.locationtech.udig.omsbox</module>
         <module>org.locationtech.udig.style</module>
         <module>org.locationtech.udig.style.advanced.core</module>
         <module>org.locationtech.udig.style.advanced.feature</module>

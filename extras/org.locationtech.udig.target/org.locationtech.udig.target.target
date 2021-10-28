@@ -71,7 +71,7 @@
 <unit id="org.eclipse.xsd.source.feature.group" version="0.0.0"/>
 <unit id="org.sat4j.core" version="0.0.0"/>
 <unit id="org.sat4j.pb" version="0.0.0"/>
-<repository location="http://download.eclipse.org/releases/2019-03/"/>
+<repository location="https://download.eclipse.org/releases/2019-03/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="javax.media.jai_imageio-feature.feature.group" version="1.1.3"/>
@@ -79,7 +79,6 @@
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="com.lowagie.text" version="2.1.7.v201004222200"/>
-<unit id="javax.xml" version="1.3.4.v201005080400"/>
 <unit id="net.miginfocom.layout" version="3.7.1.v200911230030"/>
 <unit id="net.miginfocom.layout.swing" version="3.7.1.v200911230030"/>
 <unit id="net.miginfocom.layout.swt" version="3.7.1.v201505121915"/>
@@ -93,7 +92,7 @@
 <unit id="org.hamcrest.core" version="1.3.0.v201303031735"/>
 <unit id="org.hamcrest.library" version="1.3.0.v201505072020"/>
 <unit id="org.junit" version="4.12.0.v201504281640"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180330011457/repository/"/>
+<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20180330011457/repository/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="net.bytebuddy.byte-buddy" version="1.9.0.v20181107-1410"/>
@@ -123,7 +122,15 @@
 <unit id="org.apache.batik.xml" version="0.0.0"/>
 <unit id="org.apache.xalan" version="2.7.2.v20201124-1837"/>
 <unit id="org.apache.xmlgraphics" version="2.4.0.v20200622-2037"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20201130205003/repository/"/>
+<unit id="com.sun.xml.bind" version="2.2.0.v20201118-1845"/>
+<unit id="javax.xml" version="1.3.4.v201005080400"/>
+<unit id="javax.xml.bind" version="0.0.0"/>
+<unit id="javax.xml.stream" version="0.0.0"/>
+<unit id="javax.activation" version="1.1.0.v201211130549"/>
+<unit id="org.apache.xmlrpc" version="3.0.0.v20100427-1100"/>
+<unit id="org.apache.commons.httpclient" version="3.1.0.v201012070820"/>
+<unit id="org.apache.ws.commons.util" version="1.0.2.v20160817-1930"/>
+<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20201130205003/repository/"/>
 </location>
 </locations>
 </target>

@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -10,49 +11,52 @@
 package org.locationtech.udig.core;
 
 /**
- * A simple class for wrapping a couple of objects.  Often for return types.
- * 
+ * A simple class for wrapping a couple of objects. Often for return types.
+ *
  * @author jesse
  * @since 1.1.0
  */
-public class Pair<T,V> {
+public class Pair<T, V> {
     private T left;
+
     private V right;
-    
+
     /**
-     * Create a new insance
+     * Create a new instance
+     *
      * @param left
      * @param right
      */
-    public Pair(final T left, final V right){
+    public Pair(final T left, final V right) {
         this.left = left;
         this.right = right;
     }
 
     /**
      * Factory method
+     *
      * @return return a new instance
      */
-    public static <L,R> Pair<L,R> create(L left, R right){
-        return new Pair<L,R>(left,right);
+    public static <L, R> Pair<L, R> create(L left, R right) {
+        return new Pair<>(left, right);
     }
-    
-    public final T l(){
+
+    public final T l() {
         return getLeft();
     }
-    
-    public final V r(){
+
+    public final V r() {
         return getRight();
     }
-    
-    public final T left(){
+
+    public final T left() {
         return getLeft();
     }
-    
-    public final V right(){
+
+    public final V right() {
         return getRight();
     }
-    
+
     /**
      * @return Returns the left.
      */
@@ -69,9 +73,9 @@ public class Pair<T,V> {
 
     @Override
     public String toString() {
-    	return "Pair("+left+", "+right+")";
+        return "Pair(" + left + ", " + right + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
-    
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -81,9 +85,8 @@ public class Pair<T,V> {
         return result;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public boolean equals( Object obj ) {
+    public boolean equals(Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
@@ -103,8 +106,5 @@ public class Pair<T,V> {
             return false;
         return true;
     }
-    
-    
-    
-    
+
 }

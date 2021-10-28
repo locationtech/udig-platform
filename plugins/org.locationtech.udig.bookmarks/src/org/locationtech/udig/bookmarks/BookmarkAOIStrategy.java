@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2011, Refractions Research Inc.
  *
@@ -9,27 +10,25 @@
  */
 package org.locationtech.udig.bookmarks;
 
-import org.locationtech.udig.aoi.AOIListener;
-import org.locationtech.udig.aoi.IAOIStrategy;
-
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.udig.aoi.AOIListener;
+import org.locationtech.udig.aoi.IAOIStrategy;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
- * Advertise the currently selected bookmark as a AOI (Area of Interest) for use in
- * catalog services and others.
- * 
+ * Advertise the currently selected bookmark as a AOI (Area of Interest) for use in catalog services
+ * and others.
+ *
  * @author paul.pfeiffer
  * @version 1.3.0
  */
 public class BookmarkAOIStrategy extends IAOIStrategy {
-    public static String ID = "org.locationtech.udig.bookmarks.bookmarkAOIStrategy";
-    
+    public static String ID = "org.locationtech.udig.bookmarks.bookmarkAOIStrategy"; //$NON-NLS-1$
+
     private IBookmark currentBookmark = null;
-    
+
     @Override
     public ReferencedEnvelope getExtent() {
         if (currentBookmark != null) {
@@ -72,11 +71,11 @@ public class BookmarkAOIStrategy extends IAOIStrategy {
     /**
      * @param currentBookmark the currentBookmark to set
      */
-    public void setCurrentBookmark( IBookmark bookmark ) {
+    public void setCurrentBookmark(IBookmark bookmark) {
         if (!bookmark.equals(currentBookmark)) {
             currentBookmark = bookmark;
             // notify everything that is listening for a strategy change
-            this.notifyListeners( new AOIListener.Event(this));
+            this.notifyListeners(new AOIListener.Event(this));
         }
     }
 

@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -35,55 +35,51 @@ import org.locationtech.udig.ui.graphics.SLDs;
 
 /**
  * Simple view part for editing a Marker.
- * 
+ *
  * @author aalam
  * @since 1.0.0
  */
 public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListener {
 
     private int opacityMaxValue = 100;
+
     private double opacityMaxValueFloat = 100.0;
 
     private ColorEditor borderColour;
+
     private Button borderEnabled;
+
     private Spinner borderWidth;
+
     private Spinner borderOpacity;
 
     private ColorEditor markerColour;
+
     private Button markerEnabled;
+
     private Combo markerType;
+
     private Spinner markerWidth;
+
     private Spinner markerOpacity;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.style.sld.SLDEditorPart#getContentType()
-     */
+    @Override
     public Class getContentType() {
         return PointSymbolizer.class;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.style.sld.SLDEditorPart#init()
-     */
+    @Override
     public void init() {
         // do nothing
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.style.sld.SLDEditorPart#reset()
-     */
+    @Override
     public void reset() {
-        // initialize the ui
+        // initialize the UI
         setStylingElements((PointSymbolizer) getContent());
     }
 
-    private void setStylingElements( PointSymbolizer symbolizer ) {
+    private void setStylingElements(PointSymbolizer symbolizer) {
         Color fill = SLDs.pointFill(symbolizer);
         Color border = SLDs.pointColor(symbolizer);
         int markerSize = SLDs.pointSize(symbolizer);
@@ -146,11 +142,6 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
         markerOpacity.setSelection((int) (opacity * opacityMaxValue));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.locationtech.udig.style.StyleConfigurator#apply()
-     */
     private void apply() {
         PointSymbolizer symbolizer = (PointSymbolizer) getContent();
         StyleBuilder styleBuilder = getStyleBuilder();
@@ -161,44 +152,44 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
         mark[0] = styleBuilder.createMark(markerType.getText());
         RGB colour = markerColour.getColorValue();
         if (markerEnabled.getSelection()) {
-            mark[0].setFill(styleBuilder
-                    .createFill(new Color(colour.red, colour.green, colour.blue)));
-            mark[0].getFill().setOpacity(
-                    styleBuilder.literalExpression(markerOpacity.getSelection()
-                            / opacityMaxValueFloat));
+            mark[0].setFill(
+                    styleBuilder.createFill(new Color(colour.red, colour.green, colour.blue)));
+            mark[0].getFill().setOpacity(styleBuilder
+                    .literalExpression(markerOpacity.getSelection() / opacityMaxValueFloat));
         } else {
             mark[0].setFill(null);
         }
         colour = borderColour.getColorValue();
-        g.setSize(styleBuilder.literalExpression(new Integer(markerWidth.getSelection())
-                .doubleValue()));
+        g.setSize(styleBuilder
+                .literalExpression(Integer.valueOf(markerWidth.getSelection()).doubleValue()));
         colour = borderColour.getColorValue();
         if (borderEnabled.getSelection()) {
-            mark[0].setStroke(styleBuilder.createStroke(new Color(colour.red, colour.green,
-                    colour.blue), (new Integer(borderWidth.getSelection())).doubleValue()));
-            mark[0].getStroke().setOpacity(
-                    styleBuilder.literalExpression(borderOpacity.getSelection()
-                            / opacityMaxValueFloat));
+            mark[0].setStroke(
+                    styleBuilder.createStroke(new Color(colour.red, colour.green, colour.blue),
+                            (Integer.valueOf(borderWidth.getSelection())).doubleValue()));
+            mark[0].getStroke().setOpacity(styleBuilder
+                    .literalExpression(borderOpacity.getSelection() / opacityMaxValueFloat));
         } else {
             mark[0].setStroke(null);
         }
         g.graphicalSymbols().clear();
-        for (Mark m : mark) g.graphicalSymbols().add(m);
+        for (Mark m : mark)
+            g.graphicalSymbols().add(m);
     }
 
     /**
      * Construct a subpart labeled with the provided tag.
      * <p>
-     * Creates a composite with a grid layout of the specifed columns, and a label with text from
+     * Creates a composite with a grid layout of the specified columns, and a label with text from
      * tag.
      * </p>
-     * 
+     *
      * @param parent
      * @param tag
      * @param numColumns number of columns (usually 2_
      * @return Composite with one label
      */
-    private Composite subpart( Composite parent, String tag, int width ) {
+    private Composite subpart(Composite parent, String tag, int width) {
         Composite subpart = new Composite(parent, SWT.NONE);
         RowLayout across = new RowLayout();
         across.type = SWT.HORIZONTAL;
@@ -223,10 +214,11 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
 
     /**
      * Create a row layout, with individual rows provided by sub part.
-     * 
+     *
      * @see org.locationtech.udig.style.StyleConfigurator#createControl(org.eclipse.swt.widgets.Composite)
      */
-    protected Control createPartControl( Composite parent ) {
+    @Override
+    protected Control createPartControl(Composite parent) {
         RowLayout layout = new RowLayout();
         layout.pack = false;
         layout.wrap = true;
@@ -246,7 +238,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
         return parent;
     }
 
-    private void markerPart( Composite parent ) {
+    private void markerPart(Composite parent) {
         Composite marker = subpart(parent, Messages.SLDMarkerEditorPart_label_marker, 2);
 
         markerType = new Combo(marker, SWT.READ_ONLY);
@@ -259,7 +251,7 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
         markerWidth.addSelectionListener(this);
     }
 
-    private void borderPart( Composite parent ) {
+    private void borderPart(Composite parent) {
         Composite border = subpart(parent, Messages.SLDMarkerEditorPart_label_border, 4);
 
         borderEnabled = new Button(border, SWT.CHECK);
@@ -278,8 +270,9 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
         borderOpacity.setMaximum(opacityMaxValue);
         borderOpacity.setPageIncrement(10);
     }
-    private void fillPart( Composite parent ) {
-        Composite fill = subpart(parent, Messages.SLDMarkerEditorPart_label_fill , 3);
+
+    private void fillPart(Composite parent) {
+        Composite fill = subpart(parent, Messages.SLDMarkerEditorPart_label_fill, 3);
         markerEnabled = new Button(fill, SWT.CHECK);
         markerEnabled.addSelectionListener(this);
 
@@ -291,22 +284,13 @@ public class SLDMarkerEditorPart extends SLDEditorPart implements SelectionListe
         markerOpacity.setPageIncrement(10);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
-     */
-    public void widgetDefaultSelected( SelectionEvent e ) {
+    @Override
+    public void widgetDefaultSelected(SelectionEvent e) {
         // Don't care.
-        // TODO: Commit style here
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-     */
-    public void widgetSelected( SelectionEvent e ) {
+    @Override
+    public void widgetSelected(SelectionEvent e) {
         apply();
     }
 

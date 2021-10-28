@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -19,10 +20,6 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
 
-import org.locationtech.udig.internal.ui.UiPlugin;
-import org.locationtech.udig.ui.ExceptionDetailsDialog;
-import org.locationtech.udig.ui.internal.Messages;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -41,34 +38,53 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.internal.Messages;
 
 public final class RuntimeFieldEditor extends FieldEditor {
     public static final String WORKSPACE_PATH = "WORKSPACE_PATH"; //$NON-NLS-1$
+
     public static final String LANGUAGE = "LANGUAGE"; //$NON-NLS-1$
+
     public static final String MEMORY = "MEMORY"; //$NON-NLS-1$
+
     public static final String PROXYSET = "http.proxySet"; //$NON-NLS-1$
+
     public static final String PROXYHOST = "http.proxyHost"; //$NON-NLS-1$
+
     public static final String PROXYPORT = "http.proxyPort"; //$NON-NLS-1$
+
     public static final String PROXYNONHOSTS = "http.nonProxyHosts"; //$NON-NLS-1$
 
     private Text wkspaceText;
+
     private Combo langCombo;
+
     private Text memoryText;
+
     private String workspacePath;
 
-    private static String[] langArray = new String[]{"de", "en", "es", "eu", "fr", "it", "ko", "ru"};
+    private static String[] langArray = new String[] { "de", "en", "es", "eu", "fr", "it", "ko", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
+            "ru" }; //$NON-NLS-1$
+
     private IPreferenceStore preferenceStore;
+
     private Text proxyHostText;
+
     private Text proxyPortText;
+
     private Button proxyButton;
+
     private Text proxyNonHostText;
 
-    public RuntimeFieldEditor( String name, String labelText, Composite parent ) {
+    public RuntimeFieldEditor(String name, String labelText, Composite parent) {
         super(name, labelText, parent);
 
         preferenceStore = UiPlugin.getDefault().getPreferenceStore();
     }
 
+    @Override
     public int getNumberOfControls() {
         return 3;
     }
@@ -89,17 +105,17 @@ public final class RuntimeFieldEditor extends FieldEditor {
     @Override
     protected void doLoad() {
         String workSpacePath = preferenceStore.getString(WORKSPACE_PATH);
-        if (workSpacePath == null || workSpacePath.equals("")) {
+        if (workSpacePath == null || workSpacePath.equals("")) { //$NON-NLS-1$
             workSpacePath = getWorkspacePath();
         }
         wkspaceText.setText(workSpacePath);
         memoryText.setText(String.valueOf(getCurrentHeap()));
         String lang = preferenceStore.getString(LANGUAGE);
-        if (lang == null || lang.equals("")) {
+        if (lang == null || lang.equals("")) { //$NON-NLS-1$
             Locale locale = Locale.getDefault();
             lang = locale.getLanguage();
         }
-        for( int i = 0; i < langArray.length; i++ ) {
+        for (int i = 0; i < langArray.length; i++) {
             if (lang.equals(langArray[i])) {
                 langCombo.select(i);
             }
@@ -109,7 +125,7 @@ public final class RuntimeFieldEditor extends FieldEditor {
         String port = preferenceStore.getString(PROXYPORT);
         String nonhost = preferenceStore.getString(PROXYNONHOSTS);
         String setStr = preferenceStore.getString(PROXYSET);
-        if (host.equals("") || proxyPortText.equals("")) {
+        if (host.equals("") || proxyPortText.toString().equals("")) { //$NON-NLS-1$ //$NON-NLS-2$
             // try to get it from the ini, might be added manually
             try {
                 Properties proxySettings = UiPlugin.getProxySettings();
@@ -118,17 +134,17 @@ public final class RuntimeFieldEditor extends FieldEditor {
                 nonhost = proxySettings.getProperty(PROXYNONHOSTS);
 
                 if (host == null)
-                    host = "";
+                    host = ""; //$NON-NLS-1$
                 if (port == null)
-                    port = "";
+                    port = ""; //$NON-NLS-1$
                 if (nonhost == null)
-                    nonhost = "";
+                    nonhost = ""; //$NON-NLS-1$
             } catch (IOException e) {
-                UiPlugin.log("Problem reading proxy settings.", e);
+                UiPlugin.log("Problem reading proxy settings.", e); //$NON-NLS-1$
             }
         }
-        if (setStr.equals(""))
-            setStr = "false";
+        if (setStr.equals("")) //$NON-NLS-1$
+            setStr = "false"; //$NON-NLS-1$
         boolean set = Boolean.parseBoolean(setStr);
         proxyButton.setSelection(set);
         proxyHostText.setText(host);
@@ -137,7 +153,7 @@ public final class RuntimeFieldEditor extends FieldEditor {
     }
 
     @Override
-    protected void doFillIntoGrid( final Composite parent, int numColumns ) {
+    protected void doFillIntoGrid(final Composite parent, int numColumns) {
         setPreferenceStore(preferenceStore);
 
         workspacePath = getWorkspacePath();
@@ -154,8 +170,9 @@ public final class RuntimeFieldEditor extends FieldEditor {
         Button wkspaceButton = new Button(parent, SWT.PUSH);
         wkspaceButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
         wkspaceButton.setText("..."); //$NON-NLS-1$
-        wkspaceButton.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter(){
-            public void widgetSelected( org.eclipse.swt.events.SelectionEvent e ) {
+        wkspaceButton.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
+            @Override
+            public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
                 DirectoryDialog fileDialog = new DirectoryDialog(parent.getShell(), SWT.OPEN);
                 String path = fileDialog.open();
                 if (path == null || path.length() < 1) {
@@ -195,50 +212,46 @@ public final class RuntimeFieldEditor extends FieldEditor {
         proxyGD.horizontalSpan = 3;
         proxyGroup.setLayoutData(proxyGD);
         proxyGroup.setLayout(new GridLayout(2, false));
-        proxyGroup.setText("Proxy");
+        proxyGroup.setText("Proxy"); //$NON-NLS-1$
 
         proxyButton = new Button(proxyGroup, SWT.CHECK);
         GridData proxyButtonGD = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
         proxyButtonGD.horizontalSpan = 2;
         proxyButton.setLayoutData(proxyButtonGD);
-        proxyButton.setText("Enable/Disable proxy");
+        proxyButton.setText("Enable/Disable proxy"); //$NON-NLS-1$
 
         Label proxyHostLabel = new Label(proxyGroup, SWT.NONE);
         proxyHostLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        proxyHostLabel.setText("Proxy Server");
+        proxyHostLabel.setText("Proxy Server"); //$NON-NLS-1$
         proxyHostText = new Text(proxyGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         proxyHostText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        proxyHostText.setText("");
+        proxyHostText.setText(""); //$NON-NLS-1$
 
         Label proxyPortLabel = new Label(proxyGroup, SWT.NONE);
         proxyPortLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        proxyPortLabel.setText("Proxy Port");
+        proxyPortLabel.setText("Proxy Port"); //$NON-NLS-1$
         proxyPortText = new Text(proxyGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         proxyPortText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        proxyPortText.setText("");
+        proxyPortText.setText(""); //$NON-NLS-1$
 
         Label proxyNonHostLabel = new Label(proxyGroup, SWT.NONE);
         proxyNonHostLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        proxyNonHostLabel.setText("Proxy Bypass Servers");
+        proxyNonHostLabel.setText("Proxy Bypass Servers"); //$NON-NLS-1$
         proxyNonHostText = new Text(proxyGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         proxyNonHostText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        proxyNonHostText.setText("");
+        proxyNonHostText.setText(""); //$NON-NLS-1$
 
         // restart
         Button restartButton = new Button(parent, SWT.PUSH);
         restartButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
         restartButton.setText(Messages.RuntimeFieldEditor_restart);
-        restartButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        restartButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
                 saveValues();
                 restart();
             }
         });
-
-        // put some defaults in
-        // preferenceStore.setValue(WORKSPACE_PATH, wkspaceText.getText());
-        // preferenceStore.setValue(LANGUAGE, langCombo.getText());
-        // preferenceStore.setValue(MEMORY, memoryText.getText());
 
     }
 
@@ -303,7 +316,7 @@ public final class RuntimeFieldEditor extends FieldEditor {
 
     private void writeSettings() {
         try {
-            /*
+            /**
              * ini file in the install folder
              */
             String maxHeadSize = memoryText.getText();
@@ -318,7 +331,7 @@ public final class RuntimeFieldEditor extends FieldEditor {
                 UiPlugin.setProxy(null, null, null);
             }
 
-            /*
+            /**
              * ini file in the configuration area
              */
             URL configUrlURL = Platform.getConfigurationLocation().getURL();
@@ -341,7 +354,7 @@ public final class RuntimeFieldEditor extends FieldEditor {
             try {
                 bW = new BufferedWriter(new FileWriter(configFile));
 
-                for( Object key : keySet ) {
+                for (Object key : keySet) {
                     String keyStr = (String) key;
                     if (!keyStr.equals("eof")) { //$NON-NLS-1$
                         bW.write(keyStr);
@@ -356,12 +369,13 @@ public final class RuntimeFieldEditor extends FieldEditor {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            String message = "An error occurred while setting preferences.";
+            String message = "An error occurred while setting preferences."; //$NON-NLS-1$
             ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, UiPlugin.ID, e);
         }
     }
 
     @Override
-    protected void adjustForNumColumns( int numColumns ) {
+    protected void adjustForNumColumns(int numColumns) {
+
     }
 }

@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -20,7 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -46,8 +47,8 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
- * Selects and drags single features providing an appropriate selection popup
- * in case there are multiple features located at the click point.
+ * Selects and drags single features providing an appropriate selection popup in case there are
+ * multiple features located at the click point.
  *
  * @author nprigour
  * @since 2.0.0
@@ -55,70 +56,80 @@ import org.opengis.feature.simple.SimpleFeatureType;
 public class ArrowSelectionWithPopup extends AbstractModalTool implements ModalTool {
 
     private int x;
+
     private int y;
 
-    public ArrowSelectionWithPopup(){
-        super(DRAG_DROP|MOUSE);
+    public ArrowSelectionWithPopup() {
+        super(DRAG_DROP | MOUSE);
     }
 
     @Override
-    public void mousePressed( MapMouseEvent e ) {
+    public void mousePressed(MapMouseEvent e) {
         if (e.button == MapMouseEvent.BUTTON3)
             ((ViewportPane) e.source).getMapEditor().openContextMenu();
         else {
-            x=e.x;
-            y=e.y;
+            x = e.x;
+            y = e.y;
         }
     }
 
     @Override
-    public void mouseReleased( final MapMouseEvent e ) {
+    public void mouseReleased(final MapMouseEvent e) {
 
-        if( e.x==x && e.y==y ){
+        if (e.x == x && e.y == y) {
             final int selectionSearchSize = Platform.getPreferencesService().getInt(
-                    ProjectUIPlugin.ID, PreferenceConstants.FEATURE_SELECTION_SCALEFACTOR, PreferenceConstants.DEFAULT_FEATURE_SELECTION_SCALEFACTOR, null);
+                    ProjectUIPlugin.ID, PreferenceConstants.FEATURE_SELECTION_SCALEFACTOR,
+                    PreferenceConstants.DEFAULT_FEATURE_SELECTION_SCALEFACTOR, null);
 
             final String featureAttributeName = Platform.getPreferencesService().getString(
                     ProjectUIPlugin.ID, PreferenceConstants.FEATURE_ATTRIBUTE_NAME, "id", null); //$NON-NLS-1$
 
-            //creates a pop-up menu to hold the values if multiple items are found in a position
-            //final Menu menu = new Menu(ApplicationGISInternal.getActiveEditor().getComposite().getShell(), SWT.POP_UP);
-            final Menu menu = new Menu(((ViewportPane) e.source).getControl().getShell(), SWT.POP_UP);
+            // creates a pop-up menu to hold the values if multiple items are found in a position
+            final Menu menu = new Menu(((ViewportPane) e.source).getControl().getShell(),
+                    SWT.POP_UP);
 
-            PlatformGIS.run(new IRunnableWithProgress(){
+            PlatformGIS.run(new IRunnableWithProgress() {
 
+                @Override
                 @SuppressWarnings("unchecked")
-                public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
+                public void run(IProgressMonitor monitor)
+                        throws InvocationTargetException, InterruptedException {
 
                     monitor.beginTask(Messages.ArrowSelection_0, 5);
-                    ReferencedEnvelope bbox = getContext().getBoundingBox(
-                            new Point(x,y),
+                    ReferencedEnvelope bbox = getContext().getBoundingBox(new Point(x, y),
                             selectionSearchSize);
 
-                    FeatureCollection<SimpleFeatureType, SimpleFeature> collection=null;
-                    FeatureIterator<SimpleFeature> iter=null;
+                    FeatureCollection<SimpleFeatureType, SimpleFeature> collection = null;
+                    FeatureIterator<SimpleFeature> iter = null;
                     try {
                         final ILayer selectedLayer = getContext().getSelectedLayer();
-                        FeatureSource<SimpleFeatureType, SimpleFeature> source =selectedLayer.getResource(FeatureSource.class, new SubProgressMonitor(monitor, 1));
-                        if( source==null )
+                        FeatureSource<SimpleFeatureType, SimpleFeature> source = selectedLayer
+                                .getResource(FeatureSource.class, SubMonitor.convert(monitor, 1));
+                        if (source == null)
                             return;
-                        collection=source.getFeatures(selectedLayer.createBBoxFilter(bbox, new SubProgressMonitor(monitor, 1)));
-                        iter=collection.features();
-                        if( !iter.hasNext() ){
-                            if( !e.buttonsDown() ){
-                                getContext().sendASyncCommand(getContext().getEditFactory().createNullEditFeatureCommand());
+                        collection = source.getFeatures(selectedLayer.createBBoxFilter(bbox,
+                                SubMonitor.convert(monitor, 1)));
+                        iter = collection.features();
+                        if (!iter.hasNext()) {
+                            if (!e.buttonsDown()) {
+                                getContext().sendASyncCommand(getContext().getEditFactory()
+                                        .createNullEditFeatureCommand());
                             }
-                            getContext().sendASyncCommand(getContext().getSelectionFactory().createNoSelectCommand());
+                            getContext().sendASyncCommand(
+                                    getContext().getSelectionFactory().createNoSelectCommand());
                             return;
                         } else {
-                            //if only one item then do normal UDIG action
+                            // if only one item then do normal UDIG action
                             if (collection.size() == 1) {
-                                SimpleFeature feature=iter.next();
-                                getContext().sendASyncCommand(getContext().getEditFactory().createSetEditFeatureCommand(feature, selectedLayer));
-                                getContext().sendASyncCommand(getContext().getSelectionFactory().createFIDSelectCommand(selectedLayer, feature));
+                                SimpleFeature feature = iter.next();
+                                getContext().sendASyncCommand(getContext().getEditFactory()
+                                        .createSetEditFeatureCommand(feature, selectedLayer));
+                                getContext().sendASyncCommand(getContext().getSelectionFactory()
+                                        .createFIDSelectCommand(selectedLayer, feature));
                             } else {
-                                final SimpleFeature[] features = collection.toArray(new SimpleFeature[]{});
-                                //MapPart mapPart = MapEditor();
+                                final SimpleFeature[] features = collection
+                                        .toArray(new SimpleFeature[] {});
+                                // MapPart mapPart = MapEditor();
                                 Display.getDefault().syncExec(new Runnable() {
 
                                     @Override
@@ -129,27 +140,36 @@ public class ArrowSelectionWithPopup extends AbstractModalTool implements ModalT
 
                                         for (final SimpleFeature feat : features) {
                                             MenuItem item = new MenuItem(menu, SWT.PUSH);
-                                            Object attribValue = attribName != null ? feat.getAttribute(attribName) : null;
-                                            item.setText(attribValue != null ?
-                                                    attribValue.toString() : feat.getID());
+                                            Object attribValue = attribName != null
+                                                    ? feat.getAttribute(attribName)
+                                                    : null;
+                                            item.setText(
+                                                    attribValue != null ? attribValue.toString()
+                                                            : feat.getID());
 
                                             item.addSelectionListener(new SelectionListener() {
 
                                                 @Override
                                                 public void widgetSelected(SelectionEvent e) {
-                                                    getContext().sendASyncCommand(getContext().getEditFactory().createSetEditFeatureCommand(feat, selectedLayer));
-                                                    getContext().sendASyncCommand(getContext().getSelectionFactory().createFIDSelectCommand(selectedLayer, feat));
+                                                    getContext().sendASyncCommand(
+                                                            getContext().getEditFactory()
+                                                                    .createSetEditFeatureCommand(
+                                                                            feat, selectedLayer));
+                                                    getContext().sendASyncCommand(
+                                                            getContext().getSelectionFactory()
+                                                                    .createFIDSelectCommand(
+                                                                            selectedLayer, feat));
                                                 }
 
                                                 @Override
-                                                public void widgetDefaultSelected(SelectionEvent e) {
+                                                public void widgetDefaultSelected(
+                                                        SelectionEvent e) {
 
                                                 }
                                             });
                                         }
-                                        //ApplicationGISInternal.getActiveEditor().getComposite().setMenu(menu);
-                                        //((ViewportPane) e.source).getControl().setMenu(menu);
-                                        //just make the menu visible (do not add it to a control since it will affect already existing menus)
+                                        // just make the menu visible (do not add it to a control
+                                        // since it will affect already existing menus)
                                         menu.setVisible(true);
                                     }
 
@@ -159,11 +179,10 @@ public class ArrowSelectionWithPopup extends AbstractModalTool implements ModalT
                         }
                     } catch (IOException e) {
                         // do nothing
-                    }finally{
+                    } finally {
                         monitor.done();
-                        if( collection !=null && iter!=null )
+                        if (collection != null && iter != null)
                             iter.close();
-
                     }
                 }
 

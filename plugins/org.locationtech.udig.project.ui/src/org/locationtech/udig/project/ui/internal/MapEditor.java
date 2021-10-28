@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -107,7 +108,6 @@ import org.locationtech.udig.project.ui.internal.commands.draw.DrawFeatureComman
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
 import org.locationtech.udig.project.ui.tool.IToolManager;
-import org.locationtech.udig.project.ui.viewers.MapEditDomain;
 import org.locationtech.udig.project.ui.viewers.MapViewer;
 import org.locationtech.udig.ui.IBlockingSelection;
 import org.locationtech.udig.ui.PlatformGIS;
@@ -126,7 +126,7 @@ import org.opengis.feature.simple.SimpleFeature;
  * @version $Revision: 1.9 $
  */
 public class MapEditor extends EditorPart
-        implements IDropTargetProvider, IAdaptable, MapEditorPart {
+implements IDropTargetProvider, IAdaptable, MapEditorPart {
     /** The id of the MapViewport View */
     public static final String ID = "org.locationtech.udig.project.ui.mapEditorOld"; //$NON-NLS-1$
 
@@ -154,6 +154,7 @@ public class MapEditor extends EditorPart
     // Menu menu;
 
     // private ViewportPane viewportPane;
+
     private MapViewer viewer = null;
 
     /**
@@ -470,7 +471,7 @@ public class MapEditor extends EditorPart
                 // kill rending now - even if it is moving
                 getRenderManager().dispose();
             } catch (final Throwable t) {
-                ProjectUIPlugin.log("Shutting down rendering - " + t, null);
+                ProjectUIPlugin.log("Shutting down rendering - " + t, null); //$NON-NLS-1$
             }
             getMap().getEditManagerInternal().setEditFeature(null, null);
             try {
@@ -571,7 +572,7 @@ public class MapEditor extends EditorPart
 
     @Override
     public void doSaveAs() {
-        throw new UnsupportedOperationException("Do Save As is not implemented yet");
+        throw new UnsupportedOperationException("Do Save As is not implemented yet"); //$NON-NLS-1$
     }
 
     @Override
@@ -646,7 +647,6 @@ public class MapEditor extends EditorPart
              * @see java.lang.Runnable#run()
              */
             @Override
-            @SuppressWarnings("synthetic-access")
             public void run() {
                 firePropertyChange(PROP_DIRTY);
             }
@@ -675,7 +675,7 @@ public class MapEditor extends EditorPart
         setTitleToolTip(Messages.MapEditor_titleToolTip);
         setTitleImage(ProjectUIPlugin.getDefault().getImage(ISharedImages.MAP_OBJ));
 
-        viewer = new MapViewer(composite, SWT.DOUBLE_BUFFERED);
+        viewer = new MapViewer(composite, this, SWT.DOUBLE_BUFFERED);
         // allow the viewer to open our context menu; work with our selection provider etc
         viewer.init(this);
         // if a map was provided as input we can ask the viewer to use it
@@ -848,26 +848,26 @@ public class MapEditor extends EditorPart
             final PropertyDialogAction tmp = new PropertyDialogAction(new SameShellProvider(shell),
                     new ISelectionProvider() {
 
-                        @Override
-                        public void addSelectionChangedListener(
-                                final ISelectionChangedListener listener) {
-                        }
+                @Override
+                public void addSelectionChangedListener(
+                        final ISelectionChangedListener listener) {
+                }
 
-                        @Override
-                        public ISelection getSelection() {
-                            return new StructuredSelection(getMap());
-                        }
+                @Override
+                public ISelection getSelection() {
+                    return new StructuredSelection(getMap());
+                }
 
-                        @Override
-                        public void removeSelectionChangedListener(
-                                final ISelectionChangedListener listener) {
-                        }
+                @Override
+                public void removeSelectionChangedListener(
+                        final ISelectionChangedListener listener) {
+                }
 
-                        @Override
-                        public void setSelection(final ISelection selection) {
-                        }
+                @Override
+                public void setSelection(final ISelection selection) {
+                }
 
-                    });
+            });
 
             propertiesAction = new Action() {
                 @Override
@@ -984,8 +984,6 @@ public class MapEditor extends EditorPart
     private boolean draggingEnabled;
 
     private volatile boolean visible = false;
-
-    private MapEditDomain editDomain;
 
     /**
      * Opens the map's context menu.
@@ -1150,15 +1148,13 @@ public class MapEditor extends EditorPart
         return statusLineManager;
     }
 
-    //
-    // helper method for ToolManager
     @Override
     public boolean isTesting() {
         return this.isTesting;
     }
 
     @Override
-    public void setTesting( boolean testing ) {
+    public void setTesting(boolean testing) {
         this.isTesting = testing;
     }
 

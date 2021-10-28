@@ -5,10 +5,20 @@ Bundle-Name: Test Plug-in
 Bundle-SymbolicName: org.locationtech.udig.location.tests
 Bundle-Version: 2.3.0.qualifier
 Bundle-Vendor: udig.refractions.net
-Bundle-Activator: org.locationtech.udig.location.test.TestPlugin
 Require-Bundle: org.eclipse.core.runtime,
  org.junit;bundle-version="[4.0.0,5.0.0)",
  org.locationtech.udig.libs,
  org.locationtech.udig.location
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.apache.xmlrpc,
+ org.apache.xmlrpc.client,
+ org.apache.xmlrpc.client.util,
+ org.apache.xmlrpc.common,
+ org.apache.xmlrpc.jaxb,
+ org.apache.xmlrpc.metadata,
+ org.apache.xmlrpc.parser,
+ org.apache.xmlrpc.serializer,
+ org.apache.xmlrpc.server,
+ org.apache.xmlrpc.util,
+ org.apache.xmlrpc.webserver

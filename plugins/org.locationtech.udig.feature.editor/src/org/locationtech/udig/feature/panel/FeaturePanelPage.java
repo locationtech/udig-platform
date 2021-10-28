@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2010, Refractions Research Inc.
  * (C) 2001, 2009 IBM Corporation and others
@@ -21,12 +22,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import org.locationtech.udig.feature.editor.FeatureEditorPlugin;
-import org.locationtech.udig.feature.editor.IFeaturePage;
-import org.locationtech.udig.project.ui.IFeaturePanel;
-import org.locationtech.udig.project.ui.IFeatureSite;
-import org.locationtech.udig.project.ui.feature.FeaturePanelEntry;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;
@@ -71,24 +66,28 @@ import org.eclipse.ui.part.PageBookView;
 import org.eclipse.ui.views.properties.tabbed.AbstractOverridableTabListPropertySection;
 import org.eclipse.ui.views.properties.tabbed.IOverridableTabListContentProvider;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
+import org.locationtech.udig.feature.editor.FeatureEditorPlugin;
+import org.locationtech.udig.feature.editor.IFeaturePage;
+import org.locationtech.udig.project.ui.IFeaturePanel;
+import org.locationtech.udig.project.ui.IFeatureSite;
+import org.locationtech.udig.project.ui.feature.FeaturePanelEntry;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * A tabbed UI showing feature panels.
  * <p>
- * The use of ISelectionListener.selectionChanged(IWorkbenchPart,ISelection) is
- * used to track what is going on; it is the responsibility of the container to
- * feed this page events via this method.
+ * The use of ISelectionListener.selectionChanged(IWorkbenchPart,ISelection) is used to track what
+ * is going on; it is the responsibility of the container to feed this page events via this method.
  * <ul>
  * <li>IWorkbenchPart - is checked to see if it can adapt to a Map
  * <li>ISelection -
  * </ul>
- * 
+ *
  * @see TabbedPropertySheetPage
  */
-public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProviderListener,
-        ISelectionListener {
+public class FeaturePanelPage extends Page
+        implements IFeaturePage, ILabelProviderListener, ISelectionListener {
     /**
      * FeatureSite allowing page to interact with the current EditManager etc...
      */
@@ -112,14 +111,14 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
     private FeaturePanelRegistry registry;
 
     /**
-     * In the event we are provided a selection from another workbench part this
-     * selection contributor will due the dead.
+     * In the event we are provided a selection from another workbench part this selection
+     * contributor will due the dead.
      */
     private FeaturePanelPageContributor selectionContributor = null;
 
     /**
-     * The currently active schema, which may not match the schema from the
-     * workbench part that created this instance.
+     * The currently active schema, which may not match the schema from the workbench part that
+     * created this instance.
      */
     private SimpleFeatureType currentSchema;
 
@@ -152,27 +151,31 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
      */
     private IPartListener partActivationListener = new IPartListener() {
 
+        @Override
         public void partActivated(IWorkbenchPart part) {
             handlePartActivated(part);
         }
 
+        @Override
         public void partBroughtToTop(IWorkbenchPart part) {
         }
 
+        @Override
         public void partClosed(IWorkbenchPart part) {
         }
 
+        @Override
         public void partDeactivated(IWorkbenchPart part) {
         }
 
+        @Override
         public void partOpened(IWorkbenchPart part) {
         }
     };
 
     /**
-     * This is used to communicate a selected SimpleFeatureType to the page.
-     * This can be used adapt a normal workbench part up as a
-     * IFeaturePanelPageContributor.
+     * This is used to communicate a selected SimpleFeatureType to the page. This can be used adapt
+     * a normal workbench part up as a IFeaturePanelPageContributor.
      */
     private class IFeaturePanelPageContributorFromSelection implements FeaturePanelPageContributor {
 
@@ -180,9 +183,8 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
 
         /**
          * Constructor that takes in a contributor id taken from a selection.
-         * 
-         * @param contributorId
-         *            the contributor id.
+         *
+         * @param contributorId the contributor id.
          */
         public IFeaturePanelPageContributorFromSelection(SimpleFeatureType schema) {
             this.schema = schema;
@@ -191,6 +193,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
         /**
          * @see org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor#getContributorId()
          */
+        @Override
         public SimpleFeatureType getSchema() {
             return schema;
         }
@@ -200,6 +203,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
      * Label provider for the ListViewer.
      */
     class TabbedPropertySheetPageLabelProvider extends LabelProvider {
+        @Override
         public String getText(Object element) {
             if (element instanceof FeaturePanelTabDescriptor) {
                 return ((FeaturePanelTabDescriptor) element).getLabel();
@@ -216,6 +220,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
         /**
          * Shows the tab associated with the selection.
          */
+        @Override
         public void selectionChanged(SelectionChangedEvent event) {
             IStructuredSelection selection = (IStructuredSelection) event.getSelection();
             IFeaturePanel tab = null;
@@ -236,7 +241,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
                     hideTab(currentTab);
                 }
 
-                Composite tabComposite = (Composite) tabToComposite.get(tab);
+                Composite tabComposite = tabToComposite.get(tab);
                 if (tabComposite == null) {
                     tabComposite = createTabComposite();
                     tab.createPartControl(tabComposite);
@@ -244,7 +249,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
                         tab.init(site, null);
                     } catch (PartInitException e) {
                         IStatus status = new Status(IStatus.ERROR, descriptor.getEntry().getId(),
-                                "Problem initializing feature panel", e);
+                                "Problem initializing feature panel", e); //$NON-NLS-1$
                         FeatureEditorPlugin.getDefault().getLog().log(status);
                     }
                     tabToComposite.put(tab, tabComposite);
@@ -275,11 +280,11 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
          */
         private void showTab(IFeaturePanel target) {
             if (target != null) {
-                Composite tabComposite = (Composite) tabToComposite.get(target);
+                Composite tabComposite = tabToComposite.get(target);
                 if (tabComposite != null) {
                     /**
-                     * the following method call order is important - do not
-                     * change it or the widgets might be drawn incorrectly
+                     * the following method call order is important - do not change it or the
+                     * widgets might be drawn incorrectly
                      */
                     tabComposite.moveAbove(null);
                     target.aboutToBeShown();
@@ -305,9 +310,8 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
 
     /**
      * create a new tabbed property sheet page.
-     * 
-     * @param tabbedPropertySheetPageContributor
-     *            the tabbed property sheet page contributor.
+     *
+     * @param tabbedPropertySheetPageContributor the tabbed property sheet page contributor.
      */
     public FeaturePanelPage(FeaturePanelPageContributor featurePanelPageContributor) {
         this(featurePanelPageContributor, true);
@@ -315,28 +319,25 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
 
     /**
      * create a new tabbed property sheet page.
-     * 
-     * @param tabbedPropertySheetPageContributor
-     *            the tabbed property sheet page contributor.
-     * @param showTitleBar
-     *            boolean indicating if the title bar should be shown; default
-     *            value is <code>true</code>
+     *
+     * @param tabbedPropertySheetPageContributor the tabbed property sheet page contributor.
+     * @param showTitleBar boolean indicating if the title bar should be shown; default value is
+     *        <code>true</code>
      * @since 3.5
      */
     public FeaturePanelPage(FeaturePanelPageContributor contributor, boolean showTitleBar) {
         hasTitleBar = showTitleBar;
         this.contributor = contributor;
-        tabToComposite = new HashMap<IFeaturePanel, Composite>();
-        selectionQueue = new ArrayList<String>(10);
-        tabSelectionListeners = new ArrayList<TabSelectionListener>();
+        tabToComposite = new HashMap<>();
+        selectionQueue = new ArrayList<>(10);
+        tabSelectionListeners = new ArrayList<>();
         initContributor(contributor.getSchema());
     }
 
     /**
      * Handle the part activated event.
-     * 
-     * @param part
-     *            the new activated part.
+     *
+     * @param part the new activated part.
      */
     protected void handlePartActivated(IWorkbenchPart part) {
         // Check if the part is a PageBookView with this page as its
@@ -348,8 +349,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
         // we still need to trigger aboutToBeHidden() and aboutToBeShown().
         if (!thisActivated && !part.equals(contributor)) {
             // check if this view is a proxy for another contributor
-            IContributedContentsView view = (IContributedContentsView) part
-                    .getAdapter(IContributedContentsView.class);
+            IContributedContentsView view = part.getAdapter(IContributedContentsView.class);
 
             if (view != null && view.getContributingPart() != null
                     && view.getContributingPart().equals(contributor)) {
@@ -375,6 +375,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
     /**
      * @see org.eclipse.ui.part.IPage#createControl(org.eclipse.swt.widgets.Composite)
      */
+    @Override
     public void createControl(Composite parent) {
         widgetFactory = new FeaturePanelWidgetFactory();
         tabbedPropertyComposite = new FeaturePanelComposite(parent, widgetFactory, hasTitleBar);
@@ -394,6 +395,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
         tabbedPropertyViewer.addSelectionChangedListener(new SelectionChangedListener());
         tabbedPropertyComposite.getScrolledComposite().addControlListener(new ControlAdapter() {
 
+            @Override
             public void controlResized(ControlEvent e) {
                 resizeScrolledComposite();
             }
@@ -415,12 +417,11 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
 
     /**
      * Initialize the contributor
-     * 
-     * @param contributorId
-     *            the contributor id.
+     *
+     * @param contributorId the contributor id.
      */
     private void initContributor(SimpleFeatureType schema) {
-        descriptorToTab = new HashMap<FeaturePanelTabDescriptor, IFeaturePanel>();
+        descriptorToTab = new HashMap<>();
 
         if (currentSchema == schema) {
             // default contributor from the workbench part.
@@ -428,8 +429,8 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
         } else {
             // selection contributor.
             selectionContributor = new IFeaturePanelPageContributorFromSelection(schema);
-            registry = FeaturePanelRegistryFactory.getInstance().createRegistry(
-                    selectionContributor);
+            registry = FeaturePanelRegistryFactory.getInstance()
+                    .createRegistry(selectionContributor);
         }
 
         currentSchema = schema;
@@ -451,7 +452,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
 
     /**
      * Gets the tab list content provider for the contributor.
-     * 
+     *
      * @return the tab list content provider for the contributor.
      */
     protected IStructuredContentProvider getTabListContentProvider() {
@@ -459,14 +460,12 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
     }
 
     /**
-     * Dispose the contributor with the provided contributor id. This happens on
-     * part close as well as when contributors switch between the workbench part
-     * and contributor from a selection.
+     * Dispose the contributor with the provided contributor id. This happens on part close as well
+     * as when contributors switch between the workbench part and contributor from a selection.
      */
     private void disposeContributor() {
         /**
-         * If the current tab is about to be disposed we have to call
-         * aboutToBeHidden
+         * If the current tab is about to be disposed we have to call aboutToBeHidden
          */
         if (currentTab != null) {
             currentTab.aboutToBeHidden();
@@ -495,6 +494,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
     /**
      * @see org.eclipse.ui.part.IPage#dispose()
      */
+    @Override
     public void dispose() {
 
         disposeContributor();
@@ -522,6 +522,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
     /**
      * @see org.eclipse.ui.part.IPage#getControl()
      */
+    @Override
     public Control getControl() {
         return tabbedPropertyComposite;
     }
@@ -529,6 +530,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
     /**
      * @see org.eclipse.ui.part.IPage#setActionBars(org.eclipse.ui.IActionBars)
      */
+    @Override
     public void setActionBars(IActionBars actionBars) {
         // Override the undo and redo global action handlers
         // to use the contributor action handlers
@@ -556,6 +558,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
     /**
      * @see org.eclipse.ui.part.IPage#setFocus()
      */
+    @Override
     public void setFocus() {
         getControl().setFocus();
     }
@@ -564,17 +567,17 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
      * @see org.eclipse.ui.ISelectionListener#selectionChanged(org.eclipse.ui.IWorkbenchPart,
      *      org.eclipse.jface.viewers.ISelection)
      */
+    @Override
     public void selectionChanged(IWorkbenchPart part, ISelection selection) {
         setInput(part, selection);
         tabbedPropertyViewer.refresh();
     }
 
     /**
-     * Stores the current tab label in the selection queue. Tab labels are used
-     * to carry the tab context from one input object to another. The queue
-     * specifies the selection priority. So if the first tab in the queue is not
-     * available for the input we try the second tab and so on. If none of the
-     * tabs are available we default to the first tab available for the input.
+     * Stores the current tab label in the selection queue. Tab labels are used to carry the tab
+     * context from one input object to another. The queue specifies the selection priority. So if
+     * the first tab in the queue is not available for the input we try the second tab and so on. If
+     * none of the tabs are available we default to the first tab available for the input.
      */
     private void storeCurrentTabSelection(String label) {
         if (!selectionQueueLocked) {
@@ -584,15 +587,15 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
     }
 
     /**
-     * Resize the scrolled composite enclosing the sections, which may result in
-     * the addition or removal of scroll bars.
-     * 
+     * Resize the scrolled composite enclosing the sections, which may result in the addition or
+     * removal of scroll bars.
+     *
      * @since 3.5
      */
     public void resizeScrolledComposite() {
         Point currentTabSize = new Point(0, 0);
         if (currentTab != null) {
-            Composite sizeReference = (Composite) tabToComposite.get(currentTab);
+            Composite sizeReference = tabToComposite.get(currentTab);
             if (sizeReference != null) {
                 currentTabSize = sizeReference.computeSize(SWT.DEFAULT, SWT.DEFAULT);
             }
@@ -619,7 +622,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
     private void disposeTabs(Collection tabs) {
         for (Iterator iter = tabs.iterator(); iter.hasNext();) {
             IFeaturePanel tab = (IFeaturePanel) iter.next();
-            Composite composite = (Composite) tabToComposite.remove(tab);
+            Composite composite = tabToComposite.remove(tab);
             tab.dispose();
             if (composite != null) {
                 composite.dispose();
@@ -647,15 +650,14 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
     }
 
     /**
-     * Update the current tabs to represent the given input object. When tabs
-     * apply for both the old and new input they are reused otherwise they are
-     * disposed. If the current visible tab will not be reused (i.e. will be
-     * disposed) we have to send it an aboutToBeHidden() message.
-     * 
+     * Update the current tabs to represent the given input object. When tabs apply for both the old
+     * and new input they are reused otherwise they are disposed. If the current visible tab will
+     * not be reused (i.e. will be disposed) we have to send it an aboutToBeHidden() message.
+     *
      * @since 3.4
      */
     protected void updateTabs(List<FeaturePanelTabDescriptor> descriptors) {
-        Map<FeaturePanelTabDescriptor, IFeaturePanel> newTabs = new HashMap<FeaturePanelTabDescriptor, IFeaturePanel>(
+        Map<FeaturePanelTabDescriptor, IFeaturePanel> newTabs = new HashMap<>(
                 descriptors.size() * 2);
         boolean disposingCurrentTab = (currentTab != null);
         for (FeaturePanelTabDescriptor descriptor : descriptors) {
@@ -673,8 +675,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
         }
         if (disposingCurrentTab) {
             /**
-             * If the current tab is about to be disposed we have to call
-             * aboutToBeHidden
+             * If the current tab is about to be disposed we have to call aboutToBeHidden
              */
             currentTab.aboutToBeHidden();
             currentTab = null;
@@ -685,9 +686,8 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
 
     /**
      * Create the tab contents for the provided tab descriptor.
-     * 
-     * @param tabDescriptor
-     *            the tab descriptor.
+     *
+     * @param tabDescriptor the tab descriptor.
      * @return the tab contents.
      * @since 3.4
      */
@@ -698,7 +698,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
 
     /**
      * Helper method for creating property tab composites.
-     * 
+     *
      * @return the property tab composite.
      */
     private Composite createTabComposite() {
@@ -736,14 +736,13 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
         if (!descriptors.isEmpty()) {
             updateTabs(descriptors);
             ILabelProvider header = null;
-            for( FeaturePanelTabDescriptor descriptor : descriptors ){
+            for (FeaturePanelTabDescriptor descriptor : descriptors) {
                 header = descriptor.getEntry().getLabelProvider();
             }
-            if( header != null ){
-                tabbedPropertyViewer.setLabelProvider( new TabLabelProvider( header ));
-            }
-            else {
-                tabbedPropertyViewer.setLabelProvider( null );
+            if (header != null) {
+                tabbedPropertyViewer.setLabelProvider(new TabLabelProvider(header));
+            } else {
+                tabbedPropertyViewer.setLabelProvider(null);
             }
         }
         // update tabs list
@@ -774,7 +773,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
 
     /**
      * Get the currently active tab.
-     * 
+     *
      * @return the currently active tab.
      * @since 3.4
      */
@@ -784,9 +783,8 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
 
     /**
      * Handle the tab selected change event.
-     * 
-     * @param tabDescriptor
-     *            the new selected tab.
+     *
+     * @param tabDescriptor the new selected tab.
      */
     private void handleTabSelection(FeaturePanelTabDescriptor tabDescriptor) {
         if (selectionQueueLocked) {
@@ -802,9 +800,8 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
 
     /**
      * Add a tab selection listener.
-     * 
-     * @param listener
-     *            a tab selection listener.
+     *
+     * @param listener a tab selection listener.
      */
     public void addTabSelectionListener(TabSelectionListener listener) {
         tabSelectionListeners.add(listener);
@@ -812,19 +809,18 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
 
     /**
      * Remove a tab selection listener.
-     * 
-     * @param listener
-     *            a tab selection listener.
+     *
+     * @param listener a tab selection listener.
      */
     public void removeTabSelectionListener(TabSelectionListener listener) {
         tabSelectionListeners.remove(listener);
     }
 
     /**
-     * Override the tabs with a new set of tabs. The tab list is obtained from
-     * the {@link AbstractOverridableTabListPropertySection} by the
+     * Override the tabs with a new set of tabs. The tab list is obtained from the
+     * {@link AbstractOverridableTabListPropertySection} by the
      * {@link IOverridableTabListContentProvider}.
-     * 
+     *
      * @since 3.4
      */
     public void overrideTabs() {
@@ -836,7 +832,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
 
     /**
      * Get the widget factory.
-     * 
+     *
      * @return the widget factory.
      */
     public FeaturePanelWidgetFactory getWidgetFactory() {
@@ -851,8 +847,8 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
             FeaturePanelTitle title = tabbedPropertyComposite.getTitle();
             if (currentTab == null) {
                 /**
-                 * No tabs are shown so hide the title bar, otherwise you see
-                 * "No properties available" and a title bar for the selection.
+                 * No tabs are shown so hide the title bar, otherwise you see "No properties
+                 * available" and a title bar for the selection.
                  */
                 title.setTitle(null, null);
             } else {
@@ -866,16 +862,16 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
     /**
      * @see org.eclipse.jface.viewers.ILabelProviderListener#labelProviderChanged(org.eclipse.jface.viewers.LabelProviderChangedEvent)
      */
+    @Override
     public void labelProviderChanged(LabelProviderChangedEvent event) {
         refreshTitleBar();
     }
 
     /**
-     * Retrieve the contributor from the selection; the contributor is
-     * responsible for obtaining a Schema.
-     * 
-     * @param object
-     *            - the selected element
+     * Retrieve the contributor from the selection; the contributor is responsible for obtaining a
+     * Schema.
+     *
+     * @param object - the selected element
      * @return the IFeaturePanelPageContributor or null if not applicable
      */
     private FeaturePanelPageContributor getFeaturePanelPageContributor(Object object) {
@@ -885,8 +881,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
 
         if (object instanceof IAdaptable
                 && ((IAdaptable) object).getAdapter(FeaturePanelPageContributor.class) != null) {
-            return (FeaturePanelPageContributor) (((IAdaptable) object)
-                    .getAdapter(FeaturePanelPageContributor.class));
+            return (((IAdaptable) object).getAdapter(FeaturePanelPageContributor.class));
         }
 
         if (Platform.getAdapterManager().hasAdapter(object,
@@ -899,17 +894,14 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
     }
 
     /**
-     * The workbench part creates this instance of the TabbedFeaturePanelPage
-     * and implements ITabbedFeaturePanelPageContributor which is unique
-     * contributor id. This unique contributor id is used to load a registry
-     * with the extension point This id matches the registry.
+     * The workbench part creates this instance of the TabbedFeaturePanelPage and implements
+     * ITabbedFeaturePanelPageContributor which is unique contributor id. This unique contributor id
+     * is used to load a registry with the extension point This id matches the registry.
      * <p>
-     * It is possible for elements in a selection to implement
-     * ITabbedFeaturePanelPageContributor to provide a different contributor id
-     * and thus a differenent registry.
-     * 
-     * @param selection
-     *            the current selection in the active workbench part.
+     * It is possible for elements in a selection to implement ITabbedFeaturePanelPageContributor to
+     * provide a different contributor id and thus a differenent registry.
+     *
+     * @param selection the current selection in the active workbench part.
      */
     private void validateRegistry(ISelection selection) {
         if (selection == null) {
@@ -925,13 +917,12 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
             return;
         }
 
-        FeaturePanelPageContributor newContributor = getFeaturePanelPageContributor(structuredSelection
-                .getFirstElement());
+        FeaturePanelPageContributor newContributor = getFeaturePanelPageContributor(
+                structuredSelection.getFirstElement());
 
         if (newContributor == null) {
             /**
-             * selection does not implement or adapt
-             * ITabbedFeaturePanelPageContributor.
+             * selection does not implement or adapt ITabbedFeaturePanelPageContributor.
              */
             newContributor = contributor;
         }
@@ -947,10 +938,9 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
         }
 
         /**
-         * Selection implements ITabbedFeaturePanelPageContributor different
-         * than current contributor id, so make sure all elements implement the
-         * new id. If all contributor id do not match, then fall back to default
-         * contributor from the workbench part.
+         * Selection implements ITabbedFeaturePanelPageContributor different than current
+         * contributor id, so make sure all elements implement the new id. If all contributor id do
+         * not match, then fall back to default contributor from the workbench part.
          */
         Iterator i = structuredSelection.iterator();
         i.next();
@@ -958,8 +948,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
             newContributor = getFeaturePanelPageContributor(i.next());
             if (newContributor == null || !newContributor.getSchema().equals(selectionSchema)) {
                 /**
-                 * fall back to use the default contributor id from the
-                 * workbench part.
+                 * fall back to use the default contributor id from the workbench part.
                  */
                 if (selectionContributor != null) {
                     disposeContributor();
@@ -971,8 +960,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
         }
 
         /**
-         * All the elements in the selection implement a new contributor id, so
-         * use that id.
+         * All the elements in the selection implement a new contributor id, so use that id.
          */
         disposeContributor();
         currentSchema = selectionSchema;
@@ -992,9 +980,8 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
 
     /**
      * Returns the currently selected tab.
-     * 
-     * @return the currently selected tab or <code>null</code> if there is no
-     *         tab selected.
+     *
+     * @return the currently selected tab or <code>null</code> if there is no tab selected.
      * @since 3.5
      */
     public FeaturePanelTabDescriptor getSelectedTab() {
@@ -1021,9 +1008,8 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
 
     /**
      * Set the currently selected tab to be that of the provided tab id.
-     * 
-     * @param id
-     *            The string id of the tab to select.
+     *
+     * @param id The string id of the tab to select.
      */
     public void setSelectedTab(String id) {
         List<FeaturePanelTabDescriptor> elements = tabbedPropertyViewer.getElements();
@@ -1037,13 +1023,12 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
     }
 
     /**
-     * Returns text of the feature panel title for given selection. If selection
-     * is null, then currentSelection is used
-     * 
-     * @param selection
-     *            Selection whose properties title text is to be returned
+     * Returns text of the feature panel title for given selection. If selection is null, then
+     * currentSelection is used
+     *
+     * @param selection Selection whose properties title text is to be returned
      * @return String representing title text.
-     * 
+     *
      */
     public String getTitleText(ISelection selection) {
         if (selection == null) {
@@ -1053,13 +1038,12 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
     }
 
     /**
-     * Returns the title image for given selection. If selection is null, then
-     * currentSelection is used.
-     * 
-     * @param selection
-     *            Selection whose properties title image is to be returned
+     * Returns the title image for given selection. If selection is null, then currentSelection is
+     * used.
+     *
+     * @param selection Selection whose properties title image is to be returned
      * @return Image that is used as a title image.
-     * 
+     *
      */
     public Image getTitleImage(ISelection selection) {
         if (selection == null) {
@@ -1068,6 +1052,7 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
         return registry.getLabelProvider().getImage(selection);
     }
 
+    @Override
     public void editFeatureChanged(SimpleFeature feature) {
         if (feature != null) {
             StructuredSelection selection = new StructuredSelection(feature);
@@ -1077,10 +1062,12 @@ public class FeaturePanelPage extends Page implements IFeaturePage, ILabelProvid
         }
     }
 
+    @Override
     public IFeatureSite getFeatureSite() {
         return this.site;
     }
 
+    @Override
     public void setFeatureSite(IFeatureSite site) {
         this.site = site;
     }

@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2006, Refractions Research Inc.
  *
@@ -14,12 +15,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.awt.Dimension;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.command.AbstractCommand;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.tests.support.MapTests;
-import org.locationtech.udig.validation.ValidateOverlaps;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.swt.widgets.Display;
@@ -28,13 +23,18 @@ import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Id;
-
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineString;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.tests.CatalogTests;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.validation.ValidateOverlaps;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.filter.Id;
 
 public class IntegrityValidationTest {
 
@@ -57,7 +57,7 @@ public class IntegrityValidationTest {
         // second test: does this validation test for self-overlaps? (it shouldn't)
         line[2] = factory.createLineString(new Coordinate[]{new Coordinate(50, 50),
                 new Coordinate(60, 50), new Coordinate(55, 50),});
-        // third test: an intersecting line; is valid?  
+        // third test: an intersecting line; is valid?
         line[3] = factory.createLineString(new Coordinate[]{new Coordinate(10, 20),
                 new Coordinate(20, 10),});
 
@@ -76,7 +76,7 @@ public class IntegrityValidationTest {
         features[2] = SimpleFeatureBuilder.build(ft,new Object[]{line[2], attrValues[2]}, Integer.toString(2));
         features[3] = SimpleFeatureBuilder.build(ft,new Object[]{line[3], attrValues[3]}, Integer.toString(3));
 
-        IGeoResource resource = MapTests.createGeoResource(features, true);
+        IGeoResource resource = CatalogTests.createGeoResource(features, true);
         Map map = MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(500, 512));
         ValidateOverlaps validator = new ValidateOverlaps();
         validator.op(Display.getDefault(), map.getLayersInternal().get(0),
@@ -84,9 +84,11 @@ public class IntegrityValidationTest {
         assertEquals(1, validator.genericResults.failedFeatures.size()); //only line[0] and line[1] should fail (counts as 1)
         map.sendCommandSync(new AbstractCommand(){
 
+            @Override
             public void run( IProgressMonitor monitor ) throws Exception {
             }
 
+            @Override
             public String getName() {
                 return null;
             }

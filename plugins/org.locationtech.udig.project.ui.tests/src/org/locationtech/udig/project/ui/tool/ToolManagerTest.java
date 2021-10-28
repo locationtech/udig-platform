@@ -27,6 +27,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.locationtech.udig.AbstractProjectUITestCase;
 import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.tests.CatalogTests;
 import org.locationtech.udig.core.filter.AdaptingFilter;
 import org.locationtech.udig.core.filter.AdaptingFilterFactory;
 import org.locationtech.udig.project.internal.Layer;
@@ -66,14 +67,14 @@ public class ToolManagerTest extends AbstractProjectUITestCase {
         }, true);
 
         SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("new", 1); //$NON-NLS-1$
-        IGeoResource resource = MapTests.createGeoResource(features, true);
+        IGeoResource resource = CatalogTests.createGeoResource(features, true);
         Layer layer = map.getLayerFactory().createLayer(resource);
         map.getLayersInternal().add(layer);
 
         IAction copyAction = ApplicationGIS.getToolManager()
-                .getCOPYAction(ApplicationGISInternal.getActiveEditor());
+                .getCOPYAction(ApplicationGISInternal.getActiveMapPart());
         IAction pasteAction = ApplicationGIS.getToolManager()
-                .getPASTEAction(ApplicationGISInternal.getActiveEditor());
+                .getPASTEAction(ApplicationGISInternal.getActiveMapPart());
 
         map.getEditManagerInternal().setSelectedLayer(firstLayer);
 
@@ -83,14 +84,14 @@ public class ToolManagerTest extends AbstractProjectUITestCase {
                 firstLayer);
         StructuredSelection structuredSelection = new StructuredSelection(filter);
 
-        ApplicationGISInternal.getActiveEditor().getEditorSite().getSelectionProvider()
-        .setSelection(structuredSelection);
+        ApplicationGISInternal.getActiveMapPart().getSite().getSelectionProvider()
+                .setSelection(structuredSelection);
+
         Event event = new Event();
         event.display = Display.getCurrent();
         copyAction.runWithEvent(event);
-
-        ApplicationGISInternal.getActiveEditor().getEditorSite().getSelectionProvider()
-        .setSelection(new StructuredSelection(layer));
+        ApplicationGISInternal.getActiveMapPart().getSite().getSelectionProvider()
+                .setSelection(new StructuredSelection(layer));
 
         pasteAction.runWithEvent(event);
 
@@ -116,7 +117,7 @@ public class ToolManagerTest extends AbstractProjectUITestCase {
     @Test
     public void testDeleteAction() throws Exception {
         SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("new", 15); //$NON-NLS-1$
-        IGeoResource resource = MapTests.createGeoResource(features, true);
+        IGeoResource resource = CatalogTests.createGeoResource(features, true);
         Layer layer = map.getLayerFactory().createLayer(resource);
         map.getLayersInternal().add(layer);
 

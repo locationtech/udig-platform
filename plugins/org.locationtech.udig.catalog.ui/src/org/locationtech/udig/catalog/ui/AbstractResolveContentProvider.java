@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,17 +16,15 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.ui.PlatformUI;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.IResolveChangeEvent;
 import org.locationtech.udig.catalog.IResolveChangeListener;
 import org.locationtech.udig.ui.PlatformGIS;
-
-import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.ui.PlatformUI;
-
 
 /**
  * Provides a threaded Tree content provider for IResolve.
@@ -53,7 +51,8 @@ public class AbstractResolveContentProvider implements IResolveChangeListener {
      * enough in the object to correctly deal with multilevel services.
      * </p>
      */
-    Map<IResolve, Thread> threadFarm = new IdentityHashMap<IResolve, Thread>();
+    Map<IResolve, Thread> threadFarm = new IdentityHashMap<>();
+
     /**
      * Captures parent child relationships.
      * <p>
@@ -61,12 +60,15 @@ public class AbstractResolveContentProvider implements IResolveChangeListener {
      * enough in the object to correctly deal with multilevel services.
      * </p>
      */
-    protected final Map<IResolve, List<IResolve>> structure = new IdentityHashMap<IResolve, List<IResolve>>();
+    protected final Map<IResolve, List<IResolve>> structure = new IdentityHashMap<>();
+
     /**
      * Root of this tree, often a ICatalog.
      */
     protected ICatalog catalog;
+
     protected List<IResolve> list;
+
     protected Viewer viewer;
 
     public AbstractResolveContentProvider() {
@@ -88,15 +90,16 @@ public class AbstractResolveContentProvider implements IResolveChangeListener {
      *
      * @param event
      */
-    public void changed( IResolveChangeEvent event ) {
-    	if( threadFarm==null ){
-    		// we are disposed
-    		if( catalog!=null ){
-    			catalog.removeCatalogListener(this);
-    		}
-    		return;
-    	}
-        if ( event.getType() != IResolveChangeEvent.Type.POST_CHANGE) {
+    @Override
+    public void changed(IResolveChangeEvent event) {
+        if (threadFarm == null) {
+            // we are disposed
+            if (catalog != null) {
+                catalog.removeCatalogListener(this);
+            }
+            return;
+        }
+        if (event.getType() != IResolveChangeEvent.Type.POST_CHANGE) {
             return;
         }
         IResolve resolve = event.getResolve();
@@ -113,18 +116,19 @@ public class AbstractResolveContentProvider implements IResolveChangeListener {
      *
      * @param resolve
      */
-    public void refresh( final IResolve resolve ) {
-        if( PlatformUI.getWorkbench().isClosing() )
+    public void refresh(final IResolve resolve) {
+        if (PlatformUI.getWorkbench().isClosing())
             return;
-        Runnable object = new Runnable(){
-        	public void run() {
-        		if (viewer instanceof TreeViewer) {
-    				TreeViewer treeViewer = (TreeViewer) viewer;
-    				treeViewer.refresh(resolve, true);
-    			}else{
-        			viewer.refresh();
-    			}
-        	}
+        Runnable object = new Runnable() {
+            @Override
+            public void run() {
+                if (viewer instanceof TreeViewer) {
+                    TreeViewer treeViewer = (TreeViewer) viewer;
+                    treeViewer.refresh(resolve, true);
+                } else {
+                    viewer.refresh();
+                }
+            }
         };
 
         PlatformGIS.asyncInDisplayThread(object, true);
@@ -138,7 +142,7 @@ public class AbstractResolveContentProvider implements IResolveChangeListener {
      *
      * @param resolve
      */
-    public void update( final IResolve resolve ) {
+    public void update(final IResolve resolve) {
         if (resolve == null) {
             // go away
             return;
@@ -194,13 +198,13 @@ public class AbstractResolveContentProvider implements IResolveChangeListener {
      * </p>
      *
      * @param viewer the viewer
-     * @param oldInput the old input element, or <code>null</code> if the viewer did not
-     *        previously have an input
+     * @param oldInput the old input element, or <code>null</code> if the viewer did not previously
+     *        have an input
      * @param newInput the new input element, or <code>null</code> if the viewer does not have an
      *        input
      */
     @SuppressWarnings("unchecked")
-    public void inputChanged( Viewer newViewer, Object oldInput, Object newInput ) {
+    public void inputChanged(Viewer newViewer, Object oldInput, Object newInput) {
         if (oldInput == newInput) {
             return;
         }
@@ -218,29 +222,28 @@ public class AbstractResolveContentProvider implements IResolveChangeListener {
 
     public void dispose() {
         if (threadFarm != null) {
-            for( IResolve resolve : threadFarm.keySet() ) {
+            for (IResolve resolve : threadFarm.keySet()) {
                 Thread thread = threadFarm.get(resolve);
-                if (thread!=null && thread.isAlive()) {
+                if (thread != null && thread.isAlive()) {
                     thread.interrupt();
                 }
             }
-            if(catalog!=null)
-            	catalog.removeCatalogListener(this);
+            if (catalog != null)
+                catalog.removeCatalogListener(this);
 
             CatalogPlugin.getDefault().getLocalCatalog().removeCatalogListener(this);
             threadFarm.clear();
             threadFarm = null;
         }
         if (structure != null) {
-            for( IResolve resolve : structure.keySet() ) {
+            for (IResolve resolve : structure.keySet()) {
                 List<IResolve> children = structure.get(resolve);
-                if( children!=null )
+                if (children != null)
                     children.clear();
             }
             structure.clear();
         }
     }
-
 
     /**
      * Thread for updating structure
@@ -249,19 +252,21 @@ public class AbstractResolveContentProvider implements IResolveChangeListener {
      */
     class Update implements Runnable {
         IResolve resolve;
-        Update( IResolve target ) {
+
+        Update(IResolve target) {
             resolve = target;
         }
+
         /**
-         * Update strucuture, Thread will be notified if more updates are required.
+         * Update structure, Thread will be notified if more updates are required.
          * <p>
          * Note: We also need to let ourselves be interrupted
          */
-        @SuppressWarnings("unchecked")
+        @Override
         public void run() {
             try {
                 try {
-                    List<IResolve> members = new ArrayList<IResolve>(resolve.members(null));
+                    List<IResolve> members = new ArrayList<>(resolve.members(null));
                     structure.put(resolve, members);
                 } catch (IOException io) {
                     // could not get children
@@ -272,10 +277,9 @@ public class AbstractResolveContentProvider implements IResolveChangeListener {
                 }
                 refresh(resolve);
             } catch (Throwable t) {
-                CatalogUIPlugin.trace( resolve.getIdentifier()+": "+t, t );
+                CatalogUIPlugin.trace(resolve.getIdentifier() + ": " + t, t); //$NON-NLS-1$
             }
         }
     }
-
 
 }
