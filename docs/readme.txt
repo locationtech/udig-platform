@@ -7,25 +7,25 @@ Windows Sphinx Install
 
 Install Python:
 
-1. Python version 3.9 has been verified to work: https://www.python.org/downloads/release/python-3100/
+1. Python version 3.10 has been verified to work: https://www.python.org/downloads/release/python-3100/
 2. You will need to add it to your path.::
      
-     set 'PYTHON=C:\Python-3.9.0\'
+     set 'PYTHON=C:\Python-3.10.0\'
      set 'PATH=%PATH%;%PYTHON%'
 
 3. To install sphinx easily its recommend to install pip first
+   Installers might have an option to install pip. If download https://bootstrap.pypa.io/get-pip.py
+   and run
 
-   download https://bootstrap.pypa.io/get-pip.py
+   'python get-pip.py'
 
-   run 'python get-pip.py'
-
-5. Install Sphinx
+5. Install Sphinx using pip
    
-        pip  sphinx==4.2.0
+        python -m pip install sphinx
 
    Optionally you could install a specific version of sphinx (although we try and use the latest)::
 
-        easy_install sphinx==4.2.0
+        python -m pip install sphinx==4.2.0
 
 Mac Sphinx Install
 ^^^^^^^^^^^^^^^^^^
@@ -33,15 +33,15 @@ Mac Sphinx Install
 You can use the distribution manager of your choice (example bru, macports, etc...). The following example
 is for macports.
 
-1. On OSX Use macports to install Python 3.9::
+1. On OSX Use macports to install Python 3.10::
      
-     sudo port install python39
+     sudo port install python310
      sudo port install python_select
-     sudo python_select python39
+     sudo python_select python310
      
 2. You can use macports to install Python Image Library::
      
-     sudo port install py27-pil
+     sudo port install py310-pil
      
 3. You can now use python easy_install to install sphinx::
      
