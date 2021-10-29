@@ -15,8 +15,6 @@ package org.locationtech.udig.project.element.provider;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.locationtech.udig.project.element.util.ElementAdapterFactory;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -31,6 +29,7 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.locationtech.udig.project.element.util.ElementAdapterFactory;
 
 /**
  * This is the factory that is used to provide the interfaces needed to support Viewers.
@@ -65,7 +64,7 @@ public class ElementItemProviderAdapterFactory extends ElementAdapterFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    protected Collection<Object> supportedTypes = new ArrayList<Object>();
+    protected Collection<Object> supportedTypes = new ArrayList<>();
 
     /**
      * This constructs an instance.
@@ -202,7 +201,7 @@ public class ElementItemProviderAdapterFactory extends ElementAdapterFactory
     }
 
     /**
-     * This disposes all of the item providers created by this factory. 
+     * This disposes all of the item providers created by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

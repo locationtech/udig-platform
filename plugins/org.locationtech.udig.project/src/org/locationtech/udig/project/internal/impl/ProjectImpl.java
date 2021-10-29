@@ -11,15 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-
-import org.locationtech.udig.project.command.Command;
-import org.locationtech.udig.project.command.CommandManager;
-import org.locationtech.udig.project.internal.Messages;
-import org.locationtech.udig.project.internal.Project;
-import org.locationtech.udig.project.internal.ProjectElement;
-import org.locationtech.udig.project.internal.ProjectPackage;
-import org.locationtech.udig.project.internal.commands.DefaultErrorHandler;
-
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -34,6 +25,13 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.locationtech.udig.project.command.Command;
+import org.locationtech.udig.project.command.CommandManager;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.commands.DefaultErrorHandler;
 
 /**
  * Default implementation

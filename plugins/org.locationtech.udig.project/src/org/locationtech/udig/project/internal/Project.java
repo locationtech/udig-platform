@@ -11,13 +11,12 @@ package org.locationtech.udig.project.internal;
 
 import java.util.List;
 
-import org.locationtech.udig.project.IProject;
-
 import org.eclipse.emf.ecore.EObject;
+import org.locationtech.udig.project.IProject;
 
 /**
  * The read/write interface for IProject.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @model
@@ -26,12 +25,13 @@ public interface Project extends EObject, IProject {
     /**
      * Returns an unmodifiable
      */
+    @Override
     public <E> List<E> getElements(Class<E> type);
 
     /**
      * Returns a List with all elements in the project
      * THis list is modifiable.
-     * 
+     *
      * @return a list with all in the project
      * @model type="ProjectElement" opposite="projectInternal"
      */
@@ -39,11 +39,12 @@ public interface Project extends EObject, IProject {
 
     /**
      * gets the name of the project
-     * 
+     *
      * @return the name of the project
      * @uml.property name="name"
      * @model
      */
+    @Override
     public String getName();
 
     /**

@@ -14,14 +14,6 @@ package org.locationtech.udig.project.element.impl;
 
 import java.util.List;
 
-import org.locationtech.udig.core.internal.ExtensionPointList;
-import org.locationtech.udig.project.IProject;
-import org.locationtech.udig.project.element.ElementPackage;
-import org.locationtech.udig.project.element.IGenericProjectElement;
-import org.locationtech.udig.project.element.ProjectElementAdapter;
-import org.locationtech.udig.project.internal.Project;
-import org.locationtech.udig.project.internal.ProjectPackage;
-
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -29,6 +21,13 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.element.ElementPackage;
+import org.locationtech.udig.project.element.IGenericProjectElement;
+import org.locationtech.udig.project.element.ProjectElementAdapter;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectPackage;
 
 /**
  * <!-- begin-user-doc -->

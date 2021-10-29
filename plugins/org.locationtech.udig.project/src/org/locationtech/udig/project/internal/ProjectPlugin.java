@@ -29,9 +29,9 @@ import org.locationtech.udig.ui.ShutdownTaskList;
 import org.osgi.framework.BundleContext;
 
 /**
- * This is the central singleton for the Project model plugin. <!-- begin-user-doc --> <!--
+ * This is the central singleton for the Project model plugin.
+ * <!-- begin-user-doc --> <!--
  * end-user-doc -->
- *
  * @generated
  */
 public final class ProjectPlugin extends EMFPlugin {
@@ -39,8 +39,8 @@ public final class ProjectPlugin extends EMFPlugin {
     public static final String ID = "org.locationtech.udig.project"; //$NON-NLS-1$
 
     /**
-     * Keep track of the singleton. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Keep track of the singleton.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public static final ProjectPlugin INSTANCE = new ProjectPlugin();
@@ -53,8 +53,8 @@ public final class ProjectPlugin extends EMFPlugin {
     static Implementation plugin;
 
     /**
-     * Create the instance. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Create the instance.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public ProjectPlugin() {
@@ -62,9 +62,9 @@ public final class ProjectPlugin extends EMFPlugin {
     }
 
     /**
-     * Returns the singleton instance of the Eclipse plugin. <!-- begin-user-doc --> <!--
+     * Returns the singleton instance of the Eclipse plugin.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @return the singleton instance.
      * @generated
      */
@@ -101,9 +101,9 @@ public final class ProjectPlugin extends EMFPlugin {
     }
 
     /**
-     * Returns the singleton instance of the Eclipse plugin. <!-- begin-user-doc --> <!--
+     * Returns the singleton instance of the Eclipse plugin.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @return the singleton instance.
      * @generated
      */
@@ -123,8 +123,8 @@ public final class ProjectPlugin extends EMFPlugin {
     public static class Implementation extends EclipsePlugin {
 
         /**
-         * Creates an instance. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * Creates an instance.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         public Implementation() {

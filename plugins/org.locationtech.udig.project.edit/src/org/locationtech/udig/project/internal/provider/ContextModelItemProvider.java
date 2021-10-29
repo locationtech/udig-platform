@@ -9,9 +9,6 @@ package org.locationtech.udig.project.internal.provider;
 import java.util.Collection;
 import java.util.List;
 
-import org.locationtech.udig.project.internal.ContextModel;
-import org.locationtech.udig.project.internal.ProjectPackage;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
@@ -24,6 +21,8 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.locationtech.udig.project.internal.ContextModel;
+import org.locationtech.udig.project.internal.ProjectPackage;
 
 /**
  * This is the item provider adapter for a {@link org.locationtech.udig.project.internal.ContextModel} object.
@@ -47,7 +46,7 @@ public class ContextModelItemProvider extends ItemProviderAdapter
     /**
      * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -65,7 +64,7 @@ public class ContextModelItemProvider extends ItemProviderAdapter
      * {@link org.eclipse.emf.edit.command.RemoveCommand} or
      * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override
@@ -113,7 +112,7 @@ public class ContextModelItemProvider extends ItemProviderAdapter
     /**
      * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @generated NOT
      */
     @Override
