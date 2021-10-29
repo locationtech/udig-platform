@@ -5,12 +5,22 @@ Welcome to uDig application development; this section will walk you through sett
 environment, the creation of a simple plugin, and packaging up your own GIS application as an
 executable for others
 
+uDig Developers
+---------------
+.. toctree::
+   :maxdepth: 1
+
+   docguide/sphinxEnvironment
+   IDE-Setup/Eclipse/getting_started_Eclipse_IDE
+
+uDig Application Development
+----------------------------
+
 Tutorials:
 
 .. toctree::
    :maxdepth: 1
    
-   IDE-Setup/Eclipse/getting_started_Eclipse_IDE
    SDKQuickstart/SDKQuickstart
    CustomApplication/CustomApplication
    tool_plugin_tutorial
