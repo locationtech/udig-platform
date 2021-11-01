@@ -12,6 +12,12 @@
  */
 package org.locationtech.udig.project.element.impl;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.locationtech.udig.project.element.ElementFactory;
 import org.locationtech.udig.project.element.ElementPackage;
 import org.locationtech.udig.project.element.IGenericProjectElement;
@@ -20,13 +26,6 @@ import org.locationtech.udig.project.internal.ProjectPackage;
 import org.locationtech.udig.project.internal.impl.ProjectPackageImpl;
 import org.locationtech.udig.project.internal.render.RenderPackage;
 import org.locationtech.udig.project.internal.render.impl.RenderPackageImpl;
-
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc -->

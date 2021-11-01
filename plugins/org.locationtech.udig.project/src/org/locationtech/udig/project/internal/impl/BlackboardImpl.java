@@ -75,7 +75,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     /**
      * The cached value of the '{@link #getEntries() <em>Entries</em>}' containment reference list.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @see #getEntries()
      * @generated
      * @ordered
@@ -84,7 +83,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @generated
      */
     protected BlackboardImpl() {
@@ -93,7 +91,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @generated
      */
     @Override
@@ -103,7 +100,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @generated
      */
     @Override
@@ -117,7 +113,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @generated
      */
     @Override
@@ -132,7 +127,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @generated
      */
     @Override
@@ -146,7 +140,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -163,7 +156,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @generated
      */
     @Override
@@ -178,7 +170,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @generated
      */
     @Override
@@ -551,7 +542,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
                         if (ProjectPlugin.isDebugging("blackboard")) { //$NON-NLS-1$
                             ProjectPlugin.trace(BlackboardImpl.class,
                                     persister.getExtension().getExtensionPointUniqueIdentifier()
-                                            + "unable to load " + className, //$NON-NLS-1$
+                                            + "unable to load " //$NON-NLS-1$
+                                            + className,
                                     e);
                         }
                         continue; // skip this one

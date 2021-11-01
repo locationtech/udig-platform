@@ -10,6 +10,11 @@
  */
 package org.locationtech.udig.project.internal.util;
 
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
+import org.eclipse.emf.ecore.EObject;
 import org.locationtech.udig.catalog.IResolveChangeListener;
 import org.locationtech.udig.core.IBlockingAdaptable;
 import org.locationtech.udig.project.IAbstractContext;
@@ -43,17 +48,11 @@ import org.locationtech.udig.project.internal.StyleEntry;
 import org.locationtech.udig.project.render.IRenderManager;
 import org.locationtech.udig.project.render.IViewportModel;
 
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * TODO Purpose of org.locationtech.udig.project.internal.util
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -283,7 +282,7 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     /**
      * Creates an adapter for the <code>target</code>. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @param target the object to adapt.
      * @return the adapter for the <code>target</code>.
      * @generated
@@ -299,7 +298,7 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
-     * 
+     *
      * @return the new adapter.
      * @see org.locationtech.udig.project.internal.ContextModel
      * @generated
@@ -378,7 +377,7 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
-     * 
+     *
      * @return the new adapter.
      * @see Cloneable
      * @generated
@@ -583,7 +582,7 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
-     * 
+     *
      * @return the new adapter.
      * @see org.locationtech.udig.project.internal.ProjectElement
      * @generated
@@ -624,7 +623,7 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
-     * 
+     *
      * @return the new adapter.
      * @see org.locationtech.udig.project.internal.StyleBlackboard
      * @generated
@@ -651,7 +650,7 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
-     * 
+     *
      * @return the new adapter.
      * @see Comparable
      * @generated

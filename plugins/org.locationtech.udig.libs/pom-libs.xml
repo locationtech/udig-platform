@@ -397,12 +397,6 @@
 			<artifactId>gt-gtopo30</artifactId>
 			<version>${geotools.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>1.6</version>
-		</dependency>
 		<dependency>
 			<groupId>it.geosolutions.imageio-ext</groupId>
 			<artifactId>imageio-ext-streams</artifactId>

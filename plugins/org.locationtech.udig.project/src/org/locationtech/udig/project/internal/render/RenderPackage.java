@@ -22,38 +22,37 @@ import org.eclipse.emf.ecore.EReference;
 public interface RenderPackage extends EPackage {
 
     /**
-     * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The package name.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     String eNAME = "render"; //$NON-NLS-1$
 
     /**
-     * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The package namespace URI.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     String eNS_URI = "http:///net/refractions/udig/project/internal/render.ecore"; //$NON-NLS-1$
 
     /**
-     * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The package namespace name.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     String eNS_PREFIX = "org.locationtech.udig.project.internal.render"; //$NON-NLS-1$
 
     /**
-     * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The singleton instance of the package.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     RenderPackage eINSTANCE = org.locationtech.udig.project.internal.render.impl.RenderPackageImpl
             .init();
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.render.IRenderManager
-     * <em>IRender Manager</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.render.IRenderManager <em>IRender Manager</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.render.IRenderManager
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIRenderManager()
      * @generated
@@ -70,9 +69,8 @@ public interface RenderPackage extends EPackage {
     int IRENDER_MANAGER_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.render.IViewportModel
-     * <em>IViewport Model</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.render.IViewportModel <em>IViewport Model</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.render.IViewportModel
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIViewportModel()
      * @generated
@@ -89,9 +87,8 @@ public interface RenderPackage extends EPackage {
     int IVIEWPORT_MODEL_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.render.IMultiLayerRenderer
-     * <em>IMulti Layer Renderer</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.render.IMultiLayerRenderer <em>IMulti Layer Renderer</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.render.IMultiLayerRenderer
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIMultiLayerRenderer()
      * @generated
@@ -108,9 +105,8 @@ public interface RenderPackage extends EPackage {
     int IMULTI_LAYER_RENDERER_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.render.IRenderer
-     * <em>IRenderer</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.render.IRenderer <em>IRenderer</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.render.IRenderer
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIRenderer()
      * @generated
@@ -118,18 +114,17 @@ public interface RenderPackage extends EPackage {
     int IRENDERER = 3;
 
     /**
-     * The number of structural features of the the '<em>IRenderer</em>' class. <!-- begin-user-doc
+     * The number of structural features of the '<em>IRenderer</em>' class.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int IRENDERER_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.ILayer <em>ILayer</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.ILayer <em>ILayer</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.ILayer
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getILayer()
      * @generated
@@ -137,19 +132,17 @@ public interface RenderPackage extends EPackage {
     int ILAYER = 4;
 
     /**
-     * The number of structural features of the '<em>ILayer</em>' class. <!-- begin-user-doc -->
+     * The number of structural features of the '<em>ILayer</em>' class.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int ILAYER_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the
-     * '{@link org.locationtech.udig.project.internal.render.impl.RendererImpl <em>Renderer</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.render.impl.RendererImpl <em>Renderer</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.render.impl.RendererImpl
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRenderer()
      * @generated
@@ -157,46 +150,44 @@ public interface RenderPackage extends EPackage {
     int RENDERER = 10;
 
     /**
-     * The feature id for the '<em><b>State</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>State</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int RENDERER__STATE = IRENDERER_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int RENDERER__NAME = IRENDERER_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Context</b></em>' reference. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Context</b></em>' reference.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int RENDERER__CONTEXT = IRENDERER_FEATURE_COUNT + 2;
 
     /**
-     * The number of structural features of the the '<em>Renderer</em>' class. <!-- begin-user-doc
+     * The number of structural features of the '<em>Renderer</em>' class.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int RENDERER_FEATURE_COUNT = IRENDERER_FEATURE_COUNT + 3;
 
     /**
-     * The meta object id for the
-     * '{@link org.locationtech.udig.project.internal.render.impl.MultiLayerRendererImpl <em>Multi
-     * Layer Renderer</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.render.impl.MultiLayerRendererImpl <em>Multi Layer Renderer</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.render.impl.MultiLayerRendererImpl
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getMultiLayerRenderer()
      * @generated
@@ -204,27 +195,27 @@ public interface RenderPackage extends EPackage {
     int MULTI_LAYER_RENDERER = 5;
 
     /**
-     * The feature id for the '<em><b>State</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>State</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int MULTI_LAYER_RENDERER__STATE = RENDERER__STATE;
 
     /**
-     * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int MULTI_LAYER_RENDERER__NAME = RENDERER__NAME;
 
     /**
-     * The feature id for the '<em><b>Context</b></em>' reference. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Context</b></em>' reference.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -240,10 +231,8 @@ public interface RenderPackage extends EPackage {
     int MULTI_LAYER_RENDERER_FEATURE_COUNT = RENDERER_FEATURE_COUNT + 0;
 
     /**
-     * The meta object id for the
-     * '{@link org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl
-     * <em>Executor</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl <em>Executor</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRenderExecutor()
      * @generated
@@ -251,55 +240,53 @@ public interface RenderPackage extends EPackage {
     int RENDER_EXECUTOR = 6;
 
     /**
-     * The feature id for the '<em><b>State</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>State</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int RENDER_EXECUTOR__STATE = RENDERER__STATE;
 
     /**
-     * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int RENDER_EXECUTOR__NAME = RENDERER__NAME;
 
     /**
-     * The feature id for the '<em><b>Context</b></em>' reference. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Context</b></em>' reference.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int RENDER_EXECUTOR__CONTEXT = RENDERER__CONTEXT;
 
     /**
-     * The feature id for the '<em><b>Renderer</b></em>' reference. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Renderer</b></em>' reference.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int RENDER_EXECUTOR__RENDERER = RENDERER_FEATURE_COUNT + 0;
 
     /**
-     * The number of structural features of the the '<em>Executor</em>' class. <!-- begin-user-doc
+     * The number of structural features of the '<em>Executor</em>' class.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int RENDER_EXECUTOR_FEATURE_COUNT = RENDERER_FEATURE_COUNT + 1;
 
     /**
-     * The meta object id for the
-     * '{@link org.locationtech.udig.project.internal.render.impl.RenderManagerImpl
-     * <em>Manager</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.render.impl.RenderManagerImpl <em>Manager</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.render.impl.RenderManagerImpl
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRenderManager()
      * @generated
@@ -307,27 +294,27 @@ public interface RenderPackage extends EPackage {
     int RENDER_MANAGER = 7;
 
     /**
-     * The feature id for the '<em><b>Render Executor</b></em>' reference. <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Render Executor</b></em>' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int RENDER_MANAGER__RENDER_EXECUTOR = IRENDER_MANAGER_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Map Display</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Map Display</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int RENDER_MANAGER__MAP_DISPLAY = IRENDER_MANAGER_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Map Internal</b></em>' reference. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Map Internal</b></em>' reference.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -343,19 +330,17 @@ public interface RenderPackage extends EPackage {
     int RENDER_MANAGER__VIEWPORT_MODEL_INTERNAL = IRENDER_MANAGER_FEATURE_COUNT + 3;
 
     /**
-     * The number of structural features of the the '<em>Manager</em>' class. <!-- begin-user-doc
+     * The number of structural features of the '<em>Manager</em>' class.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int RENDER_MANAGER_FEATURE_COUNT = IRENDER_MANAGER_FEATURE_COUNT + 4;
 
     /**
-     * The meta object id for the
-     * '{@link org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener <em>IMap
-     * Display Listener</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener <em>IMap Display Listener</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIMapDisplayListener()
      * @generated
@@ -372,10 +357,8 @@ public interface RenderPackage extends EPackage {
     int IMAP_DISPLAY_LISTENER_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the
-     * '{@link org.locationtech.udig.project.internal.render.impl.ViewportModelImpl <em>Viewport
-     * Model</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.render.impl.ViewportModelImpl <em>Viewport Model</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.render.impl.ViewportModelImpl
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getViewportModel()
      * @generated
@@ -383,63 +366,63 @@ public interface RenderPackage extends EPackage {
     int VIEWPORT_MODEL = 8;
 
     /**
-     * The feature id for the '<em><b>CRS</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>CRS</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int VIEWPORT_MODEL__CRS = IMAP_DISPLAY_LISTENER_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Bounds</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Bounds</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int VIEWPORT_MODEL__BOUNDS = IMAP_DISPLAY_LISTENER_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Center</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Center</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int VIEWPORT_MODEL__CENTER = IMAP_DISPLAY_LISTENER_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Height</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Height</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int VIEWPORT_MODEL__HEIGHT = IMAP_DISPLAY_LISTENER_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Width</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Width</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int VIEWPORT_MODEL__WIDTH = IMAP_DISPLAY_LISTENER_FEATURE_COUNT + 4;
 
     /**
-     * The feature id for the '<em><b>Aspect Ratio</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Aspect Ratio</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int VIEWPORT_MODEL__ASPECT_RATIO = IMAP_DISPLAY_LISTENER_FEATURE_COUNT + 5;
 
     /**
-     * The feature id for the '<em><b>Pixel Size</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Pixel Size</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -473,49 +456,13 @@ public interface RenderPackage extends EPackage {
     int VIEWPORT_MODEL__PREFERRED_SCALE_DENOMINATORS = IMAP_DISPLAY_LISTENER_FEATURE_COUNT + 9;
 
     /**
-     * The feature id for the '<em><b>Available Timesteps</b></em>' attribute list. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     *
-     * @generated
-     * @ordered
-     */
-    int VIEWPORT_MODEL__AVAILABLE_TIMESTEPS = IMAP_DISPLAY_LISTENER_FEATURE_COUNT + 10;
-
-    /**
-     * The feature id for the '<em><b>Current Timestep</b></em>' attribute. <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     * @ordered
-     */
-    int VIEWPORT_MODEL__CURRENT_TIMESTEP = IMAP_DISPLAY_LISTENER_FEATURE_COUNT + 11;
-
-    /**
-     * The feature id for the '<em><b>Available Elevation</b></em>' attribute list. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     *
-     * @generated
-     * @ordered
-     */
-    int VIEWPORT_MODEL__AVAILABLE_ELEVATION = IMAP_DISPLAY_LISTENER_FEATURE_COUNT + 12;
-
-    /**
-     * The feature id for the '<em><b>Current Elevation</b></em>' attribute. <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     * @ordered
-     */
-    int VIEWPORT_MODEL__CURRENT_ELEVATION = IMAP_DISPLAY_LISTENER_FEATURE_COUNT + 13;
-
-    /**
      * The number of structural features of the the '<em>Viewport Model</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      *
      * @generated
      * @ordered
      */
-    int VIEWPORT_MODEL_FEATURE_COUNT = IMAP_DISPLAY_LISTENER_FEATURE_COUNT + 14;
+    int VIEWPORT_MODEL_FEATURE_COUNT = IMAP_DISPLAY_LISTENER_FEATURE_COUNT + 10;
 
     /**
      * The meta object id for the '{@link Comparable <em>Comparable</em>}' class. <!--
@@ -528,18 +475,17 @@ public interface RenderPackage extends EPackage {
     int COMPARABLE = 9;
 
     /**
-     * The number of structural features of the the '<em>Comparable</em>' class. <!-- begin-user-doc
+     * The number of structural features of the '<em>Comparable</em>' class.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int COMPARABLE_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.render.IRenderContext
-     * <em>IRender Context</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.render.IRenderContext <em>IRender Context</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.render.IRenderContext
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIRenderContext()
      * @generated
@@ -566,9 +512,9 @@ public interface RenderPackage extends EPackage {
     int COORDINATE_REFERENCE_SYSTEM = 13;
 
     /**
-     * The meta object id for the '<em>Envelope</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Envelope</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.locationtech.jts.geom.Envelope
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getEnvelope()
      * @generated
@@ -576,9 +522,9 @@ public interface RenderPackage extends EPackage {
     int ENVELOPE = 14;
 
     /**
-     * The meta object id for the '<em>IGeo Resource</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>IGeo Resource</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.locationtech.udig.catalog.IGeoResource
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIGeoResource()
      * @generated
@@ -586,9 +532,9 @@ public interface RenderPackage extends EPackage {
     int IGEO_RESOURCE = 15;
 
     /**
-     * The meta object id for the '<em>Buffered Image</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Buffered Image</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see java.awt.image.BufferedImage
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getBufferedImage()
      * @generated
@@ -596,9 +542,9 @@ public interface RenderPackage extends EPackage {
     int BUFFERED_IMAGE = 16;
 
     /**
-     * The meta object id for the '<em>Rectangle</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Rectangle</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see java.awt.Rectangle
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRectangle()
      * @generated
@@ -606,9 +552,9 @@ public interface RenderPackage extends EPackage {
     int RECTANGLE = 17;
 
     /**
-     * The meta object id for the '<em>Query</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Query</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.geotools.data.Query
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getQuery()
      * @generated
@@ -616,9 +562,9 @@ public interface RenderPackage extends EPackage {
     int QUERY = 18;
 
     /**
-     * The meta object id for the '<em>Graphics2 D</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Graphics2 D</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see java.awt.Graphics2D
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getGraphics2D()
      * @generated
@@ -626,9 +572,9 @@ public interface RenderPackage extends EPackage {
     int GRAPHICS2_D = 19;
 
     /**
-     * The meta object id for the '<em>List</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>List</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see java.util.List
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getList()
      * @generated
@@ -636,9 +582,9 @@ public interface RenderPackage extends EPackage {
     int LIST = 20;
 
     /**
-     * The meta object id for the '<em>Coordinate</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Coordinate</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.locationtech.jts.geom.Coordinate
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getCoordinate()
      * @generated
@@ -646,9 +592,9 @@ public interface RenderPackage extends EPackage {
     int COORDINATE = 21;
 
     /**
-     * The meta object id for the '<em>Point</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Point</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see java.awt.Point
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getPoint()
      * @generated
@@ -656,9 +602,9 @@ public interface RenderPackage extends EPackage {
     int POINT = 22;
 
     /**
-     * The meta object id for the '<em>Affine Transform</em>' data type. <!-- begin-user-doc -->
+     * The meta object id for the '<em>Affine Transform</em>' data type.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @see java.awt.geom.AffineTransform
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getAffineTransform()
      * @generated
@@ -666,9 +612,9 @@ public interface RenderPackage extends EPackage {
     int AFFINE_TRANSFORM = 23;
 
     /**
-     * The meta object id for the '<em>Map Display</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Map Display</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplay
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getMapDisplay()
      * @generated
@@ -676,9 +622,9 @@ public interface RenderPackage extends EPackage {
     int MAP_DISPLAY = 24;
 
     /**
-     * The meta object id for the '<em>IProgress Monitor</em>' data type. <!-- begin-user-doc -->
+     * The meta object id for the '<em>IProgress Monitor</em>' data type.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @see org.eclipse.core.runtime.IProgressMonitor
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIProgressMonitor()
      * @generated
@@ -686,9 +632,9 @@ public interface RenderPackage extends EPackage {
     int IPROGRESS_MONITOR = 25;
 
     /**
-     * The meta object id for the '<em>Exception</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Exception</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.locationtech.udig.project.render.RenderException
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRenderException()
      * @generated
@@ -696,9 +642,9 @@ public interface RenderPackage extends EPackage {
     int RENDER_EXCEPTION = 26;
 
     /**
-     * The meta object id for the '<em>Sorted Set</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Sorted Set</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see java.util.SortedSet
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getSortedSet()
      * @generated
@@ -706,24 +652,14 @@ public interface RenderPackage extends EPackage {
     int SORTED_SET = 27;
 
     /**
-     * The meta object id for the '<em>Referenced Envelope</em>' data type. <!-- begin-user-doc -->
+     * The meta object id for the '<em>Referenced Envelope</em>' data type.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @see org.geotools.geometry.jts.ReferencedEnvelope
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getReferencedEnvelope()
      * @generated
      */
     int REFERENCED_ENVELOPE = 28;
-
-    /**
-     * The meta object id for the '<em>Date Time</em>' data type. <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     *
-     * @see org.joda.time.DateTime
-     * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getDateTime()
-     * @generated
-     */
-    int DATE_TIME = 29;
 
     /**
      * The meta object id for the '<em>Illegal Argument Exception</em>' data type. <!--
@@ -733,7 +669,7 @@ public interface RenderPackage extends EPackage {
      * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIllegalArgumentException()
      * @generated
      */
-    int ILLEGAL_ARGUMENT_EXCEPTION = 30;
+    int ILLEGAL_ARGUMENT_EXCEPTION = 29;
 
     /**
      * The meta object id for the '<em>Info List</em>' data type. <!-- begin-user-doc --> <!--
@@ -800,10 +736,8 @@ public interface RenderPackage extends EPackage {
     EClass getILayer();
 
     /**
-     * Returns the meta object for class
-     * '{@link org.locationtech.udig.project.internal.render.MultiLayerRenderer <em>Multi Layer
-     * Renderer</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.render.MultiLayerRenderer <em>Multi Layer Renderer</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Multi Layer Renderer</em>'.
      * @see org.locationtech.udig.project.internal.render.MultiLayerRenderer
      * @generated
@@ -811,10 +745,8 @@ public interface RenderPackage extends EPackage {
     EClass getMultiLayerRenderer();
 
     /**
-     * Returns the meta object for class
-     * '{@link org.locationtech.udig.project.internal.render.RenderExecutor <em>Executor</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.render.RenderExecutor <em>Executor</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for class '<em>Executor</em>'.
      * @see org.locationtech.udig.project.internal.render.RenderExecutor
      * @generated
@@ -822,10 +754,8 @@ public interface RenderPackage extends EPackage {
     EClass getRenderExecutor();
 
     /**
-     * Returns the meta object for the reference
-     * '{@link org.locationtech.udig.project.internal.render.RenderExecutor#getRenderer
-     * <em>Renderer</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.render.RenderExecutor#getRenderer <em>Renderer</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Renderer</em>'.
      * @see org.locationtech.udig.project.internal.render.RenderExecutor#getRenderer()
      * @see #getRenderExecutor()
@@ -845,10 +775,8 @@ public interface RenderPackage extends EPackage {
     EClass getRenderManager();
 
     /**
-     * Returns the meta object for the reference
-     * '{@link org.locationtech.udig.project.internal.render.RenderManager#getRenderExecutor
-     * <em>Render Executor</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.render.RenderManager#getRenderExecutor <em>Render Executor</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Render Executor</em>'.
      * @see org.locationtech.udig.project.internal.render.RenderManager#getRenderExecutor()
      * @see #getRenderManager()
@@ -857,10 +785,8 @@ public interface RenderPackage extends EPackage {
     EReference getRenderManager_RenderExecutor();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.render.RenderManager#getMapDisplay <em>Map
-     * Display</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.RenderManager#getMapDisplay <em>Map Display</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Map Display</em>'.
      * @see org.locationtech.udig.project.internal.render.RenderManager#getMapDisplay()
      * @see #getRenderManager()
@@ -869,10 +795,8 @@ public interface RenderPackage extends EPackage {
     EAttribute getRenderManager_MapDisplay();
 
     /**
-     * Returns the meta object for the reference
-     * '{@link org.locationtech.udig.project.internal.render.RenderManager#getMapInternal <em>Map
-     * Internal</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.render.RenderManager#getMapInternal <em>Map Internal</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Map Internal</em>'.
      * @see org.locationtech.udig.project.internal.render.RenderManager#getMapInternal()
      * @see #getRenderManager()
@@ -881,10 +805,8 @@ public interface RenderPackage extends EPackage {
     EReference getRenderManager_MapInternal();
 
     /**
-     * Returns the meta object for the reference
-     * '{@link org.locationtech.udig.project.internal.render.RenderManager#getViewportModelInternal
-     * <em>Viewport Model Internal</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.render.RenderManager#getViewportModelInternal <em>Viewport Model Internal</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Viewport Model Internal</em>'.
      * @see org.locationtech.udig.project.internal.render.RenderManager#getViewportModelInternal()
      * @see #getRenderManager()
@@ -904,10 +826,8 @@ public interface RenderPackage extends EPackage {
     EClass getRenderer();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.render.Renderer#getState <em>State</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.Renderer#getState <em>State</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for the attribute '<em>State</em>'.
      * @see org.locationtech.udig.project.internal.render.Renderer#getState()
      * @see #getRenderer()
@@ -928,10 +848,8 @@ public interface RenderPackage extends EPackage {
     EAttribute getRenderer_Name();
 
     /**
-     * Returns the meta object for the reference
-     * '{@link org.locationtech.udig.project.internal.render.Renderer#getContext <em>Context</em>}'.
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.render.Renderer#getContext <em>Context</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for the reference '<em>Context</em>'.
      * @see org.locationtech.udig.project.internal.render.Renderer#getContext()
      * @see #getRenderer()
@@ -940,10 +858,8 @@ public interface RenderPackage extends EPackage {
     EReference getRenderer_Context();
 
     /**
-     * Returns the meta object for class
-     * '{@link org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener <em>IMap
-     * Display Listener</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener <em>IMap Display Listener</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>IMap Display Listener</em>'.
      * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener
      * @model instanceClass="org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener"
@@ -952,9 +868,8 @@ public interface RenderPackage extends EPackage {
     EClass getIMapDisplayListener();
 
     /**
-     * Returns the meta object for class '{@link org.locationtech.udig.project.render.IRenderContext
-     * <em>IRender Context</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.project.render.IRenderContext <em>IRender Context</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>IRender Context</em>'.
      * @see org.locationtech.udig.project.render.IRenderContext
      * @model instanceClass="org.locationtech.udig.project.render.IRenderContext"
@@ -963,10 +878,8 @@ public interface RenderPackage extends EPackage {
     EClass getIRenderContext();
 
     /**
-     * Returns the meta object for class
-     * '{@link org.locationtech.udig.project.internal.render.ViewportModel <em>Viewport
-     * Model</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.render.ViewportModel <em>Viewport Model</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Viewport Model</em>'.
      * @see org.locationtech.udig.project.internal.render.ViewportModel
      * @generated
@@ -974,10 +887,8 @@ public interface RenderPackage extends EPackage {
     EClass getViewportModel();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCRS <em>CRS</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCRS <em>CRS</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for the attribute '<em>CRS</em>'.
      * @see org.locationtech.udig.project.internal.render.ViewportModel#getCRS()
      * @see #getViewportModel()
@@ -986,10 +897,8 @@ public interface RenderPackage extends EPackage {
     EAttribute getViewportModel_CRS();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getBounds
-     * <em>Bounds</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.ViewportModel#getBounds <em>Bounds</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Bounds</em>'.
      * @see org.locationtech.udig.project.internal.render.ViewportModel#getBounds()
      * @see #getViewportModel()
@@ -998,10 +907,8 @@ public interface RenderPackage extends EPackage {
     EAttribute getViewportModel_Bounds();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCenter
-     * <em>Center</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCenter <em>Center</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Center</em>'.
      * @see org.locationtech.udig.project.internal.render.ViewportModel#getCenter()
      * @see #getViewportModel()
@@ -1010,10 +917,8 @@ public interface RenderPackage extends EPackage {
     EAttribute getViewportModel_Center();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getHeight
-     * <em>Height</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.ViewportModel#getHeight <em>Height</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Height</em>'.
      * @see org.locationtech.udig.project.internal.render.ViewportModel#getHeight()
      * @see #getViewportModel()
@@ -1022,10 +927,8 @@ public interface RenderPackage extends EPackage {
     EAttribute getViewportModel_Height();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getWidth
-     * <em>Width</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.ViewportModel#getWidth <em>Width</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Width</em>'.
      * @see org.locationtech.udig.project.internal.render.ViewportModel#getWidth()
      * @see #getViewportModel()
@@ -1034,10 +937,8 @@ public interface RenderPackage extends EPackage {
     EAttribute getViewportModel_Width();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getAspectRatio <em>Aspect
-     * Ratio</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.ViewportModel#getAspectRatio <em>Aspect Ratio</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Aspect Ratio</em>'.
      * @see org.locationtech.udig.project.internal.render.ViewportModel#getAspectRatio()
      * @see #getViewportModel()
@@ -1046,10 +947,8 @@ public interface RenderPackage extends EPackage {
     EAttribute getViewportModel_AspectRatio();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getPixelSize <em>Pixel
-     * Size</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.ViewportModel#getPixelSize <em>Pixel Size</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Pixel Size</em>'.
      * @see org.locationtech.udig.project.internal.render.ViewportModel#getPixelSize()
      * @see #getViewportModel()
@@ -1058,10 +957,8 @@ public interface RenderPackage extends EPackage {
     EAttribute getViewportModel_PixelSize();
 
     /**
-     * Returns the meta object for the container reference
-     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getMapInternal <em>Map
-     * Internal</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the container reference '{@link org.locationtech.udig.project.internal.render.ViewportModel#getMapInternal <em>Map Internal</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Map Internal</em>'.
      * @see org.locationtech.udig.project.internal.render.ViewportModel#getMapInternal()
      * @see #getViewportModel()
@@ -1070,10 +967,8 @@ public interface RenderPackage extends EPackage {
     EReference getViewportModel_MapInternal();
 
     /**
-     * Returns the meta object for the reference
-     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getRenderManagerInternal
-     * <em>Render Manager Internal</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.render.ViewportModel#getRenderManagerInternal <em>Render Manager Internal</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Render Manager Internal</em>'.
      * @see org.locationtech.udig.project.internal.render.ViewportModel#getRenderManagerInternal()
      * @see #getViewportModel()
@@ -1082,64 +977,14 @@ public interface RenderPackage extends EPackage {
     EReference getViewportModel_RenderManagerInternal();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getPreferredScaleDenominators
-     * <em>Preferred Scale Denominators</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.render.ViewportModel#getPreferredScaleDenominators <em>Preferred Scale Denominators</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Preferred Scale Denominators</em>'.
      * @see org.locationtech.udig.project.internal.render.ViewportModel#getPreferredScaleDenominators()
      * @see #getViewportModel()
      * @generated
      */
     EAttribute getViewportModel_PreferredScaleDenominators();
-
-    /**
-     * Returns the meta object for the attribute list
-     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getAvailableTimesteps
-     * <em>Available Timesteps</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
-     * @return the meta object for the attribute list '<em>Available Timesteps</em>'.
-     * @see org.locationtech.udig.project.internal.render.ViewportModel#getAvailableTimesteps()
-     * @see #getViewportModel()
-     * @generated
-     */
-    EAttribute getViewportModel_AvailableTimesteps();
-
-    /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCurrentTimestep
-     * <em>Current Timestep</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
-     * @return the meta object for the attribute '<em>Current Timestep</em>'.
-     * @see org.locationtech.udig.project.internal.render.ViewportModel#getCurrentTimestep()
-     * @see #getViewportModel()
-     * @generated
-     */
-    EAttribute getViewportModel_CurrentTimestep();
-
-    /**
-     * Returns the meta object for the attribute list
-     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getAvailableElevation
-     * <em>Available Elevation</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
-     * @return the meta object for the attribute list '<em>Available Elevation</em>'.
-     * @see org.locationtech.udig.project.internal.render.ViewportModel#getAvailableElevation()
-     * @see #getViewportModel()
-     * @generated
-     */
-    EAttribute getViewportModel_AvailableElevation();
-
-    /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCurrentElevation
-     * <em>Current Elevation</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
-     * @return the meta object for the attribute '<em>Current Elevation</em>'.
-     * @see org.locationtech.udig.project.internal.render.ViewportModel#getCurrentElevation()
-     * @see #getViewportModel()
-     * @generated
-     */
-    EAttribute getViewportModel_CurrentElevation();
 
     /**
      * Returns the meta object for class '{@link Comparable <em>Comparable</em>}'. <!--
@@ -1153,10 +998,8 @@ public interface RenderPackage extends EPackage {
     EClass getComparable();
 
     /**
-     * Returns the meta object for data type
-     * '{@link org.opengis.referencing.crs.CoordinateReferenceSystem <em>Coordinate Reference
-     * System</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.opengis.referencing.crs.CoordinateReferenceSystem <em>Coordinate Reference System</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Coordinate Reference System</em>'.
      * @see org.opengis.referencing.crs.CoordinateReferenceSystem
      * @model instanceClass="org.opengis.referencing.crs.CoordinateReferenceSystem"
@@ -1165,9 +1008,8 @@ public interface RenderPackage extends EPackage {
     EDataType getCoordinateReferenceSystem();
 
     /**
-     * Returns the meta object for data type '{@link org.locationtech.jts.geom.Envelope
-     * <em>Envelope</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.locationtech.jts.geom.Envelope <em>Envelope</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Envelope</em>'.
      * @see org.locationtech.jts.geom.Envelope
      * @model instanceClass="org.locationtech.jts.geom.Envelope"
@@ -1176,9 +1018,8 @@ public interface RenderPackage extends EPackage {
     EDataType getEnvelope();
 
     /**
-     * Returns the meta object for data type '{@link org.locationtech.udig.catalog.IGeoResource
-     * <em>IGeo Resource</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.locationtech.udig.catalog.IGeoResource <em>IGeo Resource</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>IGeo Resource</em>'.
      * @see org.locationtech.udig.catalog.IGeoResource
      * @model instanceClass="org.locationtech.udig.catalog.IGeoResource"
@@ -1187,9 +1028,8 @@ public interface RenderPackage extends EPackage {
     EDataType getIGeoResource();
 
     /**
-     * Returns the meta object for data type '{@link java.awt.image.BufferedImage <em>Buffered
-     * Image</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link java.awt.image.BufferedImage <em>Buffered Image</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Buffered Image</em>'.
      * @see java.awt.image.BufferedImage
      * @model instanceClass="java.awt.image.BufferedImage"
@@ -1222,7 +1062,6 @@ public interface RenderPackage extends EPackage {
     /**
      * Returns the meta object for data type '{@link java.awt.Graphics2D <em>Graphics2 D</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for data type '<em>Graphics2 D</em>'.
      * @see java.awt.Graphics2D
      * @model instanceClass="java.awt.Graphics2D"
@@ -1242,9 +1081,8 @@ public interface RenderPackage extends EPackage {
     EDataType getList();
 
     /**
-     * Returns the meta object for data type '{@link org.locationtech.jts.geom.Coordinate
-     * <em>Coordinate</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.locationtech.jts.geom.Coordinate <em>Coordinate</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Coordinate</em>'.
      * @see org.locationtech.jts.geom.Coordinate
      * @model instanceClass="org.locationtech.jts.geom.Coordinate"
@@ -1264,9 +1102,8 @@ public interface RenderPackage extends EPackage {
     EDataType getPoint();
 
     /**
-     * Returns the meta object for data type '{@link java.awt.geom.AffineTransform <em>Affine
-     * Transform</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link java.awt.geom.AffineTransform <em>Affine Transform</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Affine Transform</em>'.
      * @see java.awt.geom.AffineTransform
      * @model instanceClass="java.awt.geom.AffineTransform"
@@ -1275,10 +1112,8 @@ public interface RenderPackage extends EPackage {
     EDataType getAffineTransform();
 
     /**
-     * Returns the meta object for data type
-     * '{@link org.locationtech.udig.project.render.displayAdapter.IMapDisplay <em>Map
-     * Display</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.locationtech.udig.project.render.displayAdapter.IMapDisplay <em>Map Display</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Map Display</em>'.
      * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplay
      * @model instanceClass="org.locationtech.udig.project.render.displayAdapter.IMapDisplay"
@@ -1287,9 +1122,8 @@ public interface RenderPackage extends EPackage {
     EDataType getMapDisplay();
 
     /**
-     * Returns the meta object for data type '{@link org.eclipse.core.runtime.IProgressMonitor
-     * <em>IProgress Monitor</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.eclipse.core.runtime.IProgressMonitor <em>IProgress Monitor</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>IProgress Monitor</em>'.
      * @see org.eclipse.core.runtime.IProgressMonitor
      * @model instanceClass="org.eclipse.core.runtime.IProgressMonitor"
@@ -1321,9 +1155,8 @@ public interface RenderPackage extends EPackage {
     EDataType getSortedSet();
 
     /**
-     * Returns the meta object for data type '{@link org.geotools.geometry.jts.ReferencedEnvelope
-     * <em>Referenced Envelope</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.geotools.geometry.jts.ReferencedEnvelope <em>Referenced Envelope</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Referenced Envelope</em>'.
      * @see org.geotools.geometry.jts.ReferencedEnvelope
      * @model instanceClass="org.geotools.geometry.jts.ReferencedEnvelope"
@@ -1332,20 +1165,8 @@ public interface RenderPackage extends EPackage {
     EDataType getReferencedEnvelope();
 
     /**
-     * Returns the meta object for data type '{@link org.joda.time.DateTime <em>Date Time</em>}'.
+     * Returns the meta object for data type '{@link java.lang.IllegalArgumentException <em>Illegal Argument Exception</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
-     * @return the meta object for data type '<em>Date Time</em>'.
-     * @see org.joda.time.DateTime
-     * @model instanceClass="org.joda.time.DateTime"
-     * @generated
-     */
-    EDataType getDateTime();
-
-    /**
-     * Returns the meta object for data type '{@link java.lang.IllegalArgumentException <em>Illegal
-     * Argument Exception</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for data type '<em>Illegal Argument Exception</em>'.
      * @see java.lang.IllegalArgumentException
      * @model instanceClass="java.lang.IllegalArgumentException"
@@ -1354,9 +1175,9 @@ public interface RenderPackage extends EPackage {
     EDataType getIllegalArgumentException();
 
     /**
-     * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!--
+     * Returns the factory that creates the instances of the model.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @return the factory that creates the instances of the model.
      * @generated
      */
@@ -1371,15 +1192,12 @@ public interface RenderPackage extends EPackage {
      * <li>and each data type</li>
      * </ul>
      * <!-- end-user-doc -->
-     *
      * @generated
      */
     interface Literals {
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.render.IRenderManager <em>IRender Manager</em>}'
-         * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.render.IRenderManager <em>IRender Manager</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.render.IRenderManager
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIRenderManager()
          * @generated
@@ -1387,10 +1205,8 @@ public interface RenderPackage extends EPackage {
         EClass IRENDER_MANAGER = eINSTANCE.getIRenderManager();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.render.IViewportModel <em>IViewport Model</em>}'
-         * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.render.IViewportModel <em>IViewport Model</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.render.IViewportModel
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIViewportModel()
          * @generated
@@ -1398,10 +1214,8 @@ public interface RenderPackage extends EPackage {
         EClass IVIEWPORT_MODEL = eINSTANCE.getIViewportModel();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.render.IMultiLayerRenderer <em>IMulti Layer
-         * Renderer</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.render.IMultiLayerRenderer <em>IMulti Layer Renderer</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.render.IMultiLayerRenderer
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIMultiLayerRenderer()
          * @generated
@@ -1409,9 +1223,8 @@ public interface RenderPackage extends EPackage {
         EClass IMULTI_LAYER_RENDERER = eINSTANCE.getIMultiLayerRenderer();
 
         /**
-         * The meta object literal for the '{@link org.locationtech.udig.project.render.IRenderer
-         * <em>IRenderer</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.render.IRenderer <em>IRenderer</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.render.IRenderer
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIRenderer()
          * @generated
@@ -1419,9 +1232,8 @@ public interface RenderPackage extends EPackage {
         EClass IRENDERER = eINSTANCE.getIRenderer();
 
         /**
-         * The meta object literal for the '{@link org.locationtech.udig.project.ILayer
-         * <em>ILayer</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.ILayer <em>ILayer</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.ILayer
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getILayer()
          * @generated
@@ -1429,10 +1241,8 @@ public interface RenderPackage extends EPackage {
         EClass ILAYER = eINSTANCE.getILayer();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.render.impl.MultiLayerRendererImpl
-         * <em>Multi Layer Renderer</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.render.impl.MultiLayerRendererImpl <em>Multi Layer Renderer</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.internal.render.impl.MultiLayerRendererImpl
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getMultiLayerRenderer()
          * @generated
@@ -1440,10 +1250,8 @@ public interface RenderPackage extends EPackage {
         EClass MULTI_LAYER_RENDERER = eINSTANCE.getMultiLayerRenderer();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl
-         * <em>Executor</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl <em>Executor</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRenderExecutor()
          * @generated
@@ -1459,10 +1267,8 @@ public interface RenderPackage extends EPackage {
         EReference RENDER_EXECUTOR__RENDERER = eINSTANCE.getRenderExecutor_Renderer();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.render.impl.RenderManagerImpl
-         * <em>Manager</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.render.impl.RenderManagerImpl <em>Manager</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.internal.render.impl.RenderManagerImpl
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRenderManager()
          * @generated
@@ -1494,19 +1300,16 @@ public interface RenderPackage extends EPackage {
         EReference RENDER_MANAGER__MAP_INTERNAL = eINSTANCE.getRenderManager_MapInternal();
 
         /**
-         * The meta object literal for the '<em><b>Viewport Model Internal</b></em>' reference
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Viewport Model Internal</b></em>' reference feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EReference RENDER_MANAGER__VIEWPORT_MODEL_INTERNAL = eINSTANCE
                 .getRenderManager_ViewportModelInternal();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.render.impl.ViewportModelImpl <em>Viewport
-         * Model</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.render.impl.ViewportModelImpl <em>Viewport Model</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.internal.render.impl.ViewportModelImpl
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getViewportModel()
          * @generated
@@ -1570,70 +1373,31 @@ public interface RenderPackage extends EPackage {
         EAttribute VIEWPORT_MODEL__PIXEL_SIZE = eINSTANCE.getViewportModel_PixelSize();
 
         /**
-         * The meta object literal for the '<em><b>Map Internal</b></em>' container reference
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Map Internal</b></em>' container reference feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EReference VIEWPORT_MODEL__MAP_INTERNAL = eINSTANCE.getViewportModel_MapInternal();
 
         /**
-         * The meta object literal for the '<em><b>Render Manager Internal</b></em>' reference
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Render Manager Internal</b></em>' reference feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EReference VIEWPORT_MODEL__RENDER_MANAGER_INTERNAL = eINSTANCE
                 .getViewportModel_RenderManagerInternal();
 
         /**
-         * The meta object literal for the '<em><b>Preferred Scale Denominators</b></em>' attribute
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Preferred Scale Denominators</b></em>' attribute feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EAttribute VIEWPORT_MODEL__PREFERRED_SCALE_DENOMINATORS = eINSTANCE
                 .getViewportModel_PreferredScaleDenominators();
 
         /**
-         * The meta object literal for the '<em><b>Available Timesteps</b></em>' attribute list
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
-         * @generated
-         */
-        EAttribute VIEWPORT_MODEL__AVAILABLE_TIMESTEPS = eINSTANCE
-                .getViewportModel_AvailableTimesteps();
-
-        /**
-         * The meta object literal for the '<em><b>Current Timestep</b></em>' attribute feature.
-         * <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
-         * @generated
-         */
-        EAttribute VIEWPORT_MODEL__CURRENT_TIMESTEP = eINSTANCE.getViewportModel_CurrentTimestep();
-
-        /**
-         * The meta object literal for the '<em><b>Available Elevation</b></em>' attribute list
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
-         * @generated
-         */
-        EAttribute VIEWPORT_MODEL__AVAILABLE_ELEVATION = eINSTANCE
-                .getViewportModel_AvailableElevation();
-
-        /**
-         * The meta object literal for the '<em><b>Current Elevation</b></em>' attribute feature.
-         * <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
-         * @generated
-         */
-        EAttribute VIEWPORT_MODEL__CURRENT_ELEVATION = eINSTANCE
-                .getViewportModel_CurrentElevation();
-
-        /**
          * The meta object literal for the '{@link java.lang.Object <em>Comparable</em>}' class.
          * <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
          * @see java.lang.Object
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getComparable()
          * @generated
@@ -1641,10 +1405,8 @@ public interface RenderPackage extends EPackage {
         EClass COMPARABLE = eINSTANCE.getComparable();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.render.impl.RendererImpl
-         * <em>Renderer</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.render.impl.RendererImpl <em>Renderer</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.internal.render.impl.RendererImpl
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRenderer()
          * @generated
@@ -1676,10 +1438,8 @@ public interface RenderPackage extends EPackage {
         EReference RENDERER__CONTEXT = eINSTANCE.getRenderer_Context();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener <em>IMap
-         * Display Listener</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener <em>IMap Display Listener</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIMapDisplayListener()
          * @generated
@@ -1687,10 +1447,8 @@ public interface RenderPackage extends EPackage {
         EClass IMAP_DISPLAY_LISTENER = eINSTANCE.getIMapDisplayListener();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.render.IRenderContext <em>IRender Context</em>}'
-         * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.render.IRenderContext <em>IRender Context</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.render.IRenderContext
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIRenderContext()
          * @generated
@@ -1708,9 +1466,9 @@ public interface RenderPackage extends EPackage {
         EDataType COORDINATE_REFERENCE_SYSTEM = eINSTANCE.getCoordinateReferenceSystem();
 
         /**
-         * The meta object literal for the '<em>Envelope</em>' data type. <!-- begin-user-doc -->
+         * The meta object literal for the '<em>Envelope</em>' data type.
+         * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         *
          * @see org.locationtech.jts.geom.Envelope
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getEnvelope()
          * @generated
@@ -1718,9 +1476,9 @@ public interface RenderPackage extends EPackage {
         EDataType ENVELOPE = eINSTANCE.getEnvelope();
 
         /**
-         * The meta object literal for the '<em>IGeo Resource</em>' data type. <!-- begin-user-doc
+         * The meta object literal for the '<em>IGeo Resource</em>' data type.
+         * <!-- begin-user-doc
          * --> <!-- end-user-doc -->
-         *
          * @see org.locationtech.udig.catalog.IGeoResource
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getIGeoResource()
          * @generated
@@ -1728,9 +1486,9 @@ public interface RenderPackage extends EPackage {
         EDataType IGEO_RESOURCE = eINSTANCE.getIGeoResource();
 
         /**
-         * The meta object literal for the '<em>Buffered Image</em>' data type. <!-- begin-user-doc
+         * The meta object literal for the '<em>Buffered Image</em>' data type.
+         * <!-- begin-user-doc
          * --> <!-- end-user-doc -->
-         *
          * @see java.awt.image.BufferedImage
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getBufferedImage()
          * @generated
@@ -1738,9 +1496,9 @@ public interface RenderPackage extends EPackage {
         EDataType BUFFERED_IMAGE = eINSTANCE.getBufferedImage();
 
         /**
-         * The meta object literal for the '<em>Rectangle</em>' data type. <!-- begin-user-doc -->
+         * The meta object literal for the '<em>Rectangle</em>' data type.
+         * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         *
          * @see java.awt.Rectangle
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRectangle()
          * @generated
@@ -1748,9 +1506,9 @@ public interface RenderPackage extends EPackage {
         EDataType RECTANGLE = eINSTANCE.getRectangle();
 
         /**
-         * The meta object literal for the '<em>Query</em>' data type. <!-- begin-user-doc --> <!--
+         * The meta object literal for the '<em>Query</em>' data type.
+         * <!-- begin-user-doc --> <!--
          * end-user-doc -->
-         *
          * @see org.geotools.data.Query
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getQuery()
          * @generated
@@ -1758,9 +1516,9 @@ public interface RenderPackage extends EPackage {
         EDataType QUERY = eINSTANCE.getQuery();
 
         /**
-         * The meta object literal for the '<em>Graphics2 D</em>' data type. <!-- begin-user-doc -->
+         * The meta object literal for the '<em>Graphics2 D</em>' data type.
+         * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         *
          * @see java.awt.Graphics2D
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getGraphics2D()
          * @generated
@@ -1768,9 +1526,9 @@ public interface RenderPackage extends EPackage {
         EDataType GRAPHICS2_D = eINSTANCE.getGraphics2D();
 
         /**
-         * The meta object literal for the '<em>List</em>' data type. <!-- begin-user-doc --> <!--
+         * The meta object literal for the '<em>List</em>' data type.
+         * <!-- begin-user-doc --> <!--
          * end-user-doc -->
-         *
          * @see java.util.List
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getList()
          * @generated
@@ -1778,9 +1536,9 @@ public interface RenderPackage extends EPackage {
         EDataType LIST = eINSTANCE.getList();
 
         /**
-         * The meta object literal for the '<em>Coordinate</em>' data type. <!-- begin-user-doc -->
+         * The meta object literal for the '<em>Coordinate</em>' data type.
+         * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         *
          * @see org.locationtech.jts.geom.Coordinate
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getCoordinate()
          * @generated
@@ -1788,9 +1546,9 @@ public interface RenderPackage extends EPackage {
         EDataType COORDINATE = eINSTANCE.getCoordinate();
 
         /**
-         * The meta object literal for the '<em>Point</em>' data type. <!-- begin-user-doc --> <!--
+         * The meta object literal for the '<em>Point</em>' data type.
+         * <!-- begin-user-doc --> <!--
          * end-user-doc -->
-         *
          * @see java.awt.Point
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getPoint()
          * @generated
@@ -1808,9 +1566,9 @@ public interface RenderPackage extends EPackage {
         EDataType AFFINE_TRANSFORM = eINSTANCE.getAffineTransform();
 
         /**
-         * The meta object literal for the '<em>Map Display</em>' data type. <!-- begin-user-doc -->
+         * The meta object literal for the '<em>Map Display</em>' data type.
+         * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         *
          * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplay
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getMapDisplay()
          * @generated
@@ -1828,9 +1586,9 @@ public interface RenderPackage extends EPackage {
         EDataType IPROGRESS_MONITOR = eINSTANCE.getIProgressMonitor();
 
         /**
-         * The meta object literal for the '<em>Exception</em>' data type. <!-- begin-user-doc -->
+         * The meta object literal for the '<em>Exception</em>' data type.
+         * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         *
          * @see org.locationtech.udig.project.render.RenderException
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getRenderException()
          * @generated
@@ -1838,9 +1596,9 @@ public interface RenderPackage extends EPackage {
         EDataType RENDER_EXCEPTION = eINSTANCE.getRenderException();
 
         /**
-         * The meta object literal for the '<em>Sorted Set</em>' data type. <!-- begin-user-doc -->
+         * The meta object literal for the '<em>Sorted Set</em>' data type.
+         * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         *
          * @see java.util.SortedSet
          * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getSortedSet()
          * @generated
@@ -1856,16 +1614,6 @@ public interface RenderPackage extends EPackage {
          * @generated
          */
         EDataType REFERENCED_ENVELOPE = eINSTANCE.getReferencedEnvelope();
-
-        /**
-         * The meta object literal for the '<em>Date Time</em>' data type. <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         *
-         * @see org.joda.time.DateTime
-         * @see org.locationtech.udig.project.internal.render.impl.RenderPackageImpl#getDateTime()
-         * @generated
-         */
-        EDataType DATE_TIME = eINSTANCE.getDateTime();
 
         /**
          * The meta object literal for the '<em>Illegal Argument Exception</em>' data type. <!--

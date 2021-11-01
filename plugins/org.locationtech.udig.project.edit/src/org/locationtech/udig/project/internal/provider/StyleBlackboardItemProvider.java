@@ -9,9 +9,6 @@ package org.locationtech.udig.project.internal.provider;
 import java.util.Collection;
 import java.util.List;
 
-import org.locationtech.udig.project.internal.ProjectPackage;
-import org.locationtech.udig.project.internal.StyleBlackboard;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
@@ -24,6 +21,8 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.StyleBlackboard;
 
 /**
  * This is the item provider adapter for a {@link org.locationtech.udig.project.internal.StyleBlackboard} object.
@@ -65,7 +64,7 @@ public class StyleBlackboardItemProvider extends ItemProviderAdapter
      * {@link org.eclipse.emf.edit.command.RemoveCommand} or
      * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override
@@ -113,7 +112,7 @@ public class StyleBlackboardItemProvider extends ItemProviderAdapter
     /**
      * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @generated NOT
      */
     @Override

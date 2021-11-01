@@ -271,8 +271,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
         @Override
         public void changed(FeatureEvent featureEvent) {
             try {
-                FeatureSource<?, ?> featureSource = featureEvent
-                        .getFeatureSource();
+                FeatureSource<?, ?> featureSource = featureEvent.getFeatureSource();
                 FeatureSource<?, ?> resource = getResource(FeatureSource.class,
                         new NullProgressMonitor());
 

@@ -9,14 +9,13 @@
  */
 package org.locationtech.udig.project.internal.render;
 
+import org.eclipse.emf.ecore.EObject;
 import org.locationtech.udig.project.render.IRenderContext;
 import org.locationtech.udig.project.render.IRenderer;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * The EMF object extension to the IRenderer interface.  Non-udig developers should not have to reference this class.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @model abstract="true"
@@ -35,11 +34,12 @@ public interface Renderer extends EObject, IRenderer {
      * <li> {@linkplain #NEVER} </li>
      * <li> {@linkplain #DISPOSED} </li>
      * </ul>
-     * 
+     *
      * @return the current state of rendering.
      * @uml.property name="state"
      * @model default="0"
      */
+    @Override
     public int getState();
 
     /**
@@ -79,11 +79,12 @@ public interface Renderer extends EObject, IRenderer {
      * more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * 
+     *
      * @return the value of the '<em>Toolkit</em>' attribute.
      * @see org.locationtech.udig.project.internal.render.RenderPackage#getRenderer_Context()
      * @model transient="true" resolveProxies="false"
      */
+    @Override
     IRenderContext getContext();
 
     /**
@@ -97,9 +98,10 @@ public interface Renderer extends EObject, IRenderer {
 
     /**
      * Informs the renderer to dispose of resources
-     * 
+     *
      * @model
      */
+    @Override
     public void dispose();
 
 }

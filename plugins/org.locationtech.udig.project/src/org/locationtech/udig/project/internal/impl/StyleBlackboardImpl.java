@@ -29,6 +29,18 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.locks.Lock;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.ui.WorkbenchException;
+import org.eclipse.ui.XMLMemento;
 import org.locationtech.udig.core.internal.ExtensionPointProcessor;
 import org.locationtech.udig.core.internal.ExtensionPointUtil;
 import org.locationtech.udig.project.BlackboardEvent;
@@ -42,22 +54,9 @@ import org.locationtech.udig.project.internal.StyleBlackboard;
 import org.locationtech.udig.project.internal.StyleEntry;
 import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.ui.WorkbenchException;
-import org.eclipse.ui.XMLMemento;
-
 /**
  * The default implementation.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -76,13 +75,13 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * Map of style id to StyleContent
-     * 
+     *
      * @uml.property name="id2content"
      * @uml.associationEnd qualifier="key:java.lang.Object
      *                     org.locationtech.udig.project.StyleContent"
      * @generated NOT
      */
-    protected HashMap<String, StyleContent> id2content = new HashMap<String, StyleContent>();
+    protected HashMap<String, StyleContent> id2content = new HashMap<>();
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -109,7 +108,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     @SuppressWarnings("unchecked")
     public List<StyleEntry> getContent() {
         if (content == null) {
-            content = new EObjectContainmentEList<StyleEntry>(StyleEntry.class, this,
+            content = new EObjectContainmentEList<>(StyleEntry.class, this,
                     ProjectPackage.STYLE_BLACKBOARD__CONTENT);
         }
         return content;
@@ -117,7 +116,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -147,7 +146,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -198,7 +197,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     /**
      * Gets the style object from a StyleEntry. Either from the StyleEntry cache or from the
      * StyleContent associated with the entry.
-     * 
+     *
      * @generated NOT
      */
     protected Object getObject(StyleEntry styleEntry) {
@@ -226,7 +225,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -236,7 +235,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -283,7 +282,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -378,7 +377,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -403,7 +402,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     /**
      * <!-- begin-user-doc --> TODO: This method does not actually clone the underlying style
      * objects, which it should. <!-- end-user-doc -->
-     * 
+     *
      * @throws CloneNotSupportedException
      * @generated NOT
      */
@@ -616,7 +615,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     }
 
-    CopyOnWriteArraySet<IBlackboardListener> listeners = new CopyOnWriteArraySet<IBlackboardListener>();
+    CopyOnWriteArraySet<IBlackboardListener> listeners = new CopyOnWriteArraySet<>();
 
     @Override
     public boolean addListener(IBlackboardListener listener) {
@@ -666,7 +665,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     @Override
     public Set<String> keySet() {
-        Set<String> keys = new HashSet<String>();
+        Set<String> keys = new HashSet<>();
         for (StyleEntry entry : content) {
             if (entry == null) {
                 continue; // huh?
