@@ -24,7 +24,7 @@ import org.locationtech.udig.tool.edit.internal.Messages;
 /**
  * Command used by (@link org.locationtech.udig.tools.edit.EditToolHandler} and
  * {@link org.locationtech.udig.tools.edit.OrderedCompositeEventBehavior} for executing the
- * behaviors in a tool.
+ * behaviours in a tool.
  *
  * @author jones
  * @since 1.1.0
@@ -97,10 +97,10 @@ public class EventBehaviourCommand extends AbstractCommand implements PostDeterm
     }
 
     /**
-     * Returns true if the handler is unlocked or the behavior has the correct key.
+     * Returns true if the handler is unlocked or the behaviour has the correct key.
      *
      * @param behaviour trying to run
-     * @return Returns true if the handler is unlocked or the behavior has the correct key.
+     * @return Returns true if the handler is unlocked or the behaviour has the correct key.
      */
     private boolean canUnlock(EventBehaviour behaviour) {
         if (!handler.isLocked())

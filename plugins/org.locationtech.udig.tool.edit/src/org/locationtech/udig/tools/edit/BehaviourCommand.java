@@ -23,7 +23,7 @@ import org.locationtech.udig.tool.edit.internal.Messages;
 /**
  * Command used by (@link org.locationtech.udig.tools.edit.EditToolHandler} and
  * {@link org.locationtech.udig.tools.edit.OrderedCompositeEventBehavior} for executing the
- * behaviors in a tool.
+ * behaviours in a tool.
  *
  * @author jones
  * @since 1.1.0
