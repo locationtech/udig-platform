@@ -13,6 +13,11 @@ import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.notify.Adapter;
+import org.geotools.brewer.color.BrewerPalette;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.ILegendItem;
 import org.locationtech.udig.project.IMap;
@@ -21,20 +26,13 @@ import org.locationtech.udig.project.command.NavCommandStack;
 import org.locationtech.udig.project.internal.render.RenderManager;
 import org.locationtech.udig.project.internal.render.ViewportModel;
 import org.locationtech.udig.ui.palette.ColourScheme;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.common.notify.Adapter;
-import org.geotools.brewer.color.BrewerPalette;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.filter.Filter;
-
-import org.locationtech.jts.geom.Envelope;
 
 /**
  * TODO Purpose of org.locationtech.udig.project.internal
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @model
@@ -42,7 +40,7 @@ import org.locationtech.jts.geom.Envelope;
 public interface Map extends ProjectElement, IMap {
     /**
      * Return's the map's context model
-     * 
+     *
      * @return the map's context model
      * @model containment="true" opposite="map" many="false" settable="false"
      */
@@ -60,7 +58,7 @@ public interface Map extends ProjectElement, IMap {
 
     /**
      * Returns the Viewport model for this map.
-     * 
+     *
      * @return the Viewport model for this map.
      * @model containment="true" opposite="mapInternal" many="false"
      */
@@ -77,7 +75,7 @@ public interface Map extends ProjectElement, IMap {
 
     /**
      * Returns the colour palette that layer's default colours are picked from.
-     * 
+     *
      * @return
      * @model
      */
@@ -110,17 +108,18 @@ public interface Map extends ProjectElement, IMap {
     /**
      * Iterates through the current layers and returns the default colours in use.
      *
-     * @return 
+     * @return
      */
     List<Color> getMapDefaultColours();
 
     /**
      * Returns the map's abstract
-     * 
+     *
      * @return the map's abstract
      * @uml.property name="abstract"
      * @model
      */
+    @Override
     String getAbstract();
 
     /**
@@ -142,25 +141,27 @@ public interface Map extends ProjectElement, IMap {
      * Note: this is a constant for a given map. It is related to the size of the map data, and is
      * not dependent on the viewport.
      * </p>
-     * 
+     *
      * @return The Envelope in Lat Long that indicates the maximum bounding box of the map.
      * @throws IOException
      * @model transient="true" changeable="false" unsettable='true' default=''
      */
+    @Override
     public ReferencedEnvelope getBounds(IProgressMonitor monitor);
 
     /**
      * Returns the Aspect ratio of the map. It is normally no the same as the aspect ratio of the
      * viewport.
-     * 
+     *
      * @return The aspect ratio of the map.
      * @model volatile="true" changeable="false" transient="true"
      */
+    @Override
     public double getAspectRatio(IProgressMonitor monitor);
 
     /**
      * Returns the Rendermanager for the current map.
-     * 
+     *
      * @return the Rendermanager for the current map.
      * @model containment="true" opposite="mapInternal" many="false" transient="true"
      */
@@ -177,7 +178,7 @@ public interface Map extends ProjectElement, IMap {
 
     /**
      * Returns the SelectionManager for the current map.
-     * 
+     *
      * @return the SelectionManager for the current map.
      * @model containment="false" transient="true" opposite="mapInternal" many="false"
      */
@@ -194,42 +195,42 @@ public interface Map extends ProjectElement, IMap {
 
     /**
      * Redo the last command undone.
-     * 
+     *
      * @model
      */
     public void redo();
 
     /**
      * Undo the last command.
-     * 
+     *
      * @model
      */
     public void undo();
 
     /**
      * move back to the last viewed location
-     * 
+     *
      * @model
      */
     public void backwardHistory();
 
     /**
      * move back to the last viewed location
-     * 
+     *
      * @model
      */
     public void forwardHistory();
 
     /**
      * Returns the number of Navigation Commands in the command stack
-     * 
+     *
      * @model volatile="true" changeable="false" transient="true"
      */
     NavCommandStack getNavCommandStack();
 
     /**
      * Returns the number of Normal(Selection and Editing) Commands in the command stack
-     * 
+     *
      * @model volatile="true" changeable="false" transient="true"
      */
     CommandStack getCommandStack();
@@ -237,6 +238,7 @@ public interface Map extends ProjectElement, IMap {
     /**
      * @model resolveProxies="false" containment="true" opposite="map"
      */
+    @Override
     LayerFactory getLayerFactory();
 
     /**
@@ -282,7 +284,7 @@ public interface Map extends ProjectElement, IMap {
     /**
      * Returns all the layers contained in the map. The list is mutable and events will be raised if
      * the list is modified.
-     * 
+     *
      * @return all the layers contained in the map.
      */
     List<Layer> getLayersInternal();
@@ -307,7 +309,7 @@ public interface Map extends ProjectElement, IMap {
      * Increases the ZOrder of the layer so it is rendered earlier with incomparison to the other
      * layers. If the Layer is at the bottom of the render list(first to be drawn) it is not
      * affected.
-     * 
+     *
      * @param layer The layer whose rendering order will be modified
      */
     public void lowerLayer(Layer layer);
@@ -315,7 +317,7 @@ public interface Map extends ProjectElement, IMap {
     /**
      * Decreases the ZOrder of the layer so it is rendered later with incomparison to the other
      * layers. If the Layer is at the top of the render list(last to be drawn) it is not affected.
-     * 
+     *
      * @param layer The layer whose rendering order will be modified
      */
     public void raiseLayer(Layer layer);
@@ -324,7 +326,7 @@ public interface Map extends ProjectElement, IMap {
      * Increases the ZOrder of the layer so it is rendered first with incomparison to the other
      * layers. If the Layer is at the bottom of the render list(first to be drawn) it is not
      * affected.
-     * 
+     *
      * @param layer The layer whose rendering order will be modified
      */
     public void sendToFrontLayer(Layer layer);
@@ -332,7 +334,7 @@ public interface Map extends ProjectElement, IMap {
     /**
      * Decreases the ZOrder of the layer so it is rendered last with incomparison to the other
      * layers. If the Layer is at the top of the render list(last to be drawn) it is not affected.
-     * 
+     *
      * @param layer The layer whose rendering order will be modified
      */
     public void sendToBackLayer(Layer layer);
@@ -340,7 +342,7 @@ public interface Map extends ProjectElement, IMap {
     /**
      * Sets the ZOrder of the layer to the specified index so it is rendered relative to the new
      * ordering created by the change.
-     * 
+     *
      * @param layer The layer whose rendering order will be modified
      */
     public void sendToIndexLayer(Layer layer, int index);
@@ -351,9 +353,9 @@ public interface Map extends ProjectElement, IMap {
      * <p>
      * Any Tool that wishes to be undoable would will need to remember the previous state.
      * </p>
-     * 
+     *
      * @param boundingBox the bounding box in Viewportmodel CRS to create a filter with
-     * 
+     *
      */
     public void select(Envelope boundingBox);
 
@@ -363,7 +365,7 @@ public interface Map extends ProjectElement, IMap {
      * <p>
      * Any Tool that wishes to be undoable would will need to remember the previous state.
      * </p>
-     * 
+     *
      * @param boundingBox the bounding box in Viewportmodel CRS to create a filter with
      * @param add true adds (or with current filter)to the current selection, false removes from the
      *        current selection(and with current filter).
@@ -375,7 +377,7 @@ public interface Map extends ProjectElement, IMap {
      * <p>
      * Any Tool that wishes to be undoable would will need to remember the previous state.
      * </p>
-     * 
+     *
      * @param filter new selection filter
      */
     public void select(Filter filter);
@@ -385,7 +387,7 @@ public interface Map extends ProjectElement, IMap {
      * <p>
      * Any Tool that wishes to be undoable would will need to remember the previous state.
      * </p>
-     * 
+     *
      * @param filter the new filter
      * @param add true adds (or with current filter)to the current selection, false removes from the
      *        current selection.
@@ -395,7 +397,7 @@ public interface Map extends ProjectElement, IMap {
     /**
      * Makes a selection in a specified layer of this map (not necessarily a selected layer ).
      * Does nothing if the specified layer does not belong to this map.
-     * 
+     *
      * @param filter
      * @param layer
      */

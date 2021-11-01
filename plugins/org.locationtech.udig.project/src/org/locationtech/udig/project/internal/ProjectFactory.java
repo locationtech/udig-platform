@@ -11,7 +11,7 @@ import org.eclipse.emf.ecore.EFactory;
  * TODO Purpose of org.locationtech.udig.project.internal
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -37,7 +37,7 @@ public interface ProjectFactory extends EFactory {
     /**
      * Returns a new object of class '<em>Layer</em>'. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @return a new object of class '<em>Layer</em>'.
      * @generated
      */
@@ -46,7 +46,7 @@ public interface ProjectFactory extends EFactory {
     /**
      * Returns a new object of class '<em>Map</em>'. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @return a new object of class '<em>Map</em>'.
      * @generated
      */
@@ -54,7 +54,7 @@ public interface ProjectFactory extends EFactory {
 
     /**
      * Returns a new object of class '<em>Map</em>'.
-     * 
+     *
      * @return a new object of class '<em>Map</em>'.
      */
     Map createMap(Project owner, String name, List layers);
@@ -70,7 +70,7 @@ public interface ProjectFactory extends EFactory {
 
     /**
      * Returns a new object of class '<em>Registry</em>'.
-     * <!-- begin-user-doc --> 
+     * <!-- begin-user-doc -->
      * <b>This creates a new instance.  {@link ProjectPlugin.Implementation#getProjectRegistry()} should
      * be used instead
      * </b>

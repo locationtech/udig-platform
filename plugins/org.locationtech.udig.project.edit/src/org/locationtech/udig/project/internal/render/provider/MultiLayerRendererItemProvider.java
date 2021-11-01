@@ -7,17 +7,17 @@
 package org.locationtech.udig.project.internal.render.provider;
 
 import java.util.List;
-import org.locationtech.udig.project.internal.render.MultiLayerRenderer;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.locationtech.udig.project.internal.render.MultiLayerRenderer;
 
 /**
  * This is the item provider adapter for a
  * {@link org.locationtech.udig.project.internal.render.MultiLayerRenderer} object. <!--
  * begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class MultiLayerRendererItemProvider extends RendererItemProvider {
@@ -59,7 +59,7 @@ public class MultiLayerRendererItemProvider extends RendererItemProvider {
     /**
      * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @generated NOT
      */
     @Override

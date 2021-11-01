@@ -14,10 +14,31 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.impl.EFactoryImpl;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.geotools.brewer.color.BrewerPalette;
+import org.geotools.data.FeatureEvent;
+import org.geotools.data.Query;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.ReferencingFactoryFinder;
+import org.geotools.referencing.crs.DefaultEngineeringCRS;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.geotools.styling.SLD;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.Interaction;
 import org.locationtech.udig.core.internal.CorePlugin;
 import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.project.Interaction;
 import org.locationtech.udig.project.command.CommandStack;
 import org.locationtech.udig.project.command.EditCommand;
 import org.locationtech.udig.project.command.EditManagerControlCommand;
@@ -48,37 +69,14 @@ import org.locationtech.udig.project.internal.render.impl.ViewportModelImpl;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.palette.ColourScheme;
-
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.impl.EFactoryImpl;
-import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.geotools.brewer.color.BrewerPalette;
-import org.geotools.data.FeatureEvent;
-import org.geotools.data.Query;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.ReferencingFactoryFinder;
-import org.geotools.referencing.crs.DefaultEngineeringCRS;
-import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.geotools.styling.SLD;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.picocontainer.MutablePicoContainer;
 
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Envelope;
-
 /**
  * The EMF factory for project model objects
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -482,7 +480,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public Envelope createEnvelopeFromString(EDataType eDataType, String initialValue) {
@@ -491,7 +489,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public String convertEnvelopeToString(EDataType eDataType, Object instanceValue) {
@@ -593,7 +591,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public CoordinateReferenceSystem createCoordinateReferenceSystemFromString(EDataType eDataType,
@@ -617,7 +615,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public String convertCoordinateReferenceSystemToString(EDataType eDataType,
@@ -805,7 +803,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public CatalogRef createCatalogRefFromString(EDataType eDataType, String initialValue) {
@@ -821,7 +819,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public String convertCatalogRefToString(EDataType eDataType, Object instanceValue) {
@@ -884,7 +882,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public ColourScheme createColourSchemeFromString(EDataType eDataType, String initialValue) {
@@ -896,12 +894,12 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
         }
         String[] strap = parts[2].split(","); //$NON-NLS-1$
         BrewerPalette palette = PlatformGIS.getColorBrewer().getPalette(parts[0]);
-        HashMap<Integer, Integer> colourMapping = new HashMap<Integer, Integer>();
+        HashMap<Integer, Integer> colourMapping = new HashMap<>();
         for (int i = 0; i < strap.length; i++) {
             colourMapping.put(i, Integer.parseInt(strap[i]));
         }
         String[] strap2 = parts[3].split(","); //$NON-NLS-1$
-        HashMap<String, Integer> idMapping = new HashMap<String, Integer>();
+        HashMap<String, Integer> idMapping = new HashMap<>();
         for (int i = 0; i < strap2.length; i++) {
             idMapping.put(strap2[i], Integer.parseInt(strap2[++i]));
         }
@@ -912,7 +910,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public String convertColourSchemeToString(EDataType eDataType, Object instanceValue) {
@@ -942,7 +940,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public Color createDefaultColorFromString(EDataType eDataType, String initialValue) {
@@ -952,7 +950,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public String convertDefaultColorToString(EDataType eDataType, Object instanceValue) {
@@ -962,7 +960,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public Color createColorFromString(EDataType eDataType, String initialValue) {
@@ -972,7 +970,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public String convertColorToString(EDataType eDataType, Object instanceValue) {
@@ -1183,7 +1181,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -1196,7 +1194,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
 
     private void runMapCreationInterceptors(Map map) {
         List<IConfigurationElement> interceptors = ExtensionPointList
-                .getExtensionPointList(MapInterceptor.MAP_INTERCEPTOR_EXTENSIONPOINT); 
+                .getExtensionPointList(MapInterceptor.MAP_INTERCEPTOR_EXTENSIONPOINT);
         for (IConfigurationElement element : interceptors) {
             if (!"mapCreation".equals(element.getName())) //$NON-NLS-1$
                 continue;
@@ -1215,7 +1213,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      *      java.lang.String, java.util.List)
      */
     @Override
-    @SuppressWarnings("unchecked") 
+    @SuppressWarnings("unchecked")
     public Map createMap(Project owner, String name, List layers) {
         Map map = createMap();
 

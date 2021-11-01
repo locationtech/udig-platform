@@ -6,19 +6,18 @@
  */
 package org.locationtech.udig.project.internal.impl;
 
-import org.locationtech.udig.project.internal.BlackboardEntry;
-import org.locationtech.udig.project.internal.ProjectPackage;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.locationtech.udig.project.internal.BlackboardEntry;
+import org.locationtech.udig.project.internal.ProjectPackage;
 
 /**
  * TODO Purpose of org.locationtech.udig.project.internal.impl
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -47,7 +46,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
     /**
      * The default value of the '{@link #getMemento() <em>Memento</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMemento()
      * @generated
      * @ordered
@@ -57,7 +56,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
     /**
      * The cached value of the '{@link #getMemento() <em>Memento</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMemento()
      * @generated
      * @ordered
@@ -67,7 +66,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
     /**
      * The default value of the '{@link #getObject() <em>Object</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getObject()
      * @generated
      * @ordered
@@ -143,7 +142,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="objectClass"
      * @generated NOT
      */
@@ -154,7 +153,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="objectClass"
      * @generated NOT
      */
@@ -165,7 +164,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -175,7 +174,7 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override

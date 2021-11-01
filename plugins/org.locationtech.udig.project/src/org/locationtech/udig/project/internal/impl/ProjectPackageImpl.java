@@ -4,12 +4,33 @@
  */
 package org.locationtech.udig.project.internal.impl;
 
+import static org.locationtech.udig.project.internal.ProjectPackage.ADAPTER;
+
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
 import java.util.List;
 
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EGenericType;
+import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.geotools.brewer.color.BrewerPalette;
+import org.geotools.data.FeatureEvent;
+import org.geotools.data.Query;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IResolveChangeListener;
 import org.locationtech.udig.core.IBlockingAdaptable;
@@ -58,31 +79,10 @@ import org.locationtech.udig.project.render.IViewportModel;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 import org.locationtech.udig.ui.palette.ColourPalette;
 import org.locationtech.udig.ui.palette.ColourScheme;
-
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EGenericType;
-import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.geotools.brewer.color.BrewerPalette;
-import org.geotools.data.FeatureEvent;
-import org.geotools.data.Query;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.picocontainer.MutablePicoContainer;
-
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Envelope;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package </b>. <!-- end-user-doc -->
