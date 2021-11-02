@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -20,20 +21,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.internal.ui.actions.ResetService;
-import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
-import org.locationtech.udig.catalog.ui.internal.Messages;
-import org.locationtech.udig.ui.FeatureTypeEditorDialog;
-import org.locationtech.udig.ui.PlatformGIS;
-import org.locationtech.udig.ui.FeatureTypeEditorDialog.ValidateFeatureType;
-import org.locationtech.udig.ui.operations.IOp;
-
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Display;
@@ -41,21 +32,32 @@ import org.geotools.data.DataStore;
 import org.geotools.data.DataUtilities;
 import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.ui.actions.ResetService;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.ui.FeatureTypeEditorDialog;
+import org.locationtech.udig.ui.FeatureTypeEditorDialog.ValidateFeatureType;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.operations.IOp;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * Creates a new feature type in the selected service. The user is queried to define the feature
  * type.
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
 public class NewFeatureTypeOp implements IOp {
 
     private boolean testing;
+
     private boolean error = false;
 
-    public void op( final Display display, final Object target, final IProgressMonitor monitor )
+    @Override
+    public void op(final Display display, final Object target, final IProgressMonitor monitor)
             throws Exception {
         final IService service = (IService) target;
         final DataStore ds = service.resolve(DataStore.class, monitor);
@@ -67,12 +69,12 @@ public class NewFeatureTypeOp implements IOp {
                     error = true;
                     return;
                 } else {
-                    display.asyncExec(new Runnable(){
+                    display.asyncExec(new Runnable() {
+                        @Override
                         public void run() {
-                            MessageDialog
-                                    .openInformation(display.getActiveShell(),
-                                            Messages.NewFeatureTypeOp_title, 
-                                            Messages.NewFeatureTypeOp_message); 
+                            MessageDialog.openInformation(display.getActiveShell(),
+                                    Messages.NewFeatureTypeOp_title,
+                                    Messages.NewFeatureTypeOp_message);
                         }
                     });
                     return;
@@ -84,28 +86,30 @@ public class NewFeatureTypeOp implements IOp {
 
         final SimpleFeatureType[] featureType = new SimpleFeatureType[1];
         if (!testing) {
-            
-            final FeatureTypeEditorDialog[] dialog=new FeatureTypeEditorDialog[1];
-            PlatformGIS.syncInDisplayThread(new Runnable(){
-                public void run() {
-                    dialog[0] = new FeatureTypeEditorDialog(display
-                            .getActiveShell(), new ValidateFeatureType(){
 
-                                public String validate( SimpleFeatureType featureBuilder ) {
+            final FeatureTypeEditorDialog[] dialog = new FeatureTypeEditorDialog[1];
+            PlatformGIS.syncInDisplayThread(new Runnable() {
+                @Override
+                public void run() {
+                    dialog[0] = new FeatureTypeEditorDialog(display.getActiveShell(),
+                            new ValidateFeatureType() {
+
+                                @Override
+                                public String validate(SimpleFeatureType featureBuilder) {
                                     return null;
                                 }
-                        
-                    });
+
+                            });
                 }
             });
-            int code=-1;
+            int code = -1;
             do {
-                code=openDialog(display, dialog[0], ds);
-                if( code==Window.CANCEL){
-                    featureType[0]=null;
-                }else
-                    featureType[0]=dialog[0].getFeatureType(true);
-            } while( featureType[0] == null && code==Window.OK);
+                code = openDialog(display, dialog[0], ds);
+                if (code == Window.CANCEL) {
+                    featureType[0] = null;
+                } else
+                    featureType[0] = dialog[0].getFeatureType(true);
+            } while (featureType[0] == null && code == Window.OK);
         } else {
             featureType[0] = DataUtilities.createType("TestName", "Geom:MultiLineString"); //$NON-NLS-1$ //$NON-NLS-2$
         }
@@ -118,20 +122,24 @@ public class NewFeatureTypeOp implements IOp {
                 createShapefile(display, monitor, featureType[0], service.getIdentifier());
             } else {
                 ds.createSchema(featureType[0]);
-                long start=System.currentTimeMillis();
-                while( !Arrays.asList(ds.getTypeNames()).contains(featureType[0].getName().getLocalPart() ) && start+5000>System.currentTimeMillis()){
+                long start = System.currentTimeMillis();
+                while (!Arrays.asList(ds.getTypeNames())
+                        .contains(featureType[0].getName().getLocalPart())
+                        && start + 5000 > System.currentTimeMillis()) {
                     Thread.sleep(300);
                 }
-                        
-                ResetService.reset(Collections.singletonList(service), new SubProgressMonitor(monitor, 2));
+
+                ResetService.reset(Collections.singletonList(service),
+                        SubMonitor.convert(monitor, 2));
             }
         } catch (IOException e) {
-            CatalogUIPlugin.log("Error creating feature type in datastore: "+ds.getClass(), e); //$NON-NLS-1$
-            display.asyncExec(new Runnable(){
+            CatalogUIPlugin.log("Error creating feature type in datastore: " + ds.getClass(), e); //$NON-NLS-1$
+            display.asyncExec(new Runnable() {
+                @Override
                 public void run() {
-                    MessageDialog.openError(display.getActiveShell(), Messages.NewFeatureTypeOp_0, 
-                            Messages.NewFeatureTypeOp_1 + 
-                            Messages.NewFeatureTypeOp_2+ds.getClass().getSimpleName());  
+                    MessageDialog.openError(display.getActiveShell(), Messages.NewFeatureTypeOp_0,
+                            Messages.NewFeatureTypeOp_1 + Messages.NewFeatureTypeOp_2
+                                    + ds.getClass().getSimpleName());
                 }
             });
             return;
@@ -139,25 +147,26 @@ public class NewFeatureTypeOp implements IOp {
 
     }
 
-    private void createShapefile( final Display display, IProgressMonitor monitor,
-            SimpleFeatureType type, URL oldID ) throws MalformedURLException, IOException {
+    private void createShapefile(final Display display, IProgressMonitor monitor,
+            SimpleFeatureType type, URL oldID) throws MalformedURLException, IOException {
         File file;
         if (!oldID.getProtocol().equals("file")) { //$NON-NLS-1$
             try {
-                file = new File(FileLocator.toFileURL(Platform.getInstanceLocation().getURL())
-                        .getFile()
-                        + type.getName().getLocalPart() + ".shp"); //$NON-NLS-1$
+                file = new File(
+                        FileLocator.toFileURL(Platform.getInstanceLocation().getURL()).getFile()
+                                + type.getName().getLocalPart() + ".shp"); //$NON-NLS-1$
             } catch (IOException e) {
-                file = new File(System.getProperty("java.user") + type.getName().getLocalPart() + ".shp"); //$NON-NLS-1$ //$NON-NLS-2$
+                file = new File(
+                        System.getProperty("java.user") + type.getName().getLocalPart() + ".shp"); //$NON-NLS-1$ //$NON-NLS-2$
             }
             final File f = file;
             if (!testing) {
-                display.asyncExec(new Runnable(){
+                display.asyncExec(new Runnable() {
+                    @Override
                     public void run() {
                         MessageDialog.openInformation(display.getActiveShell(),
-                                Messages.NewFeatureTypeOp_shpTitle, 
-                                Messages.NewFeatureTypeOp_shpMessage 
-                                        + f.toString());
+                                Messages.NewFeatureTypeOp_shpTitle,
+                                Messages.NewFeatureTypeOp_shpMessage + f.toString());
                     }
                 });
             }
@@ -170,15 +179,15 @@ public class NewFeatureTypeOp implements IOp {
             file = new File(s + type.getName().getLocalPart() + ".shp"); //$NON-NLS-1$
         }
         ShapefileDataStoreFactory factory = new ShapefileDataStoreFactory();
-        Map<String, Serializable> params = new HashMap<String, Serializable>();
+        Map<String, Serializable> params = new HashMap<>();
         params.put(ShapefileDataStoreFactory.URLP.key, file.toURI().toURL());
         params.put(ShapefileDataStoreFactory.CREATE_SPATIAL_INDEX.key, true);
-        
+
         DataStore ds = factory.createDataStore(params);
         ds.createSchema(type);
-        List<IService> service = CatalogPlugin.getDefault().getServiceFactory().createService(
-                file.toURI().toURL());
-        for( IService service2 : service ) {
+        List<IService> service = CatalogPlugin.getDefault().getServiceFactory()
+                .createService(file.toURI().toURL());
+        for (IService service2 : service) {
             try {
                 if (service2.resolve(DataStore.class, monitor) instanceof ShapefileDataStore)
                     CatalogPlugin.getDefault().getLocalCatalog().add(service2);
@@ -188,14 +197,16 @@ public class NewFeatureTypeOp implements IOp {
         }
     }
 
-    private int openDialog( final Display display, final FeatureTypeEditorDialog dialog, final DataStore dataStore ) {
-        final int[] code=new int[1];
-        PlatformGIS.syncInDisplayThread(new Runnable(){
+    private int openDialog(final Display display, final FeatureTypeEditorDialog dialog,
+            final DataStore dataStore) {
+        final int[] code = new int[1];
+        PlatformGIS.syncInDisplayThread(new Runnable() {
 
+            @Override
             public void run() {
                 dialog.setDataStore(dataStore);
                 dialog.setBlockOnOpen(true);
-                code[0]=dialog.open();
+                code[0] = dialog.open();
             }
 
         });
@@ -205,9 +216,10 @@ public class NewFeatureTypeOp implements IOp {
     /**
      * only for testing
      */
-    public void testingSetTesting( boolean b ) {
+    public void testingSetTesting(boolean b) {
         testing = b;
     }
+
     /**
      * only for testing
      */
