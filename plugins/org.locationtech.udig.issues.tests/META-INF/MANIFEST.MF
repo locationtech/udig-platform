@@ -8,6 +8,8 @@ Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.locationtech.udig.issues,
- org.locationtech.udig.project.ui.tests
+ org.locationtech.udig.project.ui.tests,
+ org.locationtech.udig.project;bundle-version="2.3.0",
+ org.locationtech.udig.ui
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

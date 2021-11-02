@@ -18,6 +18,7 @@ import java.util.Map;
 
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.document.DocumentPlugin;
 
 /**
@@ -112,7 +113,7 @@ public class BasicHotlinkDescriptorParser {
                     HotlinkDescriptor descriptor = new HotlinkDescriptor(definition);
                     descriptors.add(descriptor);
                 } catch (Throwable t) {
-                    DocumentPlugin.log("Unable describe hotlink:" + definition, t); //$NON-NLS-1$
+                    LoggingSupport.log(DocumentPlugin.getDefault(), "Unable describe hotlink:" + definition, t); //$NON-NLS-1$
                 }
             }
         }

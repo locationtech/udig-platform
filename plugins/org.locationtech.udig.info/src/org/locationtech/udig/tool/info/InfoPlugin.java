@@ -10,10 +10,9 @@
  */
 package org.locationtech.udig.tool.info;
 
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -45,10 +44,12 @@ public class InfoPlugin extends AbstractUIPlugin {
         plugin = this;
     }
 
+    @Override
     public void start(BundleContext context) throws Exception {
         super.start(context);
     }
 
+    @Override
     public void stop(BundleContext context) throws Exception {
         plugin = null;
         super.stop(context);
@@ -56,7 +57,7 @@ public class InfoPlugin extends AbstractUIPlugin {
 
     /**
      * Access shared InfoPlugin instance.
-     * 
+     *
      * @return Shared Instance
      */
     public static InfoPlugin getDefault() {
@@ -68,29 +69,22 @@ public class InfoPlugin extends AbstractUIPlugin {
      * <p>
      * This should be used for user level messages.
      * </p>
+     *
+     * @deprecated Use LoggerSupport
      */
     public static void log(String message, Throwable e) {
-        getDefault().getLog().log(new Status(IStatus.INFO, ID, 0, message, e));
+        LoggingSupport.log(getDefault(), message, e);
     }
 
     /**
      * Messages that only engage if getDefault().isDebugging()
-     * <p>
-     * It is much prefered to do this:
-     * 
-     * <pre><code>
-     * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
-     * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
-     *      System.out.println( "your message here" );
-     * }
+     *
+     * @deprecated Use
+     *             {@link LoggingSupport#trace(org.eclipse.core.runtime.Plugin, String, Throwable)}
+     *             instead.
      */
     public static void trace(String message, Throwable e) {
-        if (getDefault().isDebugging()) {
-            if (message != null)
-                System.out.println(message);
-            if (e != null)
-                e.printStackTrace();
-        }
+        LoggingSupport.trace(getDefault(), message, e);
     }
 
     /**
@@ -101,11 +95,11 @@ public class InfoPlugin extends AbstractUIPlugin {
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
      * </p>
-     * 
+     *
      * @param trace currently only RENDER is defined
      */
     public static boolean isDebugging(final String trace) {
         return getDefault().isDebugging()
-                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
+                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
 }

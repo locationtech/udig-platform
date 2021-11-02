@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.issues.IIssuesList;
 import org.locationtech.udig.issues.IIssuesManager;
 import org.locationtech.udig.issues.IIssuesPreferencePage;
@@ -55,7 +56,7 @@ import org.eclipse.ui.XMLMemento;
 
 /**
  * The Preference Page for configuring what issues list is used.
- *  
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -69,14 +70,14 @@ public class IssuesPreferencePage extends PreferencePage implements IWorkbenchPr
     private List<IConfigurationElement> extensionMapping;
     private List<String> names;
     private ListData issuesList;
-    private Map<Integer, ListData> lists=new HashMap<Integer, ListData>();
+    private Map<Integer, ListData> lists=new HashMap<>();
     private Composite progressArea;
 
     public IssuesPreferencePage() {
-        super(Messages.IssuesPreferencePage_pageTitle); 
-        setDescription(Messages.IssuesPreferencePage_pageDesc); 
+        super(Messages.IssuesPreferencePage_pageTitle);
+        setDescription(Messages.IssuesPreferencePage_pageDesc);
         setPreferenceStore(IssuesActivator.getDefault().getPreferenceStore());
-        
+
         //Ping the issues manager to make sure it is initialized
         IIssuesManager.defaultInstance.getIssuesList();
     }
@@ -100,7 +101,7 @@ public class IssuesPreferencePage extends PreferencePage implements IWorkbenchPr
         data.horizontalSpan=2;
         data.heightHint=50;
         progressArea.setLayoutData(data);
-        
+
     }
 
     private void createConfigArea( Composite c ) {
@@ -118,10 +119,12 @@ public class IssuesPreferencePage extends PreferencePage implements IWorkbenchPr
         combo.select(getCurrentIndex());
         combo.addSelectionListener(new SelectionListener(){
 
+            @Override
             public void widgetDefaultSelected( SelectionEvent e ) {
                 widgetSelected(e);
             }
 
+            @Override
             public void widgetSelected( SelectionEvent e ) {
                 createList();
             }
@@ -132,7 +135,7 @@ public class IssuesPreferencePage extends PreferencePage implements IWorkbenchPr
 
     void createList() {
         setErrorMessage(null);
-        setMessage(getTitle()); 
+        setMessage(getTitle());
         int selectionIndex = combo.getSelectionIndex();
         IConfigurationElement elem=extensionMapping.get(selectionIndex);
         ListData data=new ListData(selectionIndex);
@@ -144,13 +147,13 @@ public class IssuesPreferencePage extends PreferencePage implements IWorkbenchPr
 
         if( data==issuesList )
             return;
-        
+
         try {
             storeCurrentConfiguration();
         } catch (Exception e2) {
-            IssuesActivator.log("", e2); //$NON-NLS-1$
+            LoggingSupport.log(IssuesActivator.getDefault(), e2); //$NON-NLS-1$
         }
-        
+
         try {
             createList(elem, data);
             if( data.configurator!=ERROR_CONFIG)
@@ -160,8 +163,8 @@ public class IssuesPreferencePage extends PreferencePage implements IWorkbenchPr
             issuesList=data;
         } catch (Exception e1) {
             data.configurator=ERROR_CONFIG;
-            setErrorMessage(Messages.IssuesPreferencePage_ListCreationError);  
-            IssuesActivator.log("",e1); //$NON-NLS-1$
+            setErrorMessage(Messages.IssuesPreferencePage_ListCreationError);
+            LoggingSupport.log(IssuesActivator.getDefault(),e1); //$NON-NLS-1$
         }
     }
 
@@ -188,13 +191,13 @@ public class IssuesPreferencePage extends PreferencePage implements IWorkbenchPr
             }
         }
         if( data.configurator==ERROR_CONFIG )
-            setErrorMessage(Messages.IssuesPreferencePage_ListCreationError); 
+            setErrorMessage(Messages.IssuesPreferencePage_ListCreationError);
     }
 
     private void createConfiguration( IConfigurationElement elem, ListData data ) throws CoreException {
         if( data.configurator!=null )
             return;
-        
+
         if( elem.getAttribute("configurator")==null ){ //$NON-NLS-1$
             data.configurator=null;
             return;
@@ -207,7 +210,7 @@ public class IssuesPreferencePage extends PreferencePage implements IWorkbenchPr
             setErrorMessage("An error occurred while creating the configuration panel for this issues list.  Please choose another."); //$NON-NLS-1$
         }
     }
-    
+
     protected IMemento createMemento( ListData data ) {
         try {
             String id = getId(data.index);
@@ -240,7 +243,7 @@ public class IssuesPreferencePage extends PreferencePage implements IWorkbenchPr
         GridData gridData = new GridData(SWT.NONE, SWT.NONE, false, false);
         gridData.verticalAlignment=SWT.CENTER;
         label.setLayoutData(gridData);
-        label.setText(Messages.IssuesPreferencePage_currentLabelText); 
+        label.setText(Messages.IssuesPreferencePage_currentLabelText);
     }
 
     private int getCurrentIndex() {
@@ -281,7 +284,7 @@ public class IssuesPreferencePage extends PreferencePage implements IWorkbenchPr
     }
 
     private void processExtensionPoint() {
-        names=new ArrayList<String>();
+        names=new ArrayList<>();
         extensionMapping=ExtensionPointList.getExtensionPointList(IssueConstants.ISSUES_LIST_EXTENSION_ID);
         for( IConfigurationElement element : extensionMapping ) {
             names.add(element.getAttribute("name")); //$NON-NLS-1$
@@ -293,7 +296,7 @@ public class IssuesPreferencePage extends PreferencePage implements IWorkbenchPr
         combo.select(indexOf(getPreferenceStore().getDefaultString(PREFERENCE_ID)));
         createList();
     }
-    
+
     @Override
     public boolean performOk() {
         if( issuesList.configurator==ERROR_CONFIG )
@@ -304,15 +307,16 @@ public class IssuesPreferencePage extends PreferencePage implements IWorkbenchPr
                 final int selectionIndex = combo.getSelectionIndex();
                 runWithProgress(true, new IRunnableWithProgress(){
 
+                    @Override
                     public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
-                        monitor.beginTask(Messages.IssuesPreferencePage_TestTaskName, IProgressMonitor.UNKNOWN); 
+                        monitor.beginTask(Messages.IssuesPreferencePage_TestTaskName, IProgressMonitor.UNKNOWN);
                         if ( issuesList.configurator.isConfigured() ){
                             storeListIDInPrefs(selectionIndex);
                             try {
                                 storeCurrentConfiguration();
                             } catch (IOException e) {
-                                IssuesActivator.log("", e); //$NON-NLS-1$
-                                throw new InvocationTargetException(e,Messages.IssuesPreferencePage_StorageError); 
+                                LoggingSupport.log(IssuesActivator.getDefault(), e);
+                                throw new InvocationTargetException(e,Messages.IssuesPreferencePage_StorageError);
                             }
                             configured[0]=true;
                         } else {
@@ -320,21 +324,21 @@ public class IssuesPreferencePage extends PreferencePage implements IWorkbenchPr
                         }
                         monitor.done();
                     }
-                    
+
                 });
                 if( !configured[0] ){
                     setErrorMessage(issuesList.configurator.getError());
 
-                    getPreferenceStore().setValue(PREFERENCE_ID, 
+                    getPreferenceStore().setValue(PREFERENCE_ID,
                             getPreferenceStore().getDefaultString(PREFERENCE_ID));
                 }else{
                     setErrorMessage(""); //$NON-NLS-1$
                     setList();
                 }
-                
+
                 return configured[0];
             } catch (Exception e) {
-                setErrorMessage(Messages.IssuesPreferencePage_testError+e.getLocalizedMessage()); 
+                setErrorMessage(Messages.IssuesPreferencePage_testError+e.getLocalizedMessage());
                 return false;
             }
         }
@@ -344,7 +348,7 @@ public class IssuesPreferencePage extends PreferencePage implements IWorkbenchPr
         setList();
         return super.performOk();
     }
-    
+
 
     private void storeListIDInPrefs( final int selectionIndex ) {
 //        String id = getExtensionList().get(selectionIndex).getAttribute("id"); //$NON-NLS-1$
@@ -365,7 +369,7 @@ public class IssuesPreferencePage extends PreferencePage implements IWorkbenchPr
     protected String getXMLConfiguration() throws IOException {
         if( issuesList==null || issuesList.configurator==null || issuesList.configurator==ERROR_CONFIG )
             return null;
-            
+
         XMLMemento memento=XMLMemento.createWriteRoot("configuration"); //$NON-NLS-1$
         issuesList.configurator.getConfiguration(memento);
         StringWriter stringWriter=new StringWriter();
@@ -375,6 +379,7 @@ public class IssuesPreferencePage extends PreferencePage implements IWorkbenchPr
         return configuration;
     }
 
+    @Override
     public void runWithProgress( boolean mayBlock, final IRunnableWithProgress runnable )
             throws InvocationTargetException, InterruptedException {
         if (Display.getCurrent() == null)
@@ -391,26 +396,32 @@ public class IssuesPreferencePage extends PreferencePage implements IWorkbenchPr
 
     }
 
+    @Override
     public void init( IWorkbench workbench ) {
     }
-    
-    
+
+
     protected static final IssuesListConfigurator ERROR_CONFIG = new IssuesListConfigurator(){
 
+        @Override
         public void getConfiguration( IMemento memento ) {
         }
 
+        @Override
         public Control getControl( Composite parent, IIssuesPreferencePage page ) {
             return null;
         }
 
+        @Override
         public String getError() {
             return null;
         }
 
+        @Override
         public void initConfiguration( IIssuesList list, IMemento memento ) {
         }
 
+        @Override
         public boolean isConfigured() {
             return false;
         }
@@ -423,5 +434,5 @@ public class IssuesPreferencePage extends PreferencePage implements IWorkbenchPr
         final int index;
         ListData(int index){ this.index=index; }
     }
-    
+
 }

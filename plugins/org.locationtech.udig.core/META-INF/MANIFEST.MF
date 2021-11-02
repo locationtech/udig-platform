@@ -13,6 +13,7 @@ Export-Package: org.locationtech.udig.core,
  org.locationtech.udig.core.filter,
  org.locationtech.udig.core.internal,
  org.locationtech.udig.core.jts,
+ org.locationtech.udig.core.logging,
  org.locationtech.udig.core.opengis
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,

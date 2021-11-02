@@ -16,6 +16,7 @@ import java.util.Iterator;
 
 import org.locationtech.udig.core.enums.Priority;
 import org.locationtech.udig.core.enums.Resolution;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.issues.IIssue;
 import org.locationtech.udig.issues.internal.IssuesActivator;
 import org.locationtech.udig.issues.internal.Messages;
@@ -50,13 +51,13 @@ public class IssuesCollectionToFeatureCollection extends AdaptorFeatureCollectio
     private final ReferencedEnvelope DEFAULT_BOUNDS=new ReferencedEnvelope(-180,180,-90,90, DefaultGeographicCRS.WGS84);
     private Collection<? extends IIssue> issues;
     private FeatureTypeAttributeMapper mapper;
-    
+
     public IssuesCollectionToFeatureCollection(Collection<? extends IIssue> issues, FeatureTypeAttributeMapper mapper){
         super("Issues To Issues FeatureCollection", mapper.getSchema());
         this.issues=issues;
         this.mapper=mapper;
     }
-    
+
     @Override
     protected void closeIterator( Iterator close ) {
     }
@@ -65,21 +66,23 @@ public class IssuesCollectionToFeatureCollection extends AdaptorFeatureCollectio
     protected Iterator openIterator() {
         return new Iterator<SimpleFeature>(){
             Iterator<? extends IIssue> iter=issues.iterator();
+            @Override
             public boolean hasNext() {
                 return iter.hasNext();
             }
 
+            @Override
             public SimpleFeature next() {
                 IIssue issue = iter.next();
                 String extId=issue.getExtensionID();
                 String groupId=issue.getGroupId();
-                
+
                 String id=issue.getId();
-                
+
                 String resolution=issue.getResolution().name();
                 String priority=issue.getPriority().name();
                 String description=issue.getDescription();
-                
+
                 String viewMemento=createViewMemento(issue);
 
                 String issueMemento=createIssueMemento(issue);
@@ -92,7 +95,7 @@ public class IssuesCollectionToFeatureCollection extends AdaptorFeatureCollectio
                         bounds=toMultiPolygon(DEFAULT_BOUNDS);
                     feature.setAttribute(mapper.getBounds(), bounds);
                     if( groupId==null )
-                        groupId=Messages.IssuesCollectionToFeatureCollection_defaultGroup; 
+                        groupId=Messages.IssuesCollectionToFeatureCollection_defaultGroup;
                     feature.setAttribute(mapper.getGroupId(), groupId);
                     feature.setAttribute(mapper.getId(), id);
                     if( resolution==null )
@@ -114,10 +117,11 @@ public class IssuesCollectionToFeatureCollection extends AdaptorFeatureCollectio
                 }
             }
 
+            @Override
             public void remove() {
                 iter.remove();
             }
-            
+
         };
     }
 
@@ -128,12 +132,12 @@ public class IssuesCollectionToFeatureCollection extends AdaptorFeatureCollectio
 
         return toPolygon(issue.getBounds());
     }
-    
+
     protected MultiPolygon toMultiPolygon(ReferencedEnvelope env2){
         GeometryFactory factory=new GeometryFactory();
         return factory.createMultiPolygon(new Polygon[]{ toPolygon(env2)} );
     }
-    
+
     protected Polygon toPolygon(ReferencedEnvelope env2){
         ReferencedEnvelope env=env2;
         if( env==null )
@@ -141,18 +145,18 @@ public class IssuesCollectionToFeatureCollection extends AdaptorFeatureCollectio
 
         AttributeDescriptor att=mapper.getSchema().getDescriptor(mapper.getBounds());
         CoordinateReferenceSystem crs=null;
-        
+
         if( att instanceof GeometryDescriptor )
             crs=((GeometryDescriptor)att).getCoordinateReferenceSystem();
-        
+
         if( crs==null )
             crs=DefaultGeographicCRS.WGS84;
-        
+
         GeometryFactory factory=new GeometryFactory();
-        try{
-            env=env.transform(crs, true);
-        }catch(Exception e){
-            IssuesActivator.log("", e); //$NON-NLS-1$
+        try {
+            env = env.transform(crs, true);
+        } catch (Exception e) {
+            LoggingSupport.log(IssuesActivator.getDefault(), e);
         }
 
         return factory.createPolygon(factory.createLinearRing(new Coordinate[]{
@@ -161,10 +165,10 @@ public class IssuesCollectionToFeatureCollection extends AdaptorFeatureCollectio
                 new Coordinate(env.getMaxX(), env.getMaxY()),
                 new Coordinate(env.getMinX(), env.getMaxY()),
                 new Coordinate(env.getMinX(), env.getMinY()),
-                
+
         }), new LinearRing[0]);
     }
-    
+
 
     protected String createIssueMemento( IIssue issue ) {
         StringWriter out;
@@ -175,7 +179,7 @@ public class IssuesCollectionToFeatureCollection extends AdaptorFeatureCollectio
         try {
             memento.save(out);
         } catch (IOException e) {
-            IssuesActivator.log("", e); //$NON-NLS-1$
+            LoggingSupport.log(IssuesActivator.getDefault(), e);
         }
         return out.toString();
     }
@@ -187,7 +191,7 @@ public class IssuesCollectionToFeatureCollection extends AdaptorFeatureCollectio
         try {
             memento.save(out);
         } catch (IOException e) {
-            IssuesActivator.log("", e); //$NON-NLS-1$
+            LoggingSupport.log(IssuesActivator.getDefault(), e);
         }
        return out.toString();
     }

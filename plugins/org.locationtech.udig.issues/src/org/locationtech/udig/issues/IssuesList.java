@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.issues.internal.IssuesActivator;
 import org.locationtech.udig.issues.listeners.IIssuesListListener;
 import org.locationtech.udig.issues.listeners.IssuesListEvent;
@@ -36,19 +37,19 @@ import org.eclipse.ui.WorkbenchException;
  * <p>
  * Notifies listeners when issues are added or removed from list.
  * </p>
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
 public class IssuesList extends AbstractSequentialList<IIssue> implements IIssuesList {
 
-    LinkedList<IIssue> list = new LinkedList<IIssue>();
+    LinkedList<IIssue> list = new LinkedList<>();
 
     private static final String ID = "org.locationtech.udig.issues.memory"; //$NON-NLS-1$
 
     private boolean notify = true;
 
-    Set<String> ids = new CopyOnWriteArraySet<String>();
+    Set<String> ids = new CopyOnWriteArraySet<>();
 
     volatile int nextID = 0;
 
@@ -64,6 +65,7 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
         return "Issue." + nextID++; //$NON-NLS-1$
     }
 
+    @Override
     public boolean add(IIssue o) {
         checkID(o, list.size());
         list.add(o);
@@ -71,12 +73,14 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
         return true;
     }
 
+    @Override
     public void add(int index, IIssue element) {
         checkID(element, index);
         list.add(index, element);
         notify(element, IssuesListEventType.ADD);
     }
 
+    @Override
     public boolean addAll(Collection<? extends IIssue> c) {
         try {
             notify = false;
@@ -91,6 +95,7 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
         return true;
     }
 
+    @Override
     public boolean addAll(int index, Collection<? extends IIssue> c) {
         boolean doNotify = notify;
         try {
@@ -119,6 +124,7 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
         return issue;
     }
 
+    @Override
     public IIssue remove(int index) {
         IIssue issue = list.remove(index);
         ids.remove(issue);
@@ -127,6 +133,7 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
         return issue;
     }
 
+    @Override
     public boolean remove(Object o) {
         if (o instanceof IIssue) {
             IIssue issue = (IIssue) o;
@@ -140,8 +147,9 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
         return false;
     }
 
+    @Override
     public boolean removeAll(Collection<?> c) {
-        Collection<IIssue> i = new HashSet<IIssue>();
+        Collection<IIssue> i = new HashSet<>();
         for (Object object : c) {
             if (!(object instanceof IIssue))
                 return false;
@@ -170,6 +178,7 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
         return remove(list.size() - 1);
     }
 
+    @Override
     public IIssue set(int index, IIssue element) {
         IIssue old = list.set(index, element);
         element.setId(old.getId());
@@ -178,8 +187,9 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
         return old;
     }
 
+    @Override
     public boolean retainAll(Collection<?> c) {
-        List<IIssue> changed = new LinkedList<IIssue>();
+        List<IIssue> changed = new LinkedList<>();
         boolean modified = false;
         Iterator<IIssue> e = list.iterator();
         try {
@@ -200,6 +210,7 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
         return modified;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public void clear() {
         List<IIssue> changed;
@@ -218,10 +229,11 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
     /**
      * <b>This is public for tesing purposes only!!!!</b>
      */
-    public Collection<IIssuesListListener> listeners = new CopyOnWriteArraySet<IIssuesListListener>();
+    public Collection<IIssuesListListener> listeners = new CopyOnWriteArraySet<>();
 
     private ReentrantLock issuesListLock = new ReentrantLock();
 
+    @Override
     public void addListener(IIssuesListListener listener) {
         issuesListLock.lock();
         try {
@@ -231,6 +243,7 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
         }
     }
 
+    @Override
     public void removeListener(IIssuesListListener listener) {
         issuesListLock.lock();
         try {
@@ -252,26 +265,28 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
 
     /**
      * Notify listeners of a change to the list.
-     * 
+     *
      * @param changed issue that has changed.
      * @param type Type of change.
      */
     public void notify(IIssue changed, IssuesListEventType type) {
-        HashSet<IIssue> set = new HashSet<IIssue>();
+        HashSet<IIssue> set = new HashSet<>();
         set.add(changed);
         notify(set, type);
     }
 
+    @Override
     public Set<String> getGroups() {
-        Set<String> groups = new HashSet<String>();
+        Set<String> groups = new HashSet<>();
         for (IIssue issue : list) {
             groups.add(issue.getGroupId());
         }
         return groups;
     }
 
+    @Override
     public List<IIssue> getIssues(String groupId) {
-        List<IIssue> group = new LinkedList<IIssue>();
+        List<IIssue> group = new LinkedList<>();
         for (IIssue issue : list) {
             if (groupId == null) {
                 if (issue.getGroupId() == null) {
@@ -284,10 +299,11 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
         return group;
     }
 
+    @Override
     public void removeIssues(String groupId) {
         if (groupId == null)
             return;
-        LinkedList<IIssue> group = new LinkedList<IIssue>();
+        LinkedList<IIssue> group = new LinkedList<>();
         for (IIssue issue : list) {
             if (groupId.equals(issue.getGroupId()))
                 group.add(issue);
@@ -305,13 +321,14 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
         return list.size();
     }
 
+    @Override
     public String getExtensionID() {
         return ID;
     }
 
     /**
      * Sets it so that adds and removes will not raise notifications.
-     * 
+     *
      * @param notifyListeners true if notifications should be sent
      */
     public void setNotify(boolean notifyListeners) {
@@ -326,10 +343,11 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
         try {
             persister.load();
         } catch (WorkbenchException e) {
-            IssuesActivator.log(
+            LoggingSupport.log(IssuesActivator.getDefault(),
                     "Failed to load old issues because the memento could not be parsed", e); //$NON-NLS-1$
         } catch (IOException e) {
-            IssuesActivator.log("Failed to load old issues because the file could not be read", e); //$NON-NLS-1$
+            LoggingSupport.log(IssuesActivator.getDefault(),
+                    "Failed to load old issues because the file could not be read", e); //$NON-NLS-1$
         }
     }
 
@@ -341,7 +359,8 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
         try {
             persister.save();
         } catch (IOException e) {
-            IssuesActivator.log("Failed to save issues because the file could not be written", e); //$NON-NLS-1$
+            LoggingSupport.log(IssuesActivator.getDefault(),
+                    "Failed to save issues because the file could not be written", e); //$NON-NLS-1$
         }
     }
 

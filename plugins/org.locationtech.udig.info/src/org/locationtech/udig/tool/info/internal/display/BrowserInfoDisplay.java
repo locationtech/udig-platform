@@ -13,6 +13,7 @@ package org.locationtech.udig.tool.info.internal.display;
 
 import java.io.IOException;
 
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.tool.info.InfoDisplay;
 import org.locationtech.udig.tool.info.InfoPlugin;
 import org.locationtech.udig.tool.info.LayerPointInfo;
@@ -34,7 +35,7 @@ import org.eclipse.swt.widgets.ToolBar;
 
 /**
  * Nested browser used to display LayerPointInfo.
- * 
+ *
  * @author Jody Garnett
  * @since 0.3
  */
@@ -42,19 +43,22 @@ public class BrowserInfoDisplay extends InfoDisplay {
 
     /** <code>browser</code> field */
     protected Browser browser;
-        
+
     private Action backAction = new Action("Back") { //$NON-NLS-1$
+        @Override
         public void run() {
             browser.back();
         }
-    };    
+    };
     private Action forwardAction = new Action("Forward") { //$NON-NLS-1$
+        @Override
         public void run() {
             browser.forward();
         }
     };
 
     private Action stopAction = new Action("Stop") { //$NON-NLS-1$
+        @Override
         public void run() {
             browser.stop();
             // cancel any partial progress.
@@ -63,6 +67,7 @@ public class BrowserInfoDisplay extends InfoDisplay {
     };
 
     private Action refreshAction = new Action("Refresh") { //$NON-NLS-1$
+        @Override
         public void run() {
             browser.refresh();
         }
@@ -71,38 +76,41 @@ public class BrowserInfoDisplay extends InfoDisplay {
     static final protected boolean DEBUG = false;
     //private CLabel label;
     private ViewForm viewForm;
-    
+
     /*
-     * Nested viewForm containing browser, locationbar and toolbar 
+     * Nested viewForm containing browser, locationbar and toolbar
      * @return embded browser
      */
+    @Override
     public Control getControl() {
         return viewForm;
     }
     /*
      * Set up w/ an embeded brower.
      */
+    @Override
     public void createDisplay( Composite parent ) {
         viewForm= new ViewForm( parent, SWT.NONE);
-        
+
         //label= new CLabel( viewForm, SWT.NONE);
         //viewForm.setTopLeft( label );
-        
+
         ToolBar toolBar= new ToolBar( viewForm, SWT.FLAT | SWT.WRAP);
         viewForm.setTopCenter(toolBar);
-                        
-        browser = createBrowser( viewForm, toolBar );        
+
+        browser = createBrowser( viewForm, toolBar );
         browser.setUrl( "about:blank" ); //$NON-NLS-1$
-        
+
         viewForm.setContent( browser );
     }
-    
+
     /**
      * Focus the browser onto LayerPointInfo.getRequestURL.
-     * 
+     *
      * @see org.locationtech.udig.tool.info.InfoDisplay#setInfo(org.locationtech.udig.project.render.LayerPointInfo)
      * @param info
      */
+    @Override
     public void setInfo( LayerPointInfo info ) {
         if( info == null || info.getRequestURL() == null ) {
             browser.setVisible( false );
@@ -112,21 +120,21 @@ public class BrowserInfoDisplay extends InfoDisplay {
             try {
                 browser.setText((String) info.acquireValue());
             } catch (IOException e) {
-                InfoPlugin.trace("Could not acquire info value", e);
+                LoggingSupport.trace(InfoPlugin.getDefault(), "Could not acquire info value", e);
             }
         }
     }
-    
-    
-    private Browser createBrowser(Composite parent, final ToolBar toolbar) {      
+
+    private Browser createBrowser(Composite parent, final ToolBar toolbar) {
         try{
         browser = new Browser(parent, SWT.NONE);
         }catch(Exception e){
-            InfoPlugin.log( "Could not create browser", e); //$NON-NLS-1$
+            LoggingSupport.log(InfoPlugin.getDefault(), "Could not create browser", e); //$NON-NLS-1$
         }
-        
+
         browser.addStatusTextListener(new StatusTextListener() {
-            // IStatusLineManager status = toolbar.getStatusLineManager(); 
+            // IStatusLineManager status = toolbar.getStatusLineManager();
+            @Override
             public void changed(StatusTextEvent event) {
                 /*
                 if (DEBUG) {
@@ -134,29 +142,31 @@ public class BrowserInfoDisplay extends InfoDisplay {
                 }
                 status.setMessage(event.text);
                 */
-            }         
+            }
         });
         browser.addLocationListener(new LocationAdapter() {
+            @Override
             public void changed(LocationEvent event) {
                 if (event.top){
-                    //label.setToolTipText( browser.getUrl() );                    
+                    //label.setToolTipText( browser.getUrl() );
                 }
             }
         });
         browser.addTitleListener(new TitleListener() {
+            @Override
             public void changed(TitleEvent event) {
                 //label.setText( event.title );
             }
         });
-        
+
         // Hook the navigation actons as handlers for the retargetable actions
         // defined in BrowserActionBuilder.
-        ToolBarManager tbmanager= new ToolBarManager( toolbar );        
+        ToolBarManager tbmanager= new ToolBarManager( toolbar );
         tbmanager.add( backAction );
         tbmanager.add( forwardAction );
         tbmanager.add( stopAction) ;
         tbmanager.add( refreshAction );
-        
+
         return browser;
     }
 }

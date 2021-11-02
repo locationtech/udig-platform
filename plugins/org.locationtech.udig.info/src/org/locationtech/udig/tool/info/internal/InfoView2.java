@@ -56,6 +56,7 @@ import org.geotools.ows.wms.Layer;
 import org.geotools.util.factory.GeoTools;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.project.AdaptableFeature;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.ILayerListener;
@@ -352,7 +353,8 @@ public class InfoView2 extends SearchPart {
                     StructuredSelection sel = new StructuredSelection(src);
                     featureDisplay.selectionChanged(null, sel);
                 } catch (IOException ex) {
-                    InfoPlugin.log("GML value could not be acquired.", ex); //$NON-NLS-1$
+                    LoggingSupport.log(InfoPlugin.getDefault(), "GML value could not be acquired.", //$NON-NLS-1$
+                            ex);
                 }
                 // featureDisplay.setInfo(info);
             } else if (info.getRequestURL() != null
@@ -430,7 +432,7 @@ public class InfoView2 extends SearchPart {
                         set.addAll(more);
                     }
                 } catch (Throwable t) {
-                    InfoPlugin.log("Information request " + layer.getName() + " failed " + t, t); //$NON-NLS-1$ //$NON-NLS-2$
+                   LoggingSupport.log(InfoPlugin.getDefault(), "Information request " + layer.getName() + " failed " + t, t); //$NON-NLS-1$ //$NON-NLS-2$
                 }
                 continue;
             }

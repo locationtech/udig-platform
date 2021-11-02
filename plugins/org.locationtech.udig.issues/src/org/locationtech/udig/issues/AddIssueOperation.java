@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import org.locationtech.udig.core.enums.Priority;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.issues.internal.IssuesActivator;
 import org.locationtech.udig.issues.internal.Messages;
 import org.locationtech.udig.issues.internal.view.IssuesView;
@@ -55,12 +56,13 @@ import org.opengis.filter.Filter;
 
 /**
  * Adds selected features as issues to the issues list
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public class AddIssueOperation implements IOp {
 
+    @Override
     public void op( Display display, Object target, IProgressMonitor monitor ) throws Exception {
         Object[] array = (Object[]) target;
 
@@ -88,7 +90,8 @@ public class AddIssueOperation implements IOp {
 
     private void select(Display display, final Collection<IIssue> issues) {
     	display.asyncExec(new Runnable() {
-			public void run() {
+			@Override
+            public void run() {
 				IWorkbenchPage page = findPage();
 				if( page!=null ){
 					IViewPart view = page.findView(IssuesView.VIEW_ID);
@@ -108,7 +111,7 @@ public class AddIssueOperation implements IOp {
         		activePage.showView(IssuesView.VIEW_ID, null, IWorkbenchPage.VIEW_VISIBLE);
         	}
         } catch (PartInitException e) {
-            IssuesActivator.log("Error showing issues view",e); //$NON-NLS-1$
+            LoggingSupport.log(IssuesActivator.getDefault(), "Error showing issues view",e); //$NON-NLS-1$
         }
     }
 
@@ -132,6 +135,7 @@ public class AddIssueOperation implements IOp {
     private InformationDialog openInformationDialog( final Display display ) {
         final InformationDialog[] dialog = new InformationDialog[1];
         PlatformGIS.syncInDisplayThread(display, new Runnable(){
+            @Override
             public void run() {
                 dialog[0] = new InformationDialog(display.getActiveShell());
                 showView();
@@ -144,48 +148,46 @@ public class AddIssueOperation implements IOp {
     private Collection<IIssue> addFeatureIssues( SimpleFeature[] features, InformationDialog dialog,
             IProgressMonitor monitor ) {
 
-        Collection<IIssue> issues = new HashSet<IIssue>();
-        
+        Collection<IIssue> issues = new HashSet<>();
+
         for( SimpleFeature feature : features ) {
             if (feature instanceof IAdaptable) {
                 IAdaptable adaptable = (IAdaptable) feature;
-                ILayer layer = (ILayer) adaptable.getAdapter(ILayer.class);
+                ILayer layer = adaptable.getAdapter(ILayer.class);
                 if (layer == null) {
-                    IssuesActivator
-                            .log(
-                                    "Couldn't adapt the feature to a layer so therefore couldn't add it as an issue", //$NON-NLS-1$
-                                    null);
+                    LoggingSupport.log(IssuesActivator.getDefault(),
+                                    "Couldn't adapt the feature to a layer so therefore couldn't add it as an issue"); //$NON-NLS-1$
                 } else {
                     issues.add(addFeatureIssue(feature, layer, dialog));
                 }
             } else {
-                IssuesActivator.log(
+                LoggingSupport.log(IssuesActivator.getDefault(),
                         "The feature is not adaptable and therefore a layor couldn't be determined for it.  " //$NON-NLS-1$
-                                + "So it couldn't add it as an issue", null); //$NON-NLS-1$
+                                + "So it couldn't add it as an issue"); //$NON-NLS-1$
             }
             monitor.worked(1);
         }
         issues.remove(null);
         return issues;
-        
+
     }
 
     private Collection<IIssue> addFeatureIssues( Filter[] filters, InformationDialog dialog,
             IProgressMonitor monitor ) throws IOException {
-    	Collection<IIssue> issues = new HashSet<IIssue>();
+    	Collection<IIssue> issues = new HashSet<>();
         for( Filter filter : filters ) {
              FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = null;
             ILayer layer = null;
             if (filter instanceof IAdaptable) {
                 IAdaptable adaptable = (IAdaptable) filter;
-                layer = (ILayer) adaptable.getAdapter(ILayer.class);
+                layer = adaptable.getAdapter(ILayer.class);
                 if (layer != null) {
                     featureSource = layer.getResource(FeatureSource.class, monitor);
                 }
             }
-            
+
             if (featureSource == null) {
-                IssuesActivator.log("SimpleFeature Source for filter: " + filter, null); //$NON-NLS-1$
+                LoggingSupport.log(IssuesActivator.getDefault(),"SimpleFeature Source for filter: " + filter); //$NON-NLS-1$
             } else {
                 FeatureCollection<SimpleFeatureType, SimpleFeature>  features = featureSource.getFeatures(filter);
                 FeatureIterator<SimpleFeature> iter = features.features();
@@ -205,7 +207,7 @@ public class AddIssueOperation implements IOp {
 
     private IIssue addFeatureIssue( SimpleFeature feature, ILayer layer, InformationDialog dialog ) {
         if (feature == null) {
-            IssuesActivator.log("Can't construct an issue from a null feature!", null); //$NON-NLS-1$
+            LoggingSupport.log(IssuesActivator.getDefault(),"Can't construct an issue from a null feature!"); //$NON-NLS-1$
             return null;
         } else {
             String description = dialog.getDescription();
@@ -257,7 +259,7 @@ public class AddIssueOperation implements IOp {
             createGroupIDWidgets(comp);
 
             createDescriptionWidgets(comp);
-            
+
             createOperationDescription(comp);
 
             return comp;
@@ -318,6 +320,7 @@ public class AddIssueOperation implements IOp {
             return new GridData(SWT.FILL, SWT.TOP, fillHorizontal, false);
         }
 
+        @Override
         public void handleEvent( Event event ) {
             if (event.widget == description) {
                 descriptionText = description.getText();
