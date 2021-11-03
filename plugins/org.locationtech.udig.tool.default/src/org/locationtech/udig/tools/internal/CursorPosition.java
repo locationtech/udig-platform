@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -10,18 +11,10 @@
 package org.locationtech.udig.tools.internal;
 
 import java.awt.Point;
-import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.Locale;
 
-import org.locationtech.udig.project.command.Command;
-import org.locationtech.udig.project.internal.command.navigation.SetViewportCenterCommand;
-import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import org.locationtech.udig.project.ui.tool.AbstractTool;
-import org.locationtech.udig.project.ui.tool.IToolContext;
-import org.locationtech.udig.ui.PlatformGIS;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.ContributionItem;
@@ -41,20 +34,30 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.geometry.jts.JTS;
+import org.geotools.measure.AngleFormat;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.udig.project.command.Command;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportCenterCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.tool.AbstractTool;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.ui.PlatformGIS;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import org.locationtech.jts.geom.Coordinate;
-
 /**
- * A CursorPosition tool displays the current Cursor position in map coordinates on the Statusbar
- * 
+ * A CursorPosition tool displays the current Cursor position in map coordinates on the StatusBar
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
 public class CursorPosition extends AbstractTool {
     private static final String ID = "CURSOR_POSITION_LABEL"; //$NON-NLS-1$
+
+    private static final AngleFormat LAT_ANGLE_FORMAT = new AngleFormat("DD°MM'SS.ss"); //$NON-NLS-1$
+
+    private static final AngleFormat LON_ANGLE_FORMAT = new AngleFormat("DDD°MM'SS.ss"); //$NON-NLS-1$
 
     /**
      * Creates an new instance of CursorPosition
@@ -66,16 +69,10 @@ public class CursorPosition extends AbstractTool {
     @Override
     public void setContext(IToolContext tools) {
         super.setContext(tools);
-        PlatformGIS.syncInDisplayThread(new Runnable() {
-            /**
-             * @see java.lang.Runnable#run()
-             */
-            public void run() {
-                getLabel();
-            }
-        });
+        PlatformGIS.syncInDisplayThread(() -> getLabel());
     }
 
+    @Override
     public void mouseMoved(final MapMouseEvent e) {
         final LineItem label = getLabel();
         if (label == null)
@@ -104,6 +101,7 @@ public class CursorPosition extends AbstractTool {
         return item;
     }
 
+    @Override
     public void mouseDragged(MapMouseEvent e) {
         mouseMoved(e);
     }
@@ -122,6 +120,7 @@ public class CursorPosition extends AbstractTool {
         /**
          * @see org.eclipse.jface.action.IContributionItem#isDynamic()
          */
+        @Override
         public boolean isDynamic() {
             return true;
         }
@@ -146,10 +145,10 @@ public class CursorPosition extends AbstractTool {
             data.heightHint = 15;
             separator.setLayoutData(data);
             textArea = new Text(parent, SWT.BORDER | SWT.CENTER);
-            textArea.addKeyListener(this);
-            textArea.addFocusListener(this);
-            if (position != null)
+            textArea.setEditable(false);
+            if (position != null) {
                 textArea.setText(getString(position));
+            }
             textArea.setToolTipText(Messages.CursorPosition_tooltip);
             setFont(textArea);
             data = new StatusLineLayoutData();
@@ -166,18 +165,21 @@ public class CursorPosition extends AbstractTool {
                 data = textArea2.getFont().getFontData();
             }
             for (int i = 0; i < data.length; i++) {
-                if (Platform.OS_MACOSX == Platform.getOS())
+                if (Platform.OS_MACOSX.equals(Platform.getOS())) {
                     data[i].setHeight(12);
-                else
+                } else {
                     data[i].setHeight(10);
+                }
             }
             textArea2.setFont(new Font(textArea2.getDisplay(), data));
         }
 
+        @Override
         public void keyPressed(KeyEvent e) {
             // do nothing
         }
 
+        @Override
         public void keyReleased(KeyEvent e) {
             if (e.character == SWT.Selection) {
                 go();
@@ -197,20 +199,22 @@ public class CursorPosition extends AbstractTool {
             }
         }
 
+        @Override
         public void focusGained(FocusEvent e) {
             int end = textArea.getText().length();
             textArea.setSelection(0, end);
         }
 
+        @Override
         public void focusLost(FocusEvent e) {
-            // do nada
+            // do nothing
         }
 
     }
 
     /**
-     * transforms a String value to a Coordinate considering Locale setting and the supplied crs.
-     * 
+     * Transforms a string value to a Coordinate considering Locale setting and the supplied CRS.
+     *
      * @param value
      * @param crs
      * @return
@@ -228,29 +232,29 @@ public class CursorPosition extends AbstractTool {
         if (tmp.length() != modifiedvalue.length())
             latlong = true;
 
-        modifiedvalue = StringUtils.removeStart(modifiedvalue.trim(), "(");
-        modifiedvalue = StringUtils.removeStart(modifiedvalue.trim(), "[");
-        modifiedvalue = StringUtils.removeEnd(modifiedvalue.trim(), ")");
-        modifiedvalue = StringUtils.removeEnd(modifiedvalue.trim(), "]");
+        modifiedvalue = StringUtils.removeStart(modifiedvalue.trim(), "("); //$NON-NLS-1$
+        modifiedvalue = StringUtils.removeStart(modifiedvalue.trim(), "["); //$NON-NLS-1$
+        modifiedvalue = StringUtils.removeEnd(modifiedvalue.trim(), ")"); //$NON-NLS-1$
+        modifiedvalue = StringUtils.removeEnd(modifiedvalue.trim(), "]"); //$NON-NLS-1$
 
-        String[] components = StringUtils.split(modifiedvalue, decimalSeparator == ',' ? " " : ","); //$NON-NLS-1$
+        String[] components = StringUtils.split(modifiedvalue, decimalSeparator == ',' ? " " : ","); //$NON-NLS-1$ //$NON-NLS-2$
         if (components.length == 1) {
             components = StringUtils.split(modifiedvalue, " "); //$NON-NLS-1$
         }
         if (components.length == 1) {
-            components = StringUtils.split(modifiedvalue, ",");
+            components = StringUtils.split(modifiedvalue, ","); //$NON-NLS-1$
         }
         if (components.length <= 1) {
             return null;
         }
 
         try {
-            components[0] = StringUtils.stripEnd(components[0].trim(), ", ");
-            double arg1 = components[0].contains(".") ? Double.parseDouble(components[0])
+            components[0] = StringUtils.stripEnd(components[0].trim(), ", "); //$NON-NLS-1$
+            double arg1 = components[0].contains(".") ? Double.parseDouble(components[0]) //$NON-NLS-1$
                     : NumberFormat.getInstance().parse(components[0]).doubleValue();
 
-            components[1] = StringUtils.stripEnd(components[1].trim(), ", ");
-            double arg0 = components[1].contains(".") ? Double.parseDouble(components[1])
+            components[1] = StringUtils.stripEnd(components[1].trim(), ", "); //$NON-NLS-1$
+            double arg0 = components[1].contains(".") ? Double.parseDouble(components[1]) //$NON-NLS-1$
                     : NumberFormat.getInstance().parse(components[1]).doubleValue();
             Coordinate coord = new Coordinate(arg1, arg0);
             if (latlong && crs != null) {
@@ -262,50 +266,23 @@ public class CursorPosition extends AbstractTool {
                 }
             }
             return coord;
-        } catch (NumberFormatException e) {
-            return null;
-        } catch (ParseException e1) {
-            return null;
-        } catch (Exception e1) {
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
-     * transforms coordinate to String
-     * 
+     * Transforms coordinate to String
+     *
      * @param coord
      * @return
      */
     public static String getString(Coordinate coord) {
-        String value = getString(coord.x) + " " + getString(coord.y); //$NON-NLS-1$
-        return value;
-    }
-
-    private static String getString(double value) {
-        if (Double.isNaN(value)) {
-            return Messages.CursorPosition_not_a_number;
-        }
-
-        if (Double.isInfinite(value)) {
-            return Messages.CursorPosition_infinity;
-        }
-
-        DecimalFormat format = (DecimalFormat) NumberFormat.getNumberInstance(Locale.getDefault());
-        format.setMaximumFractionDigits(4);
-        format.setMinimumIntegerDigits(1);
-        format.setGroupingUsed(false);
-        String string = format.format(value);
-
-        String[] parts = string.split("\\.");
-        if (parts.length > 3) {
-            string = parts[0];
-        }
-        return string;
+        return formatCoordinate(true, coord.y) + " " + formatCoordinate(false, coord.x); //$NON-NLS-1$
     }
 
     /**
-     * 
+     *
      * @param modifiedvalue
      * @param upperCase
      * @return
@@ -334,4 +311,46 @@ public class CursorPosition extends AbstractTool {
         return modifiedvalue;
     }
 
+    private static String formatCoordinate(boolean isLatitude, double value) {
+        double finalvalue;
+        if (isLatitude && Math.abs(value) > 90.0) {
+            finalvalue = 90.0;
+        } else {
+            double vector = getVector(value);
+            finalvalue = value + vector;
+        }
+        StringBuilder sb = new StringBuilder();
+        if (isLatitude) {
+            sb.append(LAT_ANGLE_FORMAT.format(Math.abs(finalvalue)));
+            if (value > 0) {
+                sb.append("N"); //$NON-NLS-1$
+            } else {
+                sb.append("S"); //$NON-NLS-1$
+            }
+        } else {
+            sb.append(LON_ANGLE_FORMAT.format(Math.abs(finalvalue)));
+            if (finalvalue > 0) {
+                sb.append("E"); //$NON-NLS-1$
+            } else {
+                sb.append("W"); //$NON-NLS-1$
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * @param longValue Longitude-Value to get vector for
+     * @return vector to move X-valid into valid WGS84 Bounds
+     */
+    public static double getVector(final double longValue) {
+        return -1 * (longValue - (euclideanMod(longValue + 180., 360.) - 180.));
+    }
+
+    static double euclideanMod(final double x, final double y) {
+        double r = Math.abs(x) % Math.abs(y);
+        // apply the sign of dividend and make sure the remainder is positive number
+        r *= Math.signum(x);
+        r = (r + Math.abs(y)) % Math.abs(y);
+        return r;
+    }
 }
