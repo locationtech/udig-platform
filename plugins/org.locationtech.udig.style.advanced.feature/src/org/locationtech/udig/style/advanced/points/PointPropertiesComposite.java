@@ -709,6 +709,8 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            } else {
+            	ruleWrapper.getRule().setFilter(null);
             }
             break;
         }

@@ -436,6 +436,8 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            } else {
+            	ruleWrapper.getRule().setFilter(null);
             }
             break;
         }

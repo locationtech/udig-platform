@@ -417,6 +417,8 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            } else {
+            	ruleWrapper.getRule().setFilter(null);
             }
             break;
         }
