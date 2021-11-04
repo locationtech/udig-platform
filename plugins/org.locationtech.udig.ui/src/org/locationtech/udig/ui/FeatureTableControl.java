@@ -57,7 +57,9 @@ import org.eclipse.ui.part.PageBook;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.udig.core.IProvider;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.internal.ui.Trace;
 import org.locationtech.udig.internal.ui.UiPlugin;
 import org.locationtech.udig.ui.internal.Messages;
@@ -67,8 +69,6 @@ import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.filter.Filter;
 import org.opengis.filter.Id;
 import org.opengis.filter.identity.FeatureId;
-
-import org.locationtech.jts.geom.Geometry;
 
 /**
  * A TreeViewer control for viewing a table of SimpleFeature attributes.
@@ -102,7 +102,7 @@ import org.locationtech.jts.geom.Geometry;
  * If the FeatureCollection implements the {@link IAdaptable} interface and adapts to
  * {@link ICellEditorListener[]} then the listeners will be added to the {@link CellEditor}s.
  * </p>
- * 
+ *
  * @author jdeolive
  * @author jeichar
  * @since 0.3
@@ -135,7 +135,7 @@ public class FeatureTableControl implements ISelectionProvider {
 
     private Color messageForeground;
 
-    private Set<IFeatureTableLoadingListener> loadingListeners = new CopyOnWriteArraySet<IFeatureTableLoadingListener>();
+    private Set<IFeatureTableLoadingListener> loadingListeners = new CopyOnWriteArraySet<>();
 
     private Comparator<SimpleFeature> currentComparator;
 
@@ -157,40 +157,42 @@ public class FeatureTableControl implements ISelectionProvider {
 
     /**
      * Construct a <code>FeatureTableControl</code>.
-     * 
+     *
      * @param monitorProvider a provider that will provider progress monitors for displaying loading
      *        information.
      * @param fReader The FeatureReader that returns the actual features.
      * @param resPerPage Results per page to be shown in the table.
      */
-    public FeatureTableControl( Composite parent,
-            FeatureCollection<SimpleFeatureType, SimpleFeature> features ) {
+    public FeatureTableControl(Composite parent,
+            FeatureCollection<SimpleFeatureType, SimpleFeature> features) {
         this(ProgressManager.instance(), parent, features);
     }
+
     /**
      * Construct <code>FeatureTableControl</code>.
      * <p>
      * Must call setFeatures before use.
      * </p>
-     * 
+     *
      * @param monitorProvider a provider that will provider progress monitors for displaying loading
      *        information.
      */
-    public FeatureTableControl( final IProvider<IProgressMonitor> monitorProvider ) {
+    public FeatureTableControl(final IProvider<IProgressMonitor> monitorProvider) {
         this.progressMonitorProvider = monitorProvider;
-        this.selectionProvider = new FeatureTableSelectionProvider(this, ProgressManager.instance());
+        this.selectionProvider = new FeatureTableSelectionProvider(this,
+                ProgressManager.instance());
     }
 
     /**
      * Construct a <code>FeatureTableControl</code>.
-     * 
+     *
      * @param monitorProvider a provider that will provider progress monitors for displaying loading
      *        information.
      * @param fReader The FeatureReader that returns the actual features.
      * @param resPerPage Results per page to be shown in the table.
      */
-    public FeatureTableControl( final IProvider<IProgressMonitor> monitorProvider,
-            Composite parent, FeatureCollection<SimpleFeatureType, SimpleFeature> features ) {
+    public FeatureTableControl(final IProvider<IProgressMonitor> monitorProvider, Composite parent,
+            FeatureCollection<SimpleFeatureType, SimpleFeature> features) {
         this(monitorProvider);
         this.features = features;
         createTableControl(parent);
@@ -198,16 +200,16 @@ public class FeatureTableControl implements ISelectionProvider {
 
     /**
      * Sets the number of features viewed in the table per page.
-     * 
+     *
      * @param resPerPage positive integer.
      */
-    public void setPageSize( int resPerPage ) {
+    public void setPageSize(int resPerPage) {
         this.pageSize = resPerPage;
     }
 
     /**
      * Returns the number of features viewed in the table per page.
-     * 
+     *
      * @return positive integer.
      */
     public int getPageSize() {
@@ -216,7 +218,7 @@ public class FeatureTableControl implements ISelectionProvider {
 
     /**
      * Returns the control representing the table control.
-     * 
+     *
      * @return The internal table viewer control.
      */
     public Control getControl() {
@@ -229,10 +231,10 @@ public class FeatureTableControl implements ISelectionProvider {
 
     /**
      * Creates the table control.
-     * 
+     *
      * @param parent The to be parent of the control.
      */
-    public void createTableControl( Composite parent ) {
+    public void createTableControl(Composite parent) {
         book = new PageBook(parent, SWT.NONE);
         message = new Text(book, SWT.WRAP);
         messageBackground = message.getBackground();
@@ -247,7 +249,7 @@ public class FeatureTableControl implements ISelectionProvider {
 
     /**
      * Indicates that all attribute types will be searched by the select method
-     * 
+     *
      * @see #select(String, String[], boolean)
      */
     public static final String[] ALL = new String[0];
@@ -256,17 +258,17 @@ public class FeatureTableControl implements ISelectionProvider {
 
     /**
      * show the warning about loading features into memory.
-     * 
+     *
      * @returns true if the user wishes to continue to load features; false otherwise.
      */
-    public boolean showWarning( Display display ) {
+    public boolean showWarning(Display display) {
 
         IPreferenceStore preferenceStore = UiPlugin.getDefault().getPreferenceStore();
         if (!preferenceStore.getBoolean(CACHING_WARNING) && !shown) {
             shown = true;
 
-            MessageDialogWithToggle dialog = MessageDialogWithToggle.openOkCancelConfirm(display
-                    .getActiveShell(), Messages.FeatureTableControl_warningTitle,
+            MessageDialogWithToggle dialog = MessageDialogWithToggle.openOkCancelConfirm(
+                    display.getActiveShell(), Messages.FeatureTableControl_warningTitle,
                     Messages.FeatureTableControl_warningMessage,
                     Messages.FeatureTableControl_warningToggle, false, null, null);
             // MessageDialogWithToggle dialog = MessageDialogWithToggle.openWarning(display
@@ -301,10 +303,10 @@ public class FeatureTableControl implements ISelectionProvider {
 
     /**
      * Creates the table control itself.
-     * 
+     *
      * @param parent
      */
-    protected void createTableViewer( Composite parent ) {
+    protected void createTableViewer(Composite parent) {
         int style = SWT.FULL_SELECTION | SWT.VIRTUAL | SWT.H_SCROLL | SWT.V_SCROLL;
         if (tableViewer != null) {
             disposeTableViewer();
@@ -339,10 +341,10 @@ public class FeatureTableControl implements ISelectionProvider {
 
             setCellValidators(adaptable);
             addCellEditorListeners(adaptable);
-            tableViewer.setCellModifier((ICellModifier) adaptable.getAdapter(ICellModifier.class));
+            tableViewer.setCellModifier(adaptable.getAdapter(ICellModifier.class));
 
             String[] properties = new String[attributeCount + 1];
-            for( int i = 0; i < properties.length; i++ ) {
+            for (int i = 0; i < properties.length; i++) {
                 if (i == 0)
                     properties[i] = FEATURE_ID_COLUMN_PROPERTY;
                 else {
@@ -357,8 +359,8 @@ public class FeatureTableControl implements ISelectionProvider {
         }
         book.showPage(tableViewer.getControl());
 
-        UiPlugin.trace(Trace.FEATURE_TABLE, getClass(),
-                "createTableViewer(): showing table View", SHOW_PATH ? new Exception() : null); //$NON-NLS-1$
+        UiPlugin.trace(Trace.FEATURE_TABLE, getClass(), "createTableViewer(): showing table View", //$NON-NLS-1$
+                SHOW_PATH ? new Exception() : null);
 
         if (features != null) {
             tableViewer.setInput(features);
@@ -366,15 +368,16 @@ public class FeatureTableControl implements ISelectionProvider {
 
     }
 
-    private void addSelectionListener( final Table table ) {
+    private void addSelectionListener(final Table table) {
         // We are not using default selection provided by the table because it is too slow
         // so I am doing my own listening and based on which items are selected and what
         // keys are down I am simulating the selection behaviour.
-        table.addListener(SWT.MouseDown, new Listener(){
+        table.addListener(SWT.MouseDown, new Listener() {
 
             int lastIndex = -1;
 
-            public void handleEvent( Event e ) {
+            @Override
+            public void handleEvent(Event e) {
 
                 if (e.button != 1) {
                     return;
@@ -401,8 +404,8 @@ public class FeatureTableControl implements ISelectionProvider {
                 selectionProvider.notifyListeners();
             }
 
-            private void handleDefault( final Table table, int index,
-                    FeatureTableContentProvider provider, Collection<String> selectionFids ) {
+            private void handleDefault(final Table table, int index,
+                    FeatureTableContentProvider provider, Collection<String> selectionFids) {
                 if (index == -1) {
                     selectionFids.clear();
                     table.clearAll();
@@ -415,8 +418,8 @@ public class FeatureTableControl implements ISelectionProvider {
                 lastIndex = index;
             }
 
-            private void handleXORSelect( final Table table, int index,
-                    FeatureTableContentProvider provider, Collection<String> selectionFids ) {
+            private void handleXORSelect(final Table table, int index,
+                    FeatureTableContentProvider provider, Collection<String> selectionFids) {
                 String fid = provider.features.get(index).getID();
                 if (selectionFids.contains(fid)) {
                     selectionFids.remove(fid);
@@ -427,8 +430,8 @@ public class FeatureTableControl implements ISelectionProvider {
                 lastIndex = index;
             }
 
-            private void handleSelecteRange( final Table table, int index,
-                    FeatureTableContentProvider provider, Collection<String> selectionFids ) {
+            private void handleSelecteRange(final Table table, int index,
+                    FeatureTableContentProvider provider, Collection<String> selectionFids) {
                 selectionFids.clear();
 
                 int low = Math.min(lastIndex, index);
@@ -440,7 +443,7 @@ public class FeatureTableControl implements ISelectionProvider {
                 List<SimpleFeature> toAdd = provider.features.subList(low, high + 1);
                 boolean foundUnselectedItem = false;
                 int i = low;
-                for( SimpleFeature feature : toAdd ) {
+                for (SimpleFeature feature : toAdd) {
                     if (selectionFids.add(feature.getID())) {
                         foundUnselectedItem = true;
                     }
@@ -469,12 +472,12 @@ public class FeatureTableControl implements ISelectionProvider {
         tableViewer = null;
     }
 
-    private void setCellEditors( IAdaptable adaptable, int attributeCount ) {
+    private void setCellEditors(IAdaptable adaptable, int attributeCount) {
         if (adaptable.getAdapter(CellEditor[].class) != null) {
-            CellEditor[] editors = (CellEditor[]) adaptable.getAdapter(CellEditor[].class);
+            CellEditor[] editors = adaptable.getAdapter(CellEditor[].class);
             if (editors.length < attributeCount) {
-                UiPlugin.log(
-                        "not enough cell editors for feature type so not used", new Exception()); //$NON-NLS-1$
+                LoggingSupport.log(UiPlugin.getDefault(), new IllegalStateException(
+                        "not enough cell editors for feature type so not used")); //$NON-NLS-1$
                 createCellEditors();
             } else {
                 CellEditor[] copy = new CellEditor[editors.length + 1];
@@ -496,7 +499,7 @@ public class FeatureTableControl implements ISelectionProvider {
         }
     }
 
-    private void addCellEditorListeners( IAdaptable adaptable ) {
+    private void addCellEditorListeners(IAdaptable adaptable) {
         CellEditor[] editors = tableViewer.getCellEditors();
         // offset is usually 1 but if the number of validators==number of attributes then the offset
         // is 0
@@ -505,18 +508,18 @@ public class FeatureTableControl implements ISelectionProvider {
 
         ICellEditorListener[] listener = null;
         if (adaptable.getAdapter(ICellEditorListener[].class) != null) {
-            listener = (ICellEditorListener[]) adaptable.getAdapter(ICellEditorListener[].class);
+            listener = adaptable.getAdapter(ICellEditorListener[].class);
             int attributeCount = features.getSchema().getAttributeCount();
             if (listener.length < attributeCount) {
-                UiPlugin.log(
-                        "not enough cell editors for feature type so not used", new Exception()); //$NON-NLS-1$
+                LoggingSupport.log(UiPlugin.getDefault(), new IllegalStateException(
+                        "not enough cell editors for feature type so not used")); //$NON-NLS-1$
                 return;
             } else if (listener.length == attributeCount + 1) {
                 offset = 0;
             }
         }
 
-        for( int i = 0; i < editors.length - offset; i++ ) {
+        for (int i = 0; i < editors.length - offset; i++) {
             final CellEditor editor = editors[i + offset];
             if (editor == null)
                 continue;
@@ -526,7 +529,7 @@ public class FeatureTableControl implements ISelectionProvider {
         }
     }
 
-    private void setCellValidators( IAdaptable adaptable ) {
+    private void setCellValidators(IAdaptable adaptable) {
         CellEditor[] editors = tableViewer.getCellEditors();
         SimpleFeatureType schema = features.getSchema();
         // offset is usually 1 but if the number of validators==number of attributes then the offset
@@ -536,19 +539,18 @@ public class FeatureTableControl implements ISelectionProvider {
 
         ICellEditorValidator[] validators = null;
         if (adaptable.getAdapter(ICellEditorValidator[].class) != null) {
-            validators = (ICellEditorValidator[]) adaptable
-                    .getAdapter(ICellEditorValidator[].class);
+            validators = adaptable.getAdapter(ICellEditorValidator[].class);
             int attributeCount = features.getSchema().getAttributeCount();
             if (validators.length < attributeCount) {
-                UiPlugin.log(
-                        "not enough cell editors for feature type so not used", new Exception()); //$NON-NLS-1$
+                LoggingSupport.log(UiPlugin.getDefault(), new IllegalStateException(
+                        "not enough cell editors for feature type so not used")); //$NON-NLS-1$
                 validators = null;
             } else if (validators.length == attributeCount) {
                 offset = 0;
             }
         }
 
-        for( int i = 0; i < editors.length - offset; i++ ) {
+        for (int i = 0; i < editors.length - offset; i++) {
             CellEditor editor = editors[i + offset];
             if (editor == null)
                 continue;
@@ -565,9 +567,9 @@ public class FeatureTableControl implements ISelectionProvider {
         org.eclipse.jface.viewers.CellEditor[] editors = new org.eclipse.jface.viewers.CellEditor[schema
                 .getAttributeCount() + 1];
 
-        for( int i = 0; i < schema.getAttributeCount(); i++ ) {
+        for (int i = 0; i < schema.getAttributeCount(); i++) {
             AttributeDescriptor aType = schema.getDescriptor(i);
-            Class< ? extends Object> concreteType = aType.getType().getBinding();
+            Class<? extends Object> concreteType = aType.getType().getBinding();
             Composite control = (Composite) tableViewer.getControl();
             if (concreteType.isAssignableFrom(String.class)) {
                 BasicTypeCellEditor textCellEditor = new BasicTypeCellEditor(control, String.class);
@@ -587,7 +589,7 @@ public class FeatureTableControl implements ISelectionProvider {
             } else if (concreteType.isAssignableFrom(BigInteger.class)) {
                 NumberCellEditor textCellEditor = new NumberCellEditor(control, BigInteger.class);
                 editors[i + 1] = textCellEditor;
-                
+
             } else if (concreteType.isAssignableFrom(Boolean.class)) {
                 BooleanCellEditor textCellEditor = new BooleanCellEditor(control);
                 editors[i + 1] = textCellEditor;
@@ -605,7 +607,7 @@ public class FeatureTableControl implements ISelectionProvider {
             // WarningCellEditor textCellEditor = new WarningCellEditor(control, "The Date type does
             // not yet have a editor, please make a bug report for this Attribute Type");
             // editors[i+1]=textCellEditor;
-            //                
+            //
             // }
             else if (concreteType.isAssignableFrom(Byte.class)) {
                 BasicTypeCellEditor textCellEditor = new BasicTypeCellEditor(control, Byte.class);
@@ -629,7 +631,7 @@ public class FeatureTableControl implements ISelectionProvider {
         tableViewer.setCellEditors(editors);
     }
 
-    private void createAttributeColumns( final Table table, TableViewer viewer, TableLayout layout ) {
+    private void createAttributeColumns(final Table table, TableViewer viewer, TableLayout layout) {
 
         if (features == null) {
             TableColumn column = new TableColumn(table, SWT.CENTER | SWT.BORDER);
@@ -644,10 +646,10 @@ public class FeatureTableControl implements ISelectionProvider {
             layout.addColumnData(new ColumnWeightData(1, 150, true));
             column.setMoveable(true);
 
-            column.addListener(SWT.Selection, new AttributeColumnSortListener(this,
-                    FEATURE_ID_COLUMN_PROPERTY));
+            column.addListener(SWT.Selection,
+                    new AttributeColumnSortListener(this, FEATURE_ID_COLUMN_PROPERTY));
 
-            for( int i = 0; i < schema.getAttributeCount(); i++ ) {
+            for (int i = 0; i < schema.getAttributeCount(); i++) {
                 AttributeDescriptor aType = schema.getDescriptor(i);
                 column = new TableColumn(table, SWT.CENTER | SWT.BORDER);
                 if (Geometry.class.isAssignableFrom(aType.getType().getBinding())) { // was
@@ -660,8 +662,8 @@ public class FeatureTableControl implements ISelectionProvider {
                 layout.addColumnData(new ColumnWeightData(1, 100, true));
                 column.setMoveable(true);
 
-                column.addListener(SWT.Selection, new AttributeColumnSortListener(this, aType
-                        .getName().getLocalPart()));
+                column.addListener(SWT.Selection,
+                        new AttributeColumnSortListener(this, aType.getName().getLocalPart()));
             }
 
         }
@@ -669,7 +671,7 @@ public class FeatureTableControl implements ISelectionProvider {
 
     /**
      * Does nothing.
-     * 
+     *
      * @see org.eclipse.ui.IWorkbenchPart#setFocus()
      */
     public void setFocus() {
@@ -678,7 +680,7 @@ public class FeatureTableControl implements ISelectionProvider {
 
     /**
      * Contents of the current page of features
-     * 
+     *
      * @return
      */
     public FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatures() {
@@ -686,7 +688,7 @@ public class FeatureTableControl implements ISelectionProvider {
     }
 
     /** Set up for a single page of content */
-    public void setFeatures( FeatureCollection<SimpleFeatureType, SimpleFeature> features ) {
+    public void setFeatures(FeatureCollection<SimpleFeatureType, SimpleFeature> features) {
         checkWidget();
         if (this.features != null && this.features == features)
             return;
@@ -713,14 +715,14 @@ public class FeatureTableControl implements ISelectionProvider {
     /**
      * Displays a message. If text == null or "" then the message is hidden and tableViewer is shown
      * again.
-     * 
+     *
      * @param text message to display
      * @param background color of the background of the text widget. If null the default color is
      *        used
      * @param foreground color of the foreground of the text widget. If null the default color is
      *        used
      */
-    public void message( String text, Color background, Color foreground ) {
+    public void message(String text, Color background, Color foreground) {
         checkWidget();
         Color background2 = background;
         Color foreground2 = foreground;
@@ -736,45 +738,45 @@ public class FeatureTableControl implements ISelectionProvider {
             message.setText(""); //$NON-NLS-1$
             if (tableViewer != null) {
                 book.showPage(tableViewer.getControl());
-                UiPlugin
-                        .trace(
-                                Trace.FEATURE_TABLE,
-                                getClass(),
-                                "message(String,Color,Color): showing table View", SHOW_PATH ? new Exception() : null); //$NON-NLS-1$
+                UiPlugin.trace(Trace.FEATURE_TABLE, getClass(),
+                        "message(String,Color,Color): showing table View", //$NON-NLS-1$
+                        SHOW_PATH ? new Exception() : null);
             }
         } else {
             message.setText(text);
             book.showPage(message);
-            UiPlugin
-                    .trace(
-                            Trace.FEATURE_TABLE,
-                            getClass(),
-                            "message(String,Color,Color): showing message", SHOW_PATH ? new Exception() : null); //$NON-NLS-1$
+            UiPlugin.trace(Trace.FEATURE_TABLE, getClass(),
+                    "message(String,Color,Color): showing message", //$NON-NLS-1$
+                    SHOW_PATH ? new Exception() : null);
         }
     }
 
     /**
      * Displays a message. If text == null or "" then the message is hidden and tableViewer is shown
      * again.
-     * 
+     *
      * @param text message to display
      */
-    public void message( String text ) {
+    public void message(String text) {
         message(text, null, null);
     }
 
     /**
      * Returns a selection with a single Id indicating the features selected
      */
+    @Override
     public ISelection getSelection() {
         checkWidget();
         return selectionProvider.getSelection();
     }
 
-    public void addSelectionChangedListener( ISelectionChangedListener listener ) {
+    @Override
+    public void addSelectionChangedListener(ISelectionChangedListener listener) {
         selectionProvider.addSelectionChangedListener(listener);
     }
-    public void removeSelectionChangedListener( ISelectionChangedListener listener ) {
+
+    @Override
+    public void removeSelectionChangedListener(ISelectionChangedListener listener) {
         selectionProvider.removeSelectionChangedListener(listener);
     }
 
@@ -782,7 +784,8 @@ public class FeatureTableControl implements ISelectionProvider {
      * Useable selections are: selection of features, FIDS and Filters/Queries that adapt to a
      * FeatureSource
      */
-    public void setSelection( final ISelection newSelection ) {
+    @Override
+    public void setSelection(final ISelection newSelection) {
         checkWidget();
         selectionProvider.setSelection(newSelection);
     }
@@ -806,13 +809,13 @@ public class FeatureTableControl implements ISelectionProvider {
 
     /**
      * Sorts the features in the tableView.
-     * 
+     *
      * @param comparator comparator to use for the sorting.
      * @param dir the direction to set the column SWT.UP or SWT.DOWN. If SWT.UP then the table item
      *        with index 0 is at the top of the table otherwise it is at the bottom of the table.
      * @param sortColumn the column that is being sorted
      */
-    public void sort( Comparator<SimpleFeature> comparator, int dir, TableColumn sortColumn ) {
+    public void sort(Comparator<SimpleFeature> comparator, int dir, TableColumn sortColumn) {
         checkWidget();
 
         FeatureTableContentProvider provider = (FeatureTableContentProvider) tableViewer
@@ -828,12 +831,14 @@ public class FeatureTableControl implements ISelectionProvider {
         if (table.getSortColumn() != sortColumn) {
             sorted = true;
             table.setSortColumn(sortColumn);
-            while( Display.getCurrent().readAndDispatch() );
+            while (Display.getCurrent().readAndDispatch())
+                ;
         }
         if (table.getSortColumn() != null && dir != table.getSortDirection()) {
             sorted = true;
             table.setSortDirection(dir);
-            while( Display.getCurrent().readAndDispatch() );
+            while (Display.getCurrent().readAndDispatch())
+                ;
         }
         if (sorted) {
             table.deselectAll();
@@ -845,10 +850,10 @@ public class FeatureTableControl implements ISelectionProvider {
     /**
      * Resorts the table using the last comparator. This is useful for cases where features have
      * been added to the table
-     * 
+     *
      * @param refreshTable
      */
-    void sort( boolean refreshTable ) {
+    void sort(boolean refreshTable) {
         if (currentComparator == null)
             return;
 
@@ -870,7 +875,7 @@ public class FeatureTableControl implements ISelectionProvider {
         return selectionProvider;
     }
 
-    public void setSelection( StructuredSelection selection, boolean reveal ) {
+    public void setSelection(StructuredSelection selection, boolean reveal) {
         selectionProvider.setSelection(selection, reveal);
     }
 
@@ -878,11 +883,11 @@ public class FeatureTableControl implements ISelectionProvider {
         return selectionProvider.getSelectionFids().size();
     }
 
-    public void select( Set<FeatureId> selection ) {
+    public void select(Set<FeatureId> selection) {
         getSelectionProvider().getSelectionFids().clear();
         int j = 0;
         int firstMatch = -1;
-        for( FeatureId id : selection ) {
+        for (FeatureId id : selection) {
             selectionProvider.getSelectionFids().add(id.getID());
             if (firstMatch == -1) {
                 firstMatch = j;
@@ -899,8 +904,9 @@ public class FeatureTableControl implements ISelectionProvider {
         // tell the world..
         selectionProvider.notifyListeners();
     }
-    public void select( String cql, boolean selectAll ) throws CQLException {
-        Filter filter = (Filter) CQL.toFilter(cql);
+
+    public void select(String cql, boolean selectAll) throws CQLException {
+        Filter filter = CQL.toFilter(cql);
 
         FeatureTableContentProvider provider = (FeatureTableContentProvider) this.tableViewer
                 .getContentProvider();
@@ -913,7 +919,7 @@ public class FeatureTableControl implements ISelectionProvider {
         getSelectionProvider().getSelectionFids().clear();
         int j = 0;
         int firstMatch = -1;
-        OUTER: for( SimpleFeature feature : toSearch ) {
+        OUTER: for (SimpleFeature feature : toSearch) {
             if (filter.evaluate(feature)) {
                 selectionProvider.getSelectionFids().add(feature.getID());
                 if (firstMatch == -1)
@@ -938,13 +944,13 @@ public class FeatureTableControl implements ISelectionProvider {
     /**
      * select the features found that has the text. Only the attributes indicated are searched. If
      * {@link #ALL} is selected then all attributes will be searched
-     * 
+     *
      * @param text text to search for it will first be assumed that it is a reg ex expression
      * @param attributes the attributes to search. See {@link #ALL}
      * @param selectAll if true all matched features will be selected otherwise just the first
      *        feature
      */
-    public void select( String text, String[] attributes, boolean selectAll )
+    public void select(String text, String[] attributes, boolean selectAll)
             throws PatternSyntaxException {
 
         Pattern pattern = compilePattern(text);
@@ -964,7 +970,7 @@ public class FeatureTableControl implements ISelectionProvider {
         getSelectionProvider().getSelectionFids().clear();
         int j = 0;
         int firstMatch = -1;
-        OUTER: for( SimpleFeature feature : toSearch ) {
+        OUTER: for (SimpleFeature feature : toSearch) {
             if (searchFeature(feature, pattern, attributes)) {
                 if (firstMatch == -1)
                     firstMatch = j;
@@ -985,13 +991,13 @@ public class FeatureTableControl implements ISelectionProvider {
         selectionProvider.notifyListeners();
     }
 
-    private Pattern compilePattern( final String text ) {
+    private Pattern compilePattern(final String text) {
 
         String[] parts = text.split("\\|");
 
         StringBuilder builder = new StringBuilder();
 
-        for( String string : parts ) {
+        for (String string : parts) {
             String pre = ".*";
             String post = ".*";
             if (string.startsWith("^") || string.startsWith(".") || string.startsWith("\\A")) {
@@ -1021,17 +1027,17 @@ public class FeatureTableControl implements ISelectionProvider {
         return pattern;
     }
 
-    private boolean searchFeature( SimpleFeature feature, Pattern pattern, String[] attributes ) {
+    private boolean searchFeature(SimpleFeature feature, Pattern pattern, String[] attributes) {
         SimpleFeatureType featureType = feature.getFeatureType();
         if (attributes == ALL) {
-            for( int i = 0; i < featureType.getAttributeCount(); i++ ) {
+            for (int i = 0; i < featureType.getAttributeCount(); i++) {
                 if (matches(pattern, feature.getAttribute(i))) {
                     selectionProvider.getSelectionFids().add(feature.getID());
                     return true;
                 }
             }
         }
-        for( int i = 0; i < attributes.length; i++ ) {
+        for (int i = 0; i < attributes.length; i++) {
             if (matches(pattern, feature.getAttribute(attributes[i]))) {
                 getSelectionProvider().getSelectionFids().add(feature.getID());
                 return true;
@@ -1041,7 +1047,7 @@ public class FeatureTableControl implements ISelectionProvider {
         return false;
     }
 
-    private String convertToLiteral( String text ) {
+    private String convertToLiteral(String text) {
         String text2 = text.replace("\\", "\\\\"); //$NON-NLS-1$ //$NON-NLS-2$
         text2 = text2.replace("*", "\\*"); //$NON-NLS-1$ //$NON-NLS-2$
         text2 = text2.replace("+", "\\+"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1058,7 +1064,7 @@ public class FeatureTableControl implements ISelectionProvider {
         return text2;
     }
 
-    private boolean matches( Pattern pattern, Object attribute ) {
+    private boolean matches(Pattern pattern, Object attribute) {
         if (attribute == null) {
             attribute = "";
         }
@@ -1066,11 +1072,11 @@ public class FeatureTableControl implements ISelectionProvider {
         return pattern.matcher(stringValue).matches();
     }
 
-    public void addLoadingListener( IFeatureTableLoadingListener listener ) {
+    public void addLoadingListener(IFeatureTableLoadingListener listener) {
         loadingListeners.add(listener);
     }
 
-    public void remove( IFeatureTableLoadingListener listener ) {
+    public void remove(IFeatureTableLoadingListener listener) {
         loadingListeners.remove(listener);
     }
 
@@ -1083,7 +1089,7 @@ public class FeatureTableControl implements ISelectionProvider {
                 try {
                     listener.loadingStarted(event.monitor);
                 } catch (Throwable e) {
-                    UiPlugin.log(listener + " threw an exception", e); //$NON-NLS-1$
+                    LoggingSupport.log(UiPlugin.getDefault(), listener + " threw an exception", e); //$NON-NLS-1$
                 }
             }
         } else {
@@ -1091,7 +1097,7 @@ public class FeatureTableControl implements ISelectionProvider {
                 try {
                     listener.loadingStopped(event.canceled);
                 } catch (Throwable e) {
-                    UiPlugin.log(listener + " threw an exception", e); //$NON-NLS-1$
+                    LoggingSupport.log(UiPlugin.getDefault(), listener + " threw an exception", e); //$NON-NLS-1$
                 }
             }
         }
@@ -1100,10 +1106,10 @@ public class FeatureTableControl implements ISelectionProvider {
     /**
      * Updates the features that have the same feature ID to match the new feature or adds the
      * features if they are not part of the current collection.
-     * 
+     *
      * @param features2 the feature collection that contains the modified or new features.
      */
-    public void update( FeatureCollection<SimpleFeatureType, SimpleFeature> features2 ) {
+    public void update(FeatureCollection<SimpleFeatureType, SimpleFeature> features2) {
         if (features == null)
             return; // nothing to update since the table is not in use... Should this be an
                     // exception?
@@ -1127,7 +1133,7 @@ public class FeatureTableControl implements ISelectionProvider {
     /**
      * Removes the selected features (the features selected by the owning
      * {@link FeatureTableControl}).
-     * 
+     *
      * @return returns a collection of the deleted features
      * @see #setSelection(ISelection)
      * @see #setSelection(StructuredSelection, boolean)
@@ -1140,10 +1146,10 @@ public class FeatureTableControl implements ISelectionProvider {
 
     /**
      * Sets the context Menu used by the table view. Not menu is used for the message box.
-     * 
+     *
      * @param contextMenu menu manager used for creating the menu.
      */
-    public void setMenuManager( MenuManager contextMenu ) {
+    public void setMenuManager(MenuManager contextMenu) {
         checkWidget();
         this.contextMenu = contextMenu;
         if (tableViewer != null && tableViewer.getControl() != null) {
@@ -1155,7 +1161,7 @@ public class FeatureTableControl implements ISelectionProvider {
         }
     }
 
-    public void setSelectionColor( IProvider<RGB> selectionColor ) {
+    public void setSelectionColor(IProvider<RGB> selectionColor) {
         this.selectionColor = selectionColor;
         if (tableViewer != null) {
             FeatureTableLabelProvider labelProvider = (FeatureTableLabelProvider) tableViewer

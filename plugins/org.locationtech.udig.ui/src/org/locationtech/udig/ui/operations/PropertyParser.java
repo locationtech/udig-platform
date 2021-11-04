@@ -11,6 +11,7 @@ package org.locationtech.udig.ui.operations;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.internal.ui.UiPlugin;
 import org.locationtech.udig.internal.ui.operations.OpFilterPropertyValueCondition;
 
@@ -19,52 +20,61 @@ import org.locationtech.udig.internal.ui.operations.OpFilterPropertyValueConditi
  */
 public class PropertyParser implements FilterParser {
 
-    public PropertyParser( ) {
+    public PropertyParser() {
         super();
     }
 
     @Override
-    public OpFilter parse( IConfigurationElement element ) {
+    public OpFilter parse(IConfigurationElement element) {
         String desiredPropertyId = element.getAttribute("propertyId"); //$NON-NLS-1$
         // try the deprecated one if the required new one is not there
-        if( desiredPropertyId==null || desiredPropertyId.trim().length()==0 )
+        if (desiredPropertyId == null || desiredPropertyId.trim().length() == 0)
             desiredPropertyId = element.getAttribute("name"); //$NON-NLS-1$
-        String expectedValue = element.getAttribute("expectedValue");       //$NON-NLS-1$
+        String expectedValue = element.getAttribute("expectedValue"); //$NON-NLS-1$
 
-        if (desiredPropertyId == null || desiredPropertyId.length() == 0 ) {
-            UiPlugin.log("EnablesFor element is not valid. PropertyId must be supplied.", null); //$NON-NLS-1$
+        if (desiredPropertyId == null || desiredPropertyId.length() == 0) {
+            LoggingSupport.log(UiPlugin.getDefault(),
+                    "EnablesFor element is not valid. PropertyId must be supplied."); //$NON-NLS-1$
             return OpFilter.TRUE;
         }
 
-        IConfigurationElement[] configuration = Platform.getExtensionRegistry().getConfigurationElementsFor("org.locationtech.udig.ui.objectProperty"); //$NON-NLS-1$
-        IConfigurationElement propertyElement=null;
-        String targetClass = null; 
-        for( IConfigurationElement configurationElement : configuration ) {
-            if( propertyElement!=null )
+        IConfigurationElement[] configuration = Platform.getExtensionRegistry()
+                .getConfigurationElementsFor("org.locationtech.udig.ui.objectProperty"); //$NON-NLS-1$
+        IConfigurationElement propertyElement = null;
+        String targetClass = null;
+        for (IConfigurationElement configurationElement : configuration) {
+            if (propertyElement != null)
                 break;
             IConfigurationElement[] children = configurationElement.getChildren("property"); //$NON-NLS-1$
-            for( IConfigurationElement child : children ) {
+            for (IConfigurationElement child : children) {
                 String currentPropertyID = child.getAttribute("id"); //$NON-NLS-1$
-                String currentPropertyID2=child.getNamespaceIdentifier()+"."+currentPropertyID; //$NON-NLS-1$
-                
-                if( currentPropertyID.equals(desiredPropertyId) || currentPropertyID2.equals(desiredPropertyId)){
+                String currentPropertyID2 = child.getNamespaceIdentifier() + "." //$NON-NLS-1$
+                        + currentPropertyID;
+
+                if (currentPropertyID.equals(desiredPropertyId)
+                        || currentPropertyID2.equals(desiredPropertyId)) {
                     propertyElement = child;
                     targetClass = configurationElement.getAttribute("targetClass"); //$NON-NLS-1$
                     // try the deprecated one if the required new one is not there
-                    if( targetClass==null || targetClass.trim().length()==0 )
+                    if (targetClass == null || targetClass.trim().length() == 0)
                         targetClass = configurationElement.getAttribute("class"); //$NON-NLS-1$
                     break;
                 }
             }
         }
 
-        if ( propertyElement==null ){
-            UiPlugin.log("PropertyParser: Parsing PropertyValue, desired Propert: "+desiredPropertyId+" not found.  Referenced in plugin: "+element.getNamespaceIdentifier(), null); //$NON-NLS-1$ //$NON-NLS-2$
+        if (propertyElement == null) {
+            LoggingSupport.log(UiPlugin.getDefault(),
+                    "PropertyParser: Parsing PropertyValue, desired Propert: " + desiredPropertyId //$NON-NLS-1$
+                            + " not found.  Referenced in plugin: " //$NON-NLS-1$
+                            + element.getNamespaceIdentifier());
             return OpFilter.TRUE;
         }
 
-        if (targetClass==null ){
-            UiPlugin.log("PropertyParser: Parsing PropertyValue, no target class defined in property"+desiredPropertyId, null); //$NON-NLS-1$
+        if (targetClass == null) {
+            LoggingSupport.log(UiPlugin.getDefault(),
+                    "PropertyParser: Parsing PropertyValue, no target class defined in property" //$NON-NLS-1$
+                            + desiredPropertyId);
 
             return OpFilter.TRUE;
         }

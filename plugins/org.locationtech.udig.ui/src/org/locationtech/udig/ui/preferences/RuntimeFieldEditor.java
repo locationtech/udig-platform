@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.internal.ui.UiPlugin;
 import org.locationtech.udig.ui.ExceptionDetailsDialog;
 import org.locationtech.udig.ui.internal.Messages;
@@ -140,7 +141,7 @@ public final class RuntimeFieldEditor extends FieldEditor {
                 if (nonhost == null)
                     nonhost = ""; //$NON-NLS-1$
             } catch (IOException e) {
-                UiPlugin.log("Problem reading proxy settings.", e); //$NON-NLS-1$
+                LoggingSupport.log(UiPlugin.getDefault(), "Problem reading proxy settings.", e); //$NON-NLS-1$
             }
         }
         if (setStr.equals("")) //$NON-NLS-1$

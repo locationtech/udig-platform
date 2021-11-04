@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.locationtech.udig.internal.ui.UiPlugin;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
@@ -26,11 +24,13 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.locationtech.udig.core.logging.LoggingSupport;
+import org.locationtech.udig.internal.ui.UiPlugin;
 import org.opengis.filter.expression.Expression;
 
 /**
  * Factory class that takes an Expression and returns the appropriate ExpressionViewer.
- * 
+ *
  * @author Scott
  * @since 1.3.0
  */
@@ -45,11 +45,12 @@ public abstract class ExpressionViewerFactory extends ViewerFactory<IExpressionV
      * <p>
      * The default implementation assumes {@link ExpressionInput} and {@link Express} in order to
      * call {@link #score(ExpressionInput, Expression)} below.
-     * 
+     *
      * @param input Assumed to be {@link ExpressionInput}
      * @param value Assumed to be {@link Express}
      * @return score between 0-100 indicating suitability
      */
+    @Override
     public int score(Object input, Object value) {
         ExpressionInput expressionInput = safeCast(input, ExpressionInput.class);
         Expression expression = safeCast(value, Expression.class);
@@ -62,7 +63,7 @@ public abstract class ExpressionViewerFactory extends ViewerFactory<IExpressionV
      * <p>
      * The default implementation assumes {@link ExpressionInput} and {@link Express} in order to
      * call {@link #score(ExpressionInput, Expression)} below.
-     * 
+     *
      * @param input Context used to assist the user in defining an expresison
      * @param expr {@link Expression} displayed to the user for editing
      * @return score between 0-100 indicating suitability
@@ -82,11 +83,12 @@ public abstract class ExpressionViewerFactory extends ViewerFactory<IExpressionV
      * This method simply creates the viewer; client code is expected to call
      * {@link Viewer#setInput(filter )} prior to use. For more information please see the JFace
      * {@link Viewer} class.
-     * 
+     *
      * @param composite
      * @param style
      * @return requested viewer
      */
+    @Override
     public abstract IExpressionViewer createViewer(Composite composite, int style);
 
     //
@@ -105,18 +107,18 @@ public abstract class ExpressionViewerFactory extends ViewerFactory<IExpressionV
 
     /**
      * Short list {@link ExpressionViewerFactory} suitable for the editing a expression in the provided context.
-     * 
+     *
      * @param input context information for editing
      * @param expression expression presented to the user for editing
      * @return
      */
     public static List<ExpressionViewerFactory> factoryList(
             final ExpressionInput input, final Expression expression) {
-        List<ExpressionViewerFactory> list = new ArrayList<ExpressionViewerFactory>();
+        List<ExpressionViewerFactory> list = new ArrayList<>();
         for( ExpressionViewerFactory factory : factoryList()){
             int score = factory.score( input, expression );
             if( Appropriate.valueOf( score ) == Appropriate.NOT_APPROPRIATE ){
-                continue; // skip this one 
+                continue; // skip this one
             }
             list.add( factory );
         }
@@ -129,12 +131,12 @@ public abstract class ExpressionViewerFactory extends ViewerFactory<IExpressionV
      * Note because these factories are active objects (each with an implementation of {@link #score(ExpressionInput, Expression)}
      * which we need to call) they are not handled in the traditional eclipse "proxy" style. This is a known violation of the
      * Eclipse House rules (that will force each plugin implementing a {@link ExpressionViewerFactory} to be loaded - very bad).
-     * 
+     *
      * @return Complete list of factories provided by {@link #FILTER_VIEWER_EXTENSION} extension
      */
     public synchronized static List<ExpressionViewerFactory> factoryList() {
         if (factoryList == null) {
-            ArrayList<ExpressionViewerFactory> list = new ArrayList<ExpressionViewerFactory>();
+            ArrayList<ExpressionViewerFactory> list = new ArrayList<>();
 
             IExtensionRegistry registery = Platform.getExtensionRegistry();
             IExtensionPoint extensionPoint = registery.getExtensionPoint(FILTER_VIEWER_EXTENSION);
@@ -152,8 +154,8 @@ public abstract class ExpressionViewerFactory extends ViewerFactory<IExpressionV
                         list.add(factory);
                     } catch (CoreException e) {
                         String pluginId = configuration.getContributor().getName();
-                        IStatus status = new Status(IStatus.WARNING, pluginId, e.getMessage(), e);
-                        UiPlugin.log(status);
+                        LoggingSupport.log(UiPlugin.getDefault(),
+                                new Status(IStatus.WARNING, pluginId, e.getMessage(), e));
                     }
                 } else {
                     // skip as it is probably a expressionViewer element

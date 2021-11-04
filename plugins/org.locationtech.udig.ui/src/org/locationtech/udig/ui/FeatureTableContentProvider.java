@@ -21,9 +21,7 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ILazyContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -42,6 +40,7 @@ import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.locationtech.udig.core.IProvider;
 import org.locationtech.udig.core.feature.AdaptableFeatureCollection;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.internal.ui.Trace;
 import org.locationtech.udig.internal.ui.UiPlugin;
 import org.locationtech.udig.ui.internal.Messages;
@@ -50,7 +49,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * ContentProvider that agressively listens to FeatureCollection (using FeatureSource FeatureEvents).
- * 
+ *
  * @author Jody Garnett
  */
 class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Collection<SimpleFeature>> {
@@ -66,7 +65,7 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
         owningFeatureTableControl = control;
         this.progressMonitorProvider=progressMonitorProvider;
     }
-    
+
     /**
      * Listens for changes in FeatureSource, updates the viewer if content provider changes.
      * <p>
@@ -163,7 +162,7 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
     /**
      * Contains same features as Features but sorted by id
      */
-    Map<String, SimpleFeature> lookup = new HashMap<String, SimpleFeature>();
+    Map<String, SimpleFeature> lookup = new HashMap<>();
     /**
      * If true then an edit has occurred and the table is being updated.
      */
@@ -171,36 +170,38 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
     private boolean disposed=false;
     /**
      * Does nothing.
-     * 
+     *
      * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer,
      *      java.lang.Object, java.lang.Object)
      * @param viewer
      * @param oldInput
      * @param newInput
      */
+    @Override
     public void inputChanged( Viewer viewer, Object oldInput, final Object newInput ) {
 
         synchronized (this) {
             if (monitor != NULL) {
                 monitor.setCanceled(true);
 
-                UiPlugin.trace(Trace.FEATURE_TABLE, FeatureTableContentProvider.class, 
+                UiPlugin.trace(Trace.FEATURE_TABLE, FeatureTableContentProvider.class,
                         "#inputChanged(): cancelled monitor", null); //$NON-NLS-1$
                 try {
                     PlatformGIS.wait(500, -1, new WaitCondition(){
-                        
+
+                        @Override
                         public boolean isTrue() {
                             return monitor == NULL;
                         }
-                        
+
                     }, this);
                 } catch (InterruptedException e) {
-                    UiPlugin.log("Interrupted", e); //$NON-NLS-1$
+                    LoggingSupport.log(UiPlugin.getDefault(), "Interrupted", e); //$NON-NLS-1$
                     return;
                 }
             }
             features.clear();
-            
+
             if (oldInput != null && oldInput instanceof AdaptableFeatureCollection) {
                 AdaptableFeatureCollection old = (AdaptableFeatureCollection) oldInput;
                 FeatureSource source = (FeatureSource) old.getAdapter(FeatureSource.class);
@@ -239,11 +240,12 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
             PlatformGIS.run(new ContentLoader(input));
         }
     }
+    @Override
     public void dispose() {
         synchronized( this ){
             if( disposed )
-                return; 
-            
+                return;
+
             disposed=true;
         }
         features.clear();
@@ -253,20 +255,23 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
             try {
                 PlatformGIS.wait(200, -1, new WaitCondition(){
 
+                    @Override
                     public boolean isTrue() {
                         return monitor == NULL;
                     }
 
                 }, this);
             } catch (InterruptedException e) {
-                UiPlugin.log("Interrupted", e); //$NON-NLS-1$
+                LoggingSupport.log(UiPlugin.getDefault(), "Interrupted", e); //$NON-NLS-1$
                 return;
             }
         }
     }
+    @Override
     public Collection<SimpleFeature> get(Object... params) {
         return features;
     }
+    @Override
     public void updateElement( int index ) {
         if (index >= features.size()) {
             owningFeatureTableControl.getViewer().replace("", index); //$NON-NLS-1$
@@ -274,8 +279,8 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
             owningFeatureTableControl.getViewer().replace(FeatureTableControl.LOADING, 0);
         } else {
             int resolvedIndex=index;
-            //commented fragment below not needed since features list 
-            //is already sorted using Collections.sort 
+            //commented fragment below not needed since features list
+            //is already sorted using Collections.sort
             //if( owningFeatureTableControl.getViewer().getTable().getSortDirection()==SWT.UP )
             //    resolvedIndex=features.size()-index-1;
             SimpleFeature feature = features.get(resolvedIndex);
@@ -291,14 +296,16 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
             this.input = input;
         }
 
+        @Override
         public void handleException( Throwable exception ) {
-            UiPlugin.log("Error loading features", exception); //$NON-NLS-1$
+            LoggingSupport.log(UiPlugin.getDefault(), "Error loading features", exception); //$NON-NLS-1$
         }
 
+        @Override
         public void run() throws Exception {
             if (cancel())
                 return;
-            UiPlugin.trace(Trace.FEATURE_TABLE, FeatureTableContentProvider.class, 
+            UiPlugin.trace(Trace.FEATURE_TABLE, FeatureTableContentProvider.class,
                     "Starting ContentLoader", null); //$NON-NLS-1$
             setEnabled(false);
             int i = 0;
@@ -327,22 +334,22 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
                 }
             } catch (OutOfMemoryError error) {
                 error(input, i + " " + Messages.FeatureTableContentProvider_outOfMemory, true); //$NON-NLS-1$
-                UiPlugin.log("Out of memory error in table view", error); //$NON-NLS-1$
+                LoggingSupport.log(UiPlugin.getDefault(), "Out of memory error in table view", error); //$NON-NLS-1$
                 return;
             } catch (IndexOutOfBoundsException e) {
                 error(input, Messages.FeatureTableContentProvider_unexpectedErro
                         + " " + Messages.FeatureTableContentProvider_probablecharseterror, false);
-                UiPlugin.log("error loading features in table view", e); //$NON-NLS-1$
+                LoggingSupport.log(UiPlugin.getDefault(), "error loading features in table view", e); //$NON-NLS-1$
                 return;
             } catch (Throwable t) {
                 error(input, Messages.FeatureTableContentProvider_unexpectedErro
                         + t.getLocalizedMessage(), false);
-                UiPlugin.log("error loading features in table view", t); //$NON-NLS-1$
+                LoggingSupport.log(UiPlugin.getDefault(), "error loading features in table view", t); //$NON-NLS-1$
                 return;
             } finally {
                 if (iterator != null)
                     iterator.close();
-                UiPlugin.trace(Trace.FEATURE_TABLE, FeatureTableContentProvider.class, 
+                UiPlugin.trace(Trace.FEATURE_TABLE, FeatureTableContentProvider.class,
                         "Ending ContentLoader, Cancel state is:"+monitor.isCanceled(), null); //$NON-NLS-1$
             }
             if (!cancel()) {
@@ -356,17 +363,19 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
          */
         private void error( final FeatureCollection<SimpleFeatureType, SimpleFeature> input, final String string,
                 final boolean clearFeatures ) {
-            UiPlugin.trace(Trace.FEATURE_TABLE, FeatureTableContentProvider.class, 
+            UiPlugin.trace(Trace.FEATURE_TABLE, FeatureTableContentProvider.class,
                     "ContentLoader#error: Error occurred in ContentLoader:\n"+string, null); //$NON-NLS-1$
 
             final Display display = owningFeatureTableControl.getViewer().getControl().getDisplay();
             display.asyncExec(new Runnable(){
+                @Override
                 public void run() {
                     monitor.setCanceled(true);
                 }
             });
             done();
             display.asyncExec(new Runnable(){
+                @Override
                 public void run() {
                     owningFeatureTableControl.message(string, display
                             .getSystemColor(SWT.COLOR_INFO_BACKGROUND), display
@@ -379,6 +388,7 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
             final int j = i;
             owningFeatureTableControl.getViewer().getControl().getDisplay().asyncExec(
                     new Runnable(){
+                        @Override
                         public void run() {
                             monitor
                                     .subTask(Messages.FeatureTableContentProvider_loadedFeatures
@@ -393,7 +403,7 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
          * If enabled it will finish the {@link IProgressMonitor}, null it out, notify listeners
          * and enable the table control. if not enabled it will begin the progress task and disable
          * the Table control
-         * 
+         *
          * @param enabled
          */
         private void setEnabled( final boolean enabled ) {
@@ -406,9 +416,10 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
                 size = IProgressMonitor.UNKNOWN;
 
             control.getDisplay().asyncExec(new Runnable(){
+                @Override
                 public void run() {
 
-                    UiPlugin.trace(Trace.FEATURE_TABLE, FeatureTableContentProvider.class, 
+                    UiPlugin.trace(Trace.FEATURE_TABLE, FeatureTableContentProvider.class,
                             "ContentLoader#setEnabled():"+enabled, null); //$NON-NLS-1$
                     if (enabled) {
                         done();
@@ -424,11 +435,12 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
         private void done() {
             final Table control = owningFeatureTableControl.getViewer().getTable();
             Runnable runnable = new Runnable(){
+                @Override
                 public void run() {
 
-                    UiPlugin.trace(Trace.FEATURE_TABLE, FeatureTableContentProvider.class, 
+                    UiPlugin.trace(Trace.FEATURE_TABLE, FeatureTableContentProvider.class,
                             "ContentLoader#done()|run():", null); //$NON-NLS-1$
-                    
+
                     monitor.done();
                     synchronized (FeatureTableContentProvider.this) {
                         monitor = NULL;
@@ -453,11 +465,12 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
         private void updateTable( final FeatureCollection<SimpleFeatureType, SimpleFeature> newInput, final boolean done ) {
             final Table table = owningFeatureTableControl.getViewer().getTable();
             table.getDisplay().asyncExec(new Runnable(){
+                @Override
                 public void run() {
 
-                    UiPlugin.trace(Trace.FEATURE_TABLE, FeatureTableContentProvider.class, 
+                    UiPlugin.trace(Trace.FEATURE_TABLE, FeatureTableContentProvider.class,
                             "ContentLoader#updateTable(): done="+done, null); //$NON-NLS-1$
-                    
+
                     owningFeatureTableControl.message(null);
                     int size = features.size();
                     owningFeatureTableControl.getViewer().setItemCount(size);
@@ -481,26 +494,26 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
 
     /**
      * Updates the features that have the same feature ID to match the new feature or adds the features if they are not part of the
-     * current collection.  
+     * current collection.
      *
-     * @param features2 the feature collection that contains the modified or new features.  
+     * @param features2 the feature collection that contains the modified or new features.
      */
     public void update( FeatureCollection<SimpleFeatureType, SimpleFeature> features2 ) throws IllegalArgumentException{
         if( features==null )
             return;
-        
+
         if( !owningFeatureTableControl.features.getSchema().equals(features2.getSchema()) )
             throw new IllegalArgumentException( "The feature type of the SimpleFeature Collection passed as a parameter does not have the same" + //$NON-NLS-1$
                     " feature type as the features in the table so it cannot be used to update the features." ); //$NON-NLS-1$
-        
+
         ContentUpdater updater=new ContentUpdater(features2);
         PlatformGIS.run(updater);
     }
-    
+
     SimpleFeature findFeature(String featureId ){
         return lookup.get(featureId);
     }
-    
+
     private class ContentUpdater implements ISafeRunnable{
 
         private FeatureCollection<SimpleFeatureType, SimpleFeature> newFeatures;
@@ -510,10 +523,12 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
             this.newFeatures=features2;
         }
 
+        @Override
         public void handleException( Throwable exception ) {
-            UiPlugin.log("Exception while updating the features in the FeatureTableControl", exception); //$NON-NLS-1$
+            LoggingSupport.log(UiPlugin.getDefault(), "Exception while updating the features in the FeatureTableControl", exception); //$NON-NLS-1$
         }
 
+        @Override
         public void run() throws Exception {
             synchronized( FeatureTableContentProvider.this){
                 updating=true;
@@ -521,20 +536,21 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
                     // wait until finished loading
                     try {
                         PlatformGIS.wait(500, -1, new WaitCondition(){
-    
+
+                            @Override
                             public boolean isTrue() {
                                 return monitor == NULL;
                             }
-    
+
                         }, FeatureTableContentProvider.this);
                     } catch (InterruptedException e) {
-                        UiPlugin.log("Interrupted", e); //$NON-NLS-1$
+                        LoggingSupport.log(UiPlugin.getDefault(), "Interrupted", e); //$NON-NLS-1$
                         return;
                     }
                 }
-                
+
                 startLoading();
-                
+
                 SimpleFeatureType schema = newFeatures.getSchema();
                 FeatureIterator<SimpleFeature> iter=newFeatures.features();
                 try{
@@ -556,18 +572,19 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
                         loaded++;
                         updateMonitor(loaded+Messages.FeatureTableContentProvider_updatingFeatures);
                     }
-                    
+
                     updateTable(featuresWereAdded);
                 }finally{
                     iter.close();
                 }
-                
+
             }
         }
-        
+
         private void updateTable(final boolean featuresWereAdded) {
             final Table table = owningFeatureTableControl.getViewer().getTable();
             table.getDisplay().asyncExec(new Runnable(){
+                @Override
                 public void run() {
                     if( featuresWereAdded ){
                         updateMonitor(Messages.FeatureTableContentProvider_sortTable);
@@ -592,6 +609,7 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
         private void updateMonitor(final String subTask) {
             Display display = owningFeatureTableControl.getControl().getDisplay();
             display.asyncExec(new Runnable(){
+                @Override
                 public void run() {
                     monitor.subTask(subTask);
                     monitor.worked(1);
@@ -602,6 +620,7 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
         private void startLoading() {
             Display display = owningFeatureTableControl.getControl().getDisplay();
             display.asyncExec(new Runnable(){
+                @Override
                 public void run() {
                     owningFeatureTableControl.notifyLoadingListeners(new LoadingEvent(false, monitor, true));
                     monitor=progressMonitorProvider.get();
@@ -611,7 +630,7 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
             });
         }
     }
-    
+
     /**
      * Checks the lookup table and the feature list to ensure that they have the same number of features and the same features.
      * An exception will be thrown otherwise.
@@ -619,7 +638,7 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
     public void assertInternallyConsistent(){
         if( features.size()!=lookup.size())
             throw new AssertionError("lookup table has "+lookup.size()+" features while feature list has "+features.size()+" features"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        
+
         for( SimpleFeature feature : features ) {
             SimpleFeature lookupFeature = lookup.get(feature.getID());
             if( lookup==null ){
@@ -637,10 +656,10 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
     public FeatureCollection<SimpleFeatureType, SimpleFeature> deleteSelection() {
         final DefaultFeatureCollection deletedFeatures = new DefaultFeatureCollection();
         Runnable updateTable = new Runnable(){
-            @SuppressWarnings("unchecked")
+            @Override
             public void run() {
                 Collection<String> selectionFids = owningFeatureTableControl.getSelectionProvider().getSelectionFids();
-                
+
                 for( Iterator<SimpleFeature> iter = features.iterator(); iter.hasNext(); ) {
                     SimpleFeature feature =  iter.next();
                     if( selectionFids.contains(feature.getID()) ){
@@ -649,18 +668,18 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
                         lookup.remove(feature.getID());
                     }
                 }
-                
+
                 selectionFids.clear();
                 owningFeatureTableControl.getViewer().getTable().clearAll();
             }
         };
-        
+
         if( Display.getCurrent()==null ){
             PlatformGIS.syncInDisplayThread(owningFeatureTableControl.getControl().getDisplay(), updateTable);
         }else{
             updateTable.run();
         }
-        
+
         return deletedFeatures;
     }
 }

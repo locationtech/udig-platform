@@ -39,9 +39,9 @@ import org.locationtech.udig.project.internal.StyleBlackboard;
  */
 public final class MapPaletteSaveStrategy extends CatalogExport {
 	private final ExportResourceSelectionState state;
-	private MapEditorWithPalette editor;
+	private MapEditor editor;
 
-	public MapPaletteSaveStrategy(ExportResourceSelectionState state, MapEditorWithPalette editor) {
+	public MapPaletteSaveStrategy(ExportResourceSelectionState state, MapEditor editor) {
 		super(false);
 		this.state = state;
 		this.editor = editor;

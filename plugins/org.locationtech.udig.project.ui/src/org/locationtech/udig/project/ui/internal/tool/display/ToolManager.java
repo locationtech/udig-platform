@@ -94,7 +94,7 @@ import org.locationtech.udig.project.internal.ProjectPackage;
 import org.locationtech.udig.project.internal.commands.CreateMapCommand;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
-import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
+import org.locationtech.udig.project.ui.internal.MapEditor;
 import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.project.ui.internal.Messages;
 import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
@@ -723,9 +723,9 @@ public class ToolManager implements IToolManager {
             }
             activeModalToolProxy.setChecked(true);
             editor.setSelectionProvider(activeModalToolProxy.getSelectionProvider());
-            if (editor instanceof MapEditorWithPalette) {
+            if (editor instanceof MapEditor) {
                 // temporary cast while we sort out if MapPart can own an MapEditDomain
-                MapEditorWithPalette editor2 = (MapEditorWithPalette) editor;
+                MapEditor editor2 = (MapEditor) editor;
                 MapEditDomain editDomain = editor2.getEditDomain();
                 editDomain.setActiveTool(activeModalToolProxy.getId());
             }

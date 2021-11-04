@@ -16,12 +16,13 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.internal.ui.UiPlugin;
 
 /**
  * A non-blocking version of the LazyOpFilter. Returns false first then calculates whether it is in
  * fact false or true in a seperate thread and notifies the listeners of the actual state.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -30,12 +31,13 @@ public class LazyOpFilter implements OpFilter {
     private final OpFilter opFilter;
     private final ILazyOpListener listener;
     private Worker worker;
-    final Map<Object, Boolean> cache=new WeakHashMap<Object, Boolean>();
+    final Map<Object, Boolean> cache=new WeakHashMap<>();
     final boolean blocking, caching;
     final Lock lock =new ReentrantLock();
-    
+
     private IOpFilterListener changeListener = new IOpFilterListener(){
 
+        @Override
         public void notifyChange( Object changedLayer ) {
             boolean notify=false;
             boolean newResult=false;
@@ -43,7 +45,8 @@ public class LazyOpFilter implements OpFilter {
             lock.lock();
             try{
                 if( !enabled ){
-                    UiPlugin.log("Warning listener called even though not enabled", new Exception()); //$NON-NLS-1$
+                    LoggingSupport.log(UiPlugin.getDefault(), new IllegalStateException(
+                            "Warning listener called even though not enabled")); //$NON-NLS-1$
                     return;
                 }
                 if( opFilter.canCacheResult() ){
@@ -93,6 +96,7 @@ public class LazyOpFilter implements OpFilter {
     /**
      * Will safely run the enablement worker (protected by a lock).
      */
+    @Override
     public boolean accept( final Object object ) {
         lock.lock();
         try{
@@ -117,7 +121,7 @@ public class LazyOpFilter implements OpFilter {
 
         if( result==null )
             result=defaultReturnValue;
-        
+
         if (blocking) {
             worker = new Worker(object);
             executor.submit(worker);
@@ -144,6 +148,7 @@ public class LazyOpFilter implements OpFilter {
             cancelled = true;
         }
 
+        @Override
         public void run() {
             boolean result;
             synchronized (LazyOpFilter.this) {
@@ -159,12 +164,14 @@ public class LazyOpFilter implements OpFilter {
     /**
      * Listener; used to report on worker progress
      */
+    @Override
     public void addListener( IOpFilterListener listener ) {
         throw new UnsupportedOperationException();
     }
     /**
      * Subclass must override?
      */
+    @Override
     public boolean canCacheResult() {
         throw new UnsupportedOperationException();
     }
@@ -172,14 +179,16 @@ public class LazyOpFilter implements OpFilter {
     /**
      * Subclass must override?
      */
+    @Override
     public boolean isBlocking() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void removeListener( IOpFilterListener listener ) {
         throw new UnsupportedOperationException();
     }
-    
+
     public void disable(){
         lock.lock();
         try{

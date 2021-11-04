@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,16 +13,6 @@ package org.locationtech.udig.internal.ui;
 import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
-
-import org.locationtech.udig.core.internal.ExtensionPointList;
-import org.locationtech.udig.ui.Constants;
-import org.locationtech.udig.ui.MenuBuilder;
-import org.locationtech.udig.ui.UDIGMenuBuilder;
-import org.locationtech.udig.ui.action.NewObjectContribution;
-import org.locationtech.udig.ui.action.NewObjectDelegate;
-import org.locationtech.udig.ui.action.NewObjectDelegateComparator;
-import org.locationtech.udig.ui.internal.Messages;
-import org.locationtech.udig.ui.preferences.PreferenceConstants;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProduct;
@@ -40,11 +30,21 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
-import org.eclipse.ui.actions.ContributionItemFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
+import org.eclipse.ui.actions.ContributionItemFactory;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.core.logging.LoggingSupport;
+import org.locationtech.udig.ui.Constants;
+import org.locationtech.udig.ui.MenuBuilder;
+import org.locationtech.udig.ui.UDIGMenuBuilder;
+import org.locationtech.udig.ui.action.NewObjectContribution;
+import org.locationtech.udig.ui.action.NewObjectDelegate;
+import org.locationtech.udig.ui.action.NewObjectDelegateComparator;
+import org.locationtech.udig.ui.internal.Messages;
+import org.locationtech.udig.ui.preferences.PreferenceConstants;
 
 /**
  * Public base class for configuring the action bars of a workbench window.
@@ -71,7 +71,7 @@ import org.eclipse.ui.application.WorkbenchWindowAdvisor;
  * to configure a window's action bars</li>
  * </ul>
  * </p>
- * 
+ *
  * @see WorkbenchWindowAdvisor#createActionBarAdvisor(IActionBarConfigurer)
  * @author cole.markham
  * @since 1.0.0
@@ -84,7 +84,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
     private MenuBuilder menuBuilder;
 	/**
      * Default constructor
-     * 
+     *
      * @param configurer
      */
     public UDIGActionBarAdvisor( IActionBarConfigurer configurer ) {
@@ -109,7 +109,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
 
     /**
      * Get the MenuFactory which will create the menus for this plugin
-     * 
+     *
      * @return The MenuFactory singleton
      */
     protected MenuBuilder getMenuFactory() {
@@ -145,7 +145,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
             override.fillMenuBar(menuBar, window);
             return;
         }
-        
+
         MenuManager fileMenu = new MenuManager(Messages.UDIGWorkbenchAdvisor_file,
                 IWorkbenchActionConstants.M_FILE);
         fillFileMenu(fileMenu);
@@ -158,20 +158,20 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
         menuBar.add(editMenu);
 
         if( true ){
-            // TODO: phase these out with org.eclipse.ui.menus        
+            // TODO: phase these out with org.eclipse.ui.menus
             IMenuManager navMenu = new MenuManager(Messages.UDIGWorkbenchAdvisor_navigationMenu,
                     Constants.M_NAVIGATE);
             fillNavigateMenu(navMenu);
             menuBar.add(navMenu);
-    
+
             IMenuManager toolMenu = new MenuManager(Messages.UDIGWorkbenchAdvisor_tools,
                     Constants.M_TOOL);
             fillToolMenu(toolMenu);
             menuBar.add(toolMenu);
         }
-        
+
         menuBar.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-        
+
         IMenuManager windowMenu = new MenuManager(Messages.UDIGWorkbenchAdvisor_window,
                 IWorkbenchActionConstants.M_WINDOW);
         fillWindowMenu(windowMenu);
@@ -181,9 +181,9 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
                 IWorkbenchActionConstants.M_HELP);
         fillHelpMenu(helpMenu);
         menuBar.add(helpMenu);
-        
+
         menuBar.add(new GroupMarker(IWorkbenchActionConstants.WB_END));
-        
+
         if( true ){
             // clue in operations about the window
             IWorkbenchWindow window = getActionBarConfigurer().getWindowConfigurer().getWindow();
@@ -206,7 +206,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
      * navigate/bottom
      * navigate/navEnd
      * </pre>
-     * 
+     *
      * @param menu
      */
     protected void fillNavigateMenu( IMenuManager menu ) {
@@ -243,15 +243,15 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
         menu.add(new GroupMarker(Constants.TOOL_MODAL));
         menu.add(new Separator());
         menu.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-        menu.add(new GroupMarker(IWorkbenchActionConstants.WB_END));        
+        menu.add(new GroupMarker(IWorkbenchActionConstants.WB_END));
     }
-    
+
     /**
      * Set up customary File menu structure as defined by IWorkBenchActionConstants.
      * <p>
      * We are focused on providing the usual "group markers" so that menu paths for action sets,
      * tools, operations or menus will work out okay (for this or *any* RCP application).
-     * 
+     *
      * <pre>
      * file/fileStart
      * file/new.ext
@@ -270,7 +270,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
      * file/fileEnd
      * file/quit
      * </pre>
-     * 
+     *
      * @param window
      * @param fileMenu
      */
@@ -326,7 +326,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
         fileMenu.add(ActionFactory.EXPORT.create(window));
         fileMenu.add(new Separator());
         fileMenu.add(ActionFactory.PROPERTIES.create(window));
-        
+
         fileMenu.add(new GroupMarker(Constants.CONFIG_EXT));
         fileMenu.add(new Separator());
 
@@ -337,7 +337,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
         IWorkbenchAction quit = ActionFactory.QUIT.create(window);
         IContributionItem item = new ActionContributionItem(quit);
         item.setVisible(!Platform.OS_MACOSX.equals(Platform.getOS()));
-        
+
         fileMenu.add(item);
     }
 
@@ -348,7 +348,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
      * bare minimum here; only positioning the "group markers" in the correct spot so the relative
      * menu path goodness will work for later plugin contributions (using org.eclipse.ui.menu
      * extensions).
-     * 
+     *
      * <pre>
      * edit/editStart
      * edit/undo.ext
@@ -359,7 +359,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
      * edit/commit.ext
      * edit/editEnd
      * </pre>
-     * 
+     *
      * @param window
      * @param editMenu
      */
@@ -378,16 +378,16 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
         editMenu.add(ActionFactory.COPY.create(window));
         editMenu.add(ActionFactory.PASTE.create(window));
         editMenu.add(new Separator());
-        
+
         editMenu.add(ActionFactory.DELETE.create(window));
         editMenu.add(ActionFactory.SELECT_ALL.create(window));
         editMenu.add(new GroupMarker(Constants.ADD_EXT));
         editMenu.add(new Separator());
-        
+
         editMenu.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
         editMenu.add(new GroupMarker(Constants.OTHER));
         editMenu.add(new Separator());
-        
+
         editMenu.add(new GroupMarker(Constants.COMMIT_EXT));
         editMenu.add(new GroupMarker(Constants.EDIT_END));
     }
@@ -401,9 +401,9 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
         menu.add(new Separator());
         menu.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
         menu.add(new GroupMarker(Constants.LAYER_EDIT_EXT));
-        menu.add(new GroupMarker(IWorkbenchActionConstants.WB_END));        
+        menu.add(new GroupMarker(IWorkbenchActionConstants.WB_END));
     }
-    
+
     /**
      * Define the Window Menu according to RCP "custom".
      * <p>
@@ -412,7 +412,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
      * switching perspectives.
      * <p>
      * window/wbStart window/... window/additions window/wbEnd
-     * 
+     *
      * @param windowMenu
      */
     protected void fillWindowMenu( IMenuManager windowMenu ) {
@@ -423,7 +423,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
         //IAction openNewWindow = ActionFactory.OPEN_NEW_WINDOW.create(window);
         //openNewWindow.setText(Messages.UDIGWorkbenchAdvisor_newWindow_text);
         //windowMenu.add(openNewWindow);
-        
+
         //windowMenu.add( new Separator());
 
         IMenuManager perspectiveMenu = new MenuManager(
@@ -437,35 +437,35 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
         viewMenu.add(ContributionItemFactory.VIEWS_SHORTLIST.create(window));
         windowMenu.add(viewMenu);
         windowMenu.add( new Separator());
-        
+
         IAction resetPerspective = ActionFactory.RESET_PERSPECTIVE.create(window);
         resetPerspective.setText(Messages.UDIGWorkbenchAdvisor_resetPerspective_text);
         windowMenu.add(resetPerspective);
-        
+
         IAction closePerspective = ActionFactory.CLOSE_PERSPECTIVE.create(window);
         closePerspective.setText(Messages.UDIGWorkbenchAdvisor_closePerspective_text);
         windowMenu.add(closePerspective);
-        
+
         IAction closeAllPerspectives = ActionFactory.CLOSE_ALL_PERSPECTIVES.create(window);
         closeAllPerspectives.setText(Messages.UDIGWorkbenchAdvisor_closeAllPerspectives_text);
-        windowMenu.add(closeAllPerspectives);        
-        
+        windowMenu.add(closeAllPerspectives);
+
         windowMenu.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-                
+
         windowMenu.add( new Separator());
-        
+
         IAction preferences = ActionFactory.PREFERENCES.create(window);
         preferences.setText(Messages.UDIGWorkbenchAdvisor_preferences_text);
         IContributionItem item = new ActionContributionItem(preferences);
         item.setVisible(!Platform.OS_MACOSX.equals(Platform.getOS()));
-        
+
         windowMenu.add(item);
-        
+
         windowMenu.add(ContributionItemFactory.OPEN_WINDOWS.create(window));
-        
-        windowMenu.add(new GroupMarker(IWorkbenchActionConstants.WB_END));        
+
+        windowMenu.add(new GroupMarker(IWorkbenchActionConstants.WB_END));
     }
-    
+
     protected void fillHelpMenu( IMenuManager helpMenu ) {
         IWorkbenchWindow window = getActionBarConfigurer().getWindowConfigurer().getWindow();
 
@@ -489,7 +489,7 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
                 helpMenu.add(welcome);
             }
         }
-        
+
         if (helpMenu.findUsingPath(Constants.HELP_START) == null) {
             helpMenu
                     .insertAfter(ActionFactory.INTRO.getId(), new GroupMarker(Constants.HELP_START));
@@ -521,24 +521,24 @@ public class UDIGActionBarAdvisor extends ActionBarAdvisor {
         addAboutItem(helpMenu, window);
     }
 
-    private void addAboutItem( IMenuManager helpMenu, IWorkbenchWindow window ) {
+    private void addAboutItem(IMenuManager helpMenu, IWorkbenchWindow window) {
         if (helpMenu.findUsingPath(ActionFactory.ABOUT.getId()) == null) {
             IAction about = ActionFactory.ABOUT.create(window);
             String pattern = Messages.UDIGWorkbenchAdvisor_aboutUDig_text;
             IProduct product = Platform.getProduct();
             String productName;
-            if( product == null ){
-            	UiPlugin.log("there is no product so default to uDig", null);
-            	productName = "uDig";
-            }else{
-            	productName = product.getName();
+            if (product == null) {
+                LoggingSupport.log(UiPlugin.getDefault(), "there is no product so default to uDig"); //$NON-NLS-1$
+                productName = "uDig";
+            } else {
+                productName = product.getName();
             }
-			about.setText(MessageFormat.format(pattern, productName));
+            about.setText(MessageFormat.format(pattern, productName));
             // About should always be at the bottom, so just append it to the menu
-	        IContributionItem item = new ActionContributionItem(about);
-	        item.setVisible(!Platform.OS_MACOSX.equals(Platform.getOS()));
-	        
-	        helpMenu.add(item);
+            IContributionItem item = new ActionContributionItem(about);
+            item.setVisible(!Platform.OS_MACOSX.equals(Platform.getOS()));
+
+            helpMenu.add(item);
         }
     }
 }

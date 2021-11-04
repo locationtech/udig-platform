@@ -37,6 +37,7 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.locationtech.udig.core.AdapterUtil;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.internal.ui.URLImageDescriptor;
 import org.locationtech.udig.internal.ui.UiPlugin;
 import org.locationtech.udig.internal.ui.operations.OperationCategory;
@@ -126,7 +127,7 @@ public class OpAction extends Action implements ISelectionListener {
             try {
                 operation = (IOp) configElem.createExecutableExtension("class"); //$NON-NLS-1$
             } catch (CoreException e) {
-                UiPlugin.log("Error loading operation implementation", e); //$NON-NLS-1$
+                LoggingSupport.log(UiPlugin.getDefault(), "Error loading operation implementation", e); //$NON-NLS-1$
                 final Display display = Display.getDefault();
                 Runnable runnable = new Runnable() {
                     @Override
@@ -174,15 +175,13 @@ public class OpAction extends Action implements ISelectionListener {
                         target = AdapterUtil.instance.adapt(targetClass,
                                 selection.getFirstElement(), monitor);
                         if (target == null) {
-                            UiPlugin.log("Factory adapting " //$NON-NLS-1$
-                                    + selection.getFirstElement().getClass().getName() + " to a " + //$NON-NLS-1$
-                                    targetClass
-                                    + " is returning null even though it is advertising that it can " //$NON-NLS-1$
-                                    + "do the adaptation", null);
+                            LoggingSupport.log(UiPlugin.getDefault(), "Factory adapting "+selection.getFirstElement().getClass().getName()+" to a "+ //$NON-NLS-1$ //$NON-NLS-2$
+                                    targetClass+" is returning null even though it is advertising that it can " + //$NON-NLS-1$
+                                            "do the adaptation"); //$NON-NLS-1$
                             return Status.OK_STATUS;
                         }
                     } catch (Throwable e) {
-                        UiPlugin.log(null, e);
+                        LoggingSupport.log(UiPlugin.getDefault(), e);
                         return Status.OK_STATUS;
                     }
                 } else {
@@ -193,17 +192,15 @@ public class OpAction extends Action implements ISelectionListener {
                             Object operationTarget = AdapterUtil.instance.adapt(targetClass, entry,
                                     monitor);
                             if (operationTarget == null) {
-                                UiPlugin.log("Factory adapting " + entry.getClass().getName() //$NON-NLS-1$
-                                        + " to a " + //$NON-NLS-1$
-                                        targetClass
-                                        + " is returning null even though it is advertising that it can " //$NON-NLS-1$
-                                        + "do the adaptation", null);
+                                LoggingSupport.log(UiPlugin.getDefault(), "Factory adapting "+entry.getClass().getName()+" to a "+ //$NON-NLS-1$ //$NON-NLS-2$
+                                        targetClass+" is returning null even though it is advertising that it can " + //$NON-NLS-1$
+                                                "do the adaptation"); //$NON-NLS-1$
                                 return Status.OK_STATUS;
                             } else {
                                 targets.add(operationTarget);
                             }
                         } catch (Throwable e) {
-                            UiPlugin.log(null, e);
+                            LoggingSupport.log(UiPlugin.getDefault(), e);
                             return Status.OK_STATUS;
                         }
                     }
@@ -219,7 +216,7 @@ public class OpAction extends Action implements ISelectionListener {
                 IOp op = getOperation();
                 op.op(display, target, monitor);
             } catch (Throwable e) {
-                UiPlugin.log(null, e);
+                LoggingSupport.log(UiPlugin.getDefault(), e);
             }
             return Status.OK_STATUS;
         }

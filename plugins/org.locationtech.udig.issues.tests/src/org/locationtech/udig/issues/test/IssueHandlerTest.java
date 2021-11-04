@@ -40,7 +40,7 @@ import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.tests.support.MapTests;
 import org.locationtech.udig.project.tests.ui.ViewPart1;
 import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
+import org.locationtech.udig.project.ui.internal.MapEditor;
 import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 import org.opengis.feature.simple.SimpleFeature;
@@ -153,7 +153,7 @@ public class IssueHandlerTest extends AbstractProjectUITestCase {
         TestIssue issue = new TestIssue() {
             @Override
             public String getEditorID() {
-                return MapEditorWithPalette.ID;
+                return MapEditor.ID;
 
             }
 
@@ -165,7 +165,7 @@ public class IssueHandlerTest extends AbstractProjectUITestCase {
         IssueHandler handler = IssueHandler.createHandler(issue);
         handler.restoreEditor();
 
-        assertEquals(MapEditorWithPalette.class,
+        assertEquals(MapEditor.class,
                 getActiveWindow().getActivePage().getActiveEditor().getClass());
         assertEquals(map, ((MapPart) getActiveWindow().getActivePage().getActiveEditor()).getMap());
     }

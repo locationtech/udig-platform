@@ -12,13 +12,6 @@ package org.locationtech.udig.ui.aoi;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.locationtech.udig.aoi.AOIListener;
-import org.locationtech.udig.aoi.AOIProxy;
-import org.locationtech.udig.aoi.IAOIService;
-import org.locationtech.udig.aoi.IAOIStrategy;
-import org.locationtech.udig.internal.ui.UiPlugin;
-import org.locationtech.udig.ui.PlatformGIS;
-
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -40,6 +33,13 @@ import org.eclipse.ui.part.IPageBookViewPage;
 import org.eclipse.ui.part.MessagePage;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.ViewPart;
+import org.locationtech.udig.aoi.AOIListener;
+import org.locationtech.udig.aoi.AOIProxy;
+import org.locationtech.udig.aoi.IAOIService;
+import org.locationtech.udig.aoi.IAOIStrategy;
+import org.locationtech.udig.core.logging.LoggingSupport;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.PlatformGIS;
 
 /**
  * Allows a user to select the AOIStrategy to define the AOI (Area of Interest)
@@ -47,7 +47,7 @@ import org.eclipse.ui.part.ViewPart;
  * This view processes the "AOI" extension point in order to obtain the list of options to
  * display to the user. Each AOIStrategy may optionally provide a "page" used to further refine the
  * limit used for the AOI.
- * 
+ *
  * @author pfeiffp
  * @sinve 1.3.0
  */
@@ -58,11 +58,12 @@ public class AOIView extends ViewPart {
      */
     private AOIListener serviceWatcher = new AOIListener(){
         // private IAOIStrategy selectedStrategy = null;
+        @Override
         public void handleEvent( AOIListener.Event event ) {
             final AOIListener.Event aoiEvent = event;
             // must be run in the UI thread to be able to call setSelected
             PlatformGIS.asyncInDisplayThread(new Runnable(){
-                
+
                 @Override
                 public void run() {
                     AOIProxy currentStrategy;
@@ -71,8 +72,8 @@ public class AOIView extends ViewPart {
                     } else {
                         currentStrategy = PlatformGIS.getAOIService().getProxy();
                     }
-                    setSelected(currentStrategy);            
-                    
+                    setSelected(currentStrategy);
+
                 }
             }, true);
         }
@@ -89,16 +90,16 @@ public class AOIView extends ViewPart {
         public void selectionChanged( SelectionChangedEvent event ) {
             IStructuredSelection selectedStrategy = (IStructuredSelection) event.getSelection();
             AOIProxy selected = (AOIProxy) selectedStrategy.getFirstElement();
-            
+
             publishAOIStrategy(selected);
         }
     };
 
     private PageBook pagebook;
-    private Map<AOIProxy,PageRecord> pages = new HashMap<AOIProxy, PageRecord>();
+    private Map<AOIProxy,PageRecord> pages = new HashMap<>();
 
     private Composite placeholder;
-    
+
     //private List<IPageBookViewPage> pages = new ArrayList<IPageBookViewPage>();
     //private Map<AOIProxy,Control> controls = new HashMap<AOIProxy, Control>();
 
@@ -107,29 +108,29 @@ public class AOIView extends ViewPart {
      */
     public AOIView() {
     }
-    
+
 
     private void publishAOIStrategy( AOIProxy selected ) {
         IAOIService aOIService = PlatformGIS.getAOIService();
         aOIService.setProxy(selected);
     }
-    
+
     /**
      * This will update the combo viewer and pagebook (carefully unhooking events while the viewer is updated).
-     * 
+     *
      * @param selected
      */
     public void setSelected( AOIProxy selected ) {
         if (selected == null) {
             selected = PlatformGIS.getAOIService().getDefault();
         }
-        
+
         boolean disposed = comboViewer.getControl().isDisposed();
         if (comboViewer == null || disposed) {
             listenService(false);
             return; // the view has shutdown!
         }
-        
+
         AOIProxy current = getSelected();
         // check combo
         if (current != selected) {
@@ -140,7 +141,7 @@ public class AOIView extends ViewPart {
                 listenCombo(true);
             }
         }
-        
+
         // this is the control displayed right now
         Control currentControl = null;
         for( Control page : pagebook.getChildren() ){
@@ -149,7 +150,7 @@ public class AOIView extends ViewPart {
                 break;
             }
         }
-        
+
         // Check if we already created the control for selected
         PageRecord record = pages.get(selected);
         if( record == null ){
@@ -157,42 +158,42 @@ public class AOIView extends ViewPart {
             IPageBookViewPage page = selected.createPage();
             if( page == null ){
                 MessagePage messagePage = new MessagePage();
-                
+
                 record = new PageRecord( this, messagePage);
-                
+
                 messagePage.init( record.getSite() );
-                
+
                 messagePage.createControl( pagebook );
                 messagePage.setMessage( selected.getName() );
             }
             else {
-                record = new PageRecord( this, page );    
+                record = new PageRecord( this, page );
                 try {
                     page.init( record.getSite() );
                 } catch (PartInitException e) {
-                    UiPlugin.log(getClass(), "initPage", e); //$NON-NLS-1$
+                    LoggingSupport.log(UiPlugin.getDefault(), getClass(), "initPage", e); //$NON-NLS-1$
                 }
                 page.createControl( pagebook );
             }
             pages.put(selected, record );
         }
         Control selectedControl = record.getControl();
-        
+
         if( selectedControl == null ){
             // this is not expected to be null!
             if( placeholder == null ){
                 // placeholder just so we see something!
                 Composite content  = new Composite(pagebook, SWT.NULL);
                 content.setLayout(new FillLayout());
-    
+
                 Label label = new Label( content, SWT.LEFT | SWT.TOP | SWT.WRAP );
                 label.setText("Current Area of Interest used for filtering content.");
-                
+
                 placeholder = content;
             }
             selectedControl = placeholder;
         }
-        
+
         if( currentControl != selectedControl ){
             if( selectedControl != null ){
                 pagebook.showPage(selectedControl); // done!
@@ -201,7 +202,7 @@ public class AOIView extends ViewPart {
     }
     /**
      * Access the IAOIStrategy selected by the user
-     * 
+     *
      * @return IAOIStrategy selected by the user
      */
     public AOIProxy getSelected() {
@@ -235,7 +236,7 @@ public class AOIView extends ViewPart {
     @Override
     public void init( IViewSite site, IMemento memento ) throws PartInitException {
         super.init(site, memento);
-        
+
         // this is where you read your memento to remember
         // anything the user told you from last time
         // this.addAOIStrategy();
@@ -245,14 +246,14 @@ public class AOIView extends ViewPart {
 //            this.initialStrategy = service.findProxy(id);
         }
     }
-    
+
     @Override
     public void saveState( IMemento memento ) {
         super.saveState(memento);
-        
+
         IAOIService service = PlatformGIS.getAOIService();
         String id = service.getProxy().getId();
-        
+
         memento.putString("AOI", id );
     }
 
@@ -292,13 +293,13 @@ public class AOIView extends ViewPart {
 
         // now that we are configured we can start to listen!
         listenCombo(true);
-        
+
         pagebook = new PageBook(parent, SWT.NONE );
         GridData layoutData = new GridData(SWT.LEFT, SWT.TOP, true, true);
         layoutData.widthHint=400;
         layoutData.horizontalSpan=2;
         layoutData.heightHint=400;
-        pagebook.setLayoutData(layoutData);        
+        pagebook.setLayoutData(layoutData);
     }
 
     @Override

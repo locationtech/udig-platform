@@ -23,11 +23,11 @@ import org.locationtech.udig.project.internal.EditManager;
  * @version 1.3.0
  */
 class SaveMapPaletteRunnable implements Runnable{
-    	private final MapEditorWithPalette mapEditor;
+    	private final MapEditor mapEditor;
     	private final boolean[] success;
     	
 
-		public SaveMapPaletteRunnable(MapEditorWithPalette mapEditor, boolean[] success) {
+		public SaveMapPaletteRunnable(MapEditor mapEditor, boolean[] success) {
 			super();
 			this.mapEditor = mapEditor;
 			this.success = success;

@@ -16,9 +16,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-import net.miginfocom.swt.MigLayout;
-import org.locationtech.udig.internal.ui.UiPlugin;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
@@ -47,7 +44,11 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.ui.part.PageBook;
+import org.locationtech.udig.core.logging.LoggingSupport;
+import org.locationtech.udig.internal.ui.UiPlugin;
 import org.opengis.filter.Filter;
+
+import net.miginfocom.swt.MigLayout;
 
 /**
  * {@link IFilterViewer} allowing user to switch between implementations.
@@ -56,14 +57,14 @@ import org.opengis.filter.Filter;
  * you remember the "viewerId" in dialog settings or IMento so the user is not forced to choose
  * which viewer is displayed each time. You can also use this facility as a hint when configuring
  * the viewer for use.
- * 
+ *
  * <pre>
  * FilterViewer viewer = new FilterViewer(composite, SWT.MULTI);
  * viewer.setViewerId(&quot;cql&quot;);
  * </pre>
- * 
+ *
  * You will need to consult the extension point for the list of valid viewerIds.
- * 
+ *
  * @author Jody Garnett
  * @since 1.3.2
  */
@@ -95,7 +96,7 @@ public class FilterViewer extends IFilterViewer {
      * or saved and restored using IMemento or DialogSettings in order to preserve user context.
      */
     private String viewerId;
-    
+
     /**
      * Remember the style used so we can pass it on when we create a delegate
      */
@@ -105,7 +106,7 @@ public class FilterViewer extends IFilterViewer {
         @Override
         public void widgetSelected(SelectionEvent e) {
             MenuItem menuItem = (MenuItem) e.widget;
-            
+
             Object data = menuItem.getData();
             boolean selected = menuItem.getSelection();
 
@@ -114,8 +115,8 @@ public class FilterViewer extends IFilterViewer {
             }
             if( selected && data instanceof ContributionItem ){
                 ContributionItem item = (ContributionItem) data;
-                
-                showViewer( (String) item.getId() );
+
+                showViewer( item.getId() );
             }
         }
     };
@@ -142,7 +143,7 @@ public class FilterViewer extends IFilterViewer {
      * <li>SWT.MULTI - A multi line text field</li>
      * <li>SWT.READ_ONLY - read only display of a filter</li>
      * </ul>
-     * 
+     *
      * @param parent
      * @param style
      */
@@ -169,27 +170,28 @@ public class FilterViewer extends IFilterViewer {
             }
         };
         control.setLayout(new MigLayout("insets 0", "[fill][]", "[fill]"));
-        
+
         pageBook = new PageBook(control, SWT.NO_SCROLL);
         pageBook.setLayoutData("cell 0 0,grow,width 200:100%:100%,height 18:75%:100%");
-        
+
         placeholder = new Label( pageBook, SWT.SINGLE );
         placeholder.setText("Choose filter editor");
-        
+
         delegate = new CQLFilterViewer(pageBook, style);
         delegate.addSelectionChangedListener(listener);
         pageBook.showPage(delegate.getControl());
-        
-        this.pages = new HashMap<String,IFilterViewer>();
+
+        this.pages = new HashMap<>();
         pages.put( FilterViewerFactory.CQL_FILTER_VIEWER, delegate );
-        
+
         config = new Label(control, SWT.SINGLE);
         config.setImage(JFaceResources.getImage(PopupDialog.POPUP_IMG_MENU));
         config.setLayoutData("cell 1 0,aligny top,height 16!, width 16!");
-        
+
         createContextMenu( config );
 
         config.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
                 Menu menu = config.getMenu();
                 if( menu != null ){
@@ -206,7 +208,7 @@ public class FilterViewer extends IFilterViewer {
             newViewerId = FilterViewerFactory.CQL_FILTER_VIEWER;
         }
         this.viewerId = newViewerId;
-        
+
         // update the page book if needed
         IFilterViewer viewer = getViewer( this.viewerId );
         if( viewer == delegate ){
@@ -217,21 +219,21 @@ public class FilterViewer extends IFilterViewer {
             CQLFilterViewer cqlViewer = (CQLFilterViewer) delegate;
             cqlText = cqlViewer.text.getText();
         }
-        
+
         if( viewer == null ){
             pageBook.showPage(placeholder);
         }
         else {
             feedback(); // clear any warnings
-            
+
             // configure viewer before display!
             FilterInput currentInput = getInput();
             Filter currentFilter = getFilter();
-            
+
             viewer.setInput( currentInput );
             viewer.setFilter( currentFilter );
             viewer.refresh();
-            
+
             // if available we can carry over the users text - typos and all
             if( cqlText != null && viewer instanceof CQLFilterViewer){
                 CQLFilterViewer cqlViewer = (CQLFilterViewer) viewer;
@@ -255,7 +257,7 @@ public class FilterViewer extends IFilterViewer {
      * The viewer will be created if needed; however it will not be hooked
      * up with {@link #setInput}, {@link #setFilter} and {@link #addSelectionChangedListener}
      * as this is done by {@link #showViewer(String)} when on an as needed basis.
-     * 
+     *
      * @param viewerId
      * @return IFilterViewer or null if not available
      */
@@ -269,7 +271,7 @@ public class FilterViewer extends IFilterViewer {
             if( factory.getId().equals( lookupId )){
                 viewer = factory.createViewer( pageBook, this.style );
                 pages.put( factory.getId(), viewer );
-                
+
                 return viewer;
             }
         }
@@ -277,7 +279,7 @@ public class FilterViewer extends IFilterViewer {
     }
     /**
      * ViewerId currently shown (as selected by the user)
-     * 
+     *
      * @return viewerId currently shown (as selected by the user)
      */
     public String getViewerId() {
@@ -288,9 +290,10 @@ public class FilterViewer extends IFilterViewer {
      * This is the widget used to display the Filter; its parent has been provided in the
      * ExpressionViewer's constructor; but you may need direct access to it in order to set layout
      * data etc.
-     * 
+     *
      * @return
      */
+    @Override
     public Control getControl() {
         return control;
     }
@@ -337,12 +340,13 @@ public class FilterViewer extends IFilterViewer {
         }
         fireSelectionChanged(new SelectionChangedEvent(FilterViewer.this, getSelection()));
     }
-    
+
     private void createContextMenu( Control control ){
         final MenuManager menuManager = new MenuManager();
         menuManager.setRemoveAllWhenShown(true); // we are going to generate
-        
+
         menuManager.addMenuListener( new IMenuListener() {
+            @Override
             public void menuAboutToShow(IMenuManager manager) {
                 int current = -1;
                 for( FilterViewerFactory factory : filterViewerFactory( getInput(), getFilter() ) ){
@@ -356,7 +360,7 @@ public class FilterViewer extends IFilterViewer {
                         current = category;
                     }
                     FilterViewerFactoryContributionItem contributionItem = new FilterViewerFactoryContributionItem(factory);
-                    
+
                     menuManager.add( contributionItem );
                 }
             }
@@ -364,11 +368,11 @@ public class FilterViewer extends IFilterViewer {
         Menu menu = menuManager.createContextMenu( control );
         control.setMenu( menu );
     }
-    
+
     class FilterViewerFactoryContributionItem extends ContributionItem {
-        
+
         private FilterViewerFactory factory;
-        
+
         FilterViewerFactoryContributionItem( FilterViewerFactory factory ){
             setId( factory.getId() );
             this.factory = factory;
@@ -376,14 +380,14 @@ public class FilterViewer extends IFilterViewer {
         @Override
         public void fill(Menu menu, int index) {
             MenuItem item = new MenuItem( menu, SWT.RADIO, index );
-            
+
             item.setText( factory.getDisplayName() );
             item.setData( factory.getId() );
             item.setSelection( factory.getId().equals( viewerId ) );
             item.addSelectionListener( menuListener );
-            
+
             int appropriate = factory.appropriate( getInput(), getFilter() );
-            
+
             if( appropriate == FilterViewerFactory.NOT_APPROPRIATE ){
                 item.setEnabled(false);
             }
@@ -396,27 +400,28 @@ public class FilterViewer extends IFilterViewer {
     public static final String FILTER_VIEWER_EXTENSION = "org.locationtech.udig.ui.filterViewer";
 
     private static List<FilterViewerFactory> filterViewerFactoryList;
-    
+
     private static List<FilterViewerFactory> filterViewerFactory( final FilterInput input, final Filter filter ){
-        List<FilterViewerFactory> list = new ArrayList<FilterViewerFactory>( filterViewerFactoryList() );
+        List<FilterViewerFactory> list = new ArrayList<>( filterViewerFactoryList() );
         Collections.sort( list, new Comparator<FilterViewerFactory>(){
+            @Override
             public int compare(FilterViewerFactory factory1, FilterViewerFactory factory2) {
                 int factory1Score = factory1.appropriate( input, filter );
                 int factory2Score = factory2.appropriate( input, filter );
-                
+
                 return factory2Score - factory1Score;
             }
         });
         return list;
     }
-    
+
     private synchronized static List<FilterViewerFactory> filterViewerFactoryList() {
         if (filterViewerFactoryList == null) {
-            ArrayList<FilterViewerFactory> list = new ArrayList<FilterViewerFactory>();
-            
+            ArrayList<FilterViewerFactory> list = new ArrayList<>();
+
             IExtensionRegistry registery = Platform.getExtensionRegistry();
             IExtensionPoint extensionPoint = registery.getExtensionPoint(FILTER_VIEWER_EXTENSION);
-            
+
             IConfigurationElement[] configurationElements = extensionPoint.getConfigurationElements();
             for (IConfigurationElement configuration : configurationElements) {
                 if ("filterViewer".equals(configuration.getName())) {
@@ -428,8 +433,8 @@ public class FilterViewer extends IFilterViewer {
                         list.add(factory);
                     } catch (CoreException e) {
                         String pluginId = configuration.getContributor().getName();
-                        IStatus status = new Status(IStatus.WARNING, pluginId, e.getMessage(), e);
-                        UiPlugin.log(status);
+                        LoggingSupport.log(UiPlugin.getDefault(),
+                                new Status(IStatus.WARNING, pluginId, e.getMessage(), e));
                     }
                 } else {
                     // skip as it is probably a expressionViewer element

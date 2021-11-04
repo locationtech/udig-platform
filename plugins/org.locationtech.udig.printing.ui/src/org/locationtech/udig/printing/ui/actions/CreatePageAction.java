@@ -46,9 +46,8 @@ import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.Project;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
-import org.locationtech.udig.project.ui.internal.MapEditorPart;
-import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
 import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 
 /**
  * Creates a page using the current map
@@ -62,9 +61,9 @@ public class CreatePageAction implements IEditorActionDelegate {
     @Override
     public void run(IAction action) {
 
-        MapPart mapEditor = ApplicationGISInternal.getActiveMapPart();
+        MapPart mapPart = ApplicationGISInternal.getActiveMapPart();
 
-        if (mapEditor == null) {
+        if (mapPart == null) {
             MessageDialog.openError(Display.getDefault().getActiveShell(),
                     Messages.CreatePageAction_printError_title,
                     Messages.CreatePageAction_printError_text);
@@ -79,28 +78,19 @@ public class CreatePageAction implements IEditorActionDelegate {
             Map map = null;
             Project project = null;
 
-            Map oldMap = mapEditor.getAdapter(Map.class);
+            Map oldMap = mapPart.getAdapter(Map.class);
             project = oldMap.getProjectInternal();
             try {
                 map = EcoreUtil.copy(oldMap);
             } catch (Throwable t) {
                 // unable to copy map?
-                t.printStackTrace();
+                PrintingPlugin.log("Something went wrong to create a copy of the map", t);
                 return;
             }
 
             project.getElementsInternal().add(map);
 
-            Point partSize;
-            if (mapEditor instanceof MapEditorPart) {
-                MapEditorPart part = (MapEditorPart) mapEditor;
-                partSize = part.getComposite().getSize();
-            } else if (mapEditor instanceof MapEditorWithPalette) {
-                MapEditorWithPalette part = (MapEditorWithPalette) mapEditor;
-                partSize = part.getComposite().getSize();
-            } else {
-                partSize = new Point(500, 500);
-            }
+            Point partSize = getViewportPaneSize(mapPart);
             Page page = createPage(template, map, project, partSize);
 
             ApplicationGIS.openProjectElement(page, false);
@@ -108,21 +98,37 @@ public class CreatePageAction implements IEditorActionDelegate {
         }
     }
 
+    private Point getViewportPaneSize(MapPart mapPart) {
+        if (mapPart == null) {
+            return null;
+        }
+
+        ViewportPane viewportPane = mapPart.getAdapter(ViewportPane.class);
+        if (viewportPane == null) {
+            PrintingPlugin.log("MapPart " + mapPart.getClass().getName() + " can't be adapted to ViewportPane", null);
+            return null;
+        }
+
+        int viewportWidth = viewportPane.getWidth();
+        int viewportHeight = viewportPane.getHeight();
+        if (viewportWidth <= 0 || viewportHeight <= 0) {
+            return null;
+        }
+        return new Point(viewportWidth, viewportHeight);
+    }
+
     private Page createPage(Template template, Map map, Project project, Point partSize) {
-        int width = 800;
-        int height = 600;
+        Dimension pageDimension = null;
         if (partSize != null) {
-            width = partSize.x;
-            height = partSize.y;
+            pageDimension = new Dimension(partSize.x, partSize.y);
         } else {
             PageFormat pageFormat = PrinterJob.getPrinterJob().defaultPage();
-            width = Double.valueOf(pageFormat.getImageableWidth()).intValue();
-            height = Double.valueOf(pageFormat.getImageableHeight()).intValue();
+            pageDimension = new Dimension(Double.valueOf(pageFormat.getImageableWidth()).intValue(), Double.valueOf(pageFormat.getImageableHeight()).intValue());
         }
 
         Page page = ModelFactory.eINSTANCE.createPage();
 
-        page.setSize(new Dimension(width, height));
+        page.setSize(pageDimension);
 
         MessageFormat formatter = new MessageFormat("{0} - " + template.getAbbreviation(), Locale //$NON-NLS-1$
                 .getDefault());
