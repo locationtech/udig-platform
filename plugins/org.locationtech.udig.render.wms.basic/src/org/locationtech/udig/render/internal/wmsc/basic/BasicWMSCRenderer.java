@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2008-2011, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2008-2011, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -24,7 +24,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridCoverageFactory;
 import org.geotools.data.ows.AbstractOpenWebService;
@@ -71,9 +71,11 @@ import org.opengis.referencing.operation.TransformException;
 public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
 
     private static StyleBuilder styleBuilder = new StyleBuilder();
+
     private TileListenerImpl listener = new TileListenerImpl();
 
     private static final boolean testing = false; // for debugging
+
     private static final boolean TESTING = WMSPlugin.getDefault().isDebugging();
 
     private static int staticid = 0; // for debugging
@@ -82,15 +84,16 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
      * Static thread pools that will be reused for each renderer that gets created
      */
     private static TileWorkerQueue requestTileWorkQueue = new TileWorkerQueue();
+
     private static TileWorkerQueue writeTileWorkQueue = new TileWorkerQueue();
 
     /**
      * Use a blocking queue to keep track of and notice when tiles are ready to draw
      */
-    private BlockingQueue<Tile> tilesToDraw_queue = new PriorityBlockingQueue<Tile>();
+    private BlockingQueue<Tile> tilesToDraw_queue = new PriorityBlockingQueue<>();
 
     @Override
-    public void render( Graphics2D graphics, IProgressMonitor monitor ) throws RenderException {
+    public void render(Graphics2D graphics, IProgressMonitor monitor) throws RenderException {
         if (monitor == null) {
             monitor = new NullProgressMonitor();
         }
@@ -100,15 +103,14 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
         IGeoResource handle = getContext().getLayer().findGeoResource(TileSet.class);
 
         try {
-            TileSet tileset = handle.resolve(TileSet.class, new SubProgressMonitor(monitor, 30));
+            TileSet tileset = handle.resolve(TileSet.class, SubMonitor.convert(monitor, 30));
             AbstractOpenWebService server = null;
 
             if (handle.canResolve(WebMapServer.class)) {
-                server = handle.resolve(WebMapServer.class, new SubProgressMonitor(monitor, 30));
+                server = handle.resolve(WebMapServer.class, SubMonitor.convert(monitor, 30));
             }
             if (handle.canResolve(TiledWebMapServer.class)) {
-                server = handle.resolve(TiledWebMapServer.class,
-                        new SubProgressMonitor(monitor, 30));
+                server = handle.resolve(TiledWebMapServer.class, SubMonitor.convert(monitor, 30));
             }
 
             // determine the bounds that need to be rendered
@@ -121,8 +123,8 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
             }
 
             // ensure the bounds are in the right CRS
-            if (!bounds.getCoordinateReferenceSystem().equals(
-                    tileset.getCoordinateReferenceSystem())) {
+            if (!bounds.getCoordinateReferenceSystem()
+                    .equals(tileset.getCoordinateReferenceSystem())) {
                 // need to reproject the bounds to the tile coordinate reference system.
                 MathTransform transform = CRS.findMathTransform(
                         bounds.getCoordinateReferenceSystem(),
@@ -133,7 +135,7 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
 
             // determine scale factor used to determine zoom level
             // compute the scale factor based on the viewport size; we cannot use the bounds and
-            // tile size becuase the
+            // tile size because the
             // bounds may not be the full size of the tile and we might get the wrong scale
             double scaleFactor = getContext().getViewportModel().getBounds().getWidth()
                     / getContext().getMapDisplay().getWidth();
@@ -172,10 +174,10 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
 
             // first render any tiles that are ready and render non-ready tiles with blank images
             Map<String, Tile> tiles = range.getTiles();
-            Set<String> notRenderedTiles = new HashSet<String>();
-            Set<String> renderedTiles = new HashSet<String>();
+            Set<String> notRenderedTiles = new HashSet<>();
+            Set<String> renderedTiles = new HashSet<>();
 
-            for( String key : tiles.keySet() ) {
+            for (String key : tiles.keySet()) {
                 if (monitor.isCanceled()) {
                     setState(CANCELLED);
                     if (testing) {
@@ -217,7 +219,7 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
 
                 // block until all the missing tiles have come through (and draw them
                 // as they are added to the blocking queue
-                while( !notRenderedTiles.isEmpty() ) {
+                while (!notRenderedTiles.isEmpty()) {
                     // check that the rendering is not canceled
                     if (monitor.isCanceled()) {
                         setState(CANCELLED);
@@ -235,8 +237,8 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
 
                     Tile tile = null;
                     try {
-                        tile = (Tile) tilesToDraw_queue.take(); // blocks until a tile is ready to
-                                                                // take
+                        tile = tilesToDraw_queue.take(); // blocks until a tile is ready to
+                                                         // take
                         if (testing) {
                             System.out.println("removed from queue: " + tile.getId()); //$NON-NLS-1$
                         }
@@ -297,6 +299,7 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
         monitor.done();
         setState(DONE);
     }
+
     /**
      * @param graphics graphics to draw onto
      * @param tile to draw
@@ -304,20 +307,20 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
      * @throws FactoryException
      * @throws TransformException
      */
-    private void renderTile( Graphics2D graphics, Tile tile, CoordinateReferenceSystem crs,
-            RasterSymbolizer style ) throws FactoryException, TransformException {
+    private void renderTile(Graphics2D graphics, Tile tile, CoordinateReferenceSystem crs,
+            RasterSymbolizer style) throws FactoryException, TransformException {
 
         if (tile == null || tile.getBufferedImage() == null) {
             return;
         }
 
-        // create a gridcoverage from the tile image
+        // create a GridCoverage from the tile image
         Envelope bounds = tile.getBounds();
         GridCoverageFactory factory = new GridCoverageFactory();
         ReferencedEnvelope ref = new ReferencedEnvelope(bounds.getMinX(), bounds.getMaxX(),
                 bounds.getMinY(), bounds.getMaxY(), crs);
-        GridCoverage2D coverage = (GridCoverage2D) factory.create(
-                "GridCoverage", tile.getBufferedImage(), ref); //$NON-NLS-1$
+        GridCoverage2D coverage = factory.create("GridCoverage", //$NON-NLS-1$
+                tile.getBufferedImage(), ref);
         Envelope2D coveragebounds = coverage.getEnvelope2D();
 
         // bounds of tile
@@ -327,23 +330,23 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
         // convert bounds to necessary viewport projection
         CoordinateReferenceSystem tileCrs = getContext().getCRS();
         if (!coverage.getCoordinateReferenceSystem().equals(tileCrs)) {
-            MathTransform transform = CRS.findMathTransform(
-                    coverage.getCoordinateReferenceSystem(), tileCrs);
+            MathTransform transform = CRS.findMathTransform(coverage.getCoordinateReferenceSystem(),
+                    tileCrs);
             tilebBounds = JTS.transform(tilebBounds, transform);
         }
 
         // determine screen coordinates of tiles
-        Point upperLeft = getContext().worldToPixel(
-                new Coordinate(tilebBounds.getMinX(), tilebBounds.getMinY()));
-        Point bottomRight = getContext().worldToPixel(
-                new Coordinate(tilebBounds.getMaxX(), tilebBounds.getMaxY()));
+        Point upperLeft = getContext()
+                .worldToPixel(new Coordinate(tilebBounds.getMinX(), tilebBounds.getMinY()));
+        Point bottomRight = getContext()
+                .worldToPixel(new Coordinate(tilebBounds.getMaxX(), tilebBounds.getMaxY()));
         Rectangle tileSize = new Rectangle(upperLeft);
         tileSize.add(bottomRight);
 
         // render
         try {
-            AffineTransform worldToScreenTransform = RendererUtilities.worldToScreenTransform(
-                    tilebBounds, tileSize, tileCrs);
+            AffineTransform worldToScreenTransform = RendererUtilities
+                    .worldToScreenTransform(tilebBounds, tileSize, tileCrs);
             GridCoverageRenderer paint = new GridCoverageRenderer(tileCrs, tilebBounds, tileSize,
                     worldToScreenTransform);
 
@@ -360,13 +363,13 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
                         (int) tileSize.getMaxX(), (int) tileSize.getMaxY());
                 graphics.drawLine((int) tileSize.getMinX(), (int) tileSize.getMaxY(),
                         (int) tileSize.getMaxX(), (int) tileSize.getMaxY());
-                graphics.drawString("pos: " + tile.getPosition(), ((int) tileSize.getMaxX() - 113),
+                graphics.drawString("pos: " + tile.getPosition(), ((int) tileSize.getMaxX() - 113), //$NON-NLS-1$
                         ((int) tileSize.getMaxY() - 113));
             }
         } catch (Throwable t) {
             t.printStackTrace();
-            WmsPlugin
-                    .log("Error Rendering tile. Painting Tile:" + (coverage != null ? coverage.getName() : ""), t); //$NON-NLS-1$ //$NON-NLS-2$
+            WmsPlugin.log("Error Rendering tile. Painting Tile:" //$NON-NLS-1$
+                    + (coverage != null ? coverage.getName() : ""), t); //$NON-NLS-1$
         }
     }
 
@@ -378,7 +381,7 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
      * @throws FactoryException
      * @throws TransformException
      */
-    private void renderBlankTile( Graphics2D graphics, Tile tile, CoordinateReferenceSystem crs )
+    private void renderBlankTile(Graphics2D graphics, Tile tile, CoordinateReferenceSystem crs)
             throws FactoryException, TransformException {
 
         if (tile == null) {
@@ -396,8 +399,8 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
 
         // determine screen coordinates of tiles
         Point upperLeft = getContext().worldToPixel(new Coordinate(bnds.getMinX(), bnds.getMinY()));
-        Point bottomRight = getContext().worldToPixel(
-                new Coordinate(bnds.getMaxX(), bnds.getMaxY()));
+        Point bottomRight = getContext()
+                .worldToPixel(new Coordinate(bnds.getMaxX(), bnds.getMaxY()));
         Rectangle tileSize = new Rectangle(upperLeft);
         tileSize.add(bottomRight);
 
@@ -425,7 +428,7 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
     }
 
     @Override
-    public void render( IProgressMonitor monitor ) throws RenderException {
+    public void render(IProgressMonitor monitor) throws RenderException {
         Graphics2D g2 = (Graphics2D) context.getImage().getGraphics();
         render(g2, monitor);
     }
@@ -441,7 +444,9 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
         public TileListenerImpl() {
 
         }
-        public void notifyTileReady( Tile tile ) {
+
+        @Override
+        public void notifyTileReady(Tile tile) {
             // set the area that needs updating
             // setRenderBounds(tile.getBounds());
 

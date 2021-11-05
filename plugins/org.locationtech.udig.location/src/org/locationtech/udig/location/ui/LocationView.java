@@ -16,7 +16,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuListener;
@@ -147,7 +147,7 @@ public class LocationView extends SearchPart {
             try {
                 monitor.subTask(location.getClass().getCanonicalName());
                 List<SimpleFeature> found = location.search(query.text, query.bbox,
-                        new SubProgressMonitor(monitor, 10));
+                        SubMonitor.convert(monitor, 10));
                 results.addAll(found);
                 count += found.size();
             } catch (Exception e) {
@@ -231,7 +231,7 @@ public class LocationView extends SearchPart {
      * @param selection
      */
     public void showLocation(Object selection) {
-        // selection should be an Feture (of some sort)
+        // selection should be an Feature (of some sort)
         SimpleFeature feature = (SimpleFeature) selection;
         Geometry geom = (Geometry) feature.getDefaultGeometry();
         Point point = geom.getCentroid();
