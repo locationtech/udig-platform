@@ -9,11 +9,6 @@ package org.locationtech.udig.project.internal.render.provider;
 import java.util.Collection;
 import java.util.List;
 
-import org.locationtech.udig.project.internal.provider.ProjectEditPlugin;
-import org.locationtech.udig.project.internal.render.RenderManager;
-import org.locationtech.udig.project.internal.render.RenderPackage;
-import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
@@ -27,6 +22,10 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.locationtech.udig.project.internal.provider.ProjectEditPlugin;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 
 /**
  * This is the item provider adapter for a {@link org.locationtech.udig.project.internal.render.RenderManager} object.
@@ -154,7 +153,7 @@ public class RenderManagerItemProvider extends ItemProviderAdapter
     /**
      * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -187,7 +186,7 @@ public class RenderManagerItemProvider extends ItemProviderAdapter
      * This adds to the collection of {@link org.eclipse.emf.edit.command.CommandParameter}s
      * describing all of the children that can be created under this object. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override

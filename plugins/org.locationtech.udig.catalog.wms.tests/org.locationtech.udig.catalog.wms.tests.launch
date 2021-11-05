@@ -9,7 +9,7 @@
     <booleanAttribute key="clearConfig" value="true"/>
     <booleanAttribute key="clearws" value="true"/>
     <booleanAttribute key="clearwslog" value="false"/>
-    <stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/pde-junit"/>
+    <stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/org.locationtech.udig.catalog.wms.tests"/>
     <booleanAttribute key="default" value="false"/>
     <setAttribute key="deselected_workspace_bundles">
         <setEntry value="net.sf.opencsv"/>
@@ -17,14 +17,12 @@
         <setEntry value="org.locationtech.udig.bookmarks"/>
         <setEntry value="org.locationtech.udig.bookmarks.tests"/>
         <setEntry value="org.locationtech.udig.browser"/>
-        <setEntry value="org.locationtech.udig.catalog"/>
         <setEntry value="org.locationtech.udig.catalog.arcgrid"/>
         <setEntry value="org.locationtech.udig.catalog.arcsde"/>
         <setEntry value="org.locationtech.udig.catalog.csw"/>
         <setEntry value="org.locationtech.udig.catalog.db2"/>
         <setEntry value="org.locationtech.udig.catalog.geotiff"/>
         <setEntry value="org.locationtech.udig.catalog.geotiff.tests"/>
-        <setEntry value="org.locationtech.udig.catalog.geotools"/>
         <setEntry value="org.locationtech.udig.catalog.google2"/>
         <setEntry value="org.locationtech.udig.catalog.imageio"/>
         <setEntry value="org.locationtech.udig.catalog.jgrass"/>
@@ -33,15 +31,10 @@
         <setEntry value="org.locationtech.udig.catalog.oracle"/>
         <setEntry value="org.locationtech.udig.catalog.postgis"/>
         <setEntry value="org.locationtech.udig.catalog.rasterings"/>
-        <setEntry value="org.locationtech.udig.catalog.shp"/>
         <setEntry value="org.locationtech.udig.catalog.teradata"/>
-        <setEntry value="org.locationtech.udig.catalog.tests"/>
-        <setEntry value="org.locationtech.udig.catalog.ui"/>
         <setEntry value="org.locationtech.udig.catalog.ui.tests"/>
         <setEntry value="org.locationtech.udig.catalog.wfs"/>
         <setEntry value="org.locationtech.udig.catalog.wfs.tests"/>
-        <setEntry value="org.locationtech.udig.catalog.wms"/>
-        <setEntry value="org.locationtech.udig.catalog.wms.tests"/>
         <setEntry value="org.locationtech.udig.catalog.wmt"/>
         <setEntry value="org.locationtech.udig.catalog.wmt.tests"/>
         <setEntry value="org.locationtech.udig.catalog.worldimage"/>
@@ -59,7 +52,6 @@
         <setEntry value="org.locationtech.udig.issues.tests"/>
         <setEntry value="org.locationtech.udig.legend"/>
         <setEntry value="org.locationtech.udig.libs.db2"/>
-        <setEntry value="org.locationtech.udig.libs.netcdf"/>
         <setEntry value="org.locationtech.udig.libs.oracle"/>
         <setEntry value="org.locationtech.udig.libs.tests"/>
         <setEntry value="org.locationtech.udig.location"/>
@@ -69,10 +61,7 @@
         <setEntry value="org.locationtech.udig.printing.model"/>
         <setEntry value="org.locationtech.udig.printing.model.edit"/>
         <setEntry value="org.locationtech.udig.printing.ui"/>
-        <setEntry value="org.locationtech.udig.project"/>
-        <setEntry value="org.locationtech.udig.project.edit"/>
         <setEntry value="org.locationtech.udig.project.tests"/>
-        <setEntry value="org.locationtech.udig.project.ui"/>
         <setEntry value="org.locationtech.udig.project.ui.editor"/>
         <setEntry value="org.locationtech.udig.project.ui.tests"/>
         <setEntry value="org.locationtech.udig.render.feature.basic"/>
@@ -85,12 +74,10 @@
         <setEntry value="org.locationtech.udig.render.wmt.basic"/>
         <setEntry value="org.locationtech.udig.socket"/>
         <setEntry value="org.locationtech.udig.socket.tests"/>
-        <setEntry value="org.locationtech.udig.style"/>
         <setEntry value="org.locationtech.udig.style.advanced.core"/>
         <setEntry value="org.locationtech.udig.style.advanced.feature"/>
         <setEntry value="org.locationtech.udig.style.advanced.raster"/>
         <setEntry value="org.locationtech.udig.style.jgrass"/>
-        <setEntry value="org.locationtech.udig.style.sld"/>
         <setEntry value="org.locationtech.udig.style.sld.raster"/>
         <setEntry value="org.locationtech.udig.style.tests"/>
         <setEntry value="org.locationtech.udig.style.wms"/>
@@ -132,19 +119,19 @@
     <booleanAttribute key="includeOptional" value="true"/>
     <stringAttribute key="location" value="${workspace_loc}/../junit-workspace"/>
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-        <listEntry value="/org.locationtech.udig.ui.tests"/>
+        <listEntry value="/org.locationtech.udig.catalog.wms.tests"/>
     </listAttribute>
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
         <listEntry value="4"/>
     </listAttribute>
-    <stringAttribute key="org.eclipse.jdt.junit.CONTAINER" value="=org.locationtech.udig.ui.tests"/>
+    <stringAttribute key="org.eclipse.jdt.junit.CONTAINER" value="=org.locationtech.udig.catalog.wms.tests"/>
     <booleanAttribute key="org.eclipse.jdt.junit.KEEPRUNNING_ATTR" value="false"/>
     <stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
     <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit4"/>
     <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value=""/>
     <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog"/>
-    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.locationtech.udig.ui.tests"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.locationtech.udig.catalog.wms.tests"/>
     <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
     <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-ea"/>
     <stringAttribute key="pde.version" value="3.3"/>
@@ -153,6 +140,7 @@
     <setAttribute key="selected_target_bundles">
         <setEntry value="com.google.guava@default:default"/>
         <setEntry value="com.ibm.icu@default:default"/>
+        <setEntry value="com.lowagie.text@default:default"/>
         <setEntry value="com.sun.jna.platform@default:default"/>
         <setEntry value="com.sun.jna@default:default"/>
         <setEntry value="com.sun.xml.bind@default:default"/>
@@ -185,6 +173,7 @@
         <setEntry value="org.apache.commons.httpclient@default:default"/>
         <setEntry value="org.apache.commons.io@default:default"/>
         <setEntry value="org.apache.commons.jxpath@default:default"/>
+        <setEntry value="org.apache.commons.lang@default:default"/>
         <setEntry value="org.apache.commons.logging*1.2.0.v20180409-1502@default:default"/>
         <setEntry value="org.apache.felix.gogo.runtime@default:default"/>
         <setEntry value="org.apache.felix.scr@1:true"/>
@@ -210,6 +199,7 @@
         <setEntry value="org.eclipse.core.resources@default:default"/>
         <setEntry value="org.eclipse.core.runtime@default:true"/>
         <setEntry value="org.eclipse.core.variables@default:default"/>
+        <setEntry value="org.eclipse.draw2d@default:default"/>
         <setEntry value="org.eclipse.e4.core.commands@default:default"/>
         <setEntry value="org.eclipse.e4.core.contexts@default:default"/>
         <setEntry value="org.eclipse.e4.core.di.annotations@default:default"/>
@@ -231,18 +221,31 @@
         <setEntry value="org.eclipse.e4.ui.workbench.swt@default:default"/>
         <setEntry value="org.eclipse.e4.ui.workbench3@default:default"/>
         <setEntry value="org.eclipse.e4.ui.workbench@default:default"/>
+        <setEntry value="org.eclipse.emf.common.ui@default:default"/>
         <setEntry value="org.eclipse.emf.common@default:default"/>
         <setEntry value="org.eclipse.emf.ecore.change@default:default"/>
+        <setEntry value="org.eclipse.emf.ecore.edit@default:default"/>
         <setEntry value="org.eclipse.emf.ecore.xmi@default:default"/>
         <setEntry value="org.eclipse.emf.ecore@default:default"/>
+        <setEntry value="org.eclipse.emf.edit.ui@default:default"/>
+        <setEntry value="org.eclipse.emf.edit@default:default"/>
         <setEntry value="org.eclipse.equinox.app@default:default"/>
         <setEntry value="org.eclipse.equinox.bidi@default:default"/>
         <setEntry value="org.eclipse.equinox.common@2:true"/>
         <setEntry value="org.eclipse.equinox.event@default:default"/>
+        <setEntry value="org.eclipse.equinox.p2.core@default:default"/>
+        <setEntry value="org.eclipse.equinox.p2.engine@default:default"/>
+        <setEntry value="org.eclipse.equinox.p2.metadata.repository@default:default"/>
+        <setEntry value="org.eclipse.equinox.p2.metadata@default:default"/>
+        <setEntry value="org.eclipse.equinox.p2.repository@default:default"/>
         <setEntry value="org.eclipse.equinox.preferences@default:default"/>
         <setEntry value="org.eclipse.equinox.registry@default:default"/>
+        <setEntry value="org.eclipse.equinox.security.win32.x86_64@default:false"/>
+        <setEntry value="org.eclipse.equinox.security@default:default"/>
+        <setEntry value="org.eclipse.gef@default:default"/>
         <setEntry value="org.eclipse.help@default:default"/>
         <setEntry value="org.eclipse.jface.databinding@default:default"/>
+        <setEntry value="org.eclipse.jface.text@default:default"/>
         <setEntry value="org.eclipse.jface@default:default"/>
         <setEntry value="org.eclipse.osgi.compatibility.state@default:false"/>
         <setEntry value="org.eclipse.osgi.services@default:default"/>
@@ -251,6 +254,12 @@
         <setEntry value="org.eclipse.swt.win32.win32.x86_64@default:false"/>
         <setEntry value="org.eclipse.swt@default:default"/>
         <setEntry value="org.eclipse.team.core@default:default"/>
+        <setEntry value="org.eclipse.text@default:default"/>
+        <setEntry value="org.eclipse.ui.forms@default:default"/>
+        <setEntry value="org.eclipse.ui.ide@default:default"/>
+        <setEntry value="org.eclipse.ui.navigator@default:default"/>
+        <setEntry value="org.eclipse.ui.views@default:default"/>
+        <setEntry value="org.eclipse.ui.win32@default:false"/>
         <setEntry value="org.eclipse.ui.workbench@default:default"/>
         <setEntry value="org.eclipse.ui@default:default"/>
         <setEntry value="org.eclipse.xsd@default:default"/>
@@ -258,17 +267,31 @@
         <setEntry value="org.junit@default:default"/>
         <setEntry value="org.mockito@default:default"/>
         <setEntry value="org.objenesis@default:default"/>
+        <setEntry value="org.tukaani.xz@default:default"/>
         <setEntry value="org.w3c.css.sac@default:default"/>
         <setEntry value="org.w3c.dom.events@default:default"/>
         <setEntry value="org.w3c.dom.smil@default:default"/>
         <setEntry value="org.w3c.dom.svg@default:default"/>
     </setAttribute>
     <setAttribute key="selected_workspace_bundles">
+        <setEntry value="org.locationtech.udig.catalog.geotools@default:default"/>
+        <setEntry value="org.locationtech.udig.catalog.shp@default:default"/>
+        <setEntry value="org.locationtech.udig.catalog.tests@default:default"/>
+        <setEntry value="org.locationtech.udig.catalog.ui@default:default"/>
+        <setEntry value="org.locationtech.udig.catalog.wms.tests@default:default"/>
+        <setEntry value="org.locationtech.udig.catalog.wms@default:default"/>
+        <setEntry value="org.locationtech.udig.catalog@default:default"/>
         <setEntry value="org.locationtech.udig.core.tests@default:false"/>
         <setEntry value="org.locationtech.udig.core@default:default"/>
         <setEntry value="org.locationtech.udig.libs.jfreechart@default:default"/>
+        <setEntry value="org.locationtech.udig.libs.netcdf@default:false"/>
         <setEntry value="org.locationtech.udig.libs@default:default"/>
         <setEntry value="org.locationtech.udig.log4j.appender@default:false"/>
+        <setEntry value="org.locationtech.udig.project.edit@default:default"/>
+        <setEntry value="org.locationtech.udig.project.ui@default:default"/>
+        <setEntry value="org.locationtech.udig.project@default:default"/>
+        <setEntry value="org.locationtech.udig.style.sld@default:default"/>
+        <setEntry value="org.locationtech.udig.style@default:default"/>
         <setEntry value="org.locationtech.udig.ui.tests@default:default"/>
         <setEntry value="org.locationtech.udig.ui@default:default"/>
     </setAttribute>
@@ -277,6 +300,6 @@
     <booleanAttribute key="tracing" value="false"/>
     <booleanAttribute key="useCustomFeatures" value="false"/>
     <booleanAttribute key="useDefaultConfig" value="true"/>
-    <booleanAttribute key="useDefaultConfigArea" value="false"/>
+    <booleanAttribute key="useDefaultConfigArea" value="true"/>
     <booleanAttribute key="useProduct" value="false"/>
 </launchConfiguration>

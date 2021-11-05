@@ -9,10 +9,9 @@
  */
 package org.locationtech.udig.project.internal;
 
-import org.locationtech.udig.project.IProjectElement;
-
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.ecore.EObject;
+import org.locationtech.udig.project.IProjectElement;
 
 /**
  * The interface that describes an Element that can be part of a Project.
@@ -24,7 +23,7 @@ public interface ProjectElement extends EObject, IProjectElement, IAdaptable {
 
     /**
      * Returns the owner project of Map.
-     * 
+     *
      * @return the owner project of Map.
      * @model many="false" opposite="elementsInternal"
      */
@@ -41,16 +40,17 @@ public interface ProjectElement extends EObject, IProjectElement, IAdaptable {
 
     /**
      * Returns the owner project of Map.
-     * 
+     *
      * @return the owner project of Map.
      * @uml.property name="name"
      * @model many="false"
      */
+    @Override
     public String getName();
 
     /**
      * The new name for the project element.
-     * 
+     *
      * @param name
      * @uml.property name="name"
      */

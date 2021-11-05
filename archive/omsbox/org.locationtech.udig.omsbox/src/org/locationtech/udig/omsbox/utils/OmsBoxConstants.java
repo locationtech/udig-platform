@@ -9,10 +9,9 @@
  */
 package org.locationtech.udig.omsbox.utils;
 
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 public class OmsBoxConstants {
     public static final String CATEGORY_OTHERS = "Others";
@@ -38,8 +37,8 @@ public class OmsBoxConstants {
     public static final String STATISTICS = "Statistics";
 
     public static String dateTimeFormatterYYYYMMDDHHMMSS_string = "yyyy-MM-dd HH:mm:ss";
-    public static DateTimeFormatter dateTimeFormatterYYYYMMDDHHMMSS = DateTimeFormat
-            .forPattern(dateTimeFormatterYYYYMMDDHHMMSS_string);
+    public static DateTimeFormatter dateTimeFormatterYYYYMMDDHHMMSS = DateTimeFormatter
+            .ofPattern(dateTimeFormatterYYYYMMDDHHMMSS_string);
 
     public static String LOGLEVEL_GUI_ON = "ON";
     public static String LOGLEVEL_GUI_OFF = "OFF";

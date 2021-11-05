@@ -6,7 +6,6 @@ package org.locationtech.udig.project.internal.render.impl;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -14,13 +13,29 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.swt.widgets.Display;
+import org.geotools.geometry.DirectPosition2D;
+import org.geotools.geometry.jts.JTS;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.CRS;
+import org.geotools.referencing.crs.DefaultEngineeringCRS;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.aoi.IAOIService;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.ProjectPackage;
-import org.locationtech.udig.project.internal.render.RenderFactory;
 import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.RenderFactory;
 import org.locationtech.udig.project.internal.render.RenderManager;
 import org.locationtech.udig.project.internal.render.RenderPackage;
 import org.locationtech.udig.project.internal.render.ViewportModel;
@@ -32,24 +47,6 @@ import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 import org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent;
 import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.ProgressManager;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.swt.widgets.Display;
-import org.geotools.geometry.DirectPosition2D;
-import org.geotools.geometry.jts.JTS;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.CRS;
-import org.geotools.referencing.crs.DefaultEngineeringCRS;
-import org.joda.time.DateTime;
 import org.opengis.geometry.DirectPosition;
 import org.opengis.geometry.MismatchedDimensionException;
 import org.opengis.referencing.FactoryException;
@@ -57,14 +54,11 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Envelope;
-
 /**
  * TODO Purpose of org.locationtech.udig.project.internal.render.impl
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -83,7 +77,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * The cached value of the '{@link #getCRS() <em>CRS</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @see #getCRS()
      * @generated NOT
      * @ordered
@@ -92,7 +86,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * This is true if the CRS attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated false
      * @ordered
      */
@@ -112,7 +106,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * The cached value of the '{@link #getBounds() <em>Bounds</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getBounds()
      * @generated NOT
      * @ordered
@@ -122,7 +116,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * The default value of the '{@link #getCenter() <em>Center</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getCenter()
      * @generated
      * @ordered
@@ -132,7 +126,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * The default value of the '{@link #getHeight() <em>Height</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getHeight()
      * @generated
      * @ordered
@@ -142,7 +136,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * The default value of the '{@link #getWidth() <em>Width</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getWidth()
      * @generated
      * @ordered
@@ -152,7 +146,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * The default value of the '{@link #getAspectRatio() <em>Aspect Ratio</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getAspectRatio()
      * @generated
      * @ordered
@@ -162,7 +156,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * The default value of the '{@link #getPixelSize() <em>Pixel Size</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getPixelSize()
      * @generated
      * @ordered
@@ -191,68 +185,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     private SortedSet<Double> defaultScaleDenominators = null;
 
     /**
-     * The cached value of the '{@link #getAvailableTimesteps() <em>Available Timesteps</em>}' attribute list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getAvailableTimesteps()
-     * @generated
-     * @ordered
-     */
-    protected EList<DateTime> availableTimesteps;
-
-    /**
-     * The default value of the '{@link #getCurrentTimestep() <em>Current Timestep</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getCurrentTimestep()
-     * @generated
-     * @ordered
-     */
-    protected static final DateTime CURRENT_TIMESTEP_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getCurrentTimestep() <em>Current Timestep</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getCurrentTimestep()
-     * @generated
-     * @ordered
-     */
-    protected DateTime currentTimestep = CURRENT_TIMESTEP_EDEFAULT;
-
-    /**
-     * The cached value of the '{@link #getAvailableElevation() <em>Available Elevation</em>}' attribute list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getAvailableElevation()
-     * @generated
-     * @ordered
-     */
-    protected EList<Double> availableElevation;
-
-    /**
-     * The default value of the '{@link #getCurrentElevation() <em>Current Elevation</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getCurrentElevation()
-     * @generated
-     * @ordered
-     */
-    protected static final Double CURRENT_ELEVATION_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getCurrentElevation() <em>Current Elevation</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getCurrentElevation()
-     * @generated
-     * @ordered
-     */
-    protected Double currentElevation = CURRENT_ELEVATION_EDEFAULT;
-
-    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     protected ViewportModelImpl() {
@@ -336,7 +270,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -361,7 +295,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -447,7 +381,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -458,7 +392,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -471,7 +405,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -481,7 +415,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -491,7 +425,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -501,7 +435,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -511,7 +445,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -524,7 +458,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * TODO summary sentence for validState ...
-     * 
+     *
      * @return validState
      */
     private boolean validState() {
@@ -673,7 +607,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -695,7 +629,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -705,7 +639,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -747,7 +681,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -760,7 +694,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -773,7 +707,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -799,7 +733,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -884,14 +818,6 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         result.append(bounds);
         result.append(", preferredScaleDenominators: "); //$NON-NLS-1$
         result.append(preferredScaleDenominators);
-        result.append(", availableTimesteps: "); //$NON-NLS-1$
-        result.append(availableTimesteps);
-        result.append(", currentTimestep: "); //$NON-NLS-1$
-        result.append(currentTimestep);
-        result.append(", availableElevation: "); //$NON-NLS-1$
-        result.append(availableElevation);
-        result.append(", currentElevation: "); //$NON-NLS-1$
-        result.append(currentElevation);
         result.append(')');
         return result.toString();
     }
@@ -1079,14 +1005,6 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
             return getRenderManagerInternal();
         case RenderPackage.VIEWPORT_MODEL__PREFERRED_SCALE_DENOMINATORS:
             return getPreferredScaleDenominators();
-        case RenderPackage.VIEWPORT_MODEL__AVAILABLE_TIMESTEPS:
-            return getAvailableTimesteps();
-        case RenderPackage.VIEWPORT_MODEL__CURRENT_TIMESTEP:
-            return getCurrentTimestep();
-        case RenderPackage.VIEWPORT_MODEL__AVAILABLE_ELEVATION:
-            return getAvailableElevation();
-        case RenderPackage.VIEWPORT_MODEL__CURRENT_ELEVATION:
-            return getCurrentElevation();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -1124,20 +1042,6 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         case RenderPackage.VIEWPORT_MODEL__PREFERRED_SCALE_DENOMINATORS:
             setPreferredScaleDenominators((SortedSet<Double>) newValue);
             return;
-        case RenderPackage.VIEWPORT_MODEL__AVAILABLE_TIMESTEPS:
-            getAvailableTimesteps().clear();
-            getAvailableTimesteps().addAll((Collection<? extends DateTime>) newValue);
-            return;
-        case RenderPackage.VIEWPORT_MODEL__CURRENT_TIMESTEP:
-            setCurrentTimestep((DateTime) newValue);
-            return;
-        case RenderPackage.VIEWPORT_MODEL__AVAILABLE_ELEVATION:
-            getAvailableElevation().clear();
-            getAvailableElevation().addAll((Collection<? extends Double>) newValue);
-            return;
-        case RenderPackage.VIEWPORT_MODEL__CURRENT_ELEVATION:
-            setCurrentElevation((Double) newValue);
-            return;
         }
         super.eSet(featureID, newValue);
     }
@@ -1174,18 +1078,6 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         case RenderPackage.VIEWPORT_MODEL__PREFERRED_SCALE_DENOMINATORS:
             setPreferredScaleDenominators((SortedSet<Double>) null);
             return;
-        case RenderPackage.VIEWPORT_MODEL__AVAILABLE_TIMESTEPS:
-            getAvailableTimesteps().clear();
-            return;
-        case RenderPackage.VIEWPORT_MODEL__CURRENT_TIMESTEP:
-            setCurrentTimestep(CURRENT_TIMESTEP_EDEFAULT);
-            return;
-        case RenderPackage.VIEWPORT_MODEL__AVAILABLE_ELEVATION:
-            getAvailableElevation().clear();
-            return;
-        case RenderPackage.VIEWPORT_MODEL__CURRENT_ELEVATION:
-            setCurrentElevation(CURRENT_ELEVATION_EDEFAULT);
-            return;
         }
         super.eUnset(featureID);
     }
@@ -1220,16 +1112,6 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
             return renderManagerInternal != null;
         case RenderPackage.VIEWPORT_MODEL__PREFERRED_SCALE_DENOMINATORS:
             return preferredScaleDenominators != null;
-        case RenderPackage.VIEWPORT_MODEL__AVAILABLE_TIMESTEPS:
-            return availableTimesteps != null && !availableTimesteps.isEmpty();
-        case RenderPackage.VIEWPORT_MODEL__CURRENT_TIMESTEP:
-            return CURRENT_TIMESTEP_EDEFAULT == null ? currentTimestep != null
-                    : !CURRENT_TIMESTEP_EDEFAULT.equals(currentTimestep);
-        case RenderPackage.VIEWPORT_MODEL__AVAILABLE_ELEVATION:
-            return availableElevation != null && !availableElevation.isEmpty();
-        case RenderPackage.VIEWPORT_MODEL__CURRENT_ELEVATION:
-            return CURRENT_ELEVATION_EDEFAULT == null ? currentElevation != null
-                    : !CURRENT_ELEVATION_EDEFAULT.equals(currentElevation);
         }
         return super.eIsSet(featureID);
     }
@@ -1260,7 +1142,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
      * FIXME, This method was added as a work around for the fact that we do not have the ability to
      * chain or batch commands.
-     * 
+     *
      * @param firing
      */
     public void setFiringEvents(boolean firing) {
@@ -1317,7 +1199,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     @Override
     public synchronized SortedSet<Double> getDefaultPreferredScaleDenominators() {
         if (defaultScaleDenominators == null) {
-            TreeSet<Double> scales = new TreeSet<Double>();
+            TreeSet<Double> scales = new TreeSet<>();
             scales.add(1000000.0);
             scales.add(100000.0);
             scales.add(50000.0);
@@ -1347,7 +1229,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
             preferredScaleDenominators = null;
         } else {
             preferredScaleDenominators = Collections
-                    .unmodifiableSortedSet(new TreeSet<Double>(newPreferredScaleDenominators));
+                    .unmodifiableSortedSet(new TreeSet<>(newPreferredScaleDenominators));
         }
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
@@ -1356,85 +1238,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public List<DateTime> getAvailableTimesteps() {
-        if (availableTimesteps == null) {
-            availableTimesteps = new EDataTypeUniqueEList<DateTime>(DateTime.class, this,
-                    RenderPackage.VIEWPORT_MODEL__AVAILABLE_TIMESTEPS);
-        }
-        return availableTimesteps;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public DateTime getCurrentTimestep() {
-        return currentTimestep;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void setCurrentTimestep(DateTime newCurrentTimestep) {
-        DateTime oldCurrentTimestep = currentTimestep;
-        currentTimestep = newCurrentTimestep;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET,
-                    RenderPackage.VIEWPORT_MODEL__CURRENT_TIMESTEP, oldCurrentTimestep,
-                    currentTimestep));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public List<Double> getAvailableElevation() {
-        if (availableElevation == null) {
-            availableElevation = new EDataTypeUniqueEList<Double>(Double.class, this,
-                    RenderPackage.VIEWPORT_MODEL__AVAILABLE_ELEVATION);
-        }
-        return availableElevation;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Double getCurrentElevation() {
-        return currentElevation;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void setCurrentElevation(Double newCurrentElevation) {
-        Double oldCurrentElevation = currentElevation;
-        currentElevation = newCurrentElevation;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET,
-                    RenderPackage.VIEWPORT_MODEL__CURRENT_ELEVATION, oldCurrentElevation,
-                    currentElevation));
-    }
-
-    /**
-     * This method will calculate the current width based on ScaleUtils and 
+     * This method will calculate the current width based on ScaleUtils and
      * the current RenderManager.
      */
     @Override
@@ -1457,7 +1261,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         setWidth(newExtents.getWidth());
     }
 
-    CopyOnWriteArraySet<IViewportModelListener> listeners = new CopyOnWriteArraySet<IViewportModelListener>();
+    CopyOnWriteArraySet<IViewportModelListener> listeners = new CopyOnWriteArraySet<>();
 
     @Override
     public void addViewportModelListener(IViewportModelListener listener) {

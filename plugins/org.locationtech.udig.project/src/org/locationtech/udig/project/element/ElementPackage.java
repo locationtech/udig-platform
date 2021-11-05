@@ -28,45 +28,42 @@ import org.locationtech.udig.project.internal.ProjectPackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- *
  * @see org.locationtech.udig.project.element.ElementFactory
  * @model kind="package"
  * @generated
  */
 public interface ElementPackage extends EPackage {
     /**
-     * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The package name.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     String eNAME = "element"; //$NON-NLS-1$
 
     /**
-     * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The package namespace URI.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     String eNS_URI = "http:///net/refractions/udig/project/element.ecore"; //$NON-NLS-1$
 
     /**
-     * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The package namespace name.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     String eNS_PREFIX = "org.locationtech.udig.project.element"; //$NON-NLS-1$
 
     /**
-     * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The singleton instance of the package.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     ElementPackage eINSTANCE = org.locationtech.udig.project.element.impl.ElementPackageImpl.init();
 
     /**
-     * The meta object id for the
-     * '{@link org.locationtech.udig.project.element.impl.ProjectElementAdapterImpl <em>Project
-     * Element Adapter</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.element.impl.ProjectElementAdapterImpl <em>Project Element Adapter</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.element.impl.ProjectElementAdapterImpl
      * @see org.locationtech.udig.project.element.impl.ElementPackageImpl#getProjectElementAdapter()
      * @generated
@@ -74,27 +71,27 @@ public interface ElementPackage extends EPackage {
     int PROJECT_ELEMENT_ADAPTER = 0;
 
     /**
-     * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int PROJECT_ELEMENT_ADAPTER__NAME = ProjectPackage.PROJECT_ELEMENT__NAME;
 
     /**
-     * The feature id for the '<em><b>Project Internal</b></em>' reference. <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Project Internal</b></em>' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int PROJECT_ELEMENT_ADAPTER__PROJECT_INTERNAL = ProjectPackage.PROJECT_ELEMENT__PROJECT_INTERNAL;
 
     /**
-     * The feature id for the '<em><b>Backing Object</b></em>' attribute. <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Backing Object</b></em>' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -110,9 +107,9 @@ public interface ElementPackage extends EPackage {
     int PROJECT_ELEMENT_ADAPTER_FEATURE_COUNT = ProjectPackage.PROJECT_ELEMENT_FEATURE_COUNT + 1;
 
     /**
-     * The meta object id for the '<em>IGeneric Project Element</em>' data type. <!-- begin-user-doc
+     * The meta object id for the '<em>IGeneric Project Element</em>' data type.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @see org.locationtech.udig.project.element.IGenericProjectElement
      * @see org.locationtech.udig.project.element.impl.ElementPackageImpl#getIGenericProjectElement()
      * @generated
@@ -120,10 +117,8 @@ public interface ElementPackage extends EPackage {
     int IGENERIC_PROJECT_ELEMENT = 1;
 
     /**
-     * Returns the meta object for class
-     * '{@link org.locationtech.udig.project.element.ProjectElementAdapter <em>Project Element
-     * Adapter</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.project.element.ProjectElementAdapter <em>Project Element Adapter</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Project Element Adapter</em>'.
      * @see org.locationtech.udig.project.element.ProjectElementAdapter
      * @generated
@@ -131,10 +126,8 @@ public interface ElementPackage extends EPackage {
     EClass getProjectElementAdapter();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.element.ProjectElementAdapter#getBackingObject
-     * <em>Backing Object</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.element.ProjectElementAdapter#getBackingObject <em>Backing Object</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Backing Object</em>'.
      * @see org.locationtech.udig.project.element.ProjectElementAdapter#getBackingObject()
      * @see #getProjectElementAdapter()
@@ -143,10 +136,8 @@ public interface ElementPackage extends EPackage {
     EAttribute getProjectElementAdapter_BackingObject();
 
     /**
-     * Returns the meta object for data type
-     * '{@link org.locationtech.udig.project.element.IGenericProjectElement <em>IGeneric Project
-     * Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.locationtech.udig.project.element.IGenericProjectElement <em>IGeneric Project Element</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>IGeneric Project Element</em>'.
      * @see org.locationtech.udig.project.element.IGenericProjectElement
      * @model instanceClass="org.locationtech.udig.project.element.IGenericProjectElement"
@@ -155,9 +146,9 @@ public interface ElementPackage extends EPackage {
     EDataType getIGenericProjectElement();
 
     /**
-     * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!--
+     * Returns the factory that creates the instances of the model.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @return the factory that creates the instances of the model.
      * @generated
      */
@@ -172,15 +163,12 @@ public interface ElementPackage extends EPackage {
      * <li>and each data type</li>
      * </ul>
      * <!-- end-user-doc -->
-     *
      * @generated
      */
     interface Literals {
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.element.impl.ProjectElementAdapterImpl <em>Project
-         * Element Adapter</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.element.impl.ProjectElementAdapterImpl <em>Project Element Adapter</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.element.impl.ProjectElementAdapterImpl
          * @see org.locationtech.udig.project.element.impl.ElementPackageImpl#getProjectElementAdapter()
          * @generated

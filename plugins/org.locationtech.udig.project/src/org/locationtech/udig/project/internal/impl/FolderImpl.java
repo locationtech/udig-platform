@@ -2,33 +2,32 @@
  * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
- * 
+ *
  */
 package org.locationtech.udig.project.internal.impl;
 
 import java.util.Collection;
 import java.util.List;
-import org.locationtech.udig.project.ILegendItem;
-import org.locationtech.udig.project.internal.Folder;
-import org.locationtech.udig.project.internal.LegendItem;
-import org.locationtech.udig.project.internal.ProjectPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.locationtech.udig.project.ILegendItem;
+import org.locationtech.udig.project.internal.Folder;
+import org.locationtech.udig.project.internal.LegendItem;
+import org.locationtech.udig.project.internal.ProjectPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -144,7 +143,7 @@ public class FolderImpl extends EObjectImpl implements Folder {
     @Override
     public List<ILegendItem> getItems() {
         if (items == null) {
-            items = new EObjectContainmentEList<ILegendItem>(ILegendItem.class, this,
+            items = new EObjectContainmentEList<>(ILegendItem.class, this,
                     ProjectPackage.FOLDER__ITEMS);
         }
         return items;
@@ -162,7 +161,7 @@ public class FolderImpl extends EObjectImpl implements Folder {
 
     /**
      * Look up the MapImpl that is containing this legend item.
-     * 
+     *
      * @return MapImpl or null if we have not been added to a map yet.
      */
     public MapImpl getMapInternal() {

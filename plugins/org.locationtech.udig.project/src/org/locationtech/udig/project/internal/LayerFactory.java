@@ -12,16 +12,15 @@ package org.locationtech.udig.project.internal;
 import java.io.IOException;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IService;
-
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * TODO Purpose of org.locationtech.udig.project.internal
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @model
@@ -29,7 +28,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface LayerFactory extends EObject {
     /**
      * Creates a list of {@linkplain Layer}objects from the provided selection.
-     * 
+     *
      * @param selection A selection of CatalogEntries obtained from a {@linkplain CatalogTreeViewer}
      *        object.
      * @return a list of {@linkplain Layer}objects from the provided selection.
@@ -40,7 +39,7 @@ public interface LayerFactory extends EObject {
     /**
      * Creates a list of layers from a service. Each GeoResource in the service will have a
      * corresponding layer created for it. Becareful this can result in a large number of layers.
-     * 
+     *
      * @param service a service that will be used to created layers
      * @return a list of layers
      * @throws IOException
@@ -50,7 +49,7 @@ public interface LayerFactory extends EObject {
     /**
      * Creates a layer from a service and a resource. The layer is represented the data in resource.
      * May return null if it cannot resolve the service.
-     * 
+     *
      * @param service
      * @param resource
      * @return

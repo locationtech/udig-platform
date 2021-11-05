@@ -12,6 +12,19 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.ID;
@@ -30,20 +43,6 @@ import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.ProgressManager;
 import org.locationtech.udig.ui.palette.ColourScheme;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Layer Factory</b></em>'.
  * <!-- end-user-doc -->
@@ -59,7 +58,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public static final String copyright = "uDig - User Friendly Desktop Internet GIS client\n"
@@ -240,7 +239,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
 
     /**
      * Creates a list of {@linkplain Layer}objects from the provided selection.
-     * 
+     *
      * @param selection A selection of CatalogEntries obtained from a {@linkplain CatalogTreeViewer}
      *        object.
      * @return a list of {@linkplain Layer}objects from the provided selection.
@@ -249,7 +248,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
     @Override
     @SuppressWarnings("unchecked")
     public List<Layer> getLayers(List selection) throws IOException {
-        List<Layer> layers = new LinkedList<Layer>();
+        List<Layer> layers = new LinkedList<>();
         for (Iterator<Object> iter = selection.iterator(); iter.hasNext();) {
             Object obj = iter.next();
             if (obj instanceof IService) {
@@ -268,7 +267,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
     @Override
     public List<Layer> getLayers(IService service) throws IOException {
         Layer ref = null;
-        List<Layer> layers = new LinkedList<Layer>();
+        List<Layer> layers = new LinkedList<>();
 
         Iterator<? extends IGeoResource> rentryIter = service.resources(null).iterator();
         while (rentryIter.hasNext()) {
@@ -318,7 +317,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
     // throw new IOException(
     //                    "This resource (" + layerName + ") is not a part of the service. This is likely caused by inconsistent data returned by a search."); //$NON-NLS-1$//$NON-NLS-2$
     // }
-    //        
+    //
     // Layer layer = ProjectFactory.eINSTANCE.createLayer();
     //
     // layer.setID(geoResource.getIdentifier());
@@ -328,7 +327,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
 
     /**
      * Returns a LayerFactory object
-     * 
+     *
      * @return a LayerFactory object.
      */
     public static LayerFactoryImpl create() {
@@ -338,7 +337,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
     /**
      * Creates a layer from a service and a resource. The layer is represented the data in resource.
      * May return null if it cannot resolve the service.
-     * 
+     *
      * @param service
      * @param resource
      * @return
@@ -387,8 +386,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
         LayerResource preferredResource = null;
         for (IResolve resolve : resolves) {
             if (resolve instanceof IGeoResource) {
-                LayerResource layerResource = new LayerResource(layer,
-                        (IGeoResource) resolve);
+                LayerResource layerResource = new LayerResource(layer, (IGeoResource) resolve);
                 if (resolve.getID().equals(layerResourceID)) {
                     resources.add(0, layerResource);
                 } else {

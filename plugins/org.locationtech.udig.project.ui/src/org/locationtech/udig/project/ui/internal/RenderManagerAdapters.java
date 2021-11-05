@@ -74,14 +74,6 @@ public class RenderManagerAdapters {
                     manager.refresh(null);
                     break;
                 }
-                case RenderPackage.VIEWPORT_MODEL__CURRENT_TIMESTEP: {
-                    manager.refresh(null);
-                    break;
-                }
-                case RenderPackage.VIEWPORT_MODEL__CURRENT_ELEVATION: {
-                    manager.refresh(null);
-                    break;
-                }
                 }// switch
             }
 

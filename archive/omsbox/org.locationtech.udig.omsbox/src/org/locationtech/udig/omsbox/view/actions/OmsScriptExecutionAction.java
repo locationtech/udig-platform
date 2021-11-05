@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.time.LocalDateTime;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
@@ -23,8 +24,6 @@ import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
-import org.joda.time.DateTime;
-
 import org.locationtech.udig.omsbox.OmsBoxPlugin;
 import org.locationtech.udig.omsbox.core.IProcessListener;
 import org.locationtech.udig.omsbox.core.JConsoleOutputConsole;
@@ -83,7 +82,7 @@ public class OmsScriptExecutionAction implements IViewActionDelegate, IProcessLi
             Process process = executor.exec(path, internalStream, errorStream, loggerLevelGui, ramLevel);
 
             File scriptFile = new File(path);
-            scriptID = scriptFile.getName() + " " + new DateTime().toString(OmsBoxConstants.dateTimeFormatterYYYYMMDDHHMMSS);
+            scriptID = scriptFile.getName() + " " + LocalDateTime.now().format(OmsBoxConstants.dateTimeFormatterYYYYMMDDHHMMSS);
             OmsBoxPlugin.getDefault().addProcess(process, scriptID);
 
             // cleanup when leaving uDig
