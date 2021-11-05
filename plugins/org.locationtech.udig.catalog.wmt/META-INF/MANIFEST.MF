@@ -6,15 +6,17 @@ Bundle-Version: 2.3.0.qualifier
 Bundle-Activator: org.locationtech.udig.catalog.internal.wmt.WMTPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
-Export-Package: org.locationtech.udig.catalog.internal.wmt,org.locatio
- ntech.udig.catalog.internal.wmt.tile,org.locationtech.udig.catalog.in
- ternal.wmt.ui.preferences,org.locationtech.udig.catalog.internal.wmt.
- ui.properties,org.locationtech.udig.catalog.internal.wmt.ui.view,org.
- locationtech.udig.catalog.internal.wmt.ui.wizard,org.locationtech.udi
- g.catalog.internal.wmt.ui.wizard.controls,org.locationtech.udig.catal
- og.internal.wmt.wmtsource,org.locationtech.udig.catalog.internal.wmt.
- wmtsource.ww,org.locationtech.udig.catalog.internal.wmt.ww,org.locati
- ontech.udig.catalog.wmt.internal
+Export-Package: org.locationtech.udig.catalog.internal.wmt,
+ org.locationtech.udig.catalog.internal.wmt.tile,
+ org.locationtech.udig.catalog.internal.wmt.ui.preferences,
+ org.locationtech.udig.catalog.internal.wmt.ui.properties,
+ org.locationtech.udig.catalog.internal.wmt.ui.view,
+ org.locationtech.udig.catalog.internal.wmt.ui.wizard,
+ org.locationtech.udig.catalog.internal.wmt.ui.wizard.controls,
+ org.locationtech.udig.catalog.internal.wmt.wmtsource,
+ org.locationtech.udig.catalog.internal.wmt.wmtsource.ww,
+ org.locationtech.udig.catalog.internal.wmt.ww,
+ org.locationtech.udig.catalog.wmt.internal
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.locationtech.udig.catalog,
@@ -27,4 +29,11 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
+Import-Package: org.apache.commons.io;version="2.4.0",
+ org.apache.commons.io.comparator;version="2.4.0",
+ org.apache.commons.io.filefilter;version="2.4.0",
+ org.apache.commons.io.input;version="2.4.0",
+ org.apache.commons.io.monitor;version="2.4.0",
+ org.apache.commons.io.output;version="2.4.0",
+ org.apache.commons.io.serialization;version="2.4.0"
 
