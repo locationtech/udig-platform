@@ -53,13 +53,17 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
     private RuleWrapper ruleWrapper;
 
     private Composite simplePolygonComposite = null;
+
     private PolygonPropertiesEditor polygonPropertiesEditor;
+
     private Composite mainComposite;
+
     private StackLayout mainStackLayout;
 
     private String[] numericAttributesArrays;
+
     private String geometryProperty;
-    
+
     private Composite parentComposite;
 
     private final Composite parent;
@@ -78,12 +82,13 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
 
     private String[] stringattributesArrays;
 
-    public PolygonPropertiesComposite( final PolygonPropertiesEditor polygonPropertiesEditor, Composite parent ) {
+    public PolygonPropertiesComposite(final PolygonPropertiesEditor polygonPropertiesEditor,
+            Composite parent) {
         this.polygonPropertiesEditor = polygonPropertiesEditor;
         this.parent = parent;
     }
 
-    public void setRule( RuleWrapper ruleWrapper ) {
+    public void setRule(RuleWrapper ruleWrapper) {
         this.ruleWrapper = ruleWrapper;
 
         if (mainComposite == null) {
@@ -108,17 +113,19 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
 
     private void init() {
         List<String> numericAttributeNames = polygonPropertiesEditor.getNumericAttributeNames();
-        numericAttributesArrays = (String[]) numericAttributeNames.toArray(new String[numericAttributeNames.size()]);
+        numericAttributesArrays = (String[]) numericAttributeNames
+                .toArray(new String[numericAttributeNames.size()]);
         List<String> allAttributeNames = polygonPropertiesEditor.getAllAttributeNames();
 
         // sort alphabetical
         Collections.sort(allAttributeNames);
 
-        allAttributesArrays = (String[]) allAttributeNames.toArray(new String[allAttributeNames.size()]);
+        allAttributesArrays = (String[]) allAttributeNames
+                .toArray(new String[allAttributeNames.size()]);
         List<String> stringAttributeNames = polygonPropertiesEditor.getStringAttributeNames();
         stringattributesArrays = stringAttributeNames.toArray(new String[0]);
         this.geometryProperty = polygonPropertiesEditor.getGeometryPropertyName().getLocalPart();
-        
+
         parentComposite = new Composite(parent, SWT.NONE);
         parentComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         parentComposite.setLayout(new GridLayout(1, false));
@@ -148,9 +155,9 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         simplePolygonComposite.setLayout(gl);
 
         // rule name
-//        Composite nameComposite = new Composite(simplePolygonComposite, SWT.NONE);
-//        nameComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-//        nameComposite.setLayout(new GridLayout(2, true));
+        // Composite nameComposite = new Composite(simplePolygonComposite, SWT.NONE);
+        // nameComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        // nameComposite.setLayout(new GridLayout(2, true));
 
         // use an expandbar for the properties
         Group propertiesGroup = new Group(simplePolygonComposite, SWT.SHADOW_ETCHED_IN);
@@ -161,7 +168,8 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         TabFolder tabFolder = new TabFolder(propertiesGroup, SWT.NONE);
         tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-        generalParametersComposite = new PolygonGeneralParametersComposite(tabFolder, numericAttributesArrays);
+        generalParametersComposite = new PolygonGeneralParametersComposite(tabFolder,
+                numericAttributesArrays);
         generalParametersComposite.init(ruleWrapper);
         generalParametersComposite.addListener(this);
         Composite generalParametersInternalComposite = generalParametersComposite.getComposite();
@@ -171,7 +179,8 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         tabItem1.setControl(generalParametersInternalComposite);
 
         // BORDER GROUP
-        borderParametersComposite = new BoderParametersComposite(tabFolder, numericAttributesArrays, stringattributesArrays, geometryProperty);
+        borderParametersComposite = new BoderParametersComposite(tabFolder, numericAttributesArrays,
+                stringattributesArrays, geometryProperty);
         borderParametersComposite.init(ruleWrapper);
         borderParametersComposite.addListener(this);
         Composite borderParametersInternalComposite = borderParametersComposite.getComposite();
@@ -181,7 +190,8 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         tabItem2.setControl(borderParametersInternalComposite);
 
         // Fill GROUP
-        fillParametersComposite = new PolygonFillParametersComposite(tabFolder, numericAttributesArrays, stringattributesArrays);
+        fillParametersComposite = new PolygonFillParametersComposite(tabFolder,
+                numericAttributesArrays, stringattributesArrays);
         fillParametersComposite.init(ruleWrapper);
         fillParametersComposite.addListener(this);
         Composite fillParametersInternalComposite = fillParametersComposite.getComposite();
@@ -191,7 +201,8 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         tabItem3.setControl(fillParametersInternalComposite);
 
         // Label GROUP
-        labelsParametersComposite = new PolygonLabelsParametersComposite(tabFolder, numericAttributesArrays, allAttributesArrays);
+        labelsParametersComposite = new PolygonLabelsParametersComposite(tabFolder,
+                numericAttributesArrays, allAttributesArrays);
         labelsParametersComposite.init(ruleWrapper);
         labelsParametersComposite.addListener(this);
         Composite labelParametersInternalComposite = labelsParametersComposite.getComposite();
@@ -212,7 +223,7 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
 
     }
 
-    public void modifyText( ModifyEvent e ) {
+    public void modifyText(ModifyEvent e) {
         // Object source = e.getSource();
         // if (source.equals(pathTextGRAPHICS)) {
         // try {
@@ -227,15 +238,16 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         // polygonPropertiesEditor.refreshPreviewCanvasOnStyle();
     }
 
-    public void onStyleChanged( Object source, String[] values, boolean fromField, STYLEEVENTTYPE styleEventType ) {
+    public void onStyleChanged(Object source, String[] values, boolean fromField,
+            STYLEEVENTTYPE styleEventType) {
         String value = values[0];
 
-        PolygonSymbolizerWrapper polygonSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
-                PolygonSymbolizerWrapper.class);
+        PolygonSymbolizerWrapper polygonSymbolizerWrapper = ruleWrapper
+                .getGeometrySymbolizersWrapper().adapt(PolygonSymbolizerWrapper.class);
 
         TextSymbolizerWrapper textSymbolizerWrapper = ruleWrapper.getTextSymbolizersWrapper();
 
-        switch( styleEventType ) {
+        switch (styleEventType) {
         // GENERAL PARAMETERS
         case NAME:
             ruleWrapper.setName(value);
@@ -274,14 +286,14 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
             String size = values[2];
 
             try {
-            	if (url.equals("")){ //$NON-NLS-1$
-            		polygonSymbolizerWrapper.clearGraphicStroke();
-            	}else{
-            		polygonSymbolizerWrapper.setStrokeExternalGraphicStrokePath(url);
-            		Graphic graphicStroke = polygonSymbolizerWrapper.getStrokeGraphicStroke();
-            		graphicStroke.setSize(Utilities.ff.literal(size));
-            		graphicStroke.setGap(Utilities.ff.literal(width));
-            	}
+                if (url.equals("")) { //$NON-NLS-1$
+                    polygonSymbolizerWrapper.clearGraphicStroke();
+                } else {
+                    polygonSymbolizerWrapper.setStrokeExternalGraphicStrokePath(url);
+                    Graphic graphicStroke = polygonSymbolizerWrapper.getStrokeGraphicStroke();
+                    graphicStroke.setSize(Utilities.ff.literal(size));
+                    graphicStroke.setGap(Utilities.ff.literal(width));
+                }
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -304,14 +316,14 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
             break;
         }
         case LINEEND: {
-        	polygonSymbolizerWrapper.setEndPointStyle(values[0], values[1], values[2], values[3]);
-        	break;
+            polygonSymbolizerWrapper.setEndPointStyle(values[0], values[1], values[2], values[3]);
+            break;
         }
         case LINESTART: {
-        	polygonSymbolizerWrapper.setStartPointStyle(values[0], values[1], values[2], values[3]);
-        	break;
+            polygonSymbolizerWrapper.setStartPointStyle(values[0], values[1], values[2], values[3]);
+            break;
         }
-            // FILL PARAMETERS
+        // FILL PARAMETERS
         case FILLENABLE: {
             boolean enabled = Boolean.parseBoolean(value);
             polygonSymbolizerWrapper.setHasFill(enabled);
@@ -326,8 +338,8 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
             break;
         }
         case WKMGRAPHICSFILL: {
-        	polygonSymbolizerWrapper.clearGraphics();
-            
+            polygonSymbolizerWrapper.clearGraphics();
+
             String wkmname = values[0];
             String wkmwidth = values[1];
             String wkmcolor = values[2];
@@ -340,18 +352,20 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
         }
         case GRAPHICSPATHFILL: {
             try {
-                polygonSymbolizerWrapper.setFillExternalGraphicFillPath((String)values[0], Double.valueOf(values[1]));
+                polygonSymbolizerWrapper.setFillExternalGraphicFillPath((String) values[0],
+                        Double.valueOf(values[1]));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
             break;
         }
-            // LABEL PARAMETERS
+        // LABEL PARAMETERS
         case LABELENABLE: {
             boolean doEnable = Boolean.parseBoolean(value);
             if (doEnable) {
                 if (textSymbolizerWrapper == null) {
-                    TextSymbolizer textSymbolizer = Utilities.createDefaultTextSymbolizer(SLD.POLYGON);
+                    TextSymbolizer textSymbolizer = Utilities
+                            .createDefaultTextSymbolizer(SLD.POLYGON);
                     ruleWrapper.addSymbolizer(textSymbolizer, TextSymbolizerWrapper.class);
                     labelsParametersComposite.update(ruleWrapper);
                 }
@@ -436,6 +450,8 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            } else {
+                ruleWrapper.getRule().setFilter(null);
             }
             break;
         }
