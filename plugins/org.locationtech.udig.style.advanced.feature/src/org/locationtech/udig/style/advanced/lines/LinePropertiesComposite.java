@@ -52,13 +52,19 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
     private RuleWrapper ruleWrapper;
 
     private Composite simplePolygonComposite = null;
+
     private LinePropertiesEditor linePropertiesEditor;
+
     private Composite mainComposite;
+
     private StackLayout mainStackLayout;
 
     private String[] numericAttributesArrays;
+
     private String[] allAttributesArrays;
+
     private String[] stringattributesArrays;
+
     private String geometryProperty;
 
     private Composite parentComposite;
@@ -73,12 +79,13 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
 
     private FiltersComposite filtersComposite;
 
-    public LinePropertiesComposite( final LinePropertiesEditor polygonPropertiesEditor, Composite parent ) {
+    public LinePropertiesComposite(final LinePropertiesEditor polygonPropertiesEditor,
+            Composite parent) {
         this.linePropertiesEditor = polygonPropertiesEditor;
         this.parent = parent;
     }
 
-    public void setRule( RuleWrapper ruleWrapper ) {
+    public void setRule(RuleWrapper ruleWrapper) {
         this.ruleWrapper = ruleWrapper;
 
         if (mainComposite == null) {
@@ -109,7 +116,7 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
         allAttributesArrays = allAttributeNames.toArray(new String[0]);
         List<String> stringAttributeNames = linePropertiesEditor.getStringAttributeNames();
         stringattributesArrays = stringAttributeNames.toArray(new String[0]);
-        
+
         geometryProperty = linePropertiesEditor.getGeometryPropertyName().getLocalPart();
 
         parentComposite = new Composite(parent, SWT.NONE);
@@ -162,7 +169,8 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
         tabItem1.setControl(generalParametersInternalComposite);
 
         // BORDER GROUP
-        borderParametersComposite = new BoderParametersComposite(tabFolder, numericAttributesArrays, stringattributesArrays, geometryProperty);
+        borderParametersComposite = new BoderParametersComposite(tabFolder, numericAttributesArrays,
+                stringattributesArrays, geometryProperty);
         borderParametersComposite.init(ruleWrapper);
         borderParametersComposite.addListener(this);
         Composite borderParametersInternalComposite = borderParametersComposite.getComposite();
@@ -172,7 +180,8 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
         tabItem2.setControl(borderParametersInternalComposite);
 
         // Label GROUP
-        labelsParametersComposite = new LineLabelsParametersComposite(tabFolder, numericAttributesArrays, allAttributesArrays);
+        labelsParametersComposite = new LineLabelsParametersComposite(tabFolder,
+                numericAttributesArrays, allAttributesArrays);
         labelsParametersComposite.init(ruleWrapper);
         labelsParametersComposite.addListener(this);
         Composite labelParametersInternalComposite = labelsParametersComposite.getComposite();
@@ -193,7 +202,7 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
 
     }
 
-    public void modifyText( ModifyEvent e ) {
+    public void modifyText(ModifyEvent e) {
         // Object source = e.getSource();
         // if (source.equals(graphicsPathText)) {
         // try {
@@ -208,15 +217,16 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
         // linePropertiesEditor.refreshPreviewCanvasOnStyle();
     }
 
-    public void onStyleChanged( Object source, String[] values, boolean fromField, STYLEEVENTTYPE styleEventType ) {
+    public void onStyleChanged(Object source, String[] values, boolean fromField,
+            STYLEEVENTTYPE styleEventType) {
         String value = values[0];
 
-        LineSymbolizerWrapper lineSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
-                LineSymbolizerWrapper.class);
+        LineSymbolizerWrapper lineSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper()
+                .adapt(LineSymbolizerWrapper.class);
 
         TextSymbolizerWrapper textSymbolizerWrapper = ruleWrapper.getTextSymbolizersWrapper();
 
-        switch( styleEventType ) {
+        switch (styleEventType) {
         // GENERAL PARAMETERS
         case NAME:
             ruleWrapper.setName(value);
@@ -254,15 +264,15 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
             String size = values[2];
 
             try {
-            	if (url.length() == 0){
-            		//clear the graphics
-            		lineSymbolizerWrapper.clearGraphicStroke();
-            	}else{
-            		lineSymbolizerWrapper.setStrokeExternalGraphicStrokePath(url);
-            		Graphic graphicStroke = lineSymbolizerWrapper.getStrokeGraphicStroke();
-            		graphicStroke.setSize(Utilities.ff.literal(size));
-            		graphicStroke.setGap(Utilities.ff.literal(width));
-            	}
+                if (url.length() == 0) {
+                    // clear the graphics
+                    lineSymbolizerWrapper.clearGraphicStroke();
+                } else {
+                    lineSymbolizerWrapper.setStrokeExternalGraphicStrokePath(url);
+                    Graphic graphicStroke = lineSymbolizerWrapper.getStrokeGraphicStroke();
+                    graphicStroke.setSize(Utilities.ff.literal(size));
+                    graphicStroke.setGap(Utilities.ff.literal(width));
+                }
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -285,14 +295,14 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
             break;
         }
         case LINEEND: {
-        	lineSymbolizerWrapper.setEndPointStyle(values[0], values[1], values[2], values[3]);
-        	break;
+            lineSymbolizerWrapper.setEndPointStyle(values[0], values[1], values[2], values[3]);
+            break;
         }
         case LINESTART: {
-        	lineSymbolizerWrapper.setStartPointStyle(values[0], values[1], values[2], values[3]);
-        	break;
+            lineSymbolizerWrapper.setStartPointStyle(values[0], values[1], values[2], values[3]);
+            break;
         }
-            // LABEL PARAMETERS
+        // LABEL PARAMETERS
         case LABELENABLE: {
             boolean doEnable = Boolean.parseBoolean(value);
             if (doEnable) {
@@ -418,7 +428,7 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
                     e.printStackTrace();
                 }
             } else {
-            	ruleWrapper.getRule().setFilter(null);
+                ruleWrapper.getRule().setFilter(null);
             }
             break;
         }
