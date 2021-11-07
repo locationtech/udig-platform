@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.QualifiedName;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.swt.widgets.Display;
 
 /**
@@ -43,7 +43,7 @@ import org.eclipse.swt.widgets.Display;
  * Please consider implementing support for resolve( ImageDescriptor.class, null ) as it will allow
  * your IGeoResource to show up with a unique representation in the Catalog view.
  * </p>
- * 
+ *
  * @author David Zwiers, Refractions Research
  * @since 0.6
  */
@@ -60,7 +60,7 @@ public abstract class IGeoResource implements IResolve {
     /**
      * Blocking operation to resolve into the adaptee, if available.
      * <p>
-     * Required adaptions:
+     * Required adoptions:
      * <ul>
      * <li>GeoResource.class - this
      * <li>IGeoResourceInfo.class - getInfo( monitor ) ie about this handles contents
@@ -68,22 +68,22 @@ public abstract class IGeoResource implements IResolve {
      * </ul>
      * <p>
      * Example Use (no casting required!):
-     * 
+     *
      * <pre>
      * <code>
      * IGeoResourceInfo info = resolve(IGeoResourceInfo.class);
      * </code>
      * </pre>
-     * 
+     *
      * </p>
      * <p>
-     * Recommended adaptions:
+     * Recommended adoptions:
      * <ul>
      * <li>ImageDescriptor.class (for icon provided by external service)
-     * <li>List.class - members( monitor ) ie children of this georesource as in the wms layer case
+     * <li>List.class - members( monitor ) ie children of this GeoResource as in the WMS layer case
      * </ul>
      * </p>
-     * 
+     *
      * @param adaptee
      * @param monitor
      * @return instance of adaptee, or null if unavailable (IGeoResourceInfo and IService must be
@@ -92,7 +92,8 @@ public abstract class IGeoResource implements IResolve {
      * @see IService
      * @see IResolve#resolve(Class, IProgressMonitor)
      */
-    public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
+    @Override
+    public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor) throws IOException {
 
         if (monitor == null)
             monitor = new NullProgressMonitor();
@@ -109,9 +110,9 @@ public abstract class IGeoResource implements IResolve {
         if (adaptee.isAssignableFrom(IServiceInfo.class)) {
             try {
                 monitor.beginTask("service info", 100); //$NON-NLS-1$
-                IService service = service(new SubProgressMonitor(monitor, 40));
+                IService service = service(SubMonitor.convert(monitor, 40));
                 if (service != null) {
-                    IServiceInfo info = service.getInfo(new SubProgressMonitor(monitor, 60));
+                    IServiceInfo info = service.getInfo(SubMonitor.convert(monitor, 60));
                     return adaptee.cast(info);
                 }
             } finally {
@@ -131,27 +132,28 @@ public abstract class IGeoResource implements IResolve {
         }
         return null; // no adapter found (check to see if ResolveAdapter is registered?)
     }
+
     /**
-     * Harded coded to capture the IGeoResource contract.
+     * Hard coded to capture the IGeoResource contract.
      * <p>
      * That is we *must* resolve the following:
      * <p>
-     * Required adaptions:
+     * Required adoptions:
      * <ul>
      * <li>GeoResource.class - this
      * <li>IGeoResourceInfo.class - getInfo (ie about this handles contents)
      * <li>IService.class - service (ie that is responsible for this GeoResource)
      * </ul>
      * <p>
-     * Recommendated adaptions:
+     * Recommended adoptions:
      * <ul>
      * <li>ImageDescriptor.class (for icon provided by external service)
-     * <li>List.class - members (ie children of this georesource as in the wms layer case)
+     * <li>List.class - members (ie children of this GeoResource as in the WMS layer case)
      * </ul>
      * <p>
      * Here is an implementation example (for something that can adapt to ImageDescriptor and
      * FeatureSource):
-     * 
+     *
      * <pre>
      * <code>
      * public &lt;T&gt; boolean canResolve( Class&lt;T&gt; adaptee ) {
@@ -162,7 +164,8 @@ public abstract class IGeoResource implements IResolve {
      * </code>
      * </pre>
      */
-    public <T> boolean canResolve( Class<T> adaptee ) {
+    @Override
+    public <T> boolean canResolve(Class<T> adaptee) {
         return adaptee != null && (adaptee.isAssignableFrom(IGeoResource.class) || // this
                 adaptee.isAssignableFrom(IService.class) || // service( monitor )
                 adaptee.isAssignableFrom(getClass()) || adaptee.isAssignableFrom(IResolve.class) || // parent
@@ -172,11 +175,11 @@ public abstract class IGeoResource implements IResolve {
     /**
      * Delegate to implementing classes to create and return the appropriate IGeoResourceInfo
      * implementation.
-     * 
+     *
      * @return IGeoResourceInfo resolve(IGeoResourceInfo.class,IProgressMonitor monitor);
      * @throws IOException
      */
-    protected abstract IGeoResourceInfo createInfo( IProgressMonitor monitor ) throws IOException;
+    protected abstract IGeoResourceInfo createInfo(IProgressMonitor monitor) throws IOException;
 
     /**
      * Blocking operation to describe this service.
@@ -185,6 +188,7 @@ public abstract class IGeoResource implements IResolve {
      * LabelDecorators to acquire title, and icon.
      * </p>
      * Example implementation:
+     *
      * <pre>
      * <code>    @Override
      *     public CSVGeoResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {
@@ -201,36 +205,27 @@ public abstract class IGeoResource implements IResolve {
      * *super.getInfo* as it is providing caching for you and will insure that createInfo is only
      * called once.
      * </p>
-     * 
+     *
      * @return IGeoResourceInfo resolve(IGeoResourceInfo.class,IProgressMonitor monitor);
      * @see IGeoResource#resolve(Class, IProgressMonitor)
      * @see IGeoResource#createInfo(IProgressMonitor)
      * @see IGeoResource#getTitle()
      */
-    public IGeoResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {
+    public IGeoResourceInfo getInfo(IProgressMonitor monitor) throws IOException {
         if (info == null) { // lazy creation
             synchronized (this) { // support concurrent access
                 if (info == null) {
                     if (Display.getCurrent() != null) {
                         // This is bad and has a chance of hanging the UI
-                        if( Platform.inDevelopmentMode()){
-                            throw new IllegalStateException("Lookup of getInfo not available from the display thread"); //$NON-NLS-1$
+                        if (Platform.inDevelopmentMode()) {
+                            throw new IllegalStateException(
+                                    "Lookup of getInfo not available from the display thread"); //$NON-NLS-1$
                         }
                     }
                     info = createInfo(monitor);
                     if (info == null) {
                         // could not connect or INFO_UNAVAILABLE
                         info = INFO_UNAVAILABLE;
-                    } else {
-                        // could issue a catalog event indicating new information is available
-                        // this delta describes what has changed
-                        /*
-                        IResolveDelta delta = new ResolveDelta(this, IResolveDelta.Kind.CHANGED);
-                        
-                        // fire the change
-                        CatalogImpl localCatalog = (CatalogImpl) CatalogPlugin.getDefault().getLocalCatalog();
-                        localCatalog.fire(new ResolveChangeEvent(this, IResolveChangeEvent.Type.POST_CHANGE, delta));
-                        */
                     }
                 }
             }
@@ -240,17 +235,17 @@ public abstract class IGeoResource implements IResolve {
         }
         return info;
     }
-    
+
     /**
      * Map of this resource's persistent properties, may be empty.
-     * 
+     *
      * @return The map containing the persistent properties where the key is the
      *         {@link QualifiedName} of the property and the value is the {@link String} value of
      *         the property.
      */
     public Map<String, Serializable> getPersistentProperties() {
-    	ID id = this.getID();
-        Map<String, Serializable> properties = service.getPersistentProperties( id );
+        ID id = this.getID();
+        Map<String, Serializable> properties = service.getPersistentProperties(id);
         return properties;
     }
 
@@ -258,7 +253,7 @@ public abstract class IGeoResource implements IResolve {
      * Returns parent for this GeoResource.
      * <p>
      * Most implementations will use the following code example:
-     * 
+     *
      * <pre>
      * <code>
      * public IService parent( IProgressMonitor monitor ) throws IOException {
@@ -266,18 +261,19 @@ public abstract class IGeoResource implements IResolve {
      * }
      * </code>
      * </pre>
-     * 
-     * This code example preserves backwords compatibility with uDig 1.0 via type narrowing IResolve
+     *
+     * This code example preserves backwards compatibility with uDig 1.0 via type narrowing IResolve
      * to IService.
      * <p>
      * You will need to provide a different implementation when working with nested content (like
      * database schema or wms layers).
-     * 
+     *
      * @return parent IResolve for this GeoResource
      * @see IGeoResource#resolve(Class, IProgressMonitor)
      */
     // TODO public abstract IResolve parent( IProgressMonitor monitor ) throws IOException;
-    public IResolve parent( IProgressMonitor monitor ) throws IOException {
+    @Override
+    public IResolve parent(IProgressMonitor monitor) throws IOException {
         return service(monitor);
     }
 
@@ -286,22 +282,24 @@ public abstract class IGeoResource implements IResolve {
      * <p>
      * The provided implementation indicates that this IGeoResource is a leaf.
      * </p>
-     * 
+     *
      * @return Collections.emptyList();
      * @see org.locationtech.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
      */
-    public List<IResolve> members( IProgressMonitor monitor ) {
+    @Override
+    public List<IResolve> members(IProgressMonitor monitor) {
         return Collections.emptyList(); // type safe EMPTY_LIST
     }
 
     /**
      * This should represent the identifier
-     * 
+     *
      * @see Object#equals(java.lang.Object)
      * @param arg0
      * @return
      */
-    public boolean equals( Object other ) {
+    @Override
+    public boolean equals(Object other) {
         if (other != null && other instanceof IGeoResource) {
             IGeoResource resource = (IGeoResource) other;
             if (getID() != null)
@@ -312,10 +310,11 @@ public abstract class IGeoResource implements IResolve {
 
     /**
      * This should represent the identified
-     * 
+     *
      * @see Object#hashCode()
      * @return
      */
+    @Override
     public int hashCode() {
         int value = 31;
 
@@ -326,32 +325,18 @@ public abstract class IGeoResource implements IResolve {
     }
 
     /**
-     * Non blocking label used by LabelProvider. public static final String
-     * getGenericLabel(IGeoResource resource){ assert resource.getIdentifier() != null; return
-     * resource==null ||
-     * resource.getIdentifier()==null?"Resource":resource.getIdentifier().toString(); }
-     */
-    /**
-     * Non blocking icon used by LabelProvider. public static final ImageDescriptor
-     * getGenericIcon(IGeoResource resource){ if(resource !=null){ assert resource.getIdentifier()
-     * != null; if(resource.canResolve(FeatureSource.class)){ // default feature return
-     * Images.getDescriptor(ISharedImages.FEATURE_OBJ); }
-     * if(resource.canResolve(GridCoverage.class)){ // default raster return
-     * Images.getDescriptor(ISharedImages.GRID_OBJ); } } return
-     * Images.getDescriptor(ISharedImages.RESOURCE_OBJ); }
-     */
-    /**
      * Indicate class and id.
-     * 
+     *
      * @return string representing this IResolve
      */
+    @Override
     public String toString() {
         StringBuffer buf = new StringBuffer();
         String classname = getClass().getSimpleName();
         buf.append(classname);
         buf.append("("); //$NON-NLS-1$
         ID ref = getID();
-        buf.append( ref.labelResource() );
+        buf.append(ref.labelResource());
         buf.append(")"); //$NON-NLS-1$
         return buf.toString();
     }
@@ -360,47 +345,53 @@ public abstract class IGeoResource implements IResolve {
      * The identifier of a IGeoResource is identified by parent().getIdentifer()#ResourceID
      * <p>
      * For example: A WMS (IService) with an id of http://www.something.com/wms?Service=WMS would
-     * have georesources with ids similar to: http://www.something.com/wms?Service=WMS#layer1
-     * 
+     * have GeoResources with IDs similar to: http://www.something.com/wms?Service=WMS#layer1
+     *
      * @see IResolve#getIdentifier()
      */
+    @Override
     public abstract URL getIdentifier();
 
+    @Override
     public ID getID() {
         return new ID(getIdentifier());
     }
 
     /**
-     * hide user password from the layer ID if it exists and returns
-     * ID as String.
-     * 
+     * hide user password from the layer ID if it exists and returns ID as String.
+     *
      * @param layer
      * @return
      */
     public String getDisplayID() {
         String userInfo = getIdentifier().getUserInfo();
         if (userInfo != null) {
-            userInfo = userInfo.substring(0, userInfo.indexOf(":")+1);
-            userInfo = userInfo.concat("******");
-            return new ID(getIdentifier().toString().replace(getIdentifier().getUserInfo(), userInfo), null).toString();
+            userInfo = userInfo.substring(0, userInfo.indexOf(":") + 1); //$NON-NLS-1$
+            userInfo = userInfo.concat("******"); //$NON-NLS-1$
+            return new ID(
+                    getIdentifier().toString().replace(getIdentifier().getUserInfo(), userInfo),
+                    null).toString();
         }
         return getID().toString();
     }
 
     /**
      * Disposes of any resources or listeners required. Default implementation does nothing.
-     * 
+     *
      * @param monitor monitor to show progress
      */
-    public void dispose( IProgressMonitor monitor ) {
+    @Override
+    public void dispose(IProgressMonitor monitor) {
         // default impl does nothing
     }
+
     /**
      * Retrieves the title from the IService cache or from the GeoResourceInfo object if they exist.
      * No objects are created and null is returned if there is no title readily available.
-     * 
+     *
      * @return title or null if none is readily available
      */
+    @Override
     public String getTitle() {
         String title = null;
         if (info != null) {
@@ -420,8 +411,8 @@ public abstract class IGeoResource implements IResolve {
         }
         return title;
     }
-    
-    public IService service( IProgressMonitor monitor ) throws IOException {
+
+    public IService service(IProgressMonitor monitor) throws IOException {
         return service;
     }
 }
