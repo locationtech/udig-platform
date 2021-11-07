@@ -35,7 +35,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -126,7 +126,7 @@ public class CatalogPlugin extends Plugin {
         resolveManager = new ResolveManager2();
 
         // ensure a preference store is around so we can save to it in the shutdown hook
-        preferenceStore = new ScopedPreferenceStore(InstanceScope.INSTANCE,
+        preferenceStore = new ScopedPreferenceStore(new InstanceScope(),
                 getBundle().getSymbolicName());
 
         try {
@@ -164,13 +164,13 @@ public class CatalogPlugin extends Plugin {
                     boolean forced) throws Exception {
                 ISearch[] toDispose = getCatalogs();
                 monitor.beginTask(Messages.CatalogPlugin_SavingCatalog, 4 + (4 * toDispose.length));
-                SubMonitor subMonitor = SubMonitor.convert(monitor, 4);
-                storeToPreferences(subMonitor);
-                subMonitor.done();
+                SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, 4);
+                storeToPreferences(subProgressMonitor);
+                subProgressMonitor.done();
                 for (ISearch catalog : toDispose) {
-                    subMonitor = SubMonitor.convert(monitor, 4);
-                    catalog.dispose(subMonitor);
-                    subMonitor.done();
+                    subProgressMonitor = new SubProgressMonitor(monitor, 4);
+                    catalog.dispose(subProgressMonitor);
+                    subProgressMonitor.done();
                 }
                 return true;
             }
@@ -200,7 +200,8 @@ public class CatalogPlugin extends Plugin {
     private void copy(File file, File backup) throws IOException {
         FileInputStream inputStream = new FileInputStream(file);
         FileOutputStream outputStream = new FileOutputStream(backup);
-        FileChannel in = inputStream.getChannel(), out = outputStream.getChannel();
+        FileChannel in = inputStream.getChannel(),
+                out = outputStream.getChannel();
         final int BSIZE = 1024;
         ByteBuffer buffer = ByteBuffer.allocate(BSIZE);
         while (in.read(buffer) != -1) {
@@ -257,14 +258,14 @@ public class CatalogPlugin extends Plugin {
         final List<ISearch> availableCatalogs = new LinkedList<>();
         ExtensionPointUtil.process(getDefault(), EXTENSION_POINT_ICATALOG,
                 new ExtensionPointProcessor() {
-                    @Override
-                    public void process(IExtension extension, IConfigurationElement element)
-                            throws Exception {
-                        ISearch externalCatalog = (ISearch) element
-                                .createExecutableExtension("class"); //$NON-NLS-1$
-                        availableCatalogs.add(externalCatalog); // $NON-NLS-1$
-                    }
-                });
+            @Override
+            public void process(IExtension extension, IConfigurationElement element)
+                    throws Exception {
+                ISearch externalCatalog = (ISearch) element
+                        .createExecutableExtension("class"); //$NON-NLS-1$
+                availableCatalogs.add(externalCatalog); // $NON-NLS-1$
+            }
+        });
         return availableCatalogs;
     }
 
@@ -336,7 +337,7 @@ public class CatalogPlugin extends Plugin {
         try {
             if (resourceBundle == null)
                 resourceBundle = ResourceBundle
-                        .getBundle("org.locationtech.udig.catalog.CatalogPluginResources"); //$NON-NLS-1$
+                .getBundle("org.locationtech.udig.catalog.CatalogPluginResources"); //$NON-NLS-1$
         } catch (MissingResourceException x) {
             resourceBundle = null;
         }
@@ -394,7 +395,7 @@ public class CatalogPlugin extends Plugin {
     /**
      * Service factory used to connect to new services.
      * <p>
-     * Services hold on to live connections; please take care to call dispose() or to add the
+     * Serivces hold on to live connections; please take care to call dispose() or to add the
      * service to the local repository so that the service is disposed when the application shuts
      * down.
      *
@@ -410,7 +411,8 @@ public class CatalogPlugin extends Plugin {
      * @return Registered {@link ServiceExtension}
      */
     public List<ServiceExtension> getServiceExtensions() {
-        List<ServiceExtension> list = new ArrayList<>(getRegisteredExtensions().values());
+        List<ServiceExtension> list = new ArrayList<>(
+                getRegisteredExtensions().values());
         return Collections.unmodifiableList(list);
     }
 
@@ -453,22 +455,22 @@ public class CatalogPlugin extends Plugin {
                 registered = new HashMap<>();
                 ExtensionPointUtil.process(CatalogPlugin.getDefault(),
                         ServiceExtension.EXTENSION_ID, new ExtensionPointProcessor() { // $NON-NLS-1$
-                            @Override
-                            public void process(IExtension extension, IConfigurationElement element)
-                                    throws Exception {
-                                // extentionIdentifier used to report any problems;
-                                // in the event of failure we want to be able to report
-                                // who had the problem
-                                // String extensionId = extension.getUniqueIdentifier();
-                                String id = element.getAttribute("id"); //$NON-NLS-1$
-                                ServiceExtension se = (ServiceExtension) element
-                                        .createExecutableExtension("class"); //$NON-NLS-1$
-                                if (id == null || id.length() == 0) {
-                                    id = se.getClass().getSimpleName();
-                                }
-                                registered.put(id, se);
-                            }
-                        });
+                    @Override
+                    public void process(IExtension extension, IConfigurationElement element)
+                            throws Exception {
+                        // extentionIdentifier used to report any problems;
+                        // in the event of failure we want to be able to report
+                        // who had the problem
+                        // String extensionId = extension.getUniqueIdentifier();
+                        String id = element.getAttribute("id"); //$NON-NLS-1$
+                        ServiceExtension se = (ServiceExtension) element
+                                .createExecutableExtension("class"); //$NON-NLS-1$
+                        if (id == null || id.length() == 0) {
+                            id = se.getClass().getSimpleName();
+                        }
+                        registered.put(id, se);
+                    }
+                });
             }
             return registered;
         } finally {
@@ -530,7 +532,7 @@ public class CatalogPlugin extends Plugin {
     /**
      * Messages that only engage if getDefault().isDebugging()
      * <p>
-     * It is much preferred to do this:
+     * It is much prefered to do this:
      *
      * <pre>
      * <code> private static final String RENDERING =

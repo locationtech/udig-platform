@@ -1,7 +1,7 @@
-/**
- * uDig - User Friendly Desktop Internet GIS client
- * http://udig.refractions.net
- * (C) 2004, Refractions Research Inc.
+/*
+ *    uDig - User Friendly Desktop Internet GIS client
+ *    http://udig.refractions.net
+ *    (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,7 +18,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 
 /**
  * Represents a handle to a process.
@@ -26,7 +26,7 @@ import org.eclipse.core.runtime.SubMonitor;
  * The resource is not guaranteed to exist, nor do we guarantee that we can connect with the
  * resource. Some/All portions of this handle may be loaded as required. This resource handle may
  * also be the result a metadata service query.
- *
+ * 
  * <h2>Implementing an IService</h2>
  * <p>
  * Implement the abstract methods and you are good to go:
@@ -36,12 +36,11 @@ import org.eclipse.core.runtime.SubMonitor;
  * <li>getIdentifier - unique identifier used to track the service in the catalog
  * </ul>
  * <p>
- * Please consider implementing support for resolve( ImageDescriptor.class, null ) as it will allow
- * your IProcess to show up with a unique representation in the Catalog view.
- *
+ * Please consider implementing support for resolve( ImageDescriptor.class, null ) as it
+ * will allow your IProcess to show up with a unique representation in the Catalog view.
+ * 
  * Based on the IGeoResource abstract class.
  * </p>
- *
  * @author gdavis, Refractions Research
  */
 public abstract class IProcess implements IResolve {
@@ -51,7 +50,7 @@ public abstract class IProcess implements IResolve {
     /**
      * Blocking operation to resolve into the adaptee, if available.
      * <p>
-     * Required adoptions:
+     * Required adaptions:
      * <ul>
      * <li>Process.class - this
      * <li>IProcessInfo.class - getInfo( monitor ) ie about this handle's contents
@@ -59,22 +58,20 @@ public abstract class IProcess implements IResolve {
      * </ul>
      * <p>
      * Example Use (no casting required!):
-     *
-     * <pre>
-     * <code>
+     * 
+     * <pre><code>
      * IProcessInfo info = resolve(IProcessInfo.class);
-     * </code>
-     * </pre>
-     *
+     * </code></pre>
+     * 
      * </p>
      * <p>
-     * Recommended adoptions:
+     * Recommendated adaptions:
      * <ul>
      * <li>ImageDescriptor.class (for icon provided by external service)
      * <li>List.class - members( monitor ) ie children of this process (if any exist)
      * </ul>
      * </p>
-     *
+     * 
      * @param adaptee
      * @param monitor
      * @return instance of adaptee, or null if unavailable (IProcessInfo and IService must be
@@ -83,9 +80,8 @@ public abstract class IProcess implements IResolve {
      * @see IService
      * @see IResolve#resolve(Class, IProgressMonitor)
      */
-    @Override
-    public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor) throws IOException {
-
+    public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
+    	
         if (monitor == null)
             monitor = new NullProgressMonitor();
 
@@ -101,10 +97,11 @@ public abstract class IProcess implements IResolve {
         if (adaptee.isAssignableFrom(IServiceInfo.class)) {
             try {
                 monitor.beginTask("service info", 100); //$NON-NLS-1$
-                IService service = service(SubMonitor.convert(monitor, 40));
-                IServiceInfo info = service.createInfo(SubMonitor.convert(monitor, 60));
-                return adaptee.cast(info);
-            } finally {
+                IService service = service( new SubProgressMonitor(monitor,40));
+                IServiceInfo info = service.createInfo( new SubProgressMonitor(monitor,60) );
+                return adaptee.cast( info );
+            }
+            finally {
                 monitor.done();
             }
         }
@@ -121,30 +118,29 @@ public abstract class IProcess implements IResolve {
         }
         return null; // no adapter found (check to see if ResolveAdapter is registered?)
     }
-
     /**
-     * Hard coded to capture the IProcess contract.
+     * Hardcoded to capture the IProcess contract.
      * <p>
      * That is we *must* resolve the following:
      * <p>
-     * Required adoptions:
+     * Required adaptions:
      * <ul>
      * <li>Process.class - this
      * <li>IProcessInfo.class - getInfo (ie about this handle's contents)
      * <li>IService.class - service (ie that is responsible for this Process)
      * </ul>
      * <p>
-     * Recommended adoptions:
+     * Recommendated adaptions:
      * <ul>
      * <li>ImageDescriptor.class (for icon provided by external service)
      * <li>List.class - members (ie children of this process (if any exist))
      * </ul>
      */
-    @Override
-    public <T> boolean canResolve(Class<T> adaptee) {
+    public <T> boolean canResolve( Class<T> adaptee ) {
         return adaptee != null && (adaptee.isAssignableFrom(IProcess.class) || // this
                 adaptee.isAssignableFrom(IService.class) || // service( monitor )
-                adaptee.isAssignableFrom(getClass()) || adaptee.isAssignableFrom(IResolve.class) || // parent
+                adaptee.isAssignableFrom(getClass()) || 
+                adaptee.isAssignableFrom(IResolve.class) || // parent
                 CatalogPlugin.getDefault().getResolveManager().canResolve(this, adaptee));
     }
 
@@ -153,74 +149,68 @@ public abstract class IProcess implements IResolve {
      * <p>
      * As an example this method is used by LabelDecorators to acquire title, and icon.
      * </p>
-     *
+     * 
      * @return IProcessInfo resolve(IProcessInfo.class,IProgressMonitor monitor);
      * @see IProcess#resolve(Class, IProgressMonitor)
      */
-    public abstract IProcessInfo getInfo(IProgressMonitor monitor) throws IOException;
+    public abstract IProcessInfo getInfo( IProgressMonitor monitor ) throws IOException;
 
     /**
      * Returns the IService for this Process.
      * <p>
-     * Method is useful in dealing with deeply nested Process children (where parent may not always
-     * be an IService).
-     *
+     * Method is useful in dealing with deeply nested Process children (where parent may not
+     * always be an IService).
+     * 
      * @return IService for this Process
      * @see IProcess#resolve(Class, IProgressMonitor)
      */
-    public abstract IService service(IProgressMonitor monitor) throws IOException;
+    public abstract IService service( IProgressMonitor monitor ) throws IOException;
 
     /**
      * Returns parent for this Process.
      * <p>
      * Most implementations will use the following code example:
-     *
-     * <pre>
-     * <code>
+     * 
+     * <pre><code>
      * public IService parent( IProgressMonitor monitor ) throws IOException {
      *     return service(monitor);
      * }
-     * </code>
-     * </pre>
-     *
+     * </code></pre>
+     * 
      * This code example preserves backwards compatibility with uDig 1.0 via type narrowing IResolve
      * to IService.
      * <p>
      * You will need to provide a different implementation when working with nested content (like
      * database schema).
-     *
+     * 
      * @return parent IResolve for this Process
      * @see IProcess#resolve(Class, IProgressMonitor)
      */
-    // TODO public abstract IResolve parent( IProgressMonitor monitor ) throws IOException;
-    @Override
-    public IResolve parent(IProgressMonitor monitor) throws IOException {
+//  TODO public abstract IResolve parent( IProgressMonitor monitor ) throws IOException;     
+    public IResolve parent( IProgressMonitor monitor ) throws IOException {
         return service(monitor);
     }
-
+    
     /**
      * List of children, or EMPTY_LIST for a leaf.
      * <p>
      * The provided implementation indicates that this Process is a leaf.
      * </p>
-     *
      * @return Collections.emptyList();
      * @see org.locationtech.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
      */
-    @Override
-    public List<IResolve> members(IProgressMonitor monitor) {
+    public List<IResolve> members( IProgressMonitor monitor ) {        
         return Collections.emptyList(); // type safe EMPTY_LIST
     }
 
     /**
      * This should represent the identifier
-     *
+     * 
      * @see Object#equals(java.lang.Object)
      * @param arg0
      * @return
      */
-    @Override
-    public boolean equals(Object arg0) {
+    public boolean equals( Object arg0 ) {
         if (arg0 != null && arg0 instanceof IProcess) {
             IProcess resource = (IProcess) arg0;
             if (getIdentifier() != null && resource.getIdentifier() != null)
@@ -228,28 +218,25 @@ public abstract class IProcess implements IResolve {
         }
         return false;
     }
-
     private String getStringURL() {
-        if (stringURL == null) {
+        if( stringURL==null ){
             synchronized (this) {
-                if (stringURL == null) {
-                    stringURL = URLUtils.urlToString(getIdentifier(), false);
+                if( stringURL==null ){
+                    stringURL=URLUtils.urlToString(getIdentifier(), false);
                 }
             }
         }
         return stringURL;
     }
-
     /**
      * This should represent the identified
-     *
+     * 
      * @see Object#hashCode()
      * @return
      */
-    @Override
     public int hashCode() {
         int value = 31;
-
+        
         if (getIdentifier() != null)
             value += 31 + URLUtils.urlToString(getIdentifier(), false).hashCode();
         value += 31 + getClass().getName().hashCode();
@@ -257,11 +244,25 @@ public abstract class IProcess implements IResolve {
     }
 
     /**
+     * Non blocking label used by LabelProvider. public static final String
+     * getGenericLabel(IGeoResource resource){ assert resource.getIdentifier() != null; return
+     * resource==null ||
+     * resource.getIdentifier()==null?"Resource":resource.getIdentifier().toString(); }
+     */
+    /**
+     * Non blocking icon used by LabelProvider. public static final ImageDescriptor
+     * getGenericIcon(IGeoResource resource){ if(resource !=null){ assert resource.getIdentifier() !=
+     * null; if(resource.canResolve(FeatureSource.class)){ // default feature return
+     * Images.getDescriptor(ISharedImages.FEATURE_OBJ); }
+     * if(resource.canResolve(GridCoverage.class)){ // default raster return
+     * Images.getDescriptor(ISharedImages.GRID_OBJ); } } return
+     * Images.getDescriptor(ISharedImages.RESOURCE_OBJ); }
+     */
+    /**
      * Indicate class and id.
-     *
+     * 
      * @return string representing this IResolve
      */
-    @Override
     public String toString() {
         StringBuffer buf = new StringBuffer();
         String classname = getClass().getName();
@@ -277,26 +278,22 @@ public abstract class IProcess implements IResolve {
      * The identifier of a IProcess is identified by parent().getIdentifer()#ResourceID
      * <p>
      * For example: A WPS (IService) with an id of http://www.something.com/wps?Service=WPS would
-     * have processes with IDs similar to: http://www.something.com/wps?Service=WPS#process1
-     * </p>
-     *
+     * have processes with ids similar to: http://www.something.com/wps?Service=WPS#process1
+     * 
      * @see IResolve#getIdentifier()
      */
-    @Override
     public abstract URL getIdentifier();
 
-    @Override
     public ID getID() {
-        return new ID(getIdentifier());
+        return new ID( getIdentifier() );
     }
-
+    
     /**
      * Disposes of any resources or listeners required. Default implementation does nothing.
-     *
+     * 
      * @param monitor monitor to show progress
      */
-    @Override
-    public void dispose(IProgressMonitor monitor) {
+    public void dispose( IProgressMonitor monitor ) {
         // default impl does nothing
     }
 }

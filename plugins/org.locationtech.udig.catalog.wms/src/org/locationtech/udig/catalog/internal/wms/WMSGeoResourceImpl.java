@@ -26,7 +26,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -145,11 +145,11 @@ public class WMSGeoResourceImpl extends IGeoResource {
         if (monitor == null)
             monitor = new NullProgressMonitor();
 
-        WMSServiceImpl wmsServer = service(SubMonitor.convert(monitor, 50));
+        WMSServiceImpl wmsServer = service(new SubProgressMonitor(monitor, 50));
 
         wmsServer.rLock.lock();
         try {
-            return new WMSResourceInfo(SubMonitor.convert(monitor, 50));
+            return new WMSResourceInfo(new SubProgressMonitor(monitor, 50));
         } finally {
             wmsServer.rLock.unlock();
         }

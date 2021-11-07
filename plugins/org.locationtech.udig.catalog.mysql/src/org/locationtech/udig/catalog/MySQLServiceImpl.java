@@ -22,22 +22,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.data.mysql.MySQLDataStoreFactory;
-import org.geotools.jdbc.JDBCDataStore;
+import org.locationtech.udig.catalog.IResolve.Status;
 import org.locationtech.udig.catalog.internal.CatalogImpl;
 import org.locationtech.udig.catalog.internal.ResolveChangeEvent;
 import org.locationtech.udig.catalog.internal.ResolveDelta;
 import org.locationtech.udig.catalog.internal.mysql.MySQLPlugin;
+import org.locationtech.udig.ui.ErrorManager;
 import org.locationtech.udig.ui.UDIGDisplaySafeLock;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
+import org.geotools.data.mysql.MySQLDataStoreFactory;
+import org.geotools.jdbc.JDBCDataStore;
 
 /**
  * Provides an ISerivce so that MySQL can show up in service lists
  * <p>
  * This code mainly copies the PostgisServiceImpl
  * </p>
- *
+ * 
  * @author David Zwiers, Refractions Research
  * @author Harry Bullen, Intelligent Automation
  * @since 1.1.0
@@ -45,42 +49,31 @@ import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 public class MySQLServiceImpl extends IService {
 
     private URL url = null;
-
     private Map<String, Serializable> params = null;
-
     protected Lock rLock = new UDIGDisplaySafeLock();
 
     private volatile List<MySQLGeoResource> members = null;
-
     private Throwable msg = null;
-
     private volatile JDBCDataStore ds = null;
-
     private Lock dsInstantiationLock = new UDIGDisplaySafeLock();
 
     /**
      * Construct <code>MySQLServiceImpl</code>.
-     *
+     * 
      * @param arg1
      * @param arg2
      */
-    public MySQLServiceImpl(URL arg1, Map<String, Serializable> arg2) {
+    public MySQLServiceImpl( URL arg1, Map<String, Serializable> arg2 ) {
         url = arg1;
         params = arg2;
     }
 
-    /**
-     * Required adaptations:
-     * <ul>
-     * <li>IServiceInfo.class
-     * <li>List.class <IGeoResource>
-     * </ul>
-     *
+    /*
+     * Required adaptations: <ul> <li>IServiceInfo.class <li>List.class <IGeoResource> </ul>
      * @see org.locationtech.udig.catalog.IService#resolve(java.lang.Class,
-     *      org.eclipse.core.runtime.IProgressMonitor)
+     * org.eclipse.core.runtime.IProgressMonitor)
      */
-    @Override
-    public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor) throws IOException {
+    public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
         if (monitor == null)
             monitor = new NullProgressMonitor();
 
@@ -89,47 +82,48 @@ public class MySQLServiceImpl extends IService {
         }
         if (adaptee.isAssignableFrom(JDBCDataStore.class))
             return adaptee.cast(getDS());
-
+        /*
+         * if (adaptee.isAssignab6leFrom(Connection.class)){ Connection connection; try { connection
+         * = getDS().getConnectionPool().getConnection(); } catch (SQLException e) { throw
+         * (IOException) new IOException(e.getLocalizedMessage()).initCause(e); } return
+         * adaptee.cast(connection); }
+         */
         return super.resolve(adaptee, monitor);
     }
-
-    /**
+    /*
      * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
-    @Override
-    public <T> boolean canResolve(Class<T> adaptee) {
+    public <T> boolean canResolve( Class<T> adaptee ) {
         if (adaptee == null)
             return false;
         return adaptee.isAssignableFrom(JDBCDataStore.class)
                 || adaptee.isAssignableFrom(Connection.class) || super.canResolve(adaptee);
     }
 
-    @Override
-    public void dispose(IProgressMonitor monitor) {
+    public void dispose( IProgressMonitor monitor ) {
         super.dispose(monitor);
-        if (ds != null) {
+        if( ds != null ){
             ds.dispose();
         }
-        if (members != null) {
+        if( members != null ){
             members = null;
         }
     }
 
-    /**
+    /*
      * @see org.locationtech.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
      */
-    @Override
-    public List<MySQLGeoResource> resources(IProgressMonitor monitor) throws IOException {
+    public List<MySQLGeoResource> resources( IProgressMonitor monitor ) throws IOException {
 
         JDBCDataStore ds = getDS();
         rLock.lock();
         try {
             if (members == null) {
-                members = new LinkedList<>();
+                members = new LinkedList<MySQLGeoResource>();
                 if (ds.getDataSource() != null) {
                     String[] typenames = ds.getTypeNames();
                     if (typenames != null) {
-                        for (int i = 0; i < typenames.length; i++) {
+                        for( int i = 0; i < typenames.length; i++ ) {
                             members.add(new MySQLGeoResource(this, typenames[i]));
                         }
                     }
@@ -140,17 +134,14 @@ public class MySQLServiceImpl extends IService {
         }
         return members;
     }
-
     @Override
-    public IServiceMySQLInfo getInfo(IProgressMonitor monitor) throws IOException {
+    public IServiceMySQLInfo getInfo( IProgressMonitor monitor ) throws IOException {
         return (IServiceMySQLInfo) super.getInfo(monitor);
     }
-
-    /**
+    /*
      * @see org.locationtech.udig.catalog.IService#getInfo(org.eclipse.core.runtime.IProgressMonitor)
      */
-    @Override
-    protected IServiceMySQLInfo createInfo(IProgressMonitor monitor) throws IOException {
+    protected IServiceMySQLInfo createInfo( IProgressMonitor monitor ) throws IOException {
         JDBCDataStore dataStore = getDS(); // load DataStore
         if (dataStore == null) {
             return null; // could not connect to provide info
@@ -162,15 +153,12 @@ public class MySQLServiceImpl extends IService {
             rLock.unlock();
         }
     }
-
-    /**
+    /*
      * @see org.locationtech.udig.catalog.IService#getConnectionParams()
      */
-    @Override
     public Map<String, Serializable> getConnectionParams() {
         return params;
     }
-
     JDBCDataStore getDS() throws IOException {
         boolean changed = false;
         dsInstantiationLock.lock();
@@ -192,45 +180,40 @@ public class MySQLServiceImpl extends IService {
         }
         if (changed) {
             IResolveDelta delta = new ResolveDelta(this, IResolveDelta.Kind.CHANGED);
-            ((CatalogImpl) CatalogPlugin.getDefault().getLocalCatalog()).fire(
-                    new ResolveChangeEvent(this, IResolveChangeEvent.Type.POST_CHANGE, delta));
+            ((CatalogImpl) CatalogPlugin.getDefault().getLocalCatalog())
+                    .fire(new ResolveChangeEvent(this, IResolveChangeEvent.Type.POST_CHANGE, delta));
         }
         if (ds != null) {
             MySQLPlugin.addDataStore(ds);
         }
         return ds;
     }
-
-    /**
+    /*
      * @see org.locationtech.udig.catalog.IResolve#getStatus()
      */
-    @Override
     public Status getStatus() {
-        if (ds == null) {
+        if( ds == null ){
             return super.getStatus();
         }
         return Status.CONNECTED;
     }
-
-    /**
+    /*
      * @see org.locationtech.udig.catalog.IResolve#getMessage()
      */
-    @Override
     public Throwable getMessage() {
         return msg;
     }
-
-    /**
+    /*
      * @see org.locationtech.udig.catalog.IResolve#getIdentifier()
      */
-    @Override
     public URL getIdentifier() {
         return url;
     }
 
+    
     private class IServiceMySQLInfo extends IServiceInfo {
 
-        IServiceMySQLInfo(JDBCDataStore resource) {
+        IServiceMySQLInfo( JDBCDataStore resource ) {
             super();
             String[] tns = null;
             try {
@@ -251,12 +234,10 @@ public class MySQLServiceImpl extends IService {
             }
         }
 
-        @Override
         public String getDescription() {
             return getIdentifier().toString();
         }
 
-        @Override
         public URI getSource() {
             try {
                 return getIdentifier().toURI();
@@ -266,7 +247,6 @@ public class MySQLServiceImpl extends IService {
             }
         }
 
-        @Override
         public String getTitle() {
             return "MySQL " + getDisplayID(); //$NON-NLS-1$
         }
