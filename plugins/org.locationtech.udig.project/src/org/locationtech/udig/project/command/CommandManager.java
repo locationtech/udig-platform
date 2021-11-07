@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -32,7 +33,6 @@ import org.locationtech.udig.project.internal.commands.edit.RollbackCommand;
 import org.locationtech.udig.project.internal.commands.selection.CommitCommand;
 import org.locationtech.udig.project.preferences.PreferenceConstants;
 import org.locationtech.udig.ui.PlatformGIS;
-import org.locationtech.udig.ui.ProgressMonitorTaskNamer;
 
 /**
  * A commands Manager executes commands in a separate thread, either synchronously or a
@@ -62,7 +62,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
     /**
      * Creates a new instance of CommandManager
      *
-     * @param handler an error handler to use to handle thrown exceptions.
+     * @param handler an ErrorHandler to use to handle thrown exceptions.
      */
     public CommandManager(String managerName, ErrorHandler handler,
             CommandListener commandCompletionListener) {
@@ -75,7 +75,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
     /**
      * Creates a new instance of CommandManager
      *
-     * @param handler an error handler to use to handle thrown exceptions.
+     * @param handler an ErrorHandler to use to handle thrown exceptions.
      */
     public CommandManager(String managerName, ErrorHandler handler) {
         this(managerName, handler, null);
@@ -84,7 +84,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
     /**
      * Creates a new instance of CommandManager
      *
-     * @param handler an error handler to use to handle thrown exceptions.
+     * @param handler an ErrorHandler to use to handle thrown exceptions.
      */
     public CommandManager(String managerName, ErrorHandler handler,
             CommandListener commandCompletionListener, long timeout2) {
@@ -94,11 +94,11 @@ public class CommandManager implements CommandStack, NavCommandStack {
     }
 
     /**
-     * Executes a command. Calls the Errorhandler if an exception is thrown.
+     * Executes a command. Calls the error handler if an exception is thrown.
      *
      * @param command The command to execute
-     * @param async flag indicating wether command should be executed sync vs async.
-     * @return true if no problems were encountered while queueing command. Problems will typically
+     * @param async flag indicating whether command should be executed sync vs async.
+     * @return true if no problems were encountered while queuing command. Problems will typically
      *         occur when the command is synchronous and it times out or is interrupted.
      */
     public boolean execute(final Command command, boolean async) {
@@ -123,9 +123,10 @@ public class CommandManager implements CommandStack, NavCommandStack {
         commandExecutor.addRequest(request);
         if (request.isSync()) {
 
-            // synchronous execution, current thread needs to wait
-            // it is unlikely that the command will be complete by the time
-            // we get here but better to be safe than sorry
+            /**
+             * Synchronous execution, current thread needs to wait it is unlikely that the command
+             * will be complete by the time we get here but better to be safe than sorry
+             */
             try {
                 Display current = Display.getCurrent();
                 if (current != null)
@@ -175,13 +176,12 @@ public class CommandManager implements CommandStack, NavCommandStack {
         long start = System.currentTimeMillis();
 
         while (mustWait(request, System.currentTimeMillis() - start)) {
-            // run a display event continue if there is more work todo.
+            // run a display event continue if there is more work to do.
             if (current.readAndDispatch()) {
                 continue;
             }
 
-            // no more work to do in display thread, wait on request if request has not
-            // finished
+            // no more work to do in display thread, wait on request if request has not finished
             if (!mustWait(request, System.currentTimeMillis() - start))
                 return System.currentTimeMillis() - start;
 
@@ -218,9 +218,9 @@ public class CommandManager implements CommandStack, NavCommandStack {
     }
 
     /**
-     * Adds an Errorhandler to the list of error handlers
+     * Adds an ErrorHandler to the list of error handlers
      *
-     * @param handler the error handler to add.
+     * @param handler the ErrorHandler to add.
      * @see ErrorHandler
      */
     public void addErrorHandler(ErrorHandler handler) {
@@ -228,9 +228,9 @@ public class CommandManager implements CommandStack, NavCommandStack {
     }
 
     /**
-     * Removes an Errorhandler from the list of error handlers
+     * Removes an ErrorHandler from the list of error handlers
      *
-     * @param handler the error handler to remove.
+     * @param handler the ErrorHandler to remove.
      * @see ErrorHandler
      */
     public void removeErrorHandler(ErrorHandler handler) {
@@ -282,7 +282,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
     }
 
     /**
-     * Executes commands in a seperate thread from the requesting thread. JONES: Should support
+     * Executes commands in a separate thread from the requesting thread. JONES: Should support
      * force kill of a command.
      *
      * @author Jesse
@@ -320,8 +320,9 @@ public class CommandManager implements CommandStack, NavCommandStack {
                     if (currentRequest == null)
                         return Status.OK_STATUS;
                 }
-                progressMonitor = new ProgressMonitorTaskNamer(monitor, 10);
-                run(progressMonitor, currentRequest);
+
+                SubMonitor subMonitor = SubMonitor.convert(monitor, 10);
+                run(subMonitor, currentRequest);
 
                 if (currentRequest.isSync()) {
                     // notify those waiting for command to finish
@@ -389,7 +390,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
         }
 
         /**
-         * Executes a command. Calls the Errorhandler if an exception is thrown.
+         * Executes a command. Calls the ErrorHandler if an exception is thrown.
          *
          * @param command The command to execute
          */
@@ -519,8 +520,10 @@ public class CommandManager implements CommandStack, NavCommandStack {
          */
         private void undo(IProgressMonitor monitor) {
             Command c;
-            // First check if there's a command on the commands stack that hasn't
-            // been executed and should just be removed
+            /**
+             * First check if there's a command on the commands stack that hasn't been executed and
+             * should just be removed
+             */
             if (!commands.isEmpty()) {
                 Request r;
                 synchronized (this) {
@@ -624,7 +627,7 @@ public class CommandManager implements CommandStack, NavCommandStack {
         /** the command to be done/undone/redone */
         public final Command command;
 
-        /** flag to signal wether command is complete * */
+        /** flag to signal whether command is complete * */
         public volatile boolean completed;
 
         public final boolean requestByDisplay;
@@ -654,9 +657,9 @@ public class CommandManager implements CommandStack, NavCommandStack {
     }
 
     /**
-     * Execute Command syncrounously. IE wait until command is complete before returning.
+     * Execute Command synchronously. IE wait until command is complete before returning.
      *
-     * @return true if no problems were encountered while queueing command. Problems will typically
+     * @return true if no problems were encountered while queuing command. Problems will typically
      *         occur when the command is synchronous and it times out or is interrupted.
      */
     public boolean syncExecute(Command command) {
@@ -668,10 +671,10 @@ public class CommandManager implements CommandStack, NavCommandStack {
     }
 
     /**
-     * Execute Command asyncrounously. IE return immediately, do not wait until command is complete
+     * Execute Command asynchronously. IE return immediately, do not wait until command is complete
      * before returning.
      *
-     * @return true if no problems were encountered while queueing command. Problems will typically
+     * @return true if no problems were encountered while queuing command. Problems will typically
      *         occur when the command is synchronous and it times out or is interrupted.
      */
     public boolean aSyncExecute(Command command) {

@@ -3,15 +3,14 @@
  */
 package org.locationtech.udig.project.internal.render;
 
-import org.locationtech.udig.project.internal.render.impl.TiledCompositeRendererImpl;
-
 import org.eclipse.emf.ecore.EFactory;
+import org.locationtech.udig.project.internal.render.impl.TiledCompositeRendererImpl;
 
 /**
  * TODO Purpose of org.locationtech.udig.project.internal.render
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -37,7 +36,7 @@ public interface RenderFactory extends EFactory {
     /**
      * Creates a RenderManager that is a viewer of the map, not part of the map model itself. One
      * could be used to view a map from a different point of view.
-     * 
+     *
      * @return a RenderManager that is a viewer of the map.
      */
     public RenderManager createRenderManagerViewer();
@@ -63,7 +62,7 @@ public interface RenderFactory extends EFactory {
     /**
      * Creates a ViewportModel that is a viewer of the map, not part of the map model itself. One
      * could be used to view a map from a different point of view.
-     * 
+     *
      * @return a ViewportModel that is a viewer of the map.
      */
     public ViewportModel createViewportModelViewer();
@@ -71,7 +70,7 @@ public interface RenderFactory extends EFactory {
     /**
      * Returns a new object of class '<em>Executor</em>'. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @return a new object of class '<em>Executor</em>'.
      * @generated NOT
      */
@@ -87,14 +86,14 @@ public interface RenderFactory extends EFactory {
 
     /**
      * Creates a CompositeRenderer object
-     * 
+     *
      * @return a CompositeRenderer object
      */
     MultiLayerRenderer createCompositeRenderer();
 
     /**
      * Creates a CompositeRenderer object
-     * 
+     *
      * @return a CompositeRenderer object
      */
     TiledCompositeRendererImpl createTiledCompositeRenderer();

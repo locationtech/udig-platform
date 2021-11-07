@@ -6,7 +6,10 @@ The User-friendly Desktop Internet GIS (uDig) is an open source ("EPL":http://ww
 * uDig can be extended with RCP "plug-ins"
 * uDig can be used as a plug-in in an existing RCP application
 
-uDig is an open project, with developers from multiple companies participating in the decision making process and project direction, or open discussions using chat tools such as "Gitter":https://gitter.im/uDig
+uDig is an open project, with developers from multiple companies participating in the decision making process and project direction, or open discussions using chat tools such as "Gitter":https://gitter.im/uDig or mailing lists:
+
+* "uDig User":https://accounts.eclipse.org/mailing-list/udig-users (How to use uDig as RCP Application)
+* "uDig Developer":https://accounts.eclipse.org/mailing-list/udig-dev (How to develop uDig and build Applications with SDK)
 
 h2. Website
 
@@ -69,7 +72,7 @@ h2. Option - Command Line Build
 1. Tycho Build
 
    For requirements to build docs with profile `docs` ("Sphinx reStructuredText":https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html)
-   consult "detailed doc description":docs/readme.txt :
+   consult "detailed doc description":docs/devel/en/docguide/sphinxEnvironment.rst :
 
 <pre>
 <code>

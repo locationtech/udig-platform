@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004-2011, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004-2011, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,6 +16,12 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IImportWizard;
+import org.eclipse.ui.PlatformUI;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.internal.ui.ConnectionPageDecorator;
@@ -39,20 +45,13 @@ import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPage;
 import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
 import org.locationtech.udig.ui.PlatformGIS;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IImportWizard;
-import org.eclipse.ui.PlatformUI;
-
 /**
  * Used to configure a {@link WorkflowWizardDialog} and {@link WorkflowWizard} with an initial
  * workflow provided by {@link #createWorkflow()}.
  * <p>
  * Example use: dragging and dropping a URL into the catalog.
  * </p>
- * 
+ *
  * @since 1.2.0
  */
 public class CatalogImport {
@@ -70,6 +69,7 @@ public class CatalogImport {
     private void initDialog() {
         if (Display.getCurrent() == null) {
             PlatformGIS.syncInDisplayThread(new Runnable() {
+                @Override
                 public void run() {
                     shell = createShell();
                 }
@@ -109,6 +109,7 @@ public class CatalogImport {
 
     public void open() {
         Display.getDefault().asyncExec(new Runnable() {
+            @Override
             public void run() {
                 dialog.open();
             };
@@ -117,7 +118,7 @@ public class CatalogImport {
 
     /**
      * Runs the workflow.
-     * 
+     *
      * @param monitor the monitor for
      * @param context
      * @return
@@ -132,7 +133,7 @@ public class CatalogImport {
         monitor.beginTask(bind, IProgressMonitor.UNKNOWN);
         monitor.setTaskName(bind);
         try {
-            return dialog.runHeadless(new SubProgressMonitor(monitor, 100));
+            return dialog.runHeadless(SubMonitor.convert(monitor, 100));
         } finally {
             monitor.done();
         }
@@ -154,12 +155,13 @@ public class CatalogImport {
     private String formatURL(URL url) {
         return url.getProtocol() + "://" + url.getPath(); //$NON-NLS-1$
     }
+
     /**
      * Workflow used when configuring {@link #wizard}.
      * <p>
-     * Override to provide a custom workflow, be sure that all states mentioned
-     * in your workflow are covered by the {@link #createPageMapping()} method.
-     * 
+     * Override to provide a custom workflow, be sure that all states mentioned in your workflow are
+     * covered by the {@link #createPageMapping()} method.
+     *
      * @return workflow
      */
     protected Workflow createWorkflow() {
@@ -168,9 +170,10 @@ public class CatalogImport {
 
         return workflow;
     }
+
     /**
-     * Page mapping workflow states required for operation to the workflow wizard
-     * responsible for any user interaction required to complete that state.
+     * Page mapping workflow states required for operation to the workflow wizard responsible for
+     * any user interaction required to complete that state.
      * <p>
      * Subclasses can override to account for any states added in {@link #createWorkflow()}.
      * <p>
@@ -178,39 +181,43 @@ public class CatalogImport {
      * <li>{@link #pageProvider(Class)} register class (suitable for lazy creation)
      * <li>{@link #pageProvider(WorkflowWizardPage)} register a ready to use page
      * </ul>
-     * 
+     *
      * @return mapping between workflow states and wizard pages required for any interaction
      */
     protected Map<Class<? extends State>, WorkflowWizardPageProvider> createPageMapping() {
-        HashMap<Class<? extends State>, WorkflowWizardPageProvider> map = new HashMap<Class<? extends State>, WorkflowWizardPageProvider>();
+        HashMap<Class<? extends State>, WorkflowWizardPageProvider> map = new HashMap<>();
 
         addToMap(map, DataSourceSelectionState.class, DataSourceSelectionPage.class);
 
-        WorkflowWizardPageProvider provider = pageProvider( ConnectionPageDecorator.class );
-        
+        WorkflowWizardPageProvider provider = pageProvider(ConnectionPageDecorator.class);
+
         map.put(IntermediateState.class, provider);
         map.put(EndConnectionState.class, provider);
 
         addToMap(map, ConnectionErrorState.class, ConnectionErrorPage.class);
         addToMap(map, ConnectionFailureState.class, ConnectionFailurePage.class);
-        
+
         return map;
     }
+
     protected void addToMap(Map<Class<? extends State>, WorkflowWizardPageProvider> map,
             Class<? extends State> key, Class<? extends WorkflowWizardPage> workflowPage) {
         WorkflowWizardPageProvider pageFactory = pageProvider(workflowPage);
         map.put(key, pageFactory);
     }
-    protected WorkflowWizardPageProvider pageProvider(Class< ? extends WorkflowWizardPage> workflowPage ){
-        return new ReflectionWorkflowWizardPageProvider( workflowPage );
+
+    protected WorkflowWizardPageProvider pageProvider(
+            Class<? extends WorkflowWizardPage> workflowPage) {
+        return new ReflectionWorkflowWizardPageProvider(workflowPage);
     }
-    protected WorkflowWizardPageProvider pageProvider( WorkflowWizardPage page ){
-        return new BasicWorkflowWizardPageFactory( page );
+
+    protected WorkflowWizardPageProvider pageProvider(WorkflowWizardPage page) {
+        return new BasicWorkflowWizardPageFactory(page);
     }
-    
+
     /**
-     * Override for custom wizard implementation. 
-     * 
+     * Override for custom wizard implementation.
+     *
      * @param workflow
      * @param map
      * @return Implementation of WorkflowWizard being configured
@@ -222,11 +229,12 @@ public class CatalogImport {
 
     /**
      * Extends {@link WorkflowWizardAdapter} by passing the CatalogImport wizard to the constructor.
-     * 
+     *
      * @author jesse
      * @since 1.1.0
      */
-    public static class CatalogImportAdapter extends WorkflowWizardAdapter implements IImportWizard {
+    public static class CatalogImportAdapter extends WorkflowWizardAdapter
+            implements IImportWizard {
 
         public CatalogImportAdapter() {
             super(new CatalogImport().wizard);

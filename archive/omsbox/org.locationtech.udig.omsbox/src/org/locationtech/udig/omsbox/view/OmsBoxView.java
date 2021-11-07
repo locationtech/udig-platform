@@ -12,6 +12,7 @@ package org.locationtech.udig.omsbox.view;
 import i18n.omsbox.Messages;
 
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +48,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.PatternFilter;
 import org.eclipse.ui.part.ViewPart;
-import org.joda.time.DateTime;
 
 import org.locationtech.udig.omsbox.OmsBoxPlugin;
 import org.locationtech.udig.omsbox.core.ModuleDescription;
@@ -397,9 +397,9 @@ public class OmsBoxView extends ViewPart {
         if (script == null) {
             return;
         }
-
+        
         String scriptID = currentSelectedModuleGui.getModuleDescription().getName() + " "
-                + new DateTime().toString(OmsBoxConstants.dateTimeFormatterYYYYMMDDHHMMSS);
+        		+ LocalDateTime.now().format(OmsBoxConstants.dateTimeFormatterYYYYMMDDHHMMSS);
         handler.runModule(scriptID, script);
     }
 

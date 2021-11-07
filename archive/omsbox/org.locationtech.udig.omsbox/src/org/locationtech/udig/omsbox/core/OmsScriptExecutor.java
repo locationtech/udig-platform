@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,6 @@ import oms3.CLI;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.Platform;
-import org.joda.time.DateTime;
 
 import org.locationtech.udig.omsbox.OmsBoxPlugin;
 import org.locationtech.udig.omsbox.utils.OmsBoxConstants;
@@ -180,7 +180,7 @@ public class OmsScriptExecutor {
         // environment.put("CLASSPATH", classPath);
 
         final Process process = processBuilder.start();
-        internalStream.println("Process started: " + new DateTime().toString(OmsBoxConstants.dateTimeFormatterYYYYMMDDHHMMSS));
+        internalStream.println("Process started: " + LocalDateTime.now().format(OmsBoxConstants.dateTimeFormatterYYYYMMDDHHMMSS));
         internalStream.println("");
 
         // command launched
@@ -247,7 +247,7 @@ public class OmsScriptExecutor {
                 internalStream.println("");
                 internalStream.println("");
                 internalStream.println("Process finished: "
-                        + new DateTime().toString(OmsBoxConstants.dateTimeFormatterYYYYMMDDHHMMSS));
+                        + LocalDateTime.now().format(OmsBoxConstants.dateTimeFormatterYYYYMMDDHHMMSS));
             };
         }.start();
 

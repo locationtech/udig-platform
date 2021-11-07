@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -13,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
@@ -36,26 +37,35 @@ import org.opengis.filter.Filter;
 
 /**
  * Creates a new feature, prompting the user for some interaction, and sets it as the EditFeature
- * 
+ *
  * @author jody
  * @since 1.2.0
  */
 public class CreateDialogAndSelectNewFeature extends AbstractCommand implements UndoableMapCommand {
 
     private Layer layer;
+
     private SimpleFeature feature;
+
     private AddFeatureCommand addFeatureCommand;
+
     private SimpleFeature oldFeature;
+
     private ILayer oldLayer;
+
     private EditGeom geom;
+
     private String oldID;
+
     private Filter oldSelection;
+
     private boolean deselectCreatedFeature;
+
     private List<FeaturePanelEntry> panels;
 
     /**
      * New instance
-     * 
+     *
      * @param geom the EditGeom to update with the new feature's fid (after the fid has been added)
      * @param feature the feature created from the geom and that will be added to to the layer.
      * @param layer the layer to add the feature from. It must have a FeatureStore resource
@@ -64,7 +74,7 @@ public class CreateDialogAndSelectNewFeature extends AbstractCommand implements 
      *        rendered.
      * @param popup FeaturePanels used to prompt the user for content
      */
-    public CreateDialogAndSelectNewFeature( EditGeom geom, SimpleFeature feature, ILayer layer,
+    public CreateDialogAndSelectNewFeature(EditGeom geom, SimpleFeature feature, ILayer layer,
             boolean deselectCreatedFeature, List<FeaturePanelEntry> popup) {
         this.layer = (Layer) layer;
         this.feature = feature;
@@ -74,31 +84,33 @@ public class CreateDialogAndSelectNewFeature extends AbstractCommand implements 
     }
 
     @Override
-    public void run( IProgressMonitor monitor ) throws Exception {
+    public void run(IProgressMonitor monitor) throws Exception {
         final boolean create[] = new boolean[1];
         create[0] = false;
-        
+
         Display display = PlatformUI.getWorkbench().getDisplay();
-        display.syncExec( new Runnable(){            
+        display.syncExec(new Runnable() {
             @Override
             public void run() {
-                boolean yes = MessageDialog.openConfirm(null, "New Feature", "Panels available "+panels.size() );
+                boolean yes = MessageDialog.openConfirm(null, "New Feature", //$NON-NLS-1$
+                        "Panels available " + panels.size()); //$NON-NLS-1$
                 create[0] = yes;
-            }            
+            }
         });
-        if( create[0] == false ){
-            return; // user can continue editing? or should we cancel the geometry they were working on...
+        if (create[0] == false) {
+            return; // user can continue editing? or should we cancel the geometry they were working
+                    // on...
         }
         monitor.beginTask(getName(), 14);
         monitor.worked(2);
         boolean prev = layer.eDeliver();
-        try {            
+        try {
             layer.eSetDeliver(false);
             addFeatureCommand = new AddFeatureCommand(feature, layer);
             addFeatureCommand.setMap(getMap());
-            SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, 10);
-            addFeatureCommand.run(subProgressMonitor);
-            subProgressMonitor.done();
+            SubMonitor subMonitor = SubMonitor.convert(monitor, 10);
+            addFeatureCommand.run(subMonitor);
+            subMonitor.done();
 
             this.oldFeature = getMap().getEditManager().getEditFeature();
             this.oldLayer = getMap().getEditManager().getEditLayer();
@@ -116,8 +128,8 @@ public class CreateDialogAndSelectNewFeature extends AbstractCommand implements 
                 // this is not needed in the other case because the feature will not be rendered
                 layer.eSetDeliver(prev);
             } else {
-                EditUtils.instance.refreshLayer(layer, Collections.singleton(addFeatureCommand
-                        .getFid()), null, false, true);
+                EditUtils.instance.refreshLayer(layer,
+                        Collections.singleton(addFeatureCommand.getFid()), null, false, true);
 
             }
             // since the layer didn't send an event (see eSetDeliver() above) we need to send the
@@ -133,7 +145,7 @@ public class CreateDialogAndSelectNewFeature extends AbstractCommand implements 
         monitor.done();
     }
 
-    private void fireFeatureEvent( boolean prev ) {
+    private void fireFeatureEvent(boolean prev) {
         List<FeatureEvent> featureChanges = layer.getFeatureChanges();
 
         layer.eSetDeliver(prev);
@@ -148,7 +160,7 @@ public class CreateDialogAndSelectNewFeature extends AbstractCommand implements 
     }
 
     @Override
-    public void rollback( IProgressMonitor monitor ) throws Exception {
+    public void rollback(IProgressMonitor monitor) throws Exception {
         monitor.beginTask(getName(), 14);
         monitor.worked(2);
         boolean prev = layer.eDeliver();
@@ -156,9 +168,9 @@ public class CreateDialogAndSelectNewFeature extends AbstractCommand implements 
             layer.eSetDeliver(false);
             layer.setFilter(oldSelection);
 
-            SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, 10);
-            addFeatureCommand.rollback(subProgressMonitor);
-            subProgressMonitor.done();
+            SubMonitor subMonitor = SubMonitor.convert(monitor, 10);
+            addFeatureCommand.rollback(subMonitor);
+            subMonitor.done();
             geom.getFeatureIDRef().set(oldID);
 
             getMap().getEditManagerInternal().setEditFeature(oldFeature, (Layer) oldLayer);
@@ -166,21 +178,21 @@ public class CreateDialogAndSelectNewFeature extends AbstractCommand implements 
                 EditBlackboard bb = geom.getEditBlackboard();
                 EditGeom newGeom = bb.newGeom(geom.getFeatureIDRef().get(), geom.getShapeType());
                 PrimitiveShape shell = geom.getShell();
-                for( org.locationtech.udig.tools.edit.support.Point point : shell ) {
+                for (org.locationtech.udig.tools.edit.support.Point point : shell) {
                     bb.addPoint(point.getX(), point.getY(), newGeom.getShell());
                 }
 
                 List<PrimitiveShape> holes = geom.getHoles();
-                for( PrimitiveShape primitiveShape : holes ) {
+                for (PrimitiveShape primitiveShape : holes) {
                     PrimitiveShape newHole = newGeom.newHole();
-                    for( Point point2 : primitiveShape ) {
+                    for (Point point2 : primitiveShape) {
                         bb.addPoint(point2.getX(), point2.getY(), newHole);
                     }
                 }
                 geom = newGeom;
             } else {
-                EditUtils.instance.refreshLayer(layer, Collections.singleton(addFeatureCommand
-                        .getFid()), null, false, false);
+                EditUtils.instance.refreshLayer(layer,
+                        Collections.singleton(addFeatureCommand.getFid()), null, false, false);
             }
         } finally {
             layer.eSetDeliver(prev);
