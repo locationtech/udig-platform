@@ -11,27 +11,23 @@ package org.locationtech.udig.project.internal.render;
 
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
-import java.util.List;
 import java.util.SortedSet;
-
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.render.IViewportModel;
-import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
 
 import org.eclipse.emf.ecore.EObject;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
-import org.joda.time.DateTime;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * TODO Purpose of org.locationtech.udig.project.internal.render
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @model
@@ -47,7 +43,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * Returns the local coordinate system. The local coordinate system is the CRS that all the
      * layer data will be transformed into. Once the layer data is transformed into the local CRS
      * then it is transformed for display onto the screen
-     * 
+     *
      * @return the local coordinate system
      * @uml.property name="cRS"
      * @model unsettable='true'
@@ -76,19 +72,19 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * are the same <em>instance</em> then they are simply defaults and can be ignored if desired.  However if they are not the same
      * then assume that the values are only hints and can be ignored
      * </p>
-     * 
+     *
      * @see #getScaleDenominator() for a definition of scale denominator
      * @return Unmodifiable Set of preferred scale denominator values for the map
-     * @model 
+     * @model
      */
     @Override
     public SortedSet<Double> getPreferredScaleDenominators();
 
     /**
      * Sets the value of the '{@link org.locationtech.udig.project.internal.render.ViewportModel#getPreferredScaleDenominators <em>Preferred Scale Denominators</em>}' attribute.
-     * 
+     *
      * If set to null getPreferredScaleDenominators will return the defaults.
-     * 
+     *
      * @param value the new value of the '<em>Preferred Scale Denominators</em>' attribute.
      * @see #getPreferredScaleDenominators()
      * @generated NOTE
@@ -122,7 +118,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * Note: Since Envelope is not a UDIG element changes to the bounds envelope object will not
      * raise events. Therefore the bounds should only be modified via the ViewportModel interface
      * </p>
-     * 
+     *
      * @return the bounding box of the Viewport in world coordinates.
      * @uml.property name="bounds"
      * @model default=""
@@ -165,7 +161,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * aspect ratio of the Viewport
      * <p>
      * <!-- end-user-doc -->
-     * 
+     *
      * @param value the new value of the '<em>Bounds</em>' attribute.
      * @see #getBounds()
      * @generated NOT
@@ -175,7 +171,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
     /**
      * Sets the viewport's bounding box. The bounding box will be fit to the window based on the MapDisplay so
      * the bounds provided here may not be the final bounds.
-     * 
+     *
      * @param minx the minimum x value of the new bounding box.
      * @param maxx the maximum x value of the new bounding box.
      * @param miny the minimum y value of the new bounding box.
@@ -188,7 +184,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
 
     /**
      * Returns the center of the viewport in world coordinates.
-     * 
+     *
      * @return the center of the viewport in world coordinates
      * @uml.property name="center"
      * @model volatile="true" transient="true"
@@ -207,7 +203,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
 
     /**
      * Returns the Viewport's height in world coordinates.
-     * 
+     *
      * @return the Viewport's height in world coordinates.
      * @uml.property name="height"
      * @model volatile="true" transient="true"
@@ -226,7 +222,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
 
     /**
      * Returns the Viewport's width in world coordinates.
-     * 
+     *
      * @return the Viewport's width in world coordinates.
      * @uml.property name="width"
      * @model volatile="true" transient="true"
@@ -245,7 +241,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
 
     /**
      * Returns the aspect ratio of the viewport.
-     * 
+     *
      * @return The aspect ratio of the viewport.
      * @model volatile="true" changeable="false" transient="true"
      */
@@ -254,7 +250,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
 
     /**
      * Gets the Map that contains the current ViewportModel
-     * 
+     *
      * @return the Map that contains the current ViewportModel
      * @model opposite="viewportModelInternal" many="false"
      */
@@ -299,7 +295,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
     /**
      * Gets up the affine transform that will transform from the world to screen. A convenience
      * method.
-     * 
+     *
      * @return a transform that maps from real world coordinates to the screen
      * @model
      */
@@ -308,7 +304,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
 
     /**
      * Returns the pixel on the screen for a given coordinate in world space.
-     * 
+     *
      * @param coord A coordinate in world space.
      * @return The pixel on the screen that the world coordinate is drawn on.
      * @model
@@ -318,7 +314,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
 
     /**
      * Converts a coordinate expressed on the device space back to real world coordinates
-     * 
+     *
      * @param x horizontal coordinate on device space
      * @param y vertical coordinate on device space
      * @return The correspondent real world coordinate
@@ -329,10 +325,10 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
 
     /**
      * Returns the size of a pixel in world units.
-     * <p>For example if the world is in WGS 84(lat long) then 
+     * <p>For example if the world is in WGS 84(lat long) then
      * the size will be in degrees
      * </p>
-     * @return the size of a pixel in world units. 
+     * @return the size of a pixel in world units.
      * @model volatile="true" changeable="false" transient="true"
      */
     @Override
@@ -342,7 +338,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * Pans the viewport in terms of pixels on the screen. Each pixel represents a distance in world
      * coordinates, the x and y distances differ, so a pan of 8 pixels in the x direction will be
      * translated to a pan of 8*xdistance in the world.
-     * 
+     *
      * @param xpixels The amount to pan in the x direction
      * @param ypixels The amount to pan in the y direction
      * @return this ViewportModel
@@ -352,7 +348,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
 
     /**
      * Pans the viewport in terms of world units.
-     * 
+     *
      * @param x The amount to pan in the x direction
      * @param y The amount to pan in the y direction
      * @return this ViewportModel
@@ -369,7 +365,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * <li>A zoom greater than 1 is a zoom towards the map(SimpleFeature appear larger.)</li>
      * <li>A zoom less than 1 is a zoom away from the map</li>
      * </ul>
-     * 
+     *
      * @param zoom the zoom factor
      * @return This ViewportModel, allows for command chaining.
      * @model
@@ -397,14 +393,14 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
 
     /**
      * sets the Viewport bounding box so that it fully contains the visible map extent
-     * 
+     *
      * @model
      */
     public void zoomToExtent();
 
     /**
      * sets the Viewport bounding box so that it contains the new box
-     * 
+     *
      * @model
      */
     public void zoomToBox(Envelope box);
@@ -412,7 +408,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
     /**
      * Return true if it has been initialized with a display. If no display is active then the
      * viewportmodel is not initialized.
-     * 
+     *
      * @return true if it has been initialized with a display
      * @uml.property name="initialized"
      */
@@ -420,7 +416,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
 
     /**
      * Sets the initialized state of ViewportModel.
-     * 
+     *
      * @param initialized
      * @uml.property name="initialized"
      */
@@ -430,7 +426,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * Sets the zoom level of the viewport so that the scale denominator will be equal to
      * scale
      *
-     * @param scaleDenominator desired scale denominator 
+     * @param scaleDenominator desired scale denominator
      */
     public void setScale(double scaleDenominator);
 
@@ -438,7 +434,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * Sets the zoom level of the viewport so that the scale denominator will be equal to
      * scale
      *
-     * @param scaleDenominator desired scale denominator 
+     * @param scaleDenominator desired scale denominator
      */
     public void setScale(double scaleDenominator, int dpi, int displayWidth, int displayHeight);
 
@@ -450,51 +446,4 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      */
     public void setIsBoundsChanging(boolean changing);
 
-    /**
-     * Returns the available list of timesteps or null, if no time is defined. 
-     * 
-     * @model
-     */
-    public List<DateTime> getAvailableTimesteps();
-
-    /**
-     * Returns the current timestep or null if no time has been defined. 
-     * 
-     * @model
-     */
-    public DateTime getCurrentTimestep();
-
-    /**
-     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCurrentTimestep <em>Current Timestep</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Current Timestep</em>' attribute.
-     * @see #getCurrentTimestep()
-     * @generated
-     */
-    void setCurrentTimestep(DateTime value);
-
-    /**
-     * Returns the available list of elevations or null if no elevation has been defined. 
-     * 
-     * @model
-     */
-    public List<Double> getAvailableElevation();
-
-    /**
-     * Returns the current elevation or null if no time has been defined. 
-     * 
-     * @model
-     */
-    public Double getCurrentElevation();
-
-    /**
-     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCurrentElevation <em>Current Elevation</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Current Elevation</em>' attribute.
-     * @see #getCurrentElevation()
-     * @generated
-     */
-    void setCurrentElevation(Double value);
 }

@@ -238,7 +238,6 @@
       <genTypeParameters ecoreTypeParameter="render.ecore#//SortedSet/T"/>
     </genDataTypes>
     <genDataTypes ecoreDataType="render.ecore#//ReferencedEnvelope"/>
-    <genDataTypes ecoreDataType="render.ecore#//DateTime"/>
     <genDataTypes ecoreDataType="render.ecore#//IllegalArgumentException"/>
     <genClasses image="false" ecoreClass="render.ecore#//IRenderManager"/>
     <genClasses image="false" ecoreClass="render.ecore#//IViewportModel"/>
@@ -272,10 +271,6 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference render.ecore#//ViewportModel/mapInternal"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference render.ecore#//ViewportModel/renderManagerInternal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//ViewportModel/preferredScaleDenominators"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//ViewportModel/availableTimesteps"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//ViewportModel/currentTimestep"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//ViewportModel/availableElevation"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute render.ecore#//ViewportModel/currentElevation"/>
       <genOperations ecoreOperation="render.ecore#//ViewportModel/setBounds">
         <genParameters ecoreParameter="render.ecore#//ViewportModel/setBounds/minx"/>
         <genParameters ecoreParameter="render.ecore#//ViewportModel/setBounds/maxx"/>

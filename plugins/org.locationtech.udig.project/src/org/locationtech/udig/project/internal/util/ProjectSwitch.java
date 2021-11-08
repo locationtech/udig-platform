@@ -3,6 +3,10 @@
  */
 package org.locationtech.udig.project.internal.util;
 
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.util.Switch;
 import org.locationtech.udig.catalog.IResolveChangeListener;
 import org.locationtech.udig.core.IBlockingAdaptable;
 import org.locationtech.udig.project.IAbstractContext;
@@ -35,11 +39,6 @@ import org.locationtech.udig.project.internal.StyleBlackboard;
 import org.locationtech.udig.project.internal.StyleEntry;
 import org.locationtech.udig.project.render.IRenderManager;
 import org.locationtech.udig.project.render.IViewportModel;
-
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.util.Switch;
 
 /**
  * <!-- begin-user-doc --> The <b>Switch </b> for the model's inheritance hierarchy. It supports the
@@ -397,7 +396,7 @@ public class ProjectSwitch<T> extends Switch<T> {
      * Returns the result of interpretting the object as an instance of '<em>Layer</em>'. <!--
      * begin-user-doc --> This implementation returns null; returning a non-null result will
      * terminate the switch. <!-- end-user-doc -->
-     * 
+     *
      * @param object the target of the switch.
      * @return the result of interpretting the object as an instance of '<em>Layer</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -411,7 +410,7 @@ public class ProjectSwitch<T> extends Switch<T> {
      * Returns the result of interpretting the object as an instance of '<em>Map</em>'. <!--
      * begin-user-doc --> This implementation returns null; returning a non-null result will
      * terminate the switch. <!-- end-user-doc -->
-     * 
+     *
      * @param object the target of the switch.
      * @return the result of interpretting the object as an instance of '<em>Map</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -425,7 +424,7 @@ public class ProjectSwitch<T> extends Switch<T> {
      * Returns the result of interpretting the object as an instance of '<em>Project</em>'. <!--
      * begin-user-doc --> This implementation returns null; returning a non-null result will
      * terminate the switch. <!-- end-user-doc -->
-     * 
+     *
      * @param object the target of the switch.
      * @return the result of interpretting the object as an instance of '<em>Project</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -439,7 +438,7 @@ public class ProjectSwitch<T> extends Switch<T> {
      * Returns the result of interpretting the object as an instance of '<em>Element</em>'. <!--
      * begin-user-doc --> This implementation returns null; returning a non-null result will
      * terminate the switch. <!-- end-user-doc -->
-     * 
+     *
      * @param object the target of the switch.
      * @return the result of interpretting the object as an instance of '<em>Element</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -717,7 +716,7 @@ public class ProjectSwitch<T> extends Switch<T> {
      * Returns the result of interpretting the object as an instance of '<em>IMap</em>'. <!--
      * begin-user-doc --> This implementation returns null; returning a non-null result will
      * terminate the switch. <!-- end-user-doc -->
-     * 
+     *
      * @param object the target of the switch.
      * @return the result of interpretting the object as an instance of '<em>IMap</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -731,7 +730,7 @@ public class ProjectSwitch<T> extends Switch<T> {
      * Returns the result of interpretting the object as an instance of '<em>ILayer</em>'. <!--
      * begin-user-doc --> This implementation returns null; returning a non-null result will
      * terminate the switch. <!-- end-user-doc -->
-     * 
+     *
      * @param object the target of the switch.
      * @return the result of interpretting the object as an instance of '<em>ILayer</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -849,7 +848,7 @@ public class ProjectSwitch<T> extends Switch<T> {
      * Returns the result of interpretting the object as an instance of '<em>EObject</em>'. <!--
      * begin-user-doc --> This implementation returns null; returning a non-null result will
      * terminate the switch, but this is the last case anyway. <!-- end-user-doc -->
-     * 
+     *
      * @param object the target of the switch.
      * @return the result of interpretting the object as an instance of '<em>EObject</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject)

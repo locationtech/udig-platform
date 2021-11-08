@@ -17,36 +17,38 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
-import org.locationtech.udig.internal.ui.UDIGDropHandler;
-import org.locationtech.udig.ui.AcceptLessTen.Data;
-import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-
 import org.eclipse.core.runtime.IAdaptable;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
+import org.locationtech.udig.ui.AcceptLessTen.Data;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 public class UDIGDropHandlerTest {
 
     private UDIGDropHandler handler;
-    Object dropDestination = new TestDropDestination(); 
+    Object dropDestination = new TestDropDestination();
     private volatile int done=0;
     private boolean noAction=false;
     private IDropHandlerListener listener=new IDropHandlerListener(){
 
 
+        @Override
         public void done( IDropAction action, Throwable error ) {
             done++;
         }
 
+        @Override
         public void noAction( Object data ) {
             noAction=true;
         }
 
+        @Override
         public void starting( IDropAction action ) {
         }
-        
+
     };
     private void reset() {
         AlwaysAcceptDropAction.reset();
@@ -59,7 +61,7 @@ public class UDIGDropHandlerTest {
     public void tearDown() throws Exception {
         reset();
     }
-    
+
     @Before
     public void setUp() throws Exception {
         handler=new UDIGDropHandler();
@@ -73,17 +75,18 @@ public class UDIGDropHandlerTest {
         doDrop(string,1);
         assertEquals(string, AlwaysAcceptDropAction.droppedData);
         assertEquals(dropDestination, AlwaysAcceptDropAction.dropDestination);
-        
+
         IAdaptable data = new IAdaptable(){
 
+            @Override
             public Object getAdapter( @SuppressWarnings("rawtypes") Class adapter ) {
                 if( String.class.isAssignableFrom(adapter) )
                     return string;
                 return null;
             }
-            
+
         };
-        
+
         doDrop(data, 0);
         assertTrue(noAction);
         assertEquals(0,done);
@@ -103,26 +106,32 @@ public class UDIGDropHandlerTest {
         handler.performDrop(data, null);
         UDIGTestUtil.inDisplayThreadWait(2000, new WaitCondition(){
 
+            @Override
             public boolean isTrue() {
                 if( numExpectedActions>0 )
                     return done>=numExpectedActions;
                 else
                     return noAction==true;
             }
-            
+
+            @Override
+            public String toString() {
+                return "Expected to reach " + numExpectedActions + " actions in time, done so far : " + done;
+            }
         }, true);
     }
-    
+
     @Test
     public void testPerformDropAdaptTo() throws Exception {
         IAdaptable data = new IAdaptable(){
 
+            @Override
             public Object getAdapter( @SuppressWarnings("rawtypes") Class adapter ) {
                 if( Integer.class.isAssignableFrom(adapter) )
                     return Integer.valueOf(10);
                 return null;
             }
-            
+
         };
         doDrop(data, 1);
         assertFalse(noAction);
@@ -131,19 +140,19 @@ public class UDIGDropHandlerTest {
         assertEquals(dropDestination, AlwaysAcceptDropAction.dropDestination);
     }
 
-    @Ignore
+    @Ignore("only one out of three elements are processed (doDrop) in time")
     @Test
     public void testPerformDropListItemsManyActions() throws Exception {
-        ArrayList<Object> data = new ArrayList<Object>();
+        ArrayList<Object> data = new ArrayList<>();
         String data1 = "Data1"; //$NON-NLS-1$
-        data.add(data1); 
+        data.add(data1);
         String data2 = "Data2"; //$NON-NLS-1$
-        data.add(data2); 
+        data.add(data2);
         Double data3 = Double.valueOf(10);
-        data.add(data3); 
+        data.add(data3);
 
         doDrop(data, 3);
-        
+
         assertEquals(3,done);
         assertFalse(noAction);
         assertEquals(3, AlwaysAcceptDropAction.allDrops.size());
@@ -154,14 +163,14 @@ public class UDIGDropHandlerTest {
 
     @Test
     public void testPerformDrop1PlusItemsOneAction() throws Exception {
-        ArrayList<Object> data = new ArrayList<Object>();
-        Double data1 = Double.valueOf(1.1); 
-        data.add(data1); 
-        Double data2 = Double.valueOf(2.2); 
-        data.add(data2); 
+        ArrayList<Object> data = new ArrayList<>();
+        Double data1 = Double.valueOf(1.1);
+        data.add(data1);
+        Double data2 = Double.valueOf(2.2);
+        data.add(data2);
 
         doDrop(data, 1);
-        
+
         assertEquals(1,done);
         assertFalse(noAction);
         assertEquals(1, AlwaysAcceptDropAction.allDrops.size());
@@ -171,10 +180,10 @@ public class UDIGDropHandlerTest {
 
 
         Double data3 = Double.valueOf(10);
-        data.add(data3); 
-        
+        data.add(data3);
+
         doDrop(data, 1);
-        
+
         assertEquals(1,done);
         assertFalse(noAction);
         assertEquals(1, AlwaysAcceptDropAction.allDrops.size());
@@ -186,26 +195,26 @@ public class UDIGDropHandlerTest {
 
     @Test
     public void testPerformDrop2ItemsOneAction() throws Exception {
-        ArrayList<Object> data = new ArrayList<Object>();
+        ArrayList<Object> data = new ArrayList<>();
         Byte data1 = Byte.valueOf("1");  //$NON-NLS-1$
-        data.add(data1); 
+        data.add(data1);
         Byte data2 = Byte.valueOf("2");  //$NON-NLS-1$
-        data.add(data2); 
+        data.add(data2);
         Byte data3 = Byte.valueOf("10"); //$NON-NLS-1$
-        data.add(data3); 
+        data.add(data3);
 
         doDrop(data, 1);
-        
+
         assertEquals(1,done);
         assertFalse(noAction);
         assertEquals(1, AlwaysAcceptDropAction.allDrops.size());
         assertEquals(data1, ((Object[])AlwaysAcceptDropAction.droppedData)[0]);
         assertEquals(data2, ((Object[])AlwaysAcceptDropAction.droppedData)[1]);
-        
+
         data.remove(0);
-        
+
         doDrop(data, 1);
-        
+
         assertEquals(1,done);
         assertFalse(noAction);
         assertEquals(1, AlwaysAcceptDropAction.allDrops.size());
@@ -214,24 +223,24 @@ public class UDIGDropHandlerTest {
         assertEquals(dropDestination, AlwaysAcceptDropAction.dropDestination);
 
         data.remove(0);
-        
+
         doDrop(data, 0);
-        
+
         assertEquals(0,done);
         assertTrue(noAction);
-        
+
     }
 
     @Test
     public void testPerformDropPlusItemsOneAction() throws Exception {
-        ArrayList<Object> data = new ArrayList<Object>();
-        Long data1 = Long.valueOf(1); 
-        data.add(data1); 
-        Long data2 = Long.valueOf(2); 
-        data.add(data2); 
+        ArrayList<Object> data = new ArrayList<>();
+        Long data1 = Long.valueOf(1);
+        data.add(data1);
+        Long data2 = Long.valueOf(2);
+        data.add(data2);
 
         doDrop(data, 1);
-        
+
         assertEquals(1,done);
         assertFalse(noAction);
         assertEquals(1, AlwaysAcceptDropAction.allDrops.size());
@@ -241,10 +250,10 @@ public class UDIGDropHandlerTest {
 
 
         Long data3 = Long.valueOf(10);
-        data.add(data3); 
-        
+        data.add(data3);
+
         doDrop(data, 1);
-        
+
         assertEquals(1,done);
         assertFalse(noAction);
         assertEquals(1, AlwaysAcceptDropAction.allDrops.size());
@@ -256,24 +265,24 @@ public class UDIGDropHandlerTest {
 
     @Test
     public void testPerformDrop10PlusItemsOneAction() throws Exception {
-        ArrayList<Short> data = new ArrayList<Short>();
+        ArrayList<Short> data = new ArrayList<>();
         Short data1 = Short.valueOf("1");  //$NON-NLS-1$
-        data.add(data1); 
+        data.add(data1);
         Short data2 = Short.valueOf("2");  //$NON-NLS-1$
-        data.add(data2); 
+        data.add(data2);
         Short data3 = Short.valueOf("10"); //$NON-NLS-1$
-        data.add(data3); 
+        data.add(data3);
 
         doDrop(data, 0);
-        
+
         assertEquals(0,done);
         assertTrue(noAction);
-        
+
         while(data.size()<10)
             data.add(Short.valueOf("10")); //$NON-NLS-1$
-        
+
         doDrop(data, 1);
-        
+
         assertEquals(1,done);
         assertFalse(noAction);
         assertEquals(1, AlwaysAcceptDropAction.allDrops.size());
@@ -282,9 +291,9 @@ public class UDIGDropHandlerTest {
 
         while(data.size()<20)
             data.add(Short.valueOf("10")); //$NON-NLS-1$
-        
+
         doDrop(data, 1);
-        
+
         assertEquals(1,done);
         assertFalse(noAction);
         assertEquals(1, AlwaysAcceptDropAction.allDrops.size());
@@ -293,19 +302,19 @@ public class UDIGDropHandlerTest {
 
     }
 
-    @Ignore
+    @Ignore("only one out of two elements are processed (doDrop) in time")
     @Test
     public void testPerformDropListButOnlySomeAreAcceptable() throws Exception {
-        ArrayList<Data> data = new ArrayList<Data>();
+        ArrayList<Data> data = new ArrayList<>();
         Data data1 = new Data(11);
-        data.add(data1); 
-        Data data2 = new Data(1); 
-        data.add(data2); 
+        data.add(data1);
+        Data data2 = new Data(1);
+        data.add(data2);
         Data data3 = new Data(5);
-        data.add(data3); 
+        data.add(data3);
 
         doDrop(data, 2);
-        
+
         assertEquals(2,done);
         assertFalse(noAction);
         assertEquals(2, AlwaysAcceptDropAction.allDrops.size());
@@ -313,19 +322,19 @@ public class UDIGDropHandlerTest {
         assertEquals(data3, AlwaysAcceptDropAction.allDrops.get(1));
     }
 
-    @Ignore
+    @Ignore("only one out of two elements are processed (doDrop) in time")
     @Test
     public void testMixedDrop() throws Exception {
-        ArrayList<Object> data = new ArrayList<Object>();
+        ArrayList<Object> data = new ArrayList<>();
         Double data1 = Double.valueOf(11);
-        data.add(data1); 
-        Character data2 = 'c'; 
-        data.add(data2); 
+        data.add(data1);
+        Character data2 = 'c';
+        data.add(data2);
         Long data3 = Long.valueOf(5);
-        data.add(data3); 
+        data.add(data3);
 
         doDrop(data, 2);
-        
+
         assertEquals(2,done);
         assertFalse(noAction);
         assertEquals(2, AlwaysAcceptDropAction.allDrops.size());
@@ -334,5 +343,4 @@ public class UDIGDropHandlerTest {
         assertEquals(data3, AlwaysAcceptDropAction.allDrops.get(1));
 
     }
-    
 }

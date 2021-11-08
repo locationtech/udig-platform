@@ -51,13 +51,17 @@ public class FileConnectionFactory extends UDIGConnectionFactory {
 
     @Override
     public URL createConnectionURL(Object context) {
-        URL url = ID.cast(context).toURL();
-
-        if (url == null) {
+        if (context == null) {
             return null;
         }
 
-        url = checkedURL(url);
+        ID id = ID.cast(context);
+
+        if (id == null) {
+            return null;
+        }
+        URL url = checkedURL(id.toURL());
+
         if (url == null || url.getFile() == null) {
             return null;
         }
@@ -81,6 +85,9 @@ public class FileConnectionFactory extends UDIGConnectionFactory {
 
     /** Check that any trailing #layer is removed from the URL */
     static public URL checkedURL(URL url) {
+        if (url == null) {
+            return null;
+        }
         String check = url.toExternalForm();
         int hash = check.indexOf('#');
         if (hash == -1) {

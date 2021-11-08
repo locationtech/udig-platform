@@ -17,6 +17,10 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -64,10 +68,6 @@ import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
@@ -102,9 +102,9 @@ import org.opengis.referencing.operation.TransformException;
  */
 public class NavigationView extends ViewPart implements SelectionListener, IMapListener, IMapCompositionListener {
 
-    private static DateTimeFormatter ISO_DATE_TIME_FORMATTER = ISODateTimeFormat.dateTime().withZone(DateTimeZone.UTC);
+    private static DateTimeFormatter ISO_DATE_TIME_FORMATTER =  DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneOffset.UTC);
 
-    private static DateTimeFormatter ISO_DATE_TIME_PARSER = ISODateTimeFormat.dateTimeParser().withZone(DateTimeZone.UTC);
+    private static DateTimeFormatter ISO_DATE_TIME_PARSER = DateTimeFormatter.ISO_DATE_TIME .withZone(ZoneOffset.UTC);
 
     private Image worldImage;
     private Text lowerLeftText;
@@ -133,6 +133,12 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
     private File first;
 
     private Combo countriesCombo;
+
+
+    private List<Double> lavailableElevation = null;
+    private List<LocalDateTime> lavailableTimesteps = null;
+    private LocalDateTime currentTimestep = null;
+    private Double currentElevation = null;
 
     public NavigationView() {
         ImageDescriptor imageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID,
@@ -646,14 +652,14 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                     scaleCombo.select(selectionIndex);
                 }
 
-                List<DateTime> availableTimesteps = viewportModel.getAvailableTimesteps();
+                List<LocalDateTime> availableTimesteps = lavailableTimesteps;
                 if (availableTimesteps != null) {
                     dateTimeCombo.setEnabled(true);
                     dtDownButton.setEnabled(true);
                     dtUpButton.setEnabled(true);
                     String[] dates = new String[availableTimesteps.size()];
                     for( int i = 0; i < dates.length; i++ ) {
-                        dates[i] = ISO_DATE_TIME_FORMATTER.print(availableTimesteps.get(i));
+                        dates[i] = ISO_DATE_TIME_FORMATTER.format(availableTimesteps.get(i));
                     }
                     itemCount = dateTimeCombo.getItemCount();
                     selectionIndex = dateTimeCombo.getSelectionIndex();
@@ -667,7 +673,7 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                     dtUpButton.setEnabled(false);
                 }
 
-                List<Double> availableElevation = viewportModel.getAvailableElevation();
+                List<Double> availableElevation = lavailableElevation;
                 if (availableElevation != null) {
                     verticalCombo.setEnabled(true);
                     verticalDownButton.setEnabled(true);
@@ -706,15 +712,15 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
         if (source.equals(dateTimeCombo)) {
             int index = dateTimeCombo.getSelectionIndex();
             String item = dateTimeCombo.getItem(index);
-            DateTime date = ISO_DATE_TIME_PARSER.parseDateTime(item);
-            viewportModel.setCurrentTimestep(date);
+            ZonedDateTime date = ZonedDateTime.parse(item, ISO_DATE_TIME_PARSER);
+            currentTimestep = date.toLocalDateTime();
         }
         if (source.equals(verticalCombo)) {
             int index = verticalCombo.getSelectionIndex();
             String item = verticalCombo.getItem(index);
             try {
                 double vertical = Double.parseDouble(item);
-                viewportModel.setCurrentElevation(vertical);
+                currentElevation = vertical;
             } catch (NumberFormatException e1) {
                 e1.printStackTrace();
             }
@@ -727,7 +733,7 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
             }
             String item = verticalCombo.getItem(selectionIndex);
             double vertical = Double.parseDouble(item);
-            viewportModel.setCurrentElevation(vertical);
+            currentElevation = vertical;
             verticalCombo.select(selectionIndex);
         }
         if (source.equals(verticalUpButton)) {
@@ -738,7 +744,7 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
             }
             String item = verticalCombo.getItem(selectionIndex);
             double vertical = Double.parseDouble(item);
-            viewportModel.setCurrentElevation(vertical);
+            currentElevation = vertical;
             verticalCombo.select(selectionIndex);
         }
         if (source.equals(scaleDownButton)) {
@@ -770,8 +776,8 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                 selectionIndex = 0;
             }
             String item = dateTimeCombo.getItem(selectionIndex);
-            DateTime dt = ISO_DATE_TIME_PARSER.parseDateTime(item);
-            viewportModel.setCurrentTimestep(dt);
+            ZonedDateTime dt = ZonedDateTime.parse(item, ISO_DATE_TIME_PARSER);
+            currentTimestep = dt.toLocalDateTime();
             dateTimeCombo.select(selectionIndex);
         }
         if (source.equals(dtUpButton)) {
@@ -781,8 +787,8 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                 selectionIndex = dateTimeCombo.getItemCount() - 1;
             }
             String item = dateTimeCombo.getItem(selectionIndex);
-            DateTime dt = ISO_DATE_TIME_PARSER.parseDateTime(item);
-            viewportModel.setCurrentTimestep(dt);
+            ZonedDateTime dt = ZonedDateTime.parse(item, ISO_DATE_TIME_PARSER);
+            currentTimestep = dt.toLocalDateTime();
             dateTimeCombo.select(selectionIndex);
         }
         updateData();

@@ -8,9 +8,6 @@ package org.locationtech.udig.project.internal.provider;
 
 import java.util.List;
 
-import org.locationtech.udig.project.internal.EditManager;
-import org.locationtech.udig.project.internal.ProjectPackage;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
@@ -24,6 +21,8 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.ProjectPackage;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**
@@ -167,7 +166,7 @@ public class EditManagerItemProvider extends ItemProviderAdapter
     /**
      * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @generated NOT
      */
     @Override

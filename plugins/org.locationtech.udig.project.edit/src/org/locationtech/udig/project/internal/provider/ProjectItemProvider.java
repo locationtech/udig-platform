@@ -10,11 +10,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.locationtech.udig.project.IProject;
-import org.locationtech.udig.project.IProjectElement;
-import org.locationtech.udig.project.internal.Project;
-import org.locationtech.udig.project.internal.ProjectPackage;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
@@ -26,11 +21,15 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectPackage;
 
 /**
  * This is the item provider adapter for a {@link org.locationtech.udig.project.internal.Project}
  * object. <!-- begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated NOT
  */
 public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
@@ -38,7 +37,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
         ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public static final String copyright = "uDig - User Friendly Desktop Internet GIS client\n"
@@ -51,7 +50,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     public ProjectItemProvider(AdapterFactory adapterFactory) {
@@ -61,7 +60,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override
@@ -77,7 +76,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This adds a property descriptor for the Name feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected void addNamePropertyDescriptor(Object object) {
@@ -96,7 +95,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
      * {@link org.eclipse.emf.edit.command.RemoveCommand} or
      * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override
@@ -116,7 +115,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
     //    }
     /**
      * This returns Project.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override
@@ -127,7 +126,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
     /**
      * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -149,7 +148,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
      * This handles model notifications by calling {@link #updateChildren} to update any cached
      * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override
@@ -177,8 +176,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
     @Override
     protected Collection<? extends Object> getConcreteChildren(Object object) {
         if (object instanceof IProject) {
-            List<IProjectElement> elements = new ArrayList<IProjectElement>(
-                    ((IProject) object).getElements());
+            List<IProjectElement> elements = new ArrayList<>(((IProject) object).getElements());
             return elements;
         }
 

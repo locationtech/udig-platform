@@ -62,4 +62,11 @@ Import-Package: javax.media.jai,
  javax.media.jai.tilecodec,
  javax.media.jai.util,
  javax.media.jai.widget,
- net.miginfocom.swt
+ net.miginfocom.swt,
+ org.apache.commons.io;version="2.4.0",
+ org.apache.commons.io.comparator;version="2.4.0",
+ org.apache.commons.io.filefilter;version="2.4.0",
+ org.apache.commons.io.input;version="2.4.0",
+ org.apache.commons.io.monitor;version="2.4.0",
+ org.apache.commons.io.output;version="2.4.0",
+ org.apache.commons.io.serialization;version="2.4.0"

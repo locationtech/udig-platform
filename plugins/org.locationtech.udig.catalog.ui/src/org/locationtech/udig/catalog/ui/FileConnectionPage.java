@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -144,7 +144,7 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
      * @return
      * @throws IOException
      */
-    protected boolean hasOneResource(SubProgressMonitor monitor, List<IService> services)
+    protected boolean hasOneResource(SubMonitor monitor, List<IService> services)
             throws IOException {
         if (services.size() > 1 || services.isEmpty())
             return false;
@@ -392,7 +392,7 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
                                 if (service.equals(service))
                                     continue;
 
-                                service.dispose(new SubProgressMonitor(monitor, 10));
+                                service.dispose(SubMonitor.convert(monitor, 10));
                             }
                             monitor.done();
                         }

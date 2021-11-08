@@ -11,21 +11,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import org.locationtech.udig.core.internal.FeatureUtils;
-import org.locationtech.udig.project.AdaptableFeature;
-import org.locationtech.udig.project.EditManagerEvent;
-import org.locationtech.udig.project.IEditManagerListener;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.internal.EditManager;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.Messages;
-import org.locationtech.udig.project.internal.ProjectPackage;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.render.RenderManager;
-import org.locationtech.udig.ui.ProgressManager;
-
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.notify.Adapter;
@@ -46,10 +31,24 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Transaction;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.util.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.util.factory.GeoTools;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.project.AdaptableFeature;
+import org.locationtech.udig.project.EditManagerEvent;
+import org.locationtech.udig.project.IEditManagerListener;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.ui.ProgressManager;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -59,7 +58,7 @@ import org.opengis.filter.identity.Identifier;
 
 /**
  * The default implementation of the EditManager interface.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -109,7 +108,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @SuppressWarnings("unchecked")
@@ -215,7 +214,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -270,7 +269,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
     /**
      * Disables edit events so that the renderers and others listening to edit events won't be
      * triggered until after the commit or rollback.
-     * 
+     *
      * @param dialogMessage
      */
     private void startCommitRollback(String dialogMessage) {
@@ -342,7 +341,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
     /**
      * Enables rendering again and informs the feature store that editing has completed and the
      * transaction should be reset.
-     * 
+     *
      * @see UDIGFeatureStore#editComplete()
      * @throws IOException
      */
@@ -375,7 +374,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -424,7 +423,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @throws IOException
      * @generated NOT
      */
@@ -433,7 +432,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
         fireEvent(new EditManagerEvent(this, EditManagerEvent.PRE_ROLLBACK, null, null));
         startCommitRollback(Messages.EditManagerImpl_rollback_message);
 
-        HashMap<List<FeatureEvent>, FeatureEvent> modified = new HashMap<List<FeatureEvent>, FeatureEvent>();
+        HashMap<List<FeatureEvent>, FeatureEvent> modified = new HashMap<>();
         try {
             synchronized (this) {
 
@@ -443,7 +442,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
                         // create an event that notifies listeners that the area has changed again.
                         // calculate bounds of all the Changes to date.
                         // The reason for this is that otherwise I would have to make the entire
-                        // viewport re-render on a rollback. 
+                        // viewport re-render on a rollback.
                         // TODO This is a workaround to get around that.
                         ReferencedEnvelope envelope = new ReferencedEnvelope();
                         for (FeatureEvent event : changes) {
@@ -732,7 +731,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * Returns the currently selected Layer
-     * 
+     *
      * @return the currently selected Layer
      */
     @Override
@@ -759,7 +758,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
 
     /**
      * Sets the currently selected Layer
-     * 
+     *
      * @uml.property name="selectedLayer"
      */
     @Override
@@ -830,7 +829,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
         }
     };
 
-    Set<IEditManagerListener> listeners = new CopyOnWriteArraySet<IEditManagerListener>();
+    Set<IEditManagerListener> listeners = new CopyOnWriteArraySet<>();
 
     private boolean editLayerLocked = false;
 

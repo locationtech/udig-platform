@@ -23,6 +23,7 @@ import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.renderer.style.svg.SVGGraphicFactory;
 import org.geotools.util.Version;
 import org.geotools.util.factory.GeoTools;
+import org.geotools.xml.resolver.SchemaCatalog;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -39,7 +40,7 @@ import org.osgi.framework.Bundle;
  * @since 1.2.0
  */
 public class GeoToolsTest {
-    
+
     /**
      * @throws java.lang.Exception
      */
@@ -62,14 +63,14 @@ public class GeoToolsTest {
     @Test
     public void testSVGGraphicsFactory() throws Exception {
         URL url = GeoToolsTest.class.getResource("example.svg");
-        
+
         SVGGraphicFactory svgFactory = new SVGGraphicFactory();
         FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2(null);
         Literal expr = ff.literal( url.toExternalForm() );
-        
+
         Icon icon = svgFactory.getIcon(null, expr, "image/svg",16 );
         assertNotNull( icon );
-        
+
     }
 
 //    @Ignore("FIXME: due to migration to batik bundle from Orbit")
@@ -81,4 +82,9 @@ public class GeoToolsTest {
 //        SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
 //        f.createDocument(url.toString());
 //    }
+
+    @Test
+    public void testLoadClassSchemaCatalogWithResolverDependencies() throws Exception {
+        assertNotNull("class need org.apache.xml.resolver dependency to load", SchemaCatalog.build(new URL("http://maven.apache.org/xsd/maven-4.0.0.xsd")));
+    }
 }
