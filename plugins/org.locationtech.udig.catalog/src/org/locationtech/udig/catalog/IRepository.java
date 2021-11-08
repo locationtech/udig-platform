@@ -131,7 +131,7 @@ public abstract class IRepository extends ISearch {
     /**
      * Will attempt to morph into the adaptee, and return that object.
      *
-     * Required adoptions:
+     * Required adaptions:
      * <ul>
      * <li>ICatalogInfo.class
      * <li>List.class <IService>

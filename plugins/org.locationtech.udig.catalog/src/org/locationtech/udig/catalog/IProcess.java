@@ -51,7 +51,7 @@ public abstract class IProcess implements IResolve {
     /**
      * Blocking operation to resolve into the adaptee, if available.
      * <p>
-     * Required adoptions:
+     * Required adaptions:
      * <ul>
      * <li>Process.class - this
      * <li>IProcessInfo.class - getInfo( monitor ) ie about this handle's contents
@@ -68,7 +68,7 @@ public abstract class IProcess implements IResolve {
      *
      * </p>
      * <p>
-     * Recommended adoptions:
+     * Recommended adaptions:
      * <ul>
      * <li>ImageDescriptor.class (for icon provided by external service)
      * <li>List.class - members( monitor ) ie children of this process (if any exist)
@@ -127,14 +127,14 @@ public abstract class IProcess implements IResolve {
      * <p>
      * That is we *must* resolve the following:
      * <p>
-     * Required adoptions:
+     * Required adaptions:
      * <ul>
      * <li>Process.class - this
      * <li>IProcessInfo.class - getInfo (ie about this handle's contents)
      * <li>IService.class - service (ie that is responsible for this Process)
      * </ul>
      * <p>
-     * Recommended adoptions:
+     * Recommended adaptions:
      * <ul>
      * <li>ImageDescriptor.class (for icon provided by external service)
      * <li>List.class - members (ie children of this process (if any exist))
