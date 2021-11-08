@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2010, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2010, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,11 +17,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.locationtech.udig.catalog.internal.Messages;
 import org.locationtech.udig.ui.ErrorManager;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
 
 /**
  * Repository of managed services representing both the Local Catalog resources and any Web Catalog
@@ -34,7 +33,7 @@ import org.eclipse.core.runtime.SubProgressMonitor;
  * search is performed against is not defined strictly by this interface, and is determined by the
  * implementation used.
  * </p>
- * 
+ *
  * @author Jody Garnett
  * @since 1.2.0
  * @see IService
@@ -56,47 +55,51 @@ public abstract class IRepository extends ISearch {
      * List<IService> created = CatalogPlugin().getDefault().getServiceFactory().createService( params );
      * IService service = created.get(0);
      * IService registered = CatalogPlugin().getDefault().getLocal().add( service );
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
-     * After passing your service into the repository you are no longer responsible for
-     * calling dispose() (the service will be cleaned up as needed).
-     * 
+     * After passing your service into the repository you are no longer responsible for calling
+     * dispose() (the service will be cleaned up as needed).
+     *
      * @param service The services being registered with the catalog
      * @return The servie as it is represented in the catalog after being added
      * @throws UnsupportedOperationException
      * @see {@link #replace(ID, IService)}
      */
-    public abstract IService add( IService service ) throws UnsupportedOperationException;
+    public abstract IService add(IService service) throws UnsupportedOperationException;
 
     /**
      * Removes the specified entry to this catalog. In some cases the catalog will be backed onto a
      * server, which may not allow for deletions.
-     * 
+     *
      * @param service
      * @throws UnsupportedOperationException
      */
-    public abstract void remove( IService service ) throws UnsupportedOperationException;
+    public abstract void remove(IService service) throws UnsupportedOperationException;
 
     /**
-     * Acquire a service from this repository, using the default ServiceFactory if needed and registering the result.
-     * 
+     * Acquire a service from this repository, using the default ServiceFactory if needed and
+     * registering the result.
+     *
      * @param connectionParameters Connection parameters should be recognized by a ServiceExtension
      * @param monitor Used to track the process of connecting
      * @return IService
-     * @throws IOException 
+     * @throws IOException
      */
-    public abstract IService acquire( Map<String, Serializable> connectionParameters, IProgressMonitor monitor ) throws IOException;
-    
+    public abstract IService acquire(Map<String, Serializable> connectionParameters,
+            IProgressMonitor monitor) throws IOException;
+
     /**
-     * Acquire a service from this repository, using the default ServiceFactory if needed and registering the result.
-     * 
+     * Acquire a service from this repository, using the default ServiceFactory if needed and
+     * registering the result.
+     *
      * @param url URL which should be recognized by a ServiceExtension
      * @param monitor Used to track the process of connecting
      * @return IService
-     * @throws IOException 
+     * @throws IOException
      */
-    public abstract IService acquire( URL url, IProgressMonitor monitor ) throws IOException;
-    
+    public abstract IService acquire(URL url, IProgressMonitor monitor) throws IOException;
+
     /**
      * Replaces the specified entry in this catalog.
      * <p>
@@ -118,76 +121,82 @@ public abstract class IRepository extends ISearch {
      * <li>An new IForward( ID, replacement.getID()) is left in the catalog as a place holder to
      * order to let any client that was off-line know what happened next time they come to call.
      * </ul>
-     * 
+     *
      * @param id ID of the service to replace, the service with this ID will be removed
      * @param replacement Replacement IService handle; indicating where the service has moved to
      * @throws UnsupportedOperationException
      */
-    public abstract void replace( ID id, IService replacement )
-            throws UnsupportedOperationException;
+    public abstract void replace(ID id, IService replacement) throws UnsupportedOperationException;
 
     /**
-     * Will attempt to morph into the adaptee, and return that object. Required adaptions:
+     * Will attempt to morph into the adaptee, and return that object.
+     *
+     * Required adaptions:
      * <ul>
      * <li>ICatalogInfo.class
      * <li>List.class <IService>
      * </ul>
      * May Block.
-     * 
+     *
      * @param adaptee
      * @param monitor May Be Null
      * @return
      * @see ICatalogInfo
      * @see IService
      */
-    public abstract <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException;
+    @Override
+    public abstract <T> T resolve(Class<T> adaptee, IProgressMonitor monitor) throws IOException;
 
     /**
-     * Aquire info on this Catalog.
+     * Acquire info on this Catalog.
      * <p>
-     * This is functionally equivalent to: <core>resolve(ICatalogInfo.class,monitor)</code>
+     * <code>
+     * This is functionally equivalent to: <core>resolve(ICatalogInfo.class,monitor)
+     * </code>
      * </p>
-     * 
+     *
      * @see IRepository#resolve(Class, IProgressMonitor)
      * @return ICatalogInfo resolve(ICatalogInfo.class,IProgressMonitor monitor);
      */
-    public ICatalogInfo getInfo( IProgressMonitor monitor ) throws IOException {
+    @Override
+    public ICatalogInfo getInfo(IProgressMonitor monitor) throws IOException {
         return resolve(ICatalogInfo.class, monitor);
     }
 
     /**
      * Add a listener to notice when the a resource changes.
-     * 
+     *
      * @param listener
      */
-    public abstract void addListener( IResolveChangeListener listener );
+    public abstract void addListener(IResolveChangeListener listener);
 
     /**
      * Remove a listener that was watching for resource changes.
-     * 
+     *
      * @param listener
      */
-    public abstract void removeListener( IResolveChangeListener listener );
+    public abstract void removeListener(IResolveChangeListener listener);
 
     /**
      * Dispose any members at the end of the day.
      */
-    public void dispose( IProgressMonitor monitor ) {
+    @Override
+    public void dispose(IProgressMonitor monitor) {
         monitor.beginTask(Messages.ICatalog_dispose, 100);
-        List< ? extends IResolve> members;
+        List<? extends IResolve> members;
         try {
-            members = members(new SubProgressMonitor(monitor, 1));
+            members = members(SubMonitor.convert(monitor, 1));
         } catch (Throwable e) {
             ErrorManager.get().displayException(e,
                     "Error disposing members of catalog: " + getIdentifier(), CatalogPlugin.ID); //$NON-NLS-1$
             return;
         }
         int steps = (int) ((double) 99 / (double) members.size());
-        for( IResolve resolve : members ) {
+        for (IResolve resolve : members) {
             try {
-                SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, steps);
-                resolve.dispose(subProgressMonitor);
-                subProgressMonitor.done();
+                SubMonitor subMonitor = SubMonitor.convert(monitor, steps);
+                resolve.dispose(subMonitor);
+                subMonitor.done();
             } catch (Throwable e) {
                 ErrorManager.get().displayException(e,
                         "Error disposing members of catalog: " + getIdentifier(), CatalogPlugin.ID); //$NON-NLS-1$
