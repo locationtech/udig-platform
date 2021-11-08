@@ -9,6 +9,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.locationtech.udig.render.wms.basic,
  org.locationtech.udig.project.ui,
  org.locationtech.udig.project.ui.tests,
- org.locationtech.udig.catalog.wms
+ org.locationtech.udig.catalog.wms,
+ org.mockito
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
