@@ -26,29 +26,29 @@ import org.eclipse.emf.ecore.EReference;
  */
 public interface ProjectPackage extends EPackage {
     /**
-     * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The package name.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     String eNAME = "internal"; //$NON-NLS-1$
 
     /**
-     * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The package namespace URI.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     String eNS_URI = "http:///net/refractions/udig/project/internal.ecore"; //$NON-NLS-1$
 
     /**
-     * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The package namespace name.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     String eNS_PREFIX = "org.locationtech.udig.project.internal"; //$NON-NLS-1$
 
     /**
-     * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The singleton instance of the package.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     ProjectPackage eINSTANCE = org.locationtech.udig.project.internal.impl.ProjectPackageImpl
@@ -65,9 +65,9 @@ public interface ProjectPackage extends EPackage {
     int COMPARABLE = 0;
 
     /**
-     * The number of structural features of the the '<em>Comparable</em>' class. <!-- begin-user-doc
+     * The number of structural features of the '<em>Comparable</em>' class.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -76,7 +76,6 @@ public interface ProjectPackage extends EPackage {
     /**
      * The meta object id for the '{@link org.locationtech.udig.project.IMap <em>IMap</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @see org.locationtech.udig.project.IMap
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIMap()
      * @generated
@@ -84,18 +83,17 @@ public interface ProjectPackage extends EPackage {
     int IMAP = 1;
 
     /**
-     * The number of structural features of the '<em>IMap</em>' class. <!-- begin-user-doc --> <!--
+     * The number of structural features of the '<em>IMap</em>' class.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int IMAP_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.ILayer <em>ILayer</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.ILayer <em>ILayer</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.ILayer
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getILayer()
      * @generated
@@ -103,9 +101,8 @@ public interface ProjectPackage extends EPackage {
     int ILAYER = 2;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.IEditManager <em>IEdit
-     * Manager</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.IEditManager <em>IEdit Manager</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.IEditManager
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIEditManager()
      * @generated
@@ -113,9 +110,8 @@ public interface ProjectPackage extends EPackage {
     int IEDIT_MANAGER = 3;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.IProject <em>IProject</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.IProject <em>IProject</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.IProject
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIProject()
      * @generated
@@ -123,9 +119,8 @@ public interface ProjectPackage extends EPackage {
     int IPROJECT = 4;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.IAbstractContext
-     * <em>IAbstract Context</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.IAbstractContext <em>IAbstract Context</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.IAbstractContext
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIAbstractContext()
      * @generated
@@ -133,9 +128,8 @@ public interface ProjectPackage extends EPackage {
     int IABSTRACT_CONTEXT = 5;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.IBlackboard
-     * <em>IBlackboard</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.IBlackboard <em>IBlackboard</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.IBlackboard
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIBlackboard()
      * @generated
@@ -143,9 +137,8 @@ public interface ProjectPackage extends EPackage {
     int IBLACKBOARD = 6;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.IProjectElement <em>IProject
-     * Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.IProjectElement <em>IProject Element</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.IProjectElement
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIProjectElement()
      * @generated
@@ -153,9 +146,8 @@ public interface ProjectPackage extends EPackage {
     int IPROJECT_ELEMENT = 7;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.render.IRenderManager
-     * <em>IRender Manager</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.render.IRenderManager <em>IRender Manager</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.render.IRenderManager
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIRenderManager()
      * @generated
@@ -163,9 +155,8 @@ public interface ProjectPackage extends EPackage {
     int IRENDER_MANAGER = 8;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.render.IViewportModel
-     * <em>IViewport Model</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.render.IViewportModel <em>IViewport Model</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.render.IViewportModel
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIViewportModel()
      * @generated
@@ -173,20 +164,18 @@ public interface ProjectPackage extends EPackage {
     int IVIEWPORT_MODEL = 9;
 
     /**
-     * The meta object id for the '{@link Cloneable <em>Cloneable</em>}' class. <!-- begin-user-doc
+     * The meta object id for the '{@link java.lang.Object <em>Cloneable</em>}' class.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
-     * @see Cloneable
+     * @see java.lang.Object
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCloneable()
      * @generated
      */
     int CLONEABLE = 19;
 
     /**
-     * The meta object id for the
-     * '{@link org.locationtech.udig.project.internal.impl.ContextModelImpl <em>Context Model</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.ContextModelImpl <em>Context Model</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.impl.ContextModelImpl
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getContextModel()
      * @generated
@@ -194,10 +183,8 @@ public interface ProjectPackage extends EPackage {
     int CONTEXT_MODEL = 10;
 
     /**
-     * The meta object id for the
-     * '{@link org.locationtech.udig.project.internal.impl.EditManagerImpl <em>Edit Manager</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.EditManagerImpl <em>Edit Manager</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.impl.EditManagerImpl
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getEditManager()
      * @generated
@@ -205,9 +192,8 @@ public interface ProjectPackage extends EPackage {
     int EDIT_MANAGER = 11;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.LayerImpl
-     * <em>Layer</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.LayerImpl <em>Layer</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.impl.LayerImpl
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getLayer()
      * @generated
@@ -215,9 +201,8 @@ public interface ProjectPackage extends EPackage {
     int LAYER = 12;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.internal.ProjectElement
-     * <em>Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.ProjectElement <em>Element</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.ProjectElement
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getProjectElement()
      * @generated
@@ -225,9 +210,8 @@ public interface ProjectPackage extends EPackage {
     int PROJECT_ELEMENT = 15;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.MapImpl
-     * <em>Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.MapImpl <em>Map</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.impl.MapImpl
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getMap()
      * @generated
@@ -250,9 +234,8 @@ public interface ProjectPackage extends EPackage {
     // int MAP__BATCH_EVENT = MAP_FEATURE_COUNT + 1;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.ProjectImpl
-     * <em>Project</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.ProjectImpl <em>Project</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.impl.ProjectImpl
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getProject()
      * @generated
@@ -260,10 +243,8 @@ public interface ProjectPackage extends EPackage {
     int PROJECT = 14;
 
     /**
-     * The meta object id for the
-     * '{@link org.locationtech.udig.project.internal.impl.ProjectRegistryImpl <em>Registry</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.ProjectRegistryImpl <em>Registry</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.impl.ProjectRegistryImpl
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getProjectRegistry()
      * @generated
@@ -271,9 +252,8 @@ public interface ProjectPackage extends EPackage {
     int PROJECT_REGISTRY = 16;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.IStyleBlackboard <em>IStyle
-     * Blackboard</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.IStyleBlackboard <em>IStyle Blackboard</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.IStyleBlackboard
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIStyleBlackboard()
      * @generated
@@ -281,10 +261,8 @@ public interface ProjectPackage extends EPackage {
     int ISTYLE_BLACKBOARD = 26;
 
     /**
-     * The meta object id for the
-     * '{@link org.locationtech.udig.project.internal.impl.StyleBlackboardImpl <em>Style
-     * Blackboard</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.StyleBlackboardImpl <em>Style Blackboard</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.impl.StyleBlackboardImpl
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getStyleBlackboard()
      * @generated
@@ -292,9 +270,8 @@ public interface ProjectPackage extends EPackage {
     int STYLE_BLACKBOARD = 17;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.StyleEntryImpl
-     * <em>Style Entry</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.StyleEntryImpl <em>Style Entry</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.impl.StyleEntryImpl
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getStyleEntry()
      * @generated
@@ -302,10 +279,8 @@ public interface ProjectPackage extends EPackage {
     int STYLE_ENTRY = 18;
 
     /**
-     * The meta object id for the
-     * '{@link org.locationtech.udig.project.internal.impl.LayerFactoryImpl <em>Layer Factory</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.LayerFactoryImpl <em>Layer Factory</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.impl.LayerFactoryImpl
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getLayerFactory()
      * @generated
@@ -313,9 +288,8 @@ public interface ProjectPackage extends EPackage {
     int LAYER_FACTORY = 20;
 
     /**
-     * The meta object id for the '{@link org.eclipse.core.runtime.IAdaptable <em>IAdaptable</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.eclipse.core.runtime.IAdaptable <em>IAdaptable</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.core.runtime.IAdaptable
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIAdaptable()
      * @generated
@@ -323,9 +297,8 @@ public interface ProjectPackage extends EPackage {
     int IADAPTABLE = 21;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.core.IBlockingAdaptable
-     * <em>IBlocking Adaptable</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.core.IBlockingAdaptable <em>IBlocking Adaptable</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.core.IBlockingAdaptable
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIBlockingAdaptable()
      * @generated
@@ -333,9 +306,8 @@ public interface ProjectPackage extends EPackage {
     int IBLOCKING_ADAPTABLE = 22;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.BlackboardImpl
-     * <em>Blackboard</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.BlackboardImpl <em>Blackboard</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.impl.BlackboardImpl
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getBlackboard()
      * @generated
@@ -343,10 +315,8 @@ public interface ProjectPackage extends EPackage {
     int BLACKBOARD = 23;
 
     /**
-     * The meta object id for the
-     * '{@link org.locationtech.udig.project.internal.impl.BlackboardEntryImpl <em>Blackboard
-     * Entry</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.BlackboardEntryImpl <em>Blackboard Entry</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.impl.BlackboardEntryImpl
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getBlackboardEntry()
      * @generated
@@ -354,9 +324,8 @@ public interface ProjectPackage extends EPackage {
     int BLACKBOARD_ENTRY = 24;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.catalog.IResolveChangeListener
-     * <em>IResolve Change Listener</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.catalog.IResolveChangeListener <em>IResolve Change Listener</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.catalog.IResolveChangeListener
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIResolveChangeListener()
      * @generated
@@ -364,11 +333,9 @@ public interface ProjectPackage extends EPackage {
     int IRESOLVE_CHANGE_LISTENER = 25;
 
     /**
-     * The meta object id for the
-     * '{@link org.locationtech.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl
-     * <em>Interaction To EBoolean Object Map Entry</em>}' class. <!-- begin-user-doc --> <!--
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl <em>Interaction To EBoolean Object Map Entry</em>}' class.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.locationtech.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getInteractionToEBooleanObjectMapEntry()
      * @generated
@@ -376,9 +343,8 @@ public interface ProjectPackage extends EPackage {
     int INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY = 27;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.IFolder <em>IFolder</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.IFolder <em>IFolder</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.IFolder
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIFolder()
      * @generated
@@ -386,9 +352,8 @@ public interface ProjectPackage extends EPackage {
     int IFOLDER = 28;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.FolderImpl
-     * <em>Folder</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.FolderImpl <em>Folder</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.impl.FolderImpl
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getFolder()
      * @generated
@@ -396,9 +361,8 @@ public interface ProjectPackage extends EPackage {
     int FOLDER = 29;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.ILegendItem <em>ILegend
-     * Item</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.ILegendItem <em>ILegend Item</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.ILegendItem
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getILegendItem()
      * @generated
@@ -406,9 +370,9 @@ public interface ProjectPackage extends EPackage {
     int ILEGEND_ITEM = 32;
 
     /**
-     * The number of structural features of the '<em>ILayer</em>' class. <!-- begin-user-doc -->
+     * The number of structural features of the '<em>ILayer</em>' class.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -424,9 +388,9 @@ public interface ProjectPackage extends EPackage {
     int IEDIT_MANAGER_FEATURE_COUNT = 0;
 
     /**
-     * The number of structural features of the the '<em>IProject</em>' class. <!-- begin-user-doc
+     * The number of structural features of the '<em>IProject</em>' class.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -487,9 +451,9 @@ public interface ProjectPackage extends EPackage {
     int CONTEXT_MODEL__LAYERS = 0;
 
     /**
-     * The feature id for the '<em><b>Map</b></em>' container reference. <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Map</b></em>' container reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -505,9 +469,9 @@ public interface ProjectPackage extends EPackage {
     int CONTEXT_MODEL_FEATURE_COUNT = 2;
 
     /**
-     * The feature id for the '<em><b>Edit Feature</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Edit Feature</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -523,36 +487,36 @@ public interface ProjectPackage extends EPackage {
     int EDIT_MANAGER__MAP_INTERNAL = IEDIT_MANAGER_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Edit Layer Internal</b></em>' reference. <!-- begin-user-doc
+     * The feature id for the '<em><b>Edit Layer Internal</b></em>' reference.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int EDIT_MANAGER__EDIT_LAYER_INTERNAL = IEDIT_MANAGER_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Transaction Type</b></em>' attribute. <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Transaction Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int EDIT_MANAGER__TRANSACTION_TYPE = IEDIT_MANAGER_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Edit Layer Locked</b></em>' attribute. <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Edit Layer Locked</b></em>' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int EDIT_MANAGER__EDIT_LAYER_LOCKED = IEDIT_MANAGER_FEATURE_COUNT + 4;
 
     /**
-     * The feature id for the '<em><b>Selected Layer</b></em>' reference. <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Selected Layer</b></em>' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -577,9 +541,9 @@ public interface ProjectPackage extends EPackage {
     int LAYER__CONTEXT_MODEL = ILAYER_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Filter</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Filter</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -595,108 +559,108 @@ public interface ProjectPackage extends EPackage {
     int LAYER__STYLE_BLACKBOARD = ILAYER_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Zorder</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Zorder</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER__ZORDER = ILAYER_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Status</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Status</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER__STATUS = ILAYER_FEATURE_COUNT + 4;
 
     /**
-     * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER__NAME = ILAYER_FEATURE_COUNT + 5;
 
     /**
-     * The feature id for the '<em><b>Catalog Ref</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Catalog Ref</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER__CATALOG_REF = ILAYER_FEATURE_COUNT + 6;
 
     /**
-     * The feature id for the '<em><b>ID</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>ID</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER__ID = ILAYER_FEATURE_COUNT + 7;
 
     /**
-     * The feature id for the '<em><b>Visible</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Visible</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER__VISIBLE = ILAYER_FEATURE_COUNT + 8;
 
     /**
-     * The feature id for the '<em><b>Geo Resource</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Geo Resource</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER__GEO_RESOURCE = ILAYER_FEATURE_COUNT + 9;
 
     /**
-     * The feature id for the '<em><b>Geo Resources</b></em>' attribute list. <!-- begin-user-doc
+     * The feature id for the '<em><b>Geo Resources</b></em>' attribute list.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER__GEO_RESOURCES = ILAYER_FEATURE_COUNT + 10;
 
     /**
-     * The feature id for the '<em><b>CRS</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>CRS</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER__CRS = ILAYER_FEATURE_COUNT + 11;
 
     /**
-     * The feature id for the '<em><b>Properties</b></em>' reference. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Properties</b></em>' reference.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER__PROPERTIES = ILAYER_FEATURE_COUNT + 12;
 
     /**
-     * The feature id for the '<em><b>Colour Scheme</b></em>' attribute. <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Colour Scheme</b></em>' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER__COLOUR_SCHEME = ILAYER_FEATURE_COUNT + 13;
 
     /**
-     * The feature id for the '<em><b>Default Color</b></em>' attribute. <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Default Color</b></em>' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -712,99 +676,99 @@ public interface ProjectPackage extends EPackage {
     int LAYER__FEATURE_CHANGES = ILAYER_FEATURE_COUNT + 15;
 
     /**
-     * The feature id for the '<em><b>Min Scale Denominator</b></em>' attribute. <!-- begin-user-doc
+     * The feature id for the '<em><b>Min Scale Denominator</b></em>' attribute.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER__MIN_SCALE_DENOMINATOR = ILAYER_FEATURE_COUNT + 16;
 
     /**
-     * The feature id for the '<em><b>Max Scale Denominator</b></em>' attribute. <!-- begin-user-doc
+     * The feature id for the '<em><b>Max Scale Denominator</b></em>' attribute.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER__MAX_SCALE_DENOMINATOR = ILAYER_FEATURE_COUNT + 17;
 
     /**
-     * The feature id for the '<em><b>Interaction Map</b></em>' map. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Interaction Map</b></em>' map.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER__INTERACTION_MAP = ILAYER_FEATURE_COUNT + 18;
 
     /**
-     * The feature id for the '<em><b>Shown</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Shown</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER__SHOWN = ILAYER_FEATURE_COUNT + 19;
 
     /**
-     * The feature id for the '<em><b>Icon</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Icon</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER__ICON = ILAYER_FEATURE_COUNT + 20;
 
     /**
-     * The number of structural features of the '<em>Layer</em>' class. <!-- begin-user-doc --> <!--
+     * The number of structural features of the '<em>Layer</em>' class.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER_FEATURE_COUNT = ILAYER_FEATURE_COUNT + 21;
 
     /**
-     * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int PROJECT_ELEMENT__NAME = IPROJECT_ELEMENT_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Project Internal</b></em>' reference. <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Project Internal</b></em>' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int PROJECT_ELEMENT__PROJECT_INTERNAL = IPROJECT_ELEMENT_FEATURE_COUNT + 1;
 
     /**
-     * The number of structural features of the the '<em>Element</em>' class. <!-- begin-user-doc
+     * The number of structural features of the '<em>Element</em>' class.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int PROJECT_ELEMENT_FEATURE_COUNT = IPROJECT_ELEMENT_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int MAP__NAME = PROJECT_ELEMENT__NAME;
 
     /**
-     * The feature id for the '<em><b>Project Internal</b></em>' reference. <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Project Internal</b></em>' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -820,27 +784,27 @@ public interface ProjectPackage extends EPackage {
     int MAP__CONTEXT_MODEL = PROJECT_ELEMENT_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Abstract</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Abstract</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int MAP__ABSTRACT = PROJECT_ELEMENT_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Nav Command Stack</b></em>' attribute. <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Nav Command Stack</b></em>' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int MAP__NAV_COMMAND_STACK = PROJECT_ELEMENT_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Command Stack</b></em>' attribute. <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Command Stack</b></em>' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -865,9 +829,9 @@ public interface ProjectPackage extends EPackage {
     int MAP__VIEWPORT_MODEL_INTERNAL = PROJECT_ELEMENT_FEATURE_COUNT + 5;
 
     /**
-     * The feature id for the '<em><b>Color Palette</b></em>' attribute. <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Color Palette</b></em>' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -892,9 +856,9 @@ public interface ProjectPackage extends EPackage {
     int MAP__RENDER_MANAGER_INTERNAL = PROJECT_ELEMENT_FEATURE_COUNT + 8;
 
     /**
-     * The feature id for the '<em><b>Colour Scheme</b></em>' attribute. <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Colour Scheme</b></em>' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -919,18 +883,18 @@ public interface ProjectPackage extends EPackage {
     int MAP__LEGEND = PROJECT_ELEMENT_FEATURE_COUNT + 11;
 
     /**
-     * The number of structural features of the '<em>Map</em>' class. <!-- begin-user-doc --> <!--
+     * The number of structural features of the '<em>Map</em>' class.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int MAP_FEATURE_COUNT = PROJECT_ELEMENT_FEATURE_COUNT + 12;
 
     /**
-     * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -946,36 +910,36 @@ public interface ProjectPackage extends EPackage {
     int PROJECT__ELEMENTS_INTERNAL = IPROJECT_FEATURE_COUNT + 1;
 
     /**
-     * The number of structural features of the the '<em>Project</em>' class. <!-- begin-user-doc
+     * The number of structural features of the '<em>Project</em>' class.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int PROJECT_FEATURE_COUNT = IPROJECT_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Current Project</b></em>' reference. <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Current Project</b></em>' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int PROJECT_REGISTRY__CURRENT_PROJECT = 0;
 
     /**
-     * The feature id for the '<em><b>Projects</b></em>' reference list. <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Projects</b></em>' reference list.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int PROJECT_REGISTRY__PROJECTS = 1;
 
     /**
-     * The number of structural features of the the '<em>Registry</em>' class. <!-- begin-user-doc
+     * The number of structural features of the '<em>Registry</em>' class.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -1009,36 +973,36 @@ public interface ProjectPackage extends EPackage {
     int STYLE_BLACKBOARD_FEATURE_COUNT = ISTYLE_BLACKBOARD_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>ID</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>ID</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int STYLE_ENTRY__ID = 0;
 
     /**
-     * The feature id for the '<em><b>Memento</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Memento</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int STYLE_ENTRY__MEMENTO = 1;
 
     /**
-     * The feature id for the '<em><b>Style</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Style</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int STYLE_ENTRY__STYLE = 2;
 
     /**
-     * The feature id for the '<em><b>Style Class</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Style Class</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -1054,18 +1018,18 @@ public interface ProjectPackage extends EPackage {
     int STYLE_ENTRY_FEATURE_COUNT = 4;
 
     /**
-     * The number of structural features of the the '<em>Cloneable</em>' class. <!-- begin-user-doc
+     * The number of structural features of the '<em>Cloneable</em>' class.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int CLONEABLE_FEATURE_COUNT = 0;
 
     /**
-     * The feature id for the '<em><b>Map</b></em>' container reference. <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Map</b></em>' container reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -1081,9 +1045,9 @@ public interface ProjectPackage extends EPackage {
     int LAYER_FACTORY_FEATURE_COUNT = 1;
 
     /**
-     * The number of structural features of the the '<em>IAdaptable</em>' class. <!-- begin-user-doc
+     * The number of structural features of the '<em>IAdaptable</em>' class.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -1108,45 +1072,45 @@ public interface ProjectPackage extends EPackage {
     int BLACKBOARD__ENTRIES = IBLACKBOARD_FEATURE_COUNT + 0;
 
     /**
-     * The number of structural features of the the '<em>Blackboard</em>' class. <!-- begin-user-doc
+     * The number of structural features of the '<em>Blackboard</em>' class.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int BLACKBOARD_FEATURE_COUNT = IBLACKBOARD_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Key</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Key</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int BLACKBOARD_ENTRY__KEY = 0;
 
     /**
-     * The feature id for the '<em><b>Memento</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Memento</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int BLACKBOARD_ENTRY__MEMENTO = 1;
 
     /**
-     * The feature id for the '<em><b>Object Class</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Object Class</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int BLACKBOARD_ENTRY__OBJECT_CLASS = 2;
 
     /**
-     * The feature id for the '<em><b>Object</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Object</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -1171,63 +1135,62 @@ public interface ProjectPackage extends EPackage {
     int IRESOLVE_CHANGE_LISTENER_FEATURE_COUNT = 0;
 
     /**
-     * The feature id for the '<em><b>Key</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Key</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__KEY = 0;
 
     /**
-     * The feature id for the '<em><b>Value</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Value</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__VALUE = 1;
 
     /**
-     * The number of structural features of the '<em>Interaction To EBoolean Object Map Entry</em>'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The number of structural features of the '<em>Interaction To EBoolean Object Map Entry</em>' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      * @ordered
      */
     int INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY_FEATURE_COUNT = 2;
 
     /**
-     * The number of structural features of the '<em>IFolder</em>' class. <!-- begin-user-doc -->
+     * The number of structural features of the '<em>IFolder</em>' class.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int IFOLDER_FEATURE_COUNT = 0;
 
     /**
-     * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int FOLDER__NAME = IFOLDER_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Shown</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Shown</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int FOLDER__SHOWN = IFOLDER_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Icon</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Icon</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -1243,18 +1206,17 @@ public interface ProjectPackage extends EPackage {
     int FOLDER__ITEMS = IFOLDER_FEATURE_COUNT + 3;
 
     /**
-     * The number of structural features of the '<em>Folder</em>' class. <!-- begin-user-doc -->
+     * The number of structural features of the '<em>Folder</em>' class.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int FOLDER_FEATURE_COUNT = IFOLDER_FEATURE_COUNT + 4;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.ILayerLegendItem <em>ILayer
-     * Legend Item</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.ILayerLegendItem <em>ILayer Legend Item</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.ILayerLegendItem
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getILayerLegendItem()
      * @generated
@@ -1271,18 +1233,17 @@ public interface ProjectPackage extends EPackage {
     int ILAYER_LEGEND_ITEM_FEATURE_COUNT = 0;
 
     /**
-     * The number of structural features of the '<em>ILegend Item</em>' class. <!-- begin-user-doc
+     * The number of structural features of the '<em>ILegend Item</em>' class.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int ILEGEND_ITEM_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.LegendItemImpl
-     * <em>Legend Item</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.LegendItemImpl <em>Legend Item</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.impl.LegendItemImpl
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getLegendItem()
      * @generated
@@ -1290,46 +1251,44 @@ public interface ProjectPackage extends EPackage {
     int LEGEND_ITEM = 31;
 
     /**
-     * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LEGEND_ITEM__NAME = ILEGEND_ITEM_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Shown</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Shown</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LEGEND_ITEM__SHOWN = ILEGEND_ITEM_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Icon</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Icon</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LEGEND_ITEM__ICON = ILEGEND_ITEM_FEATURE_COUNT + 2;
 
     /**
-     * The number of structural features of the '<em>Legend Item</em>' class. <!-- begin-user-doc
+     * The number of structural features of the '<em>Legend Item</em>' class.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LEGEND_ITEM_FEATURE_COUNT = ILEGEND_ITEM_FEATURE_COUNT + 3;
 
     /**
-     * The meta object id for the
-     * '{@link org.locationtech.udig.project.internal.impl.LayerLegendItemImpl <em>Layer Legend
-     * Item</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.LayerLegendItemImpl <em>Layer Legend Item</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.locationtech.udig.project.internal.impl.LayerLegendItemImpl
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getLayerLegendItem()
      * @generated
@@ -1337,36 +1296,36 @@ public interface ProjectPackage extends EPackage {
     int LAYER_LEGEND_ITEM = 33;
 
     /**
-     * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER_LEGEND_ITEM__NAME = LEGEND_ITEM__NAME;
 
     /**
-     * The feature id for the '<em><b>Shown</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Shown</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER_LEGEND_ITEM__SHOWN = LEGEND_ITEM__SHOWN;
 
     /**
-     * The feature id for the '<em><b>Icon</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Icon</b></em>' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
     int LAYER_LEGEND_ITEM__ICON = LEGEND_ITEM__ICON;
 
     /**
-     * The feature id for the '<em><b>Layer</b></em>' reference. <!-- begin-user-doc --> <!--
+     * The feature id for the '<em><b>Layer</b></em>' reference.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @generated
      * @ordered
      */
@@ -1382,9 +1341,9 @@ public interface ProjectPackage extends EPackage {
     int LAYER_LEGEND_ITEM_FEATURE_COUNT = LEGEND_ITEM_FEATURE_COUNT + 1;
 
     /**
-     * The meta object id for the '<em>Coordinate</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Coordinate</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.locationtech.jts.geom.Coordinate
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCoordinate()
      * @generated
@@ -1392,9 +1351,9 @@ public interface ProjectPackage extends EPackage {
     int COORDINATE = 34;
 
     /**
-     * The meta object id for the '<em>Map Display</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Map Display</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplay
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getMapDisplay()
      * @generated
@@ -1402,9 +1361,9 @@ public interface ProjectPackage extends EPackage {
     int MAP_DISPLAY = 35;
 
     /**
-     * The meta object id for the '<em>List</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>List</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see java.util.List
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getList()
      * @generated
@@ -1412,9 +1371,9 @@ public interface ProjectPackage extends EPackage {
     int LIST = 36;
 
     /**
-     * The meta object id for the '<em>Affine Transform</em>' data type. <!-- begin-user-doc -->
+     * The meta object id for the '<em>Affine Transform</em>' data type.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @see java.awt.geom.AffineTransform
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getAffineTransform()
      * @generated
@@ -1422,9 +1381,9 @@ public interface ProjectPackage extends EPackage {
     int AFFINE_TRANSFORM = 37;
 
     /**
-     * The meta object id for the '<em>Nav Command Stack</em>' data type. <!-- begin-user-doc -->
+     * The meta object id for the '<em>Nav Command Stack</em>' data type.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @see org.locationtech.udig.project.command.NavCommandStack
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getNavCommandStack()
      * @generated
@@ -1432,9 +1391,9 @@ public interface ProjectPackage extends EPackage {
     int NAV_COMMAND_STACK = 38;
 
     /**
-     * The meta object id for the '<em>IGeo Resource</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>IGeo Resource</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.locationtech.udig.catalog.IGeoResource
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIGeoResource()
      * @generated
@@ -1442,9 +1401,9 @@ public interface ProjectPackage extends EPackage {
     int IGEO_RESOURCE = 39;
 
     /**
-     * The meta object id for the '<em>Filter</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Filter</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.opengis.filter.Filter
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getFilter()
      * @generated
@@ -1462,9 +1421,9 @@ public interface ProjectPackage extends EPackage {
     int COORDINATE_REFERENCE_SYSTEM = 41;
 
     /**
-     * The meta object id for the '<em>Command Stack</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Command Stack</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.locationtech.udig.project.command.CommandStack
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCommandStack()
      * @generated
@@ -1472,9 +1431,9 @@ public interface ProjectPackage extends EPackage {
     int COMMAND_STACK = 42;
 
     /**
-     * The meta object id for the '<em>Point</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Point</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see java.awt.Point
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getPoint()
      * @generated
@@ -1482,9 +1441,9 @@ public interface ProjectPackage extends EPackage {
     int POINT = 43;
 
     /**
-     * The meta object id for the '<em>Adapter</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Adapter</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.eclipse.emf.common.notify.Adapter
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getAdapter()
      * @generated
@@ -1492,9 +1451,9 @@ public interface ProjectPackage extends EPackage {
     int ADAPTER = 44;
 
     /**
-     * The meta object id for the '<em>IProgress Monitor</em>' data type. <!-- begin-user-doc -->
+     * The meta object id for the '<em>IProgress Monitor</em>' data type.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @see org.eclipse.core.runtime.IProgressMonitor
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIProgressMonitor()
      * @generated
@@ -1502,9 +1461,9 @@ public interface ProjectPackage extends EPackage {
     int IPROGRESS_MONITOR = 45;
 
     /**
-     * The meta object id for the '<em>Query</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Query</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.geotools.data.Query
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getQuery()
      * @generated
@@ -1512,9 +1471,9 @@ public interface ProjectPackage extends EPackage {
     int QUERY = 46;
 
     /**
-     * The meta object id for the '<em>URL</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>URL</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see java.net.URL
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getURL()
      * @generated
@@ -1522,9 +1481,9 @@ public interface ProjectPackage extends EPackage {
     int URL = 47;
 
     /**
-     * The meta object id for the '<em>Image Descriptor</em>' data type. <!-- begin-user-doc -->
+     * The meta object id for the '<em>Image Descriptor</em>' data type.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @see org.eclipse.jface.resource.ImageDescriptor
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getImageDescriptor()
      * @generated
@@ -1532,9 +1491,9 @@ public interface ProjectPackage extends EPackage {
     int IMAGE_DESCRIPTOR = 48;
 
     /**
-     * The meta object id for the '<em>Edit Command</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Edit Command</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.locationtech.udig.project.command.EditCommand
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getEditCommand()
      * @generated
@@ -1542,9 +1501,9 @@ public interface ProjectPackage extends EPackage {
     int EDIT_COMMAND = 49;
 
     /**
-     * The meta object id for the '<em>Nav Command</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Nav Command</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.locationtech.udig.project.command.NavCommand
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getNavCommand()
      * @generated
@@ -1552,9 +1511,9 @@ public interface ProjectPackage extends EPackage {
     int NAV_COMMAND = 50;
 
     /**
-     * The meta object id for the '<em>Envelope</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Envelope</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.locationtech.jts.geom.Envelope
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getEnvelope()
      * @generated
@@ -1571,9 +1530,9 @@ public interface ProjectPackage extends EPackage {
     int EDIT_MANAGER_CONTROL_COMMAND = 52;
 
     /**
-     * The meta object id for the '<em>Command</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Command</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.locationtech.udig.project.command.MapCommand
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCommand()
      * @generated
@@ -1581,9 +1540,9 @@ public interface ProjectPackage extends EPackage {
     int COMMAND = 53;
 
     /**
-     * The meta object id for the '<em>URI</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>URI</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.eclipse.emf.common.util.URI
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getURI()
      * @generated
@@ -1591,9 +1550,9 @@ public interface ProjectPackage extends EPackage {
     int URI = 54;
 
     /**
-     * The meta object id for the '<em>Catalog Ref</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Catalog Ref</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.locationtech.udig.project.internal.CatalogRef
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCatalogRef()
      * @generated
@@ -1601,9 +1560,9 @@ public interface ProjectPackage extends EPackage {
     int CATALOG_REF = 55;
 
     /**
-     * The meta object id for the '<em>Colour Palette</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Colour Palette</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.locationtech.udig.ui.palette.ColourPalette
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getColourPalette()
      * @generated
@@ -1611,9 +1570,9 @@ public interface ProjectPackage extends EPackage {
     int COLOUR_PALETTE = 56;
 
     /**
-     * The meta object id for the '<em>Colour Scheme</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Colour Scheme</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.locationtech.udig.ui.palette.ColourScheme
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getColourScheme()
      * @generated
@@ -1621,9 +1580,9 @@ public interface ProjectPackage extends EPackage {
     int COLOUR_SCHEME = 57;
 
     /**
-     * The meta object id for the '<em>Mutable Pico Container</em>' data type. <!-- begin-user-doc
+     * The meta object id for the '<em>Mutable Pico Container</em>' data type.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @see org.picocontainer.MutablePicoContainer
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getMutablePicoContainer()
      * @generated
@@ -1631,9 +1590,9 @@ public interface ProjectPackage extends EPackage {
     int MUTABLE_PICO_CONTAINER = 58;
 
     /**
-     * The meta object id for the '<em>Referenced Envelope</em>' data type. <!-- begin-user-doc -->
+     * The meta object id for the '<em>Referenced Envelope</em>' data type.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
      * @see org.geotools.geometry.jts.ReferencedEnvelope
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getReferencedEnvelope()
      * @generated
@@ -1641,9 +1600,9 @@ public interface ProjectPackage extends EPackage {
     int REFERENCED_ENVELOPE = 59;
 
     /**
-     * The meta object id for the '<em>Feature Event</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Feature Event</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.geotools.data.FeatureEvent
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getFeatureEvent()
      * @generated
@@ -1651,9 +1610,9 @@ public interface ProjectPackage extends EPackage {
     int FEATURE_EVENT = 60;
 
     /**
-     * The meta object id for the '<em>Simple Feature</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Simple Feature</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.opengis.feature.simple.SimpleFeature
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getSimpleFeature()
      * @generated
@@ -1671,9 +1630,9 @@ public interface ProjectPackage extends EPackage {
     int ILLEGAL_ARGUMENT_EXCEPTION = 62;
 
     /**
-     * The meta object id for the '<em>IO Exception</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>IO Exception</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see java.io.IOException
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIOException()
      * @generated
@@ -1681,9 +1640,9 @@ public interface ProjectPackage extends EPackage {
     int IO_EXCEPTION = 63;
 
     /**
-     * The meta object id for the '<em>Color</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Color</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see java.awt.Color
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getColor()
      * @generated
@@ -1691,9 +1650,9 @@ public interface ProjectPackage extends EPackage {
     int COLOR = 64;
 
     /**
-     * The meta object id for the '<em>Brewer Palette</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Brewer Palette</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.geotools.brewer.color.BrewerPalette
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getBrewerPalette()
      * @generated
@@ -1701,9 +1660,9 @@ public interface ProjectPackage extends EPackage {
     int BREWER_PALETTE = 65;
 
     /**
-     * The meta object id for the '<em>Interaction</em>' data type. <!-- begin-user-doc --> <!--
+     * The meta object id for the '<em>Interaction</em>' data type.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @see org.locationtech.udig.project.Interaction
      * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getInteraction()
      * @generated
@@ -1821,9 +1780,8 @@ public interface ProjectPackage extends EPackage {
     EClass getIViewportModel();
 
     /**
-     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.ContextModel
-     * <em>Context Model</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.ContextModel <em>Context Model</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Context Model</em>'.
      * @see org.locationtech.udig.project.internal.ContextModel
      * @generated
@@ -1855,9 +1813,8 @@ public interface ProjectPackage extends EPackage {
     EReference getContextModel_Map();
 
     /**
-     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.EditManager
-     * <em>Edit Manager</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.EditManager <em>Edit Manager</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Edit Manager</em>'.
      * @see org.locationtech.udig.project.internal.EditManager
      * @generated
@@ -1865,10 +1822,8 @@ public interface ProjectPackage extends EPackage {
     EClass getEditManager();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.EditManager#getEditFeature <em>Edit
-     * Feature</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.EditManager#getEditFeature <em>Edit Feature</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Edit Feature</em>'.
      * @see org.locationtech.udig.project.internal.EditManager#getEditFeature()
      * @see #getEditManager()
@@ -1877,10 +1832,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getEditManager_EditFeature();
 
     /**
-     * Returns the meta object for the container reference
-     * '{@link org.locationtech.udig.project.internal.EditManager#getMapInternal <em>Map
-     * Internal</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the container reference '{@link org.locationtech.udig.project.internal.EditManager#getMapInternal <em>Map Internal</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Map Internal</em>'.
      * @see org.locationtech.udig.project.internal.EditManager#getMapInternal()
      * @see #getEditManager()
@@ -1889,10 +1842,8 @@ public interface ProjectPackage extends EPackage {
     EReference getEditManager_MapInternal();
 
     /**
-     * Returns the meta object for the reference
-     * '{@link org.locationtech.udig.project.internal.EditManager#getEditLayerInternal <em>Edit
-     * Layer Internal</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.EditManager#getEditLayerInternal <em>Edit Layer Internal</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Edit Layer Internal</em>'.
      * @see org.locationtech.udig.project.internal.EditManager#getEditLayerInternal()
      * @see #getEditManager()
@@ -1901,10 +1852,8 @@ public interface ProjectPackage extends EPackage {
     EReference getEditManager_EditLayerInternal();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.EditManager#getTransactionType <em>Transaction
-     * Type</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.EditManager#getTransactionType <em>Transaction Type</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Transaction Type</em>'.
      * @see org.locationtech.udig.project.internal.EditManager#getTransactionType()
      * @see #getEditManager()
@@ -1913,10 +1862,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getEditManager_TransactionType();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.EditManager#isEditLayerLocked <em>Edit Layer
-     * Locked</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.EditManager#isEditLayerLocked <em>Edit Layer Locked</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Edit Layer Locked</em>'.
      * @see org.locationtech.udig.project.internal.EditManager#isEditLayerLocked()
      * @see #getEditManager()
@@ -1925,10 +1872,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getEditManager_EditLayerLocked();
 
     /**
-     * Returns the meta object for the reference
-     * '{@link org.locationtech.udig.project.internal.EditManager#getSelectedLayer <em>Selected
-     * Layer</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.EditManager#getSelectedLayer <em>Selected Layer</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Selected Layer</em>'.
      * @see org.locationtech.udig.project.internal.EditManager#getSelectedLayer()
      * @see #getEditManager()
@@ -1937,9 +1882,8 @@ public interface ProjectPackage extends EPackage {
     EReference getEditManager_SelectedLayer();
 
     /**
-     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.Layer
-     * <em>Layer</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.Layer <em>Layer</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Layer</em>'.
      * @see org.locationtech.udig.project.internal.Layer
      * @generated
@@ -1947,10 +1891,8 @@ public interface ProjectPackage extends EPackage {
     EClass getLayer();
 
     /**
-     * Returns the meta object for the container reference
-     * '{@link org.locationtech.udig.project.internal.Layer#getContextModel <em>Context
-     * Model</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the container reference '{@link org.locationtech.udig.project.internal.Layer#getContextModel <em>Context Model</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Context Model</em>'.
      * @see org.locationtech.udig.project.internal.Layer#getContextModel()
      * @see #getLayer()
@@ -1971,10 +1913,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getLayer_Filter();
 
     /**
-     * Returns the meta object for the containment reference
-     * '{@link org.locationtech.udig.project.internal.Layer#getStyleBlackboard <em>Style
-     * Blackboard</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the containment reference '{@link org.locationtech.udig.project.internal.Layer#getStyleBlackboard <em>Style Blackboard</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the containment reference '<em>Style Blackboard</em>'.
      * @see org.locationtech.udig.project.internal.Layer#getStyleBlackboard()
      * @see #getLayer()
@@ -2019,10 +1959,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getLayer_Name();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.Layer#getCatalogRef <em>Catalog Ref</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getCatalogRef <em>Catalog Ref</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for the attribute '<em>Catalog Ref</em>'.
      * @see org.locationtech.udig.project.internal.Layer#getCatalogRef()
      * @see #getLayer()
@@ -2031,10 +1969,9 @@ public interface ProjectPackage extends EPackage {
     EAttribute getLayer_CatalogRef();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.Layer#getID <em>ID</em>}'. <!-- begin-user-doc
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getID <em>ID</em>}'.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @return the meta object for the attribute '<em>ID</em>'.
      * @see org.locationtech.udig.project.internal.Layer#getID()
      * @see #getLayer()
@@ -2055,10 +1992,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getLayer_Visible();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.Layer#getGeoResource <em>Geo Resource</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getGeoResource <em>Geo Resource</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for the attribute '<em>Geo Resource</em>'.
      * @see org.locationtech.udig.project.internal.Layer#getGeoResource()
      * @see #getLayer()
@@ -2067,10 +2002,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getLayer_GeoResource();
 
     /**
-     * Returns the meta object for the attribute list
-     * '{@link org.locationtech.udig.project.internal.Layer#getGeoResources <em>Geo
-     * Resources</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute list '{@link org.locationtech.udig.project.internal.Layer#getGeoResources <em>Geo Resources</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute list '<em>Geo Resources</em>'.
      * @see org.locationtech.udig.project.internal.Layer#getGeoResources()
      * @see #getLayer()
@@ -2091,10 +2024,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getLayer_CRS();
 
     /**
-     * Returns the meta object for the reference
-     * '{@link org.locationtech.udig.project.internal.Layer#getProperties <em>Properties</em>}'.
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.Layer#getProperties <em>Properties</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for the reference '<em>Properties</em>'.
      * @see org.locationtech.udig.project.internal.Layer#getProperties()
      * @see #getLayer()
@@ -2103,10 +2034,8 @@ public interface ProjectPackage extends EPackage {
     EReference getLayer_Properties();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.Layer#getColourScheme <em>Colour
-     * Scheme</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getColourScheme <em>Colour Scheme</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Colour Scheme</em>'.
      * @see org.locationtech.udig.project.internal.Layer#getColourScheme()
      * @see #getLayer()
@@ -2115,10 +2044,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getLayer_ColourScheme();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.Layer#getDefaultColor <em>Default
-     * Color</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getDefaultColor <em>Default Color</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Default Color</em>'.
      * @see org.locationtech.udig.project.internal.Layer#getDefaultColor()
      * @see #getLayer()
@@ -2127,10 +2054,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getLayer_DefaultColor();
 
     /**
-     * Returns the meta object for the attribute list
-     * '{@link org.locationtech.udig.project.internal.Layer#getFeatureChanges <em>Feature
-     * Changes</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute list '{@link org.locationtech.udig.project.internal.Layer#getFeatureChanges <em>Feature Changes</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute list '<em>Feature Changes</em>'.
      * @see org.locationtech.udig.project.internal.Layer#getFeatureChanges()
      * @see #getLayer()
@@ -2139,10 +2064,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getLayer_FeatureChanges();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.Layer#getMinScaleDenominator <em>Min Scale
-     * Denominator</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getMinScaleDenominator <em>Min Scale Denominator</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Min Scale Denominator</em>'.
      * @see org.locationtech.udig.project.internal.Layer#getMinScaleDenominator()
      * @see #getLayer()
@@ -2151,10 +2074,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getLayer_MinScaleDenominator();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.Layer#getMaxScaleDenominator <em>Max Scale
-     * Denominator</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getMaxScaleDenominator <em>Max Scale Denominator</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Max Scale Denominator</em>'.
      * @see org.locationtech.udig.project.internal.Layer#getMaxScaleDenominator()
      * @see #getLayer()
@@ -2163,10 +2084,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getLayer_MaxScaleDenominator();
 
     /**
-     * Returns the meta object for the map
-     * '{@link org.locationtech.udig.project.internal.Layer#getInteractionMap <em>Interaction
-     * Map</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the map '{@link org.locationtech.udig.project.internal.Layer#getInteractionMap <em>Interaction Map</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the map '<em>Interaction Map</em>'.
      * @see org.locationtech.udig.project.internal.Layer#getInteractionMap()
      * @see #getLayer()
@@ -2199,9 +2118,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getLayer_Icon();
 
     /**
-     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.Map
-     * <em>Map</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.Map <em>Map</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Map</em>'.
      * @see org.locationtech.udig.project.internal.Map
      * @generated
@@ -2209,10 +2127,8 @@ public interface ProjectPackage extends EPackage {
     EClass getMap();
 
     /**
-     * Returns the meta object for the containment reference
-     * '{@link org.locationtech.udig.project.internal.Map#getContextModel <em>Context Model</em>}'.
+     * Returns the meta object for the containment reference '{@link org.locationtech.udig.project.internal.Map#getContextModel <em>Context Model</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for the containment reference '<em>Context Model</em>'.
      * @see org.locationtech.udig.project.internal.Map#getContextModel()
      * @see #getMap()
@@ -2233,10 +2149,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getMap_Abstract();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.Map#getNavCommandStack <em>Nav Command
-     * Stack</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Map#getNavCommandStack <em>Nav Command Stack</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Nav Command Stack</em>'.
      * @see org.locationtech.udig.project.internal.Map#getNavCommandStack()
      * @see #getMap()
@@ -2245,10 +2159,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getMap_NavCommandStack();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.Map#getCommandStack <em>Command Stack</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Map#getCommandStack <em>Command Stack</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for the attribute '<em>Command Stack</em>'.
      * @see org.locationtech.udig.project.internal.Map#getCommandStack()
      * @see #getMap()
@@ -2257,10 +2169,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getMap_CommandStack();
 
     /**
-     * Returns the meta object for the containment reference
-     * '{@link org.locationtech.udig.project.internal.Map#getLayerFactory <em>Layer Factory</em>}'.
+     * Returns the meta object for the containment reference '{@link org.locationtech.udig.project.internal.Map#getLayerFactory <em>Layer Factory</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for the containment reference '<em>Layer Factory</em>'.
      * @see org.locationtech.udig.project.internal.Map#getLayerFactory()
      * @see #getMap()
@@ -2269,10 +2179,8 @@ public interface ProjectPackage extends EPackage {
     EReference getMap_LayerFactory();
 
     /**
-     * Returns the meta object for the containment reference
-     * '{@link org.locationtech.udig.project.internal.Map#getViewportModelInternal <em>Viewport
-     * Model Internal</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the containment reference '{@link org.locationtech.udig.project.internal.Map#getViewportModelInternal <em>Viewport Model Internal</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the containment reference '<em>Viewport Model Internal</em>'.
      * @see org.locationtech.udig.project.internal.Map#getViewportModelInternal()
      * @see #getMap()
@@ -2281,10 +2189,8 @@ public interface ProjectPackage extends EPackage {
     EReference getMap_ViewportModelInternal();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.Map#getColorPalette <em>Color Palette</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Map#getColorPalette <em>Color Palette</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for the attribute '<em>Color Palette</em>'.
      * @see org.locationtech.udig.project.internal.Map#getColorPalette()
      * @see #getMap()
@@ -2293,10 +2199,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getMap_ColorPalette();
 
     /**
-     * Returns the meta object for the containment reference
-     * '{@link org.locationtech.udig.project.internal.Map#getEditManagerInternal <em>Edit Manager
-     * Internal</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the containment reference '{@link org.locationtech.udig.project.internal.Map#getEditManagerInternal <em>Edit Manager Internal</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the containment reference '<em>Edit Manager Internal</em>'.
      * @see org.locationtech.udig.project.internal.Map#getEditManagerInternal()
      * @see #getMap()
@@ -2305,10 +2209,8 @@ public interface ProjectPackage extends EPackage {
     EReference getMap_EditManagerInternal();
 
     /**
-     * Returns the meta object for the reference
-     * '{@link org.locationtech.udig.project.internal.Map#getRenderManagerInternal <em>Render
-     * Manager Internal</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.Map#getRenderManagerInternal <em>Render Manager Internal</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Render Manager Internal</em>'.
      * @see org.locationtech.udig.project.internal.Map#getRenderManagerInternal()
      * @see #getMap()
@@ -2317,10 +2219,8 @@ public interface ProjectPackage extends EPackage {
     EReference getMap_RenderManagerInternal();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.Map#getColourScheme <em>Colour Scheme</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Map#getColourScheme <em>Colour Scheme</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for the attribute '<em>Colour Scheme</em>'.
      * @see org.locationtech.udig.project.internal.Map#getColourScheme()
      * @see #getMap()
@@ -2329,10 +2229,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getMap_ColourScheme();
 
     /**
-     * Returns the meta object for the containment reference
-     * '{@link org.locationtech.udig.project.internal.Map#getBlackBoardInternal <em>Black Board
-     * Internal</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the containment reference '{@link org.locationtech.udig.project.internal.Map#getBlackBoardInternal <em>Black Board Internal</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the containment reference '<em>Black Board Internal</em>'.
      * @see org.locationtech.udig.project.internal.Map#getBlackBoardInternal()
      * @see #getMap()
@@ -2353,9 +2251,8 @@ public interface ProjectPackage extends EPackage {
     EReference getMap_Legend();
 
     /**
-     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.Project
-     * <em>Project</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.Project <em>Project</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Project</em>'.
      * @see org.locationtech.udig.project.internal.Project
      * @generated
@@ -2375,10 +2272,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getProject_Name();
 
     /**
-     * Returns the meta object for the reference list
-     * '{@link org.locationtech.udig.project.internal.Project#getElementsInternal <em>Elements
-     * Internal</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the reference list '{@link org.locationtech.udig.project.internal.Project#getElementsInternal <em>Elements Internal</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference list '<em>Elements Internal</em>'.
      * @see org.locationtech.udig.project.internal.Project#getElementsInternal()
      * @see #getProject()
@@ -2410,10 +2305,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getProjectElement_Name();
 
     /**
-     * Returns the meta object for the reference
-     * '{@link org.locationtech.udig.project.internal.ProjectElement#getProjectInternal <em>Project
-     * Internal</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.ProjectElement#getProjectInternal <em>Project Internal</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Project Internal</em>'.
      * @see org.locationtech.udig.project.internal.ProjectElement#getProjectInternal()
      * @see #getProjectElement()
@@ -2433,10 +2326,8 @@ public interface ProjectPackage extends EPackage {
     EClass getProjectRegistry();
 
     /**
-     * Returns the meta object for the reference
-     * '{@link org.locationtech.udig.project.internal.ProjectRegistry#getCurrentProject <em>Current
-     * Project</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.ProjectRegistry#getCurrentProject <em>Current Project</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Current Project</em>'.
      * @see org.locationtech.udig.project.internal.ProjectRegistry#getCurrentProject()
      * @see #getProjectRegistry()
@@ -2445,10 +2336,8 @@ public interface ProjectPackage extends EPackage {
     EReference getProjectRegistry_CurrentProject();
 
     /**
-     * Returns the meta object for the reference list
-     * '{@link org.locationtech.udig.project.internal.ProjectRegistry#getProjects
-     * <em>Projects</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the reference list '{@link org.locationtech.udig.project.internal.ProjectRegistry#getProjects <em>Projects</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference list '<em>Projects</em>'.
      * @see org.locationtech.udig.project.internal.ProjectRegistry#getProjects()
      * @see #getProjectRegistry()
@@ -2457,10 +2346,8 @@ public interface ProjectPackage extends EPackage {
     EReference getProjectRegistry_Projects();
 
     /**
-     * Returns the meta object for class
-     * '{@link org.locationtech.udig.project.internal.StyleBlackboard <em>Style Blackboard</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.StyleBlackboard <em>Style Blackboard</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for class '<em>Style Blackboard</em>'.
      * @see org.locationtech.udig.project.internal.StyleBlackboard
      * @generated
@@ -2468,10 +2355,8 @@ public interface ProjectPackage extends EPackage {
     EClass getStyleBlackboard();
 
     /**
-     * Returns the meta object for the containment reference list
-     * '{@link org.locationtech.udig.project.internal.StyleBlackboard#getContent <em>Content</em>}'.
+     * Returns the meta object for the containment reference list '{@link org.locationtech.udig.project.internal.StyleBlackboard#getContent <em>Content</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for the containment reference list '<em>Content</em>'.
      * @see org.locationtech.udig.project.internal.StyleBlackboard#getContent()
      * @see #getStyleBlackboard()
@@ -2480,9 +2365,8 @@ public interface ProjectPackage extends EPackage {
     EReference getStyleBlackboard_Content();
 
     /**
-     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.StyleEntry
-     * <em>Style Entry</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.StyleEntry <em>Style Entry</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Style Entry</em>'.
      * @see org.locationtech.udig.project.internal.StyleEntry
      * @generated
@@ -2526,10 +2410,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getStyleEntry_Style();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.StyleEntry#getStyleClass <em>Style
-     * Class</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.StyleEntry#getStyleClass <em>Style Class</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Style Class</em>'.
      * @see org.locationtech.udig.project.internal.StyleEntry#getStyleClass()
      * @see #getStyleEntry()
@@ -2538,20 +2420,19 @@ public interface ProjectPackage extends EPackage {
     EAttribute getStyleEntry_StyleClass();
 
     /**
-     * Returns the meta object for class '{@link Cloneable <em>Cloneable</em>}'. <!-- begin-user-doc
+     * Returns the meta object for class '{@link java.lang.Object <em>Cloneable</em>}'.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     *
      * @return the meta object for class '<em>Cloneable</em>'.
-     * @see Cloneable
+     * @see java.lang.Object
      * @model instanceClass="Cloneable"
      * @generated
      */
     EClass getCloneable();
 
     /**
-     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.LayerFactory
-     * <em>Layer Factory</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.LayerFactory <em>Layer Factory</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Layer Factory</em>'.
      * @see org.locationtech.udig.project.internal.LayerFactory
      * @generated
@@ -2571,9 +2452,8 @@ public interface ProjectPackage extends EPackage {
     EReference getLayerFactory_Map();
 
     /**
-     * Returns the meta object for class '{@link org.eclipse.core.runtime.IAdaptable
-     * <em>IAdaptable</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.eclipse.core.runtime.IAdaptable <em>IAdaptable</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>IAdaptable</em>'.
      * @see org.eclipse.core.runtime.IAdaptable
      * @model instanceClass="org.eclipse.core.runtime.IAdaptable"
@@ -2582,9 +2462,8 @@ public interface ProjectPackage extends EPackage {
     EClass getIAdaptable();
 
     /**
-     * Returns the meta object for class '{@link org.locationtech.udig.core.IBlockingAdaptable
-     * <em>IBlocking Adaptable</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.core.IBlockingAdaptable <em>IBlocking Adaptable</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>IBlocking Adaptable</em>'.
      * @see org.locationtech.udig.core.IBlockingAdaptable
      * @model instanceClass="org.locationtech.udig.core.IBlockingAdaptable"
@@ -2593,9 +2472,8 @@ public interface ProjectPackage extends EPackage {
     EClass getIBlockingAdaptable();
 
     /**
-     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.Blackboard
-     * <em>Blackboard</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.Blackboard <em>Blackboard</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Blackboard</em>'.
      * @see org.locationtech.udig.project.internal.Blackboard
      * @generated
@@ -2615,10 +2493,8 @@ public interface ProjectPackage extends EPackage {
     EReference getBlackboard_Entries();
 
     /**
-     * Returns the meta object for class
-     * '{@link org.locationtech.udig.project.internal.BlackboardEntry <em>Blackboard Entry</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.BlackboardEntry <em>Blackboard Entry</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for class '<em>Blackboard Entry</em>'.
      * @see org.locationtech.udig.project.internal.BlackboardEntry
      * @generated
@@ -2638,10 +2514,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getBlackboardEntry_Key();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.BlackboardEntry#getMemento <em>Memento</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.BlackboardEntry#getMemento <em>Memento</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for the attribute '<em>Memento</em>'.
      * @see org.locationtech.udig.project.internal.BlackboardEntry#getMemento()
      * @see #getBlackboardEntry()
@@ -2650,10 +2524,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getBlackboardEntry_Memento();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.BlackboardEntry#getObjectClass <em>Object
-     * Class</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.BlackboardEntry#getObjectClass <em>Object Class</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Object Class</em>'.
      * @see org.locationtech.udig.project.internal.BlackboardEntry#getObjectClass()
      * @see #getBlackboardEntry()
@@ -2662,10 +2534,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getBlackboardEntry_ObjectClass();
 
     /**
-     * Returns the meta object for the attribute
-     * '{@link org.locationtech.udig.project.internal.BlackboardEntry#getObject <em>Object</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.BlackboardEntry#getObject <em>Object</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for the attribute '<em>Object</em>'.
      * @see org.locationtech.udig.project.internal.BlackboardEntry#getObject()
      * @see #getBlackboardEntry()
@@ -2674,10 +2544,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getBlackboardEntry_Object();
 
     /**
-     * Returns the meta object for class
-     * '{@link org.locationtech.udig.catalog.IResolveChangeListener <em>IResolve Change
-     * Listener</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.catalog.IResolveChangeListener <em>IResolve Change Listener</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>IResolve Change Listener</em>'.
      * @see org.locationtech.udig.catalog.IResolveChangeListener
      * @model instanceClass="org.locationtech.udig.catalog.IResolveChangeListener"
@@ -2686,9 +2554,8 @@ public interface ProjectPackage extends EPackage {
     EClass getIResolveChangeListener();
 
     /**
-     * Returns the meta object for class '{@link org.locationtech.udig.project.IStyleBlackboard
-     * <em>IStyle Blackboard</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.project.IStyleBlackboard <em>IStyle Blackboard</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>IStyle Blackboard</em>'.
      * @see org.locationtech.udig.project.IStyleBlackboard
      * @model instanceClass="org.locationtech.udig.project.IStyleBlackboard"
@@ -2697,9 +2564,8 @@ public interface ProjectPackage extends EPackage {
     EClass getIStyleBlackboard();
 
     /**
-     * Returns the meta object for class '{@link java.util.Map.Entry <em>Interaction To EBoolean
-     * Object Map Entry</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link java.util.Map.Entry <em>Interaction To EBoolean Object Map Entry</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Interaction To EBoolean Object Map Entry</em>'.
      * @see java.util.Map.Entry
      * @model keyDataType="org.locationtech.udig.project.internal.Interaction"
@@ -2731,9 +2597,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getInteractionToEBooleanObjectMapEntry_Value();
 
     /**
-     * Returns the meta object for class '{@link org.locationtech.udig.project.IFolder
-     * <em>IFolder</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.project.IFolder <em>IFolder</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>IFolder</em>'.
      * @see org.locationtech.udig.project.IFolder
      * @model instanceClass="org.locationtech.udig.project.IFolder"
@@ -2742,9 +2607,8 @@ public interface ProjectPackage extends EPackage {
     EClass getIFolder();
 
     /**
-     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.Folder
-     * <em>Folder</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.Folder <em>Folder</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Folder</em>'.
      * @see org.locationtech.udig.project.internal.Folder
      * @generated
@@ -2764,9 +2628,8 @@ public interface ProjectPackage extends EPackage {
     EReference getFolder_Items();
 
     /**
-     * Returns the meta object for class '{@link org.locationtech.udig.project.ILayerLegendItem
-     * <em>ILayer Legend Item</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.project.ILayerLegendItem <em>ILayer Legend Item</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>ILayer Legend Item</em>'.
      * @see org.locationtech.udig.project.ILayerLegendItem
      * @model instanceClass="org.locationtech.udig.project.ILayerLegendItem"
@@ -2775,9 +2638,8 @@ public interface ProjectPackage extends EPackage {
     EClass getILayerLegendItem();
 
     /**
-     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.LegendItem
-     * <em>Legend Item</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.LegendItem <em>Legend Item</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Legend Item</em>'.
      * @see org.locationtech.udig.project.internal.LegendItem
      * @generated
@@ -2821,9 +2683,8 @@ public interface ProjectPackage extends EPackage {
     EAttribute getLegendItem_Icon();
 
     /**
-     * Returns the meta object for class '{@link org.locationtech.udig.project.ILegendItem
-     * <em>ILegend Item</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for class '{@link org.locationtech.udig.project.ILegendItem <em>ILegend Item</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>ILegend Item</em>'.
      * @see org.locationtech.udig.project.ILegendItem
      * @model instanceClass="org.locationtech.udig.project.ILegendItem"
@@ -2832,10 +2693,8 @@ public interface ProjectPackage extends EPackage {
     EClass getILegendItem();
 
     /**
-     * Returns the meta object for class
-     * '{@link org.locationtech.udig.project.internal.LayerLegendItem <em>Layer Legend Item</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.LayerLegendItem <em>Layer Legend Item</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for class '<em>Layer Legend Item</em>'.
      * @see org.locationtech.udig.project.internal.LayerLegendItem
      * @generated
@@ -2843,10 +2702,8 @@ public interface ProjectPackage extends EPackage {
     EClass getLayerLegendItem();
 
     /**
-     * Returns the meta object for the reference
-     * '{@link org.locationtech.udig.project.internal.LayerLegendItem#getLayer <em>Layer</em>}'.
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.LayerLegendItem#getLayer <em>Layer</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for the reference '<em>Layer</em>'.
      * @see org.locationtech.udig.project.internal.LayerLegendItem#getLayer()
      * @see #getLayerLegendItem()
@@ -2855,9 +2712,8 @@ public interface ProjectPackage extends EPackage {
     EReference getLayerLegendItem_Layer();
 
     /**
-     * Returns the meta object for data type '{@link org.locationtech.jts.geom.Coordinate
-     * <em>Coordinate</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.locationtech.jts.geom.Coordinate <em>Coordinate</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Coordinate</em>'.
      * @see org.locationtech.jts.geom.Coordinate
      * @model instanceClass="org.locationtech.jts.geom.Coordinate"
@@ -2866,10 +2722,8 @@ public interface ProjectPackage extends EPackage {
     EDataType getCoordinate();
 
     /**
-     * Returns the meta object for data type
-     * '{@link org.locationtech.udig.project.render.displayAdapter.IMapDisplay <em>Map
-     * Display</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.locationtech.udig.project.render.displayAdapter.IMapDisplay <em>Map Display</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Map Display</em>'.
      * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplay
      * @model instanceClass="org.locationtech.udig.project.render.displayAdapter.IMapDisplay"
@@ -2889,9 +2743,8 @@ public interface ProjectPackage extends EPackage {
     EDataType getList();
 
     /**
-     * Returns the meta object for data type '{@link java.awt.geom.AffineTransform <em>Affine
-     * Transform</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link java.awt.geom.AffineTransform <em>Affine Transform</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Affine Transform</em>'.
      * @see java.awt.geom.AffineTransform
      * @model instanceClass="java.awt.geom.AffineTransform"
@@ -2900,10 +2753,8 @@ public interface ProjectPackage extends EPackage {
     EDataType getAffineTransform();
 
     /**
-     * Returns the meta object for data type
-     * '{@link org.locationtech.udig.project.command.NavCommandStack <em>Nav Command Stack</em>}'.
+     * Returns the meta object for data type '{@link org.locationtech.udig.project.command.NavCommandStack <em>Nav Command Stack</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for data type '<em>Nav Command Stack</em>'.
      * @see org.locationtech.udig.project.command.NavCommandStack
      * @model instanceClass="org.locationtech.udig.project.command.NavCommandStack"
@@ -2912,9 +2763,8 @@ public interface ProjectPackage extends EPackage {
     EDataType getNavCommandStack();
 
     /**
-     * Returns the meta object for data type '{@link org.locationtech.udig.catalog.IGeoResource
-     * <em>IGeo Resource</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.locationtech.udig.catalog.IGeoResource <em>IGeo Resource</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>IGeo Resource</em>'.
      * @see org.locationtech.udig.catalog.IGeoResource
      * @model instanceClass="org.locationtech.udig.catalog.IGeoResource"
@@ -2925,7 +2775,6 @@ public interface ProjectPackage extends EPackage {
     /**
      * Returns the meta object for data type '{@link org.opengis.filter.Filter <em>Filter</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for data type '<em>Filter</em>'.
      * @see org.opengis.filter.Filter
      * @model instanceClass="org.opengis.filter.Filter"
@@ -2934,10 +2783,8 @@ public interface ProjectPackage extends EPackage {
     EDataType getFilter();
 
     /**
-     * Returns the meta object for data type
-     * '{@link org.opengis.referencing.crs.CoordinateReferenceSystem <em>Coordinate Reference
-     * System</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.opengis.referencing.crs.CoordinateReferenceSystem <em>Coordinate Reference System</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Coordinate Reference System</em>'.
      * @see org.opengis.referencing.crs.CoordinateReferenceSystem
      * @model instanceClass="org.opengis.referencing.crs.CoordinateReferenceSystem"
@@ -2969,9 +2816,8 @@ public interface ProjectPackage extends EPackage {
     EDataType getPoint();
 
     /**
-     * Returns the meta object for data type '{@link org.eclipse.emf.common.notify.Adapter
-     * <em>Adapter</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.eclipse.emf.common.notify.Adapter <em>Adapter</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Adapter</em>'.
      * @see org.eclipse.emf.common.notify.Adapter
      * @model instanceClass="org.eclipse.emf.common.notify.Adapter"
@@ -2980,9 +2826,8 @@ public interface ProjectPackage extends EPackage {
     EDataType getAdapter();
 
     /**
-     * Returns the meta object for data type '{@link org.eclipse.core.runtime.IProgressMonitor
-     * <em>IProgress Monitor</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.eclipse.core.runtime.IProgressMonitor <em>IProgress Monitor</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>IProgress Monitor</em>'.
      * @see org.eclipse.core.runtime.IProgressMonitor
      * @model instanceClass="org.eclipse.core.runtime.IProgressMonitor"
@@ -3013,9 +2858,8 @@ public interface ProjectPackage extends EPackage {
     EDataType getURL();
 
     /**
-     * Returns the meta object for data type '{@link org.eclipse.jface.resource.ImageDescriptor
-     * <em>Image Descriptor</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.eclipse.jface.resource.ImageDescriptor <em>Image Descriptor</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Image Descriptor</em>'.
      * @see org.eclipse.jface.resource.ImageDescriptor
      * @model instanceClass="org.eclipse.jface.resource.ImageDescriptor"
@@ -3048,9 +2892,8 @@ public interface ProjectPackage extends EPackage {
     EDataType getNavCommand();
 
     /**
-     * Returns the meta object for data type '{@link org.locationtech.jts.geom.Envelope
-     * <em>Envelope</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.locationtech.jts.geom.Envelope <em>Envelope</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Envelope</em>'.
      * @see org.locationtech.jts.geom.Envelope
      * @model instanceClass="org.locationtech.jts.geom.Envelope"
@@ -3059,10 +2902,8 @@ public interface ProjectPackage extends EPackage {
     EDataType getEnvelope();
 
     /**
-     * Returns the meta object for data type
-     * '{@link org.locationtech.udig.project.command.EditManagerControlCommand <em>Edit Manager
-     * Control Command</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.locationtech.udig.project.command.EditManagerControlCommand <em>Edit Manager Control Command</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Edit Manager Control Command</em>'.
      * @see org.locationtech.udig.project.command.EditManagerControlCommand
      * @model instanceClass="org.locationtech.udig.project.command.EditManagerControlCommand"
@@ -3085,7 +2926,6 @@ public interface ProjectPackage extends EPackage {
     /**
      * Returns the meta object for data type '{@link org.eclipse.emf.common.util.URI <em>URI</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for data type '<em>URI</em>'.
      * @see org.eclipse.emf.common.util.URI
      * @model instanceClass="org.eclipse.emf.common.util.URI"
@@ -3106,9 +2946,8 @@ public interface ProjectPackage extends EPackage {
     EDataType getCatalogRef();
 
     /**
-     * Returns the meta object for data type '{@link org.locationtech.udig.ui.palette.ColourPalette
-     * <em>Colour Palette</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.locationtech.udig.ui.palette.ColourPalette <em>Colour Palette</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Colour Palette</em>'.
      * @see org.locationtech.udig.ui.palette.ColourPalette
      * @model instanceClass="org.locationtech.udig.ui.palette.ColourPalette"
@@ -3117,9 +2956,8 @@ public interface ProjectPackage extends EPackage {
     EDataType getColourPalette();
 
     /**
-     * Returns the meta object for data type '{@link org.locationtech.udig.ui.palette.ColourScheme
-     * <em>Colour Scheme</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.locationtech.udig.ui.palette.ColourScheme <em>Colour Scheme</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Colour Scheme</em>'.
      * @see org.locationtech.udig.ui.palette.ColourScheme
      * @model instanceClass="org.locationtech.udig.ui.palette.ColourScheme"
@@ -3128,9 +2966,8 @@ public interface ProjectPackage extends EPackage {
     EDataType getColourScheme();
 
     /**
-     * Returns the meta object for data type '{@link org.picocontainer.MutablePicoContainer
-     * <em>Mutable Pico Container</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.picocontainer.MutablePicoContainer <em>Mutable Pico Container</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Mutable Pico Container</em>'.
      * @see org.picocontainer.MutablePicoContainer
      * @model instanceClass="org.picocontainer.MutablePicoContainer"
@@ -3139,9 +2976,8 @@ public interface ProjectPackage extends EPackage {
     EDataType getMutablePicoContainer();
 
     /**
-     * Returns the meta object for data type '{@link org.geotools.geometry.jts.ReferencedEnvelope
-     * <em>Referenced Envelope</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.geotools.geometry.jts.ReferencedEnvelope <em>Referenced Envelope</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Referenced Envelope</em>'.
      * @see org.geotools.geometry.jts.ReferencedEnvelope
      * @model instanceClass="org.geotools.geometry.jts.ReferencedEnvelope"
@@ -3150,9 +2986,8 @@ public interface ProjectPackage extends EPackage {
     EDataType getReferencedEnvelope();
 
     /**
-     * Returns the meta object for data type '{@link org.geotools.data.FeatureEvent <em>Feature
-     * Event</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.geotools.data.FeatureEvent <em>Feature Event</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Feature Event</em>'.
      * @see org.geotools.data.FeatureEvent
      * @model instanceClass="org.geotools.data.FeatureEvent"
@@ -3161,9 +2996,8 @@ public interface ProjectPackage extends EPackage {
     EDataType getFeatureEvent();
 
     /**
-     * Returns the meta object for data type '{@link org.opengis.feature.simple.SimpleFeature
-     * <em>Simple Feature</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.opengis.feature.simple.SimpleFeature <em>Simple Feature</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Simple Feature</em>'.
      * @see org.opengis.feature.simple.SimpleFeature
      * @model instanceClass="org.opengis.feature.simple.SimpleFeature"
@@ -3172,9 +3006,8 @@ public interface ProjectPackage extends EPackage {
     EDataType getSimpleFeature();
 
     /**
-     * Returns the meta object for data type '{@link java.lang.IllegalArgumentException <em>Illegal
-     * Argument Exception</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link java.lang.IllegalArgumentException <em>Illegal Argument Exception</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Illegal Argument Exception</em>'.
      * @see java.lang.IllegalArgumentException
      * @model instanceClass="java.lang.IllegalArgumentException"
@@ -3185,7 +3018,6 @@ public interface ProjectPackage extends EPackage {
     /**
      * Returns the meta object for data type '{@link java.io.IOException <em>IO Exception</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @return the meta object for data type '<em>IO Exception</em>'.
      * @see java.io.IOException
      * @model instanceClass="java.io.IOException"
@@ -3205,9 +3037,8 @@ public interface ProjectPackage extends EPackage {
     EDataType getColor();
 
     /**
-     * Returns the meta object for data type '{@link org.geotools.brewer.color.BrewerPalette
-     * <em>Brewer Palette</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.geotools.brewer.color.BrewerPalette <em>Brewer Palette</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Brewer Palette</em>'.
      * @see org.geotools.brewer.color.BrewerPalette
      * @model instanceClass="org.geotools.brewer.color.BrewerPalette"
@@ -3216,9 +3047,8 @@ public interface ProjectPackage extends EPackage {
     EDataType getBrewerPalette();
 
     /**
-     * Returns the meta object for data type '{@link org.locationtech.udig.project.Interaction
-     * <em>Interaction</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * Returns the meta object for data type '{@link org.locationtech.udig.project.Interaction <em>Interaction</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Interaction</em>'.
      * @see org.locationtech.udig.project.Interaction
      * @model instanceClass="org.locationtech.udig.project.Interaction"
@@ -3227,9 +3057,9 @@ public interface ProjectPackage extends EPackage {
     EDataType getInteraction();
 
     /**
-     * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!--
+     * Returns the factory that creates the instances of the model.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
      * @return the factory that creates the instances of the model.
      * @generated
      */
@@ -3244,14 +3074,12 @@ public interface ProjectPackage extends EPackage {
      * <li>and each data type</li>
      * </ul>
      * <!-- end-user-doc -->
-     *
      * @generated
      */
     interface Literals {
         /**
          * The meta object literal for the '{@link java.lang.Object <em>Comparable</em>}' class.
          * <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
          * @see java.lang.Object
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getComparable()
          * @generated
@@ -3259,9 +3087,8 @@ public interface ProjectPackage extends EPackage {
         EClass COMPARABLE = eINSTANCE.getComparable();
 
         /**
-         * The meta object literal for the '{@link org.locationtech.udig.project.IMap
-         * <em>IMap</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.IMap <em>IMap</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.IMap
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIMap()
          * @generated
@@ -3269,9 +3096,8 @@ public interface ProjectPackage extends EPackage {
         EClass IMAP = eINSTANCE.getIMap();
 
         /**
-         * The meta object literal for the '{@link org.locationtech.udig.project.ILayer
-         * <em>ILayer</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.ILayer <em>ILayer</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.ILayer
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getILayer()
          * @generated
@@ -3279,9 +3105,8 @@ public interface ProjectPackage extends EPackage {
         EClass ILAYER = eINSTANCE.getILayer();
 
         /**
-         * The meta object literal for the '{@link org.locationtech.udig.project.IEditManager
-         * <em>IEdit Manager</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.IEditManager <em>IEdit Manager</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.IEditManager
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIEditManager()
          * @generated
@@ -3289,9 +3114,8 @@ public interface ProjectPackage extends EPackage {
         EClass IEDIT_MANAGER = eINSTANCE.getIEditManager();
 
         /**
-         * The meta object literal for the '{@link org.locationtech.udig.project.IProject
-         * <em>IProject</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.IProject <em>IProject</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.IProject
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIProject()
          * @generated
@@ -3299,9 +3123,8 @@ public interface ProjectPackage extends EPackage {
         EClass IPROJECT = eINSTANCE.getIProject();
 
         /**
-         * The meta object literal for the '{@link org.locationtech.udig.project.IAbstractContext
-         * <em>IAbstract Context</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.IAbstractContext <em>IAbstract Context</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.IAbstractContext
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIAbstractContext()
          * @generated
@@ -3309,9 +3132,8 @@ public interface ProjectPackage extends EPackage {
         EClass IABSTRACT_CONTEXT = eINSTANCE.getIAbstractContext();
 
         /**
-         * The meta object literal for the '{@link org.locationtech.udig.project.IBlackboard
-         * <em>IBlackboard</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.IBlackboard <em>IBlackboard</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.IBlackboard
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIBlackboard()
          * @generated
@@ -3319,9 +3141,8 @@ public interface ProjectPackage extends EPackage {
         EClass IBLACKBOARD = eINSTANCE.getIBlackboard();
 
         /**
-         * The meta object literal for the '{@link org.locationtech.udig.project.IProjectElement
-         * <em>IProject Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.IProjectElement <em>IProject Element</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.IProjectElement
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIProjectElement()
          * @generated
@@ -3329,10 +3150,8 @@ public interface ProjectPackage extends EPackage {
         EClass IPROJECT_ELEMENT = eINSTANCE.getIProjectElement();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.render.IRenderManager <em>IRender Manager</em>}'
-         * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.render.IRenderManager <em>IRender Manager</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.render.IRenderManager
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIRenderManager()
          * @generated
@@ -3340,10 +3159,8 @@ public interface ProjectPackage extends EPackage {
         EClass IRENDER_MANAGER = eINSTANCE.getIRenderManager();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.render.IViewportModel <em>IViewport Model</em>}'
-         * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.render.IViewportModel <em>IViewport Model</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.render.IViewportModel
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIViewportModel()
          * @generated
@@ -3351,10 +3168,8 @@ public interface ProjectPackage extends EPackage {
         EClass IVIEWPORT_MODEL = eINSTANCE.getIViewportModel();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.impl.ContextModelImpl <em>Context
-         * Model</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.ContextModelImpl <em>Context Model</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.internal.impl.ContextModelImpl
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getContextModel()
          * @generated
@@ -3362,9 +3177,8 @@ public interface ProjectPackage extends EPackage {
         EClass CONTEXT_MODEL = eINSTANCE.getContextModel();
 
         /**
-         * The meta object literal for the '<em><b>Layers</b></em>' containment reference list
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Layers</b></em>' containment reference list feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EReference CONTEXT_MODEL__LAYERS = eINSTANCE.getContextModel_Layers();
@@ -3378,10 +3192,8 @@ public interface ProjectPackage extends EPackage {
         EReference CONTEXT_MODEL__MAP = eINSTANCE.getContextModel_Map();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.impl.EditManagerImpl <em>Edit
-         * Manager</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.EditManagerImpl <em>Edit Manager</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.internal.impl.EditManagerImpl
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getEditManager()
          * @generated
@@ -3397,9 +3209,8 @@ public interface ProjectPackage extends EPackage {
         EAttribute EDIT_MANAGER__EDIT_FEATURE = eINSTANCE.getEditManager_EditFeature();
 
         /**
-         * The meta object literal for the '<em><b>Map Internal</b></em>' container reference
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Map Internal</b></em>' container reference feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EReference EDIT_MANAGER__MAP_INTERNAL = eINSTANCE.getEditManager_MapInternal();
@@ -3407,7 +3218,6 @@ public interface ProjectPackage extends EPackage {
         /**
          * The meta object literal for the '<em><b>Edit Layer Internal</b></em>' reference feature.
          * <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
          * @generated
          */
         EReference EDIT_MANAGER__EDIT_LAYER_INTERNAL = eINSTANCE.getEditManager_EditLayerInternal();
@@ -3415,7 +3225,6 @@ public interface ProjectPackage extends EPackage {
         /**
          * The meta object literal for the '<em><b>Transaction Type</b></em>' attribute feature.
          * <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
          * @generated
          */
         EAttribute EDIT_MANAGER__TRANSACTION_TYPE = eINSTANCE.getEditManager_TransactionType();
@@ -3423,7 +3232,6 @@ public interface ProjectPackage extends EPackage {
         /**
          * The meta object literal for the '<em><b>Edit Layer Locked</b></em>' attribute feature.
          * <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
          * @generated
          */
         EAttribute EDIT_MANAGER__EDIT_LAYER_LOCKED = eINSTANCE.getEditManager_EditLayerLocked();
@@ -3437,10 +3245,8 @@ public interface ProjectPackage extends EPackage {
         EReference EDIT_MANAGER__SELECTED_LAYER = eINSTANCE.getEditManager_SelectedLayer();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.impl.LayerImpl <em>Layer</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.LayerImpl <em>Layer</em>}' class.
          * <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
          * @see org.locationtech.udig.project.internal.impl.LayerImpl
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getLayer()
          * @generated
@@ -3448,9 +3254,8 @@ public interface ProjectPackage extends EPackage {
         EClass LAYER = eINSTANCE.getLayer();
 
         /**
-         * The meta object literal for the '<em><b>Context Model</b></em>' container reference
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Context Model</b></em>' container reference feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EReference LAYER__CONTEXT_MODEL = eINSTANCE.getLayer_ContextModel();
@@ -3464,9 +3269,8 @@ public interface ProjectPackage extends EPackage {
         EAttribute LAYER__FILTER = eINSTANCE.getLayer_Filter();
 
         /**
-         * The meta object literal for the '<em><b>Style Blackboard</b></em>' containment reference
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Style Blackboard</b></em>' containment reference feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EReference LAYER__STYLE_BLACKBOARD = eINSTANCE.getLayer_StyleBlackboard();
@@ -3530,7 +3334,6 @@ public interface ProjectPackage extends EPackage {
         /**
          * The meta object literal for the '<em><b>Geo Resources</b></em>' attribute list feature.
          * <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
          * @generated
          */
         EAttribute LAYER__GEO_RESOURCES = eINSTANCE.getLayer_GeoResources();
@@ -3570,23 +3373,20 @@ public interface ProjectPackage extends EPackage {
         /**
          * The meta object literal for the '<em><b>Feature Changes</b></em>' attribute list feature.
          * <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
          * @generated
          */
         EAttribute LAYER__FEATURE_CHANGES = eINSTANCE.getLayer_FeatureChanges();
 
         /**
-         * The meta object literal for the '<em><b>Min Scale Denominator</b></em>' attribute
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Min Scale Denominator</b></em>' attribute feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EAttribute LAYER__MIN_SCALE_DENOMINATOR = eINSTANCE.getLayer_MinScaleDenominator();
 
         /**
-         * The meta object literal for the '<em><b>Max Scale Denominator</b></em>' attribute
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Max Scale Denominator</b></em>' attribute feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EAttribute LAYER__MAX_SCALE_DENOMINATOR = eINSTANCE.getLayer_MaxScaleDenominator();
@@ -3627,9 +3427,8 @@ public interface ProjectPackage extends EPackage {
         EClass MAP = eINSTANCE.getMap();
 
         /**
-         * The meta object literal for the '<em><b>Context Model</b></em>' containment reference
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Context Model</b></em>' containment reference feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EReference MAP__CONTEXT_MODEL = eINSTANCE.getMap_ContextModel();
@@ -3645,7 +3444,6 @@ public interface ProjectPackage extends EPackage {
         /**
          * The meta object literal for the '<em><b>Nav Command Stack</b></em>' attribute feature.
          * <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
          * @generated
          */
         EAttribute MAP__NAV_COMMAND_STACK = eINSTANCE.getMap_NavCommandStack();
@@ -3659,17 +3457,15 @@ public interface ProjectPackage extends EPackage {
         EAttribute MAP__COMMAND_STACK = eINSTANCE.getMap_CommandStack();
 
         /**
-         * The meta object literal for the '<em><b>Layer Factory</b></em>' containment reference
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Layer Factory</b></em>' containment reference feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EReference MAP__LAYER_FACTORY = eINSTANCE.getMap_LayerFactory();
 
         /**
-         * The meta object literal for the '<em><b>Viewport Model Internal</b></em>' containment
-         * reference feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Viewport Model Internal</b></em>' containment reference feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EReference MAP__VIEWPORT_MODEL_INTERNAL = eINSTANCE.getMap_ViewportModelInternal();
@@ -3683,17 +3479,15 @@ public interface ProjectPackage extends EPackage {
         EAttribute MAP__COLOR_PALETTE = eINSTANCE.getMap_ColorPalette();
 
         /**
-         * The meta object literal for the '<em><b>Edit Manager Internal</b></em>' containment
-         * reference feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Edit Manager Internal</b></em>' containment reference feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EReference MAP__EDIT_MANAGER_INTERNAL = eINSTANCE.getMap_EditManagerInternal();
 
         /**
-         * The meta object literal for the '<em><b>Render Manager Internal</b></em>' reference
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Render Manager Internal</b></em>' reference feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EReference MAP__RENDER_MANAGER_INTERNAL = eINSTANCE.getMap_RenderManagerInternal();
@@ -3707,26 +3501,22 @@ public interface ProjectPackage extends EPackage {
         EAttribute MAP__COLOUR_SCHEME = eINSTANCE.getMap_ColourScheme();
 
         /**
-         * The meta object literal for the '<em><b>Black Board Internal</b></em>' containment
-         * reference feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Black Board Internal</b></em>' containment reference feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EReference MAP__BLACK_BOARD_INTERNAL = eINSTANCE.getMap_BlackBoardInternal();
 
         /**
-         * The meta object literal for the '<em><b>Legend</b></em>' containment reference list
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Legend</b></em>' containment reference list feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EReference MAP__LEGEND = eINSTANCE.getMap_Legend();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.impl.ProjectImpl <em>Project</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.ProjectImpl <em>Project</em>}' class.
          * <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
          * @see org.locationtech.udig.project.internal.impl.ProjectImpl
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getProject()
          * @generated
@@ -3742,18 +3532,15 @@ public interface ProjectPackage extends EPackage {
         EAttribute PROJECT__NAME = eINSTANCE.getProject_Name();
 
         /**
-         * The meta object literal for the '<em><b>Elements Internal</b></em>' reference list
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Elements Internal</b></em>' reference list feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EReference PROJECT__ELEMENTS_INTERNAL = eINSTANCE.getProject_ElementsInternal();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.ProjectElement <em>Element</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.ProjectElement <em>Element</em>}' class.
          * <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
          * @see org.locationtech.udig.project.internal.ProjectElement
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getProjectElement()
          * @generated
@@ -3771,17 +3558,14 @@ public interface ProjectPackage extends EPackage {
         /**
          * The meta object literal for the '<em><b>Project Internal</b></em>' reference feature.
          * <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
          * @generated
          */
         EReference PROJECT_ELEMENT__PROJECT_INTERNAL = eINSTANCE
                 .getProjectElement_ProjectInternal();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.impl.ProjectRegistryImpl
-         * <em>Registry</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.ProjectRegistryImpl <em>Registry</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.internal.impl.ProjectRegistryImpl
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getProjectRegistry()
          * @generated
@@ -3806,10 +3590,8 @@ public interface ProjectPackage extends EPackage {
         EReference PROJECT_REGISTRY__PROJECTS = eINSTANCE.getProjectRegistry_Projects();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.impl.StyleBlackboardImpl <em>Style
-         * Blackboard</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.StyleBlackboardImpl <em>Style Blackboard</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.internal.impl.StyleBlackboardImpl
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getStyleBlackboard()
          * @generated
@@ -3817,18 +3599,15 @@ public interface ProjectPackage extends EPackage {
         EClass STYLE_BLACKBOARD = eINSTANCE.getStyleBlackboard();
 
         /**
-         * The meta object literal for the '<em><b>Content</b></em>' containment reference list
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Content</b></em>' containment reference list feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EReference STYLE_BLACKBOARD__CONTENT = eINSTANCE.getStyleBlackboard_Content();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.impl.StyleEntryImpl <em>Style Entry</em>}'
-         * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.StyleEntryImpl <em>Style Entry</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.internal.impl.StyleEntryImpl
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getStyleEntry()
          * @generated
@@ -3878,10 +3657,8 @@ public interface ProjectPackage extends EPackage {
         EClass CLONEABLE = eINSTANCE.getCloneable();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.impl.LayerFactoryImpl <em>Layer
-         * Factory</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.LayerFactoryImpl <em>Layer Factory</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.internal.impl.LayerFactoryImpl
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getLayerFactory()
          * @generated
@@ -3897,9 +3674,8 @@ public interface ProjectPackage extends EPackage {
         EReference LAYER_FACTORY__MAP = eINSTANCE.getLayerFactory_Map();
 
         /**
-         * The meta object literal for the '{@link org.eclipse.core.runtime.IAdaptable
-         * <em>IAdaptable</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.eclipse.core.runtime.IAdaptable <em>IAdaptable</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.eclipse.core.runtime.IAdaptable
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIAdaptable()
          * @generated
@@ -3907,9 +3683,8 @@ public interface ProjectPackage extends EPackage {
         EClass IADAPTABLE = eINSTANCE.getIAdaptable();
 
         /**
-         * The meta object literal for the '{@link org.locationtech.udig.core.IBlockingAdaptable
-         * <em>IBlocking Adaptable</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.core.IBlockingAdaptable <em>IBlocking Adaptable</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.core.IBlockingAdaptable
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIBlockingAdaptable()
          * @generated
@@ -3917,10 +3692,8 @@ public interface ProjectPackage extends EPackage {
         EClass IBLOCKING_ADAPTABLE = eINSTANCE.getIBlockingAdaptable();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.impl.BlackboardImpl <em>Blackboard</em>}'
-         * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.BlackboardImpl <em>Blackboard</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.internal.impl.BlackboardImpl
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getBlackboard()
          * @generated
@@ -3928,18 +3701,15 @@ public interface ProjectPackage extends EPackage {
         EClass BLACKBOARD = eINSTANCE.getBlackboard();
 
         /**
-         * The meta object literal for the '<em><b>Entries</b></em>' containment reference list
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Entries</b></em>' containment reference list feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EReference BLACKBOARD__ENTRIES = eINSTANCE.getBlackboard_Entries();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.impl.BlackboardEntryImpl <em>Blackboard
-         * Entry</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.BlackboardEntryImpl <em>Blackboard Entry</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.internal.impl.BlackboardEntryImpl
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getBlackboardEntry()
          * @generated
@@ -3979,10 +3749,8 @@ public interface ProjectPackage extends EPackage {
         EAttribute BLACKBOARD_ENTRY__OBJECT = eINSTANCE.getBlackboardEntry_Object();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.catalog.IResolveChangeListener <em>IResolve Change
-         * Listener</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.catalog.IResolveChangeListener <em>IResolve Change Listener</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.catalog.IResolveChangeListener
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIResolveChangeListener()
          * @generated
@@ -3990,9 +3758,8 @@ public interface ProjectPackage extends EPackage {
         EClass IRESOLVE_CHANGE_LISTENER = eINSTANCE.getIResolveChangeListener();
 
         /**
-         * The meta object literal for the '{@link org.locationtech.udig.project.IStyleBlackboard
-         * <em>IStyle Blackboard</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.IStyleBlackboard <em>IStyle Blackboard</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.IStyleBlackboard
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIStyleBlackboard()
          * @generated
@@ -4000,11 +3767,9 @@ public interface ProjectPackage extends EPackage {
         EClass ISTYLE_BLACKBOARD = eINSTANCE.getIStyleBlackboard();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl
-         * <em>Interaction To EBoolean Object Map Entry</em>}' class. <!-- begin-user-doc --> <!--
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl <em>Interaction To EBoolean Object Map Entry</em>}' class.
+         * <!-- begin-user-doc --> <!--
          * end-user-doc -->
-         *
          * @see org.locationtech.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getInteractionToEBooleanObjectMapEntry()
          * @generated
@@ -4031,9 +3796,8 @@ public interface ProjectPackage extends EPackage {
                 .getInteractionToEBooleanObjectMapEntry_Value();
 
         /**
-         * The meta object literal for the '{@link org.locationtech.udig.project.IFolder
-         * <em>IFolder</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.IFolder <em>IFolder</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.IFolder
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIFolder()
          * @generated
@@ -4041,10 +3805,8 @@ public interface ProjectPackage extends EPackage {
         EClass IFOLDER = eINSTANCE.getIFolder();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.impl.FolderImpl <em>Folder</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.FolderImpl <em>Folder</em>}' class.
          * <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
          * @see org.locationtech.udig.project.internal.impl.FolderImpl
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getFolder()
          * @generated
@@ -4052,17 +3814,15 @@ public interface ProjectPackage extends EPackage {
         EClass FOLDER = eINSTANCE.getFolder();
 
         /**
-         * The meta object literal for the '<em><b>Items</b></em>' containment reference list
-         * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '<em><b>Items</b></em>' containment reference list feature.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         EReference FOLDER__ITEMS = eINSTANCE.getFolder_Items();
 
         /**
-         * The meta object literal for the '{@link org.locationtech.udig.project.ILayerLegendItem
-         * <em>ILayer Legend Item</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.ILayerLegendItem <em>ILayer Legend Item</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.ILayerLegendItem
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getILayerLegendItem()
          * @generated
@@ -4070,10 +3830,8 @@ public interface ProjectPackage extends EPackage {
         EClass ILAYER_LEGEND_ITEM = eINSTANCE.getILayerLegendItem();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.impl.LegendItemImpl <em>Legend Item</em>}'
-         * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.LegendItemImpl <em>Legend Item</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.internal.impl.LegendItemImpl
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getLegendItem()
          * @generated
@@ -4105,9 +3863,8 @@ public interface ProjectPackage extends EPackage {
         EAttribute LEGEND_ITEM__ICON = eINSTANCE.getLegendItem_Icon();
 
         /**
-         * The meta object literal for the '{@link org.locationtech.udig.project.ILegendItem
-         * <em>ILegend Item</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.ILegendItem <em>ILegend Item</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.ILegendItem
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getILegendItem()
          * @generated
@@ -4115,10 +3872,8 @@ public interface ProjectPackage extends EPackage {
         EClass ILEGEND_ITEM = eINSTANCE.getILegendItem();
 
         /**
-         * The meta object literal for the
-         * '{@link org.locationtech.udig.project.internal.impl.LayerLegendItemImpl <em>Layer Legend
-         * Item</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.LayerLegendItemImpl <em>Layer Legend Item</em>}' class.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.locationtech.udig.project.internal.impl.LayerLegendItemImpl
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getLayerLegendItem()
          * @generated
@@ -4134,9 +3889,9 @@ public interface ProjectPackage extends EPackage {
         EReference LAYER_LEGEND_ITEM__LAYER = eINSTANCE.getLayerLegendItem_Layer();
 
         /**
-         * The meta object literal for the '<em>Coordinate</em>' data type. <!-- begin-user-doc -->
+         * The meta object literal for the '<em>Coordinate</em>' data type.
+         * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         *
          * @see org.locationtech.jts.geom.Coordinate
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCoordinate()
          * @generated
@@ -4144,9 +3899,9 @@ public interface ProjectPackage extends EPackage {
         EDataType COORDINATE = eINSTANCE.getCoordinate();
 
         /**
-         * The meta object literal for the '<em>Map Display</em>' data type. <!-- begin-user-doc -->
+         * The meta object literal for the '<em>Map Display</em>' data type.
+         * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         *
          * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplay
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getMapDisplay()
          * @generated
@@ -4154,9 +3909,9 @@ public interface ProjectPackage extends EPackage {
         EDataType MAP_DISPLAY = eINSTANCE.getMapDisplay();
 
         /**
-         * The meta object literal for the '<em>List</em>' data type. <!-- begin-user-doc --> <!--
+         * The meta object literal for the '<em>List</em>' data type.
+         * <!-- begin-user-doc --> <!--
          * end-user-doc -->
-         *
          * @see java.util.List
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getList()
          * @generated
@@ -4184,9 +3939,9 @@ public interface ProjectPackage extends EPackage {
         EDataType NAV_COMMAND_STACK = eINSTANCE.getNavCommandStack();
 
         /**
-         * The meta object literal for the '<em>IGeo Resource</em>' data type. <!-- begin-user-doc
+         * The meta object literal for the '<em>IGeo Resource</em>' data type.
+         * <!-- begin-user-doc
          * --> <!-- end-user-doc -->
-         *
          * @see org.locationtech.udig.catalog.IGeoResource
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIGeoResource()
          * @generated
@@ -4194,9 +3949,9 @@ public interface ProjectPackage extends EPackage {
         EDataType IGEO_RESOURCE = eINSTANCE.getIGeoResource();
 
         /**
-         * The meta object literal for the '<em>Filter</em>' data type. <!-- begin-user-doc --> <!--
+         * The meta object literal for the '<em>Filter</em>' data type.
+         * <!-- begin-user-doc --> <!--
          * end-user-doc -->
-         *
          * @see org.opengis.filter.Filter
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getFilter()
          * @generated
@@ -4214,9 +3969,9 @@ public interface ProjectPackage extends EPackage {
         EDataType COORDINATE_REFERENCE_SYSTEM = eINSTANCE.getCoordinateReferenceSystem();
 
         /**
-         * The meta object literal for the '<em>Command Stack</em>' data type. <!-- begin-user-doc
+         * The meta object literal for the '<em>Command Stack</em>' data type.
+         * <!-- begin-user-doc
          * --> <!-- end-user-doc -->
-         *
          * @see org.locationtech.udig.project.command.CommandStack
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCommandStack()
          * @generated
@@ -4224,9 +3979,9 @@ public interface ProjectPackage extends EPackage {
         EDataType COMMAND_STACK = eINSTANCE.getCommandStack();
 
         /**
-         * The meta object literal for the '<em>Point</em>' data type. <!-- begin-user-doc --> <!--
+         * The meta object literal for the '<em>Point</em>' data type.
+         * <!-- begin-user-doc --> <!--
          * end-user-doc -->
-         *
          * @see java.awt.Point
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getPoint()
          * @generated
@@ -4234,9 +3989,9 @@ public interface ProjectPackage extends EPackage {
         EDataType POINT = eINSTANCE.getPoint();
 
         /**
-         * The meta object literal for the '<em>Adapter</em>' data type. <!-- begin-user-doc -->
+         * The meta object literal for the '<em>Adapter</em>' data type.
+         * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         *
          * @see org.eclipse.emf.common.notify.Adapter
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getAdapter()
          * @generated
@@ -4254,9 +4009,9 @@ public interface ProjectPackage extends EPackage {
         EDataType IPROGRESS_MONITOR = eINSTANCE.getIProgressMonitor();
 
         /**
-         * The meta object literal for the '<em>Query</em>' data type. <!-- begin-user-doc --> <!--
+         * The meta object literal for the '<em>Query</em>' data type.
+         * <!-- begin-user-doc --> <!--
          * end-user-doc -->
-         *
          * @see org.geotools.data.Query
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getQuery()
          * @generated
@@ -4264,9 +4019,9 @@ public interface ProjectPackage extends EPackage {
         EDataType QUERY = eINSTANCE.getQuery();
 
         /**
-         * The meta object literal for the '<em>URL</em>' data type. <!-- begin-user-doc --> <!--
+         * The meta object literal for the '<em>URL</em>' data type.
+         * <!-- begin-user-doc --> <!--
          * end-user-doc -->
-         *
          * @see java.net.URL
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getURL()
          * @generated
@@ -4284,9 +4039,9 @@ public interface ProjectPackage extends EPackage {
         EDataType IMAGE_DESCRIPTOR = eINSTANCE.getImageDescriptor();
 
         /**
-         * The meta object literal for the '<em>Edit Command</em>' data type. <!-- begin-user-doc
+         * The meta object literal for the '<em>Edit Command</em>' data type.
+         * <!-- begin-user-doc
          * --> <!-- end-user-doc -->
-         *
          * @see org.locationtech.udig.project.command.EditCommand
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getEditCommand()
          * @generated
@@ -4294,9 +4049,9 @@ public interface ProjectPackage extends EPackage {
         EDataType EDIT_COMMAND = eINSTANCE.getEditCommand();
 
         /**
-         * The meta object literal for the '<em>Nav Command</em>' data type. <!-- begin-user-doc -->
+         * The meta object literal for the '<em>Nav Command</em>' data type.
+         * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         *
          * @see org.locationtech.udig.project.command.NavCommand
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getNavCommand()
          * @generated
@@ -4304,9 +4059,9 @@ public interface ProjectPackage extends EPackage {
         EDataType NAV_COMMAND = eINSTANCE.getNavCommand();
 
         /**
-         * The meta object literal for the '<em>Envelope</em>' data type. <!-- begin-user-doc -->
+         * The meta object literal for the '<em>Envelope</em>' data type.
+         * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         *
          * @see org.locationtech.jts.geom.Envelope
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getEnvelope()
          * @generated
@@ -4324,9 +4079,9 @@ public interface ProjectPackage extends EPackage {
         EDataType EDIT_MANAGER_CONTROL_COMMAND = eINSTANCE.getEditManagerControlCommand();
 
         /**
-         * The meta object literal for the '<em>Command</em>' data type. <!-- begin-user-doc -->
+         * The meta object literal for the '<em>Command</em>' data type.
+         * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         *
          * @see org.locationtech.udig.project.command.MapCommand
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCommand()
          * @generated
@@ -4334,9 +4089,9 @@ public interface ProjectPackage extends EPackage {
         EDataType COMMAND = eINSTANCE.getCommand();
 
         /**
-         * The meta object literal for the '<em>URI</em>' data type. <!-- begin-user-doc --> <!--
+         * The meta object literal for the '<em>URI</em>' data type.
+         * <!-- begin-user-doc --> <!--
          * end-user-doc -->
-         *
          * @see org.eclipse.emf.common.util.URI
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getURI()
          * @generated
@@ -4344,9 +4099,9 @@ public interface ProjectPackage extends EPackage {
         EDataType URI = eINSTANCE.getURI();
 
         /**
-         * The meta object literal for the '<em>Catalog Ref</em>' data type. <!-- begin-user-doc -->
+         * The meta object literal for the '<em>Catalog Ref</em>' data type.
+         * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         *
          * @see org.locationtech.udig.project.internal.CatalogRef
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCatalogRef()
          * @generated
@@ -4354,9 +4109,9 @@ public interface ProjectPackage extends EPackage {
         EDataType CATALOG_REF = eINSTANCE.getCatalogRef();
 
         /**
-         * The meta object literal for the '<em>Colour Palette</em>' data type. <!-- begin-user-doc
+         * The meta object literal for the '<em>Colour Palette</em>' data type.
+         * <!-- begin-user-doc
          * --> <!-- end-user-doc -->
-         *
          * @see org.locationtech.udig.ui.palette.ColourPalette
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getColourPalette()
          * @generated
@@ -4364,9 +4119,9 @@ public interface ProjectPackage extends EPackage {
         EDataType COLOUR_PALETTE = eINSTANCE.getColourPalette();
 
         /**
-         * The meta object literal for the '<em>Colour Scheme</em>' data type. <!-- begin-user-doc
+         * The meta object literal for the '<em>Colour Scheme</em>' data type.
+         * <!-- begin-user-doc
          * --> <!-- end-user-doc -->
-         *
          * @see org.locationtech.udig.ui.palette.ColourScheme
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getColourScheme()
          * @generated
@@ -4394,9 +4149,9 @@ public interface ProjectPackage extends EPackage {
         EDataType REFERENCED_ENVELOPE = eINSTANCE.getReferencedEnvelope();
 
         /**
-         * The meta object literal for the '<em>Feature Event</em>' data type. <!-- begin-user-doc
+         * The meta object literal for the '<em>Feature Event</em>' data type.
+         * <!-- begin-user-doc
          * --> <!-- end-user-doc -->
-         *
          * @see org.geotools.data.FeatureEvent
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getFeatureEvent()
          * @generated
@@ -4404,9 +4159,9 @@ public interface ProjectPackage extends EPackage {
         EDataType FEATURE_EVENT = eINSTANCE.getFeatureEvent();
 
         /**
-         * The meta object literal for the '<em>Simple Feature</em>' data type. <!-- begin-user-doc
+         * The meta object literal for the '<em>Simple Feature</em>' data type.
+         * <!-- begin-user-doc
          * --> <!-- end-user-doc -->
-         *
          * @see org.opengis.feature.simple.SimpleFeature
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getSimpleFeature()
          * @generated
@@ -4424,9 +4179,9 @@ public interface ProjectPackage extends EPackage {
         EDataType ILLEGAL_ARGUMENT_EXCEPTION = eINSTANCE.getIllegalArgumentException();
 
         /**
-         * The meta object literal for the '<em>IO Exception</em>' data type. <!-- begin-user-doc
+         * The meta object literal for the '<em>IO Exception</em>' data type.
+         * <!-- begin-user-doc
          * --> <!-- end-user-doc -->
-         *
          * @see java.io.IOException
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIOException()
          * @generated
@@ -4434,9 +4189,9 @@ public interface ProjectPackage extends EPackage {
         EDataType IO_EXCEPTION = eINSTANCE.getIOException();
 
         /**
-         * The meta object literal for the '<em>Color</em>' data type. <!-- begin-user-doc --> <!--
+         * The meta object literal for the '<em>Color</em>' data type.
+         * <!-- begin-user-doc --> <!--
          * end-user-doc -->
-         *
          * @see java.awt.Color
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getColor()
          * @generated
@@ -4444,9 +4199,9 @@ public interface ProjectPackage extends EPackage {
         EDataType COLOR = eINSTANCE.getColor();
 
         /**
-         * The meta object literal for the '<em>Brewer Palette</em>' data type. <!-- begin-user-doc
+         * The meta object literal for the '<em>Brewer Palette</em>' data type.
+         * <!-- begin-user-doc
          * --> <!-- end-user-doc -->
-         *
          * @see org.geotools.brewer.color.BrewerPalette
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getBrewerPalette()
          * @generated
@@ -4454,9 +4209,9 @@ public interface ProjectPackage extends EPackage {
         EDataType BREWER_PALETTE = eINSTANCE.getBrewerPalette();
 
         /**
-         * The meta object literal for the '<em>Interaction</em>' data type. <!-- begin-user-doc -->
+         * The meta object literal for the '<em>Interaction</em>' data type.
+         * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         *
          * @see org.locationtech.udig.project.Interaction
          * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getInteraction()
          * @generated

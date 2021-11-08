@@ -11,7 +11,7 @@
 package org.locationtech.udig.tools.edit.commands;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
 import org.geotools.feature.FeatureIterator;
@@ -34,7 +34,8 @@ import org.opengis.filter.Filter;
  * @author jones
  * @since 1.1.0
  */
-public class CreateNewOrSelectExistingFeatureCommand extends AbstractCommand implements UndoableMapCommand {
+public class CreateNewOrSelectExistingFeatureCommand extends AbstractCommand
+        implements UndoableMapCommand {
 
     private Geometry geom;
 
@@ -61,7 +62,7 @@ public class CreateNewOrSelectExistingFeatureCommand extends AbstractCommand imp
         monitor.beginTask(Messages.CreateOrSetFeature_name, 10);
         monitor.worked(1);
         FeatureStore<SimpleFeatureType, SimpleFeature> store = layer.getResource(FeatureStore.class,
-                new SubProgressMonitor(monitor, 2));
+                SubMonitor.convert(monitor, 2));
         Filter id = FeatureUtils.id(fid);
         String typeName = store.getSchema().getTypeName();
         Query query = new Query(typeName, id);
@@ -72,9 +73,9 @@ public class CreateNewOrSelectExistingFeatureCommand extends AbstractCommand imp
             iter.close();
         }
         if (createFeature) {
-            createFeature(new SubProgressMonitor(monitor, 8));
+            createFeature(SubMonitor.convert(monitor, 8));
         } else {
-            modifyFeature(new SubProgressMonitor(monitor, 8));
+            modifyFeature(SubMonitor.convert(monitor, 8));
         }
     }
 

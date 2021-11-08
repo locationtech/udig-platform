@@ -80,8 +80,8 @@ public final class ProjectEditPlugin extends EMFPlugin {
      */
     public static class Implementation extends EclipsePlugin {
         /**
-         * Creates an instance. <!-- begin-user-doc --> <!-- end-user-doc -->
-         *
+         * Creates an instance.
+         * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @generated
          */
         public Implementation() {

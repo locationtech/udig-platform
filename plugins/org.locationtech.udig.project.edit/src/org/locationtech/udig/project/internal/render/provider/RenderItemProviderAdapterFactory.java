@@ -9,8 +9,6 @@ package org.locationtech.udig.project.internal.render.provider;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.locationtech.udig.project.internal.render.util.RenderAdapterFactory;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -25,6 +23,7 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.locationtech.udig.project.internal.render.util.RenderAdapterFactory;
 
 /**
  * This is the factory that is used to provide the interfaces needed to support Viewers.
@@ -40,7 +39,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
     /**
      * This keeps track of the root adapter factory that delegates to this adapter factory. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected ComposedAdapterFactory parentAdapterFactory;
@@ -48,7 +47,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
     /**
      * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected IChangeNotifier changeNotifier = new ChangeNotifier();
@@ -58,7 +57,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    protected Collection<Object> supportedTypes = new ArrayList<Object>();
+    protected Collection<Object> supportedTypes = new ArrayList<>();
 
     /**
      * This constructs an instance.
@@ -77,7 +76,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
      * This keeps track of the one adapter used for all
      * {@link org.locationtech.udig.project.internal.render.RenderManager} instances. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected RenderManagerItemProvider renderManagerItemProvider;
@@ -101,7 +100,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
      * This keeps track of the one adapter used for all
      * {@link org.locationtech.udig.project.internal.render.ViewportModel} instances. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected ViewportModelItemProvider viewportModelItemProvider;
@@ -125,7 +124,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
      * This keeps track of the one adapter used for all
      * {@link org.locationtech.udig.project.internal.render.RenderExecutor} instances. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected RenderExecutorItemProvider renderExecutorItemProvider;
@@ -179,7 +178,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
     /**
      * This implementation substitutes the factory itself as the key for the adapter. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override
@@ -226,7 +225,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
     /**
      * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override
@@ -239,7 +238,7 @@ public class RenderItemProviderAdapterFactory extends RenderAdapterFactory
     }
 
     /**
-     * This disposes all of the item providers created by this factory. 
+     * This disposes all of the item providers created by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

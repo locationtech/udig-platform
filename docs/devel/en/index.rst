@@ -20,6 +20,7 @@ applications which combine existing and possibly new plug-ins.
    working_with_gis_application
    faq
    reference
+   contents
 
 *Reference*
 

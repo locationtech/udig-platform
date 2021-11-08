@@ -9,18 +9,17 @@
  */
 package org.locationtech.udig.project.internal.render;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.locationtech.udig.project.render.RenderException;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-
 /**
- * Each renderer has an executor that runs the renderer in a separate thread. 
- * There are currently 3 implementations. 
- * One for each type of renderer. (Composite/MultiLayer/Renderer). 
- * 
+ * Each renderer has an executor that runs the renderer in a separate thread.
+ * There are currently 3 implementations.
+ * One for each type of renderer. (Composite/MultiLayer/Renderer).
+ *
  * The CompositeRendererExecutor provides the incremental update functionality.
- * 
- * 
+ *
+ *
  * @author Jesse
  * @since 1.0.0
  * @model
@@ -62,17 +61,18 @@ public interface RenderExecutor extends Renderer {
 
     /**
      * Method calls visitor.visit().
-     * 
+     *
      * @param visitor the visitor object
      */
     void visit(ExecutorVisitor visitor);
 
     /**
      * This method does not use the monitor parameter. It is the same as calling render(bounds);
-     * 
+     *
      * @see org.locationtech.udig.project.internal.render.Renderer#render(org.locationtech.jts.geom.Envelope,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
+    @Override
     public void render(IProgressMonitor monitor) throws RenderException;
 
     /**

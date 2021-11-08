@@ -279,8 +279,9 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
                         if (monitor.isCanceled()) {
                             dataSource.close();
                             dataSource = null;
+                        } else {
+                            connection = dataSource.getConnection();
                         }
-                        connection = dataSource.getConnection();
 
                         monitor.subTask("connected"); //$NON-NLS-1$
                         monitor.worked(1);

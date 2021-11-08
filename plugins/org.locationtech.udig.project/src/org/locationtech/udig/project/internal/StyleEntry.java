@@ -13,8 +13,8 @@ package org.locationtech.udig.project.internal;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * Encapsulates an entry in the StyleBlackboard.  
- * 
+ * Encapsulates an entry in the StyleBlackboard.
+ *
  * @author Jesse
  * @since 1.0.0
  * @model
@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface StyleEntry extends EObject {
     /**
      * The ID is a unique identifier required by the Renderer and StyleConfigurator.
-     * 
+     *
      * @uml.property name="iD"
      * @model
      */
@@ -40,7 +40,7 @@ public interface StyleEntry extends EObject {
 
     /**
      * Contents to persist, genrated StyleContent.save( Memento mem, value ).
-     * 
+     *
      * @uml.property name="memento"
      * @model
      */
@@ -61,7 +61,7 @@ public interface StyleEntry extends EObject {
      * <p>
      * Value is generated using StyleContent.load( Memento mem ).
      * </p>
-     * 
+     *
      * @return the object if it exists, or null if the cache is empty.
      * @uml.property name="style"
      * @model transient="true" volatile="true"
@@ -80,7 +80,7 @@ public interface StyleEntry extends EObject {
     /**
      * Returns the cached class of the style object. Used for doing class based lookups on the style
      * blackboard.
-     * 
+     *
      * @uml.property name="styleClass"
      * @model transient="true" volatile="true"
      */

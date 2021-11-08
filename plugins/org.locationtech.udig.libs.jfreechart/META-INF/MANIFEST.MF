@@ -6,7 +6,8 @@ Bundle-Version: 2.3.0.qualifier
 Bundle-Vendor: udig.refractions.net
 Bundle-ClassPath: lib/jcommon-1.0.23.jar,
  lib/jfreechart-1.0.19.jar,
- lib/jfreechart-swt-1.0.17.jar
+ lib/jfreechart-swt-1.0.17.jar,
+ lib/eastwood-1.1.1-20090908.jar
 Bundle-ActivationPolicy: lazy
 Export-Package: com.keypoint;version="1.0.23",
  org.jfree;version="1.0.23",
@@ -51,6 +52,7 @@ Export-Package: com.keypoint;version="1.0.23",
  org.jfree.data.xml;version="1.0.19",
  org.jfree.data.xy;version="1.0.19",
  org.jfree.date;version="1.0.23",
+ org.jfree.eastwood;version="1.1.1",
  org.jfree.experimental.chart.swt;version="1.0.17",
  org.jfree.experimental.chart.swt.demo;version="1.0.17",
  org.jfree.experimental.chart.swt.editor;version="1.0.17",
