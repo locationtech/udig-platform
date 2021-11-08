@@ -107,7 +107,7 @@ public class MakeHole implements IOp {
 
             @Override
             public String getName() {
-                return "Create Hole Command"; //$NON-NLS-1$
+                return "Create Hole Command";
             }
 
         };

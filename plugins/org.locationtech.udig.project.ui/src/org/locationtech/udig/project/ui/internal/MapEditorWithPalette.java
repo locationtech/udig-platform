@@ -380,7 +380,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette
         @Override
         public boolean preShutdown(IProgressMonitor monitor, IWorkbench workbench, boolean forced)
                 throws Exception {
-            monitor.beginTask("Saving Map Editor", 3); //$NON-NLS-1$
+            monitor.beginTask("Saving Map Editor", 3);
             save(SubMonitor.convert(monitor, 1));
             if (dirty) {
                 if (!forced) {

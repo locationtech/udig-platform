@@ -54,7 +54,7 @@ public class FIDFeatureProvider implements IBlockingProvider<SimpleFeature> {
                 monitor = new NullProgressMonitor();
             }
             try {
-                monitor.beginTask("Get Feature", 100); //$NON-NLS-1$
+                monitor.beginTask("Get Feature", 100);
 
                 ILayer layer = layerProvider.get(SubMonitor.convert(monitor, 25));
                 FeatureSource<SimpleFeatureType, SimpleFeature> source = layer

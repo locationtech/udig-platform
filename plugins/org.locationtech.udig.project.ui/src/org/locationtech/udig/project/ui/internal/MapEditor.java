@@ -348,7 +348,7 @@ public class MapEditor extends EditorPart
         @Override
         public boolean preShutdown(final IProgressMonitor monitor, final IWorkbench workbench,
                 final boolean forced) throws Exception {
-            monitor.beginTask("Saving Map Editor", 3); //$NON-NLS-1$
+            monitor.beginTask("Saving Map Editor", 3);
             save(SubMonitor.convert(monitor, 1));
             if (dirty) {
                 if (!forced) {
