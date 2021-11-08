@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -23,7 +24,7 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -92,8 +93,8 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
 
     private boolean select = true;
 
-    public CatalogExportWizard( Workflow workflow,
-            Map<Class< ? extends State>, WorkflowWizardPageProvider> map ) {
+    public CatalogExportWizard(Workflow workflow,
+            Map<Class<? extends State>, WorkflowWizardPageProvider> map) {
         super(workflow, map);
         setWindowTitle(Messages.CatalogExportWizard_WindowTitle);
     }
@@ -101,10 +102,10 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
     /**
      * If true this will open the catalog view and select the exported items in the catalog view.
      * This is true by default.
-     * 
+     *
      * @param select if true the exported items will be selected in the catalog view
      */
-    public void setSelectExportedInCatalog( boolean select ) {
+    public void setSelectExportedInCatalog(boolean select) {
         this.select = select;
     }
 
@@ -114,9 +115,9 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
     }
 
     @Override
-    protected boolean performFinish( IProgressMonitor monitor ) {
-        ExportResourceSelectionState layerSelectState = getWorkflow().getState(
-                ExportResourceSelectionState.class);
+    protected boolean performFinish(IProgressMonitor monitor) {
+        ExportResourceSelectionState layerSelectState = getWorkflow()
+                .getState(ExportResourceSelectionState.class);
 
         if (layerSelectState == null)
             return false;
@@ -128,8 +129,8 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
         monitor.worked(1);
 
         // for each layer, export
-        for( Data data : resources ) {
-            SubProgressMonitor currentMonitor = new SubProgressMonitor(monitor, 1);
+        for (Data data : resources) {
+            SubMonitor currentMonitor = SubMonitor.convert(monitor, 1);
             boolean isExported;
 
             isExported = exportResource(data, currentMonitor);
@@ -151,13 +152,13 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
 
     /**
      * Export data, currently focused on Features.
-     * 
+     *
      * @param monitor
      * @param data
      * @return success
      */
     @SuppressWarnings("unchecked")
-    private boolean exportResource( Data data, IProgressMonitor monitor ) {
+    private boolean exportResource(Data data, IProgressMonitor monitor) {
         if (monitor == null)
             monitor = new NullProgressMonitor();
 
@@ -206,16 +207,16 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
                 DefaultFeatureCollection polygonCollection = new DefaultFeatureCollection();
 
                 FeatureIterator<SimpleFeature> featureIterator = fc.features();
-                while( featureIterator.hasNext() ) {
+                while (featureIterator.hasNext()) {
                     SimpleFeature feature = featureIterator.next();
                     String geometryType = ((Geometry) feature.getDefaultGeometry())
                             .getGeometryType();
 
-                    if (geometryType.endsWith("Point")) {
+                    if (geometryType.endsWith("Point")) { //$NON-NLS-1$
                         pointCollection.add(feature);
-                    } else if (geometryType.endsWith("LineString")) {
+                    } else if (geometryType.endsWith("LineString")) { //$NON-NLS-1$
                         lineCollection.add(feature);
-                    } else if (geometryType.endsWith("Polygon")) {
+                    } else if (geometryType.endsWith("Polygon")) { //$NON-NLS-1$
                         polygonCollection.add(feature);
                     }
                 }
@@ -232,20 +233,24 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
             } else {
                 // single geometry type
                 SimpleFeatureType destinationFeatureType = createFeatureType(schema,
-                        (Class< ? extends Geometry>) schema.getGeometryDescriptor().getType()
-                                .getBinding(), crs);
-                final SimpleFeatureType finalFeatureType = removeUnsupportedTypes(destinationFeatureType, true);
+                        (Class<? extends Geometry>) schema.getGeometryDescriptor().getType()
+                                .getBinding(),
+                        crs);
+                final SimpleFeatureType finalFeatureType = removeUnsupportedTypes(
+                        destinationFeatureType, true);
 
-                ShapefileDataStore shapefile = createShapefile(finalFeatureType, file, data.getCharset());
+                ShapefileDataStore shapefile = createShapefile(finalFeatureType, file,
+                        data.getCharset());
                 SimpleFeatureType targetFeatureType = shapefile.getSchema();
 
-                ReprojectingFeatureCollection processed = new ReprojectingFeatureCollection(fc, monitor, targetFeatureType, mt);
+                ReprojectingFeatureCollection processed = new ReprojectingFeatureCollection(fc,
+                        monitor, targetFeatureType, mt);
                 boolean success = writeToShapefile(shapefile, processed);
 
                 if (success) {
                     addToCatalog(file, data);
                 } else {
-                    Display.getDefault().asyncExec(new Runnable(){
+                    Display.getDefault().asyncExec(new Runnable() {
                         @Override
                         public void run() {
                             String msg = "No features were exported; did you select anything?"; //$NON-NLS-1$
@@ -257,20 +262,20 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
                 }
             }
         } catch (IOException e) {
-            String msg = MessageFormat.format(Messages.CatalogExport_layerFail, resource
-                    .getIdentifier());
+            String msg = MessageFormat.format(Messages.CatalogExport_layerFail,
+                    resource.getIdentifier());
             CatalogUIPlugin.log(msg, e);
             wizardDialog.setErrorMessage(msg);
             return false;
         } catch (IllegalFilterException e) {
-            String msg = MessageFormat.format(Messages.CatalogExport_layerFail, resource
-                    .getIdentifier());
+            String msg = MessageFormat.format(Messages.CatalogExport_layerFail,
+                    resource.getIdentifier());
             CatalogUIPlugin.log(msg, e);
             wizardDialog.setErrorMessage(msg);
             return false;
         } catch (SchemaException e) {
-            String msg = MessageFormat.format(Messages.CatalogExport_layerFail, resource
-                    .getIdentifier());
+            String msg = MessageFormat.format(Messages.CatalogExport_layerFail,
+                    resource.getIdentifier());
             CatalogExport.setError(wizardDialog, msg, e);
             return false;
         } catch (FactoryException e) {
@@ -283,8 +288,8 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
                 String msg = resource.getIdentifier() + Messages.CatalogExport_reprojectError;
                 CatalogExport.setError(wizardDialog, msg, e);
             } else {
-                String msg = MessageFormat.format(Messages.CatalogExport_layerFail, resource
-                        .getIdentifier());
+                String msg = MessageFormat.format(Messages.CatalogExport_layerFail,
+                        resource.getIdentifier());
                 CatalogExport.setError(wizardDialog, msg, e);
             }
             return false;
@@ -292,8 +297,10 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
         return true;
     }
 
-    private static SimpleFeatureType removeUnsupportedTypes(final SimpleFeatureType destinationFeatureType, boolean writeLog) {
-        final List<AttributeDescriptor> attributeDescriptors = destinationFeatureType.getAttributeDescriptors();
+    private static SimpleFeatureType removeUnsupportedTypes(
+            final SimpleFeatureType destinationFeatureType, boolean writeLog) {
+        final List<AttributeDescriptor> attributeDescriptors = destinationFeatureType
+                .getAttributeDescriptors();
         final SimpleFeatureTypeBuilder sftb = new SimpleFeatureTypeBuilder();
         sftb.setName(destinationFeatureType.getTypeName());
 
@@ -301,18 +308,18 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
             if (at.getType().getBinding().equals(Object.class)) {
                 if (writeLog) {
                     CatalogUIPlugin.log(MessageFormat.format(
-                        "Catalog Export : Ignoring attribute {0} (FeatureType {1}) which is of unsupported type Object.", ////$NON-NLS-1$
-                        at.getName(), destinationFeatureType.getName()), null);
+                            "Catalog Export : Ignoring attribute {0} (FeatureType {1}) which is of unsupported type Object.", ////$NON-NLS-1$
+                            at.getName(), destinationFeatureType.getName()), null);
                 }
             } else {
                 if (!(at instanceof GeometryDescriptor)) {
                     sftb.add(at);
                 } else {
                     final GeometryDescriptor geom = destinationFeatureType.getGeometryDescriptor();
-                    sftb.crs(destinationFeatureType.getCoordinateReferenceSystem()).defaultValue(null).restrictions(
-                            geom.getType().getRestrictions()).nillable(geom.isNillable()).add(
-                                    geom.getLocalName(),
-                                    geom.getType().getBinding());
+                    sftb.crs(destinationFeatureType.getCoordinateReferenceSystem())
+                            .defaultValue(null).restrictions(geom.getType().getRestrictions())
+                            .nillable(geom.isNillable())
+                            .add(geom.getLocalName(), geom.getType().getBinding());
                 }
 
             }
@@ -321,7 +328,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
     }
 
     @SuppressWarnings("unchecked")
-    private File determineDestinationFile( Data data ) {
+    private File determineDestinationFile(Data data) {
         ExportResourceSelectionState layerSelectState = findState();
         File exportDir = new File(layerSelectState.getExportDir());
         String typeName = data.getName();
@@ -333,9 +340,9 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
             }
             typeName = URLUtils.cleanFilename(typeName);
 
-            final File[] destination = new File[]{addSuffix(new File(exportDir, typeName))};
+            final File[] destination = new File[] { addSuffix(new File(exportDir, typeName)) };
             if (destination[0].exists()) {
-                getContainer().getShell().getDisplay().syncExec(new Runnable(){
+                getContainer().getShell().getDisplay().syncExec(new Runnable() {
                     @Override
                     public void run() {
                         String pattern = Messages.CatalogExportWizard_OverwriteDialogQuery;
@@ -372,7 +379,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
 
     }
 
-    private File addSuffix( File file ) {
+    private File addSuffix(File file) {
         String path = stripEndSlash(file.getPath());
 
         File destination;
@@ -385,13 +392,13 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
         return destination;
     }
 
-    private String stripEndSlash( String path ) {
+    private String stripEndSlash(String path) {
         if (path.endsWith("/")) //$NON-NLS-1$
             return stripEndSlash(path.substring(0, path.length() - 1));
         return path;
     }
 
-    private File selectFile( File destination, String string ) {
+    private File selectFile(File destination, String string) {
         FileDialog dialog = new FileDialog(getShell(), SWT.SAVE);
         dialog.setText(string);
         dialog.setFilterPath(destination.getParent());
@@ -407,7 +414,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
 
     private ExportResourceSelectionState findState() {
         State[] states = getWorkflow().getStates();
-        for( State state : states ) {
+        for (State state : states) {
             if (ExportResourceSelectionState.class.isAssignableFrom(state.getClass())) {
                 return (ExportResourceSelectionState) state;
             }
@@ -423,17 +430,17 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
 
         // ok we will show selection (if we can)
 
-        ExportResourceSelectionState layerSelectState = getWorkflow().getState(
-                ExportResourceSelectionState.class);
+        ExportResourceSelectionState layerSelectState = getWorkflow()
+                .getState(ExportResourceSelectionState.class);
         List<Data> resources = layerSelectState.getExportData();
 
-        final List<IGeoResource> exported = new ArrayList<IGeoResource>(resources.size());
+        final List<IGeoResource> exported = new ArrayList<>(resources.size());
 
-        for( Data data : resources ) {
+        for (Data data : resources) {
             exported.addAll(data.getExportedResources());
         }
 
-        PlatformGIS.asyncInDisplayThread(new Runnable(){
+        PlatformGIS.asyncInDisplayThread(new Runnable() {
             @Override
             public void run() {
                 CatalogView catalogView = getCatalogView();
@@ -443,17 +450,17 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
                 }
             }
 
-            private ISelection toTreePathSelection( List<IGeoResource> exported ) {
+            private ISelection toTreePathSelection(List<IGeoResource> exported) {
 
-                List<TreePath> paths = new ArrayList<TreePath>(exported.size());
+                List<TreePath> paths = new ArrayList<>(exported.size());
 
-                for( IGeoResource resource : exported ) {
+                for (IGeoResource resource : exported) {
                     paths.add(new TreePath(toTreePath(resource).toArray()));
                 }
                 return new TreeSelection(paths.toArray(new TreePath[paths.size()]));
             }
 
-            private List<IResolve> toTreePath( IGeoResource resource ) {
+            private List<IResolve> toTreePath(IGeoResource resource) {
                 IResolve parent;
                 try {
                     parent = resource.parent(ProgressManager.instance().get());
@@ -461,7 +468,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
                     CatalogUIPlugin.log("Error resolving the parent", e); //$NON-NLS-1$
                     parent = null;
                 }
-                List<IResolve> path = new ArrayList<IResolve>();
+                List<IResolve> path = new ArrayList<>();
 
                 if (parent instanceof IGeoResource) {
                     IGeoResource parentResource = (IGeoResource) parent;
@@ -500,61 +507,59 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
         }
     }
 
-    private void exportLineFeatures( Data data, IProgressMonitor currentMonitor, File file,
-            SimpleFeatureCollection lineCollection,
-            SimpleFeatureType schema, MathTransform mt )
+    private void exportLineFeatures(Data data, IProgressMonitor currentMonitor, File file,
+            SimpleFeatureCollection lineCollection, SimpleFeatureType schema, MathTransform mt)
             throws IllegalFilterException, IOException, SchemaException, MalformedURLException {
 
         File lineFile = addFileNameSuffix(file, LINE_SUFFIX);
-        ShapefileDataStore shapefile = createShapefile(createFeatureType(schema, MultiLineString.class, data.getCRS()), lineFile, data.getCharset());
+        ShapefileDataStore shapefile = createShapefile(
+                createFeatureType(schema, MultiLineString.class, data.getCRS()), lineFile,
+                data.getCharset());
         SimpleFeatureType targetFeatureType = shapefile.getSchema();
 
-        SimpleFeatureCollection temp = new ToMultiLineFeatureCollection(
-                                                lineCollection, targetFeatureType, 
-                                                schema.getGeometryDescriptor(), 
-                                                mt, currentMonitor);
+        SimpleFeatureCollection temp = new ToMultiLineFeatureCollection(lineCollection,
+                targetFeatureType, schema.getGeometryDescriptor(), mt, currentMonitor);
 
         if (writeToShapefile(shapefile, temp))
             addToCatalog(lineFile, data);
     }
 
-    private void exportPointFeatures( Data data, IProgressMonitor currentMonitor, File file,
-            SimpleFeatureCollection pointCollection,
-            SimpleFeatureType schema, MathTransform mt )
+    private void exportPointFeatures(Data data, IProgressMonitor currentMonitor, File file,
+            SimpleFeatureCollection pointCollection, SimpleFeatureType schema, MathTransform mt)
             throws IllegalFilterException, IOException, SchemaException, MalformedURLException {
 
         File pointFile = addFileNameSuffix(file, POINT_SUFFIX);
-        ShapefileDataStore shapefile = createShapefile(createFeatureType(schema, MultiPoint.class, data.getCRS()), pointFile, data.getCharset());
+        ShapefileDataStore shapefile = createShapefile(
+                createFeatureType(schema, MultiPoint.class, data.getCRS()), pointFile,
+                data.getCharset());
         SimpleFeatureType targetFeatureType = shapefile.getSchema();
 
-        SimpleFeatureCollection temp = new ToMultiPointFeatureCollection(
-                                                pointCollection, targetFeatureType, 
-                                                schema.getGeometryDescriptor(), 
-                                                mt, currentMonitor);
+        SimpleFeatureCollection temp = new ToMultiPointFeatureCollection(pointCollection,
+                targetFeatureType, schema.getGeometryDescriptor(), mt, currentMonitor);
 
         if (writeToShapefile(shapefile, temp))
             addToCatalog(pointFile, data);
     }
 
-    private void exportPolygonFeatures( Data data, IProgressMonitor currentMonitor, File file,
-            SimpleFeatureCollection polygonCollection,
-            SimpleFeatureType schema, MathTransform mt )
+    private void exportPolygonFeatures(Data data, IProgressMonitor currentMonitor, File file,
+            SimpleFeatureCollection polygonCollection, SimpleFeatureType schema, MathTransform mt)
             throws IllegalFilterException, IOException, SchemaException, MalformedURLException {
 
         File polyFile = addFileNameSuffix(file, POLY_SUFFIX);
-        ShapefileDataStore shapefile = createShapefile(createFeatureType(schema, MultiPolygon.class, data.getCRS()), polyFile, data.getCharset());
+        ShapefileDataStore shapefile = createShapefile(
+                createFeatureType(schema, MultiPolygon.class, data.getCRS()), polyFile,
+                data.getCharset());
         SimpleFeatureType targetFeatureType = shapefile.getSchema();
 
-        SimpleFeatureCollection temp = new ToMultiPolygonFeatureCollection( 
-                polygonCollection, targetFeatureType,
-                schema.getGeometryDescriptor(), mt, currentMonitor);
+        SimpleFeatureCollection temp = new ToMultiPolygonFeatureCollection(polygonCollection,
+                targetFeatureType, schema.getGeometryDescriptor(), mt, currentMonitor);
 
         if (writeToShapefile(shapefile, temp))
             addToCatalog(polyFile, data);
     }
 
-    private SimpleFeatureType createFeatureType( SimpleFeatureType schema,
-            Class< ? extends Geometry> geomBinding, CoordinateReferenceSystem crs )
+    private SimpleFeatureType createFeatureType(SimpleFeatureType schema,
+            Class<? extends Geometry> geomBinding, CoordinateReferenceSystem crs)
             throws SchemaException {
         SimpleFeatureTypeBuilder builder = new SimpleFeatureTypeBuilder();
         builder.setName("type"); //$NON-NLS-1$
@@ -567,7 +572,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
             crs = null;
         }
 
-        for( int i = 0; i < schema.getAttributeCount(); i++ ) {
+        for (int i = 0; i < schema.getAttributeCount(); i++) {
             AttributeDescriptor attribute = schema.getDescriptor(i);
             if (!(attribute instanceof GeometryDescriptor)) {
                 builder.add(attribute);
@@ -582,15 +587,14 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
     }
 
     /**
-     * Connect to the file (using the existing catalog entry if avaiable) and
-     * add 
-     * 
+     * Connect to the file (using the existing catalog entry if avaiable) and add
+     *
      * @param file
      * @param data
      * @throws IOException
      */
     @SuppressWarnings("unchecked")
-    private void addToCatalog( File file, Data data ) throws IOException {
+    private void addToCatalog(File file, Data data) throws IOException {
         IProgressMonitor monitor = ProgressManager.instance().get();
 
         // add the service to the catalog
@@ -598,12 +602,13 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
         ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
         URL url = URLUtils.fileToURL(file);
         List<IService> services = sFactory.createService(url);
-        monitor.beginTask("add to catalog", services.size() * 10);
-        for( IService service : services ) {
+        monitor.beginTask("add to catalog", services.size() * 10); //$NON-NLS-1$
+        for (IService service : services) {
             IService registeredService = catalog.add(service);
-            SubProgressMonitor monitor2 = new SubProgressMonitor(monitor, 10);
-            List<IGeoResource> contents = (List<IGeoResource>) registeredService.resources(monitor2);
-            data.addNewResources( contents );
+            SubMonitor monitor2 = SubMonitor.convert(monitor, 10);
+            List<IGeoResource> contents = (List<IGeoResource>) registeredService
+                    .resources(monitor2);
+            data.addNewResources(contents);
         }
     }
 
@@ -611,7 +616,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
     /**
      * Returns true if a generic Geometry class; so we cannot tell if it is point / line / polygon.
      */
-    private boolean isAbstractGeometryType( SimpleFeatureType schema ) {
+    private boolean isAbstractGeometryType(SimpleFeatureType schema) {
         Class geometryType = schema.getGeometryDescriptor().getType().getBinding();
 
         return geometryType.isAssignableFrom(Geometry.class);
@@ -620,11 +625,14 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
     }
 
     static String SHAPEFILE_EXT = ".shp"; //$NON-NLS-1$
+
     static String POLY_SUFFIX = "_poly"; //$NON-NLS-1$
+
     static String POINT_SUFFIX = "_point"; //$NON-NLS-1$
+
     static String LINE_SUFFIX = "_line"; //$NON-NLS-1$
 
-    private File addFileNameSuffix( File file, String suffix ) {
+    private File addFileNameSuffix(File file, String suffix) {
         String path = file.getPath();
         path = path.replaceAll(POLY_SUFFIX + SHAPEFILE_EXT, SHAPEFILE_EXT);
         path = path.replaceAll(POINT_SUFFIX + SHAPEFILE_EXT, SHAPEFILE_EXT);
@@ -639,24 +647,23 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
         return null;
     }
 
-    private org.opengis.filter.Filter createGeometryTypeFilter( String geomName, String type )
+    private org.opengis.filter.Filter createGeometryTypeFilter(String geomName, String type)
             throws IllegalFilterException {
         FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2(null);
-        Function function = ff.function("geometryType", ff.property(geomName));
-        return ff.equal(function, ff.literal(type)); //$NON-NLS-1$
+        Function function = ff.function("geometryType", ff.property(geomName)); //$NON-NLS-1$
+        return ff.equal(function, ff.literal(type)); // $NON-NLS-1$
     }
-    
-    
-    
-    private ShapefileDataStore createShapefile( SimpleFeatureType targetType, File file, Charset charset) throws IOException {
-        
+
+    private ShapefileDataStore createShapefile(SimpleFeatureType targetType, File file,
+            Charset charset) throws IOException {
+
         if (!canWrite(file)) {
-            throw new IOException(MessageFormat.format(Messages.CatalogExport_cannotWrite, file
-                    .getAbsolutePath()));
+            throw new IOException(MessageFormat.format(Messages.CatalogExport_cannotWrite,
+                    file.getAbsolutePath()));
         }
         // creates the shapefile
         ShapefileDataStoreFactory dataStoreFactory = new ShapefileDataStoreFactory();
-        Map<String, Serializable> params = new HashMap<String, Serializable>();
+        Map<String, Serializable> params = new HashMap<>();
         params.put("url", URLUtils.fileToURL(file)); //$NON-NLS-1$
         params.put("create spatial index", Boolean.TRUE); //$NON-NLS-1$
         ShapefileDataStore ds = (ShapefileDataStore) dataStoreFactory.createDataStore(params);
@@ -664,19 +671,19 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
             ds.setCharset(charset);
         }
         ds.createSchema(targetType);
-        
-        
+
         return ds;
-        
+
     }
 
-    private boolean writeToShapefile(ShapefileDataStore shapefile, SimpleFeatureCollection fc) throws IOException {
+    private boolean writeToShapefile(ShapefileDataStore shapefile, SimpleFeatureCollection fc)
+            throws IOException {
         SimpleFeatureStore featureSource = (SimpleFeatureStore) shapefile.getFeatureSource();
         List<FeatureId> ids = featureSource.addFeatures(fc);
         return ids.size() >= 0;
     }
 
-    private boolean canWrite( File file ) throws IOException {
+    private boolean canWrite(File file) throws IOException {
         if (file.exists()) {
             return file.canWrite();
         } else {
@@ -685,7 +692,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
     }
 
     @Override
-    public void init( IWorkbench workbench, IStructuredSelection selection ) {
+    public void init(IWorkbench workbench, IStructuredSelection selection) {
         getWorkflow().getState(ExportResourceSelectionState.class).selection = selection;
     }
 }

@@ -19,3 +19,10 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Export-Package: org.locationtech.udig.style.jgrass.categories,org.loca
  tiontech.udig.style.jgrass.colors
+Import-Package: org.apache.commons.io;version="2.4.0",
+ org.apache.commons.io.comparator;version="2.4.0",
+ org.apache.commons.io.filefilter;version="2.4.0",
+ org.apache.commons.io.input;version="2.4.0",
+ org.apache.commons.io.monitor;version="2.4.0",
+ org.apache.commons.io.output;version="2.4.0",
+ org.apache.commons.io.serialization;version="2.4.0"

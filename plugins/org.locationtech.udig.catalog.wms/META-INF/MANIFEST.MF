@@ -2,15 +2,16 @@ Automatic-Module-Name: org.locationtech.udig.catalog.wms
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
-Bundle-SymbolicName: org.locationtech.udig.catalog.wms; singleton:=true
+Bundle-SymbolicName: org.locationtech.udig.catalog.wms;singleton:=true
 Bundle-Version: 2.3.0.qualifier
 Bundle-Activator: org.locationtech.udig.catalog.internal.wms.WmsPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
-Export-Package: org.locationtech.udig.catalog.internal.wms,org.locatio
- ntech.udig.catalog.internal.wms.ui,org.locationtech.udig.catalog.inte
- rnal.wmsc,org.locationtech.udig.catalog.wmsc,org.locationtech.udig.ca
- talog.wmsc.server
+Export-Package: org.locationtech.udig.catalog.internal.wms,
+ org.locationtech.udig.catalog.internal.wms.ui,
+ org.locationtech.udig.catalog.internal.wmsc,
+ org.locationtech.udig.catalog.wmsc,
+ org.locationtech.udig.catalog.wmsc.server
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.locationtech.udig.catalog,
@@ -19,3 +20,10 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.project.ui
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.apache.commons.io;version="2.4.0",
+ org.apache.commons.io.comparator;version="2.4.0",
+ org.apache.commons.io.filefilter;version="2.4.0",
+ org.apache.commons.io.input;version="2.4.0",
+ org.apache.commons.io.monitor;version="2.4.0",
+ org.apache.commons.io.output;version="2.4.0",
+ org.apache.commons.io.serialization;version="2.4.0"

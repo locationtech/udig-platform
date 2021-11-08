@@ -17,7 +17,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.swt.widgets.Display;
 import org.geotools.data.FeatureSource;
 import org.geotools.feature.FeatureCollection;
@@ -61,7 +61,7 @@ public class LineGraphOp implements IOp {
         monitor.subTask("grab features for " + filter); //$NON-NLS-1$
 
         FeatureSource<SimpleFeatureType, SimpleFeature> source = layer
-                .getResource(FeatureSource.class, new SubProgressMonitor(monitor, 10));
+                .getResource(FeatureSource.class, SubMonitor.convert(monitor, 10));
 
         FeatureCollection<SimpleFeatureType, SimpleFeature> features = source.getFeatures(filter);
 
@@ -69,10 +69,10 @@ public class LineGraphOp implements IOp {
         Class<?> binding = schema.getGeometryDescriptor().getType().getBinding();
         Graph graph = null;
         if (MultiLineString.class.isAssignableFrom(binding)) {
-            graph = buildFromMultiLineString(features, new SubProgressMonitor(monitor, 90));
+            graph = buildFromMultiLineString(features, SubMonitor.convert(monitor, 90));
         }
         if (graph == null) {
-            // prompt or otherwise anny user?
+            // prompt or otherwise any user?
             System.out.println("Could not create a graph from the current selection"); //$NON-NLS-1$
             return;
         }

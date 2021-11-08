@@ -29,7 +29,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -826,7 +826,7 @@ public class ValidationDialog extends TitleAreaDialog {
             monitor.subTask(""); //$NON-NLS-1$
             monitor.setTaskName(Messages.ValidationDialog_validating + " " + testName //$NON-NLS-1$
                     + Messages.ValidationDialog_ellipsis);
-            SubProgressMonitor subMonitor = new SubProgressMonitor(monitor, 10);
+            SubMonitor subMonitor = SubMonitor.convert(monitor, 10);
             processor.runFeatureTest(testName, layers, results[i], subMonitor);
             // processor.runIntegrityTest(test.getName(), layers, results[i], monitor);
 
