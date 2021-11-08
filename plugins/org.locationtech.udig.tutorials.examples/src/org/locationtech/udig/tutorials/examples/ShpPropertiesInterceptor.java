@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,24 +22,25 @@ import org.locationtech.udig.catalog.internal.shp.ShpServiceImpl;
 
 public class ShpPropertiesInterceptor implements ServiceInterceptor {
 
-    public void run(IService service){
-        if( service instanceof ShpServiceImpl){
+    @Override
+    public void run(IService service) {
+        if (service instanceof ShpServiceImpl) {
             ID id = service.getID();
             File directory = id.toFile().getParentFile();
-            File infoFile = new File( directory, id.toBaseFile()+".properties" );
-            if( infoFile.exists() ){
-               try { 
-                   FileReader infoReader = new FileReader( infoFile );
-                 Properties info = new Properties();
-                 info.load( infoReader );
-                 String title = (String) info.get("title");
-                 if( title != null ){
-                   service.getPersistentProperties().put("title", title);
-                 }
-               } catch (IOException eek ){
-               }
+            File infoFile = new File(directory, id.toBaseFile() + ".properties"); //$NON-NLS-1$
+            if (infoFile.exists()) {
+                try {
+                    FileReader infoReader = new FileReader(infoFile);
+                    Properties info = new Properties();
+                    info.load(infoReader);
+                    String title = (String) info.get("title"); //$NON-NLS-1$
+                    if (title != null) {
+                        service.getPersistentProperties().put("title", title); //$NON-NLS-1$
+                    }
+                } catch (IOException eek) {
+                }
             }
         }
-     }
+    }
 
 }
