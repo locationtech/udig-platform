@@ -99,7 +99,8 @@ Let us start off by creating a plug-in that will contain our feature editor.
 .. figure:: /images/feature_editor_tutorial/create_plugin.png
    :align: left
    :figwidth: 100%
-Fig. Create plugin dialog
+
+   Fig. Create plugin dialog
 
 2. In the **MANIFTEST.MF** editor switch to the **Dependencies** tab.
 3. Add the following plug-in dependency:
@@ -110,7 +111,8 @@ Fig. Create plugin dialog
 .. figure:: /images/feature_editor_tutorial/add_dependencies.png
    :align: left
    :figwidth: 100%
-Fig. Add dependencies
+
+   Fig. Add dependencies
 
 3. Save the **MANIFTEST.MF** file.
 
@@ -138,7 +140,8 @@ Create the FormCellEditorListener
 .. figure:: /images/feature_editor_tutorial/create_cell_editor_listener.png
    :align: left
    :figwidth: 100%
-Fig. Create cell editor listener dialog
+
+   Fig. Create cell editor listener dialog
 
 5. Press **Finish** to create **FormCellEditorListener.java** class
 
@@ -215,7 +218,8 @@ Create the MandatoryFormTextCellEditorValidator
 .. figure:: /images/feature_editor_tutorial/create_cell_editor_validator.png
    :align: left
    :figwidth: 100%
-Fig. Create cell editor validator dialog
+
+   Fig. Create cell editor validator dialog
 
 5. Press Finish to create **MandatoryFormTextCellEditorValidator.java** class
 
@@ -258,7 +262,8 @@ Create the FormTextCellEditor
 .. figure:: /images/feature_editor_tutorial/create_cell_editor.png
    :align: left
    :figwidth: 100%
-Fig. Create cell editor dialog
+
+   Fig. Create cell editor dialog
 
 5. Press Finish to create **FormTextCellEditor.java** class
 
@@ -325,7 +330,8 @@ In this section we will create **CountryPanel** that populates a *Composite* wit
 .. figure:: /images/feature_editor_tutorial/create_view_panel.png
    :align: left
    :figwidth: 100%
-Fig. Create view panel dialog
+
+   Fig. Create view panel dialog
 
 5. Press **Finish** to create **CountryPanel.java** class
 
@@ -729,7 +735,8 @@ This information is only used in error messages when something goes wrong which 
 .. figure:: /images/feature_editor_tutorial/add_extension_view.png
    :align: left
    :figwidth: 100%
-Fig. Add view extension
+
+   Fig. Add view extension
 
 6. **Save** the **MANIFTEST.MF** file.
 7. Press the **class** link to open the **New Java Class** wizard.
@@ -742,7 +749,8 @@ Fig. Add view extension
 .. figure:: /images/feature_editor_tutorial/create_view.png
    :align: left
    :figwidth: 100%
-Fig. Create view dialog
+
+   Fig. Create view dialog
 
 10. Click **Finish** to create the **CountryView.class** class
 
@@ -862,7 +870,8 @@ Select a Feature
 .. figure:: /images/feature_editor_tutorial/try_out_select_feature.png
    :align: left
    :figwidth: 100%
-Fig. Open view
+
+   Fig. Open view
 
 Update Information
 ''''''''''''''''''
@@ -882,7 +891,8 @@ Okay, I am sure you can think of lots of things to try:
 .. figure:: /images/feature_editor_tutorial/miglayout.png
    :align: left
    :figwidth: 100%
-Fig. MigLayout samples
+
+   Fig. MigLayout samples
 
 - Can you re-do the layout of this view using the Eclipse FormLayout? This layout manager makes the opposite trade off you have real Java data structures to fill in for your layout data. Here is a small example to get you started::
 

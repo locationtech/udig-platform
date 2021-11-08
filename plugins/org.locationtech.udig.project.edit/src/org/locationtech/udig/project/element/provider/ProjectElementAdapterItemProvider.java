@@ -14,13 +14,6 @@ package org.locationtech.udig.project.element.provider;
 
 import java.util.List;
 
-import org.locationtech.udig.core.internal.ExtensionPointList;
-import org.locationtech.udig.project.element.ElementPackage;
-import org.locationtech.udig.project.element.IGenericProjectElement;
-import org.locationtech.udig.project.element.ProjectElementAdapter;
-import org.locationtech.udig.project.internal.ProjectPackage;
-import org.locationtech.udig.project.internal.provider.ProjectEditPlugin;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -43,6 +36,12 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.project.element.ElementPackage;
+import org.locationtech.udig.project.element.IGenericProjectElement;
+import org.locationtech.udig.project.element.ProjectElementAdapter;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.provider.ProjectEditPlugin;
 
 /**
  * This is the item provider adapter for a {@link org.locationtech.udig.project.element.ProjectElementAdapter} object.
@@ -89,7 +88,7 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
 
     /**
      * This adds a property descriptor for the Name feature.
-     * 
+     *
      * @generated NO MORE
      */
     protected void addNamePropertyDescriptor(Object object) {
@@ -255,7 +254,7 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
      * returned by the extension's labelProvider or the icon defined in the
      * extension (if it is defined). If the element is not a
      * ProjectElementAdapter the a default image is returned
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -306,7 +305,7 @@ public class ProjectElementAdapterItemProvider extends ItemProviderAdapter
      * returned by the extension's labelProvider or the label defined in the
      * extension (if it is defined). If the element is not a
      * ProjectElementAdapter the a default text is returned
-     * 
+     *
      * @generated NOT
      */
     @Override

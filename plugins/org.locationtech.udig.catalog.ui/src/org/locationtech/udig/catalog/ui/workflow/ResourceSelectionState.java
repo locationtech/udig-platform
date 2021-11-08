@@ -24,7 +24,7 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IResolve;
@@ -221,7 +221,7 @@ public class ResourceSelectionState extends State {
             try {
                 monitor.beginTask("", services.size() * 10); //$NON-NLS-1$
                 for (IService service : services) {
-                    SubProgressMonitor subMonitor = new SubProgressMonitor(monitor, 10);
+                    SubMonitor subMonitor = SubMonitor.convert(monitor, 10);
                     try {
                         URL identifier = service.getIdentifier();
                         monitor.setTaskName(MessageFormat

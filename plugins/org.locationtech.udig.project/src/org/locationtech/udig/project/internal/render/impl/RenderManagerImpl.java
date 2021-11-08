@@ -12,6 +12,15 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.notify.impl.NotificationChainImpl;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.internal.Map;
@@ -34,21 +43,10 @@ import org.locationtech.udig.project.render.IRenderer;
 import org.locationtech.udig.project.render.Tile;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.notify.impl.NotificationChainImpl;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-
-import org.locationtech.jts.geom.Envelope;
-
 /**
- * An unresponsive implementation of IRenderManager.  It will not rerender if the viewport model changes.  
+ * An unresponsive implementation of IRenderManager.  It will not rerender if the viewport model changes.
  * In fact it does not register for any events.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -57,7 +55,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     /**
      * The cached value of the '{@link #getRenderExecutor() <em>Render Executor</em>}' reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getRenderExecutor()
      * @generated NOT
      * @ordered
@@ -67,7 +65,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     /**
      * The cached value of the '{@link #getRendererCreator() <em>Renderer Creator</em>}'
      * containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getRendererCreator()
      * @generated NOT
      * @ordered
@@ -77,7 +75,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     /**
      * The default value of the '{@link #getMapDisplay() <em>Map Display</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMapDisplay()
      * @generated
      * @ordered
@@ -87,7 +85,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     /**
      * The cached value of the '{@link #getMapDisplay() <em>Map Display</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMapDisplay()
      * @generated
      * @ordered
@@ -97,7 +95,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     /**
      * The cached value of the '{@link #getMapInternal() <em>Map Internal</em>}' reference. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMapInternal()
      * @generated
      * @ordered
@@ -129,7 +127,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     protected RenderManagerImpl() {
@@ -334,7 +332,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -345,7 +343,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -376,7 +374,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -441,7 +439,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     /**
      * If subclasses override this method make sure that super.dispose() is called <b>AT THE END<b>
      * of the overridding method.
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -665,7 +663,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     @Override
     public List<IRenderer> getRenderers() {
         checkState();
-        final List<IRenderer> renderers = new ArrayList<IRenderer>();
+        final List<IRenderer> renderers = new ArrayList<>();
         getRenderExecutor().visit(new ExecutorVisitor() {
 
             @Override
@@ -746,7 +744,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     }
 
     /**
-     * 
+     *
      * Returns true if these two layers are related in any way.  Two layers are related if:
      * <ul>
      *   <li>They are the same (layer = contained)
@@ -755,7 +753,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      *
      * @param layer
      * @param contained
-     * 
+     *
      * @returns true if the two layers are part of the same context
      */
     @Override
@@ -781,7 +779,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
                 }
             } else {
                 if (context.getLayer() == layer) {
-                    //layer is not part of a composite context and cannot be related in 
+                    //layer is not part of a composite context and cannot be related in
                     //any way to contained
                     return false;
                 }

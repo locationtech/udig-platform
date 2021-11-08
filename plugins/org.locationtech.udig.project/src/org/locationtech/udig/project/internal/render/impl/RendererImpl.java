@@ -7,6 +7,14 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.text.MessageFormat;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.Messages;
 import org.locationtech.udig.project.internal.ProjectPlugin;
@@ -16,17 +24,7 @@ import org.locationtech.udig.project.internal.render.Renderer;
 import org.locationtech.udig.project.internal.render.SelectionLayer;
 import org.locationtech.udig.project.render.IRenderContext;
 import org.locationtech.udig.project.render.RenderException;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Envelope;
 
 /**
  * Abstract class for Renderers to extend.
@@ -38,7 +36,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
     /**
      * The default value of the '{@link #getState() <em>State</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getState()
      * @generated NOT
      * @ordered
@@ -78,7 +76,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
     /**
      * The cached value of the '{@link #getContext() <em>Context</em>}' reference. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getContext()
      * @generated NOT
      * @ordered
@@ -169,14 +167,15 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
     @Override
     public void setContext(IRenderContext newContext) {
         ProjectPlugin.trace(Trace.RENDER, getClass(),
-                "RenderContext changed. \nOld:" + context + "\nNew:" + newContext, null); //$NON-NLS-1$ //$NON-NLS-2$
+                "RenderContext changed. \nOld:" + context + "\nNew:" + newContext, //$NON-NLS-1$//$NON-NLS-2$
+                null);
         context = newContext;
     }
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @throws RenderException
      * @generated NOT
      */
@@ -189,7 +188,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated public InfoList getInfo(Point screenLocation) { // TODO: implement this method //
      *            Ensure that you remove
      * @generated or mark it
@@ -198,7 +197,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override

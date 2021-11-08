@@ -56,9 +56,9 @@
             <param name="build" value="pdf" />
         </antcall>
     </target>
-    
+
     <target name="devel" depends="init">
-        <antcall target="sphinx-ignore-warnings">
+        <antcall target="sphinx">
             <param name="id" value="devel/en"/>
             <param name="build" value="html"/>
         </antcall>
@@ -75,21 +75,21 @@
     </target>
 
     <target name="user-help" depends="init">
-    	<description>Generate for help</description>
-    	<antcall target="sphinx-simple">
+        <description>Generate for help</description>
+        <antcall target="sphinx-simple">
             <param name="id" value="user/en" />
             <param name="build" value="html" />
         </antcall>
     </target>
-	
-	<target name="help-clean">
-		<delete includeemptydirs="true">
+
+    <target name="help-clean">
+        <delete includeemptydirs="true">
             <fileset dir="${basedir}/../plugins/org.locationtech.udig.help/EN" includes="**/*"/>
         </delete>
-	</target>
-	
+    </target>
+
     <target name="sphinx" if="sphinx.available">
-        <echo message="Running sphinx-build -D release=${project.version} -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/> 
+        <echo message="Running sphinx-build -D release=${project.version} -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/>
         <exec executable="sphinx-build" failonerror="true" dir="${basedir}/${id}">
             <arg line="-D release=${project.version} -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/>
         </exec>
@@ -102,12 +102,12 @@
     </target>
 
     <target name="sphinx-simple" if="sphinx.available">
-        <echo message="Running sphinx-build -D release=${project.version} -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/> 
+        <echo message="Running sphinx-build -D release=${project.version} -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/>
         <exec executable="sphinx-build" failonerror="true" dir="${basedir}/${id}">
             <arg line="-D release=${project.version} -D html_theme='simple' -D html_title='User Guide' -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/simple&quot;"/>
         </exec>
     </target>
-    
+
     <target name="latex" if="latex.available">
         <exec executable="sphinx-build" failonerror="true" dir="${basedir}/${id}">
             <arg line="-D release=${project.version} -b latex -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/>

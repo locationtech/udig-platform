@@ -12,14 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.ProjectPackage;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.impl.LayerImpl;
-import org.locationtech.udig.project.preferences.PreferenceConstants;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
@@ -41,6 +33,13 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.geotools.util.Range;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.impl.LayerImpl;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
 
 /**
  * This is the item provider adapter for a {@link org.locationtech.udig.project.internal.Layer} object.
@@ -76,7 +75,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -100,7 +99,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Zorder feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      */
     @SuppressWarnings("unchecked")
     protected void addZorderPropertyDescriptor(Object object) {
@@ -132,7 +131,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the ID feature. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @generated
      */
     protected void addIDPropertyDescriptor(Object object) {
@@ -390,7 +389,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * {@link org.eclipse.emf.edit.command.RemoveCommand} or
      * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -414,7 +413,7 @@ public class LayerItemProvider extends ItemProviderAdapter
         return super.getChildFeature(object, child);
     }
 
-    private Map<Layer, Data> cache = new HashMap<Layer, Data>();
+    private Map<Layer, Data> cache = new HashMap<>();
 
     private static class Data {
         ImageDescriptor desc;
@@ -457,7 +456,7 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * This returns Layer.gif. <!-- begin-user-doc --> Returns layers glyph property, requesting WMS
      * Legend Graphic will be handled by a decorator. <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -495,7 +494,7 @@ public class LayerItemProvider extends ItemProviderAdapter
             image = ImageDescriptor.createWithFlags(image, outOfScaleModifier);
         }
 
-        return image; 
+        return image;
     }
 
     /**
@@ -528,7 +527,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * This returns the label text for the adapted class. <!-- begin-user-doc --> Makes use of layer
      * label, will use name of GeoResource URL by default. A decorator can request the GeoResoruce's
      * title in thread. <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -553,7 +552,7 @@ public class LayerItemProvider extends ItemProviderAdapter
      * This handles model notifications by calling {@link #updateChildren} to update any cached
      * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -686,16 +685,16 @@ public class LayerItemProvider extends ItemProviderAdapter
     /**
      * Returns true if mylar is "on" for the given layer.  "on" means that
      * the layer should be greyed out.
-     * 
+     *
      * <p>
      * In the case of composite layers (wms for example); all layers associated
-     * with the context should be "on"; which is why function thing needs to know about 
+     * with the context should be "on"; which is why function thing needs to know about
      * the renderers.
      * </p>
      *
      * @param layer
      * @param map
-     * 
+     *
      * @return if mylar is turned on and it is affecting (greying out) the current layer
      */
     private boolean mylarOnAndAffectingLayer(LayerImpl layer, IMap map) {

@@ -13,10 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.ui.ExceptionDetailsDialog;
-import org.locationtech.udig.ui.PlatformGIS;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -36,16 +32,16 @@ import org.geotools.gce.geotiff.GeoTiffFormat;
 import org.geotools.gce.geotiff.GeoTiffWriteParams;
 import org.geotools.gce.geotiff.GeoTiffWriter;
 import org.geotools.referencing.CRS;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.tools.jgrass.JGrassToolsPlugin;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.PlatformGIS;
 import org.opengis.coverage.grid.GridCoverage;
 import org.opengis.parameter.GeneralParameterValue;
 import org.opengis.parameter.ParameterValueGroup;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
-
-import org.locationtech.udig.tools.jgrass.JGrassToolsPlugin;
 
 /**
  * @author Andrea Antonello (www.hydrologis.com)
@@ -54,8 +50,7 @@ public class TiffAsciiExportWizard extends Wizard implements IExportWizard {
 
     public static boolean canFinish = false;
     private TiffAsciiExportWizardPage mainPage;
-    public static DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyyMMddHHmm"); //$NON-NLS-1$
-
+    
     public TiffAsciiExportWizard() {
         super();
     }
