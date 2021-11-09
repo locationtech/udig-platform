@@ -28,10 +28,7 @@ public class RendererUtilsTest {
     }
 
     @Test
-    public void advancedProjectSupportIsOnIfPropertyExsistOrIsTrue() {
-        System.setProperty(RendererUtils.ADVANCED_PROJECTION_PROPERTY, ""); // //$NON-NLS-1$
-        assertTrue(RendererUtils.isAdvancedProjectionSupportEnabled());
-
+    public void advancedProjectSupportIsOnIfPropertyIsTrue() {
         System.setProperty(RendererUtils.ADVANCED_PROJECTION_PROPERTY, "True"); // //$NON-NLS-1$
         assertTrue(RendererUtils.isAdvancedProjectionSupportEnabled());
 
@@ -44,6 +41,9 @@ public class RendererUtilsTest {
 
     @Test
     public void advancedProjectSupportIsDisabledIfPropertyIsFalseOrSomethingElseThanFalse() {
+        System.setProperty(RendererUtils.ADVANCED_PROJECTION_PROPERTY, ""); // //$NON-NLS-1$
+        assertFalse(RendererUtils.isAdvancedProjectionSupportEnabled());
+
         System.setProperty(RendererUtils.ADVANCED_PROJECTION_PROPERTY, "False"); // //$NON-NLS-1$
         assertFalse(RendererUtils.isAdvancedProjectionSupportEnabled());
 
