@@ -25,7 +25,7 @@
              see https://locationtech.org/bugs/show_bug.cgi?id=51
         -->
         <tycho.test.envSettings></tycho.test.envSettings>
-        <tycho.testArgLine></tycho.testArgLine> <!-- empty default to run tests without coverage profile -->
+        <tycho.test.defaultArgLine>-Xmx1024m -Dlauncher.suppressErrors -Dsdtcore.headless ${tycho.test.OSspecific} ${tycho.test.envSettings}</tycho.test.defaultArgLine>
     </properties>
 
     <!--
@@ -107,6 +107,12 @@
                             <execution>
                                 <goals>
                                     <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+				<id>generate-report</id>
+                                <goals>
+                                    <goal>report</goal>
                                 </goals>
                             </execution>
                         </executions>
@@ -407,7 +413,7 @@
                     <configuration>
                         <useUIHarness>true</useUIHarness>
                         <runOrder>alphabetical</runOrder>
-                        <argLine>-Xmx1024m -Dlauncher.suppressErrors -Dsdtcore.headless ${tycho.test.OSspecific} ${tycho.test.envSettings} ${tycho.testArgLine}</argLine>
+                        <argLine>${tycho.test.defaultArgLine} ${tycho.testArgLine}</argLine>
                     </configuration>
                 </plugin>
 
