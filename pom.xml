@@ -25,6 +25,7 @@
              see https://locationtech.org/bugs/show_bug.cgi?id=51
         -->
         <tycho.test.envSettings></tycho.test.envSettings>
+        <tycho.testArgLine></tycho.testArgLine>
         <tycho.test.defaultArgLine>-Xmx1024m -Dlauncher.suppressErrors -Dsdtcore.headless ${tycho.test.OSspecific} ${tycho.test.envSettings}</tycho.test.defaultArgLine>
     </properties>
 
