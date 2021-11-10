@@ -42,7 +42,11 @@ jobs:
     - name: Run uDig tests
       uses: GabrielBB/xvfb-action@v1
       with:
-         run: mvn integration-test -B -Ptest --fail-at-end
+         run: mvn integration-test -Pcoverage -B -Ptest --fail-at-end
+    - uses: codecov/codecov-action@v1
+      with:
+        file: ./plugins/**/target/site/jacoco/jacoco.xml
+        name: codecoverage
     - name: provide Windows product for download
       uses: actions/upload-artifact@v2
       with:
