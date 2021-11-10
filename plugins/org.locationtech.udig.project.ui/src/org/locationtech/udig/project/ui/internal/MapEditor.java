@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -120,13 +120,13 @@ import org.opengis.feature.simple.SimpleFeature;
 
 /**
  * This class is the Eclipse editor Part in which a ViewportPane is embedded. The ViewportPane
- * displays and edits Maps. MapViewport is used to intialize ViewportPane and the RenderManager.
+ * displays and edits Maps. MapViewport is used to initialize ViewportPane and the RenderManager.
  *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
 public class MapEditor extends EditorPart
-implements IDropTargetProvider, IAdaptable, MapEditorPart {
+        implements IDropTargetProvider, IAdaptable, MapEditorPart {
     /** The id of the MapViewport View */
     public static final String ID = "org.locationtech.udig.project.ui.mapEditorOld"; //$NON-NLS-1$
 
@@ -150,10 +150,6 @@ implements IDropTargetProvider, IAdaptable, MapEditorPart {
     private IContributionItem crsContributionItem;
 
     private boolean dirty = false;
-
-    // Menu menu;
-
-    // private ViewportPane viewportPane;
 
     private MapViewer viewer = null;
 
@@ -253,7 +249,7 @@ implements IDropTargetProvider, IAdaptable, MapEditorPart {
 
     /**
      * Listens to the Map and will change the editor title if the map name is changed. Also marks a
-     * layer as ditry if the edit manager has some kind of event.
+     * layer as dirty if the edit manager has some kind of event.
      */
     IMapListener mapListener = new IMapListener() {
 
@@ -292,7 +288,7 @@ implements IDropTargetProvider, IAdaptable, MapEditorPart {
     };
 
     /**
-     * Listens to the edito manager; will clear the dirty status after a commit or after a rollback
+     * Listens to the editor manager; will clear the dirty status after a commit or after a rollback
      * (as long as a map does not have temporary layers).
      */
     IEditManagerListener editListener = new IEditManagerListener() {
@@ -352,8 +348,8 @@ implements IDropTargetProvider, IAdaptable, MapEditorPart {
         @Override
         public boolean preShutdown(final IProgressMonitor monitor, final IWorkbench workbench,
                 final boolean forced) throws Exception {
-            monitor.beginTask("Saving Map Editor", 3); //$NON-NLS-1$
-            save(new SubProgressMonitor(monitor, 1));
+            monitor.beginTask("Saving Map Editor", 3);
+            save(SubMonitor.convert(monitor, 1));
             if (dirty) {
                 if (!forced) {
                     return false;
@@ -364,7 +360,7 @@ implements IDropTargetProvider, IAdaptable, MapEditorPart {
             removeTemporaryLayers(ProjectPlugin.getPlugin().getPreferenceStore());
             monitor.worked(1);
 
-            // save the map's URI in the preferences so that it will be loaded the next time udig is
+            // save the map's URI in the preferences so that it will be loaded the next time uDig is
             // run.
             final Resource resource = getMap().eResource();
             if (resource != null) {
@@ -805,12 +801,11 @@ implements IDropTargetProvider, IAdaptable, MapEditorPart {
                     contextMenu.add(tm.getBACKWARD_HISTORYAction());
                     contextMenu.add(tm.getFORWARD_HISTORYAction());
                     contextMenu.add(new Separator());
-                    // contextMenu.add(tm.createCUTAction(MapEditor.this));
                     contextMenu.add(tm.getCOPYAction(MapEditor.this));
                     contextMenu.add(tm.getPASTEAction(MapEditor.this));
                     contextMenu.add(tm.getDELETEAction());
 
-                    /*
+                    /**
                      * Gets contributions from active modal tool if possible
                      */
                     tm.contributeActiveModalTool(contextMenu);
@@ -848,26 +843,26 @@ implements IDropTargetProvider, IAdaptable, MapEditorPart {
             final PropertyDialogAction tmp = new PropertyDialogAction(new SameShellProvider(shell),
                     new ISelectionProvider() {
 
-                @Override
-                public void addSelectionChangedListener(
-                        final ISelectionChangedListener listener) {
-                }
+                        @Override
+                        public void addSelectionChangedListener(
+                                final ISelectionChangedListener listener) {
+                        }
 
-                @Override
-                public ISelection getSelection() {
-                    return new StructuredSelection(getMap());
-                }
+                        @Override
+                        public ISelection getSelection() {
+                            return new StructuredSelection(getMap());
+                        }
 
-                @Override
-                public void removeSelectionChangedListener(
-                        final ISelectionChangedListener listener) {
-                }
+                        @Override
+                        public void removeSelectionChangedListener(
+                                final ISelectionChangedListener listener) {
+                        }
 
-                @Override
-                public void setSelection(final ISelection selection) {
-                }
+                        @Override
+                        public void setSelection(final ISelection selection) {
+                        }
 
-            });
+                    });
 
             propertiesAction = new Action() {
                 @Override
@@ -910,7 +905,6 @@ implements IDropTargetProvider, IAdaptable, MapEditorPart {
      */
     @Override
     public Map getMap() {
-        // return viewer.getMap();
         final UDIGEditorInput editorInput = (UDIGEditorInput) getEditorInput();
         if (editorInput != null) {
             return (Map) editorInput.getProjectElement();
@@ -991,10 +985,6 @@ implements IDropTargetProvider, IAdaptable, MapEditorPart {
     @Override
     public void openContextMenu() {
         viewer.openContextMenu();
-        /*
-         * getEditorSite().getShell().getDisplay().asyncExec(new Runnable(){ public void run() {
-         * menu.setVisible(true); } });
-         */
     }
 
     @Override
@@ -1098,7 +1088,6 @@ implements IDropTargetProvider, IAdaptable, MapEditorPart {
             } catch (final Exception e) {
                 ProjectUIPlugin.log("", e); //$NON-NLS-1$
             }
-            // PlatformGIS.run(sendAnimation);
         }
 
         private IAnimation createAnimation(List<SimpleFeature> current) {
@@ -1126,9 +1115,7 @@ implements IDropTargetProvider, IAdaptable, MapEditorPart {
                 commands.add(command);
             }
             final Rectangle2D rect = new Rectangle();
-            // for( IDrawCommand command : commands ) {
-            // rect=rect.createUnion(command.getValidArea());
-            // }
+
             final Rectangle validArea = (Rectangle) rect;
 
             return new FeatureAnimation(commands, validArea);
