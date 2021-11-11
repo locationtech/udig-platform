@@ -45,7 +45,7 @@ jobs:
          run: mvn integration-test -Pcoverage -B -Ptest --fail-at-end
     - uses: codecov/codecov-action@v1
       with:
-        file: plugins/**/target/site/jacoco/jacoco.xml
+        files: ./plugins/**/target/site/jacoco/jacoco.xml
         name: codecov
     - name: provide Windows product for download
       uses: actions/upload-artifact@v2
