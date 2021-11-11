@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2013, Refractions Research Inc.
  *
@@ -23,9 +24,8 @@ import java.util.Collection;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -58,18 +58,23 @@ import org.opengis.referencing.operation.TransformException;
 
 /**
  * Wizard for exporting a collection of maps to a collection of images. One for each map.
- * 
+ *
  * @author Jesse
  */
 public class ExportMapToImageWizard extends Wizard implements IExportWizard {
 
     public static final String DIRECTORY_KEY = "exportDirectoryKey"; //$NON-NLS-1$
+
     public static final String FORMAT_KEY = "exportFormatKey"; //$NON-NLS-1$
+
     public static final String WIDTH_KEY = "widthKey"; //$NON-NLS-1$
+
     public static final String HEIGHT_KEY = Messages.ExportMapToImageWizard_3;
+
     public static final String SELECTION = "SELECTION_HANDLING"; //$NON-NLS-1$
 
     private ImageExportPage imageSettingsPage = new ImageExportPage();
+
     private MapSelectorPageWithScaleColumn mapSelectorPage;
 
     public ExportMapToImageWizard() {
@@ -77,16 +82,18 @@ public class ExportMapToImageWizard extends Wizard implements IExportWizard {
         setDialogSettings(ProjectUIPlugin.getDefault().getDialogSettings());
 
         String title = null; // will use default title
-        ImageDescriptor banner = ProjectUIPlugin.getDefault().getImageDescriptor(Icons.WIZBAN + "exportimage_wiz.gif"); //$NON-NLS-1$
+        ImageDescriptor banner = ProjectUIPlugin.getDefault()
+                .getImageDescriptor(Icons.WIZBAN + "exportimage_wiz.gif"); //$NON-NLS-1$
         setDefaultPageImageDescriptor(banner);
-        mapSelectorPage = new MapSelectorPageWithScaleColumn("Select Map With Scale", title, banner); //$NON-NLS-1$
+        mapSelectorPage = new MapSelectorPageWithScaleColumn("Select Map With Scale", title, //$NON-NLS-1$
+                banner);
         addPage(mapSelectorPage);
         addPage(imageSettingsPage);
         setNeedsProgressMonitor(true);
     }
 
     @Override
-    public void setContainer( IWizardContainer wizardContainer ) {
+    public void setContainer(IWizardContainer wizardContainer) {
         super.setContainer(wizardContainer);
         addPageChangeListener();
     }
@@ -98,14 +105,15 @@ public class ExportMapToImageWizard extends Wizard implements IExportWizard {
     private void addPageChangeListener() {
         if (getContainer() instanceof WizardDialog) {
             WizardDialog dialog = (WizardDialog) getContainer();
-            dialog.addPageChangedListener(new IPageChangedListener(){
+            dialog.addPageChangedListener(new IPageChangedListener() {
 
-                public void pageChanged( PageChangedEvent event ) {
+                @Override
+                public void pageChanged(PageChangedEvent event) {
                     WizardPage currentPage = (WizardPage) event.getSelectedPage();
                     if (currentPage == mapSelectorPage) {
                         String currentFormat = imageSettingsPage.getFormat().getName();
-                        String description = MessageFormat.format(
-                                "Select map to export to {0} images", currentFormat);
+                        String description = MessageFormat
+                                .format("Select map to export to {0} images", currentFormat); //$NON-NLS-1$
                         currentPage.setDescription(description);
                     }
                 }
@@ -113,49 +121,51 @@ public class ExportMapToImageWizard extends Wizard implements IExportWizard {
             });
         }
     }
+
     @Override
     public boolean performFinish() {
 
-	// reset error message if user hit finish again (hopefully with modified parameters)
+        // reset error message if user hit finish again (hopefully with modified parameters)
         if (getContainer().getCurrentPage() instanceof WizardPage) {
             WizardPage wp = (WizardPage) getContainer().getCurrentPage();
             wp.setErrorMessage(null);
-        };
+        }
+        ;
 
-        final Collection<String> errors = new ArrayList<String>();
-        final Collection<IMap> renderedMaps = new ArrayList<IMap>();
+        final Collection<String> errors = new ArrayList<>();
+        final Collection<IMap> renderedMaps = new ArrayList<>();
         try {
-            getContainer().run(false, true, new IRunnableWithProgress(){
+            getContainer().run(false, true, new IRunnableWithProgress() {
 
-                public void run( IProgressMonitor monitor ) throws InvocationTargetException,
-                        InterruptedException {
+                @Override
+                public void run(IProgressMonitor monitor)
+                        throws InvocationTargetException, InterruptedException {
 
                     Collection<IMap> maps = mapSelectorPage.getMaps();
 
-                    monitor.beginTask(Messages.ExportMapToImageWizard_exportMapsTaskName, maps
-                            .size() * 3 + 1);
+                    monitor.beginTask(Messages.ExportMapToImageWizard_exportMapsTaskName,
+                            maps.size() * 3 + 1);
                     monitor.worked(1);
-                    for( IMap map : maps ) {
+                    for (IMap map : maps) {
                         try {
-                            exportMap(map, new SubProgressMonitor(monitor, 3));
+                            exportMap(map, SubMonitor.convert(monitor, 3));
                         } catch (RenderException e) {
 
-                            Object[] args = new Object[]{map.getName(), e.getLocalizedMessage()};
+                            Object[] args = new Object[] { map.getName(), e.getLocalizedMessage() };
                             String pattern = Messages.ExportMapToImageWizard_renderingErrorMessage;
                             errors.add(MessageFormat.format(pattern, args));
                         } catch (IOException e) {
                             errors.add(Messages.ExportMapToImageWizard_ioexceptionErrorMessage
                                     + e.getLocalizedMessage());
                         } catch (TransformException e) {
-                            errors
-                                    .add("Failed to create world file.  This image can not be used as a Raster file in uDig");
+                            errors.add(
+                                    "Failed to create world file.  This image can not be used as a Raster file in uDig"); //$NON-NLS-1$
                         } catch (NoninvertibleTransformException e) {
-                            errors
-                                    .add("Failed to create world file.  This image can not be used as a Raster file in uDig");
+                            errors.add(
+                                    "Failed to create world file.  This image can not be used as a Raster file in uDig"); //$NON-NLS-1$
                         } catch (RuntimeException e) {
-                            errors
-                                    .add("An unexpected failure occurred: "
-                                            + e.getLocalizedMessage());
+                            errors.add(
+                                    "An unexpected failure occurred: " + e.getLocalizedMessage()); //$NON-NLS-1$
                         }
                         renderedMaps.add(map);
                     }
@@ -170,9 +180,8 @@ public class ExportMapToImageWizard extends Wizard implements IExportWizard {
         }
 
         if (!errors.isEmpty()) {
-            ((WizardPage) getContainer().getCurrentPage())
-                    .setErrorMessage(Messages.ExportMapToImageWizard_ShowErrorMessage
-                            + errors.iterator().next());
+            ((WizardPage) getContainer().getCurrentPage()).setErrorMessage(
+                    Messages.ExportMapToImageWizard_ShowErrorMessage + errors.iterator().next());
             return false;
         }
 
@@ -182,22 +191,22 @@ public class ExportMapToImageWizard extends Wizard implements IExportWizard {
         return true;
     }
 
-    private void exportMap( IMap map, IProgressMonitor monitor ) throws RenderException,
-            IOException, TransformException, NoninvertibleTransformException {
+    private void exportMap(IMap map, IProgressMonitor monitor) throws RenderException, IOException,
+            TransformException, NoninvertibleTransformException {
 
         monitor.beginTask(Messages.ExportMapToImageWizard_RenderingTaskName, 10);
         String pattern = Messages.ExportMapToImageWizard_preparingTaskName;
-        Object[] args = new Object[]{map.getName()};
+        Object[] args = new Object[] { map.getName() };
         monitor.setTaskName(MessageFormat.format(pattern, args));
         File destination = determineDestinationFile(map);
         if (destination == null) {
             return;
         }
 
-        int width = imageSettingsPage.getWidth(map.getViewportModel().getWidth(), map
-                .getViewportModel().getHeight());
-        int height = imageSettingsPage.getHeight(map.getViewportModel().getWidth(), map
-                .getViewportModel().getHeight());
+        int width = imageSettingsPage.getWidth(map.getViewportModel().getWidth(),
+                map.getViewportModel().getHeight());
+        int height = imageSettingsPage.getHeight(map.getViewportModel().getWidth(),
+                map.getViewportModel().getHeight());
 
         // gdavis - ARGB won't output proper background color for non-alpha supporting
         // image types like jpg. Since the resulting image contains no alpha, RGB works
@@ -210,13 +219,14 @@ public class ExportMapToImageWizard extends Wizard implements IExportWizard {
         try {
             monitor.worked(2);
             pattern = Messages.ExportMapToImageWizard_renderingTaskname;
-            args = new Object[]{map.getName()};
+            args = new Object[] { map.getName() };
             monitor.setTaskName(MessageFormat.format(pattern, args));
             int scaleDenom = MapSelectorPageWithScaleColumn.getScaleDenom(map);
             BoundsStrategy boundsStrategy = new BoundsStrategy(scaleDenom);
 
-            DrawMapParameter drawMapParameter = new DrawMapParameter(g, new java.awt.Dimension(
-                    width, height), map, boundsStrategy, imageSettingsPage.getFormat().getDPI(),
+            DrawMapParameter drawMapParameter = new DrawMapParameter(g,
+                    new java.awt.Dimension(width, height), map, boundsStrategy,
+                    imageSettingsPage.getFormat().getDPI(),
                     imageSettingsPage.getSelectionHandling(), monitor);
 
             renderedMap = ApplicationGIS.drawMap(drawMapParameter);
@@ -225,71 +235,51 @@ public class ExportMapToImageWizard extends Wizard implements IExportWizard {
         }
         monitor.worked(3);
         pattern = Messages.ExportMapToImageWizard_writingTaskname;
-        args = new Object[]{map.getName()};
+        args = new Object[] { map.getName() };
         monitor.setTaskName(MessageFormat.format(pattern, args));
         imageSettingsPage.getFormat().write(renderedMap, image, destination);
-        
-        addToCatalog(destination ); 
-        
+
+        addToCatalog(destination);
+
         monitor.done();
     }
 
-    private void addToCatalog( final File file ) throws IOException {
-        if( !file.exists() ){
-            throw new FileNotFoundException("Expected "+file+" was not created");
+    private void addToCatalog(final File file) throws IOException {
+        if (!file.exists()) {
+            throw new FileNotFoundException("Expected " + file + " was not created"); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         // try if the file isn't a pdf
-        if ( file.getAbsolutePath().toLowerCase().endsWith("pdf") ) { //$NON-NLS-1$
+        if (file.getAbsolutePath().toLowerCase().endsWith("pdf")) { //$NON-NLS-1$
             return;
         }
 
-        Job addToCatalog = new Job("Add "+file.getName() ){
+        Job addToCatalog = new Job("Add " + file.getName()) { //$NON-NLS-1$
             @Override
             protected IStatus run(IProgressMonitor monitor) {
                 ICatalog localCatalog = CatalogPlugin.getDefault().getLocalCatalog();
-                URL url = new ID( file, null ).toURL();
+                URL url = new ID(file, null).toURL();
                 IService service = null;
                 try {
-                    service = localCatalog.acquire( url, monitor );
+                    service = localCatalog.acquire(url, monitor);
+                } catch (IOException unepected) {
                 }
-                catch( IOException unepected ){
-                }
-                return service != null ? Status.OK_STATUS : new Status( IStatus.ERROR, ProjectUIPlugin.ID, "Failed to add "+file );
+                return service != null ? Status.OK_STATUS
+                        : new Status(IStatus.ERROR, ProjectUIPlugin.ID, "Failed to add " + file); //$NON-NLS-1$
             }
         };
         addToCatalog.schedule();
     }
-    /**
-     * This implementation is a bit more drastic then the usual catalog add method
-     * as it will replace the existing contents if required.
-     *
-     * @param localCatalog
-     * @param service
-     */
-    private void addToCatalog( ICatalog localCatalog, IService service ) {
-        ID id = service.getID();
-        IService found = localCatalog.getById(IService.class, id, new NullProgressMonitor());
-        if (found != null) {
-            // existing catalog entry to replace
-            // (if this is only being done for a "refresh" we may be able to take less
-            // drastic action)
-            localCatalog.replace(service.getID(), service);
-        } else {
-            localCatalog.add(service);
-        }
-    }
 
-    private File determineDestinationFile( IMap map ) {
+    private File determineDestinationFile(IMap map) {
         File exportDir = mapSelectorPage.getExportDir();
         String name = URLUtils.cleanFilename(map.getName());
         File destination = addSuffix(new File(exportDir, name));
         if (destination.exists()) {
-            boolean overwrite = !MessageDialog
-                    .openQuestion(getContainer().getShell(),
-                            Messages.ExportMapToImageWizard_overwriteWarningTitle,
-                            Messages.ExportMapToImageWizard_overwriteWarningMessage
-                                    + destination.getName());
+            boolean overwrite = !MessageDialog.openQuestion(getContainer().getShell(),
+                    Messages.ExportMapToImageWizard_overwriteWarningTitle,
+                    Messages.ExportMapToImageWizard_overwriteWarningMessage
+                            + destination.getName());
 
             if (!overwrite) {
                 if (!destination.delete()) {
@@ -310,7 +300,7 @@ public class ExportMapToImageWizard extends Wizard implements IExportWizard {
         return addSuffix(destination);
     }
 
-    private File addSuffix( File file ) {
+    private File addSuffix(File file) {
         String path = stripEndSlash(file.getPath());
 
         File destination;
@@ -323,13 +313,13 @@ public class ExportMapToImageWizard extends Wizard implements IExportWizard {
         return destination;
     }
 
-    private String stripEndSlash( String path ) {
+    private String stripEndSlash(String path) {
         if (path.endsWith("/")) //$NON-NLS-1$
             return stripEndSlash(path.substring(0, path.length() - 1));
         return path;
     }
 
-    private File selectFile( File destination, String string ) {
+    private File selectFile(File destination, String string) {
         FileDialog dialog = new FileDialog(getShell(), SWT.SAVE);
         dialog.setText(string);
         dialog.setFilterPath(destination.getParent());
@@ -343,8 +333,8 @@ public class ExportMapToImageWizard extends Wizard implements IExportWizard {
         return destination;
     }
 
-    @SuppressWarnings("unchecked")
-    public void init( IWorkbench workbench, IStructuredSelection selection ) {
+    @Override
+    public void init(IWorkbench workbench, IStructuredSelection selection) {
         mapSelectorPage.setSelection(selection);
     }
 

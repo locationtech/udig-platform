@@ -14,7 +14,7 @@ import java.io.IOException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.geotools.data.FeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.feature.FeatureIterator;
@@ -38,7 +38,7 @@ public class FIDFeatureProvider implements IBlockingProvider<SimpleFeature> {
     public FIDFeatureProvider(String fid2, IBlockingProvider<ILayer> layer2) {
         this.layerProvider = layer2;
         if (fid2 == null) {
-            throw new NullPointerException("Fid must not be null");
+            throw new NullPointerException("Fid must not be null"); //$NON-NLS-1$
         }
         this.fid = fid2;
     }
@@ -56,9 +56,9 @@ public class FIDFeatureProvider implements IBlockingProvider<SimpleFeature> {
             try {
                 monitor.beginTask("Get Feature", 100);
 
-                ILayer layer = layerProvider.get(new SubProgressMonitor(monitor, 25));
+                ILayer layer = layerProvider.get(SubMonitor.convert(monitor, 25));
                 FeatureSource<SimpleFeatureType, SimpleFeature> source = layer
-                        .getResource(FeatureSource.class, new SubProgressMonitor(monitor, 25));
+                        .getResource(FeatureSource.class, SubMonitor.convert(monitor, 25));
 
                 FeatureIterator<SimpleFeature> iter = source.getFeatures(fidFilter).features();
                 monitor.worked(25);
