@@ -35,6 +35,7 @@ import org.locationtech.udig.project.internal.render.Renderer;
 import org.locationtech.udig.project.internal.render.SelectionLayer;
 import org.locationtech.udig.project.render.IRenderContext;
 import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.render.RendererUtils;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -70,7 +71,7 @@ public class RenderJob extends Job {
 
     protected void init() {
         setRule(new RenderJobRule());
-        setSystem(true);
+        setSystem(RendererUtils.isRendererJobSystemJob());
     }
 
     /**
@@ -361,5 +362,4 @@ public class RenderJob extends Job {
         }
 
     }
-
 }
