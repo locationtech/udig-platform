@@ -25,8 +25,13 @@
              see https://locationtech.org/bugs/show_bug.cgi?id=51
         -->
         <tycho.test.envSettings></tycho.test.envSettings>
-        <tycho.testArgLine></tycho.testArgLine>
-        <tycho.test.defaultArgLine>-Xmx1024m -Dlauncher.suppressErrors -Dsdtcore.headless ${tycho.test.OSspecific} ${tycho.test.envSettings}</tycho.test.defaultArgLine>
+        <tycho.test.defaultOptions>-Xmx1024m -Dlauncher.suppressErrors -Dsdtcore.headless ${tycho.test.OSspecific}</tycho.test.defaultOptions>
+        <tycho.test.options>${tycho.test.defaultOptions} ${tycho.test.envSettings}</tycho.test.options>
+
+        <!-- sonar specific parameters -->
+        <sonar.jacoco.reportPaths>../${project.artifactId}.tests/target/jacoco.exec</sonar.jacoco.reportPaths>
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
     </properties>
 
     <!--
@@ -97,6 +102,7 @@
                 </property>
             </activation>
             <properties>
+              <tycho.test.options>${tycho.test.defaultOptions} ${tycho.test.envSettings} ${tycho.test.jacoco}</tycho.test.options>
             </properties>
             <build>
                 <plugins>
@@ -106,6 +112,9 @@
                         <artifactId>jacoco-maven-plugin</artifactId>
                         <executions>
                             <execution>
+                                <configuration>
+                                  <propertyName>tycho.test.jacoco</propertyName>
+                                </configuration>
                                 <goals>
                                     <goal>prepare-agent</goal>
                                 </goals>
@@ -414,7 +423,7 @@
                     <configuration>
                         <useUIHarness>true</useUIHarness>
                         <runOrder>alphabetical</runOrder>
-                        <argLine>${tycho.test.defaultArgLine} ${tycho.testArgLine}</argLine>
+                        <argLine>${tycho.test.options}</argLine>
                     </configuration>
                 </plugin>
 
