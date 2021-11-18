@@ -26,7 +26,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.jobs.Job;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleBuilder;
@@ -151,7 +151,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
         ex.setRenderBounds(new Envelope(minx, maxx, miny, maxy));
         ex.render();
 
-        Platform.getJobManager().join(map.getRenderManager(), new NullProgressMonitor());
+        Job.getJobManager().join(map.getRenderManager(), new NullProgressMonitor());
 
         showImage("testRenderEnvelopeIProgressMonitor", image); //$NON-NLS-1$
         testImage(image, false, minx, 512 - maxy, maxx, 512 - miny);
@@ -196,7 +196,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
         ex.setRenderBounds(new Rectangle(minx, miny, maxx - minx, maxy - miny));
         ex.render();
 
-        Platform.getJobManager().join(map.getRenderManager(), new NullProgressMonitor());
+        Job.getJobManager().join(map.getRenderManager(), new NullProgressMonitor());
 
         BufferedImage image2 = ex.getContext().getImage(w, h);
         assertEquals(image, image2);
@@ -246,7 +246,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 
         map.getRenderManagerInternal().getRenderExecutor().render();
 
-        Platform.getJobManager().join(map.getRenderManager(), new NullProgressMonitor());
+        Job.getJobManager().join(map.getRenderManager(), new NullProgressMonitor());
 
         BufferedImage image2 = ex.getContext().getImage(w, h);
         assertEquals(image, image2);
@@ -276,7 +276,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
         ex.setRenderBounds(new Envelope(minx, maxx, miny, maxy));
         ex.render();
 
-        Platform.getJobManager().join(map.getRenderManager(), new NullProgressMonitor());
+        Job.getJobManager().join(map.getRenderManager(), new NullProgressMonitor());
 
         BufferedImage image2 = ex.getContext().getImage();
         assertEquals(image, image2);
@@ -293,7 +293,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
         graphics.dispose();
         ex.setRenderBounds(new Envelope(minx, maxx, miny, maxy));
         ex.render();
-        Platform.getJobManager().join(map.getRenderManager(), new NullProgressMonitor());
+        Job.getJobManager().join(map.getRenderManager(), new NullProgressMonitor());
 
         testImage(image, false, 0, 0, 512, 512);
     }
