@@ -20,6 +20,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.locationtech.udig.project.internal.render.RenderContext;
 import org.locationtech.udig.project.internal.render.RenderExecutor;
+import org.locationtech.udig.project.internal.render.RenderFactory;
+import org.locationtech.udig.project.internal.render.RenderManager;
 import org.locationtech.udig.project.internal.render.RendererCreator;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 import org.mockito.Mock;
@@ -27,17 +29,17 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RenderManagerImplTest {
-    
+
     @Mock
     private IMapDisplay mapDisplay;
 
-    private RenderManagerImpl manager = new RenderManagerImpl();
+    private RenderManager manager = RenderFactory.eINSTANCE.createRenderManager();
 
     @Test
     public void testGetRenderExecutorCaching() {
         RenderExecutor expectedRenderExecutor = manager.getRenderExecutor();
         RenderExecutor actualRenderExecutor = manager.getRenderExecutor();
-        
+
         assertEquals(expectedRenderExecutor, actualRenderExecutor);
     }
 
@@ -47,21 +49,12 @@ public class RenderManagerImplTest {
         assertNotNull(rendererCreator);
         RenderContext renderContext = rendererCreator.getContext();
         assertNotNull(renderContext);
-        
+
         assertEquals(manager, renderContext.getRenderManagerInternal());
         assertEquals(manager, renderContext.getRenderManager());
     }
 
     @Test
-    public void testSetAndGetOfIsViewer() {
-        assertFalse(manager.isViewer());
-        manager.setViewer(true);
-        assertTrue(manager.isViewer());
-        manager.setViewer(false);
-        assertFalse(manager.isViewer());
-    }
-    
-   @Test
     public void testIsRenderingEnabledWhenEnabledAndDisplaySizesGreaterZero() {
         when(mapDisplay.getWidth()).thenReturn(512);
         when(mapDisplay.getHeight()).thenReturn(512);
