@@ -177,11 +177,6 @@ public class ASTFactory {
             this.right = right;
         }
 
-        /**
-         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
-         * @param datum
-         * @return
-         */
         @Override
         public boolean accept(String datum) {
             if (datum == null)
@@ -217,11 +212,6 @@ public class ASTFactory {
             this.right = right;
         }
 
-        /**
-         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
-         * @param datum
-         * @return
-         */
         @Override
         public boolean accept(String datum) {
             if (datum == null)
@@ -229,10 +219,6 @@ public class ASTFactory {
             return (right != null && right.accept(datum)) || (left != null && left.accept(datum));
         }
 
-        /**
-         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#type()
-         * @return
-         */
         @Override
         public int type() {
             return OR;
@@ -260,11 +246,6 @@ public class ASTFactory {
             this.child = child;
         }
 
-        /**
-         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
-         * @param datum
-         * @return
-         */
         @Override
         public boolean accept(String datum) {
             if (datum == null)
@@ -272,10 +253,6 @@ public class ASTFactory {
             return !(child != null && child.accept(datum));
         }
 
-        /**
-         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#type()
-         * @return
-         */
         @Override
         public int type() {
             return NOT;
@@ -303,11 +280,6 @@ public class ASTFactory {
             this.value = value;
         }
 
-        /**
-         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
-         * @param datum
-         * @return
-         */
         @Override
         public boolean accept(String datum) {
             return value != null && datum != null
