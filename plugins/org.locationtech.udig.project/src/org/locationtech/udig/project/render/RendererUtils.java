@@ -1,7 +1,7 @@
 /**
  * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2020, Refractions Research Inc.
+ * (C) 2021, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0

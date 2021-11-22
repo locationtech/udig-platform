@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -48,7 +48,7 @@ public class ModalToolCategory extends ToolCategory {
 
     /**
      * Optional default selection provided used for all tools in this category As an example
-     * selection tools may be able to just report the selection fromt he current layer
+     * selection tools may be able to just report the selection from the current layer
      */
     private IMapEditorSelectionProvider selectionProviderInstance;
 
@@ -58,7 +58,7 @@ public class ModalToolCategory extends ToolCategory {
      * @param element
      * @param manager
      */
-    public ModalToolCategory( IConfigurationElement element, IToolManager manager ) {
+    public ModalToolCategory(IConfigurationElement element, IToolManager manager) {
         super(element, manager);
     }
 
@@ -67,7 +67,7 @@ public class ModalToolCategory extends ToolCategory {
      *
      * @param manager
      */
-    public ModalToolCategory( IToolManager manager ) {
+    public ModalToolCategory(IToolManager manager) {
         super(manager);
     }
 
@@ -84,61 +84,57 @@ public class ModalToolCategory extends ToolCategory {
     }
 
     /**
-     * Returns  a  current UI contribution item for this category of modal tools.
+     * Returns a current UI contribution item for this category of modal tools.
      *
      * @return
      */
     public AbstractToolbarContributionItem getContribution() {
         return contribution;
     }
+
     /**
-     * Hooks the provided container up to this cateogry; so that it can update
-     * in response to key presses
+     * Hooks the provided container up to this category; so that it can update in response to key
+     * presses
      *
      * @param container
      */
-    public void hook( PaletteContainer container ){
+    public void hook(PaletteContainer container) {
         this.container = container;
     }
 
-    public void container( PaletteContainer container ){
+    public void container(PaletteContainer container) {
         this.container = container;
     }
 
-    public void contribute( IToolBarManager manager ) {
-        CurrentContributionItem old = contribution;
-        contribution = new CurrentModalToolContribution();
-        manager.add(contribution);
-        //Add CurrentModalToolContribution as a contribution to each item of themodal category
-        for( ModalItem item : this ) {
-            ToolProxy tool = (ToolProxy) item;
-            if (tool.getType() == ToolProxy.MODAL) {
-                if(old != null){
-                    /*
-                     * Vitalis:
-                     * Just to clean old contributions being collected
-                     * during maps opening/closing.
-                     */
-                    tool.removeContribution(old);
+    public void contribute(IToolBarManager manager) {
+        if (contribution == null) {
+            contribution = new CurrentModalToolContribution(getId());
+            for (ModalItem item : this) {
+                ToolProxy tool = (ToolProxy) item;
+                if (tool.getType() == ToolProxy.MODAL) {
+                    tool.addContribution(contribution);
                 }
-                tool.addContribution(contribution);
             }
+        }
+
+        if (manager.find(contribution.getId()) == null) {
+            manager.add(contribution);
+            manager.update(false);
         }
     }
 
     public IMapEditorSelectionProvider getSelectionProvider() {
-        if( selectionProviderInstance==null ){
+        if (selectionProviderInstance == null) {
             if (element.getAttribute("selectionProvider") != null) { //$NON-NLS-1$
                 try {
                     selectionProviderInstance = (IMapEditorSelectionProvider) element
                             .createExecutableExtension("selectionProvider"); //$NON-NLS-1$
                 } catch (CoreException e) {
-                    ProjectUIPlugin
-                            .log(
-                                    "Error instantiating selection provider for " + element.getNamespace() + "/" + element.getName(), e); //$NON-NLS-1$//$NON-NLS-2$
+                    ProjectUIPlugin.log("Error instantiating selection provider for " //$NON-NLS-1$
+                            + element.getNamespaceIdentifier() + "/" + element.getName(), e); //$NON-NLS-1$
                     selectionProviderInstance = new MapEditorSelectionProvider();
                 }
-            }else{
+            } else {
                 selectionProviderInstance = new MapEditorSelectionProvider();
             }
         }
@@ -154,43 +150,45 @@ public class ModalToolCategory extends ToolCategory {
      */
     protected class CurrentModalToolContribution extends AbstractToolbarContributionItem {
 
-        /**
-         * @see org.locationtech.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#createToolItem(org.eclipse.swt.widgets.ToolBar,
-         *      int)
-         */
+        String categoryId;
+
+        public CurrentModalToolContribution(String categoryId) {
+            this.categoryId = categoryId;
+        }
+
         @Override
-        protected ToolItem createToolItem( final ToolBar parent, int index ) {
+        protected ToolItem createToolItem(final ToolBar parent, int index) {
             final ToolItem item = new ToolItem(parent, SWT.DROP_DOWN, index);
             return item;
         }
 
         @Override
-        protected void runCurrentTool( ) {
-            super.runCurrentTool();
-            IMapEditorSelectionProvider provider = ((ToolProxy)currentTool).getSelectionProvider();
-            MapPart editor = ApplicationGISInternal.getActiveMapPart();
+        public String getId() {
+            return this.categoryId;
+        }
 
-            //if( editor!=null && editor.getSite()!=null && provider!=editor.getSite().getSelectionProvider() )
-            if( editor != null ){
+        @Override
+        protected void runCurrentTool() {
+            super.runCurrentTool();
+            IMapEditorSelectionProvider provider = ((ToolProxy) currentTool).getSelectionProvider();
+            MapPart editor = ApplicationGISInternal.getActiveMapPart();
+            if (editor != null) {
                 editor.setSelectionProvider(provider);
             }
         }
 
-        /**
-         * @see org.locationtech.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#getTools()
-         */
         @Override
         protected List<ModalItem> getTools() {
-            List<ModalItem> onToolbar=new ArrayList<>();
-            ModalItem enabled=null;
+            List<ModalItem> onToolbar = new ArrayList<>();
+            ModalItem enabled = null;
 
-            for( ModalItem item : items ) {
-                if( ((ToolProxy)item).isOnToolbar() )
+            for (ModalItem item : items) {
+                if (((ToolProxy) item).isOnToolbar())
                     onToolbar.add(item);
-                if( item.isEnabled() && enabled==null && ((ToolProxy)item).isOnToolbar())
-                    enabled=item;
+                if (item.isEnabled() && enabled == null && ((ToolProxy) item).isOnToolbar())
+                    enabled = item;
             }
-            if( enabled!=null ){
+            if (enabled != null) {
                 onToolbar.remove(enabled);
                 onToolbar.add(0, enabled);
             }
@@ -198,25 +196,18 @@ public class ModalToolCategory extends ToolCategory {
             return onToolbar;
         }
 
-        /**
-         * @see org.locationtech.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#isDefaultItem()
-         */
         @Override
         protected boolean isDefaultItem() {
-            return getTools().contains(((ToolManager)manager).defaultModalToolProxy);
+            return getTools().contains(((ToolManager) manager).defaultModalToolProxy);
         }
 
-        /**
-         *  (non-Javadoc)
-         * @see org.locationtech.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#isActiveItem()
-         */
         @Override
         protected boolean isActiveItem() {
             return getTools().contains(manager.getActiveToolProxy());
         }
     }
 
-    /** As an alternative to a contirbution; we can use a palette container */
+    /** As an alternative to a contribution; we can use a palette container */
     public PaletteContainer getContainer() {
         return container;
     }

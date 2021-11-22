@@ -221,7 +221,7 @@ public class InfoView2 extends SearchPart {
             Image image = registry.get(key);
             if (image == null) {
                 ImageDescriptor icon;
-                icon = (ImageDescriptor) layer.getProperties().get("generated icon"); //$NON-NLS-1$
+                icon = (ImageDescriptor) layer.getBlackboard().get("generated icon"); //$NON-NLS-1$
                 if (icon == null) {
                     icon = layer.getIcon();
                 }

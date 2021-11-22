@@ -441,7 +441,6 @@ Bundle-ClassPath: .,
  lib/xpp3_min-1.1.4c.jar
 Export-Package: .,
  au.com.objectix.jgridshift,
- com.google.protobuf,
  com.mysql.jdbc;version="5.1.46",
  com.mysql.jdbc.exceptions;version="5.1.46",
  com.mysql.jdbc.exceptions.jdbc4;version="5.1.46",

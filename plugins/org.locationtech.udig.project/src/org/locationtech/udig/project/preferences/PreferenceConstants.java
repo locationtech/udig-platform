@@ -10,6 +10,7 @@
  */
 package org.locationtech.udig.project.preferences;
 
+import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.locationtech.udig.project.internal.render.impl.ScaleUtils;
 
 /**
@@ -39,7 +40,7 @@ public final class PreferenceConstants {
     public static final String P_REMOVE_LAYERS = "P_REMOVE_LAYERS"; //$NON-NLS-1$
 
     public static final String P_HIGHLIGHT = "LayerPreferencePage.HighlightBehaviour"; //$NON-NLS-1$
-    
+
     public static final String P_HIGHLIGHT_NONE = "NONE"; //$NON-NLS-1$
     public static final String P_HIGHLIGHT_FOREGROUND = "FOREGROUND"; //$NON-NLS-1$
     public static final String P_HIGHLIGHT_BACKGROUND = "BACKGROUND"; //$NON-NLS-1$
@@ -47,7 +48,7 @@ public final class PreferenceConstants {
     public static final String P_WARN_IRREVERSIBLE_COMMAND = "P_WARN_IRREVERSIBLE_COMMAND"; //$NON-NLS-1$
 
     public static final String P_IRREVERSIBLE_COMMAND_VALUE = "P_IRREVERSIBLE_COMMAND_VALUE"; //$NON-NLS-1$
-    
+
     public static final String P_STYLE_DEFAULT_PERPENDICULAR_OFFSET = "P_STYLE_DEFAULT_PERPENDICULAR_OFFSET"; //$NON-NLS-1$
     public static final String P_LAYER_RESOURCE_CACHING_STRATEGY = "P_LAYER_RESOURCE_CACHING_STRATEGY"; //$NON-NLS-1$
 
@@ -64,6 +65,15 @@ public final class PreferenceConstants {
      * shown in progress view and are not hidden.
      * <p>
      * If the property is <code>true</code> then jobs are not shown in Progress View.
+     * </br>
+     * Use</br>
+     *
+     * <code>
+     *    {@value ProjectPlugin#ID}/{@value #P_HIDE_RENDER_JOB}=true
+     * </code>
+     *</br>
+     * to configure in <code>.options</code> file.
+     * </p>
      */
     public static final String P_HIDE_RENDER_JOB = "HIDE_RENDER_JOB"; //$NON-NLS-1$
 
@@ -71,11 +81,11 @@ public final class PreferenceConstants {
      * The property value for the preferred scale to ZOOM IN when extents of the layer
      * are not really correct or too small to be zoomed and displayed.
      * <p>
-     * The example: only one point exists in the layer and its extents are like 
+     * The example: only one point exists in the layer and its extents are like
      * (Xpoint, Ypoint, Xpoint, Ypoint) - so extents are collapsed to the point.
      * <p>
      * Used in "Zoom to extents" action.
-     * 
+     *
      */
     public static final String P_MINIMUM_ZOOM_SCALE = "P_MINIMUM_ZOOM_SCALE"; //$NON-NLS-1$
 
@@ -85,10 +95,10 @@ public final class PreferenceConstants {
      * <p>
      * This is a customization property to avoid drawback effects because of non-uniform and not complete
      * implementation of feature events notifiers and bugs in rendering workflow.
-     * 
+     *
      * The idea is to get the up-to-date picture with all changes in the layer no matter of feature
      * events that might cause refreshing only its bounding box.
-     * 
+     *
      */
     public static final String P_FEATURE_EVENT_REFRESH_ALL = "P_FEATURE_EVENT_REFRESH_ALL"; //$NON-NLS-1$
 
