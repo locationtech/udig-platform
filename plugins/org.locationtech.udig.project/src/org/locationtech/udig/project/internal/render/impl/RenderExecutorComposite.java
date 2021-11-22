@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -26,21 +27,21 @@ import org.locationtech.udig.project.internal.Trace;
 import org.locationtech.udig.project.internal.render.ExecutorVisitor;
 import org.locationtech.udig.project.internal.render.RenderExecutor;
 import org.locationtech.udig.project.internal.render.Renderer;
-import org.locationtech.udig.project.preferences.PreferenceConstants;
 import org.locationtech.udig.project.render.IRenderContext;
 import org.locationtech.udig.project.render.IRenderer;
 import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.project.render.RendererUtils;
 
 /**
  * An Executor specifically for executing CompositeRenderers.
  * <p>
- * This class appears to actually *be* the uDig appplication :-)
+ * This class appears to actually *be* the uDig application :-)
  * <p>
  * This class is supposed to listen to all events going down and is supposed to queue up some work
  * and let 'er rip.
  * <ul>
  * <li>RENDER_REQUEST causes this to refresh()
- * 
+ *
  * @author jeichar
  * @since 0.6.0
  */
@@ -52,22 +53,22 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
 
         /**
          * Construct <code>CompositeRendererJob</code>.
-         * 
+         *
          * @param executor
          */
-        public CompositeRendererJob( RenderExecutorComposite executor ) {
+        public CompositeRendererJob(RenderExecutorComposite executor) {
             super(executor);
             setPriority(Job.INTERACTIVE);
         }
 
         @Override
-        protected void clearBounds( Envelope bounds2 ) {
+        protected void clearBounds(Envelope bounds2) {
             // ignore because we don't want to clear until first update is received from one of the
             // contained renderers
         }
 
         @Override
-        protected void finalizeLabelPainter( IRenderContext context2 ) {
+        protected void finalizeLabelPainter(IRenderContext context2) {
             // do nothing
         }
 
@@ -81,7 +82,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
 
         /**
          * Incrementally updates the display until rendering is complete.
-         * 
+         *
          * @throws InterruptedException
          * @throws RenderException
          */
@@ -96,23 +97,21 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
             CompositeRendererImpl renderer2 = getExecutor().getRenderer();
             long start = System.currentTimeMillis();
             synchronized (getExecutor()) {
-                while( (getMonitor() != null && !getMonitor().isCanceled())
-                        && isRendering(renderer2) && getExecutor().timeout < TIMEOUT ) {
+                while ((getMonitor() != null && !getMonitor().isCanceled())
+                        && isRendering(renderer2) && getExecutor().timeout < TIMEOUT) {
                     getExecutor().wait(wait_period);
                     long now = System.currentTimeMillis();
-                    getExecutor().timeout = (int)(now - start);
+                    getExecutor().timeout = (int) (now - start);
                     if (isRendering(renderer2)) {
                         renderer2.refreshImage(false);
                         getExecutor().setState(RENDERING);
                     }
                 }
             }
-//            if (getExecutor().timeout>= TIMEOUT){ 
-//                System.out.println("Timed Out"); 
-//            }            
 
-            if( ProjectPlugin.getPlugin().isDebugging()){
-                String message = "Time taken to render is: " + (System.currentTimeMillis() - start) / 1000 + "seconds"; //$NON-NLS-1$ //$NON-NLS-2$
+            if (ProjectPlugin.getPlugin().isDebugging()) {
+                String message = "Time taken to render is: " //$NON-NLS-1$
+                        + (System.currentTimeMillis() - start) / 1000 + "seconds"; //$NON-NLS-1$
                 ProjectPlugin.trace(Trace.RENDER, getClass(), message, null);
             }
             synchronized (getExecutor()) {
@@ -124,16 +123,6 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
             }
         }
 
-        @Override
-        protected void init() {
-            updateSystemState(this);
-        }
-
-        @Override
-        protected void initializeLabelPainter( IRenderContext context2 ) {
-            // do nothing
-        }
-
         /**
          * @see org.locationtech.udig.project.internal.render.impl.RenderJob#postRendering()
          */
@@ -142,14 +131,13 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
 
             if (monitor.isCanceled()) {
                 executor.getRenderer().setState(CANCELLED);
-                for( RenderExecutor renderer : ((CompositeRendererImpl) executor.getRenderer())
-                        .getRenderExecutors() ) {
-                    if (renderer.getContext().isVisible() && executor.getState() != IRenderer.DONE) {
+                for (RenderExecutor renderer : ((CompositeRendererImpl) executor.getRenderer())
+                        .getRenderExecutors()) {
+                    if (renderer.getContext().isVisible()
+                            && executor.getState() != IRenderer.DONE) {
                         renderer.getContext().setStatus(ILayer.WARNING);
-                        renderer
-                                .getContext()
-                                .setStatusMessage(
-                                        "Timed out while rendering this layer.  Seems to have blocked, check that the server is up"); //$NON-NLS-1$
+                        renderer.getContext().setStatusMessage(
+                                "Timed out while rendering this layer.  Seems to have blocked, check that the server is up"); //$NON-NLS-1$
                     }
                 }
                 return;
@@ -160,7 +148,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
          * @see org.locationtech.udig.project.internal.render.impl.RenderJob#startRendering()
          */
         @Override
-        protected void startRendering( Envelope bounds, IProgressMonitor monitor ) throws Throwable {
+        protected void startRendering(Envelope bounds, IProgressMonitor monitor) throws Throwable {
             // need to show that we are in update just in case a renderer triggers a state event
             // in the RenderExecutor.render() method.
             synchronized (getExecutor()) {
@@ -177,7 +165,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
      * <p>
      * It will also set some time out states so the screen is not hammered with refreshes as the
      * children are busy.
-     * 
+     *
      * @author jeichar
      * @since 0.6.0
      */
@@ -185,10 +173,10 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
 
         /**
          * Construct <code>CompositeRendererListener</code>.
-         * 
+         *
          * @param executor
          */
-        CompositeRendererListener( RenderExecutorComposite executor ) {
+        CompositeRendererListener(RenderExecutorComposite executor) {
             super(executor);
         }
 
@@ -200,8 +188,8 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
          * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorMultiLayer.MultiLayerRendererListener#stateChanged(org.eclipse.emf.common.notify.Notification)
          */
         @Override
-        protected void stateChanged( Notification msg ) {
-            switch( msg.getNewIntValue() ) {
+        protected void stateChanged(Notification msg) {
+            switch (msg.getNewIntValue()) {
             case Renderer.RENDERING:
                 getExecutor().resetTimeout();
                 synchronized (getExecutor()) {
@@ -218,8 +206,8 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
                             executor.setState(Renderer.DONE);
                         }
                         if (!isRendering(getExecutor().getRenderer())
-                                || (getExecutor().renderJob.getMonitor() != null && getExecutor().renderJob
-                                        .getMonitor().isCanceled())) {
+                                || (getExecutor().renderJob.getMonitor() != null
+                                        && getExecutor().renderJob.getMonitor().isCanceled())) {
                             getExecutor().notifyAll();
                         }
                     }
@@ -230,7 +218,8 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
                 }
                 break;
             case Renderer.RENDER_REQUEST:
-                //use this block and synchronization, such that we won't lose delivery because of too many rendering calls
+                // use this block and synchronization, such that we won't lose delivery because of
+                // too many rendering calls
                 synchronized (getExecutor()) {
                     boolean oldValue = executor.eDeliver();
                     try {
@@ -295,12 +284,12 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
      * @param renderer2
      * @return
      */
-    static boolean isRendering( CompositeRendererImpl renderer2 ) {
+    static boolean isRendering(CompositeRendererImpl renderer2) {
         Collection<RenderExecutor> executors = renderer2.getRenderExecutors();
-        for( RenderExecutor executor : executors ) {
-            if (executor.getContext().isVisible()
-                    && (executor.getState() == IRenderer.RENDERING
-                            || executor.getState() == IRenderer.STARTING || executor.getState() == IRenderer.RENDER_REQUEST))
+        for (RenderExecutor executor : executors) {
+            if (executor.getContext().isVisible() && (executor.getState() == IRenderer.RENDERING
+                    || executor.getState() == IRenderer.STARTING
+                    || executor.getState() == IRenderer.RENDER_REQUEST))
                 return true;
         }
         return false;
@@ -323,9 +312,9 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
 
     @Override
     protected LayerListener getLayerListener() {
-        return new LayerListener(this){
+        return new LayerListener(this) {
             @Override
-            public void notifyChanged( Notification msg ) {
+            public void notifyChanged(Notification msg) {
                 // do nothingsuper.notifyChanged(msg);
             }
         };
@@ -346,8 +335,8 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
 
     @Override
     protected String getRenderJobName() {
-        return MessageFormat.format(Messages.RenderExecutorImpl_message, new Object[]{getContext()
-                .getMap().getName()});
+        return MessageFormat.format(Messages.RenderExecutorImpl_message,
+                new Object[] { getContext().getMap().getName() });
     }
 
     /**
@@ -355,9 +344,9 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
      */
     public synchronized void refresh() {
         if (refreshJob == null) {
-            refreshJob = new Job(getRenderJobName()){
+            refreshJob = new Job(getRenderJobName()) {
                 @Override
-                protected IStatus run( IProgressMonitor monitor ) {
+                protected IStatus run(IProgressMonitor monitor) {
                     try {
                         ((CompositeRendererJob) renderJob).incrementalUpdate();
                     } catch (Exception e) {
@@ -368,7 +357,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
                 }
 
             };
-            refreshJob.setSystem(false);
+            refreshJob.setSystem(RendererUtils.isRendererJobSystemJob());
             refreshJob.setPriority(Job.INTERACTIVE);
         }
         refreshJob.schedule();
@@ -401,8 +390,9 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
     protected synchronized void resetTimeout() {
         timeout = 0;
     }
+
     @Override
-    protected void resyncState( Renderer renderer ) {
+    protected void resyncState(Renderer renderer) {
 
         // FIXME sync sub renderers, witness composite renderer
         //
@@ -413,8 +403,10 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
      * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl#setRenderer(org.locationtech.udig.project.render.Renderer)
      */
     @Override
-    public void setRenderer( Renderer newRenderer ) {
-        updateSystemState(renderJob);
+    public void setRenderer(Renderer newRenderer) {
+        if (renderJob != null) {
+            renderJob.setSystem(RendererUtils.isRendererJobSystemJob());
+        }
         super.setRendererInternal(newRenderer);
     }
 
@@ -423,7 +415,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
      */
     @Override
     public void stopRendering() {
-        for( RenderExecutor executor : getRenderer().getRenderExecutors() ) {
+        for (RenderExecutor executor : getRenderer().getRenderExecutors()) {
             executor.stopRendering();
         }
         super.stopRendering();
@@ -433,19 +425,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
      * @see org.locationtech.udig.project.internal.render.impl.RenderExecutorImpl#visit(org.locationtech.udig.project.render.ExecutorVisitor)
      */
     @Override
-    public void visit( ExecutorVisitor visitor ) {
+    public void visit(ExecutorVisitor visitor) {
         visitor.visit(this);
-    }
-
-    /**
-     * Sets the system state of the provided job. The setting is read from the preference store
-     * using the {@link PreferenceConstants#P_HIDE_RENDER_JOB} constant.
-     * 
-     * @param job the job whose system state should be updated
-     */
-    private static void updateSystemState(Job job) {
-        boolean hideRenderJob = ProjectPlugin.getPlugin().getPreferenceStore()
-                .getBoolean(PreferenceConstants.P_HIDE_RENDER_JOB);
-        job.setSystem(hideRenderJob);
     }
 }

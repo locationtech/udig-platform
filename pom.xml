@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.locationtech.udig</groupId>
-    <artifactId>udig-tycho</artifactId>
+    <artifactId>udig-platform</artifactId>
     <version>2.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -25,6 +25,13 @@
              see https://locationtech.org/bugs/show_bug.cgi?id=51
         -->
         <tycho.test.envSettings></tycho.test.envSettings>
+        <tycho.test.defaultOptions>-Xmx1024m -Dlauncher.suppressErrors -Dsdtcore.headless ${tycho.test.OSspecific}</tycho.test.defaultOptions>
+        <tycho.test.options>${tycho.test.defaultOptions} ${tycho.test.envSettings}</tycho.test.options>
+
+        <!-- sonar specific parameters -->
+        <sonar.jacoco.reportPaths>../${project.artifactId}.tests/target/jacoco.exec</sonar.jacoco.reportPaths>
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
     </properties>
 
     <!--
@@ -95,54 +102,30 @@
                 </property>
             </activation>
             <properties>
-                <emma.session.out.file>${project.build.directory}/emma/${project.artifactId}.es</emma.session.out.file>
-                <emma.filter>se.mattiasholmqvist.*</emma.filter>
-                <eclemma.instrument.bundles>se.mattiasholmqvist.tychoexamples.bundle</eclemma.instrument.bundles>
+              <tycho.test.options>${tycho.test.defaultOptions} ${tycho.test.envSettings} ${tycho.test.jacoco}</tycho.test.options>
             </properties>
             <build>
                 <plugins>
+                    <!-- Enabling use of jacoco -->
                     <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>build-helper-maven-plugin</artifactId>
-                        <version>1.5</version>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>attach-artifacts</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>attach-artifact</goal>
-                                </goals>
                                 <configuration>
-                                    <artifacts>
-                                        <artifact>
-                                            <file>${emma.session.out.file}</file>
-                                            <type>es</type>
-                                        </artifact>
-                                    </artifacts>
+                                  <propertyName>tycho.test.jacoco</propertyName>
                                 </configuration>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+				<id>generate-report</id>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
                             </execution>
                         </executions>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>org.eclipse.tycho</groupId>
-                        <artifactId>tycho-surefire-plugin</artifactId>
-                        <version>${tycho-version}</version>
-                        <configuration>
-                            <systemProperties combine.children="append">
-                                <eclemma.help>true</eclemma.help>
-                                <emma.session.out.file>${emma.session.out.file}</emma.session.out.file>
-                                <emma.filter>${emma.filter}</emma.filter>
-                                <eclemma.instrument.bundles>${eclemma.instrument.bundles}</eclemma.instrument.bundles>
-                            </systemProperties>
-                            <frameworkExtensions>
-                                <frameworkExtension>
-                                    <groupId>se.mattiasholmqvist.tychoexamples</groupId>
-                                    <artifactId>eclemma.runtime.equinox</artifactId>
-                                    <version>1.1.0.200908261008</version>
-                                </frameworkExtension>
-                            </frameworkExtensions>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>
@@ -440,7 +423,7 @@
                     <configuration>
                         <useUIHarness>true</useUIHarness>
                         <runOrder>alphabetical</runOrder>
-                        <argLine>-Xmx1024m -Dlauncher.suppressErrors -Dsdtcore.headless ${tycho.test.OSspecific} ${tycho.test.envSettings}</argLine>
+                        <argLine>${tycho.test.options}</argLine>
                     </configuration>
                 </plugin>
 
@@ -461,20 +444,15 @@
                         <threshold>High</threshold>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.7</version>
+                </plugin>
+
             </plugins>
         </pluginManagement>
     </build>
-
-    <reporting>
-        <plugins>
-            <!-- Code coverage report -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <version>2.2</version>
-            </plugin>
-        </plugins>
-    </reporting>
 
     <modules>
         <module>extras/org.locationtech.udig.target</module>

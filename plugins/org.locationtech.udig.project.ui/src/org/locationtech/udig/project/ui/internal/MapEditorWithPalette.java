@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -380,8 +380,8 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette
         @Override
         public boolean preShutdown(IProgressMonitor monitor, IWorkbench workbench, boolean forced)
                 throws Exception {
-            monitor.beginTask("Saving Map Editor", 3); //$NON-NLS-1$
-            save(new SubProgressMonitor(monitor, 1));
+            monitor.beginTask("Saving Map Editor", 3);
+            save(SubMonitor.convert(monitor, 1));
             if (dirty) {
                 if (!forced) {
                     return false;
