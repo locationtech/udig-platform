@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -29,7 +29,7 @@ import org.opengis.filter.Filter;
 
 /**
  * Counts all the features that are within the current view.
- * 
+ *
  * @author jeichar
  * @since 1.0
  */
@@ -39,23 +39,25 @@ public class FeaturesInView implements IOp {
      * @see org.locationtech.udig.ui.operations.IOp#op(org.eclipse.swt.widgets.Display,
      *      java.lang.Object, org.eclipse.core.runtime.IProgressMonitor)
      */
-    public void op( final Display display, Object target, IProgressMonitor monitor )
+    @Override
+    public void op(final Display display, Object target, IProgressMonitor monitor)
             throws Exception {
         IMap map = (IMap) target;
 
         Exception e = null;
 
         int featureCount = 0;
-        for( ILayer layer : map.getMapLayers() ) {
-            if (layer.isType(FeatureSource.class) && layer.isVisible()) {
+        for (ILayer layer : map.getMapLayers()) {
+            if (layer.hasResource(FeatureSource.class) && layer.isVisible()) {
                 try {
-                    FeatureSource<SimpleFeatureType, SimpleFeature> source = layer.getResource(FeatureSource.class, monitor);
+                    FeatureSource<SimpleFeatureType, SimpleFeature> source = layer
+                            .getResource(FeatureSource.class, monitor);
                     Filter filter = layer.createBBoxFilter(map.getViewportModel().getBounds(),
                             monitor);
-                    FeatureCollection<SimpleFeatureType, SimpleFeature>  results = source.getFeatures(new Query(layer.getSchema()
-                            .getName().getLocalPart(), filter));
+                    FeatureCollection<SimpleFeatureType, SimpleFeature> results = source
+                            .getFeatures(
+                                    new Query(layer.getSchema().getName().getLocalPart(), filter));
                     int count = results.size();
-                    // FeatureReader<SimpleFeatureType, SimpleFeature> reader=results.reader()
                     if (count > 0) {
                         featureCount += count;
                     }
@@ -69,17 +71,16 @@ public class FeaturesInView implements IOp {
         final Exception exception = e;
         final int finalCount = featureCount;
 
-        display.asyncExec(new Runnable(){
+        display.asyncExec(new Runnable() {
+            @Override
             public void run() {
                 if (exception == null)
-                    MessageDialog.openInformation(display.getActiveShell(), 
-                    		Messages.FeaturesInView_0,
-                            Messages.FeaturesInView_1 + finalCount); 
+                    MessageDialog.openInformation(display.getActiveShell(),
+                            Messages.FeaturesInView_0, Messages.FeaturesInView_1 + finalCount);
                 else
-                    MessageDialog.openInformation(display.getActiveShell(), 
-                    		Messages.FeaturesInView_0,
-                    		MessageFormat.format(Messages.FeaturesInView_3, new Object[] {finalCount})
-                    );
+                    MessageDialog.openInformation(display.getActiveShell(),
+                            Messages.FeaturesInView_0, MessageFormat.format(
+                                    Messages.FeaturesInView_3, new Object[] { finalCount }));
             }
         });
     }

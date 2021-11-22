@@ -143,14 +143,6 @@ public interface ILayer extends ILegendItem, Comparable<ILayer> {
     public <T> boolean hasResource(Class<T> resourceType);
 
     /**
-     * @see #hasResource(Class)
-     *
-     * @deprecated use {@link #hasResource(Class)}
-     */
-    @Deprecated
-    public <T> boolean isType(Class<T> resourceType);
-
-    /**
      * Returns a <i>real</i> resource that one of the GeoResources can resolved to.
      * <p>
      * Note: examples of resources are: FeatureSource, WebMapServer, etc... GeoResources are handles
