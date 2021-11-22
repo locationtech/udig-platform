@@ -173,7 +173,7 @@ public abstract class ListAttributeField extends AttributeField {
     private int convertHorizontalDLUsToPixels(Button control, int buttonWidth) {
         GC gc = new GC(control);
         gc.setFont(control.getFont());
-        int averageWidth = (int) Math.round(gc.getFontMetrics().getAverageCharacterWidth());
+        double averageWidth = gc.getFontMetrics().getAverageCharacterWidth();
         gc.dispose();
 
         double horizontalDialogUnitSize = averageWidth * 0.25;
