@@ -13,6 +13,8 @@ package org.locationtech.udig.project.render;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.junit.After;
 import org.junit.Before;
