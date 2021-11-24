@@ -59,6 +59,7 @@ public class RenderExecutorComposite extends RenderExecutorMultiLayer {
         public CompositeRendererJob(RenderExecutorComposite executor) {
             super(executor);
             setPriority(Job.INTERACTIVE);
+            setSystem(RendererUtils.isRendererJobSystemJob());
         }
 
         @Override
