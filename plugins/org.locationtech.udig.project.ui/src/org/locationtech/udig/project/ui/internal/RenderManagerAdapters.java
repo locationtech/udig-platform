@@ -42,6 +42,7 @@ import org.locationtech.udig.project.internal.render.ViewportModel;
 import org.locationtech.udig.project.internal.render.impl.RenderManagerImpl;
 import org.locationtech.udig.project.preferences.PreferenceConstants;
 import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 import org.opengis.filter.Filter;
@@ -485,7 +486,10 @@ public class RenderManagerAdapters {
          */
         @Override
         protected void renderUpdate() {
-            ((ViewportPane) manager.getMapDisplay()).renderUpdate();
+            IMapDisplay mapDisplay = manager.getMapDisplay();
+            if (mapDisplay != null) {
+                ((ViewportPane) mapDisplay).renderUpdate();
+            }
         }
 
         /**
@@ -493,7 +497,10 @@ public class RenderManagerAdapters {
          */
         @Override
         protected void renderDone() {
-            ((ViewportPane) manager.getMapDisplay()).renderDone();
+            IMapDisplay mapDisplay = manager.getMapDisplay();
+            if (mapDisplay != null) {
+                ((ViewportPane) mapDisplay).renderDone();
+            }
         }
     }
 
