@@ -484,99 +484,63 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
         });
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#removeMouseListener(org.locationtech.udig.project.render.MapMouseListener)
-     */
     @Override
     public void removeMouseListener(MapMouseListener l) {
         eventJob.removeMouseListener(l);
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#removeMouseMotionListener(org.locationtech.udig.project.render.MapMouseMotionListener)
-     */
     @Override
     public void removeMouseMotionListener(MapMouseMotionListener l) {
         eventJob.removeMouseMotionListener(l);
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#removeMouseWheelListener(org.locationtech.udig.project.render.MapMouseWheelListener)
-     */
     @Override
     public void removeMouseWheelListener(MapMouseWheelListener l) {
         eventJob.removeMouseWheelListener(l);
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#addMouseListener(org.locationtech.udig.project.render.MapMouseListener)
-     */
     @Override
     public void addMouseListener(MapMouseListener l) {
         eventJob.addMouseListener(l);
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#addMouseMotionListener(org.locationtech.udig.project.render.MapMouseMotionListener)
-     */
     @Override
     public void addMouseMotionListener(MapMouseMotionListener l) {
         eventJob.addMouseMotionListener(l);
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#addMouseWheelListener(org.locationtech.udig.project.render.MapMouseWheelListener)
-     */
     @Override
     public void addMouseWheelListener(MapMouseWheelListener l) {
         eventJob.addMouseWheelListener(l);
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.MapDisplay#getDisplaySize()
-     */
     @Override
     public Dimension getDisplaySize() {
         return displaySize;
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.MapDisplay#getWidth()
-     */
     @Override
     public int getWidth() {
         return getDisplaySize().width;
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.MapDisplay#getHeight()
-     */
     @Override
     public int getHeight() {
         return getDisplaySize().height;
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#addPaneListener(org.locationtech.udig.project.render.displayAdapter.MapDisplayListener)
-     */
     @Override
     public void addPaneListener(IMapDisplayListener listener) {
         eventJob.addMapEditorListener(listener);
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#removePaneListener(org.locationtech.udig.project.render.displayAdapter.MapDisplayListener)
-     */
     @Override
     public void removePaneListener(IMapDisplayListener listener) {
         eventJob.removeMapEditorListener(listener);
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#getMapEditor()
-     */
     @Override
-    public MapPart getMapEditor() {
+    public MapPart getMapPart() {
         return editor;
     }
 
