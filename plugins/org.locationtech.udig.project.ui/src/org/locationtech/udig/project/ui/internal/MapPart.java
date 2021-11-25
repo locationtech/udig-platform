@@ -77,7 +77,17 @@ public interface MapPart extends IWorkbenchPart {
      */
     public UDIGDropHandler getDropHandler();
 
+    /**
+     * Returns true if drag and drop is enabled for the MapPart.
+     *
+     * @return Returns true if drag and drop is enabled for the MapPart.
+     */
     boolean isDragging();
 
+    /**
+     * Enables or disables dragging (drag and drop) from the map editor.
+     *
+     * @param isDragging True if drag and drop should be enabled, false otherwise.
+     */
     void setDragging(boolean isDragging);
 }
