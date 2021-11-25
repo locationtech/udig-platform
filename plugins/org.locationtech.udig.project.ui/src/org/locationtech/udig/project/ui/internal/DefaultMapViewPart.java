@@ -225,4 +225,14 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
     public UDIGDropHandler getDropHandler() {
         return ((UDIGControlDropListener) dropTarget.listener).getHandler();
     }
+
+    @Override
+    public boolean isDragging() {
+        return false;
+    }
+
+    @Override
+    public void setDragging(boolean isDragging) {
+        // ignore drag source
+    }
 }
