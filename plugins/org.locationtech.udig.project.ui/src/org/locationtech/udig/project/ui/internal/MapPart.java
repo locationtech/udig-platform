@@ -71,6 +71,13 @@ public interface MapPart extends IWorkbenchPart {
     IStatusLineManager getStatusLineManager();
 
     /**
+     * Returns the MapSite of this editor.
+     *
+     * @return Returns the MapSite of this editor.
+     */
+    MapSite getMapSite();
+
+    /**
      * Returns the DropHandler from this editor.
      *
      * @return Returns the DropHandler from this editor.

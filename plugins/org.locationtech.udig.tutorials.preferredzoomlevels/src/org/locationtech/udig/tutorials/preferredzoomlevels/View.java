@@ -25,6 +25,7 @@ import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.ui.internal.DefaultMapViewPart;
+import org.locationtech.udig.project.ui.internal.MapSite;
 
 /**
  *
@@ -67,6 +68,11 @@ public class View extends DefaultMapViewPart {
     @Override
     public IStatusLineManager getStatusLineManager() {
         return getViewSite().getActionBars().getStatusLineManager();
+    }
+
+    @Override
+    public MapSite getMapSite() {
+        return null;
     }
 
     @Override

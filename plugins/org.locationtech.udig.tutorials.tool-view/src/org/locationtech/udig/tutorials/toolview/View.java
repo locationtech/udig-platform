@@ -25,6 +25,7 @@ import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
 import org.locationtech.udig.project.ui.internal.DefaultMapViewPart;
+import org.locationtech.udig.project.ui.internal.MapSite;
 
 /**
  * The main view port. Adds a shapefile to the View and configures the view with the tools and
@@ -81,6 +82,11 @@ public class View extends DefaultMapViewPart {
     @Override
     public IStatusLineManager getStatusLineManager() {
         return getViewSite().getActionBars().getStatusLineManager();
+    }
+
+    @Override
+    public MapSite getMapSite() {
+        return null;
     }
 
     @Override

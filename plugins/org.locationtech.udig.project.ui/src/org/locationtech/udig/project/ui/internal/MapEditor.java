@@ -143,7 +143,7 @@ public class MapEditor extends EditorPart
 
     final StatusLineManager statusLineManager = new StatusLineManager();
 
-    private MapEditorSite mapEditorSite;
+    private MapSite mapSite;
 
     private IContributionItem scaleContributionItem;
 
@@ -715,9 +715,9 @@ public class MapEditor extends EditorPart
         this.replaceableSelectionProvider = new ReplaceableSelectionProvider();
         getSite().setSelectionProvider(replaceableSelectionProvider);
         runMapOpeningInterceptor(getMap());
-        mapEditorSite = new MapEditorSite(super.getSite(), this);
+        mapSite = new MapSite(super.getSite(), this);
 
-        final IContributionManager statusBar = mapEditorSite.getActionBars().getStatusLineManager();
+        final IContributionManager statusBar = mapSite.getActionBars().getStatusLineManager();
 
         scaleContributionItem = new ScaleRatioLabel(this);
         scaleContributionItem.setVisible(true);
@@ -1037,8 +1037,8 @@ public class MapEditor extends EditorPart
     }
 
     @Override
-    public MapEditorSite getMapEditorSite() {
-        return mapEditorSite;
+    public MapSite getMapSite() {
+        return mapSite;
     }
 
     private class FlashFeatureListener implements ISelectionListener {
