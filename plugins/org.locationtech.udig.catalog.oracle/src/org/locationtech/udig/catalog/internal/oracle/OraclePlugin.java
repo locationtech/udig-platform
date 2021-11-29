@@ -33,7 +33,7 @@ public class OraclePlugin extends AbstractUIPlugin {
     /**
      * The constructor.
      */
-    private OraclePlugin() {
+    public OraclePlugin() {
         super();
         plugin = this;
     }
