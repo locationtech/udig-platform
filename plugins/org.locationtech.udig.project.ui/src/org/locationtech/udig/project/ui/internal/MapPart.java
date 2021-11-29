@@ -71,9 +71,9 @@ public interface MapPart extends IWorkbenchPart {
     IStatusLineManager getStatusLineManager();
 
     /**
-     * Returns the MapSite of this editor.
+     * Returns the MapSite of this MapPart.
      *
-     * @return Returns the MapSite of this editor.
+     * @return Returns the MapSite of this MapPart.
      */
     MapSite getMapSite();
 
