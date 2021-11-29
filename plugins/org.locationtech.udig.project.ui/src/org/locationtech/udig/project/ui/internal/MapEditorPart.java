@@ -28,8 +28,6 @@ public interface MapEditorPart extends MapPart, IEditorPart {
 
     Composite getComposite();
 
-    void setDirty(boolean b);
-
     boolean isTesting();
 
     void setTesting(boolean testing);

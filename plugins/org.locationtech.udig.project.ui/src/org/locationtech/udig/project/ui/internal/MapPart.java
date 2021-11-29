@@ -97,4 +97,11 @@ public interface MapPart extends IWorkbenchPart {
      * @param isDragging True if drag and drop should be enabled, false otherwise.
      */
     void setDragging(boolean isDragging);
+
+    /**
+     * Sets MapPart to dirty mode.
+     *
+     * @param isDirty True if MapPart is dirty, false otherwise.
+     */
+    void setDirty(boolean isDirty);
 }

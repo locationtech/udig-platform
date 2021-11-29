@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -31,7 +31,7 @@ import org.locationtech.udig.project.internal.commands.SetScaleCommand;
 import org.locationtech.udig.project.render.IViewportModel;
 import org.locationtech.udig.project.render.IViewportModelListener;
 import org.locationtech.udig.project.render.ViewportModelEvent.EventType;
-import org.locationtech.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.project.ui.internal.Messages;
 import org.locationtech.udig.ui.ZoomingDialog;
 
@@ -42,7 +42,7 @@ import org.locationtech.udig.ui.ZoomingDialog;
  */
 public class ScaleRatioLabel extends ContributionItem implements KeyListener, FocusListener {
     /** ScaleRatioLabel editor field */
-    private final MapEditorPart mapPart;
+    private final MapPart mapPart;
 
     private static final int MINIMUM_WIDTH = 80;
 
@@ -64,12 +64,12 @@ public class ScaleRatioLabel extends ContributionItem implements KeyListener, Fo
         }
     };
 
-    public ScaleRatioLabel(MapEditorPart editor) {
+    public ScaleRatioLabel(MapPart mapPart) {
         super(SCALE_ITEM_ID);
-        this.mapPart = editor;
+        this.mapPart = mapPart;
 
-        if (editor.getMap() != null) {
-            setViewportModel(editor.getMap().getViewportModel());
+        if (mapPart.getMap() != null) {
+            setViewportModel(mapPart.getMap().getViewportModel());
         }
     }
 
@@ -220,14 +220,7 @@ public class ScaleRatioLabel extends ContributionItem implements KeyListener, Fo
         String text = combo.getText();
         if (text.contains(":")) //$NON-NLS-1$
             text = text.substring(2);
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < text.length(); i++) {
-            char c = text.charAt(i);
-            if (c != ',') { // isn'tis language specific and would NumberFormat help here?
-                builder.append(c);
-            }
-        }
-        combo.setText(builder.toString());
+        combo.setText(text);
         int end = combo.getText().length();
         combo.setSelection(new Point(0, end));
     }
