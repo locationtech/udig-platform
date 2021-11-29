@@ -37,7 +37,7 @@ import org.locationtech.udig.ui.ZoomingDialog;
 
 /**
  * Displays the current scale ratio on the status bar.
- * 
+ *
  * @author Andrea Aime
  */
 public class ScaleRatioLabel extends ContributionItem implements KeyListener, FocusListener {
@@ -179,7 +179,7 @@ public class ScaleRatioLabel extends ContributionItem implements KeyListener, Fo
     }
 
     private String toLabel(double scaleDenominator) {
-        return "1:" + nf.format(scaleDenominator);
+        return "1:" + nf.format(scaleDenominator); //$NON-NLS-1$
     }
 
     private boolean isLegalKey(KeyEvent e) {
@@ -205,13 +205,13 @@ public class ScaleRatioLabel extends ContributionItem implements KeyListener, Fo
     private void go() {
         String newScale = combo.getText().trim();
         try {
-            double d = nf.parse(newScale.replace(" ", "")).doubleValue();
+            double d = nf.parse(newScale.replace(" ", "")).doubleValue(); //$NON-NLS-1$ //$NON-NLS-2$
             SetScaleCommand command = new SetScaleCommand(d);
             this.mapPart.getMap().sendCommandASync(command);
         } catch (Exception e) {
             org.eclipse.swt.graphics.Rectangle start = ZoomingDialog.calculateBounds(combo);
 
-            ZoomingDialog.openErrorMessage(start, this.mapPart.getMapEditorSite().getShell(),
+            ZoomingDialog.openErrorMessage(start, this.mapPart.getMapSite().getShell(),
                     Messages.MapEditor_illegalScaleTitle, Messages.MapEditor_illegalScaleMessage);
         }
     }
