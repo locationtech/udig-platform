@@ -67,16 +67,10 @@ public class AOILayerSelectionTool extends AbstractModalTool implements ModalToo
 
     boolean showContextOnRightClick = false;
 
-    /**
-     *
-     */
     public AOILayerSelectionTool() {
         super(MOUSE | MOTION);
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mousePressed(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
-     */
     @Override
     public void mousePressed(MapMouseEvent e) {
         shapeCommand = new SelectionBoxCommand();
@@ -109,9 +103,6 @@ public class AOILayerSelectionTool extends AbstractModalTool implements ModalToo
 
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseReleased(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
-     */
     @Override
     public void mouseReleased(MapMouseEvent e) {
         if (selecting) {
@@ -133,9 +124,6 @@ public class AOILayerSelectionTool extends AbstractModalTool implements ModalToo
         }
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.tool.SimpleTool#onMouseDragged(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
-     */
     @Override
     public void mouseDragged(MapMouseEvent e) {
         if (selecting) {
@@ -189,9 +177,6 @@ public class AOILayerSelectionTool extends AbstractModalTool implements ModalToo
 
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.tool.Tool#dispose()
-     */
     @Override
     public void dispose() {
         super.dispose();
@@ -247,12 +232,8 @@ public class AOILayerSelectionTool extends AbstractModalTool implements ModalToo
         protected IPreferenceStore fillFields(Composite parent) {
 
             Button nav = new Button(parent, SWT.CHECK);
-            nav.setText("Navigate"); //$NON-NLS-1$
+            nav.setText("Navigate");
             addField(SelectionToolPreferencePage.NAVIGATE_SELECTION, nav);
-
-            // Button zoom = new Button(parent, SWT.CHECK);
-            // zoom.setText("Zoom to selection");
-            // addField(SelectionToolPreferencePage.ZOOM_TO_SELECTION, zoom);
 
             setCombo(parent);
             listenAOILayer(true);
@@ -314,7 +295,7 @@ public class AOILayerSelectionTool extends AbstractModalTool implements ModalToo
             }
         }
 
-        /*
+        /**
          * This will update the combo viewer (carefully unhooking events while the viewer is
          * updated).
          *
@@ -341,7 +322,7 @@ public class AOILayerSelectionTool extends AbstractModalTool implements ModalToo
 
         }
 
-        /*
+        /**
          * Get the AOI Layer currently selected in this tool
          *
          * @return ILayer currently selected in this tool
@@ -354,15 +335,15 @@ public class AOILayerSelectionTool extends AbstractModalTool implements ModalToo
             return null;
         }
 
-        /*
+        /**
          * Sets the active layer in the AOI layer strategy
          */
         private void setActiveLayer(ILayer activeLayer) {
             getAOILayerStrategy().setActiveLayer(activeLayer);
         }
 
-        /*
-         * returns a AOILayerStrategy object for quick access
+        /**
+         * Returns a AOILayerStrategy object for quick access
          */
         private AOILayerStrategy getAOILayerStrategy() {
             IAOIService aOIService = PlatformGIS.getAOIService();
@@ -374,8 +355,8 @@ public class AOILayerSelectionTool extends AbstractModalTool implements ModalToo
             return null;
         }
 
-        /*
-         * gets a list of AOI layers via the AOI strategy
+        /**
+         * Gets a list of AOI layers via the AOI strategy
          */
         private List<ILayer> getAOILayers() {
             return getAOILayerStrategy().getAOILayers();
