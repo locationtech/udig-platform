@@ -42,6 +42,7 @@ import org.locationtech.udig.project.internal.ProjectFactory;
 import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
 import org.locationtech.udig.project.internal.commands.AddLayersCommand;
 import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.MapSite;
 import org.locationtech.udig.project.ui.internal.wizard.MapImport;
 import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
 import org.locationtech.udig.project.ui.tool.ModalTool;
@@ -63,6 +64,8 @@ public class MapView extends ViewPart implements MapPart {
 
     private MapViewer mapviewer;
 
+    private MapSite mapSite;
+
     private Map map;
 
     private SeagullGlassPaneOp seagullOp;
@@ -78,6 +81,7 @@ public class MapView extends ViewPart implements MapPart {
         parent.setLayout(fillLayout);
         mapviewer = new MapViewer(parent, this, SWT.SINGLE | SWT.DOUBLE_BUFFERED);
 
+        mapSite = new MapSite(getViewSite(), this);
         // create a new empty map
         // if you are going to add layers do so now
         // prior to adding to the MapViewer
@@ -305,6 +309,11 @@ public class MapView extends ViewPart implements MapPart {
         }
         tool.setActive(true);
         activeTool = tool;
+    }
+
+    @Override
+    public MapSite getMapSite() {
+        return mapSite;
     }
 
     @Override

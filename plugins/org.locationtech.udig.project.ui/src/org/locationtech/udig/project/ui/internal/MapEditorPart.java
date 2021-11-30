@@ -26,8 +26,6 @@ public interface MapEditorPart extends MapPart, IEditorPart {
      */
     static final String LAYER_DIRTY_KEY = "DIRTY"; //$NON-NLS-1$
 
-    MapEditorSite getMapEditorSite();
-
     Composite getComposite();
 
     void setDirty(boolean b);
