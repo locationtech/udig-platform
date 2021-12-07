@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -44,7 +44,7 @@ import org.locationtech.udig.project.ui.tool.options.ToolOptionContributionItem;
  * Provides Pan functionality for MapViewport; the technique used for panning is controlled via
  * preferences.
  * <p>
- * There are three strateies avaialble {@link Pan}, {@link Scroll}, {@link FixedScale}.
+ * There are three strategies available {@link Pan}, {@link Scroll}, {@link FixedScale}.
  *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
@@ -139,33 +139,21 @@ public class PanTool extends AbstractModalTool implements ModalTool {
         return e.buttons == MapMouseEvent.BUTTON1 && !(e.modifiersDown());
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseDragged(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
-     */
     @Override
     public void mouseDragged(MapMouseEvent e) {
         strategy.mouseDragged(e);
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mousePressed(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
-     */
     @Override
     public void mousePressed(MapMouseEvent e) {
         strategy.mousePressed(e);
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseReleased(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
-     */
     @Override
     public void mouseReleased(MapMouseEvent e) {
         strategy.mouseReleased(e);
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.tool.Tool#dispose()
-     */
     @Override
     public void dispose() {
         if (strategy != null) {
@@ -246,9 +234,6 @@ public class PanTool extends AbstractModalTool implements ModalTool {
             }
         }
 
-        /**
-         * @see org.locationtech.udig.project.ui.tool.AbstractTool#mousePressed(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
-         */
         @Override
         public void mousePressed(MapMouseEvent e) {
             if (validModifierButtonCombo(e)) {
@@ -260,9 +245,6 @@ public class PanTool extends AbstractModalTool implements ModalTool {
             }
         }
 
-        /**
-         * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseReleased(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
-         */
         @Override
         public void mouseReleased(MapMouseEvent e) {
             if (dragging) {
@@ -304,9 +286,6 @@ public class PanTool extends AbstractModalTool implements ModalTool {
 
         private org.eclipse.swt.graphics.Point start = null;
 
-        /**
-         * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseDragged(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
-         */
         @Override
         public void mouseDragged(MapMouseEvent e) {
             if (dragging) {
@@ -333,9 +312,6 @@ public class PanTool extends AbstractModalTool implements ModalTool {
             }
         }
 
-        /**
-         * @see org.locationtech.udig.project.ui.tool.AbstractTool#mousePressed(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
-         */
         @Override
         public void mousePressed(MapMouseEvent e) {
             if (validModifierButtonCombo(e)) {
@@ -410,9 +386,6 @@ public class PanTool extends AbstractModalTool implements ModalTool {
 
         TranslateCommand command;
 
-        /**
-         * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseDragged(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
-         */
         @Override
         public void mouseDragged(MapMouseEvent e) {
             if (dragging) {
@@ -421,9 +394,6 @@ public class PanTool extends AbstractModalTool implements ModalTool {
             }
         }
 
-        /**
-         * @see org.locationtech.udig.project.ui.tool.AbstractTool#mousePressed(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
-         */
         @Override
         public void mousePressed(MapMouseEvent e) {
 
@@ -437,9 +407,6 @@ public class PanTool extends AbstractModalTool implements ModalTool {
             }
         }
 
-        /**
-         * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseReleased(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
-         */
         @Override
         public void mouseReleased(MapMouseEvent e) {
             if (dragging) {
@@ -497,9 +464,6 @@ public class PanTool extends AbstractModalTool implements ModalTool {
             }
         }
 
-        /**
-         * @see org.locationtech.udig.project.ui.tool.Tool#dispose()
-         */
         @Override
         public void dispose() {
             super.dispose();
