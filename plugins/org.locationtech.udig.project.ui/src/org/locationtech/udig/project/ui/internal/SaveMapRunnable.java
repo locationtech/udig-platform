@@ -14,22 +14,23 @@ import org.locationtech.udig.project.internal.EditManager;
 
 public class SaveMapRunnable implements Runnable {
 
-    private final MapEditorPart mapEditor;
+    private final MapPart mapPart;
 
     private final boolean[] success;
 
-    public SaveMapRunnable(MapEditorPart mapEditor, boolean[] success) {
+    public SaveMapRunnable(MapPart mapPart, boolean[] success) {
         super();
-        this.mapEditor = mapEditor;
+        this.mapPart = mapPart;
         this.success = success;
     }
 
     private enum Result{NO_TEMP_LAYERS, EXPORT_WIZARD_RUNNING};
 
+    @Override
     public void run() {
         try {
 
-            EditManager editManagerInternal = mapEditor.getMap().getEditManagerInternal();
+            EditManager editManagerInternal = mapPart.getMap().getEditManagerInternal();
 
             SaveMapRunnable.Result result = saveTemporaryLayers();
             if (result == Result.NO_TEMP_LAYERS) {
@@ -45,8 +46,8 @@ public class SaveMapRunnable implements Runnable {
     }
 
     private SaveMapRunnable.Result saveTemporaryLayers( ) {
-        List<IGeoResource> resources=new ArrayList<IGeoResource>();
-        for (ILayer layer : mapEditor.getMap().getMapLayers()) {
+        List<IGeoResource> resources=new ArrayList<>();
+        for (ILayer layer : mapPart.getMap().getMapLayers()) {
             if (layer.hasResource(ITransientResolve.class)) {
                 resources.addAll(layer.getGeoResources());
             }
@@ -60,7 +61,7 @@ public class SaveMapRunnable implements Runnable {
         final ExportResourceSelectionState layerState = new ExportResourceSelectionState(selection);
         final CatalogExport exp;
 
-        exp = new MapSaveStrategy(layerState, mapEditor);
+        exp = new MapSaveStrategy(layerState, mapPart);
 
         // open the export dialog
         exp.open();

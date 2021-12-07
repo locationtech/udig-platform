@@ -79,4 +79,9 @@ public class View extends DefaultMapViewPart {
         // ignore drag source
     }
 
+    @Override
+    public void setDirty(boolean isDirty) {
+        // ignore dirty flag
+    }
+
 }

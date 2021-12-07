@@ -41,32 +41,32 @@ public class MapSite implements IEditorSite, IViewSite {
 
     private static final String ERROR_DELEGATE_IS_NOT_AN_EDITOR_SITE = "delegate is not a IEditorSite!!!"; //$NON-NLS-1$
 
-    IWorkbenchPartSite delegate;
+    private IWorkbenchPartSite originalMapSite;
 
-    private MapPart editor;
+    private MapPart mapPart;
 
-    public MapSite(IWorkbenchPartSite original, MapPart editor) {
-        delegate = original;
-        this.editor = editor;
+    public MapSite(IWorkbenchPartSite originalMapSite, MapPart mapPart) {
+        this.originalMapSite = originalMapSite;
+        this.mapPart = mapPart;
     }
 
     @Override
     public IEditorActionBarContributor getActionBarContributor() {
-        if (delegate instanceof IEditorSite) {
-            return ((IEditorSite) delegate).getActionBarContributor();
+        if (originalMapSite instanceof IEditorSite) {
+            return ((IEditorSite) originalMapSite).getActionBarContributor();
         }
         throw new IllegalStateException(ERROR_DELEGATE_IS_NOT_AN_EDITOR_SITE);
     }
 
     @Override
     public IActionBars getActionBars() {
-        if (delegate instanceof IEditorSite) {
-            return new MapEditorActionBars((IActionBars2) ((IEditorSite) delegate).getActionBars(),
-                    editor);
+        if (originalMapSite instanceof IEditorSite) {
+            return new MapEditorActionBars((IActionBars2) ((IEditorSite) originalMapSite).getActionBars(),
+                    mapPart);
         }
-        if (delegate instanceof IViewSite) {
-            return new MapEditorActionBars((IActionBars2) ((IViewSite) delegate).getActionBars(),
-                    editor);
+        if (originalMapSite instanceof IViewSite) {
+            return new MapEditorActionBars((IActionBars2) ((IViewSite) originalMapSite).getActionBars(),
+                    mapPart);
         }
         throw new IllegalStateException(ERROR_DELEGATE_IS_NOT_AN_EDITOR_SITE);
     }
@@ -74,8 +74,8 @@ public class MapSite implements IEditorSite, IViewSite {
     @Override
     public void registerContextMenu(MenuManager menuManager, ISelectionProvider selectionProvider,
             boolean includeEditorInput) {
-        if (delegate instanceof IEditorSite) {
-            ((IEditorSite) delegate).registerContextMenu(menuManager, selectionProvider,
+        if (originalMapSite instanceof IEditorSite) {
+            ((IEditorSite) originalMapSite).registerContextMenu(menuManager, selectionProvider,
                     includeEditorInput);
             return;
         }
@@ -85,8 +85,8 @@ public class MapSite implements IEditorSite, IViewSite {
     @Override
     public void registerContextMenu(String menuId, MenuManager menuManager,
             ISelectionProvider selectionProvider, boolean includeEditorInput) {
-        if (delegate instanceof IEditorSite) {
-            ((IEditorSite) delegate).registerContextMenu(menuId, menuManager, selectionProvider,
+        if (originalMapSite instanceof IEditorSite) {
+            ((IEditorSite) originalMapSite).registerContextMenu(menuId, menuManager, selectionProvider,
                     includeEditorInput);
             return;
         }
@@ -95,86 +95,86 @@ public class MapSite implements IEditorSite, IViewSite {
 
     @Override
     public Object getAdapter(Class adapter) {
-        return delegate.getAdapter(adapter);
+        return originalMapSite.getAdapter(adapter);
     }
 
     @Override
     public String getId() {
-        return delegate.getId();
+        return originalMapSite.getId();
     }
 
     @Override
     public IKeyBindingService getKeyBindingService() {
-        return delegate.getKeyBindingService();
+        return originalMapSite.getKeyBindingService();
     }
 
     @Override
     public IWorkbenchPage getPage() {
-        return delegate.getPage();
+        return originalMapSite.getPage();
     }
 
     @Override
     public IWorkbenchPart getPart() {
-        return delegate.getPart();
+        return originalMapSite.getPart();
     }
 
     @Override
     public String getPluginId() {
-        return delegate.getPluginId();
+        return originalMapSite.getPluginId();
     }
 
     @Override
     public String getRegisteredName() {
-        return delegate.getRegisteredName();
+        return originalMapSite.getRegisteredName();
     }
 
     @Override
     public ISelectionProvider getSelectionProvider() {
-        return delegate.getSelectionProvider();
+        return originalMapSite.getSelectionProvider();
     }
 
     @Override
     public Shell getShell() {
-        return delegate.getShell();
+        return originalMapSite.getShell();
     }
 
     @Override
     public IWorkbenchWindow getWorkbenchWindow() {
-        return delegate.getWorkbenchWindow();
+        return originalMapSite.getWorkbenchWindow();
     }
 
     @Override
     public void registerContextMenu(MenuManager menuManager, ISelectionProvider selectionProvider) {
-        delegate.registerContextMenu(menuManager, selectionProvider);
+        originalMapSite.registerContextMenu(menuManager, selectionProvider);
     }
 
     @Override
     public void registerContextMenu(String menuId, MenuManager menuManager,
             ISelectionProvider selectionProvider) {
-        delegate.registerContextMenu(menuId, menuManager, selectionProvider);
+        originalMapSite.registerContextMenu(menuId, menuManager, selectionProvider);
     }
 
     @Override
     public void setSelectionProvider(ISelectionProvider provider) {
-        delegate.setSelectionProvider(provider);
+        originalMapSite.setSelectionProvider(provider);
     }
 
     @Override
     public String getSecondaryId() {
-        if (delegate instanceof IViewSite) {
-            return ((IViewSite) delegate).getSecondaryId();
+        if (originalMapSite instanceof IViewSite) {
+            return ((IViewSite) originalMapSite).getSecondaryId();
         }
         throw new IllegalStateException("delegate is not a IViewSite!!!!"); //$NON-NLS-1$
     }
 
     private static class MapEditorActionBars implements IActionBars2 {
-        MapPart editor;
+        private MapPart mapPart;
 
         private IActionBars2 actionBars;
 
-        public MapEditorActionBars(IActionBars2 actionBars, MapPart editor) {
-            this.editor = editor;
+        public MapEditorActionBars(IActionBars2 actionBars, MapPart mapPart) {
             this.actionBars = actionBars;
+            this.mapPart = mapPart;
         }
 
         @Override
@@ -199,7 +199,7 @@ public class MapSite implements IEditorSite, IViewSite {
 
         @Override
         public IStatusLineManager getStatusLineManager() {
-            return editor.getStatusLineManager();
+            return mapPart.getStatusLineManager();
         }
 
         @Override
@@ -225,11 +225,11 @@ public class MapSite implements IEditorSite, IViewSite {
 
     @Override
     public Object getService(Class api) {
-        return delegate.getService(api);
+        return originalMapSite.getService(api);
     }
 
     @Override
     public boolean hasService(Class api) {
-        return delegate.hasService(api);
+        return originalMapSite.hasService(api);
     }
 }

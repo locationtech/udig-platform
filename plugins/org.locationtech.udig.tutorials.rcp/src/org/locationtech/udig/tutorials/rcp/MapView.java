@@ -66,6 +66,9 @@ public class MapView extends ViewPart implements MapPart {
 
     private MapSite mapSite;
 
+    @SuppressWarnings("unused")
+    private boolean isDirty = false;
+
     private Map map;
 
     private SeagullGlassPaneOp seagullOp;
@@ -330,5 +333,10 @@ public class MapView extends ViewPart implements MapPart {
     @Override
     public void setDragging(boolean isDragging) {
         // ignore drag source
+    }
+
+    @Override
+    public void setDirty(boolean isDirty) {
+        this.isDirty = isDirty;
     }
 }
