@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -65,6 +65,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     /**
      * The cached value of the '{@link #getContent() <em>Content</em>}' containment reference list.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @see #getContent()
      * @generated
      * @ordered
@@ -85,6 +86,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     protected StyleBlackboardImpl() {
@@ -93,6 +95,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -102,10 +105,10 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
-    @SuppressWarnings("unchecked")
     public List<StyleEntry> getContent() {
         if (content == null) {
             content = new EObjectContainmentEList<>(StyleEntry.class, this,
@@ -170,7 +173,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
                             }
                             se.setStyleClass(type);
                         } else {
-                            // this shoudl no longer happen as we have a DEFAULT
+                            // this should no longer happen as we have a DEFAULT
                             continue;
                         }
                     }
@@ -181,7 +184,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
                 } catch (Throwable t) {
                     // protect against a StyleEntry/StyleContent taking us down
                     ProjectPlugin.log(
-                            "Style " + se.getID() + " not restored:" + t.getLocalizedMessage(), t);
+                            "Style " + se.getID() + " not restored:" + t.getLocalizedMessage(), t); //$NON-NLS-1$//$NON-NLS-2$
                 }
 
             }
@@ -215,7 +218,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
                     }
                 }
             } catch (WorkbenchException e) {
-                ProjectPlugin.getPlugin().log(styleEntry.getID() + ":" + e);
+                ProjectPlugin.getPlugin().log(styleEntry.getID() + ":" + e); //$NON-NLS-1$
                 e.printStackTrace();
             }
         }
@@ -239,7 +242,6 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
      * @generated NOT
      */
     @Override
-    @SuppressWarnings("unchecked")
     public void put(String styleId, Object style) {
         Object oldValue = remove(styleId);
         StyleEntry se = ProjectFactory.eINSTANCE.createStyleEntry();
@@ -307,7 +309,8 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
      * @generated NOT
      */
     private void loadStyleContent(final String styleId) {
-        id2content.put(styleId, StyleContent.DEFAULT); // default to use of we cannot find a specific one
+        id2content.put(styleId, StyleContent.DEFAULT); // default to use of we cannot find a
+                                                       // specific one
         ExtensionPointProcessor p = new ExtensionPointProcessor() {
             boolean found = false;
 
@@ -317,7 +320,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
                 if (!found && element.getAttribute("id").equals(styleId)) { //$NON-NLS-1$
                     found = true;
                     StyleContent styleContent = (StyleContent) element
-                            .createExecutableExtension("class");
+                            .createExecutableExtension("class"); //$NON-NLS-1$
                     id2content.put(styleId, styleContent);
                 }
             }
@@ -341,11 +344,6 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
             this.monitor = monitor;
         }
 
-        /*
-         * @see
-         * org.locationtech.udig.core.internal.ExtensionPointProcessor#process(org.eclipse.core.runtime
-         * .IExtension, org.eclipse.core.runtime.IConfigurationElement)
-         */
         @Override
         public void process(IExtension extension, IConfigurationElement element) throws Exception {
             if (found)
@@ -452,13 +450,13 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
                         styleEntryClone.setStyle(copy);
                     } catch (Throwable t) {
                         ProjectPlugin.trace(StyleBlackboardImpl.class,
-                                "Unable to copy style " + ID + ":" + style, t);
+                                "Unable to copy style " + ID + ":" + style, t); //$NON-NLS-1$ //$NON-NLS-2$
                     }
                 } else {
                     // unable to preserve independence of this style object
                     styleEntryClone.setStyle(style); // warning!
                     ProjectPlugin.trace(StyleBlackboardImpl.class,
-                            "Unable to copy style " + ID + ":" + style, null);
+                            "Unable to copy style " + ID + ":" + style, null); //$NON-NLS-1$ //$NON-NLS-2$
                 }
                 clone.getContent().add(styleEntryClone);
             }
@@ -469,8 +467,8 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -484,8 +482,8 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -498,8 +496,8 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -515,8 +513,8 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -530,8 +528,8 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -543,9 +541,6 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
         return super.eIsSet(featureID);
     }
 
-    /**
-     * @see org.locationtech.udig.project.IBlackboard#getFloat(java.lang.String)
-     */
     @Override
     public Float getFloat(String key) {
         if (contains(key)) {
@@ -596,10 +591,10 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     @Override
     public void clear() {
-        if (content == null) {
-            return;
+        if (content != null) {
+            content.clear();
         }
-        content.clear();
+        id2content.clear();
 
         for (IBlackboardListener l : listeners) {
             try {
@@ -675,17 +670,16 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
         return keys;
     }
 
-    @SuppressWarnings("nls")
     @Override
     public String toString() {
         StringBuffer buf = new StringBuffer();
-        buf.append("StyleBlackBoardImpl: ");
+        buf.append("StyleBlackBoardImpl: "); //$NON-NLS-1$
         buf.append(content.size());
-        buf.append(" entries");
+        buf.append(" entries"); //$NON-NLS-1$
         for (StyleEntry entry : content) {
-            buf.append("\n\t");
+            buf.append("\n\t"); //$NON-NLS-1$
             buf.append(entry.getID());
-            buf.append("=");
+            buf.append("="); //$NON-NLS-1$
             buf.append(entry.getStyle());
         }
         return buf.toString();
