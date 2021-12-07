@@ -55,22 +55,32 @@ import org.locationtech.udig.ui.graphics.ViewportGraphics;
  */
 public class ViewportPaneJava extends Panel implements ViewportPane {
     ViewportPainter painter = new ViewportPainter(this);
+
     private static final long serialVersionUID = 1L;
-	private static final int DEFAULT_DPI = 72;
-	ViewportPane pane = this;
+
+    private static final int DEFAULT_DPI = 72;
+
+    ViewportPane pane = this;
+
     private static final AffineTransform IDENTITY = new AffineTransform();
+
     private VolatileImage vImage;
+
     VolatileImage buffer;
+
     private Composite composite = null;
+
     EventJob eventJob = new EventJob();
+
     private RenderManager renderManager;
+
     private EventHandler handler;
+
     private MapPart editor;
 
     /**
-     * The glass pane associated with the viewport pane.
-     * Allows direct drawing on the image (similar to
-     * draw commands).
+     * The glass pane associated with the viewport pane. Allows direct drawing on the image (similar
+     * to draw commands).
      */
     private GlassPane glass;
 
@@ -85,16 +95,18 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
      * @param h height
      * @return BufferedImage directly backed by AWT
      */
-    public BufferedImage image( int w, int h ) {
+    @Override
+    public BufferedImage image(int w, int h) {
         return (BufferedImage) createImage(w, h);
     }
+
     /**
      * Creates a new ViewportPaneImpl object.
      *
      * @param comp The Composite that this pane will be embedded into
      * @param editor editor that contains this viewport
      */
-    public ViewportPaneJava( Composite comp, MapPart editor ) {
+    public ViewportPaneJava(Composite comp, MapPart editor) {
         this.editor = editor;
         handler = new EventHandler(this, eventJob);
 
@@ -109,7 +121,7 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
         comp.addListener(SWT.Resize, handler);
         comp.addListener(SWT.KeyDown, handler);
 
-        Composite child = new Composite(comp, SWT.EMBEDDED | SWT.NO_BACKGROUND );
+        Composite child = new Composite(comp, SWT.EMBEDDED | SWT.NO_BACKGROUND);
         child.setEnabled(false);
         SWT_AWT.new_Frame(child).add(this);
         composite = child;
@@ -124,14 +136,16 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
     /**
      * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#setRenderManager(org.locationtech.udig.project.render.RenderManager)
      */
-    public void setRenderManager( RenderManager manager ) {
+    @Override
+    public void setRenderManager(RenderManager manager) {
         this.renderManager = manager;
     }
 
     /**
      * @see java.awt.Canvas#paint(java.awt.Graphics)
      */
-    public void paint( Graphics g ) {
+    @Override
+    public void paint(Graphics g) {
         initializeViewportModel();
         if (vImage == null) {
             clearDisplay(g);
@@ -143,10 +157,10 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
             drawOnOffScreenBuffer();
 
             drawOnScreen(g);
-        } while( buffer.contentsLost() );
+        } while (buffer.contentsLost());
     }
 
-    private void drawOnScreen( Graphics g ) {
+    private void drawOnScreen(Graphics g) {
         int minWidth = Math.min(buffer.getWidth(), g.getClipBounds().width);
         int minHeight = Math.min(buffer.getHeight(), g.getClipBounds().height);
         g.drawImage(buffer, 0, 0, minWidth, minHeight, 0, 0, minWidth, minHeight, this);
@@ -155,14 +169,15 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
     private void drawOnOffScreenBuffer() {
 
         Graphics2D graphics = buffer.createGraphics();
-//        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        // graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+        // RenderingHints.VALUE_ANTIALIAS_ON);
         ViewportGraphics vg = new AWTGraphics(graphics);
         do {
             int minWidth = Math.min(buffer.getWidth(), getWidth());
             int minHeight = Math.min(buffer.getHeight(), getHeight());
             validateVolitileImage();
             painter.paint(vg, vImage, minWidth, minHeight);
-        } while( vImage.contentsLost() );
+        } while (vImage.contentsLost());
     }
 
     private void validateVolitileImage() {
@@ -184,7 +199,7 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
             buffer = createVolatileImage(getWidth(), getHeight());
     }
 
-    private void clearDisplay( Graphics g ) {
+    private void clearDisplay(Graphics g) {
         Graphics2D graphics = (Graphics2D) g;
         graphics.clearRect(0, 0, getWidth(), getHeight());
         return;
@@ -193,7 +208,7 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
     private void initializeViewportModel() {
         if (renderManager != null && !renderManager.getViewportModelInternal().isInitialized()) {
             Event event = new Event();
-            event.display=Display.getDefault();
+            event.display = Display.getDefault();
             // eventJob.fire( EventJob.RESIZED, new MapDisplayEvent(this, new Dimension(0,0),
             // getSize()) );
             handler.controlResized(event);
@@ -201,7 +216,7 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
 
     }
 
-    void copyImageToVolitileImage( boolean clearImage ) {
+    void copyImageToVolitileImage(boolean clearImage) {
         if (vImage == null)
             return;
         do {
@@ -214,7 +229,7 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
                 graphics.clearRect(0, 0, vImage.getWidth(), vImage.getHeight());
             graphics.drawRenderedImage(getImage(), IDENTITY);
             graphics.dispose();
-        } while( vImage.contentsLost() );
+        } while (vImage.contentsLost());
     }
 
     private void initMap() {
@@ -243,94 +258,74 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
         }
     }
 
-    /**
-     * @see java.awt.Component#update(java.awt.Graphics)
-     */
-    public void update( Graphics g ) {
+    @Override
+    public void update(Graphics g) {
         paint(g);
     }
 
-    public void update(){
-        //do nothing
+    @Override
+    public void update() {
+        // do nothing
     }
 
-    /**
-     * @see ViewportPane#dispose()
-     */
+    @Override
     public void dispose() {
         composite.dispose();
     }
 
-    /**
-     * @see ViewportPane#addDrawCommand(IDrawCommand)
-     */
-    public void addDrawCommand( IDrawCommand command ) {
+    @Override
+    public void addDrawCommand(IDrawCommand command) {
         painter.addDrawCommand(command);
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplay#getDisplaySize()
-     * @return the size of the viewportpane
-     */
+    @Override
     public Dimension getDisplaySize() {
         return getSize();
     }
 
-    /**
-     * @see ViewportPane#removeMouseListener(MapMouseListener)
-     */
-    public void removeMouseListener( MapMouseListener l ) {
+    @Override
+    public void removeMouseListener(MapMouseListener l) {
         eventJob.removeMouseListener(l);
     }
-    /**
-     * @see ViewportPane#removeMouseMotionListener(MapMouseMotionListener)
-     */
-    public void removeMouseMotionListener( MapMouseMotionListener l ) {
+
+    @Override
+    public void removeMouseMotionListener(MapMouseMotionListener l) {
         eventJob.removeMouseMotionListener(l);
     }
-    /**
-     * @see ViewportPane#removeMouseWheelListener(MapMouseWheelListener)
-     */
-    public void removeMouseWheelListener( MapMouseWheelListener l ) {
+
+    @Override
+    public void removeMouseWheelListener(MapMouseWheelListener l) {
         eventJob.removeMouseWheelListener(l);
     }
-    /**
-     * @see ViewportPane#addMouseListener(MapMouseListener)
-     */
-    public void addMouseListener( MapMouseListener l ) {
+
+    @Override
+    public void addMouseListener(MapMouseListener l) {
         eventJob.addMouseListener(l);
     }
-    /**
-     * @see ViewportPane#addMouseMotionListener(MapMouseMotionListener)
-     */
-    public void addMouseMotionListener( MapMouseMotionListener l ) {
+
+    @Override
+    public void addMouseMotionListener(MapMouseMotionListener l) {
         eventJob.addMouseMotionListener(l);
     }
-    /**
-     * @see ViewportPane#addMouseWheelListener(MapMouseWheelListener)
-     */
-    public void addMouseWheelListener( MapMouseWheelListener l ) {
+
+    @Override
+    public void addMouseWheelListener(MapMouseWheelListener l) {
         eventJob.addMouseWheelListener(l);
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#renderStarting()
-     */
+    @Override
     public void renderStarting() {
         painter.renderStart();
         repaint();
     }
-    /**
-     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#renderDone()
-     */
+
+    @Override
     public void renderDone() {
         renderUpdate();
         painter.renderDone();
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#renderUpdate()
-     */
+    @Override
     public void renderUpdate() {
         initMap();
         if (getImage() != null) {
@@ -339,50 +334,52 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
         }
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#addPaneListener(org.locationtech.udig.project.render.displayAdapter.MapDisplayListener)
-     */
-    public void addPaneListener( IMapDisplayListener listener ) {
+    @Override
+    public void addPaneListener(IMapDisplayListener listener) {
         eventJob.addMapEditorListener(listener);
     }
-    /**
-     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#removePaneListener(org.locationtech.udig.project.render.displayAdapter.MapDisplayListener)
-     */
-    public void removePaneListener( IMapDisplayListener listener ) {
+
+    @Override
+    public void removePaneListener(IMapDisplayListener listener) {
         eventJob.removeMapEditorListener(listener);
     }
-    /**
-     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#setCursor(org.eclipse.swt.graphics.Cursor)
-     */
-    public void setCursor( final Cursor cursor ) {
-    	PlatformGIS.asyncInDisplayThread(new Runnable() {
-			public void run() {
-				composite.getParent().setCursor(cursor);
-			}
-		}, true);
+
+    @Override
+    public void setCursor(final Cursor cursor) {
+        PlatformGIS.asyncInDisplayThread(new Runnable() {
+            @Override
+            public void run() {
+                composite.getParent().setCursor(cursor);
+            }
+        }, true);
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#getMapEditor()
-     */
-    public MapPart getMapEditor() {
+    @Override
+    public MapPart getMapPart() {
         return editor;
     }
-	public int getDPI() {
-		return DEFAULT_DPI;
-	}
-	public Control getControl() {
-		return composite;
-	}
+
+    @Override
+    public int getDPI() {
+        return DEFAULT_DPI;
+    }
+
+    @Override
+    public Control getControl() {
+        return composite;
+    }
 
     @Override
     public void repaint() {
         super.repaint();
     }
 
-	public void enableDrawCommands(boolean enable) {
-		painter.switchOnOff(enable);
-	}
+    @Override
+    public void enableDrawCommands(boolean enable) {
+        painter.switchOnOff(enable);
+    }
+
+    @Override
     public boolean isDisposed() {
         return composite.isDisposed();
     }
@@ -395,6 +392,7 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
      *
      * @return the GlassPane if set; or null if no GlassPane set
      */
+    @Override
     public GlassPane getGlass() {
         return this.glass;
     }
@@ -404,7 +402,8 @@ public class ViewportPaneJava extends Panel implements ViewportPane {
      *
      * @param g
      */
-    public void setGlass( GlassPane glass ) {
+    @Override
+    public void setGlass(GlassPane glass) {
         this.glass = glass;
     }
 }
