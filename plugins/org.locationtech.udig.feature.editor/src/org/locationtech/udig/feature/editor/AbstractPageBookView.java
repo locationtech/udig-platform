@@ -19,7 +19,7 @@ import java.util.Set;
 
 import org.eclipse.core.commands.common.EventManager;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.SafeRunner;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
@@ -502,7 +502,7 @@ abstract class AbstractPageBookView<K> extends ViewPart {
             Object[] listeners = getListeners();
             for (int i = 0; i < listeners.length; ++i) {
                 final ISelectionChangedListener l = (ISelectionChangedListener) listeners[i];
-                Platform.run(new SafeRunnable() {
+                SafeRunner.run(new SafeRunnable() {
                     @Override
                     public void run() {
                         l.selectionChanged(event);

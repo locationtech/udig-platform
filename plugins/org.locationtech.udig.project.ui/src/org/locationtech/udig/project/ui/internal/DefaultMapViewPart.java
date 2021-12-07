@@ -58,6 +58,8 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
 
     MapViewer viewer;
 
+    MapSite mapSite;
+
     private MapEditorSelectionProvider selectionProvider;
 
     private DropTargetDescriptor dropTarget;
@@ -92,6 +94,7 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
     @Override
     public final void createPartControl(Composite parent) {
         editDomain = new MapEditDomain(null);
+        mapSite = new MapSite(getViewSite(), this);
         try {
             IProgressMonitor monitor = getViewSite().getActionBars().getStatusLineManager()
                     .getProgressMonitor();
@@ -222,7 +225,22 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
     }
 
     @Override
+    public MapSite getMapSite() {
+        return mapSite;
+    }
+
+    @Override
     public UDIGDropHandler getDropHandler() {
         return ((UDIGControlDropListener) dropTarget.listener).getHandler();
+    }
+
+    @Override
+    public boolean isDragging() {
+        return false;
+    }
+
+    @Override
+    public void setDragging(boolean isDragging) {
+        // ignore drag source
     }
 }

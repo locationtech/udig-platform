@@ -58,6 +58,7 @@ import org.locationtech.udig.ui.preferences.PreferenceConstants;
 import org.locationtech.udig.ui.preferences.RuntimeFieldEditor;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Version;
 import org.osgi.service.prefs.Preferences;
 
 import com.google.common.base.Function;
@@ -123,43 +124,44 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         iconsUrl = context.getBundle().getEntry(ICONS_PATH);
         Authenticator.setDefault(new UDIGAuthenticator());
         /*
-        * TODO Further code can nuke the previously set authenticator. Proper security access
-        * should be configured to prevent this.
-        */
+         * TODO Further code can nuke the previously set authenticator. Proper security access
+         * should be configured to prevent this.
+         */
         disableCerts();
         try {
-            loadVersion();
-
-            java.lang.System.setProperty("http.agent", "uDig " + getVersion() + " (http://udig.refractions.net)"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            java.lang.System.setProperty("https.agent", "uDig " + getVersion() + " (http://udig.refractions.net)");//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            String productName = loadVersion();
+            String agentString = productName + " " + getVersion(); //$NON-NLS-1$
+            java.lang.System.setProperty("http.agent", agentString); //$NON-NLS-1$
+            java.lang.System.setProperty("https.agent", agentString); //$NON-NLS-1$
         } catch (Throwable e) {
             log("error determining version", e); //$NON-NLS-1$
         }
     }
 
     /**
-     * this is completely temporary.  It allows SSL and HTTPS connections to just accept all certificates.
+     * this is completely temporary. It allows SSL and HTTPS connections to just accept all
+     * certificates.
      */
     private static void disableCerts() {
         // Create a trust manager that does not validate certificate chains
-        TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager(){
+        TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
             @Override
             public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                 return null;
             }
 
             @Override
-            public void checkClientTrusted( java.security.cert.X509Certificate[] certs,
-                    String authType ) {
+            public void checkClientTrusted(java.security.cert.X509Certificate[] certs,
+                    String authType) {
 
             }
 
             @Override
-            public void checkServerTrusted( java.security.cert.X509Certificate[] certs,
-                    String authType ) {
+            public void checkServerTrusted(java.security.cert.X509Certificate[] certs,
+                    String authType) {
 
             }
-        }};
+        } };
 
         // Install the all-trusting trust manager
         try {
@@ -180,57 +182,73 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     /**
      * This method hunts down the version recorded in the current product.
      *
+     * @return the product name
+     *
      * @throws IOException
      */
-    private void loadVersion() {
+    private String loadVersion() {
         IProduct product = Platform.getProduct();
-        if (product == null || !(UDIG_PRODUCT_ID.equals(product.getId()))) {
+        if (product == null) {
             // chances are someone is using the SDK with their own
             // application or product.
             String message = "Unable to parse version from about.mappings file. Defaulting to a blank string."; //$NON-NLS-1$
             this.getLog().log(new Status(IStatus.INFO, ID, 0, message, null));
             this.version = "";
-            return;
+            return "undefined";
         }
-        Bundle pluginBundle = product.getDefiningBundle();
+        if (UDIG_PRODUCT_ID.equals(product.getId())) {
 
-        URL mappingsURL = FileLocator.find(pluginBundle, new Path(MAPPINGS_FILENAME), null);
-        if (mappingsURL != null) {
-            try {
-                mappingsURL = FileLocator.resolve(mappingsURL);
-            } catch (IOException e) {
-                mappingsURL = null;
-                String message = "Unable to find " + mappingsURL + " Defaulting to a blank string."; //$NON-NLS-1$
-                this.getLog().log(new Status(IStatus.ERROR, ID, 0, message, e));
-            }
-        }
-        PropertyResourceBundle bundle = null;
-        if (mappingsURL != null) {
-            InputStream is = null;
-            try {
-                is = mappingsURL.openStream();
-                bundle = new PropertyResourceBundle(is);
-            } catch (IOException e) {
-                bundle = null;
-                String message = "Unable to parse version from about.mappings file. Defaulting to a blank string."; //$NON-NLS-1$
-                this.getLog().log(new Status(IStatus.ERROR, ID, 0, message, e));
-            } finally {
+            Bundle pluginBundle = product.getDefiningBundle();
+
+            URL mappingsURL = FileLocator.find(pluginBundle, new Path(MAPPINGS_FILENAME), null);
+            if (mappingsURL != null) {
                 try {
-                    if (is != null)
-                        is.close();
+                    mappingsURL = FileLocator.resolve(mappingsURL);
                 } catch (IOException e) {
+                    mappingsURL = null;
+                    String message = "Unable to find " + mappingsURL //$NON-NLS-1$
+                            + " Defaulting to a blank string.";
+                    this.getLog().log(new Status(IStatus.ERROR, ID, 0, message, e));
                 }
             }
-        }
+            PropertyResourceBundle bundle = null;
+            if (mappingsURL != null) {
+                InputStream is = null;
+                try {
+                    is = mappingsURL.openStream();
+                    bundle = new PropertyResourceBundle(is);
+                } catch (IOException e) {
+                    bundle = null;
+                    String message = "Unable to parse version from about.mappings file. Defaulting to a blank string."; //$NON-NLS-1$
+                    this.getLog().log(new Status(IStatus.ERROR, ID, 0, message, e));
+                } finally {
+                    try {
+                        if (is != null)
+                            is.close();
+                    } catch (IOException e) {
+                    }
+                }
+            }
 
-        if (bundle != null) {
-            this.version = bundle.getString(UDIG_VERSION_KEY);
+            if (bundle != null) {
+                this.version = bundle.getString(UDIG_VERSION_KEY);
+            }
+            return "uDig";
+        } else {
+            String agentName = null;
+
+            // get version from product
+            final Bundle definingBundle = product.getDefiningBundle();
+            final Version version2 = definingBundle.getVersion();
+            this.version = version2.toString();
+            agentName = product.getName();
+
+            return agentName;
         }
     }
 
     /**
-     * This is the version of uDig being deployed; obtained from the current product
-     * if available.
+     * This is the version of uDig being deployed; obtained from the current product if available.
      *
      * @return
      */
@@ -241,7 +259,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     /**
      * Creates an image descriptor for later use.
      */
-    synchronized ImageDescriptor create( String id ) {
+    synchronized ImageDescriptor create(String id) {
         URL url = null;
         try {
             url = new URL(iconsUrl, id);
@@ -270,23 +288,19 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     }
 
     /**
-     * Logs the given throwable to the platform log, indicating the class and
-     * method from where it is being logged (this is not necessarily where it
-     * occurred).
+     * Logs the given throwable to the platform log, indicating the class and method from where it
+     * is being logged (this is not necessarily where it occurred).
      *
-     * This convenience method is for internal use by the Workbench only and
-     * must not be called outside the Workbench.
+     * This convenience method is for internal use by the Workbench only and must not be called
+     * outside the Workbench.
      *
-     * @param clazz
-     *            The calling class.
-     * @param methodName
-     *            The calling method name.
-     * @param t
-     *            The throwable from where the problem actually occurred.
+     * @param clazz The calling class.
+     * @param methodName The calling method name.
+     * @param t The throwable from where the problem actually occurred.
      */
-    public static void log( Class clazz, String methodName, Throwable t ) {
+    public static void log(Class clazz, String methodName, Throwable t) {
         String msg = MessageFormat.format("Exception in {0}.{1}: {2}", //$NON-NLS-1$
-                new Object[]{clazz.getName(), methodName, t});
+                new Object[] { clazz.getName(), methodName, t });
         log(msg, t);
     }
 
@@ -296,7 +310,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      * This should be used for user level messages.
      * </p>
      */
-    public static void log( String message2, Throwable e ) {
+    public static void log(String message2, Throwable e) {
         String message = message2;
         if (message == null)
             message = ""; //$NON-NLS-1$
@@ -305,27 +319,30 @@ public class UiPlugin extends AbstractUdigUIPlugin {
 
     /**
      * Log the status to the default log.
+     *
      * @param status
      */
-    public static void log( IStatus status ) {
+    public static void log(IStatus status) {
         getDefault().getLog().log(status);
     }
 
     /**
      * Messages that only engage if getDefault().isDebugging()
      * <p>
-     * It is much preferred to do this:<pre><code>
-     * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
-     * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
+     * It is much preferred to do this:
+     * 
+     * <pre>
+     * <code> private static final String RENDERING = "org.locationtech.udig.project/render/trace";
+     * if (ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase(RENDERING)) {
      *      System.out.println( "your message here" );
-     *
+     * }
      */
-    private static void trace( String message, Throwable e ) {
+    private static void trace(String message, Throwable e) {
         if (getDefault().isDebugging()) {
-            if (message != null){
-                System.out.println(message); //$NON-NLS-1$
+            if (message != null) {
+                System.out.println(message); // $NON-NLS-1$
             }
-            if (e != null){
+            if (e != null) {
                 e.printStackTrace(System.out);
             }
         }
@@ -333,9 +350,10 @@ public class UiPlugin extends AbstractUdigUIPlugin {
 
     /**
      * Messages that only engage if getDefault().isDebugging() and the trace option traceID is true.
-     * Available trace options can be found in the Trace class.  (They must also be part of the .options file)
+     * Available trace options can be found in the Trace class. (They must also be part of the
+     * .options file)
      */
-    public static void trace( String traceID, Class< ? > caller, String message, Throwable e ) {
+    public static void trace(String traceID, Class<?> caller, String message, Throwable e) {
         if (isDebugging(traceID)) {
             trace(caller, message, e);
         }
@@ -348,7 +366,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      * @param message tracing message, may be null.
      * @param e exception, may be null.
      */
-    public static void trace( Class< ? > caller, String message, Throwable e ) {
+    public static void trace(Class<?> caller, String message, Throwable e) {
         trace(caller.getSimpleName() + ": " + message, e); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
@@ -363,8 +381,9 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      *
      * @param trace currently only RENDER is defined
      */
-    public static boolean isDebugging( final String trace ) {
-        return getDefault().isDebugging() && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
+    public static boolean isDebugging(final String trace) {
+        return (getDefault() != null && getDefault().isDebugging()
+                && "true".equalsIgnoreCase(Platform.getDebugOption(trace))); //$NON-NLS-1$
     }
 
     /**
@@ -388,8 +407,8 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         String idField = MenuBuilder.ATTR_ID;
         String classField = MenuBuilder.ATTR_CLASS;
 
-        MenuBuilder mb = (MenuBuilder) lookupConfigurationObject(interfaceClass, getPreferenceStore(), ID, prefConstant, xpid,
-                idField, classField);
+        MenuBuilder mb = (MenuBuilder) lookupConfigurationObject(interfaceClass,
+                getPreferenceStore(), ID, prefConstant, xpid, idField, classField);
         if (mb != null) {
             return mb;
         }
@@ -403,10 +422,10 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     public static int getMaxHeapSize() throws IOException {
         final Pattern pattern = Pattern.compile("Xmx([0-9]+)([mMgGkKbB])");
         final int[] heapS = new int[1];
-        processAppIni(true, new Function<String, String>(){
+        processAppIni(true, new Function<String, String>() {
 
             @Override
-            public String apply( String line ) {
+            public String apply(String line) {
                 if (line.matches(".*Xmx.*")) { //$NON-NLS-1$
                     Matcher matcher = pattern.matcher(line);
                     matcher.find();
@@ -431,16 +450,18 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     }
 
     /**
-     * Sets the max heap size in the configuration file so on a restart the maximum size will be changed
+     * Sets the max heap size in the configuration file so on a restart the maximum size will be
+     * changed
      *
      * @param maxHeapSize new heapsize. 1024M 1G are legal options
      * @return the configFile to use for setting configuration information
      */
-    public static void setMaxHeapSize( final String maxHeapSize ) throws FileNotFoundException, IOException {
-        processAppIni(false, new Function<String, String>(){
+    public static void setMaxHeapSize(final String maxHeapSize)
+            throws FileNotFoundException, IOException {
+        processAppIni(false, new Function<String, String>() {
 
             @Override
-            public String apply( String line ) {
+            public String apply(String line) {
                 if (line.matches(".*Xmx([0-9]+)([mMgGkKbB]).*")) { //$NON-NLS-1$
                     line = line.replaceFirst("Xmx([0-9]+)([mMgGkKbB])", "Xmx" + maxHeapSize + "M"); //$NON-NLS-1$ //$NON-NLS-2$
                 }
@@ -465,15 +486,15 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public static void setProxy( String proxyHost, String proxyPort, String proxyNonHost ) throws FileNotFoundException,
-            IOException {
+    public static void setProxy(String proxyHost, String proxyPort, String proxyNonHost)
+            throws FileNotFoundException, IOException {
         File iniFile = getIniFile();
         BufferedReader bR = null;
         StringBuilder sB = new StringBuilder();
         try {
             bR = new BufferedReader(new FileReader(iniFile));
             String line = null;
-            while( (line = bR.readLine()) != null ) {
+            while ((line = bR.readLine()) != null) {
                 if (line.matches(".*Dhttp.proxy.*") || line.matches(".*Dhttp.nonProxy.*")) {
                     continue;
                 }
@@ -486,13 +507,15 @@ public class UiPlugin extends AbstractUdigUIPlugin {
             bR.close();
         }
 
-        if (proxyHost != null && proxyHost.length() > 0 && proxyPort != null && proxyPort.length() > 0) {
+        if (proxyHost != null && proxyHost.length() > 0 && proxyPort != null
+                && proxyPort.length() > 0) {
             sB.append("-D" + RuntimeFieldEditor.PROXYHOST + "=").append(proxyHost).append("\n");
             sB.append("-D" + RuntimeFieldEditor.PROXYPORT + "=").append(proxyPort).append("\n");
             if (proxyNonHost != null && proxyNonHost.length() > 0) {
                 // add quotes for multiple non proxy hosts
                 proxyNonHost = PROXYQUOTES + proxyNonHost + PROXYQUOTES;
-                sB.append("-D" + RuntimeFieldEditor.PROXYNONHOSTS + "=").append(proxyNonHost).append("\n");
+                sB.append("-D" + RuntimeFieldEditor.PROXYNONHOSTS + "=").append(proxyNonHost)
+                        .append("\n");
             }
         }
         BufferedWriter bW = null;
@@ -521,7 +544,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         }
         BufferedReader bR = new BufferedReader(new FileReader(iniFile));
         String line = null;
-        while( (line = bR.readLine()) != null ) {
+        while ((line = bR.readLine()) != null) {
             if (line.matches(".*D" + RuntimeFieldEditor.PROXYHOST + ".*")) {
                 String proxyHost = line.split("=")[1].trim();
                 properties.put(RuntimeFieldEditor.PROXYHOST, proxyHost);
@@ -542,7 +565,8 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         return properties;
     }
 
-    private static void processAppIni( boolean readOnly, Function<String, String> func ) throws IOException {
+    private static void processAppIni(boolean readOnly, Function<String, String> func)
+            throws IOException {
         File iniFile = getIniFile();
         if (iniFile != null && iniFile.exists()) {
             BufferedReader bR = null;
@@ -551,14 +575,14 @@ public class UiPlugin extends AbstractUdigUIPlugin {
                 Collection<String> updatedLines = new ArrayList<String>();
                 bR = new BufferedReader(new FileReader(iniFile));
                 String line = null;
-                while( (line = bR.readLine()) != null ) {
+                while ((line = bR.readLine()) != null) {
                     String newLine = func.apply(line);
                     updatedLines.add(newLine);
                     updatedLines.add("\n"); //$NON-NLS-1$
                 }
                 if (!readOnly) {
                     bW = new BufferedWriter(new FileWriter(iniFile));
-                    for( String string : updatedLines ) {
+                    for (String string : updatedLines) {
                         bW.write(string);
                     }
                 }
@@ -583,12 +607,12 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         File appFolder = new File(installLoc.getFile());
         String[] list = appFolder.list();
         String iniName = null;
-        for( String l : list ) {
+        for (String l : list) {
             if (l.endsWith(".ini")) { //$NON-NLS-1$
                 iniName = l;
             }
         }
-        if( iniName == null ){
+        if (iniName == null) {
             return null; // must be running from eclipse
         }
         File iniFile = new File(appFolder, iniName);
@@ -596,35 +620,31 @@ public class UiPlugin extends AbstractUdigUIPlugin {
     }
 
     /**
-     * Looks a configuration object using the preference store and extension
-     * points to locate the class and instantiate it. If there is a problem,
-     * null is returned and the caller is expect to supply a default value of
-     * their own. Exceptions are not thrown, but messages will be logged.
+     * Looks a configuration object using the preference store and extension points to locate the
+     * class and instantiate it. If there is a problem, null is returned and the caller is expect to
+     * supply a default value of their own. Exceptions are not thrown, but messages will be logged.
      *
-     * These configuration objects are typically defined in
-     * plugin_customization.ini files, and these values are loaded into the
-     * preference store. The parameter <tt>prefConstant</tt> is used to look
-     * up this value, and should be the key (prefixed by the plug-in name,
+     * These configuration objects are typically defined in plugin_customization.ini files, and
+     * these values are loaded into the preference store. The parameter <tt>prefConstant</tt> is
+     * used to look up this value, and should be the key (prefixed by the plug-in name,
      * org.locationtech.udig.ui) used in the ini file.
      *
-     * The returned object will either be an instances of
-     * <tt>interfaceClass</tt> or <tt>null</tt>.
+     * The returned object will either be an instance of <tt>interfaceClass</tt> or <tt>null</tt>.
      *
-     * The parameter <tt>xpid</tt> is the extension point ID that the value
-     * specified in the ini file should point to. This extension point must
-     * contain an attribute used for an id, and an attribute used for the class
-     * which is an implementation of <tt>interfaceClass</tt>. <tt>idField</tt>
-     * indicates the name of the attribute for id, and <tt>classField</tt>
+     * The parameter <tt>xpid</tt> is the extension point ID that the value specified in the ini
+     * file should point to. This extension point must contain an attribute used for an id, and an
+     * attribute used for the class which is an implementation of <tt>interfaceClass</tt>.
+     * <tt>idField</tt> indicates the name of the attribute for id, and <tt>classField</tt>
      * indicates the name of the attribute for the class.
      *
-     * Example:
-     * plugin_customization.ini
+     * Example: plugin_customization.ini
+     * 
      * <pre>
      * org.locationtech.udig.ui/workbenchConfiguration=org.locationtech.udig.internal.ui.UDIGWorkbenchConfiguration
      * </pre>
      *
-     * <b><tt>store</tt></b>: org.locationtech.udig.internal.ui.UiPlugin.getPreferenceStore()
-     * (this corresponds to the first part of the key)
+     * <b><tt>store</tt></b>: org.locationtech.udig.internal.ui.UiPlugin.getPreferenceStore() (this
+     * corresponds to the first part of the key)
      *
      * <b><tt>pluginID</tt></b>: "org.locationtech.udig.ui"
      *
@@ -641,15 +661,13 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      * </pre>
      *
      * <b><tt>xpid</tt></b>: "org.locationtech.udig.ui.workbenchConfigurations"
-     * <b><tt>idField</tt></b>: "id"
-     * <b><tt>classField</tt></b>: "class"
+     * <b><tt>idField</tt></b>: "id" <b><tt>classField</tt></b>: "class"
      *
-     * This will return an instance of <tt>org.locationtech.udig.ui.WorkbenchConfiguration</tt>,
-     * or null if it cannot find one (in which case, check the logs!).
+     * This will return an instance of <tt>org.locationtech.udig.ui.WorkbenchConfiguration</tt>, or
+     * null if it cannot find one (in which case, check the logs!).
      *
-     * Make sure to be a good developer and use constants. Also make sure to
-     * use a default implementation if this returns null! The code should not
-     * explode!
+     * Make sure to be a good developer and use constants. Also make sure to use a default
+     * implementation if this returns null! The code should not explode!
      *
      * TODO It would be nice to simplify this API call.
      *
@@ -661,8 +679,9 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      * @param idField id attribute key used in extension point
      * @param classField class attribute key used in extension point
      */
-    public static Object lookupConfigurationObject( Class< ? > interfaceClass, final IPreferenceStore store,
-            final String pluginID, final String prefConstant, final String xpid, final String idField, final String classField ) {
+    public static Object lookupConfigurationObject(Class<?> interfaceClass,
+            final IPreferenceStore store, final String pluginID, final String prefConstant,
+            final String xpid, final String idField, final String classField) {
 
         final String configurationID = store.getString(prefConstant);
 
@@ -670,12 +689,14 @@ public class UiPlugin extends AbstractUdigUIPlugin {
             try {
                 final Object[] configObj = new Object[1];
                 final Throwable[] error = new Throwable[1];
-                ExtensionPointProcessor p = new ExtensionPointProcessor(){
+                ExtensionPointProcessor p = new ExtensionPointProcessor() {
 
                     @Override
-                    public void process( IExtension extension, IConfigurationElement element ) throws Exception {
+                    public void process(IExtension extension, IConfigurationElement element)
+                            throws Exception {
                         try {
-                            if (element.getAttribute(idField) != null && element.getAttribute(idField).equals(configurationID)) {
+                            if (element.getAttribute(idField) != null
+                                    && element.getAttribute(idField).equals(configurationID)) {
                                 Object obj = element.createExecutableExtension(classField);
                                 configObj[0] = obj;
                             }
@@ -691,8 +712,9 @@ public class UiPlugin extends AbstractUdigUIPlugin {
                 if (configObj[0] != null) {
                     return configObj[0];
                 } else {
-                    MessageFormat format = new MessageFormat(Messages.UDIGWorkbenchWindowAdvisor_specifiedButNotFound);
-                    Object[] args = new Object[]{configurationID, interfaceClass.getName()};
+                    MessageFormat format = new MessageFormat(
+                            Messages.UDIGWorkbenchWindowAdvisor_specifiedButNotFound);
+                    Object[] args = new Object[] { configurationID, interfaceClass.getName() };
                     StringBuffer message = format.format(args, new StringBuffer(), null);
                     Throwable e = null;
                     if (error[0] != null) {
@@ -701,8 +723,8 @@ public class UiPlugin extends AbstractUdigUIPlugin {
                     trace(message.toString(), e);
                 }
             } catch (Exception e) {
-                log(MessageFormat.format(Messages.UDIGWorkbenchWindowAdvisor_classNotFound, new Object[]{configurationID},
-                        interfaceClass.getName()), e);
+                log(MessageFormat.format(Messages.UDIGWorkbenchWindowAdvisor_classNotFound,
+                        new Object[] { configurationID }, interfaceClass.getName()), e);
             }
         }
 
@@ -730,6 +752,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         return new InstanceScope().getNode(ID);
     }
 
+    @Override
     public IPath getIconPath() {
         return new Path(ICONS_PATH);
     }

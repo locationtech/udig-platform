@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Geobuf Datastore Extension
+Bundle-SymbolicName: org.locationtech.udig.libs.geobuf;singleton:=true
+Bundle-Version: 2.3.0.qualifier
+Bundle-Vendor: udig.refractions.net
+Fragment-Host: org.locationtech.udig.libs
+Automatic-Module-Name: org.locationtech.udig.libs.geobuf
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.geotools.data.geobuf
+Bundle-ClassPath: lib/gt-geobuf-22.1.jar,
+ lib/protobuf-java-3.4.0.jar

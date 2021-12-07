@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -30,7 +30,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.osgi.service.debug.DebugOptions;
 import org.geotools.geometry.DirectPosition2D;
@@ -72,7 +72,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * The contents of this Activator will change over time according to the needs of the libraries and
  * tool kits we are using.
  * </p>
- * 
+ *
  * @author Jody Garnett
  * @version 1.3.0
  * @since 1.1.0
@@ -80,29 +80,34 @@ import org.osgi.util.tracker.ServiceTracker;
 public class Activator implements BundleActivator {
 
     public static String ID = "org.locationtech.udig.libs"; //$NON-NLS-1$
-    public static String JDBC_DATA_TRACE_FINE = "org.locationtech.udig.libs/debug/data/jdbc/fine";
-    public static String JDBC_TRACE_FINE = "org.locationtech.udig.libs/debug/jdbc/fine";
 
-    private static final String DATABASES_FOLDER_NAME = "databases";
-    private static final String EPSG_DATABASEFOLDER_PREFIX = "epsg_v";
+    public static String JDBC_DATA_TRACE_FINE = "org.locationtech.udig.libs/debug/data/jdbc/fine"; //$NON-NLS-1$
 
-    public void start( final BundleContext context ) throws Exception {
+    public static String JDBC_TRACE_FINE = "org.locationtech.udig.libs/debug/jdbc/fine"; //$NON-NLS-1$
+
+    private static final String DATABASES_FOLDER_NAME = "databases"; //$NON-NLS-1$
+
+    private static final String EPSG_DATABASEFOLDER_PREFIX = "epsg_v"; //$NON-NLS-1$
+
+    @Override
+    public void start(final BundleContext context) throws Exception {
         if (Platform.getOS().equals(Platform.OS_WIN32)) {
             try {
                 // PNG native support is not very good .. this turns it off
                 ImageIOExt.allowNativeCodec("png", ImageReaderSpi.class, false); //$NON-NLS-1$
             } catch (Throwable t) {
                 // we should not die if JAI is missing; we have a warning for that...
-                System.out.println("Difficulty turnning windows native PNG support (which will result in scrambled images from WMS servers)"); //$NON-NLS-1$
+                System.out.println(
+                        "Difficulty turnning windows native PNG support (which will result in scrambled images from WMS servers)"); //$NON-NLS-1$
                 t.printStackTrace();
             }
         }
 
-        // System properites work for controlling referencing behavior
-        // not so sure about the geotools global hints
+        // System properties work for controlling referencing behavior
+        // not so sure about the GeoTools global hints
         //
         System.setProperty("org.geotools.referencing.forceXY", "true"); //$NON-NLS-1$ //$NON-NLS-2$
-        Map<Key, Boolean> map = new HashMap<Key, Boolean>();
+        Map<Key, Boolean> map = new HashMap<>();
         // these commented out hints are covered by the forceXY system property
         //
         // map.put( Hints.FORCE_LONGITUDE_FIRST_AXIS_ORDER, true );
@@ -111,14 +116,16 @@ public class Activator implements BundleActivator {
         map.put(Hints.LENIENT_DATUM_SHIFT, true);
         Hints global = new Hints(map);
         GeoTools.init(global);
-        Logging.GEOTOOLS.setLoggerFactory((LoggerFactory<?>)null);
-        
-        // Suppress JAI warnings when native support unavailable 
+        Logging.GEOTOOLS.setLoggerFactory((LoggerFactory<?>) null);
+
+        // Suppress JAI warnings when native support unavailable
         JAI.getDefaultInstance().setImagingListener(new ImagingListener() {
-            final Logger LOGGER = Logging.getLogger("javax.media.jai");
+            final Logger LOGGER = Logging.getLogger("javax.media.jai"); //$NON-NLS-1$
+
+            @Override
             public boolean errorOccurred(String message, Throwable thrown, Object where,
                     boolean isRetryable) throws RuntimeException {
-                if (message.contains("Continuing in pure Java mode")) {
+                if (message.contains("Continuing in pure Java mode")) { //$NON-NLS-1$
                     LOGGER.log(Level.FINE, message, thrown);
                 } else {
                     LOGGER.log(Level.INFO, message, thrown);
@@ -126,29 +133,27 @@ public class Activator implements BundleActivator {
                 return false; // we are not trying to recover
             }
         });
-        
-//        ClassLoader cl = Thread.currentThread().getContextClassLoader();
-//        Thread.currentThread().setContextClassLoader(GeoTools.class.getClassLoader());
-//        try {
-        Logger jdbcLogger = Logging.getLogger("org.geotools.jdbc");
-        Logger jdbcDataLogger = Logging.getLogger("org.geotools.data.jdbc");
-        
+
+        Logger jdbcLogger = Logging.getLogger("org.geotools.jdbc"); //$NON-NLS-1$
+        Logger jdbcDataLogger = Logging.getLogger("org.geotools.data.jdbc"); //$NON-NLS-1$
+
         ConsoleHandler handler = new ConsoleHandler();
         handler.setLevel(Level.FINEST);
-        
-        Logging.getLogger("org.geotools").addHandler(handler);
+
+        Logging.getLogger("org.geotools").addHandler(handler); //$NON-NLS-1$
         if (isDebugging(JDBC_TRACE_FINE)) {
             jdbcLogger.setLevel(Level.FINEST);
-            Logging.getLogger("org.geotools.data.store").addHandler(handler);
-            Logging.getLogger("org.geotools.data.store").setLevel(Level.FINEST); // ContentDataStore too
-            Logging.getLogger("org.geotools.data.store.JDBCFeatureReader").addHandler(handler);
-            Logging.getLogger("org.geotools.data.store.JDBCFeatureReader").setLevel(Level.FINEST);
-            Logging.getLogger("org.geotools.data.store.JDBCFeatureSource").addHandler(handler);
-            Logging.getLogger("org.geotools.data.store.JDBCFeatureSource").setLevel(Level.FINEST);
-            Logging.getLogger("org.geotools.data.store.JDBCFeatureStore").addHandler(handler);
-            Logging.getLogger("org.geotools.data.store.JDBCFeatureStore").setLevel(Level.FINEST);
-            Logging.getLogger("org.geotools.data.store.SQLDialect").addHandler(handler);
-            Logging.getLogger("org.geotools.data.store.SQLDialect").setLevel(Level.FINEST);
+            Logging.getLogger("org.geotools.data.store").addHandler(handler); //$NON-NLS-1$
+            Logging.getLogger("org.geotools.data.store").setLevel(Level.FINEST); // ContentDataStore //$NON-NLS-1$
+                                                                                 // too
+            Logging.getLogger("org.geotools.data.store.JDBCFeatureReader").addHandler(handler); //$NON-NLS-1$
+            Logging.getLogger("org.geotools.data.store.JDBCFeatureReader").setLevel(Level.FINEST); //$NON-NLS-1$
+            Logging.getLogger("org.geotools.data.store.JDBCFeatureSource").addHandler(handler); //$NON-NLS-1$
+            Logging.getLogger("org.geotools.data.store.JDBCFeatureSource").setLevel(Level.FINEST); //$NON-NLS-1$
+            Logging.getLogger("org.geotools.data.store.JDBCFeatureStore").addHandler(handler); //$NON-NLS-1$
+            Logging.getLogger("org.geotools.data.store.JDBCFeatureStore").setLevel(Level.FINEST); //$NON-NLS-1$
+            Logging.getLogger("org.geotools.data.store.SQLDialect").addHandler(handler); //$NON-NLS-1$
+            Logging.getLogger("org.geotools.data.store.SQLDialect").setLevel(Level.FINEST); //$NON-NLS-1$
         } else {
             jdbcLogger.setLevel(Level.INFO);
         }
@@ -157,19 +162,11 @@ public class Activator implements BundleActivator {
         } else {
             jdbcDataLogger.setLevel(Level.INFO);
         }
-//        } finally {
-//        	Thread.currentThread().setContextClassLoader(cl);
-//        }
-        
-        // We cannot do this here - it takes too long!
-        // Early startup is too late
-        // functionality moved to the UDIGApplication init method
-        //
-        // initializeReferencingModule( context.getBundle(), null );
+
     }
+
     public static boolean isDebugging(final String trace) {
-        return isDebugging()
-                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$    
+        return isDebugging() && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
 
     public static boolean isDebugging() {
@@ -180,8 +177,8 @@ public class Activator implements BundleActivator {
         if (context == null) {
             return false;
         }
-        ServiceTracker<DebugOptions,Object> debugTracker = new ServiceTracker<DebugOptions,Object>(context, DebugOptions.class.getName(),
-                null);
+        ServiceTracker<DebugOptions, Object> debugTracker = new ServiceTracker<>(context,
+                DebugOptions.class.getName(), null);
         debugTracker.open();
 
         DebugOptions debugOptions = (DebugOptions) debugTracker.getService();
@@ -189,46 +186,46 @@ public class Activator implements BundleActivator {
             return false;
         }
         // if platform debugging is enabled, check to see if this plugin is enabled for debugging
-        return debugOptions.isDebugEnabled() ? debugOptions.getBooleanOption(key,false) : false;
+        return debugOptions.isDebugEnabled() ? debugOptions.getBooleanOption(key, false) : false;
     }
 
-    public static void initializeReferencingModule( IProgressMonitor monitor ) {
+    public static void initializeReferencingModule(IProgressMonitor monitor) {
         Bundle bundle = Platform.getBundle(ID);
         if (monitor == null)
             monitor = new NullProgressMonitor();
 
         monitor.beginTask(Messages.Activator_EPSG_DATABASE, 100);
-        
-        Logger epsgLogger = Logging.getLogger("org.geotools.referencing.factory");
+
+        Logger epsgLogger = Logging.getLogger("org.geotools.referencing.factory"); //$NON-NLS-1$
         try {
             epsgLogger.setLevel(Level.SEVERE);
-    
+
             unpackEPSGDatabase();
-            
-            searchEPSGProperties(bundle, new SubProgressMonitor(monitor, 20));
-    
-            loadEPSG(bundle, new SubProgressMonitor(monitor, 60));
-    
+
+            searchEPSGProperties(bundle, SubMonitor.convert(monitor, 20));
+
+            loadEPSG(bundle, SubMonitor.convert(monitor, 60));
+
             monitor.subTask(Messages.OPERATIONS_DEFINITIONS);
             load(ReferencingFactoryFinder.getCoordinateOperationAuthorityFactories(null));
             monitor.worked(2);
-    
+
             monitor.subTask(Messages.COORDINATE_REFERENCE_SYSTSMS);
             load(ReferencingFactoryFinder.getCRSFactories(null));
             monitor.worked(8);
-    
+
             monitor.subTask(Messages.COORDINATE_SYSTEMS);
             load(ReferencingFactoryFinder.getCSFactories(null));
             monitor.worked(2);
-    
+
             monitor.subTask(Messages.DATUM_DEFINITIONS);
             load(ReferencingFactoryFinder.getDatumAuthorityFactories(null));
             monitor.worked(2);
-    
+
             monitor.subTask(Messages.DATUMS);
             load(ReferencingFactoryFinder.getDatumFactories(null));
             monitor.worked(2);
-    
+
             monitor.subTask(Messages.MATH_TRANSFORMS);
             load(ReferencingFactoryFinder.getMathTransformFactories(null));
             monitor.worked(4);
@@ -237,19 +234,21 @@ public class Activator implements BundleActivator {
         }
     }
 
-    static private void load( Set<?> coordinateOperationAuthorityFactories ) {
-        for( Iterator<?> iter = coordinateOperationAuthorityFactories.iterator(); iter.hasNext(); ) {
+    static private void load(Set<?> coordinateOperationAuthorityFactories) {
+        for (Iterator<?> iter = coordinateOperationAuthorityFactories.iterator(); iter.hasNext();) {
             iter.next();
         }
     }
+
     /**
-     * Location of the EPSG database; defaults to a folder in the {@link Platform#getInstallLocation()}.
+     * Location of the EPSG database; defaults to a folder in the
+     * {@link Platform#getInstallLocation()}.
      * <p>
      * You can check to see if this file exists to determine if the database is already unpacked.
-     * 
+     *
      * @return folder used for the EPSG database
      */
-    public static File epsgDatabaseFile(){
+    public static File epsgDatabaseFile() {
         // unpack into the shared configuration location
         try {
             Location configLocation = Platform.getInstallLocation();
@@ -266,35 +265,36 @@ public class Activator implements BundleActivator {
         }
         return null; // database location not known - temporary directory will be used
     }
-    
-    private static File doEpsg(Location configLocation) throws MalformedURLException{
-        File config = URLs.urlToFile( configLocation.getURL() );
-        if( config.canWrite() ){
-            URL databaseDirectoryUrl = new URL( configLocation.getURL(), DATABASES_FOLDER_NAME );
-            File directory = URLs.urlToFile( databaseDirectoryUrl );
-            File epsgDirectory = new File( directory, EPSG_DATABASEFOLDER_PREFIX + ThreadedHsqlEpsgFactory.VERSION );
-            
+
+    private static File doEpsg(Location configLocation) throws MalformedURLException {
+        File config = URLs.urlToFile(configLocation.getURL());
+        if (config.canWrite()) {
+            URL databaseDirectoryUrl = new URL(configLocation.getURL(), DATABASES_FOLDER_NAME);
+            File directory = URLs.urlToFile(databaseDirectoryUrl);
+            File epsgDirectory = new File(directory,
+                    EPSG_DATABASEFOLDER_PREFIX + ThreadedHsqlEpsgFactory.VERSION);
+
             return epsgDirectory;
         }
         return null;
     }
-    
-    public static void unpackEPSGDatabase(){
+
+    public static void unpackEPSGDatabase() {
         File file = epsgDatabaseFile();
-        if( file == null ){
+        if (file == null) {
             // default geotools temporary directory will be used
             return;
         }
         File directory = file.getParentFile();
         boolean created = directory.exists() || directory.mkdirs();
-        if( created ){
-            if( isDebugging() ){
-                System.out.println("EPSG database location: "+file);
+        if (created) {
+            if (isDebugging()) {
+                System.out.println("EPSG database location: " + file); //$NON-NLS-1$
             }
-            System.setProperty( ThreadedHsqlEpsgFactory.DIRECTORY_KEY, directory.toString() );
+            System.setProperty(ThreadedHsqlEpsgFactory.DIRECTORY_KEY, directory.toString());
         }
     }
-    
+
     /**
      * Will load the EPSG database; this will trigger the unpacking of the EPSG database (which may
      * take several minutes); and check in a few locations for an epsg.properties file to load: the
@@ -302,15 +302,15 @@ public class Activator implements BundleActivator {
      * bundle itself (which includes a default epsg.properties file that has a few common unofficial
      * codes for things like the google projection).
      * <p>
-     * This method will trigger the geotools referencing module to "scanForPlugins" and MUST be
-     * called prior to using the geotools library for anything real. I am sorry we could not arrange
+     * This method will trigger the GeoTools referencing module to "scanForPlugins" and MUST be
+     * called prior to using the GeoTools library for anything real. I am sorry we could not arrange
      * for this method to be called in an Activator as it simple takes too long and the Platform
      * get's mad at us.
-     * 
+     *
      * @param bundle
      * @param monitor
      */
-    public static void searchEPSGProperties( Bundle bundle, IProgressMonitor monitor ) {
+    public static void searchEPSGProperties(Bundle bundle, IProgressMonitor monitor) {
         if (monitor == null)
             monitor = new NullProgressMonitor();
 
@@ -318,12 +318,12 @@ public class Activator implements BundleActivator {
         try {
             // go through and check a couple of locations
             // for an "epsg.properties" file full of
-            // suplementary codes
+            // supplementary codes
             //
             URL epsg = null;
             Location configLocaiton = Platform.getInstallLocation();
             Location dataLocation = Platform.getInstanceLocation();
-            
+
             if (dataLocation != null) {
                 try {
                     URL url = dataLocation.getURL();
@@ -331,7 +331,7 @@ public class Activator implements BundleActivator {
                     monitor.subTask(Messages.CHECK + proposed);
                     String externalForm = proposed.toExternalForm();
                     if ("file".equals(proposed.getProtocol())) { //$NON-NLS-1$
-                        String path = externalForm.replaceFirst("file:", "");  //$NON-NLS-1$//$NON-NLS-2$
+                        String path = externalForm.replaceFirst("file:", ""); //$NON-NLS-1$//$NON-NLS-2$
                         File file = new File(path);
                         if (file.exists()) {
                             epsg = file.toURI().toURL();
@@ -352,7 +352,7 @@ public class Activator implements BundleActivator {
                     String externalForm = proposed.toExternalForm();
                     monitor.subTask(Messages.Activator_1 + proposed);
                     if ("file".equals(proposed.getProtocol())) { //$NON-NLS-1$
-                        String path = externalForm.replaceFirst("file:", "");  //$NON-NLS-1$//$NON-NLS-2$
+                        String path = externalForm.replaceFirst("file:", ""); //$NON-NLS-1$//$NON-NLS-2$
                         File file = new File(path);
                         if (file.exists()) {
                             epsg = file.toURI().toURL();
@@ -371,12 +371,12 @@ public class Activator implements BundleActivator {
                     URL internal = bundle.getEntry("epsg.properties"); //$NON-NLS-1$
                     URL fileUrl = FileLocator.toFileURL(internal);
                     String externalForm = fileUrl.toExternalForm();
-                    String path = externalForm.replaceFirst("file:", "");  //$NON-NLS-1$//$NON-NLS-2$
+                    String path = externalForm.replaceFirst("file:", ""); //$NON-NLS-1$//$NON-NLS-2$
                     epsg = new File(path).toURI().toURL();
                 } catch (Throwable t) {
                     if (Platform.inDebugMode()) {
-                        System.out
-                                .println("Could not find org.locationtech.udig.libs/epsg.properties"); //$NON-NLS-1$
+                        System.out.println(
+                                "Could not find org.locationtech.udig.libs/epsg.properties"); //$NON-NLS-1$
                         t.printStackTrace();
                     }
                 }
@@ -384,7 +384,8 @@ public class Activator implements BundleActivator {
 
             if (epsg != null) {
                 monitor.subTask(Messages.LOADING + epsg);
-                Hints hints = new Hints(Hints.CRS_AUTHORITY_FACTORY, PropertyAuthorityFactory.class);
+                Hints hints = new Hints(Hints.CRS_AUTHORITY_FACTORY,
+                        PropertyAuthorityFactory.class);
                 ReferencingFactoryContainer referencingFactoryContainer = ReferencingFactoryContainer
                         .instance(hints);
 
@@ -409,9 +410,9 @@ public class Activator implements BundleActivator {
             monitor.worked(1);
 
             // Show EPSG authority chain if in debug mode
-            // 
+            //
             if (isDebugging()) {
-                //CRS.main(new String[]{"-dependencies"}); //$NON-NLS-1$
+                // CRS.main(new String[]{"-dependencies"}); //$NON-NLS-1$
             }
             // Verify EPSG authority configured correctly
             // if we are in development mode
@@ -422,14 +423,14 @@ public class Activator implements BundleActivator {
                 verifyReferencingOperation();
             }
         } catch (Throwable t) {
-            Platform.getLog(bundle).log(
-                    new Status(Status.ERROR, Activator.ID, t.getLocalizedMessage(), t));
+            Platform.getLog(bundle)
+                    .log(new Status(Status.ERROR, Activator.ID, t.getLocalizedMessage(), t));
         } finally {
             monitor.done();
         }
     }
 
-    public static void loadEPSG( Bundle bundle, IProgressMonitor monitor ) {
+    public static void loadEPSG(Bundle bundle, IProgressMonitor monitor) {
         if (monitor == null)
             monitor = new NullProgressMonitor();
 
@@ -447,8 +448,8 @@ public class Activator implements BundleActivator {
             // Show EPSG authority chain if in debug mode
             //
             if (Platform.inDebugMode()) {
-            	System.out.println("Coordinate Reference System definitions supplied by:");
-                CRS.main(new String[]{"-dependencies"}); //$NON-NLS-1$
+                System.out.println("Coordinate Reference System definitions supplied by:"); //$NON-NLS-1$
+                CRS.main(new String[] { "-dependencies" }); //$NON-NLS-1$
             }
             // Verify EPSG authority configured correctly
             // if we are in development mode
@@ -459,8 +460,8 @@ public class Activator implements BundleActivator {
                 verifyReferencingOperation();
             }
         } catch (Throwable t) {
-            Platform.getLog(bundle).log(
-                    new Status(Status.ERROR, Activator.ID, t.getLocalizedMessage(), t));
+            Platform.getLog(bundle)
+                    .log(new Status(Status.ERROR, Activator.ID, t.getLocalizedMessage(), t));
         } finally {
             monitor.done();
         }
@@ -469,7 +470,7 @@ public class Activator implements BundleActivator {
     /**
      * If this method fails it's because, the epsg jar is either not available, or not set up to
      * handle math transforms in the manner udig expects.
-     * 
+     *
      * @return true if referencing is working and we get the expected result
      * @throws Exception if we cannot even get that far
      */
@@ -485,15 +486,17 @@ public class Activator implements BundleActivator {
         double delta = Math.abs(check.getOrdinate(0) - there.getOrdinate(0))
                 + Math.abs(check.getOrdinate(1) - there.getOrdinate(1));
         if (delta > 0.0001) {
-            String msg = "Referencing failed to transformation with expected accuracy: Off by " + delta + "\n" + check + "\n" + there; //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+            String msg = "Referencing failed to transformation with expected accuracy: Off by " //$NON-NLS-1$
+                    + delta + "\n" + check + "\n" + there; //$NON-NLS-1$//$NON-NLS-2$
             System.out.println(msg);
             // throw new FactoryException(msg);
         }
     }
+
     /**
      * If this method fails it's because, the epsg jar is either not available, or not set up to
      * handle math transforms in the manner udig expects.
-     * 
+     *
      * @return true if referencing is working and we get the expected result
      * @throws Exception if we cannot even get that far
      */
@@ -515,7 +518,9 @@ public class Activator implements BundleActivator {
         }
     }
 
-    public void stop( BundleContext context ) throws Exception {
+    @Override
+    public void stop(BundleContext context) throws Exception {
+
     }
 
 }

@@ -56,7 +56,7 @@ Tour of the standard views in uDig and what selections you can expect in the dif
 -  Info View: Features
 -  Selection View (Soon to be renamed to Table View): Features
 -  Feature Editor: Feature
--  MapEditor: This is a trickier workbench part. The selection is determined by the active tool. By
+-  MapPart: This is a trickier workbench part. The selection is determined by the active tool. By
    default, the current selection is the map but some tools (editing tools for example) will cause
    the current selection to be features.
 
@@ -103,7 +103,7 @@ object. This operation would be enabled in the MapEditor and the Project Explore
 
     public void op( final Display display, Object target, IProgressMonitor monitor )
                 throws Exception {
-        IMap map = (IMap) target; 
+        IMap map = (IMap) target;
 
         // ... some work
     }
@@ -211,7 +211,7 @@ Layer Summary Class
 
     /**
      * Displays a summary of the layer in a dialog.
-     * 
+     *
      * @author jeichar
      * @since 0.6.0
      */

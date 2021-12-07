@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -16,6 +17,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.IGeoResource;
@@ -26,29 +29,23 @@ import org.locationtech.udig.catalog.IServiceInfo;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
-
 /**
  * How to create a temporary layer.
- * 
+ *
  * @author Jesse Eichar
  * @since 1.1.0
  */
 public class CreateAndAddGeoResourceToMap {
 
     /**
-     * Q:
-     * 
-     * I want to add an image to the map, how do I do that?
-     * 
-     * 
-     * A:
-     * 
-     * This example shows how to create an IGeoResource from a URL and add it as a layer to the current map.
-     * 
+     * Q: I want to add an image to the map, how do I do that?
+     *
+     * A: This example shows how to create an IGeoResource from a URL and add it as a layer to the
+     * current map.
+     *
      */
-    public void example(URL url, IProgressMonitor progressMonitor, int addPosition, IMap map) throws IOException {
+    public void example(URL url, IProgressMonitor progressMonitor, int addPosition, IMap map)
+            throws IOException {
         progressMonitor.beginTask("task", 6); //$NON-NLS-1$
         progressMonitor.worked(1);
 
@@ -57,26 +54,29 @@ public class CreateAndAddGeoResourceToMap {
             ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
 
             // first search the local catalog.
-            List<IResolve> matches = catalog.find(url, new SubProgressMonitor(progressMonitor, 2));
+            List<IResolve> matches = catalog.find(url, SubMonitor.convert(progressMonitor, 2));
 
             for (IResolve resolve : matches) {
                 if (resolve instanceof ExpectedService) {
-                    // found the resource now we have to search it for the
-                    // resource we want
-                    if (searchServiceForResource(new SubProgressMonitor(progressMonitor, 2), addPosition, map,
-                            (IService) resolve))
+                    // found the resource now we have to search it for the resource we want
+                    if (searchServiceForResource(SubMonitor.convert(progressMonitor, 2),
+                            addPosition, map, (IService) resolve))
                         return;
                 } else if (resolve instanceof ExpectedGeoResource) {
-                    // yay we found the resource this is too easy:)
+                    // Yay we found the resource this is too easy :)
 
-                    ApplicationGIS.addLayersToMap(map, Collections.singletonList((IGeoResource) resolve), addPosition);
+                    ApplicationGIS.addLayersToMap(map,
+                            Collections.singletonList((IGeoResource) resolve), addPosition);
                     return;
                 }
             }
 
-            // usually only returns 1 service but it may be that multiple
-            // Services know how to interpret the URL
-            List<IService> services = CatalogPlugin.getDefault().getServiceFactory().createService(url);
+            /**
+             * Usually only returns 1 service but it may be that multiple Services know how to
+             * interpret the URL
+             */
+            List<IService> services = CatalogPlugin.getDefault().getServiceFactory()
+                    .createService(url);
             IService found = null;
             progressMonitor.worked(1);
 
@@ -90,7 +90,8 @@ public class CreateAndAddGeoResourceToMap {
             }
 
             catalog.add(found);
-            searchServiceForResource(new SubProgressMonitor(progressMonitor, 2), addPosition, map, found);
+            searchServiceForResource(SubMonitor.convert(progressMonitor, 2), addPosition, map,
+                    found);
 
         } finally {
             progressMonitor.done();
@@ -98,16 +99,17 @@ public class CreateAndAddGeoResourceToMap {
 
     }
 
-    private boolean searchServiceForResource(IProgressMonitor progressMonitor, int addPosition, IMap map, IService found)
-            throws IOException {
+    private boolean searchServiceForResource(IProgressMonitor progressMonitor, int addPosition,
+            IMap map, IService found) throws IOException {
         List<? extends IGeoResource> resources = found.resources(progressMonitor);
 
         // now find the resource you want.
         for (IGeoResource resource : resources) {
             if (someLogic(resource)) {
-                // ok we've found it
+                // OK we've found it
                 // add the resource to the map and return
-                ApplicationGIS.addLayersToMap(map, Collections.singletonList(resource), addPosition);
+                ApplicationGIS.addLayersToMap(map, Collections.singletonList(resource),
+                        addPosition);
                 return true;
             }
         }
@@ -130,14 +132,17 @@ public class CreateAndAddGeoResourceToMap {
             return null;
         }
 
+        @Override
         public URL getIdentifier() {
             return null;
         }
 
+        @Override
         public Throwable getMessage() {
             return null;
         }
 
+        @Override
         public Status getStatus() {
             return null;
         }
@@ -155,10 +160,12 @@ public class CreateAndAddGeoResourceToMap {
             return null;
         }
 
+        @Override
         public Throwable getMessage() {
             return null;
         }
 
+        @Override
         public Status getStatus() {
             return null;
         }

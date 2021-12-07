@@ -207,4 +207,11 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
          install-size="0"
          version="0.0.0"/>
 
+   <plugin
+         id="org.locationtech.udig.libs.geobuf"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
 </feature>
